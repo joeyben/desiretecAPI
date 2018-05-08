@@ -7,8 +7,11 @@ use App\Events\Backend\Access\Role\RoleDeleted;
 use App\Events\Backend\Access\Role\RoleUpdated;
 use App\Exceptions\GeneralException;
 use App\Models\Access\Role\Role;
+use App\Models\Access\User\User;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\Backend\Access\User\UserRepository;
+
 
 /**
  * Class RoleRepository.
@@ -179,7 +182,7 @@ class RoleRepository extends BaseRepository
                             }
                         }
                     }
-
+                    $this->updateAllUsersPermissions([$role->name], $permissions);
                     $role->attachPermissions($permissions);
                 }
 
@@ -235,5 +238,35 @@ class RoleRepository extends BaseRepository
         }
 
         return $this->query()->where('name', config('access.users.default_role'))->first();
+    }
+
+    /**
+     * @param $roles
+     * @param string $by
+     *
+     * @return mixed
+     */
+    public function getByRole($roles, $by = 'name')
+    {
+        if (!is_array($roles)) {
+            $roles = [$roles];
+        }
+        $user = new User;
+        return $user->whereHas('roles', function ($query) use ($roles, $by) {
+            $query->whereIn('roles.'.$by, $roles);
+        })->get();
+    }
+
+    /**
+     * @param $role
+     * @param $permissions
+     */
+    public function updateAllUsersPermissions($role, $permissions)
+    {
+        $users = $this->getByRole($role,'name');
+        foreach($users as $user) {
+            $user->detachPermissions($user->permissions);
+            $user->attachPermissions($permissions);
+        }
     }
 }

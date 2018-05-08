@@ -107,6 +107,7 @@ return [
                             'last_updated' => 'Last Updated',
                             'name'         => 'Name',
                             'status'       => 'Status',
+                            'whitelabels'  => 'Whitelabels',
                         ],
                     ],
                 ],
@@ -170,6 +171,80 @@ return [
             'table' => [
                 'title'     => 'Blog',
                 'publish'   => 'PublishDateTime',
+                'status'    => 'Status',
+                'createdat' => 'Created At',
+                'createdby' => 'Created By',
+                'all'       => 'All',
+            ],
+        ],
+
+        'wishes' => [
+            'create'     => 'Create Wish',
+            'edit'       => 'Edit Wish',
+            'management' => 'Wishes',
+            'title'      => 'Wishes',
+            'no_whitelabels' => 'no Whitelabels',
+            'table' => [
+                'title'     => 'Wish',
+                'status'    => 'Status',
+                'destination'    => 'Destination',
+                'airport'    => 'Airport',
+                'earliest_start'    => 'Earliest Start',
+                'latest_return'    => 'Latest Return',
+                'createdat' => 'Created At',
+                'createdby' => 'Created By',
+                'whitelabel'=> 'Whitelabel',
+                'offerCount'=> 'Offers',
+                'all'       => 'All',
+            ],
+        ],
+
+        'groups' => [
+            'create'     => 'Create Group',
+            'edit'       => 'Edit Group',
+            'management' => 'Groups',
+            'title'      => 'Groups',
+            'no_whitelabels' => 'no Whitelabels',
+            'table' => [
+                'name'              => 'Group',
+                'display_name'      => 'Display Name',
+                'status'            => 'Status',
+                'users'             => 'Users',
+                'description'       => 'Description',
+                'createdat'         => 'Created At',
+                'createdby'         => 'Created By',
+                'whitelabel'        => 'Whitelabel',
+                'all'               => 'All',
+            ],
+        ],
+
+        'distributions' => [
+            'create'     => 'Create Distribution',
+            'edit'       => 'Edit Distribution',
+            'management' => 'Distributions',
+            'title'      => 'Distributions',
+            'no_distributions' => 'no Distributions',
+            'table' => [
+                'name'              => 'Distribution',
+                'display_name'      => 'Display Name',
+                'description'       => 'Description',
+                'createdat'         => 'Created At',
+                'createdby'         => 'Created By',
+                'whitelabel'        => 'Whitelabel',
+                'all'               => 'All',
+            ],
+        ],
+
+        'whitelabels' => [
+            'create'     => 'Create Whitelabel',
+            'edit'       => 'Edit Whitelabel',
+            'management' => 'Whitelabels',
+            'title'      => 'Whitelabels',
+
+            'table' => [
+                'name'     => 'Identifier',
+                'display_name' => 'Whitelabel',
+                'distribution'   => 'Distribution',
                 'status'    => 'Status',
                 'createdat' => 'Created At',
                 'createdby' => 'Created By',
@@ -350,7 +425,7 @@ return [
                 'first_name'         => 'First Name',
                 'last_name'          => 'Last Name',
                 'address'            => 'Address',
-                'state'              => 'State',
+                'country'            => 'Country',
                 'city'               => 'City',
                 'zipcode'            => 'Zip Code',
                 'ssn'                => 'SSN',
@@ -358,5 +433,30 @@ return [
             ],
         ],
 
+        'offers' => [
+            'create' => 'Create new Offer',
+            'management' => 'Offers',
+            'offers_for_wish' => 'Offer for',
+            'table' => [
+                'title'     => 'Offer',
+                'status'    => 'Status',
+                'createdat' => 'Created At',
+                'createdby' => 'Created By',
+                'all'       => 'All',
+            ],
+
+        ],
+
+        'wishes' => [
+            'wishes'        => 'Wishes',
+            'goto'          => 'Go To Wish',
+            'created_at'    => 'created at',
+            'edit'          => 'Edit wish',
+            'add-comment' => 'Add comment',
+            'table' => [
+                'adults' => 'Adults',
+                'kids' => 'Kids',
+            ]
+        ],
     ],
 ];

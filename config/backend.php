@@ -20,7 +20,7 @@ return [
      * yellow
      * yellow-light
      */
-    'theme' => 'blue-light',
+    'theme' => 'black-light',
 
     /*
      * Layout for the Admin LTE backend theme
@@ -49,5 +49,5 @@ return [
      *
      * Note: you cannot use both layout-boxed and fixed at the same time. Anything else can be mixed together.
      */
-    'layout' => 'sidebar-mini',
+    'layout' => 'fixed',
 ];

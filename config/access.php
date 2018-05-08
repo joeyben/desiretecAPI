@@ -2,6 +2,9 @@
 
 use App\Models\Access\Permission\Permission;
 use App\Models\Access\Role\Role;
+use App\Models\Whitelabels\Whitelabel;
+use App\Models\Distributions\Distribution;
+use App\Models\Groups\Group;
 
 return [
     /*
@@ -13,6 +16,21 @@ return [
      * Role model used by Access to create correct relations. Update the role if it is in a different namespace.
     */
     'role' => Role::class,
+
+    /*
+     * Whitelabel model used by Access to create correct relations. Update the Whitelabel if it is in a different namespace.
+    */
+    'whitelabel' => Whitelabel::class,
+
+    /*
+     * Whitelabel model used by Access to create correct relations. Update the Whitelabel if it is in a different namespace.
+    */
+    'distributions' => Distribution::class,
+
+    /*
+     * Group model used by Access to create correct relations. Update the Group if it is in a different namespace.
+    */
+    'group' => Group::class,
 
     /*
      * Roles table used by Access to save roles to the database.
@@ -44,6 +62,26 @@ return [
      * role_user table used by Access to save assigned roles to the database.
      */
     'role_user_table' => 'role_user',
+
+    /*
+     * whitelabel_user table used by Access to save assigned roles to the database.
+     */
+    'whitelabel_user_table' => 'whitelabel_user',
+
+    /*
+     * group_user table used by Access to save assigned roles to the database.
+     */
+    'group_user_table' => 'group_user',
+
+    /*
+    * whitelabel_distribution_table table used by Access to save assigned roles to the database.
+    */
+    'whitelabel_distribution_table' => 'whitelabel_distribution',
+
+    /*
+    * role_user table used by Access to save assigned roles to the database.
+    */
+    'whitelabel_wish_table' => 'whitelabel_wish',
 
     /*
      * countries table used to store countries

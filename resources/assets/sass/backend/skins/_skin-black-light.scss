@@ -7,30 +7,30 @@
 .skin-black-light {
   //Navbar & Logo
   .main-header {
-    @include box-shadow(0px 1px 1px rgba(0, 0, 0, 0.05));
+    border-bottom: 1px solid #eee;
     .navbar-toggle {
       color: #333;
     }
     .navbar-brand {
       color: #333;
-      border-right: 1px solid #eee;
+      /*border-right: 1px solid #eee;*/
     }
     > .navbar {
       @include navbar-variant(#fff, #333, #999, #fff);
       > .sidebar-toggle {
         color: #333;
-        border-right: 1px solid #eee;
+      /*border-right: 1px solid #eee;*/
       }
       .navbar-nav {
         > li > a {
-          border-right: 1px solid #eee;
+          /*border-right: 1px solid #eee;*/
         }
       }
       .navbar-custom-menu .navbar-nav,
       .navbar-right {
         > li {
           > a {
-            border-left: 1px solid #eee;
+            /*border-left: 1px solid #eee;*/
             border-right-width: 0;
           }
         }

@@ -6,7 +6,6 @@
     <section class="sidebar">
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            <li class="header">{{ trans('menus.backend.sidebar.general') }}</li>
 
             <li class="{{ active_class(Active::checkUriPattern('admin/dashboard')) }}">
                 <a href="{{ route('admin.dashboard') }}">
@@ -15,7 +14,6 @@
                 </a>
             </li>
 
-            <li class="header">{{ trans('menus.backend.sidebar.system') }}</li>
 
             @permission('view-access-management')
             <li class="{{ active_class(Active::checkUriPattern('admin/access/*')) }} treeview">

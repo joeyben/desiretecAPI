@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'groups' => [
+        'table' => 'groups',
+    ],
     'pages' => [
         'table' => 'pages',
     ],
@@ -17,6 +20,21 @@ return [
     ],
     'blogs' => [
         'table' => 'blogs',
+    ],
+    'wishes' => [
+        'table' => 'wishes',
+    ],
+    'offers' => [
+        'table' => 'offers',
+    ],
+    'whitelabels' => [
+        'table' => 'whitelabels',
+    ],
+    'distributions' => [
+        'table' => 'distributions',
+    ],
+    'comments' => [
+        'table' => 'comments',
     ],
     'faqs' => [
         'table' => 'faqs',

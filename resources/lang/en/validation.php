@@ -145,6 +145,8 @@ return [
                 'users' => [
                     'active'                  => 'Active',
                     'associated_roles'        => 'Associated Roles',
+                    'groups'                  => 'User Groups',
+                    'associated_whitelabels'  => 'Associated Whitelabels',
                     'confirmed'               => 'Confirmed',
                     'email'                   => 'E-mail Address',
                     'firstName'               => 'First Name',
@@ -154,6 +156,7 @@ return [
                     'password'                => 'New Password',
                     'password_confirmation'   => 'New Password Confirmation',
                     'send_confirmation_email' => 'Send Confirmation E-mail',
+                    'no-group'                => 'None',
                 ],
             ],
             'pages' => [
@@ -200,6 +203,47 @@ return [
                 'status'           => 'Status',
             ],
 
+            'wishes' => [
+                'title'            => 'Wish Title',
+                'image'            => 'Featured Image',
+                'description'      => 'Description',
+                'status'           => 'Status',
+                'airport'          => 'Airport',
+                'destination'      => 'Destination',
+                'earliest_start'   => 'Earliest start',
+                'latest_return'    => 'Latest return',
+                'adults'           => 'Adults',
+                'kids'             => 'Kids',
+                'budget'           => 'Budget',
+                'category'         => 'Hotel category',
+                'catering'         => 'Hotel catering',
+                'duration'         => 'Duration',
+                'associated_whitelabels'      => 'Associated Whitelabels',
+            ],
+
+            'groups' => [
+                'name'             => 'Group Name',
+                'display_name'     => 'Display Name',
+                'description'      => 'Description',
+                'status'           => 'Status',
+                'associated_whitelabels'      => 'Associated Whitelabels',
+                'groups'           => 'Seller Groups',
+            ],
+
+            'distributions' => [
+                'name'             => 'Name',
+                'display_name'     => 'Display Name',
+                'description'      => 'Description',
+
+            ],
+
+            'whitelabels' => [
+                'name'             => 'Name',
+                'display_name'     => 'Display Name',
+                'status'           => 'Status',
+
+            ],
+
             'settings' => [
                 'sitelogo'        => 'Site Logo',
                 'favicon'         => 'Fav Icon',
@@ -241,8 +285,8 @@ return [
                 'password'                  => 'Password',
                 'address'                   => 'Address',
                 'country'                   => 'Country',
-                'state'                     => 'Select State',
-                'city'                      => 'Select City',
+                'state'                     => 'State',
+                'city'                      => 'City',
                 'zipcode'                   => 'Zip Code',
                 'ssn'                       => 'SSN',
                 'password_confirmation'     => 'Password Confirmation',
@@ -250,6 +294,15 @@ return [
                 'new_password'              => 'New Password',
                 'new_password_confirmation' => 'New Password Confirmation',
                 'terms_and_conditions'      => 'terms and conditions',
+                'user_type'                 => 'I use desiretec as a',
+                'user_type_user'            => 'User',
+                'user_type_seller'          => 'Seller',
+            ],
+            'offers' => [
+                'title'             => 'Title',
+                'text'              => 'Text',
+                'status'            => 'Status',
+                'file'              => 'File',
             ],
         ],
     ],

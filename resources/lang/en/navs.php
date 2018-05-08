@@ -23,7 +23,10 @@ return [
         'login'     => 'Login',
         'macros'    => 'Macros',
         'register'  => 'Register',
-
+        'wishes'    => 'My Wishes',
+        'create_wish'   => 'Create Wish',
+        'wisheslist'=> 'Wishes',
+        'offers'    => 'My Offers',
         'user' => [
             'account'         => 'My Account',
             'administration'  => 'Administration',

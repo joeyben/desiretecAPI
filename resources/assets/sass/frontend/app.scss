@@ -1,14 +1,18 @@
 // Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600);
 
 // Variables
 @import "variables";
 
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import "~bootstrap-select/sass/bootstrap-select";
 
 // Font Awesome
 @import "~font-awesome/scss/font-awesome";
+
+// Elegant fonts
+@import "icons/elegantIcons.css";
 
 // Helpers
 @import "../helpers";
@@ -17,7 +21,11 @@
 @import "global";
 
 // Pages
+@import "pages/frontpage";
 @import "pages/dashboard";
+@import "pages/offers";
+@import "pages/wishes";
+@import "pages/wish";
 
 // Plugins
 @import "../plugin/toastr/toastr.scss";

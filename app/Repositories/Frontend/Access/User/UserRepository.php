@@ -243,11 +243,9 @@ class UserRepository extends BaseRepository
         $user->first_name = $input['first_name'];
         $user->last_name = $input['last_name'];
         $user->address = $input['address'];
-        $user->state_id = $input['state_id'];
-        $user->country_id = config('access.constants.default_country');
-        $user->city_id = $input['city_id'];
+        $user->country = $input['country'];
+        $user->city = $input['city'];
         $user->zip_code = $input['zip_code'];
-        $user->ssn = $input['ssn'];
         $user->updated_by = access()->user()->id;
 
         if ($user->canChangeEmail()) {
@@ -339,4 +337,26 @@ class UserRepository extends BaseRepository
 
         return false;
     }
+
+    /**
+     * @param $latitude
+     * @param $longitude
+     *
+     * @return mixed
+     */
+    public function scopeCloseTo($latitude, $longitude)
+    {
+        return $this->query()->whereRaw("
+       ST_Distance_Sphere(
+            point(longitude, latitude),
+            point(?, ?)
+        ) * .000621371192 < delivery_max_range
+    ", [
+            $longitude,
+            $latitude,
+        ]);
+    }
+
+// Using the scope:
+//return Restaurant::closeTo($myLatitude, $myLongitude);
 }

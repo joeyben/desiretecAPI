@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#frontend-navbar-collapse">
@@ -10,15 +10,17 @@
 
            {{--   @if(settings()->logo)
             <a href="{{ route('frontend.index') }}" class="logo"><img height="48" width="226" class="navbar-brand" src="{{route('frontend.index')}}/img/site_logo/{{settings()->logo}}"></a>
-            @else --}}
+            @else
              {{ link_to_route('frontend.index',app_name(), [], ['class' => 'navbar-brand']) }}
            {{--  @endif --}}
+            <a href="{{ route('frontend.index') }}" class="logo">
+                <img class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
+            </a>
+
         </div><!--navbar-header-->
 
         <div class="collapse navbar-collapse" id="frontend-navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li>{{ link_to_route('frontend.macros', trans('navs.frontend.macros')) }}</li>
-            </ul>
+
             <ul class="nav navbar-nav navbar-right">
                 @if (config('locale.status') && count(config('locale.languages')) > 1)
                     <li class="dropdown">
@@ -31,8 +33,12 @@
                     </li>
                 @endif
 
-                @if ($logged_in_user)
-                    <li>{{ link_to_route('frontend.user.dashboard', trans('navs.frontend.dashboard')) }}</li>
+                @if ($logged_in_user && $logged_in_user->hasRole('Seller'))
+                    <li>{{ link_to_route('frontend.wishes.list', trans('navs.frontend.wisheslist')) }}</li>
+                @endif
+
+                @if ($logged_in_user && $logged_in_user->hasRole('User'))
+                    <li>{{ link_to_route('frontend.wishes.create', trans('navs.frontend.create_wish')) }}</li>
                 @endif
 
                 @if (! $logged_in_user)
@@ -51,6 +57,14 @@
                             @permission('view-backend')
                                 <li>{{ link_to_route('admin.dashboard', trans('navs.frontend.user.administration')) }}</li>
                             @endauth
+
+                            @if ($logged_in_user && $logged_in_user->hasRole('Seller'))
+                                <li>{{ link_to_route('frontend.offers.index', trans('navs.frontend.offers')) }}</li>
+                            @endif
+
+                            @if ($logged_in_user && $logged_in_user->hasRole('User'))
+                                <li>{{ link_to_route('frontend.wishes.list', trans('navs.frontend.wishes')) }}</li>
+                            @endif
 
                             <li>{{ link_to_route('frontend.user.account', trans('navs.frontend.user.account')) }}</li>
                             <li>{{ link_to_route('frontend.auth.logout', trans('navs.general.logout')) }}</li>

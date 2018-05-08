@@ -40,6 +40,14 @@
     }
   }
 
+  .main-sidebar{
+    background-color: #fff;
+    .skin-blue-light {
+      .sidebar-menu>li>a{
+        color: #444;
+      }
+    }
+  }
   //Content Header
   .content-header {
     background: transparent;

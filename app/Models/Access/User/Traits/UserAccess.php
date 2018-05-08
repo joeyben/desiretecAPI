@@ -242,6 +242,7 @@ trait UserAccess
         $this->roles()->detach($role);
     }
 
+
     /**
      * Attach multiple roles to a user.
      *
@@ -256,6 +257,7 @@ trait UserAccess
         }
     }
 
+
     /**
      * Detach multiple roles from a user.
      *
@@ -269,6 +271,146 @@ trait UserAccess
             $this->detachRole($role);
         }
     }
+
+
+    /**
+     * Alias to eloquent many-to-many relation's detach() method.
+     *
+     * @param mixed $whitelabel
+     *
+     * @return void
+     */
+    public function detachWhitelabel($whitelabel)
+    {
+        if (is_object($whitelabel)) {
+            $whitelabel = $whitelabel->getKey();
+        }
+
+        if (is_array($whitelabel)) {
+            $whitelabel = $whitelabel['id'];
+        }
+
+        $this->whitelabels()->detach($whitelabel);
+    }
+
+
+    /**
+     * Detach multiple whitelabels from a user.
+     *
+     * @param mixed $whitelabels
+     *
+     * @return void
+     */
+    public function detachWhitelabels($whitelabels)
+    {
+        foreach ($whitelabels as $whitelabel) {
+            $this->detachWhitelabel($whitelabel);
+        }
+    }
+
+    /**
+     * Alias to eloquent many-to-many relation's attach() method.
+     *
+     * @param mixed $whitelabel
+     *
+     * @return void
+     */
+    public function attachWhitelabel($whitelabel)
+    {
+        if (is_object($whitelabel)) {
+            $whitelabel = $whitelabel->getKey();
+        }
+
+        if (is_array($whitelabel)) {
+            $whitelabel = $whitelabel['id'];
+        }
+
+        $this->whitelabels()->attach($whitelabel);
+    }
+
+    /**
+     * Attach multiple whitelabels to a user.
+     *
+     * @param mixed $whitelabels
+     *
+     * @return void
+     */
+    public function attachWhitelabels($whitelabels)
+    {
+        foreach ($whitelabels as $whitelabel) {
+            $this->attachWhitelabel($whitelabel);
+        }
+    }
+
+    /**
+     * Alias to eloquent many-to-many relation's detach() method.
+     *
+     * @param mixed $group
+     *
+     * @return void
+     */
+    public function detachGroup($group)
+    {
+        if (is_object($group)) {
+            $group = $group->getKey();
+        }
+
+        if (is_array($group)) {
+            $group = $group['id'];
+        }
+
+        $this->groups()->detach($group);
+    }
+
+
+    /**
+     * Detach multiple groups from a user.
+     *
+     * @param mixed $groups
+     *
+     * @return void
+     */
+    public function detachGroups($groups)
+    {
+        foreach ($groups as $group) {
+            $this->detachGroup($group);
+        }
+    }
+
+    /**
+     * Alias to eloquent many-to-many relation's attach() method.
+     *
+     * @param mixed $group
+     *
+     * @return void
+     */
+    public function attachGroup($group)
+    {
+        if (is_object($group)) {
+            $group = $group->getKey();
+        }
+
+        if (is_array($group)) {
+            $group = $group['id'];
+        }
+
+        $this->groups()->attach($group);
+    }
+
+    /**
+     * Attach multiple groups to a user.
+     *
+     * @param mixed $groups
+     *
+     * @return void
+     */
+    public function attachGroups($groups)
+    {
+        foreach ($groups as $group) {
+            $this->attachGroup($group);
+        }
+    }
+
 
     /**
      * Attach multiple Permissions to a user.
@@ -336,5 +478,20 @@ trait UserAccess
         }
 
         $this->permissions()->detach($permission);
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getWhitelabels()
+    {
+        $whitelabels = [];
+
+        foreach ($this->whitelabels as $whitelabel) {
+            array_push($whitelabels, $whitelabel->id);
+        }
+
+        return $whitelabels;
     }
 }

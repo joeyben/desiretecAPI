@@ -132,7 +132,7 @@ class ManageBlogsTest extends TestCase
 
         $stored_blog = Blog::find(2);
 
-        Storage::disk('public')->assertExists('img/blog/'.$stored_blog->featured_image);
+        Storage::disk('s3')->assertExists('img/blog/'.$stored_blog->featured_image);
     }
 
     /** @test */

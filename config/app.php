@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Laravel AdminPanel'),
+    'name' => env('APP_NAME', 'desiretec'),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -202,6 +202,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Bvipul\Generator\Provider\CrudGeneratorServiceProvider::class,
+        Torann\GeoIP\GeoIPServiceProvider::class,
     ],
 
     /*
@@ -262,6 +263,7 @@ return [
         'Html'        => Collective\Html\HtmlFacade::class,
         'Socialite'   => Laravel\Socialite\Facades\Socialite::class,
         'JWTAuth'     => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'GeoIP'       => Torann\GeoIP\Facades\GeoIP::class,
         //'Datatables' => Yajra\DataTables\Facades\DataTables::class
 
     ],

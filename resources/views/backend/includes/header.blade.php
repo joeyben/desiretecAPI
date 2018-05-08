@@ -1,22 +1,7 @@
 <header class="main-header">
 
     <a href="{{ route('frontend.index') }}" class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini">
-           {{ substr(app_name(), 0, 1) }}
-        </span>
-
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg">
-           {{--  @php
-                 $settings = settings();
-            @endphp
-            @if($settings->logo)
-                <img height="48" width="226" class="navbar-brand" src="{{route('frontend.index')}}/img/site_logo/{{$settings->logo}}">
-            @else --}}
-                {{ app_name() }}
-           {{--  @endif --}}
-        </span>
+        <img class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
     </a>
 
     <nav class="navbar navbar-static-top" role="navigation">

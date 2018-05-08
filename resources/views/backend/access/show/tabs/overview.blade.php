@@ -20,6 +20,19 @@
     </tr>
 
     <tr>
+        <th>{{ trans('labels.backend.access.users.tabs.content.overview.whitelabels') }}</th>
+        <td>
+            @if (count($whitelabels) > 0)
+                @foreach($whitelabels as $whitelabel)
+                    <label class="label label-info">{{$whitelabel->display_name}}</label>
+                @endforeach
+            @else
+                {{ trans('labels.backend.access.users.no_whitelabels') }}
+            @endif
+        </td>
+    </tr>
+
+    <tr>
         <th>{{ trans('labels.backend.access.users.tabs.content.overview.created_at') }}</th>
         <td>{{ $user->created_at }} ({{ $user->created_at->diffForHumans() }})</td>
     </tr>

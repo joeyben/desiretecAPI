@@ -21,6 +21,26 @@ trait UserRelationship
     }
 
     /**
+     * Many-to-Many relations with Whitelabel.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function whitelabels()
+    {
+        return $this->belongsToMany(config('access.whitelabel'), config('access.whitelabel_user_table'), 'user_id', 'whitelabel_id');
+    }
+
+    /**
+     * Many-to-Many relations with Group.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function groups()
+    {
+        return $this->belongsToMany(config('access.group'), config('access.group_user_table'), 'user_id', 'group_id');
+    }
+
+    /**
      * Many-to-Many relations with Permission.
      * ONLY GETS PERMISSIONS ARE NOT ASSOCIATED WITH A ROLE.
      *

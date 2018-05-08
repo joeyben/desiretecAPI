@@ -23,7 +23,9 @@
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
-        "spatie/laravel-cors": "^1.1",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "spatie/laravel-cors": "^1.2",
+        "torann/geoip": "^1.0",
         "tymon/jwt-auth": "dev-develop",
         "unisharp/laravel-filemanager": "~1.8",
         "yajra/laravel-datatables-oracle": "~8.0"
@@ -31,7 +33,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.0",
         "codedungeon/phpunit-result-printer": "^0.6.0",
-        "bvipul/generator": "^0.9.1",
+        "bvipul/generator": "dev-master",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "laravel/browser-kit-testing": "^4.0.0",

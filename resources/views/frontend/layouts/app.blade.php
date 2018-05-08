@@ -11,8 +11,8 @@
         <title>@yield('title', app_name())</title>
 
         <!-- Meta -->
-        <meta name="description" content="@yield('meta_description', 'Laravel AdminPanel')">
-        <meta name="author" content="@yield('meta_author', 'Viral Solani')">
+        <meta name="description" content="@yield('meta_description', 'desiretec')">
+        <meta name="author" content="@yield('meta_author', 'Joe Ben Slimane')">
         @yield('meta')
 
         <!-- Styles -->
@@ -26,7 +26,10 @@
             {{ Html::style(mix('css/frontend.css')) }}
         @endif
         {!! Html::style('js/select2/select2.css') !!}
-        @yield('after-styles')
+
+        {{ Html::style(mix('css/frontend-custom.css')) }}
+
+    @yield('after-styles')
 
         <!-- Scripts -->
         <script>
@@ -40,12 +43,12 @@
             }
         ?>
     </head>
-    <body id="app-layout">
+    <body id="app-layout" class="{{ ( ! empty($body_class) ? $body_class : '' )}}">
         <div id="app">
             @include('includes.partials.logged-in-as')
             @include('frontend.includes.nav')
 
-            <div class="container">
+            <div class="container main-container">
                 @include('includes.partials.messages')
                 @yield('content')
             </div><!-- container -->

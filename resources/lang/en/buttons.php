@@ -28,6 +28,11 @@ return [
         ],
     ],
 
+    'wishes' => [
+        'frontend' =>[
+            'create_offer' => 'Create Offer',
+        ]
+    ],
     'emails' => [
         'auth' => [
             'confirm_account' => 'Confirm Account',

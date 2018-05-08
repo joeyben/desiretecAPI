@@ -73,6 +73,38 @@ return [
             'main'       => 'Blogs',
         ],
 
+        'wishes' => [
+            'all'        => 'All Wishes',
+            'create'     => 'Create Wish',
+            'edit'       => 'Edit Wish',
+            'management' => 'Wish Management',
+            'main'       => 'Wishes',
+        ],
+
+        'groups' => [
+            'all'        => 'All Groups',
+            'create'     => 'Create Group',
+            'edit'       => 'Edit Group',
+            'management' => 'Group Management',
+            'main'       => 'Groups',
+        ],
+
+        'distributions' => [
+            'all'        => 'All Distributions',
+            'create'     => 'Create Distribution',
+            'edit'       => 'Edit Distribution',
+            'management' => 'Distribution Management',
+            'main'       => 'Distributions',
+        ],
+
+        'whitelabels' => [
+            'all'        => 'All Whitelabels',
+            'create'     => 'Create Whitelabel',
+            'edit'       => 'Edit Whitelabel',
+            'management' => 'Whitelabel Management',
+            'main'       => 'Whitelabels',
+        ],
+
         'blogcategories' => [
             'all'        => 'All Blog Categories',
             'create'     => 'Create Blog Category',
@@ -162,4 +194,11 @@ return [
             'th'    => 'Thai',
         ],
     ],
+
+    'list' => [
+        'status' => [
+            'all' => 'All wishes'
+        ]
+    ]
+
 ];

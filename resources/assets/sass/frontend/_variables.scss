@@ -7,6 +7,13 @@ $list-group-border: $laravel-border-color;
 $navbar-default-border: $laravel-border-color;
 $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
+$border-default: 1px solid #ddd;
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
 
 // Brands
 $brand-primary: #3097D1;
@@ -18,11 +25,11 @@ $brand-danger: #bf5329;
 // Typography
 $fa-font-path: "~font-awesome/fonts/";
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-$font-family-sans-serif: "Raleway", sans-serif;
+$font-family-sans-serif: 'Open Sans', sans-serif;
 $font-size-base: 14px;
 $line-height-base: 1.6;
 $text-color: #636b6f;
-
+$main-color: #3097d1;
 // Navbar
 $navbar-default-bg: #fff;
 

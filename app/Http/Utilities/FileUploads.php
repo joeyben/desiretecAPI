@@ -331,7 +331,7 @@ class FileUploads
     public function deleteDirectory($path)
     {
         if (is_dir($path)) {
-            \Storage::disk('local')->deleteDirectory($path);
+            \Storage::disk('s3')->deleteDirectory($path);
         }
     }
 

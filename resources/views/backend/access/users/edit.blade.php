@@ -76,7 +76,23 @@
                             </div>
                         </div><!--col-lg-1-->
                     </div><!--form control-->
+                    @if ($user->hasRole('Seller'))
+                    <div class="form-group">
+                        {{ Form::label('groups[]', trans('validation.attributes.backend.access.users.groups'), ['class' => 'col-lg-2 control-label']) }}
 
+                        <div class="col-lg-10">
+                            <select class="selectpicker" id="groups" name="groups[]" multiple>
+                                @if ($groups)
+                                    @foreach ($groups as $group)
+                                        <option value="{{ $group->id }}" {{ (in_array($group->id, $userGroups) ? 'selected' : '') }}>
+                                            {{ $group->display_name }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div><!--col-lg-3-->
+                    </div><!--form control-->
+                    @endif
                     {{-- Associated Roles --}}
                     <div class="form-group">
                         {{ Form::label('status', trans('validation.attributes.backend.access.users.associated_roles'), ['class' => 'col-lg-2 control-label']) }}
@@ -119,6 +135,7 @@
                         </div><!--col-lg-3-->
                     </div><!--form control-->
 
+
                     {{-- Associated Permissions --}}
                     <div class="form-group">
                         {{ Form::label('associated-permissions', trans('validation.attributes.backend.access.roles.associated_permissions'), ['class' => 'col-lg-2 control-label']) }}
@@ -142,6 +159,26 @@
                                     </div><!--col-lg-6-->
                                 </div><!--row-->
                             </div><!--available permissions-->
+                        </div><!--col-lg-3-->
+                    </div><!--form control-->
+
+                    {{-- Associated Whitelabels --}}
+                    <div class="form-group">
+                        {{ Form::label('whitelabels', trans('validation.attributes.backend.access.users.associated_whitelabels'), ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-8">
+                            @if (count($whitelabels) > 0)
+                                @foreach($whitelabels as $whitelabel)
+                                    <div>
+                                        <label for="whitelabel-{{$whitelabel->id}}" class="control control--checkbox">
+                                            <input type="checkbox" value="{{$whitelabel->id}}" name="whitelabels[]" id="whitelabel-{{$whitelabel->id}}" class=""  {{ isset($userWhitelabels) && in_array($whitelabel->id, $userWhitelabels) ? 'checked' : '' }}/>  &nbsp;&nbsp;{!! $whitelabel->name !!}
+                                            <div class="control__indicator"></div>
+                                        </label>
+                                    </div>
+                                @endforeach
+                            @else
+                                {{ trans('labels.backend.access.users.no_whitelabels') }}
+                            @endif
                         </div><!--col-lg-3-->
                     </div><!--form control-->
 

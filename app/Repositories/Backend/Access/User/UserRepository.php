@@ -62,6 +62,8 @@ class UserRepository extends BaseRepository
         $dataTableQuery = $this->query()
             ->leftJoin('role_user', 'role_user.user_id', '=', 'users.id')
             ->leftJoin('roles', 'role_user.role_id', '=', 'roles.id')
+            ->leftJoin('whitelabel_user', 'whitelabel_user.user_id', '=', 'users.id')
+            ->leftJoin('whitelabels', 'whitelabel_user.whitelabel_id', '=', 'whitelabels.id')
             ->select([
                 config('access.users_table').'.id',
                 config('access.users_table').'.first_name',
@@ -73,6 +75,7 @@ class UserRepository extends BaseRepository
                 config('access.users_table').'.updated_at',
                 config('access.users_table').'.deleted_at',
                 DB::raw('GROUP_CONCAT(roles.name) as roles'),
+                DB::raw('GROUP_CONCAT(whitelabels.name) as whitelabels'),
             ])
             ->groupBy('users.id');
 
@@ -91,12 +94,13 @@ class UserRepository extends BaseRepository
      */
     public function create($request)
     {
-        $data = $request->except('assignees_roles', 'permissions');
+        $data = $request->except('assignees_roles', 'permissions','whitelabels');
         $roles = $request->get('assignees_roles');
         $permissions = $request->get('permissions');
+        $whitelabels = $request->get('whitelabels');
         $user = $this->createUserStub($data);
 
-        DB::transaction(function () use ($user, $data, $roles, $permissions) {
+        DB::transaction(function () use ($user, $data, $roles, $permissions,$whitelabels) {
             if ($user->save()) {
 
                 //User Created, Validate Roles
@@ -109,6 +113,9 @@ class UserRepository extends BaseRepository
 
                 // Attach New Permissions
                 $user->attachPermissions($permissions);
+
+                //Attach new whitelabels
+                $user->attachWhitelabels($whitelabels);
 
                 //Send confirmation email if requested and account approval is off
                 if (isset($data['confirmation_email']) && $user->confirmed == 0) {
@@ -137,10 +144,11 @@ class UserRepository extends BaseRepository
         $data = $request->except('assignees_roles', 'permissions');
         $roles = $request->get('assignees_roles');
         $permissions = $request->get('permissions');
-
+        $whitelabels = $request->get('whitelabels');
+        $groups = $request->get('groups');
         $this->checkUserByEmail($data, $user);
 
-        DB::transaction(function () use ($user, $data, $roles, $permissions) {
+        DB::transaction(function () use ($user, $data, $roles, $permissions, $whitelabels, $groups) {
             if ($user->update($data)) {
                 $user->status = isset($data['status']) && $data['status'] == '1' ? 1 : 0;
                 $user->confirmed = isset($data['confirmed']) && $data['confirmed'] == '1' ? 1 : 0;
@@ -151,6 +159,8 @@ class UserRepository extends BaseRepository
                 $this->flushRoles($roles, $user);
 
                 $this->flushPermissions($permissions, $user);
+                $this->flushWhitelabels($whitelabels, $user);
+                $this->flushGroups($groups, $user);
                 event(new UserUpdated($user));
 
                 return true;
@@ -359,6 +369,33 @@ class UserRepository extends BaseRepository
         //Flush permission out, then add array of new ones
         $user->detachPermissions($user->permissions);
         $user->attachPermissions($permissions);
+    }
+
+    /**
+     * Flush Whitelabels out, then add array of new ones.
+     *
+     * @param $whitelabels
+     * @param $user
+     */
+    protected function flushWhitelabels($whitelabels, $user)
+    {
+        //Flush permission out, then add array of new ones
+        $user->detachWhitelabels($user->whitelabels);
+        $user->attachWhitelabels($whitelabels);
+    }
+
+
+    /**
+     * Flush Groups out, then add array of new ones.
+     *
+     * @param $groups
+     * @param $user
+     */
+    protected function flushGroups($groups, $user)
+    {
+        //Flush permission out, then add array of new ones
+        $user->detachGroups($user->groups);
+        $user->attachGroups($groups);
     }
 
     /**

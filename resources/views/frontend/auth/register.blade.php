@@ -48,6 +48,16 @@
                     </div><!--form-group-->
 
                     <div class="form-group">
+                        {{ Form::label('user_type', trans('validation.attributes.frontend.register-user.user_type').'*', ['class' => 'col-md-4 control-label']) }}
+                        <div class="col-md-6">
+                            <select class="selectpicker" id="user_type">
+                                <option value="1">{{ trans('validation.attributes.frontend.register-user.user_type_user') }}</option>
+                                <option value="1">{{ trans('validation.attributes.frontend.register-user.user_type_seller') }}</option>
+                            </select>
+                        </div><!--col-md-6-->
+                    </div><!--form-group-->
+
+                    <div class="form-group">
                             <div class="col-xs-7">
                                <label class="col-md-12 control-label">
                                  {!! Form::checkbox('is_term_accept',1,false) !!}

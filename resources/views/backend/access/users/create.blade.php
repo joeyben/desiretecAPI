@@ -111,6 +111,27 @@
                     </div><!--col-lg-1-->
                 </div><!--form control-->
 
+                {{-- Associated Whitelabels --}}
+                <div class="form-group">
+                    {{ Form::label('whitelabels', trans('validation.attributes.backend.access.users.associated_whitelabels'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-8">
+                        @if (count($whitelabels) > 0)
+                            @foreach($whitelabels as $whitelabel)
+                                <div>
+                                    <label for="whitelabel-{{$whitelabel->id}}" class="control control--checkbox">
+                                        <input type="checkbox" value="{{$whitelabel->id}}" name="whitelabels[]" id="whitelabel-{{$whitelabel->id}}" class=""  />  &nbsp;&nbsp;{!! $whitelabel->name !!}
+                                        <div class="control__indicator"></div>
+                                    </label>
+                                </div>
+                            @endforeach
+                        @else
+                            {{ trans('labels.backend.access.users.no_whitelabels') }}
+                        @endif
+                    </div><!--col-lg-3-->
+                </div><!--form control-->
+
+
                 {{-- Associated Roles --}}
                 <div class="form-group">
                     {{ Form::label('status', trans('validation.attributes.backend.access.users.associated_roles'), ['class' => 'col-lg-2 control-label']) }}

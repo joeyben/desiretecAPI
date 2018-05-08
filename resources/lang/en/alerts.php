@@ -61,6 +61,24 @@ return [
             'updated' => 'The Blog was successfully updated.',
         ],
 
+        'wishes' => [
+            'created' => 'The Wish was successfully created.',
+            'deleted' => 'The Wish was successfully deleted.',
+            'updated' => 'The Wish was successfully updated.',
+        ],
+
+        'groups' => [
+            'created' => 'The Group was successfully created.',
+            'deleted' => 'The Group was successfully deleted.',
+            'updated' => 'The Group was successfully updated.',
+        ],
+
+        'whitelabels' => [
+            'created' => 'The Whitelabel was successfully created.',
+            'deleted' => 'The Whitelabel was successfully deleted.',
+            'updated' => 'The Whitelabel was successfully updated.',
+        ],
+
         'emailtemplates' => [
             'deleted' => 'The Email Template was successfully deleted.',
             'updated' => 'The Email Template was successfully updated.',
@@ -79,6 +97,16 @@ return [
             'created' => 'The Menu was successfully created.',
             'deleted' => 'The Menu was successfully deleted.',
             'updated' => 'The Menu was successfully updated.',
+        ],
+    ],
+    'frontend' => [
+        'offers' => [
+            'created' => 'Offer successfully created',
+        ],
+        'wishes' => [
+            'created' => 'The Wish was successfully created.',
+            'deleted' => 'The Wish was successfully deleted.',
+            'updated' => 'The Wish was successfully updated.',
         ],
     ],
 ];

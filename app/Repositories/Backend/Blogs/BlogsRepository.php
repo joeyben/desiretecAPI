@@ -38,7 +38,7 @@ class BlogsRepository extends BaseRepository
     public function __construct()
     {
         $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'blog'.DIRECTORY_SEPARATOR;
-        $this->storage = Storage::disk('public');
+        $this->storage = Storage::disk('s3');
     }
 
     /**

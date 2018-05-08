@@ -11,9 +11,12 @@ use App\Http\Requests\Backend\Access\User\ShowUserRequest;
 use App\Http\Requests\Backend\Access\User\StoreUserRequest;
 use App\Http\Requests\Backend\Access\User\UpdateUserRequest;
 use App\Models\Access\Permission\Permission;
+use App\Models\Groups\Group;
 use App\Models\Access\User\User;
 use App\Repositories\Backend\Access\Role\RoleRepository;
+use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Backend\Access\User\UserRepository;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class UserController.
@@ -31,13 +34,20 @@ class UserController extends Controller
     protected $roles;
 
     /**
+     * @var WhitelabelRepository
+     */
+    protected $whitelabels;
+
+    /**
      * @param UserRepository $users
      * @param RoleRepository $roles
+     * @param WhitelabelRepository $whitelabels
      */
-    public function __construct(UserRepository $users, RoleRepository $roles)
+    public function __construct(UserRepository $users, RoleRepository $roles, WhitelabelsRepository $whitelabels)
     {
         $this->users = $users;
         $this->roles = $roles;
+        $this->whitelabels = $whitelabels;
     }
 
     /**
@@ -58,7 +68,8 @@ class UserController extends Controller
     public function create(CreateUserRequest $request)
     {
         return view('backend.access.users.create')->with([
-            'roles' => $this->roles->getAll(),
+            'roles'       => $this->roles->getAll(),
+            'whitelabels' => $this->whitelabels->getAll(),
         ]);
     }
 
@@ -83,7 +94,9 @@ class UserController extends Controller
     public function show(User $user, ShowUserRequest $request)
     {
         return view('backend.access.users.show')
-            ->withUser($user);
+            ->withUser($user)->with([
+                'whitelabels' => $this->whitelabels->getAll(),
+            ]);
     }
 
     /**
@@ -95,14 +108,22 @@ class UserController extends Controller
     public function edit(User $user, EditUserRequest $request)
     {
         $permissions = Permission::getSelectData('display_name');
+        $groups = DB::table('groups')->whereIn('whitelabel_id', $user->whitelabels->pluck('id')->toArray())->get()->toArray();
         $userPermissions = $user->permissions()->get()->pluck('id')->toArray();
+        $userWhitelabels = $user->whitelabels()->get()->pluck('id')->toArray();
+        $userGroups = $user->groups()->get()->pluck('id')->toArray();
 
         return view('backend.access.users.edit')->with([
             'user'            => $user,
             'userRoles'       => $user->roles->pluck('id')->all(),
             'roles'           => $this->roles->getAll(),
             'userPermissions' => $userPermissions,
+            'userWhitelabels' => $userWhitelabels,
+            'userGroups'      => $userGroups,
             'permissions'     => $permissions,
+            'groups'          => $groups,
+            'whitelabels'     => $this->whitelabels->getAll(),
+
         ]);
     }
 
