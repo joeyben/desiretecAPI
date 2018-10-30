@@ -1,5 +1,11 @@
 @extends('frontend.layouts.app')
 
+@section('logo')
+    <a href="{{ route('frontend.index') }}" class="logo">
+        <img class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
+    </a>
+@endsection
+
 @section('content')
     <div class="row">
 

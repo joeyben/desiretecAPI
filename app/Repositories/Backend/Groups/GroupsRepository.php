@@ -39,7 +39,7 @@ class GroupsRepository extends BaseRepository
      */
     public function getForDataTable()
     {
-        return $this->query()
+        $dataTableQuery = $this->query()
             ->leftjoin(config('module.whitelabels.table'), config('module.whitelabels.table').'.id', '=', config('module.groups.table').'.whitelabel_id')
             ->select([
                 config('module.groups.table').'.id',
@@ -51,6 +51,11 @@ class GroupsRepository extends BaseRepository
                 config('module.whitelabels.table').'.id as whitelabel_id',
                 config('module.whitelabels.table').'.display_name as whitelabel_name',
             ]);
+        $dataTableQuery->when(access()->user()->hasRole('Executive') && !access()->user()->hasRole('Administrator'),function($q){
+            $q->whereIn('whitelabel_id',access()->user()->whitelabels()->get()->pluck('id')->toArray());
+        });
+
+        return $dataTableQuery;
     }
 
     /**

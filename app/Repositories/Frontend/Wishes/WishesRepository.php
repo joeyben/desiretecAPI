@@ -7,6 +7,7 @@ use App\Events\Frontend\Wishes\WishDeleted;
 use App\Events\Frontend\Wishes\WishUpdated;
 use App\Exceptions\GeneralException;
 use App\Models\Wishes\Wish;
+use App\Models\Groups\Group;
 use App\Repositories\BaseRepository;
 use DB;
 use Illuminate\Support\Facades\Storage;
@@ -92,17 +93,22 @@ class WishesRepository extends BaseRepository
      */
     public function getLowestWishesGroup($whitelabel_id){
 
-        $query = $this->query()
-            ->select(config('module.wishes.table').'.group_id', DB::raw('count(*) as total'))
+        $current = Group::where('current', 1)
             ->where('whitelabel_id',$whitelabel_id)
-            ->where(config('module.wishes.table').'.group_id', '!=', 0)
-            ->groupBy(config('module.wishes.table').'.group_id')
-            ->orderBy('total','ASC')
-            ->get();
+            ->first();
 
-        $group_id = count($query->toArray()) > 0 ? $query->toArray()[0]['group_id'] : 0;
+        $group = Group::where('id', '>', $current->toArray()['id'])
+            ->where('whitelabel_id',$whitelabel_id)
+            ->orderby('id', 'ASC')
+            ->first();
 
-        return $group_id;
+        if(!$group){
+            $group = Group::where('whitelabel_id',$whitelabel_id)
+                ->orderby('id', 'ASC')
+                ->first();
+        }
+
+        return $group->toArray()['id'];
     }
 
     /**
@@ -122,6 +128,8 @@ class WishesRepository extends BaseRepository
             $input['group_id'] = $this->getGroup();
 
             if ($wish = Wish::create($input)) {
+
+                $this->updateGroup($input['group_id'], $input['whitelabel_id']);
 
                 event(new WishCreated($wish));
 
@@ -229,6 +237,25 @@ class WishesRepository extends BaseRepository
             return $this->getLowestWishesGroup(access()->user()->whitelabels[0]->id);
         }
     }
+
+    public function updateGroup($group_id, $whitelabel_id){
+
+        Group::where('id',$group_id)->update(['current'=> 1]);
+
+        $current = Group::where('id', '<', $group_id)
+            ->where('whitelabel_id',$whitelabel_id)
+            ->orderby('id', 'DESC')
+            ->first();
+        if($current){
+            Group::where('id',$current->toArray()['id'])->update(['current'=> 0]);
+        }else{
+            $first = Group::where('whitelabel_id',$whitelabel_id)
+                ->orderby('id', 'DESC')
+                ->first();
+            Group::where('id',$first->toArray()['id'])->update(['current'=> 0]);
+        }
+    }
+
 
     public function getDistribution(){
         return access()->user()->whitelabels[0]->distribution->name;

@@ -26,6 +26,7 @@
                             <th>{{ trans('labels.backend.wishes.table.createdby') }}</th>
                             <th>{{ trans('labels.backend.wishes.table.createdat') }}</th>
                             <th>{{ trans('labels.backend.wishes.table.whitelabel') }}</th>
+                            <th>{{ trans('labels.backend.wishes.table.group') }}</th>
                             <th>{{ trans('labels.general.actions') }}</th>
                         </tr>
                     </thead>
@@ -81,6 +82,7 @@
                     {data: 'created_by', name: '{{config('module.wishes.table')}}.created_by'},
                     {data: 'created_at', name: '{{config('module.wishes.table')}}.created_at'},
                     {data: 'whitelabel_name', name: '{{config('module.wishes.table')}}.whitelabel_name'},
+                    {data: 'group_name', name: '{{config('module.wishes.table')}}.group_name'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],
                 order: [[3, "asc"]],

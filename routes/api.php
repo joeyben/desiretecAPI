@@ -18,6 +18,10 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('login', 'AuthController@login');
     });
 
+    Route::group(['prefix' => 'popup'], function () {
+        Route::get('show', 'WishesController@show');
+    });
+
     Route::group(['middleware' => ['jwt.auth']], function () {
         Route::group(['prefix' => 'auth'], function () {
             Route::post('logout', 'AuthController@logout');

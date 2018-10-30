@@ -79,6 +79,10 @@ class UserRepository extends BaseRepository
             ])
             ->groupBy('users.id');
 
+        $dataTableQuery->when(access()->user()->hasRole('Executive'),function($q){
+            $q->whereIn('whitelabels.id',access()->user()->whitelabels()->get()->pluck('id')->toArray());
+        });
+
         if ($trashed == 'true') {
             return $dataTableQuery->onlyTrashed();
         }

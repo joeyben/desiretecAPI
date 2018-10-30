@@ -406,8 +406,10 @@ trait UserAccess
      */
     public function attachGroups($groups)
     {
-        foreach ($groups as $group) {
-            $this->attachGroup($group);
+        if($groups){
+            foreach ($groups as $group) {
+                $this->attachGroup($group);
+            }
         }
     }
 

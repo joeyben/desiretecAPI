@@ -8,9 +8,7 @@
 /*Route::domain('localhost:8000')->group(function () {
     Route::get('bla', 'FrontendController@macros')->name('bla');     //
 });*/
-Route::group(['domain' => '127.0.0.1'], function () {
-    Route::get('/', 'WhitelabelController@index')->name('index');
-});
+
 
 Route::group(['domain' => 'localhost'], function () {
     Route::get('/', 'FrontendController@index')->name('index');

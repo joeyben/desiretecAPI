@@ -194,6 +194,7 @@ return [
                 'createdat' => 'Created At',
                 'createdby' => 'Created By',
                 'whitelabel'=> 'Whitelabel',
+                'group'=> 'Group',
                 'offerCount'=> 'Offers',
                 'all'       => 'All',
             ],
@@ -239,6 +240,7 @@ return [
             'create'     => 'Create Whitelabel',
             'edit'       => 'Edit Whitelabel',
             'management' => 'Whitelabels',
+            'management_client' => 'Whitelabel',
             'title'      => 'Whitelabels',
 
             'table' => [

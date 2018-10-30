@@ -35,6 +35,7 @@ class Wish extends BaseModel
         'created_by',
         'whitelabel_id',
         'group_id',
+        'current',
     ];
 
     protected $dates = [

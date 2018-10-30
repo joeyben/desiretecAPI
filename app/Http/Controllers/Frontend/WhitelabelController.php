@@ -18,8 +18,8 @@ class WhitelabelController extends Controller
     {
         $settingData = Setting::first();
         $google_analytics = $settingData->google_analytics;
-        $whitelabel_name = 'tui';
-        $bg_image = 'https://malediven.de/wp-content/uploads/2016/12/malediven-slider-startseite-conrad-1654x930.jpg';
+        $whitelabel_name = 'TUI';
+        $bg_image = 'https://example.desiretec.com/bundles/master/master/images/homepage_bcg.jpg';
         return view('whitelabel.index', compact('google_analytics', $google_analytics, 'whitelabel_name', 'bg_image'));
     }
 

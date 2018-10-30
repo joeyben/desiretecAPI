@@ -24,14 +24,19 @@ mix.sass('resources/assets/sass/frontend/app.scss', 'public/css/frontend.css')
         'public/css/loader.css',
         'public/css/bootstrap-datetimepicker.min.css'
     ], 'public/css/backend-custom.css')
+    .styles([
+        'public/css/plugin/datatables/jquery.dataTables.min.css',
+    ], 'public/css/frontend-custom.css')
     .js([
         'resources/assets/js/frontend/app.js',
         'resources/assets/js/plugin/sweetalert/sweetalert.min.js',
+        'node_modules/bootstrap-select/js/bootstrap-select.js',
         'resources/assets/js/plugins.js'
     ], 'public/js/frontend.js')
     .js([
         'resources/assets/js/backend/app.js',
         'resources/assets/js/plugin/sweetalert/sweetalert.min.js',
+        'node_modules/bootstrap-select/js/bootstrap-select.js',
         'resources/assets/js/plugins.js'
     ], 'public/js/backend.js')
     //Copying all directories of tinymce to public folder
@@ -46,6 +51,8 @@ mix.sass('resources/assets/sass/frontend/app.scss', 'public/css/frontend.css')
         "public/js/backend/notification.js",
         "public/js/backend/admin.js"
     ], 'public/js/backend-custom.js')
+    .copy('resources/assets/fonts', 'public/fonts')
+    .copy('resources/assets/img', 'public/img')
     //Datatable js
     .scripts([
         'node_modules/datatables.net/js/jquery.dataTables.js',

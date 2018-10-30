@@ -41,9 +41,10 @@ class WishesRepository extends BaseRepository
      */
     public function getForDataTable()
     {
-        return $this->query()
+        $dataTableQuery =  $this->query()
             ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.wishes.table').'.created_by')
             ->leftjoin(config('module.whitelabels.table'), config('module.whitelabels.table').'.id', '=', config('module.wishes.table').'.whitelabel_id')
+            ->leftjoin(config('module.groups.table'), config('module.groups.table').'.id', '=', config('module.wishes.table').'.group_id')
             ->select([
                 config('module.wishes.table').'.id',
                 config('module.wishes.table').'.title',
@@ -53,7 +54,15 @@ class WishesRepository extends BaseRepository
                 config('access.users_table').'.first_name as user_name',
                 config('module.whitelabels.table').'.id as whitelabel_id',
                 config('module.whitelabels.table').'.display_name as whitelabel_name',
+                config('module.groups.table').'.id as group_id',
+                config('module.groups.table').'.display_name as group_name',
             ]);
+
+        $dataTableQuery->when(access()->user()->hasRole('Executive') && !access()->user()->hasRole('Administrator'),function($q){
+            $q->whereIn(config('module.whitelabels.table').'.id', access()->user()->whitelabels()->get()->pluck('id')->toArray());
+        });
+
+        return $dataTableQuery;
     }
 
     /**

@@ -4,8 +4,13 @@
 
 @section('page-header')
     <h1>
-        {{ trans('labels.backend.whitelabels.management') }}
-        <small>{{ trans('labels.backend.whitelabels.edit') }}</small>
+        @if ($logged_in_user->hasRole('Administrator'))
+            {{ trans('labels.backend.whitelabels.management') }}
+            <small>{{ trans('labels.backend.whitelabels.edit') }}</small>
+        @else
+            {{ trans('labels.backend.whitelabels.management_client') }}
+            <small>{{ trans('labels.backend.whitelabels.edit') }}</small>
+        @endif
     </h1>
 @endsection
 
