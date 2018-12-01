@@ -449,6 +449,20 @@ return [
 
         ],
 
+        'agents' => [
+            'create' => 'Create new Agent',
+            'management' => 'Agents',
+            'table' => [
+                'avatar'     => 'Avatar',
+                'name'       => 'Name',
+                'display_name'     => 'Display name',
+                'status'    => 'Status',
+                'created_at' => 'Created At',
+                'createdby' => 'Created By',
+                'id'       => 'Id',
+            ],
+
+        ],
         'wishes' => [
             'wishes'        => 'Wishes',
             'goto'          => 'Go To Wish',

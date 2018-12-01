@@ -59,6 +59,7 @@
 
                             @if ($logged_in_user && $logged_in_user->hasRole('Seller'))
                                 <li>{{ link_to_route('frontend.offers.index', trans('navs.frontend.offers')) }}</li>
+                                <li>{{ link_to_route('frontend.agents.index', trans('navs.frontend.agents')) }}</li>
                             @endif
 
                             @if ($logged_in_user && $logged_in_user->hasRole('User'))

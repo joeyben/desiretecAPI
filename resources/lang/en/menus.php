@@ -160,7 +160,15 @@ return [
             'main'       => 'Module Pages',
         ],
     ],
-
+    'frontend' => [
+        'agents' => [
+            'all'        => 'All Menu',
+            'create'     => 'Create Agent',
+            'edit'       => 'Edit Menu',
+            'management' => 'Menu Management',
+            'main'       => 'Menus',
+        ]
+    ],
     'language-picker' => [
         'language' => 'Language',
         /*

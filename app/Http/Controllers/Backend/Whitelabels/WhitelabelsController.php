@@ -61,11 +61,13 @@ class WhitelabelsController extends Controller
      *
      * @return mixed
      */
-    public function create(ManageWhitelabelsRequest $request)
+    public function create(Whitelabel $whitelabel,ManageWhitelabelsRequest $request)
     {
 
         return view('backend.whitelabels.create')->with([
             'status'         => $this->status,
+            'distributions' => $this->distributions->getAll(),
+            'whitelabel'        => $whitelabel
 
         ]);
     }

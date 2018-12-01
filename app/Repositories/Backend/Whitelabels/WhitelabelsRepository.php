@@ -10,6 +10,7 @@ use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\BaseRepository;
 use DB;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Process\Process;
 
 /**
  * Class WhitelabelsRepository.
@@ -77,6 +78,14 @@ class WhitelabelsRepository extends BaseRepository
             if ($whitelabel = Whitelabel::create($input)) {
 
                 event(new WhitelabelCreated($whitelabel));
+                $command = \sprintf(
+                    'php artisan module:make %s',
+                    ucfirst($input['name'])
+                );
+
+                $p = new Process($command);
+                $p->setWorkingDirectory(base_path());
+                $p->run();
 
                 return true;
             }

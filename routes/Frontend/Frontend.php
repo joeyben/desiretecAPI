@@ -74,6 +74,15 @@ Route::group(['domain' => 'localhost'], function () {
 
         });
 
+        Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
+            Route::get('agents', 'AgentsController@index')->name('index');
+            Route::post('agents/get', 'AgentsTableController')->name('get');
+            Route::get('agents/create', 'AgentsController@create')->name('create');
+            Route::post('agents/store', 'AgentsController@store')->name('store');
+            Route::post('agents/edit', 'AgentsController@edit')->name('edit');
+            Route::post('agents/destroy', 'AgentsController@destroy')->name('destroy');
+        });
+
         Route::group(['namespace' => 'Comments', 'as' => 'comments.'], function () {
 
             Route::get('comments', 'CommentsController@index')->name('index');

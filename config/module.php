@@ -30,6 +30,9 @@ return [
     'whitelabels' => [
         'table' => 'whitelabels',
     ],
+    'agents' => [
+        'table' => 'agents',
+    ],
     'distributions' => [
         'table' => 'distributions',
     ],
