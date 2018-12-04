@@ -25,19 +25,17 @@
 
     <div class="form-group">
         {{ Form::label('earliest_start', trans('validation.attributes.backend.wishes.earliest_start'), ['class' => 'col-lg-2 control-label required']) }}
-
         <div class="col-lg-10">
-            {{ Form::text('earliest_start', null, ['class' => 'form-control box-size', 'placeholder' => trans('validation.attributes.backend.wishes.earliest_start'), 'required' => 'required']) }}
-        </div><!--col-lg-10-->
+            <input type="text" id="earliest_start" name="earliest_start" class="form-control box-size datepicker" value="{{ $wish->earliest_start }}" placeholder="@lang('validation.attributes.backend.wishes.earliest_start')">
+        </div>
     </div><!--form control-->
 
     <div class="form-group">
         {{ Form::label('latest_return', trans('validation.attributes.backend.wishes.latest_return'), ['class' => 'col-lg-2 control-label required']) }}
-
         <div class="col-lg-10">
-            {{ Form::text('latest_return', null, ['class' => 'form-control box-size', 'placeholder' => trans('validation.attributes.backend.wishes.latest_return'), 'required' => 'required']) }}
-        </div><!--col-lg-10-->
-    </div><!--form control-->
+            <input type="text" id="latest_return" name="latest_return" class="form-control box-size datepicker" value="{{ $wish->latest_return }}" placeholder="@lang('validation.attributes.backend.wishes.latest_return')">
+        </div>
+    </div>
 
     <div class="form-group">
         {{ Form::label('adults', trans('validation.attributes.backend.wishes.adults'), ['class' => 'col-lg-2 control-label required']) }}
