@@ -26,7 +26,7 @@ class UserAccessController extends Controller
         // Overwrite who we're logging in as, if we're already logged in as someone else.
         if (session()->has('admin_user_id') && session()->has('temp_user_id')) {
             // Let's not try to login as ourselves.
-            if (access()->id() == $user->id || session()->get('admin_user_id') == $user->id) {
+            if (access()->id() === $user->id || session()->get('admin_user_id') === $user->id) {
                 throw new GeneralException('Do not try to login as yourself.');
             }
 
@@ -43,7 +43,7 @@ class UserAccessController extends Controller
         app()->make(Auth::class)->flushTempSession();
 
         // Won't break, but don't let them "Login As" themselves
-        if (access()->id() == $user->id) {
+        if (access()->id() === $user->id) {
             throw new GeneralException('Do not try to login as yourself.');
         }
 

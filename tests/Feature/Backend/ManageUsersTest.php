@@ -73,7 +73,7 @@ class ManageUsersTest extends TestCase
     public function a_user_can_view_single_user()
     {
         $this->actingAs($this->admin)
-             ->get('/admin/access/user/'.$this->admin->id)
+             ->get('/admin/access/user/' . $this->admin->id)
              ->assertViewIs('backend.access.users.show')
              ->assertSee('View User')
              ->assertSee('Overview')

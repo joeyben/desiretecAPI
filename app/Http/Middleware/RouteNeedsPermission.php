@@ -22,9 +22,9 @@ class RouteNeedsPermission
         /*
          * Permission array
          */
-        if (strpos($permission, ';') !== false) {
+        if (false !== mb_strpos($permission, ';')) {
             $permissions = explode(';', $permission);
-            $access = access()->allowMultiple($permissions, ($needsAll === 'true' ? true : false));
+            $access = access()->allowMultiple($permissions, ('true' === $needsAll ? true : false));
         } else {
             /**
              * Single permission.

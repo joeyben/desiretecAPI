@@ -21,7 +21,6 @@ class GroupsRepository extends BaseRepository
      */
     const MODEL = Group::class;
 
-
     /**
      * Storage Class Object.
      *
@@ -31,7 +30,6 @@ class GroupsRepository extends BaseRepository
 
     public function __construct()
     {
-
     }
 
     /**
@@ -40,19 +38,19 @@ class GroupsRepository extends BaseRepository
     public function getForDataTable()
     {
         $dataTableQuery = $this->query()
-            ->leftjoin(config('module.whitelabels.table'), config('module.whitelabels.table').'.id', '=', config('module.groups.table').'.whitelabel_id')
+            ->leftjoin(config('module.whitelabels.table'), config('module.whitelabels.table') . '.id', '=', config('module.groups.table') . '.whitelabel_id')
             ->select([
-                config('module.groups.table').'.id',
-                config('module.groups.table').'.name',
-                config('module.groups.table').'.display_name',
-                config('module.groups.table').'.description',
-                config('module.groups.table').'.status',
-                config('module.groups.table').'.created_at',
-                config('module.whitelabels.table').'.id as whitelabel_id',
-                config('module.whitelabels.table').'.display_name as whitelabel_name',
+                config('module.groups.table') . '.id',
+                config('module.groups.table') . '.name',
+                config('module.groups.table') . '.display_name',
+                config('module.groups.table') . '.description',
+                config('module.groups.table') . '.status',
+                config('module.groups.table') . '.created_at',
+                config('module.whitelabels.table') . '.id as whitelabel_id',
+                config('module.whitelabels.table') . '.display_name as whitelabel_name',
             ]);
-        $dataTableQuery->when(access()->user()->hasRole('Executive') && !access()->user()->hasRole('Administrator'),function($q){
-            $q->whereIn('whitelabel_id',access()->user()->whitelabels()->get()->pluck('id')->toArray());
+        $dataTableQuery->when(access()->user()->hasRole('Executive') && !access()->user()->hasRole('Administrator'), function ($q) {
+            $q->whereIn('whitelabel_id', access()->user()->whitelabels()->get()->pluck('id')->toArray());
         });
 
         return $dataTableQuery;
@@ -67,14 +65,10 @@ class GroupsRepository extends BaseRepository
      */
     public function create(array $input)
     {
-
         DB::transaction(function () use ($input) {
             $input['created_by'] = access()->user()->id;
 
-
-
             if ($group = Group::create($input)) {
-
                 event(new GroupCreated($group));
 
                 return true;
@@ -88,16 +82,14 @@ class GroupsRepository extends BaseRepository
      * Update Group.
      *
      * @param \App\Models\Groups\Group $group
-     * @param array                  $input
+     * @param array                    $input
      */
     public function update(Group $group, array $input)
     {
         $input['updated_by'] = access()->user()->id;
 
-
         DB::transaction(function () use ($group, $input) {
             if ($group->update($input)) {
-
                 event(new GroupUpdated($group));
 
                 return true;
@@ -108,8 +100,6 @@ class GroupsRepository extends BaseRepository
             );
         });
     }
-
-
 
     /**
      * @param \App\Models\Groups\Group $group
@@ -130,5 +120,4 @@ class GroupsRepository extends BaseRepository
             throw new GeneralException(trans('exceptions.backend.groups.delete_error'));
         });
     }
-
 }

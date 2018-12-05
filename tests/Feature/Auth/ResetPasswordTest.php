@@ -3,7 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use App\Notifications\Frontend\Auth\UserNeedsPasswordReset;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Tests\BrowserKitTestCase;
 
@@ -50,7 +49,7 @@ class ResetPasswordTest extends BrowserKitTestCase
     {
         $token = $this->app->make('auth.password.broker')->createToken($this->user);
 
-        $this->visit('password/reset/'.$token)
+        $this->visit('password/reset/' . $token)
              ->see($this->user->email)
              ->type('', 'password')
              ->type('', 'password_confirmation')
@@ -63,7 +62,7 @@ class ResetPasswordTest extends BrowserKitTestCase
     {
         $token = $this->app->make('auth.password.broker')->createToken($this->user);
 
-        $this->visit('password/reset/'.$token)
+        $this->visit('password/reset/' . $token)
              ->see($this->user->email)
              ->type('12345678', 'password')
              ->type('12345678', 'password_confirmation')

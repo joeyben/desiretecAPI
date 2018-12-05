@@ -85,12 +85,12 @@ class FileUploads
         }
 
         if ($prefix) {
-            $this->fileName = time().'_'.$prefix.'_'.$this->file->getClientOriginalName();
+            $this->fileName = time() . '_' . $prefix . '_' . $this->file->getClientOriginalName();
 
             return $this->fileName;
         }
 
-        $this->fileName = time().'_'.$this->file->getClientOriginalName();
+        $this->fileName = time() . '_' . $this->file->getClientOriginalName();
 
         return $this->fileName;
     }
@@ -160,7 +160,7 @@ class FileUploads
      */
     public function setBasePath($path)
     {
-        $this->filePath = $this->baseDir.DIRECTORY_SEPARATOR.$path;
+        $this->filePath = $this->baseDir . \DIRECTORY_SEPARATOR . $path;
 
         return $this;
     }
@@ -249,13 +249,13 @@ class FileUploads
     {
         $info = getimagesize($source);
 
-        if ($info['mime'] == 'image/jpeg') {
+        if ('image/jpeg' === $info['mime']) {
             $image = imagecreatefromjpeg($source);
             imagejpeg($image, $destination, $quality);
-        } elseif ($info['mime'] == 'image/gif') {
+        } elseif ('image/gif' === $info['mime']) {
             $image = imagecreatefromgif($source);
             imagegif($image, $destination, $quality);
-        } elseif ($info['mime'] == 'image/png') {
+        } elseif ('image/png' === $info['mime']) {
             $image = imagecreatefrompng($source);
             imagepng($image, $destination, $quality);
         } else {
@@ -288,14 +288,14 @@ class FileUploads
     public function makeThumbnail($file)
     {
         if ($this->isThumbnail) {
-            $referenceFile = $this->getBasePath().DIRECTORY_SEPARATOR.$file;
+            $referenceFile = $this->getBasePath() . \DIRECTORY_SEPARATOR . $file;
             $fileName = $this->getFileName();
-            $filePath = $this->getBasePath().DIRECTORY_SEPARATOR.$this->getThumbnailPath();
+            $filePath = $this->getBasePath() . \DIRECTORY_SEPARATOR . $this->getThumbnailPath();
             $filePath = $this->checkAndCreateDir($filePath);
 
             Image::make($referenceFile)
                     ->fit(200)
-                    ->save($filePath.DIRECTORY_SEPARATOR.$fileName);
+                    ->save($filePath . \DIRECTORY_SEPARATOR . $fileName);
 
             return $this;
         }
@@ -364,10 +364,10 @@ class FileUploads
     public function moveFile($source, $destination)
     {
         $filePath = $this->getBasePath();
-        $source = $filePath.DIRECTORY_SEPARATOR.$source;
-        $destination = $filePath.DIRECTORY_SEPARATOR.$destination;
+        $source = $filePath . \DIRECTORY_SEPARATOR . $source;
+        $destination = $filePath . \DIRECTORY_SEPARATOR . $destination;
         if (File::exists($source)) {
-            $dir = dirname($destination);
+            $dir = \dirname($destination);
             if (!is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }
@@ -389,10 +389,10 @@ class FileUploads
     public function copyFile($source, $destination)
     {
         $filePath = $this->getBasePath();
-        $source = $filePath.DIRECTORY_SEPARATOR.$source;
-        $destination = $filePath.DIRECTORY_SEPARATOR.$destination;
+        $source = $filePath . \DIRECTORY_SEPARATOR . $source;
+        $destination = $filePath . \DIRECTORY_SEPARATOR . $destination;
         if (File::exists($source)) {
-            $dir = dirname($destination);
+            $dir = \dirname($destination);
             if (!is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }
@@ -413,7 +413,7 @@ class FileUploads
     public function removeDirectory($path)
     {
         $filePath = $this->getBasePath();
-        $path = $filePath.DIRECTORY_SEPARATOR.$path;
+        $path = $filePath . \DIRECTORY_SEPARATOR . $path;
 
         return recursiveRemoveDirectory($path);
     }

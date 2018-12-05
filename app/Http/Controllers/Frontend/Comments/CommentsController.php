@@ -14,7 +14,7 @@ use App\Repositories\Frontend\Comments\CommentsRepository;
  */
 class CommentsController extends Controller
 {
-    CONST BODY_CLASS = 'comment';
+    const BODY_CLASS = 'comment';
 
     /**
      * @var CommentsRepository
@@ -39,15 +39,12 @@ class CommentsController extends Controller
         //var_dump($request->get('type'));
         $comments = $this->comment->getForDataTable();
 
-
         $response = [
             'data' => $comments
         ];
 
         return response()->json($response);
     }
-
-
 
     /**
      * @param \App\Http\Requests\Frontend\Comments\StoreCommentsRequest $request
@@ -58,15 +55,14 @@ class CommentsController extends Controller
     {
         $comment = $this->comment->create($request->except('_token'));
 
-
         $response = [
             'data' => [
-                'comment' => $comment->comment,
-                'type' => $comment->type,
+                'comment'    => $comment->comment,
+                'type'       => $comment->type,
                 'created_at' => $comment->created_at->format('d M Y H:i:s'),
                 'first_name' => $comment->owner->first_name,
-                'last_name' => $comment->owner->last_name,
-                'me' => $comment->owner->id === access()->user()->id
+                'last_name'  => $comment->owner->last_name,
+                'me'         => $comment->owner->id === access()->user()->id
             ]
         ];
 
@@ -74,7 +70,7 @@ class CommentsController extends Controller
     }
 
     /**
-     * @param \App\Models\Comments\Comment                              $comment
+     * @param \App\Models\Comments\Comment                               $comment
      * @param \App\Http\Requests\Frontend\Comments\ManageCommentsRequest $request
      *
      * @return mixed
@@ -83,15 +79,15 @@ class CommentsController extends Controller
     {
         return view('frontend.comments.edit')->with([
             'comment'               => $comment,
-            'status'             => $this->status,
-            'category'           => $this->category,
-            'catering'           => $this->catering,
-            'body_class' => $this::BODY_CLASS,
+            'status'                => $this->status,
+            'category'              => $this->category,
+            'catering'              => $this->catering,
+            'body_class'            => $this::BODY_CLASS,
         ]);
     }
 
     /**
-     * @param \App\Models\Comments\Comment                              $comment
+     * @param \App\Models\Comments\Comment                               $comment
      * @param \App\Http\Requests\Frontend\Comments\UpdateCommentsRequest $request
      *
      * @return mixed
@@ -108,7 +104,7 @@ class CommentsController extends Controller
     }
 
     /**
-     * @param \App\Models\Comments\Comment                              $comment
+     * @param \App\Models\Comments\Comment                               $comment
      * @param \App\Http\Requests\Frontend\Comments\ManageCommentsRequest $request
      *
      * @return mixed

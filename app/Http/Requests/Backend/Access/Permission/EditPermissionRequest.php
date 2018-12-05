@@ -27,7 +27,6 @@ class EditPermissionRequest extends Request
     public function rules()
     {
         return [
-
         ];
     }
 }

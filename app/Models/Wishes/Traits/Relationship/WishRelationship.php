@@ -12,7 +12,6 @@ use App\Models\Offers\Offer;
  */
 trait WishRelationship
 {
-
     /**
      * Wishes belongsTo with User.
      */
@@ -57,16 +56,14 @@ trait WishRelationship
      * Alias to eloquent many-to-many relation's attach() method.
      *
      * @param mixed $whitelabel
-     *
-     * @return void
      */
     public function attachWhitelabel($whitelabel)
     {
-        if (is_object($whitelabel)) {
+        if (\is_object($whitelabel)) {
             $whitelabel = $whitelabel->getKey();
         }
 
-        if (is_array($whitelabel)) {
+        if (\is_array($whitelabel)) {
             $whitelabel = $whitelabel['id'];
         }
 
@@ -77,8 +74,6 @@ trait WishRelationship
      * Attach multiple whitelabels to a wish.
      *
      * @param mixed $whitelabels
-     *
-     * @return void
      */
     public function attachWhitelabels($whitelabels)
     {
@@ -90,6 +85,5 @@ trait WishRelationship
     public function getTotalOffersAttribute()
     {
         return $this->hasMany(Offer::class)->count();
-
     }
 }

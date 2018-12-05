@@ -37,7 +37,7 @@ class BlogsRepository extends BaseRepository
 
     public function __construct()
     {
-        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'blog'.DIRECTORY_SEPARATOR;
+        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'blog' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
     }
 
@@ -47,15 +47,15 @@ class BlogsRepository extends BaseRepository
     public function getForDataTable()
     {
         return $this->query()
-            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.blogs.table').'.created_by')
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.blogs.table') . '.created_by')
             ->select([
-                config('module.blogs.table').'.id',
-                config('module.blogs.table').'.name',
-                config('module.blogs.table').'.publish_datetime',
-                config('module.blogs.table').'.status',
-                config('module.blogs.table').'.created_by',
-                config('module.blogs.table').'.created_at',
-                config('access.users_table').'.first_name as user_name',
+                config('module.blogs.table') . '.id',
+                config('module.blogs.table') . '.name',
+                config('module.blogs.table') . '.publish_datetime',
+                config('module.blogs.table') . '.status',
+                config('module.blogs.table') . '.created_by',
+                config('module.blogs.table') . '.created_at',
+                config('access.users_table') . '.first_name as user_name',
             ]);
     }
 
@@ -80,12 +80,12 @@ class BlogsRepository extends BaseRepository
 
             if ($blog = Blog::create($input)) {
                 // Inserting associated category's id in mapper table
-                if (count($categoriesArray)) {
+                if (\count($categoriesArray)) {
                     $blog->categories()->sync($categoriesArray);
                 }
 
                 // Inserting associated tag's id in mapper table
-                if (count($tagsArray)) {
+                if (\count($tagsArray)) {
                     $blog->tags()->sync($tagsArray);
                 }
 
@@ -122,14 +122,13 @@ class BlogsRepository extends BaseRepository
 
         DB::transaction(function () use ($blog, $input, $tagsArray, $categoriesArray) {
             if ($blog->update($input)) {
-
                 // Updateing associated category's id in mapper table
-                if (count($categoriesArray)) {
+                if (\count($categoriesArray)) {
                     $blog->categories()->sync($categoriesArray);
                 }
 
                 // Updating associated tag's id in mapper table
-                if (count($tagsArray)) {
+                if (\count($tagsArray)) {
                     $blog->tags()->sync($tagsArray);
                 }
 
@@ -228,9 +227,9 @@ class BlogsRepository extends BaseRepository
         $avatar = $input['featured_image'];
 
         if (isset($input['featured_image']) && !empty($input['featured_image'])) {
-            $fileName = time().$avatar->getClientOriginalName();
+            $fileName = time() . $avatar->getClientOriginalName();
 
-            $this->storage->put($this->upload_path.$fileName, file_get_contents($avatar->getRealPath()));
+            $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()));
 
             $input = array_merge($input, ['featured_image' => $fileName]);
 
@@ -247,6 +246,6 @@ class BlogsRepository extends BaseRepository
     {
         $fileName = $model->featured_image;
 
-        return $this->storage->delete($this->upload_path.$fileName);
+        return $this->storage->delete($this->upload_path . $fileName);
     }
 }

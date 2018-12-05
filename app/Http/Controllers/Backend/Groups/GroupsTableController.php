@@ -34,10 +34,11 @@ class GroupsTableController extends Controller
             ->escapeColumns(['display_name'])
             ->escapeColumns(['description'])
             ->addColumn('users', function ($groups) {
-                $users = "";
-                foreach ($groups->users as $user){
-                    $users .= "<div>".$user->first_name." ".$user->last_name."</div>";
+                $users = '';
+                foreach ($groups->users as $user) {
+                    $users .= '<div>' . $user->first_name . ' ' . $user->last_name . '</div>';
                 }
+
                 return $users;
             })
             ->addColumn('status', function ($groups) {

@@ -44,9 +44,9 @@ class NotificationRepository extends BaseRepository
         }
         if ($this->model->save()) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -127,7 +127,7 @@ class NotificationRepository extends BaseRepository
     public function clearNotifications($limit = 'all')
     {
         $query = $this->model;
-        if ($limit != 'all') {
+        if ('all' !== $limit) {
             $query->where('is_read', '=', 0);
             $query = $query->orderBy('is_read', 'asc');
             $query = $query->orderBy('created_at', 'desc');
@@ -138,8 +138,8 @@ class NotificationRepository extends BaseRepository
 
         if ($query->update(['is_read' => 1])) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

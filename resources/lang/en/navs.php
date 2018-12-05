@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Navs Language Lines
@@ -19,16 +18,16 @@ return [
     ],
 
     'frontend' => [
-        'dashboard' => 'Dashboard',
-        'login'     => 'Login',
-        'macros'    => 'Macros',
-        'register'  => 'Register',
-        'wishes'    => 'My Wishes',
-        'create_wish'   => 'Create Wish',
-        'wisheslist'=> 'Wishes',
-        'offers'    => 'My Offers',
+        'dashboard'       => 'Dashboard',
+        'login'           => 'Login',
+        'macros'          => 'Macros',
+        'register'        => 'Register',
+        'wishes'          => 'My Wishes',
+        'create_wish'     => 'Create Wish',
+        'wisheslist'      => 'Wishes',
+        'offers'          => 'My Offers',
         'agents'          => 'Agents',
-        'user' => [
+        'user'            => [
             'account'         => 'My Account',
             'administration'  => 'Administration',
             'change_password' => 'Change Password',

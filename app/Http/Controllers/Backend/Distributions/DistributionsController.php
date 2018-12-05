@@ -14,7 +14,6 @@ use App\Repositories\Backend\Distributions\DistributionsRepository;
  */
 class DistributionsController extends Controller
 {
-
     /**
      * @var DistributionsRepository
      */
@@ -46,7 +45,6 @@ class DistributionsController extends Controller
      */
     public function create(ManageDistributionsRequest $request)
     {
-
         return view('backend.distributions.create')->with([
         ]);
     }
@@ -75,8 +73,7 @@ class DistributionsController extends Controller
     {
         return view('backend.distributions.edit')->with([
             'distribution'               => $distribution,
-            'status'             => $this->status,
-
+            'status'                     => $this->status,
         ]);
     }
 

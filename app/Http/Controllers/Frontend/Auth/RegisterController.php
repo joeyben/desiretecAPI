@@ -71,11 +71,10 @@ class RegisterController extends Controller
                     trans('exceptions.frontend.auth.confirmation.created_pending') :
                     trans('exceptions.frontend.auth.confirmation.created_confirm')
             );
-        } else {
-            access()->login($this->user->create($request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept')));
-            event(new UserRegistered(access()->user()));
-
-            return redirect($this->redirectPath());
         }
+        access()->login($this->user->create($request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept')));
+        event(new UserRegistered(access()->user()));
+
+        return redirect($this->redirectPath());
     }
 }

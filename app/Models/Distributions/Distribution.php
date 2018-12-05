@@ -2,9 +2,9 @@
 
 namespace App\Models\Distributions;
 
+use App\Models\BaseModel;
 use App\Models\Distributions\Traits\Attribute\DistributionAttribute;
 use App\Models\Distributions\Traits\Relationship\DistributionRelationship;
-use App\Models\BaseModel;
 use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -18,7 +18,7 @@ class Distribution extends BaseModel
         DistributionAttribute,
         DistributionRelationship {
             // DistributionAttribute::getEditButtonAttribute insteadof ModelTrait;
-        }
+    }
 
     /**
      * The database table used by the model.
@@ -32,7 +32,7 @@ class Distribution extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['name', 'display_name','description'];
+    protected $fillable = ['name', 'display_name', 'description'];
 
     protected $attributes = [
         'created_by' => 1,

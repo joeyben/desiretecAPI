@@ -13,8 +13,8 @@ trait PermissionAttribute
     public function getActionButtonsAttribute()
     {
         return '<div class="btn-group action-btn">
-                    '.$this->getEditButtonAttribute('edit-permission', 'admin.access.permission.edit').'
-                    '.$this->getDeleteButtonAttribute('delete-permission', 'admin.access.permission.destroy').'
+                    ' . $this->getEditButtonAttribute('edit-permission', 'admin.access.permission.edit') . '
+                    ' . $this->getDeleteButtonAttribute('delete-permission', 'admin.access.permission.destroy') . '
                 </div>';
     }
 }

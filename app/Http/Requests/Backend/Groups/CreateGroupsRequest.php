@@ -27,7 +27,6 @@ class CreateGroupsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

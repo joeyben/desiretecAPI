@@ -27,7 +27,6 @@ class DeletePageRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

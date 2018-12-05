@@ -17,6 +17,6 @@ class BlogTagTest extends TestCase
 
         $this->assertInstanceOf(User::class, $tag->creator);
 
-        $this->assertEquals($tag->creator->id, access()->id());
+        $this->assertSame($tag->creator->id, access()->id());
     }
 }

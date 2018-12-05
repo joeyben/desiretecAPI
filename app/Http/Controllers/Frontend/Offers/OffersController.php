@@ -15,16 +15,15 @@ use App\Repositories\Frontend\Offers\OffersRepository;
  */
 class OffersController extends Controller
 {
-    CONST BODY_CLASS = 'offer';
+    const BODY_CLASS = 'offer';
     /**
      * Offer Status.
      */
     protected $status = [
-        'Active' => 'Active',
+        'Active'       => 'Active',
         'Inactive'     => 'Inactive',
-        'Deleted'  => 'Deleted',
+        'Deleted'      => 'Deleted',
     ];
-
 
     /**
      * @var OffersRepository
@@ -47,24 +46,23 @@ class OffersController extends Controller
     public function index(ManageOffersRequest $request)
     {
         return view('frontend.offers.index')->with([
-            'status'=> $this->status,
+            'status'     => $this->status,
             'body_class' => $this::BODY_CLASS,
         ]);
     }
 
     /**
      * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
-     * @param  type $id
+     * @param type                                                   $id
+     *
      * @return mixed
      */
     public function create($id, ManageOffersRequest $request)
     {
-
         return view('frontend.offers.create')->with([
             'status'         => $this->status,
             'wish_id'        => $id,
-            'body_class' => $this::BODY_CLASS,
-
+            'body_class'     => $this::BODY_CLASS,
         ]);
     }
 
@@ -83,7 +81,7 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Offers\Offer                              $offer
+     * @param \App\Models\Offers\Offer                               $offer
      * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
      *
      * @return mixed
@@ -92,13 +90,13 @@ class OffersController extends Controller
     {
         return view('frontend.offers.edit')->with([
             'offer'               => $offer,
-            'status'             => $this->status,
-            'body_class' => $this::BODY_CLASS,
+            'status'              => $this->status,
+            'body_class'          => $this::BODY_CLASS,
         ]);
     }
 
     /**
-     * @param \App\Models\Offers\Offer                              $offer
+     * @param \App\Models\Offers\Offer                               $offer
      * @param \App\Http\Requests\Frontend\Offers\UpdateOffersRequest $request
      *
      * @return mixed
@@ -115,7 +113,7 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Offers\Offer                              $offer
+     * @param \App\Models\Offers\Offer                               $offer
      * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
      *
      * @return mixed
@@ -130,17 +128,16 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                              $wish
+     * @param \App\Models\Wishes\Wish                                $wish
      * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
      *
      * @return mixed
      */
     public function getWishOffers(Wish $wish, ManageOffersRequest $request)
     {
-
         return view('frontend.offers.wishoffers')->with([
-            'status'=> $this->status,
-            'wish' => $wish,
+            'status'     => $this->status,
+            'wish'       => $wish,
             'body_class' => $this::BODY_CLASS,
         ]);
     }

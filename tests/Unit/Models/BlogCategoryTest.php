@@ -17,6 +17,6 @@ class BlogCategoryTest extends TestCase
 
         $this->assertInstanceOf(User::class, $category->creator);
 
-        $this->assertEquals($category->creator->id, access()->id());
+        $this->assertSame($category->creator->id, access()->id());
     }
 }

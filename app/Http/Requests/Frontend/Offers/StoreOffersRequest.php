@@ -29,7 +29,6 @@ class StoreOffersRequest extends Request
         return [
             'title'           => 'required|max:191',
             'description'     => 'required',
-
         ];
     }
 
@@ -41,10 +40,9 @@ class StoreOffersRequest extends Request
     public function messages()
     {
         return [
-            'title.required' => 'Please insert Offer Title',
-            'title.max'      => 'Offer Title may not be greater than 200 characters.',
+            'title.required'       => 'Please insert Offer Title',
+            'title.max'            => 'Offer Title may not be greater than 200 characters.',
             'description.required' => 'Please insert Offer Description',
-
         ];
     }
 }

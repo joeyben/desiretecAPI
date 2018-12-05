@@ -27,7 +27,6 @@ class DeleteOffersRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

@@ -27,9 +27,9 @@ class StoreDistributionsRequest extends Request
     public function rules()
     {
         return [
-            'name'            => 'required|max:191',
+            'name'                 => 'required|max:191',
             'display_name'         => 'required|max:191',
-            'description'         => 'required',
+            'description'          => 'required',
         ];
     }
 
@@ -41,12 +41,11 @@ class StoreDistributionsRequest extends Request
     public function messages()
     {
         return [
-            'name.required' => 'Please insert Distribution Name',
-            'name.max'      => 'Distribution Name may not be greater than 191 characters.',
+            'name.required'         => 'Please insert Distribution Name',
+            'name.max'              => 'Distribution Name may not be greater than 191 characters.',
             'display_name.required' => 'Please insert Distribution Display Name',
             'display_name.max'      => 'Distribution Display Name may not be greater than 191 characters.',
-            'description.required' => 'Please insert Distribution Description',
-
+            'description.required'  => 'Please insert Distribution Description',
         ];
     }
 }

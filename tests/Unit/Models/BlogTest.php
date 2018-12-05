@@ -24,7 +24,7 @@ class BlogTest extends TestCase
 
         $this->assertInstanceOf(BlogCategory::class, $blog->categories->first());
 
-        $this->assertEquals($category->id, $blog->categories->first()->id);
+        $this->assertSame($category->id, $blog->categories->first()->id);
     }
 
     /** @test */
@@ -40,7 +40,7 @@ class BlogTest extends TestCase
 
         $this->assertInstanceOf(BlogTag::class, $blog->tags->first());
 
-        $this->assertEquals($tag->id, $blog->tags->first()->id);
+        $this->assertSame($tag->id, $blog->tags->first()->id);
     }
 
     /** @test */

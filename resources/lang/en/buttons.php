@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Buttons Language Lines
@@ -29,7 +28,7 @@ return [
     ],
 
     'wishes' => [
-        'frontend' =>[
+        'frontend' => [
             'create_offer' => 'Create Offer',
         ]
     ],

@@ -14,16 +14,15 @@ use App\Repositories\Frontend\Agents\AgentsRepository;
  */
 class AgentsController extends Controller
 {
-    CONST BODY_CLASS = 'agent';
+    const BODY_CLASS = 'agent';
     /**
      * Agent Status.
      */
     protected $status = [
-        'Active' => 'Active',
+        'Active'       => 'Active',
         'Inactive'     => 'Inactive',
-        'Deleted'  => 'Deleted',
+        'Deleted'      => 'Deleted',
     ];
-
 
     /**
      * @var AgentsRepository
@@ -46,24 +45,23 @@ class AgentsController extends Controller
     public function index(ManageAgentsRequest $request)
     {
         return view('frontend.agents.index')->with([
-            'status'=> $this->status,
+            'status'     => $this->status,
             'body_class' => $this::BODY_CLASS,
         ]);
     }
 
     /**
      * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
-     * @param  type $id
+     * @param type                                                   $id
+     *
      * @return mixed
      */
     public function create($id, ManageAgentsRequest $request)
     {
-
         return view('frontend.agents.create')->with([
             'status'         => $this->status,
             'user_id'        => $id,
-            'body_class' => $this::BODY_CLASS,
-
+            'body_class'     => $this::BODY_CLASS,
         ]);
     }
 
@@ -82,7 +80,7 @@ class AgentsController extends Controller
     }
 
     /**
-     * @param \App\Models\Agents\Agent                              $agent
+     * @param \App\Models\Agents\Agent                               $agent
      * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
      *
      * @return mixed
@@ -91,13 +89,13 @@ class AgentsController extends Controller
     {
         return view('frontend.agents.edit')->with([
             'agent'               => $agent,
-            'status'             => $this->status,
-            'body_class' => $this::BODY_CLASS,
+            'status'              => $this->status,
+            'body_class'          => $this::BODY_CLASS,
         ]);
     }
 
     /**
-     * @param \App\Models\Agents\Agent                              $agent
+     * @param \App\Models\Agents\Agent                               $agent
      * @param \App\Http\Requests\Frontend\Agents\UpdateAgentsRequest $request
      *
      * @return mixed
@@ -114,7 +112,7 @@ class AgentsController extends Controller
     }
 
     /**
-     * @param \App\Models\Agents\Agent                              $agent
+     * @param \App\Models\Agents\Agent                               $agent
      * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
      *
      * @return mixed

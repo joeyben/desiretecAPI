@@ -2,11 +2,11 @@
 
 namespace Modules\Tui\Http\Controllers;
 
+use App\Models\Whitelabels\Whitelabel;
+use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use App\Models\Whitelabels\Whitelabel;
-use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 
 class TuiController extends Controller
 {
@@ -30,6 +30,7 @@ class TuiController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -38,7 +39,7 @@ class TuiController extends Controller
 
         return view('tui::index')->with([
             'display_name' => $whitelabel['display_name'],
-            'bg_image' => $whitelabel['bg_image'],
+            'bg_image'     => $whitelabel['bg_image'],
         ]);
     }
 
@@ -50,26 +51,28 @@ class TuiController extends Controller
      */
     public function show(Request $request)
     {
-        $html =  view('tui::layer.popup')->with([
+        $html = view('tui::layer.popup')->with([
             'adults_arr' => $this->adults
         ])->render();
 
-        return response()->json(array('success' => true, 'html'=>$html));
+        return response()->json(['success' => true, 'html'=>$html]);
     }
-
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
     {
     }
 
-    private function setAdults(){
-        for($i=1; $i<=8;$i++){
-            array_push($this->adults,$i);
+    private function setAdults()
+    {
+        for ($i = 1; $i <= 8; ++$i) {
+            array_push($this->adults, $i);
         }
     }
 }

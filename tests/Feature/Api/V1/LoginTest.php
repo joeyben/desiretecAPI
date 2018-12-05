@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class LoginTest extends TestCase

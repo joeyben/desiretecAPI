@@ -24,7 +24,6 @@ class CreateFaqsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
         ];
     }
 }

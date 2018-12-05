@@ -44,12 +44,11 @@ class AgentsTableController extends Controller
                 return $agents->status;
             })
             ->addColumn('created_at', function ($agents) {
-                return $agents->created_at->toFormattedDateString().' '.$agents->created_at->toTimeString();
+                return $agents->created_at->toFormattedDateString() . ' ' . $agents->created_at->toTimeString();
             })
             ->addColumn('actions', function ($agents) {
                 return $agents->action_buttons;
             })
             ->make(true);
     }
-
 }

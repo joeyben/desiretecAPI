@@ -7,7 +7,6 @@ namespace App\Models\Agents\Traits\Relationship;
  */
 trait AgentRelationship
 {
-
     /**
      * get the distribution for a Agent.
      */

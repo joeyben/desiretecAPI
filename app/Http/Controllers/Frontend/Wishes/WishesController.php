@@ -15,14 +15,14 @@ use Torann\GeoIP\Facades\GeoIP;
  */
 class WishesController extends Controller
 {
-    CONST BODY_CLASS = 'wish';
+    const BODY_CLASS = 'wish';
     /**
      * Wish Status.
      */
     protected $status = [
-        'Active' => 'Active',
+        'Active'       => 'Active',
         'Inactive'     => 'Inactive',
-        'Deleted'  => 'Deleted',
+        'Deleted'      => 'Deleted',
     ];
 
     /**
@@ -34,7 +34,6 @@ class WishesController extends Controller
         '3'  => 3,
         '4'  => 4,
         '5'  => 5,
-
     ];
 
     /**
@@ -46,7 +45,6 @@ class WishesController extends Controller
         'Pension'       => 'Pension',
         'Full Pension'  => 'Full Pension',
         'All Inclusive' => 'All Inclusive',
-
     ];
 
     /**
@@ -73,26 +71,26 @@ class WishesController extends Controller
         //var_dump($location);
         //die();
         return view('frontend.wishes.index')->with([
-            'status'=> $this->status,
-            'category'=> $this->category,
-            'catering'=> $this->catering,
-            'count' => $this->wish->getForDataTable()->count(),
-            'wishes' => $this->wish->getForDataTable()->get()->toArray(),
+            'status'     => $this->status,
+            'category'   => $this->category,
+            'catering'   => $this->catering,
+            'count'      => $this->wish->getForDataTable()->count(),
+            'wishes'     => $this->wish->getForDataTable()->get()->toArray(),
             'body_class' => $this::BODY_CLASS,
-
         ]);
     }
 
     /**
      * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     * @param \App\Models\Wishes\Wish                              $wish
+     * @param \App\Models\Wishes\Wish                                $wish
+     *
      * @return mixed
      */
     public function show(Wish $wish, ManageWishesRequest $request)
     {
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
-            'body_class' => $this::BODY_CLASS,
+            'body_class'         => $this::BODY_CLASS,
         ]);
     }
 
@@ -105,10 +103,10 @@ class WishesController extends Controller
     {
         //var_dump($request->ip());
         return view('frontend.wishes.index')->with([
-            'status'=> $this->status,
-            'category'=> $this->category,
-            'catering'=> $this->catering,
-            'count' => $this->wish->getForDataTable()->count(),
+            'status'     => $this->status,
+            'category'   => $this->category,
+            'catering'   => $this->catering,
+            'count'      => $this->wish->getForDataTable()->count(),
             'body_class' => $this::BODY_CLASS,
         ]);
     }
@@ -122,20 +120,19 @@ class WishesController extends Controller
     {
         $status = $request->get('status');
         $wish = $this->wish->getForDataTable()
-            ->when($status, function($wish, $status) {
-                return $wish->where(config('module.wishes.table').'.status',$status);
+            ->when($status, function ($wish, $status) {
+                return $wish->where(config('module.wishes.table') . '.status', $status);
             })
             ->paginate(10);
 
-
         $response = [
             'pagination' => [
-                'total' => $wish->total(),
-                'per_page' => $wish->perPage(),
+                'total'        => $wish->total(),
+                'per_page'     => $wish->perPage(),
                 'current_page' => $wish->currentPage(),
-                'last_page' => $wish->lastPage(),
-                'from' => $wish->firstItem(),
-                'to' => $wish->lastItem()
+                'last_page'    => $wish->lastPage(),
+                'from'         => $wish->firstItem(),
+                'to'           => $wish->lastItem()
             ],
             'data' => $wish
         ];
@@ -150,13 +147,11 @@ class WishesController extends Controller
      */
     public function create(ManageWishesRequest $request)
     {
-
         return view('frontend.wishes.create')->with([
             'status'         => $this->status,
-            'category'=> $this->category,
-            'catering'=> $this->catering,
-            'body_class' => $this::BODY_CLASS,
-
+            'category'       => $this->category,
+            'catering'       => $this->catering,
+            'body_class'     => $this::BODY_CLASS,
         ]);
     }
 
@@ -175,7 +170,7 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                              $wish
+     * @param \App\Models\Wishes\Wish                                $wish
      * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
      *
      * @return mixed
@@ -187,12 +182,12 @@ class WishesController extends Controller
             'status'             => $this->status,
             'category'           => $this->category,
             'catering'           => $this->catering,
-            'body_class' => $this::BODY_CLASS,
+            'body_class'         => $this::BODY_CLASS,
         ]);
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                              $wish
+     * @param \App\Models\Wishes\Wish                                $wish
      * @param \App\Http\Requests\Frontend\Wishes\UpdateWishesRequest $request
      *
      * @return mixed
@@ -209,7 +204,7 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                              $wish
+     * @param \App\Models\Wishes\Wish                                $wish
      * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
      *
      * @return mixed

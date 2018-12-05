@@ -13,8 +13,6 @@ class ComposerServiceProvider extends ServiceProvider
 {
     /**
      * Register bindings in the container.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -23,7 +21,8 @@ class ComposerServiceProvider extends ServiceProvider
          */
         View::composer(
             // This class binds the $logged_in_user variable to every view
-            '*', GlobalComposer::class
+            '*',
+            GlobalComposer::class
         );
 
         /*
@@ -37,11 +36,8 @@ class ComposerServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
-        //
     }
 }

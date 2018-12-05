@@ -27,7 +27,6 @@ class ManagePermissionRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

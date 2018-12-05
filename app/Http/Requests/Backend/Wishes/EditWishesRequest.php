@@ -27,7 +27,6 @@ class EditWishesRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

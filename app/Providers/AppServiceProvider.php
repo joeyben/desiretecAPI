@@ -10,8 +10,6 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -42,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Force SSL in production
-        if ($this->app->environment() == 'production') {
+        if ('production' === $this->app->environment()) {
             //URL::forceScheme('https');
         }
 
@@ -53,15 +51,13 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register()
     {
         /*
          * Sets third party service providers that are only needed on local/testing environments
          */
-        if ($this->app->environment() != 'production') {
+        if ('production' !== $this->app->environment()) {
             /**
              * Loader for registering facades.
              */

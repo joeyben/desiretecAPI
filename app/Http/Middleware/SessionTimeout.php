@@ -44,7 +44,7 @@ class SessionTimeout
         $remember_cookie = \Auth::guard()->getRecallerName();
 
         if (!Cookie::has($remember_cookie) && config('session.timeout_status')) {
-            $isLoggedIn = $request->path() != '/logout';
+            $isLoggedIn = '/logout' !== $request->path();
 
             if (!session('lastActivityTime')) {
                 $this->session->put('lastActivityTime', time());
@@ -54,7 +54,7 @@ class SessionTimeout
                 $email = $request->user()->email;
                 access()->logout();
 
-                return redirect()->route('frontend.auth.login')->withFlashWarning(trans('strings.backend.general.timeout').$this->timeout / 60 .trans('strings.backend.general.minutes'))->withInput(compact('email'))->withCookie($cookie);
+                return redirect()->route('frontend.auth.login')->withFlashWarning(trans('strings.backend.general.timeout') . $this->timeout / 60 . trans('strings.backend.general.minutes'))->withInput(compact('email'))->withCookie($cookie);
             }
 
             $isLoggedIn ? $this->session->put('lastActivityTime', time()) : $this->session->forget('lastActivityTime');

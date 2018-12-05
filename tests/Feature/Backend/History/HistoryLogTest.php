@@ -16,23 +16,25 @@ class HistoryLogTest extends BrowserKitTestCase
 
         history()
             ->withType('User')
-            ->withText(trans('history.backend.users.created').$this->user->name)
+            ->withText(trans('history.backend.users.created') . $this->user->name)
             ->withEntity($this->user->id)
             ->withIcon('plus')
             ->withClass('bg-green')
             ->log();
 
-        $this->seeInDatabase('history',
+        $this->seeInDatabase(
+            'history',
             [
                 'type_id'   => 1,
                 'user_id'   => $this->admin->id,
                 'entity_id' => $this->user->id,
                 'icon'      => 'plus',
                 'class'     => 'bg-green',
-                'text'      => trans('history.backend.users.created').$this->user->name,
-            ])
+                'text'      => trans('history.backend.users.created') . $this->user->name,
+            ]
+        )
              ->visit('/admin/dashboard')
-             ->see('<strong>'.$this->admin->name.'</strong> '.trans('history.backend.users.created').$this->user->name);
+             ->see('<strong>' . $this->admin->name . '</strong> ' . trans('history.backend.users.created') . $this->user->name);
     }
 
     /** @test **/
@@ -42,22 +44,24 @@ class HistoryLogTest extends BrowserKitTestCase
 
         history()
             ->withType(1)
-            ->withText(trans('history.backend.users.created').$this->user->name)
+            ->withText(trans('history.backend.users.created') . $this->user->name)
             ->withEntity($this->user->id)
             ->withIcon('plus')
             ->withClass('bg-green')
             ->log();
 
-        $this->seeInDatabase('history',
+        $this->seeInDatabase(
+            'history',
             [
                 'type_id'   => 1,
                 'user_id'   => $this->admin->id,
                 'entity_id' => $this->user->id,
                 'icon'      => 'plus',
                 'class'     => 'bg-green',
-                'text'      => trans('history.backend.users.created').$this->user->name,
-            ])
+                'text'      => trans('history.backend.users.created') . $this->user->name,
+            ]
+        )
              ->visit('/admin/dashboard')
-             ->see('<strong>'.$this->admin->name.'</strong> '.trans('history.backend.users.created').$this->user->name);
+             ->see('<strong>' . $this->admin->name . '</strong> ' . trans('history.backend.users.created') . $this->user->name);
     }
 }

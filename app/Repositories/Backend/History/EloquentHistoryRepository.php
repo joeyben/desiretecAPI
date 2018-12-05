@@ -70,7 +70,7 @@ class EloquentHistoryRepository implements HistoryContract
             return $this;
         }
 
-        throw new GeneralException('An invalid history type was supplied: '.$type.'.');
+        throw new GeneralException('An invalid history type was supplied: ' . $type . '.');
     }
 
     /**
@@ -82,7 +82,7 @@ class EloquentHistoryRepository implements HistoryContract
      */
     public function withText($text)
     {
-        if (strlen($text)) {
+        if (\mb_strlen($text)) {
             $this->text = $text;
         } else {
             throw new GeneralException('You must supply text for each history item.');
@@ -134,7 +134,7 @@ class EloquentHistoryRepository implements HistoryContract
      */
     public function withAssets($assets)
     {
-        $this->assets = is_array($assets) && count($assets) ? json_encode($assets) : null;
+        $this->assets = \is_array($assets) && \count($assets) ? json_encode($assets) : null;
 
         return $this;
     }
@@ -227,8 +227,8 @@ class EloquentHistoryRepository implements HistoryContract
         $asset_count = 1;
         $flag = false;
 
-        if (is_array($assets) || $assets instanceof \Countable) {
-            $asset_count = count($assets) + 1;
+        if (\is_array($assets) || $assets instanceof \Countable) {
+            $asset_count = \count($assets) + 1;
             $flag = true;
         }
 
@@ -239,41 +239,41 @@ class EloquentHistoryRepository implements HistoryContract
 
                 switch ($type) {
                     case 'link':
-                        if (is_array($values)) {
-                            switch (count($values)) {
+                        if (\is_array($values)) {
+                            switch (\count($values)) {
                                 case 1:
-                                    $text = str_replace('{'.$key.'}', link_to_route($values[0], $values[0]), $text);
-                                break;
+                                    $text = str_replace('{' . $key . '}', link_to_route($values[0], $values[0]), $text);
+                                    break;
 
                                 case 2:
-                                    $text = str_replace('{'.$key.'}', link_to_route($values[0], $values[1]), $text);
-                                break;
+                                    $text = str_replace('{' . $key . '}', link_to_route($values[0], $values[1]), $text);
+                                    break;
 
                                 case 3:
-                                    $text = str_replace('{'.$key.'}', link_to_route($values[0], $values[1], $values[2]), $text);
-                                break;
+                                    $text = str_replace('{' . $key . '}', link_to_route($values[0], $values[1], $values[2]), $text);
+                                    break;
 
                                 case 4:
-                                    $text = str_replace('{'.$key.'}', link_to_route($values[0], $values[1], $values[2], $values[3]), $text);
-                                break;
+                                    $text = str_replace('{' . $key . '}', link_to_route($values[0], $values[1], $values[2], $values[3]), $text);
+                                    break;
                             }
                         } else {
                             //Normal url
-                            $text = str_replace('{'.$key.'}', link_to($values, $values), $text);
+                            $text = str_replace('{' . $key . '}', link_to($values, $values), $text);
                         }
 
-                    break;
+                        break;
 
                     case 'string':
-                        $text = str_replace('{'.$key.'}', $values, $text);
-                    break;
+                        $text = str_replace('{' . $key . '}', $values, $text);
+                        break;
                 }
 
-                $count++;
+                ++$count;
             }
         }
 
-        if ($asset_count == $count) {
+        if ($asset_count === $count) {
             //Evaluate all trans functions as PHP
             //We don't want to use eval() for security reasons so we're explicitly converting trans cases
             return preg_replace_callback('/trans\(\"([^"]+)\"\)/', function ($matches) {
@@ -308,13 +308,12 @@ class EloquentHistoryRepository implements HistoryContract
     {
         if ($paginate && is_numeric($pagination)) {
             return $query->{$this->paginationType}($pagination);
-        } else {
-            if ($limit && is_numeric($limit)) {
-                $query->take($limit);
-            }
-
-            return $query->get();
         }
+        if ($limit && is_numeric($limit)) {
+            $query->take($limit);
+        }
+
+        return $query->get();
     }
 
     /**
@@ -327,12 +326,11 @@ class EloquentHistoryRepository implements HistoryContract
     {
         if (is_numeric($type)) {
             return $query->where('type_id', $type)->latest();
-        } else {
-            $type = strtolower($type);
-
-            return $query->whereHas('type', function ($query) use ($type) {
-                $query->where('name', ucfirst($type));
-            })->latest();
         }
+        $type = mb_strtolower($type);
+
+        return $query->whereHas('type', function ($query) use ($type) {
+            $query->where('name', ucfirst($type));
+        })->latest();
     }
 }

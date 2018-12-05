@@ -27,7 +27,6 @@ class ManageBlogsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

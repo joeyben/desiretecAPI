@@ -23,7 +23,7 @@ class Role extends BaseModel
         SoftDeletes {
             RoleAttribute::getEditButtonAttribute insteadof ModelTrait;
             RoleAttribute::getDeleteButtonAttribute insteadof ModelTrait;
-        }
+    }
 
     /**
      * The database table used by the model.

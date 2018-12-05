@@ -27,7 +27,6 @@ class ManagePageRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

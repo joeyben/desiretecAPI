@@ -32,7 +32,7 @@ class OffersRepository extends BaseRepository
 
     public function __construct()
     {
-        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'offer'.DIRECTORY_SEPARATOR;
+        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'offer' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
     }
 
@@ -42,41 +42,42 @@ class OffersRepository extends BaseRepository
     public function getForDataTable()
     {
         return $this->query()
-            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.offers.table').'.created_by')
-            ->leftjoin(config('module.wishes.table'), config('module.wishes.table').'.id', '=', config('module.offers.table').'.wish_id')
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.offers.table') . '.created_by')
+            ->leftjoin(config('module.wishes.table'), config('module.wishes.table') . '.id', '=', config('module.offers.table') . '.wish_id')
             ->select([
-                config('module.offers.table').'.id',
-                config('module.offers.table').'.title',
-                config('module.offers.table').'.status',
-                config('module.offers.table').'.created_by',
-                config('module.offers.table').'.created_at',
-                config('access.users_table').'.first_name as first_name',
-                config('access.users_table').'.last_name as last_name',
-                config('module.wishes.table').'.id as wish_id',
-                config('module.wishes.table').'.title as wish_title',
-            ])->where(config('module.offers.table').'.created_by', access()->user()->id);
+                config('module.offers.table') . '.id',
+                config('module.offers.table') . '.title',
+                config('module.offers.table') . '.status',
+                config('module.offers.table') . '.created_by',
+                config('module.offers.table') . '.created_at',
+                config('access.users_table') . '.first_name as first_name',
+                config('access.users_table') . '.last_name as last_name',
+                config('module.wishes.table') . '.id as wish_id',
+                config('module.wishes.table') . '.title as wish_title',
+            ])->where(config('module.offers.table') . '.created_by', access()->user()->id);
     }
 
     /**
      * @param string $id
+     *
      * @return mixed
      */
     public function getForDataTableForWish($id)
     {
         return $this->query()
-            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.offers.table').'.created_by')
-            ->leftjoin(config('module.wishes.table'), config('module.wishes.table').'.id', '=', config('module.offers.table').'.wish_id')
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.offers.table') . '.created_by')
+            ->leftjoin(config('module.wishes.table'), config('module.wishes.table') . '.id', '=', config('module.offers.table') . '.wish_id')
             ->select([
-                config('module.offers.table').'.id',
-                config('module.offers.table').'.title',
-                config('module.offers.table').'.status',
-                config('module.offers.table').'.created_by',
-                config('module.offers.table').'.created_at',
-                config('access.users_table').'.first_name as first_name',
-                config('access.users_table').'.last_name as last_name',
-                config('module.wishes.table').'.id as wish_id',
-                config('module.wishes.table').'.title as wish_title',
-            ])->where(config('module.offers.table').'.wish_id', $id);
+                config('module.offers.table') . '.id',
+                config('module.offers.table') . '.title',
+                config('module.offers.table') . '.status',
+                config('module.offers.table') . '.created_by',
+                config('module.offers.table') . '.created_at',
+                config('access.users_table') . '.first_name as first_name',
+                config('access.users_table') . '.last_name as last_name',
+                config('module.wishes.table') . '.id as wish_id',
+                config('module.wishes.table') . '.title as wish_title',
+            ])->where(config('module.offers.table') . '.wish_id', $id);
     }
 
     /**
@@ -88,13 +89,11 @@ class OffersRepository extends BaseRepository
      */
     public function create(array $input)
     {
-
         DB::transaction(function () use ($input) {
             $input = $this->uploadImage($input);
             $input['created_by'] = access()->user()->id;
 
             if ($offer = Offer::create($input)) {
-
                 event(new OfferCreated($offer));
 
                 return true;
@@ -108,7 +107,7 @@ class OffersRepository extends BaseRepository
      * Update Offer.
      *
      * @param \App\Models\Offers\Offer $offer
-     * @param array                  $input
+     * @param array                    $input
      */
     public function update(Offer $offer, array $input)
     {
@@ -122,7 +121,6 @@ class OffersRepository extends BaseRepository
 
         DB::transaction(function () use ($offer, $input) {
             if ($offer->update($input)) {
-
                 event(new OfferUpdated($offer));
 
                 return true;
@@ -133,8 +131,6 @@ class OffersRepository extends BaseRepository
             );
         });
     }
-
-
 
     /**
      * @param \App\Models\Offers\Offer $offer
@@ -168,9 +164,9 @@ class OffersRepository extends BaseRepository
         $avatar = $input['file'];
 
         if (isset($input['file']) && !empty($input['file'])) {
-            $fileName = time().$avatar->getClientOriginalName();
+            $fileName = time() . $avatar->getClientOriginalName();
 
-            $this->storage->put($this->upload_path.$fileName, file_get_contents($avatar->getRealPath()));
+            $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()));
 
             $input = array_merge($input, ['file' => $fileName]);
 
@@ -187,6 +183,6 @@ class OffersRepository extends BaseRepository
     {
         $fileName = $model->file;
 
-        return $this->storage->delete($this->upload_path.$fileName);
+        return $this->storage->delete($this->upload_path . $fileName);
     }
 }

@@ -24,7 +24,6 @@ class DeleteFaqsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
         ];
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Labels Language Lines
@@ -179,34 +178,34 @@ return [
         ],
 
         'wishes' => [
-            'create'     => 'Create Wish',
-            'edit'       => 'Edit Wish',
-            'management' => 'Wishes',
-            'title'      => 'Wishes',
+            'create'         => 'Create Wish',
+            'edit'           => 'Edit Wish',
+            'management'     => 'Wishes',
+            'title'          => 'Wishes',
             'no_whitelabels' => 'no Whitelabels',
-            'table' => [
-                'title'     => 'Wish',
-                'status'    => 'Status',
-                'destination'    => 'Destination',
-                'airport'    => 'Airport',
+            'table'          => [
+                'title'             => 'Wish',
+                'status'            => 'Status',
+                'destination'       => 'Destination',
+                'airport'           => 'Airport',
                 'earliest_start'    => 'Earliest Start',
-                'latest_return'    => 'Latest Return',
-                'createdat' => 'Created At',
-                'createdby' => 'Created By',
-                'whitelabel'=> 'Whitelabel',
-                'group'=> 'Group',
-                'offerCount'=> 'Offers',
-                'all'       => 'All',
+                'latest_return'     => 'Latest Return',
+                'createdat'         => 'Created At',
+                'createdby'         => 'Created By',
+                'whitelabel'        => 'Whitelabel',
+                'group'             => 'Group',
+                'offerCount'        => 'Offers',
+                'all'               => 'All',
             ],
         ],
 
         'groups' => [
-            'create'     => 'Create Group',
-            'edit'       => 'Edit Group',
-            'management' => 'Groups',
-            'title'      => 'Groups',
+            'create'         => 'Create Group',
+            'edit'           => 'Edit Group',
+            'management'     => 'Groups',
+            'title'          => 'Groups',
             'no_whitelabels' => 'no Whitelabels',
-            'table' => [
+            'table'          => [
                 'name'              => 'Group',
                 'display_name'      => 'Display Name',
                 'status'            => 'Status',
@@ -220,12 +219,12 @@ return [
         ],
 
         'distributions' => [
-            'create'     => 'Create Distribution',
-            'edit'       => 'Edit Distribution',
-            'management' => 'Distributions',
-            'title'      => 'Distributions',
+            'create'           => 'Create Distribution',
+            'edit'             => 'Edit Distribution',
+            'management'       => 'Distributions',
+            'title'            => 'Distributions',
             'no_distributions' => 'no Distributions',
-            'table' => [
+            'table'            => [
                 'name'              => 'Distribution',
                 'display_name'      => 'Display Name',
                 'description'       => 'Description',
@@ -237,20 +236,20 @@ return [
         ],
 
         'whitelabels' => [
-            'create'     => 'Create Whitelabel',
-            'edit'       => 'Edit Whitelabel',
-            'management' => 'Whitelabels',
+            'create'            => 'Create Whitelabel',
+            'edit'              => 'Edit Whitelabel',
+            'management'        => 'Whitelabels',
             'management_client' => 'Whitelabel',
-            'title'      => 'Whitelabels',
+            'title'             => 'Whitelabels',
 
             'table' => [
-                'name'     => 'Identifier',
-                'display_name' => 'Whitelabel',
+                'name'           => 'Identifier',
+                'display_name'   => 'Whitelabel',
                 'distribution'   => 'Distribution',
-                'status'    => 'Status',
-                'createdat' => 'Created At',
-                'createdby' => 'Created By',
-                'all'       => 'All',
+                'status'         => 'Status',
+                'createdat'      => 'Created At',
+                'createdby'      => 'Created By',
+                'all'            => 'All',
             ],
         ],
 
@@ -370,7 +369,6 @@ return [
     ],
 
     'frontend' => [
-
         'auth' => [
             'login_box_title'    => 'Login',
             'login_button'       => 'Login',
@@ -436,42 +434,40 @@ return [
         ],
 
         'offers' => [
-            'create' => 'Create new Offer',
-            'management' => 'Offers',
+            'create'          => 'Create new Offer',
+            'management'      => 'Offers',
             'offers_for_wish' => 'Offer for',
-            'table' => [
+            'table'           => [
                 'title'     => 'Offer',
                 'status'    => 'Status',
                 'createdat' => 'Created At',
                 'createdby' => 'Created By',
                 'all'       => 'All',
             ],
-
         ],
 
         'agents' => [
-            'create' => 'Create new Agent',
+            'create'     => 'Create new Agent',
             'management' => 'Agents',
-            'table' => [
-                'avatar'     => 'Avatar',
-                'name'       => 'Name',
+            'table'      => [
+                'avatar'           => 'Avatar',
+                'name'             => 'Name',
                 'display_name'     => 'Display name',
-                'status'    => 'Status',
-                'created_at' => 'Created At',
-                'createdby' => 'Created By',
-                'id'       => 'Id',
+                'status'           => 'Status',
+                'created_at'       => 'Created At',
+                'createdby'        => 'Created By',
+                'id'               => 'Id',
             ],
-
         ],
         'wishes' => [
             'wishes'        => 'Wishes',
             'goto'          => 'Go To Wish',
             'created_at'    => 'created at',
             'edit'          => 'Edit wish',
-            'add-comment' => 'Add comment',
-            'table' => [
+            'add-comment'   => 'Add comment',
+            'table'         => [
                 'adults' => 'Adults',
-                'kids' => 'Kids',
+                'kids'   => 'Kids',
             ]
         ],
     ],

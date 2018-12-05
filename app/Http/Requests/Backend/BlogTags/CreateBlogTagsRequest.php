@@ -27,7 +27,6 @@ class CreateBlogTagsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

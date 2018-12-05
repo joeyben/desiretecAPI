@@ -24,7 +24,6 @@ class EditFaqsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
         ];
     }
 }

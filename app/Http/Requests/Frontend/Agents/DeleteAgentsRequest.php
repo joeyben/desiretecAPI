@@ -27,7 +27,6 @@ class DeleteAgentsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

@@ -11,11 +11,10 @@ use App\Http\Requests\Backend\Access\User\ShowUserRequest;
 use App\Http\Requests\Backend\Access\User\StoreUserRequest;
 use App\Http\Requests\Backend\Access\User\UpdateUserRequest;
 use App\Models\Access\Permission\Permission;
-use App\Models\Groups\Group;
 use App\Models\Access\User\User;
 use App\Repositories\Backend\Access\Role\RoleRepository;
-use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Backend\Access\User\UserRepository;
+use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -39,8 +38,8 @@ class UserController extends Controller
     protected $whitelabels;
 
     /**
-     * @param UserRepository $users
-     * @param RoleRepository $roles
+     * @param UserRepository       $users
+     * @param RoleRepository       $roles
      * @param WhitelabelRepository $whitelabels
      */
     public function __construct(UserRepository $users, RoleRepository $roles, WhitelabelsRepository $whitelabels)
@@ -123,7 +122,6 @@ class UserController extends Controller
             'permissions'     => $permissions,
             'groups'          => $groups,
             'whitelabels'     => $this->whitelabels->getAll(),
-
         ]);
     }
 

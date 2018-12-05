@@ -22,9 +22,9 @@ class RouteNeedsRole
         /*
          * Roles array
          */
-        if (strpos($role, ';') !== false) {
+        if (false !== mb_strpos($role, ';')) {
             $roles = explode(';', $role);
-            $access = access()->hasRoles($roles, ($needsAll === 'true' ? true : false));
+            $access = access()->hasRoles($roles, ('true' === $needsAll ? true : false));
         } else {
             /**
              * Single role.

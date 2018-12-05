@@ -41,7 +41,7 @@ class NotificationIos extends Notification
 
     protected function _send($deviceId, $message, $sendOptions = [])
     {
-        if (is_null($this->_passPhrase)) {
+        if (null === $this->_passPhrase) {
             $this->raiseerror(self::ERROR_PASSPHRASE_EMPTY);
         }
         dd($this->_pemFile);
@@ -63,16 +63,16 @@ class NotificationIos extends Notification
 
         foreach ($deviceId as $singleId) {
             // Build the binary notification
-            $msg = chr(0).pack('n', 32).pack('H*', $singleId).pack('n', strlen($payload)).$payload;
+            $msg = \chr(0) . pack('n', 32) . pack('H*', $singleId) . pack('n', \mb_strlen($payload)) . $payload;
             // Send it to the server
-            $result = fwrite($fp, $msg, strlen($msg));
+            $result = fwrite($fp, $msg, \mb_strlen($msg));
         }
         //echo "<br>-------<br>";
         if (!$result) {
-            return 'Message not delivered'.PHP_EOL;
-        } else {
-            return 'Message successfully delivered'.PHP_EOL;
+            return 'Message not delivered' . PHP_EOL;
         }
+
+        return 'Message successfully delivered' . PHP_EOL;
 
         // Close the connection to the server
         fclose($fp);
@@ -80,11 +80,11 @@ class NotificationIos extends Notification
 
     protected function _prepareBody($message, $sendOptions)
     {
-        if ($this->sendNotification == 1) {
+        if (1 === $this->sendNotification) {
             return ['alert' => $message, 'sound' => 'default', 'badge' => self::BADGE_ID];
-        } else {
-            return ['badge' => 0];
         }
+
+        return ['badge' => 0];
     }
 
     public function sendNotification($sendNotification)
@@ -99,7 +99,7 @@ class NotificationIos extends Notification
 
     public function setPemFile($pemFile = 'apns_baseproject_dev.pem')
     {
-        $newPemFilePath = dirname(__FILE__).'/'.$pemFile;
+        $newPemFilePath = __DIR__ . '/' . $pemFile;
         // echo $_SERVER['DOCUMENT_ROOT'].'/app/Http/Controllers/Utilities/'.$pemFile;exit;
         //echo dirname(__FILE__); exit;
         // echo file_get_contents(dirname(__FILE__).'/'.$pemFile); exit;

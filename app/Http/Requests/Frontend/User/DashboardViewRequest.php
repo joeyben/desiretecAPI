@@ -27,7 +27,6 @@ class DashboardViewRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

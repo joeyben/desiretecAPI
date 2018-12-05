@@ -36,7 +36,7 @@ class ProfileController extends Controller
         $output = $this->user->updateProfile(access()->id(), $request->all());
 
         // E-mail address was updated, user has to reconfirm
-        if (is_array($output) && $output['email_changed']) {
+        if (\is_array($output) && $output['email_changed']) {
             access()->logout();
 
             return redirect()->route('frontend.auth.login')->withFlashInfo(trans('strings.frontend.user.email_changed_notice'));

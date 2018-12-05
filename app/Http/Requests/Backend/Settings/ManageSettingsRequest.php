@@ -27,7 +27,6 @@ class ManageSettingsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

@@ -27,7 +27,6 @@ class DeleteBlogsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

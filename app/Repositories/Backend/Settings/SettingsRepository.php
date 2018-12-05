@@ -43,8 +43,8 @@ class SettingsRepository extends BaseRepository
      */
     public function __construct()
     {
-        $this->site_logo_path = 'img'.DIRECTORY_SEPARATOR.'logo'.DIRECTORY_SEPARATOR;
-        $this->favicon_path = 'img'.DIRECTORY_SEPARATOR.'favicon'.DIRECTORY_SEPARATOR;
+        $this->site_logo_path = 'img' . \DIRECTORY_SEPARATOR . 'logo' . \DIRECTORY_SEPARATOR;
+        $this->favicon_path = 'img' . \DIRECTORY_SEPARATOR . 'favicon' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('public');
     }
 
@@ -82,11 +82,11 @@ class SettingsRepository extends BaseRepository
      */
     public function uploadLogo($setting, $logo, $type)
     {
-        $path = $type == 'logo' ? $this->site_logo_path : $this->favicon_path;
+        $path = 'logo' === $type ? $this->site_logo_path : $this->favicon_path;
 
-        $image_name = time().$logo->getClientOriginalName();
+        $image_name = time() . $logo->getClientOriginalName();
 
-        $this->storage->put($path.$image_name, file_get_contents($logo->getRealPath()));
+        $this->storage->put($path . $image_name, file_get_contents($logo->getRealPath()));
 
         return $image_name;
     }
@@ -96,10 +96,10 @@ class SettingsRepository extends BaseRepository
      */
     public function removeLogo(Setting $setting, $type)
     {
-        $path = $type == 'logo' ? $this->site_logo_path : $this->favicon_path;
+        $path = 'logo' === $type ? $this->site_logo_path : $this->favicon_path;
 
-        if ($setting->$type && $this->storage->exists($path.$setting->$type)) {
-            $this->storage->delete($path.$setting->$type);
+        if ($setting->$type && $this->storage->exists($path . $setting->$type)) {
+            $this->storage->delete($path . $setting->$type);
         }
 
         $result = $setting->update([$type => null]);

@@ -27,7 +27,6 @@ class CreateWhitelabelsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

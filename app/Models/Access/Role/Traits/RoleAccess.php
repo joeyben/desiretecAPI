@@ -11,8 +11,6 @@ trait RoleAccess
      * Save the inputted permissions.
      *
      * @param mixed $inputPermissions
-     *
-     * @return void
      */
     public function savePermissions($inputPermissions)
     {
@@ -27,16 +25,14 @@ trait RoleAccess
      * Attach permission to current role.
      *
      * @param object|array $permission
-     *
-     * @return void
      */
     public function attachPermission($permission)
     {
-        if (is_object($permission)) {
+        if (\is_object($permission)) {
             $permission = $permission->getKey();
         }
 
-        if (is_array($permission)) {
+        if (\is_array($permission)) {
             $permission = $permission['id'];
         }
 
@@ -47,16 +43,14 @@ trait RoleAccess
      * Detach permission form current role.
      *
      * @param object|array $permission
-     *
-     * @return void
      */
     public function detachPermission($permission)
     {
-        if (is_object($permission)) {
+        if (\is_object($permission)) {
             $permission = $permission->getKey();
         }
 
-        if (is_array($permission)) {
+        if (\is_array($permission)) {
             $permission = $permission['id'];
         }
 
@@ -67,8 +61,6 @@ trait RoleAccess
      * Attach multiple permissions to current role.
      *
      * @param mixed $permissions
-     *
-     * @return void
      */
     public function attachPermissions($permissions)
     {
@@ -81,8 +73,6 @@ trait RoleAccess
      * Detach multiple permissions from current role.
      *
      * @param mixed $permissions
-     *
-     * @return void
      */
     public function detachPermissions($permissions)
     {

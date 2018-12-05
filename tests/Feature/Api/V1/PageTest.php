@@ -19,13 +19,11 @@ class PageTest extends TestCase
         $this->user = User::find(1);
 
         $this->token = JWTAuth::fromUser($this->user);
-        $this->headers = ['Authorization' => 'Bearer '.$this->token];
+        $this->headers = ['Authorization' => 'Bearer ' . $this->token];
     }
 
     /**
      * A basic test example.
-     *
-     * @return void
      */
     public function testExample()
     {
@@ -34,8 +32,6 @@ class PageTest extends TestCase
 
     /**
      * A basic test to get response form pages api.
-     *
-     * @return void
      */
 
     /** @test */
@@ -63,8 +59,6 @@ class PageTest extends TestCase
 
     /**
      * A basic test to get response form pages api.
-     *
-     * @return void
      */
 
     /** @test */
@@ -72,7 +66,7 @@ class PageTest extends TestCase
     {
         $page = create(Page::class);
         $payload = [];
-        $response = $this->json('GET', '/api/v1/pages/'.$page->id, $payload, $this->headers);
+        $response = $this->json('GET', '/api/v1/pages/' . $page->id, $payload, $this->headers);
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -90,9 +84,6 @@ class PageTest extends TestCase
      * Author: Indra Shastri
      * Date:03-03-2018
      * A basic test to update a page from api.
-     *
-     *
-     * @return void
      */
 
     /** @test */
@@ -117,7 +108,7 @@ class PageTest extends TestCase
                         'title'        => $page->title,
                         'status_label' => $page->status_label,
                         'status'       => ($page->isActive()) ? 'Active' : 'InActive',
-                        'created_by'   => ''.$this->user->id,
+                        'created_by'   => '' . $this->user->id,
                     ],
             ]);
     }
@@ -126,8 +117,6 @@ class PageTest extends TestCase
      *  Author: Indra Shastri
      *  Date:03-03-2018
      * A basic test to create a page from api.
-     *
-     * @return void
      */
 
     /** @test */
@@ -161,8 +150,6 @@ class PageTest extends TestCase
      *  Author: Indra Shastri
      *  Date:03-03-2018
      * A basic test to create a page from api.
-     *
-     * @return void
      */
 
     /** @test */
@@ -170,7 +157,7 @@ class PageTest extends TestCase
     {
         $page = create(Page::class);
         $payload = [];
-        $response = $this->json('DELETE', '/api/v1/pages/'.$page->id, $payload, $this->headers);
+        $response = $this->json('DELETE', '/api/v1/pages/' . $page->id, $payload, $this->headers);
         $response->assertStatus(200)
             ->assertJson([
                 'message'=> 'The Page was successfully deleted.',

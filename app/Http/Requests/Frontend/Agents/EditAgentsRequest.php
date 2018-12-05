@@ -27,7 +27,6 @@ class EditAgentsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

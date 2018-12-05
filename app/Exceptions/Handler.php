@@ -35,8 +35,6 @@ class Handler extends ExceptionHandler
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
      * @param \Exception $exception
-     *
-     * @return void
      */
     public function report(Exception $exception)
     {
@@ -53,8 +51,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if (strpos($request->url(), '/api/') !== false) {
-            \Log::debug('API Request Exception - '.$request->url().' - '.$exception->getMessage().(!empty($request->all()) ? ' - '.json_encode($request->except(['password'])) : ''));
+        if (false !== mb_strpos($request->url(), '/api/')) {
+            \Log::debug('API Request Exception - ' . $request->url() . ' - ' . $exception->getMessage() . (!empty($request->all()) ? ' - ' . json_encode($request->except(['password'])) : ''));
 
             if ($exception instanceof AuthorizationException) {
                 return $this->setStatusCode(403)->respondWithError($exception->getMessage());
@@ -77,7 +75,7 @@ class Handler extends ExceptionHandler
             }
 
             if ($exception instanceof ValidationException) {
-                \Log::debug('API Validation Exception - '.json_encode($exception->validator->messages()));
+                \Log::debug('API Validation Exception - ' . json_encode($exception->validator->messages()));
 
                 return $this->setStatusCode(422)->respondWithError($exception->validator->messages());
             }
@@ -87,7 +85,7 @@ class Handler extends ExceptionHandler
             * Usually because user stayed on the same screen too long and their session expired
             */
             if ($exception instanceof UnauthorizedHttpException) {
-                switch (get_class($exception->getPrevious())) {
+                switch (\get_class($exception->getPrevious())) {
                     case \App\Exceptions\Handler::class:
                         return $this->setStatusCode($exception->getStatusCode())->respondWithError('Token has not been provided.');
                     case \Tymon\JWTAuth\Exceptions\TokenExpiredException::class:

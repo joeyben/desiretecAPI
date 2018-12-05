@@ -27,7 +27,6 @@ class CreateBlogsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

@@ -44,11 +44,11 @@ class WishesTableController extends Controller
                 return $wishes->action_buttons;
             })
             ->addColumn('offer_count', function ($wishes) {
-                if($wishes->total_offers > 0){
+                if ($wishes->total_offers > 0) {
                     return $wishes->action_wish_offers;
-                }else{
-                    return $wishes->total_offers;
                 }
+
+                return $wishes->total_offers;
             })
             ->make(true);
     }

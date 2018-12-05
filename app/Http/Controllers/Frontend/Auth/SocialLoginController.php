@@ -51,7 +51,7 @@ class SocialLoginController extends Controller
         $user = null;
 
         // If the provider is not an acceptable third party than kick back
-        if (!in_array($provider, $this->helper->getAcceptedProviders())) {
+        if (!\in_array($provider, $this->helper->getAcceptedProviders(), true)) {
             return redirect()->route('frontend.index')->withFlashDanger(trans('auth.socialite.unacceptable', ['provider' => $provider]));
         }
 
@@ -71,7 +71,7 @@ class SocialLoginController extends Controller
             return redirect()->route('frontend.index')->withFlashDanger($e->getMessage());
         }
 
-        if (is_null($user) || !isset($user)) {
+        if (null === $user || !isset($user)) {
             return redirect()->route('frontend.index')->withFlashDanger(trans('exceptions.frontend.auth.unknown'));
         }
 
@@ -101,9 +101,9 @@ class SocialLoginController extends Controller
     private function getAuthorizationFirst($provider)
     {
         $socialite = Socialite::driver($provider);
-        $scopes = count(config("services.{$provider}.scopes")) ? config("services.{$provider}.scopes") : false;
-        $with = count(config("services.{$provider}.with")) ? config("services.{$provider}.with") : false;
-        $fields = count(config("services.{$provider}.fields")) ? config("services.{$provider}.fields") : false;
+        $scopes = \count(config("services.{$provider}.scopes")) ? config("services.{$provider}.scopes") : false;
+        $with = \count(config("services.{$provider}.with")) ? config("services.{$provider}.with") : false;
+        $fields = \count(config("services.{$provider}.fields")) ? config("services.{$provider}.fields") : false;
 
         if ($scopes) {
             $socialite->scopes($scopes);

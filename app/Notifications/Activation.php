@@ -12,8 +12,6 @@ class Activation extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
     protected $user;
 
@@ -43,7 +41,7 @@ class Activation extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/auth/'.$this->user->confirmation_code.'/activate');
+        $url = url('/auth/' . $this->user->confirmation_code . '/activate');
 
         return (new MailMessage())
                     ->greeting('Hello!')
@@ -63,7 +61,6 @@ class Activation extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
         ];
     }
 }

@@ -27,7 +27,6 @@ class EditRoleRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

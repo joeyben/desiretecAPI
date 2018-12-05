@@ -3,9 +3,9 @@
 namespace App\Models\Wishes;
 
 use App\Models\BaseModel;
+use App\Models\ModelTrait;
 use App\Models\Wishes\Traits\Attribute\WishAttribute;
 use App\Models\Wishes\Traits\Relationship\WishRelationship;
-use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Wish extends BaseModel

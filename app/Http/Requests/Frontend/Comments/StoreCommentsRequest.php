@@ -30,7 +30,6 @@ class StoreCommentsRequest extends Request
             'comment'         => 'required',
             'data_id'         => 'required',
             'type'            => 'required',
-
         ];
     }
 

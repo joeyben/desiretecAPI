@@ -32,7 +32,7 @@ class AgentsRepository extends BaseRepository
 
     public function __construct()
     {
-        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'agent'.DIRECTORY_SEPARATOR;
+        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'agent' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
     }
 
@@ -42,15 +42,15 @@ class AgentsRepository extends BaseRepository
     public function getForDataTable()
     {
         return $this->query()
-            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.agents.table').'.user_id')
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.agents.table') . '.user_id')
             ->select([
-                config('module.agents.table').'.id',
-                config('module.agents.table').'.name',
-                config('module.agents.table').'.avatar',
-                config('module.agents.table').'.display_name',
-                config('module.agents.table').'.user_id',
-                config('module.agents.table').'.created_at',
-            ])->where(config('module.agents.table').'.user_id', access()->user()->id);
+                config('module.agents.table') . '.id',
+                config('module.agents.table') . '.name',
+                config('module.agents.table') . '.avatar',
+                config('module.agents.table') . '.display_name',
+                config('module.agents.table') . '.user_id',
+                config('module.agents.table') . '.created_at',
+            ])->where(config('module.agents.table') . '.user_id', access()->user()->id);
     }
 
     /**
@@ -62,13 +62,11 @@ class AgentsRepository extends BaseRepository
      */
     public function create(array $input)
     {
-
         DB::transaction(function () use ($input) {
             $input = $this->uploadImage($input);
             $input['user_id'] = access()->user()->id;
 
             if ($agent = Agent::create($input)) {
-
                 event(new AgentCreated($agent));
 
                 return true;
@@ -82,7 +80,7 @@ class AgentsRepository extends BaseRepository
      * Update Agent.
      *
      * @param \App\Models\Agents\Agent $agent
-     * @param array                  $input
+     * @param array                    $input
      */
     public function update(Agent $agent, array $input)
     {
@@ -96,7 +94,6 @@ class AgentsRepository extends BaseRepository
 
         DB::transaction(function () use ($agent, $input) {
             if ($agent->update($input)) {
-
                 event(new AgentUpdated($agent));
 
                 return true;
@@ -107,8 +104,6 @@ class AgentsRepository extends BaseRepository
             );
         });
     }
-
-
 
     /**
      * @param \App\Models\Agents\Agent $agent
@@ -142,9 +137,9 @@ class AgentsRepository extends BaseRepository
         $avatar = $input['avatar'];
 
         if (isset($input['avatar']) && !empty($input['avatar'])) {
-            $fileName = time().$avatar->getClientOriginalName();
+            $fileName = time() . $avatar->getClientOriginalName();
 
-            $this->storage->put($this->upload_path.$fileName, file_get_contents($avatar->getRealPath()));
+            $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()));
 
             $input = array_merge($input, ['avatar' => $fileName]);
 
@@ -161,6 +156,6 @@ class AgentsRepository extends BaseRepository
     {
         $fileName = $model->file;
 
-        return $this->storage->delete($this->upload_path.$fileName);
+        return $this->storage->delete($this->upload_path . $fileName);
     }
 }

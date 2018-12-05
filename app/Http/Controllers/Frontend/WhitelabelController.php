@@ -20,6 +20,7 @@ class WhitelabelController extends Controller
         $google_analytics = $settingData->google_analytics;
         $whitelabel_name = 'TUI';
         $bg_image = 'https://example.desiretec.com/bundles/master/master/images/homepage_bcg.jpg';
+
         return view('whitelabel.index', compact('google_analytics', $google_analytics, 'whitelabel_name', 'bg_image'));
     }
 

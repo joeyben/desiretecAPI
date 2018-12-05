@@ -3,9 +3,9 @@
 namespace App\Models\Offers;
 
 use App\Models\BaseModel;
+use App\Models\ModelTrait;
 use App\Models\Offers\Traits\Attribute\OfferAttribute;
 use App\Models\Offers\Traits\Relationship\OfferRelationship;
-use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Offer extends BaseModel

@@ -27,7 +27,6 @@ class DeleteUserRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

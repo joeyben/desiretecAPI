@@ -31,7 +31,7 @@ class PagesController extends APIController
     {
         $limit = $request->get('paginate') ? $request->get('paginate') : 25;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'ASC';
-        $sortBy = $request->get('sortBy') ? $request->get('sortBy') : config('module.pages.table', 'pages').'created_at';
+        $sortBy = $request->get('sortBy') ? $request->get('sortBy') : config('module.pages.table', 'pages') . 'created_at';
 
         return PagesResource::collection(
             $this->repository->getForDataTable()->orderBy($sortBy, $orderBy)->paginate($limit)
@@ -120,7 +120,7 @@ class PagesController extends APIController
     public function validatePages(Request $request, $id = 0)
     {
         $validation = Validator::make($request->all(), [
-            'title'       => 'required|max:191|unique:pages,title,'.$id,
+            'title'       => 'required|max:191|unique:pages,title,' . $id,
             'description' => 'required',
         ]);
 

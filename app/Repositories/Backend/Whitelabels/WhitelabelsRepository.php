@@ -33,7 +33,7 @@ class WhitelabelsRepository extends BaseRepository
 
     public function __construct()
     {
-        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'whitelabel'.DIRECTORY_SEPARATOR;
+        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'whitelabel' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
     }
 
@@ -42,20 +42,20 @@ class WhitelabelsRepository extends BaseRepository
      */
     public function getForDataTable()
     {
-        $dataTableQuery =  $this->query()
-            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.whitelabels.table').'.created_by')
+        $dataTableQuery = $this->query()
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.whitelabels.table') . '.created_by')
             ->select([
-                config('module.whitelabels.table').'.id',
-                config('module.whitelabels.table').'.name',
-                config('module.whitelabels.table').'.display_name',
-                config('module.whitelabels.table').'.status',
-                config('module.whitelabels.table').'.distribution_id',
-                config('module.whitelabels.table').'.created_by',
-                config('module.whitelabels.table').'.created_at',
+                config('module.whitelabels.table') . '.id',
+                config('module.whitelabels.table') . '.name',
+                config('module.whitelabels.table') . '.display_name',
+                config('module.whitelabels.table') . '.status',
+                config('module.whitelabels.table') . '.distribution_id',
+                config('module.whitelabels.table') . '.created_by',
+                config('module.whitelabels.table') . '.created_at',
             ]);
 
-        $dataTableQuery->when(access()->user()->hasRole('Executive') && !access()->user()->hasRole('Administrator') ,function($q){
-            $q->whereIn(config('module.whitelabels.table').'.id',access()->user()->whitelabels()->get()->pluck('id')->toArray());
+        $dataTableQuery->when(access()->user()->hasRole('Executive') && !access()->user()->hasRole('Administrator'), function ($q) {
+            $q->whereIn(config('module.whitelabels.table') . '.id', access()->user()->whitelabels()->get()->pluck('id')->toArray());
         });
 
         return $dataTableQuery;
@@ -70,13 +70,11 @@ class WhitelabelsRepository extends BaseRepository
      */
     public function create(array $input)
     {
-
         DB::transaction(function () use ($input) {
             $input = $this->uploadImage($input);
             $input['created_by'] = access()->user()->id;
 
             if ($whitelabel = Whitelabel::create($input)) {
-
                 event(new WhitelabelCreated($whitelabel));
                 $command = \sprintf(
                     'php artisan module:make %s',
@@ -98,7 +96,7 @@ class WhitelabelsRepository extends BaseRepository
      * Update Whitelabel.
      *
      * @param \App\Models\Whitelabels\Whitelabel $whitelabel
-     * @param array                  $input
+     * @param array                              $input
      */
     public function update(Whitelabel $whitelabel, array $input)
     {
@@ -109,10 +107,9 @@ class WhitelabelsRepository extends BaseRepository
             $this->deleteOldFile($whitelabel);
             $input = $this->uploadImage($input);
         }
-        
+
         DB::transaction(function () use ($whitelabel, $input) {
             if ($whitelabel->update($input)) {
-
                 event(new WhitelabelUpdated($whitelabel));
 
                 return true;
@@ -123,8 +120,6 @@ class WhitelabelsRepository extends BaseRepository
             );
         });
     }
-
-
 
     /**
      * @param \App\Models\Whitelabels\Whitelabel $whitelabel
@@ -146,20 +141,21 @@ class WhitelabelsRepository extends BaseRepository
         });
     }
 
-
     /**
      * @param string $name
+     *
      * @return mixed
      */
-    public function getByName($name){
+    public function getByName($name)
+    {
         return $this->query()
 
             ->select([
-                config('module.whitelabels.table').'.id',
-                config('module.whitelabels.table').'.name',
-                config('module.whitelabels.table').'.display_name',
-                config('module.whitelabels.table').'.status',
-                config('module.whitelabels.table').'.bg_image',
+                config('module.whitelabels.table') . '.id',
+                config('module.whitelabels.table') . '.name',
+                config('module.whitelabels.table') . '.display_name',
+                config('module.whitelabels.table') . '.status',
+                config('module.whitelabels.table') . '.bg_image',
             ])
             ->where('name', $name)
             ->first()->toArray();
@@ -177,9 +173,9 @@ class WhitelabelsRepository extends BaseRepository
         $avatar = $input['bg_image'];
 
         if (isset($input['bg_image']) && !empty($input['bg_image'])) {
-            $fileName = time().$avatar->getClientOriginalName();
+            $fileName = time() . $avatar->getClientOriginalName();
 
-            $this->storage->put($this->upload_path.$fileName, file_get_contents($avatar->getRealPath()), 'public');
+            $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()), 'public');
 
             $input = array_merge($input, ['bg_image' => $fileName]);
 
@@ -196,6 +192,6 @@ class WhitelabelsRepository extends BaseRepository
     {
         $fileName = $model->bg_image;
 
-        return $this->storage->delete($this->upload_path.$fileName);
+        return $this->storage->delete($this->upload_path . $fileName);
     }
 }

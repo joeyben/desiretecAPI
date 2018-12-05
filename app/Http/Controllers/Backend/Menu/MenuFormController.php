@@ -17,8 +17,8 @@ class MenuFormController extends Controller
      */
     public function create($formName, CreateMenuRequest $request)
     {
-        if (in_array($formName, ['_add_custom_url_form'])) {
-            return view('backend.menus.'.$formName);
+        if (\in_array($formName, ['_add_custom_url_form'], true)) {
+            return view('backend.menus.' . $formName);
         }
 
         return abort(404);

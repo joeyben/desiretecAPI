@@ -28,7 +28,7 @@ class UpdateRoleRequest extends Request
     {
         $permissions = '';
 
-        if ($this->associated_permissions != 'all') {
+        if ('all' !== $this->associated_permissions) {
             $permissions = 'required';
         }
 

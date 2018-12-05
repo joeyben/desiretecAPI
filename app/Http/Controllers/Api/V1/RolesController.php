@@ -125,12 +125,12 @@ class RolesController extends APIController
     {
         $permissions = '';
 
-        if ($request->post('associated_permissions') != 'all') {
+        if ('all' !== $request->post('associated_permissions')) {
             $permissions = 'required';
         }
 
         $validation = Validator::make($request->all(), [
-            'name'        => 'required|max:191|unique:roles,name,'.$id,
+            'name'        => 'required|max:191|unique:roles,name,' . $id,
             'permissions' => $permissions,
         ]);
 

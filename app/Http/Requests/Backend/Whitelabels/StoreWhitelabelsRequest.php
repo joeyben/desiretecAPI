@@ -27,9 +27,8 @@ class StoreWhitelabelsRequest extends Request
     public function rules()
     {
         return [
-            'name'            => 'required|max:191',
+            'name'                 => 'required|max:191',
             'display_name'         => 'required|max:191',
-
         ];
     }
 
@@ -41,8 +40,8 @@ class StoreWhitelabelsRequest extends Request
     public function messages()
     {
         return [
-            'name.required' => 'Please insert Whitelabel Name',
-            'name.max'      => 'Whitelabel Name may not be greater than 200 characters.',
+            'name.required'         => 'Please insert Whitelabel Name',
+            'name.max'              => 'Whitelabel Name may not be greater than 200 characters.',
             'display_name.required' => 'Please insert Whitelabel Display Name',
             'display_name.max'      => 'Whitelabel Display Name may not be greater than 200 characters.',
         ];

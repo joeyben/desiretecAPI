@@ -10,7 +10,7 @@ trait UserAccess
     /**
      * Checks if the user has a Role by its name or id.
      *
-     * @param string $nameOrId Role name or id.
+     * @param string $nameOrId role name or id
      *
      * @return bool
      */
@@ -24,13 +24,13 @@ trait UserAccess
 
             //First check to see if it's an ID
             if (is_numeric($nameOrId)) {
-                if ($role->id == $nameOrId) {
+                if ($role->id === $nameOrId) {
                     return true;
                 }
             }
 
             //Otherwise check by name
-            if ($role->name == $nameOrId) {
+            if ($role->name === $nameOrId) {
                 return true;
             }
         }
@@ -51,22 +51,22 @@ trait UserAccess
     public function hasRoles($roles, $needsAll = false)
     {
         //If not an array, make a one item array
-        if (!is_array($roles)) {
+        if (!\is_array($roles)) {
             $roles = [$roles];
         }
 
         //User has to possess all of the roles specified
         if ($needsAll) {
             $hasRoles = 0;
-            $numRoles = count($roles);
+            $numRoles = \count($roles);
 
             foreach ($roles as $role) {
                 if ($this->hasRole($role)) {
-                    $hasRoles++;
+                    ++$hasRoles;
                 }
             }
 
-            return $numRoles == $hasRoles;
+            return $numRoles === $hasRoles;
         }
 
         //User has to possess one of the roles specified
@@ -82,7 +82,7 @@ trait UserAccess
     /**
      * Check if user has a permission by its name or id.
      *
-     * @param string $nameOrId Permission name or id.
+     * @param string $nameOrId permission name or id
      *
      * @return bool
      */
@@ -95,16 +95,15 @@ trait UserAccess
 
         //Check permissions directly tied to user
         foreach ($this->permissions as $perm) {
-
             //First check to see if it's an ID
             if (is_numeric($nameOrId)) {
-                if ($perm->id == $nameOrId) {
+                if ($perm->id === $nameOrId) {
                     return true;
                 }
             }
 
             //Otherwise check by name
-            if ($perm->name == $nameOrId) {
+            if ($perm->name === $nameOrId) {
                 return true;
             }
         }
@@ -153,22 +152,22 @@ trait UserAccess
     public function allowMultiple($permissions, $needsAll = false)
     {
         //If not an array, make a one item array
-        if (!is_array($permissions)) {
+        if (!\is_array($permissions)) {
             $permissions = [$permissions];
         }
 
         //User has to possess all of the permissions specified
         if ($needsAll) {
             $hasPermissions = 0;
-            $numPermissions = count($permissions);
+            $numPermissions = \count($permissions);
 
             foreach ($permissions as $perm) {
                 if ($this->allow($perm)) {
-                    $hasPermissions++;
+                    ++$hasPermissions;
                 }
             }
 
-            return $numPermissions == $hasPermissions;
+            return $numPermissions === $hasPermissions;
         }
 
         //User has to possess one of the permissions specified
@@ -206,16 +205,14 @@ trait UserAccess
      * Alias to eloquent many-to-many relation's attach() method.
      *
      * @param mixed $role
-     *
-     * @return void
      */
     public function attachRole($role)
     {
-        if (is_object($role)) {
+        if (\is_object($role)) {
             $role = $role->getKey();
         }
 
-        if (is_array($role)) {
+        if (\is_array($role)) {
             $role = $role['id'];
         }
 
@@ -226,29 +223,24 @@ trait UserAccess
      * Alias to eloquent many-to-many relation's detach() method.
      *
      * @param mixed $role
-     *
-     * @return void
      */
     public function detachRole($role)
     {
-        if (is_object($role)) {
+        if (\is_object($role)) {
             $role = $role->getKey();
         }
 
-        if (is_array($role)) {
+        if (\is_array($role)) {
             $role = $role['id'];
         }
 
         $this->roles()->detach($role);
     }
 
-
     /**
      * Attach multiple roles to a user.
      *
      * @param mixed $roles
-     *
-     * @return void
      */
     public function attachRoles($roles)
     {
@@ -257,13 +249,10 @@ trait UserAccess
         }
     }
 
-
     /**
      * Detach multiple roles from a user.
      *
      * @param mixed $roles
-     *
-     * @return void
      */
     public function detachRoles($roles)
     {
@@ -272,34 +261,28 @@ trait UserAccess
         }
     }
 
-
     /**
      * Alias to eloquent many-to-many relation's detach() method.
      *
      * @param mixed $whitelabel
-     *
-     * @return void
      */
     public function detachWhitelabel($whitelabel)
     {
-        if (is_object($whitelabel)) {
+        if (\is_object($whitelabel)) {
             $whitelabel = $whitelabel->getKey();
         }
 
-        if (is_array($whitelabel)) {
+        if (\is_array($whitelabel)) {
             $whitelabel = $whitelabel['id'];
         }
 
         $this->whitelabels()->detach($whitelabel);
     }
 
-
     /**
      * Detach multiple whitelabels from a user.
      *
      * @param mixed $whitelabels
-     *
-     * @return void
      */
     public function detachWhitelabels($whitelabels)
     {
@@ -312,16 +295,14 @@ trait UserAccess
      * Alias to eloquent many-to-many relation's attach() method.
      *
      * @param mixed $whitelabel
-     *
-     * @return void
      */
     public function attachWhitelabel($whitelabel)
     {
-        if (is_object($whitelabel)) {
+        if (\is_object($whitelabel)) {
             $whitelabel = $whitelabel->getKey();
         }
 
-        if (is_array($whitelabel)) {
+        if (\is_array($whitelabel)) {
             $whitelabel = $whitelabel['id'];
         }
 
@@ -332,8 +313,6 @@ trait UserAccess
      * Attach multiple whitelabels to a user.
      *
      * @param mixed $whitelabels
-     *
-     * @return void
      */
     public function attachWhitelabels($whitelabels)
     {
@@ -346,29 +325,24 @@ trait UserAccess
      * Alias to eloquent many-to-many relation's detach() method.
      *
      * @param mixed $group
-     *
-     * @return void
      */
     public function detachGroup($group)
     {
-        if (is_object($group)) {
+        if (\is_object($group)) {
             $group = $group->getKey();
         }
 
-        if (is_array($group)) {
+        if (\is_array($group)) {
             $group = $group['id'];
         }
 
         $this->groups()->detach($group);
     }
 
-
     /**
      * Detach multiple groups from a user.
      *
      * @param mixed $groups
-     *
-     * @return void
      */
     public function detachGroups($groups)
     {
@@ -381,16 +355,14 @@ trait UserAccess
      * Alias to eloquent many-to-many relation's attach() method.
      *
      * @param mixed $group
-     *
-     * @return void
      */
     public function attachGroup($group)
     {
-        if (is_object($group)) {
+        if (\is_object($group)) {
             $group = $group->getKey();
         }
 
-        if (is_array($group)) {
+        if (\is_array($group)) {
             $group = $group['id'];
         }
 
@@ -401,25 +373,20 @@ trait UserAccess
      * Attach multiple groups to a user.
      *
      * @param mixed $groups
-     *
-     * @return void
      */
     public function attachGroups($groups)
     {
-        if($groups){
+        if ($groups) {
             foreach ($groups as $group) {
                 $this->attachGroup($group);
             }
         }
     }
 
-
     /**
      * Attach multiple Permissions to a user.
      *
      * @param mixed $permissions
-     *
-     * @return void
      */
     public function attachPermissions($permissions)
     {
@@ -432,16 +399,14 @@ trait UserAccess
      * Alias to eloquent many-to-many relation's attach() method.
      *
      * @param mixed $permission
-     *
-     * @return void
      */
     public function attachPermission($permission)
     {
-        if (is_object($permission)) {
+        if (\is_object($permission)) {
             $permission = $permission->getKey();
         }
 
-        if (is_array($permission)) {
+        if (\is_array($permission)) {
             $permission = $permission['id'];
         }
 
@@ -452,8 +417,6 @@ trait UserAccess
      * Detach multiple permissions from current role.
      *
      * @param mixed $permissions
-     *
-     * @return void
      */
     public function detachPermissions($permissions)
     {
@@ -466,16 +429,14 @@ trait UserAccess
      * Detach permission form current User.
      *
      * @param object|array $permission
-     *
-     * @return void
      */
     public function detachPermission($permission)
     {
-        if (is_object($permission)) {
+        if (\is_object($permission)) {
             $permission = $permission->getKey();
         }
 
-        if (is_array($permission)) {
+        if (\is_array($permission)) {
             $permission = $permission['id'];
         }
 
@@ -483,7 +444,6 @@ trait UserAccess
     }
 
     /**
-     *
      * @return array
      */
     public function getWhitelabels()

@@ -102,8 +102,8 @@ abstract class Notification
     public function setOptions(array $options)
     {
         foreach ($options as $optionKey => $option) {
-            $methodName = 'set'.ucfirst($optionKey);
-            $propertyName = '_'.$optionKey;
+            $methodName = 'set' . ucfirst($optionKey);
+            $propertyName = '_' . $optionKey;
             if (method_exists($methodName, $this)) {
                 $this->$methodName($option);
             } elseif (property_exists($propertyName, $this)) {
@@ -127,7 +127,7 @@ abstract class Notification
     {
         $codeValue = $this->getErrorMessages();
         if (!isset($codeValue[$errorCode])) {
-            $errorException = 'Erro code '.$errorCode;
+            $errorException = 'Erro code ' . $errorCode;
         } else {
             $errorException = $codeValue[$errorCode];
         }

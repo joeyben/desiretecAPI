@@ -19,7 +19,7 @@ class BlogEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->blogs->id)
-            ->withText('trans("history.backend.blogs.created") <strong>'.$event->blogs->name.'</strong>')
+            ->withText('trans("history.backend.blogs.created") <strong>' . $event->blogs->name . '</strong>')
             ->withIcon('plus')
             ->withClass('bg-green')
             ->log();
@@ -32,7 +32,7 @@ class BlogEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->blogs->id)
-            ->withText('trans("history.backend.blogs.updated") <strong>'.$event->blogs->name.'</strong>')
+            ->withText('trans("history.backend.blogs.updated") <strong>' . $event->blogs->name . '</strong>')
             ->withIcon('save')
             ->withClass('bg-aqua')
             ->log();
@@ -45,7 +45,7 @@ class BlogEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->blogs->id)
-            ->withText('trans("history.backend.blogs.deleted") <strong>'.$event->blogs->name.'</strong>')
+            ->withText('trans("history.backend.blogs.deleted") <strong>' . $event->blogs->name . '</strong>')
             ->withIcon('trash')
             ->withClass('bg-maroon')
             ->log();

@@ -64,13 +64,15 @@ class RegistrationTest extends BrowserKitTestCase
             ->check('is_term_accept')
             ->press('Register')
             ->seePageIs('/')
-            ->seeInDatabase(config('access.users_table'),
-             [
+            ->seeInDatabase(
+                config('access.users_table'),
+                [
                  'email'      => 'john.doe@example.com',
                  'first_name' => 'John',
                  'last_name'  => 'Doe',
                  'confirmed'  => 1,
-             ]);
+                ]
+            );
 
         Event::assertDispatched(UserRegistered::class);
     }
@@ -101,13 +103,15 @@ class RegistrationTest extends BrowserKitTestCase
             ->see('Your account was successfully created and is pending approval. An e-mail will be sent when your account is approved.')
             ->see('Login')
             ->seePageIs('/')
-            ->seeInDatabase(config('access.users_table'),
+            ->seeInDatabase(
+                config('access.users_table'),
                 [
                     'email'      => 'test@example.com',
                     'first_name' => 'first name',
                     'last_name'  => 'last name',
                     'confirmed'  => 0,
-                ]);
+                ]
+            );
 
         // Get the user that was inserted into the database
         $user = User::where('email', 'test@example.com')->first();

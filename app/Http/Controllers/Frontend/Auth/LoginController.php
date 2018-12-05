@@ -155,13 +155,12 @@ class LoginController extends Controller
 
             //Redirect to backend user page
             return redirect()->route('admin.access.user.index');
-        } else {
-            app()->make(Auth::class)->flushTempSession();
-
-            //Otherwise logout and redirect to login
-            access()->logout();
-
-            return redirect()->route('frontend.auth.login');
         }
+        app()->make(Auth::class)->flushTempSession();
+
+        //Otherwise logout and redirect to login
+        access()->logout();
+
+        return redirect()->route('frontend.auth.login');
     }
 }

@@ -36,7 +36,7 @@ class PermissionTableController extends Controller
             ->escapeColumns(['name', 'sort'])
             ->addColumn('permissions', function ($permission) {
                 if ($permission->all) {
-                    return '<span class="label label-success">'.trans('labels.general.all').'</span>';
+                    return '<span class="label label-success">' . trans('labels.general.all') . '</span>';
                 }
             })
             ->addColumn('actions', function ($permission) {

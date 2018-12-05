@@ -18,7 +18,7 @@ class Permission extends BaseModel
         PermissionAttribute,
         PermissionRelationship {
             // PermissionAttribute::getEditButtonAttribute insteadof ModelTrait;
-        }
+    }
 
     /**
      * The database table used by the model.

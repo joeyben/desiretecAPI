@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'messages' => [
         'registeration' => [
             'success' => 'You have registered successfully. Please check your email for activation!',
@@ -26,5 +25,4 @@ return [
             'status' => 'Ok',
         ],
     ],
-
 ];

@@ -27,7 +27,6 @@ class EditBlogCategoriesRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

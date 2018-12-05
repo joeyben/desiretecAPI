@@ -27,7 +27,6 @@ class ManageMenuRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

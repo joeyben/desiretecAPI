@@ -7,8 +7,8 @@ use App\Http\Requests\Backend\Whitelabels\ManageWhitelabelsRequest;
 use App\Http\Requests\Backend\Whitelabels\StoreWhitelabelsRequest;
 use App\Http\Requests\Backend\Whitelabels\UpdateWhitelabelsRequest;
 use App\Models\Whitelabels\Whitelabel;
-use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Backend\Distributions\DistributionsRepository;
+use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 
 /**
  * Class WhitelabelsController.
@@ -19,7 +19,7 @@ class WhitelabelsController extends Controller
      * Whitelabel Status.
      */
     protected $status = [
-        'Active' => 'Active',
+        'Active'       => 'Active',
         'Inactive'     => 'Inactive',
     ];
 
@@ -34,7 +34,7 @@ class WhitelabelsController extends Controller
     protected $distributions;
 
     /**
-     * @param \App\Repositories\Backend\Whitelabels\WhitelabelsRepository $whitelabel
+     * @param \App\Repositories\Backend\Whitelabels\WhitelabelsRepository     $whitelabel
      * @param \App\Repositories\Backend\Distributions\DistributionsRepository $distribution
      */
     public function __construct(WhitelabelsRepository $whitelabel, DistributionsRepository $distributions)
@@ -52,7 +52,6 @@ class WhitelabelsController extends Controller
     {
         return view('backend.whitelabels.index')->with([
             'status'=> $this->status,
-
         ]);
     }
 
@@ -61,14 +60,12 @@ class WhitelabelsController extends Controller
      *
      * @return mixed
      */
-    public function create(Whitelabel $whitelabel,ManageWhitelabelsRequest $request)
+    public function create(Whitelabel $whitelabel, ManageWhitelabelsRequest $request)
     {
-
         return view('backend.whitelabels.create')->with([
-            'status'         => $this->status,
-            'distributions' => $this->distributions->getAll(),
+            'status'            => $this->status,
+            'distributions'     => $this->distributions->getAll(),
             'whitelabel'        => $whitelabel
-
         ]);
     }
 
@@ -95,8 +92,8 @@ class WhitelabelsController extends Controller
     public function edit(Whitelabel $whitelabel, ManageWhitelabelsRequest $request)
     {
         return view('backend.whitelabels.edit')->with([
-            'whitelabel'        => $whitelabel,
-            'status'            => $this->status,
+            'whitelabel'         => $whitelabel,
+            'status'             => $this->status,
             'distributions'      => $this->distributions->getAll(),
         ]);
     }

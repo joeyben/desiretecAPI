@@ -27,7 +27,6 @@ class DeleteRoleRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

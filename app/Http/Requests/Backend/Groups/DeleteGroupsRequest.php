@@ -27,7 +27,6 @@ class DeleteGroupsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

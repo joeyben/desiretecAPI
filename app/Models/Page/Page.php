@@ -15,7 +15,7 @@ class Page extends BaseModel
         PageRelationship,
         PageAttribute {
             // PageAttribute::getEditButtonAttribute insteadof ModelTrait;
-        }
+    }
 
     /**
      * The database table used by the model.

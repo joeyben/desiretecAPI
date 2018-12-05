@@ -12,9 +12,9 @@ trait CommentAttribute
      */
     public function getActionButtonsAttribute()
     {
-        return '<div class="btn-group action-btn">'.
-                $this->getEditButtonAttribute('edit-wish', 'admin.comments.edit').
-                $this->getDeleteButtonAttribute('delete-wish', 'admin.comments.destroy').
+        return '<div class="btn-group action-btn">' .
+                $this->getEditButtonAttribute('edit-wish', 'admin.comments.edit') .
+                $this->getDeleteButtonAttribute('delete-wish', 'admin.comments.destroy') .
                 '</div>';
     }
 
@@ -23,9 +23,9 @@ trait CommentAttribute
      */
     public function getActionButtonsUserAttribute()
     {
-        return '<div class="btn-group action-btn">'.
-            $this->getEditButtonAttribute('edit-wish', 'frontend.comments.edit').
-            $this->getDeleteButtonAttribute('delete-wish', 'frontend.comments.destroy').
+        return '<div class="btn-group action-btn">' .
+            $this->getEditButtonAttribute('edit-wish', 'frontend.comments.edit') .
+            $this->getDeleteButtonAttribute('delete-wish', 'frontend.comments.destroy') .
             '</div>';
     }
 
@@ -34,9 +34,8 @@ trait CommentAttribute
      */
     public function getActionCommentOffersAttribute()
     {
-        return '<a href="'.route("frontend.offers.showoffers" , $this).'">'.
-            $this->total_offers.
+        return '<a href="' . route('frontend.offers.showoffers', $this) . '">' .
+            $this->total_offers .
             '</a>';
     }
-
 }

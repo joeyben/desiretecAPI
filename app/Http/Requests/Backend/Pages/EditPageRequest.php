@@ -27,7 +27,6 @@ class EditPageRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

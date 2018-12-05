@@ -85,7 +85,8 @@ class ManageBlogTagsTest extends TestCase
         $catTag = create(BlogTag::class, ['name' => 'Cat']);
         $dogTag = create(BlogTag::class, ['name' => 'Dog']);
 
-        $this->patch(route('admin.blogTags.update', $dogTag),
+        $this->patch(
+            route('admin.blogTags.update', $dogTag),
             ['name' => 'Cat']
         )->assertSessionHasErrors('name');
     }

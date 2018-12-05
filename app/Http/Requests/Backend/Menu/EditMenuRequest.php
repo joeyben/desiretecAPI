@@ -27,7 +27,6 @@ class EditMenuRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

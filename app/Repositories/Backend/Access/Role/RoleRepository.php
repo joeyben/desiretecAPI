@@ -10,8 +10,6 @@ use App\Models\Access\Role\Role;
 use App\Models\Access\User\User;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\Backend\Access\User\UserRepository;
-
 
 /**
  * Class RoleRepository.
@@ -48,17 +46,17 @@ class RoleRepository extends BaseRepository
             ->leftJoin('permission_role', 'permission_role.role_id', '=', 'roles.id')
             ->leftJoin('permissions', 'permission_role.permission_id', '=', 'permissions.id')
             ->select([
-                config('access.roles_table').'.id',
-                config('access.roles_table').'.name',
-                config('access.roles_table').'.all',
-                config('access.roles_table').'.sort',
-                config('access.roles_table').'.status',
-                config('access.roles_table').'.created_at',
-                config('access.roles_table').'.updated_at',
+                config('access.roles_table') . '.id',
+                config('access.roles_table') . '.name',
+                config('access.roles_table') . '.all',
+                config('access.roles_table') . '.sort',
+                config('access.roles_table') . '.status',
+                config('access.roles_table') . '.created_at',
+                config('access.roles_table') . '.updated_at',
                 DB::raw("GROUP_CONCAT( DISTINCT permissions.display_name SEPARATOR '<br/>') as permission_name"),
                 DB::raw('(SELECT COUNT(role_user.id) FROM role_user LEFT JOIN users ON role_user.user_id = users.id WHERE role_user.role_id = roles.id AND users.deleted_at IS NULL) AS userCount'),
             ])
-            ->groupBy(config('access.roles_table').'.id', config('access.roles_table').'.name', config('access.roles_table').'.all', config('access.roles_table').'.sort');
+            ->groupBy(config('access.roles_table') . '.id', config('access.roles_table') . '.name', config('access.roles_table') . '.all', config('access.roles_table') . '.sort');
     }
 
     /**
@@ -75,7 +73,7 @@ class RoleRepository extends BaseRepository
         }
 
         //See if the role has all access
-        $all = $input['associated_permissions'] == 'all' ? true : false;
+        $all = 'all' === $input['associated_permissions'] ? true : false;
 
         if (!isset($input['permissions'])) {
             $input['permissions'] = [];
@@ -84,7 +82,7 @@ class RoleRepository extends BaseRepository
         //This config is only required if all is false
         if (!$all) {
             //See if the role must contain a permission as per config
-            if (config('access.roles.role_must_contain_permission') && count($input['permissions']) == 0) {
+            if (config('access.roles.role_must_contain_permission') && 0 === \count($input['permissions'])) {
                 throw new GeneralException(trans('exceptions.backend.access.roles.needs_permission'));
             }
         }
@@ -93,19 +91,19 @@ class RoleRepository extends BaseRepository
             $role = self::MODEL;
             $role = new $role();
             $role->name = $input['name'];
-            $role->sort = isset($input['sort']) && strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
+            $role->sort = isset($input['sort']) && \mb_strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
 
             //See if this role has all permissions and set the flag on the role
             $role->all = $all;
 
-            $role->status = (isset($input['status']) && $input['status'] == 1) ? 1 : 0;
+            $role->status = (isset($input['status']) && 1 === $input['status']) ? 1 : 0;
             $role->created_by = access()->user()->id;
 
             if ($role->save()) {
                 if (!$all) {
                     $permissions = [];
 
-                    if (is_array($input['permissions']) && count($input['permissions'])) {
+                    if (\is_array($input['permissions']) && \count($input['permissions'])) {
                         foreach ($input['permissions'] as $perm) {
                             if (is_numeric($perm)) {
                                 array_push($permissions, $perm);
@@ -136,10 +134,10 @@ class RoleRepository extends BaseRepository
     public function update($role, array $input)
     {
         //See if the role has all access, administrator always has all access
-        if ($role->id == 1) {
+        if (1 === $role->id) {
             $all = true;
         } else {
-            $all = $input['associated_permissions'] == 'all' ? true : false;
+            $all = 'all' === $input['associated_permissions'] ? true : false;
         }
 
         if (!isset($input['permissions'])) {
@@ -149,18 +147,18 @@ class RoleRepository extends BaseRepository
         //This config is only required if all is false
         if (!$all) {
             //See if the role must contain a permission as per config
-            if (config('access.roles.role_must_contain_permission') && count($input['permissions']) == 0) {
+            if (config('access.roles.role_must_contain_permission') && 0 === \count($input['permissions'])) {
                 throw new GeneralException(trans('exceptions.backend.access.roles.needs_permission'));
             }
         }
 
         $role->name = $input['name'];
-        $role->sort = isset($input['sort']) && strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
+        $role->sort = isset($input['sort']) && \mb_strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
 
         //See if this role has all permissions and set the flag on the role
         $role->all = $all;
 
-        $role->status = (isset($input['status']) && $input['status'] == 1) ? 1 : 0;
+        $role->status = (isset($input['status']) && 1 === $input['status']) ? 1 : 0;
         $role->updated_by = access()->user()->id;
 
         DB::transaction(function () use ($role, $input, $all) {
@@ -175,7 +173,7 @@ class RoleRepository extends BaseRepository
                     //Attach permissions if the role does not have all access
                     $permissions = [];
 
-                    if (is_array($input['permissions']) && count($input['permissions'])) {
+                    if (\is_array($input['permissions']) && \count($input['permissions'])) {
                         foreach ($input['permissions'] as $perm) {
                             if (is_numeric($perm)) {
                                 array_push($permissions, $perm);
@@ -205,7 +203,7 @@ class RoleRepository extends BaseRepository
     public function delete(Role $role)
     {
         //Would be stupid to delete the administrator role
-        if ($role->id == 1) { //id is 1 because of the seeder
+        if (1 === $role->id) { //id is 1 because of the seeder
             throw new GeneralException(trans('exceptions.backend.access.roles.cant_delete_admin'));
         }
 
@@ -248,12 +246,13 @@ class RoleRepository extends BaseRepository
      */
     public function getByRole($roles, $by = 'name')
     {
-        if (!is_array($roles)) {
+        if (!\is_array($roles)) {
             $roles = [$roles];
         }
-        $user = new User;
+        $user = new User();
+
         return $user->whereHas('roles', function ($query) use ($roles, $by) {
-            $query->whereIn('roles.'.$by, $roles);
+            $query->whereIn('roles.' . $by, $roles);
         })->get();
     }
 
@@ -263,8 +262,8 @@ class RoleRepository extends BaseRepository
      */
     public function updateAllUsersPermissions($role, $permissions)
     {
-        $users = $this->getByRole($role,'name');
-        foreach($users as $user) {
+        $users = $this->getByRole($role, 'name');
+        foreach ($users as $user) {
             $user->detachPermissions($user->permissions);
             $user->attachPermissions($permissions);
         }

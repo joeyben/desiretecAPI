@@ -117,7 +117,6 @@ class UserRepository extends BaseRepository
 
         DB::transaction(function () use ($user) {
             if ($user->save()) {
-
                 /*
                  * Add the default site role to the new user
                  */
@@ -139,7 +138,7 @@ class UserRepository extends BaseRepository
          *
          * If this is a social account they are confirmed through the social provider by default
          */
-        if (config('access.users.confirm_email') && $provider === false) {
+        if (config('access.users.confirm_email') && false === $provider) {
             $user->notify(new UserNeedsConfirmation($user->confirmation_code));
         }
 
@@ -214,11 +213,11 @@ class UserRepository extends BaseRepository
     {
         $user = $this->findByToken($token);
 
-        if ($user->confirmed == 1) {
+        if (1 === $user->confirmed) {
             throw new GeneralException(trans('exceptions.frontend.auth.confirmation.already_confirmed'));
         }
 
-        if ($user->confirmation_code == $token) {
+        if ($user->confirmation_code === $token) {
             $user->confirmed = 1;
 
             event(new UserConfirmed($user));
@@ -250,7 +249,7 @@ class UserRepository extends BaseRepository
 
         if ($user->canChangeEmail()) {
             //Address is not current address
-            if ($user->email != $input['email']) {
+            if ($user->email !== $input['email']) {
                 //Emails have to be unique
                 if ($this->findByEmail($input['email'])) {
                     throw new GeneralException(trans('exceptions.frontend.auth.email_taken'));
@@ -346,17 +345,17 @@ class UserRepository extends BaseRepository
      */
     public function scopeCloseTo($latitude, $longitude)
     {
-        return $this->query()->whereRaw("
+        return $this->query()->whereRaw('
        ST_Distance_Sphere(
             point(longitude, latitude),
             point(?, ?)
         ) * .000621371192 < delivery_max_range
-    ", [
+    ', [
             $longitude,
             $latitude,
         ]);
     }
 
-// Using the scope:
+    // Using the scope:
 //return Restaurant::closeTo($myLatitude, $myLongitude);
 }

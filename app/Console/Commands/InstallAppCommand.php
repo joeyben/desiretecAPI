@@ -65,7 +65,7 @@ class InstallAppCommand extends Command
         $extensions = get_loaded_extensions();
         $require_extensions = ['mbstring', 'openssl', 'curl', 'exif', 'fileinfo', 'tokenizer'];
         foreach (array_diff($require_extensions, $extensions) as $missing_extension) {
-            $this->error('Missing '.ucfirst($missing_extension).' extension');
+            $this->error('Missing ' . ucfirst($missing_extension) . ' extension');
         }
 
         if (!file_exists('.env')) {
@@ -110,8 +110,6 @@ class InstallAppCommand extends Command
      * Set Database info in .env file.
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     *
-     * @return void
      */
     protected function setDatabaseInfo()
     {
@@ -135,17 +133,17 @@ class InstallAppCommand extends Command
             $question->setHidden(true)->setHiddenFallback(true);
             $this->password = (new SymfonyQuestionHelper())->ask($this->input, $this->output, $question);
 
-            if ($this->password === '<none>') {
+            if ('<none>' === $this->password) {
                 $this->password = '';
             }
 
             // Update DB credentials in .env file.
             $contents = $this->getKeyFile();
-            $contents = preg_replace('/('.preg_quote('DB_HOST=').')(.*)/', 'DB_HOST='.$this->host, $contents);
-            $contents = preg_replace('/('.preg_quote('DB_PORT=').')(.*)/', 'DB_PORT='.$this->port, $contents);
-            $contents = preg_replace('/('.preg_quote('DB_DATABASE=').')(.*)/', 'DB_DATABASE='.$this->database, $contents);
-            $contents = preg_replace('/('.preg_quote('DB_USERNAME=').')(.*)/', 'DB_USERNAME='.$this->username, $contents);
-            $contents = preg_replace('/('.preg_quote('DB_PASSWORD=').')(.*)/', 'DB_PASSWORD='.$this->password, $contents);
+            $contents = preg_replace('/(' . preg_quote('DB_HOST=') . ')(.*)/', 'DB_HOST=' . $this->host, $contents);
+            $contents = preg_replace('/(' . preg_quote('DB_PORT=') . ')(.*)/', 'DB_PORT=' . $this->port, $contents);
+            $contents = preg_replace('/(' . preg_quote('DB_DATABASE=') . ')(.*)/', 'DB_DATABASE=' . $this->database, $contents);
+            $contents = preg_replace('/(' . preg_quote('DB_USERNAME=') . ')(.*)/', 'DB_USERNAME=' . $this->username, $contents);
+            $contents = preg_replace('/(' . preg_quote('DB_PASSWORD=') . ')(.*)/', 'DB_PASSWORD=' . $this->password, $contents);
 
             if (!$contents) {
                 throw new Exception('Error while writing credentials to .env file.');
@@ -188,7 +186,7 @@ class InstallAppCommand extends Command
     protected function guessDatabaseName()
     {
         try {
-            $segments = array_reverse(explode(DIRECTORY_SEPARATOR, app_path()));
+            $segments = array_reverse(explode(\DIRECTORY_SEPARATOR, app_path()));
             $name = explode('.', $segments[1])[0];
 
             return str_replace('-', '_', str_slug($name));
@@ -246,10 +244,10 @@ class InstallAppCommand extends Command
             DB::purge();
 
             // Switch to use {$this->database}
-            DB::unprepared('USE `'.$database.'`');
+            DB::unprepared('USE `' . $database . '`');
             DB::connection()->setDatabaseName($database);
 
-            $dumpDB = DB::unprepared(file_get_contents(base_path().'/database/dump/laravel_admin_panel.sql'));
+            $dumpDB = DB::unprepared(file_get_contents(base_path() . '/database/dump/laravel_admin_panel.sql'));
 
             if ($dumpDB) {
                 $this->info('Import default database successfully!');
@@ -262,7 +260,7 @@ class InstallAppCommand extends Command
      */
     protected function migrateTables($database)
     {
-        DB::unprepared('USE `'.$database.'`');
+        DB::unprepared('USE `' . $database . '`');
 
         Artisan::call('migrate'); // Artisan migration
         $this->info('Migration successfully done!');

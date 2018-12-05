@@ -2,8 +2,6 @@
 
 namespace App\Models\Distributions\Traits\Relationship;
 
-use App\Models\Wishes\Wish;
-
 /**
  * Class DistributionRelationship.
  */
@@ -18,5 +16,4 @@ trait DistributionRelationship
     {
         return $this->belongsToMany(config('access.whitelabel'), config('access.whitelabel_distribution_table'), 'distribution_id', 'whitelabel_id');
     }
-
 }

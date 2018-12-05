@@ -27,7 +27,6 @@ class ManageCommentsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

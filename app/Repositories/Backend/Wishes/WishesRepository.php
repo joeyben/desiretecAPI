@@ -32,7 +32,7 @@ class WishesRepository extends BaseRepository
 
     public function __construct()
     {
-        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'wish'.DIRECTORY_SEPARATOR;
+        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
     }
 
@@ -41,25 +41,25 @@ class WishesRepository extends BaseRepository
      */
     public function getForDataTable()
     {
-        $dataTableQuery =  $this->query()
-            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.wishes.table').'.created_by')
-            ->leftjoin(config('module.whitelabels.table'), config('module.whitelabels.table').'.id', '=', config('module.wishes.table').'.whitelabel_id')
-            ->leftjoin(config('module.groups.table'), config('module.groups.table').'.id', '=', config('module.wishes.table').'.group_id')
+        $dataTableQuery = $this->query()
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.wishes.table') . '.created_by')
+            ->leftjoin(config('module.whitelabels.table'), config('module.whitelabels.table') . '.id', '=', config('module.wishes.table') . '.whitelabel_id')
+            ->leftjoin(config('module.groups.table'), config('module.groups.table') . '.id', '=', config('module.wishes.table') . '.group_id')
             ->select([
-                config('module.wishes.table').'.id',
-                config('module.wishes.table').'.title',
-                config('module.wishes.table').'.status',
-                config('module.wishes.table').'.created_by',
-                config('module.wishes.table').'.created_at',
-                config('access.users_table').'.first_name as user_name',
-                config('module.whitelabels.table').'.id as whitelabel_id',
-                config('module.whitelabels.table').'.display_name as whitelabel_name',
-                config('module.groups.table').'.id as group_id',
-                config('module.groups.table').'.display_name as group_name',
+                config('module.wishes.table') . '.id',
+                config('module.wishes.table') . '.title',
+                config('module.wishes.table') . '.status',
+                config('module.wishes.table') . '.created_by',
+                config('module.wishes.table') . '.created_at',
+                config('access.users_table') . '.first_name as user_name',
+                config('module.whitelabels.table') . '.id as whitelabel_id',
+                config('module.whitelabels.table') . '.display_name as whitelabel_name',
+                config('module.groups.table') . '.id as group_id',
+                config('module.groups.table') . '.display_name as group_name',
             ]);
 
-        $dataTableQuery->when(access()->user()->hasRole('Executive') && !access()->user()->hasRole('Administrator'),function($q){
-            $q->whereIn(config('module.whitelabels.table').'.id', access()->user()->whitelabels()->get()->pluck('id')->toArray());
+        $dataTableQuery->when(access()->user()->hasRole('Executive') && !access()->user()->hasRole('Administrator'), function ($q) {
+            $q->whereIn(config('module.whitelabels.table') . '.id', access()->user()->whitelabels()->get()->pluck('id')->toArray());
         });
 
         return $dataTableQuery;
@@ -74,15 +74,11 @@ class WishesRepository extends BaseRepository
      */
     public function create(array $input)
     {
-
         DB::transaction(function () use ($input) {
             $input = $this->uploadImage($input);
             $input['created_by'] = access()->user()->id;
 
-
-
             if ($wish = Wish::create($input)) {
-
                 event(new WishCreated($wish));
 
                 return true;
@@ -96,7 +92,7 @@ class WishesRepository extends BaseRepository
      * Update Wish.
      *
      * @param \App\Models\Wishes\Wish $wish
-     * @param array                  $input
+     * @param array                   $input
      */
     public function update(Wish $wish, array $input)
     {
@@ -110,7 +106,6 @@ class WishesRepository extends BaseRepository
 
         DB::transaction(function () use ($wish, $input) {
             if ($wish->update($input)) {
-
                 event(new WishUpdated($wish));
 
                 return true;
@@ -121,8 +116,6 @@ class WishesRepository extends BaseRepository
             );
         });
     }
-
-
 
     /**
      * @param \App\Models\Wishes\Wish $wish
@@ -156,9 +149,9 @@ class WishesRepository extends BaseRepository
         $avatar = $input['featured_image'];
 
         if (isset($input['featured_image']) && !empty($input['featured_image'])) {
-            $fileName = time().$avatar->getClientOriginalName();
+            $fileName = time() . $avatar->getClientOriginalName();
 
-            $this->storage->put($this->upload_path.$fileName, file_get_contents($avatar->getRealPath()), 'public');
+            $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()), 'public');
 
             $input = array_merge($input, ['featured_image' => $fileName]);
 
@@ -175,6 +168,6 @@ class WishesRepository extends BaseRepository
     {
         $fileName = $model->featured_image;
 
-        return $this->storage->delete($this->upload_path.$fileName);
+        return $this->storage->delete($this->upload_path . $fileName);
     }
 }

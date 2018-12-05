@@ -24,11 +24,11 @@ class MenuRepository extends BaseRepository
     {
         return $this->query()
             ->select([
-                config('access.menus_table').'.id',
-                config('access.menus_table').'.name',
-                config('access.menus_table').'.type',
-                config('access.menus_table').'.created_at',
-                config('access.menus_table').'.updated_at',
+                config('access.menus_table') . '.id',
+                config('access.menus_table') . '.name',
+                config('access.menus_table') . '.type',
+                config('access.menus_table') . '.created_at',
+                config('access.menus_table') . '.updated_at',
             ]);
     }
 

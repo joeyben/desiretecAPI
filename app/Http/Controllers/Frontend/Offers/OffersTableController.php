@@ -33,10 +33,10 @@ class OffersTableController extends Controller
             ->escapeColumns(['title'])
 
             ->addColumn('created_by', function ($offers) {
-                return $offers->first_name.' '.$offers->last_name;
+                return $offers->first_name . ' ' . $offers->last_name;
             })
             ->addColumn('created_at', function ($offers) {
-                return $offers->created_at->toFormattedDateString().' '.$offers->created_at->toTimeString();
+                return $offers->created_at->toFormattedDateString() . ' ' . $offers->created_at->toTimeString();
             })
             ->addColumn('status', function ($offers) {
                 return $offers->status;
@@ -49,18 +49,19 @@ class OffersTableController extends Controller
 
     /**
      * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
+     *
      * @return mixed
      */
     public function showOffersForWish(ManageOffersRequest $request)
     {
-        return Datatables::of($this->offers->getForDataTableForWish( $request->get('id')))
+        return Datatables::of($this->offers->getForDataTableForWish($request->get('id')))
             ->escapeColumns(['title'])
 
             ->addColumn('created_by', function ($offers) {
-                return $offers->first_name.' '.$offers->last_name;
+                return $offers->first_name . ' ' . $offers->last_name;
             })
             ->addColumn('created_at', function ($offers) {
-                return $offers->created_at->toFormattedDateString().' '.$offers->created_at->toTimeString();
+                return $offers->created_at->toFormattedDateString() . ' ' . $offers->created_at->toTimeString();
             })
             ->addColumn('status', function ($offers) {
                 return $offers->status;

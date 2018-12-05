@@ -27,7 +27,6 @@ class EditCommentsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

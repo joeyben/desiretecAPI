@@ -68,7 +68,7 @@ class LoggedOutRouteTest extends BrowserKitTestCase
         $unconfirmed = factory(User::class)->states('unconfirmed')->create();
         $unconfirmed->attachRole(3); //User
 
-        $this->visit('/account/confirm/'.$unconfirmed->confirmation_code)
+        $this->visit('/account/confirm/' . $unconfirmed->confirmation_code)
              ->seePageIs('/login')
              ->see('Your account has been successfully confirmed!')
              ->seeInDatabase(config('access.users_table'), ['email' => $unconfirmed->email, 'confirmed' => 1]);
@@ -86,7 +86,7 @@ class LoggedOutRouteTest extends BrowserKitTestCase
     {
         Notification::fake();
 
-        $this->visit('/account/confirm/resend/'.$this->user->id)
+        $this->visit('/account/confirm/resend/' . $this->user->id)
              ->seePageIs('/login')
              ->see('A new confirmation e-mail has been sent to the address on file.');
 
@@ -100,7 +100,7 @@ class LoggedOutRouteTest extends BrowserKitTestCase
     public function test_404Page()
     {
         $response = $this->call('GET', '7g48hwbfw9eufj');
-        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertSame(404, $response->getStatusCode());
         $this->assertContains('Page Not Found', $response->getContent());
     }
 }

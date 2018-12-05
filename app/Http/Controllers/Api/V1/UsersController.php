@@ -150,12 +150,12 @@ class UsersController extends APIController
      */
     public function validateUser(Request $request, $action = '', $id = 0)
     {
-        $password = ($action == 'edit') ? '' : 'required|min:6|confirmed';
+        $password = ('edit' === $action) ? '' : 'required|min:6|confirmed';
 
         $validation = Validator::make($request->all(), [
             'first_name'      => 'required|max:255',
             'last_name'       => 'required|max:255',
-            'email'           => 'required|max:255|email|unique:users,email,'.$id,
+            'email'           => 'required|max:255|email|unique:users,email,' . $id,
             'password'        => $password,
             'assignees_roles' => 'required',
             'permissions'     => 'required',

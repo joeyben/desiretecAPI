@@ -27,7 +27,6 @@ class DeleteDistributionsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

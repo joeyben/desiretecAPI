@@ -19,7 +19,7 @@ class PermissionEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->permission->id)
-            ->withText('trans("history.backend.permissions.created") <strong>'.$event->permission->name.'</strong>')
+            ->withText('trans("history.backend.permissions.created") <strong>' . $event->permission->name . '</strong>')
             ->withIcon('plus')
             ->withClass('bg-green')
             ->log();
@@ -32,7 +32,7 @@ class PermissionEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->permission->id)
-            ->withText('trans("history.backend.permissions.updated") <strong>'.$event->permission->name.'</strong>')
+            ->withText('trans("history.backend.permissions.updated") <strong>' . $event->permission->name . '</strong>')
             ->withIcon('save')
             ->withClass('bg-aqua')
             ->log();
@@ -45,7 +45,7 @@ class PermissionEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->permission->id)
-            ->withText('trans("history.backend.permissions.deleted") <strong>'.$event->permission->name.'</strong>')
+            ->withText('trans("history.backend.permissions.deleted") <strong>' . $event->permission->name . '</strong>')
             ->withIcon('trash')
             ->withClass('bg-maroon')
             ->log();

@@ -31,10 +31,10 @@ class BaseRepository
             return $this->query()->where('status', $active)
                 ->orderBy($order_by, $sort)
                 ->paginate($per_page);
-        } else {
-            return $this->query()->orderBy($order_by, $sort)
-                ->paginate($per_page);
         }
+
+        return $this->query()->orderBy($order_by, $sort)
+                ->paginate($per_page);
     }
 
     /**
@@ -60,6 +60,6 @@ class BaseRepository
      */
     public function query()
     {
-        return call_user_func(static::MODEL.'::query');
+        return \call_user_func(static::MODEL . '::query');
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Models\Whitelabels;
 
-use App\Models\Whitelabels\Traits\Attribute\WhitelabelAttribute;
-use App\Models\Whitelabels\Traits\Relationship\WhitelabelRelationship;
 use App\Models\BaseModel;
 use App\Models\ModelTrait;
+use App\Models\Whitelabels\Traits\Attribute\WhitelabelAttribute;
+use App\Models\Whitelabels\Traits\Relationship\WhitelabelRelationship;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -18,7 +18,7 @@ class Whitelabel extends BaseModel
         WhitelabelAttribute,
         WhitelabelRelationship {
             // WhitelabelAttribute::getEditButtonAttribute insteadof ModelTrait;
-        }
+    }
 
     /**
      * The database table used by the model.
@@ -32,7 +32,7 @@ class Whitelabel extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['name', 'display_name', 'status', 'distribution_id','bg_image'];
+    protected $fillable = ['name', 'display_name', 'status', 'distribution_id', 'bg_image'];
 
     protected $attributes = [
         'created_by' => 1,

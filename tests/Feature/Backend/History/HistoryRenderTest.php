@@ -16,14 +16,14 @@ class HistoryRenderTest extends BrowserKitTestCase
 
         history()
             ->withType('User')
-            ->withText(trans('history.backend.users.created').$this->user->name)
+            ->withText(trans('history.backend.users.created') . $this->user->name)
             ->withEntity($this->user->id)
             ->withIcon('plus')
             ->withClass('bg-green')
             ->log();
 
         $this->visit('/admin/dashboard')
-             ->see('<strong>'.$this->admin->name.'</strong> '.trans('history.backend.users.created').$this->user->name);
+             ->see('<strong>' . $this->admin->name . '</strong> ' . trans('history.backend.users.created') . $this->user->name);
     }
 
     /** @test **/
@@ -33,13 +33,13 @@ class HistoryRenderTest extends BrowserKitTestCase
 
         history()
             ->withType('User')
-            ->withText(trans('history.backend.users.created').$this->user->name)
+            ->withText(trans('history.backend.users.created') . $this->user->name)
             ->withEntity($this->user->id)
             ->withIcon('plus')
             ->withClass('bg-green')
             ->log();
 
         $this->visit('/admin/access/user/3')
-             ->see('<strong>'.$this->admin->name.'</strong> '.trans('history.backend.users.created').$this->user->name);
+             ->see('<strong>' . $this->admin->name . '</strong> ' . trans('history.backend.users.created') . $this->user->name);
     }
 }

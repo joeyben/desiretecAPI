@@ -27,7 +27,6 @@ class CreateWishesRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

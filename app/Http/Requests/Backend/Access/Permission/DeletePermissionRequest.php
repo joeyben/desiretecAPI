@@ -27,7 +27,6 @@ class DeletePermissionRequest extends Request
     public function rules()
     {
         return [
-
         ];
     }
 }

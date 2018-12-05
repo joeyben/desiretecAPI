@@ -13,8 +13,8 @@ trait BlogTagAttribute
     public function getActionButtonsAttribute()
     {
         return '<div class="btn-group action-btn">
-                    '.$this->getEditButtonAttribute('edit-blog-tag', 'admin.blogTags.edit').'
-                    '.$this->getDeleteButtonAttribute('delete-blog-tag', 'admin.blogTags.destroy').'
+                    ' . $this->getEditButtonAttribute('edit-blog-tag', 'admin.blogTags.edit') . '
+                    ' . $this->getDeleteButtonAttribute('delete-blog-tag', 'admin.blogTags.destroy') . '
                 </div>';
     }
 
@@ -24,10 +24,10 @@ trait BlogTagAttribute
     public function getStatusLabelAttribute()
     {
         if ($this->isActive()) {
-            return "<label class='label label-success'>".trans('labels.general.active').'</label>';
+            return "<label class='label label-success'>" . trans('labels.general.active') . '</label>';
         }
 
-        return "<label class='label label-danger'>".trans('labels.general.inactive').'</label>';
+        return "<label class='label label-danger'>" . trans('labels.general.inactive') . '</label>';
     }
 
     /**
@@ -35,6 +35,6 @@ trait BlogTagAttribute
      */
     public function isActive()
     {
-        return $this->status == 1;
+        return 1 === $this->status;
     }
 }

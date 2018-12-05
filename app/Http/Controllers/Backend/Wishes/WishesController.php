@@ -19,9 +19,9 @@ class WishesController extends Controller
      * Wish Status.
      */
     protected $status = [
-        'Active' => 'Active',
+        'Active'       => 'Active',
         'Inactive'     => 'Inactive',
-        'Deleted'  => 'Deleted',
+        'Deleted'      => 'Deleted',
     ];
 
     /**
@@ -33,7 +33,6 @@ class WishesController extends Controller
         '3'  => 3,
         '4'  => 4,
         '5'  => 5,
-
     ];
 
     /**
@@ -45,7 +44,6 @@ class WishesController extends Controller
         'Pension'       => 'Pension',
         'Full Pension'  => 'Full Pension',
         'All Inclusive' => 'All Inclusive',
-
     ];
 
     /**
@@ -60,7 +58,7 @@ class WishesController extends Controller
 
     /**
      * @param \App\Repositories\Backend\Wishes\WishesRepository $wish
-     * @param WhitelabelsRepository $whitelabels
+     * @param WhitelabelsRepository                             $whitelabels
      */
     public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabels)
     {
@@ -76,10 +74,9 @@ class WishesController extends Controller
     public function index(ManageWishesRequest $request)
     {
         return view('backend.wishes.index')->with([
-            'status'=> $this->status,
+            'status'  => $this->status,
             'category'=> $this->category,
             'catering'=> $this->catering,
-
         ]);
     }
 
@@ -90,12 +87,11 @@ class WishesController extends Controller
      */
     public function create(ManageWishesRequest $request)
     {
-
         return view('backend.wishes.create')->with([
             'status'         => $this->status,
-            'category'=> $this->category,
-            'catering'=> $this->catering,
-            'whitelabels' => $this->whitelabels->getAll(),
+            'category'       => $this->category,
+            'catering'       => $this->catering,
+            'whitelabels'    => $this->whitelabels->getAll(),
         ]);
     }
 
@@ -114,7 +110,7 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                              $wish
+     * @param \App\Models\Wishes\Wish                               $wish
      * @param \App\Http\Requests\Backend\Wishes\ManageWishesRequest $request
      *
      * @return mixed
@@ -126,12 +122,12 @@ class WishesController extends Controller
             'status'             => $this->status,
             'category'           => $this->category,
             'catering'           => $this->catering,
-            'whitelabels' => $this->whitelabels->getAll(),
+            'whitelabels'        => $this->whitelabels->getAll(),
         ]);
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                              $wish
+     * @param \App\Models\Wishes\Wish                               $wish
      * @param \App\Http\Requests\Backend\Wishes\UpdateWishesRequest $request
      *
      * @return mixed
@@ -148,7 +144,7 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                              $wish
+     * @param \App\Models\Wishes\Wish                               $wish
      * @param \App\Http\Requests\Backend\Wishes\ManageWishesRequest $request
      *
      * @return mixed

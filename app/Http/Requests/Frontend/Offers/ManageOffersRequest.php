@@ -27,7 +27,6 @@ class ManageOffersRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

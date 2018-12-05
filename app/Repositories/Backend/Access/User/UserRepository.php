@@ -65,25 +65,25 @@ class UserRepository extends BaseRepository
             ->leftJoin('whitelabel_user', 'whitelabel_user.user_id', '=', 'users.id')
             ->leftJoin('whitelabels', 'whitelabel_user.whitelabel_id', '=', 'whitelabels.id')
             ->select([
-                config('access.users_table').'.id',
-                config('access.users_table').'.first_name',
-                config('access.users_table').'.last_name',
-                config('access.users_table').'.email',
-                config('access.users_table').'.status',
-                config('access.users_table').'.confirmed',
-                config('access.users_table').'.created_at',
-                config('access.users_table').'.updated_at',
-                config('access.users_table').'.deleted_at',
+                config('access.users_table') . '.id',
+                config('access.users_table') . '.first_name',
+                config('access.users_table') . '.last_name',
+                config('access.users_table') . '.email',
+                config('access.users_table') . '.status',
+                config('access.users_table') . '.confirmed',
+                config('access.users_table') . '.created_at',
+                config('access.users_table') . '.updated_at',
+                config('access.users_table') . '.deleted_at',
                 DB::raw('GROUP_CONCAT(roles.name) as roles'),
                 DB::raw('GROUP_CONCAT(whitelabels.name) as whitelabels'),
             ])
             ->groupBy('users.id');
 
-        $dataTableQuery->when(access()->user()->hasRole('Executive') && !access()->user()->hasRole('Administrator'),function($q){
-            $q->whereIn('whitelabels.id',access()->user()->whitelabels()->get()->pluck('id')->toArray());
+        $dataTableQuery->when(access()->user()->hasRole('Executive') && !access()->user()->hasRole('Administrator'), function ($q) {
+            $q->whereIn('whitelabels.id', access()->user()->whitelabels()->get()->pluck('id')->toArray());
         });
 
-        if ($trashed == 'true') {
+        if ('true' === $trashed) {
             return $dataTableQuery->onlyTrashed();
         }
 
@@ -98,17 +98,16 @@ class UserRepository extends BaseRepository
      */
     public function create($request)
     {
-        $data = $request->except('assignees_roles', 'permissions','whitelabels');
+        $data = $request->except('assignees_roles', 'permissions', 'whitelabels');
         $roles = $request->get('assignees_roles');
         $permissions = $request->get('permissions');
         $whitelabels = $request->get('whitelabels');
         $user = $this->createUserStub($data);
 
-        DB::transaction(function () use ($user, $data, $roles, $permissions,$whitelabels) {
+        DB::transaction(function () use ($user, $data, $roles, $permissions, $whitelabels) {
             if ($user->save()) {
-
                 //User Created, Validate Roles
-                if (!count($roles)) {
+                if (!\count($roles)) {
                     throw new GeneralException(trans('exceptions.backend.access.users.role_needed_create'));
                 }
 
@@ -122,7 +121,7 @@ class UserRepository extends BaseRepository
                 $user->attachWhitelabels($whitelabels);
 
                 //Send confirmation email if requested and account approval is off
-                if (isset($data['confirmation_email']) && $user->confirmed == 0) {
+                if (isset($data['confirmation_email']) && 0 === $user->confirmed) {
                     $user->notify(new UserNeedsConfirmation($user->confirmation_code));
                 }
 
@@ -154,8 +153,8 @@ class UserRepository extends BaseRepository
 
         DB::transaction(function () use ($user, $data, $roles, $permissions, $whitelabels, $groups) {
             if ($user->update($data)) {
-                $user->status = isset($data['status']) && $data['status'] == '1' ? 1 : 0;
-                $user->confirmed = isset($data['confirmed']) && $data['confirmed'] == '1' ? 1 : 0;
+                $user->status = isset($data['status']) && '1' === $data['status'] ? 1 : 0;
+                $user->confirmed = isset($data['confirmed']) && '1' === $data['confirmed'] ? 1 : 0;
 
                 $user->save();
 
@@ -214,7 +213,7 @@ class UserRepository extends BaseRepository
      */
     public function delete($user)
     {
-        if (access()->id() == $user->id) {
+        if (access()->id() === $user->id) {
             throw new GeneralException(trans('exceptions.backend.access.users.cant_delete_self'));
         }
 
@@ -238,11 +237,11 @@ class UserRepository extends BaseRepository
      */
     public function deleteAll($ids)
     {
-        if (in_array(access()->id(), $ids)) {
+        if (\in_array(access()->id(), $ids, true)) {
             throw new GeneralException(trans('exceptions.backend.access.users.cant_delete_self'));
         }
 
-        if (in_array(1, $ids)) {
+        if (\in_array(1, $ids, true)) {
             throw new GeneralException(trans('exceptions.backend.access.users.cant_delete_admin'));
         }
 
@@ -262,7 +261,7 @@ class UserRepository extends BaseRepository
      */
     public function forceDelete($user)
     {
-        if (is_null($user->deleted_at)) {
+        if (null === $user->deleted_at) {
             throw new GeneralException(trans('exceptions.backend.access.users.delete_first'));
         }
 
@@ -286,7 +285,7 @@ class UserRepository extends BaseRepository
      */
     public function restore($user)
     {
-        if (is_null($user->deleted_at)) {
+        if (null === $user->deleted_at) {
             throw new GeneralException(trans('exceptions.backend.access.users.cant_restore'));
         }
 
@@ -309,7 +308,7 @@ class UserRepository extends BaseRepository
      */
     public function mark($user, $status)
     {
-        if (access()->id() == $user->id && $status == 0) {
+        if (access()->id() === $user->id && 0 === $status) {
             throw new GeneralException(trans('exceptions.backend.access.users.cant_deactivate_self'));
         }
 
@@ -318,11 +317,11 @@ class UserRepository extends BaseRepository
         switch ($status) {
             case 0:
                 event(new UserDeactivated($user));
-            break;
+                break;
 
             case 1:
                 event(new UserReactivated($user));
-            break;
+                break;
         }
 
         if ($user->save()) {
@@ -341,7 +340,7 @@ class UserRepository extends BaseRepository
     protected function checkUserByEmail($input, $user)
     {
         //Figure out if email is not the same
-        if ($user->email != $input['email']) {
+        if ($user->email !== $input['email']) {
             //Check to see if email exists
             if ($this->query()->where('email', '=', $input['email'])->first()) {
                 throw new GeneralException(trans('exceptions.backend.access.users.email_error'));
@@ -388,7 +387,6 @@ class UserRepository extends BaseRepository
         $user->attachWhitelabels($whitelabels);
     }
 
-
     /**
      * Flush Groups out, then add array of new ones.
      *
@@ -411,7 +409,7 @@ class UserRepository extends BaseRepository
     {
         //User Updated, Update Roles
         //Validate that there's at least one role chosen
-        if (count($roles) == 0) {
+        if (0 === \count($roles)) {
             throw new GeneralException(trans('exceptions.backend.access.users.role_needed'));
         }
     }
@@ -445,12 +443,12 @@ class UserRepository extends BaseRepository
      */
     public function getByPermission($permissions, $by = 'name')
     {
-        if (!is_array($permissions)) {
+        if (!\is_array($permissions)) {
             $permissions = [$permissions];
         }
 
         return $this->query()->whereHas('roles.permissions', function ($query) use ($permissions, $by) {
-            $query->whereIn('permissions.'.$by, $permissions);
+            $query->whereIn('permissions.' . $by, $permissions);
         })->get();
     }
 
@@ -462,12 +460,12 @@ class UserRepository extends BaseRepository
      */
     public function getByRole($roles, $by = 'name')
     {
-        if (!is_array($roles)) {
+        if (!\is_array($roles)) {
             $roles = [$roles];
         }
 
         return $this->query()->whereHas('roles', function ($query) use ($roles, $by) {
-            $query->whereIn('roles.'.$by, $roles);
+            $query->whereIn('roles.' . $by, $roles);
         })->get();
     }
 }

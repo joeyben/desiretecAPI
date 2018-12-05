@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Validation Language Lines
@@ -115,7 +114,6 @@ return [
     */
 
     'attributes' => [
-
         'backend' => [
             'access' => [
                 'permissions' => [
@@ -195,45 +193,44 @@ return [
             ],
 
             'wishes' => [
-                'title'            => 'Wish Title',
-                'image'            => 'Featured Image',
-                'description'      => 'Description',
-                'status'           => 'Status',
-                'airport'          => 'Airport',
-                'destination'      => 'Destination',
-                'earliest_start'   => 'Earliest start',
-                'latest_return'    => 'Latest return',
-                'adults'           => 'Adults',
-                'kids'             => 'Kids',
-                'budget'           => 'Budget',
-                'category'         => 'Hotel category',
-                'catering'         => 'Hotel catering',
-                'duration'         => 'Duration',
+                'title'                       => 'Wish Title',
+                'image'                       => 'Featured Image',
+                'description'                 => 'Description',
+                'status'                      => 'Status',
+                'airport'                     => 'Airport',
+                'destination'                 => 'Destination',
+                'earliest_start'              => 'Earliest start',
+                'latest_return'               => 'Latest return',
+                'adults'                      => 'Adults',
+                'kids'                        => 'Kids',
+                'budget'                      => 'Budget',
+                'category'                    => 'Hotel category',
+                'catering'                    => 'Hotel catering',
+                'duration'                    => 'Duration',
                 'associated_whitelabels'      => 'Associated Whitelabels',
             ],
 
             'groups' => [
-                'name'             => 'Group Name',
-                'display_name'     => 'Display Name',
-                'description'      => 'Description',
-                'status'           => 'Status',
+                'name'                        => 'Group Name',
+                'display_name'                => 'Display Name',
+                'description'                 => 'Description',
+                'status'                      => 'Status',
                 'associated_whitelabels'      => 'Associated Whitelabels',
-                'groups'           => 'Seller Groups',
+                'groups'                      => 'Seller Groups',
             ],
 
             'distributions' => [
                 'name'             => 'Name',
                 'display_name'     => 'Display Name',
                 'description'      => 'Description',
-
             ],
 
             'whitelabels' => [
-                'name'             => 'Name',
-                'display_name'     => 'Display Name',
-                'status'           => 'Status',
+                'name'                         => 'Name',
+                'display_name'                 => 'Display Name',
+                'status'                       => 'Status',
                 'associated_distribution'      => 'Associated Distribution',
-                'image'             => 'Background Image'
+                'image'                        => 'Background Image'
             ],
 
             'settings' => [
@@ -333,5 +330,4 @@ return [
             'invalid_email'    => 'Email is not register with fin builders',
         ],
     ],
-
 ];

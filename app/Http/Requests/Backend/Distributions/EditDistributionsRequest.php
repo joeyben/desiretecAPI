@@ -27,7 +27,6 @@ class EditDistributionsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

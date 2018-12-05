@@ -10,7 +10,6 @@ use App\Models\Wishes\Wish;
  */
 trait OfferRelationship
 {
-
     /**
      * Offers belongsTo with User.
      */
@@ -19,7 +18,6 @@ trait OfferRelationship
         return $this->belongsTo(User::class, 'created_by');
     }
 
-
     /**
      * Offers belongsTo with Wish.
      */
@@ -27,5 +25,4 @@ trait OfferRelationship
     {
         return $this->belongsTo(Wish::class, 'wish_id');
     }
-
 }

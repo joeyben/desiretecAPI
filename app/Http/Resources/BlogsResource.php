@@ -21,7 +21,7 @@ class BlogsResource extends Resource
             'publish_datetime'  => $this->publish_datetime->format('d/m/Y h:i A'),
             'status'            => $this->status,
             'created_at'        => optional($this->created_at)->toDateString(),
-            'created_by'        => (is_null($this->user_name)) ? optional($this->owner)->first_name : $this->user_name,
+            'created_by'        => (null === $this->user_name) ? optional($this->owner)->first_name : $this->user_name,
         ];
     }
 }

@@ -27,7 +27,6 @@ class CreateRoleRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

@@ -119,9 +119,9 @@ class BlogsController extends APIController
      */
     public function validateBlog(Request $request, $action = 'insert')
     {
-        $featured_image = ($action == 'insert') ? 'required' : '';
+        $featured_image = ('insert' === $action) ? 'required' : '';
 
-        $publish_datetime = $request->publish_datetime !== '' ? 'required|date' : 'required';
+        $publish_datetime = '' !== $request->publish_datetime ? 'required|date' : 'required';
 
         $validation = Validator::make($request->all(), [
             'name'              => 'required|max:191',

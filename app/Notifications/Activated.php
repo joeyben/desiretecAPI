@@ -12,8 +12,6 @@ class Activated extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
     protected $user;
 
@@ -63,7 +61,6 @@ class Activated extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
         ];
     }
 }

@@ -3,15 +3,12 @@
 namespace App\Models\Groups\Traits\Relationship;
 
 use App\Models\Access\User\User;
-use App\Models\Comments\Comment;
-use App\Models\Offers\Offer;
 
 /**
  * Class GroupRelationship.
  */
 trait GroupRelationship
 {
-
     /**
      * Groups belongsTo with User.
      */
@@ -19,7 +16,6 @@ trait GroupRelationship
     {
         return $this->belongsTo(User::class, 'created_by');
     }
-
 
     /**
      * Groups belongsTo with Whitelabel.
@@ -36,5 +32,4 @@ trait GroupRelationship
     {
         return $this->belongsToMany(config('auth.providers.users.model'), 'group_user', 'group_id', 'user_id');
     }
-
 }

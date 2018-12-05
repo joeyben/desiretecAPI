@@ -6,8 +6,8 @@ use App\Events\Frontend\Wishes\WishCreated;
 use App\Events\Frontend\Wishes\WishDeleted;
 use App\Events\Frontend\Wishes\WishUpdated;
 use App\Exceptions\GeneralException;
-use App\Models\Wishes\Wish;
 use App\Models\Groups\Group;
+use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
 use DB;
 use Illuminate\Support\Facades\Storage;
@@ -36,7 +36,7 @@ class WishesRepository extends BaseRepository
 
     public function __construct()
     {
-        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'wish'.DIRECTORY_SEPARATOR;
+        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
     }
 
@@ -50,39 +50,37 @@ class WishesRepository extends BaseRepository
             array_push($whitelabels, $whitelabel->id);
         }
 
-
-
         $query = $this->query()
-            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.wishes.table').'.created_by')
-            ->leftjoin(config('module.whitelabels.table'), config('module.whitelabels.table').'.id', '=', config('module.wishes.table').'.whitelabel_id')
-            ->leftjoin(config('module.offers.table'), config('module.offers.table').'.wish_id', '=', config('module.wishes.table').'.id')
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.wishes.table') . '.created_by')
+            ->leftjoin(config('module.whitelabels.table'), config('module.whitelabels.table') . '.id', '=', config('module.wishes.table') . '.whitelabel_id')
+            ->leftjoin(config('module.offers.table'), config('module.offers.table') . '.wish_id', '=', config('module.wishes.table') . '.id')
             ->select([
-                config('module.wishes.table').'.id',
-                config('module.wishes.table').'.title',
-                config('module.wishes.table').'.airport',
-                config('module.wishes.table').'.destination',
-                config('module.wishes.table').'.duration',
-                config('module.wishes.table').'.adults',
-                config('module.wishes.table').'.budget',
-                config('module.wishes.table').'.earliest_start',
-                config('module.wishes.table').'.latest_return',
-                config('module.wishes.table').'.status',
-                config('module.wishes.table').'.featured_image',
-                config('module.wishes.table').'.created_by',
-                config('module.wishes.table').'.created_at',
-                config('module.wishes.table').'.group_id',
-                config('access.users_table').'.first_name as first_name',
-                config('access.users_table').'.last_name as last_name',
-                config('module.whitelabels.table').'.id as whitelabel_id',
-                config('module.whitelabels.table').'.display_name as whitelabel_name',
-                DB::raw('count('.config('module.offers.table').'.id) as offers'),
+                config('module.wishes.table') . '.id',
+                config('module.wishes.table') . '.title',
+                config('module.wishes.table') . '.airport',
+                config('module.wishes.table') . '.destination',
+                config('module.wishes.table') . '.duration',
+                config('module.wishes.table') . '.adults',
+                config('module.wishes.table') . '.budget',
+                config('module.wishes.table') . '.earliest_start',
+                config('module.wishes.table') . '.latest_return',
+                config('module.wishes.table') . '.status',
+                config('module.wishes.table') . '.featured_image',
+                config('module.wishes.table') . '.created_by',
+                config('module.wishes.table') . '.created_at',
+                config('module.wishes.table') . '.group_id',
+                config('access.users_table') . '.first_name as first_name',
+                config('access.users_table') . '.last_name as last_name',
+                config('module.whitelabels.table') . '.id as whitelabel_id',
+                config('module.whitelabels.table') . '.display_name as whitelabel_name',
+                DB::raw('count(' . config('module.offers.table') . '.id) as offers'),
             ])
-            ->whereIn('whitelabel_id',$whitelabels)
-            ->groupBy(config('module.wishes.table').'.id');
-        if(access()->user()->hasRole('User')){
-            $query->where(config('module.wishes.table').'.created_by', access()->user()->id);
-        }else if(access()->user()->hasRole('Seller')){
-            $query->whereIn(config('module.wishes.table').'.group_id', access()->user()->groups->pluck('id')->toArray());
+            ->whereIn('whitelabel_id', $whitelabels)
+            ->groupBy(config('module.wishes.table') . '.id');
+        if (access()->user()->hasRole('User')) {
+            $query->where(config('module.wishes.table') . '.created_by', access()->user()->id);
+        } elseif (access()->user()->hasRole('Seller')) {
+            $query->whereIn(config('module.wishes.table') . '.group_id', access()->user()->groups->pluck('id')->toArray());
         }
 
         return $query;
@@ -91,19 +89,19 @@ class WishesRepository extends BaseRepository
     /**
      * @return mixed
      */
-    public function getLowestWishesGroup($whitelabel_id){
-
+    public function getLowestWishesGroup($whitelabel_id)
+    {
         $current = Group::where('current', 1)
-            ->where('whitelabel_id',$whitelabel_id)
+            ->where('whitelabel_id', $whitelabel_id)
             ->first();
 
         $group = Group::where('id', '>', $current->toArray()['id'])
-            ->where('whitelabel_id',$whitelabel_id)
+            ->where('whitelabel_id', $whitelabel_id)
             ->orderby('id', 'ASC')
             ->first();
 
-        if(!$group){
-            $group = Group::where('whitelabel_id',$whitelabel_id)
+        if (!$group) {
+            $group = Group::where('whitelabel_id', $whitelabel_id)
                 ->orderby('id', 'ASC')
                 ->first();
         }
@@ -120,7 +118,6 @@ class WishesRepository extends BaseRepository
      */
     public function create(array $input)
     {
-
         DB::transaction(function () use ($input) {
             $input = $this->uploadImage($input);
             $input['created_by'] = access()->user()->id;
@@ -128,7 +125,6 @@ class WishesRepository extends BaseRepository
             $input['group_id'] = $this->getGroup();
 
             if ($wish = Wish::create($input)) {
-
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
 
                 event(new WishCreated($wish));
@@ -144,7 +140,7 @@ class WishesRepository extends BaseRepository
      * Update Wish.
      *
      * @param \App\Models\Wishes\Wish $wish
-     * @param array                  $input
+     * @param array                   $input
      */
     public function update(Wish $wish, array $input)
     {
@@ -158,7 +154,6 @@ class WishesRepository extends BaseRepository
 
         DB::transaction(function () use ($wish, $input) {
             if ($wish->update($input)) {
-
                 event(new WishUpdated($wish));
 
                 return true;
@@ -169,8 +164,6 @@ class WishesRepository extends BaseRepository
             );
         });
     }
-
-
 
     /**
      * @param \App\Models\Wishes\Wish $wish
@@ -204,9 +197,9 @@ class WishesRepository extends BaseRepository
         $avatar = $input['featured_image'];
 
         if (isset($input['featured_image']) && !empty($input['featured_image'])) {
-            $fileName = time().$avatar->getClientOriginalName();
+            $fileName = time() . $avatar->getClientOriginalName();
 
-            $this->storage->put($this->upload_path.$fileName, file_get_contents($avatar->getRealPath()), 'public');
+            $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()), 'public');
 
             $input = array_merge($input, ['featured_image' => $fileName]);
 
@@ -223,41 +216,40 @@ class WishesRepository extends BaseRepository
     {
         $fileName = $model->featured_image;
 
-        return $this->storage->delete($this->upload_path.$fileName);
+        return $this->storage->delete($this->upload_path . $fileName);
     }
 
-
-    public function getGroup(){
-
+    public function getGroup()
+    {
         $distribution = $this->getDistribution();
 
-        if($distribution === $this::ROUND_ROBIN){
+        if ($distribution === $this::ROUND_ROBIN) {
             return $this->getLowestWishesGroup(access()->user()->whitelabels[0]->id);
-        }else if($distribution === $this::REGIONAL){
+        } elseif ($distribution === $this::REGIONAL) {
             return $this->getLowestWishesGroup(access()->user()->whitelabels[0]->id);
         }
     }
 
-    public function updateGroup($group_id, $whitelabel_id){
-
-        Group::where('id',$group_id)->update(['current'=> 1]);
+    public function updateGroup($group_id, $whitelabel_id)
+    {
+        Group::where('id', $group_id)->update(['current'=> 1]);
 
         $current = Group::where('id', '<', $group_id)
-            ->where('whitelabel_id',$whitelabel_id)
+            ->where('whitelabel_id', $whitelabel_id)
             ->orderby('id', 'DESC')
             ->first();
-        if($current){
-            Group::where('id',$current->toArray()['id'])->update(['current'=> 0]);
-        }else{
-            $first = Group::where('whitelabel_id',$whitelabel_id)
+        if ($current) {
+            Group::where('id', $current->toArray()['id'])->update(['current'=> 0]);
+        } else {
+            $first = Group::where('whitelabel_id', $whitelabel_id)
                 ->orderby('id', 'DESC')
                 ->first();
-            Group::where('id',$first->toArray()['id'])->update(['current'=> 0]);
+            Group::where('id', $first->toArray()['id'])->update(['current'=> 0]);
         }
     }
 
-
-    public function getDistribution(){
+    public function getDistribution()
+    {
         return access()->user()->whitelabels[0]->distribution->name;
     }
 }

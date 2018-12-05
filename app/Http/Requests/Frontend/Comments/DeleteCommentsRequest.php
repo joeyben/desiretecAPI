@@ -27,7 +27,6 @@ class DeleteCommentsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

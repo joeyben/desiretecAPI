@@ -12,8 +12,6 @@ class PasswordReset extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
     protected $user;
     protected $token;
@@ -45,7 +43,7 @@ class PasswordReset extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/password/reset/'.$this->token);
+        $url = url('/password/reset/' . $this->token);
 
         return (new MailMessage())
                     ->greeting('Hello!')
@@ -66,7 +64,6 @@ class PasswordReset extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
         ];
     }
 }

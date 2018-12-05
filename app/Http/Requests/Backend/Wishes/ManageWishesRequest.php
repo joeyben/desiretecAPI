@@ -27,7 +27,6 @@ class ManageWishesRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

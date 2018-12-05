@@ -27,7 +27,6 @@ class ShowUserRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

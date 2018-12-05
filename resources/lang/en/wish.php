@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -21,18 +20,17 @@ return [
         'earliest_start'    => 'Earliest Start',
         'latest_return'     => 'Latest Return',
         'text'              => 'Text',
-        'adults'           => 'Adults',
-        'kids'             => 'Kids',
-        'budget'           => 'Budget',
-        'category'         => 'Hotel category',
-        'catering'         => 'Hotel catering',
-        'duration'         => 'Duration',
+        'adults'            => 'Adults',
+        'kids'              => 'Kids',
+        'budget'            => 'Budget',
+        'category'          => 'Hotel category',
+        'catering'          => 'Hotel catering',
+        'duration'          => 'Duration',
         'createdat'         => 'Created At',
         'createdby'         => 'Created By',
         'whitelabel'        => 'Whitelabel',
         'offerCount'        => 'Offers',
         'owner'             => 'Name',
         'email'             => 'Email',
-
     ],
 ];

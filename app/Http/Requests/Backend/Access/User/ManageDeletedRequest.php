@@ -27,7 +27,6 @@ class ManageDeletedRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

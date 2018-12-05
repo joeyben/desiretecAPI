@@ -29,7 +29,6 @@ class WishesController extends APIController
      */
     public function index(Request $request)
     {
-
     }
 
     /**
@@ -41,11 +40,10 @@ class WishesController extends APIController
      */
     public function show(Request $request)
     {
-        $html =  view('whitelabel.layer.form')->with([
-
+        $html = view('whitelabel.layer.form')->with([
         ])->render();
 
-        return response()->json(array('success' => true, 'html'=>$html));
+        return response()->json(['success' => true, 'html'=>$html]);
     }
 
     /**
@@ -118,7 +116,7 @@ class WishesController extends APIController
     public function validatePages(Request $request, $id = 0)
     {
         $validation = Validator::make($request->all(), [
-            'title'       => 'required|max:191|unique:pages,title,'.$id,
+            'title'       => 'required|max:191|unique:pages,title,' . $id,
             'description' => 'required',
         ]);
 

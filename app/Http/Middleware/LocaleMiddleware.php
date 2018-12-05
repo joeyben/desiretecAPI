@@ -24,8 +24,7 @@ class LocaleMiddleware
          * Locale is enabled and allowed to be changed
          */
         if (config('locale.status')) {
-            if (session()->has('locale') && in_array(session()->get('locale'), array_keys(config('locale.languages')))) {
-
+            if (session()->has('locale') && \in_array(session()->get('locale'), array_keys(config('locale.languages')), true)) {
                 /*
                  * Set the Laravel locale
                  */

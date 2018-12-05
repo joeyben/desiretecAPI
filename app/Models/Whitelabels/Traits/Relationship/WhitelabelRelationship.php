@@ -2,8 +2,8 @@
 
 namespace App\Models\Whitelabels\Traits\Relationship;
 
-use App\Models\Wishes\Wish;
 use App\Models\Distributions\Distribution;
+use App\Models\Wishes\Wish;
 
 /**
  * Class WhitelabelRelationship.

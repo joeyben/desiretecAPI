@@ -19,7 +19,7 @@ class PageEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->page->id)
-            ->withText('trans("history.backend.pages.created") <strong>'.$event->page->title.'</strong>')
+            ->withText('trans("history.backend.pages.created") <strong>' . $event->page->title . '</strong>')
             ->withIcon('plus')
             ->withClass('bg-green')
             ->log();
@@ -32,7 +32,7 @@ class PageEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->page->id)
-            ->withText('trans("history.backend.pages.updated") <strong>'.$event->page->title.'</strong>')
+            ->withText('trans("history.backend.pages.updated") <strong>' . $event->page->title . '</strong>')
             ->withIcon('save')
             ->withClass('bg-aqua')
             ->log();
@@ -45,7 +45,7 @@ class PageEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->page->id)
-            ->withText('trans("history.backend.pages.deleted") <strong>'.$event->page->title.'</strong>')
+            ->withText('trans("history.backend.pages.deleted") <strong>' . $event->page->title . '</strong>')
             ->withIcon('trash')
             ->withClass('bg-maroon')
             ->log();

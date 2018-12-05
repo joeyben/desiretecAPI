@@ -30,13 +30,13 @@ class DistributionsRepository extends BaseRepository
     public function getForDataTable()
     {
         return $this->query()
-            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.distributions.table').'.created_by')
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.distributions.table') . '.created_by')
             ->select([
-                config('module.distributions.table').'.name',
-                config('module.distributions.table').'.display_name',
-                config('module.distributions.table').'.description',
-                config('module.distributions.table').'.created_by',
-                config('module.distributions.table').'.created_at',
+                config('module.distributions.table') . '.name',
+                config('module.distributions.table') . '.display_name',
+                config('module.distributions.table') . '.description',
+                config('module.distributions.table') . '.created_by',
+                config('module.distributions.table') . '.created_at',
             ]);
     }
 
@@ -49,12 +49,10 @@ class DistributionsRepository extends BaseRepository
      */
     public function create(array $input)
     {
-
         DB::transaction(function () use ($input) {
             $input['created_by'] = access()->user()->id;
 
             if ($distribution = Distribution::create($input)) {
-
                 event(new DistributionCreated($distribution));
 
                 return true;
@@ -68,16 +66,14 @@ class DistributionsRepository extends BaseRepository
      * Update Distribution.
      *
      * @param \App\Models\Distributions\Distribution $distribution
-     * @param array                  $input
+     * @param array                                  $input
      */
     public function update(Distribution $distribution, array $input)
     {
         $input['updated_by'] = access()->user()->id;
-        
 
         DB::transaction(function () use ($distribution, $input) {
             if ($distribution->update($input)) {
-
                 event(new DistributionUpdated($distribution));
 
                 return true;
@@ -88,8 +84,6 @@ class DistributionsRepository extends BaseRepository
             );
         });
     }
-
-
 
     /**
      * @param \App\Models\Distributions\Distribution $distribution
@@ -110,5 +104,4 @@ class DistributionsRepository extends BaseRepository
             throw new GeneralException(trans('exceptions.backend.distributions.delete_error'));
         });
     }
-    
 }

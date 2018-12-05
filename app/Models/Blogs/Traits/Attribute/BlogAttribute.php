@@ -12,9 +12,9 @@ trait BlogAttribute
      */
     public function getActionButtonsAttribute()
     {
-        return '<div class="btn-group action-btn">'.
-                $this->getEditButtonAttribute('edit-blog', 'admin.blogs.edit').
-                $this->getDeleteButtonAttribute('delete-blog', 'admin.blogs.destroy').
+        return '<div class="btn-group action-btn">' .
+                $this->getEditButtonAttribute('edit-blog', 'admin.blogs.edit') .
+                $this->getDeleteButtonAttribute('delete-blog', 'admin.blogs.destroy') .
                 '</div>';
     }
 }

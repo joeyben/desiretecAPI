@@ -32,7 +32,6 @@ class StoreAgentsRequest extends Request
             'destination'     => 'required|max:200',
             'earliest_start'  => 'required|max:200',
             'latest_return'   => 'required|max:200',
-
         ];
     }
 

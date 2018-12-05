@@ -15,7 +15,7 @@ class Blog extends BaseModel
         BlogAttribute,
         BlogRelationship {
             // BlogAttribute::getEditButtonAttribute insteadof ModelTrait;
-        }
+    }
 
     protected $fillable = [
         'name',

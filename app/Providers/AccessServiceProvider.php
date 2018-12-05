@@ -28,8 +28,6 @@ class AccessServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -39,8 +37,6 @@ class AccessServiceProvider extends ServiceProvider
 
     /**
      * Register the application bindings.
-     *
-     * @return void
      */
     private function registerAccess()
     {
@@ -51,8 +47,6 @@ class AccessServiceProvider extends ServiceProvider
 
     /**
      * Register the vault facade without the user having to add it to the app.php file.
-     *
-     * @return void
      */
     public function registerFacade()
     {
@@ -83,7 +77,7 @@ class AccessServiceProvider extends ServiceProvider
         });
 
         Blade::directive('needsroles', function ($roles) {
-            return '<?php if (access()->hasRoles('.$roles.', true)): ?>';
+            return '<?php if (access()->hasRoles(' . $roles . ', true)): ?>';
         });
 
         /*
@@ -102,7 +96,7 @@ class AccessServiceProvider extends ServiceProvider
         });
 
         Blade::directive('needspermissions', function ($permissions) {
-            return '<?php if (access()->allowMultiple('.$permissions.', true)): ?>';
+            return '<?php if (access()->allowMultiple(' . $permissions . ', true)): ?>';
         });
 
         /*

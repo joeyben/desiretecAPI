@@ -27,7 +27,6 @@ class CreatePageRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

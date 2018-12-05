@@ -27,7 +27,6 @@ class DeleteWishesRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

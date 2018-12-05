@@ -7,8 +7,8 @@ use App\Http\Requests\Backend\Groups\ManageGroupsRequest;
 use App\Http\Requests\Backend\Groups\StoreGroupsRequest;
 use App\Http\Requests\Backend\Groups\UpdateGroupsRequest;
 use App\Models\Groups\Group;
-use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Backend\Groups\GroupsRepository;
+use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 
 /**
  * Class GroupsController.
@@ -19,9 +19,9 @@ class GroupsController extends Controller
      * Group Status.
      */
     protected $status = [
-        'Active' => 'Active',
+        'Active'       => 'Active',
         'Inactive'     => 'Inactive',
-        'Deleted'  => 'Deleted',
+        'Deleted'      => 'Deleted',
     ];
 
     /**
@@ -36,7 +36,7 @@ class GroupsController extends Controller
 
     /**
      * @param \App\Repositories\Backend\Groups\GroupsRepository $group
-     * @param WhitelabelsRepository $whitelabels
+     * @param WhitelabelsRepository                             $whitelabels
      */
     public function __construct(GroupsRepository $group, WhitelabelsRepository $whitelabels)
     {
@@ -63,9 +63,8 @@ class GroupsController extends Controller
      */
     public function create(ManageGroupsRequest $request)
     {
-
         return view('backend.groups.create')->with([
-            'whitelabels' => $this->whitelabels->getAll(),
+            'whitelabels'    => $this->whitelabels->getAll(),
             'status'         => $this->status,
         ]);
     }
@@ -94,8 +93,8 @@ class GroupsController extends Controller
     {
         return view('backend.groups.edit')->with([
             'group'               => $group,
-            'status'         => $this->status,
-            'whitelabels' => $this->whitelabels->getAll(),
+            'status'              => $this->status,
+            'whitelabels'         => $this->whitelabels->getAll(),
         ]);
     }
 

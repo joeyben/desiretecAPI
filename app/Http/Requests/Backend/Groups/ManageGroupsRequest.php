@@ -27,7 +27,6 @@ class ManageGroupsRequest extends Request
     public function rules()
     {
         return [
-            //
         ];
     }
 }

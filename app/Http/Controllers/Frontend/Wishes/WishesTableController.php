@@ -50,24 +50,24 @@ class WishesTableController extends Controller
                 return $wishes->destination;
             })
             ->addColumn('created_by', function ($wishes) {
-                return $wishes->first_name.' '.$wishes->last_name;
+                return $wishes->first_name . ' ' . $wishes->last_name;
             })
             ->addColumn('created_at', function ($wishes) {
                 return $wishes->created_at->toDateString();
             })
             ->addColumn('add_offer', function ($wishes) {
-                if(access()->user()->hasRole('Seller')) {
-                    return '<a href="' . route('frontend.offers.create', $wishes->id) . '" class="btn btn-flat btn-primary">' . trans("buttons.wishes.frontend.create_offer") . '</a>';
-                }else{
-                    return $wishes->action_buttons_user;
+                if (access()->user()->hasRole('Seller')) {
+                    return '<a href="' . route('frontend.offers.create', $wishes->id) . '" class="btn btn-flat btn-primary">' . trans('buttons.wishes.frontend.create_offer') . '</a>';
                 }
+
+                return $wishes->action_buttons_user;
             })
             ->addColumn('offer_count', function ($wishes) {
-                if($wishes->total_offers > 0){
+                if ($wishes->total_offers > 0) {
                     return $wishes->action_wish_offers;
-                }else{
-                    return $wishes->total_offers;
                 }
+
+                return $wishes->total_offers;
             })
             ->make(true);
     }

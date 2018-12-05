@@ -12,8 +12,6 @@ class PasswordResetted extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
     protected $user;
 
@@ -64,7 +62,6 @@ class PasswordResetted extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
         ];
     }
 }

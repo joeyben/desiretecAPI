@@ -142,7 +142,7 @@ class ManageBlogsTest extends TestCase
 
         $stored_blog = Blog::find(2);
 
-        Storage::disk('s3')->assertExists('img/blog/'.$stored_blog->featured_image);
+        Storage::disk('s3')->assertExists('img/blog/' . $stored_blog->featured_image);
     }
 
     /** @test */
@@ -227,7 +227,8 @@ class ManageBlogsTest extends TestCase
         $catCategory = create(Blog::class, ['name' => 'Cat']);
         $dogCategory = create(Blog::class, ['name' => 'Dog']);
 
-        $this->patch(route('admin.blogs.update', $dogCategory),
+        $this->patch(
+            route('admin.blogs.update', $dogCategory),
             ['name' => 'Cat']
         )->assertSessionHasErrors('name');
     }

@@ -21,7 +21,7 @@ class PagesResource extends Resource
             'status_label'  => $this->status_label,
             'status'        => ($this->isActive()) ? 'Active' : 'InActive',
             'created_at'    => $this->created_at->toDateString(),
-            'created_by'    => is_int($this->created_by) ? optional($this->owner)->first_name : $this->created_by,
+            'created_by'    => \is_int($this->created_by) ? optional($this->owner)->first_name : $this->created_by,
         ];
     }
 }
