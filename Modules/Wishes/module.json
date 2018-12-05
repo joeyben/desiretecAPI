@@ -1,0 +1,16 @@
+{
+    "name": "Wishes",
+    "alias": "wishes",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Wishes\\Providers\\WishesServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

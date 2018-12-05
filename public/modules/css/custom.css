@@ -1,0 +1,472 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Sidebar layouts
+ *
+ *  Styles for sidebar components, main navigation and sidebar itself
+ *
+ *  Version: 1.2
+ *  Latest update: Nov 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+.dropdown-search {
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+}
+.el-transfer-panel {
+    width: 40% !important;
+}
+    /* ------------------------------------------------------------------------------
+     *
+     *  # Datatables library
+     *
+     *  Add advanced interaction controls to any HTML table
+     *
+     *  Version: 1.2
+     *  Latest update: Mar 10, 2016
+     *
+     * ---------------------------------------------------------------------------- */
+[v-cloak] {
+    display: none;
+}
+.el-upload__input {
+    display: none !important;
+}
+
+.navbar-sm {
+    box-shadow: 0 0 9px rgba(0,0,0,.8);
+}
+.navbar-dark {
+    background-color: #1D2C2E;
+}
+.sidebar-dark {
+    background-color: #0d1d1f;
+}
+
+.dropdown-divider {
+    margin: .1rem 0;
+}
+.dropdown-menu {
+    background: #111; /* for old browsers */
+    background: url('../images/trans-black.png') !important;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6) !important;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+}
+.dropdown-menu>.dropdown-submenu.show>.dropdown-item, .dropdown-menu>.dropdown-submenu:hover>.dropdown-item, .dropdown-item:focus, .dropdown-item:hover {
+    text-decoration: none;
+    background-color: #00695C;
+    color: #fff !important;
+    transition: all 0.3s linear;
+}
+.dropdown-item {
+    color: #ccc;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.dashboard-scrollable {
+    max-height: 420px;
+    overflow: auto;
+}
+.forum-scrollable {
+    height: 120px;
+    overflow: auto;
+}
+/* ------------------------------------------------------------------------------
+ *
+ *  # Datatables library
+ *
+ *  Add advanced interaction controls to any HTML table
+ *
+ *  Version: 1.2
+ *  Latest update: Mar 10, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+.vuetable {
+    margin: 0;
+    max-width: none;
+}
+.vuetable thead th,
+.vuetable thead td {
+    outline: 0;
+    position: relative;
+}
+.vuetable thead .sorting_asc,
+.vuetable thead .sorting_desc,
+.vuetable thead .sorting {
+    cursor: pointer;
+}
+.vuetable thead .sorting,
+.vuetable thead .sorting_asc,
+.vuetable thead .sorting_desc,
+.vuetable thead .sorting_asc_disabled,
+.vuetable thead .sorting_desc_disabled {
+    padding-right: 40px;
+}
+.vuetable thead .sorting:before,
+.vuetable thead .sorting:after,
+.vuetable thead .sorting_asc:after,
+.vuetable thead .sorting_desc:after,
+.vuetable thead .sorting_asc_disabled:after,
+.vuetable thead .sorting_desc_disabled:after {
+    content: '';
+    font-family: 'icomoon';
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    font-size: 12px;
+    margin-top: -6px;
+    display: inline-block;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.vuetable thead .sorting:before {
+    content: '\e9c1';
+    margin-top: -2px;
+    color: #999999;
+}
+.vuetable thead .sorting:after {
+    content: '\e9c2';
+    margin-top: -10px;
+    color: #999999;
+}
+.vuetable thead .sorting_asc:after {
+    content: '\e9c2';
+}
+.vuetable thead .sorting_desc:after {
+    content: '\e9c1';
+}
+.vuetable thead .sorting_asc_disabled:after {
+    content: '\e9c2';
+    color: #ccc;
+}
+.vuetable thead .sorting_desc_disabled:after {
+    content: '\e9c1';
+    color: #ccc;
+}
+
+/** Modal windows **/
+
+.table thead .heading, .vuetable thead {
+    color: #fff;
+    background-color: #00796b;
+}
+
+/** Modal windows **/
+.modal-backdrop, .modal-backdrop.fade.in {
+    background-color: #777 !important;
+    opacity: .3;
+}
+.modal-content {
+    background: #111; /* for old browsers */
+    background: url('../images/trans-black.png');
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    border: 1px solid #222;
+    color: #cfcfcf;
+    border-radius: 2px;
+}
+.modal-dialog.ui-draggable .modal-header, .modal-dialog.ui-draggable .modal-footer {
+    cursor: move;
+}
+.modal .modal-header {
+    color: #cfcfcf;
+    border-bottom-color: #333;
+    padding: 15px !important;
+    cursor: all-scroll;
+}
+.modal .modal-body {
+    border-radius: 2px !important;
+    margin: 10px;
+    padding: 15px !important;
+    background: #fff;
+    box-shadow: 0 0 25px #111;
+}
+.bootbox.modal .modal-body, .modal .modal-body.info {
+    background: transparent;
+    box-shadow: none;
+}
+.modal .modal-body .form-group .input-group-addon {
+    border-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+    border-left: 1px solid #bbb;
+}
+.modal .modal-body fieldset {
+    padding: 3px 0;
+    margin: 0;
+    background: #eee;
+    border: none;
+    color: #333;
+}
+.modal .modal-body fieldset.table {
+    background: #fff;
+}
+.modal .modal-body fieldset legend {
+    position: relative;
+    display: inline-block;
+    font-size: 1.1em;
+    background-color: #fff;
+    padding: 5px 15px 5px 5px;
+    border: none !important;
+    color: #333;
+    margin: 6px 0px 6px -6px;
+    box-shadow: 0px 1px 1px #bbb;
+}
+.modal .modal-body fieldset legend {
+    display: inline-block;
+}
+.modal .modal-body .portlet fieldset legend, .modal .modal-body fieldset .panel-body legend {
+    display: block;
+}
+.modal .modal-body fieldset .form-group legend {
+    margin: 6px 0px 6px -9px;
+}
+.modal .modal-body fieldset legend::after {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    right: -2px;
+    border-width: 13px 11px;
+    border-style: solid;
+    border-color: transparent #eee transparent transparent;
+}
+.modal .modal-body fieldset .form-group:hover legend::after {
+    border-color: transparent #e4e4e4 transparent transparent;
+}
+.modal .modal-body fieldset legend::before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 0px;
+    top: 100%;
+    border-width: 3px 3px;
+    border-style: solid;
+    border-color: #aaa #bbb transparent transparent;
+}
+.modal .modal-body fieldset .form-group {
+    margin: 0;
+    padding: 5px;
+}
+.modal .modal-body fieldset .form-group.without-label .input-group[class*=col-] {
+    padding-left: 0;
+}
+.modal .modal-body .control-label {
+    text-align: left;
+}
+.modal .modal-body .control-label[for]:hover {
+    cursor: pointer;
+}
+.modal-body label.control-label .required {
+    position: absolute;
+    color: #ff0000;
+    line-height: 5px;
+    font-size: 16px;
+    margin-top: 5px;
+    text-shadow: 0 2px 3px #999;
+}
+.modal-body label.control-label .required.disabled {
+    color: #666;
+}
+.modal .modal-body fieldset .row {
+    margin: -3px -15px;
+}
+
+.modal .modal-body fieldset .row .col-md-6 + .col-md-6 {
+    padding-left: 0;
+}
+.modal .modal-body fieldset .form-group .table-bordered,
+.modal .modal-body fieldset .form-group .table-bordered > thead > tr > th,
+.modal .modal-body fieldset .form-group .table-bordered > tbody > tr > td {
+    border-color: #bbb;
+}
+.modal .modal-body fieldset .form-group:hover,
+.modal .modal-body fieldset .form-group:focus {
+    background: #e4e4e4;
+}
+.modal .modal-body fieldset .form-group:hover .question i,
+.modal .modal-body fieldset .form-group:focus .question i,
+.modal .modal-body fieldset .form-group:hover .bootstrap-select .caret::before,
+.modal .modal-body fieldset .form-group:focus .bootstrap-select .caret::before,
+.modal .modal-body fieldset .form-group:hover .bootstrap-select.open .caret::before,
+.modal .modal-body fieldset .form-group:focus .bootstrap-select.open .caret::before {
+    color: #666;
+}
+.modal .modal-body fieldset .form-group:hover .select2-container--bootstrap .select2-selection--single .select2-selection__arrow b,
+.modal .modal-body fieldset .form-group:focus .select2-container--bootstrap .select2-selection--single .select2-selection__arrow b {
+    border-color: #666 transparent transparent transparent;
+}
+.modal .modal-body fieldset .form-group:hover .select2-container--bootstrap.select2-container--open .select2-selection .select2-selection__arrow b,
+.modal .modal-body fieldset .form-group:focus .select2-container--bootstrap.select2-container--open .select2-selection .select2-selection__arrow b {
+    border-color: transparent transparent #666 transparent;
+}
+.modal .modal-body fieldset .form-group[highlight] {
+    background: #D9EDF7;
+}
+.modal .modal-body fieldset .form-group[highlight]:hover,
+.modal .modal-body fieldset .form-group[highlight]:focus {
+    background: #C0E1F2;
+}
+.modal .modal-body fieldset .form-group[highlight-danger] {
+    background: #F2DEDE;
+}
+.modal .modal-body fieldset .form-group[highlight-danger]:hover,
+.modal .modal-body fieldset .form-group[highlight-danger]:focus {
+    background: #EFD3D7;
+}
+.modal .modal-body fieldset .form-group:hover .input-group .input-group-addon i {
+    color: #888;
+}
+.modal .modal-header .close:hover, .modal .modal-header .close:focus,
+.modal .modal-body .close:hover, .modal .modal-body .close:focus,
+.information-window .window-header .close:hover, .information-window .window-header .close:focus,
+.information-window .window-body .close:hover, .information-window .window-body .close:focus {
+    opacity: 1;
+    transition: opacity 0.3s linear;
+}
+
+.modal-content .nav.nav-tabs > li.active {
+    z-index: 1;
+}
+.modal-content .nav.nav-tabs > li > a:focus {
+    background: #ddd;
+}
+.modal-content .nav.nav-tabs > li.active a:focus {
+    background: #fff;
+}
+.modal-content .tab-content {
+    border-radius: 6px;
+}
+.modal-content .table {
+    margin-bottom: 0;
+    color: #333;
+}
+.modal-content .table td.dataTables_empty {
+    text-align: center;
+}
+.modal-content .table .progress {
+    margin-bottom: 0;
+}
+.modal-content fieldset .panel-group .panel + .panel {
+    margin-top: 0;
+}
+.modal-content fieldset .panel-group.accordion {
+    margin: -3px 0 -7px 0;
+}
+.modal-content fieldset .panel-group.accordion .panel.panel-default {
+    border-radius: 0;
+    border: none;
+    border-bottom: 7px solid #fff;
+}
+.modal-content .portlet.box {
+    margin-bottom: 7px;
+    border: none !important;
+    background: #eee !important;
+}
+.modal-content .portlet.box:last-child {
+    margin-bottom: 0;
+}
+.modal-content fieldset .panel-title {
+    min-height: 35px;
+    margin: 0 !important;
+    background: #eee;
+}
+.modal-content .portlet-title {
+    background: #eee !important;
+    padding: 0 10px !important;
+    border-radius: 0;
+}
+.modal-content fieldset .panel-title a {
+    padding: 10px 50px 10px 10px !important;
+    margin-right: 10px !important;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+.modal-content .portlet-title .caption {
+    font-weight: 500 !important;
+    color: #777 !important;
+    text-shadow: 1px 1px 0 #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: all 0.3s linear;
+}
+.modal-content .portlet-title[highlight-portlet-danger] .caption,
+.modal-content .portlet-title[highlight-portlet-danger]:hover .caption {
+    position: relative;
+    color: #d95d5f !important;
+}
+.modal-content .portlet-title[highlight-portlet-danger] .caption::after {
+    position: absolute;
+    font-family: FontAwesome;
+    font-size: 15px;
+    top: 10px;
+    right: -18px;
+    content: "\f057";
+}
+.modal-content .portlet > .portlet-title > .tools > a.expand {
+    background-image: url('../images/portlet-collapse-icon.png') !important;
+    opacity: 1;
+}
+.modal-content .portlet > .portlet-title > .tools > a.collapse {
+    background-image: url('../images/portlet-expand-icon.png') !important;
+    opacity: 1;
+}
+
+.modal-content fieldset .panel-title .accordion-toggle.accordion-toggle-styled.collapsed {
+    font-weight: 500;
+    color: #777 !important;
+    transition: all 0.3s linear;
+}
+
+.modal-content fieldset .panel-title .accordion-toggle.accordion-toggle-styled,
+.modal-content fieldset .panel-title .accordion-toggle.accordion-toggle-styled.collapsed:hover,
+.modal-content fieldset .accordion-toggle-lock-open.active,
+.modal-content fieldset .accordion-toggle-lock-open:hover {
+    font-weight: 500;
+    color: #333 !important;
+    text-shadow: 1px 1px 0 #fff;
+    transition: all 0.3s linear;
+}
+
+.modal-content fieldset .panel-body {
+    padding: 3px 0;
+    background: #eee;
+    border-top: none;
+}
+.modal-content fieldset .panel-default > .panel-heading + .panel-collapse .panel-body {
+    border-top: none;
+}
+.modal-content .panel-title .accordion-toggle.collapseSignMinus::before,
+.modal-content .panel-title .accordion-toggle.collapseSignPlus::before {
+    display: none;
+}
+.modal .modal-body hr {
+    border-top-color: #333;
+}
+.modal .modal-body fieldset hr {
+    margin: 3px 0 !important;
+    border-top: 5px double #fff;
+}
+.modal .modal-body fieldset h4 {
+    margin: 15px 5px 5px 5px;
+    text-shadow:  1px 1px 0 #fff;
+}
+.modal .modal-body fieldset h4:first-child {
+    margin: 5px 5px 5px 5px;
+    text-shadow:  1px 1px 0 #fff;
+}
+.modal-footer {
+    padding: 10px !important;
+    border-bottom-right-radius: 6px !important;
+    border-bottom-left-radius: 6px !important;
+    background-color: transparent;
+    border-top-color: #333;
+}
+.modal-footer button {
+    box-shadow: 0 0 2px #000 !important;
+}
+

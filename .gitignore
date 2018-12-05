@@ -37,3 +37,4 @@ public/access.log
 public/error.log
 
 /Modules/Tui/node_modules/
+/Modules/Wishes/node_modules/

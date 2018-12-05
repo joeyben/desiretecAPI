@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@babel/preset-stage-2": "^7.0.0",
-    "axios": "^0.17",
+    "axios": "^0.18",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^5.1",
     "font-awesome": "^4.7.0",
@@ -21,7 +21,28 @@
     "lodash": "^4.17.4",
     "popper.js": "^1.14.1",
     "vue": "^2.5.7",
-    "webpack-rtl-plugin": "^1.5.0"
+    "webpack-rtl-plugin": "^1.5.0",
+    "accounting": "^0.4.1",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "element-ui": "^2.4.9",
+    "es6-promise": "^4.2.5",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-html": "^3.2.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "lang.js": "^1.1.13",
+    "scroll-to": "0.0.2",
+    "toastr": "^2.1.4",
+    "vue-events": "^3.1.0",
+    "vue-router": "^2.7.0",
+    "vuetable-2": "^1.7.5",
+    "vuex": "^2.4.0"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
@@ -40,6 +61,8 @@
     "skeleton-card-vuejs": "0.0.0",
     "tinymce": "^4.5.8",
     "vue-moment": "^4.0.0",
-    "vue-select": "^2.4.0"
+    "vue-select": "^2.4.0",
+    "moment": "^2.22.1",
+    "vue-i18n": "^7.6.0"
   }
 }
