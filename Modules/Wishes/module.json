@@ -6,7 +6,10 @@
     "active": 1,
     "order": 0,
     "providers": [
-        "Modules\\Wishes\\Providers\\WishesServiceProvider"
+        "Modules\\Wishes\\Providers\\AuthServiceProvider",
+        "Modules\\Wishes\\Providers\\WishesServiceProvider",
+        "Modules\\Wishes\\Providers\\EventServiceProvider",
+        "Modules\\Wishes\\Providers\\RepositoryServiceProvider"
     ],
     "aliases": {},
     "files": [

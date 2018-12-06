@@ -33,4 +33,10 @@ optimize: install ## optimize
 migrate: optimize ## migrate
 	composer dump-autoload & $(PHP) artisan migrate:refresh --seed
 
+routes: optimize
+	$(PHP) artisan laroute:generate
+
+message: optimize ## messages.js add /* eslint-disable */
+	$(PHP) artisan lang:js --no-lib resources/assets/js/utils/messages.js & php artisan lang:js public/js/messages.js
+
 

@@ -27,8 +27,8 @@ class CreateWishesTable extends Migration
             $table->integer('kids')->unsigned();
             $table->integer('category')->unsigned();;
             $table->string('catering', 191)->nullable();
-            $table->string('duration', 191)->nullable();
-            $table->string('status', 191);
+            $table->string('duration', 20)->nullable();
+            $table->boolean('status')->default(true);
             $table->integer('created_by')->unsigned();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->timestamps();

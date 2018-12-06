@@ -1,5 +1,12 @@
 <?php
 
 return [
-    'name' => 'Wishes'
+    'name' => 'Wishes',
+
+    'crud' => [
+        'Create Wish',
+        'Read Wish',
+        'Update Wish',
+        'Delete Wish',
+    ]
 ];

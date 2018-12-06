@@ -53,111 +53,12 @@
                     <i class="icon-paragraph-justify3"></i>
                 </a>
             </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
-                    <i class="icon-git-compare"></i>
-                    <span class="d-md-none ml-2">Git updates</span>
-                    <span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">9</span>
-                </a>
-
-                <div class="dropdown-menu dropdown-content wmin-md-350">
-                    <div class="dropdown-content-header">
-                        <span class="font-weight-semibold">Git updates</span>
-                        <a href="#" class="text-default"><i class="icon-sync"></i></a>
-                    </div>
-
-                    <div class="dropdown-content-body dropdown-scrollable">
-                        <ul class="media-list">
-                            <li class="media">
-                                <div class="mr-3">
-                                    <a href="#" class="btn bg-transparent border-primary text-primary rounded-round border-2 btn-icon"><i class="icon-git-pull-request"></i></a>
-                                </div>
-
-                                <div class="media-body">
-                                    Drop the IE <a href="#">specific hacks</a> for temporal inputs
-                                    <div class="text-muted font-size-sm">4 minutes ago</div>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <a href="#" class="btn bg-transparent border-warning text-warning rounded-round border-2 btn-icon"><i class="icon-git-commit"></i></a>
-                                </div>
-
-                                <div class="media-body">
-                                    Add full font overrides for popovers and tooltips
-                                    <div class="text-muted font-size-sm">36 minutes ago</div>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <a href="#" class="btn bg-transparent border-info text-info rounded-round border-2 btn-icon"><i class="icon-git-branch"></i></a>
-                                </div>
-
-                                <div class="media-body">
-                                    <a href="#">Chris Arney</a> created a new <span class="font-weight-semibold">Design</span> branch
-                                    <div class="text-muted font-size-sm">2 hours ago</div>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <a href="#" class="btn bg-transparent border-success text-success rounded-round border-2 btn-icon"><i class="icon-git-merge"></i></a>
-                                </div>
-
-                                <div class="media-body">
-                                    <a href="#">Eugene Kopyov</a> merged <span class="font-weight-semibold">Master</span> and <span class="font-weight-semibold">Dev</span> branches
-                                    <div class="text-muted font-size-sm">Dec 18, 18:36</div>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <a href="#" class="btn bg-transparent border-primary text-primary rounded-round border-2 btn-icon"><i class="icon-git-pull-request"></i></a>
-                                </div>
-
-                                <div class="media-body">
-                                    Have Carousel ignore keyboard events
-                                    <div class="text-muted font-size-sm">Dec 12, 05:46</div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="dropdown-content-footer bg-light">
-                        <a href="#" class="text-grey mr-auto">All updates</a>
-                        <div>
-                            <a href="#" class="text-grey" data-popup="tooltip" title="Mark all as read"><i class="icon-radio-unchecked"></i></a>
-                            <a href="#" class="text-grey ml-2" data-popup="tooltip" title="Bug tracker"><i class="icon-bug2"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item"><a href="javacript:;" class="navbar-nav-link">Home</a></li>
-            <li class="nav-item dropdown">
-                <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">Administration</a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" class="dropdown-item">Action 1</a>
-                    <a href="#" class="dropdown-item">Action 2</a>
-                    <a href="#" class="dropdown-item">Action 3</a>
-                    <a href="#" class="dropdown-item">Action 4</a>
-                </div>
-            </li>
         </ul>
 
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="navbar-nav-link" rel="alternate" href="#">
-                    <i class="icon-envelop2"></i>
-                    <span class="d-md-none ml-2">Notifications</span>
-                    <span class="badge badge-pill bg-pink-800 ml-auto ml-md-0">8</span>
-                </a>
-            </li>
-
             <li class="nav-item dropdown">
                 <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown" data-hover="dropdown">
-                    <i class="icon-cart5"></i>
+                    <i class="icon-envelop2"></i>
                     <span class="d-md-none ml-2">Notifications</span>
                     <span class="badge badge-pill bg-pink-800 ml-auto ml-md-0">8</span>
                 </a>
@@ -341,22 +242,19 @@
                         </a>
                     </li>
                     <li class="nav-item nav-item-submenu">
-                        <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Administration</span></a>
+                        <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Access Management</span></a>
 
                         <ul class="nav nav-group-sub" data-submenu-title="Layouts">
-                            <li class="nav-item"><a href="javascript:;" class="nav-link active">Menu 1</a></li>
-                            <li class="nav-item"><a href="javascript:;" class="nav-link">Menu 2</a></li>
-                            <li class="nav-item"><a href="javascript:;" class="nav-link">Menu 3</a></li>
-                            <li class="nav-item"><a href="javascript:;" class="nav-link">Menu 4</a></li>
-                            <li class="nav-item"><a href="javascript:;" class="nav-link">Menu 5</a></li>
-                            <li class="nav-item"><a href="javascript:;" class="nav-link disabled"> Disabled Menu 6 <span class="badge bg-transparent align-self-center ml-auto">Coming soon</span></a></li>
+                            <li class="nav-item"><a href="javascript:;" class="nav-link active">User Management</a></li>
+                            <li class="nav-item"><a href="javascript:;" class="nav-link">Role Management</a></li>
+                            <li class="nav-item"><a href="javascript:;" class="nav-link">Permission Management</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a href="javascript:;" class="nav-link">
-                            <i class="icon-list-unordered"></i>
-                            <span>Menu with labels</span>
-                            <span class="badge bg-blue-400 align-self-center ml-auto">2.1</span>
+                            <i class="icon-check"></i>
+                            <span>Wishes</span>
+                            <span class="badge bg-blue-400 align-self-center ml-auto">0</span>
                         </a>
                     </li>
                     <!-- /main -->
@@ -376,20 +274,12 @@
     <div class="content-wrapper">
 
         <!-- Page header -->
-        <div class="page-header page-header-dark" style="border: 1px solid #ddd; border-bottom: 0;">
-            <div class="page-header-content bg-pink-800 header-elements-inline">
+        <div class="page-header page-header-light" style="border: 1px solid #ddd; border-bottom: 0;">
+            <div class="page-header-content header-elements-md-inline">
                 <div class="page-title">
                     <h1>
                         @yield('page-title')
                     </h1>
-                </div>
-
-                <div class="header-elements d-none">
-                    <div class="d-flex justify-content-center">
-                        <a href="#" class="btn btn-link btn-float text-default"><i class="icon-bars-alt text-white"></i><span>Statistics</span></a>
-                        <a href="#" class="btn btn-link btn-float text-default"><i class="icon-calculator text-white"></i> <span>Invoices</span></a>
-                        <a href="#" class="btn btn-link btn-float text-default"><i class="icon-calendar5 text-white"></i> <span>Schedule</span></a>
-                    </div>
                 </div>
             </div>
 
@@ -397,22 +287,6 @@
                 <div class="d-flex">
                     @yield('breadcrumb')
                     <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
-                </div>
-
-                <div class="header-elements d-none">
-                    <div class="breadcrumb justify-content-center">
-                        <a href="#" class="breadcrumb-elements-item dropdown-toggle" data-toggle="dropdown">
-                            Actions
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>
-                            <a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>
-                            <a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -435,29 +309,8 @@
 
             <div class="navbar-collapse collapse" id="navbar-footer">
                     <span class="navbar-text">
-                        &copy; 2015 - 2018. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
+                        &copy; 2019 <a href="https://desiretec.com/" target="_blank">Desiretec GmbH</a>
                     </span>
-
-                <ul class="navbar-nav ml-lg-auto">
-                    <li class="nav-item">
-                        <a href="#" class="navbar-nav-link">Text link</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#" class="navbar-nav-link">
-                            <i class="icon-lifebuoy"></i>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov" class="navbar-nav-link font-weight-semibold">
-                                <span class="text-pink-400">
-                                    <i class="icon-cart2 mr-2"></i>
-                                    Purchase
-                                </span>
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
         <!-- /footer -->
@@ -473,8 +326,8 @@
 <script src="{{ asset("modules/js/main/jquery.min.js") }}" ></script>
 <script src="{{ asset("modules/js/main/bootstrap.bundle.min.js") }}" ></script>
 <script src="{{ asset("modules/js/plugins/loaders/blockui.min.js") }}" ></script>
-<script src="{{ asset("modules/js/messages.js") }}" type="text/javascript" ></script>
-<script src="{{ asset("modules/js/laroute.js") }}" type="text/javascript"></script>
+<script src="{{ asset("js/messages.js") }}" type="text/javascript" ></script>
+<script src="{{ asset("js/laroute.js") }}" type="text/javascript"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 <script>
   window.i18 = <?php echo json_encode([

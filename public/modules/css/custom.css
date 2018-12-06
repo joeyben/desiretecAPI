@@ -46,25 +46,6 @@
 .dropdown-divider {
     margin: .1rem 0;
 }
-.dropdown-menu {
-    background: #111; /* for old browsers */
-    background: url('../images/trans-black.png') !important;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6) !important;
-    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    background-clip: padding-box;
-}
-.dropdown-menu>.dropdown-submenu.show>.dropdown-item, .dropdown-menu>.dropdown-submenu:hover>.dropdown-item, .dropdown-item:focus, .dropdown-item:hover {
-    text-decoration: none;
-    background-color: #00695C;
-    color: #fff !important;
-    transition: all 0.3s linear;
-}
-.dropdown-item {
-    color: #ccc;
-    font-weight: 400;
-    white-space: nowrap;
-}
 
 .dashboard-scrollable {
     max-height: 420px;

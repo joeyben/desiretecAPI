@@ -26,14 +26,14 @@
     <div class="form-group">
         {{ Form::label('earliest_start', trans('validation.attributes.backend.wishes.earliest_start'), ['class' => 'col-lg-2 control-label required']) }}
         <div class="col-lg-10">
-            <input type="text" id="earliest_start" name="earliest_start" class="form-control box-size datepicker" value="{{ $wish->earliest_start }}" placeholder="@lang('validation.attributes.backend.wishes.earliest_start')">
+            {{ Form::text('earliest_start', null, ['class' => 'form-control box-size', 'placeholder' => trans('validation.attributes.backend.wishes.earliest_start'), 'required' => 'required']) }}
         </div>
     </div><!--form control-->
 
     <div class="form-group">
         {{ Form::label('latest_return', trans('validation.attributes.backend.wishes.latest_return'), ['class' => 'col-lg-2 control-label required']) }}
         <div class="col-lg-10">
-            <input type="text" id="latest_return" name="latest_return" class="form-control box-size datepicker" value="{{ $wish->latest_return }}" placeholder="@lang('validation.attributes.backend.wishes.latest_return')">
+            {{ Form::text('latest_return', null, ['class' => 'form-control box-size', 'placeholder' => trans('validation.attributes.backend.wishes.latest_return'), 'required' => 'required']) }}
         </div>
     </div>
 
@@ -127,20 +127,6 @@
     <div class="form-group">
         {{ Form::label('status', trans('validation.attributes.backend.wishes.associated_whitelabels'), ['class' => 'col-lg-2 control-label']) }}
 
-        <div class="col-lg-8">
-            @if (count($whitelabels) > 0)
-                @foreach($whitelabels as $whitelabel)
-                    <div>
-                            <label for="whitelabel-{{$whitelabel->id}}" class="control control--radio">
-                            <input type="radio" value="{{$whitelabel->id}}" name="whitelabel_id" id="whitelabel-{{$whitelabel->id}}" class=""  @if ($wish->whitelabel_id == $whitelabel->id) checked @endif/>  &nbsp;&nbsp;{!! $whitelabel->name !!}
-                            <div class="control__indicator"></div>
-                        </label>
-                    </div>
-                @endforeach
-            @else
-                {{ trans('labels.backend.access.wishes.no_whitelabels') }}
-            @endif
-        </div><!--col-lg-3-->
     </div><!--form control-->
 </div>
 

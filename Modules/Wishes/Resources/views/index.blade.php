@@ -13,7 +13,7 @@
     </div>
 @stop
 @section('vue-js')
-    <script src="{{ asset('js/modules/provider/wishes/wishes.js') }}"></script>
+    <script src="{{ asset('js/modules/admin/wishes/wishes.js') }}"></script>
 @stop
 @section('content')
     <!-- Basic card -->
