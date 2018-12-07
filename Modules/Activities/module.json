@@ -1,0 +1,15 @@
+{
+    "name": "Activities",
+    "alias": "activities",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Activities\\Providers\\ActivitiesServiceProvider",
+        "Modules\\Activities\\Providers\\RepositoryServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

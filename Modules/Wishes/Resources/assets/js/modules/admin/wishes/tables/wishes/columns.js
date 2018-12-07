@@ -18,6 +18,22 @@ export default [
     visible: true
   },
   {
+    name: 'owner.full_name',
+    title: window.Lang.get('tables.owner'),
+    sortField: 'first_name',
+    visible: true
+  },
+  {
+    name: 'whitelabel.display_name',
+    title: window.Lang.get('tables.whitelabel'),
+    visible: true
+  },
+  {
+    name: 'group.display_name',
+    title: window.Lang.get('tables.group'),
+    visible: true
+  },
+  {
     name: 'airport',
     title: window.Lang.get('tables.airport'),
     sortField: 'airport',

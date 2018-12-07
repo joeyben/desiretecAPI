@@ -38,3 +38,5 @@ public/error.log
 
 /Modules/Tui/node_modules/
 /Modules/Wishes/node_modules/
+/Modules/Activities/node_modules/
+/Modules/Attac/node_modules/

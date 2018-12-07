@@ -2,6 +2,7 @@
 
 namespace Modules\Wishes\Http\Controllers;
 
+use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use Illuminate\Auth\AuthManager;
@@ -10,7 +11,9 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
+use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Wishes\Http\Requests\StoreWishRequest;
 use Modules\Wishes\Http\Requests\UpdateWishRequest;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
@@ -37,23 +40,29 @@ class WishesController extends Controller
      * @var \Illuminate\Support\Carbon
      */
     private $carbon;
+    /**
+     * @var \Modules\Activities\Repositories\Contracts\ActivitiesRepository
+     */
+    private $activities;
 
     /**
      * WishesController constructor.
      *
-     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository $wishes
-     * @param \Illuminate\Routing\ResponseFactory                     $response
-     * @param \Illuminate\Auth\AuthManager                            $auth
-     * @param \Illuminate\Translation\Translator                      $lang
-     * @param \Illuminate\Support\Carbon                              $carbon
+     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository         $wishes
+     * @param \Illuminate\Routing\ResponseFactory                             $response
+     * @param \Illuminate\Auth\AuthManager                                    $auth
+     * @param \Illuminate\Translation\Translator                              $lang
+     * @param \Illuminate\Support\Carbon                                      $carbon
+     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository $activities
      */
-    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
+    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities)
     {
         $this->wishes = $wishes;
         $this->response = $response;
         $this->auth = $auth;
         $this->lang = $lang;
         $this->carbon = $carbon;
+        $this->activities = $activities;
     }
 
     /**
@@ -75,6 +84,13 @@ class WishesController extends Controller
             $result['data'] = $this->wishes->withCriteria([
                 new OrderBy($sort[0], $sort[1]),
                 new Filter($request->get('filter')),
+                new EagerLoad(['owner' => function ($query) {
+                    $query->select('id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'));
+                }, 'group'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }, 'whitelabel'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }]),
             ])->paginate($perPage);
 
             $result['success'] = true;
@@ -172,7 +188,16 @@ class WishesController extends Controller
     public function edit(int $id)
     {
         try {
-            $result['wish'] = $this->wishes->find($id);
+            $result['wish'] = $this->wishes->withCriteria([
+                new EagerLoad(['owner' => function ($query) {
+                    $query->select('id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'));
+                }, 'group'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }, 'whitelabel'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }]),
+            ])->find($id);
+            $result['wish']['logs'] = $this->activities->byModel($result['wish']);
 
             $result['success'] = true;
             $result['status'] = 200;
@@ -196,7 +221,21 @@ class WishesController extends Controller
     public function update(UpdateWishRequest $request, int $id)
     {
         try {
-            $wish = $this->wishes->update($id, $request->only('title', 'description', 'airport', 'destination', 'earliest_start', 'latest_return', 'budget', 'adults', 'kids', 'duration', 'status', 'updated_by'));
+            $wish = $this->wishes->update(
+                $id,
+                $request->only(
+                    'title',
+                    'description',
+                    'airport',
+                    'destination',
+                    'earliest_start',
+                    'latest_return',
+                    'budget',
+                    'adults',
+                    'kids',
+                    'duration',
+                    'status'
+                ));
 
             $result['wish'] = $wish;
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => $this->lang->get('labels.wish')]);

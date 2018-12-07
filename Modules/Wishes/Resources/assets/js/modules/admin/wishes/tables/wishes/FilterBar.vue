@@ -5,6 +5,18 @@
         </h5>
         <div class="header-elements">
             <form action="#" class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <el-select v-model="group" :placeholder="trans('tables.group')" @input="doGroup">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <el-select :value="show" placeholder="Select" multiple collapse-tags style="margin-left: 2px;"  @input="doShow">
@@ -17,7 +29,7 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <el-select v-model="value" placeholder="Select" @input="doPage">
                             <el-option
@@ -29,7 +41,7 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="form-group form-group-feedback form-group-feedback-left">
                         <div class="input-group">
                             <input type="search" class="form-control" placeholder="Search" v-model="filterText" @input="doFilter">
@@ -55,6 +67,7 @@
         return {
           fields: config.fields,
           filterText: '',
+          group: '',
           value: 10,
           options: [{
             value: 10,
@@ -103,6 +116,9 @@
         },
         doPage () {
           this.$events.fire('page-set', this.value)
+        },
+        doGroup () {
+          this.$events.fire('group-set', this.group)
         },
         doFilter () {
           if (this.filterText.length > 0) {
