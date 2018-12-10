@@ -3,7 +3,7 @@
 return [
     'name' => 'Wishes',
 
-    'crud' => [
+    'permissions' => [
         'Create Wish',
         'Read Wish',
         'Update Wish',

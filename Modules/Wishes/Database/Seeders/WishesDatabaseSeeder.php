@@ -15,7 +15,7 @@ class WishesDatabaseSeeder extends Seeder
     {
         Model::unguard();
         $faker = \Faker\Factory::create();
-        foreach (config('wishes.crud', []) as $key => $value) {
+        foreach (config('wishes.permissions', []) as $key => $value) {
             if (!DB::table('permissions')->where('name', \str_slug($value))->exists()) {
                 DB::table('permissions')->insertGetId([
                     'name'         => \str_slug($value),

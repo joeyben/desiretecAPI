@@ -3,11 +3,16 @@
 /**
  * All route names are prefixed with 'admin.access'.
  */
+
 Route::group([
     'prefix'    => 'access',
     'as'        => 'access.',
     'namespace' => 'Access',
 ], function () {
+    Route::group(['namespace' => 'User'], function () {
+        Route::get('current', 'UserController@current')->name('users.current');
+
+    });
 
     /*
      * User Management
@@ -31,6 +36,7 @@ Route::group([
              * User CRUD
              */
             Route::resource('user', 'UserController');
+
 
             /*
              * Specific User

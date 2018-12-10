@@ -15,6 +15,8 @@ use App\Models\Access\User\User;
 use App\Repositories\Backend\Access\Role\RoleRepository;
 use App\Repositories\Backend\Access\User\UserRepository;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
+use Illuminate\Auth\AuthManager;
+use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -36,17 +38,29 @@ class UserController extends Controller
      * @var WhitelabelRepository
      */
     protected $whitelabels;
+    /**
+     * @var \Illuminate\Auth\AuthManager
+     */
+    private $auth;
+    /**
+     * @var \Illuminate\Routing\ResponseFactory
+     */
+    private $response;
 
     /**
-     * @param UserRepository       $users
-     * @param RoleRepository       $roles
-     * @param WhitelabelRepository $whitelabels
+     * @param UserRepository                                              $users
+     * @param RoleRepository                                              $roles
+     * @param \App\Repositories\Backend\Whitelabels\WhitelabelsRepository $whitelabels
+     * @param \Illuminate\Auth\AuthManager                                $auth
+     * @param \Illuminate\Routing\ResponseFactory                         $response
      */
-    public function __construct(UserRepository $users, RoleRepository $roles, WhitelabelsRepository $whitelabels)
+    public function __construct(UserRepository $users, RoleRepository $roles, WhitelabelsRepository $whitelabels, AuthManager $auth, ResponseFactory $response)
     {
         $this->users = $users;
         $this->roles = $roles;
         $this->whitelabels = $whitelabels;
+        $this->auth = $auth;
+        $this->response = $response;
     }
 
     /**
@@ -149,5 +163,29 @@ class UserController extends Controller
         $this->users->delete($user);
 
         return redirect()->route('admin.access.user.deleted')->withFlashSuccess(trans('alerts.backend.users.deleted'));
+    }
+
+    /**
+     * Show the specified resource.
+     *
+     * @return Response
+     */
+    public function current()
+    {
+        try {
+            $user = $this->users->find($this->auth->guard('web')->user()->id);
+            $result['user']['id'] = $user->id;
+            foreach (config('wishes.permissions', []) as $permission){
+                $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
+            }
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
     }
 }

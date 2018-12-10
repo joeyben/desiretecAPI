@@ -9,6 +9,7 @@ use App\Http\Requests\Backend\Whitelabels\UpdateWhitelabelsRequest;
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Distributions\DistributionsRepository;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
+use Illuminate\Routing\ResponseFactory;
 
 /**
  * Class WhitelabelsController.
@@ -32,15 +33,21 @@ class WhitelabelsController extends Controller
      * @var DistributionsRepository
      */
     protected $distributions;
+    /**
+     * @var \Illuminate\Routing\ResponseFactory
+     */
+    private $response;
 
     /**
      * @param \App\Repositories\Backend\Whitelabels\WhitelabelsRepository     $whitelabel
-     * @param \App\Repositories\Backend\Distributions\DistributionsRepository $distribution
+     * @param \App\Repositories\Backend\Distributions\DistributionsRepository $distributions
+     * @param \Illuminate\Routing\ResponseFactory                             $response
      */
-    public function __construct(WhitelabelsRepository $whitelabel, DistributionsRepository $distributions)
+    public function __construct(WhitelabelsRepository $whitelabel, DistributionsRepository $distributions, ResponseFactory $response)
     {
         $this->whitelabel = $whitelabel;
         $this->distributions = $distributions;
+        $this->response = $response;
     }
 
     /**
@@ -53,6 +60,27 @@ class WhitelabelsController extends Controller
         return view('backend.whitelabels.index')->with([
             'status'=> $this->status,
         ]);
+    }
+
+    public function view()
+    {
+        try {
+            $whitelabels =$this->whitelabel->getAll();
+            $result['whitelabels'] = $whitelabels->map(function ($whitelabel) {
+                return [
+                    'id' => $whitelabel->id,
+                    'name' => $whitelabel->display_name
+                ];
+            });
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**

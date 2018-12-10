@@ -5,6 +5,9 @@ namespace Modules\Wishes\Http\Controllers;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\Where;
+use App\Repositories\Criteria\WhereBetween;
+use App\Repositories\Criteria\WhereIn;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -83,6 +86,8 @@ class WishesController extends Controller
 
             $result['data'] = $this->wishes->withCriteria([
                 new OrderBy($sort[0], $sort[1]),
+                new Where('wishes.whitelabel_id', $request->get('whitelabel')),
+                new WhereBetween('wishes.created_at', $request->get('start'), $request->get('end')),
                 new Filter($request->get('filter')),
                 new EagerLoad(['owner' => function ($query) {
                     $query->select('id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'));

@@ -37915,7 +37915,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
   loadUser: function loadUser(success, error) {
-    return window.axios.get(window.laroute.route('users.current')).then(function (response) {
+    return window.axios.get(window.laroute.route('admin.access.users.current')).then(function (response) {
       return success(response.data);
     }, function (response) {
       return error(response);
@@ -37969,12 +37969,16 @@ var getters = _interopRequireWildcard(_getters);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var state = {
-  wish: {}
+  wish: {},
+  whitelabels: {}
 };
 
 var mutations = {
   ADD_WISH: function ADD_WISH(state, wish) {
     state.wish = wish;
+  },
+  ADD_WHITELABELS: function ADD_WHITELABELS(state, whitelabels) {
+    state.whitelabels = whitelabels;
   },
   updateWish: function updateWish(state, obj) {
     state.wish[obj.name] = obj.value;
@@ -37998,16 +38002,35 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addWish = undefined;
+exports.loadWhitelabels = exports.addWish = undefined;
 
 var _mutationTypes = __webpack_require__(223);
 
 var types = _interopRequireWildcard(_mutationTypes);
 
+var _api = __webpack_require__(419);
+
+var _api2 = _interopRequireDefault(_api);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var addWish = exports.addWish = function addWish(store, wish) {
   store.commit(types.ADD_WISH, wish);
+};
+
+var loadWhitelabels = exports.loadWhitelabels = function loadWhitelabels(store) {
+  _api2.default.loadWhitelabels(function (response) {
+    if (!response) {
+      console.log('error', response);
+      return;
+    }
+
+    store.commit(types.ADD_WHITELABELS, response.whitelabels);
+  }, function (error) {
+    console.log('LOGIN_USER not answer', error);
+  });
 };
 
 /***/ }),
@@ -38022,7 +38045,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var LOAD_LANGUAGES = exports.LOAD_LANGUAGES = 'LOAD_LANGUAGES';
 var ADD_WISH = exports.ADD_WISH = 'ADD_WISH';
-var ADD_ROLES = exports.ADD_ROLES = 'ADD_ROLES';
+var ADD_WHITELABELS = exports.ADD_WHITELABELS = 'ADD_WHITELABELS';
 var ADD_USERS = exports.ADD_USERS = 'ADD_USERS';
 
 /***/ }),
@@ -38037,6 +38060,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 var wish = exports.wish = function wish(state) {
   return state.wish;
+};
+var whitelabels = exports.whitelabels = function whitelabels(state) {
+  return state.whitelabels;
 };
 
 /***/ }),
@@ -84291,12 +84317,14 @@ exports.default = {
   },
   mounted: function mounted() {
     this.loadUser();
+    this.loadWhitelabels();
   },
 
   watch: {},
   computed: _extends({}, _vuex2.default.mapGetters({})),
   methods: _extends({}, _vuex2.default.mapActions({
-    loadUser: 'loadLoggedUser'
+    loadUser: 'loadLoggedUser',
+    loadWhitelabels: 'loadWhitelabels'
   }))
 };
 
@@ -84462,6 +84490,12 @@ exports.default = {
     this.$events.$on('restore-set', function (id) {
       return _this.doRestore(id);
     });
+    this.$events.$on('range-date-set', function (start, end) {
+      return _this.doRangeDate(start, end);
+    });
+    this.$events.$on('whitelabel-set', function (id) {
+      return _this.doWhitelabel(id);
+    });
   },
   render: function render(h) {
     return h('div', {
@@ -84501,12 +84535,32 @@ exports.default = {
         return _this5.$refs.vuetable.normalizeFields(_this5.fields);
       });
     },
-    onFilterReset: function onFilterReset() {
+    doRangeDate: function doRangeDate(start, end) {
       var _this6 = this;
 
-      delete this.appendParams.filter;
+      this.appendParams.start = start;
+      this.appendParams.end = end;
       _vue2.default.nextTick(function () {
         return _this6.$refs.vuetable.refresh();
+      });
+    },
+    doWhitelabel: function doWhitelabel(id) {
+      var _this7 = this;
+
+      this.appendParams.whitelabel = id;
+      _vue2.default.nextTick(function () {
+        return _this7.$refs.vuetable.refresh();
+      });
+    },
+    onFilterReset: function onFilterReset() {
+      var _this8 = this;
+
+      delete this.appendParams.filter;
+      delete this.appendParams.start;
+      delete this.appendParams.end;
+      delete this.appendParams.whitelabel;
+      _vue2.default.nextTick(function () {
+        return _this8.$refs.vuetable.refresh();
       });
     },
     renderLoader: function renderLoader(h) {
@@ -84603,82 +84657,82 @@ exports.default = {
       this.$refs.vuetable.toggleDetailRow(data.id);
     },
     doDelete: function doDelete(id) {
-      var _this7 = this;
+      var _this9 = this;
 
       this.$confirm(this.trans('messages.delete'), 'Warning', {
         confirmButtonText: this.trans('labels.ok'),
         cancelButtonText: this.trans('labels.cancel'),
         type: 'warning'
       }).then(function () {
-        _this7.onDelete(id);
+        _this9.onDelete(id);
       }).catch(function () {
-        _this7.$message({
+        _this9.$message({
           type: 'info',
-          message: _this7.trans('messages.delete_canceled')
+          message: _this9.trans('messages.delete_canceled')
         });
       });
     },
     doDestroy: function doDestroy(id) {
-      var _this8 = this;
+      var _this10 = this;
 
       this.$confirm(this.trans('messages.destroy'), 'Warning', {
         confirmButtonText: this.trans('labels.ok'),
         cancelButtonText: this.trans('labels.cancel'),
         type: 'warning'
       }).then(function () {
-        _this8.onForceDelete(id);
+        _this10.onForceDelete(id);
       }).catch(function () {
-        _this8.$message({
+        _this10.$message({
           type: 'info',
-          message: _this8.trans('messages.delete_canceled')
+          message: _this10.trans('messages.delete_canceled')
         });
       });
     },
     doRestore: function doRestore(id) {
-      var _this9 = this;
+      var _this11 = this;
 
       this.$confirm(this.trans('messages.restore'), 'Warning', {
         confirmButtonText: this.trans('labels.ok'),
         cancelButtonText: this.trans('labels.cancel'),
         type: 'warning'
       }).then(function () {
-        _this9.onRestore(id);
+        _this11.onRestore(id);
       }).catch(function () {
-        _this9.$message({
+        _this11.$message({
           type: 'info',
-          message: _this9.trans('messages.restore_canceled')
+          message: _this11.trans('messages.restore_canceled')
         });
       });
     },
     onDelete: function onDelete(id) {
-      var _this10 = this;
-
-      this.$store.dispatch('block', { element: 'wishesComponent', load: true });
-      // eslint-disable-next-line
-      this.$http.delete(laroute.route('admin.wishes.destroy', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
-        _this10.$store.dispatch('block', { element: 'wishesComponent', load: false });
-      });
-    },
-    onForceDelete: function onForceDelete(id) {
-      var _this11 = this;
-
-      this.$store.dispatch('block', { element: 'wishesComponent', load: true });
-      // eslint-disable-next-line
-      this.$http.delete(laroute.route('admin.wishes.forceDelete', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
-        _this11.$store.dispatch('block', { element: 'wishesComponent', load: false });
-      });
-    },
-    onRestore: function onRestore(id) {
       var _this12 = this;
 
       this.$store.dispatch('block', { element: 'wishesComponent', load: true });
       // eslint-disable-next-line
-      this.$http.put(window.laroute.route('admin.wishes.restore', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+      this.$http.delete(laroute.route('admin.wishes.destroy', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
         _this12.$store.dispatch('block', { element: 'wishesComponent', load: false });
       });
     },
-    onDeleteSuccess: function onDeleteSuccess(response) {
+    onForceDelete: function onForceDelete(id) {
       var _this13 = this;
+
+      this.$store.dispatch('block', { element: 'wishesComponent', load: true });
+      // eslint-disable-next-line
+      this.$http.delete(laroute.route('admin.wishes.forceDelete', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+        _this13.$store.dispatch('block', { element: 'wishesComponent', load: false });
+      });
+    },
+    onRestore: function onRestore(id) {
+      var _this14 = this;
+
+      this.$store.dispatch('block', { element: 'wishesComponent', load: true });
+      // eslint-disable-next-line
+      this.$http.put(window.laroute.route('admin.wishes.restore', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+        _this14.$store.dispatch('block', { element: 'wishesComponent', load: false });
+      });
+    },
+    onDeleteSuccess: function onDeleteSuccess(response) {
+      var _this15 = this;
 
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
         this.$message({
@@ -84686,7 +84740,7 @@ exports.default = {
           message: response.data.message
         });
         _vue2.default.nextTick(function () {
-          return _this13.$refs.vuetable.refresh();
+          return _this15.$refs.vuetable.refresh();
         });
       } else {
         _toastr2.default.error(response.message);
@@ -99291,7 +99345,6 @@ exports.default = [{
 }, {
   name: 'owner.full_name',
   title: window.Lang.get('tables.owner'),
-  sortField: 'first_name',
   visible: true
 }, {
   name: 'whitelabel.display_name',
@@ -99305,29 +99358,29 @@ exports.default = [{
   name: 'airport',
   title: window.Lang.get('tables.airport'),
   sortField: 'airport',
-  visible: true
+  visible: false
 }, {
   name: 'destination',
   title: window.Lang.get('tables.destination'),
   sortField: 'destination',
-  visible: true
+  visible: false
 }, {
   name: 'earliest_start',
   title: window.Lang.get('tables.earliest_start'),
   sortField: 'earliest_start',
   callback: 'formatDate|DD.MM.YYYY',
-  visible: true
+  visible: false
 }, {
   name: 'latest_return',
   title: window.Lang.get('tables.latest_return'),
   callback: 'formatDate|DD.MM.YYYY',
   sortField: 'latest_return',
-  visible: true
+  visible: false
 }, {
   name: 'adults',
   title: window.Lang.get('tables.adults'),
   sortField: 'adults',
-  visible: true
+  visible: false
 }, {
   name: 'kids',
   title: window.Lang.get('tables.kids'),
@@ -99338,7 +99391,7 @@ exports.default = [{
   title: window.Lang.get('tables.budget'),
   sortField: 'budget',
   callback: 'formatNumber',
-  visible: true
+  visible: false
 }, {
   name: 'category',
   title: window.Lang.get('tables.category'),
@@ -100387,19 +100440,110 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__(7);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
 var _config = __webpack_require__(210);
 
 var _config2 = _interopRequireDefault(_config);
 
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+_moment2.default.locale(window.i18.lang);
 exports.default = {
   name: 'FilterBar',
   data: function data() {
     return {
+      created: '',
       fields: _config2.default.fields,
       filterText: '',
-      group: '',
+      whitelabel: '',
       value: 10,
       options: [{
         value: 10,
@@ -100417,7 +100561,9 @@ exports.default = {
     };
   },
 
-  computed: {
+  computed: _extends({}, _vuex2.default.mapGetters({
+    whitelabels: 'whitelabels'
+  }), {
     show: function show() {
       var results = [];
       if (this.fields.length > 0) {
@@ -100430,7 +100576,7 @@ exports.default = {
 
       return results;
     }
-  },
+  }),
   methods: {
     doShow: function doShow(elements) {
       var filtered = elements.filter(function (el) {
@@ -100450,82 +100596,28 @@ exports.default = {
     doPage: function doPage() {
       this.$events.fire('page-set', this.value);
     },
-    doGroup: function doGroup() {
-      this.$events.fire('group-set', this.group);
+    doWhitelabel: function doWhitelabel() {
+      this.$events.fire('whitelabel-set', this.whitelabel);
+    },
+    doRange: function doRange(e) {
+      this.$events.fire('range-date-set', (0, _moment2.default)(e[0], _moment2.default.ISO_8601).startOf('day').format('YYYY-MM-DD HH:mm:ss'), (0, _moment2.default)(e[1], _moment2.default.ISO_8601).endOf('day').format('YYYY-MM-DD  HH:mm:ss'));
     },
     doFilter: function doFilter() {
       if (this.filterText.length > 0) {
         this.$events.fire('filter-set', this.filterText);
       } else if (this.filterText.length === 0) {
-        this.resetFilter();
+        this.$events.fire('filter-reset');
       }
     },
     resetFilter: function resetFilter() {
       this.filterText = '';
+      this.created = '';
+      this.whitelabel = '';
+      this.fields = _config2.default.fields;
       this.$events.fire('filter-reset');
     }
   }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 /* 407 */
@@ -100536,56 +100628,33 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card-header header-elements-inline" }, [
-    _c(
-      "h5",
-      { staticClass: "card-title" },
-      [
-        _c(
-          "router-link",
-          {
-            staticClass:
-              "btn alpha-teal text-teal-800 btn-icon rounded-round ml-2",
-            attrs: { to: { name: "root.edit", params: { id: 0 } } }
-          },
-          [_c("i", { staticClass: "icon-plus3" })]
-        )
-      ],
-      1
-    ),
+    _c("h5", { staticClass: "card-title" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "dropdown-menu dropdown-menu-left" },
+        [
+          _c(
+            "router-link",
+            {
+              staticClass: "dropdown-item",
+              attrs: { to: { name: "root.edit", params: { id: 0 } } }
+            },
+            [_c("i", { staticClass: "icon-plus3" }), _vm._v(" Create Wish")]
+          ),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._m(2)
+        ],
+        1
+      )
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "header-elements" }, [
       _c("form", { staticClass: "row", attrs: { action: "#" } }, [
-        _c("div", { staticClass: "col-md-2" }, [
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c(
-                "el-select",
-                {
-                  attrs: { placeholder: _vm.trans("tables.group") },
-                  on: { input: _vm.doGroup },
-                  model: {
-                    value: _vm.group,
-                    callback: function($$v) {
-                      _vm.group = $$v
-                    },
-                    expression: "group"
-                  }
-                },
-                _vm._l(_vm.options, function(item) {
-                  return _c("el-option", {
-                    key: item.value,
-                    attrs: { label: item.label, value: item.value }
-                  })
-                })
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3" }, [
+        _c("div", { staticClass: "col-xl-2 col-md-12 col-sm-12" }, [
           _c(
             "div",
             { staticClass: "form-group" },
@@ -100614,7 +100683,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-2" }, [
+        _c("div", { staticClass: "col-xl-1 col-md-12 col-sm-12" }, [
           _c(
             "div",
             { staticClass: "form-group" },
@@ -100644,7 +100713,62 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-5" }, [
+        _c("div", { staticClass: "col-xl-2 col-md-12 col-sm-12" }, [
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c(
+                "el-select",
+                {
+                  attrs: { placeholder: _vm.trans("tables.whitelabel") },
+                  on: { input: _vm.doWhitelabel },
+                  model: {
+                    value: _vm.whitelabel,
+                    callback: function($$v) {
+                      _vm.whitelabel = $$v
+                    },
+                    expression: "whitelabel"
+                  }
+                },
+                _vm._l(_vm.whitelabels, function(item) {
+                  return _c("el-option", {
+                    key: item.id,
+                    attrs: { label: item.name, value: item.id }
+                  })
+                })
+              )
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-xl-3 col-md-12 col-sm-12" }, [
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("el-date-picker", {
+                attrs: {
+                  type: "daterange",
+                  "start-placeholder": "Start",
+                  "end-placeholder": "End"
+                },
+                on: { input: _vm.doRange },
+                model: {
+                  value: _vm.created,
+                  callback: function($$v) {
+                    _vm.created = $$v
+                  },
+                  expression: "created"
+                }
+              })
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-xl-4 col-md-12 col-sm-12" }, [
           _c(
             "div",
             {
@@ -100691,7 +100815,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(0)
+              _vm._m(3)
             ]
           )
         ])
@@ -100700,6 +100824,38 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass:
+          "btn btn-outline bg-teal-300 text-teal-800 btn-icon dropdown-toggle",
+        attrs: { type: "button", "data-toggle": "dropdown" }
+      },
+      [_c("i", { staticClass: "icon-gear" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+      _c("i", { staticClass: "icon-file-text3" }),
+      _vm._v(" Export Selected")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+      _c("i", { staticClass: "icon-file-text3" }),
+      _vm._v(" Export All")
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -102471,6 +102627,26 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-4a405c3a", module.exports)
   }
 }
+
+/***/ }),
+/* 419 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  loadWhitelabels: function loadWhitelabels(success, error) {
+    return window.axios.get(window.laroute.route('admin.whitelabels.view')).then(function (response) {
+      return success(response.data);
+    }, function (response) {
+      return error(response);
+    });
+  }
+};
 
 /***/ })
 /******/ ]);
