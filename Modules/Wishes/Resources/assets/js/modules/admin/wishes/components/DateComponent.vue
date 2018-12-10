@@ -4,6 +4,7 @@
         <div class="col-lg-9">
             <el-date-picker :start-placeholder="trans('modals.' + field)" :end-placeholder="trans('modals.' + field)" filterable size="small" style="width: 100%;" format="dd.MM.yyyy" @input="updateRoomRange"
                             :picker-options="pickerOptions"
+                            disabled
                             range-separator="-"
                             :value="date">
             </el-date-picker>

@@ -4,7 +4,7 @@
  * Created by PhpStorm.
  * User: goldoni
  * Date: 10.12.18
- * Time: 11:55
+ * Time: 11:55.
  */
 
 namespace App\Repositories\Criteria;
@@ -12,9 +12,7 @@ namespace App\Repositories\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class WhereBetween
- *
- * @package \App\Repositories\Criteria
+ * Class WhereBetween.
  */
 class WhereBetween
 {
@@ -30,7 +28,6 @@ class WhereBetween
      * @var string
      */
     private $column;
-
 
     /**
      * WhereBetween constructor.
@@ -53,7 +50,6 @@ class WhereBetween
      */
     public function apply($model): Builder
     {
-        return is_null($this->start) || is_null($this->end) ? $model : $model->whereBetween($this->column, [$this->start, $this->end]);
+        return null === $this->start || null === $this->end ? $model : $model->whereBetween($this->column, [$this->start, $this->end]);
     }
-
 }

@@ -65,10 +65,10 @@ class WhitelabelsController extends Controller
     public function view()
     {
         try {
-            $whitelabels =$this->whitelabel->getAll();
+            $whitelabels = $this->whitelabel->getAll();
             $result['whitelabels'] = $whitelabels->map(function ($whitelabel) {
                 return [
-                    'id' => $whitelabel->id,
+                    'id'   => $whitelabel->id,
                     'name' => $whitelabel->display_name
                 ];
             });

@@ -2,13 +2,15 @@
 
 namespace Modules\Wishes\Http\Controllers;
 
+use App\Models\Groups\Group;
+use App\Repositories\Backend\Groups\GroupsRepository;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
-use App\Repositories\Criteria\WhereIn;
 use Illuminate\Auth\AuthManager;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -17,12 +19,14 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\Wishes\Entities\Wish;
 use Modules\Wishes\Http\Requests\StoreWishRequest;
 use Modules\Wishes\Http\Requests\UpdateWishRequest;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
 
 class WishesController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
      */
@@ -47,6 +51,10 @@ class WishesController extends Controller
      * @var \Modules\Activities\Repositories\Contracts\ActivitiesRepository
      */
     private $activities;
+    /**
+     * @var \App\Repositories\Backend\Groups\GroupsRepository
+     */
+    private $groups;
 
     /**
      * WishesController constructor.
@@ -57,8 +65,9 @@ class WishesController extends Controller
      * @param \Illuminate\Translation\Translator                              $lang
      * @param \Illuminate\Support\Carbon                                      $carbon
      * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository $activities
+     * @param \App\Repositories\Backend\Groups\GroupsRepository               $groups
      */
-    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities)
+    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, GroupsRepository $groups)
     {
         $this->wishes = $wishes;
         $this->response = $response;
@@ -66,20 +75,26 @@ class WishesController extends Controller
         $this->lang = $lang;
         $this->carbon = $carbon;
         $this->activities = $activities;
+        $this->groups = $groups;
     }
 
     /**
      * Display a listing of the resource.
      *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
      * @return Response
      */
     public function index()
     {
+        $this->authorize('view', Wish::class);
+
         return view('wishes::index');
     }
 
     public function view(Request $request)
     {
+        $this->authorize('view', Wish::class);
         try {
             $perPage = $request->get('per_page');
             $sort = explode('|', $request->get('sort'));
@@ -202,7 +217,16 @@ class WishesController extends Controller
                     $query->select('id', 'display_name');
                 }]),
             ])->find($id);
-            $result['wish']['logs'] = $this->activities->byModel($result['wish']);
+
+            $result['wish']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-wish') ? $this->activities->byModel($result['wish']) : [];
+            $groups = Group::where('whitelabel_id', $result['wish']->whitelabel_id)->get();
+
+            $result['wish']['groups'] = $groups->map(function ($whitelabel) {
+                return [
+                    'id'   => $whitelabel->id,
+                    'name' => $whitelabel->display_name
+                ];
+            });
 
             $result['success'] = true;
             $result['status'] = 200;
@@ -229,17 +253,8 @@ class WishesController extends Controller
             $wish = $this->wishes->update(
                 $id,
                 $request->only(
-                    'title',
-                    'description',
-                    'airport',
-                    'destination',
-                    'earliest_start',
-                    'latest_return',
-                    'budget',
-                    'adults',
-                    'kids',
-                    'duration',
-                    'status'
+                    'status',
+                    'group_id'
                 ));
 
             $result['wish'] = $wish;
@@ -253,14 +268,5 @@ class WishesController extends Controller
         }
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @return Response
-     */
-    public function destroy()
-    {
     }
 }

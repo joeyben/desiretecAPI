@@ -8,8 +8,8 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <ul class="nav nav-tabs nav-tabs-highlight nav-justified">
-                    <li class="nav-item"><a href="#highlighted-justified-tab1" class="nav-link active" data-toggle="tab"><i class="icon-pencil6 mr-2"></i> {{ trans('modals.wish') }}</a></li>
-                    <li class="nav-item" v-if="true"><a href="#highlighted-justified-tab2" class="nav-link" data-toggle="tab"><i class="icon-file-text mr-2"></i> {{ trans('modals.logs') }}</a></li>
+                    <li class="nav-item" v-if="can_logs"><a href="#highlighted-justified-tab1" class="nav-link active" data-toggle="tab"><i class="icon-pencil6 mr-2"></i> {{ trans('modals.wish') }}</a></li>
+                    <li class="nav-item" v-if="can_logs"><a href="#highlighted-justified-tab2" class="nav-link" data-toggle="tab"><i class="icon-file-text mr-2"></i> {{ trans('modals.logs') }}</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -29,7 +29,7 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.title') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('title') ? 'is-invalid': ''" id='title' name='title' :placeholder="trans('modals.title')" @input="updateWish"  :value="wish.title"/>
+                                                    <input type="text" class="form-control" :class="errors.has('title') ? 'is-invalid': ''" id='title' name='title' :placeholder="trans('modals.title')" disabled readonly :value="wish.title"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('title')"></strong>
                                                     </div>
@@ -38,7 +38,7 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.airport') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('airport') ? 'is-invalid': ''" id='airport' name='airport' :placeholder="trans('modals.airport')" @input="updateWish"  :value="wish.airport"/>
+                                                    <input type="text" class="form-control" :class="errors.has('airport') ? 'is-invalid': ''" id='airport' name='airport' :placeholder="trans('modals.airport')" disabled readonly  :value="wish.airport"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('airport')"></strong>
                                                     </div>
@@ -47,7 +47,7 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.destination') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('destination') ? 'is-invalid': ''" id='destination' name='destination' :placeholder="trans('modals.destination')" @input="updateWish"  :value="wish.destination"/>
+                                                    <input type="text" class="form-control" :class="errors.has('destination') ? 'is-invalid': ''" id='destination' name='destination' :placeholder="trans('modals.destination')" disabled readonly  :value="wish.destination"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('destination')"></strong>
                                                     </div>
@@ -58,7 +58,7 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.adults') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <el-input-number name='adults' :value="wish.adults" @input="updateWishAdults" :min="1" :class="errors.has('adults') ? 'is-invalid': ''" style="width: 100%;"></el-input-number>
+                                                    <el-input-number name='adults' :value="wish.adults" disabled :min="1" :class="errors.has('adults') ? 'is-invalid': ''" style="width: 100%;"></el-input-number>
                                                     <div class="help-block text-danger" v-if="errors.has('adults')">
                                                         <strong v-text="errors.get('adults')"></strong>
                                                     </div>
@@ -67,7 +67,7 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.kids') }}</label>
                                                 <div class="col-lg-9">
-                                                    <el-input-number name='kids' :value="wish.kids" @input="updateWishKids" :min="0" :class="errors.has('kids') ? 'is-invalid': ''" style="width: 100%;"></el-input-number>
+                                                    <el-input-number name='kids' :value="wish.kids" disabled :min="0" :class="errors.has('kids') ? 'is-invalid': ''" style="width: 100%;"></el-input-number>
                                                     <div class="help-block text-danger" v-if="errors.has('kids')">
                                                         <strong v-text="errors.get('kids')"></strong>
                                                     </div>
@@ -76,7 +76,7 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.budget') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <el-input-number name='kids' :value="wish.budget" @input="updateWishBudget" :min="0" :class="errors.has('budget') ? 'is-invalid': ''" style="width: 100%;"></el-input-number>
+                                                    <el-input-number name='kids' :value="wish.budget" disabled :min="0" :class="errors.has('budget') ? 'is-invalid': ''" style="width: 100%;"></el-input-number>
                                                     <div class="help-block text-danger" v-if="errors.has('budget')">
                                                         <strong v-text="errors.get('budget')"></strong>
                                                     </div>
@@ -95,18 +95,23 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.group') }}</label>
+                                                <label class="col-lg-3 col-form-label"> &nbsp; {{ trans('modals.group') }}</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('display_name') ? 'is-invalid': ''" id='display_name' name='display_name' :placeholder="trans('modals.group')" @input="updateWish"  :value="getWish('group', 'display_name')"/>
-                                                    <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('display_name')"></strong>
-                                                    </div>
+                                                    <el-select :value="wish.group_id" :placeholder="trans('labels.group')" size="small" style="width: 100%;" @input="inputGroup">
+                                                        <el-option
+                                                                v-for="item in wish.groups"
+                                                                :key="item.id"
+                                                                :label="item.name"
+                                                                :value="item.id">
+                                                            <span style="float: left"><i :class="item.name"></i> {{ item.name }}</span>
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.category') }}</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('category') ? 'is-invalid': ''" id='category' name='category' :placeholder="trans('modals.category')" @input="updateWish"  :value="wish.category"/>
+                                                    <input type="text" class="form-control" :class="errors.has('category') ? 'is-invalid': ''" id='category' name='category' :placeholder="trans('modals.category')" disabled readonly :value="wish.category"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('category')"></strong>
                                                     </div>
@@ -115,7 +120,7 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.catering') }}</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('catering') ? 'is-invalid': ''" id='catering' name='catering' :placeholder="trans('modals.catering')" @input="updateWish"  :value="wish.catering"/>
+                                                    <input type="text" class="form-control" :class="errors.has('catering') ? 'is-invalid': ''" id='catering' name='catering' :placeholder="trans('modals.catering')" disabled readonly  :value="wish.catering"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('catering')"></strong>
                                                     </div>
@@ -135,7 +140,7 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.duration') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('duration') ? 'is-invalid': ''" id='duration' name='duration' :placeholder="trans('modals.duration')" @input="updateWish"  :value="wish.duration"/>
+                                                    <input type="text" class="form-control" :class="errors.has('duration') ? 'is-invalid': ''" id='duration' name='duration' :placeholder="trans('modals.duration')" disabled readonly  :value="wish.duration"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('duration')"></strong>
                                                     </div>
@@ -144,9 +149,18 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.description') }}</label>
                                                 <div class="col-lg-9">
-                                                    <textarea class="form-control" :class="errors.has('description') ? 'is-invalid': ''" rows="5" id='description' name='description' :placeholder="trans('modals.description')" @input="updateWish"  :value="wish.description"></textarea>
+                                                    <textarea class="form-control" :class="errors.has('description') ? 'is-invalid': ''" rows="5" id='description' name='description' :placeholder="trans('modals.description')" disabled readonly  :value="wish.description"></textarea>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('description')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.image') }} <span class="text-danger"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <input type="url" class="form-control" :class="errors.has('featured_image') ? 'is-invalid': ''" id='featured_image' name='featured_image' :placeholder="trans('modals.image')" disabled readonly :value="wish.featured_image"/>
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('featured_image')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
@@ -162,7 +176,7 @@
                             </form>                        </div>
                     </div>
 
-                    <div class="tab-pane fade" id="highlighted-justified-tab2" v-if="true">
+                    <div class="tab-pane fade" id="highlighted-justified-tab2" v-if="can_logs">
                         <div class="modal-body">
                             <vue-table :options="wish.logs"></vue-table>
                         </div>
@@ -202,13 +216,23 @@
     },
     computed: {
       ...Vuex.mapGetters({
-        wish: 'wish'
-      })
+        wish: 'wish',
+        user: 'currentUser'
+      }),
+      can_logs () {
+        return !this.deleted && this.hasPermissionTo('logs-wish')
+      }
     },
     methods: {
       ...Vuex.mapActions({
         addWish: 'addWish'
       }),
+      hasPermissionTo (permission) {
+        return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
+      },
+      inputGroup (value) {
+        this.$store.commit('updateWish', {name: 'group_id', value: value})
+      },
       getWish (key, value) {
         return (this.wish.hasOwnProperty(key)) ? this.wish[key][value] : ''
       },

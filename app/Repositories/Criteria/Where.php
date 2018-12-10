@@ -4,7 +4,7 @@
  * Created by PhpStorm.
  * User: goldoni
  * Date: 10.12.18
- * Time: 13:36
+ * Time: 13:36.
  */
 
 namespace App\Repositories\Criteria;
@@ -12,9 +12,7 @@ namespace App\Repositories\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class Where
- *
- * @package \App\Repositories\Criteria
+ * Class Where.
  */
 class Where
 {
@@ -38,6 +36,7 @@ class Where
         $this->column = $column;
         $this->value = $value;
     }
+
     /**
      * @param $model
      *
@@ -45,8 +44,6 @@ class Where
      */
     public function apply($model): Builder
     {
-        return is_null($this->value) ? $model : $model->where($this->column, $this->value);
+        return null === $this->value ? $model : $model->where($this->column, $this->value);
     }
-
-
 }

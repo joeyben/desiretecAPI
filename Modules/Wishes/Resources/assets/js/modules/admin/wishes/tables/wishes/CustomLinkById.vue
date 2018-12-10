@@ -31,12 +31,12 @@
           return this.rowData.deleted_at !== null
         },
         can_edit () {
-          return true
+          return !this.deleted && this.hasPermissionTo('update-wish')
         }
       },
       methods: {
         hasPermissionTo (permission) {
-          return this.user.hasOwnProperty('permissions') && (this.user.permissions.indexOf(permission) >= 0)
+          return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
         }
       }
     }

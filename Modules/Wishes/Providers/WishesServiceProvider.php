@@ -4,6 +4,8 @@ namespace Modules\Wishes\Providers;
 
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\ServiceProvider;
+use Modules\Wishes\Entities\Wish;
+use Modules\Wishes\Observers\WishObserver;
 
 class WishesServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,7 @@ class WishesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Wish::observe(WishObserver::class);
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();

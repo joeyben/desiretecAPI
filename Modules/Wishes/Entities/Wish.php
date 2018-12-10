@@ -57,19 +57,19 @@ class Wish extends Model
          * @var array
          */
         'columns' => [
-            'wishes.id'          => 10,
-            'wishes.title'          => 10,
-            'users.first_name'          => 10,
-            'users.last_name'          => 10,
-            'groups.name'          => 10,
-            'groups.display_name'          => 10,
-            'whitelabels.name'          => 10,
+            'wishes.id'                         => 10,
+            'wishes.title'                      => 10,
+            'users.first_name'                  => 10,
+            'users.last_name'                   => 10,
+            'groups.name'                       => 10,
+            'groups.display_name'               => 10,
+            'whitelabels.name'                  => 10,
             'whitelabels.display_name'          => 10,
         ],
         'joins' => [
-            'users' => ['wishes.created_by','users.id'],
-            'groups' => ['wishes.group_id','groups.id'],
-            'whitelabels' => ['wishes.whitelabel_id','whitelabels.id'],
+            'users'       => ['wishes.created_by', 'users.id'],
+            'groups'      => ['wishes.group_id', 'groups.id'],
+            'whitelabels' => ['wishes.whitelabel_id', 'whitelabels.id'],
         ]
     ];
 

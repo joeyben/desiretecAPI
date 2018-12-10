@@ -99655,7 +99655,7 @@ exports = module.exports = __webpack_require__(51)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -99672,9 +99672,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
 //
 //
 //
@@ -99702,16 +99699,7 @@ exports.default = {
     user: 'currentUser'
   }), {
     can_edit: function can_edit() {
-      return true;
-    },
-    can_restore: function can_restore() {
-      return this.deleted && this.hasPermissionTo('RESTORE_BOARDS');
-    },
-    can_force_delete: function can_force_delete() {
-      return this.deleted && this.hasPermissionTo('FORCE_DELETE');
-    },
-    can_delete: function can_delete() {
-      return true;
+      return !this.deleted && this.hasPermissionTo('update-wish');
     },
 
     deleted: function deleted() {
@@ -99719,20 +99707,8 @@ exports.default = {
     }
   }),
   methods: {
-    doView: function doView(action, data, index) {
-      this.$events.fire('view-set', action, data, index);
-    },
-    doDelete: function doDelete(id) {
-      this.$events.fire('delete-set', id);
-    },
-    doDestroy: function doDestroy(id) {
-      this.$events.fire('destroy-set', id);
-    },
-    doRestore: function doRestore(id) {
-      this.$events.fire('restore-set', id);
-    },
     hasPermissionTo: function hasPermissionTo(permission) {
-      return this.user.hasOwnProperty('permissions') && this.user.permissions.indexOf(permission) >= 0;
+      return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
     }
   }
 };
@@ -99762,69 +99738,6 @@ var render = function() {
               }
             },
             [_c("i", { staticClass: "icon-pencil7" })]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.can_delete
-        ? _c(
-            "a",
-            {
-              staticClass:
-                "btn btn-outline btn-sm bg-danger text-danger-800 btn-icon ml-2",
-              attrs: {
-                href: "javascript:;",
-                "data-popup": "tooltip",
-                title: _vm.trans("labels.delete")
-              },
-              on: {
-                click: function($event) {
-                  _vm.doDelete(_vm.rowData.id)
-                }
-              }
-            },
-            [_c("i", { staticClass: "icon-cancel-circle2" })]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.can_force_delete
-        ? _c(
-            "a",
-            {
-              staticClass:
-                "btn btn-outline btn-sm bg-danger text-danger-800 btn-icon ml-2",
-              attrs: {
-                href: "javascript:;",
-                "data-popup": "tooltip",
-                title: _vm.trans("labels.destroy")
-              },
-              on: {
-                click: function($event) {
-                  _vm.doDestroy(_vm.rowData.id)
-                }
-              }
-            },
-            [_c("i", { staticClass: "icon-trash-alt" })]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.can_restore
-        ? _c(
-            "a",
-            {
-              staticClass:
-                "btn btn-outline btn-sm bg-info text-info-800 btn-icon ml-2",
-              attrs: {
-                href: "javascript:;",
-                "data-popup": "tooltip",
-                title: _vm.trans("labels.restore")
-              },
-              on: {
-                click: function($event) {
-                  _vm.doRestore(_vm.rowData.id)
-                }
-              }
-            },
-            [_c("i", { staticClass: "icon-folder-open" })]
           )
         : _vm._e()
     ],
@@ -99936,12 +99849,12 @@ exports.default = {
       return this.rowData.deleted_at !== null;
     },
     can_edit: function can_edit() {
-      return true;
+      return !this.deleted && this.hasPermissionTo('update-wish');
     }
   }),
   methods: {
     hasPermissionTo: function hasPermissionTo(permission) {
-      return this.user.hasOwnProperty('permissions') && this.user.permissions.indexOf(permission) >= 0;
+      return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
     }
   }
 };
@@ -100086,12 +99999,12 @@ exports.default = {
       return this.rowData.deleted_at !== null;
     },
     can_edit: function can_edit() {
-      return true;
+      return !this.deleted && this.hasPermissionTo('update-wish');
     }
   }),
   methods: {
     hasPermissionTo: function hasPermissionTo(permission) {
-      return this.user.hasOwnProperty('permissions') && this.user.permissions.indexOf(permission) >= 0;
+      return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
     }
   }
 };
@@ -100842,19 +100755,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-      _c("i", { staticClass: "icon-file-text3" }),
-      _vm._v(" Export Selected")
-    ])
+    return _c(
+      "a",
+      { staticClass: "dropdown-item disabled", attrs: { href: "#" } },
+      [_c("i", { staticClass: "icon-file-text3" }), _vm._v(" Export Selected")]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-      _c("i", { staticClass: "icon-file-text3" }),
-      _vm._v(" Export All")
-    ])
+    return _c(
+      "a",
+      { staticClass: "dropdown-item disabled", attrs: { href: "#" } },
+      [_c("i", { staticClass: "icon-file-text3" }), _vm._v(" Export All")]
+    )
   },
   function() {
     var _vm = this
@@ -101126,6 +101041,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vuex = __webpack_require__(7);
 
@@ -101167,11 +101096,22 @@ exports.default = {
     }
   },
   computed: _extends({}, _vuex2.default.mapGetters({
-    wish: 'wish'
-  })),
+    wish: 'wish',
+    user: 'currentUser'
+  }), {
+    can_logs: function can_logs() {
+      return !this.deleted && this.hasPermissionTo('logs-wish');
+    }
+  }),
   methods: _extends({}, _vuex2.default.mapActions({
     addWish: 'addWish'
   }), {
+    hasPermissionTo: function hasPermissionTo(permission) {
+      return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
+    },
+    inputGroup: function inputGroup(value) {
+      this.$store.commit('updateWish', { name: 'group_id', value: value });
+    },
     getWish: function getWish(key, value) {
       return this.wish.hasOwnProperty(key) ? this.wish[key][value] : '';
     },
@@ -101612,6 +101552,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _vuex = __webpack_require__(7);
 
@@ -101694,6 +101635,7 @@ var render = function() {
             size: "small",
             format: "dd.MM.yyyy",
             "picker-options": _vm.pickerOptions,
+            disabled: "",
             "range-separator": "-",
             value: _vm.date
           },
@@ -101745,24 +101687,26 @@ var render = function() {
             "ul",
             { staticClass: "nav nav-tabs nav-tabs-highlight nav-justified" },
             [
-              _c("li", { staticClass: "nav-item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link active",
-                    attrs: {
-                      href: "#highlighted-justified-tab1",
-                      "data-toggle": "tab"
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "icon-pencil6 mr-2" }),
-                    _vm._v(" " + _vm._s(_vm.trans("modals.wish")))
-                  ]
-                )
-              ]),
+              _vm.can_logs
+                ? _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link active",
+                        attrs: {
+                          href: "#highlighted-justified-tab1",
+                          "data-toggle": "tab"
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "icon-pencil6 mr-2" }),
+                        _vm._v(" " + _vm._s(_vm.trans("modals.wish")))
+                      ]
+                    )
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              true
+              _vm.can_logs
                 ? _c("li", { staticClass: "nav-item" }, [
                     _c(
                       "a",
@@ -101844,10 +101788,11 @@ var render = function() {
                                       type: "text",
                                       id: "title",
                                       name: "title",
-                                      placeholder: _vm.trans("modals.title")
+                                      placeholder: _vm.trans("modals.title"),
+                                      disabled: "",
+                                      readonly: ""
                                     },
-                                    domProps: { value: _vm.wish.title },
-                                    on: { input: _vm.updateWish }
+                                    domProps: { value: _vm.wish.title }
                                   }),
                                   _vm._v(" "),
                                   _c(
@@ -101892,10 +101837,11 @@ var render = function() {
                                       type: "text",
                                       id: "airport",
                                       name: "airport",
-                                      placeholder: _vm.trans("modals.airport")
+                                      placeholder: _vm.trans("modals.airport"),
+                                      disabled: "",
+                                      readonly: ""
                                     },
-                                    domProps: { value: _vm.wish.airport },
-                                    on: { input: _vm.updateWish }
+                                    domProps: { value: _vm.wish.airport }
                                   }),
                                   _vm._v(" "),
                                   _c(
@@ -101944,10 +101890,11 @@ var render = function() {
                                       name: "destination",
                                       placeholder: _vm.trans(
                                         "modals.destination"
-                                      )
+                                      ),
+                                      disabled: "",
+                                      readonly: ""
                                     },
-                                    domProps: { value: _vm.wish.destination },
-                                    on: { input: _vm.updateWish }
+                                    domProps: { value: _vm.wish.destination }
                                   }),
                                   _vm._v(" "),
                                   _c(
@@ -102014,9 +101961,9 @@ var render = function() {
                                       attrs: {
                                         name: "adults",
                                         value: _vm.wish.adults,
+                                        disabled: "",
                                         min: 1
-                                      },
-                                      on: { input: _vm.updateWishAdults }
+                                      }
                                     }),
                                     _vm._v(" "),
                                     _vm.errors.has("adults")
@@ -102065,9 +102012,9 @@ var render = function() {
                                       attrs: {
                                         name: "kids",
                                         value: _vm.wish.kids,
+                                        disabled: "",
                                         min: 0
-                                      },
-                                      on: { input: _vm.updateWishKids }
+                                      }
                                     }),
                                     _vm._v(" "),
                                     _vm.errors.has("kids")
@@ -102121,9 +102068,9 @@ var render = function() {
                                       attrs: {
                                         name: "kids",
                                         value: _vm.wish.budget,
+                                        disabled: "",
                                         min: 0
-                                      },
-                                      on: { input: _vm.updateWishBudget }
+                                      }
                                     }),
                                     _vm._v(" "),
                                     _vm.errors.has("budget")
@@ -102217,46 +102164,56 @@ var render = function() {
                                   { staticClass: "col-lg-3 col-form-label" },
                                   [
                                     _vm._v(
-                                      "  " + _vm._s(_vm.trans("modals.group"))
+                                      "   " + _vm._s(_vm.trans("modals.group"))
                                     )
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    class: _vm.errors.has("display_name")
-                                      ? "is-invalid"
-                                      : "",
-                                    attrs: {
-                                      type: "text",
-                                      id: "display_name",
-                                      name: "display_name",
-                                      placeholder: _vm.trans("modals.group")
-                                    },
-                                    domProps: {
-                                      value: _vm.getWish(
-                                        "group",
-                                        "display_name"
-                                      )
-                                    },
-                                    on: { input: _vm.updateWish }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "invalid-feedback" },
-                                    [
-                                      _c("strong", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.errors.get("display_name")
-                                          )
-                                        }
+                                _c(
+                                  "div",
+                                  { staticClass: "col-lg-9" },
+                                  [
+                                    _c(
+                                      "el-select",
+                                      {
+                                        staticStyle: { width: "100%" },
+                                        attrs: {
+                                          value: _vm.wish.group_id,
+                                          placeholder: _vm.trans(
+                                            "labels.group"
+                                          ),
+                                          size: "small"
+                                        },
+                                        on: { input: _vm.inputGroup }
+                                      },
+                                      _vm._l(_vm.wish.groups, function(item) {
+                                        return _c(
+                                          "el-option",
+                                          {
+                                            key: item.id,
+                                            attrs: {
+                                              label: item.name,
+                                              value: item.id
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              {
+                                                staticStyle: { float: "left" }
+                                              },
+                                              [
+                                                _c("i", { class: item.name }),
+                                                _vm._v(" " + _vm._s(item.name))
+                                              ]
+                                            )
+                                          ]
+                                        )
                                       })
-                                    ]
-                                  )
-                                ])
+                                    )
+                                  ],
+                                  1
+                                )
                               ]),
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group row" }, [
@@ -102281,10 +102238,11 @@ var render = function() {
                                       type: "text",
                                       id: "category",
                                       name: "category",
-                                      placeholder: _vm.trans("modals.category")
+                                      placeholder: _vm.trans("modals.category"),
+                                      disabled: "",
+                                      readonly: ""
                                     },
-                                    domProps: { value: _vm.wish.category },
-                                    on: { input: _vm.updateWish }
+                                    domProps: { value: _vm.wish.category }
                                   }),
                                   _vm._v(" "),
                                   _c(
@@ -102325,10 +102283,11 @@ var render = function() {
                                       type: "text",
                                       id: "catering",
                                       name: "catering",
-                                      placeholder: _vm.trans("modals.catering")
+                                      placeholder: _vm.trans("modals.catering"),
+                                      disabled: "",
+                                      readonly: ""
                                     },
-                                    domProps: { value: _vm.wish.catering },
-                                    on: { input: _vm.updateWish }
+                                    domProps: { value: _vm.wish.catering }
                                   }),
                                   _vm._v(" "),
                                   _c(
@@ -102403,10 +102362,11 @@ var render = function() {
                                       type: "text",
                                       id: "duration",
                                       name: "duration",
-                                      placeholder: _vm.trans("modals.duration")
+                                      placeholder: _vm.trans("modals.duration"),
+                                      disabled: "",
+                                      readonly: ""
                                     },
-                                    domProps: { value: _vm.wish.duration },
-                                    on: { input: _vm.updateWish }
+                                    domProps: { value: _vm.wish.duration }
                                   }),
                                   _vm._v(" "),
                                   _c(
@@ -102449,10 +102409,11 @@ var render = function() {
                                       name: "description",
                                       placeholder: _vm.trans(
                                         "modals.description"
-                                      )
+                                      ),
+                                      disabled: "",
+                                      readonly: ""
                                     },
-                                    domProps: { value: _vm.wish.description },
-                                    on: { input: _vm.updateWish }
+                                    domProps: { value: _vm.wish.description }
                                   }),
                                   _vm._v(" "),
                                   _c(
@@ -102463,6 +102424,55 @@ var render = function() {
                                         domProps: {
                                           textContent: _vm._s(
                                             _vm.errors.get("description")
+                                          )
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group row" }, [
+                                _c(
+                                  "label",
+                                  { staticClass: "col-lg-3 col-form-label" },
+                                  [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(_vm.trans("modals.image")) +
+                                        " "
+                                    ),
+                                    _c("span", { staticClass: "text-danger" }, [
+                                      _vm._v(" *")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-9" }, [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    class: _vm.errors.has("featured_image")
+                                      ? "is-invalid"
+                                      : "",
+                                    attrs: {
+                                      type: "url",
+                                      id: "featured_image",
+                                      name: "featured_image",
+                                      placeholder: _vm.trans("modals.image"),
+                                      disabled: "",
+                                      readonly: ""
+                                    },
+                                    domProps: { value: _vm.wish.featured_image }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _c("strong", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.errors.get("featured_image")
                                           )
                                         }
                                       })
@@ -102537,7 +102547,7 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            true
+            _vm.can_logs
               ? _c(
                   "div",
                   {

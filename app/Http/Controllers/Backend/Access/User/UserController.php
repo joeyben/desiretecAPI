@@ -175,7 +175,7 @@ class UserController extends Controller
         try {
             $user = $this->users->find($this->auth->guard('web')->user()->id);
             $result['user']['id'] = $user->id;
-            foreach (config('wishes.permissions', []) as $permission){
+            foreach (config('wishes.permissions', []) as $permission) {
                 $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
             }
             $result['success'] = true;

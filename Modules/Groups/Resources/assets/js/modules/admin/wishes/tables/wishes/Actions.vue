@@ -1,9 +1,6 @@
 <template>
     <div class="list-icons">
         <router-link class="btn btn-outline btn-sm bg-teal text-teal-800 btn-icon ml-2" :to="{name: 'root.edit', params: { id: rowData.id }}"  v-if="can_edit" data-popup="tooltip" :title="trans('labels.edit')"><i class="icon-pencil7"></i></router-link>
-        <a href="javascript:;" class="btn btn-outline btn-sm bg-danger text-danger-800 btn-icon ml-2" @click="doDelete(rowData.id)" v-if="can_delete" data-popup="tooltip" :title="trans('labels.delete')"><i class="icon-cancel-circle2"></i></a>
-        <a href="javascript:;" class="btn btn-outline btn-sm bg-danger text-danger-800 btn-icon ml-2" @click="doDestroy(rowData.id)" v-if="can_force_delete" data-popup="tooltip" :title="trans('labels.destroy')"><i class="icon-trash-alt"></i></a>
-        <a href="javascript:;" class="btn btn-outline btn-sm bg-info text-info-800 btn-icon ml-2" @click="doRestore(rowData.id)" v-if="can_restore" data-popup="tooltip" :title="trans('labels.restore')"><i class="icon-folder-open"></i></a>
     </div>
 </template>
 
@@ -25,16 +22,7 @@
         user: 'currentUser'
       }),
       can_edit () {
-        return true
-      },
-      can_restore () {
-        return this.deleted && this.hasPermissionTo('RESTORE_BOARDS')
-      },
-      can_force_delete () {
-        return this.deleted && this.hasPermissionTo('FORCE_DELETE')
-      },
-      can_delete () {
-        return true
+        return !this.deleted && this.hasPermissionTo('update-wish')
       },
       deleted: function () {
         return this.rowData.deleted_at !== null
@@ -54,7 +42,7 @@
         this.$events.fire('restore-set', id)
       },
       hasPermissionTo (permission) {
-        return this.user.hasOwnProperty('permissions') && (this.user.permissions.indexOf(permission) >= 0)
+        return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
       }
     }
   }

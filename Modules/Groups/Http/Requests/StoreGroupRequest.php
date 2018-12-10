@@ -14,7 +14,6 @@ class StoreGroupRequest extends FormRequest
     public function rules()
     {
         return [
-            //
         ];
     }
 

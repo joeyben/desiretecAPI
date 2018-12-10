@@ -7,37 +7,37 @@
 </template>
 
 <script>
-    import Vuex from 'vuex'
-    export default {
-      name: 'CustomLinkById',
-      props: {
-        rowData: {
-          type: Object,
-          required: true
-        },
-        rowIndex: {
-          type: Number
-        }
+  import Vuex from 'vuex'
+  export default {
+    name: 'CustomLinkById',
+    props: {
+      rowData: {
+        type: Object,
+        required: true
       },
-      data () {
-        return {
-        }
+      rowIndex: {
+        type: Number
+      }
+    },
+    data () {
+      return {
+      }
+    },
+    computed: {
+      ...Vuex.mapGetters({
+        user: 'currentUser'
+      }),
+      deleted: function () {
+        return this.rowData.deleted_at !== null
       },
-      computed: {
-        ...Vuex.mapGetters({
-          user: 'currentUser'
-        }),
-        deleted: function () {
-          return this.rowData.deleted_at !== null
-        },
-        can_edit () {
-          return true
-        }
-      },
-      methods: {
-        hasPermissionTo (permission) {
-          return this.user.hasOwnProperty('permissions') && (this.user.permissions.indexOf(permission) >= 0)
-        }
+      can_edit () {
+        return !this.deleted && this.hasPermissionTo('update-wish')
+      }
+    },
+    methods: {
+      hasPermissionTo (permission) {
+        return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
       }
     }
+  }
 </script>

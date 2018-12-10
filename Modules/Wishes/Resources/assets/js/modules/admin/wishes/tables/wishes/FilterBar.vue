@@ -7,8 +7,8 @@
 
             <div class="dropdown-menu dropdown-menu-left">
                 <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}"><i class="icon-plus3"></i> Create Wish</router-link>
-                <a href="#" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>
-                <a href="#" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>
+                <a href="#" class="dropdown-item disabled"><i class="icon-file-text3"></i> Export Selected</a>
+                <a href="#" class="dropdown-item disabled"><i class="icon-file-text3"></i> Export All</a>
             </div>
         </h5>
         <div class="header-elements">
