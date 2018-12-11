@@ -37,7 +37,7 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="col-xl-2 col-md-12 col-sm-12">
+                <div class="col-xl-2 col-md-12 col-sm-12" v-if="hasRole('Administrator')">
                     <div class="form-group">
                         <el-select v-model="whitelabel" :placeholder="trans('tables.whitelabel')" @input="doWhitelabel">
                             <el-option
@@ -109,7 +109,8 @@
       },
       computed: {
         ...Vuex.mapGetters({
-          whitelabels: 'whitelabels'
+          whitelabels: 'whitelabels',
+          user: 'currentUser'
         }),
         show () {
           let results = []
@@ -162,6 +163,9 @@
           this.whitelabel = ''
           this.fields = config.fields
           this.$events.fire('filter-reset')
+        },
+        hasRole (role) {
+          return this.user.hasOwnProperty('roles') && this.user.permissions[role]
         }
       }
     }

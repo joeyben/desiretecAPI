@@ -4,6 +4,7 @@ namespace Modules\Wishes\Http\Controllers;
 
 use App\Models\Groups\Group;
 use App\Repositories\Backend\Groups\GroupsRepository;
+use App\Repositories\Criteria\ByWhitelabel;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
@@ -105,12 +106,14 @@ class WishesController extends Controller
                 new WhereBetween('wishes.created_at', $request->get('start'), $request->get('end')),
                 new Filter($request->get('filter')),
                 new EagerLoad(['owner' => function ($query) {
-                    $query->select('id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'));
+                    $select = $this->auth->guard('web')->user()->hasRole('Administrator') ? 'CONCAT(first_name, " ", last_name, " ( ", email, " ) ") AS full_name' : 'CONCAT(first_name, " ", last_name) AS full_name';
+                    $query->select('id', DB::raw($select));
                 }, 'group'  => function ($query) {
                     $query->select('id', 'display_name');
                 }, 'whitelabel'  => function ($query) {
                     $query->select('id', 'display_name');
                 }]),
+                new ByWhitelabel()
             ])->paginate($perPage);
 
             $result['success'] = true;
@@ -216,6 +219,7 @@ class WishesController extends Controller
                 }, 'whitelabel'  => function ($query) {
                     $query->select('id', 'display_name');
                 }]),
+                new ByWhitelabel()
             ])->find($id);
 
             $result['wish']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-wish') ? $this->activities->byModel($result['wish']) : [];
@@ -250,7 +254,9 @@ class WishesController extends Controller
     public function update(UpdateWishRequest $request, int $id)
     {
         try {
-            $wish = $this->wishes->update(
+            $wish = $this->wishes->withCriteria([
+                new ByWhitelabel()
+            ])->update(
                 $id,
                 $request->only(
                     'status',

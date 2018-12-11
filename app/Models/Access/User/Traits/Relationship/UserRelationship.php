@@ -4,6 +4,7 @@ namespace App\Models\Access\User\Traits\Relationship;
 
 use App\Models\Access\User\SocialLogin;
 use App\Models\System\Session;
+use Modules\Dashboard\Entities\Dashboard;
 
 /**
  * Class UserRelationship.
@@ -65,5 +66,13 @@ trait UserRelationship
     public function sessions()
     {
         return $this->hasMany(Session::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function dashboards()
+    {
+        return $this->belongsToMany(Dashboard::class);
     }
 }

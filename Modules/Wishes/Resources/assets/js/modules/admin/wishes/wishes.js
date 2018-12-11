@@ -45,10 +45,6 @@ if ($wishesComponent) {
         path: '/edit/:id(\\d+)',
         name: 'root.edit',
         component: require('./components/EditWishComponent.vue')
-      }, {
-        path: '/create',
-        name: 'root.create',
-        component: require('./components/EditWishComponent.vue')
       }]
     }]
   })

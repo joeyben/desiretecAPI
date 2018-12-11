@@ -6,7 +6,6 @@
             </button>
 
             <div class="dropdown-menu dropdown-menu-left">
-                <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}"><i class="icon-plus3"></i> Create Wish</router-link>
                 <a href="#" class="dropdown-item disabled"><i class="icon-file-text3"></i> Export Selected</a>
                 <a href="#" class="dropdown-item disabled"><i class="icon-file-text3"></i> Export All</a>
             </div>
@@ -16,7 +15,7 @@
                 <div class="col-xl-2 col-md-12 col-sm-12">
                     <div class="form-group">
                         <el-select :value="show" placeholder="Select" multiple collapse-tags style="margin-left: 2px;"  @input="doShow">
-                            <el-option
+                            <el-option style="width: 100%;"
                                     v-for="item in fields"
                                     :key="item.title"
                                     :label="item.title"
@@ -28,7 +27,7 @@
                 <div class="col-xl-1 col-md-12 col-sm-12">
                     <div class="form-group">
                         <el-select v-model="value" placeholder="Select" @input="doPage">
-                            <el-option
+                            <el-option style="width: 100%;"
                                     v-for="item in options"
                                     :key="item.value"
                                     :label="item.label"
@@ -37,11 +36,23 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="col-xl-2 col-md-12 col-sm-12">
+                <div class="col-xl-2 col-md-12 col-sm-12" v-if="hasRole('Administrator')">
                     <div class="form-group">
                         <el-select v-model="whitelabel" :placeholder="trans('tables.whitelabel')" @input="doWhitelabel">
-                            <el-option
+                            <el-option style="width: 100%;"
                                     v-for="item in whitelabels"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-12 col-sm-12" v-if="!hasRole('Administrator') && hasRole('Executive')">
+                    <div class="form-group">
+                        <el-select v-model="group" :placeholder="trans('tables.group')" @input="doGroup">
+                            <el-option style="width: 100%;"
+                                    v-for="item in group"
                                     :key="item.id"
                                     :label="item.name"
                                     :value="item.id">
@@ -51,7 +62,7 @@
                 </div>
                 <div class="col-xl-3 col-md-12 col-sm-12">
                     <div class="form-group">
-                        <el-date-picker
+                        <el-date-picker style="width: 100%;"
                                 v-model="created"
                                 @input="doRange"
                                 type="daterange"
@@ -91,6 +102,7 @@
           fields: config.fields,
           filterText: '',
           whitelabel: '',
+          group: '',
           value: 10,
           options: [{
             value: 10,
@@ -109,7 +121,8 @@
       },
       computed: {
         ...Vuex.mapGetters({
-          whitelabels: 'whitelabels'
+          whitelabels: 'whitelabels',
+          user: 'currentUser'
         }),
         show () {
           let results = []
@@ -146,6 +159,9 @@
         doWhitelabel () {
           this.$events.fire('whitelabel-set', this.whitelabel)
         },
+        doGroup () {
+          this.$events.fire('group-set', this.whitelabel)
+        },
         doRange (e) {
           this.$events.fire('range-date-set', moment(e[0], moment.ISO_8601).startOf('day').format('YYYY-MM-DD HH:mm:ss'), moment(e[1], moment.ISO_8601).endOf('day').format('YYYY-MM-DD  HH:mm:ss'))
         },
@@ -162,6 +178,9 @@
           this.whitelabel = ''
           this.fields = config.fields
           this.$events.fire('filter-reset')
+        },
+        hasRole (role) {
+          return this.user.hasOwnProperty('roles') && this.user.roles[role]
         }
       }
     }

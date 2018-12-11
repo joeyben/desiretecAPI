@@ -178,6 +178,8 @@ class UserController extends Controller
             foreach (config('wishes.permissions', []) as $permission) {
                 $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
             }
+            $result['user']['roles']['Administrator'] = $user->hasRole('Administrator');
+            $result['user']['roles']['Executive'] = $user->hasRole('Executive');
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {

@@ -19,7 +19,7 @@ class WishPolicy
      */
     public function view(User $user)
     {
-        return $user->hasPermission('view-wishes');
+        return $user->hasPermission('view-wish');
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('wishes::layouts.master')
+@extends('layouts.default')
 @section('title')
     List of wishes
 @stop
