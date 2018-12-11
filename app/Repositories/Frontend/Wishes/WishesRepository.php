@@ -124,7 +124,7 @@ class WishesRepository extends BaseRepository
             $input['whitelabel_id'] = access()->user()->getWhitelabels()[0];
             $input['group_id'] = $this->getGroup();
 
-            if ($wish = Wish::create($input)) {
+            if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
 
                 event(new WishCreated($wish));

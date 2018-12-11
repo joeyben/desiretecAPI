@@ -26,6 +26,6 @@ class ByWhitelabel
     {
         $whitelabels = Auth::guard('web')->user()->whitelabels()->get()->pluck('id')->all();
 
-        return Auth::guard('web')->user()->hasRole('Administrator') ? $model : $model->whereIn('wishes.whitelabel_id', $whitelabels);
+        return Auth::guard('web')->user()->hasRole('Administrator') ? $model->newQuery() : $model->whereIn('wishes.whitelabel_id', $whitelabels);
     }
 }
