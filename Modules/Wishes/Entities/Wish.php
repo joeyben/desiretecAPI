@@ -61,6 +61,7 @@ class Wish extends Model
             'wishes.title'                      => 10,
             'users.first_name'                  => 10,
             'users.last_name'                   => 10,
+            'users.email'                       => 10,
             'groups.name'                       => 10,
             'groups.display_name'               => 10,
             'whitelabels.name'                  => 10,
