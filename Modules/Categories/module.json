@@ -1,0 +1,19 @@
+{
+    "name": "Categories",
+    "alias": "categories",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Categories\\Providers\\CategoriesServiceProvider",
+        "Modules\\Categories\\Providers\\RepositoryServiceProvider",
+        "Modules\\Categories\\Providers\\EventServiceProvider",
+        "Modules\\Categories\\Providers\\AuthServiceProvider"
+    ],
+    "aliases": [],
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
