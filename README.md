@@ -1,35 +1,47 @@
-# laravel-adminpanel
-[![GitHub license](https://img.shields.io/github/license/viralsolani/laravel-adminpanel.svg?style=plastic)](https://github.com/viralsolani/laravel-adminpanel/blob/master/LICENSE.txt)
-[![GitHub stars](https://img.shields.io/github/stars/viralsolani/laravel-adminpanel.svg?style=plastic)](https://github.com/viralsolani/laravel-adminpanel/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/viralsolani/laravel-adminpanel.svg?style=plastic)](https://github.com/viralsolani/laravel-adminpanel/network)
-[![GitHub issues](https://img.shields.io/github/issues/viralsolani/laravel-adminpanel.svg?style=plastic)](https://github.com/viralsolani/laravel-adminpanel/issues)
-![StyleCI](https://img.shields.io/badge/styleCI-passed-brightgreen.svg?style=plastic)
-
-## [Demo](https://laravel-adminpanel.vrkansagara.in/)
+# desiretec mvp laravel
 
 ## Introduction
-* This is a laravel Admin Panel, based on [Rappasoft Laravel Boilerplate](https://github.com/rappasoft/laravel-5-boilerplate/releases/tag/4.5.7), with enhancemenets and many modules pre-made, just for you.
-* The project is taken to Laravel 5.6 so we can develop from the latest Laravel.
-* Article on our Admin Panel on CodeWall : [https://www.codewall.co.uk/the-laravel-admin-panel-that-you-need/](https://www.codewall.co.uk/the-laravel-admin-panel-that-you-need/)
+* TODO
 
 ## Features
-For Laravel 5 Boilerplate Features : [Features](https://github.com/rappasoft/laravel-5-boilerplate/wiki#features)
+* TODO OR REMOVE
 
-## Additional Features
-* Built-in Laravel Boilerplate Module Generator,
-* Dynamic Menu/Sidebar Builder
-* CMS Pages Module
-* Email Template Module
-* Blog Module
-* FAQ Module
-* API Boilerplate.
+## Docker Setup
 
-Give your project a Head Start by using [laravel-adminpanel](https://github.com/viralsolani/laravel-adminpanel).
+Install docker from [here](https://www.docker.com/)
 
-## Built-in Laravel Boilerplate Module Generator
-It gives you the ability to create a module using a sweet GUI, where you put in the Module Name and it will generate all the necessary files for you, like Model, Traits, Relationship, Migration, Controllers, Views and routes. So when you are done creating a module, you can directly go to the route generated and see your new module. Since, this does not have the ability to generate table fields for now, so you have to write the migration file that is generated and run a manual php artisan migrate command, and you are good to go.
+Clone the repository
 
-We are using the module generator as a package, you can find it here: [Module Generator For Laravel Adminpanel](https://github.com/bvipul/generator).
+    git clone git@git.desiretec.com:desiretec/desiretec-mvp-laravel.git
+
+Switch to the repository folder and clone laradock into it
+
+    cd desiretec-mvp-laravel
+    git clone https://github.com/laradock/laradock.git laradock
+
+Switch to laradock/ and copy the env-example to .env
+
+    cp env-example .env
+
+Edit the .env file with your favorite editor and find&replace the following options! The DATA_PATH_HOST option will save all persistent data, like the db into the laradock/.data folder, so be careful with deleting stuff! You can choose an directory outside the repository if u think it will be a problem, but I like to keep all my project related stuff in one place.
+
+    # Choose storage path on your machine. For all storage systems
+    DATA_PATH_HOST=./.data
+    
+    # Define the prefix of container names. This is useful if you have multiple projects that use laradock to have seperate containers per project.
+    COMPOSE_PROJECT_NAME=desiretecmvp
+
+Now it's time to spin up some containers.
+
+    1. to run docker-compose commands you have to be in the laradock directory!
+    2. run 'docker-compose up -d nginx mariadb redis workspace'
+    3. if u run this command for the first time the containers will be build and it can take some time! Grab a coffee :)
+    4. run 'docker ps' and verify that all containers (6) are running (Status: up x seconds/minutes/...) if not run 'docker-compose down' and 'docker-compose up -d nginx mariadb redis workspace' (only needed after the first build of the containers and not all the time!)
+    5. to install composer and npm packages run 'docker exec -it desiretec_workspace_1'! If u get an error 'No such container' please check 'docker ps' if the container is running and for the name and replace desiretec_workspace_1 with the right container name.
+    6. now you are inside the workspace container and the /var/www folder is your project repository and u can execute composer etc.
+
+Afterwards you can install your app and all its dependencies via the workspace container.
+
 
 ## Installation
 
@@ -88,13 +100,8 @@ For linking storage folder in public
 
     php artisan storage:link
 
-Start the local development server
 
-    php artisan serve
-
-
-
-You can now access the server at http://localhost:8000
+You can now access the server at http://localhost
 
 **Command list**
 
@@ -130,13 +137,3 @@ Password: `1234`
 ## Settings
 ![Screenshot](screenshots/settings.png)
 
-## Issues
-
-If you come across any issues please report them [here](https://github.com/viralsolani/laravel-adminpanel/issues).
-
-## Contributing
-Feel free to create any pull requests for the project. For proposing any new changes or features you want to add to the project, you can send us an email at viral.solani@gmail.com or basapativipulkumar@gmail.com.
-
-## License
-
-[MIT LICENSE](https://github.com/viralsolani/laravel-adminpanel/blob/master/LICENSE.txt)
