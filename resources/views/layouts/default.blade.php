@@ -28,7 +28,7 @@
 </head>
 
 <body class="navbar-top">
-
+<?php $module = Module::collections() ?>
 <!-- Main navbar -->
 <div class="navbar navbar-dark navbar-expand-md fixed-top">
     <div class="navbar-brand">
@@ -250,6 +250,15 @@
                             <li class="nav-item"><a href="javascript:;" class="nav-link">Permission Management</a></li>
                         </ul>
                     </li>
+                    @if($module->has('Categories') )
+                    <li class="nav-item">
+                        <a href="{{ route('admin.categories') }}" class="nav-link">
+                            <i class="icon-folder-open"></i>
+                            <span>Categories Management</span>
+                        </a>
+                    </li>
+                    @endif
+                    @if($module->has('Wishes')  && Auth::guard('web')->user()->hasPermission('read-wish'))
                     <li class="nav-item">
                         <a href="{{ route('admin.wishes') }}" class="nav-link">
                             <i class="icon-check"></i>
@@ -257,6 +266,7 @@
                             <span class="badge bg-blue-400 align-self-center ml-auto">0</span>
                         </a>
                     </li>
+                    @endif
                     <!-- /main -->
 
                 </ul>

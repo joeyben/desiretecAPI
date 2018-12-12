@@ -3,11 +3,8 @@
 namespace Modules\Wishes\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Lang;
+use Illuminate\Notifications\Notification;
 use Modules\Wishes\Entities\Wish;
 
 class CreatedWishNotification extends Notification
@@ -32,6 +29,7 @@ class CreatedWishNotification extends Notification
      * Get the notification's delivery channels.
      *
      * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -43,10 +41,13 @@ class CreatedWishNotification extends Notification
      * Get the mail representation of the notification.
      *
      * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->view('wishes::emails.wish', ['wish' => $this->wish])->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
+        createNotification('Wish was successfully created: ' . $this->wish->title, $notifiable->id);
+
+        return (new MailMessage())->view('wishes::emails.wish', ['wish' => $this->wish])->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
     }
 }

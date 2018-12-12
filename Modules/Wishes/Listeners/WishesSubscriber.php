@@ -2,9 +2,7 @@
 
 namespace Modules\Wishes\Listeners;
 
-use App\Models\Access\User\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Modules\Groups\Entities\Group;
 use Modules\Wishes\Entities\Wish;

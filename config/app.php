@@ -203,6 +203,7 @@ return [
         Bvipul\Generator\Provider\CrudGeneratorServiceProvider::class,
         Torann\GeoIP\GeoIPServiceProvider::class,
         Lord\Laroute\LarouteServiceProvider::class,
+        \App\Providers\FlagServiceProvider::class,
     ],
 
     /*
@@ -264,6 +265,7 @@ return [
         'Socialite'   => Laravel\Socialite\Facades\Socialite::class,
         'JWTAuth'     => Tymon\JWTAuth\Facades\JWTAuth::class,
         'GeoIP'       => Torann\GeoIP\Facades\GeoIP::class,
+        'Flag'        => \App\Services\Flag\Facades\Flag::class,
         //'Datatables' => Yajra\DataTables\Facades\DataTables::class
 
     ],

@@ -11,7 +11,7 @@
         "Modules\\Wishes\\Providers\\EventServiceProvider",
         "Modules\\Wishes\\Providers\\RepositoryServiceProvider"
     ],
-    "aliases": {},
+    "aliases": [],
     "files": [
         "start.php"
     ],
