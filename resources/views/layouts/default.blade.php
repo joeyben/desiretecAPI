@@ -267,6 +267,24 @@
                         </a>
                     </li>
                     @endif
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="icon-power3"></i> <span>Maintenance</span></a>
+
+                        <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                            <li class="nav-item">
+                                <a href="{{ route('log-viewer::dashboard') }}" class="nav-link" target="_blank">
+                                    <i class="icon-warning2"></i>
+                                    <span>Logs</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="icon-cube4"></i>
+                                    <span>Components Management</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <!-- /main -->
 
                 </ul>

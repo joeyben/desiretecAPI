@@ -14,7 +14,3 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'na
     Route::put('categories/{id}', 'CategoriesController@update')->name('admin.categories.update')->where('id', '[0-9]+');
 }
 );
-
-Route::group(['middleware' => ['web'], 'prefix' => '/admin'], function () {
-    Route::get('categories/{id}', 'CategoriesController@show')->name('admin.categories.show')->where('id', '[0-9]+');
-});
