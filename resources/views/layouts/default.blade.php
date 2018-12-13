@@ -278,9 +278,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('admin.components') }}" class="nav-link">
                                     <i class="icon-cube4"></i>
-                                    <span>Components Management</span>
+                                    <span>Components Mgnt</span>
                                 </a>
                             </li>
                         </ul>

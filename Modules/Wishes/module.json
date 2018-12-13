@@ -1,10 +1,11 @@
 {
     "name": "Wishes",
     "alias": "wishes",
-    "description": "",
+    "description": "Wish Management Module",
+    "package": "Basic",
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 5,
     "providers": [
         "Modules\\Wishes\\Providers\\AuthServiceProvider",
         "Modules\\Wishes\\Providers\\WishesServiceProvider",

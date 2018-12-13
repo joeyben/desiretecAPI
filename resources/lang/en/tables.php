@@ -74,4 +74,6 @@ return [
     'actions'                       => 'Actions',
     'activity'                      => 'Activity',
     'activities'                    => 'Activities',
+    'alias'                         => 'Alias',
+    'package'                       => 'Package',
 ];

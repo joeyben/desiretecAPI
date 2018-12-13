@@ -1,10 +1,11 @@
 {
     "name": "Dashboard",
     "alias": "dashboard",
-    "description": "",
+    "description": "Dashboard Management Module",
+    "package": "Premium",
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 3,
     "providers": [
         "Modules\\Dashboard\\Providers\\AuthServiceProvider",
         "Modules\\Dashboard\\Providers\\RepositoryServiceProvider",

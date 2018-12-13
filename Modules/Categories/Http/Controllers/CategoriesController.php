@@ -115,7 +115,7 @@ class CategoriesController extends Controller
     {
         try {
             $result['category'] = [
-                'id'      => 0,
+                'id'        => 0,
                 'name'      => '',
                 'parent_id' => null
             ];

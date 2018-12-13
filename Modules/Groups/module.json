@@ -1,10 +1,11 @@
 {
     "name": "Groups",
     "alias": "groups",
-    "description": "",
+    "description": "Group Management Module",
+    "package": "Basic",
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 4,
     "providers": [
         "Modules\\Groups\\Providers\\GroupsServiceProvider"
     ],

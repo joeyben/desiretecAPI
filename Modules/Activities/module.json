@@ -1,10 +1,11 @@
 {
     "name": "Activities",
     "alias": "activities",
-    "description": "",
+    "description": "Module for logging user changes",
+    "package": "Core Module",
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 1,
     "providers": [
         "Modules\\Activities\\Providers\\ActivitiesServiceProvider",
         "Modules\\Activities\\Providers\\RepositoryServiceProvider"

@@ -1,10 +1,11 @@
 {
     "name": "Categories",
     "alias": "categories",
-    "description": "",
+    "description": "Category Management Modules",
+    "package": "Core Module",
     "keywords": [],
     "active": 1,
-    "order": 0,
+    "order": 2,
     "providers": [
         "Modules\\Categories\\Providers\\CategoriesServiceProvider",
         "Modules\\Categories\\Providers\\RepositoryServiceProvider",

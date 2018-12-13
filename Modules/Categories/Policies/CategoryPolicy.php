@@ -13,7 +13,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can view the category.
      *
-     * @param  \App\Models\Access\User\User          $user
+     * @param \App\Models\Access\User\User $user
      *
      * @return mixed
      */
@@ -25,7 +25,8 @@ class CategoryPolicy
     /**
      * Determine whether the user can create categories.
      *
-     * @param  \App\Models\Access\User\User  $user
+     * @param \App\Models\Access\User\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -36,7 +37,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can update the category.
      *
-     * @param  \App\Models\Access\User\User          $user
+     * @param \App\Models\Access\User\User           $user
      * @param \BrianFaust\Categories\Models\Category $category
      *
      * @return mixed
@@ -49,7 +50,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can delete the category.
      *
-     * @param  \App\Models\Access\User\User          $user
+     * @param \App\Models\Access\User\User           $user
      * @param \BrianFaust\Categories\Models\Category $category
      *
      * @return mixed
@@ -62,7 +63,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can restore the category.
      *
-     * @param  \App\Models\Access\User\User          $user
+     * @param \App\Models\Access\User\User           $user
      * @param \BrianFaust\Categories\Models\Category $category
      *
      * @return mixed
@@ -75,7 +76,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can permanently delete the category.
      *
-     * @param  \App\Models\Access\User\User          $user
+     * @param \App\Models\Access\User\User           $user
      * @param \BrianFaust\Categories\Models\Category $category
      *
      * @return mixed
