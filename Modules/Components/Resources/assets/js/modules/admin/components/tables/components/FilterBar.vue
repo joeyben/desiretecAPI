@@ -1,16 +1,5 @@
 <template>
     <div class="card-header header-elements-inline">
-        <h5 class="card-title">
-            <button type="button" class="btn btn-outline bg-teal-300 text-teal-800 btn-icon dropdown-toggle" data-toggle="dropdown">
-                <i class="icon-gear"></i>
-            </button>
-
-            <div class="dropdown-menu dropdown-menu-left">
-                <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}"><i class="icon-plus3"></i> Create Wish</router-link>
-                <a href="#" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>
-                <a href="#" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>
-            </div>
-        </h5>
         <div class="header-elements">
             <form action="#" class="row">
                 <div class="col-xl-7 col-md-12 col-sm-12">

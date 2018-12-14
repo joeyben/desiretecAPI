@@ -69,7 +69,142 @@ class ComponentsController extends Controller
             $result['status'] = Flag::STATUS_CODE_FORBIDDEN;
         }
 
-        return $this->response->json($result['data'], $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
+        return $this->response->json($result['data'], $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function install(string $key)
+    {
+        try {
+            $result = $this->componentsRepository->install($key);
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_FORBIDDEN;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param string $key
+     * @param bool   $keep
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function uninstall(string $key, bool $keep)
+    {
+        try {
+            $result = $this->componentsRepository->uninstall($key, $keep);
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_FORBIDDEN;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @throws \Exception
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function seed(string $key)
+    {
+        try {
+            $result['message'] = $this->componentsRepository->seed($key);
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_FORBIDDEN;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @throws \Exception
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function migrate(string $key)
+    {
+        try {
+            $result['message'] = $this->componentsRepository->migrate($key);
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_FORBIDDEN;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @throws \Exception
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh(string $key)
+    {
+        try {
+            $result['message'] = $this->componentsRepository->refresh($key);
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_FORBIDDEN;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @throws \Exception
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function rollback(string $key)
+    {
+        try {
+            $result['message'] = $this->componentsRepository->rollback($key);
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_FORBIDDEN;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**

@@ -258,6 +258,14 @@
                         </a>
                     </li>
                     @endif
+                    @if($module->has('Groups') )
+                    <li class="nav-item">
+                        <a href="{{ route('admin.groups') }}" class="nav-link">
+                            <i class="icon-collaboration"></i>
+                            <span>Groups Management</span>
+                        </a>
+                    </li>
+                    @endif
                     @if($module->has('Wishes')  && Auth::guard('web')->user()->hasPermission('read-wish'))
                     <li class="nav-item">
                         <a href="{{ route('admin.wishes') }}" class="nav-link">
@@ -267,6 +275,7 @@
                         </a>
                     </li>
                     @endif
+                    @if(Auth::guard('web')->user()->hasRole('Administrator'))
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-power3"></i> <span>Maintenance</span></a>
 
@@ -285,6 +294,7 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
                     <!-- /main -->
 
                 </ul>
@@ -354,6 +364,7 @@
 <script src="{{ asset("modules/js/main/jquery.min.js") }}" ></script>
 <script src="{{ asset("modules/js/main/bootstrap.bundle.min.js") }}" ></script>
 <script src="{{ asset("modules/js/plugins/loaders/blockui.min.js") }}" ></script>
+<script src="{{ asset('modules/js/plugins/notifications/bootbox.min.js') }}"></script>
 <script src="{{ asset("js/messages.js") }}" type="text/javascript" ></script>
 <script src="{{ asset("js/laroute.js") }}" type="text/javascript"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>

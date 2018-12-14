@@ -3,7 +3,6 @@
   import Vue from 'vue'
 import Vuex from 'vuex'
 import toastr from 'toastr'
-import accounting from 'accounting'
 import moment from 'moment'
 
 import Vuetable from 'vuetable-2/src/components/Vuetable.vue'
@@ -48,11 +47,9 @@ import CssConfig from './CssConfig.js'
       this.$events.$on('page-set', perPage => this.onPageSet(perPage))
       this.$events.$on('filter-reset', e => this.onFilterReset())
       this.$events.$on('view-set', (action, data, index) => this.doView(action, data, index))
-      this.$events.$on('delete-set', (id) => this.doDelete(id))
-      this.$events.$on('destroy-set', (id) => this.doDestroy(id))
-      this.$events.$on('restore-set', (id) => this.doRestore(id))
-      this.$events.$on('range-date-set', (start, end) => this.doRangeDate(start, end))
-      this.$events.$on('whitelabel-set', (id) => this.doWhitelabel(id))
+      this.$events.$on('migrate-set', (name) => this.doMigrate(name))
+      this.$events.$on('install-set', (name) => this.doInstall(name))
+      this.$events.$on('uninstall-set', (name) => this.doUninstall(name))
     },
     render (h) {
       return h(
@@ -85,14 +82,176 @@ import CssConfig from './CssConfig.js'
         this.fields = fields
         Vue.nextTick(() => this.$refs.vuetable.normalizeFields(this.fields))
       },
-      doRangeDate (start, end) {
-        this.appendParams.start = start
-        this.appendParams.end = end
-        Vue.nextTick(() => this.$refs.vuetable.refresh())
+      doUninstall (name) {
+        window.bootbox.prompt({
+          title: 'Uninstall component',
+          inputType: 'checkbox',
+          inputOptions: [
+            {
+              text: ' Keep Database Tables',
+              value: '1'
+            }
+          ],
+          buttons: {
+            confirm: {
+              label: '<i class="fa fa-check"></i> Ok',
+              className: 'bg-teal-800'
+            },
+            cancel: {
+              label: 'Cancel',
+              className: 'btn-danger'
+            }
+          },
+          callback: (result) => {
+            if (Array.isArray(result) && result.includes('1')) {
+              this.onUninstall(name, 1)
+            } else if (Array.isArray(result)) {
+              this.onUninstall(name, 0)
+            }
+          }
+        })
       },
-      doWhitelabel (id) {
-        this.appendParams.whitelabel = id
-        Vue.nextTick(() => this.$refs.vuetable.refresh())
+      onSeed (key) {
+        this.$store.dispatch('block', {element: 'componentsComponent', load: true})
+        this.$http.get(window.laroute.route('admin.components.seed', {key: key}))
+          .then(this.onMigrateSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'componentsComponent', load: false})
+          })
+      },
+      onMigrate (key) {
+        this.$store.dispatch('block', {element: 'componentsComponent', load: true})
+        this.$http.get(window.laroute.route('admin.components.migrate', {key: key}))
+          .then(this.onMigrateSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'componentsComponent', load: false})
+          })
+      },
+      onRefresh (key) {
+        this.$store.dispatch('block', {element: 'componentsComponent', load: true})
+        this.$http.get(window.laroute.route('admin.components.refresh', {key: key}))
+          .then(this.onMigrateSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'componentsComponent', load: false})
+          })
+      },
+      onRollBack (key) {
+        this.$store.dispatch('block', {element: 'componentsComponent', load: true})
+        this.$http.get(window.laroute.route('admin.components.rollback', {key: key}))
+          .then(this.onMigrateSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'componentsComponent', load: false})
+          })
+      },
+      onUninstall (key, keep) {
+        this.$store.dispatch('block', {element: 'componentsComponent', load: true})
+        this.$http.get(window.laroute.route('admin.components.uninstall', {key: key, keep: keep}))
+          .then(this.onUninstallSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'componentsComponent', load: false})
+          })
+      },
+      doInstall (name) {
+        window.bootbox.confirm({
+          title: 'Install component',
+          message: 'Do you really want to install this component ?',
+          buttons: {
+            confirm: {
+              label: '<i class="fa fa-check"></i> Ok',
+              className: 'bg-teal-800'
+            },
+            cancel: {
+              label: 'Cancel',
+              className: 'btn-danger'
+            }
+          },
+          callback: (result) => {
+            if (result) {
+              this.onInstall(name)
+            }
+          }
+        })
+      },
+      onInstall (key) {
+        this.$store.dispatch('block', {element: 'componentsComponent', load: true})
+        this.$http.get(window.laroute.route('admin.components.install', {key: key}))
+          .then(this.onInstallSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'componentsComponent', load: false})
+          })
+      },
+      onInstallSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.$message({
+            type: 'success',
+            message: response.data.message
+          })
+          Vue.nextTick(() => this.$refs.vuetable.refresh())
+        } else {
+          toastr.error(response.data.message)
+        }
+      },
+      doMigrate (name) {
+        window.bootbox.prompt({
+          title: 'Please select a database action',
+          inputType: 'checkbox',
+          inputOptions: [
+            {
+              text: ' Module:seed',
+              value: '0'
+            },
+            {
+              text: ' Module:migrate',
+              value: '1'
+            },
+            {
+              text: ' Module:migrate-refresh',
+              value: '2'
+            },
+            {
+              text: ' Module:migrate-rollback',
+              value: '3'
+            }
+          ],
+          buttons: {
+            confirm: {
+              label: '<i class="fa fa-check"></i> Ok',
+              className: 'btn btn-outline btn-sm bg-teal text-teal-800 btn-icon ml-2'
+            },
+            cancel: {
+              label: 'Cancel',
+              className: 'btn btn-outline btn-sm bg-danger text-danger-800 btn-icon ml-2'
+            }
+          },
+          callback: (result) => {
+            if (Array.isArray(result) && result.includes('0')) {
+              this.onSeed(name)
+            } else if (Array.isArray(result) && result.includes('1')) {
+              this.onMigrate(name)
+            } else if (Array.isArray(result) && result.includes('2')) {
+              this.onRefresh(name)
+            } else if (Array.isArray(result) && result.includes('3')) {
+              this.onRollBack(name)
+            }
+          }
+        })
+      },
+      onMigrateSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.$message({
+            type: 'success',
+            message: response.data.message
+          })
+          Vue.nextTick(() => this.$refs.vuetable.refresh())
+        } else {
+          toastr.error(response.message)
+        }
       },
       onFilterReset () {
         delete this.appendParams.filter
@@ -206,97 +365,10 @@ import CssConfig from './CssConfig.js'
       onLoaded () {
         this.$store.dispatch('block', {element: 'componentsComponent', load: false})
       },
-      boardsCallBack (boards) {
-        let data = []
-        boards.forEach((board) => {
-          data.push('<span class="text-teal-300">' + board.name + '</span>')
-        })
-        return data.join(', ')
-      },
-      formatNumber (value) {
-        return accounting.formatMoney(value, '€ ', 0, '.', '.')
-      },
-      formatDate (value, fmt = 'D MMM YYYY') {
-        return (value == null)
-          ? ''
-          : moment(value, 'YYYY-MM-DD HH:mm:ss').format(fmt)
-      },
       doView (action, data, index) {
         this.$refs.vuetable.toggleDetailRow(data.id)
       },
-      doDelete (id) {
-        this.$confirm(this.trans('messages.delete'), 'Warning', {
-          confirmButtonText: this.trans('labels.ok'),
-          cancelButtonText: this.trans('labels.cancel'),
-          type: 'warning'
-        }).then(() => {
-          this.onDelete(id)
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: this.trans('messages.delete_canceled')
-          })
-        })
-      },
-      doDestroy (id) {
-        this.$confirm(this.trans('messages.destroy'), 'Warning', {
-          confirmButtonText: this.trans('labels.ok'),
-          cancelButtonText: this.trans('labels.cancel'),
-          type: 'warning'
-        }).then(() => {
-          this.onForceDelete(id)
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: this.trans('messages.delete_canceled')
-          })
-        })
-      },
-      doRestore (id) {
-        this.$confirm(this.trans('messages.restore'), 'Warning', {
-          confirmButtonText: this.trans('labels.ok'),
-          cancelButtonText: this.trans('labels.cancel'),
-          type: 'warning'
-        }).then(() => {
-          this.onRestore(id)
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: this.trans('messages.restore_canceled')
-          })
-        })
-      },
-      onDelete (id) {
-        this.$store.dispatch('block', {element: 'componentsComponent', load: true})
-        // eslint-disable-next-line
-        this.$http.delete(laroute.route('admin.components.destroy', {id: id}))
-          .then(this.onDeleteSuccess)
-          .catch(this.onFailed)
-          .then(() => {
-            this.$store.dispatch('block', {element: 'componentsComponent', load: false})
-          })
-      },
-      onForceDelete (id) {
-        this.$store.dispatch('block', {element: 'componentsComponent', load: true})
-        // eslint-disable-next-line
-        this.$http.delete(laroute.route('admin.components.forceDelete', {id: id}))
-          .then(this.onDeleteSuccess)
-          .catch(this.onFailed)
-          .then(() => {
-            this.$store.dispatch('block', {element: 'componentsComponent', load: false})
-          })
-      },
-      onRestore (id) {
-        this.$store.dispatch('block', {element: 'componentsComponent', load: true})
-        // eslint-disable-next-line
-        this.$http.put(window.laroute.route('admin.components.restore', {id: id}))
-          .then(this.onDeleteSuccess)
-          .catch(this.onFailed)
-          .then(() => {
-            this.$store.dispatch('block', {element: 'componentsComponent', load: false})
-          })
-      },
-      onDeleteSuccess (response) {
+      onUninstallSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
           this.$message({
             type: 'success',

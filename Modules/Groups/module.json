@@ -9,7 +9,7 @@
     "providers": [
         "Modules\\Groups\\Providers\\GroupsServiceProvider"
     ],
-    "aliases": {},
+    "aliases": [],
     "files": [
         "start.php"
     ],

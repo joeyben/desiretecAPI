@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <el-input placeholder="Filter keyword" v-model="filterText"></el-input>
                 </div>
-                <div class="card card-body border-left-danger border-left-2">
+                <div class="card card-body border-left-teal-800 border-left-2">
                     <el-tree
                             v-if="show"
                             :load="loadNode"

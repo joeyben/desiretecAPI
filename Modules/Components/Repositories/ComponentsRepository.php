@@ -60,7 +60,7 @@ class ComponentsRepository
     {
         $modules = collect($this->module->all());
 
-        $except = ['Components', 'Tui', 'Master', 'Nmviajes'];
+        $except = ['Components', 'Tui', 'Master', 'Nmviajes', 'Activities', 'Categories', 'Dashboard'];
 
         return $modules->map(function ($module) use ($except) {
             if (!\in_array($module->getStudlyName(), $except, true)) {
@@ -84,7 +84,7 @@ class ComponentsRepository
 
         if ($module->enabled() && 'Components' !== $module->getStudlyName()) {
             $module->disable();
-            $result['message'] = $this->translator->get('message.success', ['attribute' => $module->getStudlyName()]) . "\n";
+            $result['message'] = $this->translator->get('messages.uninstall', ['attribute' => $module->getStudlyName()]) . ":\n";
 
             if (!$keep) {
                 $this->artisan->call('module:migrate-rollback', ['module' => $this->str->studly($key), '--force' => true]);
@@ -104,7 +104,7 @@ class ComponentsRepository
 
         if ($module->disabled()) {
             $module->enable();
-            $result['message'] = $this->translator->get('message.success', ['attribute' => $module->getStudlyName()]) . "\n";
+            $result['message'] = $this->translator->get('messages.install', ['attribute' => $module->getStudlyName()]) . ":\n";
             $this->artisan->call('module:migrate', ['module' => $this->str->studly($key), '--force' => true]);
             $result['message'] .= $this->artisan->output();
         } else {
