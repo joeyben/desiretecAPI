@@ -40,12 +40,7 @@ if ($componentsComponent) {
     routes: [{
       path: '/',
       name: 'root',
-      component: require('./components/ComponentsComponent.vue'),
-      children: [{
-        path: '/edit/:id(\\d+)',
-        name: 'root.edit',
-        component: require('./components/EditComponentComponent.vue')
-      }]
+      component: require('./components/ComponentsComponent.vue')
     }]
   })
   new Vue({

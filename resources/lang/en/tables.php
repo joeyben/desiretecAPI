@@ -76,4 +76,7 @@ return [
     'activities'                    => 'Activities',
     'alias'                         => 'Alias',
     'package'                       => 'Package',
+    'install'                       => 'Install',
+    'uninstall'                     => 'Uninstall',
+    'migrate'                       => 'Migrate',
 ];
