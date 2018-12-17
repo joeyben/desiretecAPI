@@ -9,9 +9,9 @@
 
 <script>
   import Vuex from 'vuex'
-  import VueDatatable from '../tables/wishes/VueDatatable'
+  import VueDatatable from '../tables/groups/VueDatatable'
   export default {
-    name: 'WishesComponent',
+    name: 'GroupsComponent',
     components: { VueDatatable },
     data () {
       return {

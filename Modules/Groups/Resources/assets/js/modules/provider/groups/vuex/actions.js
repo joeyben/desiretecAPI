@@ -1,8 +1,8 @@
 import * as types from '../../../../vuex/mutation-types'
 import api from './api/api'
 
-export const addWish = function (store, wish) {
-  store.commit(types.ADD_WISH, wish)
+export const addGroup = function (store, group) {
+  store.commit(types.ADD_GROUP, group)
 }
 
 export const loadWhitelabels = function (store) {

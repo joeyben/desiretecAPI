@@ -6,21 +6,33 @@
             </button>
 
             <div class="dropdown-menu dropdown-menu-left">
-                <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}"><i class="icon-plus3"></i> Create Wish</router-link>
-                <a href="#" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>
-                <a href="#" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>
+                <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}" v-if="hasPermissionTo('create-group') && hasRole('Executive')"><i class="icon-plus3"></i> Create Group</router-link>
+                <a href="javascript:;" class="dropdown-item disabled" disabled="true"><i class="icon-file-text3"></i> Export Selected</a>
+                <a href="javascript:;" class="dropdown-item disabled" disabled="true"><i class="icon-file-text3"></i> Export All</a>
             </div>
         </h5>
         <div class="header-elements">
             <form action="#" class="row">
                 <div class="col-xl-2 col-md-12 col-sm-12">
+                    <div class="form-group" v-if="hasRole('Administrator')">
+                        <el-select v-model="whitelabel" :placeholder="trans('tables.whitelabel')" @input="doWhitelabel">
+                            <el-option style="width: 100%;"
+                                       v-for="item in whitelabels"
+                                       :key="item.id"
+                                       :label="item.name"
+                                       :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-12 col-sm-12">
                     <div class="form-group">
                         <el-select :value="show" placeholder="Select" multiple collapse-tags style="margin-left: 2px;"  @input="doShow">
-                            <el-option
-                                    v-for="item in fields"
-                                    :key="item.title"
-                                    :label="item.title"
-                                    :value="item.title">
+                            <el-option style="width: 100%;"
+                                       v-for="item in fields"
+                                       :key="item.title"
+                                       :label="item.title"
+                                       :value="item.title">
                             </el-option>
                         </el-select>
                     </div>
@@ -28,35 +40,23 @@
                 <div class="col-xl-1 col-md-12 col-sm-12">
                     <div class="form-group">
                         <el-select v-model="value" placeholder="Select" @input="doPage">
-                            <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </div>
-                </div>
-                <div class="col-xl-2 col-md-12 col-sm-12" v-if="hasRole('Administrator')">
-                    <div class="form-group">
-                        <el-select v-model="whitelabel" :placeholder="trans('tables.whitelabel')" @input="doWhitelabel">
-                            <el-option
-                                    v-for="item in whitelabels"
-                                    :key="item.id"
-                                    :label="item.name"
-                                    :value="item.id">
+                            <el-option style="width: 100%;"
+                                       v-for="item in options"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
                             </el-option>
                         </el-select>
                     </div>
                 </div>
                 <div class="col-xl-3 col-md-12 col-sm-12">
                     <div class="form-group">
-                        <el-date-picker
-                                v-model="created"
-                                @input="doRange"
-                                type="daterange"
-                                start-placeholder="Start"
-                                end-placeholder="End">
+                        <el-date-picker style="width: 100%;"
+                                        v-model="created"
+                                        @input="doRange"
+                                        type="daterange"
+                                        start-placeholder="Start"
+                                        end-placeholder="End">
                         </el-date-picker>
                     </div>
                 </div>
@@ -165,7 +165,10 @@
           this.$events.fire('filter-reset')
         },
         hasRole (role) {
-          return this.user.hasOwnProperty('roles') && this.user.permissions[role]
+          return this.user.hasOwnProperty('roles') && this.user.roles[role]
+        },
+        hasPermissionTo (permission) {
+          return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
         }
       }
     }

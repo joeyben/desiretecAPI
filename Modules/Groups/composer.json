@@ -10,7 +10,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\Groups\\Providers\\GroupsServiceProvider"
+                "Modules\\Groups\\Providers\\AuthServiceProvider",
+                "Modules\\Groups\\Providers\\EventServiceProvider",
+                "Modules\\Groups\\Providers\\GroupsServiceProvider",
+                "Modules\\Groups\\Providers\\RepositoryServiceProvider"
             ],
             "aliases": {
                 

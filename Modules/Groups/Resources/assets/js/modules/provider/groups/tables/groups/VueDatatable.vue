@@ -17,9 +17,9 @@ import CssConfig from './CssConfig.js'
   Vue.component('my-detail-row', config.detail)
   Vue.component('custom-actions', config.actions)
   Vue.component('custom-link-by-id', config.customLinkById)
-  Vue.component('custom-link-by-title', config.CustomLinkByTitle)
+  Vue.component('custom-link-by-name', config.CustomLinkByName)
   Vue.component('custom-status', config.CustomStatus)
-  Vue.component('custom-user', config.customUser)
+  Vue.component('custom-users', config.customUsers)
   toastr.options.progressBar = true
   toastr.options.preventDuplicates = true
   moment.locale(window.i18.lang)
@@ -30,7 +30,7 @@ import CssConfig from './CssConfig.js'
     },
     data () {
       return {
-        apiUrl: window.laroute.route('admin.wishes.view'),
+        apiUrl: window.laroute.route('provider.groups.view'),
         fields: config.fields,
         sortOrder: config.sortOrder,
         appendParams: config.moreParams,
@@ -201,10 +201,10 @@ import CssConfig from './CssConfig.js'
         this.$events.fire('checkbox-toggled-all-set', checked)
       },
       onLoading () {
-        this.$store.dispatch('block', {element: 'wishesComponent', load: true})
+        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
       },
       onLoaded () {
-        this.$store.dispatch('block', {element: 'wishesComponent', load: false})
+        this.$store.dispatch('block', {element: 'groupsComponent', load: false})
       },
       boardsCallBack (boards) {
         let data = []
@@ -267,33 +267,32 @@ import CssConfig from './CssConfig.js'
         })
       },
       onDelete (id) {
-        this.$store.dispatch('block', {element: 'wishesComponent', load: true})
-        // eslint-disable-next-line
-        this.$http.delete(laroute.route('admin.wishes.destroy', {id: id}))
+        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
+        this.$http.delete(window.laroute.route('provider.groups.destroy', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'wishesComponent', load: false})
+            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
           })
       },
       onForceDelete (id) {
-        this.$store.dispatch('block', {element: 'wishesComponent', load: true})
+        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
         // eslint-disable-next-line
-        this.$http.delete(laroute.route('admin.wishes.forceDelete', {id: id}))
+        this.$http.delete(laroute.route('provider.groups.forceDelete', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'wishesComponent', load: false})
+            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
           })
       },
       onRestore (id) {
-        this.$store.dispatch('block', {element: 'wishesComponent', load: true})
+        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
         // eslint-disable-next-line
-        this.$http.put(window.laroute.route('admin.wishes.restore', {id: id}))
+        this.$http.put(window.laroute.route('provider.groups.restore', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'wishesComponent', load: false})
+            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
           })
       },
       onDeleteSuccess (response) {

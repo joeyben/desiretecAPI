@@ -1,6 +1,7 @@
 <template>
     <div class="list-icons">
         <router-link class="btn btn-outline btn-sm bg-teal text-teal-800 btn-icon ml-2" :to="{name: 'root.edit', params: { id: rowData.id }}"  v-if="can_edit" data-popup="tooltip" :title="trans('labels.edit')"><i class="icon-pencil7"></i></router-link>
+        <a href="javascript:;" class="btn btn-outline btn-sm bg-danger text-danger-800 btn-icon ml-2" @click="doDelete(rowData.id)" v-if="can_delete" data-popup="tooltip" :title="trans('labels.delete')"><i class="icon-cancel-circle2"></i></a>
     </div>
 </template>
 
@@ -22,7 +23,16 @@
         user: 'currentUser'
       }),
       can_edit () {
-        return !this.deleted && this.hasPermissionTo('update-wish')
+        return !this.deleted && this.hasPermissionTo('update-group')
+      },
+      can_restore () {
+        return this.deleted && this.hasPermissionTo('RESTORE_BOARDS')
+      },
+      can_force_delete () {
+        return this.deleted && this.hasPermissionTo('FORCE_DELETE')
+      },
+      can_delete () {
+        return !this.deleted && this.hasPermissionTo('delete-group')
       },
       deleted: function () {
         return this.rowData.deleted_at !== null

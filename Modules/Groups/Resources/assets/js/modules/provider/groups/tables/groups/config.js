@@ -3,9 +3,9 @@ import sort from './sort'
 import Detail from './Detail'
 import Actions from './Actions'
 import CustomLinkById from './CustomLinkById'
-import CustomLinkByTitle from './CustomLinkByTitle'
+import CustomLinkByName from './CustomLinkByName'
 import CustomStatus from './CustomStatus'
-import CustomUser from './CustomUser'
+import CustomUsers from './CustomUsers'
 export default {
   perPage: 10,
   fields: Columns,
@@ -14,7 +14,7 @@ export default {
   detail: Detail,
   actions: Actions,
   customLinkById: CustomLinkById,
-  CustomLinkByTitle: CustomLinkByTitle,
+  CustomLinkByName: CustomLinkByName,
   CustomStatus: CustomStatus,
-  customUser: CustomUser
+  customUsers: CustomUsers
 }

@@ -33,27 +33,27 @@ Vue.filter('str_limit', function (string, value) {
   return string.length <= parseInt(value) ? string : string.substring(0, value) + ' ...'
 })
 
-let $wishesComponent = document.querySelector('#wishesComponent')
+let $groupsComponent = document.querySelector('#groupsComponent')
 
-if ($wishesComponent) {
+if ($groupsComponent) {
   const router = new VueRouter({
     routes: [{
       path: '/',
       name: 'root',
-      component: require('./components/WishesComponent.vue'),
+      component: require('./components/GroupsComponent.vue'),
       children: [{
         path: '/edit/:id(\\d+)',
         name: 'root.edit',
-        component: require('./components/EditWishComponent.vue')
+        component: require('./components/EditGroupComponent.vue')
       }, {
         path: '/create',
         name: 'root.create',
-        component: require('./components/EditWishComponent.vue')
+        component: require('./components/EditGroupComponent.vue')
       }]
     }]
   })
   new Vue({
-    el: '#wishesComponent',
+    el: '#groupsComponent',
     router,
     store,
     components: { },

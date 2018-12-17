@@ -18,6 +18,21 @@ use Illuminate\Support\Facades\Auth;
 class ByWhitelabel
 {
     /**
+     * @var string
+     */
+    private $table;
+
+    /**
+     * ByWhitelabel constructor.
+     *
+     * @param string $table
+     */
+    public function __construct(string $table = 'wishes')
+    {
+        $this->table = $table;
+    }
+
+    /**
      * @param $model
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -26,6 +41,6 @@ class ByWhitelabel
     {
         $whitelabels = Auth::guard('web')->user()->whitelabels()->get()->pluck('id')->all();
 
-        return Auth::guard('web')->user()->hasRole('Administrator') ? $model->newQuery() : $model->whereIn('wishes.whitelabel_id', $whitelabels);
+        return Auth::guard('web')->user()->hasRole('Administrator') ? $model->newQuery() : $model->whereIn($this->table . '.whitelabel_id', $whitelabels);
     }
 }

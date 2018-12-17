@@ -250,7 +250,7 @@
                             <li class="nav-item"><a href="javascript:;" class="nav-link">Permission Management</a></li>
                         </ul>
                     </li>
-                    @if($module->has('Categories') )
+                    @if($module->has('Categories') && Auth::guard('web')->user()->hasPermission('read-category'))
                     <li class="nav-item">
                         <a href="{{ route('admin.categories') }}" class="nav-link">
                             <i class="icon-folder-open"></i>
@@ -258,9 +258,9 @@
                         </a>
                     </li>
                     @endif
-                    @if($module->has('Groups') )
+                    @if($module->has('Groups') && Auth::guard('web')->user()->hasPermission('read-group'))
                     <li class="nav-item">
-                        <a href="{{ route('admin.groups') }}" class="nav-link">
+                        <a href="{{ route('provider.groups') }}" class="nav-link">
                             <i class="icon-collaboration"></i>
                             <span>Groups Management</span>
                         </a>

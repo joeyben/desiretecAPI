@@ -2,19 +2,20 @@ import * as actions from './actions'
 import * as getters from './getters'
 
 const state = {
-  wish: {},
+  group: {},
+  users: {},
   whitelabels: {}
 }
 
 const mutations = {
-  ADD_WISH (state, wish) {
-    state.wish = wish
+  ADD_GROUP (state, group) {
+    state.group = group
   },
   ADD_WHITELABELS (state, whitelabels) {
     state.whitelabels = whitelabels
   },
-  updateWish (state, obj) {
-    state.wish[obj.name] = obj.value
+  updateGroup (state, obj) {
+    state.group[obj.name] = obj.value
   }
 }
 
