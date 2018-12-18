@@ -15,6 +15,7 @@ class StoreGroupRequest extends FormRequest
     {
         return [
             'name'                       => 'required|string|min:3|max:255',
+            'display_name'                       => 'required|string|min:3|max:255',
             'description'                => 'nullable|string|min:6',
             'users'                      => 'required|array|min:1',
             'status'                     => 'required|boolean'
