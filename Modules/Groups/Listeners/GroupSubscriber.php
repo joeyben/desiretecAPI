@@ -28,7 +28,6 @@ class GroupSubscriber
     public function subscribe($events)
     {
         $events->listen('eloquent.created: Modules\Groups\Entities\Group', [$this, 'onCreatedGroup']);
-        $events->listen('eloquent.updated: Modules\Groups\Entities\Group', [$this, 'onCreatedGroup']);
     }
 
     public function onCreatedGroup(Group $group)
