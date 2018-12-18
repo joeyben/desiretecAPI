@@ -158,5 +158,13 @@ class DashboardDatabaseSeeder extends Seeder
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
         ]);
+
+        for ($i = 1; $i <= 12; ++$i) {
+            DB::table('dashboard_user')->insertGetId([
+                'user_id'              => 1,
+                'dashboard_id'      => $i,
+            ]);
+        }
+
     }
 }

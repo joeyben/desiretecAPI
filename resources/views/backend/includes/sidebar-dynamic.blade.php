@@ -11,6 +11,12 @@
                     <span>{{ trans('menus.backend.sidebar.dashboard') }}</span>
                 </a>
             </li>
+            <li class="{{ active_class(Active::checkUriPattern('provider/dashboard')) }}">
+                <a href="{{ route('provider.dashboard') }}" target="_blank">
+                    <i class="fa fa-dashboard"></i>
+                    <span>{{ trans('menus.backend.sidebar.dashboard') }} (New)</span>
+                </a>
+            </li>
             <li class="header">{{ trans('menus.backend.sidebar.system') }}</li>
             {{ renderMenuItems(getMenuItems()) }}
         </ul><!-- /.sidebar-menu -->
