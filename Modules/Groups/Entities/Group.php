@@ -17,6 +17,7 @@ class Group extends Model
 
     protected static $logAttributes = [
         'name',
+        'display_name',
         'description',
         'status',
         'current'
@@ -44,6 +45,7 @@ class Group extends Model
         'columns' => [
             'groups.id'                         => 10,
             'groups.name'                       => 10,
+            'groups.display_name'               => 10,
             'users.first_name'                  => 10,
             'users.last_name'                   => 10,
             'users.email'                       => 10,

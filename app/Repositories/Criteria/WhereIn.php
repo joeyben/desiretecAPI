@@ -31,7 +31,7 @@ class WhereIn
      * @param string $column
      * @param array  $values
      */
-    public function __construct(string $column, array $values)
+    public function __construct(string $column, array $values = null)
     {
         $this->column = $column;
         $this->values = $values;
@@ -44,6 +44,6 @@ class WhereIn
      */
     public function apply($model): Builder
     {
-        return $model->whereIn($this->column, $this->values);
+        return null === $this->values ? $model->newQuery() : $model->whereIn($this->column, $this->values);
     }
 }

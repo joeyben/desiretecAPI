@@ -8,6 +8,7 @@
             <div class="dropdown-menu dropdown-menu-left">
                 <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}" v-if="hasPermissionTo('create-group') && !hasRole('Administrator')"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
                 <a href="javascript:;" class="dropdown-item" v-on:click="dialogFormVisible = true" v-if="hasRole('Administrator')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>
+                <a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>
                 <a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>
             </div>
         </h5>
@@ -135,8 +136,12 @@
       computed: {
         ...Vuex.mapGetters({
           whitelabels: 'whitelabels',
+          checked: 'checked',
           user: 'currentUser'
         }),
+        urlExportSelected () {
+          return window.laroute.route('provider.groups.export', {checked: this.checked})
+        },
         show () {
           let results = []
           if (this.fields.length > 0) {
@@ -151,6 +156,19 @@
         }
       },
       methods: {
+        onExportSelected () {
+          if (this.checked.length <= 0) {
+            this.$message({
+              message: 'Please select at least one item',
+              showClose: true,
+              type: 'error'
+            })
+
+            return false
+          }
+
+          window.location.href = this.urlExportSelected
+        },
         onCreate () {
           this.dialogFormVisible = false
           this.$router.push({name: 'root.create', params: { id: 0, whitelabel_id: this.form.id }})

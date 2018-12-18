@@ -84,4 +84,5 @@ return [
     'groups'                       => 'Groups',
     'create'                       => 'Create',
     'users'                        => 'Users',
+    'display_name'                 => 'Display Name',
 ];
