@@ -28,12 +28,12 @@ class GroupsDatabaseSeeder extends Seeder
             }
         }
 
-        for ($i = 1; $i <= 100; ++$i) {
+        for ($i = 1; $i <= 10000; ++$i) {
             $name = $faker->name;
 
             DB::table('groups')->insertGetId([
-                'name'             => $name,
-                'display_name'      =>  \str_slug($name),
+                'name'              => $name,
+                'display_name'      => \str_slug($name),
                 'description'       => $faker->sentence(100),
                 'created_by'        => $faker->numberBetween(1, 4),
                 'updated_by'        => $faker->numberBetween(1, 4),

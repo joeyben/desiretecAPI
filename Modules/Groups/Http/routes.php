@@ -12,4 +12,5 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'provider', 
     Route::delete('groups/{id}/destroy', 'GroupsController@forceDelete')
         ->name('provider.groups.forceDelete')->where('id', '[0-9]+');
     Route::put('groups/{id}/restore', 'GroupsController@restore')->name('provider.groups.restore')->where('id', '[0-9]+');
+    Route::get('groups/export', 'GroupsController@export')->name('provider.groups.export');
 });

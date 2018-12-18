@@ -43,7 +43,7 @@ class Group extends Model
          */
         'columns' => [
             'groups.id'                         => 10,
-            'groups.name'                      => 10,
+            'groups.name'                       => 10,
             'users.first_name'                  => 10,
             'users.last_name'                   => 10,
             'users.email'                       => 10,

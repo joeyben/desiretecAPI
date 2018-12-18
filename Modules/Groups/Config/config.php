@@ -9,7 +9,6 @@ return [
         'Read Group',
         'Update Group',
         'Delete Group',
-        'Restore Group',
         'Logs Group',
     ]
 ];

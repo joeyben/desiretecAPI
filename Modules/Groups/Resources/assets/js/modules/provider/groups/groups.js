@@ -46,7 +46,7 @@ if ($groupsComponent) {
         name: 'root.edit',
         component: require('./components/EditGroupComponent.vue')
       }, {
-        path: '/create',
+        path: '/create/:id(\\d+)/:whitelabel_id(\\d+)',
         name: 'root.create',
         component: require('./components/EditGroupComponent.vue')
       }]

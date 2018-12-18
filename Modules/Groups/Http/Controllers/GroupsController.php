@@ -2,7 +2,6 @@
 
 namespace Modules\Groups\Http\Controllers;
 
-use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Criteria\ByWhitelabel;
 use App\Repositories\Criteria\EagerLoad;
@@ -10,8 +9,10 @@ use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
+use App\Repositories\Criteria\WithTrashed;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -19,13 +20,17 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
+use Maatwebsite\Excel\Excel;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\Groups\Entities\Group;
+use Modules\Groups\Exports\GroupExport;
 use Modules\Groups\Http\Requests\StoreGroupRequest;
 use Modules\Groups\Http\Requests\UpdateGroupRequest;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
 
 class GroupsController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * @var \Modules\Groups\Repositories\Contracts\GroupsRepository
      */
@@ -54,6 +59,10 @@ class GroupsController extends Controller
      * @var \App\Repositories\Backend\Whitelabels\WhitelabelsRepository
      */
     private $whitelabels;
+    /**
+     * @var \Maatwebsite\Excel\Excel
+     */
+    private $excel;
 
     /**
      * GroupsController constructor.
@@ -65,8 +74,9 @@ class GroupsController extends Controller
      * @param \Illuminate\Support\Carbon                                      $carbon
      * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository $activities
      * @param \App\Repositories\Backend\Whitelabels\WhitelabelsRepository     $whitelabels
+     * @param \Maatwebsite\Excel\Excel                                        $excel
      */
-    public function __construct(GroupsRepository $groups, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels)
+    public function __construct(GroupsRepository $groups, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, Excel $excel)
     {
         $this->groups = $groups;
         $this->response = $response;
@@ -75,7 +85,9 @@ class GroupsController extends Controller
         $this->carbon = $carbon;
         $this->activities = $activities;
         $this->whitelabels = $whitelabels;
+        $this->excel = $excel;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -88,11 +100,14 @@ class GroupsController extends Controller
 
     public function view(Request $request)
     {
+        $this->authorize('view', Group::class);
+
         try {
             $perPage = $request->get('per_page');
             $sort = explode('|', $request->get('sort'));
 
             $result['data'] = $this->groups->withCriteria([
+                new WithTrashed(),
                 new OrderBy($sort[0], $sort[1]),
                 new Where('groups.whitelabel_id', $request->get('whitelabel')),
                 new WhereBetween('groups.created_at', $request->get('start'), $request->get('end')),
@@ -122,22 +137,31 @@ class GroupsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function create(Request $request)
     {
         try {
             $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((null === $whitelabel) && $request->has('whitelabelId')) {
+                $whitelabel = $this->whitelabels->find($request->get('whitelabelId'));
+            }
+
             $result['group'] = [
-                'name'                    => '',
+                'id'                       => 0,
+                'name'                     => '',
                 'description'              => '',
-                'status'              => true,
+                'status'                   => true,
                 'users'                    => [],
                 'owner'                    => $this->auth->guard('web')->user()->first_name . ' ' . $this->auth->guard('web')->user()->last_name,
-                'logs'                    => [],
-                'whitelabel' => $whitelabel,
+                'logs'                     => [],
+                'whitelabel'               => $whitelabel,
+                'whitelabel_id'            => $whitelabel->id,
             ];
-            $users = $this->whitelabels->find($whitelabel->id)->users()->get();
+            $users = $whitelabel->users()->get();
 
             $result['group']['usersList'] = $users->map(function ($user) {
                 return [
@@ -168,6 +192,11 @@ class GroupsController extends Controller
     {
         try {
             $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((null === $whitelabel) && $request->has('whitelabel_id')) {
+                $whitelabel = $this->whitelabels->find($request->get('whitelabel_id'));
+            }
+
             $result['group'] = $this->groups->create(
                 array_merge(
                     $request->only('name', 'description', 'status'),
@@ -220,13 +249,13 @@ class GroupsController extends Controller
             ])->find($id);
 
             $result['group'] = [
-                'id' => $group->id,
-                'name' => $group->name,
-                'owner' => $group->owner->full_name,
-                'whitelabel' => $group->whitelabel,
-                'users' => $group->users->pluck('id'),
+                'id'          => $group->id,
+                'name'        => $group->name,
+                'owner'       => $group->owner->full_name,
+                'whitelabel'  => $group->whitelabel,
+                'users'       => $group->users->pluck('id'),
                 'description' => $group->description,
-                'status' => $group->status
+                'status'      => $group->status
             ];
             $result['group']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-group') ? $this->activities->byModel($group) : [];
             $users = $this->whitelabels->find($group->whitelabel_id)->users()->get();
@@ -253,7 +282,6 @@ class GroupsController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Modules\Groups\Http\Requests\UpdateGroupRequest $request
-     *
      * @param int                                              $id
      *
      * @return \Illuminate\Http\JsonResponse
@@ -298,6 +326,71 @@ class GroupsController extends Controller
         try {
             $result['group'] = $this->groups->delete($id);
             $result['message'] = $this->lang->get('messages.deleted', ['attribute' => 'Group']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function export(Request $request)
+    {
+        $sort = explode('|', $request->get('sort'));
+
+        return new GroupExport($this->groups
+            ->withCriteria([
+                new OrderBy('id', 'ASC'),
+                new EagerLoad(['owner' => function ($query) {
+                    $select = $this->auth->guard('web')->user()->hasRole('Administrator') ? 'CONCAT(first_name, " ", last_name, " ( ", email, " ) ") AS full_name' : 'CONCAT(first_name, " ", last_name) AS full_name';
+                    $query->select('users.id', DB::raw($select));
+                }, 'users'  => function ($query) {
+                    $query->select('users.id', DB::raw('CONCAT(first_name, " ", last_name, " ( ", email, " ) ") AS full_name'));
+                }, 'whitelabel'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }]),
+                new ByWhitelabel('groups')
+            ])
+        );
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function restore(int $id)
+    {
+        try {
+            $result['group'] = $this->groups->restore($id);
+            $result['message'] = $this->lang->get('messages.restored', ['attribute' => 'Group']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function forceDelete(int $id)
+    {
+        $this->authorize('forceDelete', Group::class);
+        try {
+            $result['group'] = $this->groups->forceDelete($id);
+            $result['message'] = $this->lang->get('messages.destroyed', ['attribute' => 'Group']);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {

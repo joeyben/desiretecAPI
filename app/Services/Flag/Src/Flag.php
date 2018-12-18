@@ -36,4 +36,6 @@ class Flag implements FlagInterface
      * Pretty self explanatory, but also another code that is not going to be returned explicitly by the application.
      */
     const STATUS_CODE_SERVICE_UNAVAILABLE = 503;
+
+    const ADMINISTRATOR_ROLE = 'Administrator';
 }

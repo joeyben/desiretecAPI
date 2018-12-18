@@ -4,6 +4,8 @@ namespace Modules\Groups\Providers;
 
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\ServiceProvider;
+use Modules\Groups\Entities\Group;
+use Modules\Groups\Observers\GroupObserver;
 
 class GroupsServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,7 @@ class GroupsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Group::observe(GroupObserver::class);
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();

@@ -14,11 +14,11 @@ class UpdateGroupRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'                       => 'required|int|min:1',
-            'name'                    => 'required|string|min:3|max:255',
-            'description'              => 'nullable|string|min:6',
+            'id'                         => 'required|int|min:1',
+            'name'                       => 'required|string|min:3|max:255',
+            'description'                => 'nullable|string|min:6',
             'users'                      => 'required|array|min:1',
-            'status'                   => 'required|boolean'
+            'status'                     => 'required|boolean'
         ];
     }
 

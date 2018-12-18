@@ -2,8 +2,7 @@
 
 namespace Modules\Groups\Listeners;
 
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Models\Access\Role\Role;
 use Modules\Groups\Entities\Group;
 
 class GroupSubscriber
@@ -28,5 +27,18 @@ class GroupSubscriber
      */
     public function subscribe($events)
     {
+        $events->listen('eloquent.created: Modules\Groups\Entities\Group', [$this, 'onCreatedGroup']);
+        $events->listen('eloquent.updated: Modules\Groups\Entities\Group', [$this, 'onCreatedGroup']);
+    }
+
+    public function onCreatedGroup(Group $group)
+    {
+        $admins = Role::where('name', 'Administrator')->first()->users()->get();
+        $owner = $group->owner()->first();
+
+        foreach ($admins as $admin) {
+            createNotification('Group: ' . $group->name . ' has been successfully created by: ' . $owner->first_name . ' ' . $owner->last_name, $admin->id);
+        }
+        createNotification('Group: ' . $group->name . '  has been successfully created by: ' . $owner->first_name . ' ' . $owner->last_name, $owner->id);
     }
 }

@@ -26,7 +26,7 @@
                                             </a>
                                         </legend>
                                         <div class="collapse show" id="demo1">
-                                            <div class="form-group row">
+                                            <div class="form-group row" v-if="group.id !== 0">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.id') }}</label>
                                                 <div class="col-lg-9">
                                                     <input type="text" class="form-control disabled" disabled readonly id='id' name='id' :placeholder="trans('modals.id')" :value="group.id"/>
@@ -143,13 +143,20 @@
     },
     computed: {
       ...Vuex.mapGetters({
-        group: 'group'
+        group: 'group',
+        user: 'currentUser'
       })
     },
     methods: {
       ...Vuex.mapActions({
         addGroup: 'addGroup'
       }),
+      hasPermissionTo (permission) {
+        return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
+      },
+      hasRole (permission) {
+        return this.user.hasOwnProperty('roles') && this.user.roles[permission]
+      },
       generateUsers () {
         let data = []
         if (this.group.hasOwnProperty('usersList')) {
@@ -184,14 +191,14 @@
         })
 
         if (id === 0) {
-          this.CreateGroup()
+          this.CreateGroup(parseInt(this.$route.params.whitelabel_id))
         } else {
           this.EditGroup(id)
         }
       },
-      CreateGroup () {
+      CreateGroup (whitelabelId) {
         this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.get(window.laroute.route('provider.groups.create'))
+        this.$http.get(window.laroute.route('provider.groups.create', {whitelabelId: whitelabelId}))
           .then(this.onLoadGroupSuccess)
           .catch(this.onFailed)
           .then(() => {

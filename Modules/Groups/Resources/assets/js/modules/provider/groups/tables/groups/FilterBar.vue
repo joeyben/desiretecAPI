@@ -6,9 +6,9 @@
             </button>
 
             <div class="dropdown-menu dropdown-menu-left">
-                <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}" v-if="hasPermissionTo('create-group') && hasRole('Executive')"><i class="icon-plus3"></i> Create Group</router-link>
-                <a href="javascript:;" class="dropdown-item disabled" disabled="true"><i class="icon-file-text3"></i> Export Selected</a>
-                <a href="javascript:;" class="dropdown-item disabled" disabled="true"><i class="icon-file-text3"></i> Export All</a>
+                <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}" v-if="hasPermissionTo('create-group') && !hasRole('Administrator')"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
+                <a href="javascript:;" class="dropdown-item" v-on:click="dialogFormVisible = true" v-if="hasRole('Administrator')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>
+                <a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>
             </div>
         </h5>
         <div class="header-elements">
@@ -75,6 +75,25 @@
                 </div>
             </form>
         </div>
+        <el-dialog title="Please choose a Whitelabel" :visible.sync="dialogFormVisible" width="35%">
+            <el-form :model="form">
+                <el-form-item :label="trans('modals.whitelabel')">
+                    <el-select v-model="form.id" placeholder="Please choose a Whitelabel" style="width: 100%;">
+                        <el-option
+                                v-for="item in whitelabels"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                            <span style="float: left"><i :class="item.name"></i> {{ item.name }}</span>
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <button class="btn btn-outline-danger btn-sm" @click="dialogFormVisible = false"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.cancel') }}</button>
+                <button class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" @click="onCreate()" v-if="form.id !== ''"> {{ trans('button.confirm') }}</button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -87,7 +106,13 @@
       name: 'FilterBar',
       data () {
         return {
+          dialogFormVisible: false,
+          form: {
+            id: ''
+          },
+          formLabelWidth: '120px',
           created: '',
+          urlExport: window.laroute.route('provider.groups.export'),
           fields: config.fields,
           filterText: '',
           whitelabel: '',
@@ -126,6 +151,10 @@
         }
       },
       methods: {
+        onCreate () {
+          this.dialogFormVisible = false
+          this.$router.push({name: 'root.create', params: { id: 0, whitelabel_id: this.form.id }})
+        },
         doShow (elements) {
           let filtered = elements.filter(function (el) {
             return el != null

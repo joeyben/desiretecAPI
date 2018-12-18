@@ -20,4 +20,10 @@ return [
     'save'           => 'Save',
     'delete'         => 'Delete',
     'delete_all'     => 'Delete All',
+    'cancel'     => 'Cancel',
+    'confirm'     => 'Confirm',
+    'edit'     => 'Edit',
+    'delete'     => 'Delete',
+    'restore'     => 'Restore',
+    'create'     => 'Create',
 ];
