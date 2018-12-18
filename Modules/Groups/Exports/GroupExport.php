@@ -66,6 +66,7 @@ class GroupExport implements FromCollection, Responsable, WithMapping, WithHeadi
             $group->id,
             $group->status ? 'Active' : 'Inactive',
             $group->name,
+            $group->display_name,
             null === $group->owner ? '' : $group->owner->full_name,
             $group->whitelabel->display_name,
             implode(', ', $group->users->pluck('full_name')->all()),
@@ -80,6 +81,7 @@ class GroupExport implements FromCollection, Responsable, WithMapping, WithHeadi
             '#',
             Lang::get('tables.status'),
             Lang::get('tables.name'),
+            Lang::get('tables.display_name'),
             Lang::get('tables.owner'),
             Lang::get('tables.whitelabel'),
             Lang::get('tables.users'),
@@ -94,8 +96,8 @@ class GroupExport implements FromCollection, Responsable, WithMapping, WithHeadi
     public function columnFormats(): array
     {
         return [
-            'G' => 'dd.mm.yy',
             'H' => 'dd.mm.yy',
+            'I' => 'dd.mm.yy',
         ];
     }
 }

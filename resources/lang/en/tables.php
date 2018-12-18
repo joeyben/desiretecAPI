@@ -79,4 +79,5 @@ return [
     'install'                       => 'Install',
     'uninstall'                     => 'Uninstall',
     'migrate'                       => 'Migrate',
+    'display_name'                  => 'Display Name',
 ];

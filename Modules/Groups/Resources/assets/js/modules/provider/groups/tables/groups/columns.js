@@ -21,6 +21,12 @@ export default [
     visible: true
   },
   {
+    name: 'display_name',
+    title: window.Lang.get('tables.display_name'),
+    sortField: 'display_name',
+    visible: true
+  },
+  {
     name: 'owner.full_name',
     title: window.Lang.get('tables.owner'),
     visible: false

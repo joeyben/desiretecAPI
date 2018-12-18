@@ -9,6 +9,7 @@ use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
+use App\Repositories\Criteria\WhereIn;
 use App\Repositories\Criteria\WithTrashed;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
@@ -151,15 +152,16 @@ class GroupsController extends Controller
             }
 
             $result['group'] = [
-                'id'                       => 0,
-                'name'                     => '',
-                'description'              => '',
-                'status'                   => true,
-                'users'                    => [],
-                'owner'                    => $this->auth->guard('web')->user()->first_name . ' ' . $this->auth->guard('web')->user()->last_name,
-                'logs'                     => [],
-                'whitelabel'               => $whitelabel,
-                'whitelabel_id'            => $whitelabel->id,
+                'id'                               => 0,
+                'name'                             => '',
+                'display_name'                     => '',
+                'description'                      => '',
+                'status'                           => true,
+                'users'                            => [],
+                'owner'                            => $this->auth->guard('web')->user()->first_name . ' ' . $this->auth->guard('web')->user()->last_name,
+                'logs'                             => [],
+                'whitelabel'                       => $whitelabel,
+                'whitelabel_id'                    => $whitelabel->id,
             ];
             $users = $whitelabel->users()->get();
 
@@ -199,7 +201,7 @@ class GroupsController extends Controller
 
             $result['group'] = $this->groups->create(
                 array_merge(
-                    $request->only('name', 'description', 'status'),
+                    $request->only('name', 'display_name', 'description', 'status'),
                     ['whitelabel_id' => $whitelabel->id, 'created_by' => $this->auth->guard('web')->user()->id, 'updated_by' => $this->auth->guard('web')->user()->id]
                 )
             );
@@ -249,13 +251,14 @@ class GroupsController extends Controller
             ])->find($id);
 
             $result['group'] = [
-                'id'          => $group->id,
-                'name'        => $group->name,
-                'owner'       => $group->owner->full_name,
-                'whitelabel'  => $group->whitelabel,
-                'users'       => $group->users->pluck('id'),
-                'description' => $group->description,
-                'status'      => $group->status
+                'id'                  => $group->id,
+                'name'                => $group->name,
+                'display_name'        => $group->display_name,
+                'owner'               => $group->owner->full_name,
+                'whitelabel'          => $group->whitelabel,
+                'users'               => $group->users->pluck('id'),
+                'description'         => $group->description,
+                'status'              => $group->status
             ];
             $result['group']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-group') ? $this->activities->byModel($group) : [];
             $users = $this->whitelabels->find($group->whitelabel_id)->users()->get();
@@ -295,6 +298,7 @@ class GroupsController extends Controller
                 $id,
                 $request->only(
                     'name',
+                    'display_name',
                     'description',
                     'status'
                 ));
@@ -339,11 +343,13 @@ class GroupsController extends Controller
 
     public function export(Request $request)
     {
+        $records = $request->has('checked') ? explode(',', $request->get('checked')) : null;
         $sort = explode('|', $request->get('sort'));
 
         return new GroupExport($this->groups
             ->withCriteria([
                 new OrderBy('id', 'ASC'),
+                new WhereIn('id', $records),
                 new EagerLoad(['owner' => function ($query) {
                     $select = $this->auth->guard('web')->user()->hasRole('Administrator') ? 'CONCAT(first_name, " ", last_name, " ( ", email, " ) ") AS full_name' : 'CONCAT(first_name, " ", last_name) AS full_name';
                     $query->select('users.id', DB::raw($select));

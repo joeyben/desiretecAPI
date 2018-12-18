@@ -38,7 +38,8 @@ import CssConfig from './CssConfig.js'
         detailRowComponent: 'my-detail-row',
         rowClass: 'context',
         css: CssConfig,
-        loading: false
+        loading: false,
+        checked: []
       }
     },
     components: { Vuetable, VuetablePagination, VuetablePaginationInfo },
@@ -69,6 +70,9 @@ import CssConfig from './CssConfig.js'
     },
     methods: {
       ...Vuex.mapActions({
+        addChecked: 'addChecked',
+        addCheckedId: 'addCheckedId',
+        removeCheckedId: 'removeCheckedId'
       }),
       refresh () {
         Vue.nextTick(() => this.$refs.vuetable.refresh())
@@ -195,10 +199,21 @@ import CssConfig from './CssConfig.js'
       onInitialized (tableFields, description) {
       },
       onCheckboxToggled (checked, data) {
-        this.$events.fire('checkbox-toggled-set', checked, data)
+        if (checked) {
+          this.addCheckedId(data.id)
+        } else {
+          this.removeCheckedId(data.id)
+        }
       },
       onCheckboxToggledAll (checked) {
-        this.$events.fire('checkbox-toggled-all-set', checked)
+        let data = []
+        if (checked) {
+          this.$refs.vuetable.tableData.forEach((row, index) => {
+            data.push(row.id)
+          })
+        }
+
+        this.addChecked(data)
       },
       onLoading () {
         this.$store.dispatch('block', {element: 'groupsComponent', load: true})
