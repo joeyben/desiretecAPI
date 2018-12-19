@@ -17,7 +17,7 @@ class CreateWishesTable extends Migration
             $table->string('featured_image', 191);
             $table->longText('description')->nullable();
             $table->string('airport', 191);
-            $table->string('destination', 191);
+            $table->string('destination', 191)->nullable();
             $table->date('earliest_start');
             $table->date('latest_return');
             $table->integer('budget')->unsigned();
@@ -27,6 +27,7 @@ class CreateWishesTable extends Migration
             $table->string('catering', 191)->nullable();
             $table->string('duration', 20)->nullable();
             $table->boolean('status')->default(true);
+            $table->enum('booking_status', ['open', 'booked', 'cancelled'])->default('open');
             $table->integer('created_by')->nullable()->unsigned()->index();
             $table->integer('group_id')->nullable()->unsigned()->index();
             $table->integer('updated_by')->nullable()->unsigned()->index();
