@@ -17,7 +17,7 @@ class CreateWishesTable extends Migration
             $table->string('featured_image', 191);
             $table->longText('description')->nullable();
             $table->string('airport', 191);
-            $table->string('destination', 191)->nullable();
+            $table->string('destination', 191);
             $table->date('earliest_start');
             $table->date('latest_return');
             $table->integer('budget')->unsigned();
