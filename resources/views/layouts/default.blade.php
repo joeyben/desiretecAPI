@@ -7,8 +7,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="i18" content="{{ App::getLocale() }}">
     <title> @yield('title') - {{ config('app.name', 'Laravel') }} </title>
+    <?php
+        if(!empty($google_analytics)){
+            echo $google_analytics;
+        }
+    ?>
 
     <!-- Global stylesheets -->
+    @yield('before-styles')
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="{{ asset('modules/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset("modules/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css">
@@ -17,6 +23,7 @@
     <link href="{{ asset("modules/css/components.min.css") }}" rel="stylesheet" type="text/css">
     <link href="{{ asset("modules/css/colors.min.css") }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('modules/css/custom.css') }}" rel="stylesheet" type="text/css">
+    @yield('after-styles')
     <!-- /global stylesheets -->
 
 
@@ -241,15 +248,23 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
+                    @permission('view-access-management')
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Access Management</span></a>
 
                         <ul class="nav nav-group-sub" data-submenu-title="Layouts">
-                            <li class="nav-item"><a href="javascript:;" class="nav-link active">User Management</a></li>
-                            <li class="nav-item"><a href="javascript:;" class="nav-link">Role Management</a></li>
-                            <li class="nav-item"><a href="javascript:;" class="nav-link">Permission Management</a></li>
+                            @permission('view-user-management')
+                            <li class="nav-item"><a href="{{ route('admin.access.user.index') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/access/user*')) }}">{{ trans('labels.backend.access.users.management') }}</a></li>
+                            @endauth
+                            @permission('view-role-management')
+                            <li class="nav-item"><a href="{{ route('admin.access.role.index') }}" class="nav-link">{{ trans('labels.backend.access.roles.management') }}</a></li>
+                            @endauth
+                            @permission('view-permission-management')
+                            <li class="nav-item"><a href="{{ route('admin.access.permission.index') }}" class="nav-link">{{ trans('labels.backend.access.permissions.management') }}</a></li>
+                            @endauth
                         </ul>
                     </li>
+                    @endauth
                     @if($module->has('Categories') && Auth::guard('web')->user()->hasPermission('read-category'))
                     <li class="nav-item">
                         <a href="{{ route('admin.categories') }}" class="nav-link">
@@ -361,6 +376,7 @@
 
 <!-- /page content -->
 <!-- Core JS files -->
+@yield('before-scripts')
 <script src="{{ asset("modules/js/main/jquery.min.js") }}" ></script>
 <script src="{{ asset("modules/js/main/bootstrap.bundle.min.js") }}" ></script>
 <script src="{{ asset("modules/js/plugins/loaders/blockui.min.js") }}" ></script>
@@ -375,6 +391,6 @@
     ]); ?>
 </script>
 @yield('vue-js')
-<!-- /core JS files -->
+@yield('after-scripts')
 </body>
 </html>
