@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Access\User\Traits\TokenAuthenticable;
 
 /**
  * Class User.
@@ -23,7 +24,8 @@ class User extends Authenticatable implements JWTSubject
         SoftDeletes,
         UserAttribute,
         UserRelationship,
-        UserSendPasswordReset;
+        UserSendPasswordReset,
+        TokenAuthenticable;
     /**
      * The database table used by the model.
      *
