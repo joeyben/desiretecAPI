@@ -14,7 +14,7 @@ trait TokenAuthenticable
         $this->token()->delete();
 
         $this->token()->create([
-            'token' => str_random(10),
+            'token' => str_random(15),
         ]);
 
         return $this;

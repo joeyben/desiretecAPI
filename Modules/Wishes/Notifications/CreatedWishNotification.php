@@ -7,13 +7,16 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Modules\Wishes\Entities\Wish;
 
+
 class CreatedWishNotification extends Notification
 {
     use Queueable;
+    
     /**
      * @var \Modules\Wishes\Entities\Wish
      */
     private $wish;
+    //private $token;
 
     /**
      * Create a new notification instance.
@@ -23,6 +26,8 @@ class CreatedWishNotification extends Notification
     public function __construct(Wish $wish)
     {
         $this->wish = $wish;
+        //$this->$token = $token;
+     
     }
 
     /**
@@ -44,10 +49,12 @@ class CreatedWishNotification extends Notification
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
+    
     public function toMail($notifiable)
     {
         createNotification('Wish was successfully created: ' . $this->wish->title, $notifiable->id);
 
-        return (new MailMessage())->view('wishes::emails.wish', ['wish' => $this->wish])->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
+        return (new MailMessage())->view('wishes::emails.wish', ['wish' => $this->wish, 'token' => $this->wish->token])->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
     }
+
 }

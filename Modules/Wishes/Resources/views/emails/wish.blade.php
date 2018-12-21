@@ -184,6 +184,16 @@
                             </td>
                         </tr>
                         <tr>
+                            <td colspan="2" >
+                                <a href="http://localhost/wish/{{ $wish->id}}/{{ $token }}" >To view this wish click here!</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" height="10">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="2">
 
                                 Wir hoffen, dass Ihnen die Angebote zusagen. Bei Fragen stehen Ihnen unsere Reiseberater jederzeit zur Verfügung.
