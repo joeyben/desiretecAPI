@@ -30,3 +30,5 @@ build-stage:
 #    - rm -rf $DOCKER_CERT_PATH
   only:
     - development
+  variables:
+    DOCKER_HOST: "$DOCKER_HOST"
