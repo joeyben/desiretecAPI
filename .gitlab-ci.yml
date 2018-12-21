@@ -30,5 +30,3 @@ build-stage:
 #    - rm -rf $DOCKER_CERT_PATH
   only:
     - development
-  variables:
-    DOCKER_HOST: "tcp://docker:2376"
