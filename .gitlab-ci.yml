@@ -20,16 +20,13 @@ build-master:
 build-stage:
   stage: build
   script:
-    - mkdir $DOCKER_CERT_PATH
-    - echo "$DOCKER_MACHINE_CA" > $DOCKER_CERT_PATH/ca.pem
-    - echo "$CLIENT_DOCKER_CERT" > $DOCKER_CERT_PATH/cert.pem
-    - echo "$CLIENT_DOCKER_CERT_KEY" > $DOCKER_CERT_PATH/key.pem
+#    - mkdir $DOCKER_CERT_PATH
+#    - echo "$DOCKER_MACHINE_CA" > $DOCKER_CERT_PATH/ca.pem
+#    - echo "$CLIENT_DOCKER_CERT" > $DOCKER_CERT_PATH/cert.pem
+#    - echo "$CLIENT_DOCKER_CERT_KEY" > $DOCKER_CERT_PATH/key.pem
     - docker-compose build
     - docker-compose down
     - docker-compose up -d --force-recreate
-    - rm -rf $DOCKER_CERT_PATH
+#    - rm -rf $DOCKER_CERT_PATH
   only:
     - development
-  variables:
-    DOCKER_HOST: "tcp://docker:2376"
-    DOCKER_CERT_PATH: "certs"
