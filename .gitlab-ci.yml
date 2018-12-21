@@ -24,6 +24,9 @@ build-stage:
     - echo "$DOCKER_MACHINE_CA" > $DOCKER_CERT_PATH/ca.pem
     - echo "$CLIENT_DOCKER_CERT" > $DOCKER_CERT_PATH/cert.pem
     - echo "$CLIENT_DOCKER_CERT_KEY" > $DOCKER_CERT_PATH/key.pem
+    - cat $DOCKER_CERT_PATH/ca.pem
+    - cat $DOCKER_CERT_PATH/cert.pem
+    - cat $DOCKER_CERT_PATH/key.pem
     - docker-compose build
     - docker-compose down
     - docker-compose up -d --force-recreate
