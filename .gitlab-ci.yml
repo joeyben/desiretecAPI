@@ -2,12 +2,14 @@
 # Official docker image.
 image: docker:latest
 
+stages:
+  - compile
+  - build
+  - deploy
+
 services:
   - docker:dind
 
-before_script:
-  - apk add --update py-pip
-  - pip install docker-compose
 
 build-master:
   stage: build
@@ -17,8 +19,21 @@ build-master:
   only:
     - master
 
+compile-assets:
+  stage: compile
+  image: tetraweb/php
+  script:
+    - composer install
+    - composer dump-autoload
+    - npm install
+    - npm run production
+
+
 build-stage:
   stage: build
+  before_script:
+    - apk add --update py-pip
+    - pip install docker-compose
   script:
     - mkdir $DOCKER_CERT_PATH
     - echo "$MACHINE_CA" > $DOCKER_CERT_PATH/ca.pem
