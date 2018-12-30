@@ -22,7 +22,7 @@ build-master:
 compile-assets:
   stage: compile
   image: tetraweb/php
-  before-script:
+  before_script:
     - apt install -y libpng-dev
     - docker-php-ext-install exif
     - docker-php-ext-install gd
