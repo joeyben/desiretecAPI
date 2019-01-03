@@ -31,7 +31,6 @@ public/js/themes
 public/vendor
 public/js/skins/*.js
 
-composer.lock
 public/img/backend/blog_images/*
 public/mix-manifest.json
 public/access.log
