@@ -162,9 +162,8 @@ class DashboardDatabaseSeeder extends Seeder
         for ($i = 1; $i <= 12; ++$i) {
             DB::table('dashboard_user')->insertGetId([
                 'user_id'              => 1,
-                'dashboard_id'      => $i,
+                'dashboard_id'         => $i,
             ]);
         }
-
     }
 }
