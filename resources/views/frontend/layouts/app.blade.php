@@ -50,6 +50,13 @@
 
             <div class="container main-container">
                 @include('includes.partials.messages')
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            @include ('includes.partials._notifications')
+                        </div>
+                    </div>
+                </div>
                 @yield('content')
             </div><!-- container -->
         </div><!--#app-->

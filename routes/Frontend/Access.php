@@ -27,6 +27,11 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
         Route::get('login', 'LoginController@showLoginForm')->name('login');
         Route::post('login', 'LoginController@login')->name('login');
 
+        // Token Login Routes
+        Route::get('login/token', 'TokenLoginController@show');
+        Route::post('/login/token', 'TokenLoginController@sendToken');
+        Route::get('/login/token/{token}', 'TokenLoginController@validateToken');
+
         // Socialite Routes
         Route::get('login/{provider}', 'SocialLoginController@login')->name('social.login');
 
