@@ -2,11 +2,6 @@
 # Official docker image.
 image: docker:latest
 
-stages:
-  - compile
-  - build
-  - deploy
-
 services:
   - docker:dind
 
@@ -19,22 +14,6 @@ build-master:
   only:
     - master
 
-compile-assets:
-  stage: compile
-  image: tetraweb/php
-  before_script:
-    - apt update
-    - apt install -y libpng-dev
-    - docker-php-ext-install zip && docker-php-ext-enable zip
-    - docker-php-ext-install exif && docker-php-ext-enable exif
-    - docker-php-ext-install gd && docker-php-ext-enable gd
-  script:
-    - composer install
-    - composer dump-autoload
-    - npm install
-    - npm run production
-
-
 build-stage:
   stage: build
   before_script:
@@ -45,10 +24,8 @@ build-stage:
     - echo "$MACHINE_CA" > $DOCKER_CERT_PATH/ca.pem
     - echo "$CLIENT_CERT" > $DOCKER_CERT_PATH/cert.pem
     - echo "$CLIENT_KEY" > $DOCKER_CERT_PATH/key.pem
-    - cat $DOCKER_CERT_PATH/ca.pem
-    - cat $DOCKER_CERT_PATH/cert.pem
-    - cat $DOCKER_CERT_PATH/key.pem
-    - docker-compose build
+    - echo "$STAGE_DOTENV" > .env
+    - docker-compose build -f docker-compose.yml -f docker-compose.stage.yml --no-cache
     - docker-compose down
     - docker-compose up -d --force-recreate
     - rm -rf $DOCKER_CERT_PATH
@@ -61,4 +38,4 @@ build-stage:
     CLIENT_CERT: $CLIENT_DOCKER_CERT
     MACHINE_CA: $DOCKER_MACHINE_CA
     CLIENT_KEY: $CLIENT_DOCKER_CERT_KEY
-    
+    STAGE_DOTENV: $STAGE_ENV
