@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use PermissionRoleSeeder;
 use PermissionTableSeeder;
+use PermissionUserSeeder;
 
 class PermissionsDatabaseSeeder extends Seeder
 {
@@ -18,5 +19,6 @@ class PermissionsDatabaseSeeder extends Seeder
 
         $this->call(PermissionTableSeeder::class);
         $this->call(PermissionRoleSeeder::class);
+        $this->call(PermissionUserSeeder::class);
     }
 }
