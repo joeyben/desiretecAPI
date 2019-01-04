@@ -37,6 +37,7 @@ COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 RUN mv /var/www/html/docker/php/laravel.ini /usr/local/etc/php/conf.d
 RUN mv /var/www/html/docker/php/php.ini /usr/local/etc/php/php.ini
 RUN mv /var/www/html/docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+RUN a2enmod rewrite expires
 RUN composer dump-autoload
 
 USER root
