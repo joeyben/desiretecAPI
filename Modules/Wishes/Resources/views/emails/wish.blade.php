@@ -185,7 +185,7 @@
                         </tr>
                         <tr>
                             <td colspan="2" >
-                                <a href="http://localhost/wish/{{ $wish->id}}/{{ $token }}" >To view this wish click here!</a>
+                                <a href="{{ url('/wish') }}/{{ $wish->id}}/{{ $token }}" >To view this wish click here!</a>
                             </td>
                         </tr>
                         <tr>
