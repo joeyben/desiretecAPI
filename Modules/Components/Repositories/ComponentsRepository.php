@@ -60,7 +60,7 @@ class ComponentsRepository
     {
         $modules = collect($this->module->all());
 
-        $except = ['Components', 'Tui', 'Master', 'Nmviajes', 'Activities', 'Categories'];
+        $except = ['Components', 'Tui', 'Master', 'Nmviajes', 'Activities', 'Categories', 'Permissions'];
 
         return $modules->map(function ($module) use ($except) {
             if (!\in_array($module->getStudlyName(), $except, true)) {

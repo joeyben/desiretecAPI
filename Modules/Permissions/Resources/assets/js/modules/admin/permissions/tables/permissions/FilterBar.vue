@@ -1,6 +1,12 @@
 <template>
     <div class="card-header header-elements-inline">
         <h5 class="card-title">
+            <button type="button" class="btn btn-outline bg-teal-300 text-teal-800 btn-icon dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-gear"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-left">
+                <a :href="createLink" class="dropdown-item" v-if="hasPermissionTo('create-permission')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>
+            </div>
         </h5>
         <div class="header-elements">
             <form action="#" class="row">
@@ -54,25 +60,6 @@
                 </div>
             </form>
         </div>
-        <el-dialog title="Please choose a Whitelabel" :visible.sync="dialogFormVisible" width="35%">
-            <el-form :model="form">
-                <el-form-item :label="trans('modals.whitelabel')">
-                    <el-select v-model="form.id" placeholder="Please choose a Whitelabel" style="width: 100%;">
-                        <el-option
-                                v-for="item in whitelabels"
-                                :key="item.id"
-                                :label="item.name"
-                                :value="item.id">
-                            <span style="float: left"><i :class="item.name"></i> {{ item.name }}</span>
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <button class="btn btn-outline-danger btn-sm" @click="dialogFormVisible = false"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.cancel') }}</button>
-                <button class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" @click="onCreate()" v-if="form.id !== ''"> {{ trans('button.confirm') }}</button>
-            </span>
-        </el-dialog>
     </div>
 </template>
 
@@ -91,7 +78,6 @@
           },
           formLabelWidth: '120px',
           created: '',
-          urlExport: window.laroute.route('provider.groups.export'),
           fields: config.fields,
           filterText: '',
           whitelabel: '',
@@ -113,12 +99,10 @@
       },
       computed: {
         ...Vuex.mapGetters({
-          whitelabels: 'whitelabels',
-          checked: 'checked',
           user: 'currentUser'
         }),
-        urlExportSelected () {
-          return window.laroute.route('provider.groups.export', {checked: this.checked})
+        createLink () {
+          return window.laroute.route('admin.access.permission.create')
         },
         show () {
           let results = []
@@ -134,23 +118,6 @@
         }
       },
       methods: {
-        onExportSelected () {
-          if (this.checked.length <= 0) {
-            this.$message({
-              message: 'Please select at least one item',
-              showClose: true,
-              type: 'error'
-            })
-
-            return false
-          }
-
-          window.location.href = this.urlExportSelected
-        },
-        onCreate () {
-          this.dialogFormVisible = false
-          this.$router.push({name: 'root.create', params: { id: 0, whitelabel_id: this.form.id }})
-        },
         doShow (elements) {
           let filtered = elements.filter(function (el) {
             return el != null
@@ -169,9 +136,6 @@
         doPage () {
           this.$events.fire('page-set', this.value)
         },
-        doWhitelabel () {
-          this.$events.fire('whitelabel-set', this.whitelabel)
-        },
         doRange (e) {
           this.$events.fire('range-date-set', moment(e[0], moment.ISO_8601).startOf('day').format('YYYY-MM-DD HH:mm:ss'), moment(e[1], moment.ISO_8601).endOf('day').format('YYYY-MM-DD  HH:mm:ss'))
         },
@@ -185,7 +149,6 @@
         resetFilter () {
           this.filterText = ''
           this.created = ''
-          this.whitelabel = ''
           this.fields = config.fields
           this.$events.fire('filter-reset')
         },

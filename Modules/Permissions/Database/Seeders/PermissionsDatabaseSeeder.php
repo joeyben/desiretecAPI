@@ -4,6 +4,8 @@ namespace Modules\Permissions\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use PermissionRoleSeeder;
+use PermissionTableSeeder;
 
 class PermissionsDatabaseSeeder extends Seeder
 {
@@ -14,6 +16,7 @@ class PermissionsDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        $this->call(PermissionTableSeeder::class);
+        $this->call(PermissionRoleSeeder::class);
     }
 }

@@ -6,6 +6,6 @@ return [
     'permissions' => [
         'Edit Permission',
         'Delete Permission',
-        'Create Permission',
+        'Create Permission'
     ]
 ];

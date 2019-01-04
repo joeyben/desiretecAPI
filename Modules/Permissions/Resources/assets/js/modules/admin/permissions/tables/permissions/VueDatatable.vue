@@ -30,7 +30,7 @@ import CssConfig from './CssConfig.js'
     },
     data () {
       return {
-        apiUrl: window.laroute.route('admin.access.permission.view'),
+        apiUrl: window.laroute.route('admin.permission.view'),
         fields: config.fields,
         sortOrder: config.sortOrder,
         appendParams: config.moreParams,
@@ -50,8 +50,6 @@ import CssConfig from './CssConfig.js'
       this.$events.$on('filter-reset', e => this.onFilterReset())
       this.$events.$on('view-set', (action, data, index) => this.doView(action, data, index))
       this.$events.$on('delete-set', (id) => this.doDelete(id))
-      this.$events.$on('destroy-set', (id) => this.doDestroy(id))
-      this.$events.$on('restore-set', (id) => this.doRestore(id))
       this.$events.$on('range-date-set', (start, end) => this.doRangeDate(start, end))
       this.$events.$on('whitelabel-set', (id) => this.doWhitelabel(id))
     },
@@ -216,10 +214,10 @@ import CssConfig from './CssConfig.js'
         this.addChecked(data)
       },
       onLoading () {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
+        this.$store.dispatch('block', {element: 'permissionsComponent', load: true})
       },
       onLoaded () {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+        this.$store.dispatch('block', {element: 'permissionsComponent', load: false})
       },
       boardsCallBack (boards) {
         let data = []
@@ -253,61 +251,13 @@ import CssConfig from './CssConfig.js'
           })
         })
       },
-      doDestroy (id) {
-        this.$confirm(this.trans('messages.destroy'), 'Warning', {
-          confirmButtonText: this.trans('labels.ok'),
-          cancelButtonText: this.trans('labels.cancel'),
-          type: 'warning'
-        }).then(() => {
-          this.onForceDelete(id)
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: this.trans('messages.delete_canceled')
-          })
-        })
-      },
-      doRestore (id) {
-        this.$confirm(this.trans('messages.restore'), 'Warning', {
-          confirmButtonText: this.trans('labels.ok'),
-          cancelButtonText: this.trans('labels.cancel'),
-          type: 'warning'
-        }).then(() => {
-          this.onRestore(id)
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: this.trans('messages.restore_canceled')
-          })
-        })
-      },
       onDelete (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.delete(window.laroute.route('provider.groups.destroy', {id: id}))
+        this.$store.dispatch('block', {element: 'permissionsComponent', load: true})
+        this.$http.delete(window.laroute.route('admin.access.permission.destroy', {permission: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
-          })
-      },
-      onForceDelete (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        // eslint-disable-next-line
-        this.$http.delete(laroute.route('provider.groups.forceDelete', {id: id}))
-          .then(this.onDeleteSuccess)
-          .catch(this.onFailed)
-          .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
-          })
-      },
-      onRestore (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        // eslint-disable-next-line
-        this.$http.put(window.laroute.route('provider.groups.restore', {id: id}))
-          .then(this.onDeleteSuccess)
-          .catch(this.onFailed)
-          .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'permissionsComponent', load: false})
           })
       },
       onDeleteSuccess (response) {
