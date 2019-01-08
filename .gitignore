@@ -8,6 +8,7 @@ Homestead.json
 Homestead.yaml
 .env
 .DS_Store
+composer.lock
 Thumbs.db
 *.sublime-project
 *.sublime-workspace
@@ -30,7 +31,6 @@ public/js/themes
 public/vendor
 public/js/skins/*.js
 
-composer.lock
 public/img/backend/blog_images/*
 public/mix-manifest.json
 public/access.log

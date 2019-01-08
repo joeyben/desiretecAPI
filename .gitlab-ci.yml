@@ -1,0 +1,41 @@
+# This file is a template, and might need editing before it works on your project.
+# Official docker image.
+image: docker:latest
+
+services:
+  - docker:dind
+
+
+build-master:
+  stage: build
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker push "$CI_REGISTRY_IMAGE"
+  only:
+    - master
+
+build-stage:
+  stage: build
+  before_script:
+    - apk add --update py-pip
+    - pip install docker-compose
+  script:
+    - mkdir $DOCKER_CERT_PATH
+    - echo "$MACHINE_CA" > $DOCKER_CERT_PATH/ca.pem
+    - echo "$CLIENT_CERT" > $DOCKER_CERT_PATH/cert.pem
+    - echo "$CLIENT_KEY" > $DOCKER_CERT_PATH/key.pem
+    - echo "$STAGE_DOTENV" > .env
+    - docker-compose -f docker-compose.yml -f docker-compose.stage.yml build
+    - docker-compose -f docker-compose.yml -f docker-compose.stage.yml down
+    - docker-compose -f docker-compose.yml -f docker-compose.stage.yml up -d --force-recreate
+    - rm -rf $DOCKER_CERT_PATH
+  only:
+    - development
+  variables:
+    DOCKER_TLS_VERIFY: "1"
+    DOCKER_HOST: "tcp://3.120.111.163:2376"
+    DOCKER_CERT_PATH: "certs"
+    CLIENT_CERT: $CLIENT_DOCKER_CERT
+    MACHINE_CA: $DOCKER_MACHINE_CA
+    CLIENT_KEY: $CLIENT_DOCKER_CERT_KEY
+    STAGE_DOTENV: $STAGE_ENV
