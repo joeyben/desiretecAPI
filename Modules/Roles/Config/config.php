@@ -1,5 +1,12 @@
 <?php
 
 return [
-    'name' => 'Roles'
+    'name' => 'Roles',
+
+    'permissions' => [
+        'View Role Management',
+        'Edit Role',
+        'Delete Role',
+        'Create Role'
+    ]
 ];

@@ -31,7 +31,7 @@
         return this.rowData.deleted_at !== null
       },
       can_edit () {
-        return !this.deleted && this.hasPermissionTo('update-wish')
+        return !this.deleted && this.hasPermissionTo('edit-role')
       },
       editUrl () {
         return window.laroute.route('admin.access.role.edit', {role: this.rowData.id})

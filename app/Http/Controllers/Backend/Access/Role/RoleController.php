@@ -16,6 +16,8 @@ use App\Http\Responses\ViewResponse;
 use App\Models\Access\Role\Role;
 use App\Repositories\Backend\Access\Permission\PermissionRepository;
 use App\Repositories\Backend\Access\Role\RoleRepository;
+use App\Services\Flag\Src\Flag;
+use Illuminate\Support\Facades\Response;
 
 /**
  * Class RoleController.
@@ -49,7 +51,7 @@ class RoleController extends Controller
      */
     public function index(ManageRoleRequest $request)
     {
-        return new ViewResponse('backend.access.roles.index');
+        return new ViewResponse('roles::index');
     }
 
     /**
@@ -98,16 +100,28 @@ class RoleController extends Controller
         return new RedirectResponse(route('admin.access.role.index'), ['flash_success' => trans('alerts.backend.roles.updated')]);
     }
 
+
     /**
      * @param \App\Models\Access\Role\Role                             $role
      * @param \App\Http\Requests\Backend\Access\Role\DeleteRoleRequest $request
      *
-     * @return \App\Http\Responses\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\GeneralException
      */
     public function destroy(Role $role, DeleteRoleRequest $request)
     {
-        $this->roles->delete($role);
+        try {
+            $this->roles->delete($role);
 
-        return new RedirectResponse(route('admin.access.role.index'), ['flash_success' => trans('alerts.backend.roles.deleted')]);
+            $result['message'] = trans('alerts.backend.roles.deleted');
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return Response::json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 }

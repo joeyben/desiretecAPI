@@ -33,7 +33,7 @@
         return window.laroute.route('admin.access.role.destroy', {role: this.rowData.id})
       },
       can_edit () {
-        return !this.deleted && this.hasPermissionTo('update-group')
+        return !this.deleted && this.hasPermissionTo('edit-role')
       },
       can_restore () {
         return this.deleted && this.hasRole('Administrator')
@@ -42,7 +42,7 @@
         return this.deleted && this.hasRole('Administrator')
       },
       can_delete () {
-        return !this.deleted && this.hasPermissionTo('delete-group')
+        return !this.deleted && this.hasPermissionTo('delete-role')
       },
       deleted: function () {
         return this.rowData.deleted_at !== null

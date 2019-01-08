@@ -18,6 +18,7 @@ import CssConfig from './CssConfig.js'
   Vue.component('custom-actions', config.actions)
   Vue.component('custom-link-by-id', config.customLinkById)
   Vue.component('custom-link-by-name', config.CustomLinkByName)
+  Vue.component('custom-status', config.CustomStatus)
   Vue.component('custom-permissions', config.CustomPermissions)
   Vue.component('custom-users', config.customUsers)
   toastr.options.progressBar = true
@@ -214,10 +215,10 @@ import CssConfig from './CssConfig.js'
         this.addChecked(data)
       },
       onLoading () {
-        this.$store.dispatch('block', {element: 'permissionsComponent', load: true})
+        this.$store.dispatch('block', {element: 'rolesComponent', load: true})
       },
       onLoaded () {
-        this.$store.dispatch('block', {element: 'permissionsComponent', load: false})
+        this.$store.dispatch('block', {element: 'rolesComponent', load: false})
       },
       boardsCallBack (boards) {
         let data = []
@@ -252,12 +253,12 @@ import CssConfig from './CssConfig.js'
         })
       },
       onDelete (id) {
-        this.$store.dispatch('block', {element: 'permissionsComponent', load: true})
-        this.$http.delete(window.laroute.route('admin.access.permission.destroy', {permission: id}))
+        this.$store.dispatch('block', {element: 'rolesComponent', load: true})
+        this.$http.delete(window.laroute.route('admin.access.role.destroy', {role: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'permissionsComponent', load: false})
+            this.$store.dispatch('block', {element: 'rolesComponent', load: false})
           })
       },
       onDeleteSuccess (response) {

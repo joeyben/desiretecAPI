@@ -256,12 +256,12 @@
                             @permission('view-user-management')
                             <li class="nav-item"><a href="{{ route('admin.access.user.index') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/access/user*')) }}">{{ trans('labels.backend.access.users.management') }}</a></li>
                             @endauth
-                            @permission('view-role-management')
+                            @if($module->has('Roles') && Auth::guard('web')->user()->hasPermission('view-role-management'))
                             <li class="nav-item"><a href="{{ route('admin.access.role.index') }}" class="nav-link">{{ trans('labels.backend.access.roles.management') }}</a></li>
-                            @endauth
-                            @permission('view-permission-management')
+                            @endif
+                            @if($module->has('Permissions') && Auth::guard('web')->user()->hasPermission('view-permission-management'))
                             <li class="nav-item"><a href="{{ route('admin.access.permission.index') }}" class="nav-link">{{ trans('labels.backend.access.permissions.management') }}</a></li>
-                            @endauth
+                            @endif
                         </ul>
                     </li>
                     @endauth
