@@ -10,6 +10,8 @@ use App\Models\Access\User\Traits\UserSendPasswordReset;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Nicolaslopezj\Searchable\SearchableTrait;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\Access\User\Traits\TokenAuthenticable;
 
@@ -22,7 +24,9 @@ class User extends Authenticatable implements JWTSubject
         UserAccess,
         Notifiable,
         SoftDeletes,
+        LogsActivity,
         UserAttribute,
+        SearchableTrait,
         UserRelationship,
         UserSendPasswordReset,
         TokenAuthenticable;
@@ -65,6 +69,36 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $dates = ['deleted_at'];
 
+    protected static $logAttributes = [
+        'first_name',
+        'last_name',
+        'email',
+    ];
+
+    protected static $logOnlyDirty = true;
+
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /*
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'users.id'                         => 10,
+            'users.first_name'                  => 10,
+            'users.last_name'                   => 10,
+            'users.email'                       => 10,
+        ]
+    ];
+
     /**
      * @param array $attributes
      */
@@ -72,6 +106,14 @@ class User extends Authenticatable implements JWTSubject
     {
         parent::__construct($attributes);
         $this->table = config('access.users_table');
+    }
+
+    /**
+     * Wishes belongsTo with User.
+     */
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     /**

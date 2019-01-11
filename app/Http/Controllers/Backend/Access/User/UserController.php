@@ -126,7 +126,7 @@ class UserController extends Controller
         $userWhitelabels = $user->whitelabels()->get()->pluck('id')->toArray();
         $userGroups = $user->groups()->get()->pluck('id')->toArray();
 
-        return view('backend.access.users.edit')->with([
+        return view('users::edit')->with([
             'user'            => $user,
             'userRoles'       => $user->roles->pluck('id')->all(),
             'roles'           => $this->roles->getAll(),
@@ -149,7 +149,7 @@ class UserController extends Controller
     {
         $this->users->update($user, $request);
 
-        return redirect()->route('admin.access.user.index')->withFlashSuccess(trans('alerts.backend.users.updated'));
+        return redirect()->route('admin.users')->with(['success' => trans('alerts.backend.users.updated')]);
     }
 
     /**
@@ -190,6 +190,10 @@ class UserController extends Controller
             foreach (config('roles.permissions', []) as $permission) {
                 $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
             }
+            foreach (config('users.permissions', []) as $permission) {
+                $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
+            }
+
             $result['user']['roles']['Administrator'] = $user->hasRole('Administrator');
             $result['user']['roles']['Executive'] = $user->hasRole('Executive');
             $result['success'] = true;
