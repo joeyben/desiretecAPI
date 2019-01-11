@@ -34479,6 +34479,10 @@ var _CustomStatus = __webpack_require__(400);
 
 var _CustomStatus2 = _interopRequireDefault(_CustomStatus);
 
+var _CustomConfirmed = __webpack_require__(414);
+
+var _CustomConfirmed2 = _interopRequireDefault(_CustomConfirmed);
+
 var _CustomRoles = __webpack_require__(403);
 
 var _CustomRoles2 = _interopRequireDefault(_CustomRoles);
@@ -34498,6 +34502,7 @@ exports.default = {
   actions: _Actions2.default,
   customLinkById: _CustomLinkById2.default,
   CustomLinkByName: _CustomLinkByName2.default,
+  CustomConfirmed: _CustomConfirmed2.default,
   CustomStatus: _CustomStatus2.default,
   CustomRoles: _CustomRoles2.default,
   customUsers: _CustomUsers2.default
@@ -84125,6 +84130,7 @@ _vue2.default.component('custom-actions', _config2.default.actions);
 _vue2.default.component('custom-link-by-id', _config2.default.customLinkById);
 _vue2.default.component('custom-link-by-name', _config2.default.CustomLinkByName);
 _vue2.default.component('custom-status', _config2.default.CustomStatus);
+_vue2.default.component('custom-confirmed', _config2.default.CustomConfirmed);
 _vue2.default.component('custom-roles', _config2.default.CustomRoles);
 _vue2.default.component('custom-users', _config2.default.customUsers);
 _toastr2.default.options.progressBar = true;
@@ -84372,7 +84378,7 @@ exports.default = {
       var _this10 = this;
 
       this.$store.dispatch('block', { element: 'usersComponent', load: true });
-      this.$http.delete(window.laroute.route('admin.access.role.destroy', { role: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+      this.$http.delete(window.laroute.route('admin.access.user.destroy', { user: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
         _this10.$store.dispatch('block', { element: 'usersComponent', load: false });
       });
     },
@@ -99472,9 +99478,14 @@ exports.default = [{
   sortField: 'email',
   visible: true
 }, {
-  name: '__component:custom-status',
+  name: '__component:custom-confirmed',
   title: window.Lang.get('tables.confirmed'),
   sortField: 'confirmed',
+  visible: true
+}, {
+  name: '__component:custom-status',
+  title: window.Lang.get('tables.status'),
+  sortField: 'status',
   visible: true
 }, {
   name: '__component:custom-roles',
@@ -99737,7 +99748,7 @@ exports = module.exports = __webpack_require__(51)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -99754,6 +99765,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
 //
 //
 //
@@ -99788,6 +99802,15 @@ exports.default = {
     editUrl: function editUrl() {
       return window.laroute.route('admin.access.user.edit', { user: this.rowData.id });
     },
+    loginAsUserUrl: function loginAsUserUrl() {
+      return window.laroute.route('admin.access.user.edit', { user: this.rowData.id });
+    },
+    deactivateUserUrl: function deactivateUserUrl() {
+      return window.laroute.route('admin.access.user.mark', { user: this.rowData.id, status: 0 });
+    },
+    activateUserUrl: function activateUserUrl() {
+      return window.laroute.route('admin.access.user.mark', { user: this.rowData.id, status: 1 });
+    },
     deleteUrl: function deleteUrl() {
       return window.laroute.route('admin.access.user.destroy', { user: this.rowData.id });
     },
@@ -99806,6 +99829,24 @@ exports.default = {
 
     deleted: function deleted() {
       return this.rowData.deleted_at !== null;
+    },
+    can_deactivate_user: function can_deactivate_user() {
+      return !this.deleted && this.hasPermissionTo('deactivate-user') && this.rowData.status;
+    },
+    can_activate_user: function can_activate_user() {
+      return !this.deleted && this.hasPermissionTo('activate-user') && !this.rowData.status;
+    },
+    can_login: function can_login() {
+      var index = -1;
+      if (this.rowData.hasOwnProperty('roles')) {
+        index = this.rowData.roles.findIndex(function (p) {
+          return p.name === 'Administrator';
+        });
+      }
+      return !this.deleted && this.hasPermissionTo('can-login-as-user') && index === -1;
+    },
+    name: function name() {
+      return this.user.hasOwnProperty('full_name') ? this.user.full_name : '';
     }
   }),
   methods: {
@@ -99867,6 +99908,56 @@ var render = function() {
             }
           },
           [_c("i", { staticClass: "icon-cancel-circle2" })]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.can_login
+      ? _c(
+          "a",
+          {
+            staticClass:
+              "btn btn-outline btn-sm bg-success text-success-800 btn-icon ml-2",
+            attrs: {
+              href: _vm.loginAsUserUrl,
+              "data-popup": "tooltip",
+              title: _vm.trans("buttons.backend.access.users.login_as", {
+                user: _vm.name
+              })
+            }
+          },
+          [_c("i", { staticClass: "icon-user-check" })]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.can_deactivate_user
+      ? _c(
+          "a",
+          {
+            staticClass:
+              "btn btn-outline btn-sm bg-slate text-slate-800 btn-icon ml-2",
+            attrs: {
+              href: _vm.deactivateUserUrl,
+              "data-popup": "tooltip",
+              title: _vm.trans("buttons.backend.access.users.deactivate")
+            }
+          },
+          [_c("i", { staticClass: "icon-lock4" })]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.can_activate_user
+      ? _c(
+          "a",
+          {
+            staticClass:
+              "btn btn-outline btn-sm bg-primary text-primary btn-icon ml-2",
+            attrs: {
+              href: _vm.activateUserUrl,
+              "data-popup": "tooltip",
+              title: _vm.trans("buttons.backend.access.users.activate")
+            }
+          },
+          [_c("i", { staticClass: "icon-unlocked" })]
         )
       : _vm._e()
   ])
@@ -100271,13 +100362,13 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("span", [
-    _vm.rowData.confirmed
+    _vm.rowData.status
       ? _c("span", [
           _c("i", { staticClass: "icon-checkmark-circle text-success" })
         ])
       : _vm._e(),
     _vm._v(" "),
-    !_vm.rowData.confirmed
+    !_vm.rowData.status
       ? _c("span", [
           _c("i", { staticClass: "icon-cancel-circle2 text-danger" })
         ])
@@ -100692,7 +100783,7 @@ exports.default = {
     user: 'currentUser'
   }), {
     createLink: function createLink() {
-      return window.laroute.route('admin.access.role.create');
+      return window.laroute.route('admin.access.user.create');
     },
     show: function show() {
       var results = [];
@@ -100764,7 +100855,7 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "dropdown-menu dropdown-menu-left" }, [
-        _vm.hasPermissionTo("create-role")
+        _vm.hasPermissionTo("create-user")
           ? _c(
               "a",
               { staticClass: "dropdown-item", attrs: { href: _vm.createLink } },
@@ -101016,6 +101107,121 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-91f5e1c6", module.exports)
+  }
+}
+
+/***/ }),
+/* 414 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(415)
+/* template */
+var __vue_template__ = __webpack_require__(416)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/admin/users/tables/users/CustomConfirmed.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-41247444", Component.options)
+  } else {
+    hotAPI.reload("data-v-41247444", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 415 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  name: 'CustomStatus',
+  props: {
+    rowData: {
+      type: Object,
+      required: true
+    },
+    rowIndex: {
+      type: Number
+    }
+  },
+  data: function data() {
+    return {};
+  },
+
+  methods: {}
+};
+
+/***/ }),
+/* 416 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", [
+    _vm.rowData.confirmed
+      ? _c("span", [
+          _c("i", { staticClass: "icon-checkmark-circle text-success" })
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.rowData.confirmed
+      ? _c("span", [
+          _c("i", { staticClass: "icon-cancel-circle2 text-danger" })
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-41247444", module.exports)
   }
 }
 

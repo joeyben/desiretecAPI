@@ -5,7 +5,7 @@
                 <i class="icon-gear"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-left">
-                <a :href="createLink" class="dropdown-item" v-if="hasPermissionTo('create-role')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>
+                <a :href="createLink" class="dropdown-item" v-if="hasPermissionTo('create-user')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>
             </div>
         </h5>
         <div class="header-elements">
@@ -102,7 +102,7 @@
           user: 'currentUser'
         }),
         createLink () {
-          return window.laroute.route('admin.access.role.create')
+          return window.laroute.route('admin.access.user.create')
         },
         show () {
           let results = []

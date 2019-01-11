@@ -75,7 +75,7 @@ class UsersController extends Controller
 
             $result['data'] = $this->users->withCriteria([
                 new OrderBy($sort[0], $sort[1]),
-                new WhereBetween('roles.created_at', $request->get('start'), $request->get('end')),
+                new WhereBetween('users.created_at', $request->get('start'), $request->get('end')),
                 new Filter($request->get('filter')),
                 new EagerLoad(['owner' => function ($query) {
                     $select = $this->auth->guard('web')->user()->hasRole('Administrator') ? 'CONCAT(first_name, " ", last_name, " ( ", email, " ) ") AS full_name' : 'CONCAT(first_name, " ", last_name) AS full_name';
@@ -87,7 +87,7 @@ class UsersController extends Controller
                     $whitelabels = Auth::guard('web')->user()->whitelabels()->get()->pluck('id')->all();
                     Auth::guard('web')->user()->hasRole('Administrator') ? $query->newQuery() : $query->whereIn('whitelabels.id', $whitelabels);
                 })
-            ])->paginate($perPage, ['id', 'first_name', 'last_name', 'email', 'confirmed', 'created_by', 'created_at', 'updated_at', 'deleted_at']);
+            ])->paginate($perPage, ['id', 'first_name', 'last_name', 'email', 'status', 'confirmed', 'created_by', 'created_at', 'updated_at', 'deleted_at']);
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;

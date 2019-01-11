@@ -5,6 +5,7 @@ import Actions from './Actions'
 import CustomLinkById from './CustomLinkById'
 import CustomLinkByName from './CustomLinkByName'
 import CustomStatus from './CustomStatus'
+import CustomConfirmed from './CustomConfirmed'
 import CustomRoles from './CustomRoles'
 import CustomUsers from './CustomUsers'
 export default {
@@ -16,6 +17,7 @@ export default {
   actions: Actions,
   customLinkById: CustomLinkById,
   CustomLinkByName: CustomLinkByName,
+  CustomConfirmed: CustomConfirmed,
   CustomStatus: CustomStatus,
   CustomRoles: CustomRoles,
   customUsers: CustomUsers

@@ -24,9 +24,15 @@ export default [
     visible: true
   },
   {
-    name: '__component:custom-status',
+    name: '__component:custom-confirmed',
     title: window.Lang.get('tables.confirmed'),
     sortField: 'confirmed',
+    visible: true
+  },
+  {
+    name: '__component:custom-status',
+    title: window.Lang.get('tables.status'),
+    sortField: 'status',
     visible: true
   },
   {

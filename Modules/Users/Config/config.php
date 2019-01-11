@@ -12,5 +12,8 @@ return [
         'Delete User',
         'Activate User',
         'Deactivate User',
+        'Login As User',
+        'Activate User',
+        'Deactivate User',
     ]
 ];

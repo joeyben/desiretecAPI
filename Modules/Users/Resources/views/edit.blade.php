@@ -109,11 +109,11 @@
                     </div>
                 @endif
                 <div class="form-group row">
-                    {{ Form::label('status', trans('validation.attributes.backend.access.users.associated_roles'), ['class' => 'col-lg-3 col-form-label']) }}
+                    {{ Form::label('associated_roles', trans('validation.attributes.backend.access.users.associated_roles'), ['class' => 'col-lg-3 col-form-label']) }}
                         <div class="col-lg-9">
                             @if (count($roles) > 0)
                                 @foreach($roles as $role)
-                                    @if (auth()->guard('web')->user()->hasRole('Administrator') && ($role->name !== 'Seller'))
+                                    @if (auth()->guard('web')->user()->hasRole('Administrator'))
                                     <div>
                                         <label for="role-{{$role->id}}" class="control" id="roles-list">
                                             <input type="radio" value="{{$role->id}}" name="assignees_roles[]" {{ is_array(old('assignees_roles')) ? (in_array($role->id, old('assignees_roles')) ? 'checked' : '') : (in_array($role->id, $userRoles) ? 'checked' : '') }} id="role-{{$role->id}}" class="get-role-for-permissions" data-name="{{ $role->name }}"/>  &nbsp;&nbsp;{!! $role->name !!}

@@ -19,6 +19,7 @@ import CssConfig from './CssConfig.js'
   Vue.component('custom-link-by-id', config.customLinkById)
   Vue.component('custom-link-by-name', config.CustomLinkByName)
   Vue.component('custom-status', config.CustomStatus)
+  Vue.component('custom-confirmed', config.CustomConfirmed)
   Vue.component('custom-roles', config.CustomRoles)
   Vue.component('custom-users', config.customUsers)
   toastr.options.progressBar = true
@@ -254,7 +255,7 @@ import CssConfig from './CssConfig.js'
       },
       onDelete (id) {
         this.$store.dispatch('block', {element: 'usersComponent', load: true})
-        this.$http.delete(window.laroute.route('admin.access.role.destroy', {role: id}))
+        this.$http.delete(window.laroute.route('admin.access.user.destroy', {user: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
