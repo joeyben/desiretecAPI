@@ -2,7 +2,6 @@
 
 namespace Modules\Wishes\Http\Controllers;
 
-use Auth;
 use App\Models\Groups\Group;
 use App\Repositories\Backend\Groups\GroupsRepository;
 use App\Repositories\Criteria\ByWhitelabel;
@@ -11,6 +10,7 @@ use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
+use Auth;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;

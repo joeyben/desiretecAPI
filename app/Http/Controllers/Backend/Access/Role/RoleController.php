@@ -100,13 +100,13 @@ class RoleController extends Controller
         return new RedirectResponse(route('admin.access.role.index'), ['flash_success' => trans('alerts.backend.roles.updated')]);
     }
 
-
     /**
      * @param \App\Models\Access\Role\Role                             $role
      * @param \App\Http\Requests\Backend\Access\Role\DeleteRoleRequest $request
      *
-     * @return \Illuminate\Http\JsonResponse
      * @throws \App\Exceptions\GeneralException
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Role $role, DeleteRoleRequest $request)
     {

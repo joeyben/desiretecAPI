@@ -83,9 +83,9 @@ class UserController extends Controller
     public function create(CreateUserRequest $request)
     {
         return view('users::create')->with([
-            'roles'       => $this->roles->getAll(),
-            'whitelabels' => $this->whitelabels->getAll(),
-            'permissions' => Permission::getSelectData('display_name'),
+            'roles'           => $this->roles->getAll(),
+            'whitelabels'     => $this->whitelabels->getAll(),
+            'permissions'     => Permission::getSelectData('display_name'),
             'userWhitelabels' => Auth::guard('web')->user()->whitelabels()->get()->pluck('id')->toArray(),
         ]);
     }
@@ -160,8 +160,9 @@ class UserController extends Controller
      * @param User              $user
      * @param DeleteUserRequest $request
      *
-     * @return
      * @throws \App\Exceptions\GeneralException
+     *
+     * @return
      */
     public function destroy(User $user, DeleteUserRequest $request)
     {
@@ -190,7 +191,7 @@ class UserController extends Controller
         try {
             $user = $this->users->find($this->auth->guard('web')->user()->id);
             $result['user']['id'] = $user->id;
-            $result['user']['full_name'] = $user->first_name .' '. $user->last_name;
+            $result['user']['full_name'] = $user->first_name . ' ' . $user->last_name;
             foreach (config('wishes.permissions', []) as $permission) {
                 $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
             }
@@ -209,8 +210,7 @@ class UserController extends Controller
             foreach (config('users.permissions', []) as $permission) {
                 $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
             }
-            $result['user']['permissions']['can-login-as-user'] =  access()->allow('login-as-user') && (!session()->has('admin_user_id') || !session()->has('temp_user_id'));
-
+            $result['user']['permissions']['can-login-as-user'] = access()->allow('login-as-user') && (!session()->has('admin_user_id') || !session()->has('temp_user_id'));
 
             $result['user']['roles']['Administrator'] = $user->hasRole('Administrator');
             $result['user']['roles']['Executive'] = $user->hasRole('Executive');

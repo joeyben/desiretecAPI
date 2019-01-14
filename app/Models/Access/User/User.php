@@ -5,6 +5,7 @@ namespace App\Models\Access\User;
 use App\Models\Access\User\Traits\Attribute\UserAttribute;
 use App\Models\Access\User\Traits\Relationship\UserRelationship;
 use App\Models\Access\User\Traits\Scope\UserScope;
+use App\Models\Access\User\Traits\TokenAuthenticable;
 use App\Models\Access\User\Traits\UserAccess;
 use App\Models\Access\User\Traits\UserSendPasswordReset;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,7 +14,6 @@ use Illuminate\Notifications\Notifiable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use App\Models\Access\User\Traits\TokenAuthenticable;
 
 /**
  * Class User.
@@ -77,7 +77,6 @@ class User extends Authenticatable implements JWTSubject
 
     protected static $logOnlyDirty = true;
 
-
     /**
      * Searchable rules.
      *
@@ -92,7 +91,7 @@ class User extends Authenticatable implements JWTSubject
          * @var array
          */
         'columns' => [
-            'users.id'                         => 10,
+            'users.id'                          => 10,
             'users.first_name'                  => 10,
             'users.last_name'                   => 10,
             'users.email'                       => 10,
@@ -113,7 +112,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function owner()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(self::class, 'created_by');
     }
 
     /**

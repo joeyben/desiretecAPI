@@ -33,7 +33,7 @@
         return window.laroute.route('admin.access.user.edit', {user: this.rowData.id})
       },
       loginAsUserUrl () {
-        return window.laroute.route('admin.access.user.edit', {user: this.rowData.id})
+        return window.laroute.route('admin.access.user.login-as', {user: this.rowData.id})
       },
       deactivateUserUrl () {
         return window.laroute.route('admin.access.user.mark', {user: this.rowData.id, status: 0})

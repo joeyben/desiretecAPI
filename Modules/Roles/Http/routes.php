@@ -4,4 +4,3 @@ Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsPermiss
     Route::get('roles', 'RolesController@index')->name('admin.roles');
     Route::get('roles/view', 'RolesController@view')->name('admin.roles.view');
 });
-

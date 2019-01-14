@@ -2,14 +2,13 @@
 
 namespace Modules\Wishes\Listeners;
 
+use App\Models\Access\User\Traits\TokenAuthenticable;
+use App\Models\Access\User\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Modules\Groups\Entities\Group;
 use Modules\Wishes\Entities\Wish;
 use Modules\Wishes\Notifications\CreatedWishNotification;
-use App\Models\Access\User\User;
-use App\Models\Access\User\Traits\TokenAuthenticable;
-use Illuminate\Http\Request;
 
 class WishesSubscriber
 {
@@ -41,12 +40,12 @@ class WishesSubscriber
     public function onCreatedWish(Wish $wish)
     {
         $user = User::where('id', $wish->created_by)->firstOrFail();
-      
+
         $usertoken = $user->storeToken();
-    
+
         $token = $usertoken->token->token;
         $wish['token'] = $token;
-        
+
         $users = Group::find($wish->group_id)->users()->get();
         Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));
         Notification::send($users, new CreatedWishNotification($wish));

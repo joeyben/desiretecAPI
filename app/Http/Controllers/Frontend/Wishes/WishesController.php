@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
+use App\Models\Access\User\User;
+use App\Models\Access\User\UserToken;
 use App\Models\Wishes\Wish;
 use App\Repositories\Frontend\Wishes\WishesRepository;
-use Torann\GeoIP\Facades\GeoIP;
-use App\Models\Access\User\UserToken;
-use App\Models\Access\User\User;
-use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Http\Request;
+use Torann\GeoIP\Facades\GeoIP;
 
 /**
  * Class WishesController.
@@ -222,17 +222,16 @@ class WishesController extends Controller
             ->with('flash_success', trans('alerts.frontend.wishes.deleted'));
     }
 
-    public function validateToken( Wish $wish ,$token)
+    public function validateToken(Wish $wish, $token)
     {
-
         $usertoken = UserToken::where('token', $token)->firstOrFail();
 
         $user_id = $usertoken->user_id;
-        
+
         $user = User::where('id', $user_id)->firstOrFail();
-    
+
         Auth::login($user);
 
-        return redirect()->to('/wish/'.$wish->id);
+        return redirect()->to('/wish/' . $wish->id);
     }
 }

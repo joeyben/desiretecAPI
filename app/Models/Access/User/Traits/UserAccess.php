@@ -123,16 +123,15 @@ trait UserAccess
 
             // Validate against the Permission table
             foreach ($role->permissions as $perm) {
-
                 // First check to see if it's an ID
                 if (is_numeric($nameOrId)) {
-                    if ($perm->id == $nameOrId) {
+                    if ($perm->id === $nameOrId) {
                         return true;
                     }
                 }
 
                 // Otherwise check by name
-                if ($perm->name == $nameOrId) {
+                if ($perm->name === $nameOrId) {
                     return true;
                 }
             }
