@@ -26,6 +26,11 @@ class CreateGroupsTable extends Migration
             $table->timestamps();
         });
 
+        Schema::table('wishes', function (Blueprint $table) {
+            $table->integer('group_id')->after('created_by')->nullable()->unsigned()->index();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+        });
+
         Schema::table('groups', function (Blueprint $table) {
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');

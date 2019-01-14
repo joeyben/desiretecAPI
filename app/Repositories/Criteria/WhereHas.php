@@ -3,6 +3,7 @@
 namespace App\Repositories\Criteria;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class WhereHas.
@@ -34,6 +35,6 @@ class WhereHas
      */
     public function apply($model): Builder
     {
-        return $model->whereHas($this->relation, $this->closure);
+        return Auth::guard('web')->user()->hasRole('Administrator') ? $model->newQuery() : $model->whereHas($this->relation, $this->closure);
     }
 }
