@@ -1,0 +1,16 @@
+{
+    "name": "Whitelabels",
+    "alias": "whitelabels",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Whitelabels\\Providers\\WhitelabelsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
