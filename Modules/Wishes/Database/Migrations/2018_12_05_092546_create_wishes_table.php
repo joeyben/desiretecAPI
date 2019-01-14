@@ -29,7 +29,6 @@ class CreateWishesTable extends Migration
             $table->boolean('status')->default(true);
             $table->enum('booking_status', ['open', 'booked', 'cancelled'])->default('open');
             $table->integer('created_by')->nullable()->unsigned()->index();
-            $table->integer('group_id')->nullable()->unsigned()->index();
             $table->integer('updated_by')->nullable()->unsigned()->index();
             $table->integer('whitelabel_id')->nullable()->unsigned();
             $table->softDeletes();
@@ -38,7 +37,6 @@ class CreateWishesTable extends Migration
 
         Schema::table('wishes', function (Blueprint $table) {
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('whitelabel_id')->references('id')->on('whitelabels')->onDelete('cascade');
         });

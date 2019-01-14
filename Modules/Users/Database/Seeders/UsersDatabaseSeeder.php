@@ -4,6 +4,7 @@ namespace Modules\Users\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use UserTableSeeder;
 
 class UsersDatabaseSeeder extends Seeder
 {
@@ -14,6 +15,6 @@ class UsersDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        $this->call(UserTableSeeder::class);
     }
 }
