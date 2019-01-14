@@ -35,7 +35,7 @@ class EditResponse implements Responsable
      */
     public function toResponse($request)
     {
-        return view('backend.access.roles.edit')
+        return view('roles::edit')
             ->withRole($this->role)
             ->withRolePermissions($this->role->permissions->pluck('id')->all())
             ->withPermissions($this->permissions->getAll());

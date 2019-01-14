@@ -1,14 +1,13 @@
-<?php 
+<?php
 
 namespace App\Models\Access\User\Traits;
 
-use Mail;
 use App\Mail\TokenLoginRequested;
 use App\Models\Access\User\UserToken;
+use Mail;
 
 trait TokenAuthenticable
 {
-
     public function storeToken()
     {
         $this->token()->delete();

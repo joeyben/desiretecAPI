@@ -80,4 +80,6 @@ return [
     'uninstall'                     => 'Uninstall',
     'migrate'                       => 'Migrate',
     'display_name'                  => 'Display Name',
+    'confirmed'                     => 'Confirmed',
+    'roles'                         => 'Roles',
 ];

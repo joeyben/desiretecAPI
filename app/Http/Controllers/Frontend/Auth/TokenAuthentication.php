@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Frontend\Auth;
 
 use App\Models\Access\User\User;
 use Illuminate\Http\Request;
 
-class TokenAuthentication 
+class TokenAuthentication
 {
     protected $request;
     protected $identifier = 'email';
@@ -18,7 +18,7 @@ class TokenAuthentication
     public function requestLink()
     {
         $user = $this->getUserByIdentifier($this->request->get($this->identifier));
-    
+
         $user->storeToken()->sendTokenLink([
             //'remember' => $this->request->has('remember'),
             'email'    => $user->email,
@@ -29,5 +29,4 @@ class TokenAuthentication
     {
         return User::where($this->identifier, $value)->firstOrFail();
     }
-
 }

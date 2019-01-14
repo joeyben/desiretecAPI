@@ -33,6 +33,7 @@ class StoreUserRequest extends Request
             'email'           => ['required', 'email', 'max:255', Rule::unique('users')],
             'password'        => 'required|min:6|confirmed',
             'assignees_roles' => 'required',
+            'whitelabels'     => 'required',
             'permissions'     => 'required',
         ];
     }

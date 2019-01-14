@@ -15,6 +15,8 @@ use App\Http\Responses\RedirectResponse;
 use App\Http\Responses\ViewResponse;
 use App\Models\Access\Permission\Permission;
 use App\Repositories\Backend\Access\Permission\PermissionRepository;
+use App\Services\Flag\Src\Flag;
+use Illuminate\Support\Facades\Response;
 
 /**
  * Class PermissionController.
@@ -41,7 +43,7 @@ class PermissionController extends Controller
      */
     public function index(ManagePermissionRequest $request)
     {
-        return new ViewResponse('backend.access.permissions.index');
+        return new ViewResponse('permissions::index');
     }
 
     /**
@@ -57,13 +59,15 @@ class PermissionController extends Controller
     /**
      * @param StorePermissionRequest $request
      *
+     * @throws \App\Exceptions\GeneralException
+     *
      * @return \App\Http\Responses\RedirectResponse
      */
     public function store(StorePermissionRequest $request)
     {
         $this->permissions->create($request->all());
 
-        return new RedirectResponse(route('admin.access.permission.index'), ['flash_success' => trans('alerts.backend.permissions.created')]);
+        return new RedirectResponse(route('admin.permission'), ['success' => trans('alerts.backend.permissions.created')]);
     }
 
     /**
@@ -81,25 +85,39 @@ class PermissionController extends Controller
      * @param Permission              $permission
      * @param UpdatePermissionRequest $request
      *
+     * @throws \App\Exceptions\GeneralException
+     *
      * @return \App\Http\Responses\RedirectResponse
      */
     public function update(Permission $permission, UpdatePermissionRequest $request)
     {
         $this->permissions->update($permission, $request->all());
 
-        return new RedirectResponse(route('admin.access.permission.index'), ['flash_success' => trans('alerts.backend.permissions.updated')]);
+        return new RedirectResponse(route('admin.access.permission.index'), ['success' => trans('alerts.backend.permissions.updated')]);
     }
 
     /**
      * @param Permission              $permission
      * @param DeletePermissionRequest $request
      *
-     * @return \App\Http\Responses\RedirectResponse
+     * @throws \App\Exceptions\GeneralException
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Permission $permission, DeletePermissionRequest $request)
     {
-        $this->permissions->delete($permission);
+        try {
+            $this->permissions->delete($permission);
 
-        return new RedirectResponse(route('admin.access.permission.index'), ['flash_success' => trans('alerts.backend.permissions.deleted')]);
+            $result['message'] = trans('alerts.backend.permissions.deleted');
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return Response::json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 }

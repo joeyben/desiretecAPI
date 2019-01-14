@@ -25,9 +25,9 @@ class UserToken extends Model
         return $query->where('created_at', '<', Carbon::now()->subSeconds(self::TOKEN_EXPIRY));
     }
 
-    public function belongsToEmail($email) 
+    public function belongsToEmail($email)
     {
-        return (bool) ($this->user->Where('email', $email)->count() === 1);
+        return (bool) (1 === $this->user->Where('email', $email)->count());
     }
 
     public function getRouteKeyName()

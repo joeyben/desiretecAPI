@@ -96,7 +96,7 @@ class RoleRepository extends BaseRepository
             //See if this role has all permissions and set the flag on the role
             $role->all = $all;
 
-            $role->status = (isset($input['status']) && 1 === $input['status']) ? 1 : 0;
+            $role->status = (isset($input['status']) && 1 === (int) $input['status']) ? 1 : 0;
             $role->created_by = access()->user()->id;
 
             if ($role->save()) {

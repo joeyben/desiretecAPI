@@ -44,3 +44,5 @@ public/error.log
 /Modules/Categories/node_modules/
 /Modules/Components/node_modules/
 /Modules/Permissions/node_modules/
+/Modules/Roles/node_modules/
+/Modules/Users/node_modules/

@@ -38,6 +38,5 @@ class TokenLoginRequested extends Mailable
     protected function buildLink()
     {
         return url('/login/token/' . $this->user->token->token . '?' . http_build_query($this->options));
-
     }
 }

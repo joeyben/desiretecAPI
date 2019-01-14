@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\Access\User\UserToken;
+use Illuminate\Console\Command;
 
 class ClearExpiredUserLoginTokens extends Command
 {
@@ -23,8 +23,6 @@ class ClearExpiredUserLoginTokens extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
