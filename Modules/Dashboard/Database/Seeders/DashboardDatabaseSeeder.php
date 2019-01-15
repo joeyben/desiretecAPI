@@ -159,7 +159,32 @@ class DashboardDatabaseSeeder extends Seeder
             'updated_at'      => DB::raw('now()')
         ]);
 
-        for ($i = 1; $i <= 12; ++$i) {
+        DB::table('dashboards')->insert([
+            'name'            => 'GA Datatable',
+            'x'               => 0,
+            'y'               => 0,
+            'w'               => 12,
+            'h'               => 5,
+            'i'               => 12,
+            'component'       => 'ga-datatable-component',
+            'created_at'      => DB::raw('now()'),
+            'updated_at'      => DB::raw('now()')
+        ]);
+
+        DB::table('dashboards')->insert([
+            'name'            => 'Backend Analytics',
+            'x'               => 0,
+            'y'               => 0,
+            'w'               => 12,
+            'h'               => 10,
+            'i'               => 13,
+            'component'       => 'backend-analytics-component',
+            'created_at'      => DB::raw('now()'),
+            'updated_at'      => DB::raw('now()')
+        ]);
+
+
+        for ($i = 1; $i <= 14; ++$i) {
             DB::table('dashboard_user')->insertGetId([
                 'user_id'              => 1,
                 'dashboard_id'         => $i,

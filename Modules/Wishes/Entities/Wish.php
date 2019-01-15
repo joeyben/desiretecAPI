@@ -3,6 +3,7 @@
 namespace Modules\Wishes\Entities;
 
 use App\Models\Groups\Group;
+use App\Models\Offers\Offer;
 use App\Models\Whitelabels\Whitelabel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -96,5 +97,13 @@ class Wish extends Model
     public function whitelabel()
     {
         return $this->belongsTo(Whitelabel::class);
+    }
+
+    /**
+     * Wishes hasMany Offers.
+     */
+    public function offers()
+    {
+        return $this->hasMany(Offer::class);
     }
 }

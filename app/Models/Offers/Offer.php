@@ -7,6 +7,7 @@ use App\Models\ModelTrait;
 use App\Models\Offers\Traits\Attribute\OfferAttribute;
 use App\Models\Offers\Traits\Relationship\OfferRelationship;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Wishes\Entities\Wish;
 
 class Offer extends BaseModel
 {
@@ -42,5 +43,13 @@ class Offer extends BaseModel
     {
         parent::__construct($attributes);
         $this->table = config('module.offers.table');
+    }
+
+    /**
+     * Offers belongsTo with Wish.
+     */
+    public function wish()
+    {
+        return $this->belongsTo(Wish::class);
     }
 }

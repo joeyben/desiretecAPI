@@ -4,7 +4,8 @@ import * as getters from './getters'
 const state = {
   post: {},
   users: [],
-  categories: []
+  categories: [],
+  whitelabels: {}
 }
 
 const mutations = {
@@ -16,6 +17,9 @@ const mutations = {
   },
   ADD_CATEGORIES (state, categories) {
     state.categories = categories
+  },
+  ADD_WHITELABELS (state, whitelabels) {
+    state.whitelabels = whitelabels
   },
   updatePost (state, obj) {
     if (obj.name.indexOf('.') > -1) {

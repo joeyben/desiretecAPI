@@ -61,6 +61,21 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
         return $this->all($columns);
     }
 
+    // $block = Block::with('regions.seats', 'seats')->where('id', $blockId)->get();
+
+    /**
+     * Alias of Get method with relation.
+     *
+     * @param array $relations
+     * @param array $columns
+     *
+     * @return mixed
+     */
+    public function getWithRelation(array $relations, $columns = ['*'])
+    {
+        return $this->model->with($relations)->get($columns);
+    }
+
     /**
      * @param mixed ...$criteria
      *
@@ -157,6 +172,20 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     public function findWhereNotIn($field, array $values, $columns = ['*'])
     {
         $model = $this->model->whereNotIn($field, $values)->get($columns);
+        $this->modelNotFoundException($model);
+
+        return $model;
+    }
+
+    /**
+     * @param string $clause
+     * @param array  $columns
+     *
+     * @return mixed
+     */
+    public function findWhereRaw(string $clause, $columns = ['*'])
+    {
+        $model = $this->model->whereRaw($clause)->get($columns);
         $this->modelNotFoundException($model);
 
         return $model;

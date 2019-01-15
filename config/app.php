@@ -186,6 +186,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Spatie\Analytics\AnalyticsServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -266,6 +267,7 @@ return [
         'JWTAuth'     => Tymon\JWTAuth\Facades\JWTAuth::class,
         'GeoIP'       => Torann\GeoIP\Facades\GeoIP::class,
         'Flag'        => \App\Services\Flag\Facades\Flag::class,
+        'Analytics'   => Spatie\Analytics\AnalyticsFacade::class
         //'Datatables' => Yajra\DataTables\Facades\DataTables::class
 
     ],

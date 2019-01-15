@@ -13,6 +13,19 @@ export const loadLoggedUser = function (store) {
   })
 }
 
+export const loadBackendAnalytics = function (store) {
+  api.loadBackendAnalytics(response => {
+    if (!response) {
+      console.log('error', response)
+      return
+    }
+
+    store.commit('BACKEND_ANALYTICS', response.data)
+  }, error => {
+    console.log('BACKEND_ANALYTICS not answer', error)
+  })
+}
+
 export const block = function (store, {element, load}) {
   if (load) {
     $('#' + element).find('div.table-responsive').block({
