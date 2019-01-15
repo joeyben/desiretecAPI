@@ -7,9 +7,3 @@ services:
         - VIRTUAL_HOST=mvp.desiretec.com
         - LETSENCRYPT_HOST=mvp.desiretec.com
         - LETSENCRYPT_EMAIL=info@desiretec.com
-      networks:
-        - reverseproxy_http_proxy
-
-networks:
-  reverseproxy_http_proxy:
-    external: true
