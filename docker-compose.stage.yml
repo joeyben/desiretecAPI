@@ -10,9 +10,19 @@ services:
         - VIRTUAL_PORT=8080
         - LETSENCRYPT_HOST=mvp.desiretec.com
         - LETSENCRYPT_EMAIL=info@desiretec.com
+      networks:
+        - frontend
+        - backend
+    mariadb:
+      networks:
+        - backend
+    redis:
+      networks:
+        - backend
 
 
 networks:
-  default:
+  frontend:
     external:
       name: reverseproxy_http_proxy
+  backend:
