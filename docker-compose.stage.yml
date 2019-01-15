@@ -8,4 +8,8 @@ services:
         - LETSENCRYPT_HOST=mvp.desiretec.com
         - LETSENCRYPT_EMAIL=info@desiretec.com
       networks:
-        - http_proxy
+        - reverseproxy_http_proxy
+
+networks:
+  reverseproxy_http_proxy:
+    external: true
