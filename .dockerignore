@@ -1,0 +1,6 @@
+.env
+.git
+.git*
+laradock/
+vendor/
+node_modules/
