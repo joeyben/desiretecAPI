@@ -58,3 +58,4 @@ class CreatedWishNotification extends Notification
     }
 
 }
+   

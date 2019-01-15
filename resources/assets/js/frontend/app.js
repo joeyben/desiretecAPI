@@ -17,6 +17,9 @@ Vue.use(require('vue-moment'));
 Vue.component('v-select', require('../../../../node_modules/vue-select/src/components/Select.vue'))
 Vue.component('pagination', require('../components/frontend/PaginationComponent.vue'));
 Vue.component('comment', require('../components/frontend/Comment.vue'));
+Vue.component('message', require('../components/frontend/Message.vue'));
+Vue.component('chat-messages', require('../components/frontend/ChatMessages.vue'));
+Vue.component('message-form', require('../components/frontend/MessageForm.vue'));
 
 const app = new Vue({
     el: '#app',
@@ -28,7 +31,21 @@ const app = new Vue({
             'current_page': 1
         },
         loading: true,
+        messages: '',
+        user_name: ''
 
+    },
+    mounted() {
+        this.fetchWishes();
+        // this.fetchMessages();
+
+        // Echo.private('chat')
+        //     .listen('MessageSentEvent',  (e) => {
+        //         this.messages.push({
+        //             message: e.message.message,
+        //             user: e.user
+        //         })
+        //     })
     },
 
     methods: {
@@ -50,10 +67,7 @@ const app = new Vue({
 
         formatPrice(value) {
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-        }
-    },
+        },
 
-    mounted() {
-        this.fetchWishes();
     }
 });

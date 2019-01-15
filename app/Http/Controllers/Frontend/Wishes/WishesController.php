@@ -14,6 +14,7 @@ use App\Models\Access\User\User;
 use Illuminate\Http\Request;
 use Auth;
 
+
 /**
  * Class WishesController.
  */
