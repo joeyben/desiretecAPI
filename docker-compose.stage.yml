@@ -10,3 +10,9 @@ services:
         - VIRTUAL_PORT=8080
         - LETSENCRYPT_HOST=mvp.desiretec.com
         - LETSENCRYPT_EMAIL=info@desiretec.com
+
+
+networks:
+  default:
+    external:
+      name: reverseproxy_http_proxy
