@@ -17,12 +17,6 @@ class WhitelabelsDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        DB::table('whitelabels')->insertGetId([
-            'name'             => '',
-            'display_name'    => '',
-            'status'       => '',
-            'created_at'        => DB::raw('now()'),
-            'updated_at'        => DB::raw('now()'),
-        ]);
+        $this->call(WhitelabelsTableSeeder::class);
     }
 }

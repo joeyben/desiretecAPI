@@ -6,6 +6,9 @@
     "active": 1,
     "order": 0,
     "providers": [
+        "Modules\\Whitelabels\\Providers\\AuthServiceProvider",
+        "Modules\\Whitelabels\\Providers\\EventServiceProvider",
+        "Modules\\Whitelabels\\Providers\\RepositoryServiceProvider",
         "Modules\\Whitelabels\\Providers\\WhitelabelsServiceProvider"
     ],
     "aliases": {},

@@ -28,7 +28,7 @@ class GroupsDatabaseSeeder extends Seeder
             }
         }
 
-        for ($i = 1; $i <= 10; ++$i) {
+        for ($i = 1; $i <= 100; ++$i) {
             $name = $faker->name;
 
             DB::table('groups')->insertGetId([
