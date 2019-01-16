@@ -18,7 +18,6 @@ class CreateWhitelabelsTable extends Migration
             $table->string('display_name', 191);
             $table->boolean('status')->default(true);
             $table->integer('created_by')->unsigned()->nullable();
-            $table->integer('distribution_id')->unsigned()->nullable();
             $table->string('bg_image', 191);
 
             $table->softDeletes();
@@ -27,8 +26,14 @@ class CreateWhitelabelsTable extends Migration
 
         Schema::table('whitelabels', function (Blueprint $table) {
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('distribution_id')->references('id')->on('distributions')->onDelete('cascade');
         });
+
+        if (Schema::hasTable('distributions')) {
+            Schema::table('whitelabels', function (Blueprint $table) {
+                $table->integer('distribution_id')->after('created_by')->nullable()->unsigned()->index();
+                $table->foreign('distribution_id')->references('id')->on('distributions')->onDelete('cascade');
+            });
+        }
     }
 
     /**

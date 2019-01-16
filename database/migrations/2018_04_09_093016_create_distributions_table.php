@@ -22,6 +22,13 @@ class CreateDistributionsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        if (Schema::hasTable('whitelabels') && !Schema::hasColumn('whitelabels', 'distribution_id')) {
+            Schema::table('whitelabels', function (Blueprint $table) {
+                $table->integer('distribution_id')->after('created_by')->nullable()->unsigned()->index();
+                $table->foreign('distribution_id')->references('id')->on('distributions')->onDelete('cascade');
+            });
+        }
     }
 
     /**
