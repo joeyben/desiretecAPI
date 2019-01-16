@@ -37,6 +37,14 @@ class Whitelabel extends Model
     /**
      * Wishes belongsTo with User.
      */
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    /**
+     * Wishes belongsTo with User.
+     */
     public function distribution()
     {
         return $this->belongsTo(Distribution::class);

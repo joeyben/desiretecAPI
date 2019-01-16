@@ -46,6 +46,7 @@
         "laravel-echo": "^1.4.0",
         "moment": "^2.22.1",
         "socket.io-client": "^2.1.1",
+        "vue-form-wizard": "^0.8.4",
         "vue-i18n": "^7.6.0"
     }
 }

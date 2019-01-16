@@ -2,11 +2,13 @@
 
 namespace Modules\Whitelabels\Http\Controllers;
 
+use App\Repositories\Backend\Distributions\DistributionsRepository;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WithTrashed;
+use App\Services\Flag\Src\Flag;
 use Carbon\Carbon;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -49,11 +51,16 @@ class WhitelabelsController extends Controller
      * @var \Maatwebsite\Excel\Excel
      */
     private $excel;
+    /**
+     * @var \App\Repositories\Backend\Distributions\DistributionsRepository
+     */
+    private $distributions;
 
     /**
      * WhitelabelsController constructor.
      *
      * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
+     * @param \App\Repositories\Backend\Distributions\DistributionsRepository   $distributions
      * @param \Illuminate\Routing\ResponseFactory                               $response
      * @param \Illuminate\Auth\AuthManager                                      $auth
      * @param \Illuminate\Translation\Translator                                $lang
@@ -61,7 +68,7 @@ class WhitelabelsController extends Controller
      * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
      * @param \Maatwebsite\Excel\Excel                                          $excel
      */
-    public function __construct(WhitelabelsRepository $whitelabels, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel)
+    public function __construct(WhitelabelsRepository $whitelabels, DistributionsRepository $distributions, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel)
     {
         $this->whitelabels = $whitelabels;
         $this->response = $response;
@@ -70,10 +77,12 @@ class WhitelabelsController extends Controller
         $this->carbon = $carbon;
         $this->activities = $activities;
         $this->excel = $excel;
+        $this->distributions = $distributions;
     }
 
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -134,16 +143,48 @@ class WhitelabelsController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
     {
-        return view('whitelabels::create');
+        try {
+            $result['whitelabel'] = [
+                'id'                               => 0,
+                'name'                             => '',
+                'display_name'                     => '',
+                'status'                           => true,
+                'distribution_id'                  => 1,
+                'owner'                            => $this->auth->guard('web')->user()->first_name . ' ' . $this->auth->guard('web')->user()->last_name,
+                'bg_image'                         => '',
+                'logs'                             => []
+            ];
+
+            $distributions = $this->distributions->getAll();
+
+            $result['whitelabel']['distributions'] = $distributions->map(function ($distribution) {
+                return [
+                    'id'   => $distribution->id,
+                    'name' => $distribution->display_name
+                ];
+            });
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -152,6 +193,7 @@ class WhitelabelsController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -161,6 +203,7 @@ class WhitelabelsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return Response
      */
     public function edit()
@@ -170,7 +213,9 @@ class WhitelabelsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function update(Request $request)
@@ -179,6 +224,7 @@ class WhitelabelsController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()

@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\InstallAppCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\Whitelabels\Console\WhitelabelMakeRouteCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,6 +17,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
     InstallAppCommand::class,
     Commands\ClearExpiredUserLoginTokens::class,
+    WhitelabelMakeRouteCommand::class,
     ];
 
     /**

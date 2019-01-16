@@ -58,7 +58,7 @@
         return {
           // eslint-disable-next-line
                 errors: new Errors(),
-          url: window.laroute.route('attachments.store'),
+          url: '#',
           deleteUrl: 'attachments.destroy',
           dialogImageUrl: '',
           dialogVisible: false,

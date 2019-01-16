@@ -2,8 +2,6 @@
 
 namespace Modules\Whitelabels\Listeners;
 
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Modules\Whitelabels\Entities\Whitelabel;
 
 class WhitelabelSubscriber

@@ -3,6 +3,7 @@ import * as getters from './getters'
 
 const state = {
   group: {},
+  whitelabel: {},
   users: {},
   checked: [],
   whitelabels: {}
@@ -22,11 +23,14 @@ const mutations = {
   ADD_GROUP (state, group) {
     state.group = group
   },
+  ADD_WHITELABEL (state, whitelabel) {
+    state.whitelabel = whitelabel
+  },
   ADD_WHITELABELS (state, whitelabels) {
     state.whitelabels = whitelabels
   },
-  updateGroup (state, obj) {
-    state.group[obj.name] = obj.value
+  updateWhitelabel (state, obj) {
+    state.whitelabel[obj.name] = obj.value
   }
 }
 

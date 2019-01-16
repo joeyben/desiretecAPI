@@ -1,29 +1,58 @@
 <template>
     <!-- Large modal -->
-    <div>
-        Create Whitelabel
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <div class="card-title">
+            </div>
+        </div>
+        <div class="card-body">
+            <form-wizard @on-complete="onComplete" :start-index="0" title="This is a new title" subtitle="And a new subtitle" color="#00695C">
+                <tab-content v-for="tab in tabs"
+                             v-if="!tab.hide"
+                             :key="tab.title"
+                             :title="tab.title"
+                             :before-change="beforeTabSwitch">
+                    <component :is="tab.component"></component>
+                </tab-content>
+                <tab-content title="Additional Info" :before-change="beforeTabSwitch">
+                    My second tab content
+                </tab-content>
+                <tab-content title="Last step">
+                    Yuhuuu! This seems pretty damn simple
+                </tab-content>
+            </form-wizard>
+        </div>
     </div>
     <!-- /large modal -->
 </template>
 <script>
   import Vuex from 'vuex'
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
+  import UploadAttachments from '../../../../../../../../../resources/assets/js/utils/UploadAttachments'
+  import {FormWizard, TabContent} from 'vue-form-wizard'
+  import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+
+  import WhitelabelGeneralInformationComponent from './WhitelabelGeneralInformationComponent'
   export default {
     name: 'CreateWhitelabelComponent',
-    components: { },
+    components: { FormWizard, TabContent, UploadAttachments, WhitelabelGeneralInformationComponent },
     data () {
       return {
         // eslint-disable-next-line
         errors: new Errors(),
-        close: false
+        tabs: [
+          {
+            title: 'Personal details',
+            beforeTabSwitch: 'beforeTabSwitch',
+            component: 'WhitelabelGeneralInformationComponent'
+          }
+        ]
       }
     },
     mounted () {
+      this.loadWhitelabel()
     },
     watch: {
-      '$route.params.id' () {
-        this.EditGroup(parseInt(this.$route.params.id))
-      }
     },
     computed: {
       ...Vuex.mapGetters({
@@ -32,7 +61,33 @@
     },
     methods: {
       ...Vuex.mapActions({
+        addWhitelabel: 'addWhitelabel'
       }),
+      loadWhitelabel () {
+        this.$store.dispatch('block', {element: 'whitelabelsComponent', load: true})
+        this.$http.get(window.laroute.route('admin.whitelabels.create'))
+          .then(this.onLoadWhitelabelSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'whitelabelsComponent', load: false})
+          })
+      },
+      onLoadWhitelabelSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.addWhitelabel(response.data.whitelabel)
+        } else {
+          this.$message({
+            type: 'error',
+            message: response.message
+          })
+        }
+      },
+      onComplete: function () {
+        alert('Yay. Done!')
+      },
+      beforeTabSwitch: function () {
+        return true
+      },
       hasPermissionTo (permission) {
         return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
       },

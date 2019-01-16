@@ -1,6 +1,10 @@
 import * as types from '../../../../vuex/mutation-types'
 import api from './api/api'
 
+export const addWhitelabel = function (store, whitelabel) {
+  store.commit(types.ADD_WHITELABEL, whitelabel)
+}
+
 export const addGroup = function (store, group) {
   store.commit(types.ADD_GROUP, group)
 }
