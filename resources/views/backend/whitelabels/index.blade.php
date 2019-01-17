@@ -25,6 +25,7 @@
                             <th>{{ trans('labels.backend.whitelabels.table.name') }}</th>
                             <th>{{ trans('labels.backend.whitelabels.table.distribution') }}</th>
                             <th>{{ trans('labels.backend.whitelabels.table.status') }}</th>
+                            <th>{{ trans('labels.backend.whitelabels.table.ga_view_id') }}</th>
                             <th>{{ trans('labels.backend.whitelabels.table.createdat') }}</th>
                             <th>{{ trans('labels.general.actions') }}</th>
                         </tr>
@@ -65,6 +66,7 @@
                     {data: 'name', name: '{{config('module.whitelabels.table')}}.name'},
                     {data: 'distribution', name: 'distribution', searchable: false, sortable: false},
                     {data: 'status', name: '{{config('module.whitelabels.table')}}.status'},
+                    {data: 'ga_view_id', name: '{{config('module.whitelabels.table')}}.ga_view_id'},
                     {data: 'created_at', name: '{{config('module.whitelabels.table')}}.created_at'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],

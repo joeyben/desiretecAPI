@@ -65,6 +65,14 @@
         @endif
     </div><!--form control-->
 
+    <div class="form-group">
+        {{ Form::label('ga_view_id', trans('validation.attributes.backend.whitelabels.ga_view_id'), ['class' => 'col-lg-2 control-label']) }}
+
+        <div class="col-lg-10">
+            {{ Form::text('ga_view_id', null, ['class' => 'form-control box-size', 'placeholder' => trans('validation.attributes.backend.whitelabels.ga_view_id')]) }}
+        </div><!--col-lg-10-->
+    </div><!--form control-->
+
 </div>
 
 @section("after-scripts")
