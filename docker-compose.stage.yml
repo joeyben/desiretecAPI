@@ -11,6 +11,9 @@ services:
         - frontend
         - backend
     mariadb:
+      environment:
+        - MYSQL_PASSWORD=${MARIADB_STAGE_PW}
+        - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PW}
       ports:
         - "127.0.0.1:3300:3306"
       networks:
