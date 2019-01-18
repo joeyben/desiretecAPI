@@ -31,13 +31,7 @@ class TokenLoginController extends Controller
 
     public function validateToken(Request $request, UserToken $token)
     {
-        $token->delete();
-
-        if( $token->isExpired()) {
-
-            return redirect('/login/token')->with('error', 'That login link has expired.');
-        }
-
+        
         if (!$token->belongsToEmail($request->email)) {
             
             return redirect('/login/token')->with('error', 'Invalid login link!');

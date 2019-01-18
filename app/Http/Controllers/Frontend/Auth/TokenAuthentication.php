@@ -20,7 +20,6 @@ class TokenAuthentication
         $user = $this->getUserByIdentifier($this->request->get($this->identifier));
     
         $user->storeToken()->sendTokenLink([
-            //'remember' => $this->request->has('remember'),
             'email'    => $user->email,
         ]);
     }
