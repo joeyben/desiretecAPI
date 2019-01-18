@@ -2,32 +2,37 @@
     <div>
         <ul class="chat">
             <li :id="message.id" class="left" v-for="message in messages" :key="message.id">
-                <span v-on:click="deleteMessage(message.id)" class="close_button">
-                    <i class="fa fa-times"></i>
-                </span>
-                <span v-on:click="editMessage(message.id, message.message)" class="edit_button">
-                    <i class="fa fa-pencil"></i>
-                </span>
-                
+              
+                    <div v-if="message.user_id == userid">
+                    <span v-on:click="showModal(message.id)" class="close_button">
+                        <i class="fa fa-times"></i>
+                    </span>
+                    <span v-on:click="editMessage(message.id, message.message)" class="edit_button">
+                        <i class="fa fa-pencil"></i>
+                    </span>
+
+                    <confirmation-modal v-on:confirm="updateMessages" :id="message.id"></confirmation-modal>
+                </div>
                 <div class="chat-body clearfix">
                     <span class="user">{{ message.first_name }}</span>
-                    <span class="date-created">{{ message.created_at }}</span>
-                
-                    <p>
-                        {{ message.message }}
-                    </p>
-                    
-                    
+                    <span class="date-created">{{ timestamp(message.created_at) }}</span>
+                    <p>{{ message.message }}</p>
                 </div>
+               <hr>
             </li>
+            
         </ul>
-        <message-form :username="this.user" :userid="userid" :wishid="wishid" :groupid="groupid"></message-form>
+        <message-form v-on:messaged="updateMessages" :username="this.user" :userid="userid" :wishid="wishid" :groupid="groupid"></message-form>
     </div>
 </template>
 
 <script>
 
   import MessageForm from './MessageForm.vue'
+  import ConfirmationModal from './ConfirmationModal.vue'
+  import moment from 'moment'
+
+Vue.prototype.moment = moment
 
   export default {
     data () {
@@ -53,14 +58,6 @@
             });
         },
 
-        deleteMessage(messageid) {
-            axios.get('/message/delete/'+messageid).then(resp => {
-                $('#'+messageid).remove();
-
-            });
-            
-        },
-
         editMessage(messageid, message) {
 
             $('#btn-input').val('');
@@ -71,6 +68,22 @@
             $('.button-hide').css('display','inline-block')
 
             $('html, body').animate({scrollTop: $('.input-group').offset().top - 80}, 1000);            
+        },
+
+        showModal(id) {
+            $('.hidden-popup-val').val(id)
+            $('.confirm-popup').show();
+            $('body').css('overflow', 'hidden');
+        },
+         
+        updateMessages () {
+            
+            this.fetchMessages();
+        },
+
+        timestamp(date) {
+            return moment(date).fromNow();
+
         }
 
     }

@@ -4,7 +4,8 @@
         <input id="edit-val" style="display: none;">
         <span class="input-group-btn">
             <button class="btn btn-primary btn-sm button-show" id="btn-chat" @click="sendMessage">
-                Send
+                <span>Send</span>
+                 <div class="loader"></div>
             </button>
             <button class="btn btn-primary btn-sm button-hide" id="btn-chat" @click="cancel">
                 Cancel
@@ -25,7 +26,7 @@
             }
         },
 
-        props: ['messages', 'userid', 'wishid', 'groupid', 'username'],
+        props: ['messages', 'userid', 'wishid', 'groupid', 'username', 'fetch'],
 
         methods: {
             sendMessage() {
@@ -35,17 +36,14 @@
                     group_id: this.groupid,
                     message: this.newMessage
                 }
+
+                $('.button-show span').css('display', 'none');
+                $('.loader').css('display', 'block');
                     
                 axios.post('/messages', data).then(response => {
-                    
-                    var d = new Date();
-                    var e = d.toUTCString();
-                    var date;
-                    date = e.split('GMT').slice(0, 4).join(' ');
-
-                    var html = '<li class="left"><span v-on:click="deleteMessage(message.id)" class="close_button" style="float: right;cursor: pointer;"><i class="fa fa-times"></i></span><span  class="edit_button" style="margin-right: 15px;float: right;cursor: pointer;"><i class="fa fa-pencil"></i></span><div class="chat-body clearfix"><span style="display: block;font-weight: 700;">'+this.username+'</span><span style="display: block;color: #ccc;font-size: 12px;">'+date+'</span><p>'+data.message+'</p></div></li>';
-                    jQuery('.chat').append(html)
-
+                    $('.loader').css('display','none');
+                    $('.button-show span').css('display', 'block');
+                    this.$emit('messaged', response.data.data);
 
                 });
 
@@ -55,8 +53,8 @@
             cancel() {
                 $('#btn-input').val('');
                 
-                $('.button-show').css('display','block')
-                $('.button-hide').css('display','none')
+                $('.button-show span').show();
+                $('.loader').hide();
             },
 
             updateMessage() {
@@ -102,5 +100,25 @@
     .button-hide:last-child {
         margin-left: 10px;
     }
+    .loader {
+        display:none;
+        border: 2px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 2px solid #3498db;
+        width: 18px;
+        height: 18px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+    }
 
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 </style>

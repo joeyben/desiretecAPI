@@ -57,7 +57,7 @@
     "jquery-ui-bundle": "^1.12.1-migrate",
     "js-cookie": "^2.2.0",
     "laravel-echo": "^1.5.2",
-    "moment": "^2.22.1",
+    "moment": "^2.23.0",
     "nestable2": "^1.5.0",
     "pluralize": "^7.0.0",
     "pusher-js": "^4.3.1",

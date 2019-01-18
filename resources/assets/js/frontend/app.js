@@ -20,6 +20,7 @@ Vue.component('comment', require('../components/frontend/Comment.vue'));
 Vue.component('message', require('../components/frontend/Message.vue'));
 Vue.component('chat-messages', require('../components/frontend/ChatMessages.vue'));
 Vue.component('message-form', require('../components/frontend/MessageForm.vue'));
+Vue.component('confirmation-modal', require('../components/frontend/ConfirmationModal.vue'));
 
 const app = new Vue({
     el: '#app',
@@ -37,15 +38,7 @@ const app = new Vue({
     },
     mounted() {
         this.fetchWishes();
-        // this.fetchMessages();
-
-        // Echo.private('chat')
-        //     .listen('MessageSentEvent',  (e) => {
-        //         this.messages.push({
-        //             message: e.message.message,
-        //             user: e.user
-        //         })
-        //     })
+        
     },
 
     methods: {
