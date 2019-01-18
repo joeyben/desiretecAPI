@@ -11,6 +11,8 @@ services:
         - frontend
         - backend
     mariadb:
+      ports:
+        - "127.0.0.1:3300:3306"
       networks:
         - backend
     redis:
