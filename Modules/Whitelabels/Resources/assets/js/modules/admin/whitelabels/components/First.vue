@@ -1,15 +1,7 @@
 <template>
-    <!-- Large modal -->
     <div class="card-body">
         <form action="#" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)" id="myForm">
             <fieldset>
-                <legend class="font-weight-semibold text-uppercase font-size-sm">
-                    <i class="icon-check mr-2"></i>
-                    General Information
-                    <a class="float-right text-default" data-toggle="collapse" data-target="#demo1">
-                        <i class="icon-circle-down2"></i>
-                    </a>
-                </legend>
                 <div class="collapse show" id="demo1">
                     <div class="form-group row" v-if="whitelabel.id !== 0">
                         <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.id') }}</label>
@@ -87,31 +79,29 @@
             </fieldset>
         </form>
     </div>
-    <!-- /large modal -->
 </template>
 <script>
   import Vuex from 'vuex'
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   import UploadAttachments from '../../../../../../../../../resources/assets/js/utils/UploadAttachments'
-
   export default {
-    name: 'WhitelabelGeneralInformationComponent',
+    name: 'First',
     components: { UploadAttachments },
     data () {
       return {
         // eslint-disable-next-line
         errors: new Errors(),
-        tabs: [{title: 'Personal details', icon: 'ti-user', component: 'WhitelabelGeneralInformationComponent'}
-        ]
       }
     },
     mounted () {
+      this.$events.$on('on-submit-first', () => this.onSubmit())
+      this.$events.$on('handle-success-file', response => this.handleSuccessFile(response))
+      this.$events.$on('handle-remove-file', response => this.handleRemoveFile(response))
     },
     watch: {
     },
     computed: {
       ...Vuex.mapGetters({
-        user: 'currentUser',
         whitelabel: 'whitelabel'
       })
     },
@@ -119,6 +109,27 @@
       ...Vuex.mapActions({
         addWhitelabel: 'addWhitelabel'
       }),
+      onSubmit () {
+        this.$store.dispatch('block', {element: 'whitelabelsComponent', load: true})
+        this.$http.put(window.laroute.route('admin.whitelabels.store'), this.whitelabel)
+          .then(this.onSubmitSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'whitelabelsComponent', load: false})
+          })
+      },
+      onSubmitSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.$parent.$parent.$data.isValid = true
+          this.$store.commit('updateWhitelabel', {name: 'id', value: response.data.whitelabel.id})
+          this.$store.commit('updateWhitelabel', {name: 'state', value: response.data.whitelabel.state})
+        } else {
+          this.$message({
+            type: 'error',
+            message: response.message
+          })
+        }
+      },
       handleSuccessFile (response) {
         if (response !== undefined) {
           this.$store.commit('addWhitelabelFile', response)
@@ -132,29 +143,6 @@
       handleFileUploadBg () {
         this.$store.commit('updateWhitelabel', {name: 'bg_image', value: this.$refs.bg_image.files[0]})
       },
-      onSubmit () {
-        this.$store.dispatch('block', {element: 'whitelabelsComponent', load: true})
-        this.$http.put(window.laroute.route('admin.whitelabels.store'), this.whitelabel)
-          .then(this.onSubmitSuccess)
-          .catch(this.onFailed)
-          .then(() => {
-            this.$store.dispatch('block', {element: 'whitelabelsComponent', load: false})
-          })
-      },
-      onSubmitSuccess (response) {
-        if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          if (this.$route.name === 'root.edit') {
-            this.$parent.$parent.$parent.$data.isValid = true
-          } else {
-            this.$router.push({name: 'root.edit', params: {id: response.data.whitelabel.id}})
-          }
-        } else {
-          this.$message({
-            type: 'error',
-            message: response.message
-          })
-        }
-      },
       updateStatus (value) {
         this.$store.commit('updateWhitelabel', {name: 'status', value: value})
       },
@@ -165,10 +153,6 @@
         if (e.target.value !== null) {
           this.$store.commit('updateWhitelabel', {name: e.target.name, value: e.target.value})
         }
-      },
-      beforeTabSwitch: function () {
-        alert('This is called before switchind tabs')
-        return true
       },
       onFailed (error) {
         if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {

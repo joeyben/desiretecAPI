@@ -31,6 +31,13 @@ const mutations = {
   },
   updateWhitelabel (state, obj) {
     state.whitelabel[obj.name] = obj.value
+  },
+  addWhitelabelFile (state, obj) {
+    state.whitelabel[obj.name].push({name: obj.id, status: 'success', uid: obj.id, url: obj.url})
+  },
+  removeWhitelabelFile (state, obj) {
+    let index = state.whitelabel[obj.name].findIndex((c) => c.uid === obj.id)
+    state.whitelabel[obj.name].splice(index, 1)
   }
 }
 

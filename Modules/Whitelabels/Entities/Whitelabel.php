@@ -13,11 +13,16 @@ class Whitelabel extends Model
 {
     use SoftDeletes, SearchableTrait, LogsActivity;
 
-    protected $fillable = ['name', 'display_name'];
+    protected $fillable = ['name', 'display_name', 'status', 'created_by', 'distribution_id', 'bg_image', 'logo_image', 'state'];
 
     protected static $logAttributes = [
         'name',
-        'display_name'
+        'display_name',
+        'status',
+        'created_by',
+        'distribution_id',
+        'bg_image',
+        'state',
     ];
 
     protected static $logOnlyDirty = true;
@@ -32,14 +37,6 @@ class Whitelabel extends Model
     public function owner()
     {
         return $this->belongsTo(User::class, 'created_by');
-    }
-
-    /**
-     * Wishes belongsTo with User.
-     */
-    public function state()
-    {
-        return $this->belongsTo(State::class);
     }
 
     /**

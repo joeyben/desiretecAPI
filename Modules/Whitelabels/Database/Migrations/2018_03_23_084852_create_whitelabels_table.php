@@ -19,6 +19,8 @@ class CreateWhitelabelsTable extends Migration
             $table->boolean('status')->default(true);
             $table->integer('created_by')->unsigned()->nullable();
             $table->string('bg_image', 191);
+            $table->string('logo_image', 191);
+            $table->smallInteger('state')->default(0);
 
             $table->softDeletes();
             $table->timestamps();

@@ -57,8 +57,8 @@
       data () {
         return {
           // eslint-disable-next-line
-                errors: new Errors(),
-          url: '#',
+          errors: new Errors(),
+          url: window.laroute.route('admin.whitelabels.uploadFile'),
           deleteUrl: 'attachments.destroy',
           dialogImageUrl: '',
           dialogVisible: false,

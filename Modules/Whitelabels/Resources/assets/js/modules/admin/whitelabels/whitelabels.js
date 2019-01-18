@@ -48,8 +48,22 @@ if ($whitelabelsComponent) {
     }, {
       path: '/create',
       name: 'root.create',
-      component: require('./components/CreateWhitelabelComponent.vue')
-    }]
+      component: require('./components/CreateWhitelabelComponent.vue'),
+      children: [{
+        path: '/first',
+        name: 'create.first',
+        component: require('./components/First.vue')
+      }, {
+        path: '/second',
+        name: 'create.second',
+        component: require('./components/Second.vue')
+      }, {
+        path: '/third',
+        name: 'create.third',
+        component: require('./components/Third.vue')
+      }]
+    }
+    ]
   })
   new Vue({
     el: '#whitelabelsComponent',

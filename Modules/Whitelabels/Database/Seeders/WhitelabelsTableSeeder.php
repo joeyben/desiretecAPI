@@ -44,6 +44,8 @@ class WhitelabelsTableSeeder extends Seeder
             'created_by'            => 1,
             'distribution_id'       => 1,
             'bg_image'              => '#',
+            'logo_image'              => '#',
+            'state'                 => 3,
             'created_at'            => DB::raw('now()'),
             'updated_at'            => DB::raw('now()'),
         ]);
@@ -55,6 +57,8 @@ class WhitelabelsTableSeeder extends Seeder
             'created_by'            => 1,
             'distribution_id'       => 2,
             'bg_image'              => '#',
+            'logo_image'              => '#',
+            'state'                 => 3,
             'created_at'            => DB::raw('now()'),
             'updated_at'            => DB::raw('now()'),
         ]);
@@ -66,6 +70,8 @@ class WhitelabelsTableSeeder extends Seeder
             'created_by'            => 1,
             'distribution_id'       => 1,
             'bg_image'              => '#',
+            'logo_image'              => '#',
+            'state'                 => 3,
             'created_at'            => DB::raw('now()'),
             'updated_at'            => DB::raw('now()'),
         ]);
@@ -77,6 +83,8 @@ class WhitelabelsTableSeeder extends Seeder
             'created_by'            => 1,
             'distribution_id'       => 1,
             'bg_image'              => '#',
+            'logo_image'              => '#',
+            'state'                 => 3,
             'created_at'            => DB::raw('now()'),
             'updated_at'            => DB::raw('now()'),
         ]);
@@ -88,6 +96,8 @@ class WhitelabelsTableSeeder extends Seeder
             'created_by'            => 1,
             'distribution_id'       => 1,
             'bg_image'              => '#',
+            'logo_image'              => '#',
+            'state'                 => 3,
             'created_at'            => DB::raw('now()'),
             'updated_at'            => DB::raw('now()'),
         ]);
@@ -99,6 +109,8 @@ class WhitelabelsTableSeeder extends Seeder
             'created_by'            => 1,
             'distribution_id'       => 1,
             'bg_image'              => '#',
+            'logo_image'              => '#',
+            'state'                 => 3,
             'created_at'            => DB::raw('now()'),
             'updated_at'            => DB::raw('now()'),
         ]);

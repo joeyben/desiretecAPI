@@ -6,20 +6,23 @@
             </div>
         </div>
         <div class="card-body">
-            <form-wizard @on-complete="onComplete" :start-index="0" title="This is a new title" subtitle="And a new subtitle" color="#00695C">
-                <tab-content v-for="tab in tabs"
-                             v-if="!tab.hide"
-                             :key="tab.title"
-                             :title="tab.title"
-                             :before-change="beforeTabSwitch">
-                    <component :is="tab.component"></component>
+            <form-wizard @on-complete="onComplete"
+                         shape="circle"
+                         color="#e74c3c">
+                <tab-content title="Personal details"
+                             route="/first"
+                             ref="first"
+                             :before-change="validateAsyncFirst">
                 </tab-content>
-                <tab-content title="Additional Info" :before-change="beforeTabSwitch">
-                    My second tab content
+                <tab-content title="Additional Info"
+                             route="/second">
                 </tab-content>
-                <tab-content title="Last step">
-                    Yuhuuu! This seems pretty damn simple
+                <tab-content title="Last step"
+                             route="/third">
                 </tab-content>
+                <transition name="fade" mode="out-in">
+                    <router-view></router-view>
+                </transition>
             </form-wizard>
         </div>
     </div>
@@ -27,26 +30,18 @@
 </template>
 <script>
   import Vuex from 'vuex'
-  import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
-  import UploadAttachments from '../../../../../../../../../resources/assets/js/utils/UploadAttachments'
-  import {FormWizard, TabContent} from 'vue-form-wizard'
-  import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
+import {FormWizard, TabContent} from 'vue-form-wizard'
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 
-  import WhitelabelGeneralInformationComponent from './WhitelabelGeneralInformationComponent'
   export default {
     name: 'CreateWhitelabelComponent',
-    components: { FormWizard, TabContent, UploadAttachments, WhitelabelGeneralInformationComponent },
+    components: { FormWizard, TabContent },
     data () {
       return {
         // eslint-disable-next-line
         errors: new Errors(),
-        tabs: [
-          {
-            title: 'Personal details',
-            beforeTabSwitch: 'beforeTabSwitch',
-            component: 'WhitelabelGeneralInformationComponent'
-          }
-        ]
+        isValid: false
       }
     },
     mounted () {
@@ -56,7 +51,7 @@
     },
     computed: {
       ...Vuex.mapGetters({
-        user: 'currentUser'
+        whitelabel: 'whitelabel'
       })
     },
     methods: {
@@ -85,14 +80,21 @@
       onComplete: function () {
         alert('Yay. Done!')
       },
+      validateAsyncFirst: function () {
+        this.$events.fire('on-submit-first')
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (!this.isValid) {
+              reject(new Error('something bad happened'))
+            } else {
+              this.isValid = false
+              resolve(true)
+            }
+          }, 1000)
+        })
+      },
       beforeTabSwitch: function () {
         return true
-      },
-      hasPermissionTo (permission) {
-        return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
-      },
-      hasRole (permission) {
-        return this.user.hasOwnProperty('roles') && this.user.roles[permission]
       },
       onFailed (error) {
         if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
