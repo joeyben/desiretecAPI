@@ -86,4 +86,12 @@ trait WishRelationship
     {
         return $this->hasMany(Offer::class)->count();
     }
+
+    /**
+     * Wishes HasMany  Messages.
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 }

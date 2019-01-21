@@ -3,7 +3,7 @@
         <a class="pagination-previous arrow" @click.prevent="changePage(1)" :class="pagination.current_page <= 1 ? 'disabled' : ''"><i class="arrow_carrot-2left"></i></a>
         <a class="pagination-previous arrow" @click.prevent="changePage(pagination.current_page - 1)" :class="pagination.current_page <= 1 ? 'disabled' : ''"><i class="arrow_carrot-left"></i></a>
         <ul class="pagination-list">
-            <li v-for="page in pages">
+            <li v-for="page in pages" :key="page.id">
                 <a class="pagination-link" :class="isCurrentPage(page) ? 'is-current' : ''" @click.prevent="changePage(page)">{{ page }}</a>
             </li>
         </ul>
