@@ -28,6 +28,8 @@ RUN npm install && npm run production
 
 FROM horrorhorst/laravel-base:latest
 
+RUN docker-php-ext-install zip
+
 COPY . /var/www/html
 COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 COPY --from=frontend /public/js/ /var/www/html/public/js/
