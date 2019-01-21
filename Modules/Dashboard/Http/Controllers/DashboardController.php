@@ -191,38 +191,38 @@ class DashboardController extends Controller
     public function googleAnalytics(Request $request)
     {
         try {
-            $whitelabel_id = $request->get('whitelabel');
+            $whitelabelId = $request->get('whitelabel');
 
-            $ga_view_id = null;
+            $gaViewId = null;
             // TODO: add to db - whitelabels
-            switch ($whitelabel_id) {
+            switch ($whitelabelId) {
                 case 1:
-                    $ga_view_id = '159641355';
+                    $gaViewId = '159641355';
                     break;
                 case 2:
-                    $ga_view_id = '163819320';
+                    $gaViewId = '163819320';
                     break;
                 case 3:
-                    $ga_view_id = '162076862';
+                    $gaViewId = '162076862';
                     break;
                 case 4:
-                    $ga_view_id = '';
+                    $gaViewId = '';
                     break;
                 case 5:
-                    $ga_view_id = '';
+                    $gaViewId = '';
                     break;
                 case 15:
-                    $ga_view_id = '185523513';
+                    $gaViewId = '185523513';
                     break;
             }
 
-            if ($ga_view_id != '') {
+            if ($gaViewId != '') {
                 $optParams = array(
                     'dimensions' => 'rt:eventLabel, rt:eventCategory, rt:eventAction'
                 );
 
                 $result['ga'] = \Analytics::getAnalyticsService()->data_realtime->get(
-                    'ga:' . $ga_view_id,
+                    'ga:' . $gaViewId,
                     'rt:totalEvents',
                     $optParams
                 );
@@ -265,15 +265,15 @@ class DashboardController extends Controller
         try {
             $date = new \DateTime();
             $date->modify('-48 hours');
-            $formatted_date = $date->format('Y-m-d H:i:s');
+            $formattedDate = $date->format('Y-m-d H:i:s');
 
             $wishes = $this->wishes->all()->count();
-            $changed_wishes = $this->wishes->findWhereRaw('created_at != updated_at')->count();
-            $free_text = $this->wishes->findWhereRaw('description != ""')->count();
-            $answered_wishes = $this->offers->getCount();
-            $reaction_quota = $answered_wishes / $wishes * 100;
-            $latest_answered_wishes = $this->offers->findWhere('created_at', '>', $formatted_date)->count();
-            $latest_reaction_quota = $latest_answered_wishes / $wishes * 100;
+            $changedWishes = $this->wishes->findWhereRaw('created_at != updated_at')->count();
+            $freeText = $this->wishes->findWhereRaw('description != ""')->count();
+            $answeredWishes = $this->offers->getCount();
+            $reactionQuota = $answeredWishes / $wishes * 100;
+            $latestAnsweredWishes = $this->offers->findWhere('created_at', '>', $formattedDate)->count();
+            $latestReactionQuota = $latestAnsweredWishes / $wishes * 100;
             $bookings = $this->wishes->findWhereRaw('booking_status = "booked"')->count();
 
             $wishesWithOffers = $this->wishes->getWithRelation(['offers']);
@@ -292,12 +292,12 @@ class DashboardController extends Controller
 
             $data = [
                 'created_wishes' => $wishes,
-                'changed_wishes' => $changed_wishes,
-                'free_text' => $free_text,
-                'answered_wishes' => $answered_wishes,
-                'reaction_quota' => $reaction_quota . '%',
-                'latest_answered_wishes' => $latest_answered_wishes,
-                'latest_reaction_quota' => $latest_reaction_quota . '%',
+                'changed_wishes' => $changedWishes,
+                'free_text' => $freeText,
+                'answered_wishes' => $answeredWishes,
+                'reaction_quota' => $reactionQuota . '%',
+                'latest_answered_wishes' => $latestAnsweredWishes,
+                'latest_reaction_quota' => $latestReactionQuota . '%',
                 'reaction_time' => $wishesWithReactionTime,
                 'bookings' => $bookings
             ];
