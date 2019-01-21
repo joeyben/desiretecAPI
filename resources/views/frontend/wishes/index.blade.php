@@ -79,6 +79,10 @@
                             <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>
                         @endif
                         <a type="button" class="btn btn-primary btn-main" :href="'/wish/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
+                        @if($logged_in_user->allow('create-offer'))
+                            <a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
+                        @endif
+
                     </div>
                 </div>
             </div>
