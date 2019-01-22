@@ -28,6 +28,8 @@ RUN npm install && npm run production
 
 FROM horrorhorst/laravel-base:latest
 
+RUN docker-php-ext-install zip
+
 COPY . /var/www/html
 COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 COPY --from=frontend /public/js/ /var/www/html/public/js/
@@ -40,6 +42,7 @@ RUN mv /var/www/html/docker/php/laravel.ini /usr/local/etc/php/conf.d
 RUN mv /var/www/html/docker/php/php.ini /usr/local/etc/php/php.ini
 RUN mv /var/www/html/docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 RUN a2enmod rewrite expires
+RUN echo "SetEnvIf x-forwarded-proto https HTTPS=on" >> /etc/apache2/conf-available/docker-php.conf
 RUN composer dump-autoload
 
 USER root

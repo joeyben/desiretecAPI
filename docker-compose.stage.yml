@@ -3,3 +3,30 @@ services:
     app:
       volumes:
         - /var/www/desiretec-mvp-stage/storage:/var/www/html/storage
+      environment:
+        - VIRTUAL_HOST=mvp.desiretec.com
+        - LETSENCRYPT_HOST=mvp.desiretec.com
+        - LETSENCRYPT_EMAIL=info@desiretec.com
+      networks:
+        - frontend
+        - backend
+    mariadb:
+      environment:
+        - MYSQL_USER=default
+        - MYSQL_PASSWORD=${DB_STAGE_PW}
+        - MYSQL_DATABASE=default
+        - MYSQL_ROOT_PASSWORD=${DB_ROOT_PW}
+      ports:
+        - "127.0.0.1:3300:3306"
+      networks:
+        - backend
+    redis:
+      networks:
+        - backend
+
+
+networks:
+  frontend:
+    external:
+      name: reverseproxy_http_proxy
+  backend:

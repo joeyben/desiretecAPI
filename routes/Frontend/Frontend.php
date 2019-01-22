@@ -91,6 +91,16 @@ Route::group(['domain' => 'localhost'], function () {
             Route::post('comment/store', 'CommentsController@store')->name('store');
 
         });
+
+        Route::group(['namespace' => 'Messages', 'as' => 'messages.'], function () {
+
+            Route::get('messages/{wish}/{group}', 'MessagesController@getMessages');
+            Route::post('messages', 'MessagesController@sendMessage');
+            Route::get('message/delete/{message}', 'MessagesController@deleteMessage');
+            Route::post('message/edit/{message}/{m}', 'MessagesController@editMessage');
+
+        });
+
     });
 
     /*
