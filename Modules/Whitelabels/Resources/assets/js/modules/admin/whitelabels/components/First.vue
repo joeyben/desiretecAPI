@@ -15,7 +15,7 @@
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.name') }} <span class="text-danger"> *</span></label>
                         <div class="col-lg-9">
-                            <input type="text" class="form-control" :class="errors.has('name') ? 'is-invalid': ''" id='name' name='name' :placeholder="trans('modals.name')" @input="updateWhitelabel"  :value="whitelabel.name"/>
+                            <input type="text" class="form-control" :class="errors.has('name') ? 'is-invalid': ''" :disabled="whitelabel.id > 0" :readonly="whitelabel.id > 0" id='name' name='name' :placeholder="trans('modals.name')" @input="updateWhitelabel"  :value="whitelabel.name"/>
                             <div class="invalid-feedback">
                                 <strong v-text="errors.get('name')"></strong>
                             </div>
@@ -110,18 +110,29 @@
         addWhitelabel: 'addWhitelabel'
       }),
       onSubmit () {
-        this.$store.dispatch('block', {element: 'whitelabelsComponent', load: true})
-        this.$http.put(window.laroute.route('admin.whitelabels.store'), this.whitelabel)
-          .then(this.onSubmitSuccess)
-          .catch(this.onFailed)
-          .then(() => {
-            this.$store.dispatch('block', {element: 'whitelabelsComponent', load: false})
-          })
+        if (this.whitelabel.id > 0) {
+          this.$store.dispatch('block', {element: 'whitelabelsComponent', load: true})
+          this.$http.put(window.laroute.route('admin.whitelabels.update', {id: this.whitelabel.id}), this.whitelabel)
+            .then(this.onSubmitSuccess)
+            .catch(this.onFailed)
+            .then(() => {
+              this.$store.dispatch('block', {element: 'whitelabelsComponent', load: false})
+            })
+        } else {
+          this.$store.dispatch('block', {element: 'whitelabelsComponent', load: true})
+          this.$http.put(window.laroute.route('admin.whitelabels.store'), this.whitelabel)
+            .then(this.onSubmitSuccess)
+            .catch(this.onFailed)
+            .then(() => {
+              this.$store.dispatch('block', {element: 'whitelabelsComponent', load: false})
+            })
+        }
       },
       onSubmitSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
           this.$parent.$parent.$data.isValid = true
           this.$store.commit('updateWhitelabel', {name: 'id', value: response.data.whitelabel.id})
+          this.$store.commit('updateWhitelabel', {name: 'name', value: response.data.whitelabel.name})
           this.$store.commit('updateWhitelabel', {name: 'state', value: response.data.whitelabel.state})
         } else {
           this.$message({
@@ -137,7 +148,7 @@
       },
       handleRemoveFile (response) {
         if (response !== undefined) {
-          this.$store.commit('removeWhitelabelFile', response.data.attachment.id)
+          this.$store.commit('removeWhitelabelFile', response.data)
         }
       },
       handleFileUploadBg () {

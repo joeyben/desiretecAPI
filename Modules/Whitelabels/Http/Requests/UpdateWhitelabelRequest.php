@@ -4,7 +4,7 @@ namespace Modules\Whitelabels\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreWhitelabelRequest extends FormRequest
+class UpdateWhitelabelRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,6 +14,7 @@ class StoreWhitelabelRequest extends FormRequest
     public function rules()
     {
         return [
+            'id'    => 'required|int|min:1',
             'name'    => 'required|string|min:2|max:255',
             'display_name'    => 'required|string|min:2|max:255',
             'distribution_id'    => 'required|int|min:1',

@@ -16,6 +16,7 @@ class CreateWhitelabelsTable extends Migration
             $table->increments('id');
             $table->string('name', 191)->unique();
             $table->string('display_name', 191);
+            $table->string('domain', 191)->nullable();
             $table->boolean('status')->default(true);
             $table->integer('created_by')->unsigned()->nullable();
             $table->string('bg_image', 191);

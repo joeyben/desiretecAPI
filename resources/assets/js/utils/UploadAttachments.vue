@@ -59,7 +59,7 @@
           // eslint-disable-next-line
           errors: new Errors(),
           url: window.laroute.route('admin.whitelabels.uploadFile'),
-          deleteUrl: 'attachments.destroy',
+          deleteUrl: 'admin.whitelabels.destroyFile',
           dialogImageUrl: '',
           dialogVisible: false,
           headers: {

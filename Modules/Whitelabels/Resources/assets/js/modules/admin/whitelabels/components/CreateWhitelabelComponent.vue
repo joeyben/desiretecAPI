@@ -15,7 +15,8 @@
                              :before-change="validateAsyncFirst">
                 </tab-content>
                 <tab-content title="Additional Info"
-                             route="/second">
+                             route="/second"
+                             :before-change="validateAsyncLSecond">
                 </tab-content>
                 <tab-content title="Last step"
                              route="/third">
@@ -41,6 +42,7 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css'
       return {
         // eslint-disable-next-line
         errors: new Errors(),
+        isValidSecond: false,
         isValid: false
       }
     },
@@ -88,6 +90,19 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css'
               reject(new Error('something bad happened'))
             } else {
               this.isValid = false
+              resolve(true)
+            }
+          }, 1000)
+        })
+      },
+      validateAsyncLSecond: function () {
+        this.$events.fire('on-submit-second')
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (!this.isValidSecond) {
+              reject(new Error('something bad happened'))
+            } else {
+              this.isValidSecond = false
               resolve(true)
             }
           }, 1000)

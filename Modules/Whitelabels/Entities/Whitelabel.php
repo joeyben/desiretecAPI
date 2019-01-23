@@ -13,7 +13,7 @@ class Whitelabel extends Model
 {
     use SoftDeletes, SearchableTrait, LogsActivity;
 
-    protected $fillable = ['name', 'display_name', 'status', 'created_by', 'distribution_id', 'bg_image', 'logo_image', 'state'];
+    protected $fillable = ['name', 'display_name', 'status', 'domain', 'created_by', 'distribution_id', 'bg_image', 'logo_image', 'state'];
 
     protected static $logAttributes = [
         'name',
