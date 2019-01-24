@@ -14,17 +14,15 @@ RUN composer install \
 
 FROM node:latest as frontend
 
-RUN mkdir -p /public
-COPY public/css /public/css
-COPY public/js /public/js
-COPY public/fonts /public/fonts
+RUN mkdir -p /myapp
+COPY public /myapp/
 
-COPY package.json webpack.mix.js yarn.lock /
-COPY resources/assets/ /resources/assets/
+COPY package-lock.json package.json webpack.mix.js webpack.config.js yarn.lock /myapp/
+COPY resources /myapp/
 
-WORKDIR /
+WORKDIR /myap
 
-RUN npm install && npm run production
+RUN cd /myapp && yarn install && npm run production
 
 FROM horrorhorst/laravel-base:latest
 
