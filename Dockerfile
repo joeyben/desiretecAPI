@@ -30,7 +30,7 @@ RUN docker-php-ext-install zip
 
 COPY . /var/www/html
 COPY --from=vendor /app/vendor/ /var/www/html/vendor/
-COPY --from=frontend /public /var/www/html/public
+COPY --from=frontend /myapp/public /var/www/html/public
 COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 RUN mv /var/www/html/docker/php/laravel.ini /usr/local/etc/php/conf.d
