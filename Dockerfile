@@ -15,10 +15,10 @@ RUN composer install \
 FROM node:latest as frontend
 
 RUN mkdir -p /myapp
-COPY public /myapp/
-
+COPY public /myapp/public
+COPY resources /myapp/resources
 COPY package-lock.json package.json webpack.mix.js webpack.config.js yarn.lock /myapp/
-COPY resources /myapp/
+
 
 WORKDIR /myap
 
