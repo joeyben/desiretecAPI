@@ -15,6 +15,7 @@ RUN composer install \
 FROM node:latest as frontend
 
 RUN mkdir -p /myapp
+COPY Modules /myapp/Modules
 COPY public /myapp/public
 COPY resources /myapp/resources
 COPY package-lock.json package.json webpack.mix.js webpack.config.js yarn.lock /myapp/
@@ -23,6 +24,7 @@ COPY package-lock.json package.json webpack.mix.js webpack.config.js yarn.lock /
 WORKDIR /myap
 
 RUN cd /myapp && yarn install && npm run production
+RUN cd /myapp/Modules/Tui && yarn install && npm run production
 
 FROM horrorhorst/laravel-base:latest
 
