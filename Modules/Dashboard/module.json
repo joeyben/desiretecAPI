@@ -11,7 +11,7 @@
         "Modules\\Dashboard\\Providers\\RepositoryServiceProvider",
         "Modules\\Dashboard\\Providers\\DashboardServiceProvider"
     ],
-    "aliases": {},
+    "aliases": [],
     "files": [
         "start.php"
     ],

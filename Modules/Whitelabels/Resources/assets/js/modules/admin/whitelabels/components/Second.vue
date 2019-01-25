@@ -74,6 +74,7 @@
           this.$parent.$parent.$data.isValidSecond = true
           this.$store.commit('updateWhitelabel', {name: 'id', value: response.data.whitelabel.id})
           this.$store.commit('updateWhitelabel', {name: 'domain', value: response.data.whitelabel.domain})
+          this.$store.commit('updateWhitelabel', {name: 'state', value: response.data.whitelabel.state})
         } else {
           this.$message({
             type: 'error',

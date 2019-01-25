@@ -23,6 +23,7 @@ use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Excel;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Whitelabels\Http\Requests\DomainWhitelabelRequest;
+use Modules\Whitelabels\Http\Requests\SaveWhitelabelRequest;
 use Modules\Whitelabels\Http\Requests\StoreWhitelabelAttachmentRequest;
 use Modules\Whitelabels\Http\Requests\StoreWhitelabelRequest;
 use Modules\Whitelabels\Http\Requests\UpdateWhitelabelRequest;
@@ -389,6 +390,39 @@ class WhitelabelsController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param \Modules\Whitelabels\Http\Requests\SaveWhitelabelRequest $request
+     *
+     * @param int                                                        $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function save(SaveWhitelabelRequest $request, int $id)
+    {
+        try {
+            $result['whitelabel'] = $this->whitelabels->update(
+                $id,
+                array_merge(
+                    $request->only('display_name', 'status', 'distribution_id'),
+                    ['state' => 1, 'bg_image' => $request->get('background')[0]['uid'], 'logo_image' => $request->get('logo')[0]['uid']]
+                )
+            );
+
+
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
      * @param \Modules\Whitelabels\Http\Requests\DomainWhitelabelRequest $request
      *
      * @param int                                                        $id
@@ -400,11 +434,11 @@ class WhitelabelsController extends Controller
         try {
             $result['whitelabel'] = $this->whitelabels->update(
                 $id,
-                ['domain' => str_slug($request->get('domain'))]
+                ['domain' => str_slug($request->get('domain')), 'state' => 2]
             );
 
             ini_set('max_execution_time', 300);
-            $this->artisan->call('whitelabel:make-route', ['domain' => $result['whitelabel']->domain, 'module' => $result['whitelabel']->name, '--force' => true]);
+            $this->artisan->call('whitelabel:make-route', ['domain' => $result['whitelabel']->domain, 'module' => $result['whitelabel']->name]);
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Domain']);
             $result['message'] .= $this->artisan->output();

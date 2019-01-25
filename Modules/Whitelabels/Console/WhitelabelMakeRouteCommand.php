@@ -40,54 +40,7 @@ class WhitelabelMakeRouteCommand extends Command
         $this->route($this->argument('domain'), $this->argument('module'));
     }
 
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return [
-            ['domain', InputArgument::REQUIRED, 'An domain argument is required.'],
-            ['module', InputArgument::REQUIRED, 'An module argument is required.'],
-        ];
-    }
 
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-        ];
-    }
 
-    private function route($domain, $module)
-    {
-        $template = str_replace(
-            [
-                '$DOMAIN$',
-                '$MODULE$',
-            ],
-            [
-                $domain,
-                $module
-            ],
-            $this->getStub()
-        );
 
-        if (!file_exists($path = base_path("Modules/{$module}/Http"))) {
-            throw new FileNotFoundException('Whitelabel not exists!');
-        }
-
-        file_put_contents("$path/routes.php", $template);
-        $this->info("Created : {$path}/routes.php");
-    }
-
-    private function getStub()
-    {
-        return file_get_contents(base_path('Modules/Whitelabels/Stubs/routes.stub'));
-    }
 }

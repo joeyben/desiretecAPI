@@ -15,7 +15,7 @@ class DomainWhitelabelRequest extends FormRequest
     {
         return [
             'id'    => 'required|int|min:1',
-            'domain'    => 'required|string|min:2|max:255',
+            'domain'    => 'required|string|min:2|max:255|unique:whitelabels,domain',
         ];
     }
 

@@ -1,0 +1,16 @@
+{
+    "name": "HolidayCheck",
+    "alias": "holidaycheck",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\HolidayCheck\\Providers\\HolidayCheckServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

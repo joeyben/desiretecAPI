@@ -40,11 +40,12 @@ if ($whitelabelsComponent) {
     routes: [{
       path: '/',
       name: 'root',
-      component: require('./components/WhitelabelsComponent.vue')
-    }, {
-      path: '/edit/:id(\\d+)',
-      name: 'root.edit',
-      component: require('./components/EditWhitelabelComponent.vue')
+      component: require('./components/WhitelabelsComponent.vue'),
+      children: [{
+        path: '/edit/:id(\\d+)',
+        name: 'root.edit',
+        component: require('./components/EditWhitelabelComponent.vue')
+      }]
     }, {
       path: '/create',
       name: 'root.create',

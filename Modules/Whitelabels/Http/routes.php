@@ -10,5 +10,6 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'provider', 
     Route::delete('whitelabels/destroyFile/{id}', 'WhitelabelsController@destroyFile')->name('admin.whitelabels.destroyFile');
     Route::get('whitelabels/{id}/edit', 'WhitelabelsController@edit')->name('admin.whitelabels.edit')->where('id', '[0-9]+');
     Route::put('whitelabels/{id}', 'WhitelabelsController@update')->name('admin.whitelabels.update')->where('id', '[0-9]+');
+    Route::put('whitelabels/save/{id}', 'WhitelabelsController@save')->name('admin.whitelabels.save')->where('id', '[0-9]+');
     Route::put('whitelabels/domain/{id}', 'WhitelabelsController@domain')->name('admin.whitelabels.domain')->where('id', '[0-9]+');
 });

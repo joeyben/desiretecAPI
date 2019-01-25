@@ -80,7 +80,15 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css'
         }
       },
       onComplete: function () {
-        alert('Yay. Done!')
+        this.$confirm(this.trans('messages.whitelabel_user') + ' ?', 'Warning', {
+          confirmButtonText: this.trans('labels.ok'),
+          cancelButtonText: this.trans('labels.cancel'),
+          type: 'warning'
+        }).then(() => {
+          window.location.href = window.laroute.route('admin.access.user.create')
+        }).catch(() => {
+          window.location.href = window.laroute.route('admin.whitelabels')
+        })
       },
       validateAsyncFirst: function () {
         this.$events.fire('on-submit-first')

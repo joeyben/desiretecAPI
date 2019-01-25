@@ -69,11 +69,17 @@
                     <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('validation.attributes.backend.whitelabels.image') }}</legend>
                     <div class="form-group row">
                         <upload-attachments :data="{name: 'background'}" :fileList="whitelabel.background" :limit="1" listType="picture-card"></upload-attachments>
+                        <div class="help-block text-danger" v-if="errors.has('background')">
+                            <strong v-text="errors.get('background')"></strong>
+                        </div>
                     </div>
 
                     <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> Logo </legend>
                     <div class="form-group row">
                         <upload-attachments :data="{name: 'logo'}" :fileList="whitelabel.logo" :limit="1" listType="picture-card"></upload-attachments>
+                        <div class="help-block text-danger" v-if="errors.has('logo')">
+                            <strong v-text="errors.get('logo')"></strong>
+                        </div>
                     </div>
                 </div>
             </fieldset>
@@ -144,6 +150,7 @@
       handleSuccessFile (response) {
         if (response !== undefined) {
           this.$store.commit('addWhitelabelFile', response)
+          this.errors.clear(response.name)
         }
       },
       handleRemoveFile (response) {
