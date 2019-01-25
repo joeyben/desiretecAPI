@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Frontend\Messages;
 
-use Auth;
-use Mail;
+use App\Http\Controllers\Controller;
 use App\Mail\MessageSent;
 use App\Models\Access\User\User;
 use App\Models\Messages\Message;
-use App\Models\Groups\Group;
+use Auth;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Mail;
 
 class MessagesController extends Controller
 {
@@ -23,8 +22,6 @@ class MessagesController extends Controller
 
         $id = Auth::id();
 
-        
-
         $messages = Message::where('user_id', '=', $id)
                     ->where('wish_id', '=', $wish_id)
                     ->get();
@@ -32,12 +29,11 @@ class MessagesController extends Controller
         $user_name = User::where('id', '=', $id)->first()->first_name;
 
         $response = [
-            'data' => $messages,
+            'data'      => $messages,
             'user_name' => $user_name
         ];
-        
+
         return response()->json($response);
-       
     }
 
     public function sendMessage(Request $request)
@@ -49,25 +45,20 @@ class MessagesController extends Controller
         $s = User::join('group_user', 'users.id', '=', 'group_user.user_id')
                     ->join('groups', 'group_user.group_id', '=', 'groups.id')
                     ->where('group_user.group_id', '=', 1)
-                    ->pluck('user_id');        
+                    ->pluck('user_id');
 
-        if(in_array(Auth::id(), $s->all()))
-        {
-            
+        if (\in_array(Auth::id(), $s->all(), true)) {
             $consumer = User::where('id', '=', $consumer_id)->pluck('email');
             Mail::to($consumer)->send(new MessageSent($message));
-        }
-        else
-        {
+        } else {
             $sellers = User::join('group_user', 'users.id', '=', 'group_user.user_id')
                             ->join('groups', 'group_user.group_id', '=', 'groups.id')
                             ->where('group_user.group_id', '=', $group_id)
                             ->pluck('email');
 
-            foreach($sellers as $seller){
+            foreach ($sellers as $seller) {
                 Mail::to($seller)->send(new MessageSent($message));
             }
-            
         }
 
         $message = Message::create([
@@ -75,12 +66,11 @@ class MessagesController extends Controller
             'wish_id' => $request->wish_id,
             'message' => $message
         ]);
-        
-        return ['status' => 'Message Sent!'];
 
+        return ['status' => 'Message Sent!'];
     }
 
-    public function getMessages($wish, $group) 
+    public function getMessages($wish, $group)
     {
         $id = Auth::id();
 
@@ -88,18 +78,14 @@ class MessagesController extends Controller
                         ->join('groups', 'group_user.group_id', '=', 'groups.id')
                         ->where('group_user.group_id', '=', $group)
                         ->pluck('user_id');
-          
-        $ids = $sellers->toArray();                
-        if(in_array(Auth::id(), $ids))
-        {
+
+        $ids = $sellers->toArray();
+        if (\in_array(Auth::id(), $ids, true)) {
             $ids = User::join('message', 'users.id', '=', 'message.user_id')
                         ->where('message.wish_id', '=', $wish)
                         ->pluck('user_id')->toArray();
-
-        }
-        else
-        {
-            array_push($ids, $id); 
+        } else {
+            array_push($ids, $id);
         }
 
         $messages = User::join('message', 'users.id', '=', 'message.user_id')
@@ -113,9 +99,8 @@ class MessagesController extends Controller
             'data' => $messages,
             'user' => $user
         ];
-        
+
         return response()->json($response);
-       
     }
 
     public function deleteMessage($id)
@@ -126,7 +111,7 @@ class MessagesController extends Controller
     public function editMessage($id, $message)
     {
         $m = Message::find($id);
-        
+
         $m->message = $message;
 
         $m->save();

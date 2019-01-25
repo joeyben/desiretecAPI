@@ -54,4 +54,3 @@ class CreatedWishNotification extends Notification
         return (new MailMessage())->view('wishes::emails.wish', ['wish' => $this->wish, 'token' => $this->wish->token])->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
     }
 }
-   

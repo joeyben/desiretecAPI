@@ -3,9 +3,9 @@
 namespace App\Models\Access\User\Traits\Relationship;
 
 use App\Models\Access\User\SocialLogin;
+use App\Models\Messages\Message;
 use App\Models\System\Session;
 use Modules\Dashboard\Entities\Dashboard;
-use App\Models\Messages\Message;
 
 /**
  * Class UserRelationship.
