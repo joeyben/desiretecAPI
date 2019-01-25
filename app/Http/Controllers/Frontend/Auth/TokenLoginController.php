@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Frontend\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\Access\User\UserToken;
 use Auth;
+use App\Models\Access\User\UserToken;
+use App\Http\Controllers\Frontend\Auth\TokenAuthentication;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class TokenLoginController extends Controller
 {
@@ -25,20 +26,17 @@ class TokenLoginController extends Controller
         $auth->requestLink();
 
         return redirect()->to($this->redirectOnRequested)->with('success', 'We\'ve sent you a login link!');
+    
     }
 
     public function validateToken(Request $request, UserToken $token)
     {
-        $token->delete();
-
-        if ($token->isExpired()) {
-            return redirect('/login/token')->with('error', 'That login link has expired.');
-        }
-
+        
         if (!$token->belongsToEmail($request->email)) {
+            
             return redirect('/login/token')->with('error', 'Invalid login link!');
         }
-
+        
         Auth::login($token->user, $request->remember);
 
         return redirect()->intended();
