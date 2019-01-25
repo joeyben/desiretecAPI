@@ -4,8 +4,8 @@ services:
       volumes:
         - /var/www/desiretec-mvp-stage/storage:/var/www/html/storage
       environment:
-        - VIRTUAL_HOST=mvp.desiretec.com
-        - LETSENCRYPT_HOST=mvp.desiretec.com
+        - VIRTUAL_HOST=mvp.desiretec.com,tuimvp.desiretec.com
+        - LETSENCRYPT_HOST=mvp.desiretec.com,tuimvp.desiretec.com
         - LETSENCRYPT_EMAIL=info@desiretec.com
       networks:
         - frontend
