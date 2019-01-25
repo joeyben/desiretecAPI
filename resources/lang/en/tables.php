@@ -82,4 +82,7 @@ return [
     'display_name'                  => 'Display Name',
     'confirmed'                     => 'Confirmed',
     'roles'                         => 'Roles',
+    'eventLabel'                    => 'Event Label',
+    'eventCategory'                 => 'Event Category',
+    'eventAction'                   => 'Event Action',
 ];

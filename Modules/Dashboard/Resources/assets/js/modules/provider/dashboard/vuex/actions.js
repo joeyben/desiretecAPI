@@ -21,3 +21,16 @@ export const loadUsers = function (store) {
     console.log('LOGIN_USER not answer', error)
   })
 }
+
+export const loadWhitelabels = function (store) {
+  api.loadWhitelabels(response => {
+    if (!response) {
+      console.log('error', response)
+      return
+    }
+
+    store.commit(types.ADD_WHITELABELS, response.whitelabels)
+  }, error => {
+    console.log('ADD_WHITELABELS not answer', error)
+  })
+}

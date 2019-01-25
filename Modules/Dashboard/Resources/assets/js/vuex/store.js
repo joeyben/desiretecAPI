@@ -9,12 +9,17 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 const state = {
-  currentUser: []
+  currentUser: [],
+  backendAnalytics: {}
 }
 
 const mutations = {
   LOGIN_USER (state, user) {
     state.currentUser = user
+  },
+  BACKEND_ANALYTICS (state, analytics) {
+    state.backendAnalytics = analytics
+    console.log(state.backendAnalytics)
   }
 }
 

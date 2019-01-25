@@ -38,6 +38,19 @@ class BaseRepository
     }
 
     /**
+     * @param string $column
+     * @param string $operator
+     * @param        $value
+     * @param array  $columns
+     *
+     * @return mixed
+     */
+    public function findWhere(string $column, string $operator, $value = null, $columns = ['*'])
+    {
+        return $this->query()->where($column, $operator, $value)->get($columns);
+    }
+
+    /**
      * @return mixed
      */
     public function getCount()

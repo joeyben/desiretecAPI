@@ -3,6 +3,7 @@
 namespace Modules\Dashboard\Http\Controllers;
 
 use App\Repositories\Backend\Access\User\UserRepository;
+use App\Repositories\Frontend\Offers\OffersRepository;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,6 +13,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
+use Modules\Wishes\Repositories\Contracts\WishesRepository;
 
 class DashboardController extends Controller
 {
@@ -35,7 +37,6 @@ class DashboardController extends Controller
      * @var \Illuminate\Translation\Translator
      */
     private $lang;
-
     /**
      * @var \App\Repositories\Backend\Access\User\UserRepository
      */
@@ -44,6 +45,14 @@ class DashboardController extends Controller
      * @var \Illuminate\Support\Carbon
      */
     private $carbon;
+    /**
+     * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
+     */
+    private $wishes;
+    /**
+     * @var \App\Repositories\Frontend\Offers\OffersRepository
+     */
+    private $offers;
 
     /**
      * DashboardController constructor.
@@ -56,7 +65,7 @@ class DashboardController extends Controller
      * @param \App\Repositories\Backend\Access\User\UserRepository            $users
      * @param \Illuminate\Support\Carbon                                      $carbon
      */
-    public function __construct(DashboardRepository $dashboard, ActivitiesRepository $activities, ResponseFactory $response, AuthManager $auth, Translator $lang, UserRepository $users, Carbon $carbon)
+    public function __construct(DashboardRepository $dashboard, ActivitiesRepository $activities, ResponseFactory $response, AuthManager $auth, Translator $lang, UserRepository $users, Carbon $carbon, WishesRepository $wishes, OffersRepository $offers)
     {
         $this->dashboard = $dashboard;
         $this->activities = $activities;
@@ -65,6 +74,8 @@ class DashboardController extends Controller
         $this->lang = $lang;
         $this->users = $users;
         $this->carbon = $carbon;
+        $this->wishes = $wishes;
+        $this->offers = $offers;
     }
 
     /**
@@ -167,5 +178,140 @@ class DashboardController extends Controller
      */
     public function destroy()
     {
+    }
+
+
+    /**
+     * Google analytics.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function googleAnalytics(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabel');
+
+            $gaViewId = null;
+            // TODO: add to db - whitelabels
+            switch ($whitelabelId) {
+                case 1:
+                    $gaViewId = '159641355';
+                    break;
+                case 2:
+                    $gaViewId = '163819320';
+                    break;
+                case 3:
+                    $gaViewId = '162076862';
+                    break;
+                case 4:
+                    $gaViewId = '';
+                    break;
+                case 5:
+                    $gaViewId = '';
+                    break;
+                case 15:
+                    $gaViewId = '185523513';
+                    break;
+            }
+
+            if ($gaViewId != '') {
+                $optParams = array(
+                    'dimensions' => 'rt:eventLabel, rt:eventCategory, rt:eventAction'
+                );
+
+                $result['ga'] = \Analytics::getAnalyticsService()->data_realtime->get(
+                    'ga:' . $gaViewId,
+                    'rt:totalEvents',
+                    $optParams
+                );
+
+                $data = array();
+
+                foreach ($result['ga']->getRows() as $row) {
+                    $item = [
+                        'rt:eventLabel' => $row[0],
+                        'rt:eventCategory' => $row[1],
+                        'rt:eventAction' => $row[2]
+                    ];
+
+                    array_push($data, $item);
+                }
+
+                $result['data'] = $data;
+            } else {
+                $result['data'] = [];
+            }
+
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Backend analytics.
+     *
+     * @return Response
+     */
+    public function backendAnalytics()
+    {
+        try {
+            $date = new \DateTime();
+            $date->modify('-48 hours');
+            $formattedDate = $date->format('Y-m-d H:i:s');
+
+            $wishes = $this->wishes->all()->count();
+            $changedWishes = $this->wishes->findWhereRaw('created_at != updated_at')->count();
+            $freeText = $this->wishes->findWhereRaw('description != ""')->count();
+            $answeredWishes = $this->offers->getCount();
+            $reactionQuota = $answeredWishes / $wishes * 100;
+            $latestAnsweredWishes = $this->offers->findWhere('created_at', '>', $formattedDate)->count();
+            $latestReactionQuota = $latestAnsweredWishes / $wishes * 100;
+            $bookings = $this->wishes->findWhereRaw('booking_status = "booked"')->count();
+
+            $wishesWithOffers = $this->wishes->getWithRelation(['offers']);
+
+            $wishesWithReactionTime = [];
+            foreach ($wishesWithOffers as $wo) {
+                if (count($wo->offers) > 0) {
+                    $wishDate = Carbon::parse($wo->created_at);
+                    $offerDate = Carbon::parse($wo->offers[0]->created_at);
+                    $diffInHours = $wishDate->diffInHours($offerDate);
+                    $wo['diff_hours'] = $diffInHours;
+                    array_push($wishesWithReactionTime, $wo);
+                }
+            }
+
+
+            $data = [
+                'created_wishes' => $wishes,
+                'changed_wishes' => $changedWishes,
+                'free_text' => $freeText,
+                'answered_wishes' => $answeredWishes,
+                'reaction_quota' => $reactionQuota . '%',
+                'latest_answered_wishes' => $latestAnsweredWishes,
+                'latest_reaction_quota' => $latestReactionQuota . '%',
+                'reaction_time' => $wishesWithReactionTime,
+                'bookings' => $bookings
+            ];
+
+            $result['data'] = $data;
+
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 }
