@@ -17,27 +17,27 @@ class Socialite
         $socialite_enable = [];
         $socialite_links = '';
 
-        if (\mb_strlen(getenv('BITBUCKET_CLIENT_ID'))) {
+        if (mb_strlen(getenv('BITBUCKET_CLIENT_ID'))) {
             $socialite_enable[] = link_to_route('frontend.auth.social.login', trans('labels.frontend.auth.login_with', ['social_media' => 'Bit Bucket']), 'bitbucket');
         }
 
-        if (\mb_strlen(getenv('FACEBOOK_CLIENT_ID'))) {
+        if (mb_strlen(getenv('FACEBOOK_CLIENT_ID'))) {
             $socialite_enable[] = link_to_route('frontend.auth.social.login', trans('labels.frontend.auth.login_with', ['social_media' => 'Facebook']), 'facebook');
         }
 
-        if (\mb_strlen(getenv('GOOGLE_CLIENT_ID'))) {
+        if (mb_strlen(getenv('GOOGLE_CLIENT_ID'))) {
             $socialite_enable[] = link_to_route('frontend.auth.social.login', trans('labels.frontend.auth.login_with', ['social_media' => 'Google']), 'google');
         }
 
-        if (\mb_strlen(getenv('GITHUB_CLIENT_ID'))) {
+        if (mb_strlen(getenv('GITHUB_CLIENT_ID'))) {
             $socialite_enable[] = link_to_route('frontend.auth.social.login', trans('labels.frontend.auth.login_with', ['social_media' => 'Github']), 'github');
         }
 
-        if (\mb_strlen(getenv('LINKEDIN_CLIENT_ID'))) {
+        if (mb_strlen(getenv('LINKEDIN_CLIENT_ID'))) {
             $socialite_enable[] = link_to_route('frontend.auth.social.login', trans('labels.frontend.auth.login_with', ['social_media' => 'Linked In']), 'linkedin');
         }
 
-        if (\mb_strlen(getenv('TWITTER_CLIENT_ID'))) {
+        if (mb_strlen(getenv('TWITTER_CLIENT_ID'))) {
             $socialite_enable[] = link_to_route('frontend.auth.social.login', trans('labels.frontend.auth.login_with', ['social_media' => 'Twitter']), 'twitter');
         }
 

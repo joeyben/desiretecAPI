@@ -115,9 +115,9 @@ class PushNotification
             'sound' => 'default',
         ];
         $payload = json_encode($body);
-        $msg = \chr(0) . pack('n', 32) . pack('H*', $devicetoken) . pack('n', \mb_strlen($payload)) . $payload;
+        $msg = \chr(0) . pack('n', 32) . pack('H*', $devicetoken) . pack('n', mb_strlen($payload)) . $payload;
 
-        $result = fwrite($fp, $msg, \mb_strlen($msg));
+        $result = fwrite($fp, $msg, mb_strlen($msg));
 
         if (!$result) {
             return false;

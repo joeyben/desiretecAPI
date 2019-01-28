@@ -4,6 +4,7 @@ return [
     'name' => 'Wishes',
 
     'permissions' => [
+        'View Wish Frontend',
         'View Wish',
         'Create Wish',
         'Read Wish',

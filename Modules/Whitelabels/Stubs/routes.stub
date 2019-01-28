@@ -1,0 +1,9 @@
+<?php
+
+Route::group(['domain' => '$DOMAIN$'], function () {
+    Route::group(['middleware' => 'web', 'namespace' => 'Modules\$MODULE$\Http\Controllers'], function () {
+        Route::get('/', '$MODULE$Controller@index');
+        Route::get('show', '$MODULE$Controller@show');
+        Route::post('store', '$MODULE$Controller@store')->name('store');
+    });
+});

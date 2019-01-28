@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateWishesTable extends Migration
@@ -35,6 +36,13 @@ class CreateWishesTable extends Migration
             $table->timestamps();
         });
 
+        if (Schema::hasTable('groups')) {
+            Schema::table('wishes', function (Blueprint $table) {
+                $table->integer('group_id')->after('created_by')->nullable()->unsigned()->index();
+                $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            });
+        }
+
         Schema::table('wishes', function (Blueprint $table) {
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
@@ -47,6 +55,8 @@ class CreateWishesTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('wishes');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

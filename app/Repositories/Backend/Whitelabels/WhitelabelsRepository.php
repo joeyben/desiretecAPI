@@ -77,7 +77,7 @@ class WhitelabelsRepository extends BaseRepository
 
             if ($whitelabel = Whitelabel::create($input)) {
                 event(new WhitelabelCreated($whitelabel));
-                $command = \sprintf(
+                $command = sprintf(
                     'php artisan module:make %s',
                     ucfirst($input['name'])
                 );
