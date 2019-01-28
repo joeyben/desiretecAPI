@@ -300,6 +300,16 @@
                         </a>
                     </li>
                     @endif
+
+                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.whitelabels') }}" class="nav-link">
+                                <i class="icon-atom2"></i>
+                                <span>{{ __('labels.backend.whitelabels.table.display_name') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
                     @if(Auth::guard('web')->user()->hasRole('Administrator'))
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-power3"></i> <span>Maintenance</span></a>
@@ -318,14 +328,6 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                    @endif
-                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
-                    <li class="nav-item">
-                        <a href="{{ route('admin.whitelabels') }}" class="nav-link">
-                            <i class="icon-atom2"></i>
-                            <span>{{ __('labels.backend.whitelabels.table.display_name') }}</span>
-                        </a>
                     </li>
                     @endif
                     <!-- /main -->

@@ -129,9 +129,6 @@
           this.$store.commit('removeWhitelabelFile', response.data.attachment.id)
         }
       },
-      handleFileUploadBg () {
-        this.$store.commit('updateWhitelabel', {name: 'bg_image', value: this.$refs.bg_image.files[0]})
-      },
       onSubmit () {
         this.$store.dispatch('block', {element: 'whitelabelsComponent', load: true})
         this.$http.put(window.laroute.route('admin.whitelabels.store'), this.whitelabel)

@@ -14,7 +14,7 @@ class Whitelabel extends Model
 {
     use SoftDeletes, SearchableTrait, LogsActivity, AttachableTrait;
 
-    protected $fillable = ['name', 'display_name', 'status', 'domain', 'created_by', 'distribution_id', 'bg_image', 'logo_image', 'state'];
+    protected $fillable = ['name', 'display_name', 'status', 'domain', 'created_by', 'distribution_id', 'state'];
 
     protected static $logAttributes = [
         'name',
@@ -22,7 +22,7 @@ class Whitelabel extends Model
         'status',
         'created_by',
         'distribution_id',
-        'bg_image',
+        'ga_view_id',
         'state',
     ];
 

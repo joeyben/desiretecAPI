@@ -383,7 +383,7 @@ class WhitelabelsController extends Controller
                 $id,
                 array_merge(
                     $request->only('display_name', 'status', 'distribution_id'),
-                    ['state' => 1, 'bg_image' => $request->get('background')[0]['uid'], 'logo_image' => $request->get('logo')[0]['uid']]
+                    ['state' => 1]
                 )
             );
 

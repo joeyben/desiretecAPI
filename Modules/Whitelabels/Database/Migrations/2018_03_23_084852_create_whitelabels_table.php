@@ -18,9 +18,8 @@ class CreateWhitelabelsTable extends Migration
             $table->string('display_name', 191);
             $table->string('domain', 191)->nullable();
             $table->boolean('status')->default(true);
+            $table->integer('ga_view_id')->nullable();
             $table->integer('created_by')->unsigned()->nullable();
-            $table->string('bg_image', 191);
-            $table->string('logo_image', 191);
             $table->smallInteger('state')->default(0);
 
             $table->softDeletes();
