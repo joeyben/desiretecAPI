@@ -92,16 +92,12 @@
     </div>
 
     <div class="comment-container">
-    <h4>Communicate with Agent</h4>
+        <h4>{{ trans('wish.view.comment-header') }}</h4>
         <hr>
        <chat-messages :wishid="{{ $wish->id }}" :userid="{{ Auth::user()->id }}" :groupid="{{ $wish->group_id }}"></chat-messages>
     </div>
 
-    <div class="comment-container">
-        <h4>{{ trans('comment.comments') }}</h4>
-        <hr>
-        <comment :type="0" :id="{{ $wish->id }}"></comment>
-    </div>
+
 
 
 @endsection

@@ -10,7 +10,7 @@
 });*/
 
 
-Route::group(['domain' => 'localhost'], function () {
+//Route::group(['domain' => 'localhost'], function () {
     Route::get('/', 'FrontendController@index')->name('index');
     Route::get('macros', 'FrontendController@macros')->name('macros');
 //Route::post('/get/states', 'FrontendController@getStates')->name('get.states');
@@ -108,4 +108,4 @@ Route::group(['domain' => 'localhost'], function () {
     */
     Route::get('pages/{slug}', 'FrontendController@showPage')->name('pages.show');
 
-});
+//});

@@ -14,17 +14,17 @@ RUN composer install \
 
 FROM node:latest as frontend
 
-RUN mkdir -p /public
-COPY public/css /public/css
-COPY public/js /public/js
-COPY public/fonts /public/fonts
+RUN mkdir -p /myapp
+COPY Modules /myapp/Modules
+COPY public /myapp/public
+COPY resources /myapp/resources
+COPY package-lock.json package.json webpack.mix.js webpack.config.js yarn.lock /myapp/
 
-COPY package.json webpack.mix.js yarn.lock /
-COPY resources/assets/ /resources/assets/
 
-WORKDIR /
+WORKDIR /myap
 
-RUN npm install && npm run production
+RUN cd /myapp && yarn install && npm run production
+RUN cd /myapp/Modules/Tui && yarn install && npm run production
 
 FROM horrorhorst/laravel-base:latest
 
@@ -32,10 +32,7 @@ RUN docker-php-ext-install zip
 
 COPY . /var/www/html
 COPY --from=vendor /app/vendor/ /var/www/html/vendor/
-COPY --from=frontend /public/js/ /var/www/html/public/js/
-COPY --from=frontend /public/css/ /var/www/html/public/css/
-COPY --from=frontend /public/fonts/ /var/www/html/public/fonts/
-COPY --from=frontend /mix-manifest.json /var/www/html/public/mix-manifest.json
+COPY --from=frontend /myapp/public /var/www/html/public
 COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 RUN mv /var/www/html/docker/php/laravel.ini /usr/local/etc/php/conf.d

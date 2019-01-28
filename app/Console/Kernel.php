@@ -16,7 +16,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
     InstallAppCommand::class,
-    Commands\ClearExpiredUserLoginTokens::class,
     WhitelabelMakeRouteCommand::class,
     ];
 
@@ -25,10 +24,7 @@ class Kernel extends ConsoleKernel
      *
      * @param \Illuminate\Console\Scheduling\Schedule $schedule
      */
-    protected function schedule(Schedule $schedule)
-    {
-        //$schedule->command('auth:clear-tokens')->daily();
-    }
+    
 
     /**
      * Register the Closure based commands for the application.

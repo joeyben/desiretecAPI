@@ -22,6 +22,7 @@
                        :h="item.h"
                        :i="item.i"
                        :key="item.i"
+                       :class="{ datatable: item.component == 'ga-datatable-component' }"
                        @moved="movedEvent">
                 <component :is="item.component" :key="item.i"></component>
             </grid-item>
@@ -45,7 +46,9 @@
   import TileUpdateComponent from './TileUpdateComponent'
   import TileSpiderComponent from './TileSpiderComponent'
   import TileTdComponent from './TileTdComponent'
-  export default {
+  import BackendAnalyticsComponent from './BackendAnalyticsComponent'
+  import GaDatatableComponent from '../tables/ga/GaDatatableComponent'
+export default {
     name: 'DashboardComponent',
     components: {
       GridLayout: VueGridLayout.GridLayout,
@@ -60,7 +63,9 @@
       TileSpiderComponent,
       TileUpdateComponent,
       TileTdComponent,
-      TileClickComponent
+      TileClickComponent,
+      GaDatatableComponent,
+      BackendAnalyticsComponent
     },
     data () {
       return {
@@ -84,6 +89,7 @@
     mounted () {
       this.loadUser()
       this.loadLayout()
+      this.loadWhitelabels()
     },
     watch: {
     },
@@ -94,7 +100,8 @@
     },
     methods: {
       ...Vuex.mapActions({
-        loadUser: 'loadLoggedUser'
+        loadUser: 'loadLoggedUser',
+        loadWhitelabels: 'loadWhitelabels'
       }),
       loadLayout: function () {
         this.$http.get(window.laroute.route('provider.dashboard.show'))
@@ -145,3 +152,9 @@
     }
   }
 </script>
+
+<style>
+    .datatable {
+        overflow-y: auto;
+    }
+</style>

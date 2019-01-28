@@ -50,6 +50,7 @@ class WhitelabelsRepository extends BaseRepository
                 config('module.whitelabels.table') . '.display_name',
                 config('module.whitelabels.table') . '.status',
                 config('module.whitelabels.table') . '.distribution_id',
+                config('module.whitelabels.table') . '.ga_view_id',
                 config('module.whitelabels.table') . '.created_by',
                 config('module.whitelabels.table') . '.created_at',
             ]);

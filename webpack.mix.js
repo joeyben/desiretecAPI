@@ -12,7 +12,8 @@ const WebpackRTLPlugin = require('webpack-rtl-plugin');
  |
  */
 
-mix.sass('resources/assets/sass/frontend/app.scss', 'public/css/frontend.css')
+mix.setPublicPath('public')
+    .sass('resources/assets/sass/frontend/app.scss', 'public/css/frontend.css')
     .sass('resources/assets/sass/backend/app.scss', 'public/css/backend.css')
     .styles([
         'public/css/plugin/datatables/jquery.dataTables.min.css',
