@@ -40,6 +40,9 @@ class WhitelabelsTableController extends Controller
             ->addColumn('status', function ($whitelabels) {
                 return $whitelabels->status;
             })
+            ->addColumn('ga_view_id', function ($whitelabels) {
+                return $whitelabels->ga_view_id;
+            })
             ->addColumn('created_by', function ($whitelabels) {
                 return $whitelabels->user_name;
             })

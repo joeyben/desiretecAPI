@@ -230,7 +230,8 @@ return [
                 'display_name'                 => 'Display Name',
                 'status'                       => 'Status',
                 'associated_distribution'      => 'Associated Distribution',
-                'image'                        => 'Background Image'
+                'image'                        => 'Background Image',
+                'ga_view_id'                   => 'Google View Id'
             ],
 
             'settings' => [

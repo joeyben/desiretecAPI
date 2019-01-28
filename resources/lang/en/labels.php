@@ -250,6 +250,7 @@ return [
                 'createdat'      => 'Created At',
                 'createdby'      => 'Created By',
                 'all'            => 'All',
+                'ga_view_id'     => 'Google View Id',
             ],
         ],
 
