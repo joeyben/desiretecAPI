@@ -15,7 +15,7 @@ class StoreWhitelabelAttachmentRequest extends FormRequest
     {
         return [
             'attachment'      => 'required|image',
-            'name' => 'required|string',
+            'name'            => 'required|string',
         ];
     }
 

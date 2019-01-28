@@ -17,9 +17,9 @@ class GroupsDatabaseSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
         foreach (config('groups.permissions', []) as $key => $value) {
-            if (!DB::table('permissions')->where('name', \str_slug($value))->exists()) {
+            if (!DB::table('permissions')->where('name', str_slug($value))->exists()) {
                 DB::table('permissions')->insertGetId([
-                    'name'         => \str_slug($value),
+                    'name'         => str_slug($value),
                     'display_name' => $value,
                     'status'       => 1,
                     'created_at'   => DB::raw('now()'),
@@ -33,7 +33,7 @@ class GroupsDatabaseSeeder extends Seeder
 
             DB::table('groups')->insertGetId([
                 'name'              => $name,
-                'display_name'      => \str_slug($name),
+                'display_name'      => str_slug($name),
                 'description'       => $faker->sentence(100),
                 'created_by'        => $faker->numberBetween(1, 3),
                 'updated_by'        => $faker->numberBetween(1, 3),

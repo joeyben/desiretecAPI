@@ -14,7 +14,6 @@ use Auth;
 use Illuminate\Http\Request;
 use Torann\GeoIP\Facades\GeoIP;
 
-
 /**
  * Class WishesController.
  */

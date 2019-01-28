@@ -91,7 +91,7 @@ class RoleRepository extends BaseRepository
             $role = self::MODEL;
             $role = new $role();
             $role->name = $input['name'];
-            $role->sort = isset($input['sort']) && \mb_strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
+            $role->sort = isset($input['sort']) && mb_strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
 
             //See if this role has all permissions and set the flag on the role
             $role->all = $all;
@@ -153,7 +153,7 @@ class RoleRepository extends BaseRepository
         }
 
         $role->name = $input['name'];
-        $role->sort = isset($input['sort']) && \mb_strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
+        $role->sort = isset($input['sort']) && mb_strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
 
         //See if this role has all permissions and set the flag on the role
         $role->all = $all;

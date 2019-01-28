@@ -54,7 +54,7 @@ class PermissionRepository extends BaseRepository
             $permission = new $permission();
             $permission->name = $input['name'];
             $permission->display_name = $input['display_name'];
-            $permission->sort = isset($input['sort']) && \mb_strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
+            $permission->sort = isset($input['sort']) && mb_strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
             $permission->status = 1;
             $permission->created_by = access()->user()->id;
 
@@ -84,7 +84,7 @@ class PermissionRepository extends BaseRepository
 
         $permission->name = $input['name'];
         $permission->display_name = $input['display_name'];
-        $permission->sort = isset($input['sort']) && \mb_strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
+        $permission->sort = isset($input['sort']) && mb_strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
         $permission->status = 1;
         $permission->updated_by = access()->user()->id;
 

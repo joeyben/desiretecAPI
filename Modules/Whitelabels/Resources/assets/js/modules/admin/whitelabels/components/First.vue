@@ -68,17 +68,24 @@
 
                     <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('validation.attributes.backend.whitelabels.image') }}</legend>
                     <div class="form-group row">
-                        <upload-attachments :data="{name: 'background'}" :fileList="whitelabel.background" :limit="1" listType="picture-card"></upload-attachments>
+                        <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'background'}" :fileList="whitelabel.background" :limit="1" listType="picture-card"></upload-attachments>
                         <div class="help-block text-danger" v-if="errors.has('background')">
                             <strong v-text="errors.get('background')"></strong>
                         </div>
                     </div>
 
-                    <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> Logo </legend>
+                    <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('labels.logo') }} </legend>
                     <div class="form-group row">
-                        <upload-attachments :data="{name: 'logo'}" :fileList="whitelabel.logo" :limit="1" listType="picture-card"></upload-attachments>
+                        <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'logo'}" :fileList="whitelabel.logo" :limit="1" listType="picture-card"></upload-attachments>
                         <div class="help-block text-danger" v-if="errors.has('logo')">
                             <strong v-text="errors.get('logo')"></strong>
+                        </div>
+                    </div>
+                    <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('Favicon') }} </legend>
+                    <div class="form-group row">
+                        <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'favicon'}" :fileList="whitelabel.favicon" :limit="1" listType="picture-card"></upload-attachments>
+                        <div class="help-block text-danger" v-if="errors.has('favicon')">
+                            <strong v-text="errors.get('favicon')"></strong>
                         </div>
                     </div>
                 </div>
@@ -140,6 +147,10 @@
           this.$store.commit('updateWhitelabel', {name: 'id', value: response.data.whitelabel.id})
           this.$store.commit('updateWhitelabel', {name: 'name', value: response.data.whitelabel.name})
           this.$store.commit('updateWhitelabel', {name: 'state', value: response.data.whitelabel.state})
+          this.$message({
+            type: 'success',
+            message: response.data.message
+          })
         } else {
           this.$message({
             type: 'error',
@@ -149,17 +160,14 @@
       },
       handleSuccessFile (response) {
         if (response !== undefined) {
-          this.$store.commit('addWhitelabelFile', response)
-          this.errors.clear(response.name)
+          this.$store.commit('addWhitelabelFile', response.attachment)
+          this.errors.clear(response.attachment.type.replace('whitelabels/', ''))
         }
       },
       handleRemoveFile (response) {
         if (response !== undefined) {
-          this.$store.commit('removeWhitelabelFile', response.data)
+          this.$store.commit('removeWhitelabelFile', response.data.attachment)
         }
-      },
-      handleFileUploadBg () {
-        this.$store.commit('updateWhitelabel', {name: 'bg_image', value: this.$refs.bg_image.files[0]})
       },
       updateStatus (value) {
         this.$store.commit('updateWhitelabel', {name: 'status', value: value})

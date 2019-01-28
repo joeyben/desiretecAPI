@@ -33,7 +33,9 @@ const mutations = {
     state.whitelabel[obj.name] = obj.value
   },
   addWhitelabelFile (state, obj) {
-    state.whitelabel[obj.name].push({name: obj.id, status: 'success', uid: obj.id, url: obj.url})
+    if (state.whitelabel[obj.type.replace('whitelabels/', '')].length <= 0) {
+      state.whitelabel[obj.type.replace('whitelabels/', '')].push({name: obj.id, status: 'success', uid: obj.id, url: obj.url})
+    }
   },
   removeWhitelabelFile (state, obj) {
     let background = state.whitelabel['background'].findIndex((c) => c.uid === obj.id)
@@ -44,6 +46,11 @@ const mutations = {
     let logo = state.whitelabel['logo'].findIndex((c) => c.uid === obj.id)
     if (logo >= 0) {
       state.whitelabel['logo'].splice(logo, 1)
+    }
+
+    let favicon = state.whitelabel['favicon'].findIndex((c) => c.uid === obj.id)
+    if (favicon >= 0) {
+      state.whitelabel['favicon'].splice(favicon, 1)
     }
   }
 }

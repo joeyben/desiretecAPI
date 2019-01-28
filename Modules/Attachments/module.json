@@ -1,0 +1,17 @@
+{
+    "name": "Attachments",
+    "alias": "attachments",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Attachments\\Providers\\AttachmentsServiceProvider",
+        "Modules\\Attachments\\Providers\\RepositoryServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

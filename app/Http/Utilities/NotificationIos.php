@@ -63,9 +63,9 @@ class NotificationIos extends Notification
 
         foreach ($deviceId as $singleId) {
             // Build the binary notification
-            $msg = \chr(0) . pack('n', 32) . pack('H*', $singleId) . pack('n', \mb_strlen($payload)) . $payload;
+            $msg = \chr(0) . pack('n', 32) . pack('H*', $singleId) . pack('n', mb_strlen($payload)) . $payload;
             // Send it to the server
-            $result = fwrite($fp, $msg, \mb_strlen($msg));
+            $result = fwrite($fp, $msg, mb_strlen($msg));
         }
         //echo "<br>-------<br>";
         if (!$result) {

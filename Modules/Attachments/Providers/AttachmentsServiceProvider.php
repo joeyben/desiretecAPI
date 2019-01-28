@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\HolidayCheck\Providers;
+namespace Modules\Attachments\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
 
-class HolidayCheckServiceProvider extends ServiceProvider
+class AttachmentsServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -16,8 +16,6 @@ class HolidayCheckServiceProvider extends ServiceProvider
 
     /**
      * Boot the application events.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -30,73 +28,62 @@ class HolidayCheckServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
-        //
     }
 
     /**
      * Register config.
-     *
-     * @return void
      */
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('holidaycheck.php'),
+            __DIR__ . '/../Config/config.php' => config_path('attachments.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'holidaycheck'
+            __DIR__ . '/../Config/config.php', 'attachments'
         );
     }
 
     /**
      * Register views.
-     *
-     * @return void
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/holidaycheck');
+        $viewPath = resource_path('views/modules/attachments');
 
-        $sourcePath = __DIR__.'/../Resources/views';
+        $sourcePath = __DIR__ . '/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
-        ],'views');
+        ], 'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/holidaycheck';
-        }, \Config::get('view.paths')), [$sourcePath]), 'holidaycheck');
+            return $path . '/modules/attachments';
+        }, \Config::get('view.paths')), [$sourcePath]), 'attachments');
     }
 
     /**
      * Register translations.
-     *
-     * @return void
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/holidaycheck');
+        $langPath = resource_path('lang/modules/attachments');
 
         if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'holidaycheck');
+            $this->loadTranslationsFrom($langPath, 'attachments');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'holidaycheck');
+            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'attachments');
         }
     }
 
     /**
      * Register an additional directory of factories.
-     * 
-     * @return void
      */
     public function registerFactories()
     {
-        if (! app()->environment('production')) {
+        if (!app()->environment('production')) {
             app(Factory::class)->load(__DIR__ . '/../Database/factories');
         }
     }

@@ -193,22 +193,22 @@ class UserController extends Controller
             $result['user']['id'] = $user->id;
             $result['user']['full_name'] = $user->first_name . ' ' . $user->last_name;
             foreach (config('wishes.permissions', []) as $permission) {
-                $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
+                $result['user']['permissions'][str_slug($permission)] = $user->hasPermission(str_slug($permission));
             }
             foreach (config('categories.permissions', []) as $permission) {
-                $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
+                $result['user']['permissions'][str_slug($permission)] = $user->hasPermission(str_slug($permission));
             }
             foreach (config('groups.permissions', []) as $permission) {
-                $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
+                $result['user']['permissions'][str_slug($permission)] = $user->hasPermission(str_slug($permission));
             }
             foreach (config('permissions.permissions', []) as $permission) {
-                $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
+                $result['user']['permissions'][str_slug($permission)] = $user->hasPermission(str_slug($permission));
             }
             foreach (config('roles.permissions', []) as $permission) {
-                $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
+                $result['user']['permissions'][str_slug($permission)] = $user->hasPermission(str_slug($permission));
             }
             foreach (config('users.permissions', []) as $permission) {
-                $result['user']['permissions'][\str_slug($permission)] = $user->hasPermission(\str_slug($permission));
+                $result['user']['permissions'][str_slug($permission)] = $user->hasPermission(str_slug($permission));
             }
             $result['user']['permissions']['can-login-as-user'] = access()->allow('login-as-user') && (!session()->has('admin_user_id') || !session()->has('temp_user_id'));
 

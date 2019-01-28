@@ -168,21 +168,30 @@
                 </div>
             </li>
 
-            <li class="nav-item dropdown dropdown-user">
-                <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{ asset("modules/images/image.png") }}" class="rounded-circle mr-2" height="34" alt="">
-                    <span>Desiretec</span>
-                </a>
+            @auth('web')
+                <li class="nav-item dropdown dropdown-user">
+                    <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
+                        <img src="{{ asset("modules/images/image.png") }}" class="rounded-circle mr-2" height="34" alt="">
+                        <span> {{ auth()->guard('web')->user()->email }} </span>
+                    </a>
 
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
-                    <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
-                    <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span class="badge badge-pill bg-blue ml-auto">58</span></a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
-                    <a href="#" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
-                </div>
-            </li>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
+                        <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
+                        <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span class="badge badge-pill bg-blue ml-auto">58</span></a>
+                        <div class="dropdown-divider"></div>
+                        @if ($logged_in_user && session()->has("admin_user_id") && session()->has("temp_user_id"))
+                            <a href="{{ route("frontend.auth.logout-as") }}" class="dropdown-item  text-teal-800">
+                                <i class="icon-enter3"></i>
+                                Re-Login as {{ session()->get("admin_user_name") }}
+                            </a>
+                        @endif
+                        <a href="{!! route('frontend.auth.logout') !!}" class="dropdown-item">
+                            <i class="icon-switch2"></i>  {{ trans('navs.general.logout') }}
+                        </a>
+                    </div>
+                </li>
+            @endauth
         </ul>
     </div>
 </div>
@@ -242,12 +251,14 @@
 
                     <!-- Main -->
                     <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
-                    <li class="nav-item">
-                        <a href="{{ route('provider.dashboard') }}" class="nav-link">
-                            <i class="icon-home4"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
+                    @if($module->has('Dashboard'))
+                        <li class="nav-item">
+                            <a href="{{ route('provider.dashboard') }}" class="nav-link">
+                                <i class="icon-home4"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                    @endif
                     @permission('view-access-management')
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Access Management</span></a>
@@ -286,7 +297,6 @@
                         <a href="{{ route('admin.wishes') }}" class="nav-link">
                             <i class="icon-check"></i>
                             <span>Wishes</span>
-                            <span class="badge bg-blue-400 align-self-center ml-auto">0</span>
                         </a>
                     </li>
                     @endif
@@ -308,6 +318,14 @@
                                 </a>
                             </li>
                         </ul>
+                    </li>
+                    @endif
+                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.whitelabels') }}" class="nav-link">
+                            <i class="icon-atom2"></i>
+                            <span>{{ __('labels.backend.whitelabels.table.display_name') }}</span>
+                        </a>
                     </li>
                     @endif
                     <!-- /main -->

@@ -4,6 +4,7 @@ namespace Modules\Whitelabels\Http\Controllers;
 
 use App\Repositories\Backend\Distributions\DistributionsRepository;
 use App\Repositories\Criteria\EagerLoad;
+use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
@@ -22,9 +23,9 @@ use Illuminate\Support\Str;
 use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Excel;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\Attachments\Repositories\Contracts\AttachmentsRepository;
 use Modules\Whitelabels\Http\Requests\DomainWhitelabelRequest;
 use Modules\Whitelabels\Http\Requests\SaveWhitelabelRequest;
-use Modules\Whitelabels\Http\Requests\StoreWhitelabelAttachmentRequest;
 use Modules\Whitelabels\Http\Requests\StoreWhitelabelRequest;
 use Modules\Whitelabels\Http\Requests\UpdateWhitelabelRequest;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
@@ -75,6 +76,10 @@ class WhitelabelsController extends Controller
      * @var \Illuminate\Support\Str
      */
     private $str;
+    /**
+     * @var \Modules\Attachments\Repositories\Contracts\AttachmentsRepository
+     */
+    private $attachments;
 
     /**
      * WhitelabelsController constructor.
@@ -90,8 +95,9 @@ class WhitelabelsController extends Controller
      * @param \Illuminate\Filesystem\FilesystemManager                          $storage
      * @param \Illuminate\Contracts\Console\Kernel                              $artisan
      * @param \Illuminate\Support\Str                                           $str
+     * @param \Modules\Attachments\Repositories\Contracts\AttachmentsRepository $attachments
      */
-    public function __construct(WhitelabelsRepository $whitelabels, DistributionsRepository $distributions, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel, FilesystemManager $storage, Kernel $artisan, Str $str)
+    public function __construct(WhitelabelsRepository $whitelabels, DistributionsRepository $distributions, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel, FilesystemManager $storage, Kernel $artisan, Str $str, AttachmentsRepository $attachments)
     {
         $this->whitelabels = $whitelabels;
         $this->response = $response;
@@ -104,6 +110,7 @@ class WhitelabelsController extends Controller
         $this->storage = $storage;
         $this->artisan = $artisan;
         $this->str = $str;
+        $this->attachments = $attachments;
     }
 
     /**
@@ -147,6 +154,7 @@ class WhitelabelsController extends Controller
                 new WithTrashed(),
                 new OrderBy($sort[0], $sort[1]),
                 new Where('whitelabels.id', $request->get('whitelabel')),
+                new Filter($request->get('filter')),
                 new WhereBetween('whitelabels.created_at', $request->get('start'), $request->get('end')),
                 new EagerLoad(['owner' => function ($query) {
                     $select = $this->auth->guard('web')->user()->hasRole('Administrator') ? 'CONCAT(first_name, " ", last_name, " ( ", email, " ) ") AS full_name' : 'CONCAT(first_name, " ", last_name) AS full_name';
@@ -185,6 +193,7 @@ class WhitelabelsController extends Controller
                 'owner'                            => $this->auth->guard('web')->user()->first_name . ' ' . $this->auth->guard('web')->user()->last_name,
                 'background'                       => [],
                 'logo'                             => [],
+                'favicon'                          => [],
                 'state'                            => 0,
                 'logs'                             => []
             ];
@@ -209,7 +218,6 @@ class WhitelabelsController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-
     /**
      * @param \Modules\Whitelabels\Http\Requests\StoreWhitelabelRequest $request
      *
@@ -221,55 +229,35 @@ class WhitelabelsController extends Controller
             $result['whitelabel'] = $this->whitelabels->create(
                 array_merge(
                     $request->only('display_name', 'status', 'distribution_id'),
-                    ['created_by' => $this->auth->guard('web')->user()->id, 'name' => $this->str->studly($request->get('name')), 'state' => 1, 'bg_image' => $request->get('background')[0]['uid'], 'logo_image' => $request->get('logo')[0]['uid']]
+                    ['created_by' => $this->auth->guard('web')->user()->id, 'name' => $this->str->studly($request->get('name')), 'state' => 1]
                 )
             );
+
+            foreach ($request->get('background') as $item) {
+                $this->attachments->update(
+                    $item['uid'],
+                    ['attachable_id' => $result['whitelabel']->id]
+                );
+            }
+
+            foreach ($request->get('logo') as $item) {
+                $this->attachments->update(
+                    $item['uid'],
+                    ['attachable_id' => $result['whitelabel']->id]
+                );
+            }
+
+            foreach ($request->get('favicon') as $item) {
+                $this->attachments->update(
+                    $item['uid'],
+                    ['attachable_id' => $result['whitelabel']->id]
+                );
+            }
 
             ini_set('max_execution_time', 300);
             $this->artisan->call('module:make', ['name' => [$result['whitelabel']->name], '--force' => true]);
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
             $result['message'] .= $this->artisan->output();
-            $result['success'] = true;
-            $result['status'] = Flag::STATUS_CODE_SUCCESS;
-        } catch (Exception $e) {
-            $result['success'] = false;
-            $result['message'] = $e->getMessage();
-            $result['status'] = Flag::STATUS_CODE_ERROR;
-        }
-
-        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-    }
-
-    public function uploadFile(StoreWhitelabelAttachmentRequest $request) {
-        try {
-            $path = 'img' . \DIRECTORY_SEPARATOR . 'whitelabel' . \DIRECTORY_SEPARATOR;
-            $attachment = $request->file('attachment');
-            $fileName = time() . $attachment->getClientOriginalName();
-
-            $this->storage->disk('s3')->put($path . $fileName, file_get_contents($attachment->getRealPath()), 'public');
-
-            $result['id'] = $fileName;
-            $result['url'] = $this->storage->disk('s3')->url($path . $fileName);
-            $result['name'] = $request->get('name');
-            $result['success'] = true;
-            $result['status'] = Flag::STATUS_CODE_SUCCESS;
-        } catch (Exception $e) {
-            $result['success'] = false;
-            $result['message'] = $e->getMessage();
-            $result['status'] = Flag::STATUS_CODE_ERROR;
-        }
-
-        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-    }
-
-    public function destroyFile(string $id) {
-        try {
-            $path = 'img' . \DIRECTORY_SEPARATOR . 'whitelabel' . \DIRECTORY_SEPARATOR . $id;
-            $this->storage->disk('s3')->delete($path);
-
-            $result['id'] = $id;
-            $result['url'] = $this->storage->disk('s3')->url($path);
-            $result['name'] = $id;
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -310,16 +298,14 @@ class WhitelabelsController extends Controller
             ])->find($id);
 
             $result['whitelabel'] = [
-                'id'                  => $whitelabel->id,
-                'name'                => $whitelabel->name,
-                'display_name'        => $whitelabel->display_name,
-                'status'              => $whitelabel->status,
-                'domain'              => $whitelabel->domain,
-                'owner'               => $whitelabel->owner->full_name,
+                'id'                           => $whitelabel->id,
+                'name'                         => $whitelabel->name,
+                'display_name'                 => $whitelabel->display_name,
+                'status'                       => $whitelabel->status,
+                'domain'                       => $whitelabel->domain,
+                'owner'                        => $whitelabel->owner->full_name,
                 'distribution_id'              => $whitelabel->distribution_id,
-                'bg_image'              => $whitelabel->bg_image,
-                'logo_image'              => $whitelabel->logo_image,
-                'state'              => $whitelabel->state,
+                'state'                        => $whitelabel->state,
             ];
             $result['whitelabel']['logs'] = $this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE) ? $this->activities->byModel($whitelabel) : [];
 
@@ -331,18 +317,46 @@ class WhitelabelsController extends Controller
                     'name' => $distribution->display_name
                 ];
             });
-            $result['whitelabel']['background'][] = [
-                'uid' => $whitelabel->bg_image,
-                'name' => $whitelabel->bg_image,
-                'url' => $this->storage->disk('s3')->url($path . $whitelabel->bg_image)
-            ];
-            $result['whitelabel']['logo'][] = [
-                'uid' => $whitelabel->bg_image,
-                'name' => $whitelabel->bg_image,
-                'url' => $this->storage->disk('s3')->url($path . $whitelabel->logo_image)
-            ];
 
+            $background = $whitelabel->attachments->map(function ($attachment) {
+                if (('whitelabels/background') === $attachment->type) {
+                    return [
+                        'uid'  => $attachment->id,
+                        'name' => $attachment->name . '.' . $attachment->extension,
+                        'url'  => $attachment->url
+                    ];
+                }
+            })->reject(function ($item) {
+                return null === $item;
+            });
 
+            $logo = $whitelabel->attachments->map(function ($attachment) {
+                if (('whitelabels/logo') === $attachment->type) {
+                    return [
+                        'uid'  => $attachment->id,
+                        'name' => $attachment->name . '.' . $attachment->extension,
+                        'url'  => $attachment->url
+                    ];
+                }
+            })->reject(function ($item) {
+                return null === $item;
+            });
+
+            $favicon = $whitelabel->attachments->map(function ($attachment) {
+                if (('whitelabels/favicon') === $attachment->type) {
+                    return [
+                        'uid'  => $attachment->id,
+                        'name' => $attachment->name . '.' . $attachment->extension,
+                        'url'  => $attachment->url
+                    ];
+                }
+            })->reject(function ($item) {
+                return null === $item;
+            });
+
+            $result['whitelabel']['background'][] = $background->first();
+            $result['whitelabel']['logo'][] = $logo->first();
+            $result['whitelabel']['favicon'][] = $favicon->first();
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -358,7 +372,6 @@ class WhitelabelsController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Modules\Whitelabels\Http\Requests\UpdateWhitelabelRequest $request
-     *
      * @param int                                                        $id
      *
      * @return \Illuminate\Http\JsonResponse
@@ -373,7 +386,6 @@ class WhitelabelsController extends Controller
                     ['state' => 1, 'bg_image' => $request->get('background')[0]['uid'], 'logo_image' => $request->get('logo')[0]['uid']]
                 )
             );
-
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
             $result['success'] = true;
@@ -391,8 +403,7 @@ class WhitelabelsController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Modules\Whitelabels\Http\Requests\SaveWhitelabelRequest $request
-     *
-     * @param int                                                        $id
+     * @param int                                                      $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -403,10 +414,15 @@ class WhitelabelsController extends Controller
                 $id,
                 array_merge(
                     $request->only('display_name', 'status', 'distribution_id'),
-                    ['state' => 1, 'bg_image' => $request->get('background')[0]['uid'], 'logo_image' => $request->get('logo')[0]['uid']]
+                    ['state' => 2]
                 )
             );
 
+            if ($result['whitelabel']->domain !== $this->str->lower($request->get('domain'))) {
+                ini_set('max_execution_time', 300);
+                $result['whitelabel'] = $this->whitelabels->update($id, $request->only('domain'));
+                $this->artisan->call('whitelabel:make-route', ['domain' => $result['whitelabel']->domain, 'module' => $result['whitelabel']->name]);
+            }
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
             $result['success'] = true;
@@ -424,7 +440,6 @@ class WhitelabelsController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Modules\Whitelabels\Http\Requests\DomainWhitelabelRequest $request
-     *
      * @param int                                                        $id
      *
      * @return \Illuminate\Http\JsonResponse
@@ -434,7 +449,7 @@ class WhitelabelsController extends Controller
         try {
             $result['whitelabel'] = $this->whitelabels->update(
                 $id,
-                ['domain' => str_slug($request->get('domain')), 'state' => 2]
+                ['domain' => $this->str->lower($request->get('domain')), 'state' => 2]
             );
 
             ini_set('max_execution_time', 300);
@@ -456,9 +471,75 @@ class WhitelabelsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @return Response
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy()
+    public function destroy(int $id)
     {
+        try {
+            $result['whitelabel'] = $this->whitelabels->delete($id);
+            $result['message'] = $this->lang->get('messages.deleted', ['attribute' => 'Whitelabel']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function restore(int $id)
+    {
+        try {
+            $result['whitelabel'] = $this->whitelabels->restore($id);
+            $result['message'] = $this->lang->get('messages.restored', ['attribute' => 'Whitelabel']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function forceDelete(int $id)
+    {
+        try {
+            $result['whitelabel'] = $this->whitelabels->forceDelete($id);
+            $result['message'] = $this->lang->get('messages.destroyed', ['attribute' => 'Whitelabel']);
+            $result['success'] = $this->delTree(base_path('Modules/' . $result['whitelabel']->name));
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    private function delTree($dir)
+    {
+        $files = array_diff(scandir($dir), ['.', '..']);
+        foreach ($files as $file) {
+            (is_dir("$dir/$file")) ? $this->delTree("$dir/$file") : unlink("$dir/$file");
+        }
+
+        return rmdir($dir);
     }
 }

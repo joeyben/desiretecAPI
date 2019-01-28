@@ -14,13 +14,13 @@ class UpdateWhitelabelRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'    => 'required|int|min:1',
-            'name'    => 'required|string|min:2|max:255',
-            'display_name'    => 'required|string|min:2|max:255',
+            'id'                 => 'required|int|min:1',
+            'name'               => 'required|string|min:2|max:255',
+            'display_name'       => 'required|string|min:2|max:255',
             'distribution_id'    => 'required|int|min:1',
-            'status'  => 'required|boolean',
-            'background'   => 'required|array|min:1',
-            'logo'   => 'required|array|min:1',
+            'status'             => 'required|boolean',
+            'background'         => 'required|array|min:1',
+            'logo'               => 'required|array|min:1',
         ];
     }
 

@@ -14,12 +14,13 @@ class StoreWhitelabelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'    => 'required|string|min:2|max:255|unique:whitelabels,name',
-            'display_name'    => 'required|string|min:2|max:255',
+            'name'               => 'required|string|min:2|max:255|unique:whitelabels,name',
+            'display_name'       => 'required|string|min:2|max:255',
             'distribution_id'    => 'required|int|min:1',
-            'status'  => 'required|boolean',
-            'background'   => 'required|array|min:1',
-            'logo'   => 'required|array|min:1',
+            'status'             => 'required|boolean',
+            'background'         => 'required|array|min:1',
+            'logo'               => 'required|array|min:1',
+            'favicon'            => 'required|array|min:1',
         ];
     }
 

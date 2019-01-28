@@ -3,8 +3,6 @@
 namespace Modules\Whitelabels\Console;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class WhitelabelMakeRouteCommand extends Command
 {
@@ -39,8 +37,4 @@ class WhitelabelMakeRouteCommand extends Command
     {
         $this->route($this->argument('domain'), $this->argument('module'));
     }
-
-
-
-
 }

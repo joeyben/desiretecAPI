@@ -23,8 +23,6 @@ class WhitelabelMakeRouteCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -86,9 +84,9 @@ class WhitelabelMakeRouteCommand extends Command
         file_put_contents("$path/routes.php", $template);
         $this->info("Created : {$path}/routes.php");
     }
+
     private function getStub()
     {
         return file_get_contents(base_path('Modules/Whitelabels/Stubs/routes.stub'));
     }
-
 }

@@ -4,7 +4,6 @@
             <i class="icon-checkmark3 icon-2x text-success border-success border-3 rounded-round p-3 mb-3"></i>
             <h5 class="card-title">{{ trans('messages.created', {attribute: 'Whitelabel'})}}</h5>
             <a :href="createLink" class="btn bg-success mb-5">{{ trans('messages.whitelabel_user') }}</a>
-            <pre  v-html="prettyJSON(whitelabel)"></pre>
         </div>
     </div>
 </template>

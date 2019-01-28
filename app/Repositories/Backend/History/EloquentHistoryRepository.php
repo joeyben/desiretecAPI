@@ -82,7 +82,7 @@ class EloquentHistoryRepository implements HistoryContract
      */
     public function withText($text)
     {
-        if (\mb_strlen($text)) {
+        if (mb_strlen($text)) {
             $this->text = $text;
         } else {
             throw new GeneralException('You must supply text for each history item.');

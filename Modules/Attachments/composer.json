@@ -1,5 +1,5 @@
 {
-    "name": "nwidart/holidaycheck",
+    "name": "nwidart/attachments",
     "description": "",
     "authors": [
         {
@@ -10,7 +10,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\HolidayCheck\\Providers\\HolidayCheckServiceProvider"
+                "Modules\\Attachments\\Providers\\AttachmentsServiceProvider",
+                "Modules\\Attachments\\Providers\\RepositoryServiceProvider"
             ],
             "aliases": {
                 
@@ -19,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\HolidayCheck\\": ""
+            "Modules\\Attachments\\": ""
         }
     }
 }

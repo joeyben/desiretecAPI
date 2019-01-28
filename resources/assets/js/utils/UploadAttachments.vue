@@ -58,8 +58,8 @@
         return {
           // eslint-disable-next-line
           errors: new Errors(),
-          url: window.laroute.route('admin.whitelabels.uploadFile'),
-          deleteUrl: 'admin.whitelabels.destroyFile',
+          url: window.laroute.route('attachments.store'),
+          deleteUrl: 'attachments.destroy',
           dialogImageUrl: '',
           dialogVisible: false,
           headers: {
