@@ -42,7 +42,7 @@ class WishesDatabaseSeeder extends Seeder
                 'category'          => $faker->numberBetween(1, 5),
                 'catering'          => $faker->name,
                 'duration'          => $faker->numberBetween(1, 5),
-                'created_by'        => $faker->numberBetween(1, 3),
+                'created_by'        => $faker->numberBetween(12, 16),
                 'updated_by'        => $faker->numberBetween(1, 3),
                 'group_id'          => $faker->numberBetween(1, 5),
                 'whitelabel_id'     => $faker->numberBetween(1, 5),
