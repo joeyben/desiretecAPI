@@ -87,6 +87,9 @@ class UsersController extends Controller
                 new WhereHas('whitelabels', function ($query) {
                     $whitelabels = Auth::guard('web')->user()->whitelabels()->get()->pluck('id')->all();
                     Auth::guard('web')->user()->hasRole('Administrator') ? $query->newQuery() : $query->whereIn('whitelabels.id', $whitelabels);
+                }),
+                new WhereHas('roles', function ($query) {
+                    Auth::guard('web')->user()->hasRole('Administrator') ? $query->newQuery() : $query->where('roles.name', Flag::SELLER_ROLE);
                 })
             ])->paginate($perPage, ['id', 'first_name', 'last_name', 'email', 'status', 'confirmed', 'created_by', 'created_at', 'updated_at', 'deleted_at']);
 

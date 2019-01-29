@@ -1,6 +1,7 @@
 <template>
     <div class="list-icons">
-        <a :href="editUrl" class="btn btn-outline btn-sm bg-teal text-teal-800 btn-icon ml-2" v-if="can_edit" data-popup="tooltip" :title="trans('button.edit')"><i class="icon-pencil7"></i></a>
+        <router-link class="btn btn-outline btn-sm bg-teal text-teal-800 btn-icon ml-2" :to="{name: 'root.seller', params: { id: rowData.id }}"  v-if="can_edit && hasRole('Executive')" data-popup="tooltip" :title="trans('button.edit')"><i class="icon-pencil"></i></router-link>
+        <a :href="editUrl" class="btn btn-outline btn-sm bg-teal text-teal-800 btn-icon ml-2" v-if="can_edit && hasRole('Administrator')" data-popup="tooltip" :title="trans('button.edit')"><i class="icon-pencil7"></i></a>
         <a href="javascript:;" class="btn btn-outline btn-sm bg-danger text-danger-800 btn-icon ml-2" @click="doDelete(rowData.id)" v-if="can_delete" data-popup="tooltip" :title="trans('button.delete')"><i class="icon-cancel-circle2"></i></a>
         <a :href="loginAsUserUrl" class="btn btn-outline btn-sm bg-success text-success-800 btn-icon ml-2"  v-if="can_login" data-popup="tooltip" :title="trans('buttons.backend.access.users.login_as', {user: name})"><i class="icon-user-check"></i></a>
         <a :href="deactivateUserUrl" class="btn btn-outline btn-sm bg-slate text-slate-800 btn-icon ml-2"  v-if="can_deactivate_user" data-popup="tooltip" :title="trans('buttons.backend.access.users.deactivate')"><i class="icon-lock4"></i></a>
@@ -70,7 +71,7 @@
         if (this.rowData.hasOwnProperty('roles')) {
           index = this.rowData.roles.findIndex((p) => p.name === 'Administrator')
         }
-        return !this.deleted && this.hasPermissionTo('can-login-as-user') && (index === -1)
+        return !this.deleted && this.hasPermissionTo('can-login-as-user') && (index === -1) && (this.rowData.id !== this.user.id)
       },
       name: function () {
         return this.user.hasOwnProperty('full_name') ? this.user.full_name : ''

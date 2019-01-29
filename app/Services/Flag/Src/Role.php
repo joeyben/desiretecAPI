@@ -4,15 +4,13 @@
  * Created by PhpStorm.
  * User: goldoni
  * Date: 28.01.19
- * Time: 17:30
+ * Time: 17:30.
  */
 
 namespace App\Services\Flag\Src;
 
 /**
- * Class Role
- *
- * @package \App\Services\Flag\Src
+ * Class Role.
  */
 class Role
 {
@@ -106,5 +104,6 @@ class Role
         ['name' => 'Restore Category'],
         ['name' => 'Logs Category'],
         ['name' => 'View Dashboard'],
+        ['name' => 'Edit User'],
     ];
 }
