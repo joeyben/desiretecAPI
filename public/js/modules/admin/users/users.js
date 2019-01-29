@@ -99768,7 +99768,7 @@ exports = module.exports = __webpack_require__(51)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -99838,6 +99838,9 @@ exports.default = {
     can_edit: function can_edit() {
       return !this.deleted && this.hasPermissionTo('edit-user');
     },
+    can_edit_seller: function can_edit_seller() {
+      return this.can_edit && this.hasRole('Executive') && !this.hasRole('Administrator');
+    },
     can_restore: function can_restore() {
       return this.deleted && this.hasRole('Administrator');
     },
@@ -99898,7 +99901,7 @@ var render = function() {
     "div",
     { staticClass: "list-icons" },
     [
-      _vm.can_edit && _vm.hasRole("Executive")
+      _vm.can_edit_seller
         ? _c(
             "router-link",
             {
@@ -100957,6 +100960,9 @@ exports.default = {
       }
 
       return results;
+    },
+    can_edit_seller: function can_edit_seller() {
+      return this.hasRole('Executive') && !this.hasRole('Administrator');
     }
   }),
   methods: {
@@ -101019,7 +101025,7 @@ var render = function() {
         "div",
         { staticClass: "dropdown-menu dropdown-menu-left" },
         [
-          _vm.hasPermissionTo("Administrator")
+          _vm.hasRole("Administrator")
             ? _c(
                 "a",
                 {
@@ -101033,7 +101039,7 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _vm.hasRole("Executive")
+          _vm.can_edit_seller
             ? _c(
                 "router-link",
                 {
