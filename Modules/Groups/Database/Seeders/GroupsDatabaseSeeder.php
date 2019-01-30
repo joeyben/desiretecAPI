@@ -2,9 +2,11 @@
 
 namespace Modules\Groups\Database\Seeders;
 
+use App\Models\Access\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Modules\Groups\Entities\Group;
 
 class GroupsDatabaseSeeder extends Seeder
 {
@@ -28,10 +30,25 @@ class GroupsDatabaseSeeder extends Seeder
             }
         }
 
+        $id = DB::table('groups')->insertGetId([
+            'name'              => 'Tui Hamburg',
+            'display_name'      => 'tui-hamburg',
+            'description'       => $faker->sentence(100),
+            'created_by'        => $faker->numberBetween(1, 3),
+            'updated_by'        => $faker->numberBetween(1, 3),
+            'whitelabel_id'     => 1,
+            'current'           => 1,
+            'created_at'        => DB::raw('now()'),
+            'updated_at'        => DB::raw('now()'),
+        ]);
+
+        $user = Group::find($id);
+        $user->users()->sync([$faker->numberBetween(5, 7)]);
+
         for ($i = 1; $i <= 100; ++$i) {
             $name = $faker->name;
 
-            DB::table('groups')->insertGetId([
+            $id = DB::table('groups')->insertGetId([
                 'name'              => $name,
                 'display_name'      => str_slug($name),
                 'description'       => $faker->sentence(100),
@@ -41,6 +58,8 @@ class GroupsDatabaseSeeder extends Seeder
                 'created_at'        => DB::raw('now()'),
                 'updated_at'        => DB::raw('now()'),
             ]);
+            $user = Group::find($id);
+            $user->users()->sync([$faker->numberBetween(5, 10)]);
         }
     }
 }

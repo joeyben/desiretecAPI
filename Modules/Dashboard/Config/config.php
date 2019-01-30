@@ -1,5 +1,10 @@
 <?php
 
 return [
-    'name' => 'Dashboard'
+    'name' => 'Dashboard',
+
+    'permissions' => [
+        'View Dashboard'
+    ]
+
 ];
