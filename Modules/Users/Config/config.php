@@ -8,6 +8,7 @@ return [
         'View Active User',
         'Show User',
         'Edit User',
+        'Update User',
         'Create User',
         'Delete User',
         'Activate User',

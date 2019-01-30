@@ -180,7 +180,6 @@ class DashboardController extends Controller
     {
     }
 
-
     /**
      * Google analytics.
      *
@@ -216,10 +215,10 @@ class DashboardController extends Controller
                     break;
             }
 
-            if ($gaViewId != '') {
-                $optParams = array(
+            if ('' !== $gaViewId) {
+                $optParams = [
                     'dimensions' => 'rt:eventLabel, rt:eventCategory, rt:eventAction'
-                );
+                ];
 
                 $result['ga'] = \Analytics::getAnalyticsService()->data_realtime->get(
                     'ga:' . $gaViewId,
@@ -227,13 +226,13 @@ class DashboardController extends Controller
                     $optParams
                 );
 
-                $data = array();
+                $data = [];
 
                 foreach ($result['ga']->getRows() as $row) {
                     $item = [
-                        'rt:eventLabel' => $row[0],
+                        'rt:eventLabel'    => $row[0],
                         'rt:eventCategory' => $row[1],
-                        'rt:eventAction' => $row[2]
+                        'rt:eventAction'   => $row[2]
                     ];
 
                     array_push($data, $item);
@@ -280,7 +279,7 @@ class DashboardController extends Controller
 
             $wishesWithReactionTime = [];
             foreach ($wishesWithOffers as $wo) {
-                if (count($wo->offers) > 0) {
+                if (\count($wo->offers) > 0) {
                     $wishDate = Carbon::parse($wo->created_at);
                     $offerDate = Carbon::parse($wo->offers[0]->created_at);
                     $diffInHours = $wishDate->diffInHours($offerDate);
@@ -289,17 +288,16 @@ class DashboardController extends Controller
                 }
             }
 
-
             $data = [
-                'created_wishes' => $wishes,
-                'changed_wishes' => $changedWishes,
-                'free_text' => $freeText,
-                'answered_wishes' => $answeredWishes,
-                'reaction_quota' => $reactionQuota . '%',
+                'created_wishes'         => $wishes,
+                'changed_wishes'         => $changedWishes,
+                'free_text'              => $freeText,
+                'answered_wishes'        => $answeredWishes,
+                'reaction_quota'         => $reactionQuota . '%',
                 'latest_answered_wishes' => $latestAnsweredWishes,
-                'latest_reaction_quota' => $latestReactionQuota . '%',
-                'reaction_time' => $wishesWithReactionTime,
-                'bookings' => $bookings
+                'latest_reaction_quota'  => $latestReactionQuota . '%',
+                'reaction_time'          => $wishesWithReactionTime,
+                'bookings'               => $bookings
             ];
 
             $result['data'] = $data;

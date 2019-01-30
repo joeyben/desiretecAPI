@@ -4,6 +4,7 @@ import * as getters from './getters'
 const state = {
   group: {},
   users: {},
+  user: [],
   checked: [],
   whitelabels: {}
 }
@@ -19,6 +20,9 @@ const mutations = {
   ADD_CHECKED (state, checked) {
     state.checked = checked
   },
+  ADD_USER (state, user) {
+    state.user = user
+  },
   ADD_GROUP (state, group) {
     state.group = group
   },
@@ -27,6 +31,9 @@ const mutations = {
   },
   updateGroup (state, obj) {
     state.group[obj.name] = obj.value
+  },
+  updateUser (state, obj) {
+    state.user[obj.name] = obj.value
   }
 }
 

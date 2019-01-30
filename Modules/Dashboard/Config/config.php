@@ -6,5 +6,4 @@ return [
     'permissions' => [
         'View Dashboard'
     ]
-
 ];

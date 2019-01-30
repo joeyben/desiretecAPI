@@ -24,7 +24,6 @@ class Kernel extends ConsoleKernel
      *
      * @param \Illuminate\Console\Scheduling\Schedule $schedule
      */
-    
 
     /**
      * Register the Closure based commands for the application.

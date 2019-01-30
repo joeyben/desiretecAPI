@@ -6,15 +6,9 @@ export default [
     visible: true
   },
   {
-    name: 'first_name',
-    title: window.Lang.get('tables.first_name'),
-    sortField: 'first_name',
-    visible: true
-  },
-  {
-    name: 'last_name',
-    title: window.Lang.get('tables.last_name'),
-    sortField: 'last_name',
+    name: 'name',
+    title: window.Lang.get('tables.name'),
+    sortField: 'name',
     visible: true
   },
   {

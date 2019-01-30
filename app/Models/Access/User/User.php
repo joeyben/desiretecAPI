@@ -69,6 +69,13 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $dates = ['deleted_at'];
 
+    public $appends = ['name'];
+
+    protected $casts = [
+        'status'     => 'boolean',
+        'confirmed'  => 'boolean',
+    ];
+
     protected static $logAttributes = [
         'first_name',
         'last_name',
