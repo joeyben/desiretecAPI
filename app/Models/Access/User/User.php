@@ -71,11 +71,6 @@ class User extends Authenticatable implements JWTSubject
 
     public $appends = ['name'];
 
-    protected $casts = [
-        'status'     => 'boolean',
-        'confirmed'  => 'boolean',
-    ];
-
     protected static $logAttributes = [
         'first_name',
         'last_name',
