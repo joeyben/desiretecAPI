@@ -16,7 +16,7 @@ class ManageOffersRequest extends Request
      */
     public function authorize()
     {
-        return access()->allow('view-offer');
+        return access()->allow('create-offer');
     }
 
     /**
