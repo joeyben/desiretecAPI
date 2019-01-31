@@ -33,7 +33,7 @@ build-stage:
     - development
   variables:
     DOCKER_TLS_VERIFY: "1"
-    DOCKER_HOST: "tcp://3.120.111.163:2376"
+    DOCKER_HOST: "tcp://52.59.198.40:2376"
     DOCKER_CERT_PATH: "certs"
     CLIENT_CERT: $CLIENT_DOCKER_CERT
     MACHINE_CA: $DOCKER_MACHINE_CA
