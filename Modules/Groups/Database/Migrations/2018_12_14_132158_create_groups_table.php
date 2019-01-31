@@ -16,7 +16,7 @@ class CreateGroupsTable extends Migration
             $table->increments('id');
             $table->string('name', 191)->unique();
             $table->string('display_name', 191);
-            $table->text('description')->unsigned();
+            $table->text('description')->nullable();
             $table->boolean('status')->default(true);
             $table->integer('created_by')->unsigned();
             $table->integer('updated_by')->unsigned()->nullable();
