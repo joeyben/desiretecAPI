@@ -263,12 +263,11 @@ class GroupsController extends Controller
             $result['group']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-group') ? $this->activities->byModel($group) : [];
             $users = $this->whitelabels->find($group->whitelabel_id)->users()->get();
 
-            $result['group']['usersList'] = $users->map(function ($user) {
-                return [
-                    'id'   => $user->id,
-                    'name' => $user->first_name . ' ' . $user->last_name
-                ];
-            });
+            foreach ($users as $user) {
+                if ($user->hasRole(Flag::SELLER_ROLE)) {
+                    $result['group']['usersList'][] = ['id' => $user->id,  'name' => $user->first_name . ' ' . $user->last_name ];
+                }
+            }
 
             $result['success'] = true;
             $result['status'] = 200;
