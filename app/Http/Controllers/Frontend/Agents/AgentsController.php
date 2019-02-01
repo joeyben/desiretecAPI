@@ -8,6 +8,7 @@ use App\Http\Requests\Frontend\Agents\StoreAgentsRequest;
 use App\Http\Requests\Frontend\Agents\UpdateAgentsRequest;
 use App\Models\Agents\Agent;
 use App\Repositories\Frontend\Agents\AgentsRepository;
+use Illuminate\Http\Request;
 
 /**
  * Class AgentsController.
@@ -49,6 +50,17 @@ class AgentsController extends Controller
             'body_class' => $this::BODY_CLASS,
         ]);
     }
+    
+    /**
+     * @param \App\Models\Agents\Agent                               $agent
+     * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
+     *
+     * @return mixed
+     */
+    public function profile()
+    {
+        return view('frontend.agents.profile');
+    }
 
     /**
      * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
@@ -56,11 +68,11 @@ class AgentsController extends Controller
      *
      * @return mixed
      */
-    public function create($id, ManageAgentsRequest $request)
+    public function create(ManageAgentsRequest $request)
     {
         return view('frontend.agents.create')->with([
             'status'         => $this->status,
-            'user_id'        => $id,
+            // 'user_id'        => $id,
             'body_class'     => $this::BODY_CLASS,
         ]);
     }
@@ -70,8 +82,8 @@ class AgentsController extends Controller
      *
      * @return mixed
      */
-    public function store(StoreAgentsRequest $request)
-    {
+    public function store(Request $request)
+    { 
         $this->agent->create($request->except('_token'));
 
         return redirect()
@@ -124,5 +136,13 @@ class AgentsController extends Controller
         return redirect()
             ->route('admin.agents.index')
             ->with('flash_success', trans('alerts.frontend.agents.deleted'));
+    }
+
+    public function status($id)
+    {
+    
+        $this->agent->updateStatus($id);
+
+        return redirect()->back();
     }
 }
