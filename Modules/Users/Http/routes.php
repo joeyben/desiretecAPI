@@ -10,4 +10,6 @@ Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsPermiss
     Route::get('sellers/create', 'SellersController@create')->name('admin.sellers.create');
     Route::put('sellers/{id}', 'SellersController@update')->name('admin.sellers.update')->where('id', '[0-9]+');
     Route::put('sellers', 'SellersController@store')->name('admin.sellers.store');
+    Route::get('sellers', 'SellersController@index')->name('admin.sellers');
+    Route::get('sellers/view', 'SellersController@view')->name('admin.sellers.view');
 });

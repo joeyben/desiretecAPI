@@ -296,7 +296,7 @@
                     <li class="nav-item">
                         <a href="{{ route('admin.wishes') }}" class="nav-link">
                             <i class="icon-check"></i>
-                            <span>Wishes</span>
+                            <span>{{ __('menus.wishes') }}</span>
                         </a>
                     </li>
                     @endif
@@ -306,6 +306,15 @@
                             <a href="{{ route('admin.whitelabels') }}" class="nav-link">
                                 <i class="icon-atom2"></i>
                                 <span>{{ __('labels.backend.whitelabels.table.display_name') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if($module->has('Users')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.sellers') }}" class="nav-link">
+                                <i class="icon-collaboration"></i>
+                                <span>{{ __('menus.sellers') }}</span>
                             </a>
                         </li>
                     @endif

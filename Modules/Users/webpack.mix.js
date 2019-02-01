@@ -20,7 +20,8 @@ mix.webpackConfig({
   },
 });
 
-mix.js(__dirname + '/Resources/assets/js/modules/admin/users/users.js', 'js/modules/admin/users/users.js');
+mix.js(__dirname + '/Resources/assets/js/modules/admin/users/users.js', 'js/modules/admin/users/users.js')
+   .js(__dirname + '/Resources/assets/js/sellers/modules/admin/users/users.js', 'js/modules/admin/users/sellers.js');
 
 if (mix.inProduction()) {
   mix.version();

@@ -198,5 +198,7 @@ return [
         'status' => [
             'all' => 'All wishes'
         ]
-    ]
+    ],
+    'wishes' => 'Wishes',
+    'sellers' => 'Sellers',
 ];
