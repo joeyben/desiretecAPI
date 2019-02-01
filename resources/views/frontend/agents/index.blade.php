@@ -1,6 +1,28 @@
 @extends('frontend.layouts.app')
 
 @section('content')
+<div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="modal_content">
+        {{ Form::open(['route' => 'frontend.agents.store', 'class' => 'form-horizontal', 'method' => 'post', 'files' => true]) }}
+            <div class="modal-header">
+                <h5 class="modal-title">{{isset($customer)?'Edit':'New'}} Customer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{-- Including Form blade file --}}
+                @include("frontend.agents.form")
+            </div>
+            <div class="modal-footer">
+                {{ link_to_route('frontend.agents.index', 'Cancel', [], ['class' => 'btn btn-danger btn-md']) }}
+                {{ Form::submit('Create', ['class' => 'btn btn-primary btn-md']) }}
+            </div>
+        {{ Form::close() }} 
+        </div>
+    </div>
+</div>
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">{{ trans('labels.frontend.agents.management') }}</h3>
@@ -19,7 +41,6 @@
                     <th>{{ trans('labels.frontend.agents.table.name') }}</th>
                     <th>{{ trans('labels.frontend.agents.table.status') }}</th>
                     <th>{{ trans('labels.frontend.agents.table.created_at') }}</th>
-
                 </tr>
                 </thead>
             </table>
@@ -56,10 +77,9 @@
                 {data: 'id', name: '{{config('module.agents.table')}}.name'},
                 {data: 'name', name: '{{config('module.agents.table')}}.display_name'},
                 {data: 'status', name: '{{config('module.agents.table')}}.status'},
-                {data: 'created_at', name: '{{config('module.agents.table')}}.created_at'},
-
+                {data: 'created_at', name: '{{config('module.agents.table')}}.created_at'}
             ],
-            order: [[3, "asc"]],
+            order: [[4, "asc"]],
             searchDelay: 500,
             dom: 'lBfrtip',
             buttons: {

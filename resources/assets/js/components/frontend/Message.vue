@@ -5,7 +5,7 @@
                     <div class="panel-heading">Communicate with Agent</div>
 
                     <div class="panel-body">
-                        <chat-messages :messages="messages"></chat-messages>
+                        <chat-messages :messages="messages" :avatar="avatar"></chat-messages>
                     </div>
                     <div class="panel-footer">
                         <message-form></message-form>
@@ -20,7 +20,8 @@
 export default {
     data () {
       return {
-        messages: []
+        messages: [],
+        avatar: []
       }
     },
     mounted() {
@@ -30,7 +31,8 @@ export default {
     methods: {
         fetchMessages() {
             axios.get('/messages').then(response => {
-                this.messages = response.data.data
+                this.messages = response.data.data;
+                this.avatar = response.data.avatar;
             })
         }
     }
