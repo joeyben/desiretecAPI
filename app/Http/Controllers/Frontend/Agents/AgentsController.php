@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Frontend\Agents;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Agents\ManageAgentsRequest;
-use App\Http\Requests\Frontend\Agents\StoreAgentsRequest;
 use App\Http\Requests\Frontend\Agents\UpdateAgentsRequest;
 use App\Models\Agents\Agent;
 use App\Repositories\Frontend\Agents\AgentsRepository;
@@ -50,7 +49,7 @@ class AgentsController extends Controller
             'body_class' => $this::BODY_CLASS,
         ]);
     }
-    
+
     /**
      * @param \App\Models\Agents\Agent                               $agent
      * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
@@ -83,7 +82,7 @@ class AgentsController extends Controller
      * @return mixed
      */
     public function store(Request $request)
-    { 
+    {
         $this->agent->create($request->except('_token'));
 
         return redirect()
@@ -140,7 +139,6 @@ class AgentsController extends Controller
 
     public function status($id)
     {
-    
         $this->agent->updateStatus($id);
 
         return redirect()->back();

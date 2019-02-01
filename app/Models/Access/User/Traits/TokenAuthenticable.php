@@ -5,26 +5,23 @@ namespace App\Models\Access\User\Traits;
 use App\Mail\TokenLoginRequested;
 use App\Models\Access\User\UserToken;
 use Mail;
-use Auth;
 
 trait TokenAuthenticable
 {
     public function storeToken()
     {
-        if($this->token()->exists()){
-
-            return $this;
-        }else {
-
-            $this->token()->delete();
-
-            $this->token()->create([
-                'token' => str_random(15),
-            ]);
-            return "arber";
-
+        if ($this->token()->exists()) {
             return $this;
         }
+        $this->token()->delete();
+
+        $this->token()->create([
+                'token' => str_random(15),
+            ]);
+
+        return 'arber';
+
+        return $this;
     }
 
     public function sendTokenLink(array $options)

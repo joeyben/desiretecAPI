@@ -4,18 +4,15 @@
  * Created by PhpStorm.
  * User: goldoni
  * Date: 01.02.19
- * Time: 15:18
+ * Time: 15:18.
  */
 
 namespace App\Repositories\Criteria;
 
-use App\Services\Flag\Src\Flag;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class HasRole
- *
- * @package \App\Repositories\Criteria
+ * Class HasRole.
  */
 class HasRole
 {

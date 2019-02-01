@@ -31,7 +31,7 @@ class AgentsTableController extends Controller
     {
         return Datatables::of($this->agents->getForDataTable())
             ->addColumn('avatar', function ($agents) {
-                return '<img src="https://desiretec.s3.eu-central-1.amazonaws.com/img/agent/'.$agents->avatar.' "/>';
+                return '<img src="https://desiretec.s3.eu-central-1.amazonaws.com/img/agent/' . $agents->avatar . ' "/>';
             })
             ->addColumn('name', function ($agents) {
                 return $agents->name;
@@ -47,5 +47,5 @@ class AgentsTableController extends Controller
                 return $agents->created_at->toFormattedDateString() . ' ' . $agents->created_at->toTimeString();
             })
             ->rawColumns(['avatar', 'actions', 'confirmed'])->make(true);
-    } 
+    }
 }

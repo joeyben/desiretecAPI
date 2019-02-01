@@ -149,13 +149,13 @@ class SellersController
             ])->find($id);
 
             $result['user'] = [
-                'id'         => $user->id,
-                'first_name' => $user->first_name,
-                'email'      => $user->email,
-                'status'     => (boolean)$user->status,
-                'confirmed'  => (boolean)$user->confirmed,
-                'groups'     => $user->groups->pluck('id'),
-                'whitelabel' => $user->whitelabels->first(),
+                'id'           => $user->id,
+                'first_name'   => $user->first_name,
+                'email'        => $user->email,
+                'status'       => (bool) $user->status,
+                'confirmed'    => (bool) $user->confirmed,
+                'groups'       => $user->groups->pluck('id'),
+                'whitelabel'   => $user->whitelabels->first(),
                 'whitelabelId' => $user->whitelabels->first()->id,
             ];
 
@@ -195,13 +195,13 @@ class SellersController
             }
 
             $result['user'] = [
-                'id'         => 0,
-                'first_name' => '',
-                'email'      => '',
-                'status'     => true,
-                'confirmed'  => true,
-                'groups'     => [],
-                'whitelabel' => $whitelabel,
+                'id'           => 0,
+                'first_name'   => '',
+                'email'        => '',
+                'status'       => true,
+                'confirmed'    => true,
+                'groups'       => [],
+                'whitelabel'   => $whitelabel,
                 'whitelabelId' => $whitelabel->id
             ];
 

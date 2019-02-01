@@ -199,6 +199,6 @@ return [
             'all' => 'All wishes'
         ]
     ],
-    'wishes' => 'Wishes',
+    'wishes'  => 'Wishes',
     'sellers' => 'Sellers',
 ];

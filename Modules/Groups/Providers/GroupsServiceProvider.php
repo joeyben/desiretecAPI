@@ -45,7 +45,8 @@ class GroupsServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('groups.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'groups'
+            __DIR__ . '/../Config/config.php',
+            'groups'
         );
     }
 

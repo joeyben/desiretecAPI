@@ -8,9 +8,9 @@ use App\Events\Frontend\Agents\AgentUpdated;
 use App\Exceptions\GeneralException;
 use App\Models\Agents\Agent;
 use App\Repositories\BaseRepository;
+use Auth;
 use DB;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
 /**
  * Class AgentsRepository.
@@ -161,16 +161,17 @@ class AgentsRepository extends BaseRepository
         return $this->storage->delete($this->upload_path . $fileName);
     }
 
-    public function updateStatus($active_id){
+    public function updateStatus($active_id)
+    {
         $id = Auth::id();
         $active_agent = Agent::where('user_id', $id)->where('status', 'Active')->first();
-        
+
         $active_agent->status = 'InActive';
-        if($active_agent->save()){
+        if ($active_agent->save()) {
             $agent = Agent::find($active_id);
             $agent->status = 'Active';
 
-            if($agent->save()){
+            if ($agent->save()) {
                 return true;
             }
         }

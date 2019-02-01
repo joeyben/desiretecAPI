@@ -265,7 +265,7 @@ class GroupsController extends Controller
 
             foreach ($users as $user) {
                 if ($user->hasRole(Flag::SELLER_ROLE)) {
-                    $result['group']['usersList'][] = ['id' => $user->id,  'name' => $user->first_name . ' ' . $user->last_name ];
+                    $result['group']['usersList'][] = ['id' => $user->id,  'name' => $user->first_name . ' ' . $user->last_name];
                 }
             }
 
@@ -300,7 +300,8 @@ class GroupsController extends Controller
                     'display_name',
                     'description',
                     'status'
-                ));
+                )
+            );
 
             $this->groups->sync($group->id, 'users', $request->get('users'));
 
@@ -358,8 +359,7 @@ class GroupsController extends Controller
                     $query->select('id', 'display_name');
                 }]),
                 new ByWhitelabel('groups')
-            ])
-        );
+            ]));
     }
 
     /**

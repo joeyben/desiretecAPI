@@ -42,7 +42,8 @@ class AttachmentsServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('attachments.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'attachments'
+            __DIR__ . '/../Config/config.php',
+            'attachments'
         );
     }
 
