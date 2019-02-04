@@ -45,9 +45,6 @@ class OffersController extends Controller
      */
     public function index(ManageOffersRequest $request)
     {
-
-        // $offers = Offer::find('17');
-        // return $offers->agent;
         return view('frontend.offers.index')->with([
             'status'     => $this->status,
             'body_class' => $this::BODY_CLASS,

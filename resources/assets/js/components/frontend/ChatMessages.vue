@@ -14,7 +14,7 @@
                 </div>
                 <div class="chat-body clearfix">
                     <img v-if="message.avatar" :src="message.avatar">
-                    <img v-else src="https://www.thehindu.com/sci-tech/technology/internet/article17759222.ece/alternates/FREE_660/02th-egg-person">
+                    <img v-else :src="'/img/frontend/profile-picture/user.png'">
                     <span v-if="message.first_name == null" class="user">{{ message.display_name }}</span>
                     <span v-else class="user">{{ message.first_name }}</span>
                     <span class="date-created">{{ timestamp(message.created_at) }}</span>

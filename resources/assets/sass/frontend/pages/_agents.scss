@@ -7,9 +7,7 @@
     th:first-child{
         width:50px !important;
     }
-    // th:last-child{
-    //     width:100px !important;
-    // }
+    
     td:first-child{
         text-align:center;
         padding:8px 8px !important;
@@ -17,13 +15,4 @@
     td{
         vertical-align: middle;
     }
-    // td:last-child{
-    //     text-align:center;
-    //     button{
-    //         width:50px;
-    //         font-size:12px;
-    //         padding:2px 0px !important;
-    //     }
-
-    // }
 }

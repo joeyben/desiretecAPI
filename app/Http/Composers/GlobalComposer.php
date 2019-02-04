@@ -19,14 +19,14 @@ class GlobalComposer
     public function compose(View $view)
     {
         $id = Auth::id();
-        $agents = Agent::where('user_id', 15)->get();
+        $agents = Agent::where('user_id', $id)->get();
 
-        $logged_avatar = Agent::where('user_id', 15)->where('status', 'Active')->value('avatar');
-        $logged_agent = Agent::where('user_id', 15)->where('status', 'Active')->value('display_name');
+        $loggedAvatar = Agent::where('user_id', $id)->where('status', 'Active')->value('avatar');
+        $loggedAgent = Agent::where('user_id', $id)->where('status', 'Active')->value('display_name');
         
         $view->with(['logged_in_user' => access()->user(),
                     'agents' => $agents,
-                    'logged_agent' => $logged_agent,
-                    'logged_avatar' => $logged_avatar]);
+                    'logged_agent' => $loggedAgent,
+                    'logged_avatar' => $loggedAvatar]);
     }
 }

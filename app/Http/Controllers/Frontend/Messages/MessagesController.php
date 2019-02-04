@@ -22,11 +22,11 @@ class MessagesController extends Controller
                     ->where('wish_id', '=', $wish_id)
                     ->get();
 
-        $user_name = User::where('id', '=', $id)->first()->first_name;
+        $userName = User::where('id', '=', $id)->first()->first_name;
 
         $response = [
             'data'      => $messages,
-            'user_name' => $user_name
+            'user_name' => $userName
         ];
 
         return response()->json($response);
@@ -34,22 +34,22 @@ class MessagesController extends Controller
 
     public function sendMessage(Request $request)
     {
-        $consumer_id = $request->user_id;
-        $group_id = $request->group_id;
+        $consumerId = $request->user_id;
+        $groupId = $request->group_id;
         $message = $request->input('message');
         $id = Auth::id();
 
-        $s = User::join('group_user', 'users.id', '=', 'group_user.user_id')
+        $sellersId = User::join('group_user', 'users.id', '=', 'group_user.user_id')
                     ->join('groups', 'group_user.group_id', '=', 'groups.id')
-                    ->where('group_user.group_id', '=', 1)
+                    ->where('group_user.group_id', '=', $groupId)
                     ->pluck('user_id');
 
-        if (in_array($id, $s->all(), true)) {
-            $consumer = User::where('id', '=', $consumer_id)->pluck('email');
+        if (in_array($id, $sellersId->all(), true)) {
+            $consumer = User::where('id', '=', $consumerId)->pluck('email');
             Mail::to($consumer)->send(new MessageSent($message));
 
             $message = Message::create([
-                'user_id' => $consumer_id,
+                'user_id' => $consumerId,
                 'wish_id' => $request->wish_id,
                 'message' => $message
             ]);
@@ -57,7 +57,7 @@ class MessagesController extends Controller
         } else {
             $sellers = User::join('group_user', 'users.id', '=', 'group_user.user_id')
                             ->join('groups', 'group_user.group_id', '=', 'groups.id')
-                            ->where('group_user.group_id', '=', $group_id)
+                            ->where('group_user.group_id', '=', $groupId)
                             ->pluck('email');
 
             foreach ($sellers as $seller) {
@@ -67,7 +67,7 @@ class MessagesController extends Controller
             $agent = Agent::where('user_id', $id)->where('status', 'Active')->value('id');
 
             $message = Message::create([
-                'user_id' => $consumer_id,
+                'user_id' => $consumerId,
                 'wish_id' => $request->wish_id,
                 'message' => $message,
                 'agent_id'=> $agent
@@ -88,7 +88,7 @@ class MessagesController extends Controller
         $ids = $sellers->toArray();
 
         $agents = Agent::whereIn('user_id', $ids)->pluck('id');
-        $agents_id = $agents->toArray();
+        $agentsId = $agents->toArray();
 
         $id = Auth::id();
 
@@ -100,22 +100,22 @@ class MessagesController extends Controller
             $user = User::where('id', '=', $id)->first()->first_name;
         }
 
-        $user_messages = User::join('message', 'users.id', '=', 'message.user_id')
+        $userMessages = User::join('message', 'users.id', '=', 'message.user_id')
                         ->whereNotIn('user_id', $ids)
                         ->where('wish_id', '=', $wish)
                         ->get();
 
-        $agent_messages = Agent::join('message', 'agents.id', '=', 'message.agent_id')
-                                ->whereIn('agent_id', $agents_id)
+        $agentMessages = Agent::join('message', 'agents.id', '=', 'message.agent_id')
+                                ->whereIn('agent_id', $agentsId)
                                 ->where('wish_id', '=', $wish)
                                 ->get();
         
         $path = Storage::disk('s3')->url('img/agent/');
-        foreach($agent_messages as $agent_message){
-            $agent_message['avatar'] = $path . $agent_message['avatar'];
+        foreach($agentMessages as $agentMessage){
+            $agentMessage['avatar'] = $path . $agentMessage['avatar'];
         }
 
-        $messages = array_merge($user_messages->toArray() , $agent_messages->toArray());
+        $messages = array_merge($userMessages->toArray() , $agentMessages->toArray());
 
         $response = [
             'data'   => $messages,

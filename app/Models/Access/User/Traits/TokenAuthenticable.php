@@ -12,17 +12,11 @@ trait TokenAuthenticable
     public function storeToken()
     {
         if($this->token()->exists()){
-
             return $this;
         }else {
-
-            $this->token()->delete();
-
             $this->token()->create([
                 'token' => str_random(15),
             ]);
-            return "arber";
-
             return $this;
         }
     }

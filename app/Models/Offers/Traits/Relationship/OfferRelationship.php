@@ -25,12 +25,4 @@ trait OfferRelationship
     {
         return $this->belongsTo(Wish::class, 'wish_id');
     }
-
-    /**
-     * Offers belongsTo with Agent.
-     */
-    // public function agent()
-    // {
-    //     return $this->belongsTo(Agent::class, 'agent_id');
-    // }
 }
