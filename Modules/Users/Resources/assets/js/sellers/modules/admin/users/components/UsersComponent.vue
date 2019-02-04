@@ -25,6 +25,7 @@
     },
     computed: {
       ...Vuex.mapGetters({
+        currentUser: 'currentUser'
       })
     },
     methods: {
@@ -32,13 +33,18 @@
         loadUser: 'loadLoggedUser'
       }),
       loadWhitelabels () {
-        this.$store.dispatch('block', {element: 'usersComponent', load: true})
-        this.$http.get(window.laroute.route('admin.whitelabels.view'))
-          .then(this.onLoadUserSuccess)
-          .catch(this.onFailed)
-          .then(() => {
-            this.$store.dispatch('block', {element: 'usersComponent', load: false})
-          })
+        if (this.hasRoleTo('Administrator')) {
+          this.$store.dispatch('block', {element: 'usersComponent', load: true})
+          this.$http.get(window.laroute.route('admin.whitelabels.view'))
+            .then(this.onLoadUserSuccess)
+            .catch(this.onFailed)
+            .then(() => {
+              this.$store.dispatch('block', {element: 'usersComponent', load: false})
+            })
+        }
+      },
+      hasRoleTo (role) {
+        return this.currentUser.hasOwnProperty('roles') && this.currentUser.roles[role]
       },
       onLoadUserSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {

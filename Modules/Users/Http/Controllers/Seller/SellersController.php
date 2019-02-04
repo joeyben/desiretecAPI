@@ -270,7 +270,10 @@ class SellersController
             }
 
             $result['user'] = $this->users->create(
-                $request->only('first_name', 'email', 'status', 'confirmed')
+                array_merge(
+                    $request->only('first_name', 'email', 'status', 'confirmed'),
+                    ['created_by' => $this->auth->guard('web')->user()->id, 'updated_by' => $this->auth->guard('web')->user()->id]
+                )
             );
 
             $this->users->sync($result['user']->id, 'groups', $request->get('groups'));

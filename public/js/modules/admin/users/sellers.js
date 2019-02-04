@@ -99397,17 +99397,24 @@ exports.default = {
   },
 
   watch: {},
-  computed: _extends({}, _vuex2.default.mapGetters({})),
+  computed: _extends({}, _vuex2.default.mapGetters({
+    currentUser: 'currentUser'
+  })),
   methods: _extends({}, _vuex2.default.mapActions({
     loadUser: 'loadLoggedUser'
   }), {
     loadWhitelabels: function loadWhitelabels() {
       var _this = this;
 
-      this.$store.dispatch('block', { element: 'usersComponent', load: true });
-      this.$http.get(window.laroute.route('admin.whitelabels.view')).then(this.onLoadUserSuccess).catch(this.onFailed).then(function () {
-        _this.$store.dispatch('block', { element: 'usersComponent', load: false });
-      });
+      if (this.hasRoleTo('Administrator')) {
+        this.$store.dispatch('block', { element: 'usersComponent', load: true });
+        this.$http.get(window.laroute.route('admin.whitelabels.view')).then(this.onLoadUserSuccess).catch(this.onFailed).then(function () {
+          _this.$store.dispatch('block', { element: 'usersComponent', load: false });
+        });
+      }
+    },
+    hasRoleTo: function hasRoleTo(role) {
+      return this.currentUser.hasOwnProperty('roles') && this.currentUser.roles[role];
     },
     onLoadUserSuccess: function onLoadUserSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
@@ -100442,7 +100449,7 @@ var render = function() {
   return _c(
     "span",
     [
-      _vm.can_edit && _vm.hasRole("Administrator")
+      _vm.can_edit && _vm.hasRole("Executive")
         ? _c("router-link", {
             attrs: {
               to: { name: "root.seller", params: { id: _vm.rowData.id } },
@@ -101362,7 +101369,10 @@ var render = function() {
                   {
                     staticClass: "dropdown-item",
                     attrs: {
-                      to: { name: "root.create.seller", params: { id: 0 } }
+                      to: {
+                        name: "root.create.seller",
+                        params: { id: 0, whitelabel_id: 0 }
+                      }
                     }
                   },
                   [

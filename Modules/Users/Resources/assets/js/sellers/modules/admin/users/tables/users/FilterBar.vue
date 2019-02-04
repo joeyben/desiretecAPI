@@ -5,7 +5,7 @@
                 <i class="icon-gear"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-left">
-                <router-link class="dropdown-item" :to="{name: 'root.create.seller', params: { id: 0 }}"  v-if="can_edit_seller"><i class="icon-plus2"></i>{{ trans('button.create') }}</router-link>
+                <router-link class="dropdown-item" :to="{name: 'root.create.seller', params: { id: 0, whitelabel_id: 0 }}"  v-if="can_edit_seller"><i class="icon-plus2"></i>{{ trans('button.create') }}</router-link>
                 <a href="javascript:;" class="dropdown-item" v-on:click="dialogFormVisible = true" v-if="hasRole('Administrator')"><i class="icon-plus2"></i>  {{ trans('button.create') }}</a>
             </div>
         </h5>
