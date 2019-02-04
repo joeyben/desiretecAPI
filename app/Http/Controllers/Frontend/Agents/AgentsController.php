@@ -71,7 +71,6 @@ class AgentsController extends Controller
     {
         return view('frontend.agents.create')->with([
             'status'         => $this->status,
-            // 'user_id'        => $id,
             'body_class'     => $this::BODY_CLASS,
         ]);
     }

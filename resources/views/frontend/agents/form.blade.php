@@ -39,12 +39,4 @@
                 </div>
             </div>
         @endif
-        
-        
-        <!-- <div class="col-lg-5">
-            <div class="custom-file-input">
-                <input type="file" name="avatar" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" />
-                <label for="file-1"><i class="fa fa-upload"></i><span>Choose a file</span></label>
-            </div>
-        </div> -->
 </div>
