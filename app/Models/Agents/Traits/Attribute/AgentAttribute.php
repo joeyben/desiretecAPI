@@ -7,7 +7,7 @@ namespace App\Models\Agents\Traits\Attribute;
  */
 trait AgentAttribute
 {
-    /**
+    /*
      * @return string
      */
     // public function getActionButtonsAttribute()

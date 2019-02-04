@@ -39,6 +39,8 @@ class Flag implements FlagInterface
 
     const ADMINISTRATOR_ROLE = 'Administrator';
 
+    const EXECUTIVE_ROLE = 'Executive';
+
     const SELLER_ROLE = 'Seller';
 
     const UPLOADS = 'uploads';

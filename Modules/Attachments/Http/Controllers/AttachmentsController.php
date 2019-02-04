@@ -99,13 +99,17 @@ class AttachmentsController extends Controller
             } else {
                 return $this->response->json(
                     ['attachable_id' => 'This content can not receive a file'],
-                    Flag::STATUS_CODE_ERROR, [], JSON_NUMERIC_CHECK
+                    Flag::STATUS_CODE_ERROR,
+                    [],
+                    JSON_NUMERIC_CHECK
                 );
             }
         } else {
             return $this->response->json(
                 ['error' => 'method attachments undefined'],
-                Flag::STATUS_CODE_ERROR, [], JSON_NUMERIC_CHECK
+                Flag::STATUS_CODE_ERROR,
+                [],
+                JSON_NUMERIC_CHECK
             );
         }
 

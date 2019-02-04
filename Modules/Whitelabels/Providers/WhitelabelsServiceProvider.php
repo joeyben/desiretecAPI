@@ -42,7 +42,8 @@ class WhitelabelsServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('whitelabels.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'whitelabels'
+            __DIR__ . '/../Config/config.php',
+            'whitelabels'
         );
     }
 

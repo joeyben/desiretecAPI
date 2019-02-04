@@ -15,7 +15,7 @@ trait AgentRelationship
         return $this->hasOne(config('auth.providers.users.model'), 'id', 'user_id');
     }
 
-    /**
+    /*
      * Agents have many Offers.
      */
     // public function offers()

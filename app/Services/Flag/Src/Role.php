@@ -105,5 +105,6 @@ class Role
         ['name' => 'Logs Category'],
         ['name' => 'View Dashboard'],
         ['name' => 'Edit User'],
+        ['name' => 'View Agent Frontend'],
     ];
 }

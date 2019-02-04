@@ -175,8 +175,8 @@ class WishesController extends Controller
         try {
             $result['wish'] = $this->wishes->create(
                 array_merge(
-                     $request->only('title', 'catering', 'description', 'airport', 'destination', 'earliest_start', 'latest_return', 'budget', 'adults', 'kids', 'duration', 'status'),
-                     ['created_by' => $this->auth->guard('web')->user()->id, 'updated_by' => $this->auth->guard('web')->user()->id]
+                    $request->only('title', 'catering', 'description', 'airport', 'destination', 'earliest_start', 'latest_return', 'budget', 'adults', 'kids', 'duration', 'status'),
+                    ['created_by' => $this->auth->guard('web')->user()->id, 'updated_by' => $this->auth->guard('web')->user()->id]
                 )
             );
 
@@ -262,7 +262,8 @@ class WishesController extends Controller
                 $request->only(
                     'status',
                     'group_id'
-                ));
+                )
+            );
 
             $result['wish'] = $wish;
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => $this->lang->get('labels.wish')]);
