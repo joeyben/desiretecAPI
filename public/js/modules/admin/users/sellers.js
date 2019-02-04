@@ -99397,29 +99397,22 @@ exports.default = {
   },
 
   watch: {},
-  computed: _extends({}, _vuex2.default.mapGetters({
-    currentUser: 'currentUser'
-  })),
+  computed: _extends({}, _vuex2.default.mapGetters({})),
   methods: _extends({}, _vuex2.default.mapActions({
     loadUser: 'loadLoggedUser'
   }), {
     loadWhitelabels: function loadWhitelabels() {
       var _this = this;
 
-      if (this.hasRoleTo('Administrator')) {
-        this.$store.dispatch('block', { element: 'usersComponent', load: true });
-        this.$http.get(window.laroute.route('admin.whitelabels.view')).then(this.onLoadUserSuccess).catch(this.onFailed).then(function () {
-          _this.$store.dispatch('block', { element: 'usersComponent', load: false });
-        });
-      }
-    },
-    hasRoleTo: function hasRoleTo(role) {
-      return this.currentUser.hasOwnProperty('roles') && this.currentUser.roles[role];
+      this.$store.dispatch('block', { element: 'usersComponent', load: true });
+      this.$http.get(window.laroute.route('admin.whitelabels.view')).then(this.onLoadUserSuccess).catch(this.onFailed).then(function () {
+        _this.$store.dispatch('block', { element: 'usersComponent', load: false });
+      });
     },
     onLoadUserSuccess: function onLoadUserSuccess(response) {
-      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true && response.data.hasOwnProperty('whitelabels')) {
         this.$store.commit('ADD_WHITELABELS', response.data.whitelabels);
-      } else {
+      } else if (response.data.hasOwnProperty('message')) {
         this.$notify.error({ title: 'Failed', message: response.data.message });
       }
     },
