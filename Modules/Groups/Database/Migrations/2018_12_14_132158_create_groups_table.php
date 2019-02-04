@@ -16,7 +16,7 @@ class CreateGroupsTable extends Migration
             $table->increments('id');
             $table->string('name', 191)->unique();
             $table->string('display_name', 191);
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->boolean('status')->default(true);
             $table->integer('created_by')->unsigned();
             $table->integer('updated_by')->unsigned()->nullable();
@@ -26,7 +26,7 @@ class CreateGroupsTable extends Migration
             $table->timestamps();
         });
 
-        if (!Schema::hasColumn('wishes', 'group_id')) {
+        if (Schema::hasTable('wishes') && !Schema::hasColumn('wishes', 'group_id')) {
             Schema::table('wishes', function (Blueprint $table) {
                 $table->integer('group_id')->after('created_by')->nullable()->unsigned()->index();
                 $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');

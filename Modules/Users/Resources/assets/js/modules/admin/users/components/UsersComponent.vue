@@ -2,6 +2,7 @@
     <!-- Inner container -->
     <div>
         <vue-datatable></vue-datatable>
+        <router-view></router-view>
     </div>
     <!-- /inner container -->
 </template>

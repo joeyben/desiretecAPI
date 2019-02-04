@@ -5,7 +5,6 @@ namespace App\Models\Access\User\Traits;
 use App\Mail\TokenLoginRequested;
 use App\Models\Access\User\UserToken;
 use Mail;
-use Auth;
 
 trait TokenAuthenticable
 {

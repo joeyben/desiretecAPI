@@ -42,7 +42,8 @@ class DashboardServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('dashboard.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'dashboard'
+            __DIR__ . '/../Config/config.php',
+            'dashboard'
         );
     }
 

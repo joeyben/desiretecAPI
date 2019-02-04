@@ -42,7 +42,8 @@ class PermissionsServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('permissions.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'permissions'
+            __DIR__ . '/../Config/config.php',
+            'permissions'
         );
     }
 

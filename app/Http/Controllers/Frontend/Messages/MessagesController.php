@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Frontend\Messages;
 use App\Http\Controllers\Controller;
 use App\Mail\MessageSent;
 use App\Models\Access\User\User;
-use App\Models\Messages\Message;
 use App\Models\Agents\Agent;
+use App\Models\Messages\Message;
 use Auth;
 use Illuminate\Http\Request;
-use Mail;
 use Illuminate\Support\Facades\Storage;
+use Mail;
 
 class MessagesController extends Controller
 {
@@ -53,7 +53,6 @@ class MessagesController extends Controller
                 'wish_id' => $request->wish_id,
                 'message' => $message
             ]);
-
         } else {
             $sellers = User::join('group_user', 'users.id', '=', 'group_user.user_id')
                             ->join('groups', 'group_user.group_id', '=', 'groups.id')
@@ -72,7 +71,6 @@ class MessagesController extends Controller
                 'message' => $message,
                 'agent_id'=> $agent
             ]);
-
         }
 
         return ['status' => 'Message Sent!'];
@@ -92,10 +90,10 @@ class MessagesController extends Controller
 
         $id = Auth::id();
 
-        if (in_array($id, $ids, true)) {
+        if (\in_array($id, $ids, true)) {
             $user = Agent::where('user_id', '=', $id)
                             ->where('status', 'Active')
-                            ->value('display_name');             
+                            ->value('display_name');
         } else {
             $user = User::where('id', '=', $id)->first()->first_name;
         }
@@ -109,7 +107,7 @@ class MessagesController extends Controller
                                 ->whereIn('agent_id', $agentsId)
                                 ->where('wish_id', '=', $wish)
                                 ->get();
-        
+
         $path = Storage::disk('s3')->url('img/agent/');
         foreach($agentMessages as $agentMessage){
             $agentMessage['avatar'] = $path . $agentMessage['avatar'];

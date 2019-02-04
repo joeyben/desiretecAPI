@@ -473,15 +473,15 @@ return [
         ],
         'dashboard' => [
             'analytics' => [
-                'created_wishes' => 'Created Wishes',
-                'changed_wishes' => 'Changed Wishes',
-                'free_text' => 'Free text',
-                'answered_wishes' => 'Answered Wishes',
-                'reaction_quota' => 'Reaction Quota',
+                'created_wishes'         => 'Created Wishes',
+                'changed_wishes'         => 'Changed Wishes',
+                'free_text'              => 'Free text',
+                'answered_wishes'        => 'Answered Wishes',
+                'reaction_quota'         => 'Reaction Quota',
                 'latest_answered_wishes' => 'Latest Answered Wishes',
-                'latest_reaction_quota' => 'Latest Reaction Quota',
-                'bookings' => 'Bookings',
-                'reaction_time' => 'Reaction Time'
+                'latest_reaction_quota'  => 'Latest Reaction Quota',
+                'bookings'               => 'Bookings',
+                'reaction_time'          => 'Reaction Time'
             ]
         ]
     ],

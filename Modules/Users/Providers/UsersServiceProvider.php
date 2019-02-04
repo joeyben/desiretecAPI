@@ -42,7 +42,8 @@ class UsersServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('users.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'users'
+            __DIR__ . '/../Config/config.php',
+            'users'
         );
     }
 

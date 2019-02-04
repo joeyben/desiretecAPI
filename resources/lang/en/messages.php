@@ -47,4 +47,5 @@ return [
     'here'                       => 'login here',
     'sign_up'                    => 'Sign Up',
     'terms'                      => 'Agree to terms and conditions',
+    'whitelabel_user'            => 'Create Associate Whitelabel User',
 ];

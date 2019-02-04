@@ -85,4 +85,6 @@ return [
     'create'                       => 'Create',
     'users'                        => 'Users',
     'display_name'                 => 'Display Name',
+    'domain'                       => 'Domain',
+    'confirmed'                    => 'Confirmed',
 ];

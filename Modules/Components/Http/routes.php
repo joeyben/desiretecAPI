@@ -9,5 +9,4 @@ Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:Ad
     Route::get('components/migrate/{key}', 'ComponentsController@migrate')->name('admin.components.migrate')->where('key', '[a-zA-Z]+');
     Route::get('components/refresh/{key}', 'ComponentsController@refresh')->name('admin.components.refresh')->where('key', '[a-zA-Z]+');
     Route::get('components/rollback/{key}', 'ComponentsController@rollback')->name('admin.components.rollback')->where('key', '[a-zA-Z]+');
-}
-);
+});

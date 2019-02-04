@@ -1,6 +1,10 @@
 import * as types from '../../../../vuex/mutation-types'
 import api from './api/api'
 
+export const addUser = function (store, user) {
+  store.commit(types.ADD_USER, user)
+}
+
 export const addGroup = function (store, group) {
   store.commit(types.ADD_GROUP, group)
 }

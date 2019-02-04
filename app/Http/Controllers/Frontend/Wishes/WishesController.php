@@ -8,8 +8,8 @@ use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
 use App\Models\Access\User\User;
 use App\Models\Access\User\UserToken;
-use App\Models\Wishes\Wish;
 use App\Models\Agents\Agent;
+use App\Models\Wishes\Wish;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use Auth;
 use Illuminate\Http\Request;
@@ -93,15 +93,15 @@ class WishesController extends Controller
      */
     public function show(Wish $wish, ManageWishesRequest $request)
     {
-        $offers =  $wish->offers;
+        $offers = $wish->offers;
         $avatar = [];
-        foreach($offers as $offer){
+        foreach ($offers as $offer) {
             array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
         }
 
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
-            'avatar'             => $avatar,   
+            'avatar'             => $avatar,
             'body_class'         => $this::BODY_CLASS,
         ]);
     }

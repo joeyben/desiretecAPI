@@ -6,7 +6,9 @@ return [
     'permissions' => [
         'View Permission Management',
         'Edit Permission',
+        'Create Permission',
         'Delete Permission',
-        'Create Permission'
+        'Update Permission',
+        'Logs Permission',
     ]
 ];

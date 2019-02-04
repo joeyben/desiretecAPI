@@ -2,9 +2,9 @@
 
 namespace App\Http\Composers;
 
-use Illuminate\View\View;
-use Auth;
 use App\Models\Agents\Agent;
+use Auth;
+use Illuminate\View\View;
 
 /**
  * Class GlobalComposer.
