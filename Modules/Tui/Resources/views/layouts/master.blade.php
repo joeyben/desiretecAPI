@@ -14,17 +14,20 @@
     </a>
 @endsection
 
+@section('before-scripts')
+    <script src="{{ mix('whitelabel/tui/js/tui.js') }}"></script>
+@endsection
+
 @section('after-scripts')
 
-    <script src="{{ mix('whitelabel/tui/js/tui.js') }}"></script>
     <script type="application/javascript">
-        window.kwizzme = {
+        window.dt = {
             config: { baseUrl: ''  }
         };
 
         var kwz = document.createElement('script');
         kwz.type = 'text/javascript'; kwz.async = true;
-        kwz.src = '/whitelabel/tui/js/layer/layer.js';
+        kwz.src = '/whitelabel/tui/js/layer/layer-locale.js';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(kwz, s);
 
@@ -36,7 +39,7 @@
         }
 
         function showLayer(){
-            kwizzme.PopupManager.show();
+            dt.PopupManager.show();
             if(isMobile()){
                 $("body").addClass('mobile-layer');
             }
