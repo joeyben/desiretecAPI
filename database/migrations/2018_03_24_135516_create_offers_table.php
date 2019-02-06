@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -26,6 +27,13 @@ class CreateOffersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        if (Schema::hasTable('agents')) {
+            Schema::table('offers', function (Blueprint $table) {
+                $table->integer('agent_id')->after('wish_id')->nullable()->unsigned()->index();
+                $table->foreign('agent_id')->references('id')->on('agents')->onDelete('agents');
+            });
+        }
     }
 
     /**
@@ -35,6 +43,8 @@ class CreateOffersTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('offers');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
