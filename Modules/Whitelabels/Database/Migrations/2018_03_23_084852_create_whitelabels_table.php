@@ -21,7 +21,7 @@ class CreateWhitelabelsTable extends Migration
             $table->integer('ga_view_id')->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->smallInteger('state')->default(0);
-
+            $table->string('bg_image', 191)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
