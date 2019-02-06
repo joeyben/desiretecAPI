@@ -106,10 +106,10 @@
                                                             <tbody>
                                                             <tr>
                                                                 <td width="140" align="left" style="padding-left:10px;">
-                                                                    <img width="15" src="https://ci6.googleusercontent.com/proxy/ToInio0qfJTQbdrrIVoN87ngpdbJ3wm4Vv9wjtwbpT-N28UXTjrjVKO0e8Xnlx8vAoQqrCpMAc5cMDezCJYKA737BxMmErfq44eRC27ZMHTU6iTx3-mAKvmGaUt0DUfD=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/budget.png" />
+                                                                    <img width="15" src="https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/budget.png" />
                                                                 </td>
                                                                 <td width="140" align="left" style="padding-left:10px;">
-                                                                    <img width="15" src="https://ci6.googleusercontent.com/proxy/ToInio0qfJTQbdrrIVoN87ngpdbJ3wm4Vv9wjtwbpT-N28UXTjrjVKO0e8Xnlx8vAoQqrCpMAc5cMDezCJYKA737BxMmErfq44eRC27ZMHTU6iTx3-mAKvmGaUt0DUfD=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/budget.png" />
+                                                                    <img width="15" src="https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/budget.png" />
                                                                 </td>
                                                                 <td width="140" align="left" style="padding-left:10px;">
                                                                     <img width="15" src="https://ci5.googleusercontent.com/proxy/ZqmTrHLJEjRm4-XWW3fPT912psmXzsLXCRXE9wWJewzMxqGBElj4NUd8CbS_wfD8yx-X428uj_vRwoyCRn9ebeaPgG5nOziVHBN648mV3mU0K7FFDAM4jMpWJx32sg=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/time.png" />
@@ -173,19 +173,9 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <a href="https://tui-reisewunsch.com/details/kwizz/5c0f8d8ce4b02bc8e2133c8f?ltid=V0BNVFDX8M6E5ZH0">
-                                    <img src="https://ci6.googleusercontent.com/proxy/nDtULy0GqStUKZ31-cN8ZeiZAlj5MyqRqh3f7ugQGM5sy1cKQAvMqlYb5CsemcDZCcyDSNkeQlWpI_mRWterpVYbYGLYrEtIKplt0e-j=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cstui/images/button.png" width="200"/>
+                                <a href="{{ url('/wish') }}/{{ $wish->id}}?token={{ $token }}">
+                                    <img src="https://tui-reisewunsch.com/bundles/cstui/images/button.png" width="200"/>
                                 </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" height="10">
-                                &nbsp;
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" >
-                                <a href="{{ url('/wish') }}/{{ $wish->id}}/{{ $token }}" >To view this wish click here!</a>
                             </td>
                         </tr>
                         <tr>
