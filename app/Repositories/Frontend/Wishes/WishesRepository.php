@@ -114,26 +114,28 @@ class WishesRepository extends BaseRepository
      *
      * @throws \App\Exceptions\GeneralException
      *
-     * @return bool
+     * @return mixed
      */
     public function create(array $input)
     {
-        DB::transaction(function () use ($input) {
-            $input = $this->uploadImage($input);
+        $wish = DB::transaction(function () use ($input) {
+            $input['featured_image'] = $this->uploadImage($input) ? $input['featured_image'] : "1522558148csm_ER_Namibia_b97bcd06f0.jpg";
             $input['created_by'] = access()->user()->id;
             $input['whitelabel_id'] = access()->user()->getWhitelabels()[0];
             $input['group_id'] = $this->getGroup();
+            $input['title'] = $input['destination'];
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
 
                 event(new WishCreated($wish));
 
-                return true;
+                return $wish;
             }
 
             throw new GeneralException(trans('exceptions.backend.wishes.create_error'));
         });
+        return $wish;
     }
 
     /**
@@ -149,7 +151,7 @@ class WishesRepository extends BaseRepository
         // Uploading Image
         if (array_key_exists('featured_image', $input)) {
             $this->deleteOldFile($wish);
-            $input = $this->uploadImage($input);
+            $this->uploadImage($input);
         }
 
         DB::transaction(function () use ($wish, $input) {
@@ -190,21 +192,23 @@ class WishesRepository extends BaseRepository
      *
      * @param array $input
      *
-     * @return array $input
+     * @return mixed
      */
-    public function uploadImage($input)
+    public function uploadImage(&$input)
     {
-        $avatar = $input['featured_image'];
 
         if (isset($input['featured_image']) && !empty($input['featured_image'])) {
+            $avatar = $input['featured_image'];
+
             $fileName = time() . $avatar->getClientOriginalName();
 
             $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()), 'public');
 
             $input = array_merge($input, ['featured_image' => $fileName]);
 
-            return $input;
+            return true;
         }
+        return false;
     }
 
     /**

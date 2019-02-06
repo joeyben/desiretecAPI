@@ -22,4 +22,20 @@ class EloquentCategoriesRepository extends RepositoryAbstract implements Categor
     {
         return Category::class;
     }
+
+    /**
+     * Find data by multiple values in one field.
+     *
+     * @param        $column
+     * @param        $field
+     * @param array  $columns
+     * @return mixed
+     */
+    public function getChildrenFromSlug($column, $field, $columns = ['*'])
+    {
+        $parent     = $this->model->where($column, $field)->first($columns)->toArray();
+        $children   = $this->model->where('parent_id', $parent['id'])->pluck('slug')->toArray();
+        $children = array_combine($children, $children);
+        return $children;
+    }
 }

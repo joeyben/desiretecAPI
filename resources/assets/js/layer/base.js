@@ -1,12 +1,9 @@
-var Cookies = require('js-cookie');
-require('jquery-ui/ui/widgets/datepicker');
-
-var kwizzme = window.kwizzme || {};
+var dt = window.dt || {};
 
 
 (function($) {
     var Debug = {
-        enabled: window.kwizzme && window.kwizzme.debug,
+        enabled: window.dt && window.dt.debug,
         log: function(message, color) {
             if(!this.enabled) {
                 return;
@@ -33,14 +30,14 @@ var kwizzme = window.kwizzme || {};
         }
     };
 
-    if (typeof window.kwizzme.PopupManager !== 'undefined') {
+    if (typeof window.dt.PopupManager !== 'undefined') {
         Debug.warning('Popup script is already loaded. Preventing double load.');
         return;
     }
 
-    kwizzme.decoders = [];
+    dt.decoders = [];
 
-    kwizzme.AbstractTripDataDecoder = {
+    dt.AbstractTripDataDecoder = {
         filterDataDecoders: {},
         filterFormSelector: null,
         name: 'Abstract Decoder',
@@ -152,7 +149,7 @@ var kwizzme = window.kwizzme || {};
         }
     };
 
-    kwizzme.PopupManager = {
+    dt.PopupManager = {
         initialized: false,
         decoder: null,
         popup: null,
@@ -180,7 +177,7 @@ var kwizzme = window.kwizzme || {};
 
             Debug.info('Initializing...');
 
-            this.config = jQuery.extend({}, kwizzme.defaultConfig, window.kwizzme.config);
+            this.config = jQuery.extend({}, dt.defaultConfig, window.dt.config);
 
             this.selectDecoder();
 
@@ -193,9 +190,9 @@ var kwizzme = window.kwizzme || {};
             this.installStyles();
             this.createPopup();
 
-            if(jQuery.isArray(window.kwizzme.initCallbacks)) {
-                for(var i = 0; i < window.kwizzme.initCallbacks.length; ++i) {
-                    window.kwizzme.initCallbacks[i](this);
+            if(jQuery.isArray(window.dt.initCallbacks)) {
+                for(var i = 0; i < window.dt.initCallbacks.length; ++i) {
+                    window.dt.initCallbacks[i](this);
                 }
             }
 
@@ -226,7 +223,7 @@ var kwizzme = window.kwizzme || {};
             $.exitIntent('enable', { 'sensitivity': 0 });
             $(document).bind('exitintent',
                 function() {
-                    kwizzme.PopupManager.show();
+                    dt.PopupManager.show();
                 });
         },
         //getFieldValue: function(selector) {
@@ -265,8 +262,8 @@ var kwizzme = window.kwizzme || {};
         //    }
         //},
         selectDecoder: function() {
-            for(var i = 0; i < kwizzme.decoders.length; ++i) {
-                var decoder = kwizzme.decoders[i],
+            for(var i = 0; i < dt.decoders.length; ++i) {
+                var decoder = dt.decoders[i],
                     regex = new RegExp(decoder.matchesUrl);
 
                 Debug.info('Trying ' + decoder.name);
@@ -297,7 +294,7 @@ var kwizzme = window.kwizzme || {};
                 this.setVariant();
                 this.createPopup();
             } else {
-                if (window.kwizzme.force) {
+                if (window.dt.force) {
                     tripData = {};
                     this.setVariant();
                     this.createPopup();
@@ -323,14 +320,14 @@ var kwizzme = window.kwizzme || {};
                 }
             });
 
-            if (typeof window.kwizzme.triggerCallback === 'function') {
-                window.kwizzme.triggerCallback();
+            if (typeof window.dt.triggerCallback === 'function') {
+                window.dt.triggerCallback();
             }
             if(!this.shown){
                 // mixpanel.track(
                 //    "Show Layer"
                 // );
-                kwizzme.Tracking.event('shown', this.trackingLabel);
+                dt.Tracking.event('shown', this.trackingLabel);
                 this.shown = true;
             }
             this.showPopup();
@@ -364,8 +361,8 @@ var kwizzme = window.kwizzme || {};
             this.shown = this.fetchPopup();
 
             if (this.shown) {
-                if (typeof kwizzme.exitIntent !== 'undefined') {
-                    kwizzme.exitIntent.setCookie();
+                if (typeof dt.exitIntent !== 'undefined') {
+                    dt.exitIntent.setCookie();
                 }
             }
 
@@ -384,13 +381,13 @@ var kwizzme = window.kwizzme || {};
             this.popup.find('#next-button').click($.proxy(this.setNext, this));
             this.popup.find('.kwp-close').click($.proxy(this.closePopup, this));
             if($(".kwp-content").hasClass('kwp-completed-tui') || $(".kwp-content").hasClass('kwp-completed')){
-                if( kwizzme.PopupManager.isMobile){
+                if( dt.PopupManager.isMobile){
                     $(".kwp-header").hide();
                 }
                 $(".kwp-header").addClass('success');
                 $(".kwp-header-content").addClass('hidden-content');
             }else{
-                if(kwizzme.PopupManager.decoder.name == "TUI IBE"){
+                if(dt.PopupManager.decoder.name == "TUI IBE"){
 
                 }else {
 
@@ -404,7 +401,7 @@ var kwizzme = window.kwizzme || {};
             this.modal.css('display', 'block');
 
             setTimeout(function() {
-                self.popup.addClass('kwizzme-modal-visible');
+                self.popup.addClass('dt-modal-visible');
                 if(self.variant === "steps"){
                     self.popup.addClass('steps');
                 }
@@ -424,7 +421,7 @@ var kwizzme = window.kwizzme || {};
             this.modal.css('display', 'none');
             this.shown = false;
 
-            kwizzme.Tracking.event('close', this.trackingLabel);
+            dt.Tracking.event('close', this.trackingLabel);
             // mixpanel.track(
             //     "Close Layer"
             // );
@@ -434,7 +431,7 @@ var kwizzme = window.kwizzme || {};
                 this.popup = jQuery('<div/>', {'class': 'kwp'});
 
                 this.modal =
-                    jQuery('<div/>', {'class': 'kwizzme-modal'})
+                    jQuery('<div/>', {'class': 'dt-modal'})
                         .hide()
                         .append(this.popup)
                 //.click(jQuery.proxy(this.onBackdropClick, this))
@@ -443,7 +440,7 @@ var kwizzme = window.kwizzme || {};
                 jQuery('body').prepend(this.modal);
             }
 
-            var html = kwizzme.popupTemplate;
+            var html = dt.popupTemplate;
 
             if (typeof html === 'function') {
                 if (!this.variant) {
@@ -477,8 +474,8 @@ var kwizzme = window.kwizzme || {};
         onFormSubmit: function(event) {
             event.preventDefault();
 
-            if(typeof window.kwizzme.conversionCallback === 'function') {
-                window.kwizzme.conversionCallback();
+            if(typeof window.dt.conversionCallback === 'function') {
+                window.dt.conversionCallback();
             }
 
             var formData = this.popup.find('form').serialize();
@@ -490,8 +487,8 @@ var kwizzme = window.kwizzme || {};
             }, {});
             this.popupBody.html('<div class="kwp-spinner"></div>');
 
-            jQuery.ajax(this.config.baseUrl + this.config.popupPath + this.getQueryPart(), {
-                type: 'POST',
+            jQuery.ajax(this.config.baseUrl + this.config.popupStore + this.getQueryPart(), {
+                type: 'GET',
                 data: formData,
                 dataType: 'html',
                 crossDomain: true,
@@ -502,7 +499,7 @@ var kwizzme = window.kwizzme || {};
                 }
             });
 
-            kwizzme.Tracking.event('Submit-Button', this.trackingLabel);
+            dt.Tracking.event('Submit-Button', this.trackingLabel);
             /*  mixpanel.track(
                   "Layer submitted",
                   {
@@ -535,7 +532,7 @@ var kwizzme = window.kwizzme || {};
         }
     };
 
-    kwizzme.Tracking = {
+    dt.Tracking = {
         isInitialized: false,
         category: 'exit_window',
         init: function(category, TrackingId) {
@@ -552,7 +549,7 @@ var kwizzme = window.kwizzme || {};
             ga('create', TrackingId, 'auto', {'name': 'DesireTec'});
             ga('DesireTec.set', 'anonymizeIp', true);
 
-            if(window.kwizzme && window.kwizzme.debug) {
+            if(window.dt && window.dt.debug) {
                 window.ga_debug = {trace: true};
             }
 
@@ -573,7 +570,7 @@ var kwizzme = window.kwizzme || {};
             /*  mixpanel.people.set({
                   "$siteID": siteId
               });
-              jQuery('body').on('blur','.kwizzme-modal input[type=text]',function() {
+              jQuery('body').on('blur','.dt-modal input[type=text]',function() {
                   mixpanel.track(
                       jQuery(this).attr('name'),
                       {'value':jQuery(this).val()}
@@ -592,7 +589,7 @@ var kwizzme = window.kwizzme || {};
         }
     };
 
-    kwizzme.validateEmail = function(field, hint) {
+    dt.validateEmail = function(field, hint) {
         var $field = jQuery(field),
             $hint = jQuery(hint),
             typos = {
@@ -645,10 +642,10 @@ var kwizzme = window.kwizzme || {};
         });
     };
 
-    if(window.kwizzme && window.kwizzme.debug) {
+    if(window.dt && window.dt.debug) {
         jQuery(document).keypress(function (e) {
             if (e.charCode == 103) {
-                kwizzme.PopupManager.show();
+                dt.PopupManager.show();
             }
         });
     }
