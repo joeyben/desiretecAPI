@@ -1,16 +1,17 @@
-var kwizzme = window.kwizzme || {};
+var dt = window.dt || {};
 
 (function ($) {
 
-    kwizzme.defaultConfig = {
+    dt.defaultConfig = {
         baseUrl: 'http://127.0.0.1:8000',
         popupPath: '/show',
-        cssPath: '/whitelabel/tui/css/layer/layer.css'
+        popupStore:'/store',
+        cssPath: '/whitelabel/tui/css/layer/whitelabel.css'
     };
 
-    kwizzme.popupTemplate = function (variant) {
+    dt.popupTemplate = function (variant) {
 
-        var mobileHeader = kwizzme.PopupManager.decoder.getRandomElement([
+        var mobileHeader = dt.PopupManager.decoder.getRandomElement([
             'Jetzt Ihre Reise wünschen und Angebot erhalten!',
             'Dürfen wir Sie beraten?',
             'Hier klicken und persönliches Angebot erhalten',
@@ -68,7 +69,7 @@ var kwizzme = window.kwizzme || {};
 
 
     /**** Mobile Decoder ****/
-    var TuiIBETripDataDecoderMobile = $.extend({}, kwizzme.AbstractTripDataDecoder, {
+    var TuiIBETripDataDecoderMobile = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'TUI Rundreisen Mobile',
         matchesUrl: 'm.tui.com/(buchen)',
         dictionaries: {
@@ -412,7 +413,7 @@ var kwizzme = window.kwizzme || {};
         }
     });
 
-    var TuiIBETripDataDecoder = $.extend({}, kwizzme.AbstractTripDataDecoder, {
+    var TuiIBETripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         decodeDate: function (raw) {
             var r = /\w+\.\s+(\d+\.\d+.\d+)/.exec(raw);
 
@@ -921,7 +922,7 @@ var kwizzme = window.kwizzme || {};
         }
     });
 
-    var TuiHMTripDataDecoder = $.extend({}, kwizzme.AbstractTripDataDecoder, {
+    var TuiHMTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'TUI Honeymoon',
         matchesUrl: 'www.tui.com/pauschalreisen(/[a-z-]+)*/flitterwochen',
         filterFormSelector: 'body',
@@ -948,7 +949,7 @@ var kwizzme = window.kwizzme || {};
         }
     });
 
-    var KwizzmeFakeTripDataDecoder = $.extend({}, kwizzme.AbstractTripDataDecoder, {
+    var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'DesireTec WL',
         matchesUrl: '',
         filterFormSelector: 'body',
@@ -1082,27 +1083,27 @@ var kwizzme = window.kwizzme || {};
             }
         }
     });
-    kwizzme.decoders.push(TuiIBETripDataDecoder);
-    kwizzme.decoders.push(TuiIBETripDataDecoderMobile);
-    kwizzme.decoders.push(KwizzmeFakeTripDataDecoder);
-    kwizzme.decoders.push(TuiHMTripDataDecoder);
+    dt.decoders.push(TuiIBETripDataDecoder);
+    dt.decoders.push(TuiIBETripDataDecoderMobile);
+    dt.decoders.push(KwizzmeFakeTripDataDecoder);
+    dt.decoders.push(TuiHMTripDataDecoder);
 
-    //kwizzme.decoders.push($.extend({}, TuiIBETripDataDecoder, {
+    //dt.decoders.push($.extend({}, TuiIBETripDataDecoder, {
     //    name: 'TUI Landingpages',
     //    matchesUrl: 'tui.com/pauschalreisen',
     //    filterFormSelector: '.simpleSearch'
     //}));
 
-   /* kwizzme.initCallbacks = kwizzme.initCallbacks || [];
-    kwizzme.initCallbacks.push(function (popup) {
-        kwizzme.exitIntent = ExitIntent(function () {
+   /* dt.initCallbacks = dt.initCallbacks || [];
+    dt.initCallbacks.push(function (popup) {
+        dt.exitIntent = ExitIntent(function () {
             popup.show();
         }, {
             oneTime: true,
             useTopDist: true,
             useMouseLeave: true,
             useAccel: true,
-            useCookie: !window.kwizzme.debug,
+            useCookie: !window.dt.debug,
             manualCookie: true,
             excludeLeftPixels: 120,
             cookieOptions: {
@@ -1112,7 +1113,7 @@ var kwizzme = window.kwizzme || {};
     });*/
 
 
-    kwizzme.PopupManager.closePopup = function(event) {
+    dt.PopupManager.closePopup = function(event) {
         event.preventDefault();
 
         if(isMobile()){
@@ -1132,30 +1133,30 @@ var kwizzme = window.kwizzme || {};
         $("body").removeClass('mobile-layer');
         $("body, html").css({'overflow':'auto'});
 
-        kwizzme.Tracking.event('close', this.trackingLabel);
+        dt.Tracking.event('close', this.trackingLabel);
 
     };
 
 
-    kwizzme.scrollUpDetect = function () {
+    dt.scrollUpDetect = function () {
         var shown = false;
         $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
             if(direction === 'down' && parseInt(distance) > 50 && !shown){
-                kwizzme.showMobileLayer();
+                dt.showMobileLayer();
                 shown = true;
             }else if (direction === 'down' || direction === 'up' && shown && ($("body .hl-sticky").hasClass('is-sticky'))) {
-                $(".kwizzme-modal").css({'top': (document.documentElement.clientHeight - 85) + "px"});
+                $(".dt-modal").css({'top': (document.documentElement.clientHeight - 85) + "px"});
             } else if(direction === 'down' || direction === 'up' && shown) {
-                $(".kwizzme-modal").css({'top': (document.documentElement.clientHeight - 100) + "px"});
+                $(".dt-modal").css({'top': (document.documentElement.clientHeight - 100) + "px"});
             }
         }, allowPageScroll:"vertical"} );
 
 
-        $( ".kwizzme-modal" ).swipe( {
+        $( ".dt-modal" ).swipe( {
             tap:function(e, target) {
                 $(this).addClass('m-open');
                 $("body, html").css({'overflow':'hidden'});
-                ga('kwizzme.send', 'event', 'Mobile Layer', 'Layer shown', 'Tablet');
+                ga('dt.send', 'event', 'Mobile Layer', 'Layer shown', 'Tablet');
             },
             swipe:function(e, direction, distance, duration, fingerCount, fingerData) {
                 var $event = e;
@@ -1164,7 +1165,7 @@ var kwizzme = window.kwizzme || {};
                         return false;
                     $(this).addClass('swipe-left');
                     setTimeout(function(e) {
-                        kwizzme.PopupManager.closePopup($event);
+                        dt.PopupManager.closePopup($event);
                     },1000);
                     return false;
                 }else if(direction === "right"){
@@ -1172,7 +1173,7 @@ var kwizzme = window.kwizzme || {};
                         return false;
                     $(this).addClass('swipe-right');
                     setTimeout(function(e) {
-                        kwizzme.PopupManager.closePopup($event);
+                        dt.PopupManager.closePopup($event);
                     },1000);
                     return false;
                 }
@@ -1182,63 +1183,63 @@ var kwizzme = window.kwizzme || {};
 
     };
 
-    kwizzme.triggerButton = function(e){
+    dt.triggerButton = function(e){
         e && e.preventDefault();
         $("body").on('click tap','.trigger-modal',function () {
             $("body").addClass('mobile-layer');
             $("body, html").css({'overflow':'hidden'});
-            kwizzme.PopupManager.shown = true;
-            kwizzme.PopupManager.modal.removeClass('tmp-hidden').removeClass('swipe-right').removeClass('swipe-left');
+            dt.PopupManager.shown = true;
+            dt.PopupManager.modal.removeClass('tmp-hidden').removeClass('swipe-right').removeClass('swipe-left');
             $(this).remove();
-            ga('kwizzme.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
+            ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
         });
 
         $( ".kwp-header" ).swipe( {
             tap:function(e, target) {
                 var $event = e;
-                if($( ".kwizzme-modal" ).hasClass('m-open')){
-                    kwizzme.PopupManager.closePopup($event);
+                if($( ".dt-modal" ).hasClass('m-open')){
+                    dt.PopupManager.closePopup($event);
                 }
             }
         });
     }
 
-    kwizzme.showMobileLayer = function (e) {
-        kwizzme.PopupManager.show();
+    dt.showMobileLayer = function (e) {
+        dt.PopupManager.show();
         $("body").addClass('mobile-layer');
-        //$.cookie(kwizzme.PopupManager.mobileCookieId,'true',kwizzme.PopupManager.cookieOptions);
-        ga('kwizzme.send', 'event', 'Mobile Layer', 'Teaser shown', 'Tablet');
+        //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
+        ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Tablet');
     };
 
     $(document).ready(function (e) {
         if(isMobile()) {
-            kwizzme.defaultConfig.cssPath = kwizzme.defaultConfig.cssPath.replace('popup.css', 'popup_mobile.css');
+            dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('popup.css', 'popup_mobile.css');
         }
-        kwizzme.PopupManager.init();
-        kwizzme.Tracking.init('tui_exitwindow','UA-105970361-1');
+        dt.PopupManager.init();
+        dt.Tracking.init('tui_exitwindow','UA-105970361-1');
 
-        if(isMobile() && kwizzme.PopupManager.decoder){
-            kwizzme.scrollUpDetect();
-            kwizzme.PopupManager.isMobile = true;
-            $(".kwizzme-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
+        if(isMobile() && dt.PopupManager.decoder){
+            dt.scrollUpDetect();
+            dt.PopupManager.isMobile = true;
+            $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
             textareaAutosize();
             if(getUrlParams('autoShow')){
-                kwizzme.showMobileLayer();
+                dt.showMobileLayer();
                 shown = true;
                 $(this).addClass('m-open');
                 $("body, html").css({'overflow':'hidden'});
             }
         }
         if(getUrlParams('autoShow') && !isMobile()){
-            kwizzme.PopupManager.show();
+            dt.PopupManager.show();
         }
     });
 
     $( window ).on( "orientationchange", function( event ) {
-        $(".kwizzme-modal").css({'top':(document.documentElement.clientHeight - 85)+"px"});
+        $(".dt-modal").css({'top':(document.documentElement.clientHeight - 85)+"px"});
     });
 
-    kwizzme.childrenAges = function () {
+    dt.childrenAges = function () {
         (function ($, children, age) {
             function update() {
                 var val = $(children).val();
@@ -1273,9 +1274,9 @@ var kwizzme = window.kwizzme || {};
         })(jQuery, '#children', '#age_');
     };
 
-    kwizzme.hotelStars = function () {
+    dt.hotelStars = function () {
         function restoreValue() {
-            var val = $('#hotel_category').val();
+            var val = $('#category').val();
 
             if (!val) {
                 val = 0;
@@ -1285,8 +1286,13 @@ var kwizzme = window.kwizzme || {};
         }
 
         function setValue(val) {
-            $('#hotel_category').val(val);
+            $('#category').val(val);
             restoreValue(val);
+        }
+
+        function setText(cnt){
+            var sonnen = cnt === 1 ? "Sonne" : "Sonnen";
+            $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+cnt+" "+sonnen);
         }
 
         function highlight(cnt) {
@@ -1299,12 +1305,15 @@ var kwizzme = window.kwizzme || {};
                     $(this).removeClass('kwp-star-full');
                 }
             });
+            setText(cnt);
         }
 
         $('.kwp-star-input .kwp-star').hover(function () {
             highlight(parseInt($(this).attr('data-val')));
         }).click(function () {
             setValue(parseInt($(this).attr('data-val')));
+            var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Sonne" : "Sonnen";
+            $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
         });
 
         $('.kwp-star-input').mouseout(function () {
@@ -1315,7 +1324,7 @@ var kwizzme = window.kwizzme || {};
     };
 
 
-    kwizzme.agbModal = function (e) {
+    dt.agbModal = function (e) {
         e && e.preventDefault();
 
         var element = null;
@@ -1328,7 +1337,7 @@ var kwizzme = window.kwizzme || {};
                 hide();
             }
 
-            element = $('<div class="kwizzme-modal kwizzme-modal-agb" ><div class="kwp"><div class="kwp-close-button kwp-close"></div><div class="kwp-agb-content"></div></div></div>');
+            element = $('<div class="dt-modal dt-modal-agb" ><div class="kwp"><div class="kwp-close-button kwp-close"></div><div class="kwp-agb-content"></div></div></div>');
 
 
 
@@ -1362,7 +1371,7 @@ var kwizzme = window.kwizzme || {};
         return false;
     };
 
-    kwizzme.darkGreyLayout = function (e) {
+    dt.darkGreyLayout = function (e) {
         e && e.preventDefault();
         $(".kw-overlay-notActive").click(function () {
             $(this).fadeOut("slow");

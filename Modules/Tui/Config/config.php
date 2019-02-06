@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'Tui'
+    'name' => 'Tui',
+    'id'   => 1
 ];
