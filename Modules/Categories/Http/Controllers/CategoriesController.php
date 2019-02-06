@@ -107,6 +107,30 @@ class CategoriesController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @param string $slug
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function childrenBySlug(string $slug)
+    {
+        try {
+            $parent = $this->categories->findWhereFirst('slug', $slug)->toArray();
+            $result['children'] = $this->categories->findWhere('parent_id', $parent['id']);
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\JsonResponse
