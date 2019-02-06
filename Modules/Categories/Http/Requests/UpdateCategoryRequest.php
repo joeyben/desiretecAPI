@@ -15,7 +15,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'id'        => 'required|integer',
-            'name'      => 'required|string|min:2|max:255',
+            'name'      => 'required|max:255',
             'parent_id' => 'nullable|integer',
         ];
     }
