@@ -79,26 +79,29 @@
 
     <div class="offer-container">
         <h4>{{ count($wish->offers) }} Offers</h4>
+        <?php $i=0; ?>
         @foreach($wish->offers as $key => $offer)
             <div class="offer">
-                <span class="title">{{ $offer->title }}</span>
-                <p>{{ $offer->description }}</p>
-                <a class="icon_document" href="{{ Storage::disk('s3')->url('img/offer/' . $offer->file) }}"></a>
+                <img src="{{ Storage::disk('s3')->url('img/agent/' . $avatar[$i]) }}" >
+                <div class='offer-info'>
+                    <h6>{{ $offer->agent }}</h6>
+                    <span class="title">{{ $offer->title }}</span>
+                    <p>{{ $offer->description }}</p>
+                    <a class="icon_document" href="{{ Storage::disk('s3')->url('img/offer/' . $offer->file) }}"></a>
+                </div>
             </div>
             @if(($key+1) < count($wish->offers))
                 <hr>
             @endif
+        <?php $i++; ?>
         @endforeach
     </div>
 
-    <div class="comment-container">
+    <div class="message-container">
         <h4>{{ trans('wish.view.comment-header') }}</h4>
         <hr>
        <chat-messages :wishid="{{ $wish->id }}" :userid="{{ Auth::user()->id }}" :groupid="{{ $wish->group_id }}"></chat-messages>
     </div>
-
-
-
 
 @endsection
 

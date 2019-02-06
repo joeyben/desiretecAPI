@@ -79,10 +79,12 @@
         Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
             Route::get('agents', 'AgentsController@index')->name('index');
             Route::post('agents/get', 'AgentsTableController')->name('get');
+            Route::get('agent/profile', 'AgentsController@profile')->name('profile');
             Route::get('agents/create', 'AgentsController@create')->name('create');
             Route::post('agents/store', 'AgentsController@store')->name('store');
             Route::post('agents/edit', 'AgentsController@edit')->name('edit');
             Route::post('agents/destroy', 'AgentsController@destroy')->name('destroy');
+            Route::get('agents/status/{id}', 'AgentsController@status')->name('status');
         });
 
         Route::group(['namespace' => 'Comments', 'as' => 'comments.'], function () {
@@ -93,7 +95,6 @@
         });
 
         Route::group(['namespace' => 'Messages', 'as' => 'messages.'], function () {
-
             Route::get('messages/{wish}/{group}', 'MessagesController@getMessages');
             Route::post('messages', 'MessagesController@sendMessage');
             Route::get('message/delete/{message}', 'MessagesController@deleteMessage');

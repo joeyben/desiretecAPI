@@ -6,6 +6,7 @@ use App\Events\Frontend\Offers\OfferCreated;
 use App\Events\Frontend\Offers\OfferDeleted;
 use App\Events\Frontend\Offers\OfferUpdated;
 use App\Exceptions\GeneralException;
+use App\Models\Agents\Agent;
 use App\Models\Offers\Offer;
 use App\Repositories\BaseRepository;
 use DB;
@@ -90,8 +91,15 @@ class OffersRepository extends BaseRepository
     public function create(array $input)
     {
         DB::transaction(function () use ($input) {
+            $id = access()->user()->id;
+
             $input = $this->uploadImage($input);
-            $input['created_by'] = access()->user()->id;
+            $input['created_by'] = $id;
+
+            $agent = Agent::where('user_id', '=', $id)
+                    ->where('status', '=', 'Active')->value('id');
+
+            $input['agent_id'] = $agent;
 
             if ($offer = Offer::create($input)) {
                 event(new OfferCreated($offer));

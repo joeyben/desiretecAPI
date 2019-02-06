@@ -14,5 +14,4 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'na
     Route::delete('categories/{id}', 'CategoriesController@destroy')->name('admin.categories.destroy')->where('id', '[0-9]+');
     Route::put('categories/store', 'CategoriesController@store')->name('admin.categories.store');
     Route::put('categories/{id}', 'CategoriesController@update')->name('admin.categories.update')->where('id', '[0-9]+');
-}
-);
+});

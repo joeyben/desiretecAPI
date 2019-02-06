@@ -42,7 +42,8 @@ class ComponentsServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('components.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'components'
+            __DIR__ . '/../Config/config.php',
+            'components'
         );
     }
 

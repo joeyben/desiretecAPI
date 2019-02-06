@@ -8,6 +8,7 @@ use App\Events\Frontend\Agents\AgentUpdated;
 use App\Exceptions\GeneralException;
 use App\Models\Agents\Agent;
 use App\Repositories\BaseRepository;
+use Auth;
 use DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,6 +49,7 @@ class AgentsRepository extends BaseRepository
                 config('module.agents.table') . '.name',
                 config('module.agents.table') . '.avatar',
                 config('module.agents.table') . '.display_name',
+                config('module.agents.table') . '.status',
                 config('module.agents.table') . '.user_id',
                 config('module.agents.table') . '.created_at',
             ])->where(config('module.agents.table') . '.user_id', access()->user()->id);
@@ -139,7 +141,7 @@ class AgentsRepository extends BaseRepository
         if (isset($input['avatar']) && !empty($input['avatar'])) {
             $fileName = time() . $avatar->getClientOriginalName();
 
-            $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()));
+            $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()), 'public');
 
             $input = array_merge($input, ['avatar' => $fileName]);
 
@@ -157,5 +159,21 @@ class AgentsRepository extends BaseRepository
         $fileName = $model->file;
 
         return $this->storage->delete($this->upload_path . $fileName);
+    }
+
+    public function updateStatus($active_id)
+    {
+        $id = Auth::id();
+        $active_agent = Agent::where('user_id', $id)->where('status', 'Active')->first();
+
+        $active_agent->status = 'InActive';
+        if ($active_agent->save()) {
+            $agent = Agent::find($active_id);
+            $agent->status = 'Active';
+
+            if ($agent->save()) {
+                return true;
+            }
+        }
     }
 }

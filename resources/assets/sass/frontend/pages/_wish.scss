@@ -53,6 +53,38 @@ body.wish{
     padding: 20px;
     box-shadow: 0 0 16px -1px rgba(0,0,0,.1);
     margin-bottom: 20px;
+    img{
+      height: 60px;
+    width: 60px;
+    object-fit: cover;
+    float: left;
+    margin-right: 20px;
+    }
+    .offer-info{
+    display: flex;
+    flex-direction: column;
+    h6{
+      margin-top: 0;
+    }
+    .title{
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    }
+  }
+
+  .message-container{
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 16px -1px rgba(0,0,0,.1);
+    margin-bottom: 20px;
+    img{
+      height: 60px;
+    width: 60px;
+    object-fit: cover;
+    float: left;
+    margin-right: 20px;
+    }
   }
 
   .comment-container{

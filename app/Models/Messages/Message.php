@@ -11,7 +11,8 @@ class Message extends Model
     protected $fillable = [
         'message',
         'user_id',
-        'wish_id'
+        'wish_id',
+        'agent_id'
     ];
 
     public function user()

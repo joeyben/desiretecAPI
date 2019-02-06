@@ -38,4 +38,10 @@ class Flag implements FlagInterface
     const STATUS_CODE_SERVICE_UNAVAILABLE = 503;
 
     const ADMINISTRATOR_ROLE = 'Administrator';
+
+    const EXECUTIVE_ROLE = 'Executive';
+
+    const SELLER_ROLE = 'Seller';
+
+    const UPLOADS = 'uploads';
 }

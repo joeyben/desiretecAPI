@@ -2,7 +2,6 @@
 
 namespace App\Models\Access\User;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class UserToken extends Model
@@ -13,9 +12,9 @@ class UserToken extends Model
         'token'
     ];
 
-    public function belongsToEmail($email) 
+    public function belongsToEmail($email)
     {
-        return (bool) ($this->user->Where('email', $email)->count() === 1);
+        return (bool) (1 === $this->user->Where('email', $email)->count());
     }
 
     public function getRouteKeyName()

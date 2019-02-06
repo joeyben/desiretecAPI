@@ -7,7 +7,7 @@
     <span class="sr-only">Toggle Dropdown</span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="{{route('frontend.agents.create')}}"><i class="fa fa-plus"></i> {{trans('menus.frontend.agents.create')}}</a></li>
+    <li><a href="#modalForm" data-toggle="modal" data-target="#modalForm"><i class="fa fa-plus"></i> {{trans('menus.frontend.agents.create')}}</a></li>
   </ul>
 </div>
 <div class="clearfix"></div>

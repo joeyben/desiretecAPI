@@ -31,7 +31,7 @@ optimize: install ## optimize
 	$(PHP) artisan cache:clear & $(PHP) artisan config:clear & $(PHP) artisan route:clear & $(PHP) artisan view:clear
 
 migrate: optimize ## migrate
-	composer dump-autoload & $(PHP) artisan migrate:refresh --seed
+	$(PHP) artisan migrate:refresh --seed
 
 routes: optimize
 	$(PHP) artisan laroute:generate

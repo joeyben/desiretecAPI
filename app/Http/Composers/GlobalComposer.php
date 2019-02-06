@@ -2,6 +2,8 @@
 
 namespace App\Http\Composers;
 
+use App\Models\Agents\Agent;
+use Auth;
 use Illuminate\View\View;
 
 /**
@@ -16,6 +18,15 @@ class GlobalComposer
      */
     public function compose(View $view)
     {
-        $view->with('logged_in_user', access()->user());
+        $id = Auth::id();
+        $agents = Agent::where('user_id', $id)->get();
+
+        $loggedAvatar = Agent::where('user_id', $id)->where('status', 'Active')->value('avatar');
+        $loggedAgent = Agent::where('user_id', $id)->where('status', 'Active')->value('display_name');
+        
+        $view->with(['logged_in_user' => access()->user(),
+                    'agents' => $agents,
+                    'logged_agent' => $loggedAgent,
+                    'logged_avatar' => $loggedAvatar]);
     }
 }

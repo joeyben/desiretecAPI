@@ -23,6 +23,7 @@ class Offer extends BaseModel
         'description',
         'status',
         'file',
+        'agent_id',
         'created_by',
         'wish_id',
     ];

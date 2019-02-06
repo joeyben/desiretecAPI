@@ -130,3 +130,27 @@ a, a:hover, a:active, a:focus {
             420px 120px;
   }
 }
+
+.agent-dropdown-img{
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 1px solid #aaa;
+}
+.agent-menu-img{
+  float: left;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 1px solid #aaa;
+}
+
+.navbar-right{
+  a{
+    cursor: pointer;
+  }
+}

@@ -10,13 +10,14 @@ trait TokenAuthenticable
 {
     public function storeToken()
     {
-        $this->token()->delete();
-
-        $this->token()->create([
-            'token' => str_random(15),
-        ]);
-
-        return $this;
+        if($this->token()->exists()){
+            return $this;
+        }else {
+            $this->token()->create([
+                'token' => str_random(15),
+            ]);
+            return $this;
+        }
     }
 
     public function sendTokenLink(array $options)

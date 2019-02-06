@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Agents\ManageAgentsRequest;
 use App\Repositories\Frontend\Agents\AgentsRepository;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class AgentsTableController.
@@ -31,7 +32,8 @@ class AgentsTableController extends Controller
     {
         return Datatables::of($this->agents->getForDataTable())
             ->addColumn('avatar', function ($agents) {
-                return $agents->avatar;
+                $path = Storage::disk('s3')->url('img/agent/');
+                return '<img src="'.$path.$agents->avatar.'"/>';
             })
             ->addColumn('name', function ($agents) {
                 return $agents->name;
@@ -46,9 +48,6 @@ class AgentsTableController extends Controller
             ->addColumn('created_at', function ($agents) {
                 return $agents->created_at->toFormattedDateString() . ' ' . $agents->created_at->toTimeString();
             })
-            ->addColumn('actions', function ($agents) {
-                return $agents->action_buttons;
-            })
-            ->make(true);
-    }
+            ->rawColumns(['avatar'])->make(true);
+    } 
 }
