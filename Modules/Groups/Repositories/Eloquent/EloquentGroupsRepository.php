@@ -10,6 +10,7 @@
 namespace Modules\Groups\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
+use Illuminate\Support\Facades\Auth;
 use Modules\Groups\Entities\Group;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
 use Modules\Whitelabels\Entities\Whitelabel;
@@ -36,10 +37,10 @@ class EloquentGroupsRepository extends RepositoryAbstract implements GroupsRepos
 
     public function getWhitelabel($request): Whitelabel
     {
-        $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+        $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
 
         if ((null === $whitelabel) && $request->has('whitelabel_id')) {
-            $whitelabel = $this->whitelabels->find($request->get('whitelabel_id'));
+            $whitelabel = Whitelabel::find($request->get('whitelabel_id'));
         }
 
         return $whitelabel;

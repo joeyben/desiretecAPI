@@ -257,6 +257,7 @@ class GroupsController extends Controller
                 'display_name'        => $group->display_name,
                 'owner'               => $group->owner->full_name,
                 'whitelabel'          => $group->whitelabel,
+                'whitelabel_id'       => $group->whitelabel->id,
                 'users'               => $group->users->pluck('id'),
                 'description'         => $group->description,
                 'status'              => $group->status,
