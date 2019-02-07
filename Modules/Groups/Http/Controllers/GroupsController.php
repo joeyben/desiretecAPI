@@ -194,14 +194,7 @@ class GroupsController extends Controller
     public function store(StoreGroupRequest $request)
     {
         try {
-            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
-
-            if ((null === $whitelabel) && $request->has('whitelabel_id')) {
-                $whitelabel = $this->whitelabels->find($request->get('whitelabel_id'));
-            }
-
-
-
+            $whitelabel = $this->groups->getWhitelabel($request);
 
             $result['group'] = $this->groups->create(
                 array_merge(
@@ -300,6 +293,7 @@ class GroupsController extends Controller
     public function update(UpdateGroupRequest $request, int $id)
     {
         try {
+            $whitelabel = $this->groups->getWhitelabel($request);
             $group = $this->groups->withCriteria([
                 new ByWhitelabel('groups')
             ])->update(

@@ -12,6 +12,7 @@ namespace Modules\Groups\Repositories\Eloquent;
 use App\Repositories\RepositoryAbstract;
 use Modules\Groups\Entities\Group;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
+use Modules\Whitelabels\Entities\Whitelabel;
 
 /**
  * Class EloquentPostsRepository.
@@ -31,5 +32,16 @@ class EloquentGroupsRepository extends RepositoryAbstract implements GroupsRepos
         $group->update($current);
 
         return $group;
+    }
+
+    public function getWhitelabel($request): Whitelabel
+    {
+        $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+        if ((null === $whitelabel) && $request->has('whitelabel_id')) {
+            $whitelabel = $this->whitelabels->find($request->get('whitelabel_id'));
+        }
+
+        return $whitelabel;
     }
 }
