@@ -3,6 +3,7 @@
         <router-link :to="{name: 'root.edit', params: { id: rowData.id }}" data-popup="tooltip" :title="rowData.id" v-if="can_edit" v-text="rowData.id"></router-link>
         <span v-if="!can_edit && !deleted">{{ rowData.id }}</span>
         <s class="text-danger"  v-if="deleted">{{ rowData.id }}</s>
+        <span class="badge bg-teal-800" v-if="rowData.current">{{  trans('labels.current') }}</span>
     </span>
 </template>
 

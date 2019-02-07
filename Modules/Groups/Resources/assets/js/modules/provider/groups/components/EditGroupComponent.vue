@@ -100,6 +100,17 @@
                                                     </el-switch>
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.current') }} </label>
+                                                <div class="col-lg-9">
+                                                    <el-switch
+                                                            @input="updateCurrent"
+                                                            :value="group.current"
+                                                            active-color="#13ce66"
+                                                            inactive-color="#ff4949">
+                                                    </el-switch>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </fieldset>
@@ -195,6 +206,9 @@
       },
       updateStatus (value) {
         this.$store.commit('updateGroup', {name: 'status', value: value})
+      },
+      updateCurrent (value) {
+        this.$store.commit('updateGroup', {name: 'current', value: value})
       },
       loadModal () {
         let id = parseInt(this.$route.params.id)

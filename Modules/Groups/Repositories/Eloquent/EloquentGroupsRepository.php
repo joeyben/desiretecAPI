@@ -22,4 +22,14 @@ class EloquentGroupsRepository extends RepositoryAbstract implements GroupsRepos
     {
         return Group::class;
     }
+
+    public function updateCurrent(Group $group, array $current, int $whitelabelId)
+    {
+        Group::where('current', true)->where('whitelabel_id', $whitelabelId)
+            ->update(['current' => false]);
+
+        $group->update($current);
+
+        return $group;
+    }
 }
