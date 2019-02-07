@@ -35,7 +35,7 @@ class EloquentGroupsRepository extends RepositoryAbstract implements GroupsRepos
         return $group;
     }
 
-    public function getWhitelabel($request): Whitelabel
+    public function getWhitelabel($request)
     {
         $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
 
