@@ -552,4 +552,5 @@ return [
     'content'                  => 'Content',
     'review'                   => 'Review',
     'ratings'                  => 'Ratings',
+    'current'                  => 'Current',
 ];

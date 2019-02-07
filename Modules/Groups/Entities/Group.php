@@ -27,6 +27,7 @@ class Group extends Model
 
     protected $casts = [
         'status'  => 'boolean',
+        'current'  => 'boolean',
     ];
 
     /**
