@@ -68,7 +68,7 @@
 
                     <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('validation.attributes.backend.whitelabels.image') }}</legend>
                     <div class="form-group row">
-                        <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'background'}" :fileList="whitelabel.background" :limit="1" listType="picture-card"></upload-attachments>
+                        <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'background'}" :fileList="whitelabel.background" :limit="1" listType="picture-card" :tip="trans('messages.background')" accept="image/png,image/jpg,image/jpeg"></upload-attachments>
                         <div class="help-block text-danger" v-if="errors.has('background')">
                             <strong v-text="errors.get('background')"></strong>
                         </div>
@@ -76,14 +76,14 @@
 
                     <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('labels.logo') }} </legend>
                     <div class="form-group row">
-                        <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'logo'}" :fileList="whitelabel.logo" :limit="1" listType="picture-card"></upload-attachments>
+                        <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'logo'}" :fileList="whitelabel.logo" :limit="1" listType="picture-card" :tip="trans('messages.logo')" accept="image/png,image/jpg,image/jpeg,image/svg"></upload-attachments>
                         <div class="help-block text-danger" v-if="errors.has('logo')">
                             <strong v-text="errors.get('logo')"></strong>
                         </div>
                     </div>
                     <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('Favicon') }} </legend>
                     <div class="form-group row">
-                        <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'favicon'}" :fileList="whitelabel.favicon" :limit="1" listType="picture-card"></upload-attachments>
+                        <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'favicon'}" :fileList="whitelabel.favicon" :limit="1" listType="picture-card" :tip="trans('messages.favicon')" accept="image/png,image/icon"></upload-attachments>
                         <div class="help-block text-danger" v-if="errors.has('favicon')">
                             <strong v-text="errors.get('favicon')"></strong>
                         </div>

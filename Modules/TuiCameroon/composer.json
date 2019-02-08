@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/tuicameroon",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\TuiCameroon\\Providers\\TuiCameroonServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\TuiCameroon\\": ""
+        }
+    }
+}
