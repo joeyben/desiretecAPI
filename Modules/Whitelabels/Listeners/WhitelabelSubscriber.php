@@ -2,7 +2,11 @@
 
 namespace Modules\Whitelabels\Listeners;
 
+use App\Models\Access\User\User;
+use App\Services\Flag\Src\Flag;
+use Illuminate\Support\Facades\Notification;
 use Modules\Whitelabels\Entities\Whitelabel;
+use Modules\Whitelabels\Notifications\CreateWhitelabelNotification;
 
 class WhitelabelSubscriber
 {
@@ -31,5 +35,10 @@ class WhitelabelSubscriber
 
     public function onCreatedWhitelabel(Whitelabel $whitelabel)
     {
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('roles.name', Flag::ADMINISTRATOR_ROLE);
+        })->get();
+
+        Notification::send($users, new CreateWhitelabelNotification($whitelabel));
     }
 }

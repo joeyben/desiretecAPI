@@ -93,7 +93,7 @@
           this.$events.fire('handle-success-file', response)
         },
         beforeAvatarUpload (file) {
-          let isJPG = (file.type === 'image/jpeg' || file.type === 'image/png')
+          let isJPG = (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/png' || file.type === 'image/svg')
           let isLt2M = file.size / 1024 / 1024 < 1000
 
           if (!isJPG) {

@@ -553,4 +553,13 @@ return [
     'review'                   => 'Review',
     'ratings'                  => 'Ratings',
     'current'                  => 'Current',
+    'logo'                     => 'Logo',
+    'domain'                   => 'Domain',
+    'whitelabel_information'   => 'Whitelabel Information',
+    'whitelabel_executive'     => 'Whitelabel Executive',
+    'go_next'                  => 'Go Next!',
+    'go_back'                  => 'Go back!',
+    'finish'                   => 'Finish',
+    'whitelabel_title'         => 'New Whitelabel',
+    'whitelabel_subtitle'      => 'And a new subtitle',
 ];
