@@ -534,11 +534,14 @@ class WhitelabelsController extends Controller
 
     private function delTree($dir)
     {
-        $files = array_diff(scandir($dir), ['.', '..']);
-        foreach ($files as $file) {
-            (is_dir("$dir/$file")) ? $this->delTree("$dir/$file") : unlink("$dir/$file");
-        }
+        if (is_dir($dir)) {
+            $files = array_diff(scandir($dir), ['.', '..']);
+            foreach ($files as $file) {
+                (is_dir("$dir/$file")) ? $this->delTree("$dir/$file") : unlink("$dir/$file");
+            }
 
-        return rmdir($dir);
+            return rmdir($dir);
+        }
+        return true;
     }
 }

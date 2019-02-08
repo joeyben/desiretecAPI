@@ -51,33 +51,6 @@ class CreateWhitelabelNotification extends Notification implements ShouldBroadca
     }
 
     /**
-     * Get the mail representation of the notification.
-     *
-     * @param mixed $notifiable
-     *
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage())
-            ->subject('[' . config('app.name', 'MVP') . '] ' . $this->whitelabel->display_name)
-            ->view('whitelabels::emails.created', ['whitelabel' => $this->whitelabel]);
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param mixed $notifiable
-     *
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-        ];
-    }
-
-    /**
      * @param $notifiable
      *
      * @return \Illuminate\Notifications\Messages\BroadcastMessage

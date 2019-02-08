@@ -7,7 +7,6 @@ use App\Services\Flag\Src\Flag;
 use Illuminate\Support\Facades\Notification;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Notifications\CreateWhitelabelNotification;
-use Modules\Whitelabels\Notifications\DeleteWhitelabelNotification;
 
 class WhitelabelSubscriber
 {
@@ -32,7 +31,6 @@ class WhitelabelSubscriber
     public function subscribe($events)
     {
         $events->listen('eloquent.created: Modules\Whitelabels\Entities\Whitelabel', [$this, 'onCreatedWhitelabel']);
-        $events->listen('eloquent.deleted: Modules\Whitelabels\Entities\Whitelabel', [$this, 'onDeletedWhitelabel']);
     }
 
     public function onCreatedWhitelabel(Whitelabel $whitelabel)
@@ -42,15 +40,5 @@ class WhitelabelSubscriber
         })->get();
 
         Notification::send($users, new CreateWhitelabelNotification($whitelabel));
-    }
-
-    public function onDeletedWhitelabel(Whitelabel $whitelabel)
-    {
-
-        $users = User::whereHas('roles', function ($query) {
-            $query->where('roles.name', Flag::ADMINISTRATOR_ROLE);
-        })->get();
-
-        Notification::send($users, new DeleteWhitelabelNotification($whitelabel));
     }
 }
