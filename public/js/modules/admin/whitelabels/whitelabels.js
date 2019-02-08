@@ -101900,7 +101900,7 @@ exports.default = {
       this.$events.fire('handle-success-file', response);
     },
     beforeAvatarUpload: function beforeAvatarUpload(file) {
-      var isJPG = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/png';
+      var isJPG = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/png' || file.type === 'image/svg';
       var isLt2M = file.size / 1024 / 1024 < 1000;
 
       if (!isJPG) {
