@@ -154,3 +154,25 @@ a, a:hover, a:active, a:focus {
     cursor: pointer;
   }
 }
+
+.navbar-right{
+  li{
+    span{
+      padding: 10px 15px;
+      display: block;
+    }
+  }
+}
+
+@media (min-width: 768px){
+.navbar-nav>li>span {
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+}
+
+.logout{
+  a:before{
+      content: "\E163";
+  }
+}
