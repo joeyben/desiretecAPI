@@ -105,7 +105,7 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css'
               this.isValid = false
               resolve(true)
             }
-          }, 1000)
+          }, 2000)
         })
       },
       validateAsyncLSecond: function () {

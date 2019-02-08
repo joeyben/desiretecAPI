@@ -103868,7 +103868,7 @@ exports.default = {
             _this2.isValid = false;
             resolve(true);
           }
-        }, 1000);
+        }, 2000);
       });
     },
     validateAsyncLSecond: function validateAsyncLSecond() {
@@ -104798,10 +104798,12 @@ exports.default = {
     onSubmit: function onSubmit() {
       var _this2 = this;
 
-      this.$store.dispatch('block', { element: 'whitelabelsComponent', load: true });
-      this.$http.put(window.laroute.route('admin.whitelabels.domain', { id: this.whitelabel.id }), this.whitelabel).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
-        _this2.$store.dispatch('block', { element: 'whitelabelsComponent', load: false });
-      });
+      if (!isNaN(this.whitelabel.id)) {
+        this.$store.dispatch('block', { element: 'whitelabelsComponent', load: true });
+        this.$http.put(window.laroute.route('admin.whitelabels.domain', { id: this.whitelabel.id }), this.whitelabel).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+          _this2.$store.dispatch('block', { element: 'whitelabelsComponent', load: false });
+        });
+      }
     },
     onSubmitSuccess: function onSubmitSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
