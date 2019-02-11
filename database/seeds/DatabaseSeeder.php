@@ -29,5 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(\Modules\Dashboard\Database\Seeders\DashboardDatabaseSeeder::class);
 
         Model::reguard();
+        $this->call(CategoriesTableSeeder::class);
     }
 }

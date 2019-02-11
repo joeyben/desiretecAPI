@@ -53,7 +53,9 @@
                         </div>
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('tui::layer.general.duration'), ['class' => 'control-label required']) }}
-                            {{ Form::text('duration', null, ['class' => 'form-control box-size', 'placeholder' => trans('tui::layer.general.duration'), 'required' => 'required']) }}
+                            <div class="kwp-custom-select">
+                                {{ Form::select('duration', $duration_arr, ['class' => 'form-control box-size']) }}
+                            </div>
                             <i class="tui-icon--time"></i>
                         </div>
                         <div class="clearfix"></div>
@@ -143,7 +145,9 @@
 
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('tui::layer.general.catering'), ['class' => 'control-label required']) }}
-                {{ Form::text('catering', null, ['class' => 'form-control box-size', 'placeholder' => trans('tui::layer.general.catering'), 'required' => 'required']) }}
+                <div class="kwp-custom-select">
+                    {{ Form::select('catering', $catering_arr, ['class' => 'form-control box-size']) }}
+                </div>
                 <i class="tui-icon--chevron-down"></i>
             </div>
 

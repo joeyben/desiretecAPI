@@ -37,6 +37,7 @@
         "mpdf/mpdf": "^7.1",
         "nicolaslopezj/searchable": "1.*",
         "nwidart/laravel-modules": "^3.2",
+        "orangehill/iseed": "^2.6",
         "overtrue/laravel-lang": "~3.0",
         "pusher/pusher-php-server": "^3.3",
         "rinvex/cacheable": "v0.0.5",

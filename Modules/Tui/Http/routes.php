@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['domain' => 'tuimvp.desiretec.com'], function () {
+Route::group(['domain' => '127.0.0.1'], function () {
     Route::group(['middleware' => 'web', 'namespace' => 'Modules\Tui\Http\Controllers', 'as' => 'tui.'], function () {
         Route::get('/', 'TuiController@index');
         Route::get('show', 'TuiController@show');

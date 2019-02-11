@@ -30,6 +30,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.value') }} <span class="text-danger">&nbsp;* </span></label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control" :class="errors.has('value') ? 'is-invalid': ''" id="value" name="value" :placeholder="trans('modals.value')" @input="updateCategory"  :value="category.value"/>
+                                        <div class="invalid-feedback">
+                                            <strong v-text="errors.get('value')"></strong>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </fieldset>
                     </div>

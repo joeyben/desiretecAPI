@@ -42,7 +42,7 @@ return [
     'upload_tip'                   => 'Upload tip',
     'content'                      => 'content',
     'owner'                        => 'Owner',
-    'content'                      => 'Content',
+    'value'                        => 'Value',
     'categories'                   => 'Categories',
     'active'                       => 'Active',
     'online'                       => 'Online',

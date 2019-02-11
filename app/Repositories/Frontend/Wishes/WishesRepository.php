@@ -76,7 +76,7 @@ class WishesRepository extends BaseRepository
                 DB::raw('count(' . config('module.offers.table') . '.id) as offers'),
             ])
             ->whereIn('whitelabel_id', $whitelabels)
-            ->groupBy(config('module.wishes.table') . '.id');
+            ->groupBy(config('module.wishes.table') . '.id')->orderBy(config('module.wishes.table') . '.id', 'DESC');
         if (access()->user()->hasRole('User')) {
             $query->where(config('module.wishes.table') . '.created_by', access()->user()->id);
         } elseif (access()->user()->hasRole('Seller')) {

@@ -15,8 +15,9 @@ use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 class TuiController extends Controller
 {
     protected $adults = [];
-
     protected $kids = [];
+    protected $catering = [];
+    protected $duration = [];
 
     private $whitelabelId;
     /**
@@ -31,6 +32,9 @@ class TuiController extends Controller
     {
         $this->whitelabel = $whitelabel;
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
+        $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
+        $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
+        $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->whitelabelId = \Config::get('tui.id');
     }
 
@@ -59,7 +63,9 @@ class TuiController extends Controller
     {
         $html = view('tui::layer.popup')->with([
             'adults_arr' => $this->adults,
-            'kids_arr' => $this->kids
+            'kids_arr' => $this->kids,
+            'catering_arr' => $this->catering,
+            'duration_arr' => $this->duration,
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -145,5 +151,22 @@ class TuiController extends Controller
 
         $new_wish = $wish->create($request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'));
         return $new_wish;
+    }
+
+    /**
+     * @param array $duration
+     *
+     * @return array
+     */
+
+    private function getFullDuration($duration)
+    {
+
+        for ($i = 1; $i < 29; $i++) {
+            $night = $i === 1 ? "Nacht" : "Nächte";
+            $duration[$i] = $i." ".$night;
+        }
+
+        return $duration;
     }
 }
