@@ -42,7 +42,7 @@ class GroupsDatabaseSeeder extends Seeder
         ]);
 
         $user = Group::find($id);
-        $user->users()->sync([$faker->numberBetween(5, 7)]);
+        $user->users()->sync([6]);
 
         for ($i = 1; $i <= 100; ++$i) {
             $name = $faker->name;
@@ -58,7 +58,7 @@ class GroupsDatabaseSeeder extends Seeder
                 'updated_at'        => DB::raw('now()'),
             ]);
             $user = Group::find($id);
-            $user->users()->sync([$faker->numberBetween(5, 10)]);
+            $user->users()->sync([$faker->numberBetween(6, 7)]);
         }
     }
 }

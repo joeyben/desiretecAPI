@@ -107,59 +107,9 @@ class WhitelabelsTableSeeder extends Seeder
         $user_model = config('auth.providers.users.model');
         $user_model = new $user_model();
         $user_model::find(4)->whitelabels()->sync([1]);
-
         //Attach user role to general user
         $user_model = config('auth.providers.users.model');
         $user_model = new $user_model();
-        $user_model::find(5)->whitelabels()->sync([1]);
-
-        //Attach user role to general user
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(6)->whitelabels()->sync([1]);
-
-        //Attach user role to general user
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(7)->whitelabels()->sync([1]);
-
-        //Attach user role to general user
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(8)->whitelabels()->sync([1]);
-
-        //Attach user role to general user
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(9)->whitelabels()->sync([1]);
-
-        //Attach user role to general user
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(10)->whitelabels()->sync([1]);
-
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(11)->whitelabels()->sync([1]);
-
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(12)->whitelabels()->sync([1]);
-
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(13)->whitelabels()->sync([1]);
-
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(14)->whitelabels()->sync([1]);
-
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(15)->whitelabels()->sync([1]);
-
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(16)->whitelabels()->sync([1]);
+        $user_model::find(7)->whitelabels()->sync([2]);
     }
 }
