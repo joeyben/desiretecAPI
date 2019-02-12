@@ -3,6 +3,7 @@
 namespace Modules\Groups\Policies;
 
 use App\Models\Access\User\User;
+use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\Groups\Entities\Group;
 
@@ -18,7 +19,7 @@ class GroupPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->hasRole('Administrator')) {
+        if ($user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
             return true;
         }
     }

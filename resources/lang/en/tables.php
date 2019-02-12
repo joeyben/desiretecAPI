@@ -85,4 +85,5 @@ return [
     'eventLabel'                    => 'Event Label',
     'eventCategory'                 => 'Event Category',
     'eventAction'                   => 'Event Action',
+    'message'                       => 'Message',
 ];
