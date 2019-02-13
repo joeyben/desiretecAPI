@@ -1,30 +1,24 @@
 import * as types from '../../../../vuex/mutation-types'
 import api from './api/api'
+import Echo from 'laravel-echo'
 
-export const addNotification = function (store, notification) {
-  store.commit(types.ADD_NOTIFICATION, notification)
-}
-
-export const addCheckedId = function (store, id) {
-  store.commit(types.ADD_CHECKED_ID, id)
-}
-
-export const removeCheckedId = function (store, id) {
-  store.commit(types.REMOVE_CHECKED_ID, id)
-}
-
-export const addChecked = function (store, checked) {
-  store.commit(types.ADD_CHECKED, checked)
-}
-
-export const loadWhitelabels = function (store) {
-  api.loadWhitelabels(response => {
+export const loadNotifications = function (store) {
+  api.loadNotifications(response => {
     if (!response) {
       console.log('error', response)
       return
     }
 
-    store.commit(types.ADD_WHITELABELS, response.whitelabels)
+    store.commit(types.ADD_NOTIFICATIONS, response.notifications['data'])
+    window.e = new Echo({
+      broadcaster: 'socket.io',
+      host: window.location.hostname === 'localhost' ? window.location.hostname + ':6001' : window.location.hostname
+    })
+
+    window.e.private(`App.User.${response.userId}`)
+      .notification((notification) => {
+        store.commit(types.ADD_NOTIFICATION, {id: notification.id, from: notification.from, message: notification.message, created_at: notification.created_at})
+      })
   }, error => {
     console.log('LOGIN_USER not answer', error)
   })

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 212);
+/******/ 	return __webpack_require__(__webpack_require__.s = 213);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -4588,7 +4588,7 @@
 /* harmony export (immutable) */ __webpack_exports__["a"] = asyncMap;
 /* harmony export (immutable) */ __webpack_exports__["b"] = complementError;
 /* harmony export (immutable) */ __webpack_exports__["c"] = deepMerge;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__);
@@ -15854,14 +15854,14 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22), __webpack_require__(214).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22), __webpack_require__(215).setImmediate))
 
 /***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__required__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__required__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__whitespace__ = __webpack_require__(290);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__type__ = __webpack_require__(291);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__range__ = __webpack_require__(292);
@@ -15890,7 +15890,7 @@ module.exports = Vue;
 "use strict";
 
 
-var bind = __webpack_require__(75);
+var bind = __webpack_require__(76);
 var isBuffer = __webpack_require__(324);
 
 /*global toString:true*/
@@ -16200,7 +16200,7 @@ module.exports = {
 "use strict";
 
 
-var bind = __webpack_require__(205);
+var bind = __webpack_require__(206);
 
 /*global toString:true*/
 
@@ -17866,7 +17866,7 @@ module.exports = __webpack_require__(15) ? function (object, key, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(24);
-var IE8_DOM_DEFINE = __webpack_require__(64);
+var IE8_DOM_DEFINE = __webpack_require__(65);
 var toPrimitive = __webpack_require__(40);
 var dP = Object.defineProperty;
 
@@ -17898,7 +17898,7 @@ module.exports = !__webpack_require__(20)(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(67);
+var IObject = __webpack_require__(68);
 var defined = __webpack_require__(41);
 module.exports = function (it) {
   return IObject(defined(it));
@@ -18105,7 +18105,7 @@ module.exports = function (bitmap, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(66);
+var $keys = __webpack_require__(67);
 var enumBugKeys = __webpack_require__(45);
 
 module.exports = Object.keys || function keys(O) {
@@ -19055,7 +19055,7 @@ module.exports = __webpack_require__(32);
 /***/ 8:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(55);
+module.exports = __webpack_require__(56);
 
 /***/ }),
 
@@ -19126,7 +19126,7 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _popup = __webpack_require__(56);
+var _popup = __webpack_require__(57);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19374,7 +19374,7 @@ var scrollBarWidth = void 0;
 
 /* eslint-disable no-undefined */
 
-var throttle = __webpack_require__(58);
+var throttle = __webpack_require__(59);
 
 /**
  * Debounce execution of a function. Debouncing, unlike throttling,
@@ -19782,10 +19782,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(76);
+    adapter = __webpack_require__(77);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(76);
+    adapter = __webpack_require__(77);
   }
   return adapter;
 }
@@ -19887,10 +19887,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(206);
+    adapter = __webpack_require__(207);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(206);
+    adapter = __webpack_require__(207);
   }
   return adapter;
 }
@@ -19970,6 +19970,25 @@ module.exports = defaults;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var LOAD_LANGUAGES = exports.LOAD_LANGUAGES = 'LOAD_LANGUAGES';
+var ADD_GROUP = exports.ADD_GROUP = 'ADD_GROUP';
+var ADD_CHECKED = exports.ADD_CHECKED = 'ADD_CHECKED';
+var ADD_CHECKED_ID = exports.ADD_CHECKED_ID = 'ADD_CHECKED_ID';
+var REMOVE_CHECKED_ID = exports.REMOVE_CHECKED_ID = 'REMOVE_CHECKED_ID';
+var ADD_WHITELABELS = exports.ADD_WHITELABELS = 'ADD_WHITELABELS';
+var ADD_USERS_BY_WHITELABEL = exports.ADD_USERS_BY_WHITELABEL = 'ADD_USERS_BY_WHITELABEL';
+var ADD_USERS = exports.ADD_USERS = 'ADD_USERS';
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 exports.__esModule = true;
 
 var _locale = __webpack_require__(23);
@@ -19987,7 +20006,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20057,7 +20076,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20304,7 +20323,7 @@ exports.default = {
 exports.PopupManager = _popupManager2.default;
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20389,7 +20408,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 /* eslint-disable no-undefined,no-param-reassign,no-shadow */
@@ -20486,7 +20505,7 @@ module.exports = function ( delay, noTrailing, callback, debounceMode ) {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports =
@@ -20932,7 +20951,7 @@ module.exports = __webpack_require__(35);
 /******/ });
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20958,7 +20977,7 @@ function getFirstComponentChild(children) {
 };
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 module.exports =
@@ -21255,7 +21274,7 @@ exports.default = {
 /******/ });
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21299,7 +21318,7 @@ function scrollIntoView(container, selected) {
 }
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21328,16 +21347,16 @@ exports.default = _assign2.default || function (target) {
 };
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(15) && !__webpack_require__(20)(function () {
-  return Object.defineProperty(__webpack_require__(65)('div'), 'a', { get: function () { return 7; } }).a != 7;
+  return Object.defineProperty(__webpack_require__(66)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(19);
@@ -21350,7 +21369,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(11);
@@ -21373,11 +21392,11 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(68);
+var cof = __webpack_require__(69);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -21385,7 +21404,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -21396,7 +21415,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
@@ -21407,14 +21426,14 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var LIBRARY = __webpack_require__(27);
 var $export = __webpack_require__(39);
-var redefine = __webpack_require__(71);
+var redefine = __webpack_require__(72);
 var hide = __webpack_require__(13);
 var Iterators = __webpack_require__(47);
 var $iterCreate = __webpack_require__(269);
@@ -21483,14 +21502,14 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(13);
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
@@ -21504,7 +21523,7 @@ var PROTOTYPE = 'prototype';
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var createDict = function () {
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(65)('iframe');
+  var iframe = __webpack_require__(66)('iframe');
   var i = enumBugKeys.length;
   var lt = '<';
   var gt = '>';
@@ -21537,11 +21556,11 @@ module.exports = Object.create || function create(O, Properties) {
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(66);
+var $keys = __webpack_require__(67);
 var hiddenKeys = __webpack_require__(45).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
@@ -21550,7 +21569,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21577,7 +21596,7 @@ function required(rule, value, source, errors, options, type) {
 /* harmony default export */ __webpack_exports__["a"] = (required);
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21595,7 +21614,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21606,7 +21625,7 @@ var settle = __webpack_require__(327);
 var buildURL = __webpack_require__(329);
 var parseHeaders = __webpack_require__(330);
 var isURLSameOrigin = __webpack_require__(331);
-var createError = __webpack_require__(77);
+var createError = __webpack_require__(78);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(332);
 
 module.exports = function xhrAdapter(config) {
@@ -21782,7 +21801,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21807,7 +21826,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21819,7 +21838,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21845,7 +21864,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -22322,7 +22341,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22399,7 +22418,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22538,7 +22557,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22601,7 +22620,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22664,7 +22683,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22790,7 +22809,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22853,7 +22872,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22961,7 +22980,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23024,7 +23043,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23133,7 +23152,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23269,7 +23288,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23363,7 +23382,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23425,7 +23444,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23548,7 +23567,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23671,7 +23690,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23783,7 +23802,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23938,7 +23957,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24030,7 +24049,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24213,7 +24232,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24280,7 +24299,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24364,7 +24383,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24428,7 +24447,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24508,7 +24527,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24588,7 +24607,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24668,7 +24687,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24771,7 +24790,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24875,7 +24894,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24946,7 +24965,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25013,7 +25032,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25084,7 +25103,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25155,7 +25174,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25221,7 +25240,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25292,7 +25311,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25367,7 +25386,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25463,7 +25482,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25559,7 +25578,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25646,7 +25665,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25730,7 +25749,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25800,7 +25819,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25910,7 +25929,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26023,7 +26042,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26087,7 +26106,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26174,7 +26193,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26252,7 +26271,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26334,7 +26353,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26413,7 +26432,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26493,7 +26512,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26574,7 +26593,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26701,7 +26720,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26829,7 +26848,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26930,7 +26949,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27058,7 +27077,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27216,7 +27235,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27330,7 +27349,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27429,7 +27448,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27515,7 +27534,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27651,7 +27670,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27724,7 +27743,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27820,7 +27839,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27906,7 +27925,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27999,7 +28018,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28090,7 +28109,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28204,7 +28223,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28334,7 +28353,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28419,7 +28438,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28510,7 +28529,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28650,7 +28669,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28724,7 +28743,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28846,7 +28865,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28947,7 +28966,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29063,7 +29082,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29131,7 +29150,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29225,7 +29244,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29310,7 +29329,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29418,7 +29437,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29582,7 +29601,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29668,7 +29687,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29754,7 +29773,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29818,7 +29837,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29915,7 +29934,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29981,7 +30000,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30108,7 +30127,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30199,7 +30218,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30290,7 +30309,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30354,7 +30373,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30482,7 +30501,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30612,7 +30631,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30681,7 +30700,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30746,7 +30765,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30825,7 +30844,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31011,7 +31030,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31113,7 +31132,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31177,7 +31196,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31252,7 +31271,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31412,7 +31431,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31589,7 +31608,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 176 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31661,7 +31680,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 177 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31776,7 +31795,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31891,7 +31910,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31983,7 +32002,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32056,7 +32075,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32119,7 +32138,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 182 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32252,7 +32271,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 183 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32345,7 +32364,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32416,7 +32435,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32536,7 +32555,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32607,7 +32626,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32673,7 +32692,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32799,7 +32818,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -32897,7 +32916,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 190 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32992,7 +33011,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 191 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -33054,7 +33073,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -33116,7 +33135,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 193 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js language configuration
@@ -33239,7 +33258,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 194 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -33394,7 +33413,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 195 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -33496,7 +33515,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -33558,7 +33577,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 197 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -33620,7 +33639,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 198 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -33703,7 +33722,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -33775,7 +33794,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 200 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -33839,7 +33858,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 201 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -33953,7 +33972,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 202 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -34060,7 +34079,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 203 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -34167,7 +34186,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 204 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -34395,7 +34414,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 205 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34413,7 +34432,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34424,7 +34443,7 @@ var settle = __webpack_require__(359);
 var buildURL = __webpack_require__(361);
 var parseHeaders = __webpack_require__(362);
 var isURLSameOrigin = __webpack_require__(363);
-var createError = __webpack_require__(207);
+var createError = __webpack_require__(208);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(364);
 
 module.exports = function xhrAdapter(config) {
@@ -34597,7 +34616,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34621,7 +34640,7 @@ module.exports = function createError(message, config, code, response) {
 
 
 /***/ }),
-/* 208 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34633,7 +34652,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 209 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34659,7 +34678,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 210 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34717,7 +34736,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 211 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -34764,14 +34783,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 212 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(213);
+module.exports = __webpack_require__(214);
 
 
 /***/ }),
-/* 213 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34781,11 +34800,11 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vueRouter = __webpack_require__(216);
+var _vueRouter = __webpack_require__(217);
 
 var _vueRouter2 = _interopRequireDefault(_vueRouter);
 
-var _store = __webpack_require__(217);
+var _store = __webpack_require__(218);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -34858,11 +34877,11 @@ if ($groupsComponent) {
       children: [{
         path: '/edit/:id(\\d+)',
         name: 'root.edit',
-        component: __webpack_require__(211)
+        component: __webpack_require__(212)
       }, {
         path: '/create/:id(\\d+)/:whitelabel_id(\\d+)',
         name: 'root.create',
-        component: __webpack_require__(211)
+        component: __webpack_require__(212)
       }]
     }]
   });
@@ -34878,7 +34897,7 @@ if ($groupsComponent) {
 }
 
 /***/ }),
-/* 214 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -34934,7 +34953,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(215);
+__webpack_require__(216);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -34948,7 +34967,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
 
 /***/ }),
-/* 215 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -35141,7 +35160,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22), __webpack_require__(30)))
 
 /***/ }),
-/* 216 */
+/* 217 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -37772,7 +37791,7 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 217 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37790,15 +37809,15 @@ var _vuex = __webpack_require__(7);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _actions = __webpack_require__(218);
+var _actions = __webpack_require__(219);
 
 var actions = _interopRequireWildcard(_actions);
 
-var _getters = __webpack_require__(220);
+var _getters = __webpack_require__(221);
 
 var getters = _interopRequireWildcard(_getters);
 
-var _store = __webpack_require__(221);
+var _store = __webpack_require__(222);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -37836,7 +37855,7 @@ exports.default = new _vuex2.default.Store({
 });
 
 /***/ }),
-/* 218 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37845,11 +37864,17 @@ exports.default = new _vuex2.default.Store({
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.block = exports.loadLanguages = exports.loadLoggedUser = undefined;
+exports.block = exports.loadWhitelabels = exports.loadLanguages = exports.loadLoggedUser = undefined;
 
-var _api = __webpack_require__(219);
+var _api = __webpack_require__(220);
 
 var _api2 = _interopRequireDefault(_api);
+
+var _mutationTypes = __webpack_require__(54);
+
+var types = _interopRequireWildcard(_mutationTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37860,6 +37885,9 @@ var loadLoggedUser = exports.loadLoggedUser = function loadLoggedUser(store) {
       return;
     }
 
+    if (response.user.hasOwnProperty('roles') && response.user.roles['Administrator']) {
+      store.dispatch('loadWhitelabels');
+    }
     store.commit('LOGIN_USER', response.user);
   }, function (error) {
     console.log('LOGIN_USER not answer', error);
@@ -37876,6 +37904,19 @@ var loadLanguages = exports.loadLanguages = function loadLanguages(store) {
     store.commit('LOAD_LANGUAGES', response.languages);
   }, function (error) {
     console.log('LOAD_LANGUAGES not answer', error);
+  });
+};
+
+var loadWhitelabels = exports.loadWhitelabels = function loadWhitelabels(store) {
+  _api2.default.loadWhitelabels(function (response) {
+    if (!response) {
+      console.log('error', response);
+      return;
+    }
+
+    store.commit(types.ADD_WHITELABELS, response.whitelabels);
+  }, function (error) {
+    console.log('LOGIN_USER not answer', error);
   });
 };
 
@@ -37904,7 +37945,7 @@ var block = exports.block = function block(store, _ref) {
 };
 
 /***/ }),
-/* 219 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37927,11 +37968,18 @@ exports.default = {
     }, function (response) {
       return error(response);
     });
+  },
+  loadWhitelabels: function loadWhitelabels(success, error) {
+    return window.axios.get(window.laroute.route('admin.whitelabels.view')).then(function (response) {
+      return success(response.data);
+    }, function (response) {
+      return error(response);
+    });
   }
 };
 
 /***/ }),
-/* 220 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37948,7 +37996,7 @@ var languages = exports.languages = function languages(state) {
 };
 
 /***/ }),
-/* 221 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37958,7 +38006,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _actions = __webpack_require__(222);
+var _actions = __webpack_require__(223);
 
 var actions = _interopRequireWildcard(_actions);
 
@@ -38007,7 +38055,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 222 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38016,17 +38064,11 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.loadWhitelabels = exports.addChecked = exports.removeCheckedId = exports.addCheckedId = exports.addGroup = undefined;
+exports.addChecked = exports.removeCheckedId = exports.addCheckedId = exports.addGroup = undefined;
 
-var _mutationTypes = __webpack_require__(223);
+var _mutationTypes = __webpack_require__(54);
 
 var types = _interopRequireWildcard(_mutationTypes);
-
-var _api = __webpack_require__(224);
-
-var _api2 = _interopRequireDefault(_api);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -38046,59 +38088,8 @@ var addChecked = exports.addChecked = function addChecked(store, checked) {
   store.commit(types.ADD_CHECKED, checked);
 };
 
-var loadWhitelabels = exports.loadWhitelabels = function loadWhitelabels(store) {
-  _api2.default.loadWhitelabels(function (response) {
-    if (!response) {
-      console.log('error', response);
-      return;
-    }
-
-    store.commit(types.ADD_WHITELABELS, response.whitelabels);
-  }, function (error) {
-    console.log('LOGIN_USER not answer', error);
-  });
-};
-
 /***/ }),
-/* 223 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var LOAD_LANGUAGES = exports.LOAD_LANGUAGES = 'LOAD_LANGUAGES';
-var ADD_GROUP = exports.ADD_GROUP = 'ADD_GROUP';
-var ADD_CHECKED = exports.ADD_CHECKED = 'ADD_CHECKED';
-var ADD_CHECKED_ID = exports.ADD_CHECKED_ID = 'ADD_CHECKED_ID';
-var REMOVE_CHECKED_ID = exports.REMOVE_CHECKED_ID = 'REMOVE_CHECKED_ID';
-var ADD_WHITELABELS = exports.ADD_WHITELABELS = 'ADD_WHITELABELS';
-var ADD_USERS_BY_WHITELABEL = exports.ADD_USERS_BY_WHITELABEL = 'ADD_USERS_BY_WHITELABEL';
-var ADD_USERS = exports.ADD_USERS = 'ADD_USERS';
-
-/***/ }),
-/* 224 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  loadWhitelabels: function loadWhitelabels(success, error) {
-    return window.axios.get(window.laroute.route('admin.whitelabels.view')).then(function (response) {
-      return success(response.data);
-    }, function (response) {
-      return error(response);
-    });
-  }
-};
-
-/***/ }),
+/* 224 */,
 /* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -38835,7 +38826,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /* eslint-disable */
-module.exports = { 'ar.log-viewer::general': { 'all': '\u062C\u0645\u064A\u0639', 'date': '\u062A\u0627\u0631\u064A\u062E' }, 'ar.log-viewer::levels': { 'alert': '\u0625\u0646\u0630\u0627\u0631', 'all': '\u0627\u0644\u062C\u0645\u064A\u0639', 'critical': '\u062D\u0631\u062C', 'debug': '\u0627\u0644\u062A\u0635\u062D\u064A\u062D', 'emergency': '\u062D\u0627\u0644\u0627\u062A \u0627\u0644\u0637\u0648\u0627\u0631\u0626', 'error': '\u062E\u0637\u0623', 'info': '\u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062A', 'notice': '\u0645\u0644\u0627\u062D\u0638\u0629', 'warning': '\u062A\u062D\u0630\u064A\u0631' }, 'bg.log-viewer::general': { 'all': '\u0412\u0441\u0438\u0447\u043A\u0438', 'date': '\u0414\u0430\u0442\u0430', 'empty-logs': '\u041D\u0435 \u0441\u0430 \u043D\u0430\u043C\u0435\u0440\u0435\u043D\u0438 \u043B\u043E\u0433\u043E\u0432\u0435!' }, 'bg.log-viewer::levels': { 'alert': 'Alert', 'all': '\u0412\u0441\u0438\u0447\u043A\u0438', 'critical': 'Critical', 'debug': 'Debug', 'emergency': 'Emergency', 'error': 'Error', 'info': 'Info', 'notice': 'Notice', 'warning': 'Warning' }, 'de.log-viewer::general': { 'all': 'Alle', 'date': 'Datum' }, 'de.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Alle', 'critical': 'Kritisch', 'debug': 'Debug', 'emergency': 'Notfall', 'error': 'Fehler', 'info': 'Info', 'notice': 'Hinweis', 'warning': 'Warnung' }, 'en.alerts': { 'backend': { 'blogcategories': { 'created': 'The Blog Category was successfully created.', 'deleted': 'The Blog Category was successfully deleted.', 'updated': 'The Blog Category was successfully updated.' }, 'blogs': { 'created': 'The Blog was successfully created.', 'deleted': 'The Blog was successfully deleted.', 'updated': 'The Blog was successfully updated.' }, 'blogtags': { 'created': 'The Blog Tag was successfully created.', 'deleted': 'The Blog Tag was successfully deleted.', 'updated': 'The Blog Tag was successfully updated.' }, 'emailtemplates': { 'deleted': 'The Email Template was successfully deleted.', 'updated': 'The Email Template was successfully updated.' }, 'faqs': { 'created': 'The Faq was successfully created.', 'deleted': 'The Faq was successfully deleted.', 'updated': 'The Faq was successfully updated.' }, 'groups': { 'created': 'The Group was successfully created.', 'deleted': 'The Group was successfully deleted.', 'updated': 'The Group was successfully updated.' }, 'menus': { 'created': 'The Menu was successfully created.', 'deleted': 'The Menu was successfully deleted.', 'updated': 'The Menu was successfully updated.' }, 'pages': { 'created': 'The Page was successfully created.', 'deleted': 'The Page was successfully deleted.', 'updated': 'The Page was successfully updated.' }, 'permissions': { 'created': 'The permission was successfully created.', 'deleted': 'The permission was successfully deleted.', 'updated': 'The permission was successfully updated.' }, 'roles': { 'created': 'The role was successfully created.', 'deleted': 'The role was successfully deleted.', 'updated': 'The role was successfully updated.' }, 'settings': { 'updated': 'The Setting was successfully updated.' }, 'users': { 'confirmation_email': 'A new confirmation e-mail has been sent to the address on file.', 'created': 'The user was successfully created.', 'deleted': 'The user was successfully deleted.', 'deleted_permanently': 'The user was deleted permanently.', 'restored': 'The user was successfully restored.', 'session_cleared': "The user's session was successfully cleared.", 'updated': 'The user was successfully updated.', 'updated_password': "The user's password was successfully updated." }, 'whitelabels': { 'created': 'The Whitelabel was successfully created.', 'deleted': 'The Whitelabel was successfully deleted.', 'updated': 'The Whitelabel was successfully updated.' }, 'wishes': { 'created': 'The Wish was successfully created.', 'deleted': 'The Wish was successfully deleted.', 'updated': 'The Wish was successfully updated.' } }, 'frontend': { 'offers': { 'created': 'Offer successfully created' }, 'wishes': { 'created': 'The Wish was successfully created.', 'deleted': 'The Wish was successfully deleted.', 'updated': 'The Wish was successfully updated.' } } }, 'en.api': { 'messages': { 'forgot_password': { 'success': 'We have sent email with reset password link. Please check your inbox!.', 'validation': { 'email_not_found': 'This email address is not registered.' } }, 'login': { 'failed': 'Invalid Credentials! Please try again.', 'success': 'Login Successfull.' }, 'logout': { 'success': 'Successfully logged out.' }, 'refresh': { 'status': 'Ok', 'token': { 'not_provided': 'Token not provided.' } }, 'registeration': { 'success': 'You have registered successfully. Please check your email for activation!' } } }, 'en.auth': { 'failed': 'These credentials do not match our records.', 'general_error': 'You do not have access to do that.', 'socialite': { 'unacceptable': ':provider is not an acceptable login type.' }, 'throttle': 'Too many login attempts. Please try again in :seconds seconds.', 'unknown': 'An unknown error occurred' }, 'en.button': { 'cancel': 'Cancel', 'close': 'Close', 'confirm': 'Confirm', 'create': 'Create', 'delete': 'Delete', 'delete_all': 'Delete All', 'edit': 'Edit', 'required': 'Required', 'restore': 'Restore', 'save': 'Save', 'save_and_close': 'Save and Close' }, 'en.buttons': { 'backend': { 'access': { 'users': { 'activate': 'Activate', 'change_password': 'Change Password', 'clear_session': 'Clear Session', 'deactivate': 'Deactivate', 'delete_permanently': 'Delete Permanently', 'login_as': 'Login As :user', 'resend_email': 'Resend Confirmation E-mail', 'restore_user': 'Restore User' } } }, 'emails': { 'auth': { 'confirm_account': 'Confirm Account', 'reset_password': 'Reset Password' } }, 'general': { 'cancel': 'Cancel', 'continue': 'Continue', 'crud': { 'add': 'Add', 'create': 'Create', 'delete': 'Delete', 'edit': 'Edit', 'update': 'Update', 'view': 'View' }, 'preview': 'Preview', 'save': 'Save', 'view': 'View' }, 'wishes': { 'frontend': { 'create_offer': 'Create Offer' } } }, 'en.comment': { 'comments': 'Comments' }, 'en.exceptions': { 'backend': { 'access': { 'permissions': { 'already_exists': 'That permission already exists. Please choose a different name.', 'create_error': 'There was a problem creating this permission. Please try again.', 'delete_error': 'There was a problem deleting this permission. Please try again.', 'not_found': 'That permission does not exist.', 'update_error': 'There was a problem updating this permission. Please try again.' }, 'roles': { 'already_exists': 'That role already exists. Please choose a different name.', 'cant_delete_admin': 'You can not delete the Administrator role.', 'create_error': 'There was a problem creating this role. Please try again.', 'delete_error': 'There was a problem deleting this role. Please try again.', 'has_users': 'You can not delete a role with associated users.', 'needs_permission': 'You must select at least one permission for this role.', 'not_found': 'That role does not exist.', 'update_error': 'There was a problem updating this role. Please try again.' }, 'users': { 'cant_deactivate_self': 'You can not do that to yourself.', 'cant_delete_admin': 'You can not delete Admin.', 'cant_delete_own_session': 'You can not delete your own session.', 'cant_delete_self': 'You can not delete yourself.', 'cant_restore': 'This user is not deleted so it can not be restored.', 'change_mismatch': 'That is not your old password.', 'create_error': 'There was a problem creating this user. Please try again.', 'delete_error': 'There was a problem deleting this user. Please try again.', 'delete_first': 'This user must be deleted first before it can be destroyed permanently.', 'email_error': 'That email address belongs to a different user.', 'mark_error': 'There was a problem updating this user. Please try again.', 'not_found': 'That user does not exist.', 'restore_error': 'There was a problem restoring this user. Please try again.', 'role_needed': 'You must choose at least one role.', 'role_needed_create': 'You must choose at lease one role.', 'session_wrong_driver': 'Your session driver must be set to database to use this feature.', 'update_error': 'There was a problem updating this user. Please try again.', 'update_password_error': 'There was a problem changing this users password. Please try again.' } }, 'blogcategories': { 'already_exists': 'That Blog Category already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Category. Please try again.', 'delete_error': 'There was a problem deleting this Blog Category. Please try again.', 'not_found': 'That Blog Category does not exist.', 'update_error': 'There was a problem updating this Blog Category. Please try again.' }, 'blogtags': { 'already_exists': 'That Blog Tag already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Tag. Please try again.', 'delete_error': 'There was a problem deleting this Blog Tag. Please try again.', 'not_found': 'That Blog Tag does not exist.', 'update_error': 'There was a problem updating this Blog Tag. Please try again.' }, 'menus': { 'already_exists': 'That Menu already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Menu. Please try again.', 'delete_error': 'There was a problem deleting this Menu. Please try again.', 'not_found': 'That Menu does not exist.', 'update_error': 'There was a problem updating this Menu. Please try again.' }, 'modules': { 'already_exists': 'That Module already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Module. Please try again.', 'delete_error': 'There was a problem deleting this Module. Please try again.', 'not_found': 'That Module does not exist.', 'update_error': 'There was a problem updating this Module. Please try again.' }, 'pages': { 'already_exists': 'That Page already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Page. Please try again.', 'delete_error': 'There was a problem deleting this Page. Please try again.', 'not_found': 'That Page does not exist.', 'update_error': 'There was a problem updating this Page. Please try again.' }, 'settings': { 'update_error': 'There was a problem updating this Settings. Please try again.' } }, 'frontend': { 'auth': { 'confirmation': { 'already_confirmed': 'Your account is already confirmed.', 'confirm': 'Confirm your account!', 'created_confirm': 'Your account was successfully created. We have sent you an e-mail to confirm your account.', 'created_pending': 'Your account was successfully created and is pending approval. An e-mail will be sent when your account is approved.', 'mismatch': 'Your confirmation code does not match.', 'not_found': 'That confirmation code does not exist.', 'resend': 'Your account is not confirmed. Please click the confirmation link in your e-mail, or <a href=http:\/\/localhost:8000\/account\/confirm\/resend\/:user_id>click here<\/a> to resend the confirmation e-mail.', 'resent': 'A new confirmation e-mail has been sent to the address on file.', 'success': 'Your account has been successfully confirmed!' }, 'deactivated': 'Your account has been deactivated.', 'email_taken': 'That e-mail address is already taken.', 'password': { 'change_mismatch': 'That is not your old password.' }, 'registration_disabled': 'Registration is currently closed.' } } }, 'en.general': { 'currency': '\u20AC' }, 'en.history': { 'backend': { 'blogcategories': { 'created': 'created Blog Category', 'deleted': 'deleted Blog Category', 'updated': 'updated Blog Category' }, 'blogs': { 'created': 'created Blog', 'deleted': 'deleted Blog', 'updated': 'updated Blog' }, 'blogtags': { 'created': 'created Blog Tag', 'deleted': 'deleted Blog Tag', 'updated': 'updated Blog Tag' }, 'none': 'There is no recent history.', 'none_for_entity': 'There is no history for this :entity.', 'none_for_type': 'There is no history for this type.', 'pages': { 'created': 'created Page', 'deleted': 'deleted Page', 'updated': 'updated Page' }, 'permissions': { 'created': 'created permission', 'deleted': 'deleted permission', 'updated': 'updated permission' }, 'recent_history': 'Recent History', 'roles': { 'created': 'created role', 'deleted': 'deleted role', 'updated': 'updated role' }, 'users': { 'changed_password': 'changed password for user', 'created': 'created user', 'deactivated': 'deactivated user', 'deleted': 'deleted user', 'permanently_deleted': 'permanently deleted user', 'reactivated': 'reactivated user', 'restored': 'restored user', 'updated': 'updated user' } } }, 'en.http': { '404': { 'description': 'Sorry, but the page you were trying to view does not exist.', 'title': 'Page Not Found' }, '503': { 'description': 'Be right back.', 'title': 'Be right back.' } }, 'en.labels': { 'about': 'About us', 'account': 'Account', 'activated': 'activated', 'address': 'Address', 'attendee': 'Attendee', 'attendees': 'Attendees', 'backend': { 'access': { 'permissions': { 'create': 'Create Permission', 'edit': 'Edit Permission', 'management': 'Permission Management', 'table': { 'display_name': 'Display Name', 'permission': 'Permission', 'sort': 'Sort', 'status': 'Status', 'total': 'role total|roles total' } }, 'roles': { 'create': 'Create Role', 'edit': 'Edit Role', 'management': 'Role Management', 'table': { 'number_of_users': 'Number of Users', 'permissions': 'Permissions', 'role': 'Role', 'sort': 'Sort', 'total': 'role total|roles total' } }, 'users': { 'active': 'Active Users', 'all_permissions': 'All Permissions', 'change_password': 'Change Password', 'change_password_for': 'Change Password for :user', 'create': 'Create User', 'deactivated': 'Deactivated Users', 'deleted': 'Deleted Users', 'edit': 'Edit User', 'edit-profile': 'Edit Profile', 'management': 'User Management', 'no_permissions': 'No Permissions', 'no_roles': 'No Roles to set.', 'permissions': 'Permissions', 'table': { 'confirmed': 'Confirmed', 'created': 'Created', 'email': 'E-mail', 'first_name': 'First Name', 'id': 'ID', 'last_name': 'Last Name', 'last_updated': 'Last Updated', 'no_deactivated': 'No Deactivated Users', 'no_deleted': 'No Deleted Users', 'roles': 'Roles', 'total': 'user total|users total' }, 'tabs': { 'content': { 'overview': { 'avatar': 'Avatar', 'confirmed': 'Confirmed', 'created_at': 'Created At', 'deleted_at': 'Deleted At', 'email': 'E-mail', 'last_updated': 'Last Updated', 'name': 'Name', 'status': 'Status', 'whitelabels': 'Whitelabels' } }, 'titles': { 'history': 'History', 'overview': 'Overview' } }, 'view': 'View User' } }, 'blogcategories': { 'create': 'Create Blog Category', 'edit': 'Edit Blog Category', 'management': 'Blog Category Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Blog Category' }, 'title': 'Blog Category' }, 'blogs': { 'create': 'Create Blog', 'edit': 'Edit Blog', 'management': 'Blog Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'publish': 'PublishDateTime', 'status': 'Status', 'title': 'Blog' }, 'title': 'Blogs' }, 'blogtags': { 'create': 'Create Blog Tag', 'edit': 'Edit Blog Tag', 'management': 'Blog Tag Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Blog Tag' }, 'title': 'Blog Tags' }, 'distributions': { 'create': 'Create Distribution', 'edit': 'Edit Distribution', 'management': 'Distributions', 'no_distributions': 'no Distributions', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'description': 'Description', 'display_name': 'Display Name', 'name': 'Distribution', 'whitelabel': 'Whitelabel' }, 'title': 'Distributions' }, 'emailtemplates': { 'create': 'Create Email Template', 'edit': 'Edit Email Template', 'management': 'Email Template Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'status': 'Status', 'subject': 'Subject', 'title': 'Title', 'updatedat': 'Updated At' }, 'title': 'Email Templates' }, 'faqs': { 'create': 'Create FAQ', 'edit': 'Edit FAQ', 'management': 'FAQ Management', 'table': { 'all': 'All', 'answer': 'Answer', 'createdat': 'Created At', 'createdby': 'Created By', 'publish': 'PublishDateTime', 'question': 'Question', 'status': 'Status', 'title': 'FAQs', 'updatedat': 'Updated At' }, 'title': 'FAQ' }, 'groups': { 'create': 'Create Group', 'edit': 'Edit Group', 'management': 'Groups', 'no_whitelabels': 'no Whitelabels', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'description': 'Description', 'display_name': 'Display Name', 'name': 'Group', 'status': 'Status', 'users': 'Users', 'whitelabel': 'Whitelabel' }, 'title': 'Groups' }, 'menus': { 'create': 'Create Menu', 'edit': 'Edit Menu', 'field': { 'icon': 'Icon Class', 'icon_title': 'Font Awesome Class. eg. fa-edit', 'items': 'Menu Items', 'name': 'Name', 'open_in_new_tab': 'Open URL in new tab', 'type': 'Type', 'url': 'URL', 'url_type': 'URL Type', 'url_types': { 'route': 'Route', 'static': 'Static' }, 'view_permission_id': 'Permission' }, 'management': 'Menu Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'name': 'Name', 'type': 'Type' }, 'title': 'Menus' }, 'modules': { 'create': 'Create Module', 'edit': 'Edit Module', 'form': { 'controller_name': 'Controller &nbsp;Name', 'create_file': 'Create', 'directory_name': 'Directory Name', 'edit_file': 'Edit', 'event': 'Event Name', 'form_file': 'Form', 'index_file': 'Index', 'model_name': 'Model Name', 'name': 'Module Name', 'namespace': 'Namespace', 'repo_name': 'Repository Name', 'resource_controller': 'Resourceful Controller', 'resource_route': 'Resourceful Routes', 'route_controller_name': 'Controller &nbsp;Name', 'route_name': 'Route Name', 'table_controller_name': 'Controller &nbsp;Name', 'table_name': 'Table Name', 'url': 'View Route', 'view_permission_id': 'View Permission', 'views_directory': 'Directory &nbsp;&nbsp;&nbsp;Name' }, 'management': 'Module Management', 'table': { 'created_by': 'Created By', 'name': 'Module Name', 'url': 'Module View Route', 'view_permission_id': 'View Permission' }, 'title': 'Module' }, 'pages': { 'create': 'Create Page', 'edit': 'Edit Page', 'management': 'Page Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Title', 'updatedat': 'Updated At' }, 'title': 'Pages' }, 'profile_updated': 'Your profile has been updated.', 'settings': { 'companydetails': 'Company Contact Details', 'edit': 'Edit Settings', 'footer': 'Footer Settings', 'google': 'Google Analytics Track Code', 'mail': 'Mail Settings', 'management': 'Settings Management', 'seo': 'SEO Settings', 'terms': 'Terms and Condition Settings', 'title': 'Settings' }, 'whitelabels': { 'create': 'Create Whitelabel', 'edit': 'Edit Whitelabel', 'management': 'Whitelabels', 'management_client': 'Whitelabel', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'display_name': 'Whitelabel', 'distribution': 'Distribution', 'ga_view_id': 'Google View Id', 'name': 'Identifier', 'status': 'Status' }, 'title': 'Whitelabels' }, 'wishes': { 'create': 'Create Wish', 'edit': 'Edit Wish', 'management': 'Wishes', 'no_whitelabels': 'no Whitelabels', 'table': { 'airport': 'Airport', 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'destination': 'Destination', 'earliest_start': 'Earliest Start', 'group': 'Group', 'latest_return': 'Latest Return', 'offerCount': 'Offers', 'status': 'Status', 'title': 'Wish', 'whitelabel': 'Whitelabel' }, 'title': 'Wishes' } }, 'cancel': 'Cancel', 'contact': 'Contact', 'content': 'Content', 'country': 'Country', 'current': 'Current', 'current_password': 'Current Password', 'description': 'Description', 'details': 'Details', 'documents': 'Documents', 'download': 'Download', 'email': 'E-mail Address', 'events': 'Events', 'fax': 'Fax', 'feedback': 'Feedback', 'first_name': 'Fisrtname', 'frontend': { 'agents': { 'create': 'Create new Agent', 'management': 'Agents', 'table': { 'avatar': 'Avatar', 'created_at': 'Created At', 'createdby': 'Created By', 'display_name': 'Display name', 'id': 'Id', 'name': 'Name', 'status': 'Status' } }, 'auth': { 'login_box_title': 'Login', 'login_button': 'Login', 'login_with': 'Login with :social_media', 'register_box_title': 'Register', 'register_button': 'Register', 'remember_me': 'Remember Me' }, 'dashboard': { 'analytics': { 'answered_wishes': 'Answered Wishes', 'bookings': 'Bookings', 'changed_wishes': 'Changed Wishes', 'created_wishes': 'Created Wishes', 'free_text': 'Free text', 'latest_answered_wishes': 'Latest Answered Wishes', 'latest_reaction_quota': 'Latest Reaction Quota', 'reaction_quota': 'Reaction Quota', 'reaction_time': 'Reaction Time' } }, 'macros': { 'country': { 'alpha': 'Country Alpha Codes', 'alpha2': 'Country Alpha 2 Codes', 'alpha3': 'Country Alpha 3 Codes', 'numeric': 'Country Numeric Codes' }, 'macro_examples': 'Macro Examples', 'state': { 'mexico': 'Mexico State List', 'us': { 'armed': 'US Armed Forces', 'outlying': 'US Outlying Territories', 'us': 'US States' } }, 'territories': { 'canada': 'Canada Province & Territories List' }, 'timezone': 'Timezone' }, 'offers': { 'create': 'Create new Offer', 'management': 'Offers', 'offers_for_wish': 'Offer for', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Offer' } }, 'passwords': { 'forgot_password': 'Forgot Your Password?', 'reset_password_box_title': 'Reset Password', 'reset_password_button': 'Reset Password', 'send_password_reset_link_button': 'Send Password Reset Link' }, 'user': { 'passwords': { 'change': 'Change Password' }, 'profile': { 'address': 'Address', 'avatar': 'Avatar', 'city': 'City', 'country': 'Country', 'created_at': 'Created At', 'edit_information': 'Edit Information', 'email': 'E-mail', 'first_name': 'First Name', 'last_name': 'Last Name', 'last_updated': 'Last Updated', 'ssn': 'SSN', 'update_information': 'Update Information', 'zipcode': 'Zip Code' } }, 'wishes': { 'add-comment': 'Add comment', 'created_at': 'created at', 'edit': 'Edit wish', 'goto': 'Go To Wish', 'table': { 'adults': 'Adults', 'kids': 'Kids' }, 'wishes': 'Wishes' } }, 'full_name': 'Full Name', 'general': { 'actions': 'Actions', 'active': 'Active', 'all': 'All', 'buttons': { 'save': 'Save', 'update': 'Update' }, 'custom': 'Custom', 'hide': 'Hide', 'inactive': 'Inactive', 'no': 'No', 'none': 'None', 'show': 'Show', 'toggle_navigation': 'Toggle Navigation', 'yes': 'Yes' }, 'id': 'Id', 'interest': 'Interet', 'join': 'Join Now', 'language': 'Language', 'last_name': 'Lastname', 'login': 'Sign', 'logout': 'Logout', 'message': 'Message', 'message_text': 'Message text', 'mobile': 'Mobile', 'name': 'Name', 'new': 'New', 'note': 'note', 'notes': 'notes', 'now': 'Now', 'occupation': 'Occupation', 'ok': 'Ok', 'online': 'Online', 'password': 'Password', 'password_confirm': 'Confirm Password', 'personal_timezone': 'Timezone', 'phone': 'Phone', 'plus': 'More', 'posts': 'Posts', 'ratings': 'Ratings', 'recipient': 'Recipient', 'register': 'Register', 'reset': 'Reset Password', 'reset_link': 'Send Password Reset Link', 'review': 'Review', 'send': 'Send Now', 'street': 'Street', 'subject': 'Subject', 'tel': 'Numero de Telephone', 'title': 'Title', 'user': 'User', 'username': 'Username', 'verify': 'Email Verification', 'verify_email': 'Verify Your Email Address', 'warning': 'Warning', 'wish': 'Wish', 'wishes': 'Wishes', 'zipcode': 'Zip' }, 'en.log-viewer::general': { 'all': 'All', 'date': 'Date' }, 'en.log-viewer::levels': { 'alert': 'Alert', 'all': 'All', 'critical': 'Critical', 'debug': 'Debug', 'emergency': 'Emergency', 'error': 'Error', 'info': 'Info', 'notice': 'Notice', 'warning': 'Warning' }, 'en.menus': { 'backend': { 'access': { 'permissions': { 'all': 'All Permissions', 'create': 'Create Permission', 'edit': 'Edit Permission', 'main': 'Permissions', 'management': 'Permission Management' }, 'roles': { 'all': 'All Roles', 'create': 'Create Role', 'edit': 'Edit Role', 'main': 'Roles', 'management': 'Role Management' }, 'title': 'Access Management', 'users': { 'all': 'All Users', 'change-password': 'Change Password', 'create': 'Create User', 'deactivated': 'Deactivated Users', 'deleted': 'Deleted Users', 'edit': 'Edit User', 'main': 'Users', 'view': 'View User' } }, 'blog': { 'all': 'All Blog Page', 'create': 'Create Blog Page', 'edit': 'Edit Blog Page', 'main': 'Blog Pages', 'management': 'Blog Management' }, 'blogcategories': { 'all': 'All Blog Categories', 'create': 'Create Blog Category', 'edit': 'Edit Blog Category', 'main': 'CMS Pages', 'management': 'Blog Category Management' }, 'blogs': { 'all': 'All Blog', 'create': 'Create Blog', 'edit': 'Edit Blog', 'main': 'Blogs', 'management': 'Blog Management' }, 'blogtags': { 'all': 'All Blog Tag', 'create': 'Create Blog Tag', 'edit': 'Edit Blog Tag', 'main': 'Blog Tags', 'management': 'Blog Tag Management' }, 'distributions': { 'all': 'All Distributions', 'create': 'Create Distribution', 'edit': 'Edit Distribution', 'main': 'Distributions', 'management': 'Distribution Management' }, 'faqs': { 'all': 'All Faq Page', 'create': 'Create Faq Page', 'edit': 'Edit Faq Page', 'main': 'Faq Pages', 'management': 'Faq Management' }, 'groups': { 'all': 'All Groups', 'create': 'Create Group', 'edit': 'Edit Group', 'main': 'Groups', 'management': 'Group Management' }, 'log-viewer': { 'dashboard': 'Dashboard', 'logs': 'Logs', 'main': 'Log Viewer' }, 'menus': { 'all': 'All Menu', 'create': 'Create Menu', 'edit': 'Edit Menu', 'main': 'Menus', 'management': 'Menu Management' }, 'modules': { 'all': 'All Modules Page', 'create': 'Create Module Page', 'main': 'Module Pages', 'management': 'Module Management' }, 'pages': { 'all': 'All Pages', 'create': 'Create Page', 'edit': 'Edit Page', 'main': 'Pages', 'management': 'Page Management' }, 'settings': { 'all': 'All Settings', 'create': 'Create Settings', 'edit': 'Edit Settings', 'main': 'Settings', 'management': 'Settings Management' }, 'sidebar': { 'dashboard': 'Dashboard', 'general': 'General', 'system': 'System' }, 'whitelabels': { 'all': 'All Whitelabels', 'create': 'Create Whitelabel', 'edit': 'Edit Whitelabel', 'main': 'Whitelabels', 'management': 'Whitelabel Management' }, 'wishes': { 'all': 'All Wishes', 'create': 'Create Wish', 'edit': 'Edit Wish', 'main': 'Wishes', 'management': 'Wish Management' } }, 'frontend': { 'agents': { 'all': 'All Menu', 'create': 'Create Agent', 'edit': 'Edit Menu', 'main': 'Menus', 'management': 'Menu Management' } }, 'language-picker': { 'langs': { 'ar': 'Arabic', 'da': 'Danish', 'de': 'German', 'el': 'Greek', 'en': 'English', 'es': 'Spanish', 'fr': 'French', 'id': 'Indonesian', 'it': 'Italian', 'nl': 'Dutch', 'pt_BR': 'Brazilian Portuguese', 'ru': 'Russian', 'sv': 'Swedish', 'th': 'Thai' }, 'language': 'Language' }, 'list': { 'status': { 'all': 'All wishes' } }, 'sellers': 'Sellers', 'wishes': 'Wishes' }, 'en.messages': { '_account': 'Do you have an account', 'account': "Don't have an account", 'contact': 'Contact us', 'contact_success': 'Your message has been sent successfully', 'created': ':attribute has been created successfully', 'delete': 'Do you really want to delete this item. Continue ?', 'delete_canceled': 'Delete canceled', 'deleted': ':attribute has been deleted successfully', 'destroy': 'Are you sure that you want to permanently delete the selected item. Continue ?', 'destroyed': ':attribute has been deleted permanently', 'event_upcoming': 'Event Upcoming', 'forgot': 'Forgot Password', 'here': 'login here', 'install': 'Module[:attribute] has been installed successfully', 'join': 'you successfully joined event', 'login': 'Login', 'new_posts': 'Latest Posts', 'recent_event': 'Recent event', 'register': 'Create your account', 'remember': 'Remember me', 'reset': 'Reset Password', 'restore': 'Do you really want to restore this item. Continue ?', 'restore_canceled': 'Restore canceled', 'restored': ':attribute has been restored successfully', 'show_all': 'Show all articles', 'show_all_events': 'Show all events', 'sign_up': 'Sign Up', 'terms': 'Agree to terms and conditions', 'title': 'Welcome Back', 'uninstall': 'Module[:attribute] has been uninstalled successfully', 'unsaved': 'You have unsaved changes, save and proceed ?', 'updated': ':attribute has been updated successfully', 'verify': 'Before proceeding, please check your email for a verification link.', 'verify_link': 'If you did not receive the email,', 'verify_request': 'click here to request another.', 'whitelabel_user': 'Create Associate Whitelabel User' }, 'en.modals': { 'activated': 'Activated', 'active': 'Active', 'add_document': 'Add document', 'add_documents': 'Add documents', 'address': 'Address', 'adults': 'Adults', 'airport': 'Airport', 'boards': 'Boards', 'budget': 'Budget', 'categories': 'Categories', 'category': 'Hotel category', 'catering': 'Hotel catering', 'click_to_upload': 'Click to upload', 'color': 'Color', 'confirmed': 'Confirmed', 'content': 'Content', 'create': 'Create', 'created_at': 'Created at', 'createdat': 'Created At', 'createdby': 'Created By', 'current': 'Current', 'description': 'Description', 'destination': 'Destination', 'display_name': 'Display Name', 'domain': 'Domain', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'email_verified_at': 'Verified at', 'end': 'End', 'first_name': 'First Name', 'full_name': 'Full Name', 'group': 'Group', 'groups': 'Groups', 'id': 'ID', 'kids': 'Kids', 'last_login': 'Last login ', 'last_name': 'Last Name', 'latest_return': 'Latest Return', 'lockout_time': 'Lockout time', 'login_failures': 'Login failures', 'logs': 'Logs', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Occupation', 'offerCount': 'Offers', 'online': 'Online', 'owner': 'Owner', 'password': 'Password', 'password_confirm': 'Password Confirm', 'pending': 'Pending', 'period': 'Period', 'permission': 'Permission', 'permissions': 'Permissions', 'phone': 'Phone', 'role': 'Role', 'roles': 'Roles', 'start': 'Start', 'status': 'Status', 'summary': 'Summary', 'text': 'Text', 'title': 'Title', 'unconfirmed': 'Unconfirmed', 'updated_at': 'Updated at', 'upload_documents': 'Upload documents', 'upload_photo': 'Upload Photo', 'upload_tip': 'Upload tip', 'url': 'Url', 'users': 'Users', 'whitelabel': 'Whitelabel', 'wish': 'Wish' }, 'en.navs': { 'frontend': { 'agents': 'Agents', 'create_wish': 'Create Wish', 'dashboard': 'Dashboard', 'login': 'Login', 'macros': 'Macros', 'offers': 'My Offers', 'register': 'Register', 'user': { 'account': 'My Account', 'administration': 'Administration', 'agents': 'Agents', 'change_password': 'Change Password', 'my_information': 'My Information', 'profile': 'Profile' }, 'wishes': 'My Wishes', 'wisheslist': 'Wishes' }, 'general': { 'home': 'Home', 'logout': 'Logout' } }, 'en.pagination': { 'next': 'Next &raquo;', 'previous': '&laquo; Previous' }, 'en.passwords': { 'password': 'Passwords must be at least six characters and match the confirmation.', 'reset': 'Your password has been reset!', 'sent': 'We have e-mailed your password reset link!', 'token': 'This password reset token is invalid.', 'user': "We can't find a user with that e-mail address." }, 'en.roles': { 'administrator': 'Administrator', 'user': 'User' }, 'en.strings': { 'backend': { 'access': { 'users': { 'delete_user_confirm': "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", 'if_confirmed_off': '(If confirmed is off)', 'restore_user_confirm': 'Restore this user to its original state?' } }, 'dashboard': { 'title': 'Administrative Dashboard', 'welcome': 'Welcome' }, 'general': { 'all_rights_reserved': 'All Rights Reserved.', 'are_you_sure': 'Are you sure you want to do this?', 'boilerplate_link': 'Laravel AdminPanel', 'continue': 'Continue', 'member_since': 'Member since', 'minutes': ' minutes', 'search_placeholder': 'Search...', 'see_all': { 'messages': 'See all messages', 'notifications': 'View all', 'tasks': 'View all tasks' }, 'status': { 'offline': 'Offline', 'online': 'Online' }, 'timeout': 'You were automatically logged out for security reasons since you had no activity in ', 'you_have': { 'messages': "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", 'notifications': "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", 'tasks': "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, 'search': { 'empty': 'Please enter a search term.', 'incomplete': 'You must write your own search logic for this system.', 'results': 'Search Results for :query', 'title': 'Search Results' }, 'welcome': '<p>This is the AdminLTE theme by <a href="https:\/\/almsaeedstudio.com\/" target="_blank">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href="https:\/\/github.com\/rappasoft\/laravel-5-boilerplate" target="_blank">GitHub<\/a> page for more information and report any <a href="https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues" target="_blank">issues here<\/a>.<\/p>\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\n<p>- Viral Solani<\/p>' }, 'emails': { 'auth': { 'click_to_confirm': 'Click here to confirm your account:', 'error': 'Whoops!', 'greeting': 'Hello!', 'password_cause_of_email': 'You are receiving this email because we received a password reset request for your account.', 'password_if_not_requested': 'If you did not request a password reset, no further action is required.', 'password_reset_subject': 'Reset Password', 'regards': 'Regards,', 'reset_password': 'Click here to reset your password', 'thank_you_for_using_app': 'Thank you for using our application!', 'trouble_clicking_button': 'If you\u2019re having trouble clicking the ":action_text" button, copy and paste the URL below into your web browser:' } }, 'frontend': { 'test': 'Test', 'tests': { 'based_on': { 'permission': 'Permission Based - ', 'role': 'Role Based - ' }, 'js_injected_from_controller': 'Javascript Injected from a Controller', 'using_access_helper': { 'array_permissions': "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", 'array_permissions_not': "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", 'array_roles': "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", 'array_roles_not': "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", 'permission_id': 'Using Access Helper with Permission ID', 'permission_name': 'Using Access Helper with Permission Name', 'role_id': 'Using Access Helper with Role ID', 'role_name': 'Using Access Helper with Role Name' }, 'using_blade_extensions': 'Using Blade Extensions', 'view_console_it_works': "View console, you should see 'it works!' which is coming from FrontendController@index", 'you_can_see_because': "You can see this because you have the role of ':role'!", 'you_can_see_because_permission': "You can see this because you have the permission of ':permission'!" }, 'user': { 'change_email_notice': 'If you change your e-mail you will be logged out until you confirm your new e-mail address.', 'email_changed_notice': 'You must confirm your new e-mail address before you can log in again.', 'password_updated': 'Password successfully updated.', 'profile_updated': 'Profile successfully updated.' }, 'welcome_to': 'Welcome to :place' } }, 'en.tables': { 'actions': 'Actions', 'activated': 'Activated', 'activities': 'Activities', 'activity': 'Activity', 'add_documents': 'Add documents', 'address': 'Address', 'adults': 'Adults', 'airport': 'Airport', 'alias': 'Alias', 'boards': 'Boards', 'budget': 'Budget', 'categories': 'Categories', 'category': 'Hotel category', 'catering': 'Hotel catering', 'color': 'Color', 'confirmed': 'Confirmed', 'content': 'Content', 'created_at': 'Created At', 'created_by': 'Created By', 'date': 'Date', 'description': 'Description', 'destination': 'Destination', 'display_name': 'Display Name', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'email_verified_at': 'Verified at', 'end': 'End', 'eventAction': 'Event Action', 'eventCategory': 'Event Category', 'eventLabel': 'Event Label', 'first_name': 'First Name', 'full_name': 'Full Name', 'group': 'Group', 'groups': 'Groups', 'id': 'ID', 'install': 'Install', 'kids': 'Kids', 'last_login': 'Last login ', 'last_name': 'Last Name', 'latest_return': 'Latest Return', 'lockout_time': 'Lockout time', 'login_failures': 'Login failures', 'migrate': 'Migrate', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Occupation', 'offerCount': 'Offers', 'online': 'online', 'owner': 'Owner', 'package': 'Package', 'pending': 'Pending', 'period': 'Period', 'permissions': 'Permissions', 'phone': 'Phone', 'roles': 'Roles', 'start': 'Start', 'status': 'Status', 'subject': 'Subject', 'text': 'Text', 'title': 'Wish', 'unconfirmed': 'Unconfirmed', 'uninstall': 'Uninstall', 'updated_at': 'Updated at', 'url': 'Url', 'users': 'Users', 'whitelabel': 'Whitelabel' }, 'en.validation': { 'accepted': 'The :attribute must be accepted.', 'active_url': 'The :attribute is not a valid URL.', 'after': 'The :attribute must be a date after :date.', 'after_or_equal': 'The :attribute must be a date after or equal to :date.', 'alpha': 'The :attribute may only contain letters.', 'alpha_dash': 'The :attribute may only contain letters, numbers, and dashes.', 'alpha_num': 'The :attribute may only contain letters and numbers.', 'api': { 'confirmaccount': { 'already_confirmed': 'Account is already confirmed.', 'invalid_email': 'Email is not register with fin builders', 'invalid_otp': 'Please enter valid otp.' }, 'forgotpassword': { 'email_not_valid': 'Email you entered is not register with fin builders.', 'email_required': 'Please enter email', 'valid_email': 'Please enter valid email address.' }, 'login': { 'email_required': 'Please enter email', 'password_required': 'Please enter passsword.', 'username_password_didnt_match': 'Please enter valid credentials.', 'valid_email': 'Please enter valid email address.' }, 'register': { 'city_required': 'Please enter city.', 'state_required': 'Please enter state.' }, 'resetpassword': { 'confirm_password_required': 'Please enter confirm password.', 'email_not_valid': 'Email you entered is not register with fin builders.', 'email_required': 'Please enter email', 'password_confirmed': 'passsword and confirm passsword do not match.', 'password_required': 'Please enter passsword.', 'token_not_valid': 'Given token is invalid.', 'token_required': 'Please enter token.', 'valid_email': 'Please enter valid email address.' } }, 'array': 'The :attribute must be an array.', 'attributes': { 'backend': { 'access': { 'permissions': { 'associated_roles': 'Associated Roles', 'dependencies': 'Dependencies', 'display_name': 'Display Name', 'group': 'Group', 'group_sort': 'Group Sort', 'groups': { 'name': 'Group Name' }, 'name': 'Name', 'sort': 'Sort', 'system': 'System?' }, 'roles': { 'active': 'Active', 'associated_permissions': 'Associated Permissions', 'name': 'Name', 'sort': 'Sort' }, 'users': { 'active': 'Active', 'associated_roles': 'Associated Roles', 'associated_whitelabels': 'Associated Whitelabels', 'confirmed': 'Confirmed', 'email': 'E-mail Address', 'firstName': 'First Name', 'groups': 'User Groups', 'lastName': 'Last Name', 'no-group': 'None', 'old_password': 'Old password', 'other_permissions': 'Other Permissions', 'password': 'New Password', 'password_confirmation': 'New Password Confirmation', 'send_confirmation_email': 'Send Confirmation E-mail' } }, 'blogcategories': { 'is_active': 'Active', 'title': 'Blog Category' }, 'blogs': { 'cannonical_link': 'Cannonical Link', 'category': 'Blog Category', 'content': 'Content', 'image': 'Featured Image', 'meta-title': 'Meta Title', 'meta_description': 'Meta Description', 'meta_keyword': 'Meta Keyword', 'publish': 'Publish Date & Time', 'slug': 'Slug', 'status': 'Status', 'tags': 'Tags', 'title': 'Blog Title' }, 'blogtags': { 'is_active': 'Active', 'title': 'Blog Tag' }, 'distributions': { 'description': 'Description', 'display_name': 'Display Name', 'name': 'Name' }, 'faqs': { 'answer': 'Answer', 'question': 'Question', 'status': 'Status' }, 'groups': { 'associated_whitelabels': 'Associated Whitelabels', 'description': 'Description', 'display_name': 'Display Name', 'groups': 'Seller Groups', 'name': 'Group Name', 'status': 'Status' }, 'pages': { 'cannonical_link': 'Cannonical Link', 'description': 'Description', 'is_active': 'Active', 'seo_description': 'SEO Description', 'seo_keyword': 'SEO Keyword', 'seo_title': 'SEO Title', 'title': 'Title' }, 'settings': { 'companydetails': { 'address': 'Company Address', 'contactnumber': 'Contact Number' }, 'favicon': 'Fav Icon', 'footer': { 'copyright': 'Copyright Text', 'text': 'Footer Text' }, 'google': { 'analytic': 'Google Analytics' }, 'mail': { 'fromemail': 'From Email', 'fromname': 'From Name' }, 'metadescription': 'Meta Description', 'metakeyword': 'Meta Keyawords', 'metatitle': 'Meta Title', 'sitelogo': 'Site Logo', 'termscondition': { 'disclaimer': 'Disclaimer', 'terms': 'Terms & Condition' } }, 'whitelabels': { 'associated_distribution': 'Associated Distribution', 'display_name': 'Display Name', 'ga_view_id': 'Google View Id', 'image': 'Background Image', 'name': 'Name', 'status': 'Status' }, 'wishes': { 'adults': 'Adults', 'airport': 'Airport', 'associated_whitelabels': 'Associated Whitelabels', 'budget': 'Budget', 'category': 'Hotel category', 'catering': 'Hotel catering', 'description': 'Description', 'destination': 'Destination', 'duration': 'Duration', 'earliest_start': 'Earliest start', 'image': 'Featured Image', 'kids': 'Kids', 'latest_return': 'Latest return', 'status': 'Status', 'title': 'Wish Title' } }, 'frontend': { 'offers': { 'file': 'File', 'status': 'Status', 'text': 'Text', 'title': 'Title' }, 'register-user': { 'address': 'Address', 'city': 'City', 'country': 'Country', 'email': 'E-mail Address', 'firstName': 'First Name', 'lastName': 'Last Name', 'new_password': 'New Password', 'new_password_confirmation': 'New Password Confirmation', 'old_password': 'Old Password', 'password': 'Password', 'password_confirmation': 'Password Confirmation', 'ssn': 'SSN', 'state': 'State', 'terms_and_conditions': 'terms and conditions', 'user_type': 'I use desiretec as a', 'user_type_seller': 'Seller', 'user_type_user': 'User', 'zipcode': 'Zip Code' } } }, 'before': 'The :attribute must be a date before :date.', 'before_or_equal': 'The :attribute must be a date before or equal to :date.', 'between': { 'array': 'The :attribute must have between :min and :max items.', 'file': 'The :attribute must be between :min and :max kilobytes.', 'numeric': 'The :attribute must be between :min and :max.', 'string': 'The :attribute must be between :min and :max characters.' }, 'boolean': 'The :attribute field must be true or false.', 'confirmed': 'The :attribute confirmation does not match.', 'custom': { 'attribute-name': { 'rule-name': 'custom-message' } }, 'date': 'The :attribute is not a valid date.', 'date_format': 'The :attribute does not match the format :format.', 'different': 'The :attribute and :other must be different.', 'digits': 'The :attribute must be :digits digits.', 'digits_between': 'The :attribute must be between :min and :max digits.', 'dimensions': 'The :attribute has invalid image dimensions.', 'distinct': 'The :attribute field has a duplicate value.', 'email': 'The :attribute must be a valid email address.', 'exists': 'The selected :attribute is invalid.', 'file': 'The :attribute must be a file.', 'filled': 'The :attribute field must have a value.', 'image': 'The :attribute must be an image.', 'in': 'The selected :attribute is invalid.', 'in_array': 'The :attribute field does not exist in :other.', 'integer': 'The :attribute must be an integer.', 'ip': 'The :attribute must be a valid IP address.', 'json': 'The :attribute must be a valid JSON string.', 'max': { 'array': 'The :attribute may not have more than :max items.', 'file': 'The :attribute may not be greater than :max kilobytes.', 'numeric': 'The :attribute may not be greater than :max.', 'string': 'The :attribute may not be greater than :max characters.' }, 'mimes': 'The :attribute must be a file of type: :values.', 'mimetypes': 'The :attribute must be a file of type: :values.', 'min': { 'array': 'The :attribute must have at least :min items.', 'file': 'The :attribute must be at least :min kilobytes.', 'numeric': 'The :attribute must be at least :min.', 'string': 'The :attribute must be at least :min characters.' }, 'not_in': 'The selected :attribute is invalid.', 'numeric': 'The :attribute must be a number.', 'present': 'The :attribute field must be present.', 'regex': 'The :attribute format is invalid.', 'required': 'The :attribute field is required.', 'required_if': 'The :attribute field is required when :other is :value.', 'required_unless': 'The :attribute field is required unless :other is in :values.', 'required_with': 'The :attribute field is required when :values is present.', 'required_with_all': 'The :attribute field is required when :values is present.', 'required_without': 'The :attribute field is required when :values is not present.', 'required_without_all': 'The :attribute field is required when none of :values are present.', 'same': 'The :attribute and :other must match.', 'size': { 'array': 'The :attribute must contain :size items.', 'file': 'The :attribute must be :size kilobytes.', 'numeric': 'The :attribute must be :size.', 'string': 'The :attribute must be :size characters.' }, 'string': 'The :attribute must be a string.', 'timezone': 'The :attribute must be a valid zone.', 'unique': 'The :attribute has already been taken.', 'uploaded': 'The :attribute failed to upload.', 'url': 'The :attribute format is invalid.' }, 'en.wish': { 'view': { 'adults': 'Adults', 'airport': 'Airport', 'budget': 'Budget', 'category': 'Hotel category', 'catering': 'Hotel catering', 'comment-header': 'Communicate with Agent', 'createdat': 'Created At', 'createdby': 'Created By', 'destination': 'Destination', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'kids': 'Kids', 'latest_return': 'Latest Return', 'offerCount': 'Offers', 'owner': 'Name', 'status': 'Status', 'text': 'Text', 'title': 'Wish', 'whitelabel': 'Whitelabel' } }, 'es.log-viewer::general': { 'all': 'Todos', 'date': 'Fecha' }, 'es.log-viewer::levels': { 'alert': 'Alerta', 'all': 'Todos', 'critical': 'Criticos', 'debug': 'Debug', 'emergency': 'Emergencia', 'error': 'Errores', 'info': 'Info', 'notice': 'Aviso', 'warning': 'Advertencia' }, 'et.log-viewer::general': { 'all': 'K\xF5ik', 'date': 'Kuup\xE4ev', 'empty-logs': 'Logide nimekiri on t\xFChi!' }, 'et.log-viewer::levels': { 'alert': 'H\xE4ire', 'all': 'K\xF5ik', 'critical': 'Kriitiline', 'debug': 'Silumine', 'emergency': 'Erakorraline', 'error': 'Viga', 'info': 'Info', 'notice': 'Teade', 'warning': 'Hoiatus' }, 'fa.log-viewer::general': { 'all': '\u0647\u0645\u0647', 'date': '\u062A\u0627\u0631\u06CC\u062E' }, 'fa.log-viewer::levels': { 'alert': '\u0627\u062E\u0637\u0627\u0631', 'all': '\u0647\u0645\u0647', 'critical': '\u0628\u062D\u0631\u0627\u0646\u06CC', 'debug': '\u062F\u06CC\u0628\u0627\u06AF', 'emergency': '\u0627\u0648\u0631\u0698\u0627\u0646\u0633\u06CC', 'error': '\u062E\u0637\u0627', 'info': '\u0627\u0637\u0644\u0627\u0639\u0627\u062A', 'notice': '\u0627\u0639\u0644\u0627\u0646', 'warning': '\u0647\u0634\u062F\u0627\u0631' }, 'fr.log-viewer::general': { 'all': 'Tous', 'date': 'Date' }, 'fr.log-viewer::levels': { 'alert': 'Alerte', 'all': 'Tous', 'critical': 'Critique', 'debug': 'Debug', 'emergency': 'Urgence', 'error': 'Erreur', 'info': 'Info', 'notice': 'Notice', 'warning': 'Avertissement' }, 'hu.log-viewer::general': { 'all': '\xD6sszes', 'date': 'D\xE1tum', 'empty-logs': 'The list of logs is empty!' }, 'hu.log-viewer::levels': { 'alert': 'Riaszt\xE1s', 'all': '\xD6sszes', 'critical': 'Kritikus', 'debug': 'Hibakeres\xE9s', 'emergency': 'V\xE9szhelyzet', 'error': 'Hiba', 'info': 'Inform\xE1ci\xF3', 'notice': '\xC9rtes\xEDt\xE9s', 'warning': 'Figyelmeztet\xE9s' }, 'hy.log-viewer::general': { 'all': '\u0532\u0578\u056C\u0578\u0580\u0568', 'date': '\u0531\u0574\u057D\u0561\u0569\u056B\u057E' }, 'hy.log-viewer::levels': { 'alert': '\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574', 'all': '\u0532\u0578\u056C\u0578\u0580\u0568', 'critical': '\u053F\u0580\u056B\u057F\u056B\u056F\u0561\u056F\u0561\u0576', 'debug': '\u053F\u0561\u0580\u0563\u0561\u0562\u0565\u0580\u0578\u0582\u0574', 'emergency': '\u054E\u0569\u0561\u0580\u0561\u0575\u056B\u0576', 'error': '\u054D\u056D\u0561\u056C', 'info': '\u054F\u0565\u0572\u0565\u056F\u0561\u057F\u057E\u0578\u0582\u0569\u0575\u0578\u0582\u0576', 'notice': '\u053E\u0561\u0576\u0578\u0582\u0581\u0578\u0582\u0574', 'warning': '\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574' }, 'id.log-viewer::general': { 'all': 'Semua', 'date': 'Tanggal' }, 'id.log-viewer::levels': { 'alert': 'Waspada', 'all': 'Semua', 'critical': 'Kritis', 'debug': 'Debug', 'emergency': 'Darurat', 'error': 'Kesalahan', 'info': 'Info', 'notice': 'Perhatian', 'warning': 'Peringatan' }, 'it.log-viewer::general': { 'all': 'Tutti', 'date': 'Data' }, 'it.log-viewer::levels': { 'alert': 'Allarme', 'all': 'Tutti', 'critical': 'Critico', 'debug': 'Debug', 'emergency': 'Emergenza', 'error': 'Errore', 'info': 'Info', 'notice': 'Notifica', 'warning': 'Avviso' }, 'ja.log-viewer::general': { 'all': '\u3059\u3079\u3066', 'date': '\u65E5\u4ED8', 'empty-logs': '\u30ED\u30B0\u30EA\u30B9\u30C8\u304C\u7A7A\u3067\u3059!' }, 'ja.log-viewer::levels': { 'alert': '\u8B66\u6212', 'all': '\u3059\u3079\u3066', 'critical': '\u81F4\u547D\u7684', 'debug': '\u30C7\u30D0\u30C3\u30B0', 'emergency': '\u7DCA\u6025', 'error': '\u30A8\u30E9\u30FC', 'info': '\u60C5\u5831', 'notice': '\u901A\u77E5', 'warning': '\u8B66\u544A' }, 'ko.log-viewer::general': { 'all': '\uC804\uCCB4', 'date': '\uB0A0\uC9DC' }, 'ko.log-viewer::levels': { 'alert': '\uACBD\uACE0', 'all': '\uC804\uCCB4', 'critical': '\uC2EC\uAC01', 'debug': '\uB514\uBC84\uADF8', 'emergency': '\uAE34\uAE09', 'error': '\uC624\uB958', 'info': '\uC815\uBCF4', 'notice': '\uC54C\uB9BC', 'warning': '\uC8FC\uC758' }, 'nl.log-viewer::general': { 'all': 'Alles', 'date': 'Datum' }, 'nl.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Alle', 'critical': 'Cruciaal', 'debug': 'Debug', 'emergency': 'Noodgeval', 'error': 'Error', 'info': 'Informatie', 'notice': 'Opmerking', 'warning': 'Waarschuwing' }, 'pl.log-viewer::general': { 'all': 'Wszystkie', 'date': 'Data' }, 'pl.log-viewer::levels': { 'alert': 'Alerty', 'all': 'Wszystkie', 'critical': 'Krytyczne', 'debug': 'Debug', 'emergency': 'Awaryjne', 'error': 'B\u0142\u0119dy', 'info': 'Informacje', 'notice': 'Warte uwagi', 'warning': 'Ostrze\u017Cenia' }, 'pt-BR.log-viewer::general': { 'all': 'Todos', 'date': 'Data' }, 'pt-BR.log-viewer::levels': { 'alert': 'Alerta', 'all': 'Todos', 'critical': 'Cr\xEDtico', 'debug': 'Debug', 'emergency': 'Emerg\xEAncia', 'error': 'Erro', 'info': 'Informa\xE7\xE3o', 'notice': 'Not\xEDcia', 'warning': 'Aviso' }, 'ro.log-viewer::general': { 'all': 'Toate', 'date': 'Dat\u0103' }, 'ro.log-viewer::levels': { 'alert': 'Alert\u0103', 'all': 'Toate', 'critical': 'Critic', 'debug': 'Depanare', 'emergency': 'Urgen\u021B\u0103', 'error': 'Eroare', 'info': 'Informare', 'notice': 'Avertisment', 'warning': 'Pericol' }, 'ru.log-viewer::general': { 'all': '\u0412\u0441\u0435', 'date': '\u0414\u0430\u0442\u0430' }, 'ru.log-viewer::levels': { 'alert': '\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435', 'all': '\u0412\u0441\u0435', 'critical': '\u041A\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439', 'debug': '\u041E\u0442\u043B\u0430\u0434\u043A\u0430', 'emergency': '\u0410\u0432\u0430\u0440\u0438\u0439\u043D\u0430\u044F', 'error': '\u041E\u0448\u0438\u0431\u043A\u0430', 'info': '\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F', 'notice': '\u0423\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u0435', 'warning': '\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435' }, 'sv.log-viewer::general': { 'all': 'Alla', 'date': 'Datum' }, 'sv.log-viewer::levels': { 'alert': 'Alarmerande', 'all': 'Alla', 'critical': 'Kritisk', 'debug': 'Debug', 'emergency': 'Akut', 'error': 'Error', 'info': 'Information', 'notice': 'Notis', 'warning': 'Varning' }, 'th.log-viewer::general': { 'all': '\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14', 'date': '\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48', 'empty-logs': 'The list of logs is empty!' }, 'th.log-viewer::levels': { 'alert': '\u0E27\u0E34\u0E01\u0E24\u0E15\u0E34', 'all': '\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14', 'critical': '\u0E23\u0E49\u0E32\u0E22\u0E41\u0E23\u0E07', 'debug': '\u0E14\u0E35\u0E1A\u0E31\u0E01', 'emergency': '\u0E09\u0E38\u0E01\u0E40\u0E09\u0E34\u0E19', 'error': '\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14', 'info': '\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25', 'notice': '\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28', 'warning': '\u0E04\u0E33\u0E40\u0E15\u0E37\u0E2D\u0E19' }, 'tr.log-viewer::general': { 'all': 'Toplam', 'date': 'Tarih' }, 'tr.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Toplam', 'critical': 'Kritik', 'debug': 'Debug', 'emergency': 'Acil', 'error': 'Hata', 'info': 'Bilgi', 'notice': 'Bildirim', 'warning': 'Uyar\u0131' }, 'zh-TW.log-viewer::general': { 'all': '\u5168\u90E8', 'date': '\u65E5\u671F' }, 'zh-TW.log-viewer::levels': { 'alert': '\u8B66\u5831', 'all': '\u5168\u90E8', 'critical': '\u56B4\u91CD', 'debug': '\u9664\u932F', 'emergency': '\u7DCA\u6025', 'error': '\u932F\u8AA4', 'info': '\u8A0A\u606F', 'notice': '\u6CE8\u610F', 'warning': '\u8B66\u544A' }, 'zh.log-viewer::general': { 'all': '\u5168\u90E8', 'date': '\u65E5\u671F' }, 'zh.log-viewer::levels': { 'alert': '\u7D27\u6025', 'all': '\u5168\u90E8', 'critical': '\u4E25\u91CD', 'debug': '\u8C03\u8BD5', 'emergency': '\u5371\u6025', 'error': '\u9519\u8BEF', 'info': '\u4FE1\u606F', 'notice': '\u6CE8\u610F', 'warning': '\u8B66\u544A' } };
+module.exports = { 'ar.log-viewer::general': { 'all': '\u062C\u0645\u064A\u0639', 'date': '\u062A\u0627\u0631\u064A\u062E' }, 'ar.log-viewer::levels': { 'alert': '\u0625\u0646\u0630\u0627\u0631', 'all': '\u0627\u0644\u062C\u0645\u064A\u0639', 'critical': '\u062D\u0631\u062C', 'debug': '\u0627\u0644\u062A\u0635\u062D\u064A\u062D', 'emergency': '\u062D\u0627\u0644\u0627\u062A \u0627\u0644\u0637\u0648\u0627\u0631\u0626', 'error': '\u062E\u0637\u0623', 'info': '\u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062A', 'notice': '\u0645\u0644\u0627\u062D\u0638\u0629', 'warning': '\u062A\u062D\u0630\u064A\u0631' }, 'bg.log-viewer::general': { 'all': '\u0412\u0441\u0438\u0447\u043A\u0438', 'date': '\u0414\u0430\u0442\u0430', 'empty-logs': '\u041D\u0435 \u0441\u0430 \u043D\u0430\u043C\u0435\u0440\u0435\u043D\u0438 \u043B\u043E\u0433\u043E\u0432\u0435!' }, 'bg.log-viewer::levels': { 'alert': 'Alert', 'all': '\u0412\u0441\u0438\u0447\u043A\u0438', 'critical': 'Critical', 'debug': 'Debug', 'emergency': 'Emergency', 'error': 'Error', 'info': 'Info', 'notice': 'Notice', 'warning': 'Warning' }, 'de.log-viewer::general': { 'all': 'Alle', 'date': 'Datum' }, 'de.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Alle', 'critical': 'Kritisch', 'debug': 'Debug', 'emergency': 'Notfall', 'error': 'Fehler', 'info': 'Info', 'notice': 'Hinweis', 'warning': 'Warnung' }, 'en.alerts': { 'backend': { 'blogcategories': { 'created': 'The Blog Category was successfully created.', 'deleted': 'The Blog Category was successfully deleted.', 'updated': 'The Blog Category was successfully updated.' }, 'blogs': { 'created': 'The Blog was successfully created.', 'deleted': 'The Blog was successfully deleted.', 'updated': 'The Blog was successfully updated.' }, 'blogtags': { 'created': 'The Blog Tag was successfully created.', 'deleted': 'The Blog Tag was successfully deleted.', 'updated': 'The Blog Tag was successfully updated.' }, 'emailtemplates': { 'deleted': 'The Email Template was successfully deleted.', 'updated': 'The Email Template was successfully updated.' }, 'faqs': { 'created': 'The Faq was successfully created.', 'deleted': 'The Faq was successfully deleted.', 'updated': 'The Faq was successfully updated.' }, 'groups': { 'created': 'The Group was successfully created.', 'deleted': 'The Group was successfully deleted.', 'updated': 'The Group was successfully updated.' }, 'menus': { 'created': 'The Menu was successfully created.', 'deleted': 'The Menu was successfully deleted.', 'updated': 'The Menu was successfully updated.' }, 'pages': { 'created': 'The Page was successfully created.', 'deleted': 'The Page was successfully deleted.', 'updated': 'The Page was successfully updated.' }, 'permissions': { 'created': 'The permission was successfully created.', 'deleted': 'The permission was successfully deleted.', 'updated': 'The permission was successfully updated.' }, 'roles': { 'created': 'The role was successfully created.', 'deleted': 'The role was successfully deleted.', 'updated': 'The role was successfully updated.' }, 'settings': { 'updated': 'The Setting was successfully updated.' }, 'users': { 'confirmation_email': 'A new confirmation e-mail has been sent to the address on file.', 'created': 'The user was successfully created.', 'deleted': 'The user was successfully deleted.', 'deleted_permanently': 'The user was deleted permanently.', 'restored': 'The user was successfully restored.', 'session_cleared': "The user's session was successfully cleared.", 'updated': 'The user was successfully updated.', 'updated_password': "The user's password was successfully updated." }, 'whitelabels': { 'created': 'The Whitelabel was successfully created.', 'deleted': 'The Whitelabel was successfully deleted.', 'updated': 'The Whitelabel was successfully updated.' }, 'wishes': { 'created': 'The Wish was successfully created.', 'deleted': 'The Wish was successfully deleted.', 'updated': 'The Wish was successfully updated.' } }, 'frontend': { 'offers': { 'created': 'Offer successfully created' }, 'wishes': { 'created': 'The Wish was successfully created.', 'deleted': 'The Wish was successfully deleted.', 'updated': 'The Wish was successfully updated.' } } }, 'en.api': { 'messages': { 'forgot_password': { 'success': 'We have sent email with reset password link. Please check your inbox!.', 'validation': { 'email_not_found': 'This email address is not registered.' } }, 'login': { 'failed': 'Invalid Credentials! Please try again.', 'success': 'Login Successfull.' }, 'logout': { 'success': 'Successfully logged out.' }, 'refresh': { 'status': 'Ok', 'token': { 'not_provided': 'Token not provided.' } }, 'registeration': { 'success': 'You have registered successfully. Please check your email for activation!' } } }, 'en.auth': { 'failed': 'These credentials do not match our records.', 'general_error': 'You do not have access to do that.', 'socialite': { 'unacceptable': ':provider is not an acceptable login type.' }, 'throttle': 'Too many login attempts. Please try again in :seconds seconds.', 'unknown': 'An unknown error occurred' }, 'en.button': { 'cancel': 'Cancel', 'close': 'Close', 'confirm': 'Confirm', 'create': 'Create', 'delete': 'Delete', 'delete_all': 'Delete All', 'edit': 'Edit', 'required': 'Required', 'restore': 'Restore', 'save': 'Save', 'save_and_close': 'Save and Close' }, 'en.buttons': { 'backend': { 'access': { 'users': { 'activate': 'Activate', 'change_password': 'Change Password', 'clear_session': 'Clear Session', 'deactivate': 'Deactivate', 'delete_permanently': 'Delete Permanently', 'login_as': 'Login As :user', 'resend_email': 'Resend Confirmation E-mail', 'restore_user': 'Restore User' } } }, 'emails': { 'auth': { 'confirm_account': 'Confirm Account', 'reset_password': 'Reset Password' } }, 'general': { 'cancel': 'Cancel', 'continue': 'Continue', 'crud': { 'add': 'Add', 'create': 'Create', 'delete': 'Delete', 'edit': 'Edit', 'update': 'Update', 'view': 'View' }, 'preview': 'Preview', 'save': 'Save', 'view': 'View' }, 'wishes': { 'frontend': { 'create_offer': 'Create Offer' } } }, 'en.comment': { 'comments': 'Comments' }, 'en.exceptions': { 'backend': { 'access': { 'permissions': { 'already_exists': 'That permission already exists. Please choose a different name.', 'create_error': 'There was a problem creating this permission. Please try again.', 'delete_error': 'There was a problem deleting this permission. Please try again.', 'not_found': 'That permission does not exist.', 'update_error': 'There was a problem updating this permission. Please try again.' }, 'roles': { 'already_exists': 'That role already exists. Please choose a different name.', 'cant_delete_admin': 'You can not delete the Administrator role.', 'create_error': 'There was a problem creating this role. Please try again.', 'delete_error': 'There was a problem deleting this role. Please try again.', 'has_users': 'You can not delete a role with associated users.', 'needs_permission': 'You must select at least one permission for this role.', 'not_found': 'That role does not exist.', 'update_error': 'There was a problem updating this role. Please try again.' }, 'users': { 'cant_deactivate_self': 'You can not do that to yourself.', 'cant_delete_admin': 'You can not delete Admin.', 'cant_delete_own_session': 'You can not delete your own session.', 'cant_delete_self': 'You can not delete yourself.', 'cant_restore': 'This user is not deleted so it can not be restored.', 'change_mismatch': 'That is not your old password.', 'create_error': 'There was a problem creating this user. Please try again.', 'delete_error': 'There was a problem deleting this user. Please try again.', 'delete_first': 'This user must be deleted first before it can be destroyed permanently.', 'email_error': 'That email address belongs to a different user.', 'mark_error': 'There was a problem updating this user. Please try again.', 'not_found': 'That user does not exist.', 'restore_error': 'There was a problem restoring this user. Please try again.', 'role_needed': 'You must choose at least one role.', 'role_needed_create': 'You must choose at lease one role.', 'session_wrong_driver': 'Your session driver must be set to database to use this feature.', 'update_error': 'There was a problem updating this user. Please try again.', 'update_password_error': 'There was a problem changing this users password. Please try again.' } }, 'blogcategories': { 'already_exists': 'That Blog Category already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Category. Please try again.', 'delete_error': 'There was a problem deleting this Blog Category. Please try again.', 'not_found': 'That Blog Category does not exist.', 'update_error': 'There was a problem updating this Blog Category. Please try again.' }, 'blogtags': { 'already_exists': 'That Blog Tag already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Tag. Please try again.', 'delete_error': 'There was a problem deleting this Blog Tag. Please try again.', 'not_found': 'That Blog Tag does not exist.', 'update_error': 'There was a problem updating this Blog Tag. Please try again.' }, 'menus': { 'already_exists': 'That Menu already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Menu. Please try again.', 'delete_error': 'There was a problem deleting this Menu. Please try again.', 'not_found': 'That Menu does not exist.', 'update_error': 'There was a problem updating this Menu. Please try again.' }, 'modules': { 'already_exists': 'That Module already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Module. Please try again.', 'delete_error': 'There was a problem deleting this Module. Please try again.', 'not_found': 'That Module does not exist.', 'update_error': 'There was a problem updating this Module. Please try again.' }, 'pages': { 'already_exists': 'That Page already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Page. Please try again.', 'delete_error': 'There was a problem deleting this Page. Please try again.', 'not_found': 'That Page does not exist.', 'update_error': 'There was a problem updating this Page. Please try again.' }, 'settings': { 'update_error': 'There was a problem updating this Settings. Please try again.' } }, 'frontend': { 'auth': { 'confirmation': { 'already_confirmed': 'Your account is already confirmed.', 'confirm': 'Confirm your account!', 'created_confirm': 'Your account was successfully created. We have sent you an e-mail to confirm your account.', 'created_pending': 'Your account was successfully created and is pending approval. An e-mail will be sent when your account is approved.', 'mismatch': 'Your confirmation code does not match.', 'not_found': 'That confirmation code does not exist.', 'resend': 'Your account is not confirmed. Please click the confirmation link in your e-mail, or <a href=http:\/\/localhost:8000\/account\/confirm\/resend\/:user_id>click here<\/a> to resend the confirmation e-mail.', 'resent': 'A new confirmation e-mail has been sent to the address on file.', 'success': 'Your account has been successfully confirmed!' }, 'deactivated': 'Your account has been deactivated.', 'email_taken': 'That e-mail address is already taken.', 'password': { 'change_mismatch': 'That is not your old password.' }, 'registration_disabled': 'Registration is currently closed.' } } }, 'en.general': { 'currency': '\u20AC' }, 'en.history': { 'backend': { 'blogcategories': { 'created': 'created Blog Category', 'deleted': 'deleted Blog Category', 'updated': 'updated Blog Category' }, 'blogs': { 'created': 'created Blog', 'deleted': 'deleted Blog', 'updated': 'updated Blog' }, 'blogtags': { 'created': 'created Blog Tag', 'deleted': 'deleted Blog Tag', 'updated': 'updated Blog Tag' }, 'none': 'There is no recent history.', 'none_for_entity': 'There is no history for this :entity.', 'none_for_type': 'There is no history for this type.', 'pages': { 'created': 'created Page', 'deleted': 'deleted Page', 'updated': 'updated Page' }, 'permissions': { 'created': 'created permission', 'deleted': 'deleted permission', 'updated': 'updated permission' }, 'recent_history': 'Recent History', 'roles': { 'created': 'created role', 'deleted': 'deleted role', 'updated': 'updated role' }, 'users': { 'changed_password': 'changed password for user', 'created': 'created user', 'deactivated': 'deactivated user', 'deleted': 'deleted user', 'permanently_deleted': 'permanently deleted user', 'reactivated': 'reactivated user', 'restored': 'restored user', 'updated': 'updated user' } } }, 'en.http': { '404': { 'description': 'Sorry, but the page you were trying to view does not exist.', 'title': 'Page Not Found' }, '503': { 'description': 'Be right back.', 'title': 'Be right back.' } }, 'en.labels': { 'about': 'About us', 'account': 'Account', 'activated': 'activated', 'address': 'Address', 'attendee': 'Attendee', 'attendees': 'Attendees', 'backend': { 'access': { 'permissions': { 'create': 'Create Permission', 'edit': 'Edit Permission', 'management': 'Permission Management', 'table': { 'display_name': 'Display Name', 'permission': 'Permission', 'sort': 'Sort', 'status': 'Status', 'total': 'role total|roles total' } }, 'roles': { 'create': 'Create Role', 'edit': 'Edit Role', 'management': 'Role Management', 'table': { 'number_of_users': 'Number of Users', 'permissions': 'Permissions', 'role': 'Role', 'sort': 'Sort', 'total': 'role total|roles total' } }, 'users': { 'active': 'Active Users', 'all_permissions': 'All Permissions', 'change_password': 'Change Password', 'change_password_for': 'Change Password for :user', 'create': 'Create User', 'deactivated': 'Deactivated Users', 'deleted': 'Deleted Users', 'edit': 'Edit User', 'edit-profile': 'Edit Profile', 'management': 'User Management', 'no_permissions': 'No Permissions', 'no_roles': 'No Roles to set.', 'permissions': 'Permissions', 'table': { 'confirmed': 'Confirmed', 'created': 'Created', 'email': 'E-mail', 'first_name': 'First Name', 'id': 'ID', 'last_name': 'Last Name', 'last_updated': 'Last Updated', 'no_deactivated': 'No Deactivated Users', 'no_deleted': 'No Deleted Users', 'roles': 'Roles', 'total': 'user total|users total' }, 'tabs': { 'content': { 'overview': { 'avatar': 'Avatar', 'confirmed': 'Confirmed', 'created_at': 'Created At', 'deleted_at': 'Deleted At', 'email': 'E-mail', 'last_updated': 'Last Updated', 'name': 'Name', 'status': 'Status', 'whitelabels': 'Whitelabels' } }, 'titles': { 'history': 'History', 'overview': 'Overview' } }, 'view': 'View User' } }, 'blogcategories': { 'create': 'Create Blog Category', 'edit': 'Edit Blog Category', 'management': 'Blog Category Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Blog Category' }, 'title': 'Blog Category' }, 'blogs': { 'create': 'Create Blog', 'edit': 'Edit Blog', 'management': 'Blog Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'publish': 'PublishDateTime', 'status': 'Status', 'title': 'Blog' }, 'title': 'Blogs' }, 'blogtags': { 'create': 'Create Blog Tag', 'edit': 'Edit Blog Tag', 'management': 'Blog Tag Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Blog Tag' }, 'title': 'Blog Tags' }, 'distributions': { 'create': 'Create Distribution', 'edit': 'Edit Distribution', 'management': 'Distributions', 'no_distributions': 'no Distributions', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'description': 'Description', 'display_name': 'Display Name', 'name': 'Distribution', 'whitelabel': 'Whitelabel' }, 'title': 'Distributions' }, 'emailtemplates': { 'create': 'Create Email Template', 'edit': 'Edit Email Template', 'management': 'Email Template Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'status': 'Status', 'subject': 'Subject', 'title': 'Title', 'updatedat': 'Updated At' }, 'title': 'Email Templates' }, 'faqs': { 'create': 'Create FAQ', 'edit': 'Edit FAQ', 'management': 'FAQ Management', 'table': { 'all': 'All', 'answer': 'Answer', 'createdat': 'Created At', 'createdby': 'Created By', 'publish': 'PublishDateTime', 'question': 'Question', 'status': 'Status', 'title': 'FAQs', 'updatedat': 'Updated At' }, 'title': 'FAQ' }, 'groups': { 'create': 'Create Group', 'edit': 'Edit Group', 'management': 'Groups', 'no_whitelabels': 'no Whitelabels', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'description': 'Description', 'display_name': 'Display Name', 'name': 'Group', 'status': 'Status', 'users': 'Users', 'whitelabel': 'Whitelabel' }, 'title': 'Groups' }, 'menus': { 'create': 'Create Menu', 'edit': 'Edit Menu', 'field': { 'icon': 'Icon Class', 'icon_title': 'Font Awesome Class. eg. fa-edit', 'items': 'Menu Items', 'name': 'Name', 'open_in_new_tab': 'Open URL in new tab', 'type': 'Type', 'url': 'URL', 'url_type': 'URL Type', 'url_types': { 'route': 'Route', 'static': 'Static' }, 'view_permission_id': 'Permission' }, 'management': 'Menu Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'name': 'Name', 'type': 'Type' }, 'title': 'Menus' }, 'modules': { 'create': 'Create Module', 'edit': 'Edit Module', 'form': { 'controller_name': 'Controller &nbsp;Name', 'create_file': 'Create', 'directory_name': 'Directory Name', 'edit_file': 'Edit', 'event': 'Event Name', 'form_file': 'Form', 'index_file': 'Index', 'model_name': 'Model Name', 'name': 'Module Name', 'namespace': 'Namespace', 'repo_name': 'Repository Name', 'resource_controller': 'Resourceful Controller', 'resource_route': 'Resourceful Routes', 'route_controller_name': 'Controller &nbsp;Name', 'route_name': 'Route Name', 'table_controller_name': 'Controller &nbsp;Name', 'table_name': 'Table Name', 'url': 'View Route', 'view_permission_id': 'View Permission', 'views_directory': 'Directory &nbsp;&nbsp;&nbsp;Name' }, 'management': 'Module Management', 'table': { 'created_by': 'Created By', 'name': 'Module Name', 'url': 'Module View Route', 'view_permission_id': 'View Permission' }, 'title': 'Module' }, 'pages': { 'create': 'Create Page', 'edit': 'Edit Page', 'management': 'Page Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Title', 'updatedat': 'Updated At' }, 'title': 'Pages' }, 'profile_updated': 'Your profile has been updated.', 'settings': { 'companydetails': 'Company Contact Details', 'edit': 'Edit Settings', 'footer': 'Footer Settings', 'google': 'Google Analytics Track Code', 'mail': 'Mail Settings', 'management': 'Settings Management', 'seo': 'SEO Settings', 'terms': 'Terms and Condition Settings', 'title': 'Settings' }, 'whitelabels': { 'create': 'Create Whitelabel', 'edit': 'Edit Whitelabel', 'management': 'Whitelabels', 'management_client': 'Whitelabel', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'display_name': 'Whitelabel', 'distribution': 'Distribution', 'ga_view_id': 'Google View Id', 'name': 'Identifier', 'status': 'Status' }, 'title': 'Whitelabels' }, 'wishes': { 'create': 'Create Wish', 'edit': 'Edit Wish', 'management': 'Wishes', 'no_whitelabels': 'no Whitelabels', 'table': { 'airport': 'Airport', 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'destination': 'Destination', 'earliest_start': 'Earliest Start', 'group': 'Group', 'latest_return': 'Latest Return', 'offerCount': 'Offers', 'status': 'Status', 'title': 'Wish', 'whitelabel': 'Whitelabel' }, 'title': 'Wishes' } }, 'cancel': 'Cancel', 'contact': 'Contact', 'content': 'Content', 'country': 'Country', 'current': 'Current', 'current_password': 'Current Password', 'description': 'Description', 'details': 'Details', 'documents': 'Documents', 'domain': 'Domain', 'download': 'Download', 'email': 'E-mail Address', 'events': 'Events', 'fax': 'Fax', 'feedback': 'Feedback', 'finish': 'Finish', 'first_name': 'Fisrtname', 'frontend': { 'agents': { 'create': 'Create new Agent', 'management': 'Agents', 'table': { 'avatar': 'Avatar', 'created_at': 'Created At', 'createdby': 'Created By', 'display_name': 'Display name', 'id': 'Id', 'name': 'Name', 'status': 'Status' } }, 'auth': { 'login_box_title': 'Login', 'login_button': 'Login', 'login_with': 'Login with :social_media', 'register_box_title': 'Register', 'register_button': 'Register', 'remember_me': 'Remember Me' }, 'dashboard': { 'analytics': { 'answered_wishes': 'Answered Wishes', 'bookings': 'Bookings', 'changed_wishes': 'Changed Wishes', 'created_wishes': 'Created Wishes', 'free_text': 'Free text', 'latest_answered_wishes': 'Latest Answered Wishes', 'latest_reaction_quota': 'Latest Reaction Quota', 'reaction_quota': 'Reaction Quota', 'reaction_time': 'Reaction Time' } }, 'macros': { 'country': { 'alpha': 'Country Alpha Codes', 'alpha2': 'Country Alpha 2 Codes', 'alpha3': 'Country Alpha 3 Codes', 'numeric': 'Country Numeric Codes' }, 'macro_examples': 'Macro Examples', 'state': { 'mexico': 'Mexico State List', 'us': { 'armed': 'US Armed Forces', 'outlying': 'US Outlying Territories', 'us': 'US States' } }, 'territories': { 'canada': 'Canada Province & Territories List' }, 'timezone': 'Timezone' }, 'offers': { 'create': 'Create new Offer', 'management': 'Offers', 'offers_for_wish': 'Offer for', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Offer' } }, 'passwords': { 'forgot_password': 'Forgot Your Password?', 'reset_password_box_title': 'Reset Password', 'reset_password_button': 'Reset Password', 'send_password_reset_link_button': 'Send Password Reset Link' }, 'user': { 'passwords': { 'change': 'Change Password' }, 'profile': { 'address': 'Address', 'avatar': 'Avatar', 'city': 'City', 'country': 'Country', 'created_at': 'Created At', 'edit_information': 'Edit Information', 'email': 'E-mail', 'first_name': 'First Name', 'last_name': 'Last Name', 'last_updated': 'Last Updated', 'ssn': 'SSN', 'update_information': 'Update Information', 'zipcode': 'Zip Code' } }, 'wishes': { 'add-comment': 'Add comment', 'created_at': 'created at', 'edit': 'Edit wish', 'goto': 'Go To Wish', 'table': { 'adults': 'Adults', 'kids': 'Kids' }, 'wishes': 'Wishes' } }, 'full_name': 'Full Name', 'general': { 'actions': 'Actions', 'active': 'Active', 'all': 'All', 'buttons': { 'save': 'Save', 'update': 'Update' }, 'custom': 'Custom', 'hide': 'Hide', 'inactive': 'Inactive', 'no': 'No', 'none': 'None', 'show': 'Show', 'toggle_navigation': 'Toggle Navigation', 'yes': 'Yes' }, 'go_back': 'Go back!', 'go_next': 'Go Next!', 'id': 'Id', 'interest': 'Interet', 'join': 'Join Now', 'language': 'Language', 'last_name': 'Lastname', 'login': 'Sign', 'logo': 'Logo', 'logout': 'Logout', 'message': 'Message', 'message_text': 'Message text', 'mobile': 'Mobile', 'name': 'Name', 'new': 'New', 'note': 'note', 'notes': 'notes', 'now': 'Now', 'occupation': 'Occupation', 'ok': 'Ok', 'online': 'Online', 'password': 'Password', 'password_confirm': 'Confirm Password', 'personal_timezone': 'Timezone', 'phone': 'Phone', 'plus': 'More', 'posts': 'Posts', 'ratings': 'Ratings', 'recipient': 'Recipient', 'register': 'Register', 'reset': 'Reset Password', 'reset_link': 'Send Password Reset Link', 'review': 'Review', 'send': 'Send Now', 'street': 'Street', 'subject': 'Subject', 'tel': 'Numero de Telephone', 'title': 'Title', 'user': 'User', 'username': 'Username', 'verify': 'Email Verification', 'verify_email': 'Verify Your Email Address', 'warning': 'Warning', 'whitelabel_executive': 'Whitelabel Executive', 'whitelabel_information': 'Whitelabel Information', 'whitelabel_subtitle': 'And a new subtitle', 'whitelabel_title': 'New Whitelabel', 'wish': 'Wish', 'wishes': 'Wishes', 'zipcode': 'Zip' }, 'en.log-viewer::general': { 'all': 'All', 'date': 'Date' }, 'en.log-viewer::levels': { 'alert': 'Alert', 'all': 'All', 'critical': 'Critical', 'debug': 'Debug', 'emergency': 'Emergency', 'error': 'Error', 'info': 'Info', 'notice': 'Notice', 'warning': 'Warning' }, 'en.menus': { 'backend': { 'access': { 'permissions': { 'all': 'All Permissions', 'create': 'Create Permission', 'edit': 'Edit Permission', 'main': 'Permissions', 'management': 'Permission Management' }, 'roles': { 'all': 'All Roles', 'create': 'Create Role', 'edit': 'Edit Role', 'main': 'Roles', 'management': 'Role Management' }, 'title': 'Access Management', 'users': { 'all': 'All Users', 'change-password': 'Change Password', 'create': 'Create User', 'deactivated': 'Deactivated Users', 'deleted': 'Deleted Users', 'edit': 'Edit User', 'main': 'Users', 'view': 'View User' } }, 'blog': { 'all': 'All Blog Page', 'create': 'Create Blog Page', 'edit': 'Edit Blog Page', 'main': 'Blog Pages', 'management': 'Blog Management' }, 'blogcategories': { 'all': 'All Blog Categories', 'create': 'Create Blog Category', 'edit': 'Edit Blog Category', 'main': 'CMS Pages', 'management': 'Blog Category Management' }, 'blogs': { 'all': 'All Blog', 'create': 'Create Blog', 'edit': 'Edit Blog', 'main': 'Blogs', 'management': 'Blog Management' }, 'blogtags': { 'all': 'All Blog Tag', 'create': 'Create Blog Tag', 'edit': 'Edit Blog Tag', 'main': 'Blog Tags', 'management': 'Blog Tag Management' }, 'distributions': { 'all': 'All Distributions', 'create': 'Create Distribution', 'edit': 'Edit Distribution', 'main': 'Distributions', 'management': 'Distribution Management' }, 'faqs': { 'all': 'All Faq Page', 'create': 'Create Faq Page', 'edit': 'Edit Faq Page', 'main': 'Faq Pages', 'management': 'Faq Management' }, 'groups': { 'all': 'All Groups', 'create': 'Create Group', 'edit': 'Edit Group', 'main': 'Groups', 'management': 'Group Management' }, 'log-viewer': { 'dashboard': 'Dashboard', 'logs': 'Logs', 'main': 'Log Viewer' }, 'menus': { 'all': 'All Menu', 'create': 'Create Menu', 'edit': 'Edit Menu', 'main': 'Menus', 'management': 'Menu Management' }, 'modules': { 'all': 'All Modules Page', 'create': 'Create Module Page', 'main': 'Module Pages', 'management': 'Module Management' }, 'pages': { 'all': 'All Pages', 'create': 'Create Page', 'edit': 'Edit Page', 'main': 'Pages', 'management': 'Page Management' }, 'settings': { 'all': 'All Settings', 'create': 'Create Settings', 'edit': 'Edit Settings', 'main': 'Settings', 'management': 'Settings Management' }, 'sidebar': { 'dashboard': 'Dashboard', 'general': 'General', 'system': 'System' }, 'whitelabels': { 'all': 'All Whitelabels', 'create': 'Create Whitelabel', 'edit': 'Edit Whitelabel', 'main': 'Whitelabels', 'management': 'Whitelabel Management' }, 'wishes': { 'all': 'All Wishes', 'create': 'Create Wish', 'edit': 'Edit Wish', 'main': 'Wishes', 'management': 'Wish Management' } }, 'frontend': { 'agents': { 'all': 'All Menu', 'create': 'Create Agent', 'edit': 'Edit Menu', 'main': 'Menus', 'management': 'Menu Management' } }, 'language-picker': { 'langs': { 'ar': 'Arabic', 'da': 'Danish', 'de': 'German', 'el': 'Greek', 'en': 'English', 'es': 'Spanish', 'fr': 'French', 'id': 'Indonesian', 'it': 'Italian', 'nl': 'Dutch', 'pt_BR': 'Brazilian Portuguese', 'ru': 'Russian', 'sv': 'Swedish', 'th': 'Thai' }, 'language': 'Language' }, 'list': { 'status': { 'all': 'All wishes' } }, 'sellers': 'Sellers', 'wishes': 'Wishes' }, 'en.messages': { '_account': 'Do you have an account', 'account': "Don't have an account", 'background': 'The background image must be --- x --- pixels in PNG\/JPG\/JPEG format. Maximum file size is ---KB.', 'contact': 'Contact us', 'contact_success': 'Your message has been sent successfully', 'created': ':attribute has been created successfully', 'delete': 'Do you really want to delete this item. Continue ?', 'delete_canceled': 'Delete canceled', 'deleted': ':attribute has been deleted successfully', 'destroy': 'Are you sure that you want to permanently delete the selected item. Continue ?', 'destroyed': ':attribute has been deleted permanently', 'event_upcoming': 'Event Upcoming', 'favicon': 'The favicon must be --- x --- pixels in PNG\/ICON format. Maximum file size is ---KB.', 'forgot': 'Forgot Password', 'here': 'login here', 'install': 'Module[:attribute] has been installed successfully', 'join': 'you successfully joined event', 'login': 'Login', 'logo': 'The logo must be --- x --- pixels in PNG\/JPG\/JPEG\/SVG format. Maximum file size is ---KB.', 'new_posts': 'Latest Posts', 'recent_event': 'Recent event', 'register': 'Create your account', 'remember': 'Remember me', 'reset': 'Reset Password', 'restore': 'Do you really want to restore this item. Continue ?', 'restore_canceled': 'Restore canceled', 'restored': ':attribute has been restored successfully', 'show_all': 'Show all articles', 'show_all_events': 'Show all events', 'sign_up': 'Sign Up', 'terms': 'Agree to terms and conditions', 'title': 'Welcome Back', 'uninstall': 'Module[:attribute] has been uninstalled successfully', 'unsaved': 'You have unsaved changes, save and proceed ?', 'updated': ':attribute has been updated successfully', 'verify': 'Before proceeding, please check your email for a verification link.', 'verify_link': 'If you did not receive the email,', 'verify_request': 'click here to request another.', 'whitelabel_user': 'Create Associate Whitelabel User' }, 'en.modals': { 'activated': 'Activated', 'active': 'Active', 'add_document': 'Add document', 'add_documents': 'Add documents', 'address': 'Address', 'adults': 'Adults', 'airport': 'Airport', 'boards': 'Boards', 'budget': 'Budget', 'categories': 'Categories', 'category': 'Hotel category', 'catering': 'Hotel catering', 'click_to_upload': 'Click to upload', 'color': 'Color', 'confirmed': 'Confirmed', 'content': 'Content', 'create': 'Create', 'created_at': 'Created at', 'createdat': 'Created At', 'createdby': 'Created By', 'current': 'Current', 'description': 'Description', 'destination': 'Destination', 'display_name': 'Display Name', 'domain': 'Domain', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'email_verified_at': 'Verified at', 'end': 'End', 'first_name': 'First Name', 'full_name': 'Full Name', 'group': 'Group', 'groups': 'Groups', 'id': 'ID', 'kids': 'Kids', 'last_login': 'Last login ', 'last_name': 'Last Name', 'latest_return': 'Latest Return', 'lockout_time': 'Lockout time', 'login_failures': 'Login failures', 'logs': 'Logs', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Occupation', 'offerCount': 'Offers', 'online': 'Online', 'owner': 'Owner', 'password': 'Password', 'password_confirm': 'Password Confirm', 'pending': 'Pending', 'period': 'Period', 'permission': 'Permission', 'permissions': 'Permissions', 'phone': 'Phone', 'role': 'Role', 'roles': 'Roles', 'start': 'Start', 'status': 'Status', 'summary': 'Summary', 'text': 'Text', 'title': 'Title', 'unconfirmed': 'Unconfirmed', 'updated_at': 'Updated at', 'upload_documents': 'Upload documents', 'upload_photo': 'Upload Photo', 'upload_tip': 'Upload tip', 'url': 'Url', 'users': 'Users', 'whitelabel': 'Whitelabel', 'wish': 'Wish' }, 'en.navs': { 'frontend': { 'agents': 'Agents', 'create_wish': 'Create Wish', 'dashboard': 'Dashboard', 'login': 'Login', 'macros': 'Macros', 'offers': 'My Offers', 'register': 'Register', 'user': { 'account': 'My Account', 'administration': 'Administration', 'agents': 'Agents', 'change_password': 'Change Password', 'my_information': 'My Information', 'profile': 'Profile' }, 'wishes': 'My Wishes', 'wisheslist': 'Wishes' }, 'general': { 'home': 'Home', 'logout': 'Logout' } }, 'en.pagination': { 'next': 'Next &raquo;', 'previous': '&laquo; Previous' }, 'en.passwords': { 'password': 'Passwords must be at least six characters and match the confirmation.', 'reset': 'Your password has been reset!', 'sent': 'We have e-mailed your password reset link!', 'token': 'This password reset token is invalid.', 'user': "We can't find a user with that e-mail address." }, 'en.roles': { 'administrator': 'Administrator', 'user': 'User' }, 'en.strings': { 'backend': { 'access': { 'users': { 'delete_user_confirm': "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", 'if_confirmed_off': '(If confirmed is off)', 'restore_user_confirm': 'Restore this user to its original state?' } }, 'dashboard': { 'title': 'Administrative Dashboard', 'welcome': 'Welcome' }, 'general': { 'all_rights_reserved': 'All Rights Reserved.', 'are_you_sure': 'Are you sure you want to do this?', 'boilerplate_link': 'Laravel AdminPanel', 'continue': 'Continue', 'member_since': 'Member since', 'minutes': ' minutes', 'search_placeholder': 'Search...', 'see_all': { 'messages': 'See all messages', 'notifications': 'View all', 'tasks': 'View all tasks' }, 'status': { 'offline': 'Offline', 'online': 'Online' }, 'timeout': 'You were automatically logged out for security reasons since you had no activity in ', 'you_have': { 'messages': "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", 'notifications': "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", 'tasks': "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, 'search': { 'empty': 'Please enter a search term.', 'incomplete': 'You must write your own search logic for this system.', 'results': 'Search Results for :query', 'title': 'Search Results' }, 'welcome': '<p>This is the AdminLTE theme by <a href="https:\/\/almsaeedstudio.com\/" target="_blank">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href="https:\/\/github.com\/rappasoft\/laravel-5-boilerplate" target="_blank">GitHub<\/a> page for more information and report any <a href="https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues" target="_blank">issues here<\/a>.<\/p>\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\n<p>- Viral Solani<\/p>' }, 'emails': { 'auth': { 'click_to_confirm': 'Click here to confirm your account:', 'error': 'Whoops!', 'greeting': 'Hello!', 'password_cause_of_email': 'You are receiving this email because we received a password reset request for your account.', 'password_if_not_requested': 'If you did not request a password reset, no further action is required.', 'password_reset_subject': 'Reset Password', 'regards': 'Regards,', 'reset_password': 'Click here to reset your password', 'thank_you_for_using_app': 'Thank you for using our application!', 'trouble_clicking_button': 'If you\u2019re having trouble clicking the ":action_text" button, copy and paste the URL below into your web browser:' } }, 'frontend': { 'test': 'Test', 'tests': { 'based_on': { 'permission': 'Permission Based - ', 'role': 'Role Based - ' }, 'js_injected_from_controller': 'Javascript Injected from a Controller', 'using_access_helper': { 'array_permissions': "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", 'array_permissions_not': "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", 'array_roles': "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", 'array_roles_not': "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", 'permission_id': 'Using Access Helper with Permission ID', 'permission_name': 'Using Access Helper with Permission Name', 'role_id': 'Using Access Helper with Role ID', 'role_name': 'Using Access Helper with Role Name' }, 'using_blade_extensions': 'Using Blade Extensions', 'view_console_it_works': "View console, you should see 'it works!' which is coming from FrontendController@index", 'you_can_see_because': "You can see this because you have the role of ':role'!", 'you_can_see_because_permission': "You can see this because you have the permission of ':permission'!" }, 'user': { 'change_email_notice': 'If you change your e-mail you will be logged out until you confirm your new e-mail address.', 'email_changed_notice': 'You must confirm your new e-mail address before you can log in again.', 'password_updated': 'Password successfully updated.', 'profile_updated': 'Profile successfully updated.' }, 'welcome_to': 'Welcome to :place' } }, 'en.tables': { 'actions': 'Actions', 'activated': 'Activated', 'activities': 'Activities', 'activity': 'Activity', 'add_documents': 'Add documents', 'address': 'Address', 'adults': 'Adults', 'airport': 'Airport', 'alias': 'Alias', 'boards': 'Boards', 'budget': 'Budget', 'categories': 'Categories', 'category': 'Hotel category', 'catering': 'Hotel catering', 'color': 'Color', 'confirmed': 'Confirmed', 'content': 'Content', 'created_at': 'Created At', 'created_by': 'Created By', 'date': 'Date', 'description': 'Description', 'destination': 'Destination', 'display_name': 'Display Name', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'email_verified_at': 'Verified at', 'end': 'End', 'eventAction': 'Event Action', 'eventCategory': 'Event Category', 'eventLabel': 'Event Label', 'first_name': 'First Name', 'full_name': 'Full Name', 'group': 'Group', 'groups': 'Groups', 'id': 'ID', 'install': 'Install', 'kids': 'Kids', 'last_login': 'Last login ', 'last_name': 'Last Name', 'latest_return': 'Latest Return', 'lockout_time': 'Lockout time', 'login_failures': 'Login failures', 'message': 'Message', 'migrate': 'Migrate', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Occupation', 'offerCount': 'Offers', 'online': 'online', 'owner': 'Owner', 'package': 'Package', 'pending': 'Pending', 'period': 'Period', 'permissions': 'Permissions', 'phone': 'Phone', 'roles': 'Roles', 'start': 'Start', 'status': 'Status', 'subject': 'Subject', 'text': 'Text', 'title': 'Wish', 'unconfirmed': 'Unconfirmed', 'uninstall': 'Uninstall', 'updated_at': 'Updated at', 'url': 'Url', 'users': 'Users', 'whitelabel': 'Whitelabel' }, 'en.validation': { 'accepted': 'The :attribute must be accepted.', 'active_url': 'The :attribute is not a valid URL.', 'after': 'The :attribute must be a date after :date.', 'after_or_equal': 'The :attribute must be a date after or equal to :date.', 'alpha': 'The :attribute may only contain letters.', 'alpha_dash': 'The :attribute may only contain letters, numbers, and dashes.', 'alpha_num': 'The :attribute may only contain letters and numbers.', 'api': { 'confirmaccount': { 'already_confirmed': 'Account is already confirmed.', 'invalid_email': 'Email is not register with fin builders', 'invalid_otp': 'Please enter valid otp.' }, 'forgotpassword': { 'email_not_valid': 'Email you entered is not register with fin builders.', 'email_required': 'Please enter email', 'valid_email': 'Please enter valid email address.' }, 'login': { 'email_required': 'Please enter email', 'password_required': 'Please enter passsword.', 'username_password_didnt_match': 'Please enter valid credentials.', 'valid_email': 'Please enter valid email address.' }, 'register': { 'city_required': 'Please enter city.', 'state_required': 'Please enter state.' }, 'resetpassword': { 'confirm_password_required': 'Please enter confirm password.', 'email_not_valid': 'Email you entered is not register with fin builders.', 'email_required': 'Please enter email', 'password_confirmed': 'passsword and confirm passsword do not match.', 'password_required': 'Please enter passsword.', 'token_not_valid': 'Given token is invalid.', 'token_required': 'Please enter token.', 'valid_email': 'Please enter valid email address.' } }, 'array': 'The :attribute must be an array.', 'attributes': { 'backend': { 'access': { 'permissions': { 'associated_roles': 'Associated Roles', 'dependencies': 'Dependencies', 'display_name': 'Display Name', 'group': 'Group', 'group_sort': 'Group Sort', 'groups': { 'name': 'Group Name' }, 'name': 'Name', 'sort': 'Sort', 'system': 'System?' }, 'roles': { 'active': 'Active', 'associated_permissions': 'Associated Permissions', 'name': 'Name', 'sort': 'Sort' }, 'users': { 'active': 'Active', 'associated_roles': 'Associated Roles', 'associated_whitelabels': 'Associated Whitelabels', 'confirmed': 'Confirmed', 'email': 'E-mail Address', 'firstName': 'First Name', 'groups': 'User Groups', 'lastName': 'Last Name', 'no-group': 'None', 'old_password': 'Old password', 'other_permissions': 'Other Permissions', 'password': 'New Password', 'password_confirmation': 'New Password Confirmation', 'send_confirmation_email': 'Send Confirmation E-mail' } }, 'blogcategories': { 'is_active': 'Active', 'title': 'Blog Category' }, 'blogs': { 'cannonical_link': 'Cannonical Link', 'category': 'Blog Category', 'content': 'Content', 'image': 'Featured Image', 'meta-title': 'Meta Title', 'meta_description': 'Meta Description', 'meta_keyword': 'Meta Keyword', 'publish': 'Publish Date & Time', 'slug': 'Slug', 'status': 'Status', 'tags': 'Tags', 'title': 'Blog Title' }, 'blogtags': { 'is_active': 'Active', 'title': 'Blog Tag' }, 'distributions': { 'description': 'Description', 'display_name': 'Display Name', 'name': 'Name' }, 'faqs': { 'answer': 'Answer', 'question': 'Question', 'status': 'Status' }, 'groups': { 'associated_whitelabels': 'Associated Whitelabels', 'description': 'Description', 'display_name': 'Display Name', 'groups': 'Seller Groups', 'name': 'Group Name', 'status': 'Status' }, 'pages': { 'cannonical_link': 'Cannonical Link', 'description': 'Description', 'is_active': 'Active', 'seo_description': 'SEO Description', 'seo_keyword': 'SEO Keyword', 'seo_title': 'SEO Title', 'title': 'Title' }, 'settings': { 'companydetails': { 'address': 'Company Address', 'contactnumber': 'Contact Number' }, 'favicon': 'Fav Icon', 'footer': { 'copyright': 'Copyright Text', 'text': 'Footer Text' }, 'google': { 'analytic': 'Google Analytics' }, 'mail': { 'fromemail': 'From Email', 'fromname': 'From Name' }, 'metadescription': 'Meta Description', 'metakeyword': 'Meta Keyawords', 'metatitle': 'Meta Title', 'sitelogo': 'Site Logo', 'termscondition': { 'disclaimer': 'Disclaimer', 'terms': 'Terms & Condition' } }, 'whitelabels': { 'associated_distribution': 'Associated Distribution', 'display_name': 'Display Name', 'ga_view_id': 'Google View Id', 'image': 'Background Image', 'name': 'Name', 'status': 'Status' }, 'wishes': { 'adults': 'Adults', 'airport': 'Airport', 'associated_whitelabels': 'Associated Whitelabels', 'budget': 'Budget', 'category': 'Hotel category', 'catering': 'Hotel catering', 'description': 'Description', 'destination': 'Destination', 'duration': 'Duration', 'earliest_start': 'Earliest start', 'image': 'Featured Image', 'kids': 'Kids', 'latest_return': 'Latest return', 'status': 'Status', 'title': 'Wish Title' } }, 'frontend': { 'offers': { 'file': 'File', 'status': 'Status', 'text': 'Text', 'title': 'Title' }, 'register-user': { 'address': 'Address', 'city': 'City', 'country': 'Country', 'email': 'E-mail Address', 'firstName': 'First Name', 'lastName': 'Last Name', 'new_password': 'New Password', 'new_password_confirmation': 'New Password Confirmation', 'old_password': 'Old Password', 'password': 'Password', 'password_confirmation': 'Password Confirmation', 'ssn': 'SSN', 'state': 'State', 'terms_and_conditions': 'terms and conditions', 'user_type': 'I use desiretec as a', 'user_type_seller': 'Seller', 'user_type_user': 'User', 'zipcode': 'Zip Code' } } }, 'before': 'The :attribute must be a date before :date.', 'before_or_equal': 'The :attribute must be a date before or equal to :date.', 'between': { 'array': 'The :attribute must have between :min and :max items.', 'file': 'The :attribute must be between :min and :max kilobytes.', 'numeric': 'The :attribute must be between :min and :max.', 'string': 'The :attribute must be between :min and :max characters.' }, 'boolean': 'The :attribute field must be true or false.', 'confirmed': 'The :attribute confirmation does not match.', 'custom': { 'attribute-name': { 'rule-name': 'custom-message' } }, 'date': 'The :attribute is not a valid date.', 'date_format': 'The :attribute does not match the format :format.', 'different': 'The :attribute and :other must be different.', 'digits': 'The :attribute must be :digits digits.', 'digits_between': 'The :attribute must be between :min and :max digits.', 'dimensions': 'The :attribute has invalid image dimensions.', 'distinct': 'The :attribute field has a duplicate value.', 'email': 'The :attribute must be a valid email address.', 'exists': 'The selected :attribute is invalid.', 'file': 'The :attribute must be a file.', 'filled': 'The :attribute field must have a value.', 'image': 'The :attribute must be an image.', 'in': 'The selected :attribute is invalid.', 'in_array': 'The :attribute field does not exist in :other.', 'integer': 'The :attribute must be an integer.', 'ip': 'The :attribute must be a valid IP address.', 'json': 'The :attribute must be a valid JSON string.', 'max': { 'array': 'The :attribute may not have more than :max items.', 'file': 'The :attribute may not be greater than :max kilobytes.', 'numeric': 'The :attribute may not be greater than :max.', 'string': 'The :attribute may not be greater than :max characters.' }, 'mimes': 'The :attribute must be a file of type: :values.', 'mimetypes': 'The :attribute must be a file of type: :values.', 'min': { 'array': 'The :attribute must have at least :min items.', 'file': 'The :attribute must be at least :min kilobytes.', 'numeric': 'The :attribute must be at least :min.', 'string': 'The :attribute must be at least :min characters.' }, 'not_in': 'The selected :attribute is invalid.', 'numeric': 'The :attribute must be a number.', 'present': 'The :attribute field must be present.', 'regex': 'The :attribute format is invalid.', 'required': 'The :attribute field is required.', 'required_if': 'The :attribute field is required when :other is :value.', 'required_unless': 'The :attribute field is required unless :other is in :values.', 'required_with': 'The :attribute field is required when :values is present.', 'required_with_all': 'The :attribute field is required when :values is present.', 'required_without': 'The :attribute field is required when :values is not present.', 'required_without_all': 'The :attribute field is required when none of :values are present.', 'same': 'The :attribute and :other must match.', 'size': { 'array': 'The :attribute must contain :size items.', 'file': 'The :attribute must be :size kilobytes.', 'numeric': 'The :attribute must be :size.', 'string': 'The :attribute must be :size characters.' }, 'string': 'The :attribute must be a string.', 'timezone': 'The :attribute must be a valid zone.', 'unique': 'The :attribute has already been taken.', 'uploaded': 'The :attribute failed to upload.', 'url': 'The :attribute format is invalid.' }, 'en.wish': { 'view': { 'adults': 'Adults', 'airport': 'Airport', 'budget': 'Budget', 'category': 'Hotel category', 'catering': 'Hotel catering', 'comment-header': 'Communicate with Agent', 'createdat': 'Created At', 'createdby': 'Created By', 'destination': 'Destination', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'kids': 'Kids', 'latest_return': 'Latest Return', 'offerCount': 'Offers', 'owner': 'Name', 'status': 'Status', 'text': 'Text', 'title': 'Wish', 'whitelabel': 'Whitelabel' } }, 'es.log-viewer::general': { 'all': 'Todos', 'date': 'Fecha' }, 'es.log-viewer::levels': { 'alert': 'Alerta', 'all': 'Todos', 'critical': 'Criticos', 'debug': 'Debug', 'emergency': 'Emergencia', 'error': 'Errores', 'info': 'Info', 'notice': 'Aviso', 'warning': 'Advertencia' }, 'et.log-viewer::general': { 'all': 'K\xF5ik', 'date': 'Kuup\xE4ev', 'empty-logs': 'Logide nimekiri on t\xFChi!' }, 'et.log-viewer::levels': { 'alert': 'H\xE4ire', 'all': 'K\xF5ik', 'critical': 'Kriitiline', 'debug': 'Silumine', 'emergency': 'Erakorraline', 'error': 'Viga', 'info': 'Info', 'notice': 'Teade', 'warning': 'Hoiatus' }, 'fa.log-viewer::general': { 'all': '\u0647\u0645\u0647', 'date': '\u062A\u0627\u0631\u06CC\u062E' }, 'fa.log-viewer::levels': { 'alert': '\u0627\u062E\u0637\u0627\u0631', 'all': '\u0647\u0645\u0647', 'critical': '\u0628\u062D\u0631\u0627\u0646\u06CC', 'debug': '\u062F\u06CC\u0628\u0627\u06AF', 'emergency': '\u0627\u0648\u0631\u0698\u0627\u0646\u0633\u06CC', 'error': '\u062E\u0637\u0627', 'info': '\u0627\u0637\u0644\u0627\u0639\u0627\u062A', 'notice': '\u0627\u0639\u0644\u0627\u0646', 'warning': '\u0647\u0634\u062F\u0627\u0631' }, 'fr.log-viewer::general': { 'all': 'Tous', 'date': 'Date' }, 'fr.log-viewer::levels': { 'alert': 'Alerte', 'all': 'Tous', 'critical': 'Critique', 'debug': 'Debug', 'emergency': 'Urgence', 'error': 'Erreur', 'info': 'Info', 'notice': 'Notice', 'warning': 'Avertissement' }, 'hu.log-viewer::general': { 'all': '\xD6sszes', 'date': 'D\xE1tum', 'empty-logs': 'The list of logs is empty!' }, 'hu.log-viewer::levels': { 'alert': 'Riaszt\xE1s', 'all': '\xD6sszes', 'critical': 'Kritikus', 'debug': 'Hibakeres\xE9s', 'emergency': 'V\xE9szhelyzet', 'error': 'Hiba', 'info': 'Inform\xE1ci\xF3', 'notice': '\xC9rtes\xEDt\xE9s', 'warning': 'Figyelmeztet\xE9s' }, 'hy.log-viewer::general': { 'all': '\u0532\u0578\u056C\u0578\u0580\u0568', 'date': '\u0531\u0574\u057D\u0561\u0569\u056B\u057E' }, 'hy.log-viewer::levels': { 'alert': '\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574', 'all': '\u0532\u0578\u056C\u0578\u0580\u0568', 'critical': '\u053F\u0580\u056B\u057F\u056B\u056F\u0561\u056F\u0561\u0576', 'debug': '\u053F\u0561\u0580\u0563\u0561\u0562\u0565\u0580\u0578\u0582\u0574', 'emergency': '\u054E\u0569\u0561\u0580\u0561\u0575\u056B\u0576', 'error': '\u054D\u056D\u0561\u056C', 'info': '\u054F\u0565\u0572\u0565\u056F\u0561\u057F\u057E\u0578\u0582\u0569\u0575\u0578\u0582\u0576', 'notice': '\u053E\u0561\u0576\u0578\u0582\u0581\u0578\u0582\u0574', 'warning': '\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574' }, 'id.log-viewer::general': { 'all': 'Semua', 'date': 'Tanggal' }, 'id.log-viewer::levels': { 'alert': 'Waspada', 'all': 'Semua', 'critical': 'Kritis', 'debug': 'Debug', 'emergency': 'Darurat', 'error': 'Kesalahan', 'info': 'Info', 'notice': 'Perhatian', 'warning': 'Peringatan' }, 'it.log-viewer::general': { 'all': 'Tutti', 'date': 'Data' }, 'it.log-viewer::levels': { 'alert': 'Allarme', 'all': 'Tutti', 'critical': 'Critico', 'debug': 'Debug', 'emergency': 'Emergenza', 'error': 'Errore', 'info': 'Info', 'notice': 'Notifica', 'warning': 'Avviso' }, 'ja.log-viewer::general': { 'all': '\u3059\u3079\u3066', 'date': '\u65E5\u4ED8', 'empty-logs': '\u30ED\u30B0\u30EA\u30B9\u30C8\u304C\u7A7A\u3067\u3059!' }, 'ja.log-viewer::levels': { 'alert': '\u8B66\u6212', 'all': '\u3059\u3079\u3066', 'critical': '\u81F4\u547D\u7684', 'debug': '\u30C7\u30D0\u30C3\u30B0', 'emergency': '\u7DCA\u6025', 'error': '\u30A8\u30E9\u30FC', 'info': '\u60C5\u5831', 'notice': '\u901A\u77E5', 'warning': '\u8B66\u544A' }, 'ko.log-viewer::general': { 'all': '\uC804\uCCB4', 'date': '\uB0A0\uC9DC' }, 'ko.log-viewer::levels': { 'alert': '\uACBD\uACE0', 'all': '\uC804\uCCB4', 'critical': '\uC2EC\uAC01', 'debug': '\uB514\uBC84\uADF8', 'emergency': '\uAE34\uAE09', 'error': '\uC624\uB958', 'info': '\uC815\uBCF4', 'notice': '\uC54C\uB9BC', 'warning': '\uC8FC\uC758' }, 'nl.log-viewer::general': { 'all': 'Alles', 'date': 'Datum' }, 'nl.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Alle', 'critical': 'Cruciaal', 'debug': 'Debug', 'emergency': 'Noodgeval', 'error': 'Error', 'info': 'Informatie', 'notice': 'Opmerking', 'warning': 'Waarschuwing' }, 'pl.log-viewer::general': { 'all': 'Wszystkie', 'date': 'Data' }, 'pl.log-viewer::levels': { 'alert': 'Alerty', 'all': 'Wszystkie', 'critical': 'Krytyczne', 'debug': 'Debug', 'emergency': 'Awaryjne', 'error': 'B\u0142\u0119dy', 'info': 'Informacje', 'notice': 'Warte uwagi', 'warning': 'Ostrze\u017Cenia' }, 'pt-BR.log-viewer::general': { 'all': 'Todos', 'date': 'Data' }, 'pt-BR.log-viewer::levels': { 'alert': 'Alerta', 'all': 'Todos', 'critical': 'Cr\xEDtico', 'debug': 'Debug', 'emergency': 'Emerg\xEAncia', 'error': 'Erro', 'info': 'Informa\xE7\xE3o', 'notice': 'Not\xEDcia', 'warning': 'Aviso' }, 'ro.log-viewer::general': { 'all': 'Toate', 'date': 'Dat\u0103' }, 'ro.log-viewer::levels': { 'alert': 'Alert\u0103', 'all': 'Toate', 'critical': 'Critic', 'debug': 'Depanare', 'emergency': 'Urgen\u021B\u0103', 'error': 'Eroare', 'info': 'Informare', 'notice': 'Avertisment', 'warning': 'Pericol' }, 'ru.log-viewer::general': { 'all': '\u0412\u0441\u0435', 'date': '\u0414\u0430\u0442\u0430' }, 'ru.log-viewer::levels': { 'alert': '\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435', 'all': '\u0412\u0441\u0435', 'critical': '\u041A\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439', 'debug': '\u041E\u0442\u043B\u0430\u0434\u043A\u0430', 'emergency': '\u0410\u0432\u0430\u0440\u0438\u0439\u043D\u0430\u044F', 'error': '\u041E\u0448\u0438\u0431\u043A\u0430', 'info': '\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F', 'notice': '\u0423\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u0435', 'warning': '\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435' }, 'sv.log-viewer::general': { 'all': 'Alla', 'date': 'Datum' }, 'sv.log-viewer::levels': { 'alert': 'Alarmerande', 'all': 'Alla', 'critical': 'Kritisk', 'debug': 'Debug', 'emergency': 'Akut', 'error': 'Error', 'info': 'Information', 'notice': 'Notis', 'warning': 'Varning' }, 'th.log-viewer::general': { 'all': '\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14', 'date': '\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48', 'empty-logs': 'The list of logs is empty!' }, 'th.log-viewer::levels': { 'alert': '\u0E27\u0E34\u0E01\u0E24\u0E15\u0E34', 'all': '\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14', 'critical': '\u0E23\u0E49\u0E32\u0E22\u0E41\u0E23\u0E07', 'debug': '\u0E14\u0E35\u0E1A\u0E31\u0E01', 'emergency': '\u0E09\u0E38\u0E01\u0E40\u0E09\u0E34\u0E19', 'error': '\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14', 'info': '\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25', 'notice': '\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28', 'warning': '\u0E04\u0E33\u0E40\u0E15\u0E37\u0E2D\u0E19' }, 'tr.log-viewer::general': { 'all': 'Toplam', 'date': 'Tarih' }, 'tr.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Toplam', 'critical': 'Kritik', 'debug': 'Debug', 'emergency': 'Acil', 'error': 'Hata', 'info': 'Bilgi', 'notice': 'Bildirim', 'warning': 'Uyar\u0131' }, 'zh-TW.log-viewer::general': { 'all': '\u5168\u90E8', 'date': '\u65E5\u671F' }, 'zh-TW.log-viewer::levels': { 'alert': '\u8B66\u5831', 'all': '\u5168\u90E8', 'critical': '\u56B4\u91CD', 'debug': '\u9664\u932F', 'emergency': '\u7DCA\u6025', 'error': '\u932F\u8AA4', 'info': '\u8A0A\u606F', 'notice': '\u6CE8\u610F', 'warning': '\u8B66\u544A' }, 'zh.log-viewer::general': { 'all': '\u5168\u90E8', 'date': '\u65E5\u671F' }, 'zh.log-viewer::levels': { 'alert': '\u7D27\u6025', 'all': '\u5168\u90E8', 'critical': '\u4E25\u91CD', 'debug': '\u8C03\u8BD5', 'emergency': '\u5371\u6025', 'error': '\u9519\u8BEF', 'info': '\u4FE1\u606F', 'notice': '\u6CE8\u610F', 'warning': '\u8B66\u544A' } };
 
 /***/ }),
 /* 229 */
@@ -39032,7 +39023,7 @@ module.exports = __webpack_require__(10);
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(54);
+module.exports = __webpack_require__(55);
 
 /***/ }),
 /* 4 */
@@ -39056,7 +39047,7 @@ module.exports = __webpack_require__(31);
 /* 7 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(55);
+module.exports = __webpack_require__(56);
 
 /***/ }),
 /* 8 */
@@ -39068,7 +39059,7 @@ module.exports = __webpack_require__(34);
 /* 9 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(57);
+module.exports = __webpack_require__(58);
 
 /***/ }),
 /* 10 */
@@ -39383,7 +39374,7 @@ var extractTimeFormat = exports.extractTimeFormat = function extractTimeFormat(f
 /* 12 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(56);
+module.exports = __webpack_require__(57);
 
 /***/ }),
 /* 13 */
@@ -39419,7 +39410,7 @@ module.exports = __webpack_require__(37);
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(59);
+module.exports = __webpack_require__(60);
 
 /***/ }),
 /* 19 */
@@ -39437,7 +39428,7 @@ module.exports = __webpack_require__(238);
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(60);
+module.exports = __webpack_require__(61);
 
 /***/ }),
 /* 22 */
@@ -39491,13 +39482,13 @@ module.exports = __webpack_require__(32);
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(61);
+module.exports = __webpack_require__(62);
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(62);
+module.exports = __webpack_require__(63);
 
 /***/ }),
 /* 27 */
@@ -67002,7 +66993,7 @@ exports.default = {
 /* 336 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(58);
+module.exports = __webpack_require__(59);
 
 /***/ }),
 /* 337 */
@@ -75051,7 +75042,7 @@ module.exports = __webpack_require__(10);
 /***/ 20:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(60);
+module.exports = __webpack_require__(61);
 
 /***/ }),
 
@@ -76379,7 +76370,7 @@ module.exports = __webpack_require__(12);
 /***/ 10:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(57);
+module.exports = __webpack_require__(58);
 
 /***/ }),
 
@@ -77587,7 +77578,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /***/ 17:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(59);
+module.exports = __webpack_require__(60);
 
 /***/ }),
 
@@ -77622,14 +77613,14 @@ module.exports = __webpack_require__(32);
 /***/ 25:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(61);
+module.exports = __webpack_require__(62);
 
 /***/ }),
 
 /***/ 26:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(62);
+module.exports = __webpack_require__(63);
 
 /***/ }),
 
@@ -77863,7 +77854,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /***/ 5:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(54);
+module.exports = __webpack_require__(55);
 
 /***/ }),
 
@@ -79805,7 +79796,7 @@ exports.default = aria.Utils;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__);
@@ -80145,8 +80136,8 @@ module.exports = function (it) {
 var getKeys = __webpack_require__(26);
 var gOPS = __webpack_require__(46);
 var pIE = __webpack_require__(29);
-var toObject = __webpack_require__(69);
-var IObject = __webpack_require__(67);
+var toObject = __webpack_require__(70);
+var IObject = __webpack_require__(68);
 var $assign = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
@@ -80254,7 +80245,7 @@ module.exports = __webpack_require__(49).f('iterator');
 var $at = __webpack_require__(268)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(70)(String, 'String', function (iterated) {
+__webpack_require__(71)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -80298,7 +80289,7 @@ module.exports = function (TO_STRING) {
 
 "use strict";
 
-var create = __webpack_require__(72);
+var create = __webpack_require__(73);
 var descriptor = __webpack_require__(25);
 var setToStringTag = __webpack_require__(48);
 var IteratorPrototype = {};
@@ -80345,7 +80336,7 @@ module.exports = document && document.documentElement;
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(11);
-var toObject = __webpack_require__(69);
+var toObject = __webpack_require__(70);
 var IE_PROTO = __webpack_require__(43)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
@@ -80398,7 +80389,7 @@ var toIObject = __webpack_require__(16);
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(70)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(71)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -80468,7 +80459,7 @@ var global = __webpack_require__(9);
 var has = __webpack_require__(11);
 var DESCRIPTORS = __webpack_require__(15);
 var $export = __webpack_require__(39);
-var redefine = __webpack_require__(71);
+var redefine = __webpack_require__(72);
 var META = __webpack_require__(280).KEY;
 var $fails = __webpack_require__(20);
 var shared = __webpack_require__(44);
@@ -80484,7 +80475,7 @@ var isObject = __webpack_require__(19);
 var toIObject = __webpack_require__(16);
 var toPrimitive = __webpack_require__(40);
 var createDesc = __webpack_require__(25);
-var _create = __webpack_require__(72);
+var _create = __webpack_require__(73);
 var gOPNExt = __webpack_require__(283);
 var $GOPD = __webpack_require__(284);
 var $DP = __webpack_require__(14);
@@ -80611,7 +80602,7 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(73).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(74).f = gOPNExt.f = $getOwnPropertyNames;
   __webpack_require__(29).f = $propertyIsEnumerable;
   __webpack_require__(46).f = $getOwnPropertySymbols;
 
@@ -80783,7 +80774,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(68);
+var cof = __webpack_require__(69);
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
@@ -80795,7 +80786,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = __webpack_require__(16);
-var gOPN = __webpack_require__(73).f;
+var gOPN = __webpack_require__(74).f;
 var toString = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -80823,7 +80814,7 @@ var createDesc = __webpack_require__(25);
 var toIObject = __webpack_require__(16);
 var toPrimitive = __webpack_require__(40);
 var has = __webpack_require__(11);
-var IE8_DOM_DEFINE = __webpack_require__(64);
+var IE8_DOM_DEFINE = __webpack_require__(65);
 var gOPD = Object.getOwnPropertyDescriptor;
 
 exports.f = __webpack_require__(15) ? gOPD : function getOwnPropertyDescriptor(O, P) {
@@ -80986,7 +80977,7 @@ function whitespace(rule, value, source, errors, options) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__required__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__required__ = __webpack_require__(75);
 
 
 
@@ -83410,7 +83401,7 @@ module.exports = __webpack_require__(323);
 
 
 var utils = __webpack_require__(5);
-var bind = __webpack_require__(75);
+var bind = __webpack_require__(76);
 var Axios = __webpack_require__(325);
 var defaults = __webpack_require__(52);
 
@@ -83445,9 +83436,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(79);
+axios.Cancel = __webpack_require__(80);
 axios.CancelToken = __webpack_require__(339);
-axios.isCancel = __webpack_require__(78);
+axios.isCancel = __webpack_require__(79);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -83600,7 +83591,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(77);
+var createError = __webpack_require__(78);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -84033,7 +84024,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(5);
 var transformData = __webpack_require__(336);
-var isCancel = __webpack_require__(78);
+var isCancel = __webpack_require__(79);
 var defaults = __webpack_require__(52);
 var isAbsoluteURL = __webpack_require__(337);
 var combineURLs = __webpack_require__(338);
@@ -84193,7 +84184,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(79);
+var Cancel = __webpack_require__(80);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -84370,14 +84361,14 @@ exports.default = {
   },
   mounted: function mounted() {
     this.loadUser();
-    this.loadWhitelabels();
   },
 
   watch: {},
-  computed: _extends({}, _vuex2.default.mapGetters({})),
+  computed: _extends({}, _vuex2.default.mapGetters({
+    user: 'currentUser'
+  })),
   methods: _extends({}, _vuex2.default.mapActions({
-    loadUser: 'loadLoggedUser',
-    loadWhitelabels: 'loadWhitelabels'
+    loadUser: 'loadLoggedUser'
   }))
 };
 
@@ -84449,7 +84440,7 @@ var _vuex = __webpack_require__(7);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _toastr = __webpack_require__(80);
+var _toastr = __webpack_require__(81);
 
 var _toastr2 = _interopRequireDefault(_toastr);
 
@@ -84473,7 +84464,7 @@ var _VuetablePaginationInfo = __webpack_require__(379);
 
 var _VuetablePaginationInfo2 = _interopRequireDefault(_VuetablePaginationInfo);
 
-var _config = __webpack_require__(210);
+var _config = __webpack_require__(211);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -95666,252 +95657,252 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 81,
-	"./af.js": 81,
-	"./ar": 82,
-	"./ar-dz": 83,
-	"./ar-dz.js": 83,
-	"./ar-kw": 84,
-	"./ar-kw.js": 84,
-	"./ar-ly": 85,
-	"./ar-ly.js": 85,
-	"./ar-ma": 86,
-	"./ar-ma.js": 86,
-	"./ar-sa": 87,
-	"./ar-sa.js": 87,
-	"./ar-tn": 88,
-	"./ar-tn.js": 88,
-	"./ar.js": 82,
-	"./az": 89,
-	"./az.js": 89,
-	"./be": 90,
-	"./be.js": 90,
-	"./bg": 91,
-	"./bg.js": 91,
-	"./bm": 92,
-	"./bm.js": 92,
-	"./bn": 93,
-	"./bn.js": 93,
-	"./bo": 94,
-	"./bo.js": 94,
-	"./br": 95,
-	"./br.js": 95,
-	"./bs": 96,
-	"./bs.js": 96,
-	"./ca": 97,
-	"./ca.js": 97,
-	"./cs": 98,
-	"./cs.js": 98,
-	"./cv": 99,
-	"./cv.js": 99,
-	"./cy": 100,
-	"./cy.js": 100,
-	"./da": 101,
-	"./da.js": 101,
-	"./de": 102,
-	"./de-at": 103,
-	"./de-at.js": 103,
-	"./de-ch": 104,
-	"./de-ch.js": 104,
-	"./de.js": 102,
-	"./dv": 105,
-	"./dv.js": 105,
-	"./el": 106,
-	"./el.js": 106,
-	"./en-au": 107,
-	"./en-au.js": 107,
-	"./en-ca": 108,
-	"./en-ca.js": 108,
-	"./en-gb": 109,
-	"./en-gb.js": 109,
-	"./en-ie": 110,
-	"./en-ie.js": 110,
-	"./en-il": 111,
-	"./en-il.js": 111,
-	"./en-nz": 112,
-	"./en-nz.js": 112,
-	"./eo": 113,
-	"./eo.js": 113,
-	"./es": 114,
-	"./es-do": 115,
-	"./es-do.js": 115,
-	"./es-us": 116,
-	"./es-us.js": 116,
-	"./es.js": 114,
-	"./et": 117,
-	"./et.js": 117,
-	"./eu": 118,
-	"./eu.js": 118,
-	"./fa": 119,
-	"./fa.js": 119,
-	"./fi": 120,
-	"./fi.js": 120,
-	"./fo": 121,
-	"./fo.js": 121,
-	"./fr": 122,
-	"./fr-ca": 123,
-	"./fr-ca.js": 123,
-	"./fr-ch": 124,
-	"./fr-ch.js": 124,
-	"./fr.js": 122,
-	"./fy": 125,
-	"./fy.js": 125,
-	"./gd": 126,
-	"./gd.js": 126,
-	"./gl": 127,
-	"./gl.js": 127,
-	"./gom-latn": 128,
-	"./gom-latn.js": 128,
-	"./gu": 129,
-	"./gu.js": 129,
-	"./he": 130,
-	"./he.js": 130,
-	"./hi": 131,
-	"./hi.js": 131,
-	"./hr": 132,
-	"./hr.js": 132,
-	"./hu": 133,
-	"./hu.js": 133,
-	"./hy-am": 134,
-	"./hy-am.js": 134,
-	"./id": 135,
-	"./id.js": 135,
-	"./is": 136,
-	"./is.js": 136,
-	"./it": 137,
-	"./it.js": 137,
-	"./ja": 138,
-	"./ja.js": 138,
-	"./jv": 139,
-	"./jv.js": 139,
-	"./ka": 140,
-	"./ka.js": 140,
-	"./kk": 141,
-	"./kk.js": 141,
-	"./km": 142,
-	"./km.js": 142,
-	"./kn": 143,
-	"./kn.js": 143,
-	"./ko": 144,
-	"./ko.js": 144,
-	"./ky": 145,
-	"./ky.js": 145,
-	"./lb": 146,
-	"./lb.js": 146,
-	"./lo": 147,
-	"./lo.js": 147,
-	"./lt": 148,
-	"./lt.js": 148,
-	"./lv": 149,
-	"./lv.js": 149,
-	"./me": 150,
-	"./me.js": 150,
-	"./mi": 151,
-	"./mi.js": 151,
-	"./mk": 152,
-	"./mk.js": 152,
-	"./ml": 153,
-	"./ml.js": 153,
-	"./mn": 154,
-	"./mn.js": 154,
-	"./mr": 155,
-	"./mr.js": 155,
-	"./ms": 156,
-	"./ms-my": 157,
-	"./ms-my.js": 157,
-	"./ms.js": 156,
-	"./mt": 158,
-	"./mt.js": 158,
-	"./my": 159,
-	"./my.js": 159,
-	"./nb": 160,
-	"./nb.js": 160,
-	"./ne": 161,
-	"./ne.js": 161,
-	"./nl": 162,
-	"./nl-be": 163,
-	"./nl-be.js": 163,
-	"./nl.js": 162,
-	"./nn": 164,
-	"./nn.js": 164,
-	"./pa-in": 165,
-	"./pa-in.js": 165,
-	"./pl": 166,
-	"./pl.js": 166,
-	"./pt": 167,
-	"./pt-br": 168,
-	"./pt-br.js": 168,
-	"./pt.js": 167,
-	"./ro": 169,
-	"./ro.js": 169,
-	"./ru": 170,
-	"./ru.js": 170,
-	"./sd": 171,
-	"./sd.js": 171,
-	"./se": 172,
-	"./se.js": 172,
-	"./si": 173,
-	"./si.js": 173,
-	"./sk": 174,
-	"./sk.js": 174,
-	"./sl": 175,
-	"./sl.js": 175,
-	"./sq": 176,
-	"./sq.js": 176,
-	"./sr": 177,
-	"./sr-cyrl": 178,
-	"./sr-cyrl.js": 178,
-	"./sr.js": 177,
-	"./ss": 179,
-	"./ss.js": 179,
-	"./sv": 180,
-	"./sv.js": 180,
-	"./sw": 181,
-	"./sw.js": 181,
-	"./ta": 182,
-	"./ta.js": 182,
-	"./te": 183,
-	"./te.js": 183,
-	"./tet": 184,
-	"./tet.js": 184,
-	"./tg": 185,
-	"./tg.js": 185,
-	"./th": 186,
-	"./th.js": 186,
-	"./tl-ph": 187,
-	"./tl-ph.js": 187,
-	"./tlh": 188,
-	"./tlh.js": 188,
-	"./tr": 189,
-	"./tr.js": 189,
-	"./tzl": 190,
-	"./tzl.js": 190,
-	"./tzm": 191,
-	"./tzm-latn": 192,
-	"./tzm-latn.js": 192,
-	"./tzm.js": 191,
-	"./ug-cn": 193,
-	"./ug-cn.js": 193,
-	"./uk": 194,
-	"./uk.js": 194,
-	"./ur": 195,
-	"./ur.js": 195,
-	"./uz": 196,
-	"./uz-latn": 197,
-	"./uz-latn.js": 197,
-	"./uz.js": 196,
-	"./vi": 198,
-	"./vi.js": 198,
-	"./x-pseudo": 199,
-	"./x-pseudo.js": 199,
-	"./yo": 200,
-	"./yo.js": 200,
-	"./zh-cn": 201,
-	"./zh-cn.js": 201,
-	"./zh-hk": 202,
-	"./zh-hk.js": 202,
-	"./zh-tw": 203,
-	"./zh-tw.js": 203
+	"./af": 82,
+	"./af.js": 82,
+	"./ar": 83,
+	"./ar-dz": 84,
+	"./ar-dz.js": 84,
+	"./ar-kw": 85,
+	"./ar-kw.js": 85,
+	"./ar-ly": 86,
+	"./ar-ly.js": 86,
+	"./ar-ma": 87,
+	"./ar-ma.js": 87,
+	"./ar-sa": 88,
+	"./ar-sa.js": 88,
+	"./ar-tn": 89,
+	"./ar-tn.js": 89,
+	"./ar.js": 83,
+	"./az": 90,
+	"./az.js": 90,
+	"./be": 91,
+	"./be.js": 91,
+	"./bg": 92,
+	"./bg.js": 92,
+	"./bm": 93,
+	"./bm.js": 93,
+	"./bn": 94,
+	"./bn.js": 94,
+	"./bo": 95,
+	"./bo.js": 95,
+	"./br": 96,
+	"./br.js": 96,
+	"./bs": 97,
+	"./bs.js": 97,
+	"./ca": 98,
+	"./ca.js": 98,
+	"./cs": 99,
+	"./cs.js": 99,
+	"./cv": 100,
+	"./cv.js": 100,
+	"./cy": 101,
+	"./cy.js": 101,
+	"./da": 102,
+	"./da.js": 102,
+	"./de": 103,
+	"./de-at": 104,
+	"./de-at.js": 104,
+	"./de-ch": 105,
+	"./de-ch.js": 105,
+	"./de.js": 103,
+	"./dv": 106,
+	"./dv.js": 106,
+	"./el": 107,
+	"./el.js": 107,
+	"./en-au": 108,
+	"./en-au.js": 108,
+	"./en-ca": 109,
+	"./en-ca.js": 109,
+	"./en-gb": 110,
+	"./en-gb.js": 110,
+	"./en-ie": 111,
+	"./en-ie.js": 111,
+	"./en-il": 112,
+	"./en-il.js": 112,
+	"./en-nz": 113,
+	"./en-nz.js": 113,
+	"./eo": 114,
+	"./eo.js": 114,
+	"./es": 115,
+	"./es-do": 116,
+	"./es-do.js": 116,
+	"./es-us": 117,
+	"./es-us.js": 117,
+	"./es.js": 115,
+	"./et": 118,
+	"./et.js": 118,
+	"./eu": 119,
+	"./eu.js": 119,
+	"./fa": 120,
+	"./fa.js": 120,
+	"./fi": 121,
+	"./fi.js": 121,
+	"./fo": 122,
+	"./fo.js": 122,
+	"./fr": 123,
+	"./fr-ca": 124,
+	"./fr-ca.js": 124,
+	"./fr-ch": 125,
+	"./fr-ch.js": 125,
+	"./fr.js": 123,
+	"./fy": 126,
+	"./fy.js": 126,
+	"./gd": 127,
+	"./gd.js": 127,
+	"./gl": 128,
+	"./gl.js": 128,
+	"./gom-latn": 129,
+	"./gom-latn.js": 129,
+	"./gu": 130,
+	"./gu.js": 130,
+	"./he": 131,
+	"./he.js": 131,
+	"./hi": 132,
+	"./hi.js": 132,
+	"./hr": 133,
+	"./hr.js": 133,
+	"./hu": 134,
+	"./hu.js": 134,
+	"./hy-am": 135,
+	"./hy-am.js": 135,
+	"./id": 136,
+	"./id.js": 136,
+	"./is": 137,
+	"./is.js": 137,
+	"./it": 138,
+	"./it.js": 138,
+	"./ja": 139,
+	"./ja.js": 139,
+	"./jv": 140,
+	"./jv.js": 140,
+	"./ka": 141,
+	"./ka.js": 141,
+	"./kk": 142,
+	"./kk.js": 142,
+	"./km": 143,
+	"./km.js": 143,
+	"./kn": 144,
+	"./kn.js": 144,
+	"./ko": 145,
+	"./ko.js": 145,
+	"./ky": 146,
+	"./ky.js": 146,
+	"./lb": 147,
+	"./lb.js": 147,
+	"./lo": 148,
+	"./lo.js": 148,
+	"./lt": 149,
+	"./lt.js": 149,
+	"./lv": 150,
+	"./lv.js": 150,
+	"./me": 151,
+	"./me.js": 151,
+	"./mi": 152,
+	"./mi.js": 152,
+	"./mk": 153,
+	"./mk.js": 153,
+	"./ml": 154,
+	"./ml.js": 154,
+	"./mn": 155,
+	"./mn.js": 155,
+	"./mr": 156,
+	"./mr.js": 156,
+	"./ms": 157,
+	"./ms-my": 158,
+	"./ms-my.js": 158,
+	"./ms.js": 157,
+	"./mt": 159,
+	"./mt.js": 159,
+	"./my": 160,
+	"./my.js": 160,
+	"./nb": 161,
+	"./nb.js": 161,
+	"./ne": 162,
+	"./ne.js": 162,
+	"./nl": 163,
+	"./nl-be": 164,
+	"./nl-be.js": 164,
+	"./nl.js": 163,
+	"./nn": 165,
+	"./nn.js": 165,
+	"./pa-in": 166,
+	"./pa-in.js": 166,
+	"./pl": 167,
+	"./pl.js": 167,
+	"./pt": 168,
+	"./pt-br": 169,
+	"./pt-br.js": 169,
+	"./pt.js": 168,
+	"./ro": 170,
+	"./ro.js": 170,
+	"./ru": 171,
+	"./ru.js": 171,
+	"./sd": 172,
+	"./sd.js": 172,
+	"./se": 173,
+	"./se.js": 173,
+	"./si": 174,
+	"./si.js": 174,
+	"./sk": 175,
+	"./sk.js": 175,
+	"./sl": 176,
+	"./sl.js": 176,
+	"./sq": 177,
+	"./sq.js": 177,
+	"./sr": 178,
+	"./sr-cyrl": 179,
+	"./sr-cyrl.js": 179,
+	"./sr.js": 178,
+	"./ss": 180,
+	"./ss.js": 180,
+	"./sv": 181,
+	"./sv.js": 181,
+	"./sw": 182,
+	"./sw.js": 182,
+	"./ta": 183,
+	"./ta.js": 183,
+	"./te": 184,
+	"./te.js": 184,
+	"./tet": 185,
+	"./tet.js": 185,
+	"./tg": 186,
+	"./tg.js": 186,
+	"./th": 187,
+	"./th.js": 187,
+	"./tl-ph": 188,
+	"./tl-ph.js": 188,
+	"./tlh": 189,
+	"./tlh.js": 189,
+	"./tr": 190,
+	"./tr.js": 190,
+	"./tzl": 191,
+	"./tzl.js": 191,
+	"./tzm": 192,
+	"./tzm-latn": 193,
+	"./tzm-latn.js": 193,
+	"./tzm.js": 192,
+	"./ug-cn": 194,
+	"./ug-cn.js": 194,
+	"./uk": 195,
+	"./uk.js": 195,
+	"./ur": 196,
+	"./ur.js": 196,
+	"./uz": 197,
+	"./uz-latn": 198,
+	"./uz-latn.js": 198,
+	"./uz.js": 197,
+	"./vi": 199,
+	"./vi.js": 199,
+	"./x-pseudo": 200,
+	"./x-pseudo.js": 200,
+	"./yo": 201,
+	"./yo.js": 201,
+	"./zh-cn": 202,
+	"./zh-cn.js": 202,
+	"./zh-hk": 203,
+	"./zh-hk.js": 203,
+	"./zh-tw": 204,
+	"./zh-tw.js": 204
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -95991,7 +95982,7 @@ var content = __webpack_require__(352);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(204)("c96b1a10", content, false, {});
+var update = __webpack_require__(205)("c96b1a10", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -97016,7 +97007,7 @@ module.exports = __webpack_require__(356);
 
 
 var utils = __webpack_require__(6);
-var bind = __webpack_require__(205);
+var bind = __webpack_require__(206);
 var Axios = __webpack_require__(357);
 var defaults = __webpack_require__(53);
 
@@ -97051,9 +97042,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(209);
+axios.Cancel = __webpack_require__(210);
 axios.CancelToken = __webpack_require__(371);
-axios.isCancel = __webpack_require__(208);
+axios.isCancel = __webpack_require__(209);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -97185,7 +97176,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(207);
+var createError = __webpack_require__(208);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -97601,7 +97592,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(6);
 var transformData = __webpack_require__(368);
-var isCancel = __webpack_require__(208);
+var isCancel = __webpack_require__(209);
 var defaults = __webpack_require__(53);
 
 /**
@@ -97752,7 +97743,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(209);
+var Cancel = __webpack_require__(210);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -99658,7 +99649,7 @@ var content = __webpack_require__(391);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(204)("3c9bc1a6", content, false, {});
+var update = __webpack_require__(205)("3c9bc1a6", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -100573,7 +100564,7 @@ var _vuex = __webpack_require__(7);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _config = __webpack_require__(210);
+var _config = __webpack_require__(211);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -101327,7 +101318,7 @@ var _DateComponent = __webpack_require__(416);
 
 var _DateComponent2 = _interopRequireDefault(_DateComponent);
 
-var _toastr = __webpack_require__(80);
+var _toastr = __webpack_require__(81);
 
 var _toastr2 = _interopRequireDefault(_toastr);
 

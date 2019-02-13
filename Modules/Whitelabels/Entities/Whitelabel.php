@@ -71,10 +71,26 @@ class Whitelabel extends Model
     }
 
     /**
-     * Wishes belongsTo with User.
+     * @return mixed
+     */
+    public function users()
+    {
+        return $this->belongsToMany(config('auth.providers.users.model'), 'whitelabel_user', 'whitelabel_id', 'user_id');
+    }
+
+    /**
+     * get the wishes for a Whitelabel.
+     */
+    public function wishes()
+    {
+        return $this->hasMany(Wish::class);
+    }
+
+    /**
+     * get the distribution for a Whitelabel.
      */
     public function distribution()
     {
-        return $this->belongsTo(Distribution::class);
+        return $this->hasOne(Distribution::class, 'id', 'distribution_id');
     }
 }

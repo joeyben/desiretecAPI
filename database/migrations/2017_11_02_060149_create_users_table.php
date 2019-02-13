@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
@@ -28,6 +30,13 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        if (Schema::hasTable('notifications') && !Schema::hasColumn('notifications', 'from_id')) {
+            Schema::table('notifications', function (Blueprint $table) {
+                $table->integer('from_id')->unsigned()->index()->nullable();
+                $table->foreign('from_id', 'from')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
     }
 
     /**
@@ -37,6 +46,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::drop('users');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

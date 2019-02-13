@@ -562,4 +562,6 @@ return [
     'finish'                   => 'Finish',
     'whitelabel_title'         => 'New Whitelabel',
     'whitelabel_subtitle'      => 'And a new subtitle',
+    'notifications'            => 'Notifications',
+    'inbox'                    => 'Inbox',
 ];

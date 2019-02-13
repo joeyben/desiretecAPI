@@ -21,6 +21,13 @@ class CreateNotificationsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        if (Schema::hasTable('users') && !Schema::hasColumn('notifications', 'from_id')) {
+            Schema::table('notifications', function (Blueprint $table) {
+                $table->integer('from_id')->unsigned()->index()->nullable();
+                $table->foreign('from_id', 'from')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
     }
 
     /**

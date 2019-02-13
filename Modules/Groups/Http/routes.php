@@ -6,7 +6,7 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'provider', 
     Route::put('groups', 'GroupsController@store')->name('provider.groups.store');
     Route::get('groups/{id}', 'GroupsController@show')->name('provider.groups.show')->where('id', '[0-9]+');
     Route::get('groups/{id}/edit', 'GroupsController@edit')->name('provider.groups.edit')->where('id', '[0-9]+');
-    Route::get('groups/create', 'GroupsController@create')->name('provider.groups.create')->where('id', '[0-9]+');
+    Route::get('groups/create', 'GroupsController@create')->name('provider.groups.create');
     Route::put('groups/{id}', 'GroupsController@update')->name('provider.groups.update')->where('id', '[0-9]+');
     Route::delete('groups/{id}', 'GroupsController@destroy')->name('provider.groups.destroy')->where('id', '[0-9]+');
     Route::delete('groups/{id}/destroy', 'GroupsController@forceDelete')

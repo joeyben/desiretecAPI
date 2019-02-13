@@ -144,18 +144,21 @@ if (!function_exists('createNotification')) {
     /**
      * create new notification.
      *
-     * @param  $message    message you want to show in notification
-     * @param  $userId     To Whom You Want To send Notification
+     * @param             $message    message you want to show in notification
+     * @param             $userId     To Whom You Want To send Notification
+     *
+     * @param int|null    $fromId
      *
      * @return object
      */
-    function createNotification($message, $userId)
+    function createNotification($message, $userId, int $fromId = null)
     {
         $notification = new Notification();
 
         return $notification->insert([
             'message'    => $message,
             'user_id'    => $userId,
+            'from_id'    => $fromId,
             'type'       => 1,
             'created_at' => Carbon::now(),
         ]);

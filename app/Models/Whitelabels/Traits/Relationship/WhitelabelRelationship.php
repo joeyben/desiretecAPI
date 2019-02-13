@@ -21,7 +21,7 @@ trait WhitelabelRelationship
     /**
      * get the wishes for a Whitelabel.
      */
-    public function whises()
+    public function wishes()
     {
         return $this->hasMany(Wish::class);
     }

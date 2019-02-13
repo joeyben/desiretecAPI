@@ -20,7 +20,8 @@ mix.webpackConfig({
   },
 });
 
-mix.js(__dirname + '/Resources/assets/js/modules/user/notifications/notifications.js', 'js/modules/user/notifications/notifications.js');
+mix.js(__dirname + '/Resources/assets/js/modules/user/notifications/notifications.js', 'js/modules/user/notifications/notifications.js')
+   .js(__dirname + '/Resources/assets/js/modules/user/inbox/inbox.js', 'js/modules/user/inbox/inbox.js');
 
 if (mix.inProduction()) {
   mix.version();

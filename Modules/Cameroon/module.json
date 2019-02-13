@@ -1,0 +1,16 @@
+{
+    "name": "Cameroon",
+    "alias": "cameroon",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Cameroon\\Providers\\CameroonServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

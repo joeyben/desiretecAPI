@@ -3,9 +3,11 @@
 namespace Modules\Notifications\Http\Controllers;
 
 use App\Repositories\Criteria\ByUser;
+use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\Latest;
 use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WithTrashed;
 use App\Services\Flag\Src\Flag;
 use Carbon\Carbon;
@@ -14,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Notifications\Http\Requests\UpdateNotificationRequest;
 use Modules\Notifications\Repositories\Contracts\NotificationsRepository;
@@ -78,16 +81,17 @@ class NotificationsController extends Controller
     public function view(Request $request)
     {
         try {
-            $perPage = $request->get('per_page');
-            $sort = explode('|', $request->get('sort'));
+            $perPage = $request->has('per_page') ? $request->get('per_page') : 10;
 
-            $result['data'] = $this->notifications->withCriteria([
-                new WithTrashed(),
+            $result['notifications'] = $this->notifications->withCriteria([
                 new ByUser($this->auth->guard('web')->user()->id),
-                new OrderBy($sort[0], $sort[1]),
                 new Latest(),
-                new Filter($request->get('filter')),
+                new EagerLoad(['from' => function ($query) {
+                    $query->select('users.id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'));
+                }]),
             ])->paginate($perPage);
+
+            $result['userId'] = $this->auth->guard('web')->user()->id;
 
             $result['success'] = true;
             $result['status'] = 200;
@@ -97,7 +101,7 @@ class NotificationsController extends Controller
             $result['status'] = 500;
         }
 
-        return $this->response->json($result['data'], $result['status'], [], JSON_NUMERIC_CHECK);
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**

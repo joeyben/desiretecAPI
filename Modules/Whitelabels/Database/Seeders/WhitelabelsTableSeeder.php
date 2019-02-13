@@ -106,7 +106,11 @@ class WhitelabelsTableSeeder extends Seeder
         //Attach user role to general user
         $user_model = config('auth.providers.users.model');
         $user_model = new $user_model();
-        $user_model::find(4)->whitelabels()->sync([1]);
+        $user_model::find(5)->whitelabels()->sync([1]);
+        //Attach user role to general user
+        $user_model = config('auth.providers.users.model');
+        $user_model = new $user_model();
+        $user_model::find(6)->whitelabels()->sync([1]);
         //Attach user role to general user
         $user_model = config('auth.providers.users.model');
         $user_model = new $user_model();

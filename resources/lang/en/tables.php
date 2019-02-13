@@ -86,4 +86,6 @@ return [
     'eventCategory'                 => 'Event Category',
     'eventAction'                   => 'Event Action',
     'message'                       => 'Message',
+    'ago'                           => 'Ago',
+    'when'                          => 'When',
 ];

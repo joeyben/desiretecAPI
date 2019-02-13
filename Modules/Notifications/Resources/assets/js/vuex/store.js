@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import * as actions from './actions'
 import * as getters from './getters'
 import notifications from '../modules/user/notifications/vuex/store'
+import inbox from '../modules/user/inbox/vuex/store'
 
 Vue.use(Vuex)
 
@@ -28,6 +29,7 @@ export default new Vuex.Store({
   state,
   mutations,
   modules: {
+    inbox,
     notifications
   },
   strict: debug

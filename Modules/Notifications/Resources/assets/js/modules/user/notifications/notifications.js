@@ -9,6 +9,8 @@ import en from 'element-ui/lib/locale/lang/en'
 import fr from 'element-ui/lib/locale/lang/fr'
 import locale from 'element-ui/lib/locale'
 import VueEvents from 'vue-events'
+import NotificationsComponent from './components/NotificationsComponent'
+window.io = require('socket.io-client')
 require('../../../bootstrap')
 Vue.use(VueEvents)
 Vue.use(VueRouter)
@@ -40,23 +42,14 @@ if ($notificationsComponent) {
     routes: [{
       path: '/',
       name: 'root',
-      component: require('./components/NotificationsComponent.vue'),
-      children: [{
-        path: '/edit/:id(\\d+)',
-        name: 'root.edit',
-        component: require('./components/EditNotificationComponent.vue')
-      }, {
-        path: '/create/:id(\\d+)/:whitelabel_id(\\d+)',
-        name: 'root.create',
-        component: require('./components/EditNotificationComponent.vue')
-      }]
+      component: require('./components/NotificationsComponent.vue')
     }]
   })
   new Vue({
     el: '#notificationsComponent',
     router,
     store,
-    components: { },
+    components: { NotificationsComponent },
     mounted () {
     },
     methods: {

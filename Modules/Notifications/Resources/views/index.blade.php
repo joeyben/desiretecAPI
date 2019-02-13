@@ -13,11 +13,11 @@
     </div>
 @stop
 @section('vue-js')
-    <script src="{{ asset('js/modules/user/notifications/notifications.js') }}"></script>
+    <script src="{{ asset('js/modules/user/inbox/inbox.js') }}"></script>
 @stop
 @section('content')
     <!-- Basic card -->
-    <div class="content" id="notificationsComponent">
+    <div class="content" id="inboxComponent">
         <router-view></router-view>
     </div>
 @stop
