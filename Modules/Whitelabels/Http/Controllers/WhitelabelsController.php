@@ -542,6 +542,7 @@ class WhitelabelsController extends Controller
 
             return rmdir($dir);
         }
+
         return true;
     }
 }

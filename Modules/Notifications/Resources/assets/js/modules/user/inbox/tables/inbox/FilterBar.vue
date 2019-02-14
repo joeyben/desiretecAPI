@@ -6,8 +6,7 @@
             </button>
 
             <div class="dropdown-menu dropdown-menu-left">
-                <a href="javascript:;" class="dropdown-item"><i class="icon-checkmark-circle text-success"></i> Mark as read</a>
-                <a href="javascript:;" class="dropdown-item"><i class="icon-cancel-circle2 text-success"></i> Delete</a>
+                <a href="javascript:;" v-on:click="onReadSelected()" class="dropdown-item"><i class="icon-checkmark-circle"></i>{{ trans('button.mark_as_read') }}</a>
             </div>
         </h5>
         <div class="header-elements">
@@ -93,7 +92,7 @@
           checked: 'checked',
           user: 'currentUser'
         }),
-        urlExportSelected () {
+        urlReadSelected () {
           return window.laroute.route('provider.groups.export', {checked: this.checked})
         },
         show () {
@@ -110,7 +109,7 @@
         }
       },
       methods: {
-        onExportSelected () {
+        onReadSelected () {
           if (this.checked.length <= 0) {
             this.$message({
               message: 'Please select at least one item',
@@ -121,7 +120,7 @@
             return false
           }
 
-          window.location.href = this.urlExportSelected
+          this.$events.fire('read-checked-notification-set', this.checked)
         },
         onCreate () {
           this.dialogFormVisible = false

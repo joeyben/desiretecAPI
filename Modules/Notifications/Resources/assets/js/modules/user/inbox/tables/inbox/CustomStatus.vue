@@ -1,7 +1,10 @@
 <template>
     <span>
-        <span>
+        <span v-if="!rowData.is_read">
               <i class="icon-star-full2 text-warning-300"></i>
+        </span>
+        <span v-if="rowData.is_read">
+              <i class="icon-star-empty3 text-muted"></i>
         </span>
     </span>
 </template>

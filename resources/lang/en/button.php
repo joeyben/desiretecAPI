@@ -26,4 +26,5 @@ return [
     'delete'         => 'Delete',
     'restore'        => 'Restore',
     'create'         => 'Create',
+    'mark_as_read'   => 'Mark As Read',
 ];

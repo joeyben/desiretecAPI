@@ -48,12 +48,11 @@ import CssConfig from './CssConfig.js'
       this.$events.$on('show-set', fields => this.onShowSet(fields))
       this.$events.$on('page-set', perPage => this.onPageSet(perPage))
       this.$events.$on('filter-reset', e => this.onFilterReset())
-      this.$events.$on('view-set', (action, data, index) => this.doView(action, data, index))
+      this.$events.$on('mark-as-read-set', (id) => this.markAsread(id))
       this.$events.$on('delete-set', (id) => this.doDelete(id))
-      this.$events.$on('destroy-set', (id) => this.doDestroy(id))
-      this.$events.$on('restore-set', (id) => this.doRestore(id))
       this.$events.$on('range-date-set', (start, end) => this.doRangeDate(start, end))
       this.$events.$on('whitelabel-set', (id) => this.doWhitelabel(id))
+      this.$events.$on('read-checked-notification-set', (checked) => this.readCheckedNotification(checked))
     },
     render (h) {
       return h(
@@ -97,6 +96,15 @@ import CssConfig from './CssConfig.js'
       doWhitelabel (id) {
         this.appendParams.whitelabel = id
         Vue.nextTick(() => this.$refs.vuetable.refresh())
+      },
+      readCheckedNotification (checked) {
+        this.$store.dispatch('block', {element: 'notificationsComponent', load: true})
+        this.$http.put(window.laroute.route('notifications.readNotification'), {checked: checked})
+          .then(this.onReadNotificationSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'notificationsComponent', load: false})
+          })
       },
       onFilterReset () {
         delete this.appendParams.filter
@@ -241,8 +249,14 @@ import CssConfig from './CssConfig.js'
           ? ''
           : moment(value, moment.ISO_8601).fromNow()
       },
-      doView (action, data, index) {
-        this.$refs.vuetable.toggleDetailRow(data.id)
+      markAsread (id) {
+        this.$store.dispatch('block', {element: 'notificationsComponent', load: true})
+        this.$http.put(window.laroute.route('notifications.read', {id: id}))
+          .then(this.onReadSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'notificationsComponent', load: false})
+          })
       },
       doDelete (id) {
         this.$confirm(this.trans('messages.delete'), 'Warning', {
@@ -255,34 +269,6 @@ import CssConfig from './CssConfig.js'
           this.$message({
             type: 'info',
             message: this.trans('messages.delete_canceled')
-          })
-        })
-      },
-      doDestroy (id) {
-        this.$confirm(this.trans('messages.destroy'), 'Warning', {
-          confirmButtonText: this.trans('labels.ok'),
-          cancelButtonText: this.trans('labels.cancel'),
-          type: 'warning'
-        }).then(() => {
-          this.onForceDelete(id)
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: this.trans('messages.delete_canceled')
-          })
-        })
-      },
-      doRestore (id) {
-        this.$confirm(this.trans('messages.restore'), 'Warning', {
-          confirmButtonText: this.trans('labels.ok'),
-          cancelButtonText: this.trans('labels.cancel'),
-          type: 'warning'
-        }).then(() => {
-          this.onRestore(id)
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: this.trans('messages.restore_canceled')
           })
         })
       },
@@ -323,7 +309,29 @@ import CssConfig from './CssConfig.js'
           })
           Vue.nextTick(() => this.$refs.vuetable.refresh())
         } else {
-          toastr.error(response.message)
+          this.$notify.error({ title: 'Error', message: response.message })
+        }
+      },
+      onReadSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.$message({
+            type: 'success',
+            message: response.data.message
+          })
+          Vue.nextTick(() => this.$refs.vuetable.refresh())
+        } else {
+          this.$notify.error({ title: 'Error', message: response.message })
+        }
+      },
+      onReadNotificationSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.$message({
+            type: 'success',
+            message: response.data.message
+          })
+          Vue.nextTick(() => this.$refs.vuetable.refresh())
+        } else {
+          this.$notify.error({ title: 'Error', message: response.message })
         }
       },
       onFailed (error) {

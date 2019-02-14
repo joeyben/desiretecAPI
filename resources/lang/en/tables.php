@@ -88,4 +88,5 @@ return [
     'message'                       => 'Message',
     'ago'                           => 'Ago',
     'when'                          => 'When',
+    'from'                          => 'From',
 ];

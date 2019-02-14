@@ -4,14 +4,9 @@ namespace Modules\Tui\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
-use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
-use App\Models\Access\User\User;
-use App\Models\Access\User\UserToken;
 use App\Models\Wishes\Wish;
+use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
-use Auth;
-use Illuminate\Http\Request;
-use Torann\GeoIP\Facades\GeoIP;
 
 /**
  * Class TuiWishesController.
@@ -72,8 +67,9 @@ class TuiWishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                                $wish
-     * @param string $token
+     * @param \App\Models\Wishes\Wish $wish
+     * @param string                  $token
+     *
      * @return mixed
      */
     public function details(Wish $wish, string $token, ManageWishesRequest $request)
@@ -83,8 +79,8 @@ class TuiWishesController extends Controller
         return view('tui::wish.details')->with([
             'wish'               => $wish,
             'body_class'         => $this::BODY_CLASS,
-            'display_name' => $whitelabel['display_name'],
-            'bg_image'     => $whitelabel['bg_image'],
+            'display_name'       => $whitelabel['display_name'],
+            'bg_image'           => $whitelabel['bg_image'],
         ]);
     }
 }

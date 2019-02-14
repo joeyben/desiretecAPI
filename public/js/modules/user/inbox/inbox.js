@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 404);
+/******/ 	return __webpack_require__(__webpack_require__.s = 400);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -4686,7 +4686,7 @@
 /* harmony export (immutable) */ __webpack_exports__["c"] = deepMerge;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__);
 
 
@@ -5227,115 +5227,6 @@ module.exports = {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5529,7 +5420,7 @@ function setStyle(element, styleName, value) {
 };
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -5538,6 +5429,115 @@ var global = module.exports = typeof window != 'undefined' && window.Math == Mat
   // eslint-disable-next-line no-new-func
   : Function('return this')();
 if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
 
 
 /***/ }),
@@ -5696,6 +5696,513 @@ module.exports = function (it, key) {
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+function _broadcast(componentName, eventName, params) {
+  this.$children.forEach(function (child) {
+    var name = child.$options.componentName;
+
+    if (name === componentName) {
+      child.$emit.apply(child, [eventName].concat(params));
+    } else {
+      _broadcast.apply(child, [componentName, eventName].concat([params]));
+    }
+  });
+}
+exports.default = {
+  methods: {
+    dispatch: function dispatch(componentName, eventName, params) {
+      var parent = this.$parent || this.$root;
+      var name = parent.$options.componentName;
+
+      while (parent && (!name || name !== componentName)) {
+        parent = parent.$parent;
+
+        if (parent) {
+          name = parent.$options.componentName;
+        }
+      }
+      if (parent) {
+        parent.$emit.apply(parent, [eventName].concat(params));
+      }
+    },
+    broadcast: function broadcast(componentName, eventName, params) {
+      _broadcast.call(this, componentName, eventName, params);
+    }
+  }
+};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP = __webpack_require__(12);
+var createDesc = __webpack_require__(25);
+module.exports = __webpack_require__(13) ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__(24);
+var IE8_DOM_DEFINE = __webpack_require__(66);
+var toPrimitive = __webpack_require__(40);
+var dP = Object.defineProperty;
+
+exports.f = __webpack_require__(13) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return dP(O, P, Attributes);
+  } catch (e) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(20)(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = __webpack_require__(69);
+var defined = __webpack_require__(41);
+module.exports = function (it) {
+  return IObject(defined(it));
+};
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store = __webpack_require__(44)('wks');
+var uid = __webpack_require__(28);
+var Symbol = __webpack_require__(6).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(364);
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  typeof document.createElement -> undefined
+ */
+function isStandardBrowserEnv() {
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined' &&
+    typeof document.createElement === 'function'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object' && !isArray(obj)) {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim
+};
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+var core = module.exports = { version: '2.6.4' };
+if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (e) {
+    return true;
+  }
+};
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _iterator = __webpack_require__(267);
+
+var _iterator2 = _interopRequireDefault(_iterator);
+
+var _symbol = __webpack_require__(279);
+
+var _symbol2 = _interopRequireDefault(_symbol);
+
+var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+} : function (obj) {
+  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+};
+
+/***/ }),
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6641,513 +7148,6 @@ var index_esm = {
 
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-function _broadcast(componentName, eventName, params) {
-  this.$children.forEach(function (child) {
-    var name = child.$options.componentName;
-
-    if (name === componentName) {
-      child.$emit.apply(child, [eventName].concat(params));
-    } else {
-      _broadcast.apply(child, [componentName, eventName].concat([params]));
-    }
-  });
-}
-exports.default = {
-  methods: {
-    dispatch: function dispatch(componentName, eventName, params) {
-      var parent = this.$parent || this.$root;
-      var name = parent.$options.componentName;
-
-      while (parent && (!name || name !== componentName)) {
-        parent = parent.$parent;
-
-        if (parent) {
-          name = parent.$options.componentName;
-        }
-      }
-      if (parent) {
-        parent.$emit.apply(parent, [eventName].concat(params));
-      }
-    },
-    broadcast: function broadcast(componentName, eventName, params) {
-      _broadcast.call(this, componentName, eventName, params);
-    }
-  }
-};
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP = __webpack_require__(13);
-var createDesc = __webpack_require__(25);
-module.exports = __webpack_require__(14) ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject = __webpack_require__(24);
-var IE8_DOM_DEFINE = __webpack_require__(66);
-var toPrimitive = __webpack_require__(40);
-var dP = Object.defineProperty;
-
-exports.f = __webpack_require__(14) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return dP(O, P, Attributes);
-  } catch (e) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(21)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(69);
-var defined = __webpack_require__(41);
-module.exports = function (it) {
-  return IObject(defined(it));
-};
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(44)('wks');
-var uid = __webpack_require__(28);
-var Symbol = __webpack_require__(7).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var bind = __webpack_require__(366);
-
-/*global toString:true*/
-
-// utils is a library of generic helper functions non-specific to axios
-
-var toString = Object.prototype.toString;
-
-/**
- * Determine if a value is an Array
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Array, otherwise false
- */
-function isArray(val) {
-  return toString.call(val) === '[object Array]';
-}
-
-/**
- * Determine if a value is an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an ArrayBuffer, otherwise false
- */
-function isArrayBuffer(val) {
-  return toString.call(val) === '[object ArrayBuffer]';
-}
-
-/**
- * Determine if a value is a FormData
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an FormData, otherwise false
- */
-function isFormData(val) {
-  return (typeof FormData !== 'undefined') && (val instanceof FormData);
-}
-
-/**
- * Determine if a value is a view on an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
- */
-function isArrayBufferView(val) {
-  var result;
-  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
-    result = ArrayBuffer.isView(val);
-  } else {
-    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
-  }
-  return result;
-}
-
-/**
- * Determine if a value is a String
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a String, otherwise false
- */
-function isString(val) {
-  return typeof val === 'string';
-}
-
-/**
- * Determine if a value is a Number
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Number, otherwise false
- */
-function isNumber(val) {
-  return typeof val === 'number';
-}
-
-/**
- * Determine if a value is undefined
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if the value is undefined, otherwise false
- */
-function isUndefined(val) {
-  return typeof val === 'undefined';
-}
-
-/**
- * Determine if a value is an Object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Object, otherwise false
- */
-function isObject(val) {
-  return val !== null && typeof val === 'object';
-}
-
-/**
- * Determine if a value is a Date
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Date, otherwise false
- */
-function isDate(val) {
-  return toString.call(val) === '[object Date]';
-}
-
-/**
- * Determine if a value is a File
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a File, otherwise false
- */
-function isFile(val) {
-  return toString.call(val) === '[object File]';
-}
-
-/**
- * Determine if a value is a Blob
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Blob, otherwise false
- */
-function isBlob(val) {
-  return toString.call(val) === '[object Blob]';
-}
-
-/**
- * Determine if a value is a Function
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Function, otherwise false
- */
-function isFunction(val) {
-  return toString.call(val) === '[object Function]';
-}
-
-/**
- * Determine if a value is a Stream
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Stream, otherwise false
- */
-function isStream(val) {
-  return isObject(val) && isFunction(val.pipe);
-}
-
-/**
- * Determine if a value is a URLSearchParams object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a URLSearchParams object, otherwise false
- */
-function isURLSearchParams(val) {
-  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
-}
-
-/**
- * Trim excess whitespace off the beginning and end of a string
- *
- * @param {String} str The String to trim
- * @returns {String} The String freed of excess whitespace
- */
-function trim(str) {
-  return str.replace(/^\s*/, '').replace(/\s*$/, '');
-}
-
-/**
- * Determine if we're running in a standard browser environment
- *
- * This allows axios to run in a web worker, and react-native.
- * Both environments support XMLHttpRequest, but not fully standard globals.
- *
- * web workers:
- *  typeof window -> undefined
- *  typeof document -> undefined
- *
- * react-native:
- *  typeof document.createElement -> undefined
- */
-function isStandardBrowserEnv() {
-  return (
-    typeof window !== 'undefined' &&
-    typeof document !== 'undefined' &&
-    typeof document.createElement === 'function'
-  );
-}
-
-/**
- * Iterate over an Array or an Object invoking a function for each item.
- *
- * If `obj` is an Array callback will be called passing
- * the value, index, and complete array for each item.
- *
- * If 'obj' is an Object callback will be called passing
- * the value, key, and complete object for each property.
- *
- * @param {Object|Array} obj The object to iterate
- * @param {Function} fn The callback to invoke for each item
- */
-function forEach(obj, fn) {
-  // Don't bother if no value provided
-  if (obj === null || typeof obj === 'undefined') {
-    return;
-  }
-
-  // Force an array if not already something iterable
-  if (typeof obj !== 'object' && !isArray(obj)) {
-    /*eslint no-param-reassign:0*/
-    obj = [obj];
-  }
-
-  if (isArray(obj)) {
-    // Iterate over array values
-    for (var i = 0, l = obj.length; i < l; i++) {
-      fn.call(null, obj[i], i, obj);
-    }
-  } else {
-    // Iterate over object keys
-    for (var key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        fn.call(null, obj[key], key, obj);
-      }
-    }
-  }
-}
-
-/**
- * Accepts varargs expecting each argument to be an object, then
- * immutably merges the properties of each object and returns result.
- *
- * When multiple objects contain the same key the later object in
- * the arguments list will take precedence.
- *
- * Example:
- *
- * ```js
- * var result = merge({foo: 123}, {foo: 456});
- * console.log(result.foo); // outputs 456
- * ```
- *
- * @param {Object} obj1 Object to merge
- * @returns {Object} Result of all merge properties
- */
-function merge(/* obj1, obj2, obj3, ... */) {
-  var result = {};
-  function assignValue(val, key) {
-    if (typeof result[key] === 'object' && typeof val === 'object') {
-      result[key] = merge(result[key], val);
-    } else {
-      result[key] = val;
-    }
-  }
-
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    forEach(arguments[i], assignValue);
-  }
-  return result;
-}
-
-/**
- * Extends object a by mutably adding to it the properties of object b.
- *
- * @param {Object} a The object to be extended
- * @param {Object} b The object to copy properties from
- * @param {Object} thisArg The object to bind function to
- * @return {Object} The resulting value of object a
- */
-function extend(a, b, thisArg) {
-  forEach(b, function assignValue(val, key) {
-    if (thisArg && typeof val === 'function') {
-      a[key] = bind(val, thisArg);
-    } else {
-      a[key] = val;
-    }
-  });
-  return a;
-}
-
-module.exports = {
-  isArray: isArray,
-  isArrayBuffer: isArrayBuffer,
-  isFormData: isFormData,
-  isArrayBufferView: isArrayBufferView,
-  isString: isString,
-  isNumber: isNumber,
-  isObject: isObject,
-  isUndefined: isUndefined,
-  isDate: isDate,
-  isFile: isFile,
-  isBlob: isBlob,
-  isFunction: isFunction,
-  isStream: isStream,
-  isURLSearchParams: isURLSearchParams,
-  isStandardBrowserEnv: isStandardBrowserEnv,
-  forEach: forEach,
-  merge: merge,
-  extend: extend,
-  trim: trim
-};
-
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-var core = module.exports = { version: '2.6.4' };
-if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
-
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _iterator = __webpack_require__(267);
-
-var _iterator2 = _interopRequireDefault(_iterator);
-
-var _symbol = __webpack_require__(279);
-
-var _symbol2 = _interopRequireDefault(_symbol);
-
-var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
-  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
-} : function (obj) {
-  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
-};
-
-/***/ }),
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7220,7 +7220,7 @@ exports.default = { use: use, t: t, i18n: i18n };
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(19);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -7957,7 +7957,7 @@ module.exports = __webpack_require__(57);
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
@@ -8734,10 +8734,10 @@ exports.default = function (ref) {
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(7);
-var core = __webpack_require__(19);
+var global = __webpack_require__(6);
+var core = __webpack_require__(18);
 var ctx = __webpack_require__(261);
-var hide = __webpack_require__(12);
+var hide = __webpack_require__(11);
 var has = __webpack_require__(9);
 var PROTOTYPE = 'prototype';
 
@@ -8803,7 +8803,7 @@ module.exports = $export;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(19);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -8854,8 +8854,8 @@ module.exports = function (key) {
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var core = __webpack_require__(19);
-var global = __webpack_require__(7);
+var core = __webpack_require__(18);
+var global = __webpack_require__(6);
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || (global[SHARED] = {});
 
@@ -8896,9 +8896,9 @@ module.exports = {};
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(13).f;
+var def = __webpack_require__(12).f;
 var has = __webpack_require__(9);
-var TAG = __webpack_require__(16)('toStringTag');
+var TAG = __webpack_require__(15)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -8909,18 +8909,18 @@ module.exports = function (it, tag, stat) {
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(16);
+exports.f = __webpack_require__(15);
 
 
 /***/ }),
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(7);
-var core = __webpack_require__(19);
+var global = __webpack_require__(6);
+var core = __webpack_require__(18);
 var LIBRARY = __webpack_require__(27);
 var wksExt = __webpack_require__(49);
-var defineProperty = __webpack_require__(13).f;
+var defineProperty = __webpack_require__(12).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -9076,7 +9076,7 @@ var _scrollbarWidth = __webpack_require__(34);
 
 var _scrollbarWidth2 = _interopRequireDefault(_scrollbarWidth);
 
-var _dom = __webpack_require__(6);
+var _dom = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9403,7 +9403,7 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _dom = __webpack_require__(6);
+var _dom = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10001,7 +10001,7 @@ module.exports = __webpack_require__(37);
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(5);
 
 /***/ }),
 
@@ -10410,7 +10410,7 @@ exports.default = _assign2.default || function (target) {
 /* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(14) && !__webpack_require__(21)(function () {
+module.exports = !__webpack_require__(13) && !__webpack_require__(20)(function () {
   return Object.defineProperty(__webpack_require__(67)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -10419,8 +10419,8 @@ module.exports = !__webpack_require__(14) && !__webpack_require__(21)(function (
 /* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(20);
-var document = __webpack_require__(7).document;
+var isObject = __webpack_require__(19);
+var document = __webpack_require__(6).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
 module.exports = function (it) {
@@ -10433,7 +10433,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(9);
-var toIObject = __webpack_require__(15);
+var toIObject = __webpack_require__(14);
 var arrayIndexOf = __webpack_require__(264)(false);
 var IE_PROTO = __webpack_require__(43)('IE_PROTO');
 
@@ -10494,12 +10494,12 @@ module.exports = function (it) {
 var LIBRARY = __webpack_require__(27);
 var $export = __webpack_require__(39);
 var redefine = __webpack_require__(73);
-var hide = __webpack_require__(12);
+var hide = __webpack_require__(11);
 var Iterators = __webpack_require__(47);
 var $iterCreate = __webpack_require__(271);
 var setToStringTag = __webpack_require__(48);
 var getPrototypeOf = __webpack_require__(274);
-var ITERATOR = __webpack_require__(16)('iterator');
+var ITERATOR = __webpack_require__(15)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -10565,7 +10565,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 /* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(12);
+module.exports = __webpack_require__(11);
 
 
 /***/ }),
@@ -35039,7 +35039,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(213).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(213).setImmediate))
 
 /***/ }),
 /* 213 */
@@ -35109,7 +35109,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ }),
 /* 214 */
@@ -35302,7 +35302,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(31)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(31)))
 
 /***/ }),
 /* 215 */
@@ -37950,7 +37950,7 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vuex = __webpack_require__(10);
+var _vuex = __webpack_require__(22);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
@@ -39584,6 +39584,10 @@ var inbox = exports.inbox = function inbox(state) {
   return state.inbox;
 };
 
+var checked = exports.checked = function checked(state) {
+  return state.checked;
+};
+
 /***/ }),
 /* 228 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -40301,7 +40305,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /* eslint-disable */
-module.exports = { 'ar.log-viewer::general': { 'all': '\u062C\u0645\u064A\u0639', 'date': '\u062A\u0627\u0631\u064A\u062E' }, 'ar.log-viewer::levels': { 'alert': '\u0625\u0646\u0630\u0627\u0631', 'all': '\u0627\u0644\u062C\u0645\u064A\u0639', 'critical': '\u062D\u0631\u062C', 'debug': '\u0627\u0644\u062A\u0635\u062D\u064A\u062D', 'emergency': '\u062D\u0627\u0644\u0627\u062A \u0627\u0644\u0637\u0648\u0627\u0631\u0626', 'error': '\u062E\u0637\u0623', 'info': '\u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062A', 'notice': '\u0645\u0644\u0627\u062D\u0638\u0629', 'warning': '\u062A\u062D\u0630\u064A\u0631' }, 'bg.log-viewer::general': { 'all': '\u0412\u0441\u0438\u0447\u043A\u0438', 'date': '\u0414\u0430\u0442\u0430', 'empty-logs': '\u041D\u0435 \u0441\u0430 \u043D\u0430\u043C\u0435\u0440\u0435\u043D\u0438 \u043B\u043E\u0433\u043E\u0432\u0435!' }, 'bg.log-viewer::levels': { 'alert': 'Alert', 'all': '\u0412\u0441\u0438\u0447\u043A\u0438', 'critical': 'Critical', 'debug': 'Debug', 'emergency': 'Emergency', 'error': 'Error', 'info': 'Info', 'notice': 'Notice', 'warning': 'Warning' }, 'de.log-viewer::general': { 'all': 'Alle', 'date': 'Datum' }, 'de.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Alle', 'critical': 'Kritisch', 'debug': 'Debug', 'emergency': 'Notfall', 'error': 'Fehler', 'info': 'Info', 'notice': 'Hinweis', 'warning': 'Warnung' }, 'en.alerts': { 'backend': { 'blogcategories': { 'created': 'The Blog Category was successfully created.', 'deleted': 'The Blog Category was successfully deleted.', 'updated': 'The Blog Category was successfully updated.' }, 'blogs': { 'created': 'The Blog was successfully created.', 'deleted': 'The Blog was successfully deleted.', 'updated': 'The Blog was successfully updated.' }, 'blogtags': { 'created': 'The Blog Tag was successfully created.', 'deleted': 'The Blog Tag was successfully deleted.', 'updated': 'The Blog Tag was successfully updated.' }, 'emailtemplates': { 'deleted': 'The Email Template was successfully deleted.', 'updated': 'The Email Template was successfully updated.' }, 'faqs': { 'created': 'The Faq was successfully created.', 'deleted': 'The Faq was successfully deleted.', 'updated': 'The Faq was successfully updated.' }, 'groups': { 'created': 'The Group was successfully created.', 'deleted': 'The Group was successfully deleted.', 'updated': 'The Group was successfully updated.' }, 'menus': { 'created': 'The Menu was successfully created.', 'deleted': 'The Menu was successfully deleted.', 'updated': 'The Menu was successfully updated.' }, 'pages': { 'created': 'The Page was successfully created.', 'deleted': 'The Page was successfully deleted.', 'updated': 'The Page was successfully updated.' }, 'permissions': { 'created': 'The permission was successfully created.', 'deleted': 'The permission was successfully deleted.', 'updated': 'The permission was successfully updated.' }, 'roles': { 'created': 'The role was successfully created.', 'deleted': 'The role was successfully deleted.', 'updated': 'The role was successfully updated.' }, 'settings': { 'updated': 'The Setting was successfully updated.' }, 'users': { 'confirmation_email': 'A new confirmation e-mail has been sent to the address on file.', 'created': 'The user was successfully created.', 'deleted': 'The user was successfully deleted.', 'deleted_permanently': 'The user was deleted permanently.', 'restored': 'The user was successfully restored.', 'session_cleared': "The user's session was successfully cleared.", 'updated': 'The user was successfully updated.', 'updated_password': "The user's password was successfully updated." }, 'whitelabels': { 'created': 'The Whitelabel was successfully created.', 'deleted': 'The Whitelabel was successfully deleted.', 'updated': 'The Whitelabel was successfully updated.' }, 'wishes': { 'created': 'The Wish was successfully created.', 'deleted': 'The Wish was successfully deleted.', 'updated': 'The Wish was successfully updated.' } }, 'frontend': { 'offers': { 'created': 'Offer successfully created' }, 'wishes': { 'created': 'The Wish was successfully created.', 'deleted': 'The Wish was successfully deleted.', 'updated': 'The Wish was successfully updated.' } } }, 'en.api': { 'messages': { 'forgot_password': { 'success': 'We have sent email with reset password link. Please check your inbox!.', 'validation': { 'email_not_found': 'This email address is not registered.' } }, 'login': { 'failed': 'Invalid Credentials! Please try again.', 'success': 'Login Successfull.' }, 'logout': { 'success': 'Successfully logged out.' }, 'refresh': { 'status': 'Ok', 'token': { 'not_provided': 'Token not provided.' } }, 'registeration': { 'success': 'You have registered successfully. Please check your email for activation!' } } }, 'en.auth': { 'failed': 'These credentials do not match our records.', 'general_error': 'You do not have access to do that.', 'socialite': { 'unacceptable': ':provider is not an acceptable login type.' }, 'throttle': 'Too many login attempts. Please try again in :seconds seconds.', 'unknown': 'An unknown error occurred' }, 'en.button': { 'cancel': 'Cancel', 'close': 'Close', 'confirm': 'Confirm', 'create': 'Create', 'delete': 'Delete', 'delete_all': 'Delete All', 'edit': 'Edit', 'required': 'Required', 'restore': 'Restore', 'save': 'Save', 'save_and_close': 'Save and Close' }, 'en.buttons': { 'backend': { 'access': { 'users': { 'activate': 'Activate', 'change_password': 'Change Password', 'clear_session': 'Clear Session', 'deactivate': 'Deactivate', 'delete_permanently': 'Delete Permanently', 'login_as': 'Login As :user', 'resend_email': 'Resend Confirmation E-mail', 'restore_user': 'Restore User' } } }, 'emails': { 'auth': { 'confirm_account': 'Confirm Account', 'reset_password': 'Reset Password' } }, 'general': { 'cancel': 'Cancel', 'continue': 'Continue', 'crud': { 'add': 'Add', 'create': 'Create', 'delete': 'Delete', 'edit': 'Edit', 'update': 'Update', 'view': 'View' }, 'preview': 'Preview', 'save': 'Save', 'view': 'View' }, 'wishes': { 'frontend': { 'create_offer': 'Create Offer' } } }, 'en.comment': { 'comments': 'Comments' }, 'en.exceptions': { 'backend': { 'access': { 'permissions': { 'already_exists': 'That permission already exists. Please choose a different name.', 'create_error': 'There was a problem creating this permission. Please try again.', 'delete_error': 'There was a problem deleting this permission. Please try again.', 'not_found': 'That permission does not exist.', 'update_error': 'There was a problem updating this permission. Please try again.' }, 'roles': { 'already_exists': 'That role already exists. Please choose a different name.', 'cant_delete_admin': 'You can not delete the Administrator role.', 'create_error': 'There was a problem creating this role. Please try again.', 'delete_error': 'There was a problem deleting this role. Please try again.', 'has_users': 'You can not delete a role with associated users.', 'needs_permission': 'You must select at least one permission for this role.', 'not_found': 'That role does not exist.', 'update_error': 'There was a problem updating this role. Please try again.' }, 'users': { 'cant_deactivate_self': 'You can not do that to yourself.', 'cant_delete_admin': 'You can not delete Admin.', 'cant_delete_own_session': 'You can not delete your own session.', 'cant_delete_self': 'You can not delete yourself.', 'cant_restore': 'This user is not deleted so it can not be restored.', 'change_mismatch': 'That is not your old password.', 'create_error': 'There was a problem creating this user. Please try again.', 'delete_error': 'There was a problem deleting this user. Please try again.', 'delete_first': 'This user must be deleted first before it can be destroyed permanently.', 'email_error': 'That email address belongs to a different user.', 'mark_error': 'There was a problem updating this user. Please try again.', 'not_found': 'That user does not exist.', 'restore_error': 'There was a problem restoring this user. Please try again.', 'role_needed': 'You must choose at least one role.', 'role_needed_create': 'You must choose at lease one role.', 'session_wrong_driver': 'Your session driver must be set to database to use this feature.', 'update_error': 'There was a problem updating this user. Please try again.', 'update_password_error': 'There was a problem changing this users password. Please try again.' } }, 'blogcategories': { 'already_exists': 'That Blog Category already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Category. Please try again.', 'delete_error': 'There was a problem deleting this Blog Category. Please try again.', 'not_found': 'That Blog Category does not exist.', 'update_error': 'There was a problem updating this Blog Category. Please try again.' }, 'blogtags': { 'already_exists': 'That Blog Tag already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Tag. Please try again.', 'delete_error': 'There was a problem deleting this Blog Tag. Please try again.', 'not_found': 'That Blog Tag does not exist.', 'update_error': 'There was a problem updating this Blog Tag. Please try again.' }, 'menus': { 'already_exists': 'That Menu already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Menu. Please try again.', 'delete_error': 'There was a problem deleting this Menu. Please try again.', 'not_found': 'That Menu does not exist.', 'update_error': 'There was a problem updating this Menu. Please try again.' }, 'modules': { 'already_exists': 'That Module already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Module. Please try again.', 'delete_error': 'There was a problem deleting this Module. Please try again.', 'not_found': 'That Module does not exist.', 'update_error': 'There was a problem updating this Module. Please try again.' }, 'pages': { 'already_exists': 'That Page already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Page. Please try again.', 'delete_error': 'There was a problem deleting this Page. Please try again.', 'not_found': 'That Page does not exist.', 'update_error': 'There was a problem updating this Page. Please try again.' }, 'settings': { 'update_error': 'There was a problem updating this Settings. Please try again.' } }, 'frontend': { 'auth': { 'confirmation': { 'already_confirmed': 'Your account is already confirmed.', 'confirm': 'Confirm your account!', 'created_confirm': 'Your account was successfully created. We have sent you an e-mail to confirm your account.', 'created_pending': 'Your account was successfully created and is pending approval. An e-mail will be sent when your account is approved.', 'mismatch': 'Your confirmation code does not match.', 'not_found': 'That confirmation code does not exist.', 'resend': 'Your account is not confirmed. Please click the confirmation link in your e-mail, or <a href=http:\/\/localhost:8000\/account\/confirm\/resend\/:user_id>click here<\/a> to resend the confirmation e-mail.', 'resent': 'A new confirmation e-mail has been sent to the address on file.', 'success': 'Your account has been successfully confirmed!' }, 'deactivated': 'Your account has been deactivated.', 'email_taken': 'That e-mail address is already taken.', 'password': { 'change_mismatch': 'That is not your old password.' }, 'registration_disabled': 'Registration is currently closed.' } } }, 'en.general': { 'currency': '\u20AC' }, 'en.history': { 'backend': { 'blogcategories': { 'created': 'created Blog Category', 'deleted': 'deleted Blog Category', 'updated': 'updated Blog Category' }, 'blogs': { 'created': 'created Blog', 'deleted': 'deleted Blog', 'updated': 'updated Blog' }, 'blogtags': { 'created': 'created Blog Tag', 'deleted': 'deleted Blog Tag', 'updated': 'updated Blog Tag' }, 'none': 'There is no recent history.', 'none_for_entity': 'There is no history for this :entity.', 'none_for_type': 'There is no history for this type.', 'pages': { 'created': 'created Page', 'deleted': 'deleted Page', 'updated': 'updated Page' }, 'permissions': { 'created': 'created permission', 'deleted': 'deleted permission', 'updated': 'updated permission' }, 'recent_history': 'Recent History', 'roles': { 'created': 'created role', 'deleted': 'deleted role', 'updated': 'updated role' }, 'users': { 'changed_password': 'changed password for user', 'created': 'created user', 'deactivated': 'deactivated user', 'deleted': 'deleted user', 'permanently_deleted': 'permanently deleted user', 'reactivated': 'reactivated user', 'restored': 'restored user', 'updated': 'updated user' } } }, 'en.http': { '404': { 'description': 'Sorry, but the page you were trying to view does not exist.', 'title': 'Page Not Found' }, '503': { 'description': 'Be right back.', 'title': 'Be right back.' } }, 'en.labels': { 'about': 'About us', 'account': 'Account', 'activated': 'activated', 'address': 'Address', 'attendee': 'Attendee', 'attendees': 'Attendees', 'backend': { 'access': { 'permissions': { 'create': 'Create Permission', 'edit': 'Edit Permission', 'management': 'Permission Management', 'table': { 'display_name': 'Display Name', 'permission': 'Permission', 'sort': 'Sort', 'status': 'Status', 'total': 'role total|roles total' } }, 'roles': { 'create': 'Create Role', 'edit': 'Edit Role', 'management': 'Role Management', 'table': { 'number_of_users': 'Number of Users', 'permissions': 'Permissions', 'role': 'Role', 'sort': 'Sort', 'total': 'role total|roles total' } }, 'users': { 'active': 'Active Users', 'all_permissions': 'All Permissions', 'change_password': 'Change Password', 'change_password_for': 'Change Password for :user', 'create': 'Create User', 'deactivated': 'Deactivated Users', 'deleted': 'Deleted Users', 'edit': 'Edit User', 'edit-profile': 'Edit Profile', 'management': 'User Management', 'no_permissions': 'No Permissions', 'no_roles': 'No Roles to set.', 'permissions': 'Permissions', 'table': { 'confirmed': 'Confirmed', 'created': 'Created', 'email': 'E-mail', 'first_name': 'First Name', 'id': 'ID', 'last_name': 'Last Name', 'last_updated': 'Last Updated', 'no_deactivated': 'No Deactivated Users', 'no_deleted': 'No Deleted Users', 'roles': 'Roles', 'total': 'user total|users total' }, 'tabs': { 'content': { 'overview': { 'avatar': 'Avatar', 'confirmed': 'Confirmed', 'created_at': 'Created At', 'deleted_at': 'Deleted At', 'email': 'E-mail', 'last_updated': 'Last Updated', 'name': 'Name', 'status': 'Status', 'whitelabels': 'Whitelabels' } }, 'titles': { 'history': 'History', 'overview': 'Overview' } }, 'view': 'View User' } }, 'blogcategories': { 'create': 'Create Blog Category', 'edit': 'Edit Blog Category', 'management': 'Blog Category Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Blog Category' }, 'title': 'Blog Category' }, 'blogs': { 'create': 'Create Blog', 'edit': 'Edit Blog', 'management': 'Blog Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'publish': 'PublishDateTime', 'status': 'Status', 'title': 'Blog' }, 'title': 'Blogs' }, 'blogtags': { 'create': 'Create Blog Tag', 'edit': 'Edit Blog Tag', 'management': 'Blog Tag Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Blog Tag' }, 'title': 'Blog Tags' }, 'distributions': { 'create': 'Create Distribution', 'edit': 'Edit Distribution', 'management': 'Distributions', 'no_distributions': 'no Distributions', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'description': 'Description', 'display_name': 'Display Name', 'name': 'Distribution', 'whitelabel': 'Whitelabel' }, 'title': 'Distributions' }, 'emailtemplates': { 'create': 'Create Email Template', 'edit': 'Edit Email Template', 'management': 'Email Template Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'status': 'Status', 'subject': 'Subject', 'title': 'Title', 'updatedat': 'Updated At' }, 'title': 'Email Templates' }, 'faqs': { 'create': 'Create FAQ', 'edit': 'Edit FAQ', 'management': 'FAQ Management', 'table': { 'all': 'All', 'answer': 'Answer', 'createdat': 'Created At', 'createdby': 'Created By', 'publish': 'PublishDateTime', 'question': 'Question', 'status': 'Status', 'title': 'FAQs', 'updatedat': 'Updated At' }, 'title': 'FAQ' }, 'groups': { 'create': 'Create Group', 'edit': 'Edit Group', 'management': 'Groups', 'no_whitelabels': 'no Whitelabels', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'description': 'Description', 'display_name': 'Display Name', 'name': 'Group', 'status': 'Status', 'users': 'Users', 'whitelabel': 'Whitelabel' }, 'title': 'Groups' }, 'menus': { 'create': 'Create Menu', 'edit': 'Edit Menu', 'field': { 'icon': 'Icon Class', 'icon_title': 'Font Awesome Class. eg. fa-edit', 'items': 'Menu Items', 'name': 'Name', 'open_in_new_tab': 'Open URL in new tab', 'type': 'Type', 'url': 'URL', 'url_type': 'URL Type', 'url_types': { 'route': 'Route', 'static': 'Static' }, 'view_permission_id': 'Permission' }, 'management': 'Menu Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'name': 'Name', 'type': 'Type' }, 'title': 'Menus' }, 'modules': { 'create': 'Create Module', 'edit': 'Edit Module', 'form': { 'controller_name': 'Controller &nbsp;Name', 'create_file': 'Create', 'directory_name': 'Directory Name', 'edit_file': 'Edit', 'event': 'Event Name', 'form_file': 'Form', 'index_file': 'Index', 'model_name': 'Model Name', 'name': 'Module Name', 'namespace': 'Namespace', 'repo_name': 'Repository Name', 'resource_controller': 'Resourceful Controller', 'resource_route': 'Resourceful Routes', 'route_controller_name': 'Controller &nbsp;Name', 'route_name': 'Route Name', 'table_controller_name': 'Controller &nbsp;Name', 'table_name': 'Table Name', 'url': 'View Route', 'view_permission_id': 'View Permission', 'views_directory': 'Directory &nbsp;&nbsp;&nbsp;Name' }, 'management': 'Module Management', 'table': { 'created_by': 'Created By', 'name': 'Module Name', 'url': 'Module View Route', 'view_permission_id': 'View Permission' }, 'title': 'Module' }, 'pages': { 'create': 'Create Page', 'edit': 'Edit Page', 'management': 'Page Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Title', 'updatedat': 'Updated At' }, 'title': 'Pages' }, 'profile_updated': 'Your profile has been updated.', 'settings': { 'companydetails': 'Company Contact Details', 'edit': 'Edit Settings', 'footer': 'Footer Settings', 'google': 'Google Analytics Track Code', 'mail': 'Mail Settings', 'management': 'Settings Management', 'seo': 'SEO Settings', 'terms': 'Terms and Condition Settings', 'title': 'Settings' }, 'whitelabels': { 'create': 'Create Whitelabel', 'edit': 'Edit Whitelabel', 'management': 'Whitelabels', 'management_client': 'Whitelabel', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'display_name': 'Whitelabel', 'distribution': 'Distribution', 'ga_view_id': 'Google View Id', 'name': 'Identifier', 'status': 'Status' }, 'title': 'Whitelabels' }, 'wishes': { 'create': 'Create Wish', 'edit': 'Edit Wish', 'management': 'Wishes', 'no_whitelabels': 'no Whitelabels', 'table': { 'airport': 'Airport', 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'destination': 'Destination', 'earliest_start': 'Earliest Start', 'group': 'Group', 'latest_return': 'Latest Return', 'offerCount': 'Offers', 'status': 'Status', 'title': 'Wish', 'whitelabel': 'Whitelabel' }, 'title': 'Wishes' } }, 'cancel': 'Cancel', 'contact': 'Contact', 'content': 'Content', 'country': 'Country', 'current': 'Current', 'current_password': 'Current Password', 'description': 'Description', 'details': 'Details', 'documents': 'Documents', 'domain': 'Domain', 'download': 'Download', 'email': 'E-mail Address', 'events': 'Events', 'fax': 'Fax', 'feedback': 'Feedback', 'finish': 'Finish', 'first_name': 'Fisrtname', 'frontend': { 'agents': { 'create': 'Create new Agent', 'management': 'Agents', 'table': { 'avatar': 'Avatar', 'created_at': 'Created At', 'createdby': 'Created By', 'display_name': 'Display name', 'id': 'Id', 'name': 'Name', 'status': 'Status' } }, 'auth': { 'login_box_title': 'Login', 'login_button': 'Login', 'login_with': 'Login with :social_media', 'register_box_title': 'Register', 'register_button': 'Register', 'remember_me': 'Remember Me' }, 'dashboard': { 'analytics': { 'answered_wishes': 'Answered Wishes', 'bookings': 'Bookings', 'changed_wishes': 'Changed Wishes', 'created_wishes': 'Created Wishes', 'free_text': 'Free text', 'latest_answered_wishes': 'Latest Answered Wishes', 'latest_reaction_quota': 'Latest Reaction Quota', 'reaction_quota': 'Reaction Quota', 'reaction_time': 'Reaction Time' } }, 'macros': { 'country': { 'alpha': 'Country Alpha Codes', 'alpha2': 'Country Alpha 2 Codes', 'alpha3': 'Country Alpha 3 Codes', 'numeric': 'Country Numeric Codes' }, 'macro_examples': 'Macro Examples', 'state': { 'mexico': 'Mexico State List', 'us': { 'armed': 'US Armed Forces', 'outlying': 'US Outlying Territories', 'us': 'US States' } }, 'territories': { 'canada': 'Canada Province & Territories List' }, 'timezone': 'Timezone' }, 'offers': { 'create': 'Create new Offer', 'management': 'Offers', 'offers_for_wish': 'Offer for', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Offer' } }, 'passwords': { 'forgot_password': 'Forgot Your Password?', 'reset_password_box_title': 'Reset Password', 'reset_password_button': 'Reset Password', 'send_password_reset_link_button': 'Send Password Reset Link' }, 'user': { 'passwords': { 'change': 'Change Password' }, 'profile': { 'address': 'Address', 'avatar': 'Avatar', 'city': 'City', 'country': 'Country', 'created_at': 'Created At', 'edit_information': 'Edit Information', 'email': 'E-mail', 'first_name': 'First Name', 'last_name': 'Last Name', 'last_updated': 'Last Updated', 'ssn': 'SSN', 'update_information': 'Update Information', 'zipcode': 'Zip Code' } }, 'wishes': { 'add-comment': 'Add comment', 'created_at': 'created at', 'edit': 'Edit wish', 'goto': 'Go To Wish', 'table': { 'adults': 'Adults', 'kids': 'Kids' }, 'wishes': 'Wishes' } }, 'full_name': 'Full Name', 'general': { 'actions': 'Actions', 'active': 'Active', 'all': 'All', 'buttons': { 'save': 'Save', 'update': 'Update' }, 'custom': 'Custom', 'hide': 'Hide', 'inactive': 'Inactive', 'no': 'No', 'none': 'None', 'show': 'Show', 'toggle_navigation': 'Toggle Navigation', 'yes': 'Yes' }, 'go_back': 'Go back!', 'go_next': 'Go Next!', 'id': 'Id', 'inbox': 'Inbox', 'interest': 'Interet', 'join': 'Join Now', 'language': 'Language', 'last_name': 'Lastname', 'login': 'Sign', 'logo': 'Logo', 'logout': 'Logout', 'message': 'Message', 'message_text': 'Message text', 'mobile': 'Mobile', 'name': 'Name', 'new': 'New', 'note': 'note', 'notes': 'notes', 'notifications': 'Notifications', 'now': 'Now', 'occupation': 'Occupation', 'ok': 'Ok', 'online': 'Online', 'password': 'Password', 'password_confirm': 'Confirm Password', 'personal_timezone': 'Timezone', 'phone': 'Phone', 'plus': 'More', 'posts': 'Posts', 'ratings': 'Ratings', 'recipient': 'Recipient', 'register': 'Register', 'reset': 'Reset Password', 'reset_link': 'Send Password Reset Link', 'review': 'Review', 'send': 'Send Now', 'street': 'Street', 'subject': 'Subject', 'tel': 'Numero de Telephone', 'title': 'Title', 'user': 'User', 'username': 'Username', 'verify': 'Email Verification', 'verify_email': 'Verify Your Email Address', 'warning': 'Warning', 'whitelabel_executive': 'Whitelabel Executive', 'whitelabel_information': 'Whitelabel Information', 'whitelabel_subtitle': 'And a new subtitle', 'whitelabel_title': 'New Whitelabel', 'wish': 'Wish', 'wishes': 'Wishes', 'zipcode': 'Zip' }, 'en.log-viewer::general': { 'all': 'All', 'date': 'Date' }, 'en.log-viewer::levels': { 'alert': 'Alert', 'all': 'All', 'critical': 'Critical', 'debug': 'Debug', 'emergency': 'Emergency', 'error': 'Error', 'info': 'Info', 'notice': 'Notice', 'warning': 'Warning' }, 'en.menus': { 'backend': { 'access': { 'permissions': { 'all': 'All Permissions', 'create': 'Create Permission', 'edit': 'Edit Permission', 'main': 'Permissions', 'management': 'Permission Management' }, 'roles': { 'all': 'All Roles', 'create': 'Create Role', 'edit': 'Edit Role', 'main': 'Roles', 'management': 'Role Management' }, 'title': 'Access Management', 'users': { 'all': 'All Users', 'change-password': 'Change Password', 'create': 'Create User', 'deactivated': 'Deactivated Users', 'deleted': 'Deleted Users', 'edit': 'Edit User', 'main': 'Users', 'view': 'View User' } }, 'blog': { 'all': 'All Blog Page', 'create': 'Create Blog Page', 'edit': 'Edit Blog Page', 'main': 'Blog Pages', 'management': 'Blog Management' }, 'blogcategories': { 'all': 'All Blog Categories', 'create': 'Create Blog Category', 'edit': 'Edit Blog Category', 'main': 'CMS Pages', 'management': 'Blog Category Management' }, 'blogs': { 'all': 'All Blog', 'create': 'Create Blog', 'edit': 'Edit Blog', 'main': 'Blogs', 'management': 'Blog Management' }, 'blogtags': { 'all': 'All Blog Tag', 'create': 'Create Blog Tag', 'edit': 'Edit Blog Tag', 'main': 'Blog Tags', 'management': 'Blog Tag Management' }, 'distributions': { 'all': 'All Distributions', 'create': 'Create Distribution', 'edit': 'Edit Distribution', 'main': 'Distributions', 'management': 'Distribution Management' }, 'faqs': { 'all': 'All Faq Page', 'create': 'Create Faq Page', 'edit': 'Edit Faq Page', 'main': 'Faq Pages', 'management': 'Faq Management' }, 'groups': { 'all': 'All Groups', 'create': 'Create Group', 'edit': 'Edit Group', 'main': 'Groups', 'management': 'Group Management' }, 'log-viewer': { 'dashboard': 'Dashboard', 'logs': 'Logs', 'main': 'Log Viewer' }, 'menus': { 'all': 'All Menu', 'create': 'Create Menu', 'edit': 'Edit Menu', 'main': 'Menus', 'management': 'Menu Management' }, 'modules': { 'all': 'All Modules Page', 'create': 'Create Module Page', 'main': 'Module Pages', 'management': 'Module Management' }, 'pages': { 'all': 'All Pages', 'create': 'Create Page', 'edit': 'Edit Page', 'main': 'Pages', 'management': 'Page Management' }, 'settings': { 'all': 'All Settings', 'create': 'Create Settings', 'edit': 'Edit Settings', 'main': 'Settings', 'management': 'Settings Management' }, 'sidebar': { 'dashboard': 'Dashboard', 'general': 'General', 'system': 'System' }, 'whitelabels': { 'all': 'All Whitelabels', 'create': 'Create Whitelabel', 'edit': 'Edit Whitelabel', 'main': 'Whitelabels', 'management': 'Whitelabel Management' }, 'wishes': { 'all': 'All Wishes', 'create': 'Create Wish', 'edit': 'Edit Wish', 'main': 'Wishes', 'management': 'Wish Management' } }, 'frontend': { 'agents': { 'all': 'All Menu', 'create': 'Create Agent', 'edit': 'Edit Menu', 'main': 'Menus', 'management': 'Menu Management' } }, 'language-picker': { 'langs': { 'ar': 'Arabic', 'da': 'Danish', 'de': 'German', 'el': 'Greek', 'en': 'English', 'es': 'Spanish', 'fr': 'French', 'id': 'Indonesian', 'it': 'Italian', 'nl': 'Dutch', 'pt_BR': 'Brazilian Portuguese', 'ru': 'Russian', 'sv': 'Swedish', 'th': 'Thai' }, 'language': 'Language' }, 'list': { 'status': { 'all': 'All wishes' } }, 'sellers': 'Sellers', 'wishes': 'Wishes' }, 'en.messages': { '_account': 'Do you have an account', 'account': "Don't have an account", 'background': 'The background image must be --- x --- pixels in PNG\/JPG\/JPEG format. Maximum file size is ---KB.', 'contact': 'Contact us', 'contact_success': 'Your message has been sent successfully', 'created': ':attribute has been created successfully', 'delete': 'Do you really want to delete this item. Continue ?', 'delete_canceled': 'Delete canceled', 'deleted': ':attribute has been deleted successfully', 'destroy': 'Are you sure that you want to permanently delete the selected item. Continue ?', 'destroyed': ':attribute has been deleted permanently', 'event_upcoming': 'Event Upcoming', 'favicon': 'The favicon must be --- x --- pixels in PNG\/ICON format. Maximum file size is ---KB.', 'forgot': 'Forgot Password', 'here': 'login here', 'install': 'Module[:attribute] has been installed successfully', 'join': 'you successfully joined event', 'login': 'Login', 'logo': 'The logo must be --- x --- pixels in PNG\/JPG\/JPEG\/SVG format. Maximum file size is ---KB.', 'new_posts': 'Latest Posts', 'recent_event': 'Recent event', 'register': 'Create your account', 'remember': 'Remember me', 'reset': 'Reset Password', 'restore': 'Do you really want to restore this item. Continue ?', 'restore_canceled': 'Restore canceled', 'restored': ':attribute has been restored successfully', 'show_all': 'Show all articles', 'show_all_events': 'Show all events', 'sign_up': 'Sign Up', 'terms': 'Agree to terms and conditions', 'title': 'Welcome Back', 'uninstall': 'Module[:attribute] has been uninstalled successfully', 'unsaved': 'You have unsaved changes, save and proceed ?', 'updated': ':attribute has been updated successfully', 'verify': 'Before proceeding, please check your email for a verification link.', 'verify_link': 'If you did not receive the email,', 'verify_request': 'click here to request another.', 'whitelabel_user': 'Create Associate Whitelabel User' }, 'en.modals': { 'activated': 'Activated', 'active': 'Active', 'add_document': 'Add document', 'add_documents': 'Add documents', 'address': 'Address', 'adults': 'Adults', 'airport': 'Airport', 'boards': 'Boards', 'budget': 'Budget', 'categories': 'Categories', 'category': 'Hotel category', 'catering': 'Hotel catering', 'click_to_upload': 'Click to upload', 'color': 'Color', 'confirmed': 'Confirmed', 'content': 'Content', 'create': 'Create', 'created_at': 'Created at', 'createdat': 'Created At', 'createdby': 'Created By', 'current': 'Current', 'description': 'Description', 'destination': 'Destination', 'display_name': 'Display Name', 'domain': 'Domain', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'email_verified_at': 'Verified at', 'end': 'End', 'first_name': 'First Name', 'full_name': 'Full Name', 'group': 'Group', 'groups': 'Groups', 'id': 'ID', 'kids': 'Kids', 'last_login': 'Last login ', 'last_name': 'Last Name', 'latest_return': 'Latest Return', 'lockout_time': 'Lockout time', 'login_failures': 'Login failures', 'logs': 'Logs', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Occupation', 'offerCount': 'Offers', 'online': 'Online', 'owner': 'Owner', 'password': 'Password', 'password_confirm': 'Password Confirm', 'pending': 'Pending', 'period': 'Period', 'permission': 'Permission', 'permissions': 'Permissions', 'phone': 'Phone', 'role': 'Role', 'roles': 'Roles', 'start': 'Start', 'status': 'Status', 'summary': 'Summary', 'text': 'Text', 'title': 'Title', 'unconfirmed': 'Unconfirmed', 'updated_at': 'Updated at', 'upload_documents': 'Upload documents', 'upload_photo': 'Upload Photo', 'upload_tip': 'Upload tip', 'url': 'Url', 'users': 'Users', 'whitelabel': 'Whitelabel', 'wish': 'Wish' }, 'en.navs': { 'frontend': { 'agents': 'Agents', 'create_wish': 'Create Wish', 'dashboard': 'Dashboard', 'login': 'Login', 'macros': 'Macros', 'offers': 'My Offers', 'register': 'Register', 'user': { 'account': 'My Account', 'administration': 'Administration', 'agents': 'Agents', 'change_password': 'Change Password', 'my_information': 'My Information', 'profile': 'Profile' }, 'wishes': 'My Wishes', 'wisheslist': 'Wishes' }, 'general': { 'home': 'Home', 'logout': 'Logout' } }, 'en.pagination': { 'next': 'Next &raquo;', 'previous': '&laquo; Previous' }, 'en.passwords': { 'password': 'Passwords must be at least six characters and match the confirmation.', 'reset': 'Your password has been reset!', 'sent': 'We have e-mailed your password reset link!', 'token': 'This password reset token is invalid.', 'user': "We can't find a user with that e-mail address." }, 'en.roles': { 'administrator': 'Administrator', 'user': 'User' }, 'en.strings': { 'backend': { 'access': { 'users': { 'delete_user_confirm': "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", 'if_confirmed_off': '(If confirmed is off)', 'restore_user_confirm': 'Restore this user to its original state?' } }, 'dashboard': { 'title': 'Administrative Dashboard', 'welcome': 'Welcome' }, 'general': { 'all_rights_reserved': 'All Rights Reserved.', 'are_you_sure': 'Are you sure you want to do this?', 'boilerplate_link': 'Laravel AdminPanel', 'continue': 'Continue', 'member_since': 'Member since', 'minutes': ' minutes', 'search_placeholder': 'Search...', 'see_all': { 'messages': 'See all messages', 'notifications': 'View all', 'tasks': 'View all tasks' }, 'status': { 'offline': 'Offline', 'online': 'Online' }, 'timeout': 'You were automatically logged out for security reasons since you had no activity in ', 'you_have': { 'messages': "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", 'notifications': "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", 'tasks': "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, 'search': { 'empty': 'Please enter a search term.', 'incomplete': 'You must write your own search logic for this system.', 'results': 'Search Results for :query', 'title': 'Search Results' }, 'welcome': '<p>This is the AdminLTE theme by <a href="https:\/\/almsaeedstudio.com\/" target="_blank">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href="https:\/\/github.com\/rappasoft\/laravel-5-boilerplate" target="_blank">GitHub<\/a> page for more information and report any <a href="https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues" target="_blank">issues here<\/a>.<\/p>\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\n<p>- Viral Solani<\/p>' }, 'emails': { 'auth': { 'click_to_confirm': 'Click here to confirm your account:', 'error': 'Whoops!', 'greeting': 'Hello!', 'password_cause_of_email': 'You are receiving this email because we received a password reset request for your account.', 'password_if_not_requested': 'If you did not request a password reset, no further action is required.', 'password_reset_subject': 'Reset Password', 'regards': 'Regards,', 'reset_password': 'Click here to reset your password', 'thank_you_for_using_app': 'Thank you for using our application!', 'trouble_clicking_button': 'If you\u2019re having trouble clicking the ":action_text" button, copy and paste the URL below into your web browser:' } }, 'frontend': { 'test': 'Test', 'tests': { 'based_on': { 'permission': 'Permission Based - ', 'role': 'Role Based - ' }, 'js_injected_from_controller': 'Javascript Injected from a Controller', 'using_access_helper': { 'array_permissions': "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", 'array_permissions_not': "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", 'array_roles': "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", 'array_roles_not': "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", 'permission_id': 'Using Access Helper with Permission ID', 'permission_name': 'Using Access Helper with Permission Name', 'role_id': 'Using Access Helper with Role ID', 'role_name': 'Using Access Helper with Role Name' }, 'using_blade_extensions': 'Using Blade Extensions', 'view_console_it_works': "View console, you should see 'it works!' which is coming from FrontendController@index", 'you_can_see_because': "You can see this because you have the role of ':role'!", 'you_can_see_because_permission': "You can see this because you have the permission of ':permission'!" }, 'user': { 'change_email_notice': 'If you change your e-mail you will be logged out until you confirm your new e-mail address.', 'email_changed_notice': 'You must confirm your new e-mail address before you can log in again.', 'password_updated': 'Password successfully updated.', 'profile_updated': 'Profile successfully updated.' }, 'welcome_to': 'Welcome to :place' } }, 'en.tables': { 'actions': 'Actions', 'activated': 'Activated', 'activities': 'Activities', 'activity': 'Activity', 'add_documents': 'Add documents', 'address': 'Address', 'adults': 'Adults', 'ago': 'Ago', 'airport': 'Airport', 'alias': 'Alias', 'boards': 'Boards', 'budget': 'Budget', 'categories': 'Categories', 'category': 'Hotel category', 'catering': 'Hotel catering', 'color': 'Color', 'confirmed': 'Confirmed', 'content': 'Content', 'created_at': 'Created At', 'created_by': 'Created By', 'date': 'Date', 'description': 'Description', 'destination': 'Destination', 'display_name': 'Display Name', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'email_verified_at': 'Verified at', 'end': 'End', 'eventAction': 'Event Action', 'eventCategory': 'Event Category', 'eventLabel': 'Event Label', 'first_name': 'First Name', 'full_name': 'Full Name', 'group': 'Group', 'groups': 'Groups', 'id': 'ID', 'install': 'Install', 'kids': 'Kids', 'last_login': 'Last login ', 'last_name': 'Last Name', 'latest_return': 'Latest Return', 'lockout_time': 'Lockout time', 'login_failures': 'Login failures', 'message': 'Message', 'migrate': 'Migrate', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Occupation', 'offerCount': 'Offers', 'online': 'online', 'owner': 'Owner', 'package': 'Package', 'pending': 'Pending', 'period': 'Period', 'permissions': 'Permissions', 'phone': 'Phone', 'roles': 'Roles', 'start': 'Start', 'status': 'Status', 'subject': 'Subject', 'text': 'Text', 'title': 'Wish', 'unconfirmed': 'Unconfirmed', 'uninstall': 'Uninstall', 'updated_at': 'Updated at', 'url': 'Url', 'users': 'Users', 'when': 'When', 'whitelabel': 'Whitelabel' }, 'en.validation': { 'accepted': 'The :attribute must be accepted.', 'active_url': 'The :attribute is not a valid URL.', 'after': 'The :attribute must be a date after :date.', 'after_or_equal': 'The :attribute must be a date after or equal to :date.', 'alpha': 'The :attribute may only contain letters.', 'alpha_dash': 'The :attribute may only contain letters, numbers, and dashes.', 'alpha_num': 'The :attribute may only contain letters and numbers.', 'api': { 'confirmaccount': { 'already_confirmed': 'Account is already confirmed.', 'invalid_email': 'Email is not register with fin builders', 'invalid_otp': 'Please enter valid otp.' }, 'forgotpassword': { 'email_not_valid': 'Email you entered is not register with fin builders.', 'email_required': 'Please enter email', 'valid_email': 'Please enter valid email address.' }, 'login': { 'email_required': 'Please enter email', 'password_required': 'Please enter passsword.', 'username_password_didnt_match': 'Please enter valid credentials.', 'valid_email': 'Please enter valid email address.' }, 'register': { 'city_required': 'Please enter city.', 'state_required': 'Please enter state.' }, 'resetpassword': { 'confirm_password_required': 'Please enter confirm password.', 'email_not_valid': 'Email you entered is not register with fin builders.', 'email_required': 'Please enter email', 'password_confirmed': 'passsword and confirm passsword do not match.', 'password_required': 'Please enter passsword.', 'token_not_valid': 'Given token is invalid.', 'token_required': 'Please enter token.', 'valid_email': 'Please enter valid email address.' } }, 'array': 'The :attribute must be an array.', 'attributes': { 'backend': { 'access': { 'permissions': { 'associated_roles': 'Associated Roles', 'dependencies': 'Dependencies', 'display_name': 'Display Name', 'group': 'Group', 'group_sort': 'Group Sort', 'groups': { 'name': 'Group Name' }, 'name': 'Name', 'sort': 'Sort', 'system': 'System?' }, 'roles': { 'active': 'Active', 'associated_permissions': 'Associated Permissions', 'name': 'Name', 'sort': 'Sort' }, 'users': { 'active': 'Active', 'associated_roles': 'Associated Roles', 'associated_whitelabels': 'Associated Whitelabels', 'confirmed': 'Confirmed', 'email': 'E-mail Address', 'firstName': 'First Name', 'groups': 'User Groups', 'lastName': 'Last Name', 'no-group': 'None', 'old_password': 'Old password', 'other_permissions': 'Other Permissions', 'password': 'New Password', 'password_confirmation': 'New Password Confirmation', 'send_confirmation_email': 'Send Confirmation E-mail' } }, 'blogcategories': { 'is_active': 'Active', 'title': 'Blog Category' }, 'blogs': { 'cannonical_link': 'Cannonical Link', 'category': 'Blog Category', 'content': 'Content', 'image': 'Featured Image', 'meta-title': 'Meta Title', 'meta_description': 'Meta Description', 'meta_keyword': 'Meta Keyword', 'publish': 'Publish Date & Time', 'slug': 'Slug', 'status': 'Status', 'tags': 'Tags', 'title': 'Blog Title' }, 'blogtags': { 'is_active': 'Active', 'title': 'Blog Tag' }, 'distributions': { 'description': 'Description', 'display_name': 'Display Name', 'name': 'Name' }, 'faqs': { 'answer': 'Answer', 'question': 'Question', 'status': 'Status' }, 'groups': { 'associated_whitelabels': 'Associated Whitelabels', 'description': 'Description', 'display_name': 'Display Name', 'groups': 'Seller Groups', 'name': 'Group Name', 'status': 'Status' }, 'pages': { 'cannonical_link': 'Cannonical Link', 'description': 'Description', 'is_active': 'Active', 'seo_description': 'SEO Description', 'seo_keyword': 'SEO Keyword', 'seo_title': 'SEO Title', 'title': 'Title' }, 'settings': { 'companydetails': { 'address': 'Company Address', 'contactnumber': 'Contact Number' }, 'favicon': 'Fav Icon', 'footer': { 'copyright': 'Copyright Text', 'text': 'Footer Text' }, 'google': { 'analytic': 'Google Analytics' }, 'mail': { 'fromemail': 'From Email', 'fromname': 'From Name' }, 'metadescription': 'Meta Description', 'metakeyword': 'Meta Keyawords', 'metatitle': 'Meta Title', 'sitelogo': 'Site Logo', 'termscondition': { 'disclaimer': 'Disclaimer', 'terms': 'Terms & Condition' } }, 'whitelabels': { 'associated_distribution': 'Associated Distribution', 'display_name': 'Display Name', 'ga_view_id': 'Google View Id', 'image': 'Background Image', 'name': 'Name', 'status': 'Status' }, 'wishes': { 'adults': 'Adults', 'airport': 'Airport', 'associated_whitelabels': 'Associated Whitelabels', 'budget': 'Budget', 'category': 'Hotel category', 'catering': 'Hotel catering', 'description': 'Description', 'destination': 'Destination', 'duration': 'Duration', 'earliest_start': 'Earliest start', 'image': 'Featured Image', 'kids': 'Kids', 'latest_return': 'Latest return', 'status': 'Status', 'title': 'Wish Title' } }, 'frontend': { 'offers': { 'file': 'File', 'status': 'Status', 'text': 'Text', 'title': 'Title' }, 'register-user': { 'address': 'Address', 'city': 'City', 'country': 'Country', 'email': 'E-mail Address', 'firstName': 'First Name', 'lastName': 'Last Name', 'new_password': 'New Password', 'new_password_confirmation': 'New Password Confirmation', 'old_password': 'Old Password', 'password': 'Password', 'password_confirmation': 'Password Confirmation', 'ssn': 'SSN', 'state': 'State', 'terms_and_conditions': 'terms and conditions', 'user_type': 'I use desiretec as a', 'user_type_seller': 'Seller', 'user_type_user': 'User', 'zipcode': 'Zip Code' } } }, 'before': 'The :attribute must be a date before :date.', 'before_or_equal': 'The :attribute must be a date before or equal to :date.', 'between': { 'array': 'The :attribute must have between :min and :max items.', 'file': 'The :attribute must be between :min and :max kilobytes.', 'numeric': 'The :attribute must be between :min and :max.', 'string': 'The :attribute must be between :min and :max characters.' }, 'boolean': 'The :attribute field must be true or false.', 'confirmed': 'The :attribute confirmation does not match.', 'custom': { 'attribute-name': { 'rule-name': 'custom-message' } }, 'date': 'The :attribute is not a valid date.', 'date_format': 'The :attribute does not match the format :format.', 'different': 'The :attribute and :other must be different.', 'digits': 'The :attribute must be :digits digits.', 'digits_between': 'The :attribute must be between :min and :max digits.', 'dimensions': 'The :attribute has invalid image dimensions.', 'distinct': 'The :attribute field has a duplicate value.', 'email': 'The :attribute must be a valid email address.', 'exists': 'The selected :attribute is invalid.', 'file': 'The :attribute must be a file.', 'filled': 'The :attribute field must have a value.', 'image': 'The :attribute must be an image.', 'in': 'The selected :attribute is invalid.', 'in_array': 'The :attribute field does not exist in :other.', 'integer': 'The :attribute must be an integer.', 'ip': 'The :attribute must be a valid IP address.', 'json': 'The :attribute must be a valid JSON string.', 'max': { 'array': 'The :attribute may not have more than :max items.', 'file': 'The :attribute may not be greater than :max kilobytes.', 'numeric': 'The :attribute may not be greater than :max.', 'string': 'The :attribute may not be greater than :max characters.' }, 'mimes': 'The :attribute must be a file of type: :values.', 'mimetypes': 'The :attribute must be a file of type: :values.', 'min': { 'array': 'The :attribute must have at least :min items.', 'file': 'The :attribute must be at least :min kilobytes.', 'numeric': 'The :attribute must be at least :min.', 'string': 'The :attribute must be at least :min characters.' }, 'not_in': 'The selected :attribute is invalid.', 'numeric': 'The :attribute must be a number.', 'present': 'The :attribute field must be present.', 'regex': 'The :attribute format is invalid.', 'required': 'The :attribute field is required.', 'required_if': 'The :attribute field is required when :other is :value.', 'required_unless': 'The :attribute field is required unless :other is in :values.', 'required_with': 'The :attribute field is required when :values is present.', 'required_with_all': 'The :attribute field is required when :values is present.', 'required_without': 'The :attribute field is required when :values is not present.', 'required_without_all': 'The :attribute field is required when none of :values are present.', 'same': 'The :attribute and :other must match.', 'size': { 'array': 'The :attribute must contain :size items.', 'file': 'The :attribute must be :size kilobytes.', 'numeric': 'The :attribute must be :size.', 'string': 'The :attribute must be :size characters.' }, 'string': 'The :attribute must be a string.', 'timezone': 'The :attribute must be a valid zone.', 'unique': 'The :attribute has already been taken.', 'uploaded': 'The :attribute failed to upload.', 'url': 'The :attribute format is invalid.' }, 'en.wish': { 'view': { 'adults': 'Adults', 'airport': 'Airport', 'budget': 'Budget', 'category': 'Hotel category', 'catering': 'Hotel catering', 'comment-header': 'Communicate with Agent', 'createdat': 'Created At', 'createdby': 'Created By', 'destination': 'Destination', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'kids': 'Kids', 'latest_return': 'Latest Return', 'offerCount': 'Offers', 'owner': 'Name', 'status': 'Status', 'text': 'Text', 'title': 'Wish', 'whitelabel': 'Whitelabel' } }, 'es.log-viewer::general': { 'all': 'Todos', 'date': 'Fecha' }, 'es.log-viewer::levels': { 'alert': 'Alerta', 'all': 'Todos', 'critical': 'Criticos', 'debug': 'Debug', 'emergency': 'Emergencia', 'error': 'Errores', 'info': 'Info', 'notice': 'Aviso', 'warning': 'Advertencia' }, 'et.log-viewer::general': { 'all': 'K\xF5ik', 'date': 'Kuup\xE4ev', 'empty-logs': 'Logide nimekiri on t\xFChi!' }, 'et.log-viewer::levels': { 'alert': 'H\xE4ire', 'all': 'K\xF5ik', 'critical': 'Kriitiline', 'debug': 'Silumine', 'emergency': 'Erakorraline', 'error': 'Viga', 'info': 'Info', 'notice': 'Teade', 'warning': 'Hoiatus' }, 'fa.log-viewer::general': { 'all': '\u0647\u0645\u0647', 'date': '\u062A\u0627\u0631\u06CC\u062E' }, 'fa.log-viewer::levels': { 'alert': '\u0627\u062E\u0637\u0627\u0631', 'all': '\u0647\u0645\u0647', 'critical': '\u0628\u062D\u0631\u0627\u0646\u06CC', 'debug': '\u062F\u06CC\u0628\u0627\u06AF', 'emergency': '\u0627\u0648\u0631\u0698\u0627\u0646\u0633\u06CC', 'error': '\u062E\u0637\u0627', 'info': '\u0627\u0637\u0644\u0627\u0639\u0627\u062A', 'notice': '\u0627\u0639\u0644\u0627\u0646', 'warning': '\u0647\u0634\u062F\u0627\u0631' }, 'fr.log-viewer::general': { 'all': 'Tous', 'date': 'Date' }, 'fr.log-viewer::levels': { 'alert': 'Alerte', 'all': 'Tous', 'critical': 'Critique', 'debug': 'Debug', 'emergency': 'Urgence', 'error': 'Erreur', 'info': 'Info', 'notice': 'Notice', 'warning': 'Avertissement' }, 'hu.log-viewer::general': { 'all': '\xD6sszes', 'date': 'D\xE1tum', 'empty-logs': 'The list of logs is empty!' }, 'hu.log-viewer::levels': { 'alert': 'Riaszt\xE1s', 'all': '\xD6sszes', 'critical': 'Kritikus', 'debug': 'Hibakeres\xE9s', 'emergency': 'V\xE9szhelyzet', 'error': 'Hiba', 'info': 'Inform\xE1ci\xF3', 'notice': '\xC9rtes\xEDt\xE9s', 'warning': 'Figyelmeztet\xE9s' }, 'hy.log-viewer::general': { 'all': '\u0532\u0578\u056C\u0578\u0580\u0568', 'date': '\u0531\u0574\u057D\u0561\u0569\u056B\u057E' }, 'hy.log-viewer::levels': { 'alert': '\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574', 'all': '\u0532\u0578\u056C\u0578\u0580\u0568', 'critical': '\u053F\u0580\u056B\u057F\u056B\u056F\u0561\u056F\u0561\u0576', 'debug': '\u053F\u0561\u0580\u0563\u0561\u0562\u0565\u0580\u0578\u0582\u0574', 'emergency': '\u054E\u0569\u0561\u0580\u0561\u0575\u056B\u0576', 'error': '\u054D\u056D\u0561\u056C', 'info': '\u054F\u0565\u0572\u0565\u056F\u0561\u057F\u057E\u0578\u0582\u0569\u0575\u0578\u0582\u0576', 'notice': '\u053E\u0561\u0576\u0578\u0582\u0581\u0578\u0582\u0574', 'warning': '\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574' }, 'id.log-viewer::general': { 'all': 'Semua', 'date': 'Tanggal' }, 'id.log-viewer::levels': { 'alert': 'Waspada', 'all': 'Semua', 'critical': 'Kritis', 'debug': 'Debug', 'emergency': 'Darurat', 'error': 'Kesalahan', 'info': 'Info', 'notice': 'Perhatian', 'warning': 'Peringatan' }, 'it.log-viewer::general': { 'all': 'Tutti', 'date': 'Data' }, 'it.log-viewer::levels': { 'alert': 'Allarme', 'all': 'Tutti', 'critical': 'Critico', 'debug': 'Debug', 'emergency': 'Emergenza', 'error': 'Errore', 'info': 'Info', 'notice': 'Notifica', 'warning': 'Avviso' }, 'ja.log-viewer::general': { 'all': '\u3059\u3079\u3066', 'date': '\u65E5\u4ED8', 'empty-logs': '\u30ED\u30B0\u30EA\u30B9\u30C8\u304C\u7A7A\u3067\u3059!' }, 'ja.log-viewer::levels': { 'alert': '\u8B66\u6212', 'all': '\u3059\u3079\u3066', 'critical': '\u81F4\u547D\u7684', 'debug': '\u30C7\u30D0\u30C3\u30B0', 'emergency': '\u7DCA\u6025', 'error': '\u30A8\u30E9\u30FC', 'info': '\u60C5\u5831', 'notice': '\u901A\u77E5', 'warning': '\u8B66\u544A' }, 'ko.log-viewer::general': { 'all': '\uC804\uCCB4', 'date': '\uB0A0\uC9DC' }, 'ko.log-viewer::levels': { 'alert': '\uACBD\uACE0', 'all': '\uC804\uCCB4', 'critical': '\uC2EC\uAC01', 'debug': '\uB514\uBC84\uADF8', 'emergency': '\uAE34\uAE09', 'error': '\uC624\uB958', 'info': '\uC815\uBCF4', 'notice': '\uC54C\uB9BC', 'warning': '\uC8FC\uC758' }, 'nl.log-viewer::general': { 'all': 'Alles', 'date': 'Datum' }, 'nl.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Alle', 'critical': 'Cruciaal', 'debug': 'Debug', 'emergency': 'Noodgeval', 'error': 'Error', 'info': 'Informatie', 'notice': 'Opmerking', 'warning': 'Waarschuwing' }, 'pl.log-viewer::general': { 'all': 'Wszystkie', 'date': 'Data' }, 'pl.log-viewer::levels': { 'alert': 'Alerty', 'all': 'Wszystkie', 'critical': 'Krytyczne', 'debug': 'Debug', 'emergency': 'Awaryjne', 'error': 'B\u0142\u0119dy', 'info': 'Informacje', 'notice': 'Warte uwagi', 'warning': 'Ostrze\u017Cenia' }, 'pt-BR.log-viewer::general': { 'all': 'Todos', 'date': 'Data' }, 'pt-BR.log-viewer::levels': { 'alert': 'Alerta', 'all': 'Todos', 'critical': 'Cr\xEDtico', 'debug': 'Debug', 'emergency': 'Emerg\xEAncia', 'error': 'Erro', 'info': 'Informa\xE7\xE3o', 'notice': 'Not\xEDcia', 'warning': 'Aviso' }, 'ro.log-viewer::general': { 'all': 'Toate', 'date': 'Dat\u0103' }, 'ro.log-viewer::levels': { 'alert': 'Alert\u0103', 'all': 'Toate', 'critical': 'Critic', 'debug': 'Depanare', 'emergency': 'Urgen\u021B\u0103', 'error': 'Eroare', 'info': 'Informare', 'notice': 'Avertisment', 'warning': 'Pericol' }, 'ru.log-viewer::general': { 'all': '\u0412\u0441\u0435', 'date': '\u0414\u0430\u0442\u0430' }, 'ru.log-viewer::levels': { 'alert': '\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435', 'all': '\u0412\u0441\u0435', 'critical': '\u041A\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439', 'debug': '\u041E\u0442\u043B\u0430\u0434\u043A\u0430', 'emergency': '\u0410\u0432\u0430\u0440\u0438\u0439\u043D\u0430\u044F', 'error': '\u041E\u0448\u0438\u0431\u043A\u0430', 'info': '\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F', 'notice': '\u0423\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u0435', 'warning': '\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435' }, 'sv.log-viewer::general': { 'all': 'Alla', 'date': 'Datum' }, 'sv.log-viewer::levels': { 'alert': 'Alarmerande', 'all': 'Alla', 'critical': 'Kritisk', 'debug': 'Debug', 'emergency': 'Akut', 'error': 'Error', 'info': 'Information', 'notice': 'Notis', 'warning': 'Varning' }, 'th.log-viewer::general': { 'all': '\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14', 'date': '\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48', 'empty-logs': 'The list of logs is empty!' }, 'th.log-viewer::levels': { 'alert': '\u0E27\u0E34\u0E01\u0E24\u0E15\u0E34', 'all': '\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14', 'critical': '\u0E23\u0E49\u0E32\u0E22\u0E41\u0E23\u0E07', 'debug': '\u0E14\u0E35\u0E1A\u0E31\u0E01', 'emergency': '\u0E09\u0E38\u0E01\u0E40\u0E09\u0E34\u0E19', 'error': '\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14', 'info': '\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25', 'notice': '\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28', 'warning': '\u0E04\u0E33\u0E40\u0E15\u0E37\u0E2D\u0E19' }, 'tr.log-viewer::general': { 'all': 'Toplam', 'date': 'Tarih' }, 'tr.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Toplam', 'critical': 'Kritik', 'debug': 'Debug', 'emergency': 'Acil', 'error': 'Hata', 'info': 'Bilgi', 'notice': 'Bildirim', 'warning': 'Uyar\u0131' }, 'zh-TW.log-viewer::general': { 'all': '\u5168\u90E8', 'date': '\u65E5\u671F' }, 'zh-TW.log-viewer::levels': { 'alert': '\u8B66\u5831', 'all': '\u5168\u90E8', 'critical': '\u56B4\u91CD', 'debug': '\u9664\u932F', 'emergency': '\u7DCA\u6025', 'error': '\u932F\u8AA4', 'info': '\u8A0A\u606F', 'notice': '\u6CE8\u610F', 'warning': '\u8B66\u544A' }, 'zh.log-viewer::general': { 'all': '\u5168\u90E8', 'date': '\u65E5\u671F' }, 'zh.log-viewer::levels': { 'alert': '\u7D27\u6025', 'all': '\u5168\u90E8', 'critical': '\u4E25\u91CD', 'debug': '\u8C03\u8BD5', 'emergency': '\u5371\u6025', 'error': '\u9519\u8BEF', 'info': '\u4FE1\u606F', 'notice': '\u6CE8\u610F', 'warning': '\u8B66\u544A' } };
+module.exports = { 'ar.log-viewer::general': { 'all': '\u062C\u0645\u064A\u0639', 'date': '\u062A\u0627\u0631\u064A\u062E' }, 'ar.log-viewer::levels': { 'alert': '\u0625\u0646\u0630\u0627\u0631', 'all': '\u0627\u0644\u062C\u0645\u064A\u0639', 'critical': '\u062D\u0631\u062C', 'debug': '\u0627\u0644\u062A\u0635\u062D\u064A\u062D', 'emergency': '\u062D\u0627\u0644\u0627\u062A \u0627\u0644\u0637\u0648\u0627\u0631\u0626', 'error': '\u062E\u0637\u0623', 'info': '\u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062A', 'notice': '\u0645\u0644\u0627\u062D\u0638\u0629', 'warning': '\u062A\u062D\u0630\u064A\u0631' }, 'bg.log-viewer::general': { 'all': '\u0412\u0441\u0438\u0447\u043A\u0438', 'date': '\u0414\u0430\u0442\u0430', 'empty-logs': '\u041D\u0435 \u0441\u0430 \u043D\u0430\u043C\u0435\u0440\u0435\u043D\u0438 \u043B\u043E\u0433\u043E\u0432\u0435!' }, 'bg.log-viewer::levels': { 'alert': 'Alert', 'all': '\u0412\u0441\u0438\u0447\u043A\u0438', 'critical': 'Critical', 'debug': 'Debug', 'emergency': 'Emergency', 'error': 'Error', 'info': 'Info', 'notice': 'Notice', 'warning': 'Warning' }, 'de.log-viewer::general': { 'all': 'Alle', 'date': 'Datum' }, 'de.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Alle', 'critical': 'Kritisch', 'debug': 'Debug', 'emergency': 'Notfall', 'error': 'Fehler', 'info': 'Info', 'notice': 'Hinweis', 'warning': 'Warnung' }, 'en.alerts': { 'backend': { 'blogcategories': { 'created': 'The Blog Category was successfully created.', 'deleted': 'The Blog Category was successfully deleted.', 'updated': 'The Blog Category was successfully updated.' }, 'blogs': { 'created': 'The Blog was successfully created.', 'deleted': 'The Blog was successfully deleted.', 'updated': 'The Blog was successfully updated.' }, 'blogtags': { 'created': 'The Blog Tag was successfully created.', 'deleted': 'The Blog Tag was successfully deleted.', 'updated': 'The Blog Tag was successfully updated.' }, 'emailtemplates': { 'deleted': 'The Email Template was successfully deleted.', 'updated': 'The Email Template was successfully updated.' }, 'faqs': { 'created': 'The Faq was successfully created.', 'deleted': 'The Faq was successfully deleted.', 'updated': 'The Faq was successfully updated.' }, 'groups': { 'created': 'The Group was successfully created.', 'deleted': 'The Group was successfully deleted.', 'updated': 'The Group was successfully updated.' }, 'menus': { 'created': 'The Menu was successfully created.', 'deleted': 'The Menu was successfully deleted.', 'updated': 'The Menu was successfully updated.' }, 'pages': { 'created': 'The Page was successfully created.', 'deleted': 'The Page was successfully deleted.', 'updated': 'The Page was successfully updated.' }, 'permissions': { 'created': 'The permission was successfully created.', 'deleted': 'The permission was successfully deleted.', 'updated': 'The permission was successfully updated.' }, 'roles': { 'created': 'The role was successfully created.', 'deleted': 'The role was successfully deleted.', 'updated': 'The role was successfully updated.' }, 'settings': { 'updated': 'The Setting was successfully updated.' }, 'users': { 'confirmation_email': 'A new confirmation e-mail has been sent to the address on file.', 'created': 'The user was successfully created.', 'deleted': 'The user was successfully deleted.', 'deleted_permanently': 'The user was deleted permanently.', 'restored': 'The user was successfully restored.', 'session_cleared': "The user's session was successfully cleared.", 'updated': 'The user was successfully updated.', 'updated_password': "The user's password was successfully updated." }, 'whitelabels': { 'created': 'The Whitelabel was successfully created.', 'deleted': 'The Whitelabel was successfully deleted.', 'updated': 'The Whitelabel was successfully updated.' }, 'wishes': { 'created': 'The Wish was successfully created.', 'deleted': 'The Wish was successfully deleted.', 'updated': 'The Wish was successfully updated.' } }, 'frontend': { 'offers': { 'created': 'Offer successfully created' }, 'wishes': { 'created': 'The Wish was successfully created.', 'deleted': 'The Wish was successfully deleted.', 'updated': 'The Wish was successfully updated.' } } }, 'en.api': { 'messages': { 'forgot_password': { 'success': 'We have sent email with reset password link. Please check your inbox!.', 'validation': { 'email_not_found': 'This email address is not registered.' } }, 'login': { 'failed': 'Invalid Credentials! Please try again.', 'success': 'Login Successfull.' }, 'logout': { 'success': 'Successfully logged out.' }, 'refresh': { 'status': 'Ok', 'token': { 'not_provided': 'Token not provided.' } }, 'registeration': { 'success': 'You have registered successfully. Please check your email for activation!' } } }, 'en.auth': { 'failed': 'These credentials do not match our records.', 'general_error': 'You do not have access to do that.', 'socialite': { 'unacceptable': ':provider is not an acceptable login type.' }, 'throttle': 'Too many login attempts. Please try again in :seconds seconds.', 'unknown': 'An unknown error occurred' }, 'en.button': { 'cancel': 'Cancel', 'close': 'Close', 'confirm': 'Confirm', 'create': 'Create', 'delete': 'Delete', 'delete_all': 'Delete All', 'edit': 'Edit', 'mark_as_read': 'Mark As Read', 'required': 'Required', 'restore': 'Restore', 'save': 'Save', 'save_and_close': 'Save and Close' }, 'en.buttons': { 'backend': { 'access': { 'users': { 'activate': 'Activate', 'change_password': 'Change Password', 'clear_session': 'Clear Session', 'deactivate': 'Deactivate', 'delete_permanently': 'Delete Permanently', 'login_as': 'Login As :user', 'resend_email': 'Resend Confirmation E-mail', 'restore_user': 'Restore User' } } }, 'emails': { 'auth': { 'confirm_account': 'Confirm Account', 'reset_password': 'Reset Password' } }, 'general': { 'cancel': 'Cancel', 'continue': 'Continue', 'crud': { 'add': 'Add', 'create': 'Create', 'delete': 'Delete', 'edit': 'Edit', 'update': 'Update', 'view': 'View' }, 'preview': 'Preview', 'save': 'Save', 'view': 'View' }, 'wishes': { 'frontend': { 'create_offer': 'Create Offer' } } }, 'en.comment': { 'comments': 'Comments' }, 'en.exceptions': { 'backend': { 'access': { 'permissions': { 'already_exists': 'That permission already exists. Please choose a different name.', 'create_error': 'There was a problem creating this permission. Please try again.', 'delete_error': 'There was a problem deleting this permission. Please try again.', 'not_found': 'That permission does not exist.', 'update_error': 'There was a problem updating this permission. Please try again.' }, 'roles': { 'already_exists': 'That role already exists. Please choose a different name.', 'cant_delete_admin': 'You can not delete the Administrator role.', 'create_error': 'There was a problem creating this role. Please try again.', 'delete_error': 'There was a problem deleting this role. Please try again.', 'has_users': 'You can not delete a role with associated users.', 'needs_permission': 'You must select at least one permission for this role.', 'not_found': 'That role does not exist.', 'update_error': 'There was a problem updating this role. Please try again.' }, 'users': { 'cant_deactivate_self': 'You can not do that to yourself.', 'cant_delete_admin': 'You can not delete Admin.', 'cant_delete_own_session': 'You can not delete your own session.', 'cant_delete_self': 'You can not delete yourself.', 'cant_restore': 'This user is not deleted so it can not be restored.', 'change_mismatch': 'That is not your old password.', 'create_error': 'There was a problem creating this user. Please try again.', 'delete_error': 'There was a problem deleting this user. Please try again.', 'delete_first': 'This user must be deleted first before it can be destroyed permanently.', 'email_error': 'That email address belongs to a different user.', 'mark_error': 'There was a problem updating this user. Please try again.', 'not_found': 'That user does not exist.', 'restore_error': 'There was a problem restoring this user. Please try again.', 'role_needed': 'You must choose at least one role.', 'role_needed_create': 'You must choose at lease one role.', 'session_wrong_driver': 'Your session driver must be set to database to use this feature.', 'update_error': 'There was a problem updating this user. Please try again.', 'update_password_error': 'There was a problem changing this users password. Please try again.' } }, 'blogcategories': { 'already_exists': 'That Blog Category already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Category. Please try again.', 'delete_error': 'There was a problem deleting this Blog Category. Please try again.', 'not_found': 'That Blog Category does not exist.', 'update_error': 'There was a problem updating this Blog Category. Please try again.' }, 'blogtags': { 'already_exists': 'That Blog Tag already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Tag. Please try again.', 'delete_error': 'There was a problem deleting this Blog Tag. Please try again.', 'not_found': 'That Blog Tag does not exist.', 'update_error': 'There was a problem updating this Blog Tag. Please try again.' }, 'menus': { 'already_exists': 'That Menu already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Menu. Please try again.', 'delete_error': 'There was a problem deleting this Menu. Please try again.', 'not_found': 'That Menu does not exist.', 'update_error': 'There was a problem updating this Menu. Please try again.' }, 'modules': { 'already_exists': 'That Module already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Module. Please try again.', 'delete_error': 'There was a problem deleting this Module. Please try again.', 'not_found': 'That Module does not exist.', 'update_error': 'There was a problem updating this Module. Please try again.' }, 'pages': { 'already_exists': 'That Page already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Page. Please try again.', 'delete_error': 'There was a problem deleting this Page. Please try again.', 'not_found': 'That Page does not exist.', 'update_error': 'There was a problem updating this Page. Please try again.' }, 'settings': { 'update_error': 'There was a problem updating this Settings. Please try again.' } }, 'frontend': { 'auth': { 'confirmation': { 'already_confirmed': 'Your account is already confirmed.', 'confirm': 'Confirm your account!', 'created_confirm': 'Your account was successfully created. We have sent you an e-mail to confirm your account.', 'created_pending': 'Your account was successfully created and is pending approval. An e-mail will be sent when your account is approved.', 'mismatch': 'Your confirmation code does not match.', 'not_found': 'That confirmation code does not exist.', 'resend': 'Your account is not confirmed. Please click the confirmation link in your e-mail, or <a href=http:\/\/localhost:8000\/account\/confirm\/resend\/:user_id>click here<\/a> to resend the confirmation e-mail.', 'resent': 'A new confirmation e-mail has been sent to the address on file.', 'success': 'Your account has been successfully confirmed!' }, 'deactivated': 'Your account has been deactivated.', 'email_taken': 'That e-mail address is already taken.', 'password': { 'change_mismatch': 'That is not your old password.' }, 'registration_disabled': 'Registration is currently closed.' } } }, 'en.general': { 'currency': '\u20AC' }, 'en.history': { 'backend': { 'blogcategories': { 'created': 'created Blog Category', 'deleted': 'deleted Blog Category', 'updated': 'updated Blog Category' }, 'blogs': { 'created': 'created Blog', 'deleted': 'deleted Blog', 'updated': 'updated Blog' }, 'blogtags': { 'created': 'created Blog Tag', 'deleted': 'deleted Blog Tag', 'updated': 'updated Blog Tag' }, 'none': 'There is no recent history.', 'none_for_entity': 'There is no history for this :entity.', 'none_for_type': 'There is no history for this type.', 'pages': { 'created': 'created Page', 'deleted': 'deleted Page', 'updated': 'updated Page' }, 'permissions': { 'created': 'created permission', 'deleted': 'deleted permission', 'updated': 'updated permission' }, 'recent_history': 'Recent History', 'roles': { 'created': 'created role', 'deleted': 'deleted role', 'updated': 'updated role' }, 'users': { 'changed_password': 'changed password for user', 'created': 'created user', 'deactivated': 'deactivated user', 'deleted': 'deleted user', 'permanently_deleted': 'permanently deleted user', 'reactivated': 'reactivated user', 'restored': 'restored user', 'updated': 'updated user' } } }, 'en.http': { '404': { 'description': 'Sorry, but the page you were trying to view does not exist.', 'title': 'Page Not Found' }, '503': { 'description': 'Be right back.', 'title': 'Be right back.' } }, 'en.labels': { 'about': 'About us', 'account': 'Account', 'activated': 'activated', 'address': 'Address', 'attendee': 'Attendee', 'attendees': 'Attendees', 'backend': { 'access': { 'permissions': { 'create': 'Create Permission', 'edit': 'Edit Permission', 'management': 'Permission Management', 'table': { 'display_name': 'Display Name', 'permission': 'Permission', 'sort': 'Sort', 'status': 'Status', 'total': 'role total|roles total' } }, 'roles': { 'create': 'Create Role', 'edit': 'Edit Role', 'management': 'Role Management', 'table': { 'number_of_users': 'Number of Users', 'permissions': 'Permissions', 'role': 'Role', 'sort': 'Sort', 'total': 'role total|roles total' } }, 'users': { 'active': 'Active Users', 'all_permissions': 'All Permissions', 'change_password': 'Change Password', 'change_password_for': 'Change Password for :user', 'create': 'Create User', 'deactivated': 'Deactivated Users', 'deleted': 'Deleted Users', 'edit': 'Edit User', 'edit-profile': 'Edit Profile', 'management': 'User Management', 'no_permissions': 'No Permissions', 'no_roles': 'No Roles to set.', 'permissions': 'Permissions', 'table': { 'confirmed': 'Confirmed', 'created': 'Created', 'email': 'E-mail', 'first_name': 'First Name', 'id': 'ID', 'last_name': 'Last Name', 'last_updated': 'Last Updated', 'no_deactivated': 'No Deactivated Users', 'no_deleted': 'No Deleted Users', 'roles': 'Roles', 'total': 'user total|users total' }, 'tabs': { 'content': { 'overview': { 'avatar': 'Avatar', 'confirmed': 'Confirmed', 'created_at': 'Created At', 'deleted_at': 'Deleted At', 'email': 'E-mail', 'last_updated': 'Last Updated', 'name': 'Name', 'status': 'Status', 'whitelabels': 'Whitelabels' } }, 'titles': { 'history': 'History', 'overview': 'Overview' } }, 'view': 'View User' } }, 'blogcategories': { 'create': 'Create Blog Category', 'edit': 'Edit Blog Category', 'management': 'Blog Category Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Blog Category' }, 'title': 'Blog Category' }, 'blogs': { 'create': 'Create Blog', 'edit': 'Edit Blog', 'management': 'Blog Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'publish': 'PublishDateTime', 'status': 'Status', 'title': 'Blog' }, 'title': 'Blogs' }, 'blogtags': { 'create': 'Create Blog Tag', 'edit': 'Edit Blog Tag', 'management': 'Blog Tag Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Blog Tag' }, 'title': 'Blog Tags' }, 'distributions': { 'create': 'Create Distribution', 'edit': 'Edit Distribution', 'management': 'Distributions', 'no_distributions': 'no Distributions', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'description': 'Description', 'display_name': 'Display Name', 'name': 'Distribution', 'whitelabel': 'Whitelabel' }, 'title': 'Distributions' }, 'emailtemplates': { 'create': 'Create Email Template', 'edit': 'Edit Email Template', 'management': 'Email Template Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'status': 'Status', 'subject': 'Subject', 'title': 'Title', 'updatedat': 'Updated At' }, 'title': 'Email Templates' }, 'faqs': { 'create': 'Create FAQ', 'edit': 'Edit FAQ', 'management': 'FAQ Management', 'table': { 'all': 'All', 'answer': 'Answer', 'createdat': 'Created At', 'createdby': 'Created By', 'publish': 'PublishDateTime', 'question': 'Question', 'status': 'Status', 'title': 'FAQs', 'updatedat': 'Updated At' }, 'title': 'FAQ' }, 'groups': { 'create': 'Create Group', 'edit': 'Edit Group', 'management': 'Groups', 'no_whitelabels': 'no Whitelabels', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'description': 'Description', 'display_name': 'Display Name', 'name': 'Group', 'status': 'Status', 'users': 'Users', 'whitelabel': 'Whitelabel' }, 'title': 'Groups' }, 'menus': { 'create': 'Create Menu', 'edit': 'Edit Menu', 'field': { 'icon': 'Icon Class', 'icon_title': 'Font Awesome Class. eg. fa-edit', 'items': 'Menu Items', 'name': 'Name', 'open_in_new_tab': 'Open URL in new tab', 'type': 'Type', 'url': 'URL', 'url_type': 'URL Type', 'url_types': { 'route': 'Route', 'static': 'Static' }, 'view_permission_id': 'Permission' }, 'management': 'Menu Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'name': 'Name', 'type': 'Type' }, 'title': 'Menus' }, 'modules': { 'create': 'Create Module', 'edit': 'Edit Module', 'form': { 'controller_name': 'Controller &nbsp;Name', 'create_file': 'Create', 'directory_name': 'Directory Name', 'edit_file': 'Edit', 'event': 'Event Name', 'form_file': 'Form', 'index_file': 'Index', 'model_name': 'Model Name', 'name': 'Module Name', 'namespace': 'Namespace', 'repo_name': 'Repository Name', 'resource_controller': 'Resourceful Controller', 'resource_route': 'Resourceful Routes', 'route_controller_name': 'Controller &nbsp;Name', 'route_name': 'Route Name', 'table_controller_name': 'Controller &nbsp;Name', 'table_name': 'Table Name', 'url': 'View Route', 'view_permission_id': 'View Permission', 'views_directory': 'Directory &nbsp;&nbsp;&nbsp;Name' }, 'management': 'Module Management', 'table': { 'created_by': 'Created By', 'name': 'Module Name', 'url': 'Module View Route', 'view_permission_id': 'View Permission' }, 'title': 'Module' }, 'pages': { 'create': 'Create Page', 'edit': 'Edit Page', 'management': 'Page Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Title', 'updatedat': 'Updated At' }, 'title': 'Pages' }, 'profile_updated': 'Your profile has been updated.', 'settings': { 'companydetails': 'Company Contact Details', 'edit': 'Edit Settings', 'footer': 'Footer Settings', 'google': 'Google Analytics Track Code', 'mail': 'Mail Settings', 'management': 'Settings Management', 'seo': 'SEO Settings', 'terms': 'Terms and Condition Settings', 'title': 'Settings' }, 'whitelabels': { 'create': 'Create Whitelabel', 'edit': 'Edit Whitelabel', 'management': 'Whitelabels', 'management_client': 'Whitelabel', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'display_name': 'Whitelabel', 'distribution': 'Distribution', 'ga_view_id': 'Google View Id', 'name': 'Identifier', 'status': 'Status' }, 'title': 'Whitelabels' }, 'wishes': { 'create': 'Create Wish', 'edit': 'Edit Wish', 'management': 'Wishes', 'no_whitelabels': 'no Whitelabels', 'table': { 'airport': 'Airport', 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'destination': 'Destination', 'earliest_start': 'Earliest Start', 'group': 'Group', 'latest_return': 'Latest Return', 'offerCount': 'Offers', 'status': 'Status', 'title': 'Wish', 'whitelabel': 'Whitelabel' }, 'title': 'Wishes' } }, 'cancel': 'Cancel', 'contact': 'Contact', 'content': 'Content', 'country': 'Country', 'current': 'Current', 'current_password': 'Current Password', 'description': 'Description', 'details': 'Details', 'documents': 'Documents', 'domain': 'Domain', 'download': 'Download', 'email': 'E-mail Address', 'events': 'Events', 'fax': 'Fax', 'feedback': 'Feedback', 'finish': 'Finish', 'first_name': 'Fisrtname', 'frontend': { 'agents': { 'create': 'Create new Agent', 'management': 'Agents', 'table': { 'avatar': 'Avatar', 'created_at': 'Created At', 'createdby': 'Created By', 'display_name': 'Display name', 'id': 'Id', 'name': 'Name', 'status': 'Status' } }, 'auth': { 'login_box_title': 'Login', 'login_button': 'Login', 'login_with': 'Login with :social_media', 'register_box_title': 'Register', 'register_button': 'Register', 'remember_me': 'Remember Me' }, 'dashboard': { 'analytics': { 'answered_wishes': 'Answered Wishes', 'bookings': 'Bookings', 'changed_wishes': 'Changed Wishes', 'created_wishes': 'Created Wishes', 'free_text': 'Free text', 'latest_answered_wishes': 'Latest Answered Wishes', 'latest_reaction_quota': 'Latest Reaction Quota', 'reaction_quota': 'Reaction Quota', 'reaction_time': 'Reaction Time' } }, 'macros': { 'country': { 'alpha': 'Country Alpha Codes', 'alpha2': 'Country Alpha 2 Codes', 'alpha3': 'Country Alpha 3 Codes', 'numeric': 'Country Numeric Codes' }, 'macro_examples': 'Macro Examples', 'state': { 'mexico': 'Mexico State List', 'us': { 'armed': 'US Armed Forces', 'outlying': 'US Outlying Territories', 'us': 'US States' } }, 'territories': { 'canada': 'Canada Province & Territories List' }, 'timezone': 'Timezone' }, 'offers': { 'create': 'Create new Offer', 'management': 'Offers', 'offers_for_wish': 'Offer for', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Offer' } }, 'passwords': { 'forgot_password': 'Forgot Your Password?', 'reset_password_box_title': 'Reset Password', 'reset_password_button': 'Reset Password', 'send_password_reset_link_button': 'Send Password Reset Link' }, 'user': { 'passwords': { 'change': 'Change Password' }, 'profile': { 'address': 'Address', 'avatar': 'Avatar', 'city': 'City', 'country': 'Country', 'created_at': 'Created At', 'edit_information': 'Edit Information', 'email': 'E-mail', 'first_name': 'First Name', 'last_name': 'Last Name', 'last_updated': 'Last Updated', 'ssn': 'SSN', 'update_information': 'Update Information', 'zipcode': 'Zip Code' } }, 'wishes': { 'add-comment': 'Add comment', 'created_at': 'created at', 'edit': 'Edit wish', 'goto': 'Go To Wish', 'table': { 'adults': 'Adults', 'kids': 'Kids' }, 'wishes': 'Wishes' } }, 'full_name': 'Full Name', 'general': { 'actions': 'Actions', 'active': 'Active', 'all': 'All', 'buttons': { 'save': 'Save', 'update': 'Update' }, 'custom': 'Custom', 'hide': 'Hide', 'inactive': 'Inactive', 'no': 'No', 'none': 'None', 'show': 'Show', 'toggle_navigation': 'Toggle Navigation', 'yes': 'Yes' }, 'go_back': 'Go back!', 'go_next': 'Go Next!', 'id': 'Id', 'inbox': 'Inbox', 'interest': 'Interet', 'join': 'Join Now', 'language': 'Language', 'last_name': 'Lastname', 'login': 'Sign', 'logo': 'Logo', 'logout': 'Logout', 'message': 'Message', 'message_text': 'Message text', 'mobile': 'Mobile', 'name': 'Name', 'new': 'New', 'note': 'note', 'notes': 'notes', 'notifications': 'Notifications', 'now': 'Now', 'occupation': 'Occupation', 'ok': 'Ok', 'online': 'Online', 'password': 'Password', 'password_confirm': 'Confirm Password', 'personal_timezone': 'Timezone', 'phone': 'Phone', 'plus': 'More', 'posts': 'Posts', 'ratings': 'Ratings', 'recipient': 'Recipient', 'register': 'Register', 'reset': 'Reset Password', 'reset_link': 'Send Password Reset Link', 'review': 'Review', 'send': 'Send Now', 'street': 'Street', 'subject': 'Subject', 'tel': 'Numero de Telephone', 'title': 'Title', 'user': 'User', 'username': 'Username', 'verify': 'Email Verification', 'verify_email': 'Verify Your Email Address', 'warning': 'Warning', 'whitelabel_executive': 'Whitelabel Executive', 'whitelabel_information': 'Whitelabel Information', 'whitelabel_subtitle': 'And a new subtitle', 'whitelabel_title': 'New Whitelabel', 'wish': 'Wish', 'wishes': 'Wishes', 'zipcode': 'Zip' }, 'en.log-viewer::general': { 'all': 'All', 'date': 'Date' }, 'en.log-viewer::levels': { 'alert': 'Alert', 'all': 'All', 'critical': 'Critical', 'debug': 'Debug', 'emergency': 'Emergency', 'error': 'Error', 'info': 'Info', 'notice': 'Notice', 'warning': 'Warning' }, 'en.menus': { 'backend': { 'access': { 'permissions': { 'all': 'All Permissions', 'create': 'Create Permission', 'edit': 'Edit Permission', 'main': 'Permissions', 'management': 'Permission Management' }, 'roles': { 'all': 'All Roles', 'create': 'Create Role', 'edit': 'Edit Role', 'main': 'Roles', 'management': 'Role Management' }, 'title': 'Access Management', 'users': { 'all': 'All Users', 'change-password': 'Change Password', 'create': 'Create User', 'deactivated': 'Deactivated Users', 'deleted': 'Deleted Users', 'edit': 'Edit User', 'main': 'Users', 'view': 'View User' } }, 'blog': { 'all': 'All Blog Page', 'create': 'Create Blog Page', 'edit': 'Edit Blog Page', 'main': 'Blog Pages', 'management': 'Blog Management' }, 'blogcategories': { 'all': 'All Blog Categories', 'create': 'Create Blog Category', 'edit': 'Edit Blog Category', 'main': 'CMS Pages', 'management': 'Blog Category Management' }, 'blogs': { 'all': 'All Blog', 'create': 'Create Blog', 'edit': 'Edit Blog', 'main': 'Blogs', 'management': 'Blog Management' }, 'blogtags': { 'all': 'All Blog Tag', 'create': 'Create Blog Tag', 'edit': 'Edit Blog Tag', 'main': 'Blog Tags', 'management': 'Blog Tag Management' }, 'distributions': { 'all': 'All Distributions', 'create': 'Create Distribution', 'edit': 'Edit Distribution', 'main': 'Distributions', 'management': 'Distribution Management' }, 'faqs': { 'all': 'All Faq Page', 'create': 'Create Faq Page', 'edit': 'Edit Faq Page', 'main': 'Faq Pages', 'management': 'Faq Management' }, 'groups': { 'all': 'All Groups', 'create': 'Create Group', 'edit': 'Edit Group', 'main': 'Groups', 'management': 'Group Management' }, 'log-viewer': { 'dashboard': 'Dashboard', 'logs': 'Logs', 'main': 'Log Viewer' }, 'menus': { 'all': 'All Menu', 'create': 'Create Menu', 'edit': 'Edit Menu', 'main': 'Menus', 'management': 'Menu Management' }, 'modules': { 'all': 'All Modules Page', 'create': 'Create Module Page', 'main': 'Module Pages', 'management': 'Module Management' }, 'pages': { 'all': 'All Pages', 'create': 'Create Page', 'edit': 'Edit Page', 'main': 'Pages', 'management': 'Page Management' }, 'settings': { 'all': 'All Settings', 'create': 'Create Settings', 'edit': 'Edit Settings', 'main': 'Settings', 'management': 'Settings Management' }, 'sidebar': { 'dashboard': 'Dashboard', 'general': 'General', 'system': 'System' }, 'whitelabels': { 'all': 'All Whitelabels', 'create': 'Create Whitelabel', 'edit': 'Edit Whitelabel', 'main': 'Whitelabels', 'management': 'Whitelabel Management' }, 'wishes': { 'all': 'All Wishes', 'create': 'Create Wish', 'edit': 'Edit Wish', 'main': 'Wishes', 'management': 'Wish Management' } }, 'frontend': { 'agents': { 'all': 'All Menu', 'create': 'Create Agent', 'edit': 'Edit Menu', 'main': 'Menus', 'management': 'Menu Management' } }, 'language-picker': { 'langs': { 'ar': 'Arabic', 'da': 'Danish', 'de': 'German', 'el': 'Greek', 'en': 'English', 'es': 'Spanish', 'fr': 'French', 'id': 'Indonesian', 'it': 'Italian', 'nl': 'Dutch', 'pt_BR': 'Brazilian Portuguese', 'ru': 'Russian', 'sv': 'Swedish', 'th': 'Thai' }, 'language': 'Language' }, 'list': { 'status': { 'all': 'All wishes' } }, 'sellers': 'Sellers', 'wishes': 'Wishes' }, 'en.messages': { '_account': 'Do you have an account', 'account': "Don't have an account", 'background': 'The background image must be --- x --- pixels in PNG\/JPG\/JPEG format. Maximum file size is ---KB.', 'contact': 'Contact us', 'contact_success': 'Your message has been sent successfully', 'created': ':attribute has been created successfully', 'delete': 'Do you really want to delete this item. Continue ?', 'delete_canceled': 'Delete canceled', 'deleted': ':attribute has been deleted successfully', 'destroy': 'Are you sure that you want to permanently delete the selected item. Continue ?', 'destroyed': ':attribute has been deleted permanently', 'event_upcoming': 'Event Upcoming', 'favicon': 'The favicon must be --- x --- pixels in PNG\/ICON format. Maximum file size is ---KB.', 'forgot': 'Forgot Password', 'here': 'login here', 'install': 'Module[:attribute] has been installed successfully', 'join': 'you successfully joined event', 'login': 'Login', 'logo': 'The logo must be --- x --- pixels in PNG\/JPG\/JPEG\/SVG format. Maximum file size is ---KB.', 'new_posts': 'Latest Posts', 'recent_event': 'Recent event', 'register': 'Create your account', 'remember': 'Remember me', 'reset': 'Reset Password', 'restore': 'Do you really want to restore this item. Continue ?', 'restore_canceled': 'Restore canceled', 'restored': ':attribute has been restored successfully', 'show_all': 'Show all articles', 'show_all_events': 'Show all events', 'sign_up': 'Sign Up', 'terms': 'Agree to terms and conditions', 'title': 'Welcome Back', 'uninstall': 'Module[:attribute] has been uninstalled successfully', 'unsaved': 'You have unsaved changes, save and proceed ?', 'updated': ':attribute has been updated successfully', 'verify': 'Before proceeding, please check your email for a verification link.', 'verify_link': 'If you did not receive the email,', 'verify_request': 'click here to request another.', 'whitelabel_user': 'Create Associate Whitelabel User' }, 'en.modals': { 'activated': 'Activated', 'active': 'Active', 'add_document': 'Add document', 'add_documents': 'Add documents', 'address': 'Address', 'adults': 'Adults', 'airport': 'Airport', 'boards': 'Boards', 'budget': 'Budget', 'categories': 'Categories', 'category': 'Hotel category', 'catering': 'Hotel catering', 'click_to_upload': 'Click to upload', 'color': 'Color', 'confirmed': 'Confirmed', 'content': 'Content', 'create': 'Create', 'created_at': 'Created at', 'createdat': 'Created At', 'createdby': 'Created By', 'current': 'Current', 'description': 'Description', 'destination': 'Destination', 'display_name': 'Display Name', 'domain': 'Domain', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'email_verified_at': 'Verified at', 'end': 'End', 'first_name': 'First Name', 'full_name': 'Full Name', 'group': 'Group', 'groups': 'Groups', 'id': 'ID', 'kids': 'Kids', 'last_login': 'Last login ', 'last_name': 'Last Name', 'latest_return': 'Latest Return', 'lockout_time': 'Lockout time', 'login_failures': 'Login failures', 'logs': 'Logs', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Occupation', 'offerCount': 'Offers', 'online': 'Online', 'owner': 'Owner', 'password': 'Password', 'password_confirm': 'Password Confirm', 'pending': 'Pending', 'period': 'Period', 'permission': 'Permission', 'permissions': 'Permissions', 'phone': 'Phone', 'role': 'Role', 'roles': 'Roles', 'start': 'Start', 'status': 'Status', 'summary': 'Summary', 'text': 'Text', 'title': 'Title', 'unconfirmed': 'Unconfirmed', 'updated_at': 'Updated at', 'upload_documents': 'Upload documents', 'upload_photo': 'Upload Photo', 'upload_tip': 'Upload tip', 'url': 'Url', 'users': 'Users', 'whitelabel': 'Whitelabel', 'wish': 'Wish' }, 'en.navs': { 'frontend': { 'agents': 'Agents', 'create_wish': 'Create Wish', 'dashboard': 'Dashboard', 'login': 'Login', 'macros': 'Macros', 'offers': 'My Offers', 'register': 'Register', 'user': { 'account': 'My Account', 'administration': 'Administration', 'agents': 'Agents', 'change_password': 'Change Password', 'my_information': 'My Information', 'profile': 'Profile' }, 'wishes': 'My Wishes', 'wisheslist': 'Wishes' }, 'general': { 'home': 'Home', 'logout': 'Logout' } }, 'en.pagination': { 'next': 'Next &raquo;', 'previous': '&laquo; Previous' }, 'en.passwords': { 'password': 'Passwords must be at least six characters and match the confirmation.', 'reset': 'Your password has been reset!', 'sent': 'We have e-mailed your password reset link!', 'token': 'This password reset token is invalid.', 'user': "We can't find a user with that e-mail address." }, 'en.roles': { 'administrator': 'Administrator', 'user': 'User' }, 'en.strings': { 'backend': { 'access': { 'users': { 'delete_user_confirm': "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", 'if_confirmed_off': '(If confirmed is off)', 'restore_user_confirm': 'Restore this user to its original state?' } }, 'dashboard': { 'title': 'Administrative Dashboard', 'welcome': 'Welcome' }, 'general': { 'all_rights_reserved': 'All Rights Reserved.', 'are_you_sure': 'Are you sure you want to do this?', 'boilerplate_link': 'Laravel AdminPanel', 'continue': 'Continue', 'member_since': 'Member since', 'minutes': ' minutes', 'search_placeholder': 'Search...', 'see_all': { 'messages': 'See all messages', 'notifications': 'View all', 'tasks': 'View all tasks' }, 'status': { 'offline': 'Offline', 'online': 'Online' }, 'timeout': 'You were automatically logged out for security reasons since you had no activity in ', 'you_have': { 'messages': "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", 'notifications': "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", 'tasks': "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, 'search': { 'empty': 'Please enter a search term.', 'incomplete': 'You must write your own search logic for this system.', 'results': 'Search Results for :query', 'title': 'Search Results' }, 'welcome': '<p>This is the AdminLTE theme by <a href="https:\/\/almsaeedstudio.com\/" target="_blank">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href="https:\/\/github.com\/rappasoft\/laravel-5-boilerplate" target="_blank">GitHub<\/a> page for more information and report any <a href="https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues" target="_blank">issues here<\/a>.<\/p>\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\n<p>- Viral Solani<\/p>' }, 'emails': { 'auth': { 'click_to_confirm': 'Click here to confirm your account:', 'error': 'Whoops!', 'greeting': 'Hello!', 'password_cause_of_email': 'You are receiving this email because we received a password reset request for your account.', 'password_if_not_requested': 'If you did not request a password reset, no further action is required.', 'password_reset_subject': 'Reset Password', 'regards': 'Regards,', 'reset_password': 'Click here to reset your password', 'thank_you_for_using_app': 'Thank you for using our application!', 'trouble_clicking_button': 'If you\u2019re having trouble clicking the ":action_text" button, copy and paste the URL below into your web browser:' } }, 'frontend': { 'test': 'Test', 'tests': { 'based_on': { 'permission': 'Permission Based - ', 'role': 'Role Based - ' }, 'js_injected_from_controller': 'Javascript Injected from a Controller', 'using_access_helper': { 'array_permissions': "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", 'array_permissions_not': "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", 'array_roles': "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", 'array_roles_not': "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", 'permission_id': 'Using Access Helper with Permission ID', 'permission_name': 'Using Access Helper with Permission Name', 'role_id': 'Using Access Helper with Role ID', 'role_name': 'Using Access Helper with Role Name' }, 'using_blade_extensions': 'Using Blade Extensions', 'view_console_it_works': "View console, you should see 'it works!' which is coming from FrontendController@index", 'you_can_see_because': "You can see this because you have the role of ':role'!", 'you_can_see_because_permission': "You can see this because you have the permission of ':permission'!" }, 'user': { 'change_email_notice': 'If you change your e-mail you will be logged out until you confirm your new e-mail address.', 'email_changed_notice': 'You must confirm your new e-mail address before you can log in again.', 'password_updated': 'Password successfully updated.', 'profile_updated': 'Profile successfully updated.' }, 'welcome_to': 'Welcome to :place' } }, 'en.tables': { 'actions': 'Actions', 'activated': 'Activated', 'activities': 'Activities', 'activity': 'Activity', 'add_documents': 'Add documents', 'address': 'Address', 'adults': 'Adults', 'ago': 'Ago', 'airport': 'Airport', 'alias': 'Alias', 'boards': 'Boards', 'budget': 'Budget', 'categories': 'Categories', 'category': 'Hotel category', 'catering': 'Hotel catering', 'color': 'Color', 'confirmed': 'Confirmed', 'content': 'Content', 'created_at': 'Created At', 'created_by': 'Created By', 'date': 'Date', 'description': 'Description', 'destination': 'Destination', 'display_name': 'Display Name', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'email_verified_at': 'Verified at', 'end': 'End', 'eventAction': 'Event Action', 'eventCategory': 'Event Category', 'eventLabel': 'Event Label', 'first_name': 'First Name', 'from': 'From', 'full_name': 'Full Name', 'group': 'Group', 'groups': 'Groups', 'id': 'ID', 'install': 'Install', 'kids': 'Kids', 'last_login': 'Last login ', 'last_name': 'Last Name', 'latest_return': 'Latest Return', 'lockout_time': 'Lockout time', 'login_failures': 'Login failures', 'message': 'Message', 'migrate': 'Migrate', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Occupation', 'offerCount': 'Offers', 'online': 'online', 'owner': 'Owner', 'package': 'Package', 'pending': 'Pending', 'period': 'Period', 'permissions': 'Permissions', 'phone': 'Phone', 'roles': 'Roles', 'start': 'Start', 'status': 'Status', 'subject': 'Subject', 'text': 'Text', 'title': 'Wish', 'unconfirmed': 'Unconfirmed', 'uninstall': 'Uninstall', 'updated_at': 'Updated at', 'url': 'Url', 'users': 'Users', 'when': 'When', 'whitelabel': 'Whitelabel' }, 'en.validation': { 'accepted': 'The :attribute must be accepted.', 'active_url': 'The :attribute is not a valid URL.', 'after': 'The :attribute must be a date after :date.', 'after_or_equal': 'The :attribute must be a date after or equal to :date.', 'alpha': 'The :attribute may only contain letters.', 'alpha_dash': 'The :attribute may only contain letters, numbers, and dashes.', 'alpha_num': 'The :attribute may only contain letters and numbers.', 'api': { 'confirmaccount': { 'already_confirmed': 'Account is already confirmed.', 'invalid_email': 'Email is not register with fin builders', 'invalid_otp': 'Please enter valid otp.' }, 'forgotpassword': { 'email_not_valid': 'Email you entered is not register with fin builders.', 'email_required': 'Please enter email', 'valid_email': 'Please enter valid email address.' }, 'login': { 'email_required': 'Please enter email', 'password_required': 'Please enter passsword.', 'username_password_didnt_match': 'Please enter valid credentials.', 'valid_email': 'Please enter valid email address.' }, 'register': { 'city_required': 'Please enter city.', 'state_required': 'Please enter state.' }, 'resetpassword': { 'confirm_password_required': 'Please enter confirm password.', 'email_not_valid': 'Email you entered is not register with fin builders.', 'email_required': 'Please enter email', 'password_confirmed': 'passsword and confirm passsword do not match.', 'password_required': 'Please enter passsword.', 'token_not_valid': 'Given token is invalid.', 'token_required': 'Please enter token.', 'valid_email': 'Please enter valid email address.' } }, 'array': 'The :attribute must be an array.', 'attributes': { 'backend': { 'access': { 'permissions': { 'associated_roles': 'Associated Roles', 'dependencies': 'Dependencies', 'display_name': 'Display Name', 'group': 'Group', 'group_sort': 'Group Sort', 'groups': { 'name': 'Group Name' }, 'name': 'Name', 'sort': 'Sort', 'system': 'System?' }, 'roles': { 'active': 'Active', 'associated_permissions': 'Associated Permissions', 'name': 'Name', 'sort': 'Sort' }, 'users': { 'active': 'Active', 'associated_roles': 'Associated Roles', 'associated_whitelabels': 'Associated Whitelabels', 'confirmed': 'Confirmed', 'email': 'E-mail Address', 'firstName': 'First Name', 'groups': 'User Groups', 'lastName': 'Last Name', 'no-group': 'None', 'old_password': 'Old password', 'other_permissions': 'Other Permissions', 'password': 'New Password', 'password_confirmation': 'New Password Confirmation', 'send_confirmation_email': 'Send Confirmation E-mail' } }, 'blogcategories': { 'is_active': 'Active', 'title': 'Blog Category' }, 'blogs': { 'cannonical_link': 'Cannonical Link', 'category': 'Blog Category', 'content': 'Content', 'image': 'Featured Image', 'meta-title': 'Meta Title', 'meta_description': 'Meta Description', 'meta_keyword': 'Meta Keyword', 'publish': 'Publish Date & Time', 'slug': 'Slug', 'status': 'Status', 'tags': 'Tags', 'title': 'Blog Title' }, 'blogtags': { 'is_active': 'Active', 'title': 'Blog Tag' }, 'distributions': { 'description': 'Description', 'display_name': 'Display Name', 'name': 'Name' }, 'faqs': { 'answer': 'Answer', 'question': 'Question', 'status': 'Status' }, 'groups': { 'associated_whitelabels': 'Associated Whitelabels', 'description': 'Description', 'display_name': 'Display Name', 'groups': 'Seller Groups', 'name': 'Group Name', 'status': 'Status' }, 'pages': { 'cannonical_link': 'Cannonical Link', 'description': 'Description', 'is_active': 'Active', 'seo_description': 'SEO Description', 'seo_keyword': 'SEO Keyword', 'seo_title': 'SEO Title', 'title': 'Title' }, 'settings': { 'companydetails': { 'address': 'Company Address', 'contactnumber': 'Contact Number' }, 'favicon': 'Fav Icon', 'footer': { 'copyright': 'Copyright Text', 'text': 'Footer Text' }, 'google': { 'analytic': 'Google Analytics' }, 'mail': { 'fromemail': 'From Email', 'fromname': 'From Name' }, 'metadescription': 'Meta Description', 'metakeyword': 'Meta Keyawords', 'metatitle': 'Meta Title', 'sitelogo': 'Site Logo', 'termscondition': { 'disclaimer': 'Disclaimer', 'terms': 'Terms & Condition' } }, 'whitelabels': { 'associated_distribution': 'Associated Distribution', 'display_name': 'Display Name', 'ga_view_id': 'Google View Id', 'image': 'Background Image', 'name': 'Name', 'status': 'Status' }, 'wishes': { 'adults': 'Adults', 'airport': 'Airport', 'associated_whitelabels': 'Associated Whitelabels', 'budget': 'Budget', 'category': 'Hotel category', 'catering': 'Hotel catering', 'description': 'Description', 'destination': 'Destination', 'duration': 'Duration', 'earliest_start': 'Earliest start', 'image': 'Featured Image', 'kids': 'Kids', 'latest_return': 'Latest return', 'status': 'Status', 'title': 'Wish Title' } }, 'frontend': { 'offers': { 'file': 'File', 'status': 'Status', 'text': 'Text', 'title': 'Title' }, 'register-user': { 'address': 'Address', 'city': 'City', 'country': 'Country', 'email': 'E-mail Address', 'firstName': 'First Name', 'lastName': 'Last Name', 'new_password': 'New Password', 'new_password_confirmation': 'New Password Confirmation', 'old_password': 'Old Password', 'password': 'Password', 'password_confirmation': 'Password Confirmation', 'ssn': 'SSN', 'state': 'State', 'terms_and_conditions': 'terms and conditions', 'user_type': 'I use desiretec as a', 'user_type_seller': 'Seller', 'user_type_user': 'User', 'zipcode': 'Zip Code' } } }, 'before': 'The :attribute must be a date before :date.', 'before_or_equal': 'The :attribute must be a date before or equal to :date.', 'between': { 'array': 'The :attribute must have between :min and :max items.', 'file': 'The :attribute must be between :min and :max kilobytes.', 'numeric': 'The :attribute must be between :min and :max.', 'string': 'The :attribute must be between :min and :max characters.' }, 'boolean': 'The :attribute field must be true or false.', 'confirmed': 'The :attribute confirmation does not match.', 'custom': { 'attribute-name': { 'rule-name': 'custom-message' } }, 'date': 'The :attribute is not a valid date.', 'date_format': 'The :attribute does not match the format :format.', 'different': 'The :attribute and :other must be different.', 'digits': 'The :attribute must be :digits digits.', 'digits_between': 'The :attribute must be between :min and :max digits.', 'dimensions': 'The :attribute has invalid image dimensions.', 'distinct': 'The :attribute field has a duplicate value.', 'email': 'The :attribute must be a valid email address.', 'exists': 'The selected :attribute is invalid.', 'file': 'The :attribute must be a file.', 'filled': 'The :attribute field must have a value.', 'image': 'The :attribute must be an image.', 'in': 'The selected :attribute is invalid.', 'in_array': 'The :attribute field does not exist in :other.', 'integer': 'The :attribute must be an integer.', 'ip': 'The :attribute must be a valid IP address.', 'json': 'The :attribute must be a valid JSON string.', 'max': { 'array': 'The :attribute may not have more than :max items.', 'file': 'The :attribute may not be greater than :max kilobytes.', 'numeric': 'The :attribute may not be greater than :max.', 'string': 'The :attribute may not be greater than :max characters.' }, 'mimes': 'The :attribute must be a file of type: :values.', 'mimetypes': 'The :attribute must be a file of type: :values.', 'min': { 'array': 'The :attribute must have at least :min items.', 'file': 'The :attribute must be at least :min kilobytes.', 'numeric': 'The :attribute must be at least :min.', 'string': 'The :attribute must be at least :min characters.' }, 'not_in': 'The selected :attribute is invalid.', 'numeric': 'The :attribute must be a number.', 'present': 'The :attribute field must be present.', 'regex': 'The :attribute format is invalid.', 'required': 'The :attribute field is required.', 'required_if': 'The :attribute field is required when :other is :value.', 'required_unless': 'The :attribute field is required unless :other is in :values.', 'required_with': 'The :attribute field is required when :values is present.', 'required_with_all': 'The :attribute field is required when :values is present.', 'required_without': 'The :attribute field is required when :values is not present.', 'required_without_all': 'The :attribute field is required when none of :values are present.', 'same': 'The :attribute and :other must match.', 'size': { 'array': 'The :attribute must contain :size items.', 'file': 'The :attribute must be :size kilobytes.', 'numeric': 'The :attribute must be :size.', 'string': 'The :attribute must be :size characters.' }, 'string': 'The :attribute must be a string.', 'timezone': 'The :attribute must be a valid zone.', 'unique': 'The :attribute has already been taken.', 'uploaded': 'The :attribute failed to upload.', 'url': 'The :attribute format is invalid.' }, 'en.wish': { 'view': { 'adults': 'Adults', 'airport': 'Airport', 'budget': 'Budget', 'category': 'Hotel category', 'catering': 'Hotel catering', 'comment-header': 'Communicate with Agent', 'createdat': 'Created At', 'createdby': 'Created By', 'destination': 'Destination', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'kids': 'Kids', 'latest_return': 'Latest Return', 'offerCount': 'Offers', 'owner': 'Name', 'status': 'Status', 'text': 'Text', 'title': 'Wish', 'whitelabel': 'Whitelabel' } }, 'es.log-viewer::general': { 'all': 'Todos', 'date': 'Fecha' }, 'es.log-viewer::levels': { 'alert': 'Alerta', 'all': 'Todos', 'critical': 'Criticos', 'debug': 'Debug', 'emergency': 'Emergencia', 'error': 'Errores', 'info': 'Info', 'notice': 'Aviso', 'warning': 'Advertencia' }, 'et.log-viewer::general': { 'all': 'K\xF5ik', 'date': 'Kuup\xE4ev', 'empty-logs': 'Logide nimekiri on t\xFChi!' }, 'et.log-viewer::levels': { 'alert': 'H\xE4ire', 'all': 'K\xF5ik', 'critical': 'Kriitiline', 'debug': 'Silumine', 'emergency': 'Erakorraline', 'error': 'Viga', 'info': 'Info', 'notice': 'Teade', 'warning': 'Hoiatus' }, 'fa.log-viewer::general': { 'all': '\u0647\u0645\u0647', 'date': '\u062A\u0627\u0631\u06CC\u062E' }, 'fa.log-viewer::levels': { 'alert': '\u0627\u062E\u0637\u0627\u0631', 'all': '\u0647\u0645\u0647', 'critical': '\u0628\u062D\u0631\u0627\u0646\u06CC', 'debug': '\u062F\u06CC\u0628\u0627\u06AF', 'emergency': '\u0627\u0648\u0631\u0698\u0627\u0646\u0633\u06CC', 'error': '\u062E\u0637\u0627', 'info': '\u0627\u0637\u0644\u0627\u0639\u0627\u062A', 'notice': '\u0627\u0639\u0644\u0627\u0646', 'warning': '\u0647\u0634\u062F\u0627\u0631' }, 'fr.log-viewer::general': { 'all': 'Tous', 'date': 'Date' }, 'fr.log-viewer::levels': { 'alert': 'Alerte', 'all': 'Tous', 'critical': 'Critique', 'debug': 'Debug', 'emergency': 'Urgence', 'error': 'Erreur', 'info': 'Info', 'notice': 'Notice', 'warning': 'Avertissement' }, 'hu.log-viewer::general': { 'all': '\xD6sszes', 'date': 'D\xE1tum', 'empty-logs': 'The list of logs is empty!' }, 'hu.log-viewer::levels': { 'alert': 'Riaszt\xE1s', 'all': '\xD6sszes', 'critical': 'Kritikus', 'debug': 'Hibakeres\xE9s', 'emergency': 'V\xE9szhelyzet', 'error': 'Hiba', 'info': 'Inform\xE1ci\xF3', 'notice': '\xC9rtes\xEDt\xE9s', 'warning': 'Figyelmeztet\xE9s' }, 'hy.log-viewer::general': { 'all': '\u0532\u0578\u056C\u0578\u0580\u0568', 'date': '\u0531\u0574\u057D\u0561\u0569\u056B\u057E' }, 'hy.log-viewer::levels': { 'alert': '\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574', 'all': '\u0532\u0578\u056C\u0578\u0580\u0568', 'critical': '\u053F\u0580\u056B\u057F\u056B\u056F\u0561\u056F\u0561\u0576', 'debug': '\u053F\u0561\u0580\u0563\u0561\u0562\u0565\u0580\u0578\u0582\u0574', 'emergency': '\u054E\u0569\u0561\u0580\u0561\u0575\u056B\u0576', 'error': '\u054D\u056D\u0561\u056C', 'info': '\u054F\u0565\u0572\u0565\u056F\u0561\u057F\u057E\u0578\u0582\u0569\u0575\u0578\u0582\u0576', 'notice': '\u053E\u0561\u0576\u0578\u0582\u0581\u0578\u0582\u0574', 'warning': '\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574' }, 'id.log-viewer::general': { 'all': 'Semua', 'date': 'Tanggal' }, 'id.log-viewer::levels': { 'alert': 'Waspada', 'all': 'Semua', 'critical': 'Kritis', 'debug': 'Debug', 'emergency': 'Darurat', 'error': 'Kesalahan', 'info': 'Info', 'notice': 'Perhatian', 'warning': 'Peringatan' }, 'it.log-viewer::general': { 'all': 'Tutti', 'date': 'Data' }, 'it.log-viewer::levels': { 'alert': 'Allarme', 'all': 'Tutti', 'critical': 'Critico', 'debug': 'Debug', 'emergency': 'Emergenza', 'error': 'Errore', 'info': 'Info', 'notice': 'Notifica', 'warning': 'Avviso' }, 'ja.log-viewer::general': { 'all': '\u3059\u3079\u3066', 'date': '\u65E5\u4ED8', 'empty-logs': '\u30ED\u30B0\u30EA\u30B9\u30C8\u304C\u7A7A\u3067\u3059!' }, 'ja.log-viewer::levels': { 'alert': '\u8B66\u6212', 'all': '\u3059\u3079\u3066', 'critical': '\u81F4\u547D\u7684', 'debug': '\u30C7\u30D0\u30C3\u30B0', 'emergency': '\u7DCA\u6025', 'error': '\u30A8\u30E9\u30FC', 'info': '\u60C5\u5831', 'notice': '\u901A\u77E5', 'warning': '\u8B66\u544A' }, 'ko.log-viewer::general': { 'all': '\uC804\uCCB4', 'date': '\uB0A0\uC9DC' }, 'ko.log-viewer::levels': { 'alert': '\uACBD\uACE0', 'all': '\uC804\uCCB4', 'critical': '\uC2EC\uAC01', 'debug': '\uB514\uBC84\uADF8', 'emergency': '\uAE34\uAE09', 'error': '\uC624\uB958', 'info': '\uC815\uBCF4', 'notice': '\uC54C\uB9BC', 'warning': '\uC8FC\uC758' }, 'nl.log-viewer::general': { 'all': 'Alles', 'date': 'Datum' }, 'nl.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Alle', 'critical': 'Cruciaal', 'debug': 'Debug', 'emergency': 'Noodgeval', 'error': 'Error', 'info': 'Informatie', 'notice': 'Opmerking', 'warning': 'Waarschuwing' }, 'pl.log-viewer::general': { 'all': 'Wszystkie', 'date': 'Data' }, 'pl.log-viewer::levels': { 'alert': 'Alerty', 'all': 'Wszystkie', 'critical': 'Krytyczne', 'debug': 'Debug', 'emergency': 'Awaryjne', 'error': 'B\u0142\u0119dy', 'info': 'Informacje', 'notice': 'Warte uwagi', 'warning': 'Ostrze\u017Cenia' }, 'pt-BR.log-viewer::general': { 'all': 'Todos', 'date': 'Data' }, 'pt-BR.log-viewer::levels': { 'alert': 'Alerta', 'all': 'Todos', 'critical': 'Cr\xEDtico', 'debug': 'Debug', 'emergency': 'Emerg\xEAncia', 'error': 'Erro', 'info': 'Informa\xE7\xE3o', 'notice': 'Not\xEDcia', 'warning': 'Aviso' }, 'ro.log-viewer::general': { 'all': 'Toate', 'date': 'Dat\u0103' }, 'ro.log-viewer::levels': { 'alert': 'Alert\u0103', 'all': 'Toate', 'critical': 'Critic', 'debug': 'Depanare', 'emergency': 'Urgen\u021B\u0103', 'error': 'Eroare', 'info': 'Informare', 'notice': 'Avertisment', 'warning': 'Pericol' }, 'ru.log-viewer::general': { 'all': '\u0412\u0441\u0435', 'date': '\u0414\u0430\u0442\u0430' }, 'ru.log-viewer::levels': { 'alert': '\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435', 'all': '\u0412\u0441\u0435', 'critical': '\u041A\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439', 'debug': '\u041E\u0442\u043B\u0430\u0434\u043A\u0430', 'emergency': '\u0410\u0432\u0430\u0440\u0438\u0439\u043D\u0430\u044F', 'error': '\u041E\u0448\u0438\u0431\u043A\u0430', 'info': '\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F', 'notice': '\u0423\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u0435', 'warning': '\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435' }, 'sv.log-viewer::general': { 'all': 'Alla', 'date': 'Datum' }, 'sv.log-viewer::levels': { 'alert': 'Alarmerande', 'all': 'Alla', 'critical': 'Kritisk', 'debug': 'Debug', 'emergency': 'Akut', 'error': 'Error', 'info': 'Information', 'notice': 'Notis', 'warning': 'Varning' }, 'th.log-viewer::general': { 'all': '\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14', 'date': '\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48', 'empty-logs': 'The list of logs is empty!' }, 'th.log-viewer::levels': { 'alert': '\u0E27\u0E34\u0E01\u0E24\u0E15\u0E34', 'all': '\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14', 'critical': '\u0E23\u0E49\u0E32\u0E22\u0E41\u0E23\u0E07', 'debug': '\u0E14\u0E35\u0E1A\u0E31\u0E01', 'emergency': '\u0E09\u0E38\u0E01\u0E40\u0E09\u0E34\u0E19', 'error': '\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14', 'info': '\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25', 'notice': '\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28', 'warning': '\u0E04\u0E33\u0E40\u0E15\u0E37\u0E2D\u0E19' }, 'tr.log-viewer::general': { 'all': 'Toplam', 'date': 'Tarih' }, 'tr.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Toplam', 'critical': 'Kritik', 'debug': 'Debug', 'emergency': 'Acil', 'error': 'Hata', 'info': 'Bilgi', 'notice': 'Bildirim', 'warning': 'Uyar\u0131' }, 'zh-TW.log-viewer::general': { 'all': '\u5168\u90E8', 'date': '\u65E5\u671F' }, 'zh-TW.log-viewer::levels': { 'alert': '\u8B66\u5831', 'all': '\u5168\u90E8', 'critical': '\u56B4\u91CD', 'debug': '\u9664\u932F', 'emergency': '\u7DCA\u6025', 'error': '\u932F\u8AA4', 'info': '\u8A0A\u606F', 'notice': '\u6CE8\u610F', 'warning': '\u8B66\u544A' }, 'zh.log-viewer::general': { 'all': '\u5168\u90E8', 'date': '\u65E5\u671F' }, 'zh.log-viewer::levels': { 'alert': '\u7D27\u6025', 'all': '\u5168\u90E8', 'critical': '\u4E25\u91CD', 'debug': '\u8C03\u8BD5', 'emergency': '\u5371\u6025', 'error': '\u9519\u8BEF', 'info': '\u4FE1\u606F', 'notice': '\u6CE8\u610F', 'warning': '\u8B66\u544A' } };
 
 /***/ }),
 /* 231 */
@@ -40398,7 +40402,7 @@ module.exports =
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(5);
 
 /***/ }),
 /* 1 */
@@ -40410,7 +40414,7 @@ module.exports = __webpack_require__(8);
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 /* 3 */
@@ -75691,7 +75695,7 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _dom = __webpack_require__(6);
+var _dom = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78379,7 +78383,7 @@ var index = (function () {
 
 /* harmony default export */ __webpack_exports__["default"] = (index);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(18)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(17)))
 
 /***/ }),
 /* 238 */
@@ -78579,7 +78583,7 @@ function normalizeComponent (
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
@@ -79374,7 +79378,7 @@ src_button.install = function (Vue) {
 
 exports.__esModule = true;
 
-var _dom = __webpack_require__(6);
+var _dom = __webpack_require__(5);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -79847,7 +79851,7 @@ module.exports = __webpack_require__(36);
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(5);
 
 /***/ }),
 
@@ -80487,7 +80491,7 @@ function normalizeComponent (
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
@@ -81342,7 +81346,7 @@ function normalizeComponent (
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 /* 4 */
@@ -83732,7 +83736,7 @@ component.options.__file = "packages/select/src/option.vue"
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
@@ -84880,7 +84884,7 @@ exports.default = aria.Utils;
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__validator___ = __webpack_require__(290);
@@ -85159,7 +85163,7 @@ module.exports = { "default": __webpack_require__(259), __esModule: true };
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(260);
-module.exports = __webpack_require__(19).Object.assign;
+module.exports = __webpack_require__(18).Object.assign;
 
 
 /***/ }),
@@ -85223,7 +85227,7 @@ var IObject = __webpack_require__(69);
 var $assign = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(21)(function () {
+module.exports = !$assign || __webpack_require__(20)(function () {
   var A = {};
   var B = {};
   // eslint-disable-next-line no-undef
@@ -85255,7 +85259,7 @@ module.exports = !$assign || __webpack_require__(21)(function () {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(15);
+var toIObject = __webpack_require__(14);
 var toLength = __webpack_require__(265);
 var toAbsoluteIndex = __webpack_require__(266);
 module.exports = function (IS_INCLUDES) {
@@ -85377,7 +85381,7 @@ var setToStringTag = __webpack_require__(48);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(12)(IteratorPrototype, __webpack_require__(16)('iterator'), function () { return this; });
+__webpack_require__(11)(IteratorPrototype, __webpack_require__(15)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -85389,11 +85393,11 @@ module.exports = function (Constructor, NAME, next) {
 /* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(13);
+var dP = __webpack_require__(12);
 var anObject = __webpack_require__(24);
 var getKeys = __webpack_require__(26);
 
-module.exports = __webpack_require__(14) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(13) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -85408,7 +85412,7 @@ module.exports = __webpack_require__(14) ? Object.defineProperties : function de
 /* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var document = __webpack_require__(7).document;
+var document = __webpack_require__(6).document;
 module.exports = document && document.documentElement;
 
 
@@ -85436,10 +85440,10 @@ module.exports = Object.getPrototypeOf || function (O) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(276);
-var global = __webpack_require__(7);
-var hide = __webpack_require__(12);
+var global = __webpack_require__(6);
+var hide = __webpack_require__(11);
 var Iterators = __webpack_require__(47);
-var TO_STRING_TAG = __webpack_require__(16)('toStringTag');
+var TO_STRING_TAG = __webpack_require__(15)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
   'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
@@ -85465,7 +85469,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 var addToUnscopables = __webpack_require__(277);
 var step = __webpack_require__(278);
 var Iterators = __webpack_require__(47);
-var toIObject = __webpack_require__(15);
+var toIObject = __webpack_require__(14);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
@@ -85527,7 +85531,7 @@ __webpack_require__(281);
 __webpack_require__(287);
 __webpack_require__(288);
 __webpack_require__(289);
-module.exports = __webpack_require__(19).Symbol;
+module.exports = __webpack_require__(18).Symbol;
 
 
 /***/ }),
@@ -85537,30 +85541,30 @@ module.exports = __webpack_require__(19).Symbol;
 "use strict";
 
 // ECMAScript 6 symbols shim
-var global = __webpack_require__(7);
+var global = __webpack_require__(6);
 var has = __webpack_require__(9);
-var DESCRIPTORS = __webpack_require__(14);
+var DESCRIPTORS = __webpack_require__(13);
 var $export = __webpack_require__(39);
 var redefine = __webpack_require__(73);
 var META = __webpack_require__(282).KEY;
-var $fails = __webpack_require__(21);
+var $fails = __webpack_require__(20);
 var shared = __webpack_require__(44);
 var setToStringTag = __webpack_require__(48);
 var uid = __webpack_require__(28);
-var wks = __webpack_require__(16);
+var wks = __webpack_require__(15);
 var wksExt = __webpack_require__(49);
 var wksDefine = __webpack_require__(50);
 var enumKeys = __webpack_require__(283);
 var isArray = __webpack_require__(284);
 var anObject = __webpack_require__(24);
-var isObject = __webpack_require__(20);
-var toIObject = __webpack_require__(15);
+var isObject = __webpack_require__(19);
+var toIObject = __webpack_require__(14);
 var toPrimitive = __webpack_require__(40);
 var createDesc = __webpack_require__(25);
 var _create = __webpack_require__(74);
 var gOPNExt = __webpack_require__(285);
 var $GOPD = __webpack_require__(286);
-var $DP = __webpack_require__(13);
+var $DP = __webpack_require__(12);
 var $keys = __webpack_require__(26);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -85762,7 +85766,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(12)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(11)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -85776,14 +85780,14 @@ setToStringTag(global.JSON, 'JSON', true);
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(28)('meta');
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(19);
 var has = __webpack_require__(9);
-var setDesc = __webpack_require__(13).f;
+var setDesc = __webpack_require__(12).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
 };
-var FREEZE = !__webpack_require__(21)(function () {
+var FREEZE = !__webpack_require__(20)(function () {
   return isExtensible(Object.preventExtensions({}));
 });
 var setMeta = function (it) {
@@ -85867,7 +85871,7 @@ module.exports = Array.isArray || function isArray(arg) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(15);
+var toIObject = __webpack_require__(14);
 var gOPN = __webpack_require__(75).f;
 var toString = {}.toString;
 
@@ -85893,13 +85897,13 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 var pIE = __webpack_require__(29);
 var createDesc = __webpack_require__(25);
-var toIObject = __webpack_require__(15);
+var toIObject = __webpack_require__(14);
 var toPrimitive = __webpack_require__(40);
 var has = __webpack_require__(9);
 var IE8_DOM_DEFINE = __webpack_require__(66);
 var gOPD = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(14) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+exports.f = __webpack_require__(13) ? gOPD : function getOwnPropertyDescriptor(O, P) {
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -86056,7 +86060,7 @@ function whitespace(rule, value, source, errors, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__required__ = __webpack_require__(76);
@@ -86705,7 +86709,7 @@ function date(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rule___ = __webpack_require__(2);
 
@@ -87010,7 +87014,7 @@ function normalizeComponent (
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(5);
 
 /***/ }),
 
@@ -89796,15 +89800,14 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 350 */,
-/* 351 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(17);
-var normalizeHeaderName = __webpack_require__(422);
+var utils = __webpack_require__(16);
+var normalizeHeaderName = __webpack_require__(418);
 
 var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 var DEFAULT_CONTENT_TYPE = {
@@ -89821,10 +89824,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(367);
+    adapter = __webpack_require__(365);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(367);
+    adapter = __webpack_require__(365);
   }
   return adapter;
 }
@@ -89898,6 +89901,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31)))
 
 /***/ }),
+/* 351 */,
 /* 352 */,
 /* 353 */,
 /* 354 */,
@@ -89909,9 +89913,7 @@ module.exports = defaults;
 /* 360 */,
 /* 361 */,
 /* 362 */,
-/* 363 */,
-/* 364 */,
-/* 365 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -89930,7 +89932,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(417)
+var listToStyles = __webpack_require__(413)
 
 /*
 type StyleObject = {
@@ -90139,7 +90141,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 366 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90157,19 +90159,19 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 367 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(17);
-var settle = __webpack_require__(423);
-var buildURL = __webpack_require__(425);
-var parseHeaders = __webpack_require__(426);
-var isURLSameOrigin = __webpack_require__(427);
-var createError = __webpack_require__(368);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(428);
+var utils = __webpack_require__(16);
+var settle = __webpack_require__(419);
+var buildURL = __webpack_require__(421);
+var parseHeaders = __webpack_require__(422);
+var isURLSameOrigin = __webpack_require__(423);
+var createError = __webpack_require__(366);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(424);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -90265,7 +90267,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(429);
+      var cookies = __webpack_require__(425);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -90341,13 +90343,13 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 368 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(424);
+var enhanceError = __webpack_require__(420);
 
 /**
  * Create an Error with the specified message, config, error code, and response.
@@ -90365,7 +90367,7 @@ module.exports = function createError(message, config, code, response) {
 
 
 /***/ }),
-/* 369 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90377,7 +90379,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 370 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90403,7 +90405,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 371 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90413,31 +90415,31 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _columns = __webpack_require__(448);
+var _columns = __webpack_require__(444);
 
 var _columns2 = _interopRequireDefault(_columns);
 
-var _sort = __webpack_require__(449);
+var _sort = __webpack_require__(445);
 
 var _sort2 = _interopRequireDefault(_sort);
 
-var _Detail = __webpack_require__(450);
+var _Detail = __webpack_require__(446);
 
 var _Detail2 = _interopRequireDefault(_Detail);
 
-var _Actions = __webpack_require__(453);
+var _Actions = __webpack_require__(449);
 
 var _Actions2 = _interopRequireDefault(_Actions);
 
-var _CustomUserLetter = __webpack_require__(478);
+var _CustomUserLetter = __webpack_require__(454);
 
 var _CustomUserLetter2 = _interopRequireDefault(_CustomUserLetter);
 
-var _CustomLinkByFrom = __webpack_require__(481);
+var _CustomLinkByFrom = __webpack_require__(457);
 
 var _CustomLinkByFrom2 = _interopRequireDefault(_CustomLinkByFrom);
 
-var _CustomStatus = __webpack_require__(464);
+var _CustomStatus = __webpack_require__(460);
 
 var _CustomStatus2 = _interopRequireDefault(_CustomStatus);
 
@@ -90456,6 +90458,8 @@ exports.default = {
 };
 
 /***/ }),
+/* 370 */,
+/* 371 */,
 /* 372 */,
 /* 373 */,
 /* 374 */,
@@ -90484,18 +90488,14 @@ exports.default = {
 /* 397 */,
 /* 398 */,
 /* 399 */,
-/* 400 */,
-/* 401 */,
-/* 402 */,
-/* 403 */,
-/* 404 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(405);
+module.exports = __webpack_require__(401);
 
 
 /***/ }),
-/* 405 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90578,7 +90578,7 @@ if ($inboxComponent) {
     routes: [{
       path: '/',
       name: 'root',
-      component: __webpack_require__(406)
+      component: __webpack_require__(402)
     }]
   });
   new _vue2.default({
@@ -90593,15 +90593,15 @@ if ($inboxComponent) {
 }
 
 /***/ }),
-/* 406 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(7)
 /* script */
-var __vue_script__ = __webpack_require__(407)
+var __vue_script__ = __webpack_require__(403)
 /* template */
-var __vue_template__ = __webpack_require__(474)
+var __vue_template__ = __webpack_require__(467)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -90640,7 +90640,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 407 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90659,11 +90659,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _vuex = __webpack_require__(10);
+var _vuex = __webpack_require__(22);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _VueDatatable = __webpack_require__(408);
+var _VueDatatable = __webpack_require__(404);
 
 var _VueDatatable2 = _interopRequireDefault(_VueDatatable);
 
@@ -90687,13 +90687,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 408 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(7)
 /* script */
-var __vue_script__ = __webpack_require__(409)
+var __vue_script__ = __webpack_require__(405)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -90734,7 +90734,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 409 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90750,15 +90750,15 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vuex = __webpack_require__(10);
+var _vuex = __webpack_require__(22);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _toastr = __webpack_require__(410);
+var _toastr = __webpack_require__(406);
 
 var _toastr2 = _interopRequireDefault(_toastr);
 
-var _accounting = __webpack_require__(413);
+var _accounting = __webpack_require__(409);
 
 var _accounting2 = _interopRequireDefault(_accounting);
 
@@ -90766,27 +90766,27 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _Vuetable = __webpack_require__(414);
+var _Vuetable = __webpack_require__(410);
 
 var _Vuetable2 = _interopRequireDefault(_Vuetable);
 
-var _VuetablePagination = __webpack_require__(438);
+var _VuetablePagination = __webpack_require__(434);
 
 var _VuetablePagination2 = _interopRequireDefault(_VuetablePagination);
 
-var _VuetablePaginationInfo = __webpack_require__(443);
+var _VuetablePaginationInfo = __webpack_require__(439);
 
 var _VuetablePaginationInfo2 = _interopRequireDefault(_VuetablePaginationInfo);
 
-var _config = __webpack_require__(371);
+var _config = __webpack_require__(369);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _FilterBar = __webpack_require__(470);
+var _FilterBar = __webpack_require__(463);
 
 var _FilterBar2 = _interopRequireDefault(_FilterBar);
 
-var _CssConfig = __webpack_require__(473);
+var _CssConfig = __webpack_require__(466);
 
 var _CssConfig2 = _interopRequireDefault(_CssConfig);
 
@@ -90837,23 +90837,20 @@ exports.default = {
     this.$events.$on('filter-reset', function (e) {
       return _this.onFilterReset();
     });
-    this.$events.$on('view-set', function (action, data, index) {
-      return _this.doView(action, data, index);
+    this.$events.$on('mark-as-read-set', function (id) {
+      return _this.markAsread(id);
     });
     this.$events.$on('delete-set', function (id) {
       return _this.doDelete(id);
-    });
-    this.$events.$on('destroy-set', function (id) {
-      return _this.doDestroy(id);
-    });
-    this.$events.$on('restore-set', function (id) {
-      return _this.doRestore(id);
     });
     this.$events.$on('range-date-set', function (start, end) {
       return _this.doRangeDate(start, end);
     });
     this.$events.$on('whitelabel-set', function (id) {
       return _this.doWhitelabel(id);
+    });
+    this.$events.$on('read-checked-notification-set', function (checked) {
+      return _this.readCheckedNotification(checked);
     });
   },
   render: function render(h) {
@@ -90915,15 +90912,23 @@ exports.default = {
         return _this7.$refs.vuetable.refresh();
       });
     },
-    onFilterReset: function onFilterReset() {
+    readCheckedNotification: function readCheckedNotification(checked) {
       var _this8 = this;
+
+      this.$store.dispatch('block', { element: 'notificationsComponent', load: true });
+      this.$http.put(window.laroute.route('notifications.readNotification'), { checked: checked }).then(this.onReadNotificationSuccess).catch(this.onFailed).then(function () {
+        _this8.$store.dispatch('block', { element: 'notificationsComponent', load: false });
+      });
+    },
+    onFilterReset: function onFilterReset() {
+      var _this9 = this;
 
       delete this.appendParams.filter;
       delete this.appendParams.start;
       delete this.appendParams.end;
       delete this.appendParams.whitelabel;
       _vue2.default.nextTick(function () {
-        return _this8.$refs.vuetable.refresh();
+        return _this9.$refs.vuetable.refresh();
       });
     },
     renderLoader: function renderLoader(h) {
@@ -91030,54 +91035,27 @@ exports.default = {
     fromNow: function fromNow(value) {
       return value == null ? '' : (0, _moment2.default)(value, _moment2.default.ISO_8601).fromNow();
     },
-    doView: function doView(action, data, index) {
-      this.$refs.vuetable.toggleDetailRow(data.id);
+    markAsread: function markAsread(id) {
+      var _this10 = this;
+
+      this.$store.dispatch('block', { element: 'notificationsComponent', load: true });
+      this.$http.put(window.laroute.route('notifications.read', { id: id })).then(this.onReadSuccess).catch(this.onFailed).then(function () {
+        _this10.$store.dispatch('block', { element: 'notificationsComponent', load: false });
+      });
     },
     doDelete: function doDelete(id) {
-      var _this9 = this;
+      var _this11 = this;
 
       this.$confirm(this.trans('messages.delete'), 'Warning', {
         confirmButtonText: this.trans('labels.ok'),
         cancelButtonText: this.trans('labels.cancel'),
         type: 'warning'
       }).then(function () {
-        _this9.onDelete(id);
-      }).catch(function () {
-        _this9.$message({
-          type: 'info',
-          message: _this9.trans('messages.delete_canceled')
-        });
-      });
-    },
-    doDestroy: function doDestroy(id) {
-      var _this10 = this;
-
-      this.$confirm(this.trans('messages.destroy'), 'Warning', {
-        confirmButtonText: this.trans('labels.ok'),
-        cancelButtonText: this.trans('labels.cancel'),
-        type: 'warning'
-      }).then(function () {
-        _this10.onForceDelete(id);
-      }).catch(function () {
-        _this10.$message({
-          type: 'info',
-          message: _this10.trans('messages.delete_canceled')
-        });
-      });
-    },
-    doRestore: function doRestore(id) {
-      var _this11 = this;
-
-      this.$confirm(this.trans('messages.restore'), 'Warning', {
-        confirmButtonText: this.trans('labels.ok'),
-        cancelButtonText: this.trans('labels.cancel'),
-        type: 'warning'
-      }).then(function () {
-        _this11.onRestore(id);
+        _this11.onDelete(id);
       }).catch(function () {
         _this11.$message({
           type: 'info',
-          message: _this11.trans('messages.restore_canceled')
+          message: _this11.trans('messages.delete_canceled')
         });
       });
     },
@@ -91119,7 +91097,37 @@ exports.default = {
           return _this15.$refs.vuetable.refresh();
         });
       } else {
-        _toastr2.default.error(response.message);
+        this.$notify.error({ title: 'Error', message: response.message });
+      }
+    },
+    onReadSuccess: function onReadSuccess(response) {
+      var _this16 = this;
+
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.$message({
+          type: 'success',
+          message: response.data.message
+        });
+        _vue2.default.nextTick(function () {
+          return _this16.$refs.vuetable.refresh();
+        });
+      } else {
+        this.$notify.error({ title: 'Error', message: response.message });
+      }
+    },
+    onReadNotificationSuccess: function onReadNotificationSuccess(response) {
+      var _this17 = this;
+
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.$message({
+          type: 'success',
+          message: response.data.message
+        });
+        _vue2.default.nextTick(function () {
+          return _this17.$refs.vuetable.refresh();
+        });
+      } else {
+        this.$notify.error({ title: 'Error', message: response.message });
       }
     },
     onFailed: function onFailed(error) {
@@ -91143,7 +91151,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 410 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -91160,7 +91168,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
  */
 /* global define */
 (function (define) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(411)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ($) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(407)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ($) {
         return (function () {
             var $container;
             var listener;
@@ -91616,11 +91624,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
         })();
     }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-}(__webpack_require__(412)));
+}(__webpack_require__(408)));
 
 
 /***/ }),
-/* 411 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -101991,7 +101999,7 @@ return jQuery;
 
 
 /***/ }),
-/* 412 */
+/* 408 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
@@ -102000,7 +102008,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 413 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -102419,19 +102427,19 @@ module.exports = function() {
 
 
 /***/ }),
-/* 414 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(415)
+  __webpack_require__(411)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(7)
 /* script */
-var __vue_script__ = __webpack_require__(418)
+var __vue_script__ = __webpack_require__(414)
 /* template */
-var __vue_template__ = __webpack_require__(437)
+var __vue_template__ = __webpack_require__(433)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -102470,17 +102478,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 415 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(416);
+var content = __webpack_require__(412);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(365)("c96b1a10", content, false, {});
+var update = __webpack_require__(363)("c96b1a10", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -102496,7 +102504,7 @@ if(false) {
 }
 
 /***/ }),
-/* 416 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(77)(false);
@@ -102510,7 +102518,7 @@ exports.push([module.i, "\n[v-cloak][data-v-15965e3b] {\n  display: none;\n}\n.v
 
 
 /***/ }),
-/* 417 */
+/* 413 */
 /***/ (function(module, exports) {
 
 /**
@@ -102543,14 +102551,14 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 418 */
+/* 414 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(419);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(415);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 
 
@@ -103492,22 +103500,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 419 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(420);
+module.exports = __webpack_require__(416);
 
 /***/ }),
-/* 420 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(17);
-var bind = __webpack_require__(366);
-var Axios = __webpack_require__(421);
-var defaults = __webpack_require__(351);
+var utils = __webpack_require__(16);
+var bind = __webpack_require__(364);
+var Axios = __webpack_require__(417);
+var defaults = __webpack_require__(350);
 
 /**
  * Create an instance of Axios
@@ -103540,15 +103548,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(370);
-axios.CancelToken = __webpack_require__(435);
-axios.isCancel = __webpack_require__(369);
+axios.Cancel = __webpack_require__(368);
+axios.CancelToken = __webpack_require__(431);
+axios.isCancel = __webpack_require__(367);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(436);
+axios.spread = __webpack_require__(432);
 
 module.exports = axios;
 
@@ -103557,18 +103565,18 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 421 */
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(351);
-var utils = __webpack_require__(17);
-var InterceptorManager = __webpack_require__(430);
-var dispatchRequest = __webpack_require__(431);
-var isAbsoluteURL = __webpack_require__(433);
-var combineURLs = __webpack_require__(434);
+var defaults = __webpack_require__(350);
+var utils = __webpack_require__(16);
+var InterceptorManager = __webpack_require__(426);
+var dispatchRequest = __webpack_require__(427);
+var isAbsoluteURL = __webpack_require__(429);
+var combineURLs = __webpack_require__(430);
 
 /**
  * Create a new instance of Axios
@@ -103649,13 +103657,13 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 422 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(17);
+var utils = __webpack_require__(16);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -103668,13 +103676,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 423 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(368);
+var createError = __webpack_require__(366);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -103700,7 +103708,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 424 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -103726,13 +103734,13 @@ module.exports = function enhanceError(error, config, code, response) {
 
 
 /***/ }),
-/* 425 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(17);
+var utils = __webpack_require__(16);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -103801,13 +103809,13 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 426 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(17);
+var utils = __webpack_require__(16);
 
 /**
  * Parse headers into an object
@@ -103845,13 +103853,13 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 427 */
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(17);
+var utils = __webpack_require__(16);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -103920,7 +103928,7 @@ module.exports = (
 
 
 /***/ }),
-/* 428 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -103963,13 +103971,13 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 429 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(17);
+var utils = __webpack_require__(16);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -104023,13 +104031,13 @@ module.exports = (
 
 
 /***/ }),
-/* 430 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(17);
+var utils = __webpack_require__(16);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -104082,16 +104090,16 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 431 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(17);
-var transformData = __webpack_require__(432);
-var isCancel = __webpack_require__(369);
-var defaults = __webpack_require__(351);
+var utils = __webpack_require__(16);
+var transformData = __webpack_require__(428);
+var isCancel = __webpack_require__(367);
+var defaults = __webpack_require__(350);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -104168,13 +104176,13 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 432 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(17);
+var utils = __webpack_require__(16);
 
 /**
  * Transform the data for a request or a response
@@ -104195,7 +104203,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 433 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -104216,7 +104224,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 434 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -104235,13 +104243,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 435 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(370);
+var Cancel = __webpack_require__(368);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -104299,7 +104307,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 436 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -104333,7 +104341,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 437 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -105337,15 +105345,15 @@ if (false) {
 }
 
 /***/ }),
-/* 438 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(7)
 /* script */
-var __vue_script__ = __webpack_require__(439)
+var __vue_script__ = __webpack_require__(435)
 /* template */
-var __vue_template__ = __webpack_require__(442)
+var __vue_template__ = __webpack_require__(438)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -105384,12 +105392,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 439 */
+/* 435 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationMixin_vue__ = __webpack_require__(440);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationMixin_vue__ = __webpack_require__(436);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationMixin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__VuetablePaginationMixin_vue__);
 
 
@@ -105400,13 +105408,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 440 */
+/* 436 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(7)
 /* script */
-var __vue_script__ = __webpack_require__(441)
+var __vue_script__ = __webpack_require__(437)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -105447,7 +105455,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 441 */
+/* 437 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -105532,7 +105540,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 442 */
+/* 438 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -105691,15 +105699,15 @@ if (false) {
 }
 
 /***/ }),
-/* 443 */
+/* 439 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(7)
 /* script */
-var __vue_script__ = __webpack_require__(444)
+var __vue_script__ = __webpack_require__(440)
 /* template */
-var __vue_template__ = __webpack_require__(447)
+var __vue_template__ = __webpack_require__(443)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -105738,12 +105746,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 444 */
+/* 440 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationInfoMixin_vue__ = __webpack_require__(445);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationInfoMixin_vue__ = __webpack_require__(441);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationInfoMixin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__VuetablePaginationInfoMixin_vue__);
 
 
@@ -105754,13 +105762,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 445 */
+/* 441 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(7)
 /* script */
-var __vue_script__ = __webpack_require__(446)
+var __vue_script__ = __webpack_require__(442)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -105801,7 +105809,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 446 */
+/* 442 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -105855,7 +105863,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 447 */
+/* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -105878,7 +105886,7 @@ if (false) {
 }
 
 /***/ }),
-/* 448 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -105923,7 +105931,7 @@ exports.default = [{
 }];
 
 /***/ }),
-/* 449 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -105939,15 +105947,15 @@ exports.default = [{
 }];
 
 /***/ }),
-/* 450 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(7)
 /* script */
-var __vue_script__ = __webpack_require__(451)
+var __vue_script__ = __webpack_require__(447)
 /* template */
-var __vue_template__ = __webpack_require__(452)
+var __vue_template__ = __webpack_require__(448)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -105986,7 +105994,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 451 */
+/* 447 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106034,7 +106042,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 452 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -106070,19 +106078,19 @@ if (false) {
 }
 
 /***/ }),
-/* 453 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(454)
+  __webpack_require__(450)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(7)
 /* script */
-var __vue_script__ = __webpack_require__(456)
+var __vue_script__ = __webpack_require__(452)
 /* template */
-var __vue_template__ = __webpack_require__(457)
+var __vue_template__ = __webpack_require__(453)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -106121,17 +106129,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 454 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(455);
+var content = __webpack_require__(451);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(365)("578c7062", content, false, {});
+var update = __webpack_require__(363)("578c7062", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -106147,7 +106155,7 @@ if(false) {
 }
 
 /***/ }),
-/* 455 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(77)(false);
@@ -106155,13 +106163,13 @@ exports = module.exports = __webpack_require__(77)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 456 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106178,10 +106186,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
 
-var _vuex = __webpack_require__(10);
+var _vuex = __webpack_require__(22);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
@@ -106202,46 +106208,24 @@ exports.default = {
     user: 'currentUser'
   }), {
     mark_as_read: function mark_as_read() {
-      return !this.deleted && this.rowData.user_id === this.user.id;
-    },
-    can_restore: function can_restore() {
-      return this.deleted && this.hasRole('Administrator');
-    },
-    can_force_delete: function can_force_delete() {
-      return this.deleted && this.hasRole('Administrator');
+      return this.rowData.user_id === this.user.id && !this.rowData.is_read;
     },
     can_delete: function can_delete() {
-      return !this.deleted && this.rowData.user_id === this.user.id;
-    },
-
-    deleted: function deleted() {
-      return this.rowData.deleted_at !== null;
+      return this.rowData.user_id === this.user.id;
     }
   }),
   methods: {
-    doView: function doView(action, data, index) {
-      this.$events.fire('view-set', action, data, index);
+    doMark: function doMark(action, data, index) {
+      this.$events.fire('mark-as-read-set', action, data, index);
     },
     doDelete: function doDelete(id) {
       this.$events.fire('delete-set', id);
-    },
-    doDestroy: function doDestroy(id) {
-      this.$events.fire('destroy-set', id);
-    },
-    doRestore: function doRestore(id) {
-      this.$events.fire('restore-set', id);
-    },
-    hasPermissionTo: function hasPermissionTo(permission) {
-      return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
-    },
-    hasRole: function hasRole(permission) {
-      return this.user.hasOwnProperty('roles') && this.user.roles[permission];
     }
   }
 };
 
 /***/ }),
-/* 457 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -106262,7 +106246,7 @@ var render = function() {
             },
             on: {
               click: function($event) {
-                return _vm.doDelete(_vm.rowData.id)
+                return _vm.doMark(_vm.rowData.id)
               }
             }
           },
@@ -106289,48 +106273,6 @@ var render = function() {
           },
           [_c("i", { staticClass: "icon-cancel-circle2" })]
         )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.can_restore
-      ? _c(
-          "a",
-          {
-            staticClass:
-              "btn btn-outline btn-sm bg-info text-info-800 btn-icon ml-2",
-            attrs: {
-              href: "javascript:;",
-              "data-popup": "tooltip",
-              title: _vm.trans("button.restore")
-            },
-            on: {
-              click: function($event) {
-                return _vm.doRestore(_vm.rowData.id)
-              }
-            }
-          },
-          [_c("i", { staticClass: "icon-reset" })]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.can_force_delete
-      ? _c(
-          "a",
-          {
-            staticClass:
-              "btn btn-outline btn-sm bg-danger text-danger-800 btn-icon ml-2",
-            attrs: {
-              href: "javascript:;",
-              "data-popup": "tooltip",
-              title: _vm.trans("button.delete")
-            },
-            on: {
-              click: function($event) {
-                return _vm.doDestroy(_vm.rowData.id)
-              }
-            }
-          },
-          [_c("i", { staticClass: "icon-trash-alt" })]
-        )
       : _vm._e()
   ])
 }
@@ -106345,21 +106287,262 @@ if (false) {
 }
 
 /***/ }),
-/* 458 */,
-/* 459 */,
-/* 460 */,
-/* 461 */,
-/* 462 */,
-/* 463 */,
-/* 464 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(7)
 /* script */
-var __vue_script__ = __webpack_require__(465)
+var __vue_script__ = __webpack_require__(455)
 /* template */
-var __vue_template__ = __webpack_require__(466)
+var __vue_template__ = __webpack_require__(456)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/user/inbox/tables/inbox/CustomUserLetter.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3f895562", Component.options)
+  } else {
+    hotAPI.reload("data-v-3f895562", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 455 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  name: 'CustomUserLetter',
+  props: {
+    rowData: {
+      type: Object,
+      required: true
+    },
+    rowIndex: {
+      type: Number
+    }
+  },
+  data: function data() {
+    return {};
+  },
+
+  computed: {
+    letter: function letter() {
+      return this.rowData.hasOwnProperty('from') && this.rowData.from !== null ? this.rowData.from.full_name.slice(0, 2) : '';
+    }
+  },
+  methods: {}
+};
+
+/***/ }),
+/* 456 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "span",
+    { staticClass: "btn bg-teal-400 rounded-circle btn-icon btn-sm" },
+    [
+      _c("span", { staticClass: "letter-icon text-uppercase" }, [
+        _vm._v(_vm._s(_vm.letter))
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3f895562", module.exports)
+  }
+}
+
+/***/ }),
+/* 457 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(7)
+/* script */
+var __vue_script__ = __webpack_require__(458)
+/* template */
+var __vue_template__ = __webpack_require__(459)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/user/inbox/tables/inbox/CustomLinkByFrom.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-379ea5cc", Component.options)
+  } else {
+    hotAPI.reload("data-v-379ea5cc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 458 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  name: 'CustomLinkByFrom',
+  props: {
+    rowData: {
+      type: Object,
+      required: true
+    },
+    rowIndex: {
+      type: Number
+    }
+  },
+  data: function data() {
+    return {};
+  },
+
+  computed: {
+    from: function from() {
+      return this.rowData.hasOwnProperty('from') && this.rowData.from !== null ? this.rowData.from.full_name : '';
+    },
+    letter: function letter() {
+      return this.from.length > 1 ? this.from.slice(0, 2) : '';
+    }
+  },
+  methods: {}
+};
+
+/***/ }),
+/* 459 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", [
+    _c(
+      "span",
+      {
+        staticClass: "btn rounded-circle btn-icon btn-sm",
+        class: _vm.rowData.is_read ? "bg-teal-300" : "bg-teal-800"
+      },
+      [
+        _c("span", { staticClass: "letter-icon text-uppercase" }, [
+          _vm._v(_vm._s(_vm.letter))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c("span", { class: _vm.rowData.is_read ? "" : "font-weight-bold" }, [
+      _vm._v("\n         " + _vm._s(_vm.from) + "\n    ")
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-379ea5cc", module.exports)
+  }
+}
+
+/***/ }),
+/* 460 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(7)
+/* script */
+var __vue_script__ = __webpack_require__(461)
+/* template */
+var __vue_template__ = __webpack_require__(462)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -106398,7 +106581,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 465 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106407,6 +106590,9 @@ module.exports = Component.exports
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+//
+//
+//
 //
 //
 //
@@ -106436,25 +106622,26 @@ exports.default = {
 };
 
 /***/ }),
-/* 466 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("span", [
+    !_vm.rowData.is_read
+      ? _c("span", [
+          _c("i", { staticClass: "icon-star-full2 text-warning-300" })
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.rowData.is_read
+      ? _c("span", [_c("i", { staticClass: "icon-star-empty3 text-muted" })])
+      : _vm._e()
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [
-      _c("span", [_c("i", { staticClass: "icon-star-full2 text-warning-300" })])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -106465,18 +106652,15 @@ if (false) {
 }
 
 /***/ }),
-/* 467 */,
-/* 468 */,
-/* 469 */,
-/* 470 */
+/* 463 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(7)
 /* script */
-var __vue_script__ = __webpack_require__(471)
+var __vue_script__ = __webpack_require__(464)
 /* template */
-var __vue_template__ = __webpack_require__(472)
+var __vue_template__ = __webpack_require__(465)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -106515,7 +106699,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 471 */
+/* 464 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106579,13 +106763,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
-var _vuex = __webpack_require__(10);
+var _vuex = __webpack_require__(22);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _config = __webpack_require__(371);
+var _config = __webpack_require__(369);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -106631,7 +106814,7 @@ exports.default = {
     checked: 'checked',
     user: 'currentUser'
   }), {
-    urlExportSelected: function urlExportSelected() {
+    urlReadSelected: function urlReadSelected() {
       return window.laroute.route('provider.groups.export', { checked: this.checked });
     },
     show: function show() {
@@ -106648,7 +106831,7 @@ exports.default = {
     }
   }),
   methods: {
-    onExportSelected: function onExportSelected() {
+    onReadSelected: function onReadSelected() {
       if (this.checked.length <= 0) {
         this.$message({
           message: 'Please select at least one item',
@@ -106659,7 +106842,7 @@ exports.default = {
         return false;
       }
 
-      window.location.href = this.urlExportSelected;
+      this.$events.fire('read-checked-notification-set', this.checked);
     },
     onCreate: function onCreate() {
       this.dialogFormVisible = false;
@@ -106713,7 +106896,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 472 */
+/* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -106721,7 +106904,28 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card-header header-elements-inline" }, [
-    _vm._m(0),
+    _c("h5", { staticClass: "card-title" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "dropdown-menu dropdown-menu-left" }, [
+        _c(
+          "a",
+          {
+            staticClass: "dropdown-item",
+            attrs: { href: "javascript:;" },
+            on: {
+              click: function($event) {
+                return _vm.onReadSelected()
+              }
+            }
+          },
+          [
+            _c("i", { staticClass: "icon-checkmark-circle" }),
+            _vm._v(_vm._s(_vm.trans("button.mark_as_read")))
+          ]
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "header-elements" }, [
       _c("form", { staticClass: "row", attrs: { action: "#" } }, [
@@ -106843,37 +107047,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h5", { staticClass: "card-title" }, [
-      _c(
-        "button",
-        {
-          staticClass:
-            "btn btn-outline bg-teal-300 text-teal-800 btn-icon dropdown-toggle",
-          attrs: { type: "button", "data-toggle": "dropdown" }
-        },
-        [_c("i", { staticClass: "icon-gear" })]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "dropdown-menu dropdown-menu-left" }, [
-        _c(
-          "a",
-          { staticClass: "dropdown-item", attrs: { href: "javascript:;" } },
-          [
-            _c("i", { staticClass: "icon-checkmark-circle text-success" }),
-            _vm._v(" Mark as read")
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          { staticClass: "dropdown-item", attrs: { href: "javascript:;" } },
-          [
-            _c("i", { staticClass: "icon-cancel-circle2 text-success" }),
-            _vm._v(" Delete")
-          ]
-        )
-      ])
-    ])
+    return _c(
+      "button",
+      {
+        staticClass:
+          "btn btn-outline bg-teal-300 text-teal-800 btn-icon dropdown-toggle",
+        attrs: { type: "button", "data-toggle": "dropdown" }
+      },
+      [_c("i", { staticClass: "icon-gear" })]
+    )
   },
   function() {
     var _vm = this
@@ -106894,7 +107076,7 @@ if (false) {
 }
 
 /***/ }),
-/* 473 */
+/* 466 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106937,7 +107119,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 474 */
+/* 467 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -106953,251 +107135,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-6be433c6", module.exports)
-  }
-}
-
-/***/ }),
-/* 475 */,
-/* 476 */,
-/* 477 */,
-/* 478 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(5)
-/* script */
-var __vue_script__ = __webpack_require__(479)
-/* template */
-var __vue_template__ = __webpack_require__(480)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "Resources/assets/js/modules/user/inbox/tables/inbox/CustomUserLetter.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3f895562", Component.options)
-  } else {
-    hotAPI.reload("data-v-3f895562", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 479 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  name: 'CustomUserLetter',
-  props: {
-    rowData: {
-      type: Object,
-      required: true
-    },
-    rowIndex: {
-      type: Number
-    }
-  },
-  data: function data() {
-    return {};
-  },
-
-  computed: {
-    letter: function letter() {
-      return this.rowData.hasOwnProperty('from') && this.rowData.from !== null ? this.rowData.from.full_name.slice(0, 2) : '';
-    }
-  },
-  methods: {}
-};
-
-/***/ }),
-/* 480 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "span",
-    { staticClass: "btn bg-teal-400 rounded-circle btn-icon btn-sm" },
-    [
-      _c("span", { staticClass: "letter-icon text-uppercase" }, [
-        _vm._v(_vm._s(_vm.letter))
-      ])
-    ]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3f895562", module.exports)
-  }
-}
-
-/***/ }),
-/* 481 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(5)
-/* script */
-var __vue_script__ = __webpack_require__(482)
-/* template */
-var __vue_template__ = __webpack_require__(483)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "Resources/assets/js/modules/user/inbox/tables/inbox/CustomLinkByFrom.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-379ea5cc", Component.options)
-  } else {
-    hotAPI.reload("data-v-379ea5cc", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 482 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  name: 'CustomLinkByFrom',
-  props: {
-    rowData: {
-      type: Object,
-      required: true
-    },
-    rowIndex: {
-      type: Number
-    }
-  },
-  data: function data() {
-    return {};
-  },
-
-  computed: {
-    from: function from() {
-      return this.rowData.hasOwnProperty('from') && this.rowData.from !== null ? this.rowData.from.full_name : '';
-    },
-    letter: function letter() {
-      return this.from.length > 1 ? this.from.slice(0, 2) : '';
-    }
-  },
-  methods: {}
-};
-
-/***/ }),
-/* 483 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("span", [
-    _c(
-      "span",
-      { staticClass: "btn bg-teal-400 rounded-circle btn-icon btn-sm" },
-      [
-        _c("span", { staticClass: "letter-icon text-uppercase" }, [
-          _vm._v(_vm._s(_vm.letter))
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c("span", [_vm._v("\n         " + _vm._s(_vm.from) + "\n    ")])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-379ea5cc", module.exports)
   }
 }
 

@@ -251,15 +251,15 @@ class GroupsController extends Controller
             ])->find($id);
 
             $result['group'] = [
-                'id'                  => $group->id,
-                'name'                => $group->name,
-                'display_name'        => $group->display_name,
-                'owner'               => $group->owner->full_name,
-                'whitelabel'          => $group->whitelabel,
-                'whitelabel_id'       => $group->whitelabel->id,
-                'users'               => $group->users->pluck('id'),
-                'description'         => $group->description,
-                'status'              => $group->status,
+                'id'                   => $group->id,
+                'name'                 => $group->name,
+                'display_name'         => $group->display_name,
+                'owner'                => $group->owner->full_name,
+                'whitelabel'           => $group->whitelabel,
+                'whitelabel_id'        => $group->whitelabel->id,
+                'users'                => $group->users->pluck('id'),
+                'description'          => $group->description,
+                'status'               => $group->status,
                 'current'              => $group->current
             ];
             $result['group']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-group') ? $this->activities->byModel($group) : [];

@@ -1,9 +1,9 @@
 <template>
     <span>
-      <span class="btn bg-teal-400 rounded-circle btn-icon btn-sm">
+      <span class="btn rounded-circle btn-icon btn-sm" :class="rowData.is_read ? 'bg-teal-300' : 'bg-teal-800'">
            <span class="letter-icon text-uppercase">{{ letter }}</span>
       </span>
-        <span>
+        <span :class="rowData.is_read ? '' : 'font-weight-bold'">
              {{ from }}
         </span>
     </span>

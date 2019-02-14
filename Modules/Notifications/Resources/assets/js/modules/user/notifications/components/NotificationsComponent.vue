@@ -4,7 +4,7 @@
         <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
             <i class="icon-bell3"></i>
             <span class="d-md-none ml-2"> {{ trans('labels.notifications') }}</span>
-            <span class="badge badge-pill bg-teal-400 ml-auto ml-md-0" v-text="count" v-if="count > 0"></span>
+            <span class="badge badge-pill bg-teal-800 ml-auto ml-md-0" v-text="count" v-if="count > 0"></span>
         </a>
 
         <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-400">
@@ -19,8 +19,8 @@
                 </ul>
             </div>
 
-            <div class="dropdown-content-footer bg-light">
-                <a :href="inboxUrl" class="text-grey mr-auto"><i class="icon-drawer-in mr-2"></i> {{ trans('labels.inbox')}}</a>
+            <div class="dropdown-content-footer justify-content-center p-0">
+                <a :href="inboxUrl" class="bg-light text-grey w-100 py-2" data-popup="tooltip" :title="trans('labels.inbox')"><i class="icon-drawer-in d-block top-0"></i></a>
             </div>
         </div>
     </li>

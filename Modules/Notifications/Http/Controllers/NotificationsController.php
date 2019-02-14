@@ -4,11 +4,8 @@ namespace Modules\Notifications\Http\Controllers;
 
 use App\Repositories\Criteria\ByUser;
 use App\Repositories\Criteria\EagerLoad;
-use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\Latest;
-use App\Repositories\Criteria\OrderBy;
-use App\Repositories\Criteria\WhereBetween;
-use App\Repositories\Criteria\WithTrashed;
+use App\Repositories\Criteria\Where;
 use App\Services\Flag\Src\Flag;
 use Carbon\Carbon;
 use Illuminate\Auth\AuthManager;
@@ -64,6 +61,7 @@ class NotificationsController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -89,6 +87,7 @@ class NotificationsController extends Controller
                 new EagerLoad(['from' => function ($query) {
                     $query->select('users.id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'));
                 }]),
+                new Where('notifications.is_read', false)
             ])->paginate($perPage);
 
             $result['userId'] = $this->auth->guard('web')->user()->id;
@@ -106,6 +105,7 @@ class NotificationsController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
@@ -115,7 +115,9 @@ class NotificationsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -124,6 +126,7 @@ class NotificationsController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -144,7 +147,7 @@ class NotificationsController extends Controller
             $notification = $this->notifications->find($id);
 
             $result['notification'] = [
-                'id' => $notification->id,
+                'id'      => $notification->id,
                 'message' => $notification->message
             ];
 
@@ -162,8 +165,8 @@ class NotificationsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request $request
-     * @param int      $id
+     * @param Request $request
+     * @param int     $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -214,7 +217,6 @@ class NotificationsController extends Controller
 
     /**
      * @param int $id
-     *
      *
      * @return \Illuminate\Http\JsonResponse
      */

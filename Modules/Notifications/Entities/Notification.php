@@ -5,19 +5,20 @@ namespace Modules\Notifications\Entities;
 use App\Models\Access\User\User;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Notification extends Model
 {
-    use SearchableTrait, SoftDeletes;
+    use SearchableTrait;
 
     protected $guarded = [];
 
-    protected $dates = ['deleted_at'];
+    protected $casts = [
+        'is_read'  => 'boolean'
+    ];
 
     protected $searchable = [
-        /**
+        /*
          * Columns and their priority in search results.
          * Columns with higher values are more important.
          * Columns with equal values have equal importance.
@@ -25,7 +26,7 @@ class Notification extends Model
          * @var array
          */
         'columns' => [
-            'notifications.id' => 10,
+            'notifications.id'      => 10,
             'notifications.message' => 10
         ]
     ];
@@ -34,7 +35,6 @@ class Notification extends Model
     {
         return $date->format('c');
     }
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

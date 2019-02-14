@@ -10,7 +10,6 @@
 namespace Modules\Notifications\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
-use Modules\Notifications\Entities\Group;
 use Modules\Notifications\Entities\Notification;
 use Modules\Notifications\Repositories\Contracts\NotificationsRepository;
 

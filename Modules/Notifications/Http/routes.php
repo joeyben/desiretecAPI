@@ -1,4 +1,5 @@
 <?php
+
 Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Modules\Notifications\Http\Controllers'], function () {
     Route::get('notifications', 'NotificationsController@index')->name('notifications');
     Route::get('notifications/view', 'NotificationsController@view')->name('notifications.view');
@@ -11,7 +12,6 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Modules\Notificat
     Route::delete('notifications/{id}/destroy', 'NotificationsController@forceDelete')
         ->name('notifications.forceDelete')->where('id', '[0-9]+');
     Route::put('notifications/{id}/restore', 'NotificationsController@restore')->name('notifications.restore')->where('id', '[0-9]+');
-    Route::get('notifications/export', 'NotificationsController@export')->name('notifications.export');
 });
 
 Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Modules\Notifications\Http\Controllers'], function () {
@@ -22,9 +22,10 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Modules\Notificat
     Route::get('inbox/{id}/edit', 'InboxController@edit')->name('inbox.edit')->where('id', '[0-9]+');
     Route::get('inbox/create', 'InboxController@create')->name('inbox.create')->where('id', '[0-9]+');
     Route::put('inbox/{id}', 'InboxController@update')->name('inbox.update')->where('id', '[0-9]+');
+    Route::put('inbox/read/{id}', 'InboxController@read')->name('notifications.read')->where('id', '[0-9]+');
+    Route::put('inbox/readNotification', 'InboxController@readNotification')->name('notifications.readNotification');
     Route::delete('inbox/{id}', 'InboxController@destroy')->name('inbox.destroy')->where('id', '[0-9]+');
     Route::delete('inbox/{id}/destroy', 'InboxController@forceDelete')
         ->name('inbox.forceDelete')->where('id', '[0-9]+');
     Route::put('inbox/{id}/restore', 'InboxController@restore')->name('inbox.restore')->where('id', '[0-9]+');
-    Route::get('inbox/export', 'InboxController@export')->name('inbox.export');
 });

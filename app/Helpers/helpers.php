@@ -144,10 +144,9 @@ if (!function_exists('createNotification')) {
     /**
      * create new notification.
      *
-     * @param             $message    message you want to show in notification
-     * @param             $userId     To Whom You Want To send Notification
-     *
-     * @param int|null    $fromId
+     * @param          $message message you want to show in notification
+     * @param          $userId  To Whom You Want To send Notification
+     * @param int|null $fromId
      *
      * @return object
      */

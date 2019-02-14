@@ -8,7 +8,7 @@ use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\Latest;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\WhereBetween;
-use App\Repositories\Criteria\WithTrashed;
+use App\Repositories\Criteria\WhereIn;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -60,8 +60,10 @@ class InboxController extends Controller
         $this->lang = $lang;
         $this->carbon = $carbon;
     }
+
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -83,7 +85,6 @@ class InboxController extends Controller
             $sort = explode('|', $request->get('sort'));
 
             $result['data'] = $this->notifications->withCriteria([
-                new WithTrashed(),
                 new ByUser($this->auth->guard('web')->user()->id),
                 new OrderBy($sort[0], $sort[1]),
                 new Latest(),
@@ -107,6 +108,7 @@ class InboxController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
@@ -116,7 +118,9 @@ class InboxController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -125,6 +129,7 @@ class InboxController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -134,6 +139,7 @@ class InboxController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return Response
      */
     public function edit()
@@ -143,7 +149,9 @@ class InboxController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function update(Request $request)
@@ -151,7 +159,67 @@ class InboxController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function read(Request $request, int $id)
+    {
+        try {
+            $notification = $this->notifications->withCriteria([
+                new ByUser($this->auth->guard('web')->user()->id),
+            ])->update($id, ['is_read' => true]);
+
+            $result['notification'] = $notification;
+            $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Notification']);
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function readNotification(Request $request)
+    {
+        try {
+            $notifications = $this->notifications->withCriteria([
+                new ByUser($this->auth->guard('web')->user()->id),
+                new WhereIn('notifications.id', $request->get('checked')),
+            ])->get();
+
+            foreach ($notifications as $notification) {
+                $notification->update(['is_read' => true]);
+            }
+
+            $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Notifications']);
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()

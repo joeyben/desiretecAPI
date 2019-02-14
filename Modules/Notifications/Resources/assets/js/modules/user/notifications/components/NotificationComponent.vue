@@ -2,7 +2,7 @@
     <!-- Inner container -->
     <li class="media">
         <div class="mr-3">
-            <span class="btn bg-teal-400 rounded-circle btn-icon btn-sm">
+            <span class="btn bg-teal-800 rounded-circle btn-icon btn-sm">
                <span class="letter-icon text-uppercase">{{ letter }}</span>
            </span>
         </div>

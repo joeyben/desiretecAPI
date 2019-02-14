@@ -43,6 +43,7 @@ class DeletedGroupNotification extends Notification implements ShouldBroadcast
      * Get the notification's delivery channels.
      *
      * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -57,15 +58,15 @@ class DeletedGroupNotification extends Notification implements ShouldBroadcast
      */
     public function toBroadcast($notifiable)
     {
-        createNotification('<span class="badge badge-flat border-danger text-danger-600 rounded-0 mr-2">Deleted</span><strong>Group</strong> (<a  href="' . $this->url . '">' . $this->group->display_name . '</a>) has been <strong>successfully deleted</strong> by: <strong class="cursor-pointer">' .  $this->owner . '</strong>', $notifiable->id, Auth::guard('web')->user()->id);
+        createNotification('<span class="badge badge-flat border-danger text-danger-600 rounded-0 mr-2">Deleted</span><strong>Group</strong> (<a  href="' . $this->url . '">' . $this->group->display_name . '</a>) has been <strong>successfully deleted</strong> by: <strong class="cursor-pointer">' . $this->owner . '</strong>', $notifiable->id, Auth::guard('web')->user()->id);
 
         return new BroadcastMessage([
             'id'         => $this->group->id,
-            'message'    => '<span class="badge badge-flat border-danger text-danger-600 rounded-0 mr-2">Deleted</span><strong>Group</strong>(<a  href="' . $this->url . '">' . $this->group->display_name . '</a>) has been <strong>successfully deleted</strong> by: <strong class="cursor-pointer">' .  $this->owner . '</strong>',
+            'message'    => '<span class="badge badge-flat border-danger text-danger-600 rounded-0 mr-2">Deleted</span><strong>Group</strong>(<a  href="' . $this->url . '">' . $this->group->display_name . '</a>) has been <strong>successfully deleted</strong> by: <strong class="cursor-pointer">' . $this->owner . '</strong>',
             'user_id'    => $notifiable->id,
             'from_id'    => Auth::guard('web')->user()->id,
-            'from'    => [
-                'id' => Auth::guard('web')->user()->id,
+            'from'       => [
+                'id'        => Auth::guard('web')->user()->id,
                 'full_name' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name
             ],
             'created_at' => Carbon::parse(now())->format('c'),
