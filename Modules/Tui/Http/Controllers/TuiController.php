@@ -4,13 +4,13 @@ namespace Modules\Tui\Http\Controllers;
 
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
+use App\Repositories\Frontend\Access\User\UserRepository;
+use App\Repositories\Frontend\Wishes\WishesRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Tui\Http\Requests\StoreWishRequest;
-use App\Repositories\Frontend\Access\User\UserRepository;
-use App\Repositories\Frontend\Wishes\WishesRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
+use Modules\Tui\Http\Requests\StoreWishRequest;
 
 class TuiController extends Controller
 {
@@ -59,7 +59,7 @@ class TuiController extends Controller
     {
         $html = view('tui::layer.popup')->with([
             'adults_arr' => $this->adults,
-            'kids_arr' => $this->kids
+            'kids_arr'   => $this->kids
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -67,7 +67,8 @@ class TuiController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param UserRepository $user
+     *
+     * @param UserRepository   $user
      * @param StoreWishRequest $request
      * @param WishesRepository $wish
      *
@@ -75,25 +76,23 @@ class TuiController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
-
         if ($request->failed()) {
             $html = view('tui::layer.popup')->with([
-                'adults_arr' => $this->adults,
+                'adults_arr'  => $this->adults,
                 'errors'      => $request->errors()
             ])->render();
+
             return response()->json(['success' => true, 'html'=>$html]);
         }
-
 
         $newUser = $this->createUserFromLayer($request, $user);
         $wish = $this->createWishFromLayer($request, $wish);
         $html = view('tui::layer.created')->with([
             'token' => $newUser->token->token,
-            'id' => $wish->id
+            'id'    => $wish->id
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
-
     }
 
     private function setAdults()
@@ -108,21 +107,21 @@ class TuiController extends Controller
 
     /**
      * Create new user from Layer.
-     * @param UserRepository $user
+     *
+     * @param UserRepository   $user
      * @param StoreWishRequest $request
      *
      * @return UserRepository $user
      */
-
     private function createUserFromLayer(StoreWishRequest $request, $user)
     {
         $request->merge(
-            array(
-                'first_name' => "John",
-                'last_name' => "Doe",
-                "password" => "tui2019",
-                "is_term_accept" => true
-            )
+            [
+                'first_name'     => 'John',
+                'last_name'      => 'Doe',
+                'password'       => 'tui2019',
+                'is_term_accept' => true
+            ]
         );
         $new_user = $user->create($request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'));
         $new_user->storeToken();
@@ -134,16 +133,16 @@ class TuiController extends Controller
 
     /**
      * Create new user from Layer.
+     *
      * @param WishesRepository $wish
      * @param StoreWishRequest $request
      *
      * @return object
      */
-
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
-
         $new_wish = $wish->create($request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'));
+
         return $new_wish;
     }
 }

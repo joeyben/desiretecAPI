@@ -26,7 +26,7 @@ class Group extends Model
     protected static $logOnlyDirty = true;
 
     protected $casts = [
-        'status'  => 'boolean',
+        'status'   => 'boolean',
         'current'  => 'boolean',
     ];
 

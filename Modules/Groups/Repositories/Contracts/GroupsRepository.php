@@ -2,9 +2,7 @@
 
 namespace Modules\Groups\Repositories\Contracts;
 
-
 use Modules\Groups\Entities\Group;
-use Modules\Whitelabels\Entities\Whitelabel;
 
 interface GroupsRepository
 {

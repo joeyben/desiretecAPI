@@ -167,7 +167,7 @@ class GroupsController extends Controller
             $users = $whitelabel->users()->get();
 
             foreach ($users as $user) {
-                if ($user->hasRole(Flag::SELLER_ROLE)) {
+                if ($user->hasRole(Flag::SELLER_ROLE) && !$user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $result['group']['usersList'][] = ['id' => $user->id,  'name' => $user->first_name . ' ' . $user->last_name];
                 }
             }
@@ -251,22 +251,22 @@ class GroupsController extends Controller
             ])->find($id);
 
             $result['group'] = [
-                'id'                  => $group->id,
-                'name'                => $group->name,
-                'display_name'        => $group->display_name,
-                'owner'               => $group->owner->full_name,
-                'whitelabel'          => $group->whitelabel,
-                'whitelabel_id'       => $group->whitelabel->id,
-                'users'               => $group->users->pluck('id'),
-                'description'         => $group->description,
-                'status'              => $group->status,
+                'id'                   => $group->id,
+                'name'                 => $group->name,
+                'display_name'         => $group->display_name,
+                'owner'                => $group->owner->full_name,
+                'whitelabel'           => $group->whitelabel,
+                'whitelabel_id'        => $group->whitelabel->id,
+                'users'                => $group->users->pluck('id'),
+                'description'          => $group->description,
+                'status'               => $group->status,
                 'current'              => $group->current
             ];
             $result['group']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-group') ? $this->activities->byModel($group) : [];
             $users = $this->whitelabels->find($group->whitelabel_id)->users()->get();
 
             foreach ($users as $user) {
-                if ($user->hasRole(Flag::SELLER_ROLE)) {
+                if ($user->hasRole(Flag::SELLER_ROLE) && !$user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $result['group']['usersList'][] = ['id' => $user->id,  'name' => $user->first_name . ' ' . $user->last_name];
                 }
             }

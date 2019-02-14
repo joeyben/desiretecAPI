@@ -2,9 +2,9 @@
 
 use App\Models\Access\Permission\Permission;
 use App\Models\Access\Role\Role;
-use App\Models\Whitelabels\Whitelabel;
 use App\Models\Distributions\Distribution;
 use App\Models\Groups\Group;
+use Modules\Whitelabels\Entities\Whitelabel;
 
 return [
     /*

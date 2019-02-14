@@ -2,18 +2,16 @@
 
 namespace Modules\Tui\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 /**
  * Class StoreWishesRequest.
  */
 class StoreWishRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -47,18 +45,19 @@ class StoreWishRequest extends FormRequest
     /**
      * Handle a failed validation attempt.
      *
-     * @param  \Illuminate\Contracts\Validation\Validator  $validator
-     * @return JsonResponse
+     * @param \Illuminate\Contracts\Validation\Validator $validator
      *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return JsonResponse
      */
-
     protected function failedValidation(Validator $validator)
     {
         $errors = (new ValidationException($validator))->errors();
 
         return response()->json(['errors' => $errors], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
     }
+
     /**
      * Get the validation rules that apply to the request.
      *

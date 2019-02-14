@@ -210,6 +210,9 @@ class UserController extends Controller
             foreach (config('users.permissions', []) as $permission) {
                 $result['user']['permissions'][str_slug($permission)] = $user->hasPermission(str_slug($permission));
             }
+            foreach (config('notifications.permissions', []) as $permission) {
+                $result['user']['permissions'][str_slug($permission)] = $user->hasPermission(str_slug($permission));
+            }
             $result['user']['permissions']['can-login-as-user'] = access()->allow('login-as-user') && (!session()->has('admin_user_id') || !session()->has('temp_user_id'));
 
             $result['user']['roles']['Administrator'] = $user->hasRole('Administrator');

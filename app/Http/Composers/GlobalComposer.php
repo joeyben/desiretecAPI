@@ -23,10 +23,10 @@ class GlobalComposer
 
         $loggedAvatar = Agent::where('user_id', $id)->where('status', 'Active')->value('avatar');
         $loggedAgent = Agent::where('user_id', $id)->where('status', 'Active')->value('display_name');
-        
+
         $view->with(['logged_in_user' => access()->user(),
-                    'agents' => $agents,
-                    'logged_agent' => $loggedAgent,
-                    'logged_avatar' => $loggedAvatar]);
+                    'agents'          => $agents,
+                    'logged_agent'    => $loggedAgent,
+                    'logged_avatar'   => $loggedAvatar]);
     }
 }
