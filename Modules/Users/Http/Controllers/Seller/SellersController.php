@@ -249,9 +249,15 @@ class SellersController
     public function update(UpdateUserRequest $request, int $id)
     {
         try {
+            $extras = [];
+
+            if ($request->has('password')) {
+                $extras['password'] = bcrypt($request->get('password'));
+            }
+
             $user = $this->users->withCriteria([
                 new HasRole(Flag::SELLER_ROLE)
-            ])->update($id, $request->only('first_name', 'email', 'status', 'confirmed'));
+            ])->update($id, array_merge($request->only('first_name', 'email', 'status', 'confirmed'), $extras));
 
             $this->users->sync($user->id, 'groups', $request->get('groups'));
 
