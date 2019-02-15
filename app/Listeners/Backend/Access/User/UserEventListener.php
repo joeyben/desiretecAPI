@@ -2,6 +2,12 @@
 
 namespace App\Listeners\Backend\Access\User;
 
+use App\Models\Access\Role\Role;
+use App\Services\Flag\Src\Flag;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use Modules\Users\Notifications\CreatedUserNotification;
+
 /**
  * Class UserEventListener.
  */
@@ -17,6 +23,11 @@ class UserEventListener
      */
     public function onCreated($event)
     {
+        $admins = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->where('users.id', '!=', Auth::guard('web')->user()->id)->get();
+
+        Notification::send($admins, new CreatedUserNotification($event->user));
+        Auth::guard('web')->user()->notify(new CreatedUserNotification($event->user));
+
         history()->withType($this->history_slug)
             ->withEntity($event->user->id)
             ->withText('trans("history.backend.users.created") <strong>{user}</strong>')

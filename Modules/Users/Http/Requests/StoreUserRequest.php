@@ -14,11 +14,13 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|string',
-            'email'      => 'required|email|unique:users,email',
-            'groups'     => 'nullable|array',
-            'status'     => 'required|boolean',
-            'confirmed'  => 'required|boolean',
+            'first_name'       => 'required|string',
+            'email'            => 'required|email|unique:users,email',
+            'groups'           => 'nullable|array',
+            'status'           => 'required|boolean',
+            'confirmed'        => 'required|boolean',
+            'password_confirm' => 'required|min:6|required_with:password',
+            'password'         => 'required|sometimes|required_with:password_confirm|same:password_confirm|min:6',
         ];
     }
 
