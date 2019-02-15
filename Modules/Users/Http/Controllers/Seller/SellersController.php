@@ -205,7 +205,7 @@ class SellersController
             $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
 
             if ((null === $whitelabel) && $request->has('whitelabelId')) {
-                $whitelabel = $this->whitelabels->find($request->get('whitelabelId'));
+                $whitelabel = $this->whitelabels->find((int) $request->get('whitelabelId'));
             }
 
             $result['user'] = [

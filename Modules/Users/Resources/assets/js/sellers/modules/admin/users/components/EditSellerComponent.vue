@@ -127,7 +127,8 @@
                                     </fieldset>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" v-on:click="close = false"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save_and_create_new') }}</button>
+                                    <button type="submit" class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" v-on:click="close = false" v-if="user.id !== 0"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save') }}</button>
+                                    <button type="submit" class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" v-on:click="close = false" v-if="user.id === 0"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save_and_create_new') }}</button>
                                     <button type="submit" class="btn btn-outline bg-teal-400 text-teal-400 border-teal-400 btn-sm" v-on:click="close = true"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save_and_close') }}</button>
                                     <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.close') }}</button>
                                 </div>
@@ -276,7 +277,7 @@
       onSubmitUpdate (id) {
         this.$store.dispatch('block', {element: 'usersComponent', load: true})
         this.$http.put(window.laroute.route('admin.sellers.update', {id: id}), this.user)
-          .then(this.onSubmitSuccess)
+          .then(this.onUpdateSuccess)
           .catch(this.onFailed)
           .then(() => {
             this.$store.dispatch('block', {element: 'usersComponent', load: false})
@@ -289,6 +290,24 @@
             this.$router.push({name: 'root'})
           } else {
             this.CreateUser(parseInt(this.$route.params.whitelabel_id))
+          }
+          this.$message({
+            message: response.data.message,
+            showClose: true,
+            type: 'success'
+          })
+          this.$parent.$children[0].refresh()
+        } else {
+          this.$notify.error({ title: 'Failed', message: response.data.message })
+        }
+      },
+      onUpdateSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          if (this.close) {
+            $('#modal_large_user').modal('hide')
+            this.$router.push({name: 'root'})
+          } else {
+            this.$router.push({name: 'root.seller', params: {id: response.data.user.id}})
           }
           this.$message({
             message: response.data.message,

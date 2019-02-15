@@ -101926,6 +101926,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _vuex = __webpack_require__(7);
 
@@ -102060,7 +102061,7 @@ exports.default = {
       var _this5 = this;
 
       this.$store.dispatch('block', { element: 'usersComponent', load: true });
-      this.$http.put(window.laroute.route('admin.sellers.update', { id: id }), this.user).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+      this.$http.put(window.laroute.route('admin.sellers.update', { id: id }), this.user).then(this.onUpdateSuccess).catch(this.onFailed).then(function () {
         _this5.$store.dispatch('block', { element: 'usersComponent', load: false });
       });
     },
@@ -102071,6 +102072,24 @@ exports.default = {
           this.$router.push({ name: 'root' });
         } else {
           this.CreateUser(parseInt(this.$route.params.whitelabel_id));
+        }
+        this.$message({
+          message: response.data.message,
+          showClose: true,
+          type: 'success'
+        });
+        this.$parent.$children[0].refresh();
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message });
+      }
+    },
+    onUpdateSuccess: function onUpdateSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        if (this.close) {
+          $('#modal_large_user').modal('hide');
+          this.$router.push({ name: 'root' });
+        } else {
+          this.$router.push({ name: 'root.seller', params: { id: response.data.user.id } });
         }
         this.$message({
           message: response.data.message,
@@ -102644,27 +102663,53 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-footer" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm",
-                            attrs: { type: "submit" },
-                            on: {
-                              click: function($event) {
-                                _vm.close = false
-                              }
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "icon-checkmark-circle mr-1"
-                            }),
-                            _vm._v(
-                              _vm._s(_vm.trans("button.save_and_create_new"))
+                        _vm.user.id !== 0
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm",
+                                attrs: { type: "submit" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.close = false
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "icon-checkmark-circle mr-1"
+                                }),
+                                _vm._v(_vm._s(_vm.trans("button.save")))
+                              ]
                             )
-                          ]
-                        ),
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.user.id === 0
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm",
+                                attrs: { type: "submit" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.close = false
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "icon-checkmark-circle mr-1"
+                                }),
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.trans("button.save_and_create_new")
+                                  )
+                                )
+                              ]
+                            )
+                          : _vm._e(),
                         _vm._v(" "),
                         _c(
                           "button",

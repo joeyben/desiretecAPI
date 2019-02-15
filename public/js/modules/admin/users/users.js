@@ -102391,7 +102391,7 @@ var render = function() {
                             _c("i", {
                               staticClass: "icon-checkmark-circle mr-1"
                             }),
-                            _vm._v(_vm._s(_vm.trans("button.save_and_create")))
+                            _vm._v(_vm._s(_vm.trans("button.save")))
                           ]
                         ),
                         _vm._v(" "),
