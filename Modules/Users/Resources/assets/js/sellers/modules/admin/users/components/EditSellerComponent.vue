@@ -54,6 +54,24 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label"> &nbsp;&nbsp;{{ trans('modals.password') }} <span class="text-danger" v-if="parseInt(this.$route.params.id) === 0"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <input type="password" class="form-control" :class="errors.has('password') ? 'is-invalid': ''" :placeholder="trans('modals.password')" id="password" name="password" @input="updateUser"  :value="user.password">
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('password')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label"> &nbsp;&nbsp;{{ trans('modals.password_confirm') }} <span class="text-danger" v-if="parseInt(this.$route.params.id) === 0"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <input type="password" class="form-control" :class="errors.has('password_confirm') ? 'is-invalid': ''" :placeholder="trans('modals.password_confirm')" id="password_confirm" name="password_confirm" @input="updateUser"  :value="user.password_confirm">
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('password_confirm')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('validation.attributes.backend.access.users.associated_whitelabels') }}</label>
                                                 <div class="col-lg-9">
                                                     <input type="text" class="form-control"  id='whitelabel' name='whitelabel' :placeholder="trans('validation.attributes.backend.access.users.associated_whitelabels')"   :value="getWhitelabel('whitelabel', 'display_name')" disabled readonly/>
@@ -85,7 +103,7 @@
                                                 </div>
                                             </div>
                                             <legend class="font-weight-semibold text-uppercase font-size-sm">
-                                                <i class="icon-thumbs-up3"></i>
+                                                <i class="icon-collaboration"></i>
                                                 {{ trans('validation.attributes.backend.access.users.groups') }}
                                                 <a class="float-right text-default" data-toggle="collapse" data-target="#demo5">
                                                     <i class="icon-circle-down2"></i>
@@ -109,7 +127,7 @@
                                     </fieldset>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" v-on:click="close = false"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save') }}</button>
+                                    <button type="submit" class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" v-on:click="close = false"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save_and_create_new') }}</button>
                                     <button type="submit" class="btn btn-outline bg-teal-400 text-teal-400 border-teal-400 btn-sm" v-on:click="close = true"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save_and_close') }}</button>
                                     <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.close') }}</button>
                                 </div>
@@ -150,6 +168,9 @@
       this.loadModal()
     },
     watch: {
+      '$route.params.id' () {
+        this.EditUser(parseInt(this.$route.params.id))
+      }
     },
     computed: {
       ...Vuex.mapGetters({
@@ -267,7 +288,7 @@
             $('#modal_large_user').modal('hide')
             this.$router.push({name: 'root'})
           } else {
-            this.$router.push({name: 'root.seller', params: {id: response.data.user.id}})
+            this.CreateUser(parseInt(this.$route.params.whitelabel_id))
           }
           this.$message({
             message: response.data.message,

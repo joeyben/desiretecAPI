@@ -9,6 +9,7 @@
 
 namespace Modules\Users\Http\Controllers\Seller;
 
+use App\Events\Backend\Access\User\UserCreated;
 use App\Models\Access\Role\Role;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
@@ -19,6 +20,7 @@ use App\Repositories\Criteria\WhereHas;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +29,7 @@ use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
 use Modules\Users\Http\Requests\StoreUserRequest;
 use Modules\Users\Http\Requests\UpdateUserRequest;
+use Modules\Users\Notifications\CreatedUserNotificationForSeller;
 use Modules\Users\Repositories\Contracts\UsersRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
@@ -63,6 +66,10 @@ class SellersController
      * @var \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository
      */
     private $whitelabels;
+    /**
+     * @var \Illuminate\Notifications\ChannelManager
+     */
+    private $notification;
 
     /**
      * SellersController constructor.
@@ -74,8 +81,9 @@ class SellersController
      * @param \Modules\Groups\Repositories\Contracts\GroupsRepository           $groups
      * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
      * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
+     * @param \Illuminate\Notifications\ChannelManager                          $notification
      */
-    public function __construct(UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, GroupsRepository $groups, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels)
+    public function __construct(UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, GroupsRepository $groups, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, ChannelManager $notification)
     {
         $this->users = $users;
         $this->response = $response;
@@ -84,6 +92,7 @@ class SellersController
         $this->groups = $groups;
         $this->activities = $activities;
         $this->whitelabels = $whitelabels;
+        $this->notification = $notification;
     }
 
     /**
@@ -270,22 +279,31 @@ class SellersController
     {
         try {
             $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+            $extras = [];
+
             if ((null === $whitelabel) && $request->has('whitelabelId')) {
                 $whitelabel = $this->whitelabels->find($request->get('whitelabelId'));
             }
 
+            if ($request->has('password')) {
+                $extras['password'] = bcrypt($request->get('password'));
+            }
+
+            $extras['created_by'] = $this->auth->guard('web')->user()->id;
+            $extras['updated_by'] = $this->auth->guard('web')->user()->id;
+
             $result['user'] = $this->users->create(
-                array_merge(
-                    $request->only('first_name', 'email', 'status', 'confirmed'),
-                    ['created_by' => $this->auth->guard('web')->user()->id, 'updated_by' => $this->auth->guard('web')->user()->id]
-                )
+                array_merge($request->only('first_name', 'email', 'status', 'confirmed'), $extras)
             );
+
+            event(new UserCreated($result['user']));
+            $this->notification->send($result['user'], new CreatedUserNotificationForSeller($request->get('password')));
 
             $this->users->sync($result['user']->id, 'groups', $request->get('groups'));
             $this->users->sync($result['user']->id, 'whitelabels', [$whitelabel->id]);
             $this->users->sync($result['user']->id, 'roles', [Role::where('name', Flag::SELLER_ROLE)->first()->id]);
 
-            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Group']);
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Seller']);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {

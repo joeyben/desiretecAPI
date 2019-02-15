@@ -53,6 +53,7 @@ class User extends Authenticatable implements JWTSubject
         'status',
         'confirmation_code',
         'confirmed',
+        'password',
         'created_by',
         'updated_by',
     ];
