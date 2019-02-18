@@ -38,6 +38,6 @@ services:
 
 networks:
     frontend:
-      # external:
-      #   name: reverseproxy_http_proxy
+      external:
+        name: reverseproxy_http_proxy
     backend:
