@@ -27,7 +27,6 @@ class UpdateWishRequest extends FormRequest
             'duration'                 => 'required|string|min:1',
             'status'                   => 'required|boolean',
             'created_by'               => 'required|int|min:1',
-            'updated_by'               => 'required|int|min:1',
         ];
     }
 
