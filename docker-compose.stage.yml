@@ -23,10 +23,21 @@ services:
     redis:
       networks:
         - backend
-
+    laravel-echo-server:
+      build:
+        context: ./laravel-echo-server
+      volumes:
+        - ./laravel-echo-server/laravel-echo-server.json:/app/laravel-echo-server.json:ro
+      ports:
+        - 6001:6001
+      links:
+        - redis
+      networks:
+        - frontend
+        - backend
 
 networks:
-  frontend:
-    external:
-      name: reverseproxy_http_proxy
-  backend:
+    frontend:
+      external:
+        name: reverseproxy_http_proxy
+    backend:
