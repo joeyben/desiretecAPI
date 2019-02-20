@@ -303,7 +303,7 @@ class SellersController
             );
 
             event(new UserCreated($result['user']));
-            $this->notification->send($result['user'], new CreatedUserNotificationForSeller($request->get('password')));
+            $this->notification->send($result['user'], new CreatedUserNotificationForSeller($result['user'], $request->get('password'), $whitelabel));
 
             $this->users->sync($result['user']->id, 'groups', $request->get('groups'));
             $this->users->sync($result['user']->id, 'whitelabels', [$whitelabel->id]);

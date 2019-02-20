@@ -7,6 +7,7 @@ use App\Services\Flag\Src\Flag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Modules\Users\Notifications\CreatedUserNotification;
+use Modules\Users\Notifications\DeletedUserNotification;
 
 /**
  * Class UserEventListener.
@@ -60,6 +61,11 @@ class UserEventListener
      */
     public function onDeleted($event)
     {
+        $admins = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->where('users.id', '!=', Auth::guard('web')->user()->id)->get();
+
+        Notification::send($admins, new DeletedUserNotification($event->user));
+        Auth::guard('web')->user()->notify(new DeletedUserNotification($event->user));
+
         history()->withType($this->history_slug)
             ->withEntity($event->user->id)
             ->withText('trans("history.backend.users.deleted") <strong>{user}</strong>')

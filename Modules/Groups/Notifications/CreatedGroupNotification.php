@@ -8,6 +8,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 use Modules\Groups\Entities\Group;
 
 class CreatedGroupNotification extends Notification implements ShouldBroadcast
@@ -35,7 +36,7 @@ class CreatedGroupNotification extends Notification implements ShouldBroadcast
     public function __construct(Group $group, string $owner)
     {
         $this->group = $group;
-        $this->url = route('provider.groups') . '#/edit/' . $this->group->id;
+        $this->url = route('admin.groups') . '#/edit/' . $this->group->id;
         $this->owner = $owner;
     }
 
@@ -58,11 +59,11 @@ class CreatedGroupNotification extends Notification implements ShouldBroadcast
      */
     public function toBroadcast($notifiable)
     {
-        createNotification('<span class="badge badge-flat border-success text-success-600 rounded-0 mr-2"> Created</span><strong>Group</strong>(<a  href="' . $this->url . '">' . $this->group->display_name . '</a>) has been <strong>successfully created</strong> by: <strong class="cursor-pointer">' . $this->owner . '</strong>', $notifiable->id, Auth::guard('web')->user()->id);
+        createNotification(Lang::get('notification.created', ['name' => 'Group', 'url' => '<a  href="' . $this->url . '"> ' . $this->group->display_name . '</a>', 'user' => $this->owner]), $notifiable->id, Auth::guard('web')->user()->id);
 
         return new BroadcastMessage([
             'id'      => $this->group->id,
-            'message' => '<span class="badge badge-flat border-success text-success-600 rounded-0 mr-2"> Created</span><strong>Group</strong>(<a  href="' . $this->url . '">' . $this->group->display_name . '</a>) has been <strong>successfully created</strong> by: <strong class="cursor-pointer">' . $this->owner . '</strong>',
+            'message' => Lang::get('notification.created', ['name' => 'Group', 'url' => '<a  href="' . $this->url . '"> ' . $this->group->display_name . '</a>', 'user' => $this->owner]),
             'user_id' => $notifiable->id,
             'from_id' => Auth::guard('web')->user()->id,
             'from'    => [

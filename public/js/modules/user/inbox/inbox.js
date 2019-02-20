@@ -106799,7 +106799,7 @@ exports.default = {
       },
       formLabelWidth: '120px',
       created: '',
-      urlExport: window.laroute.route('provider.groups.export'),
+      urlExport: window.laroute.route('admin.groups.export'),
       fields: _config2.default.fields,
       filterText: '',
       whitelabel: '',
@@ -106825,7 +106825,7 @@ exports.default = {
     user: 'currentUser'
   }), {
     urlReadSelected: function urlReadSelected() {
-      return window.laroute.route('provider.groups.export', { checked: this.checked });
+      return window.laroute.route('admin.groups.export', { checked: this.checked });
     },
     show: function show() {
       var results = [];
