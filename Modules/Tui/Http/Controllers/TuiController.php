@@ -20,6 +20,8 @@ class TuiController extends Controller
     protected $duration = [];
 
     private $whitelabelId;
+
+    const BODY_CLASS = 'landing';
     /**
      * @var WhitelabelsRepository
      */
@@ -50,6 +52,7 @@ class TuiController extends Controller
         return view('tui::index')->with([
             'display_name' => $whitelabel['display_name'],
             'bg_image'     => $whitelabel['bg_image'],
+            'body_class'         => $this::BODY_CLASS,
         ]);
     }
 

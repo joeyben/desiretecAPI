@@ -11,6 +11,7 @@ use App\Repositories\Frontend\Pages\PagesRepository;
  */
 class FrontendController extends Controller
 {
+    const BODY_CLASS = 'landing';
     /**
      * @return \Illuminate\View\View
      */
@@ -18,8 +19,9 @@ class FrontendController extends Controller
     {
         $settingData = Setting::first();
         $google_analytics = $settingData->google_analytics;
+        $body_class = $this::BODY_CLASS;
 
-        return view('frontend.index', compact('google_analytics', $google_analytics));
+        return view('frontend.index', compact('google_analytics', 'body_class'));
     }
 
     /**

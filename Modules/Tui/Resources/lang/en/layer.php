@@ -25,6 +25,7 @@ return [
         'category'         => 'TUI-Hotelkategorie',
         'catering'         => 'Verpflegung (mind.)',
         'duration'         => 'Duration',
+        'duration_empty'   => 'Any',
         'email'            => 'Ihre E-Mail-Adresse',
         'name'             => 'Name',
         'terms'            => 'Name',

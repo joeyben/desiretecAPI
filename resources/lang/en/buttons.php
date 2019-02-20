@@ -30,6 +30,7 @@ return [
     'wishes' => [
         'frontend' => [
             'create_offer' => 'Create Offer',
+            'create_autooffer' => 'Create Auto Offer',
         ]
     ],
     'emails' => [

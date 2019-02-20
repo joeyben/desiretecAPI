@@ -54,7 +54,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('tui::layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', $duration_arr, ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['' => trans('tui::layer.general.duration_empty')], $duration_arr), ['class' => 'form-control box-size']) }}
                             </div>
                             <i class="tui-icon--time"></i>
                         </div>
@@ -123,7 +123,7 @@
                     {{ Form::number('budget', old('budget'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('tui::layer.placeholder.budget'), 'required' => 'required']) }}
                 </div>
                 <span class="text">&nbsp;</span>
-                <input type="range" min="100" max="10000" value="50"  id="budgetRange">
+                <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
             </div>
 
             <div class="kwp-col-3 white-col stars">
@@ -145,9 +145,7 @@
 
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('tui::layer.general.catering'), ['class' => 'control-label required']) }}
-                <div class="kwp-custom-select">
-                    {{ Form::select('catering', $catering_arr, ['class' => 'form-control box-size']) }}
-                </div>
+                    {{ Form::select('catering', $catering_arr, '',['class' => 'selectpicker']) }}
                 <i class="tui-icon--chevron-down"></i>
             </div>
 
@@ -254,6 +252,8 @@
             });
 
             $(document).ready(function(){
+                $('.selectpicker').selectpicker();
+
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',

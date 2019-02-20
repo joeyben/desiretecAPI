@@ -1,3 +1,30 @@
+// Colors
+$primary-orange: #F96500;
+$primary-dark-grey: #575756;
+
+$secondary-mint: #1cbac8;
+$secondary-steel: #6897B1;
+$secondary-violet: #984771;
+$secondary-med-grey: #BBBBBB;
+
+$grayscale_white: #FFFFFF;
+$grayscale_grey1: #EEEEEE;
+$grayscale_grey2: #DDDDDD;
+
+$grayscale-med-grey2: #888888;
+$grayscale-dark-grey2: #454545;
+$grayscale-dark-grey2: #454545;
+$grayscale-black: #000000;
+
+$paragraph-color: #777777;
+
+// Heading
+@mixin heading($size: 12px, $weight: normal){
+  font-size: $size;
+  font-weight: $weight;
+}
+
+
 // Body
 $body-bg: #f5f8fa;
 
