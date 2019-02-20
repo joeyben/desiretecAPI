@@ -224,7 +224,7 @@
       },
       CreateGroup (whitelabelId) {
         this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.get(window.laroute.route('provider.groups.create', {whitelabelId: whitelabelId}))
+        this.$http.get(window.laroute.route('admin.groups.create', {whitelabelId: whitelabelId}))
           .then(this.onLoadGroupSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -233,7 +233,7 @@
       },
       EditGroup (id) {
         this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.get(window.laroute.route('provider.groups.edit', {id: id}))
+        this.$http.get(window.laroute.route('admin.groups.edit', {id: id}))
           .then(this.onLoadGroupSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -260,7 +260,7 @@
       },
       onSubmitStore () {
         this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.put(window.laroute.route('provider.groups.store'), this.group)
+        this.$http.put(window.laroute.route('admin.groups.store'), this.group)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -269,7 +269,7 @@
       },
       onSubmitUpdate (id) {
         this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.put(window.laroute.route('provider.groups.update', {id: id}), this.group)
+        this.$http.put(window.laroute.route('admin.groups.update', {id: id}), this.group)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {

@@ -104,7 +104,7 @@ export default {
         loadWhitelabels: 'loadWhitelabels'
       }),
       loadLayout: function () {
-        this.$http.get(window.laroute.route('provider.dashboard.show'))
+        this.$http.get(window.laroute.route('admin.dashboard.show'))
           .then(this.onLoadDashboardSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -112,7 +112,7 @@ export default {
           })
       },
       movedEvent: function (i, newX, newY) {
-        this.$http.put(window.laroute.route('provider.dashboard.save'), {dashboards: this.dashboards})
+        this.$http.put(window.laroute.route('admin.dashboard.save'), {dashboards: this.dashboards})
           .then(this.onSaveDashboardSuccess)
           .catch(this.onFailed)
           .then(() => {

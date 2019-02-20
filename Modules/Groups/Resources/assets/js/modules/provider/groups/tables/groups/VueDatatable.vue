@@ -30,7 +30,7 @@ import CssConfig from './CssConfig.js'
     },
     data () {
       return {
-        apiUrl: window.laroute.route('provider.groups.view'),
+        apiUrl: window.laroute.route('admin.groups.view'),
         fields: config.fields,
         sortOrder: config.sortOrder,
         appendParams: config.moreParams,
@@ -283,7 +283,7 @@ import CssConfig from './CssConfig.js'
       },
       onDelete (id) {
         this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.delete(window.laroute.route('provider.groups.destroy', {id: id}))
+        this.$http.delete(window.laroute.route('admin.groups.destroy', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -293,7 +293,7 @@ import CssConfig from './CssConfig.js'
       onForceDelete (id) {
         this.$store.dispatch('block', {element: 'groupsComponent', load: true})
         // eslint-disable-next-line
-        this.$http.delete(laroute.route('provider.groups.forceDelete', {id: id}))
+        this.$http.delete(laroute.route('admin.groups.forceDelete', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -303,7 +303,7 @@ import CssConfig from './CssConfig.js'
       onRestore (id) {
         this.$store.dispatch('block', {element: 'groupsComponent', load: true})
         // eslint-disable-next-line
-        this.$http.put(window.laroute.route('provider.groups.restore', {id: id}))
+        this.$http.put(window.laroute.route('admin.groups.restore', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {

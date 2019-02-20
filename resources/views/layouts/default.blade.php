@@ -71,9 +71,8 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
-                        <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
-                        <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span class="badge badge-pill bg-blue ml-auto">58</span></a>
+                        <a href="{{ route("admin.profile.edit") }}" class="dropdown-item"><i class="icon-user-plus"></i> @lang('Edit Profile')</a>
+                        <a href="{{ route("admin.access.user.change-password", ['id' => access()->user()->id]) }}" class="dropdown-item"><i class="icon-lock"></i>@lang('Change Password')</a>
                         <div class="dropdown-divider"></div>
                         @if ($logged_in_user && session()->has("admin_user_id") && session()->has("temp_user_id"))
                             <a href="{{ route("frontend.auth.logout-as") }}" class="dropdown-item  text-teal-800">
@@ -148,7 +147,7 @@
                     <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
                     @if($module->has('Dashboard'))
                         <li class="nav-item">
-                            <a href="{{ route('provider.dashboard') }}" class="nav-link">
+                            <a href="{{ route('admin.dashboard') }}" class="nav-link">
                                 <i class="icon-home4"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -183,7 +182,7 @@
                     @endif
                     @if($module->has('Groups') && Auth::guard('web')->user()->hasPermission('read-group'))
                     <li class="nav-item">
-                        <a href="{{ route('provider.groups') }}" class="nav-link">
+                        <a href="{{ route('admin.groups') }}" class="nav-link">
                             <i class="icon-collaboration"></i>
                             <span>{{ __('Groups Management') }}</span>
                         </a>

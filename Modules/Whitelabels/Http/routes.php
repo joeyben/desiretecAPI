@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' . \App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE], 'prefix' => 'provider', 'namespace' => 'Modules\Whitelabels\Http\Controllers'], function () {
+Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' . \App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE], 'prefix' => 'admin', 'namespace' => 'Modules\Whitelabels\Http\Controllers'], function () {
     Route::get('whitelabels', 'WhitelabelsController@index')->name('admin.whitelabels');
     Route::get('whitelabels/view', 'WhitelabelsController@view')->name('admin.whitelabels.view');
     Route::get('whitelabels/list', 'WhitelabelsController@list')->name('admin.whitelabels.list');

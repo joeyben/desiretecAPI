@@ -17,6 +17,11 @@
 @section('content')
     <!-- Basic card -->
     <div class="content" id="dashboardComponent">
+        <div class="card border-top-2 border-top-slate border-bottom-2 border-bottom-slate rounded-0">
+            <div class="card-body">
+                {!! history()->render() !!}
+            </div>
+        </div>
         <!-- Simple statistics -->
         <router-view></router-view>
     </div>
