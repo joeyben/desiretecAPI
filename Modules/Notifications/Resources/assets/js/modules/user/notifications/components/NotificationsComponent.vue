@@ -45,11 +45,9 @@
     },
     computed: {
       ...Vuex.mapGetters({
+        count: 'count',
         notifications: 'notifications'
-      }),
-      count () {
-        return this.notifications.length
-      }
+      })
     },
     methods: {
       ...Vuex.mapActions({
