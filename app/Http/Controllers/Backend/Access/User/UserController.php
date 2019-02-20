@@ -72,7 +72,7 @@ class UserController extends Controller
      */
     public function index(ManageUserRequest $request)
     {
-        return view('backend.access.users.index');
+        return view('users::index');
     }
 
     /**

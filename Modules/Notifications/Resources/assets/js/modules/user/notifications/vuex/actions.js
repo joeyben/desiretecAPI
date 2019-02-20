@@ -8,8 +8,8 @@ export const loadNotifications = function (store) {
       console.log('error', response)
       return
     }
-
     store.commit(types.ADD_NOTIFICATIONS, response.notifications['data'])
+    store.commit(types.ADD_NOTIFICATIONS_COUNT, response.notifications['total'])
     window.e = new Echo({
       broadcaster: 'socket.io',
       host: window.location.hostname === 'localhost' ? window.location.hostname + ':6001' : window.location.hostname

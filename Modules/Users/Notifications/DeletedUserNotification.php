@@ -11,17 +11,13 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 
-class CreatedUserNotification extends Notification implements ShouldBroadcast
+class DeletedUserNotification extends Notification implements ShouldBroadcast
 {
     use Queueable;
     /**
      * @var \App\Models\Access\User\User
      */
     private $user;
-    /**
-     * @var string
-     */
-    private $url;
 
     /**
      * Create a new notification instance.
@@ -31,7 +27,7 @@ class CreatedUserNotification extends Notification implements ShouldBroadcast
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->url = route('admin.sellers') . '#/seller/' . $this->user->id;
+        $this->url = 'javascript:;';
     }
 
     /**
@@ -48,11 +44,11 @@ class CreatedUserNotification extends Notification implements ShouldBroadcast
 
     public function toBroadcast($notifiable)
     {
-        createNotification(Lang::get('notification.created', ['name' => 'User', 'url' => '<a  href="' . $this->url . '"> ' . $this->user->first_name . '</a>', 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, Auth::guard('web')->user()->id);
+        createNotification(Lang::get('notification.deleted', ['name' => 'User', 'url' => '<a  href="' . $this->url . '"> ' . $this->user->first_name . '</a>', 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, Auth::guard('web')->user()->id);
 
         return new BroadcastMessage([
             'id'      => $this->user->id,
-            'message' => Lang::get('notification.created', ['name' => 'User', 'url' => '<a  href="' . $this->url . '"> ' . $this->user->first_name . '</a>', 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]),
+            'message' => Lang::get('notification.deleted', ['name' => 'User', 'url' => '<a  href="' . $this->url . '"> ' . $this->user->first_name . '</a>', 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]),
             'user_id' => $notifiable->id,
             'from_id' => Auth::guard('web')->user()->id,
             'from'    => [

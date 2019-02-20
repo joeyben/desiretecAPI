@@ -73,7 +73,7 @@ class WishesController extends Controller
      */
     public function index(ManageWishesRequest $request)
     {
-        return view('backend.wishes.index')->with([
+        return view('wishes::index')->with([
             'status'  => $this->status,
             'category'=> $this->category,
             'catering'=> $this->catering,

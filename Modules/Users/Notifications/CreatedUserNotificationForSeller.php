@@ -2,9 +2,11 @@
 
 namespace Modules\Users\Notifications;
 
+use App\Models\Access\User\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Lang;
 
 class CreatedUserNotificationForSeller extends Notification
 {
@@ -13,15 +15,24 @@ class CreatedUserNotificationForSeller extends Notification
      * @var string
      */
     private $password;
+    /**
+     * @var \App\Models\Access\User\User
+     */
+    private $user;
+    private $whitelabel;
 
     /**
      * Create a new notification instance.
      *
-     * @param string $password
+     * @param \App\Models\Access\User\User $user
+     * @param string                       $password
+     * @param                              $whitelabel
      */
-    public function __construct(string $password)
+    public function __construct(User $user, string $password, $whitelabel)
     {
+        $this->user = $user;
         $this->password = $password;
+        $this->whitelabel = $whitelabel;
     }
 
     /**
@@ -46,10 +57,8 @@ class CreatedUserNotificationForSeller extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('The introduction to the notification.')
-                    ->line('email ' . $notifiable->email)
-                    ->line('password ' . $this->password)
-                    ->action('Notification Action', route('frontend.auth.login'))
-                    ->line('Thank you for using our application!');
+            ->subject('[' . config('app.name', 'Desiretec') . '] ' . Lang::get('email.account.subject', ['username' => $this->user->first_name . ' ' . $this->user->last_name, 'company' => $this->whitelabel->display_name]))
+            ->view('users::emails.created_seller', ['user' => $this->user, 'password' => $this->password, 'whitelabel' => $this->whitelabel])
+            ->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
     }
 }
