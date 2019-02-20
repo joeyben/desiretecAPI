@@ -99,10 +99,16 @@ class WishesController extends Controller
             array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
         }
 
-        return view('frontend.wishes.newwishes.wish')->with([
+        return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
             'body_class'         => $this::BODY_CLASS,
+        ]);
+    }
+
+    public function newWish(ManageWishesRequest $request){
+        return view('frontend.wishes.newwishes.wish')->with([
+            'body_class' => $this::BODY_CLASS,
         ]);
     }
 
