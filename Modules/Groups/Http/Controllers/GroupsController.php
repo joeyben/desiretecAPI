@@ -157,6 +157,7 @@ class GroupsController extends Controller
                 'display_name'                     => '',
                 'description'                      => '',
                 'status'                           => true,
+                'current'                          => false,
                 'users'                            => [],
                 'owner'                            => $this->auth->guard('web')->user()->first_name . ' ' . $this->auth->guard('web')->user()->last_name,
                 'logs'                             => [],
@@ -193,11 +194,7 @@ class GroupsController extends Controller
     public function store(StoreGroupRequest $request)
     {
         try {
-            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
-
-            if ((null === $whitelabel) && $request->has('whitelabel_id')) {
-                $whitelabel = $this->whitelabels->find($request->get('whitelabel_id'));
-            }
+            $whitelabel = $this->groups->getWhitelabel($request);
 
             $result['group'] = $this->groups->create(
                 array_merge(
@@ -205,6 +202,10 @@ class GroupsController extends Controller
                     ['whitelabel_id' => $whitelabel->id, 'created_by' => $this->auth->guard('web')->user()->id, 'updated_by' => $this->auth->guard('web')->user()->id]
                 )
             );
+
+            if ($request->has('current') && $request->get('current')) {
+                $this->groups->updateCurrent($result['group'], $request->only('current'), $whitelabel->id);
+            }
 
             $this->groups->sync($result['group']->id, 'users', $request->get('users'));
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Group']);
@@ -256,9 +257,11 @@ class GroupsController extends Controller
                 'display_name'        => $group->display_name,
                 'owner'               => $group->owner->full_name,
                 'whitelabel'          => $group->whitelabel,
+                'whitelabel_id'       => $group->whitelabel->id,
                 'users'               => $group->users->pluck('id'),
                 'description'         => $group->description,
-                'status'              => $group->status
+                'status'              => $group->status,
+                'current'              => $group->current
             ];
             $result['group']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-group') ? $this->activities->byModel($group) : [];
             $users = $this->whitelabels->find($group->whitelabel_id)->users()->get();
@@ -291,6 +294,7 @@ class GroupsController extends Controller
     public function update(UpdateGroupRequest $request, int $id)
     {
         try {
+            $whitelabel = $this->groups->getWhitelabel($request);
             $group = $this->groups->withCriteria([
                 new ByWhitelabel('groups')
             ])->update(
@@ -302,6 +306,10 @@ class GroupsController extends Controller
                     'status'
                 )
             );
+
+            if ($request->has('current') && $request->get('current')) {
+                $this->groups->updateCurrent($group, $request->only('current'), $whitelabel->id);
+            }
 
             $this->groups->sync($group->id, 'users', $request->get('users'));
 

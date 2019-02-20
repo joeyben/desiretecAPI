@@ -32,7 +32,7 @@ class PermissionRoleSeeder extends Seeder
             45, 46, 48, 50, // FAQ
             52, 53, 58, 67, // FAQ
             68, 69, 70, 72, // FAQ
-            73, 74, 89, 90,// FAQ
+            73, 74, 89, 90,92,// FAQ
         ];
 
         Role::find(2)->permissions()->sync($executivePermission);

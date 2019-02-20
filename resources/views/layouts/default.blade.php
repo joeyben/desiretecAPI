@@ -259,28 +259,30 @@
                             </a>
                         </li>
                     @endif
-                    @permission('view-access-management')
-                    <li class="nav-item nav-item-submenu">
-                        <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Access Management</span></a>
+                    @if($module->has('Users')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                        @permission('view-access-management')
+                            <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link"><i class="icon-copy"></i> <span> {{ __('Access Management') }}</span></a>
 
-                        <ul class="nav nav-group-sub" data-submenu-title="Layouts">
-                            @permission('view-user-management')
-                            <li class="nav-item"><a href="{{ route('admin.users') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/access/user*')) }}">{{ trans('labels.backend.access.users.management') }}</a></li>
-                            @endauth
-                            @if($module->has('Roles') && Auth::guard('web')->user()->hasPermission('view-role-management'))
-                            <li class="nav-item"><a href="{{ route('admin.access.role.index') }}" class="nav-link">{{ trans('labels.backend.access.roles.management') }}</a></li>
-                            @endif
-                            @if($module->has('Permissions') && Auth::guard('web')->user()->hasPermission('view-permission-management'))
-                            <li class="nav-item"><a href="{{ route('admin.access.permission.index') }}" class="nav-link">{{ trans('labels.backend.access.permissions.management') }}</a></li>
-                            @endif
-                        </ul>
-                    </li>
-                    @endauth
+                            <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                @permission('view-user-management')
+                                <li class="nav-item"><a href="{{ route('admin.users') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/access/user*')) }}">{{ trans('labels.backend.access.users.management') }}</a></li>
+                                @endauth
+                                @if($module->has('Roles') && Auth::guard('web')->user()->hasPermission('view-role-management'))
+                                <li class="nav-item"><a href="{{ route('admin.access.role.index') }}" class="nav-link">{{ trans('labels.backend.access.roles.management') }}</a></li>
+                                @endif
+                                @if($module->has('Permissions') && Auth::guard('web')->user()->hasPermission('view-permission-management'))
+                                <li class="nav-item"><a href="{{ route('admin.access.permission.index') }}" class="nav-link">{{ trans('labels.backend.access.permissions.management') }}</a></li>
+                                @endif
+                            </ul>
+                        </li>
+                        @endauth
+                    @endif
                     @if($module->has('Categories') && Auth::guard('web')->user()->hasPermission('read-category'))
                     <li class="nav-item">
                         <a href="{{ route('admin.categories') }}" class="nav-link">
                             <i class="icon-folder-open"></i>
-                            <span>Categories Management</span>
+                            <span>{{ __('Categories Management') }} </span>
                         </a>
                     </li>
                     @endif
@@ -288,7 +290,7 @@
                     <li class="nav-item">
                         <a href="{{ route('provider.groups') }}" class="nav-link">
                             <i class="icon-collaboration"></i>
-                            <span>Groups Management</span>
+                            <span>{{ __('Groups Management') }}</span>
                         </a>
                     </li>
                     @endif
@@ -311,12 +313,16 @@
                     @endif
 
                     @if($module->has('Users')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
-                        <li class="nav-item">
-                            <a href="{{ route('admin.sellers') }}" class="nav-link">
-                                <i class="icon-collaboration"></i>
-                                <span>{{ __('menus.sellers') }}</span>
-                            </a>
-                        </li>
+                        @permission('view-access-management')
+                            @permission('view-seller-management')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.sellers') }}" class="nav-link">
+                                        <i class="icon-collaboration"></i>
+                                        <span>{{ __('menus.sellers') }}</span>
+                                    </a>
+                                </li>
+                            @endauth
+                        @endauth
                     @endif
 
                     @if(Auth::guard('web')->user()->hasRole('Administrator'))

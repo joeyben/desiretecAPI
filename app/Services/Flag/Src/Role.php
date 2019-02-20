@@ -106,5 +106,6 @@ class Role
         ['name' => 'View Dashboard'],
         ['name' => 'Edit User'],
         ['name' => 'View Agent Frontend'],
+        ['name' => 'View Seller Management'],
     ];
 }

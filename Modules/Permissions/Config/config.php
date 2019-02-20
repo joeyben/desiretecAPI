@@ -5,6 +5,7 @@ return [
 
     'permissions' => [
         'View Permission Management',
+        'View Seller Management',
         'Edit Permission',
         'Create Permission',
         'Delete Permission',
