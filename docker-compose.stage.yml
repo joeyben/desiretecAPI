@@ -42,3 +42,6 @@ networks:
       external:
         name: reverseproxy_http_proxy
     backend:
+
+volumes:
+    reverseproxy_certs:
