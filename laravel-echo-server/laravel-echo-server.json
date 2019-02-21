@@ -12,8 +12,8 @@
 	"devMode": true,
 	"host": null,
 	"port": "6001",
-	"protocol": "http",
+	"protocol": "https",
 	"socketio": {},
-	"sslCertPath": "",
-	"sslKeyPath": ""
+	"sslCertPath": "/app/mvp_certs/mvp.desiretec.com.crt",
+	"sslKeyPath": "/app/mvp_certs/mvp.desiretec.com.key"
 }
