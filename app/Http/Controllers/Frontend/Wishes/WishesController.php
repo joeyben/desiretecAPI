@@ -106,6 +106,12 @@ class WishesController extends Controller
         ]);
     }
 
+    public function newWish(ManageWishesRequest $request){
+        return view('frontend.wishes.newwishes.wish')->with([
+            'body_class' => $this::BODY_CLASS,
+        ]);
+    }
+
     /**
      * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
      *
