@@ -5,7 +5,7 @@
 <div class="img-background">
     <div class="container">
         <div class="col-md-8 bg-left-content">
-            <h3>Hallo Johannes Leisch,</h3>
+            <h3>Hallo Johannes ,</h3>
             <p>Dein Reisewunsch wurde am <b>&#60;Datum&#62;</b> an <b>&#60;Reiseburoname&#62;</b> <br>
             ubermittelt. Leider liegt momentan noch kein Angebot vor.</p>
 
@@ -44,6 +44,39 @@
 </section>
 <div class="container">
     <div class="col-md-12 hr"><hr></div>
+</div>
+<section class="section-comments">
+    <div class="container">
+        <div class="col-md-12">
+        <h4>
+        Neue Nachrichten <span class="glyphicon glyphicon-bell"></span>
+        </h4>
+        
+        <div class="cu-img-left">
+            <img src="/img/frontend/profile-picture/white.jpeg" alt="">
+        </div>
+
+        <div class="cu-comment-left">
+            <p>
+            <span>14.01.19 - 8:53 Uhr</span>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            <div class="cu-cl-buttons">
+            <button class="primary-btn">Antworten</button>
+            <button class="secondary-btn">Ruckrufbitte einstellen</button>
+          </div>
+        </div>
+        
+
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="col-md-12 hr hr-mobile"><hr></div>
 </div>
 <section class="section-contact">
     <div class="container">
@@ -179,7 +212,7 @@
 
 <section class="section-data">
     <div class="container">
-        <div class="col-md-6 s3-left">
+        <div class="col-md-6 s3-left s3-left-show">
             <h4>Haufige Fragen anderer Nutzer</h4>
             <span><hr></span>
             <p>
@@ -240,5 +273,14 @@
 
     </div> 
     </div>
+
+    <div class="col-md-12 s3-left s3-left-hidden">
+            <span><hr></span>
+            <p>
+                Ihre Frage ist nicht dabei? <br>
+                <b><a href="mailto:service@desirectec.de">service@desirectec.de</a></b>
+            </p>
+        </div>
+
     </div>
 </section>

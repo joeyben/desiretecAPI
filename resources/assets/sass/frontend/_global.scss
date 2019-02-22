@@ -415,6 +415,9 @@ $darkgrey: #575756;
   h1,h2,h3,h4,p,a{
     font-weight: 100;
   }
+  .s3-left-hidden{
+    display: none;
+  }
   .s3-left{
     span{
       display: block;
@@ -472,7 +475,80 @@ $darkgrey: #575756;
     }
   }
 }
+.section-comments{
+  h1,h2,h3,h4,p,a{
+    font-weight: 100;
+  }
+  h4{
+    margin-bottom:40px;
+  }
+  .glyphicon-bell{
+    top:3px;
+    color:#ddd;
+  }
+  .cu-img-left{
+    display: inline-block;
+    float: left;
+    margin-right: 25px;
+    img{
+    border: 1px solid #ccc;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    object-fit: cover;
+    }
+  }
+  .cu-comment-left{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    p{
+      background:#ddd;
+      padding: 15px 50px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border-top-right-radius: 10px;
+      margin-top:5px;
+      font-weight: 100;
+      span{
+        display: block;
+        font-size: 10px;
+        font-weight: 100;
+        padding-bottom: 5px;
+      }
+    }
+    p:before{
+      content: "";
+      border-style: solid;
+      border-width: 12px 15px 12px 0;
+      border-color: transparent #ddd transparent transparent;
+      position: absolute;
+      left: -15px;
+      top: 5px;
+    }
+    .cu-cl-buttons{
+      margin-top:10px;
+      button{
+        border-radius: 10px;
+      }
+    .primary-btn{
+      background:$orange;
+      border-color:$orange;
+      color:#fff;
+      padding: 4px 25px;
+      margin-right: 10px;
+      font-weight: 100;
+    }
+    .secondary-btn{
+      border-color:$orange;
+      color:$orange;
+      padding: 4px 30px;
+      font-weight: 100;
+    }
+  }
+}
 
+}
 .navbar-nav>.nav-user>span {
   margin-top: 12px;
   margin-bottom: 12px;
@@ -488,6 +564,20 @@ $darkgrey: #575756;
 
 //mobile style
 @media (max-width: 768px){
+  .section-comments{
+    margin-bottom: 40px;
+    .cu-comment-left{
+      .cu-cl-buttons{
+        margin-top:0px;
+        button{
+          padding: 4px 15px !important;
+        }
+        .primary-btn{
+          margin-bottom:10px;
+        }
+      }
+    }
+  }
   #accordion{
     .panel-title{
       a{
@@ -497,7 +587,16 @@ $darkgrey: #575756;
     }
   }
   .section-data{
-    .s3-left{
+    .s3-left-hidden{
+      display: block;
+    }
+    .s3-left-show{
+      h4{
+        font-size: 16px;
+      }
+      p{
+        display: none;
+      }
       hr{
         display: none;
       }
