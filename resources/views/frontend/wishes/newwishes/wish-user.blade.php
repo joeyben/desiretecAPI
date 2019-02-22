@@ -45,13 +45,11 @@
 <div class="container">
     <div class="col-md-12 hr"><hr></div>
 </div>
-
-
 <section class="section-comments">
     <div class="container">
         <div class="col-md-12">
         <h4>
-        Nachrichten
+        Neue Nachrichten <span class="glyphicon glyphicon-bell"></span>
         </h4>
         
         <div class="cu-img-left">
@@ -67,40 +65,21 @@
         Lorem ipsum dolor sit amet, consectetur adipisicing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
-        </div>
-        
-
-        </div>
-
-        <div class="col-md-12">
-
-        <div class="cu-img-right">
-            <img src="/img/frontend/profile-picture/white.jpeg" alt="">
-          </div>      
-      
-        <div class="cu-comment-right">
-            <p>
-            <span>14.01.19 - 8:53 Uhr</span>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          <div class="cu-cr-buttons">
-            <button class="secondary-btn"> Neue Nachricht</button>
+            <div class="cu-cl-buttons">
+            <button class="primary-btn">Antworten</button>
+            <button class="secondary-btn">Ruckrufbitte einstellen</button>
           </div>
-
         </div>
         
 
         </div>
-
     </div>
 </section>
 <div class="container">
-    <div class="col-md-12 hr hr-mobile"><hr></div>
+    <div class="col-md-12 hr"><hr></div>
 </div>
+
+
 
 <section class="section-contact">
     <div class="container">
