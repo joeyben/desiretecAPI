@@ -40,11 +40,11 @@
         </div>
     </div>
 </div>
-
 </section>
 <div class="container">
     <div class="col-md-12 hr"><hr></div>
 </div>
+
 <section class="section-comments">
     <div class="container">
         <div class="col-md-12">

@@ -652,6 +652,125 @@ $darkorange: #be4d00;
 }
 }
 }
+.section-angebote{
+  h1,h2,h3,h4,p,a{
+    font-weight: 100;
+  }
+  h4{
+    margin-top:0px;
+  }
+  .more-details{
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .sa-p2{
+    height: 132px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+  }
+}
+.section-angebote-2{
+  h1,h2,h3,h4,p,a{
+    font-weight: 100;
+  }
+  h4{
+    margin-top:0px;
+  }
+  .sa2-p2{
+    a,a:hover,a:focus{
+      color:#636b6f;
+      text-decoration: underline;}
+  }
+  .sa2-buttons{
+    margin-top: 15px;
+    display: inline-block;
+     button{
+       border-radius: 5px;
+     }
+    .primary-btn{
+      border:1px solid $orange;
+      color:#FFF;
+      background: $orange;
+      padding: 4px 30px;
+      font-weight: 100;
+      margin-right: 10px;
+      }
+      .primary-btn:focus{
+        border:1px solid $darkorange;
+        background:$darkorange;
+      }
+    .secondary-btn{
+        border:1px solid $orange;
+        color:$orange;
+        background: transparent;
+        padding: 4px 30px;
+        font-weight: 100;
+      }
+      .secondary-btn:focus{
+        border:1px solid $darkorange;
+        color:$darkorange;
+        background:transparent;
+      }
+    }
+}
+.section-angebote-download{
+  .sa-2{
+    .col-md-4{
+    display: flex;
+    align-items: center;
+    padding: 15px 0 15px;
+    }
+   .sa-buttons{
+    margin-top: 15px;
+    display: inline-block;
+     button{
+       border-radius: 5px;
+     }
+    .primary-btn{
+      border:1px solid $orange;
+      color:#FFF;
+      background: $orange;
+      padding: 4px 30px;
+      font-weight: 100;
+      margin-right: 10px;
+      }
+    .primary-btn:focus{
+        border:1px solid $darkorange;
+        background:$darkorange;
+      }
+    .secondary-btn{
+        border:1px solid $orange;
+        color:$orange;
+        background: transparent;
+        padding: 4px 30px;
+        font-weight: 100;
+      }
+      .secondary-btn:focus{
+        border:1px solid $darkorange;
+        color:$darkorange;
+        background:transparent;
+      }
+   }
+    .sad-hr{
+      border-color:#eee;
+      margin-bottom: 10px;
+    }
+    a{
+      margin-left:5px;
+    }
+    a,a:hover,a:focus{
+      color:#636b6f;
+      text-decoration: underline;
+    }
+    span{
+      font-size:30px;
+      color:#ddd;
+    }
+  }
+
+}
 .navbar-nav>.nav-user>span {
   margin-top: 12px;
   margin-bottom: 12px;
@@ -667,6 +786,16 @@ $darkorange: #be4d00;
 
 //mobile style
 @media (max-width: 768px){
+  .sa-buttons{
+    .primary-btn{
+      margin-bottom: 5px;
+    }
+  }
+  .sa2-buttons{
+    .primary-btn{
+      margin-bottom: 5px;
+    }
+  }
   .section-comments{
     margin-bottom: 40px;
     .cu-comment-left{
