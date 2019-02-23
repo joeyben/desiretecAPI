@@ -5,7 +5,7 @@
 <div class="img-background">
     <div class="container">
         <div class="col-md-8 bg-left-content">
-            <h3>Hallo Johannes Leisch,</h3>
+            <h3>Hallo Johannes ,</h3>
             <p>Dein Reisewunsch wurde am <b>&#60;Datum&#62;</b> an <b>&#60;Reiseburoname&#62;</b> <br>
             ubermittelt. Leider liegt momentan noch kein Angebot vor.</p>
 
@@ -45,12 +45,69 @@
 <div class="container">
     <div class="col-md-12 hr"><hr></div>
 </div>
+
+
+<section class="section-comments">
+    <div class="container">
+        <div class="col-md-12">
+        <h4>
+        Nachrichten
+        </h4>
+        
+        <div class="cu-img-left">
+            <img src="/img/frontend/profile-picture/white.jpeg" alt="">
+        </div>
+
+        <div class="cu-comment-left">
+            <p>
+            <span>14.01.19 - 8:53 Uhr</span>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+        </div>
+        
+
+        </div>
+
+        <div class="col-md-12">
+
+        <div class="cu-img-right">
+            <img src="/img/frontend/profile-picture/white.jpeg" alt="">
+          </div>      
+      
+        <div class="cu-comment-right">
+            <p>
+            <span>14.01.19 - 8:53 Uhr</span>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          <div class="cu-cr-buttons">
+            <button class="secondary-btn"> Neue Nachricht</button>
+          </div>
+
+        </div>
+        
+
+        </div>
+
+    </div>
+</section>
+<div class="container">
+    <div class="col-md-12 hr hr-mobile"><hr></div>
+</div>
+
 <section class="section-contact">
     <div class="container">
 
     <div class="col-md-12 s2-first">
     <h4>Dein Reisewunsch</h4>
-    <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
+    <p class="sc-first-p">Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
     <p><b>Deine Nachricht:</b><br>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec purus libero, tempor eget mi vel, 
     pellentesque sodales dui. Nam pharetra neque et nibh vehicula, ut rutrum orci varius. 
@@ -179,7 +236,7 @@
 
 <section class="section-data">
     <div class="container">
-        <div class="col-md-6 s3-left">
+        <div class="col-md-6 s3-left s3-left-show">
             <h4>Haufige Fragen anderer Nutzer</h4>
             <span><hr></span>
             <p>
@@ -240,5 +297,14 @@
 
     </div> 
     </div>
+
+    <div class="col-md-12 s3-left s3-left-hidden">
+            <span><hr></span>
+            <p>
+                Ihre Frage ist nicht dabei? <br>
+                <b><a href="mailto:service@desirectec.de">service@desirectec.de</a></b>
+            </p>
+        </div>
+
     </div>
 </section>

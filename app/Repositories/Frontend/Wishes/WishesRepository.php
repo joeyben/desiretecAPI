@@ -123,7 +123,7 @@ class WishesRepository extends BaseRepository
     public function create(array $input)
     {
         $wish = DB::transaction(function () use ($input) {
-            $input['featured_image'] = $this->uploadImage($input) ? $input['featured_image'] : "1522558148csm_ER_Namibia_b97bcd06f0.jpg";
+            $input['featured_image'] = $this->uploadImage($input) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
             $input['created_by'] = access()->user()->id;
             $input['whitelabel_id'] = access()->user()->getWhitelabels()[0];
             $input['group_id'] = $this->getGroup();
@@ -141,6 +141,7 @@ class WishesRepository extends BaseRepository
 
             throw new GeneralException(trans('exceptions.backend.wishes.create_error'));
         });
+
         return $wish;
     }
 
@@ -202,7 +203,6 @@ class WishesRepository extends BaseRepository
      */
     public function uploadImage(&$input)
     {
-
         if (isset($input['featured_image']) && !empty($input['featured_image'])) {
             $avatar = $input['featured_image'];
 
@@ -214,6 +214,7 @@ class WishesRepository extends BaseRepository
 
             return true;
         }
+
         return false;
     }
 

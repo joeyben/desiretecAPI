@@ -7,18 +7,23 @@
         </div>
         <div class="card-body">
             <form-wizard @on-complete="onComplete"
+                         :title="trans('labels.whitelabel_title')"
+                         :subtitle="trans('labels.whitelabel_subtitle')"
+                         :back-button-text="trans('labels.go_back')"
+                         :next-button-text="trans('labels.go_next')"
+                         :finish-button-text="trans('labels.finish')"
                          shape="circle"
-                         color="#e74c3c">
-                <tab-content title="Personal details"
+                         color="rgb(19, 206, 102)">
+                <tab-content :title="trans('labels.whitelabel_information')"
                              route="/first"
                              ref="first"
                              :before-change="validateAsyncFirst">
                 </tab-content>
-                <tab-content title="Additional Info"
+                <tab-content :title="trans('labels.domain')"
                              route="/second"
                              :before-change="validateAsyncLSecond">
                 </tab-content>
-                <tab-content title="Last step"
+                <tab-content :title="trans('labels.whitelabel_executive')"
                              route="/third">
                 </tab-content>
                 <transition name="fade" mode="out-in">
@@ -100,7 +105,7 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css'
               this.isValid = false
               resolve(true)
             }
-          }, 1000)
+          }, 2000)
         })
       },
       validateAsyncLSecond: function () {

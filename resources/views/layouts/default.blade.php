@@ -27,7 +27,6 @@
     <!-- /global stylesheets -->
 
 
-
     <!-- Theme JS files -->
     <script src="{{ asset("modules/js/app.js") }}"></script>
     <!-- /theme JS files -->
@@ -62,112 +61,8 @@
             </li>
         </ul>
 
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-                <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown" data-hover="dropdown">
-                    <i class="icon-envelop2"></i>
-                    <span class="d-md-none ml-2">Notifications</span>
-                    <span class="badge badge-pill bg-pink-800 ml-auto ml-md-0">8</span>
-                </a>
-
-                <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
-                    <div class="dropdown-content-header">
-                        <span class="font-weight-semibold">Messages</span>
-                        <a href="#" class="text-default"><i class="icon-compose"></i></a>
-                    </div>
-
-                    <div class="dropdown-content-body dropdown-scrollable">
-                        <ul class="media-list">
-                            <li class="media">
-                                <div class="mr-3 position-relative">
-                                    <img src="{{ asset('modules/images/placeholders/placeholder.jpg') }}" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-
-                                <div class="media-body">
-                                    <div class="media-title">
-                                        <a href="#">
-                                            <span class="font-weight-semibold">James Alexander</span>
-                                            <span class="text-muted float-right font-size-sm">04:58</span>
-                                        </a>
-                                    </div>
-
-                                    <span class="text-muted">who ws, maybe that would be the best thing for me...</span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3 position-relative">
-                                    <img src="{{ asset('modules/images/placeholders/placeholder.jpg') }}" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-
-                                <div class="media-body">
-                                    <div class="media-title">
-                                        <a href="#">
-                                            <span class="font-weight-semibold">Margo Baker</span>
-                                            <span class="text-muted float-right font-size-sm">12:16</span>
-                                        </a>
-                                    </div>
-
-                                    <span class="text-muted">That was something he was unable to do because...</span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <img src="{{ asset('modules/images/placeholders/placeholder.jpg') }}" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <div class="media-title">
-                                        <a href="#">
-                                            <span class="font-weight-semibold">Jeremy Victorino</span>
-                                            <span class="text-muted float-right font-size-sm">22:48</span>
-                                        </a>
-                                    </div>
-
-                                    <span class="text-muted">But that would be extremely strained and suspicious...</span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <img src="{{ asset('modules/images/placeholders/placeholder.jpg') }}" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <div class="media-title">
-                                        <a href="#">
-                                            <span class="font-weight-semibold">Beatrix Diaz</span>
-                                            <span class="text-muted float-right font-size-sm">Tue</span>
-                                        </a>
-                                    </div>
-
-                                    <span class="text-muted">What a strenuous career it is that I've chosen...</span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <img src="{{ asset('modules/images/placeholders/placeholder.jpg') }}" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <div class="media-title">
-                                        <a href="#">
-                                            <span class="font-weight-semibold">Richard Vango</span>
-                                            <span class="text-muted float-right font-size-sm">Mon</span>
-                                        </a>
-                                    </div>
-
-                                    <span class="text-muted">Other travelling salesmen live a life of luxury...</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="dropdown-content-footer justify-content-center p-0">
-                        <a href="#" class="bg-light text-grey w-100 py-2" data-popup="tooltip" title="Load more"><i class="icon-menu7 d-block top-0"></i></a>
-                    </div>
-                </div>
-            </li>
-
+        <ul class="navbar-nav ml-auto" id="notificationsComponent">
+            <notifications-component></notifications-component>
             @auth('web')
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
@@ -176,9 +71,8 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
-                        <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
-                        <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span class="badge badge-pill bg-blue ml-auto">58</span></a>
+                        <a href="{{ route("admin.profile.edit") }}" class="dropdown-item"><i class="icon-user-plus"></i> @lang('Edit Profile')</a>
+                        <a href="{{ route("admin.access.user.change-password", ['id' => access()->user()->id]) }}" class="dropdown-item"><i class="icon-lock"></i>@lang('Change Password')</a>
                         <div class="dropdown-divider"></div>
                         @if ($logged_in_user && session()->has("admin_user_id") && session()->has("temp_user_id"))
                             <a href="{{ route("frontend.auth.logout-as") }}" class="dropdown-item  text-teal-800">
@@ -253,7 +147,7 @@
                     <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
                     @if($module->has('Dashboard'))
                         <li class="nav-item">
-                            <a href="{{ route('provider.dashboard') }}" class="nav-link">
+                            <a href="{{ route('admin.dashboard') }}" class="nav-link">
                                 <i class="icon-home4"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -288,7 +182,7 @@
                     @endif
                     @if($module->has('Groups') && Auth::guard('web')->user()->hasPermission('read-group'))
                     <li class="nav-item">
-                        <a href="{{ route('provider.groups') }}" class="nav-link">
+                        <a href="{{ route('admin.groups') }}" class="nav-link">
                             <i class="icon-collaboration"></i>
                             <span>{{ __('Groups Management') }}</span>
                         </a>
@@ -426,6 +320,7 @@
     ]); ?>
 </script>
 @yield('vue-js')
+<script src="{{ asset('js/modules/user/notifications/notifications.js') }}"></script>
 @yield('after-scripts')
 </body>
 </html>

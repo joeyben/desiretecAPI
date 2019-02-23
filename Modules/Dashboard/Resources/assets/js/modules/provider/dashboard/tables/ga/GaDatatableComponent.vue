@@ -19,7 +19,7 @@
     props: {},
     data () {
       return {
-        apiUrl: window.laroute.route('provider.dashboard.ga'),
+        apiUrl: window.laroute.route('admin.dashboard.ga'),
         fields: config.fields,
         appendParams: config.moreParams,
         rowClass: 'context',

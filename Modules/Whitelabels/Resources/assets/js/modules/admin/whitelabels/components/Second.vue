@@ -61,13 +61,15 @@
         }
       },
       onSubmit () {
-        this.$store.dispatch('block', {element: 'whitelabelsComponent', load: true})
-        this.$http.put(window.laroute.route('admin.whitelabels.domain', {id: this.whitelabel.id}), this.whitelabel)
-          .then(this.onSubmitSuccess)
-          .catch(this.onFailed)
-          .then(() => {
-            this.$store.dispatch('block', {element: 'whitelabelsComponent', load: false})
-          })
+        if (!isNaN(this.whitelabel.id)) {
+          this.$store.dispatch('block', {element: 'whitelabelsComponent', load: true})
+          this.$http.put(window.laroute.route('admin.whitelabels.domain', {id: this.whitelabel.id}), this.whitelabel)
+            .then(this.onSubmitSuccess)
+            .catch(this.onFailed)
+            .then(() => {
+              this.$store.dispatch('block', {element: 'whitelabelsComponent', load: false})
+            })
+        }
       },
       onSubmitSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {

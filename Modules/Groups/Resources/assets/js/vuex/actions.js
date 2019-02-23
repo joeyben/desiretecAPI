@@ -1,4 +1,5 @@
 import api from './api/api'
+import * as types from './mutation-types'
 
 export const loadLoggedUser = function (store) {
   api.loadUser(response => {
@@ -7,6 +8,9 @@ export const loadLoggedUser = function (store) {
       return
     }
 
+    if (response.user.hasOwnProperty('roles') && response.user.roles['Administrator']) {
+      store.dispatch('loadWhitelabels')
+    }
     store.commit('LOGIN_USER', response.user)
   }, error => {
     console.log('LOGIN_USER not answer', error)
@@ -23,6 +27,19 @@ export const loadLanguages = function (store) {
     store.commit('LOAD_LANGUAGES', response.languages)
   }, error => {
     console.log('LOAD_LANGUAGES not answer', error)
+  })
+}
+
+export const loadWhitelabels = function (store) {
+  api.loadWhitelabels(response => {
+    if (!response) {
+      console.log('error', response)
+      return
+    }
+
+    store.commit(types.ADD_WHITELABELS, response.whitelabels)
+  }, error => {
+    console.log('LOGIN_USER not answer', error)
   })
 }
 

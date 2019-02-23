@@ -2,9 +2,12 @@
 
 namespace Modules\Wishes\Listeners;
 
+use App\Models\Access\Role\Role;
 use App\Models\Access\User\Traits\TokenAuthenticable;
 use App\Models\Access\User\User;
+use App\Services\Flag\Src\Flag;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Notification;
 use Modules\Groups\Entities\Group;
 use Modules\Wishes\Entities\Wish;
@@ -49,5 +52,12 @@ class WishesSubscriber
         $users = Group::find($wish->group_id)->users()->get();
         Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));
         Notification::send($users, new CreatedWishNotification($wish));
+
+        $admins = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->where('users.id', '!=', Auth::guard('web')->user()->id)->get();
+
+        foreach ($admins as $admin) {
+            $url = route('admin.wishes') . '#/edit/' . $wish->id;
+            createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' => '<a  href="' . $url . '"> ' . $wish->title . '</a>', 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $admin->id, Auth::guard('web')->user()->id);
+        }
     }
 }

@@ -53,6 +53,7 @@ class User extends Authenticatable implements JWTSubject
         'status',
         'confirmation_code',
         'confirmed',
+        'password',
         'created_by',
         'updated_by',
     ];
@@ -107,6 +108,16 @@ class User extends Authenticatable implements JWTSubject
     {
         parent::__construct($attributes);
         $this->table = config('access.users_table');
+    }
+
+    /**
+     * The channels the user receives notification broadcasts on.
+     *
+     * @return string
+     */
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'App.User.' . $this->id;
     }
 
     /**

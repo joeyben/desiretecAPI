@@ -6,7 +6,7 @@ export default {
     )
   },
   loadBackendAnalytics (success, error) {
-    return window.axios.get(window.laroute.route('provider.dashboard.analytics')).then(
+    return window.axios.get(window.laroute.route('admin.dashboard.analytics')).then(
       (response) => success(response),
       (response) => error(response)
     )

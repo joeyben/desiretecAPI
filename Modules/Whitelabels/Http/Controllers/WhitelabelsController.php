@@ -257,7 +257,6 @@ class WhitelabelsController extends Controller
             ini_set('max_execution_time', 300);
             $this->artisan->call('module:make', ['name' => [$result['whitelabel']->name], '--force' => true]);
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
-            $result['message'] .= $this->artisan->output();
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -535,11 +534,15 @@ class WhitelabelsController extends Controller
 
     private function delTree($dir)
     {
-        $files = array_diff(scandir($dir), ['.', '..']);
-        foreach ($files as $file) {
-            (is_dir("$dir/$file")) ? $this->delTree("$dir/$file") : unlink("$dir/$file");
+        if (is_dir($dir)) {
+            $files = array_diff(scandir($dir), ['.', '..']);
+            foreach ($files as $file) {
+                (is_dir("$dir/$file")) ? $this->delTree("$dir/$file") : unlink("$dir/$file");
+            }
+
+            return rmdir($dir);
         }
 
-        return rmdir($dir);
+        return true;
     }
 }

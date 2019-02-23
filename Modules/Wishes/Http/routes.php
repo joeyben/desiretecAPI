@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'provider', 'namespace' => 'Modules\Wishes\Http\Controllers'], function () {
+Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'namespace' => 'Modules\Wishes\Http\Controllers'], function () {
     Route::get('wishes', 'WishesController@index')->name('admin.wishes');
     Route::get('wishes/view', 'WishesController@view')->name('admin.wishes.view');
     Route::put('wishes', 'WishesController@store')->name('admin.wishes.store');

@@ -149,8 +149,6 @@ class UserRepository extends BaseRepository
         return $user;
     }
 
-
-
     /**
      * @param $data
      * @param $provider

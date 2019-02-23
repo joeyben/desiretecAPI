@@ -51,9 +51,7 @@ class GroupsController extends Controller
      */
     public function index(ManageGroupsRequest $request)
     {
-        return view('backend.groups.index')->with([
-            'status'         => $this->status,
-        ]);
+        return view('groups::index');
     }
 
     /**

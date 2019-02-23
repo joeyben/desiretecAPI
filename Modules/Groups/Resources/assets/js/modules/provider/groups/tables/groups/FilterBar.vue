@@ -113,7 +113,7 @@
           },
           formLabelWidth: '120px',
           created: '',
-          urlExport: window.laroute.route('provider.groups.export'),
+          urlExport: window.laroute.route('admin.groups.export'),
           fields: config.fields,
           filterText: '',
           whitelabel: '',
@@ -140,7 +140,7 @@
           user: 'currentUser'
         }),
         urlExportSelected () {
-          return window.laroute.route('provider.groups.export', {checked: this.checked})
+          return window.laroute.route('admin.groups.export', {checked: this.checked})
         },
         show () {
           let results = []

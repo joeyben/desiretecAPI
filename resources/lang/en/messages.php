@@ -48,4 +48,7 @@ return [
     'sign_up'                    => 'Sign Up',
     'terms'                      => 'Agree to terms and conditions',
     'whitelabel_user'            => 'Create Associate Whitelabel User',
+    'background'                 => 'The background image must be --- x --- pixels in PNG/JPG/JPEG format. Maximum file size is ---KB.',
+    'logo'                       => 'The logo must be --- x --- pixels in PNG/JPG/JPEG/SVG format. Maximum file size is ---KB.',
+    'favicon'                    => 'The favicon must be --- x --- pixels in PNG/ICON format. Maximum file size is ---KB.',
 ];

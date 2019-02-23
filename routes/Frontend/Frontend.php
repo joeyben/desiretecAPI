@@ -47,6 +47,7 @@
 
             Route::get('wishes', 'WishesController@index')->name('index');
             Route::get('wish/new', 'WishesController@newWish');
+            Route::get('wish/newuser', 'WishesController@newUserWish');
             Route::get('wish/{wish}', 'WishesController@show')->name('wish');
 
             Route::post('wishes/get', 'WishesTableController')->name('get');

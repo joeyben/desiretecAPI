@@ -44,7 +44,7 @@ class MessagesController extends Controller
                     ->where('group_user.group_id', '=', $groupId)
                     ->pluck('user_id');
 
-        if (in_array($id, $sellersId->all(), true)) {
+        if (\in_array($id, $sellersId->all(), true)) {
             $consumer = User::where('id', '=', $consumerId)->pluck('email');
             Mail::to($consumer)->send(new MessageSent($message));
 
@@ -109,11 +109,11 @@ class MessagesController extends Controller
                                 ->get();
 
         $path = Storage::disk('s3')->url('img/agent/');
-        foreach($agentMessages as $agentMessage){
+        foreach ($agentMessages as $agentMessage) {
             $agentMessage['avatar'] = $path . $agentMessage['avatar'];
         }
 
-        $messages = array_merge($userMessages->toArray() , $agentMessages->toArray());
+        $messages = array_merge($userMessages->toArray(), $agentMessages->toArray());
 
         $response = [
             'data'   => $messages,
