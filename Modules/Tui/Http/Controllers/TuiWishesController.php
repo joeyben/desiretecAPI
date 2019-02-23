@@ -76,15 +76,11 @@ class TuiWishesController extends Controller
      * @param string $token
      * @return mixed
      */
-    public function details(Wish $wish, string $token, ManageWishesRequest $request)
+    public function details(Wish $wish, string $token)
     {
-        $whitelabel = $this->whitelabel->getByName('tui');
+        $this->wish->validateToken($wish->id, $token);
 
-        return view('tui::wish.details')->with([
-            'wish'               => $wish,
-            'body_class'         => $this::BODY_CLASS,
-            'display_name' => $whitelabel['display_name'],
-            'bg_image'     => $whitelabel['bg_image'],
-        ]);
+        return redirect()->to('/wish/' . $wish->id);
+
     }
 }

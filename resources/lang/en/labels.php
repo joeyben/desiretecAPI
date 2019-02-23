@@ -461,14 +461,16 @@ return [
             ],
         ],
         'wishes' => [
-            'wishes'        => 'Wishes',
-            'goto'          => 'Go To Wish',
-            'created_at'    => 'created at',
+            'wishes'        => 'Reisewünsche',
+            'goto'          => 'Reisewunsch ansehen',
+            'created_at'    => 'erstellt am',
             'edit'          => 'Edit wish',
             'add-comment'   => 'Add comment',
+            'week'          => ':value Woche|:value Wochen',
+            'night'         => ':value Nacht|:value Nächte',
             'table'         => [
-                'adults' => 'Adults',
-                'kids'   => 'Kids',
+                'adults' => 'Erwachsener|Erwachsene',
+                'kids'   => '{0}|Kind|Kinder',
             ]
         ],
         'dashboard' => [

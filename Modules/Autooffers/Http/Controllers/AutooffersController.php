@@ -74,7 +74,8 @@ class AutooffersController extends Controller
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response, $wish->id);
-        die();
+
+        return redirect()->to('offer/details/' . $wish->id);
 
     }
 
@@ -88,7 +89,7 @@ class AutooffersController extends Controller
         $this->autooffers->saveWishData($request->all());
         $response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response);
-        die();
+
     }
 
     /**

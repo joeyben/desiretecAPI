@@ -17,6 +17,7 @@
 // Helpers
 @import "../helpers";
 
+
 // Global
 @import "global";
 
@@ -37,3 +38,6 @@
 // Plugins
 @import "../plugin/toastr/toastr.scss";
 @import "../plugin/sweetalert/sweetalert.scss";
+
+// Fix issues with Bootsrap
+@import "fixes";

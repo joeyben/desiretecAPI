@@ -88,7 +88,10 @@ class TuiController extends Controller
         if ($request->failed()) {
             $html = view('tui::layer.popup')->with([
                 'adults_arr' => $this->adults,
-                'errors'      => $request->errors()
+                'errors'      => $request->errors(),
+                'kids_arr' => $this->kids,
+                'catering_arr' => $this->catering,
+                'duration_arr' => $this->duration,
             ])->render();
             return response()->json(['success' => true, 'html'=>$html]);
         }

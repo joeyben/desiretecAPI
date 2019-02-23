@@ -32,7 +32,7 @@ class Agent extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['name', 'display_name', 'status', 'avatar', 'user_id'];
+    protected $fillable = ['name', 'display_name', 'status', 'avatar', 'user_id', 'telephone', 'email'];
 
     protected $dates = [
         'created_at',

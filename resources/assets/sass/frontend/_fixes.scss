@@ -1,0 +1,15 @@
+.navbar-right{
+  li{
+    span{
+      display: inline-block;
+      padding: 0;
+      color: #000000;
+    }
+  }
+}
+
+@media (min-width: 768px), all{
+  .navbar-nav {
+    margin: 7px -15px;
+  }
+}

@@ -8,9 +8,13 @@ use App\Events\Frontend\Wishes\WishUpdated;
 use App\Exceptions\GeneralException;
 use App\Models\Groups\Group;
 use App\Models\Wishes\Wish;
+use App\Models\Access\User\User;
+use App\Models\Access\User\UserToken;
 use App\Repositories\BaseRepository;
 use DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Auth;
 
 /**
  * Class WishesRepository.
@@ -257,5 +261,24 @@ class WishesRepository extends BaseRepository
     public function getDistribution()
     {
         return access()->user()->whitelabels[0]->distribution->name;
+    }
+
+    /**
+     *
+     * @param string $id
+     * @param string $token
+     */
+
+    public function validateToken($id, $token)
+    {
+        try {
+            $usertoken = UserToken::where('token', $token)->firstOrFail();
+            $user_id = $usertoken->user_id;
+            $user = User::where('id', $user_id)->firstOrFail();
+            Auth::login($user);
+            return true;
+        } catch(ModelNotFoundException $e) {
+            return false;
+        }
     }
 }
