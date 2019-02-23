@@ -45,59 +45,34 @@
 <div class="container">
     <div class="col-md-12 hr"><hr></div>
 </div>
-
-<section class="section-angebote">
+<section class="section-angebote-2">
         <div class="container">
-        <div class="col-md-12 sa-1">
+        <div class="col-md-12 sa2-1">
         <h4>
           Neue Angebote
         </h4>
-        <p class="sa-p1">Du hast 3 Angebote von <b>&#60;Reiseburoname&#62;</b> erhalten</p>
-        <p class="sa-p2">
+        <p class="sa2-p1">Du hast 3 Angebote von <b>&#60;Reiseburoname&#62;</b> erhalten</p>
+        <p class="sa2-p2">
         Moin Johannes, <br><br>
         Wir haben entsprechend deinen Reisewunchen Angebote fur dich zisammengestellt.
         <br><br>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec purus libero, tempor eget mi vel, 
-    pellentesque sodales dui. Nam pharetra neque et nibh vehicula, ut rutrum orci varius. 
-    In quis sapien non turpis fermentum venenatis quis sed felis. Sed commodo scelerisque metus.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec purus libero, tempor eget mi vel, 
-    pellentesque sodales dui. Nam pharetra neque et nibh vehicula, ut rutrum orci varius. 
-    In quis sapien non turpis fermentum venenatis quis sed felis. Sed commodo scelerisque metus.
+        pellentesque sodales dui. Nam pharetra neque et nibh vehicula, ut rutrum orci varius. 
+        In quis sapien non turpis fermentum venenatis quis sed felis. Sed commodo scelerisque metus.
+        <br><br>
+        <b>Hier geht es zu unserer Angebotsseite:</b><a href="#">&#60;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&#62;</a>
         </p>
-        <span class="more-details">mehr Details lesen</span>
-        </div>
-        </div>
-</section>
-<section class="section-angebote-download">
-<div class="container">
-<div class="col-md-12">
-  <hr class="sad-hr">
-</div>
-    <div class="col-md-12 sa-2">
-        <div class="col-md-4">
-          <span class="glyphicon glyphicon-file"></span>
-          <a href="#" download>Angebot Nummer 1 - Lorem ipsum dolor</a>
-        </div>
-        <div class="col-md-4">
-          <span class="glyphicon glyphicon-file"></span>
-          <a href="#" download>Angebot Nummer 1 - Lorem ipsum dolor</a>
-        </div>
-        <div class="col-md-4">
-          <span class="glyphicon glyphicon-file"></span>
-          <a href="#" download>Angebot Nummer 1 - Lorem ipsum dolor</a>
-        </div>
-        <div class="sa-buttons">
+        <div class="sa2-buttons">
           <button class="primary-btn">Reiseburo kontaktieren</button>
           <button class="secondary-btn">Ruckrufbitte einstellen</button>
         </div>
         </div>
-</div>
+        </div>
 </section>
+
 <div class="container">
     <div class="col-md-12 hr"><hr></div>
 </div>
-
-
 <section class="section-comments">
     <div class="container">
         <div class="col-md-12">

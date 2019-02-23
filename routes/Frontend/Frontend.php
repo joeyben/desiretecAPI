@@ -48,6 +48,9 @@
             Route::get('wishes', 'WishesController@index')->name('index');
             Route::get('wish/new', 'WishesController@newWish');
             Route::get('wish/newuser', 'WishesController@newUserWish');
+            Route::get('wish/offertextlink', 'WishesController@offerLink');
+            Route::get('wish/offerviatext', 'WishesController@offerText');
+            Route::get('wish/attach', 'WishesController@attach');
             Route::get('wish/{wish}', 'WishesController@show')->name('wish');
 
             Route::post('wishes/get', 'WishesTableController')->name('get');
