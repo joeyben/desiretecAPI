@@ -12,6 +12,7 @@ use App\Repositories\Frontend\Pages\PagesRepository;
 class FrontendController extends Controller
 {
     const BODY_CLASS = 'landing';
+
     /**
      * @return \Illuminate\View\View
      */

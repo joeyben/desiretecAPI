@@ -26,19 +26,21 @@ class EloquentCategoriesRepository extends RepositoryAbstract implements Categor
     /**
      * Find data by multiple values in one field.
      *
-     * @param        $column
-     * @param        $field
-     * @param array  $columns
+     * @param       $column
+     * @param       $field
+     * @param array $columns
+     *
      * @return mixed
      */
     public function getChildrenFromSlug($column, $field, $columns = ['*'])
     {
-        $parent     = $this->model->where($column, $field)->first($columns)->toArray();
-        $children   = $this->model->where('parent_id', $parent['id'])->select('value', 'name')->get()->toArray();
+        $parent = $this->model->where($column, $field)->first($columns)->toArray();
+        $children = $this->model->where('parent_id', $parent['id'])->select('value', 'name')->get()->toArray();
         $category = [];
         foreach ($children as $key => $value) {
             $category[$value['value']] = $value['name'];
         }
+
         return $category;
     }
 }

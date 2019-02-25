@@ -14,9 +14,9 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'        => 'required|integer',
-            'name'      => 'required|max:255',
-            'parent_id' => 'nullable|integer',
+            'id'         => 'required|integer',
+            'name'       => 'required|max:255',
+            'parent_id'  => 'nullable|integer',
             'value'      => 'required|max:255',
         ];
     }

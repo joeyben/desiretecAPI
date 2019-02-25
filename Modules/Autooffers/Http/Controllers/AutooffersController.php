@@ -2,11 +2,11 @@
 
 namespace Modules\Autooffers\Http\Controllers;
 
+use App\Models\Wishes\Wish;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Autooffers\Repositories\AutooffersRepository;
-use App\Models\Wishes\Wish;
 
 class AutooffersController extends Controller
 {
@@ -57,6 +57,7 @@ class AutooffersController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -76,12 +77,13 @@ class AutooffersController extends Controller
         $this->autooffers->storeMany($response, $wish->id);
 
         return redirect()->to('offer/details/' . $wish->id);
-
     }
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -89,21 +91,23 @@ class AutooffersController extends Controller
         $this->autooffers->saveWishData($request->all());
         $response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response);
-
     }
 
     /**
      * @param \App\Models\Wishes\Wish $wish
+     *
      * @return Response
      */
     public function show(Wish $wish)
     {
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
+
         return view('autooffers::autooffer.show', compact('wish', 'offers'));
     }
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return Response
      */
     public function edit()
@@ -113,7 +117,9 @@ class AutooffersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function update(Request $request)
@@ -122,6 +128,7 @@ class AutooffersController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()

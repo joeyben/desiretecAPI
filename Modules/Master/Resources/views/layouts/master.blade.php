@@ -10,7 +10,7 @@
 
 @section('logo')
     <a href="{{ route('frontend.index') }}" class="logo">
-        <img class="navbar-brand" src="{{ Storage::disk('s3')->url($logo) }}">
+        <img class="navbar-brand" src="{{ $logo }}">
     </a>
 @endsection
 

@@ -109,31 +109,36 @@ class WishesController extends Controller
         ]);
     }
 
-    public function newWish(ManageWishesRequest $request){
+    public function newWish(ManageWishesRequest $request)
+    {
         return view('frontend.wishes.newwishes.wish')->with([
             'body_class' => $this::BODY_CLASS,
         ]);
     }
 
-    public function newUserWish(ManageWishesRequest $request){
+    public function newUserWish(ManageWishesRequest $request)
+    {
         return view('frontend.wishes.newwishes.wish-user')->with([
             'body_class' => $this::BODY_CLASS,
         ]);
     }
 
-    public function offerLink(ManageWishesRequest $request){
+    public function offerLink(ManageWishesRequest $request)
+    {
         return view('frontend.wishes.newwishes.offertextlink')->with([
             'body_class' => $this::BODY_CLASS,
         ]);
     }
 
-    public function offerText(ManageWishesRequest $request){
+    public function offerText(ManageWishesRequest $request)
+    {
         return view('frontend.wishes.newwishes.offerviatext')->with([
             'body_class' => $this::BODY_CLASS,
         ]);
     }
 
-    public function attach(ManageWishesRequest $request){
+    public function attach(ManageWishesRequest $request)
+    {
         return view('frontend.wishes.newwishes.attach')->with([
             'body_class' => $this::BODY_CLASS,
         ]);

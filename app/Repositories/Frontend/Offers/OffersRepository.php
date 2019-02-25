@@ -7,8 +7,8 @@ use App\Events\Frontend\Offers\OfferDeleted;
 use App\Events\Frontend\Offers\OfferUpdated;
 use App\Exceptions\GeneralException;
 use App\Models\Agents\Agent;
-use App\Models\Offers\Offer;
 use App\Models\OfferFiles\OfferFile;
+use App\Models\Offers\Offer;
 use App\Repositories\BaseRepository;
 use DB;
 use Illuminate\Support\Facades\Storage;
@@ -96,7 +96,6 @@ class OffersRepository extends BaseRepository
         DB::transaction(function () use ($input, $files) {
             $id = access()->user()->id;
 
-
             $input['created_by'] = $id;
 
             $agent = Agent::where('user_id', '=', $id)
@@ -168,13 +167,12 @@ class OffersRepository extends BaseRepository
      * Upload Image.
      *
      * @param array $files
-     * @param int $id
+     * @param int   $id
      *
-     * @return boolean
+     * @return bool
      */
     public function uploadImage($files, $id)
     {
-
         if (isset($files) && !empty($files)) {
             foreach ($files as $file) {
                 $fileName = time() . $file->getClientOriginalName();
@@ -184,8 +182,10 @@ class OffersRepository extends BaseRepository
                 $offerFiles->file = $fileName;
                 $offerFiles->save();
             }
+
             return true;
         }
+
         return false;
     }
 

@@ -206,7 +206,7 @@ class CategoriesController extends Controller
                 'id'        => $category->id,
                 'name'      => $category->name,
                 'parent_id' => $category->parent_id,
-                'value' => $category->value,
+                'value'     => $category->value,
             ];
 
             $result['success'] = true;

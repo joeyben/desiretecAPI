@@ -9,13 +9,12 @@
 
 namespace Modules\Autooffers\Repositories;
 
-use App\Repositories\RepositoryAbstract;
-use App\Repositories\BaseRepository;
-use Modules\Autooffers\Entities\Autooffer;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Client;
-use GuzzleHttp\TransferStats;
 use App\Models\Wishes\Wish;
+use App\Repositories\BaseRepository;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\TransferStats;
+use Modules\Autooffers\Entities\Autooffer;
 
 /**
  * Class EloquentPostsRepository.
@@ -27,11 +26,9 @@ class AutooffersRepository extends BaseRepository
      */
     const MODEL = Autooffer::class;
 
+    private $auth = 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
 
-    private $auth = "ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=";
-
-    private $url = "https://connector.traffics.de/v3/rest";
-
+    private $url = 'https://connector.traffics.de/v3/rest';
 
     protected $region;
 
@@ -63,7 +60,7 @@ class AutooffersRepository extends BaseRepository
 
     protected $giataIds;
 
-    protected $tourOperatorList = "";
+    protected $tourOperatorList = '';
 
     public function model()
     {
@@ -78,22 +75,22 @@ class AutooffersRepository extends BaseRepository
                 $this->url . '/offers/pauschal',
                 [
                     'query' => [
-                        'auth' => $this->auth,
-                        'sortBy' => 'quality',
-                        'productSubType' => 'all',
-                        'searchDate' => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
-                        'adults' => $this->adults,
-                        'children' => $this->kids,
-                        'navigation' => '1,3',
+                        'auth'                 => $this->auth,
+                        'sortBy'               => 'quality',
+                        'productSubType'       => 'all',
+                        'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
+                        'adults'               => $this->adults,
+                        'children'             => $this->kids,
+                        'navigation'           => '1,3',
                         'departureAirportList' => $this->airport,
-                        'regionList' => $this->region,
+                        'regionList'           => $this->region,
                         //'locationList' => $this->location,
-                        'minPricePerPerson' => intval($this->minBudget / $this->getPersonsCount()),
-                        'maxPricePerPerson' => intval($this->maxBudget / $this->getPersonsCount()),
-                        'minCategory' => $this->category,
+                        'minPricePerPerson' => (int) ($this->minBudget / $this->getPersonsCount()),
+                        'maxPricePerPerson' => (int) ($this->maxBudget / $this->getPersonsCount()),
+                        'minCategory'       => $this->category,
                         //'minBoardType' => $this->catering,
-                        'rating[source]' => 'holidaycheck',
-                        'sortDir' => 'down',
+                        'rating[source]'   => 'holidaycheck',
+                        'sortDir'          => 'down',
                         'tourOperatorList' => $this->tourOperatorList,
                     ],
                     'on_stats' => function (TransferStats $stats) use (&$url) {
@@ -115,9 +112,9 @@ class AutooffersRepository extends BaseRepository
 
     /**
      * @param string $hotelId
-     * @return boolean
+     *
+     * @return bool
      */
-
     public function getFullHotelData($hotelId)
     {
         $client = new Client();
@@ -129,12 +126,14 @@ class AutooffersRepository extends BaseRepository
                 ]
             ]
         );
+
         return json_decode($response->getBody());
     }
 
     /**
      * @param \App\Models\Wishes\Wish $wish
-     * @return boolean
+     *
+     * @return bool
      */
     public function saveWishData(Wish $wish)
     {
@@ -149,6 +148,7 @@ class AutooffersRepository extends BaseRepository
         $this->setPeriod($wish->duration);
         $this->setRegion('133');
         $this->setTourOperatorList(['BIG,XBIG,5VF,X5VF,FTI,XFTI,FLYD,ADAC,AIR,AIRM,XAIR,ATID,ALD,ALL,XALL,AME,ANEX,ATK,BAVA,BU,BYE,CBM,COR,DER,XDER,XECC,ECC,FALK,FER,FUV,FIT,FOR,FOX,XBU,GRUB,HHT,TREX,IHOM,ITS,ITS-XITS,ITSX,ITT,JAHN-XJAH,JAHN,JANA,XJAH,JT,XLMX,LMXI,LMX,MLA,HERM,MED,MWR,MON,XNER,NEC,NER,XNEC,OGE,XOGE,OLI,PHX,SLRD,SLR,SNOW,TOC,TOR,AIR,TVR,XTOC,TISC,TJAX,XPOD,TUID,XTUI,VTO,WIN,XALD,XANE,XPUR']);
+
         return true;
     }
 
@@ -156,12 +156,11 @@ class AutooffersRepository extends BaseRepository
      * @param  $data
      * @param string $wish_id
      */
-
     public function storeMany($data, $wish_id)
     {
         foreach ($data->offerList as $key => $autooffer) {
             $offer = json_decode(json_encode($autooffer), true);
-            $hotel = json_decode(json_encode($this->getFullHotelData($offer["hotelOffer"]["hotel"]["giata"]["hotelId"])), true);
+            $hotel = json_decode(json_encode($this->getFullHotelData($offer['hotelOffer']['hotel']['giata']['hotelId'])), true);
             $this->storeAutooffer($offer, $hotel, $wish_id);
         }
     }
@@ -170,81 +169,88 @@ class AutooffersRepository extends BaseRepository
      * @param object $offer
      * @param object $hotel
      * @param string $wish_id
+     *
      * @return mix
      */
-
     public function storeAutooffer($offer, $hotel, $wish_id)
     {
         try {
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
-            $autooffer->code = $offer["code"];
-            $autooffer->type = $offer["productType"];
-            $autooffer->totalPrice = $offer["totalPrice"]["value"];
-            $autooffer->personPrice = $offer["personPrice"]["value"];
-            $autooffer->from = $offer["travelDate"]["fromDate"];
-            $autooffer->to = $offer["travelDate"]["toDate"];
-            $autooffer->tourOperator_code = $offer["tourOperator"]["code"];
-            $autooffer->tourOperator_name = $offer["tourOperator"]["name"];
-            $autooffer->hotel_code = $hotel["hotel"]["giata"]["hotelId"];
-            $autooffer->hotel_name = $offer["hotelOffer"]["hotel"]["name"];
-            $autooffer->hotel_location_name = $hotel["hotel"]["location"]["name"];
-            $autooffer->hotel_location_lng = $hotel["hotel"]["location"]["longitude"];
-            $autooffer->hotel_location_lat = $hotel["hotel"]["location"]["latitude"];
-            $autooffer->hotel_location_region_code = $hotel["hotel"]["location"]["region"]["code"];
-            $autooffer->hotel_location_region_name = $hotel["hotel"]["location"]["region"]["name"];
-            $autooffer->airport_code = $offer["hotelOffer"]["hotel"]["airport"]["code"];
-            $autooffer->airport_name = $offer["hotelOffer"]["hotel"]["airport"]["name"];
+            $autooffer->code = $offer['code'];
+            $autooffer->type = $offer['productType'];
+            $autooffer->totalPrice = $offer['totalPrice']['value'];
+            $autooffer->personPrice = $offer['personPrice']['value'];
+            $autooffer->from = $offer['travelDate']['fromDate'];
+            $autooffer->to = $offer['travelDate']['toDate'];
+            $autooffer->tourOperator_code = $offer['tourOperator']['code'];
+            $autooffer->tourOperator_name = $offer['tourOperator']['name'];
+            $autooffer->hotel_code = $hotel['hotel']['giata']['hotelId'];
+            $autooffer->hotel_name = $offer['hotelOffer']['hotel']['name'];
+            $autooffer->hotel_location_name = $hotel['hotel']['location']['name'];
+            $autooffer->hotel_location_lng = $hotel['hotel']['location']['longitude'];
+            $autooffer->hotel_location_lat = $hotel['hotel']['location']['latitude'];
+            $autooffer->hotel_location_region_code = $hotel['hotel']['location']['region']['code'];
+            $autooffer->hotel_location_region_name = $hotel['hotel']['location']['region']['name'];
+            $autooffer->airport_code = $offer['hotelOffer']['hotel']['airport']['code'];
+            $autooffer->airport_name = $offer['hotelOffer']['hotel']['airport']['name'];
             $autooffer->data = json_encode($offer);
             $autooffer->hotel_data = json_encode($hotel);
-            $autooffer->wish_id = intval($wish_id);
+            $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
+
             return $autooffer->save();
         } catch (\Illuminate\Database\QueryException $e) {
             // something went wrong with the transaction, rollback
             report($e);
+
             return false;
         } catch (\Exception $e) {
             // something went wrong elsewhere, handle gracefully
             report($e);
+
             return false;
         }
     }
 
     /**
      * @param int $id
+     *
      * @return array
      */
     public function getOffersDataFromId($id)
     {
         $offers = $this->query()
             ->select(['*'])
-            ->where('wish_id', intval($id))
+            ->where('wish_id', (int) $id)
             ->get()->toArray();
 
         $offerObj = [];
 
         foreach ($offers as $key => $offer) {
             array_push($offerObj,
-                array(
-                    "data" => json_decode($offer['data'], true),
-                    "hotel_data" => json_decode($offer['hotel_data'], true)
-                )
+                [
+                    'data'       => json_decode($offer['data'], true),
+                    'hotel_data' => json_decode($offer['hotel_data'], true)
+                ]
             );
         }
+
         return $offerObj;
     }
 
     /**
-     * @return integer
+     * @return int
      */
     private function getPersonsCount()
     {
-        $kidsCount = $this->kids ? count(explode(',', $this->kids)) : 0;
+        $kidsCount = $this->kids ? \count(explode(',', $this->kids)) : 0;
+
         return $this->adults + $kidsCount;
     }
 
     // Getters & Setters
+
     /**
      * @param $budget
      */
@@ -436,6 +442,4 @@ class AutooffersRepository extends BaseRepository
     {
         $this->giataIds = $giataIds;
     }
-
-
 }

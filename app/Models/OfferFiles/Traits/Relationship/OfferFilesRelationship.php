@@ -16,5 +16,4 @@ trait OfferFilesRelationship
     {
         return $this->belongsTo(Offer::class, 'offer_id');
     }
-
 }

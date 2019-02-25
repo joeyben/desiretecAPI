@@ -3,15 +3,14 @@
 namespace Modules\Autooffers\Entities;
 
 use App\Models\Access\User\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Wishes\Entities\Wish;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Illuminate\Database\Eloquent\Model;
 
 class Autooffer extends Model
 {
-
     use SoftDeletes, SearchableTrait, LogsActivity;
 
     protected $guarded = [];
@@ -70,7 +69,7 @@ class Autooffer extends Model
         ],
         'joins' => [
             'users'       => ['autooffers.user_id', 'users.id'],
-            'wishes' => ['autooffers.wish_id', 'wishes.id'],
+            'wishes'      => ['autooffers.wish_id', 'wishes.id'],
         ]
     ];
 
@@ -81,7 +80,6 @@ class Autooffer extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
 
     /**
      * Wishes belongsTo with Wish.
