@@ -24,7 +24,7 @@ class CreateAutooffersTable extends Migration
             $table->string('hotel_code');
             $table->string('hotel_name');
             $table->string('hotel_location_name');
-            $table->floar('hotel_location_lng', 15, 8);
+            $table->float('hotel_location_lng', 15, 8);
             $table->float('hotel_location_lat', 15, 8);
             $table->string('hotel_location_region_code');
             $table->string('hotel_location_region_name');
