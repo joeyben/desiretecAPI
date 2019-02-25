@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-lg">
             <form action="#" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-steel">
                         <h5 class="modal-title"><i class="icon-menu7 mr-2"></i> &nbsp;Modal with icons</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>

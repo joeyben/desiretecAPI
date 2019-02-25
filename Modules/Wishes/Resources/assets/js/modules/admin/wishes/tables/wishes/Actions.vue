@@ -1,6 +1,6 @@
 <template>
     <div class="list-icons">
-        <router-link class="btn btn-outline btn-sm bg-teal text-teal-800 btn-icon ml-2" :to="{name: 'root.edit', params: { id: rowData.id }}"  v-if="can_edit" data-popup="tooltip" :title="trans('labels.edit')"><i class="icon-pencil7"></i></router-link>
+        <router-link class="btn btn-outline btn-sm bg-teal text-teal-800 btn-icon ml-2" :to="{name: 'root.edit', params: { id: rowData.id }}"  v-if="can_edit" data-popup="tooltip" :title="trans('labels.edit')"><i class="icon-pencil"></i></router-link>
     </div>
 </template>
 

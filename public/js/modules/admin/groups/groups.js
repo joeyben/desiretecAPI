@@ -101065,7 +101065,7 @@ var staticRenderFns = [
       "button",
       {
         staticClass:
-          "btn btn-outline bg-teal-300 text-teal-800 btn-icon dropdown-toggle",
+          "btn btn-outline bg-steel text-steel btn-icon dropdown-toggle",
         attrs: { type: "button", "data-toggle": "dropdown" }
       },
       [_c("i", { staticClass: "icon-gear" })]
@@ -101934,44 +101934,17 @@ var render = function() {
           _vm._v(" "),
           _c(
             "ul",
-            { staticClass: "nav nav-tabs nav-tabs-highlight nav-justified" },
+            {
+              staticClass:
+                "nav nav-tabs nav-tabs-bottom border-bottom-0 nav-justified"
+            },
             [
               _vm.can_logs
-                ? _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "nav-link active",
-                        attrs: {
-                          href: "#highlighted-justified-tab1",
-                          "data-toggle": "tab"
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "icon-pencil6 mr-2" }),
-                        _vm._v(" " + _vm._s(_vm.trans("modals.group")))
-                      ]
-                    )
-                  ])
+                ? _c("li", { staticClass: "nav-item" }, [_vm._m(1)])
                 : _vm._e(),
               _vm._v(" "),
               _vm.can_logs
-                ? _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "nav-link",
-                        attrs: {
-                          href: "#highlighted-justified-tab2",
-                          "data-toggle": "tab"
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "icon-file-text mr-2" }),
-                        _vm._v(" " + _vm._s(_vm.trans("modals.logs")))
-                      ]
-                    )
-                  ])
+                ? _c("li", { staticClass: "nav-item" }, [_vm._m(2)])
                 : _vm._e()
             ]
           ),
@@ -102002,7 +101975,7 @@ var render = function() {
                     [
                       _c("div", { staticClass: "modal-body" }, [
                         _c("fieldset", [
-                          _vm._m(1),
+                          _vm._m(3),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -102483,10 +102456,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
+    return _c("div", { staticClass: "modal-header bg-steel" }, [
       _c("h5", { staticClass: "modal-title" }, [
-        _c("i", { staticClass: "icon-menu7 mr-2" }),
-        _vm._v("  Modal with icons")
+        _c("i", { staticClass: "icon-menu7 mr-2" })
       ]),
       _vm._v(" "),
       _c(
@@ -102498,6 +102470,32 @@ var staticRenderFns = [
         [_vm._v("×")]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "nav-link active",
+        attrs: { href: "#highlighted-justified-tab1", "data-toggle": "tab" }
+      },
+      [_c("i", { staticClass: "icon-pencil6 mr-2" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "nav-link",
+        attrs: { href: "#highlighted-justified-tab2", "data-toggle": "tab" }
+      },
+      [_c("i", { staticClass: "icon-file-text mr-2" })]
+    )
   },
   function() {
     var _vm = this
