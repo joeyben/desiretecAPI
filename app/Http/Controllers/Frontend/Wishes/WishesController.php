@@ -21,6 +21,8 @@ use Torann\GeoIP\Facades\GeoIP;
 class WishesController extends Controller
 {
     const BODY_CLASS = 'wish';
+    const BODY_CLASS_LIST = 'wishlist';
+    const OFFER_URL = 'img/offer/';
     /**
      * Wish Status.
      */
@@ -103,6 +105,7 @@ class WishesController extends Controller
             'wish'               => $wish,
             'avatar'             => $avatar,
             'body_class'         => $this::BODY_CLASS,
+            'offer_url'          => $this::OFFER_URL,
         ]);
     }
 
@@ -149,7 +152,7 @@ class WishesController extends Controller
             'category'   => $this->category,
             'catering'   => $this->catering,
             'count'      => $this->wish->getForDataTable()->count(),
-            'body_class' => $this::BODY_CLASS,
+            'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }
 

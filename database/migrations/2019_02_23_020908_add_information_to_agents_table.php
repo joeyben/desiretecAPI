@@ -14,8 +14,8 @@ class AddInformationToAgentsTable extends Migration
     public function up()
     {
         Schema::table('agents', function (Blueprint $table) {
-            $table->string('telephone', 255);
-            $table->string('email', 255);
+            $table->string('telephone', 255)->after('name');
+            $table->string('email', 255)->after('telephone');
         });
     }
 

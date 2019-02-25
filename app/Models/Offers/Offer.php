@@ -26,6 +26,7 @@ class Offer extends BaseModel
         'agent_id',
         'created_by',
         'wish_id',
+        'link'
     ];
 
     protected $dates = [

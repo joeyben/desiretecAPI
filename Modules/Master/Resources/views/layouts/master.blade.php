@@ -1,19 +1,48 @@
 @extends('frontend.layouts.app')
 
 @section('title')
-    {!! config('master.name') !!}
+    {!! $display_name !!}
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ mix('css/master.css') }}">
+    <link rel="stylesheet" href="{{ mix('whitelabel/master/css/master.css') }}">
 @endsection
 
 @section('logo')
     <a href="{{ route('frontend.index') }}" class="logo">
-        <img class="navbar-brand" src="/img/logo_tui.png">
+        <img class="navbar-brand" src="{{ Storage::disk('s3')->url($logo) }}">
     </a>
 @endsection
 
+@section('before-scripts')
+    <script src="{{ mix('whitelabel/master/js/master.js') }}"></script>
+@endsection
+
 @section('after-scripts')
-    <script src="{{ mix('js/master.js') }}"></script>
+
+    <script type="application/javascript">
+        window.dt = {
+            config: { baseUrl: ''  }
+        };
+
+        var kwz = document.createElement('script');
+        kwz.type = 'text/javascript'; kwz.async = true;
+        kwz.src = '/whitelabel/master/js/layer/layer-locale.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(kwz, s);
+
+        function isMobile(){
+            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                return true;
+            }
+            return false;
+        }
+
+        function showLayer(){
+            dt.PopupManager.show();
+            if(isMobile()){
+                $("body").addClass('mobile-layer');
+            }
+        }
+    </script>
 @endsection

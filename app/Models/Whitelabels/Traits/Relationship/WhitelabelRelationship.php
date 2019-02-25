@@ -4,6 +4,7 @@ namespace App\Models\Whitelabels\Traits\Relationship;
 
 use App\Models\Distributions\Distribution;
 use App\Models\Wishes\Wish;
+use Modules\Attachments\Entities\Attachment;
 
 /**
  * Class WhitelabelRelationship.
@@ -32,5 +33,13 @@ trait WhitelabelRelationship
     public function distribution()
     {
         return $this->hasOne(Distribution::class, 'id', 'distribution_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function attachments()
+    {
+        return $this->morphMany(Attachment::class, 'attachable');
     }
 }

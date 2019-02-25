@@ -1,7 +1,6 @@
-@extends('frontend.layouts.newapp')
+@extends('frontend.layouts.app')
 
 @section('content')
-
 <section class="section-top">
 
     <div class="img-background">
@@ -34,7 +33,7 @@
             </div>
             <div class="col-md-3 c-info c-tel">
                 <i class="glyphicon glyphicon-earphone"></i>
-                <a href="tel:08971459535">{{ $wish->group->users[0]->agents[0]->telephone }}</a>
+                <a href="tel:{{ $wish->group->users[0]->agents[0]->telephone }}">{{ $wish->group->users[0]->agents[0]->telephone }}</a>
             </div>
             <div class="col-md-3 c-info">
                 <i class="glyphicon glyphicon-envelope"></i>
@@ -44,9 +43,113 @@
     </div>
 
 </section>
+
 <div class="container">
     <div class="col-md-12 hr"><hr></div>
 </div>
+
+@foreach($wish->offers as $key => $offer)
+    <section class="section-angebote-2">
+        <div class="container">
+            <div class="col-md-12 sa2-1">
+                <h4>
+                    {{ trans('wish.view.new_offers') }}
+                </h4>
+                <p class="sa2-p1">Du hast 3 Angebote von <b>{{ $offer->owner->name }}</b> erhalten</p>
+                <p class="sa2-p2">
+                    <b>{{ $offer->title }}</b><br>
+                    {{ $offer->description }}
+                    @if ($offer->link)
+                        <br><br>
+                        <b>Hier geht es zu unserer Angebotsseite:</b> <a href="{{ $offer->link }}" target="_blank">{{ $offer->link }}</a>
+                    @endif
+                </p>
+                @if (!$offer->offerFiles)
+                <div class="sa2-buttons">
+                    <button class="primary-btn">Reiseburo kontaktieren</button>
+                    <button class="secondary-btn">Ruckrufbitte einstellen</button>
+                </div>
+                @endif
+            </div>
+        </div>
+    </section>
+    @if ($offer->offerFiles)
+    <section class="section-angebote-download">
+        <div class="container">
+            <div class="col-md-12">
+                <hr class="sad-hr">
+            </div>
+            <div class="col-md-12 sa-2">
+                @foreach($offer->offerFiles as $key => $file)
+                    <div class="col-md-4">
+                        @if (strpos($file->file, '.pdf') !== false)
+                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                        @else
+                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                        @endif
+
+                        <a href="{{ Storage::disk('s3')->url($offer_url . $file->file) }}" target="_blank">{{ trans('wish.view.offer_number') }} {{ $key+1 }}</a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="col-md-12 hr"><hr></div>
+        </div>
+
+        <div class="container">
+            <div class="col-md-12 sa-2">
+                <div class="sa-buttons">
+                    <button class="primary-btn">Reiseburo kontaktieren</button>
+                    <button class="secondary-btn">Ruckrufbitte einstellen</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+  @endif
+@endforeach
+
+<div class="container">
+    <div class="col-md-12 hr"><hr></div>
+</div>
+
+<section class="section-comments">
+    <div class="container">
+        <div class="col-md-12">
+            <h4>
+                Neue Nachrichten <span class="glyphicon glyphicon-bell"></span>
+            </h4>
+
+            <div class="cu-img-left">
+                <img src="/img/frontend/profile-picture/white.jpeg" alt="">
+            </div>
+
+            <div class="cu-comment-left">
+                <p>
+                    <span>14.01.19 - 8:53 Uhr</span>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <div class="cu-cl-buttons">
+                    <button class="primary-btn">Antworten</button>
+                    <button class="secondary-btn">Ruckrufbitte einstellen</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="col-md-12 hr"><hr></div>
+</div>
+
 <section class="section-contact">
     <div class="container">
 
@@ -243,4 +346,11 @@
     </div>
 </section>
 
+@endsection
+
+@section('after-scripts')
+
+    <script>
+
+    </script>
 @endsection

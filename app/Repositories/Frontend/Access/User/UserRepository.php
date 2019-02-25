@@ -39,7 +39,7 @@ class UserRepository extends BaseRepository
     /**
      * @param $email
      *
-     * @return bool
+     * @return mixed
      */
     public function findByEmail($email)
     {

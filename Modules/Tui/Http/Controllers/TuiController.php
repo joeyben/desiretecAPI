@@ -128,6 +128,11 @@ class TuiController extends Controller
 
     private function createUserFromLayer(StoreWishRequest $request, $user)
     {
+        $input = $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms');
+        if ($new_user = $user->findByEmail($input['email'])) {
+            access()->login($new_user);
+            return $new_user;
+        }
         $request->merge(
             array(
                 'first_name' => "John",
@@ -136,7 +141,7 @@ class TuiController extends Controller
                 "is_term_accept" => true
             )
         );
-        $new_user = $user->create($request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'));
+        $new_user = $user->create($input);
         $new_user->storeToken();
         $new_user->attachWhitelabel($this->whitelabelId);
         access()->login($new_user);

@@ -11,10 +11,6 @@ a, a:hover, a:active, a:focus {
   outline: 0;
 }
 
-// Color
-$orange: #F96500;
-$darkgrey: #575756;
-$darkorange: #be4d00;
 
 // Header Styles
 
@@ -201,7 +197,6 @@ $darkorange: #be4d00;
   h1,h2,h3,h4,p,a{
     font-weight: 100;
   }
-  margin-top:51px;
   .img-background{
     height: 400px;
     display: flex;
@@ -718,9 +713,14 @@ $darkorange: #be4d00;
 .section-angebote-download{
   .sa-2{
     .col-md-4{
-    display: flex;
-    align-items: center;
-    padding: 15px 0 15px;
+      display: flex;
+      align-items: center;
+      padding: 15px 0 15px;
+      i{
+        font-size: 30px;
+        margin-right: 5px;
+        color: #bbbbbb;
+      }
     }
    .sa-buttons{
     margin-top: 15px;

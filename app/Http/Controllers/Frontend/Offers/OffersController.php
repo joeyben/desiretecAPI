@@ -73,7 +73,7 @@ class OffersController extends Controller
      */
     public function store(StoreOffersRequest $request)
     {
-        $this->offer->create($request->except('_token'));
+        $this->offer->create($request);
 
         return redirect()
             ->route('frontend.offers.index')

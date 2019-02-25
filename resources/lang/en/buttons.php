@@ -29,7 +29,7 @@ return [
 
     'wishes' => [
         'frontend' => [
-            'create_offer' => 'Create Offer',
+            'create_offer' => 'Angebot erstellen',
             'create_autooffer' => 'Create Auto Offer',
         ]
     ],
