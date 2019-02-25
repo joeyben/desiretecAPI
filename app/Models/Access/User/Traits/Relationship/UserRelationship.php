@@ -56,6 +56,14 @@ trait UserRelationship
     /**
      * @return mixed
      */
+    public function agents()
+    {
+        return $this->hasMany(config('access.agent'), 'user_id', 'id');
+    }
+
+    /**
+     * @return mixed
+     */
     public function providers()
     {
         return $this->hasMany(SocialLogin::class);

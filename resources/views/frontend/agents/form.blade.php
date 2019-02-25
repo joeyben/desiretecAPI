@@ -6,9 +6,16 @@
 </div>
 
 <div class="form-group">
-    {{ Form::label('display_name', 'Display Name', ['class' => 'col-lg-2 control-label required']) }}
+    {{ Form::label('email', trans('seller.agent.email'), ['class' => 'col-lg-2 control-label required']) }}
     <div class="col-lg-10">
-        {{ Form::text('display_name', null, ['class' => 'form-control box-size', 'placeholder' => 'Display Name', 'required' => 'required']) }}
+        {{ Form::email('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.email_placeholder'), 'required' => 'required']) }}
+    </div>
+</div>
+
+<div class="form-group">
+    {{ Form::label('telephone', trans('seller.agent.tel'), ['class' => 'col-lg-2 control-label required']) }}
+    <div class="col-lg-10">
+        {{ Form::text('telephone', null, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.tel_placeholder'), 'required' => 'required']) }}
     </div>
 </div>
 

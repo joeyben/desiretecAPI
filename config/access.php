@@ -2,9 +2,10 @@
 
 use App\Models\Access\Permission\Permission;
 use App\Models\Access\Role\Role;
+use App\Models\Whitelabels\Whitelabel;
 use App\Models\Distributions\Distribution;
 use App\Models\Groups\Group;
-use Modules\Whitelabels\Entities\Whitelabel;
+use App\Models\Agents\Agent;
 
 return [
     /*
@@ -31,6 +32,11 @@ return [
      * Group model used by Access to create correct relations. Update the Group if it is in a different namespace.
     */
     'group' => Group::class,
+
+    /*
+     * Agent model used by Access to create correct relations. Update the Agent if it is in a different namespace.
+    */
+    'agent' => Agent::class,
 
     /*
      * Roles table used by Access to save roles to the database.

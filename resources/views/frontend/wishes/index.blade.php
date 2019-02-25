@@ -12,7 +12,6 @@
                 <table id="wishes-table" class="table table-condensed table-hover table-bordered">
                     <thead class="transparent-bg">
                         <tr>
-                            <th>{{ trans('labels.backend.wishes.table.title') }}</th>
                             <th>{{ trans('labels.backend.wishes.table.airport') }}</th>
                             <th>{{ trans('labels.backend.wishes.table.destination') }}</th>
                             <th>{{ trans('labels.backend.wishes.table.earliest_start') }}</th>
@@ -59,13 +58,12 @@
                     </div>
                     <div class="main-info">
                         <ul class="info">
-                            <li><span class="value"><i class="icon_id-2"></i>@{{ wish.title }}</span></li>
                             <li><i class="icon_pin"></i><span class="value">@{{ wish.destination }}</span></li>
-                            <li><i class="icon_calendar"></i><span class="value">@{{ wish.duration }}</span></li>
-                            <li><i class="icon_group"></i><span class="value">@{{ wish.adults }} {{ trans('labels.frontend.wishes.table.adults') }}</span></li>
-                            <li><i class="icon_hourglass"></i><span class="value">@{{ wish.earliest_start }}</span> - <span class="value">@{{ wish.latest_return }}</span></li>
-                            <li><i class="icon_info"></i><span class="value">@{{ wish.status }}</span></li>
-                            <li>{{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("dddd, MMMM Do YYYY") }}</span></li>
+                            <li><i class="fa fa-plane"></i><span class="value">@{{ wish.airport }}</span></li>
+                            <li><i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
+                            <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
+                            <li><i class="icon_group"></i><span class="value">@{{ wish.adults }}</span></li>
+                            <li>{{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("DD.MM.YYYY") }}</span></li>
                         </ul>
                     </div>
                     <div class="action">
@@ -75,14 +73,14 @@
                             </span>
                         </div>
                         <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
-                        @if($logged_in_user->allow('edit-wish'))
+                        @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
                             <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>
                         @endif
                         <a type="button" class="btn btn-primary btn-main" :href="'/wish/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
                         @if($logged_in_user->allow('create-offer'))
                             <a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
                         @endif
-
+                        <a :href="'/offer/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a>
                     </div>
                 </div>
             </div>

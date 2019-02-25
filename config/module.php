@@ -27,6 +27,9 @@ return [
     'offers' => [
         'table' => 'offers',
     ],
+    'offer_files' => [
+        'table' => 'offer_files',
+    ],
     'whitelabels' => [
         'table' => 'whitelabels',
     ],
@@ -41,5 +44,8 @@ return [
     ],
     'faqs' => [
         'table' => 'faqs',
+    ],
+    'attachments' => [
+        'table' => 'attachments',
     ],
 ];

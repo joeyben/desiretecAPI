@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/autooffers",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Autooffers\\Providers\\AutooffersServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Autooffers\\": ""
+        }
+    }
+}

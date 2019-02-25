@@ -14,7 +14,7 @@ return [
 
     'general' => [
         'home'   => 'Home',
-        'logout' => 'Logout',
+        'logout' => 'Ausloggen',
     ],
 
     'frontend' => [
@@ -24,16 +24,16 @@ return [
         'register'        => 'Register',
         'wishes'          => 'My Wishes',
         'create_wish'     => 'Create Wish',
-        'wisheslist'      => 'Wishes',
-        'offers'          => 'My Offers',
-        'agents'          => 'Agents',
+        'wisheslist'      => 'Reisewünsche',
+        'offers'          => 'Meine Angebote',
+        'agents'          => 'Agente',
         'user'            => [
-            'account'         => 'My Account',
+            'account'         => 'Mein Konto',
             'administration'  => 'Administration',
-            'change_password' => 'Change Password',
-            'my_information'  => 'My Information',
-            'profile'         => 'Profile',
-            'agents'          => 'Agents',
+            'change_password' => 'Passwort ändern',
+            'my_information'  => 'Meine Informationen',
+            'profile'         => 'Profil',
+            'agents'          => 'Agente',
         ],
     ],
 ];

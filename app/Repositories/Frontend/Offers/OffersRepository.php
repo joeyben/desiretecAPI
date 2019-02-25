@@ -8,6 +8,7 @@ use App\Events\Frontend\Offers\OfferUpdated;
 use App\Exceptions\GeneralException;
 use App\Models\Agents\Agent;
 use App\Models\Offers\Offer;
+use App\Models\OfferFiles\OfferFile;
 use App\Repositories\BaseRepository;
 use DB;
 use Illuminate\Support\Facades\Storage;
@@ -82,18 +83,20 @@ class OffersRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
+     * @param object $request
      *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
      */
-    public function create(array $input)
+    public function create(object $request)
     {
-        DB::transaction(function () use ($input) {
+        $files = $request->hasfile('file') ? $request->file('file') : [];
+        $input = $request->except('_token', 'file');
+        DB::transaction(function () use ($input, $files) {
             $id = access()->user()->id;
 
-            $input = $this->uploadImage($input);
+
             $input['created_by'] = $id;
 
             $agent = Agent::where('user_id', '=', $id)
@@ -102,6 +105,7 @@ class OffersRepository extends BaseRepository
             $input['agent_id'] = $agent;
 
             if ($offer = Offer::create($input)) {
+                $fileUploaded = $this->uploadImage($files, $offer->id);
                 event(new OfferCreated($offer));
 
                 return true;
@@ -124,7 +128,7 @@ class OffersRepository extends BaseRepository
         // Uploading Image
         if (array_key_exists('file', $input)) {
             $this->deleteOldFile($offer);
-            $input = $this->uploadImage($input);
+            $fileUploaded = $this->uploadImage($input);
         }
 
         DB::transaction(function () use ($offer, $input) {
@@ -163,23 +167,26 @@ class OffersRepository extends BaseRepository
     /**
      * Upload Image.
      *
-     * @param array $input
+     * @param array $files
+     * @param int $id
      *
-     * @return array $input
+     * @return boolean
      */
-    public function uploadImage($input)
+    public function uploadImage($files, $id)
     {
-        $avatar = $input['file'];
 
-        if (isset($input['file']) && !empty($input['file'])) {
-            $fileName = time() . $avatar->getClientOriginalName();
-
-            $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()));
-
-            $input = array_merge($input, ['file' => $fileName]);
-
-            return $input;
+        if (isset($files) && !empty($files)) {
+            foreach ($files as $file) {
+                $fileName = time() . $file->getClientOriginalName();
+                $this->storage->put($this->upload_path . $fileName, file_get_contents($file->getRealPath()), 'public');
+                $offerFiles = new OfferFile();
+                $offerFiles->offer_id = $id;
+                $offerFiles->file = $fileName;
+                $offerFiles->save();
+            }
+            return true;
         }
+        return false;
     }
 
     /**

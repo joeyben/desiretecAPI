@@ -38,4 +38,28 @@ trait WishAttribute
             $this->total_offers .
             '</a>';
     }
+
+    /**
+     * @return string
+     */
+    public function getDurationAttribute($value)
+    {
+        return transformDuration($value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdultsAttribute($value)
+    {
+        return transformTravelers($value, 'adults');
+    }
+
+    /**
+     * @return string
+     */
+    public function getKidsAttribute($value)
+    {
+        return transformTravelers($value, 'kids');
+    }
 }
