@@ -784,16 +784,193 @@ $darkorange: #be4d00;
   background:$darkgrey;
 }
 
+//modal style
+.wish-modal-1{
+  .modal-body-left{
+    border-right: 2px solid #999;
+    input{
+      padding-top: 25px !important;
+      padding-bottom: 15px !important;
+      outline:0;
+    }
+    input:hover, input:focus{
+      outline:0 !important;
+      box-shadow:none !important;
+    }
+    input:focus{
+      border: 1px solid #999;
+    }
+    label{
+      color:#999; 
+      font-size:14px;
+      font-weight:normal;
+      position:absolute;
+      pointer-events:none;
+      left:13px;
+      top:13px;
+      transition:0.2s ease all; 
+      -moz-transition:0.2s ease all; 
+      -webkit-transition:0.2s ease all;
+    }
+    input:focus ~ label, input:valid ~ label 		{
+      top:5px;
+      font-size:10px;
+      color:#bbb;
+    }
+    select{
+      height: 42px;
+      color:#999;
+    }
+    select:hover, select:focus{
+      outline:0 !important;
+      box-shadow:none !important;
+    }
+    select:focus{
+      border: 1px solid #999;
+    }
+    
+    .group{
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .primary-btn{
+      border-color:$orange;
+      color:#FFF;
+      background: $orange;
+      padding: 4px 30px;
+      font-weight: 100;
+      border-radius: 10px;
+      float:right;
+      margin-top:20px;
+    }
+
+  }
+  .modal-body-right{
+    img{
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+      display: flex;
+      object-fit: cover;
+      border-radius:100%;
+      border: 1px solid #ccc;
+    }
+    h4,p,.modal-contact{
+      width: 90%;
+      margin: 0 auto;
+    }
+    h4{
+      margin: 20px auto 10px auto;
+    }
+    p{
+      margin: 0 auto 10px auto;
+    }
+    .modal-contact{
+      div{
+        margin-bottom:10px;
+        display: flex;
+        align-items: center;
+        span{
+          font-size: 30px;
+          color:#ccc;
+        }
+        a{
+          color: #636b6f;
+          margin-left: 10px;
+          text-decoration: underline;
+        }
+        a:hover, a:focus{
+          color: #636b6f;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .modal-body-bottom{
+    margin-top:25px;
+    textarea{
+    resize: none;
+    height: 150px;
+    }
+    textarea:focus{
+      border: 1px solid #999;
+    }
+  }
+  .modal-header{
+    border-bottom:0px !important;
+    padding-top:30px;
+    padding-left: 45px;
+    padding-right: 45px;
+    .modal-title{
+      margin-bottom: 10px;
+    }
+    .close{
+      margin-top: -2px;
+      font-size: 25px;
+      border-radius: 100%;
+      border: 1px solid #CCC;
+      padding: 3px 8px 0px 8px;
+      opacity: 1;
+      color: #ccc;
+      line-height: 1;
+      font-weight: 100;
+    }
+    a,a:hover,a:focus{
+      color:#636b6f;
+      text-decoration: underline;
+    }
+  }
+  .modal-footer{
+    border-top:0px !important;
+    padding:0 45px 30px 45px;
+    .primary-btn{
+      border-color:$orange;
+      color:#FFF;
+      background: $orange;
+      padding: 4px 30px;
+      font-weight: 100;
+      border-radius: 5px;
+    }
+    .primary-btn:focus{
+        border:1px solid $darkorange;
+        color:#FFF;
+        background: $darkorange;
+      }
+  }
+}
 //mobile style
 @media (max-width: 768px){
   .sa-buttons{
+    margin: 0 auto;
+    display: table !important;
+    text-align: center;
+    margin-top: 20px !important;
     .primary-btn{
-      margin-bottom: 5px;
+      margin-bottom: 10px;
+      display:block;
+    }
+    .secondary-btn{
+      display:inline-block;
+    }
+    button{
+      margin-right: 0px !important;
     }
   }
   .sa2-buttons{
+    margin: 0 auto;
+    display: table !important;
+    text-align: center;
+    margin-top: 20px !important;
     .primary-btn{
-      margin-bottom: 5px;
+      margin-bottom: 10px;
+      display:block;
+    }
+    .secondary-btn{
+      display:inline-block;
+    }
+    button{
+      margin-right: 0px !important;
     }
   }
   .section-comments{
@@ -871,7 +1048,7 @@ $darkorange: #be4d00;
   padding:0px;
   margin:0 -15px 0 -15px;
   hr{
-    margin: 5px 0 5px 0;
+    margin: 10px 0 10px 0;
   }
 }
 .hr-mobile{
@@ -895,6 +1072,14 @@ $darkorange: #be4d00;
 .bg-bottom{
   .col-md-3{
     margin-bottom: 15px;
+  }
+  .c-tel{
+    a{
+    border: 1px solid #636b6f;
+    border-radius: 10px;
+    padding: 0px 20px;
+
+    }
   }
 }
 .section-contact{
