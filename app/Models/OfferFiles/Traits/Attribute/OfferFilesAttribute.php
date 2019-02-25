@@ -7,5 +7,4 @@ namespace App\Models\Offers\Traits\Attribute;
  */
 trait OfferFilesAttribute
 {
-
 }

@@ -6,15 +6,15 @@ use App\Events\Frontend\Wishes\WishCreated;
 use App\Events\Frontend\Wishes\WishDeleted;
 use App\Events\Frontend\Wishes\WishUpdated;
 use App\Exceptions\GeneralException;
-use App\Models\Groups\Group;
-use App\Models\Wishes\Wish;
 use App\Models\Access\User\User;
 use App\Models\Access\User\UserToken;
+use App\Models\Groups\Group;
+use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
-use DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Auth;
+use DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class WishesRepository.
@@ -265,11 +265,9 @@ class WishesRepository extends BaseRepository
     }
 
     /**
-     *
      * @param string $id
      * @param string $token
      */
-
     public function validateToken($id, $token)
     {
         try {
@@ -277,8 +275,9 @@ class WishesRepository extends BaseRepository
             $user_id = $usertoken->user_id;
             $user = User::where('id', $user_id)->firstOrFail();
             Auth::login($user);
+
             return true;
-        } catch(ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return false;
         }
     }

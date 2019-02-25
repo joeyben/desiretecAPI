@@ -292,20 +292,23 @@ if (!function_exists('checkDatabaseConnection')) {
 
 if (!function_exists('transformTravelers')) {
     /**
-     * manipulate adults string
+     * manipulate adults string.
+     *
      * @param string $travelers
      * @param string $type
+     *
      * @return string
      */
     function transformTravelers($travelers, $type)
     {
-        return $travelers." ".trans_choice('labels.frontend.wishes.table.'.$type, intval($travelers));
+        return $travelers . ' ' . trans_choice('labels.frontend.wishes.table.' . $type, (int) $travelers);
     }
 }
 
 if (!function_exists('transformDuration')) {
     /**
-     * manipulate duration string
+     * manipulate duration string.
+     *
      * @param string $duration
      *
      * @return string
@@ -313,29 +316,29 @@ if (!function_exists('transformDuration')) {
     function transformDuration($duration)
     {
         switch ($duration) {
-            case "7":
+            case '7':
                 return trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]);
-;
+
                 break;
 
-            case "14":
+            case '14':
                 return trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]);
                 break;
 
-            case "21":
+            case '21':
                 return trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]);
                 break;
 
-            case "28":
+            case '28':
                 return trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]);
                 break;
 
             case null:
-                return "beliebig";
+                return 'beliebig';
                 break;
 
             default:
-                return trans_choice('labels.frontend.wishes.night', intval($duration), ['value' => intval($duration)]);
+                return trans_choice('labels.frontend.wishes.night', (int) $duration, ['value' => (int) $duration]);
                 break;
         }
     }

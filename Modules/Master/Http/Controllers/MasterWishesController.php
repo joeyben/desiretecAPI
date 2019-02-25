@@ -3,15 +3,9 @@
 namespace Modules\Master\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
-use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
-use App\Models\Access\User\User;
-use App\Models\Access\User\UserToken;
 use App\Models\Wishes\Wish;
+use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
-use Auth;
-use Illuminate\Http\Request;
-use Torann\GeoIP\Facades\GeoIP;
 
 /**
  * Class MasterWishesController.
@@ -72,8 +66,9 @@ class MasterWishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                                $wish
-     * @param string $token
+     * @param \App\Models\Wishes\Wish $wish
+     * @param string                  $token
+     *
      * @return mixed
      */
     public function details(Wish $wish, string $token)
@@ -81,6 +76,5 @@ class MasterWishesController extends Controller
         $this->wish->validateToken($wish->id, $token);
 
         return redirect()->to('/wish/' . $wish->id);
-
     }
 }

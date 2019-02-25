@@ -3,8 +3,8 @@
 namespace App\Models\Offers\Traits\Relationship;
 
 use App\Models\Access\User\User;
-use App\Models\Wishes\Wish;
 use App\Models\OfferFiles\OfferFile;
+use App\Models\Wishes\Wish;
 
 /**
  * Class OfferRelationship.

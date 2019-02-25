@@ -4,22 +4,17 @@ namespace Modules\Master\Http\Controllers;
 
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
+use App\Repositories\Frontend\Access\User\UserRepository;
+use App\Repositories\Frontend\Wishes\WishesRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Tui\Http\Requests\StoreWishRequest;
-use App\Repositories\Frontend\Access\User\UserRepository;
-use App\Repositories\Frontend\Wishes\WishesRepository;
-use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
+use Modules\Categories\Repositories\Contracts\CategoriesRepository;
+use Modules\Tui\Http\Requests\StoreWishRequest;
 
 class MasterController extends Controller
 {
-    const BACKGROUND_PATH   = "/background/";
-    const LOGO_PATH         = "/logo/";
-    const FAVICON_PATH      = "/favicon/";
-    const UPLOAD_PATH       = "uploads/whitelabels";
-
     protected $adults = [];
     protected $kids = [];
     protected $catering = [];
@@ -57,11 +52,12 @@ class MasterController extends Controller
     public function index()
     {
         $whitelabel = $this->whitelabel->getByName('master');
+
         return view('master::index')->with([
-            'display_name' => $whitelabel['display_name'],
-            'bg_image'     => $this::UPLOAD_PATH . $this::BACKGROUND_PATH . $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['basename'],
-            'logo'     => $this::UPLOAD_PATH . $this::LOGO_PATH . $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['basename'],
-            'body_class'         => $this::BODY_CLASS,
+            'display_name'  => $whitelabel['display_name'],
+            'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
+            'logo'          => $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['url'],
+            'body_class'    => $this::BODY_CLASS,
         ]);
     }
 
@@ -74,8 +70,8 @@ class MasterController extends Controller
     public function show(Request $request)
     {
         $html = view('master::layer.popup')->with([
-            'adults_arr' => $this->adults,
-            'kids_arr' => $this->kids,
+            'adults_arr'   => $this->adults,
+            'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
         ])->render();
@@ -85,7 +81,8 @@ class MasterController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param UserRepository $user
+     *
+     * @param UserRepository   $user
      * @param StoreWishRequest $request
      * @param WishesRepository $wish
      *
@@ -93,28 +90,26 @@ class MasterController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
-
         if ($request->failed()) {
             $html = view('master::layer.popup')->with([
-                'adults_arr' => $this->adults,
-                'errors'      => $request->errors(),
-                'kids_arr' => $this->kids,
+                'adults_arr'   => $this->adults,
+                'errors'       => $request->errors(),
+                'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
             ])->render();
+
             return response()->json(['success' => true, 'html'=>$html]);
         }
-
 
         $newUser = $this->createUserFromLayer($request, $user);
         $wish = $this->createWishFromLayer($request, $wish);
         $html = view('master::layer.created')->with([
             'token' => $newUser->token->token,
-            'id' => $wish->id
+            'id'    => $wish->id
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
-
     }
 
     private function setAdults()
@@ -129,26 +124,27 @@ class MasterController extends Controller
 
     /**
      * Create new user from Layer.
-     * @param UserRepository $user
+     *
+     * @param UserRepository   $user
      * @param StoreWishRequest $request
      *
      * @return UserRepository $user
      */
-
     private function createUserFromLayer(StoreWishRequest $request, $user)
     {
         $input = $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms');
         if ($new_user = $user->findByEmail($input['email'])) {
             access()->login($new_user);
+
             return $new_user;
         }
         $request->merge(
-            array(
-                'first_name' => "John",
-                'last_name' => "Doe",
-                "password" => "master2019",
-                "is_term_accept" => true
-            )
+            [
+                'first_name'     => 'John',
+                'last_name'      => 'Doe',
+                'password'       => 'master2019',
+                'is_term_accept' => true
+            ]
         );
         $new_user = $user->create($input);
         $new_user->storeToken();
@@ -160,16 +156,16 @@ class MasterController extends Controller
 
     /**
      * Create new user from Layer.
+     *
      * @param WishesRepository $wish
      * @param StoreWishRequest $request
      *
      * @return object
      */
-
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
-
         $new_wish = $wish->create($request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'));
+
         return $new_wish;
     }
 
@@ -178,13 +174,11 @@ class MasterController extends Controller
      *
      * @return array
      */
-
     private function getFullDuration($duration)
     {
-
-        for ($i = 1; $i < 29; $i++) {
-            $night = $i === 1 ? "Nacht" : "Nächte";
-            $duration[$i] = $i." ".$night;
+        for ($i = 1; $i < 29; ++$i) {
+            $night = 1 === $i ? 'Nacht' : 'Nächte';
+            $duration[$i] = $i . ' ' . $night;
         }
 
         return $duration;

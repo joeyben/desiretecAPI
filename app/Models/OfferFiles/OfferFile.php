@@ -6,7 +6,6 @@ use App\Models\BaseModel;
 use App\Models\ModelTrait;
 use App\Models\Offers\Traits\Attribute\OfferAttribute;
 use App\Models\Offers\Traits\Relationship\OfferRelationship;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OfferFile extends BaseModel
 {
@@ -38,5 +37,4 @@ class OfferFile extends BaseModel
         parent::__construct($attributes);
         $this->table = config('module.offer_files.table');
     }
-
 }

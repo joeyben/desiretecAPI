@@ -1,7 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'offer', 'namespace' => 'Modules\Autooffers\Http\Controllers', 'as' => 'autooffer.'], function()
-{
+Route::group(['middleware' => 'web', 'prefix' => 'offer', 'namespace' => 'Modules\Autooffers\Http\Controllers', 'as' => 'autooffer.'], function () {
     Route::get('/', 'AutooffersController@index');
     Route::get('create/{wish}', 'AutooffersController@create')->name('create');
     Route::get('details/{wish}', 'AutooffersController@show')->name('details');
