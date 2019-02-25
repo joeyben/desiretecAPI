@@ -10,6 +10,7 @@ use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
+use App\Repositories\Criteria\WhereIn;
 use Auth;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Wishes\Entities\Wish;
+use Modules\Wishes\Exports\WishExport;
 use Modules\Wishes\Http\Requests\StoreWishRequest;
 use Modules\Wishes\Http\Requests\UpdateWishRequest;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
@@ -276,5 +278,28 @@ class WishesController extends Controller
         }
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function export(Request $request)
+    {
+        $records = $request->has('checked') ? explode(',', $request->get('checked')) : null;
+        $sort = explode('|', $request->get('sort'));
+
+        return new WishExport($this->wishes->withCriteria([
+            new OrderBy('id', 'ASC'),
+            new WhereIn('wishes.id', $records),
+            new Where('wishes.whitelabel_id', $request->get('whitelabel')),
+            new WhereBetween('wishes.created_at', $request->get('start'), $request->get('end')),
+            new Filter($request->get('filter')),
+            new EagerLoad(['owner' => function ($query) {
+                $select = $this->auth->guard('web')->user()->hasRole('Administrator') ? 'CONCAT(first_name, " ", last_name, " ( ", email, " ) ") AS full_name' : 'CONCAT(first_name, " ", last_name) AS full_name';
+                $query->select('id', DB::raw($select));
+            }, 'group'  => function ($query) {
+                $query->select('id', 'display_name');
+            }, 'whitelabel'  => function ($query) {
+                $query->select('id', 'display_name');
+            }]),
+            new ByWhitelabel()
+        ]));
     }
 }

@@ -89,4 +89,5 @@ return [
     'ago'                           => 'Ago',
     'when'                          => 'When',
     'from'                          => 'From',
+    'booking_status'                => 'Booking Status',
 ];

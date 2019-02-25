@@ -37919,10 +37919,26 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var state = {
   wish: {},
+  checked: [],
   whitelabels: {}
 };
 
 var mutations = {
+  REMOVE_CHECKED_ID: function REMOVE_CHECKED_ID(state, id) {
+    var index = state.checked.findIndex(function (c) {
+      return c === id;
+    });
+    state.checked.splice(index, 1);
+  },
+  ADD_CHECKED_ID: function ADD_CHECKED_ID(state, id) {
+    state.checked.push(id);
+  },
+  ADD_CHECKED: function ADD_CHECKED(state, checked) {
+    state.checked = checked;
+  },
+  ADD_GROUP: function ADD_GROUP(state, group) {
+    state.group = group;
+  },
   ADD_WISH: function ADD_WISH(state, wish) {
     state.wish = wish;
   },
@@ -37951,7 +37967,7 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.loadWhitelabels = exports.addWish = undefined;
+exports.addChecked = exports.removeCheckedId = exports.addCheckedId = exports.loadWhitelabels = exports.addWish = undefined;
 
 var _mutationTypes = __webpack_require__(222);
 
@@ -37981,6 +37997,17 @@ var loadWhitelabels = exports.loadWhitelabels = function loadWhitelabels(store) 
     console.log('LOGIN_USER not answer', error);
   });
 };
+var addCheckedId = exports.addCheckedId = function addCheckedId(store, id) {
+  store.commit(types.ADD_CHECKED_ID, id);
+};
+
+var removeCheckedId = exports.removeCheckedId = function removeCheckedId(store, id) {
+  store.commit(types.REMOVE_CHECKED_ID, id);
+};
+
+var addChecked = exports.addChecked = function addChecked(store, checked) {
+  store.commit(types.ADD_CHECKED, checked);
+};
 
 /***/ }),
 /* 222 */
@@ -37996,6 +38023,9 @@ var LOAD_LANGUAGES = exports.LOAD_LANGUAGES = 'LOAD_LANGUAGES';
 var ADD_WISH = exports.ADD_WISH = 'ADD_WISH';
 var ADD_WHITELABELS = exports.ADD_WHITELABELS = 'ADD_WHITELABELS';
 var ADD_USERS = exports.ADD_USERS = 'ADD_USERS';
+var ADD_CHECKED = exports.ADD_CHECKED = 'ADD_CHECKED';
+var ADD_CHECKED_ID = exports.ADD_CHECKED_ID = 'ADD_CHECKED_ID';
+var REMOVE_CHECKED_ID = exports.REMOVE_CHECKED_ID = 'REMOVE_CHECKED_ID';
 
 /***/ }),
 /* 223 */
@@ -38032,6 +38062,9 @@ var wish = exports.wish = function wish(state) {
 };
 var whitelabels = exports.whitelabels = function whitelabels(state) {
   return state.whitelabels;
+};
+var checked = exports.checked = function checked(state) {
+  return state.checked;
 };
 
 /***/ }),
@@ -84472,7 +84505,11 @@ exports.default = {
     }, [h('filter-bar'), this.renderCardBody(h), this.renderMain(h)]);
   },
 
-  methods: _extends({}, _vuex2.default.mapActions({}), {
+  methods: _extends({}, _vuex2.default.mapActions({
+    addChecked: 'addChecked',
+    addCheckedId: 'addCheckedId',
+    removeCheckedId: 'removeCheckedId'
+  }), {
     refresh: function refresh() {
       var _this2 = this;
 
@@ -84596,10 +84633,21 @@ exports.default = {
     },
     onInitialized: function onInitialized(tableFields, description) {},
     onCheckboxToggled: function onCheckboxToggled(checked, data) {
-      this.$events.fire('checkbox-toggled-set', checked, data);
+      if (checked) {
+        this.addCheckedId(data.id);
+      } else {
+        this.removeCheckedId(data.id);
+      }
     },
     onCheckboxToggledAll: function onCheckboxToggledAll(checked) {
-      this.$events.fire('checkbox-toggled-all-set', checked);
+      var data = [];
+      if (checked) {
+        this.$refs.vuetable.tableData.forEach(function (row, index) {
+          data.push(row.id);
+        });
+      }
+
+      this.addChecked(data);
     },
     onLoading: function onLoading() {
       this.$store.dispatch('block', { element: 'wishesComponent', load: true });
@@ -100436,6 +100484,7 @@ exports.default = {
   data: function data() {
     return {
       created: '',
+      urlExport: window.laroute.route('admin.wishes.export'),
       fields: _config2.default.fields,
       filterText: '',
       whitelabel: '',
@@ -100459,8 +100508,12 @@ exports.default = {
 
   computed: _extends({}, _vuex2.default.mapGetters({
     whitelabels: 'whitelabels',
+    checked: 'checked',
     user: 'currentUser'
   }), {
+    urlExportSelected: function urlExportSelected() {
+      return window.laroute.route('admin.wishes.export', { checked: this.checked });
+    },
     show: function show() {
       var results = [];
       if (this.fields.length > 0) {
@@ -100475,6 +100528,19 @@ exports.default = {
     }
   }),
   methods: {
+    onExportSelected: function onExportSelected() {
+      if (this.checked.length <= 0) {
+        this.$message({
+          message: 'Please select at least one item',
+          showClose: true,
+          type: 'error'
+        });
+
+        return false;
+      }
+
+      window.location.href = this.urlExportSelected;
+    },
     doShow: function doShow(elements) {
       var filtered = elements.filter(function (el) {
         return el != null;
@@ -100531,7 +100597,34 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card-header header-elements-inline" }, [
-    _vm._m(0),
+    _c("h5", { staticClass: "card-title" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "dropdown-menu dropdown-menu-left" }, [
+        _c(
+          "a",
+          {
+            staticClass: "dropdown-item",
+            attrs: { href: "javascript:;" },
+            on: {
+              click: function($event) {
+                _vm.onExportSelected()
+              }
+            }
+          },
+          [
+            _c("i", { staticClass: "icon-file-text3" }),
+            _vm._v(" Export Selected")
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "dropdown-item", attrs: { href: _vm.urlExport } },
+          [_c("i", { staticClass: "icon-file-text3" }), _vm._v(" Export All")]
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "header-elements" }, [
       _c("form", { staticClass: "row", attrs: { action: "#" } }, [
@@ -100748,29 +100841,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h5", { staticClass: "card-title" }, [
-      _c(
-        "button",
-        {
-          staticClass:
-            "btn btn-outline bg-steel text-steel btn-icon dropdown-toggle",
-          attrs: { type: "button", "data-toggle": "dropdown" }
-        },
-        [_c("i", { staticClass: "icon-gear" })]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "dropdown-menu dropdown-menu-left" }, [
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("i", { staticClass: "icon-file-text3" }),
-          _vm._v(" Export Selected")
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("i", { staticClass: "icon-file-text3" }),
-          _vm._v(" Export All")
-        ])
-      ])
-    ])
+    return _c(
+      "button",
+      {
+        staticClass:
+          "btn btn-outline bg-steel text-steel btn-icon dropdown-toggle",
+        attrs: { type: "button", "data-toggle": "dropdown" }
+      },
+      [_c("i", { staticClass: "icon-gear" })]
+    )
   },
   function() {
     var _vm = this
