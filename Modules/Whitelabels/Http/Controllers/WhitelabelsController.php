@@ -16,6 +16,7 @@ use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\DB;
@@ -24,10 +25,12 @@ use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Excel;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Attachments\Repositories\Contracts\AttachmentsRepository;
+use Modules\Roles\Repositories\Contracts\RolesRepository;
 use Modules\Whitelabels\Http\Requests\DomainWhitelabelRequest;
 use Modules\Whitelabels\Http\Requests\SaveWhitelabelRequest;
 use Modules\Whitelabels\Http\Requests\StoreWhitelabelRequest;
 use Modules\Whitelabels\Http\Requests\UpdateWhitelabelRequest;
+use Modules\Whitelabels\Notifications\CreateWhitelabelNotification;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class WhitelabelsController extends Controller
@@ -80,6 +83,14 @@ class WhitelabelsController extends Controller
      * @var \Modules\Attachments\Repositories\Contracts\AttachmentsRepository
      */
     private $attachments;
+    /**
+     * @var \Illuminate\Notifications\ChannelManager
+     */
+    private $notification;
+    /**
+     * @var \Modules\Roles\Repositories\Contracts\RolesRepository
+     */
+    private $roles;
 
     /**
      * WhitelabelsController constructor.
@@ -96,8 +107,10 @@ class WhitelabelsController extends Controller
      * @param \Illuminate\Contracts\Console\Kernel                              $artisan
      * @param \Illuminate\Support\Str                                           $str
      * @param \Modules\Attachments\Repositories\Contracts\AttachmentsRepository $attachments
+     * @param \Illuminate\Notifications\ChannelManager                          $notification
+     * @param \Modules\Roles\Repositories\Contracts\RolesRepository             $roles
      */
-    public function __construct(WhitelabelsRepository $whitelabels, DistributionsRepository $distributions, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel, FilesystemManager $storage, Kernel $artisan, Str $str, AttachmentsRepository $attachments)
+    public function __construct(WhitelabelsRepository $whitelabels, DistributionsRepository $distributions, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel, FilesystemManager $storage, Kernel $artisan, Str $str, AttachmentsRepository $attachments, ChannelManager $notification, RolesRepository $roles)
     {
         $this->whitelabels = $whitelabels;
         $this->response = $response;
@@ -111,6 +124,8 @@ class WhitelabelsController extends Controller
         $this->artisan = $artisan;
         $this->str = $str;
         $this->attachments = $attachments;
+        $this->notification = $notification;
+        $this->roles = $roles;
     }
 
     /**
@@ -453,6 +468,8 @@ class WhitelabelsController extends Controller
 
             ini_set('max_execution_time', 300);
             $this->artisan->call('whitelabel:make-route', ['domain' => $result['whitelabel']->domain, 'module' => $result['whitelabel']->name]);
+            $users = $this->roles->findWhereFirst('name', Flag::ADMINISTRATOR_ROLE)->users()->get();
+            $this->notification->send($users, new CreateWhitelabelNotification($result['whitelabel'], 'Step 2'));
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Domain']);
             $result['message'] .= $this->artisan->output();

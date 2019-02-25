@@ -6,12 +6,14 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Modules\Whitelabels\Entities\Whitelabel;
 
-class CreateWhitelabelNotification extends Notification implements ShouldBroadcast
+class DeletedWhitelabelNotification extends Notification implements ShouldBroadcast
 {
     use Queueable;
     /**
@@ -22,29 +24,22 @@ class CreateWhitelabelNotification extends Notification implements ShouldBroadca
      * @var string
      */
     private $url;
-    /**
-     * @var string
-     */
-    private $step;
 
     /**
      * Create a new notification instance.
      *
      * @param \Modules\Whitelabels\Entities\Whitelabel $whitelabel
-     * @param string                                   $step
      */
-    public function __construct(Whitelabel $whitelabel, string $step = 'Step 1')
+    public function __construct(Whitelabel $whitelabel)
     {
         $this->whitelabel = $whitelabel;
-        $this->url = route('admin.whitelabels') . '#/edit/' . $this->whitelabel->id;
-        $this->step = $step;
+        $this->url = 'javascript:;';
     }
 
     /**
      * Get the notification's delivery channels.
      *
      * @param mixed $notifiable
-     *
      * @return array
      */
     public function via($notifiable)
@@ -59,11 +54,11 @@ class CreateWhitelabelNotification extends Notification implements ShouldBroadca
      */
     public function toBroadcast($notifiable)
     {
-        createNotification(Lang::get('notification.created', ['name' => $this->step . ' Whitelabel', 'url' => '<a  href="' . $this->url . '"> ' . $this->whitelabel->display_name . '</a>', 'user' =>  Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, Auth::guard('web')->user()->id);
+        createNotification(Lang::get('notification.deleted', ['name' => ' Whitelabel', 'url' => '<a  href="' . $this->url . '"> ' . $this->whitelabel->display_name . '</a>', 'user' =>  Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, Auth::guard('web')->user()->id);
 
         return new BroadcastMessage([
             'id'         => $this->whitelabel->id,
-            'message'    => Lang::get('notification.created', ['name' => $this->step . ' Whitelabel', 'url' =>'<a  href="' . $this->url . '"> ' . $this->whitelabel->display_name . '</a>', 'user' =>  Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]),
+            'message'    => Lang::get('notification.deleted', ['name' => ' Whitelabel', 'url' =>'<a  href="' . $this->url . '"> ' . $this->whitelabel->display_name . '</a>', 'user' =>  Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]),
             'user_id'    => $notifiable->id,
             'from_id' => Auth::guard('web')->user()->id,
             'from'    => [

@@ -3,13 +3,13 @@
     <div id="modal_large_whitelabel" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="icon-menu7 mr-2"></i> &nbsp;Modal with icons</h5>
+                <div class="modal-header bg-steel">
+                    <h5 class="modal-title"><i class="icon-menu7 mr-2"></i></h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <ul class="nav nav-tabs nav-tabs-highlight nav-justified">
-                    <li class="nav-item" v-if="true"><a href="#highlighted-justified-tab1" class="nav-link active" data-toggle="tab"><i class="icon-pencil6 mr-2"></i> {{ trans('modals.whitelabel') }}</a></li>
-                    <li class="nav-item" v-if="true"><a href="#highlighted-justified-tab2" class="nav-link" data-toggle="tab"><i class="icon-file-text mr-2"></i> {{ trans('modals.logs') }}</a></li>
+                <ul class="nav nav-tabs nav-tabs-bottom border-bottom-0 nav-justified">
+                    <li class="nav-item" v-if="true"><a href="#highlighted-justified-tab1" class="nav-link active" data-toggle="tab"><i class="icon-pencil6 mr-2"></i></a></li>
+                    <li class="nav-item" v-if="true"><a href="#highlighted-justified-tab2" class="nav-link" data-toggle="tab"><i class="icon-file-text mr-2"></i></a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="highlighted-justified-tab1">
@@ -97,7 +97,7 @@
 
                                         <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('validation.attributes.backend.whitelabels.image') }}</legend>
                                         <div class="form-group">
-                                            <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'background'}" :fileList="whitelabel.background" :limit="1" listType="picture-card"></upload-attachments>
+                                            <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'background'}" :fileList="whitelabel.background" :tip="trans('messages.background')" :limit="1" listType="picture-card"></upload-attachments>
                                             <div class="help-block text-danger" v-if="errors.has('background')">
                                                 <strong v-text="errors.get('background')"></strong>
                                             </div>
@@ -105,14 +105,14 @@
 
                                         <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('Logo') }} </legend>
                                         <div class="form-group">
-                                            <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'logo'}" :fileList="whitelabel.logo" :limit="1" listType="picture-card"></upload-attachments>
+                                            <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'logo'}" :fileList="whitelabel.logo" :limit="1" :tip="trans('messages.logo')" listType="picture-card"></upload-attachments>
                                             <div class="help-block text-danger" v-if="errors.has('logo')">
                                                 <strong v-text="errors.get('logo')"></strong>
                                             </div>
                                         </div>
                                         <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('Favicon') }} </legend>
                                         <div class="form-group">
-                                            <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'favicon'}" :fileList="whitelabel.favicon" :limit="1" listType="picture-card"></upload-attachments>
+                                            <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'favicon'}" :fileList="whitelabel.favicon" :limit="1" :tip="trans('messages.favicon')" listType="picture-card"></upload-attachments>
                                             <div class="help-block text-danger" v-if="errors.has('favicon')">
                                                 <strong v-text="errors.get('favicon')"></strong>
                                             </div>
@@ -239,6 +239,24 @@
           .then(() => {
             this.$store.dispatch('block', {element: 'whitelabelsComponent', load: false})
           })
+      },
+      onSubmitSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          if (this.close) {
+            $('#modal_large_whitelabel').modal('hide')
+            this.$router.push({name: 'root'})
+          } else {
+            this.$router.push({name: 'root.edit', params: {id: response.data.wish.id}})
+          }
+          this.$message({
+            message: response.data.message,
+            showClose: true,
+            type: 'success'
+          })
+          this.$parent.$children[0].refresh()
+        } else {
+          this.$notify.error({ title: 'Failed', message: response.data.message })
+        }
       },
       hasPermissionTo (permission) {
         return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
