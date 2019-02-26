@@ -3,13 +3,13 @@
     <div id="modal_large_user" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="icon-menu7 mr-2"></i> &nbsp;Modal with icons</h5>
+                <div class="modal-header bg-steel">
+                    <h5 class="modal-title"><i class="icon-menu7 mr-2"></i></h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <ul class="nav nav-tabs nav-tabs-highlight nav-justified">
-                    <li class="nav-item" v-if="can_logs"><a href="#highlighted-justified-tab1" class="nav-link active" data-toggle="tab"><i class="icon-pencil6 mr-2"></i> {{ trans('modals.user') }}</a></li>
-                    <li class="nav-item" v-if="can_logs"><a href="#highlighted-justified-tab2" class="nav-link" data-toggle="tab"><i class="icon-file-text mr-2"></i> {{ trans('modals.logs') }}</a></li>
+                <ul class="nav nav-tabs nav-tabs-bottom border-bottom-0 nav-justified">
+                    <li class="nav-item" v-if="can_logs"><a href="#highlighted-justified-tab1" class="nav-link active" data-toggle="tab"><i class="icon-pencil6 mr-2"></i></a></li>
+                    <li class="nav-item" v-if="can_logs"><a href="#highlighted-justified-tab2" class="nav-link" data-toggle="tab"><i class="icon-file-text mr-2"></i></a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -36,11 +36,20 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.name') }} <span class="text-danger"> *</span></label>
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.first_name') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('first_name') ? 'is-invalid': ''" id='first_name' name='first_name' :placeholder="trans('modals.name')" @input="updateUser"  :value="user.first_name"/>
+                                                    <input type="text" class="form-control" :class="errors.has('first_name') ? 'is-invalid': ''" id='first_name' name='first_name' :placeholder="trans('modals.first_name')" @input="updateUser"  :value="user.first_name"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('first_name')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.last_name') }}</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" :class="errors.has('last_name') ? 'is-invalid': ''" id='last_name' name='last_name' :placeholder="trans('modals.last_name')" @input="updateUser"  :value="user.last_name"/>
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('last_name')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
@@ -54,11 +63,20 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('validation.attributes.backend.access.users.associated_whitelabels') }}</label>
+                                                <label class="col-lg-3 col-form-label"> &nbsp;&nbsp;{{ trans('modals.password') }} <span class="text-danger" v-if="parseInt(this.$route.params.id) === 0"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control"  id='whitelabel' name='whitelabel' :placeholder="trans('validation.attributes.backend.access.users.associated_whitelabels')"  :value="user.whitelabel" disabled readonly/>
+                                                    <input type="password" class="form-control" :class="errors.has('password') ? 'is-invalid': ''" :placeholder="trans('modals.password')" id="password" name="password" @input="updateUser"  :value="user.password">
                                                     <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('whitelabel')"></strong>
+                                                        <strong v-text="errors.get('password')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label"> &nbsp;&nbsp;{{ trans('modals.password_confirm') }} <span class="text-danger" v-if="parseInt(this.$route.params.id) === 0"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <input type="password" class="form-control" :class="errors.has('password_confirm') ? 'is-invalid': ''" :placeholder="trans('modals.password_confirm')" id="password_confirm" name="password_confirm" @input="updateUser"  :value="user.password_confirm">
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('password_confirm')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,9 +102,23 @@
                                                     </el-switch>
                                                 </div>
                                             </div>
+                                            <div class="form-group row" v-if="!is_edit">
+                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('validation.attributes.backend.access.users.send_confirmation_email') }} </label>
+                                                <div class="col-lg-9">
+                                                    <el-switch
+                                                            @input="updateConfirmationEmail"
+                                                            :value="user.confirmation_email"
+                                                            active-color="#13ce66"
+                                                            inactive-color="#ff4949">
+                                                    </el-switch>
+                                                    <div class="help-block">
+                                                        {{ trans('strings.backend.access.users.if_confirmed_off') }}
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <legend class="font-weight-semibold text-uppercase font-size-sm">
-                                                <i class="icon-thumbs-up3"></i>
-                                                {{ trans('validation.attributes.backend.access.users.groups') }}
+                                                <i class="icon-atom2"></i>
+                                                {{ trans('validation.attributes.backend.access.users.associated_whitelabels') }}
                                                 <a class="float-right text-default" data-toggle="collapse" data-target="#demo5">
                                                     <i class="icon-circle-down2"></i>
                                                 </a>
@@ -94,14 +126,56 @@
                                             <div class="collapse show" id="demo5">
                                                 <div class="form-group">
                                                     <el-transfer style="width: 100%;margin-left: 5%;"
-                                                                 @input="inputGroups"
+                                                                 @input="inputWhitelabels"
                                                                  filterable
                                                                  :titles="['Source', 'Target']"
-                                                                 :value="user.groups"
-                                                                 :data="generateGroups()">
+                                                                 :value="user.whitelabels"
+                                                                 :data="generateWhitelabels()">
                                                     </el-transfer>
-                                                    <div class="help-block text-danger" v-if="errors.has('groups')">
-                                                        <strong v-text="errors.get('groups')"></strong>
+                                                    <div class="help-block text-danger" v-if="errors.has('whitelabels')">
+                                                        <strong v-text="errors.get('whitelabels')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <legend class="font-weight-semibold text-uppercase font-size-sm">
+                                                <i class="icon-delicious"></i>
+                                                {{ trans('modals.roles') }}
+                                                <a class="float-right text-default" data-toggle="collapse" data-target="#demo6">
+                                                    <i class="icon-circle-down2"></i>
+                                                </a>
+                                            </legend>
+                                            <div class="collapse show" id="demo6">
+                                                <div class="form-group">
+                                                    <el-transfer style="width: 100%;margin-left: 5%;"
+                                                                 @input="inputRoles"
+                                                                 filterable
+                                                                 :titles="['Source', 'Target']"
+                                                                 :value="user.roles"
+                                                                 :data="generateRoles()">
+                                                    </el-transfer>
+                                                    <div class="help-block text-danger" v-if="errors.has('roles')">
+                                                        <strong v-text="errors.get('roles')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <legend class="font-weight-semibold text-uppercase font-size-sm">
+                                                <i class="icon-statistics"></i>
+                                                {{ trans('modals.dashboard') }}
+                                                <a class="float-right text-default" data-toggle="collapse" data-target="#demo7">
+                                                    <i class="icon-circle-down2"></i>
+                                                </a>
+                                            </legend>
+                                            <div class="collapse show" id="demo7">
+                                                <div class="form-group">
+                                                    <el-transfer style="width: 100%;margin-left: 5%;"
+                                                                 @input="inputDashboards"
+                                                                 filterable
+                                                                 :titles="['Source', 'Target']"
+                                                                 :value="user.dashboards"
+                                                                 :data="generateDashboards()">
+                                                    </el-transfer>
+                                                    <div class="help-block text-danger" v-if="errors.has('dashboards')">
+                                                        <strong v-text="errors.get('dashboards')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
@@ -150,6 +224,9 @@
       this.loadModal()
     },
     watch: {
+      '$route.params.id' () {
+        this.EditUser(parseInt(this.$route.params.id))
+      }
     },
     computed: {
       ...Vuex.mapGetters({
@@ -158,6 +235,9 @@
       }),
       can_logs () {
         return this.hasPermissionTo('logs-user')
+      },
+      is_edit () {
+        return this.user.id !== 0
       }
     },
     methods: {
@@ -165,22 +245,57 @@
         loadUser: 'loadLoggedUser',
         addUser: 'addUser'
       }),
-      inputGroups (value) {
-        this.$store.commit('updateUser', {name: 'groups', value: value})
+      inputWhitelabels (value) {
+        this.$store.commit('updateUser', {name: 'whitelabels', value: value})
+      },
+      inputRoles (value) {
+        this.$store.commit('updateUser', {name: 'roles', value: value})
+      },
+      inputDashboards (value) {
+        this.$store.commit('updateUser', {name: 'dashboards', value: value})
       },
       updateStatus (value) {
         this.$store.commit('updateUser', {name: 'status', value: value})
       },
+      updateConfirmationEmail (value) {
+        this.$store.commit('updateUser', {name: 'confirmation_email', value: value})
+      },
       updateConfirmed (value) {
         this.$store.commit('updateUser', {name: 'confirmed', value: value})
       },
-      generateGroups () {
+      generateWhitelabels () {
         let data = []
-        if (this.user.hasOwnProperty('groupsList')) {
-          this.user['groupsList'].forEach((group, index) => {
+        if (this.user.hasOwnProperty('whitelabelsList')) {
+          this.user['whitelabelsList'].forEach((whitelabel, index) => {
             data.push({
-              label: group['name'],
-              key: group['id']
+              label: whitelabel['display_name'],
+              key: whitelabel['id']
+            })
+          })
+        }
+
+        return data
+      },
+      generateRoles () {
+        let data = []
+        if (this.user.hasOwnProperty('rolesList')) {
+          this.user['rolesList'].forEach((role, index) => {
+            data.push({
+              label: role['name'],
+              key: role['id']
+            })
+          })
+        }
+
+        return data
+      },
+      generateDashboards () {
+        let data = []
+        if (this.user.hasOwnProperty('dashboardsList')) {
+          this.user['dashboardsList'].forEach((dashboard, index) => {
+            data.push({
+              label: dashboard['name'],
+              key: dashboard['id']
             })
           })
         }
@@ -209,7 +324,7 @@
       },
       CreateUser () {
         this.$store.dispatch('block', {element: 'usersComponent', load: true})
-        this.$http.get(window.laroute.route('admin.sellers.create'))
+        this.$http.get(window.laroute.route('admin.users.create'))
           .then(this.onLoadUserSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -218,7 +333,7 @@
       },
       EditUser (id) {
         this.$store.dispatch('block', {element: 'usersComponent', load: true})
-        this.$http.get(window.laroute.route('admin.sellers.edit', {id: id}))
+        this.$http.get(window.laroute.route('admin.users.edit', {id: id}))
           .then(this.onLoadUserSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -245,7 +360,7 @@
       },
       onSubmitStore () {
         this.$store.dispatch('block', {element: 'usersComponent', load: true})
-        this.$http.put(window.laroute.route('admin.sellers.store'), this.user)
+        this.$http.put(window.laroute.route('admin.users.store'), this.user)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -254,7 +369,7 @@
       },
       onSubmitUpdate (id) {
         this.$store.dispatch('block', {element: 'usersComponent', load: true})
-        this.$http.put(window.laroute.route('admin.sellers.update', {id: id}), this.user)
+        this.$http.put(window.laroute.route('admin.users.update', {id: id}), this.user)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -267,7 +382,7 @@
             $('#modal_large_user').modal('hide')
             this.$router.push({name: 'root'})
           } else {
-            this.$router.push({name: 'root.seller', params: {id: response.data.user.id}})
+            this.$router.push({name: 'root.edit', params: {id: response.data.user.id}})
           }
           this.$message({
             message: response.data.message,
