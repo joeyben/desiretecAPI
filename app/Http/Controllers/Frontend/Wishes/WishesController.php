@@ -95,13 +95,17 @@ class WishesController extends Controller
     {
         $offers = $wish->offers;
         $avatar = [];
+        $agentName = [];
+
         foreach ($offers as $offer) {
             array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
+            array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
 
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
+            'agent_name'         => $agentName,
             'body_class'         => $this::BODY_CLASS,
         ]);
     }

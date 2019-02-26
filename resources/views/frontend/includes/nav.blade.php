@@ -34,13 +34,13 @@
 
                 @if ($logged_in_user && $logged_in_user->hasRole('Seller'))
                     <li>{{ link_to_route('frontend.wishes.list', trans('navs.frontend.wisheslist')) }}</li>
+                    @if($logged_avatar)
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             {{ $logged_agent}} 
                             <img class="agent-menu-img" src="{{ Storage::disk('s3')->url('img/agent/' . $logged_avatar) }}">
                             <span class="caret"></span>
                         </a>
-
                         <ul class="dropdown-menu" role="menu">
                             @foreach($agents as $agent)
                             <li>
@@ -52,6 +52,7 @@
                             @endforeach
                         </ul>
                     </li>
+                    @endif
                 @endif
 
                 @if ($logged_in_user && $logged_in_user->hasRole('User'))

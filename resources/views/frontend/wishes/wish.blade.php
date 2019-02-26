@@ -82,9 +82,11 @@
         <?php $i=0; ?>
         @foreach($wish->offers as $key => $offer)
             <div class="offer">
+                @if($avatar[$i])
                 <img src="{{ Storage::disk('s3')->url('img/agent/' . $avatar[$i]) }}" >
+                @endif
                 <div class='offer-info'>
-                    <h6>{{ $offer->agent }}</h6>
+                    <h6>{{ $agent_name[$i] }}</h6>
                     <span class="title">{{ $offer->title }}</span>
                     <p>{{ $offer->description }}</p>
                     <a class="icon_document" href="{{ Storage::disk('s3')->url('img/offer/' . $offer->file) }}"></a>

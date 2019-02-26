@@ -38,6 +38,7 @@ class MessagesController extends Controller
         $groupId = $request->group_id;
         $message = $request->input('message');
         $id = Auth::id();
+        $agent = Agent::where('user_id', $id)->where('status', 'Active')->value('id');
 
         $sellersId = User::join('group_user', 'users.id', '=', 'group_user.user_id')
                     ->join('groups', 'group_user.group_id', '=', 'groups.id')
@@ -51,7 +52,8 @@ class MessagesController extends Controller
             $message = Message::create([
                 'user_id' => $consumerId,
                 'wish_id' => $request->wish_id,
-                'message' => $message
+                'message' => $message,
+                'agent_id' => $agent
             ]);
         } else {
             $sellers = User::join('group_user', 'users.id', '=', 'group_user.user_id')
@@ -62,8 +64,6 @@ class MessagesController extends Controller
             foreach ($sellers as $seller) {
                 Mail::to($seller)->send(new MessageSent($message));
             }
-
-            $agent = Agent::where('user_id', $id)->where('status', 'Active')->value('id');
 
             $message = Message::create([
                 'user_id' => $consumerId,
@@ -114,7 +114,7 @@ class MessagesController extends Controller
         }
 
         $messages = array_merge($userMessages->toArray(), $agentMessages->toArray());
-
+        array_multisort( array_column($messages, "created_at"), SORT_ASC, $messages );
         $response = [
             'data'   => $messages,
             'user'   => $user,
