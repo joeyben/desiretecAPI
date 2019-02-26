@@ -32,7 +32,7 @@ class CreatedUserNotification extends Notification implements ShouldBroadcast
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->url = Auth::guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) ? route('admin.sellers') . '#/seller/' . $this->user->id : route('admin.users') . '#/edit/' . $this->user->id;
+        $this->url = !Auth::guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE) ? route('admin.sellers') . '#/seller/' . $this->user->id : route('admin.users') . '#/edit/' . $this->user->id;
     }
 
     /**
