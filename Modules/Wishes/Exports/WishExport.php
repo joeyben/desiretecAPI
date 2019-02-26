@@ -112,8 +112,8 @@ class WishExport implements FromCollection, Responsable, WithMapping, WithHeadin
     public function columnFormats(): array
     {
         return [
-            'O' => 'dd.mm.yy',
             'P' => 'dd.mm.yy',
+            'Q' => 'dd.mm.yy',
         ];
     }
 }
