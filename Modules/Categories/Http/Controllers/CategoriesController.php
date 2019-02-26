@@ -166,7 +166,7 @@ class CategoriesController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         try {
-            $result['category'] = $this->categories->create($request->only('name', 'parent_id'));
+            $result['category'] = $this->categories->create($request->only('name', 'parent_id', 'value'));
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Category']);
             $result['success'] = true;
@@ -200,12 +200,13 @@ class CategoriesController extends Controller
     public function edit(int $id)
     {
         try {
-            $category = $this->categories->find($id, ['id', 'name', 'parent_id']);
+            $category = $this->categories->find($id, ['id', 'name', 'parent_id', 'value']);
 
             $result['category'] = [
                 'id'        => $category->id,
                 'name'      => $category->name,
                 'parent_id' => $category->parent_id,
+                'value'     => $category->value,
             ];
 
             $result['success'] = true;
@@ -230,7 +231,7 @@ class CategoriesController extends Controller
     public function update(UpdateCategoryRequest $request, int $id)
     {
         try {
-            $category = $this->categories->update($id, $request->only('name', 'parent_id'));
+            $category = $this->categories->update($id, $request->only('name', 'parent_id', 'value'));
 
             $result['category'] = $category;
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Category']);

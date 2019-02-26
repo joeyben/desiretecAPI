@@ -27,7 +27,7 @@
         @endif
         {!! Html::style('js/select2/select2.css') !!}
 
-        {{!! Html::style(mix('css/frontend-custom.css')) !!}}
+        {{ Html::style(mix('css/frontend-custom.css')) }}
 
     @yield('after-styles')
 

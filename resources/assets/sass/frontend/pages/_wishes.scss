@@ -1,5 +1,5 @@
 // Offers Styles
-body.wish{
+body.wishlist{
   .filter{
     display: grid;
     grid-template-columns: 35% 65%;
@@ -18,6 +18,7 @@ body.wish{
   .list-container {
     border: 1px solid #eee;
     background-color: white;
+    margin-top: 50px;
     .list {
       .list-element {
         display: grid;
@@ -83,6 +84,53 @@ body.wish{
         }
       }
     }
+  }
+}
+
+// Skeleton
+.skeleton:empty {
+  margin: auto;
+  width: 100%;
+  height: 875px; /* change height to see repeat-y behavior */
+
+  background-image:
+          linear-gradient( lightgray 200px, transparent 0 ),
+          linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80% ),
+          linear-gradient( lightgray 20px, transparent 0 ),
+          linear-gradient( lightgray 20px, transparent 0 ),
+          linear-gradient( lightgray 20px, transparent 0 ),
+          linear-gradient( lightgray 20px, transparent 0 );
+
+  background-repeat: repeat-y;
+
+  background-size:
+          35% 220px, /* circle */
+          50px 220px, /* highlight */
+          150px 220px,
+          350px 220px,
+          300px 220px,
+          250px 220px;
+
+  background-position:
+          0 0, /* circle */
+          0 0, /* highlight */
+          420px 0,
+          420px 40px,
+          420px 80px,
+          420px 120px;
+
+  animation: shine 1s infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position:
+            0 0,
+            100% 0, /* move highlight to right */
+            420px 0,
+            420px 40px,
+            420px 80px,
+            420px 120px;
   }
 }
 

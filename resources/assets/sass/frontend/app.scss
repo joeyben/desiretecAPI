@@ -17,8 +17,15 @@
 // Helpers
 @import "../helpers";
 
+
 // Global
 @import "global";
+
+// Footer
+@import "footer";
+
+// Header
+@import "header";
 
 // Pages
 @import "pages/frontpage";
@@ -31,3 +38,6 @@
 // Plugins
 @import "../plugin/toastr/toastr.scss";
 @import "../plugin/sweetalert/sweetalert.scss";
+
+// Fix issues with Bootsrap
+@import "fixes";

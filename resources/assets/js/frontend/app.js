@@ -37,7 +37,7 @@ const app = new Vue({
 
     },
     mounted() {
-        //this.fetchWishes();
+        this.fetchWishes();
         
     },
 

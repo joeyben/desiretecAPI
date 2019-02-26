@@ -293,6 +293,8 @@ return [
                 'text'              => 'Text',
                 'status'            => 'Status',
                 'file'              => 'File',
+                'link'              => 'Link',
+                'link_placeholder'  => 'http://goo.gl/rxozgv',
             ],
         ],
     ],

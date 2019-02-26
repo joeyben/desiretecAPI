@@ -35,9 +35,12 @@ class EloquentCategoriesRepository extends RepositoryAbstract implements Categor
     public function getChildrenFromSlug($column, $field, $columns = ['*'])
     {
         $parent = $this->model->where($column, $field)->first($columns)->toArray();
-        $children = $this->model->where('parent_id', $parent['id'])->pluck('slug')->toArray();
-        $children = array_combine($children, $children);
+        $children = $this->model->where('parent_id', $parent['id'])->select('value', 'name')->get()->toArray();
+        $category = [];
+        foreach ($children as $key => $value) {
+            $category[$value['value']] = $value['name'];
+        }
 
-        return $children;
+        return $category;
     }
 }

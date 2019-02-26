@@ -21,6 +21,8 @@ use Torann\GeoIP\Facades\GeoIP;
 class WishesController extends Controller
 {
     const BODY_CLASS = 'wish';
+    const BODY_CLASS_LIST = 'wishlist';
+    const OFFER_URL = 'img/offer/';
     /**
      * Wish Status.
      */
@@ -103,12 +105,41 @@ class WishesController extends Controller
             'wish'               => $wish,
             'avatar'             => $avatar,
             'body_class'         => $this::BODY_CLASS,
+            'offer_url'          => $this::OFFER_URL,
         ]);
     }
 
     public function newWish(ManageWishesRequest $request)
     {
         return view('frontend.wishes.newwishes.wish')->with([
+            'body_class' => $this::BODY_CLASS,
+        ]);
+    }
+
+    public function newUserWish(ManageWishesRequest $request)
+    {
+        return view('frontend.wishes.newwishes.wish-user')->with([
+            'body_class' => $this::BODY_CLASS,
+        ]);
+    }
+
+    public function offerLink(ManageWishesRequest $request)
+    {
+        return view('frontend.wishes.newwishes.offertextlink')->with([
+            'body_class' => $this::BODY_CLASS,
+        ]);
+    }
+
+    public function offerText(ManageWishesRequest $request)
+    {
+        return view('frontend.wishes.newwishes.offerviatext')->with([
+            'body_class' => $this::BODY_CLASS,
+        ]);
+    }
+
+    public function attach(ManageWishesRequest $request)
+    {
+        return view('frontend.wishes.newwishes.attach')->with([
             'body_class' => $this::BODY_CLASS,
         ]);
     }
@@ -126,7 +157,7 @@ class WishesController extends Controller
             'category'   => $this->category,
             'catering'   => $this->catering,
             'count'      => $this->wish->getForDataTable()->count(),
-            'body_class' => $this::BODY_CLASS,
+            'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }
 

@@ -6,10 +6,14 @@ use App\Events\Frontend\Wishes\WishCreated;
 use App\Events\Frontend\Wishes\WishDeleted;
 use App\Events\Frontend\Wishes\WishUpdated;
 use App\Exceptions\GeneralException;
+use App\Models\Access\User\User;
+use App\Models\Access\User\UserToken;
 use App\Models\Groups\Group;
 use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
+use Auth;
 use DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -76,7 +80,7 @@ class WishesRepository extends BaseRepository
                 DB::raw('count(' . config('module.offers.table') . '.id) as offers'),
             ])
             ->whereIn('whitelabel_id', $whitelabels)
-            ->groupBy(config('module.wishes.table') . '.id');
+            ->groupBy(config('module.wishes.table') . '.id')->orderBy(config('module.wishes.table') . '.id', 'DESC');
         if (access()->user()->hasRole('User')) {
             $query->where(config('module.wishes.table') . '.created_by', access()->user()->id);
         } elseif (access()->user()->hasRole('Seller')) {
@@ -124,6 +128,8 @@ class WishesRepository extends BaseRepository
             $input['whitelabel_id'] = access()->user()->getWhitelabels()[0];
             $input['group_id'] = $this->getGroup();
             $input['title'] = $input['destination'];
+            $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
+            $input['latest_return'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
@@ -256,5 +262,23 @@ class WishesRepository extends BaseRepository
     public function getDistribution()
     {
         return access()->user()->whitelabels[0]->distribution->name;
+    }
+
+    /**
+     * @param string $id
+     * @param string $token
+     */
+    public function validateToken($id, $token)
+    {
+        try {
+            $usertoken = UserToken::where('token', $token)->firstOrFail();
+            $user_id = $usertoken->user_id;
+            $user = User::where('id', $user_id)->firstOrFail();
+            Auth::login($user);
+
+            return true;
+        } catch (ModelNotFoundException $e) {
+            return false;
+        }
     }
 }

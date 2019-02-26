@@ -1,5 +1,5 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+<nav class="navbar navbar-default navbar-fixed-top main-nav">
+    <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#frontend-navbar-collapse">
                 <span class="sr-only">{{ trans('labels.general.toggle_navigation') }}</span>
@@ -65,7 +65,7 @@
                         <li>{{ link_to_route('frontend.auth.register', trans('navs.frontend.register')) }}</li>
                     @endif
                 @else
-                    <li class="dropdown">
+                    <li class="dropdown nav-user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             {{ $logged_in_user->name }} <span class="caret"></span>
                         </a>
@@ -76,8 +76,8 @@
                             @endauth
 
                             @if ($logged_in_user && $logged_in_user->hasRole('Seller'))
-                                <li>{{ link_to_route('frontend.offers.index', trans('navs.frontend.offers')) }}</li>
                                 <li>{{ link_to_route('frontend.agents.index', trans('navs.frontend.agents')) }}</li>
+                                <li>{{ link_to_route('frontend.offers.index', trans('navs.frontend.offers')) }}</li>
                             @endif
 
                             @if ($logged_in_user && $logged_in_user->hasRole('User'))
@@ -85,10 +85,16 @@
                             @endif
 
                             <li>{{ link_to_route('frontend.user.account', trans('navs.frontend.user.account')) }}</li>
-                            <li>{{ link_to_route('frontend.auth.logout', trans('navs.general.logout')) }}</li>
+                            @if ($logged_in_user)
+                                <li>{{ link_to_route('frontend.auth.logout', trans('navs.general.logout')) }}</li>
+                            @endif
                         </ul>
                     </li>
                 @endif
+                    @if ($logged_in_user)
+                    <li class='logout'><a href="{{route('frontend.auth.logout')}}"><i class='glyphicon glyphicon-log-out'></i></a></li>
+                    @endif
+
             </ul>
         </div><!--navbar-collapse-->
     </div><!--container-->

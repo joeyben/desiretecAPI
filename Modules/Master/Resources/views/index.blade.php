@@ -1,9 +1,14 @@
 @extends('master::layouts.master')
 
 @section('content')
-    <h1>Hello World</h1>
+    <div class="slider" style="background-image: url({{ $bg_image }})">
+        <div class="welcome">
+            Welcome to
+            <strong>{!! config('master.name') !!} WISHPORTAL</strong>
+        </div>
 
-    <p>
-        This view is loaded from new module: {!! config('master.name') !!}
-    </p>
+        <div class="layer-action">
+            <a href="javascript:showLayer();" class="btn btn-primary btn-md">{{ trans('navs.frontend.create_wish') }}</a>
+        </div>
+    </div>
 @endsection

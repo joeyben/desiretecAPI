@@ -32,6 +32,8 @@ return [
         'offerCount'        => 'Offers',
         'owner'             => 'Name',
         'email'             => 'Email',
-        'comment-header'    => 'Communicate with Agent'
+        'comment-header'    => 'Communicate with Agent',
+        'offer_number'      => 'Angebot Nummer',
+        'new_offers'        => 'Neue Angebote',
     ],
 ];

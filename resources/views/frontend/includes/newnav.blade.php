@@ -36,7 +36,9 @@
                 <li class='nav-user'>
                     <img src="/img/frontend/profile-picture/white.jpeg" alt="">
                 <span>{{ $logged_in_user->name }}</span></li>
-                <li class='logout'><a href="{{route('frontend.auth.logout')}}"><i class='glyphicon glyphicon-log-out'></i></a></li>
+                    @if ($logged_in_user)
+                        <li class='logout'><a href="{{route('frontend.auth.logout')}}"><i class='glyphicon glyphicon-log-out'></i></a></li>
+                    @endif
             </ul>
      
     </div><!--container-->

@@ -49,4 +49,23 @@ class EloquentAttachmentsRepository extends RepositoryAbstract implements Attach
 
         return $fileName;
     }
+
+    /**
+     * @param string $id
+     * @param string $type
+     *
+     * @return mixed
+     */
+    public function getAttachementsByType($id, $type)
+    {
+        return $this->model
+
+            ->select([
+                config('module.attachments.table') . '.basename',
+                config('module.attachments.table') . '.type',
+            ])
+            ->where('attachable_id', (int) $id)
+            ->where('type', 'whitelabels/' . $type)
+            ->first()->toArray();
+    }
 }

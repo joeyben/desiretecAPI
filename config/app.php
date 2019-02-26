@@ -205,6 +205,7 @@ return [
         Torann\GeoIP\GeoIPServiceProvider::class,
         Lord\Laroute\LarouteServiceProvider::class,
         \App\Providers\FlagServiceProvider::class,
+        Orangehill\Iseed\IseedServiceProvider::class,
     ],
 
     /*

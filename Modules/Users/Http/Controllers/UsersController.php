@@ -211,8 +211,10 @@ class UsersController extends Controller
             $extras['confirmation_code'] = md5(uniqid(mt_rand(), true));
 
 
-            if ($request->has('confirmation_email')) {
-            }
+            $result['user'] = $this->users->create(
+                array_merge($request->only('first_name', 'email', 'status', 'confirmed'), $extras)
+            );
+
             if ($request->get('confirmation_email')  && !$request->get('confirmed')) {
                 $result['user']->notify(new UserNeedsConfirmation( $result['user']->confirmation_code));
             }

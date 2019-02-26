@@ -42,8 +42,7 @@ class MasterServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('master.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php',
-            'master'
+            __DIR__ . '/../Config/config.php', 'master'
         );
     }
 

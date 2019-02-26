@@ -15,10 +15,13 @@ use Modules\Tui\Http\Requests\StoreWishRequest;
 class TuiController extends Controller
 {
     protected $adults = [];
-
     protected $kids = [];
+    protected $catering = [];
+    protected $duration = [];
 
     private $whitelabelId;
+
+    const BODY_CLASS = 'landing';
     /**
      * @var WhitelabelsRepository
      */
@@ -31,6 +34,9 @@ class TuiController extends Controller
     {
         $this->whitelabel = $whitelabel;
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
+        $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
+        $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
+        $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->whitelabelId = \Config::get('tui.id');
     }
 
@@ -44,8 +50,9 @@ class TuiController extends Controller
         $whitelabel = $this->whitelabel->getByName('tui');
 
         return view('tui::index')->with([
-            'display_name' => $whitelabel['display_name'],
-            'bg_image'     => $whitelabel['bg_image'],
+            'display_name'       => $whitelabel['display_name'],
+            'bg_image'           => $whitelabel['bg_image'],
+            'body_class'         => $this::BODY_CLASS,
         ]);
     }
 
@@ -58,8 +65,10 @@ class TuiController extends Controller
     public function show(Request $request)
     {
         $html = view('tui::layer.popup')->with([
-            'adults_arr' => $this->adults,
-            'kids_arr'   => $this->kids
+            'adults_arr'   => $this->adults,
+            'kids_arr'     => $this->kids,
+            'catering_arr' => $this->catering,
+            'duration_arr' => $this->duration,
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -78,8 +87,11 @@ class TuiController extends Controller
     {
         if ($request->failed()) {
             $html = view('tui::layer.popup')->with([
-                'adults_arr'  => $this->adults,
-                'errors'      => $request->errors()
+                'adults_arr'   => $this->adults,
+                'errors'       => $request->errors(),
+                'kids_arr'     => $this->kids,
+                'catering_arr' => $this->catering,
+                'duration_arr' => $this->duration,
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -115,6 +127,12 @@ class TuiController extends Controller
      */
     private function createUserFromLayer(StoreWishRequest $request, $user)
     {
+        $input = $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms');
+        if ($new_user = $user->findByEmail($input['email'])) {
+            access()->login($new_user);
+
+            return $new_user;
+        }
         $request->merge(
             [
                 'first_name'     => 'John',
@@ -123,7 +141,7 @@ class TuiController extends Controller
                 'is_term_accept' => true
             ]
         );
-        $new_user = $user->create($request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'));
+        $new_user = $user->create($input);
         $new_user->storeToken();
         $new_user->attachWhitelabel($this->whitelabelId);
         access()->login($new_user);
@@ -144,5 +162,20 @@ class TuiController extends Controller
         $new_wish = $wish->create($request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'));
 
         return $new_wish;
+    }
+
+    /**
+     * @param array $duration
+     *
+     * @return array
+     */
+    private function getFullDuration($duration)
+    {
+        for ($i = 1; $i < 29; ++$i) {
+            $night = 1 === $i ? 'Nacht' : 'Nächte';
+            $duration[$i] = $i . ' ' . $night;
+        }
+
+        return $duration;
     }
 }
