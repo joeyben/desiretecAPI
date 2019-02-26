@@ -14,13 +14,18 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name'       => 'required|string',
-            'email'            => 'required|email|unique:users,email',
-            'groups'           => 'nullable|array',
-            'status'           => 'required|boolean',
-            'confirmed'        => 'required|boolean',
-            'password_confirm' => 'required|min:6|required_with:password',
-            'password'         => 'required|sometimes|required_with:password_confirm|same:password_confirm|min:6',
+            'id'                        => 'required|int',
+            'first_name'                => 'required|string',
+            'last_name'                 => 'nullable|string',
+            'email'                     => 'required|email|unique:users,email',
+            'password_confirm'          => 'required|min:6|required_with:password',
+            'password'                  => 'required|sometimes|required_with:password_confirm|same:password_confirm|min:6',
+            'status'                    => 'required|boolean',
+            'confirmed'                 => 'required|boolean',
+            'confirmation_email'        => 'required|boolean',
+            'whitelabels'               => 'nullable|array',
+            'roles'                     => 'required|array|min:1',
+            'dashboards'                => 'nullable|array',
         ];
     }
 
@@ -31,6 +36,6 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return access()->allow('create-user');
     }
 }

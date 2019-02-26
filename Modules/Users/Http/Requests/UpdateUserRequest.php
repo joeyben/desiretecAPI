@@ -14,12 +14,17 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'         => 'required|int',
-            'first_name' => 'required|string',
-            'email'      => 'required|email',
-            'groups'     => 'nullable|array',
-            'status'     => 'required|boolean',
-            'confirmed'  => 'required|boolean',
+            'id'               => 'required|int',
+            'first_name'       => 'required|string',
+            'last_name'        => 'nullable|string',
+            'email'            => 'required|string|email|max:255',
+            'password_confirm' => 'min:6|required_with:password',
+            'password'         => 'sometimes|required_with:password_confirm|same:password_confirm|min:6',
+            'status'           => 'required|boolean',
+            'confirmed'        => 'required|boolean',
+            'whitelabels'      => 'nullable|array',
+            'roles'            => 'required|array|min:1',
+            'dashboards'       => 'nullable|array',
         ];
     }
 
@@ -30,6 +35,6 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return access()->allow('edit-user');
     }
 }

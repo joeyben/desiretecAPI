@@ -3,6 +3,7 @@
 namespace Modules\Users\Notifications;
 
 use App\Models\Access\User\User;
+use App\Services\Flag\Src\Flag;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Messages\BroadcastMessage;
@@ -31,7 +32,7 @@ class CreatedUserNotification extends Notification implements ShouldBroadcast
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->url = route('admin.sellers') . '#/seller/' . $this->user->id;
+        $this->url = $user->hasRole(Flag::SELLER_ROLE) ? route('admin.sellers') . '#/seller/' . $this->user->id : route('admin.users') . '#/edit/' . $this->user->id;
     }
 
     /**

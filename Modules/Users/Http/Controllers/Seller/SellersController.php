@@ -28,7 +28,7 @@ use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
 use Modules\Users\Http\Requests\StoreUserRequest;
-use Modules\Users\Http\Requests\UpdateUserRequest;
+use Modules\Users\Http\Requests\UpdateSellerRequest;
 use Modules\Users\Notifications\CreatedUserNotificationForSeller;
 use Modules\Users\Repositories\Contracts\UsersRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
@@ -241,12 +241,12 @@ class SellersController
     /**
      * Update the specified resource in storage.
      *
-     * @param \Modules\Users\Http\Requests\UpdateUserRequest $request
-     * @param int                                            $id
+     * @param \Modules\Users\Http\Requests\UpdateSellerRequest $request
+     * @param int                                              $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateUserRequest $request, int $id)
+    public function update(UpdateSellerRequest $request, int $id)
     {
         try {
             $extras = [];

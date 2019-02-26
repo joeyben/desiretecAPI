@@ -54,7 +54,7 @@ class WhitelabelSubscriber
             createNotification(Lang::get('notification.deleted', ['name' => 'Whitelabel', 'url' => $whitelabel->display_name, 'user' =>  Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $admin->id, Auth::guard('web')->user()->id);
         }
 
-        if(!$whitelabel->isForceDeleting()) {
+        if (!$whitelabel->isForceDeleting()) {
             Notification::send($admins, new DeletedWhitelabelNotification($whitelabel));
         }
     }

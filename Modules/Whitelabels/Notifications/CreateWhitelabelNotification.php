@@ -65,8 +65,8 @@ class CreateWhitelabelNotification extends Notification implements ShouldBroadca
             'id'         => $this->whitelabel->id,
             'message'    => Lang::get('notification.created', ['name' => $this->step . ' Whitelabel', 'url' =>'<a  href="' . $this->url . '"> ' . $this->whitelabel->display_name . '</a>', 'user' =>  Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]),
             'user_id'    => $notifiable->id,
-            'from_id' => Auth::guard('web')->user()->id,
-            'from'    => [
+            'from_id'    => Auth::guard('web')->user()->id,
+            'from'       => [
                 'id'        => Auth::guard('web')->user()->id,
                 'full_name' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name
             ],

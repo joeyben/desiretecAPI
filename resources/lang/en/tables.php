@@ -90,4 +90,5 @@ return [
     'when'                          => 'When',
     'from'                          => 'From',
     'booking_status'                => 'Booking Status',
+    'empty_table'                   => 'No data available in table',
 ];

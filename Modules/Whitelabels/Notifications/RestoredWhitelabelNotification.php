@@ -6,8 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
@@ -40,6 +38,7 @@ class RestoredWhitelabelNotification extends Notification implements ShouldBroad
      * Get the notification's delivery channels.
      *
      * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -60,8 +59,8 @@ class RestoredWhitelabelNotification extends Notification implements ShouldBroad
             'id'         => $this->whitelabel->id,
             'message'    => Lang::get('notification.restored', ['name' => 'Whitelabel', 'url' =>'<a  href="' . $this->url . '"> ' . $this->whitelabel->display_name . '</a>', 'user' =>  Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]),
             'user_id'    => $notifiable->id,
-            'from_id' => Auth::guard('web')->user()->id,
-            'from'    => [
+            'from_id'    => Auth::guard('web')->user()->id,
+            'from'       => [
                 'id'        => Auth::guard('web')->user()->id,
                 'full_name' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name
             ],
