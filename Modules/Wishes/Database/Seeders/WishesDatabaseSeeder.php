@@ -27,7 +27,7 @@ class WishesDatabaseSeeder extends Seeder
             }
         }
 
-        for ($i = 1; $i <= 100; ++$i) {
+        for ($i = 1; $i <= 4000; ++$i) {
             DB::table('wishes')->insertGetId([
                 'title'             => $faker->name,
                 'featured_image'    => $faker->imageUrl(),
@@ -46,7 +46,7 @@ class WishesDatabaseSeeder extends Seeder
                 'updated_by'        => $faker->numberBetween(1, 3),
                 'group_id'          => $faker->numberBetween(1, 5),
                 'whitelabel_id'     => $faker->numberBetween(1, 5),
-                'created_at'        => DB::raw('now()'),
+                'created_at'        => $faker->dateTimeThisYear(),
                 'updated_at'        => DB::raw('now()'),
             ]);
         }

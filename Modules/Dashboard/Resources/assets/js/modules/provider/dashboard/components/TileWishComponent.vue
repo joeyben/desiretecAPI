@@ -1,14 +1,14 @@
 <template>
     <!-- Large modal -->
-    <div class="card card-body bg-teal-400 has-bg-image">
+    <div class="card card-body bg-indigo-400 has-bg-image">
         <div class="media">
             <div class="media-body">
-                <h3 class="mb-0" v-text="groupCount"></h3>
-                <span class="text-uppercase font-size-xs">{{ trans('dashboard.total_groups') }}</span>
+                <h3 class="mb-0" v-text="wishCount"></h3>
+                <span class="text-uppercase font-size-xs">{{ trans('dashboard.total_wishes') }}</span>
             </div>
 
             <div class="ml-3 align-self-center">
-                <i class="icon-collaboration icon-3x opacity-75"></i>
+                <i class="icon-heart5 icon-3x opacity-75"></i>
             </div>
         </div>
     </div>
@@ -18,17 +18,17 @@
   import Vuex from 'vuex'
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   export default {
-    name: 'TileGroupComponent',
+    name: 'TileWishComponent',
     components: { },
     data () {
       return {
         // eslint-disable-next-line
         errors: new Errors(),
-        groupCount: 0
+        wishCount: 0
       }
     },
     mounted () {
-      this.loadGroup()
+      this.loadWish()
     },
     watch: {
     },
@@ -39,18 +39,18 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadGroup: function () {
+      loadWish: function () {
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.groups'))
-          .then(this.onLoadDashboardGroupSuccess)
+        this.$http.get(window.laroute.route('admin.dashboard.wishes'))
+          .then(this.onLoadDashboardWishSuccess)
           .catch(this.onFailed)
           .then(() => {
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
       },
-      onLoadDashboardGroupSuccess (response) {
+      onLoadDashboardWishSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.groupCount = response.data.groupCount
+          this.wishCount = response.data.wishCount
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
         }

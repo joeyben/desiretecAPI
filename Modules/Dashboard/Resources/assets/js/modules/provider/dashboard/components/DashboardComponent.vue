@@ -35,9 +35,10 @@
 <script>
   import Vuex from 'vuex'
   import VueGridLayout from 'vue-grid-layout'
+  import TileWishComponent from './TileWishComponent'
+  import TileGroupComponent from './TileGroupComponent'
+  import TileSellerComponent from './TileSellerComponent'
   import TileCommentComponent from './TileCommentComponent'
-  import TileClickComponent from './TileClickComponent'
-  import TileEventComponent from './TileEventComponent'
   import TileOrderComponent from './TileOrderComponent'
   import TileUserComponent from './TileUserComponent'
   import TileChartComponent from './TileChartComponent'
@@ -53,8 +54,9 @@ export default {
     components: {
       GridLayout: VueGridLayout.GridLayout,
       GridItem: VueGridLayout.GridItem,
+      TileWishComponent,
+      TileSellerComponent,
       TileCommentComponent,
-      TileEventComponent,
       TileOrderComponent,
       TileUserComponent,
       TileChartComponent,
@@ -63,27 +65,13 @@ export default {
       TileSpiderComponent,
       TileUpdateComponent,
       TileTdComponent,
-      TileClickComponent,
+      TileGroupComponent,
       GaDatatableComponent,
       BackendAnalyticsComponent
     },
     data () {
       return {
-        dashboards: [],
-        layout1: [
-          {'x': 0, 'y': 0, 'w': 2, 'h': 2, 'i': '0', 'component': 'tile-comment-component'},
-          {'x': 2, 'y': 0, 'w': 2, 'h': 2, 'i': '1', 'component': 'tile-click-component'},
-          {'x': 4, 'y': 0, 'w': 2, 'h': 2, 'i': '2', 'component': 'tile-event-component'},
-          {'x': 6, 'y': 0, 'w': 2, 'h': 2, 'i': '3', 'component': 'tile-user-component'},
-          {'x': 8, 'y': 0, 'w': 2, 'h': 2, 'i': '4', 'component': 'tile-order-component'},
-          {'x': 10, 'y': 0, 'w': 2, 'h': 2, 'i': '5', 'component': 'tile-comment-component'},
-          {'x': 0, 'y': 2, 'w': 4, 'h': 8, 'i': '6', 'component': 'tile-update-component'},
-          {'x': 4, 'y': 2, 'w': 4, 'h': 8, 'i': '7', 'component': 'tile-spider-component'},
-          {'x': 8, 'y': 2, 'w': 4, 'h': 8, 'i': '9', 'component': 'tile-pie-component'},
-          {'x': 0, 'y': 5, 'w': 4, 'h': 8, 'i': '11', 'component': 'tile-chart-component'},
-          {'x': 4, 'y': 5, 'w': 4, 'h': 8, 'i': '12', 'component': 'tile-bar-component'},
-          {'x': 8, 'y': 5, 'w': 4, 'h': 8, 'i': '13', 'component': 'tile-td-component'}
-        ]
+        dashboards: []
       }
     },
     mounted () {

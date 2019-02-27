@@ -1,14 +1,14 @@
 <template>
     <!-- Large modal -->
-    <div class="card card-body bg-teal-400 has-bg-image">
+    <div class="card card-body bg-primary has-bg-image">
         <div class="media">
             <div class="media-body">
-                <h3 class="mb-0" v-text="groupCount"></h3>
-                <span class="text-uppercase font-size-xs">{{ trans('dashboard.total_groups') }}</span>
+                <h3 class="mb-0" v-text="sellerCount"></h3>
+                <span class="text-uppercase font-size-xs">{{ trans('dashboard.total_sellers') }}</span>
             </div>
 
             <div class="ml-3 align-self-center">
-                <i class="icon-collaboration icon-3x opacity-75"></i>
+                <i class="icon-users2 icon-3x opacity-75"></i>
             </div>
         </div>
     </div>
@@ -18,17 +18,17 @@
   import Vuex from 'vuex'
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   export default {
-    name: 'TileGroupComponent',
+    name: 'TileSellerComponent',
     components: { },
     data () {
       return {
         // eslint-disable-next-line
         errors: new Errors(),
-        groupCount: 0
+        sellerCount: 0
       }
     },
     mounted () {
-      this.loadGroup()
+      this.loadSeller()
     },
     watch: {
     },
@@ -39,18 +39,18 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadGroup: function () {
+      loadSeller: function () {
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.groups'))
-          .then(this.onLoadDashboardGroupSuccess)
+        this.$http.get(window.laroute.route('admin.dashboard.sellers'))
+          .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
       },
-      onLoadDashboardGroupSuccess (response) {
+      onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.groupCount = response.data.groupCount
+          this.sellerCount = response.data.sellerCount
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
         }

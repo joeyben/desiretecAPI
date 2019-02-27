@@ -14,12 +14,11 @@ return [
 
     'account'              => [
         'subject'   => 'Account Details for :username at :company',
-        'hello'     => 'Hello, :username',
-        'activate'  => 'Activate Your Account',
-        'activated' => 'Your Account has been activated. You can login now, please using the following email and password.',
+        'hello'     => 'Hallo, :username',
+        'activated' => 'Für Sie wurde ein neuer :account Account für das desiretec Reisewunschportal erstellt.',
         'link'      => 'Mit Klick auf den folgenden Button können Sie sich mit Ihren Benutzerdaten einloggen.',
         'username'  => 'Email address: :email',
-        'password'  => 'Password : :password',
+        'password'  => 'Password: :password',
         'greeting'  => 'Thank you for your trust in our services',
     ],
 

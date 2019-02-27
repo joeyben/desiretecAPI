@@ -25,6 +25,7 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
 use Modules\Users\Http\Requests\StoreSellerRequest;
@@ -102,6 +103,7 @@ class SellersController
      */
     public function index()
     {
+        dd(app()->getLocale());
         return view('users::sellers.index');
     }
 

@@ -16,37 +16,37 @@ class DashboardDatabaseSeeder extends Seeder
         Model::unguard();
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Comment',
+            'name'            => 'Tile Wish',
             'x'               => 0,
             'y'               => 0,
             'w'               => 2,
             'h'               => 2,
             'i'               => 0,
-            'component'       => 'tile-comment-component',
+            'component'       => 'tile-wish-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Click',
+            'name'            => 'Tile Seller',
             'x'               => 2,
             'y'               => 0,
             'w'               => 2,
             'h'               => 2,
             'i'               => 1,
-            'component'       => 'tile-click-component',
+            'component'       => 'tile-seller-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Event',
+            'name'            => 'Tile Group',
             'x'               => 4,
             'y'               => 0,
             'w'               => 2,
             'h'               => 2,
             'i'               => 2,
-            'component'       => 'tile-event-component',
+            'component'       => 'tile-group-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
         ]);

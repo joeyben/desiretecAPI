@@ -107,6 +107,8 @@
 
                                     @lang('email.account.activated')<br><br>
 
+                                    @lang('email.account.link')<br><br>
+
                                     @lang('labels.email'): {{ $user->email }}<br><br>
 
                                     @lang('labels.password'): {{ $password }} </td></tr>
