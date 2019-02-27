@@ -176,7 +176,7 @@
                 <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
             </div>
             <div class="col-md-3">
-                <i class="fal fa-badge"></i>
+                <i class="fal fa-star"></i>
                 <input class="data-content" value="{{ $wish->category }} Sterne">
             </div>
 
@@ -193,7 +193,7 @@
                 <input class="data-content" value="{{ $wish->duration }}">
             </div>
             <div class="col-md-3">
-                <i class="fal fa-hotel"></i>
+                <i class="fal fa-utensils"></i>
                 <input class="data-content" value="{{ $wish->catering }}">
             </div>
             <button class="secondary-btn">Daten andern</button>

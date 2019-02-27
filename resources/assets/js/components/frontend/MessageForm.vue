@@ -65,7 +65,7 @@
                     
                     $('#btn-input').val('');
 
-                    jQuery('#'+messageid+" p").text(message);
+                    jQuery('#'+messageid+" .chat-body p").text(message);
                     
                     $('.button-show').css('display','block')
                     $('.button-hide').css('display','none')
