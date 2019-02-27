@@ -202,7 +202,7 @@ class UsersController extends Controller
             if ($request->has('password')) {
                 $extras['password'] = bcrypt($request->get('password'));
             }
-            if ($request->has('last_name') && !is_null($request->get('last_name'))) {
+            if ($request->has('last_name') && null !== $request->get('last_name')) {
                 $extras['last_name'] = $request->get('last_name');
             }
 
@@ -210,13 +210,12 @@ class UsersController extends Controller
             $extras['updated_by'] = $this->auth->guard('web')->user()->id;
             $extras['confirmation_code'] = md5(uniqid(mt_rand(), true));
 
-
             $result['user'] = $this->users->create(
                 array_merge($request->only('first_name', 'email', 'status', 'confirmed'), $extras)
             );
 
-            if ($request->get('confirmation_email')  && !$request->get('confirmed')) {
-                $result['user']->notify(new UserNeedsConfirmation( $result['user']->confirmation_code));
+            if ($request->get('confirmation_email') && !$request->get('confirmed')) {
+                $result['user']->notify(new UserNeedsConfirmation($result['user']->confirmation_code));
             }
 
             event(new UserCreated($result['user']));
