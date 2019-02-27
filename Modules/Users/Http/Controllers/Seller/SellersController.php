@@ -103,7 +103,6 @@ class SellersController
      */
     public function index()
     {
-        dd(app()->getLocale());
         return view('users::sellers.index');
     }
 
