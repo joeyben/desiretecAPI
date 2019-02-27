@@ -23,8 +23,8 @@ COPY package-lock.json package.json webpack.mix.js webpack.config.js yarn.lock /
 
 WORKDIR /myap
 
-RUN cd /myapp && yarn install && npm run production
-RUN cd /myapp/Modules/Tui && yarn install && npm run production
+RUN cd /myapp && npm install && npm run production
+RUN cd /myapp/Modules/Tui && npm install && npm run production
 
 FROM horrorhorst/laravel-base:latest
 
