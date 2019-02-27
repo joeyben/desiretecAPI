@@ -65,7 +65,7 @@ Vue.prototype.moment = moment
         editMessage(messageid, message) {
 
             $('#btn-input').val('');
-            $('#btn-input').val(message);
+            $('#btn-input').val(jQuery('#'+messageid+" .chat-body p").text());
             $('#edit-val').val(messageid);
 
             $('.button-show').css('display','none')
