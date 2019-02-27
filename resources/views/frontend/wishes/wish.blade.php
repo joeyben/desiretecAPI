@@ -28,15 +28,15 @@
                 </p>
             </div>
             <div class="col-md-3 c-info">
-                <i class="glyphicon glyphicon-user"></i>
+                <i class="fas fa-user"></i>
                 <span>{{ $wish->group->users[0]->agents[0]->name }}</span>
             </div>
             <div class="col-md-3 c-info c-tel">
-                <i class="glyphicon glyphicon-earphone"></i>
+                <i class="fas fa-phone"></i>
                 <a href="tel:{{ $wish->group->users[0]->agents[0]->telephone }}">{{ $wish->group->users[0]->agents[0]->telephone }}</a>
             </div>
             <div class="col-md-3 c-info">
-                <i class="glyphicon glyphicon-envelope"></i>
+                <i class="fas fa-envelope"></i>
                 <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->agents[0]->email }}</a>
             </div>
         </div>
@@ -164,36 +164,36 @@
         <div class="col-md-12 s2-second">
 
             <div class="col-md-3">
-                <span class="circle"></span>
+                <i class="fal fa-plane-departure"></i>
                 <input class="data-content" value="{{ $wish->airport }}">
             </div>
             <div class="col-md-3">
-                <span class="circle"></span>
+                <i class="fal fa-calendar-alt"></i>
                 <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }}">
             </div>
             <div class="col-md-3">
-                <span class="circle"></span>
+                <i class="fal fa-usd-circle"></i>
                 <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
             </div>
             <div class="col-md-3">
-                <span class="circle"></span>
+                <i class="fal fa-badge"></i>
                 <input class="data-content" value="{{ $wish->category }} Sterne">
             </div>
 
             <div class="col-md-3">
-                <span class="circle"></span>
+                <i class="fal fa-plane-arrival"></i>
                 <input class="data-content" value="{{ $wish->destination }}">
             </div>
             <div class="col-md-3">
-                <span class="circle"></span>
+                <i class="fal fa-users"></i>
                 <input class="data-content" value="{{ $wish->adults }}">
             </div>
             <div class="col-md-3">
-                <span class="circle"></span>
+                <i class="fal fa-stopwatch"></i>
                 <input class="data-content" value="{{ $wish->duration }}">
             </div>
             <div class="col-md-3">
-                <span class="circle"></span>
+                <i class="fal fa-hotel"></i>
                 <input class="data-content" value="{{ $wish->catering }}">
             </div>
             <button class="secondary-btn">Daten andern</button>
@@ -346,6 +346,147 @@
     </div>
 </section>
 
+
+<!-- Modal -->
+<div id="myModal" class="modal wish-modal-1 fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Kontakt zum zustandigen Reiseburo</h4>
+                <p>Schreibe Sie dem zustandigen Reiseburo eine Nachricht oder Nutzen Sie den <a href="#">Ruckruf-Service</a></p>
+            </div>
+
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <div class="col-md-8 modal-body-left">
+
+                        <div class="group">
+                            <input type="text" class="form-control name" required>
+                            <label>Name</label>
+                        </div>
+                        <div class="group">
+                            <input type="text" class="form-control nachname" required>
+                            <label>Nachname</label>
+                        </div>
+                        <div class="group">
+                            <input type="text" class="form-control email" required>
+                            <label>E-Mail-Adresse</label>
+                        </div>
+                        <div class="group">
+                            <input type="text" class="form-control tel" required>
+                            <label>Telefon-Nr.(optional)</label>
+                        </div>
+                        <div class="group">
+                            <input type="text" class="form-control betreff" required>
+                            <label>Betreff</label>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 modal-body-right">
+                        <img src="/img/frontend/profile-picture/white.jpeg" alt="">
+                        <h4>Reiseburo Sonnenklar</h4>
+                        <p>Musterstrasse 7 <br>
+                            12345 Wusterhausen
+                        </p>
+                        <div class="modal-contact">
+                            <div class="mc-tel">
+                                <span class="glyphicon glyphicon-earphone"></span>
+                                <a href="tel:08971459535">089 - 714 595 35</a>
+                            </div>
+                            <div class="mc-mail">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                                <a href="mailto:mail@reisebuero.de">mail@reisebuero.de</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 modal-body-bottom">
+                        <textarea name="modal-textarea" id="modal-textarea" class="form-control" placeholder="Worum geht es? Ihre Nachricht an uns."></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="primary-btn wm-1-btn" data-dismiss="modal">Nachricht absenden</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="myModal2" class="modal wish-modal-1 fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Kontakt zum zustandigen Reiseburo einstellen</h4>
+                <p>Stellen Sie einfach und bequem eine Ruckrufbitte ein und das <br>
+                    Zustandige Reiseburo wird sich als bald bei ihnen melden.
+                </p>
+            </div>
+
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <div class="col-md-8 modal-body-left">
+
+                        <div class="group">
+                            <input type="text" class="form-control name" required>
+                            <label>Vorname</label>
+                        </div>
+                        <div class="group">
+                            <input type="text" class="form-control nachname" required>
+                            <label>Nachname</label>
+                        </div>
+                        <div class="group">
+                            <input type="text" class="form-control tel" required>
+                            <label>Telefon-Nr unter der wir sie erreichen</label>
+                        </div>
+                        <div class="group">
+                            <select name="modal-select" id="modal-select" class="form-control">
+                                <option name="" id="">Wahlen Sie einen Zeitraum</option>
+                                <option name="" id="">Option 2</option>
+                            </select>
+                        </div>
+                        <button type="button" class="primary-btn wm-2-btn" data-dismiss="modal">Nachricht absenden</button>
+                    </div>
+
+                    <div class="col-md-4 modal-body-right">
+                        <img src="/img/frontend/profile-picture/white.jpeg" alt="">
+                        <h4>Reiseburo Sonnenklar</h4>
+                        <p>Musterstrasse 7 <br>
+                            12345 Wusterhausen
+                        </p>
+                        <div class="modal-contact">
+                            <div class="mc-tel">
+                                <span class="glyphicon glyphicon-earphone"></span>
+                                <a href="tel:08971459535">089 - 714 595 35</a>
+                            </div>
+                            <div class="mc-mail">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                                <a href="mailto:mail@reisebuero.de">mail@reisebuero.de</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('after-scripts')

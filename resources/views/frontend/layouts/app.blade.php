@@ -29,6 +29,8 @@
 
         {{ Html::style(mix('css/frontend-custom.css')) }}
 
+        {{ Html::style(mix('fontawsome/css/all.css')) }}
+
     @yield('after-styles')
 
         <!-- Scripts -->
