@@ -32,41 +32,44 @@ class CategoriesDatabaseSeeder extends Seeder
             'name'     => 'Hotel Categories',
             'children' => [
                 [
-                    'name' => '1 Star',
+                    'name' => '1 Stern',
                 ]
             ]
         ]);
         $parent->children()->create([
-            'name' => '2 Stars'
+            'name' => '2 Stern'
         ]);
         $parent->children()->create([
-            'name' => '3 Stars'
+            'name' => '3 Stern'
         ]);
         $parent->children()->create([
-            'name' => '4 Stars'
+            'name' => '4 Stern'
         ]);
         $parent->children()->create([
-            'name' => '5 Stars'
+            'name' => '5 Stern'
         ]);
         $parent = Category::create([
             'name'     => 'Hotel Catering',
             'children' => [
                 [
-                    'name' => 'Any',
+                    'name' => 'Beliebig',
                 ]
             ]
         ]);
         $parent->children()->create([
-            'name' => 'Breakfast'
+            'name' => 'ohne Verpflegung'
         ]);
         $parent->children()->create([
-            'name' => 'Pension'
+            'name' => 'Frühstück'
         ]);
         $parent->children()->create([
-            'name' => 'Full Pension'
+            'name' => 'Halbpension'
         ]);
         $parent->children()->create([
-            'name' => 'All Inclusive'
+            'name' => 'Vollpension'
+        ]);
+        $parent->children()->create([
+            'name' => 'all inclusive'
         ]);
     }
 }
