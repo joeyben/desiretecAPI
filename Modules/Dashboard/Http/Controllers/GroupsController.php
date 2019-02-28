@@ -3,6 +3,7 @@
 namespace Modules\Dashboard\Http\Controllers;
 
 use App\Repositories\Criteria\ByWhitelabel;
+use App\Repositories\Criteria\Where;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -50,13 +51,16 @@ class GroupsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
             $result['groupCount'] = $this->groups->withCriteria([
-                new ByWhitelabel('groups')
+                new ByWhitelabel('groups'),
+                 new Where('groups.whitelabel_id', $request->get('whitelabelId'))
             ])->all()->count();
 
             $result['success'] = true;

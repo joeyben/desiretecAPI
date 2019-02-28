@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'total_sellers'              => 'Total Sellers',
-    'total_groups'               => 'Total Groups',
-    'total_wishes'               => 'Total Wishes',
+    'total_sellers'              => 'Alle Anbieter',
+    'total_groups'               => 'Alle Gruppen',
+    'total_wishes'               => 'Alle Wünsche',
 ];

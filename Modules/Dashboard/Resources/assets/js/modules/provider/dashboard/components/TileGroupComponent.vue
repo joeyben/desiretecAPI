@@ -29,6 +29,7 @@
     },
     mounted () {
       this.loadGroup()
+      this.$events.$on('whitelabel-set', whitelabelId => this.loadGroup(whitelabelId))
     },
     watch: {
     },
@@ -39,9 +40,10 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadGroup: function () {
+      loadGroup: function (whitelabelId) {
+        let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.groups'))
+        this.$http.get(window.laroute.route('admin.dashboard.groups') + params)
           .then(this.onLoadDashboardGroupSuccess)
           .catch(this.onFailed)
           .then(() => {

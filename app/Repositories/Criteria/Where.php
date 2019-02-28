@@ -44,6 +44,6 @@ class Where
      */
     public function apply($model): Builder
     {
-        return null === $this->value ? $model : $model->where($this->column, $this->value);
+        return null === $this->value ? $model->newQuery() : $model->where($this->column, $this->value);
     }
 }

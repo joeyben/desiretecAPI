@@ -88,13 +88,13 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile update',
+            'name'            => 'Chart Wish',
             'x'               => 0,
             'y'               => 2,
             'w'               => 4,
             'h'               => 8,
             'i'               => 6,
-            'component'       => 'tile-update-component',
+            'component'       => 'chart-wish-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
         ]);
@@ -124,13 +124,13 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile chart',
+            'name'            => 'Wishes overall per day',
             'x'               => 0,
             'y'               => 5,
             'w'               => 4,
             'h'               => 8,
             'i'               => 9,
-            'component'       => 'tile-chart-component',
+            'component'       => 'chart-wish-day-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
         ]);

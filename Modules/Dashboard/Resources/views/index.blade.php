@@ -18,7 +18,7 @@
     <!-- Basic card -->
     <div class="content" id="dashboardComponent">
         @if(auth()->guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
-            <div class="card border-top-2 border-top-slate border-bottom-2 border-bottom-slate rounded-0">
+            <div class="card border-top-2 border-top-slate border-bottom-2 border-bottom-slate rounded-0" style="display: none;">
                 <div class="card-body">
                     {!! history()->render() !!}
                 </div>

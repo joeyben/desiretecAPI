@@ -29,6 +29,7 @@
     },
     mounted () {
       this.loadWish()
+      this.$events.$on('whitelabel-set', whitelabelId => this.loadWish(whitelabelId))
     },
     watch: {
     },
@@ -39,9 +40,10 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadWish: function () {
+      loadWish: function (whitelabelId = null) {
+        let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.wishes'))
+        this.$http.get(window.laroute.route('admin.dashboard.wishes') + params)
           .then(this.onLoadDashboardWishSuccess)
           .catch(this.onFailed)
           .then(() => {

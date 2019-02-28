@@ -18,6 +18,7 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'na
 
     Route::get('dashboard/wishes', 'WishesController@index')->name('admin.dashboard.wishes');
     Route::get('dashboard/wishes/byMonth', 'WishesController@byMonth')->name('admin.dashboard.wishes.byMonth');
+    Route::get('dashboard/wishes/byDay', 'WishesController@byDay')->name('admin.dashboard.wishes.byDay');
     Route::get('dashboard/sellers', 'SellersController@index')->name('admin.dashboard.sellers');
     Route::get('dashboard/groups', 'GroupsController@index')->name('admin.dashboard.groups');
 });

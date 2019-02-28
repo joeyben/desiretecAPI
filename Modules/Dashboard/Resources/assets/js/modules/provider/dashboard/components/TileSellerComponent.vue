@@ -3,7 +3,7 @@
     <div class="card card-body bg-primary has-bg-image">
         <div class="media">
             <div class="media-body">
-                <h3 class="mb-0" v-text="sellerCount"></h3>
+                <h3 class="mb-0" v-text="sellerCount.active + '/' + sellerCount.all"></h3>
                 <span class="text-uppercase font-size-xs">{{ trans('dashboard.total_sellers') }}</span>
             </div>
 
@@ -24,11 +24,12 @@
       return {
         // eslint-disable-next-line
         errors: new Errors(),
-        sellerCount: 0
+        sellerCount: {all: 0, active: 0}
       }
     },
     mounted () {
       this.loadSeller()
+      this.$events.$on('whitelabel-set', whitelabelId => this.loadSeller(whitelabelId))
     },
     watch: {
     },
@@ -39,9 +40,10 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadSeller: function () {
+      loadSeller: function (whitelabelId = null) {
+        let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.sellers'))
+        this.$http.get(window.laroute.route('admin.dashboard.sellers') + params)
           .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {
