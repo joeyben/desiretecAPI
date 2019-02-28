@@ -9,13 +9,13 @@
             <div class="kwp-col-4 destination">
                 {{ Form::label('destination', trans('master::layer.general.destination'), ['class' => 'control-label required']) }}
                 {{ Form::text('destination', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('master::layer.placeholder.destination'), 'required' => 'required']) }}
-                <i class="master-icon--location-fill"></i>
+                <i class="fal fa-plane-arrival"></i>
             </div>
 
             <div class="kwp-col-4">
                 {{ Form::label('airport', trans('master::layer.general.airport'), ['class' => 'control-label required']) }}
                 {{ Form::text('airport', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('master::layer.placeholder.airport'), 'required' => 'required']) }}
-                <i class="master-icon--aircraft-up"></i>
+                <i class="fal fa-plane-departure"></i>
             </div>
 
         </div>
@@ -26,8 +26,8 @@
                     <label for="duration-time" class="required">Wann & wie lange?</label>
                     <span class="duration-time dd-trigger">
                         <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
-                        <i class="master-icon--calendar-month not-triggered"></i>
-                        <i class="master-icon--close triggered"></i>
+                        <i class="fal fa-calendar-alt not-triggered"></i>
+                        <i class="fal fa-times triggered"></i>
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
@@ -39,7 +39,7 @@
                                 @endforeach
 
                             @endif
-                            <i class="master-icon--calendar-month"></i>
+                            <i class="fal fa-calendar-alt"></i>
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('master::layer.general.latest_return'), ['class' => 'control-label required']) }}
@@ -49,14 +49,14 @@
                                     <span>{{ $error }}</span>
                                 @endforeach
                             @endif
-                            <i class="master-icon--calendar-month"></i>
+                            <i class="fal fa-calendar-alt"></i>
                         </div>
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('master::layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('duration', array_merge(['' => trans('master::layer.general.duration_empty')], $duration_arr), ['class' => 'form-control box-size']) }}
                             </div>
-                            <i class="master-icon--time"></i>
+                            <i class="fal fa-clock"></i>
                         </div>
                         <div class="clearfix"></div>
                         <hr>
@@ -72,8 +72,8 @@
                     <label for="travelers" class="required">Wer reist mit?</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
-                         <i class="master-icon--user-family not-triggered"></i>
-                         <i class="master-icon--close triggered"></i>
+                         <i class="fal fa-users not-triggered"></i>
+                         <i class="fal fa-times triggered"></i>
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-12">
@@ -81,7 +81,7 @@
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
-                            <i class="master-icon--user-family"></i>
+                            <i class="fal fa-users"></i>
                         </div>
                         <div class="kwp-col-12 kids" style="position: relative;">
                             <div class="kwp-col-12">
@@ -89,19 +89,19 @@
                                 <div class="kwp-custom-select">
                                     {{ Form::select('kids', $kids_arr, ['class' => 'form-control box-size']) }}
                                 </div>
-                                <i class="master-icon--baby"></i>
+                                <i class="fal fa-child"></i>
                             </div>
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
                                     <label class="main-label">Alter (Hinreise)</label>
                                     <div class="kwp-col-3">
-                                        <i class="master-icon--aircraft-down"></i>
+                                        <i class="fal fa-plane-arrival"></i>
                                     </div>
                                     <div class="kwp-col-3">
-                                        <i class="master-icon--aircraft-down"></i>
+                                        <i class="fal fa-plane-arrival"></i>
                                     </div>
                                     <div class="kwp-col-3">
-                                        <i class="master-icon--aircraft-down"></i>
+                                        <i class="fal fa-plane-arrival"></i>
                                     </div>
 
                                 </div>
@@ -146,7 +146,6 @@
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('master::layer.general.catering'), ['class' => 'control-label required']) }}
                     {{ Form::select('catering', $catering_arr, '',['class' => 'selectpicker']) }}
-                <i class="master-icon--chevron-down"></i>
             </div>
 
         </div>
@@ -155,7 +154,7 @@
             <div class="kwp-col-12 description">
                 {{ Form::label('description', trans('master::layer.general.description'), ['class' => 'control-label required']) }}
                 {{ Form::textarea('description', null,['class' => 'form-control', 'placeholder' => trans('master::layer.placeholder.description')]) }}
-                <i class="master-icon--calendar-month"></i>
+                <i class="fal fa-comment-alt"></i>
             </div>
         </div>
 
@@ -163,7 +162,7 @@
             <div class="kwp-col-4 email-col">
                 {{ Form::label('email', trans('master::layer.general.email'), ['class' => 'control-label']) }}
                 {{ Form::text('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('master::layer.placeholder.email'), 'required' => 'required']) }}
-                <i class="master-icon--mail"></i>
+                <i class="fal fa-envelope"></i>
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
                     @foreach ($errors->get('email') as $error)

@@ -27,7 +27,7 @@ build-stage:
     - echo "$STAGE_DOTENV" > .env
     - docker-compose -f docker-compose.yml -f docker-compose.stage.yml build
     - docker-compose -f docker-compose.yml -f docker-compose.stage.yml down
-    - docker-compose -f docker-compose.yml -f docker-compose.stage.yml up -d --force-recreate
+    - docker-compose -f docker-compose.yml -f docker-compose.stage.yml up -d
     - rm -rf $DOCKER_CERT_PATH
   only:
     - development

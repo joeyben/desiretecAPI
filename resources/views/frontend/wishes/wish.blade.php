@@ -7,7 +7,7 @@
         <div class="container">
             <div class="col-md-8 bg-left-content">
                 <h3>Hallo {{ $wish->owner->first_name }} {{ $wish->owner->last_name }},</h3>
-                <p>Dein Reisewunsch wurde am <b>{{ \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y') }}</b> an <b>{{ $wish->group->users[0]->name }}</b> <br>
+                <p class="header-p">Dein Reisewunsch wurde am <b>{{ \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y') }}</b> an <b>{{ $wish->group->users[0]->name }}</b> <br>
                     ubermittelt. Leider liegt momentan noch kein Angebot vor.</p>
 
                 <button class="primary-btn" data-toggle="modal" data-target="#myModal">Reiseburo kontaktieren</button>
