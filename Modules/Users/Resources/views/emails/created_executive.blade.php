@@ -44,7 +44,7 @@
                                                                 <tbody>
                                                                 <tr>
                                                                     <td width="140" align="left" style="padding-left:10px;">
-                                                                        @lang('labels.whitelabel')
+                                                                        @lang('labels.role')
                                                                     </td>
                                                                     <td width="140" align="left" style="padding-left:10px;">
                                                                         @lang('labels.name')
@@ -66,7 +66,7 @@
                                                                 <tbody>
                                                                 <tr>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ $whitelabel->display_name }}
+                                                                        Admin
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
                                                                         {{ $user->first_name . ' ' . $user->last_name }}
@@ -105,7 +105,7 @@
                                 <td colspan="2">
                                     @lang('email.account.hello', ['username' => $user->first_name . ' ' . $user->last_name])<br><br>
 
-                                    @lang('email.account.activated')<br><br>
+                                    @lang('email.account.activated', ['account' => 'Admin'])<br><br>
 
                                     @lang('email.account.link')<br><br>
 

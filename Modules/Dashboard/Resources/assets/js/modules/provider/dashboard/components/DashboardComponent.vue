@@ -1,6 +1,39 @@
 <template>
     <!-- Inner container -->
     <div>
+        <!-- Filter toolbar -->
+        <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
+            <div class="text-center d-lg-none w-100">
+                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-filter">
+                    <i class="icon-unfold mr-2"></i>
+                    Filters
+                </button>
+            </div>
+
+            <div class="navbar-collapse collapse" id="navbar-filter">
+								<span class="navbar-text font-weight-semibold mr-3">
+									Filter:
+								</span>
+
+                <ul class="navbar-nav flex-wrap">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-sort mr-2"></i>
+                            By Whitelabel
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Show all</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">Whitelabel 1</a>
+                            <a href="#" class="dropdown-item">Whitelabel 2</a>
+                            <a href="#" class="dropdown-item">Whitelabel 3</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /filter toolbar -->
         <grid-layout
                 :layout.sync="dashboards"
                 :col-num="12"

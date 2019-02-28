@@ -567,4 +567,5 @@ return [
     'notifications'            => 'Notifications',
     'inbox'                    => 'Inbox',
     'whitelabel'               => 'Whitelabel',
+    'role'                     => 'Rolle',
 ];

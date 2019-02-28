@@ -88,4 +88,5 @@ return [
     'domain'                       => 'Domain',
     'confirmed'                    => 'Confirmed',
     'current'                      => 'Current',
+    'dashboard'                    => 'Dashboard',
 ];

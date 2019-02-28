@@ -14,13 +14,19 @@ return [
 
     'account'              => [
         'subject'   => 'Account Details for :username at :company',
+        'subject_for_seller'   => 'Ihre Zugangsdaten zu Ihrem desiretec White Label',
+        'subject_for_executive'   => 'Ihre Zugangsdaten zum desiretec System',
         'hello'     => 'Hello, :username',
-        'activate'  => 'Activate Your Account',
-        'activated' => 'Your Account has been activated. You can login now, please using the following email and password.',
+        'activate'  => 'Login',
+        'activated' => 'Für Sie wurde ein neuer :account Account für das desiretec Reisewunschportal erstellt.',
         'link'      => 'Mit Klick auf den folgenden Button können Sie sich mit Ihren Benutzerdaten einloggen.',
         'username'  => 'Email address: :email',
         'password'  => 'Password : :password',
         'greeting'  => 'Thank you for your trust in our services',
+    ],
+    'wish'              => [
+        'subject_for_seller'   => 'Es gibt einen neuen TUI Reisewunsch zur Bearbeitung!',
+        'subject_for_seller'   => 'Es gibt einen neuen TUI Reisewunsch zur Bearbeitung!',
     ],
 
     'footer'              => [
