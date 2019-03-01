@@ -253,6 +253,9 @@ a, a:hover, a:active, a:focus {
     .c-info{
     display: flex;
     align-items: center;
+    a{
+      text-decoration: underline;
+    }
     }
     h4{
       padding-left: 15px;
@@ -521,6 +524,7 @@ a, a:hover, a:active, a:focus {
     display: inline-block;
     float: left;
     margin-right: 25px;
+    margin-top:5px;
     img{
     border: 1px solid #ccc;
     width: 35px;
@@ -546,7 +550,10 @@ a, a:hover, a:active, a:focus {
     display: flex;
     flex-direction: column;
     position: relative;
+    margin-top:5px;
+    margin-bottom: 5px;
     p{
+      margin:0px;
       background:#ddd;
       padding: 15px 50px;
       border-bottom-left-radius: 10px;
@@ -570,42 +577,43 @@ a, a:hover, a:active, a:focus {
       left: -15px;
       top: 5px;
     }
-    .cu-cl-buttons{
-      margin-top:10px;
-      button{
-        border-radius: 5px;
-      }
-    .primary-btn{
-      background:$orange;
-      border:1px solid $orange;
-      color:#fff;
-      padding: 4px 25px;
-      margin-right: 5px;
-      font-weight: 100;
-    }
-    .primary-btn:focus{
-      background:$darkorange;
-      border: 1px solid $darkorange;
-    }
-    .secondary-btn{
-      border:1px solid $orange;
-      color:$orange;
-      background:transparent;
-      padding: 4px 30px;
-      font-weight: 100;
-    }
-    .secondary-btn:focus{
-      border:1px solid $darkorange;
-      color:$darkorange;
-      background:transparent;
-    }
+}
+.cu-cl-buttons{
+  margin-top:10px;
+  button{
+    border-radius: 5px;
   }
+.primary-btn{
+  background:$orange;
+  border:1px solid $orange;
+  color:#fff;
+  padding: 4px 25px;
+  margin-right: 5px;
+  font-weight: 100;
+}
+.primary-btn:focus{
+  background:$darkorange;
+  border: 1px solid $darkorange;
+}
+.secondary-btn{
+  border:1px solid $orange;
+  color:$orange;
+  background:transparent;
+  padding: 4px 30px;
+  font-weight: 100;
+}
+.secondary-btn:focus{
+  border:1px solid $darkorange;
+  color:$darkorange;
+  background:transparent;
+}
 }
 .cu-comment-right{
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-top:10px;
+  margin-top:5px;
+  margin-bottom: 5px;
   p{
     margin:0px;
     border: 1px solid #ddd;
@@ -633,6 +641,7 @@ a, a:hover, a:active, a:focus {
       top: 20px;
       transform: rotate(45deg);
     }
+}
 .cu-cr-buttons{
   margin-top:20px;
       button{
@@ -650,7 +659,6 @@ a, a:hover, a:active, a:focus {
     color:$darkorange;
     background:transparent;
   }
-}
 }
 }
 .section-angebote{
@@ -945,6 +953,19 @@ a, a:hover, a:active, a:focus {
       }
   }
 }
+#antworten{
+  height: 80px;
+  border: 1px solid #ccc;
+  resize: none;
+  padding: 3px 10px;
+  display: none;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 25px;
+}
+#antworten:focus{
+  border: 1px solid #636b6f;
+}
 //mobile style
 @media (max-width: 768px){
   .sa-buttons{
@@ -981,7 +1002,6 @@ a, a:hover, a:active, a:focus {
   }
   .section-comments{
     margin-bottom: 40px;
-    .cu-comment-left{
       .cu-cl-buttons{
         margin-top:0px;
         button{
@@ -991,7 +1011,6 @@ a, a:hover, a:active, a:focus {
           margin-bottom:10px;
         }
       }
-    }
   }
   #accordion{
     .panel-title{

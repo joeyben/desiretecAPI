@@ -27,6 +27,7 @@
                     {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
                 </p>
             </div>
+            @if(count($wish->group->users[0]->agents))
             <div class="col-md-3 c-info">
                 <i class="fas fa-user"></i>
                 <span>{{ $wish->group->users[0]->agents[0]->name }}</span>
@@ -39,14 +40,10 @@
                 <i class="fas fa-envelope"></i>
                 <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->agents[0]->email }}</a>
             </div>
+            @endif
         </div>
     </div>
-
 </section>
-
-<div class="container">
-    <div class="col-md-12 hr"><hr></div>
-</div>
 
 @foreach($wish->offers as $key => $offer)
     <section class="section-angebote-2">
@@ -121,28 +118,7 @@
             <h4>
                 Neue Nachrichten <span class="glyphicon glyphicon-bell"></span>
             </h4>
-
-            <div class="cu-img-left">
-                <img src="/img/frontend/profile-picture/white.jpeg" alt="">
-            </div>
-
-            <div class="cu-comment-left">
-                <p>
-                    <span>14.01.19 - 8:53 Uhr</span>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <div class="cu-cl-buttons">
-                    <button class="primary-btn">Antworten</button>
-                    <button class="secondary-btn">Ruckrufbitte einstellen</button>
-                </div>
-            </div>
-
-
-        </div>
+        <chat-messages :wishid="{{ $wish->id }}" :userid="{{ Auth::user()->id }}" :groupid="{{ $wish->group_id }}"></chat-messages>
     </div>
 </section>
 
