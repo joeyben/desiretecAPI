@@ -24,6 +24,7 @@ class MessagesController extends Controller
 
         $userName = User::where('id', '=', $id)->first()->first_name;
 
+    
         $response = [
             'data'      => $messages,
             'user_name' => $userName

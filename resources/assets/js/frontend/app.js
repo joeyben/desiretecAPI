@@ -109,3 +109,12 @@ $('.wm-2-btn').click(function(){
         }
     })
 })
+
+$('.antworten-btn').click(function(){
+    $('#antworten').slideDown()
+    if($(this).hasClass('sendAntworten')){
+        
+    }
+    $(this).addClass('sendAntworten');
+})
+
