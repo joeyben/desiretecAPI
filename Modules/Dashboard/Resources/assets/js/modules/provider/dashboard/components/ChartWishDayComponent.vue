@@ -28,10 +28,10 @@
             type: 'line'
           },
           title: {
-            text: 'Daily Average Wish'
+            text: this.trans('dashboard.daily_average_wish')
           },
           subtitle: {
-            text: 'Current Month'
+            text: this.trans('dashboard.current_month')
           },
           xAxis: {
             type: 'datetime',
@@ -40,12 +40,12 @@
               year: '%b'
             },
             title: {
-              text: 'Date'
+              text: this.trans('dashboard.date')
             }
           },
           yAxis: {
             title: {
-              text: 'Wish'
+              text: this.trans('dashboard.wishes')
             }
           },
           legend: {
@@ -69,7 +69,7 @@
           },
 
           series: [{
-            name: 'Wishes',
+            name: this.trans('dashboard.wishes'),
             data: []
           }],
 

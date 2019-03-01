@@ -26,17 +26,17 @@
             type: 'line'
           },
           title: {
-            text: 'Monthly Average Wish'
+            text: this.trans('dashboard.monthly_average_wish')
           },
           subtitle: {
-            text: 'Source: 2019'
+            text: this.trans('dashboard.source_2019')
           },
           xAxis: {
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
           },
           yAxis: {
             title: {
-              text: 'Wish'
+              text: this.trans('dashboard.wishes')
             }
           },
           plotOptions: {
@@ -49,7 +49,7 @@
           },
 
           series: [{
-            name: 'Wishes',
+            name: this.trans('dashboard.wishes'),
             data: []
           }],
 

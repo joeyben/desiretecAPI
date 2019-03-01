@@ -52,7 +52,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile User',
+            'name'            => 'Tile Reaction Time',
             'x'               => 6,
             'y'               => 0,
             'w'               => 3,
