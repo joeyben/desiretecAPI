@@ -4,7 +4,7 @@
  * Created by PhpStorm.
  * User: goldoni
  * Date: 28.02.19
- * Time: 17:22
+ * Time: 17:22.
  */
 
 namespace App\Repositories\Criteria;
@@ -14,9 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class WhereHasForDashboard
- *
- * @package \App\Repositories\Criteria
+ * Class WhereHasForDashboard.
  */
 class WhereHasForDashboard
 {
@@ -43,5 +41,4 @@ class WhereHasForDashboard
     {
         return Auth::guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) ? $model->newQuery() : $model->whereHas($this->relation, $this->closure);
     }
-
 }

@@ -5,7 +5,6 @@ namespace Modules\Dashboard\Http\Controllers;
 use App\Repositories\Criteria\ByWhitelabel;
 use App\Repositories\Criteria\GroupBy;
 use App\Repositories\Criteria\Where;
-use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WhereMonth;
 use App\Repositories\Criteria\WhereYear;
 use Carbon\Carbon;
@@ -99,14 +98,13 @@ class WishesController extends Controller
                 ->pluck('wishes_count', 'month')
                 ->toArray();
 
-            for ($i = 1; $i <= $this->carbon->nowWithSameTz()->format('m'); $i++) {
-                if (key_exists($i, $data)) {
+            for ($i = 1; $i <= $this->carbon->nowWithSameTz()->format('m'); ++$i) {
+                if (array_key_exists($i, $data)) {
                     $result['data'][] = $data[$i];
                 } else {
                     $result['data'][] = 0;
                 }
             }
-
 
             $result['success'] = true;
             $result['status'] = 200;
@@ -142,8 +140,8 @@ class WishesController extends Controller
                 ];
             }
 
-            for ($i = 1; $i <= $this->carbon->nowWithSameTz()->format('d'); $i++) {
-                if (key_exists($i, $items)) {
+            for ($i = 1; $i <= $this->carbon->nowWithSameTz()->format('d'); ++$i) {
+                if (array_key_exists($i, $items)) {
                     $result['data'][] = $items[$i];
                 } else {
                     $result['data'][] = 0;
@@ -163,6 +161,7 @@ class WishesController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
@@ -172,7 +171,9 @@ class WishesController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -181,6 +182,7 @@ class WishesController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -190,6 +192,7 @@ class WishesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return Response
      */
     public function edit()
@@ -199,7 +202,9 @@ class WishesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function update(Request $request)
@@ -208,6 +213,7 @@ class WishesController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()

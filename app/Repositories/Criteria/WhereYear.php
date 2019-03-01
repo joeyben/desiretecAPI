@@ -4,7 +4,7 @@
  * Created by PhpStorm.
  * User: goldoni
  * Date: 01.03.19
- * Time: 12:22
+ * Time: 12:22.
  */
 
 namespace App\Repositories\Criteria;
@@ -12,9 +12,7 @@ namespace App\Repositories\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class WhereYear
- *
- * @package \App\Repositories\Criteria
+ * Class WhereYear.
  */
 class WhereYear
 {
@@ -32,6 +30,7 @@ class WhereYear
     {
         $this->year = $year;
     }
+
     /**
      * @param $model
      *

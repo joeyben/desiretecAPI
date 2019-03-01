@@ -4,7 +4,6 @@ namespace Modules\Users\Http\Controllers;
 
 use App\Events\Backend\Access\User\UserCreated;
 use App\Events\Backend\Access\User\UserUpdated;
-use App\Notifications\Frontend\Auth\UserNeedsConfirmation;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
@@ -210,14 +209,13 @@ class UsersController extends Controller
             if ($request->has('password')) {
                 $extras['password'] = bcrypt($request->get('password'));
             }
-            if ($request->has('last_name') && !is_null($request->get('last_name'))) {
+            if ($request->has('last_name') && null !== $request->get('last_name')) {
                 $extras['last_name'] = $request->get('last_name');
             }
 
             $extras['created_by'] = $this->auth->guard('web')->user()->id;
             $extras['updated_by'] = $this->auth->guard('web')->user()->id;
             $extras['confirmed'] = true;
-
 
             $result['user'] = $this->users->create(
                 array_merge($request->only('first_name', 'email', 'status'), $extras)
@@ -232,7 +230,6 @@ class UsersController extends Controller
             if ($result['user']->hasRole(Flag::EXECUTIVE_ROLE)) {
                 $this->notification->send($result['user'], new CreatedUserNotificationForExecutive($result['user'], $request->get('password')));
             }
-
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Seller']);
             $result['success'] = true;

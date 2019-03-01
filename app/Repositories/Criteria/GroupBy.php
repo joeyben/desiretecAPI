@@ -4,7 +4,7 @@
  * Created by PhpStorm.
  * User: goldoni
  * Date: 27.02.19
- * Time: 14:20
+ * Time: 14:20.
  */
 
 namespace App\Repositories\Criteria;
@@ -12,9 +12,7 @@ namespace App\Repositories\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class GroupBy
- *
- * @package \App\Repositories\Criteria
+ * Class GroupBy.
  */
 class GroupBy
 {

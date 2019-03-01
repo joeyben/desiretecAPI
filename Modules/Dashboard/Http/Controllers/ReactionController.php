@@ -3,7 +3,6 @@
 namespace Modules\Dashboard\Http\Controllers;
 
 use App\Repositories\Criteria\ByWhitelabel;
-use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Has;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereDay;
@@ -71,13 +70,13 @@ class ReactionController extends Controller
             $diffInHours = 0;
             $count = 0;
             foreach ($wishesWithOffers as $wo) {
-                $count++;
+                ++$count;
                 $wishDate = $this->carbon->parse($wo->created_at);
                 $offerDate = $this->carbon->parse($wo->offers->first()->created_at);
                 $diffInHours += $wishDate->diffInHours($offerDate);
             }
 
-            $result['reactionTime'] = $wishesWithOffers->count() > 0 ? $diffInHours/$wishesWithOffers->count() : 0;
+            $result['reactionTime'] = $wishesWithOffers->count() > 0 ? $diffInHours / $wishesWithOffers->count() : 0;
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -111,13 +110,13 @@ class ReactionController extends Controller
             $diffInHours = 0;
             $count = 0;
             foreach ($wishesWithOffers as $wo) {
-                $count++;
+                ++$count;
                 $wishDate = $this->carbon->parse($wo->created_at);
                 $offerDate = $this->carbon->parse($wo->offers->first()->created_at);
                 $diffInHours += $wishDate->diffInHours($offerDate);
             }
 
-            $result['reactionTime'] = $wishesWithOffers->count() > 0 ? $diffInHours/$wishesWithOffers->count() : 0;
+            $result['reactionTime'] = $wishesWithOffers->count() > 0 ? $diffInHours / $wishesWithOffers->count() : 0;
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -131,6 +130,7 @@ class ReactionController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -140,6 +140,7 @@ class ReactionController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
@@ -149,7 +150,9 @@ class ReactionController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -158,6 +161,7 @@ class ReactionController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -167,6 +171,7 @@ class ReactionController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return Response
      */
     public function edit()
@@ -176,7 +181,9 @@ class ReactionController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function update(Request $request)
@@ -185,6 +192,7 @@ class ReactionController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()

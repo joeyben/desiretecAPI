@@ -2,10 +2,7 @@
 
 namespace Modules\Dashboard\Http\Controllers;
 
-use App\Repositories\Criteria\GroupBy;
-use App\Repositories\Criteria\Has;
 use App\Repositories\Criteria\HasRole;
-use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereHas;
 use App\Repositories\Criteria\WhereHasForDashboard;
 use App\Services\Flag\Src\Flag;
@@ -14,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Users\Repositories\Contracts\UsersRepository;
 
@@ -58,7 +54,7 @@ class SellersController extends Controller
                     $whitelabels = $this->auth->guard('web')->user()->whitelabels()->get()->pluck('id')->all();
                     $this->auth->guard('web')->user()->hasRole('Administrator') ? $query->newQuery() : $query->whereIn('whitelabels.id', $whitelabels);
                 }),
-                new WhereHasForDashboard('whitelabels', function ($query) use ($request){
+                new WhereHasForDashboard('whitelabels', function ($query) use ($request) {
                     $query->where('whitelabels.id', $request->get('whitelabelId'));
                 }),
                 new HasRole(Flag::SELLER_ROLE)
@@ -68,25 +64,22 @@ class SellersController extends Controller
 
             foreach ($sellers as $seller) {
                 if ($request->has('whitelabelId')) {
-                    if (!is_null($seller->whitelabels->first()) && $seller->whitelabels->first()->id === (int)$request->get('whitelabelId')) {
+                    if (null !== $seller->whitelabels->first() && $seller->whitelabels->first()->id === (int) $request->get('whitelabelId')) {
                         $data[] = $seller;
                     }
                 } else {
                     $data[] = $seller;
                 }
-
             }
 
-
-            $result['sellerCount']['all']= count($data);
+            $result['sellerCount']['all'] = \count($data);
             $result['sellerCount']['active'] = 0;
 
             foreach ($data as $seller) {
-                if($seller->status) {
-                    $result['sellerCount']['active']++;
+                if ($seller->status) {
+                    ++$result['sellerCount']['active'];
                 }
             }
-
 
             $result['success'] = true;
             $result['status'] = 200;
@@ -101,6 +94,7 @@ class SellersController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
@@ -110,7 +104,9 @@ class SellersController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -119,6 +115,7 @@ class SellersController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -128,6 +125,7 @@ class SellersController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return Response
      */
     public function edit()
@@ -137,7 +135,9 @@ class SellersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function update(Request $request)
@@ -146,6 +146,7 @@ class SellersController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()

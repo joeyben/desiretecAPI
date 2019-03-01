@@ -4,7 +4,7 @@
  * Created by PhpStorm.
  * User: goldoni
  * Date: 01.03.19
- * Time: 15:49
+ * Time: 15:49.
  */
 
 namespace App\Repositories\Criteria;
@@ -12,9 +12,7 @@ namespace App\Repositories\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class WhereDay
- *
- * @package \App\Repositories\Criteria
+ * Class WhereDay.
  */
 class WhereDay
 {
