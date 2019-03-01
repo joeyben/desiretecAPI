@@ -47,6 +47,8 @@ RUN composer dump-autoload
 USER root
 
 RUN rm -r /var/www/html/docker
+RUN make routes
+RUN make message
 
 
 
