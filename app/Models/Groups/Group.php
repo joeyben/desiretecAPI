@@ -24,6 +24,7 @@ class Group extends BaseModel
         'status',
         'created_by',
         'whitelabel_id',
+        'lastwish',
     ];
 
     protected $dates = [

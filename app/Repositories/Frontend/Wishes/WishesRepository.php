@@ -95,13 +95,8 @@ class WishesRepository extends BaseRepository
      */
     public function getLowestWishesGroup($whitelabel_id)
     {
-        $current = Group::where('current', 1)
-            ->where('whitelabel_id', $whitelabel_id)
-            ->first();
-
-        $group = Group::where('id', '>', $current->toArray()['id'])
-            ->where('whitelabel_id', $whitelabel_id)
-            ->orderby('id', 'ASC')
+        $group = Group::where('whitelabel_id', $whitelabel_id)
+            ->oldest('lastwish')
             ->first();
 
         if (!$group) {
@@ -110,7 +105,10 @@ class WishesRepository extends BaseRepository
                 ->first();
         }
 
-        return $group->toArray()['id'];
+        $id = $group->toArray()['id'];
+        $this->updateLastwish($id);
+
+        return $id;
     }
 
     /**
@@ -280,5 +278,17 @@ class WishesRepository extends BaseRepository
         } catch (ModelNotFoundException $e) {
             return false;
         }
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return boolean
+     */
+    public function updateLastwish($id)
+    {
+        $group = Group::find(intval($id));
+        $group->lastwish = \Carbon\Carbon::now();
+        return $group->save();
     }
 }
