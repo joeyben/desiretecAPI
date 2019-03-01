@@ -98827,13 +98827,15 @@ exports.default = {
     return {
       // eslint-disable-next-line
       errors: new _errors.Errors(),
-      reactionTime: 0
+      reactionTimeByMonth: 0,
+      reactionTimeByDay: 0
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     this.loadReationTimeByMonth();
+    this.loadReationTimeByDay();
     this.$events.$on('whitelabel-set', function (whitelabelId) {
       return _this.loadReationTimeByMonth(whitelabelId);
     });
@@ -98862,14 +98864,14 @@ exports.default = {
     },
     onLoadDashboardReationTimeByMonthSuccess: function onLoadDashboardReationTimeByMonthSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.reactionTime = response.data.reactionTime;
+        this.reactionTimeByMonth = response.data.reactionTime;
       } else {
         this.$notify.error({ title: 'Failed', message: response.data.message });
       }
     },
     onLoadDashboardReationTimeByDaySuccess: function onLoadDashboardReationTimeByDaySuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.reactionTime = response.data.reactionTime;
+        this.reactionTimeByDay = response.data.reactionTime;
       } else {
         this.$notify.error({ title: 'Failed', message: response.data.message });
       }
@@ -98910,7 +98912,7 @@ var render = function() {
         _c("div", { staticClass: "media-body text-left" }, [
           _c("h3", {
             staticClass: "mb-0",
-            domProps: { textContent: _vm._s(_vm.reactionTime) }
+            domProps: { textContent: _vm._s(_vm.reactionTimeByMonth) }
           }),
           _vm._v(" "),
           _c("span", { staticClass: "text-uppercase font-size-xs" }, [
@@ -98921,7 +98923,7 @@ var render = function() {
         _c("div", { staticClass: "media-body text-right" }, [
           _c("h3", {
             staticClass: "mb-0",
-            domProps: { textContent: _vm._s(_vm.reactionTime) }
+            domProps: { textContent: _vm._s(_vm.reactionTimeByDay) }
           }),
           _vm._v(" "),
           _c("span", { staticClass: "text-uppercase font-size-xs" }, [

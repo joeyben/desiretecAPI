@@ -3,11 +3,13 @@
 namespace Modules\Dashboard\Http\Controllers;
 
 use App\Repositories\Criteria\ByWhitelabel;
+use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Has;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereDay;
 use App\Repositories\Criteria\WhereMonth;
 use App\Repositories\Criteria\WhereYear;
+use App\Services\Flag\Src\Flag;
 use Carbon\Carbon;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -59,24 +61,36 @@ class ReactionController extends Controller
     public function timeByMonth(Request $request)
     {
         try {
-            $wishesWithOffers = $this->wishes->withCriteria([
-                new ByWhitelabel(),
-                new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-                new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
-                new WhereMonth($this->carbon->nowWithSameTz()->format('m')),
-                new Has('offers'),
-            ])->all();
+            $wishesWithOffers = null;
+            if($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $wishesWithOffers = $this->wishes->withCriteria([
+                    new ByWhitelabel(),
+                    new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
+                    new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
+                    new WhereMonth($this->carbon->nowWithSameTz()->format('m')),
+                    new Has('offers'),
+                    new EagerLoad(['offers']),
+                ])->all();
+            } elseif($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                $whitelabelId = $this->auth->guard('web')->user()->whitelabels()->first()->id;
+                $wishesWithOffers = $this->wishes->withCriteria([
+                    new Where('wishes.whitelabel_id', '' . $whitelabelId),
+                    new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
+                    new WhereMonth($this->carbon->nowWithSameTz()->format('m')),
+                    new Has('offers'),
+                    new EagerLoad(['offers']),
+                ])->all();
+            }
+
 
             $diffInHours = 0;
-            $count = 0;
             foreach ($wishesWithOffers as $wo) {
-                ++$count;
                 $wishDate = $this->carbon->parse($wo->created_at);
                 $offerDate = $this->carbon->parse($wo->offers->first()->created_at);
                 $diffInHours += $wishDate->diffInHours($offerDate);
             }
 
-            $result['reactionTime'] = $wishesWithOffers->count() > 0 ? $diffInHours / $wishesWithOffers->count() : 0;
+            $result['reactionTime'] = $wishesWithOffers->count() > 0 ? number_format($diffInHours / $wishesWithOffers->count(), 2) : 0;
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -98,14 +112,26 @@ class ReactionController extends Controller
     public function timeByDay(Request $request)
     {
         try {
-            $wishesWithOffers = $this->wishes->withCriteria([
-                new ByWhitelabel(),
-                new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-                new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
-                new WhereMonth($this->carbon->nowWithSameTz()->format('m')),
-                new WhereDay($this->carbon->nowWithSameTz()->format('d')),
-                new Has('offers'),
-            ])->all();
+            $wishesWithOffers = null;
+            if($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $wishesWithOffers = $this->wishes->withCriteria([
+                    new ByWhitelabel(),
+                    new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
+                    new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
+                    new WhereMonth($this->carbon->nowWithSameTz()->format('m')),
+                    new Has('offers'),
+                    new EagerLoad(['offers']),
+                ])->all();
+            } elseif($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                $whitelabelId = $this->auth->guard('web')->user()->whitelabels()->first()->id;
+                $wishesWithOffers = $this->wishes->withCriteria([
+                    new Where('wishes.whitelabel_id', '' . $whitelabelId),
+                    new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
+                    new WhereMonth($this->carbon->nowWithSameTz()->format('m')),
+                    new Has('offers'),
+                    new EagerLoad(['offers']),
+                ])->all();
+            }
 
             $diffInHours = 0;
             $count = 0;
@@ -116,7 +142,7 @@ class ReactionController extends Controller
                 $diffInHours += $wishDate->diffInHours($offerDate);
             }
 
-            $result['reactionTime'] = $wishesWithOffers->count() > 0 ? $diffInHours / $wishesWithOffers->count() : 0;
+            $result['reactionTime'] = $wishesWithOffers->count() > 0 ? number_format($diffInHours / $wishesWithOffers->count(), 2) : 0;
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {

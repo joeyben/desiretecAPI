@@ -3,12 +3,12 @@
     <div class="card card-body bg-purple-400 has-bg-image">
         <div class="media">
             <div class="media-body text-left">
-                <h3 class="mb-0" v-text="reactionTime"></h3>
+                <h3 class="mb-0" v-text="reactionTimeByMonth"></h3>
                 <span class="text-uppercase font-size-xs">{{ trans('dashboard.reaction_time_average_month') }}</span>
             </div>
 
             <div class="media-body text-right">
-                <h3 class="mb-0" v-text="reactionTime"></h3>
+                <h3 class="mb-0" v-text="reactionTimeByDay"></h3>
                 <span class="text-uppercase font-size-xs">{{ trans('dashboard.reaction_time_average_day') }}</span>
             </div>
         </div>
@@ -25,11 +25,13 @@
       return {
         // eslint-disable-next-line
         errors: new Errors(),
-        reactionTime: 0
+        reactionTimeByMonth: 0,
+        reactionTimeByDay: 0
       }
     },
     mounted () {
       this.loadReationTimeByMonth()
+      this.loadReationTimeByDay()
       this.$events.$on('whitelabel-set', whitelabelId => this.loadReationTimeByMonth(whitelabelId))
     },
     watch: {
@@ -63,14 +65,14 @@
       },
       onLoadDashboardReationTimeByMonthSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.reactionTime = response.data.reactionTime
+          this.reactionTimeByMonth = response.data.reactionTime
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
         }
       },
       onLoadDashboardReationTimeByDaySuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.reactionTime = response.data.reactionTime
+          this.reactionTimeByDay = response.data.reactionTime
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
         }
