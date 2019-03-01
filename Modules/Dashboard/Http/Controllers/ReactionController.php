@@ -3,9 +3,10 @@
 namespace Modules\Dashboard\Http\Controllers;
 
 use App\Repositories\Criteria\ByWhitelabel;
-use App\Repositories\Criteria\GroupBy;
+use App\Repositories\Criteria\EagerLoad;
+use App\Repositories\Criteria\Has;
 use App\Repositories\Criteria\Where;
-use App\Repositories\Criteria\WhereBetween;
+use App\Repositories\Criteria\WhereDay;
 use App\Repositories\Criteria\WhereMonth;
 use App\Repositories\Criteria\WhereYear;
 use Carbon\Carbon;
@@ -14,11 +15,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
 
-class WishesController extends Controller
+class ReactionController extends Controller
 {
     /**
      * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
@@ -41,15 +41,6 @@ class WishesController extends Controller
      */
     private $carbon;
 
-    /**
-     * WishesController constructor.
-     *
-     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository $wishes
-     * @param \Illuminate\Routing\ResponseFactory                     $response
-     * @param \Illuminate\Auth\AuthManager                            $auth
-     * @param \Illuminate\Translation\Translator                      $lang
-     * @param \Carbon\Carbon                                          $carbon
-     */
     public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
     {
         $this->wishes = $wishes;
@@ -60,96 +51,33 @@ class WishesController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function timeByMonth(Request $request)
     {
         try {
-            $result['wishCount'] = $this->wishes->withCriteria([
+            $wishesWithOffers = $this->wishes->withCriteria([
                 new ByWhitelabel(),
                 new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-            ])->all()->count();
-            $result['success'] = true;
-            $result['status'] = 200;
-        } catch (Exception $e) {
-            $result['success'] = false;
-            $result['message'] = $e->getMessage();
-            $result['status'] = 500;
-        }
-
-        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function byMonth(Request $request)
-    {
-        try {
-            $data = $this->wishes->withCriteria([
-                new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
-                new ByWhitelabel(),
-                new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-                new GroupBy('month')
-            ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count')])
-                ->pluck('wishes_count', 'month')
-                ->toArray();
-
-            for ($i = 1; $i <= $this->carbon->nowWithSameTz()->format('m'); $i++) {
-                if (key_exists($i, $data)) {
-                    $result['data'][] = $data[$i];
-                } else {
-                    $result['data'][] = 0;
-                }
-            }
-
-
-            $result['success'] = true;
-            $result['status'] = 200;
-        } catch (Exception $e) {
-            $result['success'] = false;
-            $result['message'] = $e->getMessage();
-            $result['status'] = 500;
-        }
-
-        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function byDay(Request $request)
-    {
-        try {
-            $data = $this->wishes->withCriteria([
                 new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
                 new WhereMonth($this->carbon->nowWithSameTz()->format('m')),
-                new ByWhitelabel(),
-                new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-                new GroupBy('day')
-            ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('DAY(created_at) as day'), DB::raw('count(*) as wishes_count')]);
-            $items = [];
-            foreach ($data as $item) {
-                $items[$item->day] = [
-                    $item->created_at->format('Y-m-d'),
-                    $item->wishes_count
-                ];
+                new Has('offers'),
+            ])->all();
+
+            $diffInHours = 0;
+            $count = 0;
+            foreach ($wishesWithOffers as $wo) {
+                $count++;
+                $wishDate = $this->carbon->parse($wo->created_at);
+                $offerDate = $this->carbon->parse($wo->offers->first()->created_at);
+                $diffInHours += $wishDate->diffInHours($offerDate);
             }
 
-            for ($i = 1; $i <= $this->carbon->nowWithSameTz()->format('d'); $i++) {
-                if (key_exists($i, $items)) {
-                    $result['data'][] = $items[$i];
-                } else {
-                    $result['data'][] = 0;
-                }
-            }
-
+            $result['reactionTime'] = $wishesWithOffers->count() > 0 ? $diffInHours/$wishesWithOffers->count() : 0;
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -159,6 +87,55 @@ class WishesController extends Controller
         }
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function timeByDay(Request $request)
+    {
+        try {
+            $wishesWithOffers = $this->wishes->withCriteria([
+                new ByWhitelabel(),
+                new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
+                new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
+                new WhereMonth($this->carbon->nowWithSameTz()->format('m')),
+                new WhereDay($this->carbon->nowWithSameTz()->format('d')),
+                new Has('offers'),
+            ])->all();
+
+            $diffInHours = 0;
+            $count = 0;
+            foreach ($wishesWithOffers as $wo) {
+                $count++;
+                $wishDate = $this->carbon->parse($wo->created_at);
+                $offerDate = $this->carbon->parse($wo->offers->first()->created_at);
+                $diffInHours += $wishDate->diffInHours($offerDate);
+            }
+
+            $result['reactionTime'] = $wishesWithOffers->count() > 0 ? $diffInHours/$wishesWithOffers->count() : 0;
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function index()
+    {
+        return view('dashboard::index');
     }
 
     /**

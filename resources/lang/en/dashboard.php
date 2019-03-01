@@ -15,4 +15,6 @@ return [
     'total_sellers'              => 'Alle Anbieter',
     'total_groups'               => 'Alle Gruppen',
     'total_wishes'               => 'Alle Wünsche',
+    'reaction_time_average_month'               => 'Reaction time/Month',
+    'reaction_time_average_day'               => 'Reaction time/Day',
 ];

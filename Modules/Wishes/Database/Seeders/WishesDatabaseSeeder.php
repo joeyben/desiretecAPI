@@ -46,7 +46,7 @@ class WishesDatabaseSeeder extends Seeder
                 'updated_by'        => $faker->numberBetween(1, 3),
                 'group_id'          => $faker->numberBetween(1, 5),
                 'whitelabel_id'     => $faker->numberBetween(1, 5),
-                'created_at'        => $faker->dateTimeThisYear(),
+                'created_at'        => $faker->dateTimeThisMonth(),
                 'updated_at'        => DB::raw('now()'),
             ]);
         }

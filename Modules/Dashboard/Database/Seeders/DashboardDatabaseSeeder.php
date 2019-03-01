@@ -55,7 +55,7 @@ class DashboardDatabaseSeeder extends Seeder
             'name'            => 'Tile User',
             'x'               => 6,
             'y'               => 0,
-            'w'               => 2,
+            'w'               => 3,
             'h'               => 2,
             'i'               => 3,
             'component'       => 'tile-user-component',
@@ -64,22 +64,10 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Order',
-            'x'               => 8,
-            'y'               => 0,
-            'w'               => 2,
-            'h'               => 2,
-            'i'               => 4,
-            'component'       => 'tile-order-component',
-            'created_at'      => DB::raw('now()'),
-            'updated_at'      => DB::raw('now()')
-        ]);
-
-        DB::table('dashboards')->insert([
             'name'            => 'Tile Comment',
-            'x'               => 10,
+            'x'               => 9,
             'y'               => 0,
-            'w'               => 2,
+            'w'               => 3,
             'h'               => 2,
             'i'               => 5,
             'component'       => 'tile-comment-component',
@@ -183,7 +171,7 @@ class DashboardDatabaseSeeder extends Seeder
             'updated_at'      => DB::raw('now()')
         ]);
 
-        for ($i = 1; $i <= 14; ++$i) {
+        for ($i = 1; $i <= 13; ++$i) {
             DB::table('dashboard_user')->insertGetId([
                 'user_id'              => 1,
                 'dashboard_id'         => $i,
