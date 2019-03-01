@@ -1,14 +1,12 @@
 <template>
     <div class="card-header header-elements-inline">
         <h5 class="card-title">
-            <button type="button" class="btn btn-outline bg-teal-300 text-teal-800 btn-icon dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-outline bg-steel text-steel btn-icon dropdown-toggle" data-toggle="dropdown">
                 <i class="icon-gear"></i>
             </button>
 
             <div class="dropdown-menu dropdown-menu-left">
                 <router-link class="dropdown-item" :to="{name: 'root.create'}" v-if="hasRole('Administrator')"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
-                <a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>
-                <a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>
             </div>
         </h5>
         <div class="header-elements">

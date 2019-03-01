@@ -1,6 +1,6 @@
 <template>
     <span>
-        <a :href="editUrl && hasRole('Administrator')" v-if="can_edit" data-popup="tooltip" :title="rowData.id" v-text="rowData.id"></a>
+        <router-link :to="{name: 'root.edit', params: { id: rowData.id }}" data-popup="tooltip" :title="rowData.id" v-if="can_edit" v-text="rowData.id"></router-link>
         <span v-if="!can_edit && !deleted">{{ rowData.id }}</span>
         <s class="text-danger"  v-if="deleted">{{ rowData.id }}</s>
     </span>

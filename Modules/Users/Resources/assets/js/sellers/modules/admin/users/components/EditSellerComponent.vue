@@ -3,13 +3,13 @@
     <div id="modal_large_user" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="icon-menu7 mr-2"></i> &nbsp;Modal with icons</h5>
+                <div class="modal-header bg-steel">
+                    <h5 class="modal-title"><i class="icon-menu7 mr-2"></i></h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <ul class="nav nav-tabs nav-tabs-highlight nav-justified">
-                    <li class="nav-item" v-if="can_logs"><a href="#highlighted-justified-tab1" class="nav-link active" data-toggle="tab"><i class="icon-pencil6 mr-2"></i> {{ trans('modals.user') }}</a></li>
-                    <li class="nav-item" v-if="can_logs"><a href="#highlighted-justified-tab2" class="nav-link" data-toggle="tab"><i class="icon-file-text mr-2"></i> {{ trans('modals.logs') }}</a></li>
+                <ul class="nav nav-tabs nav-tabs-bottom border-bottom-0 nav-justified">
+                    <li class="nav-item" v-if="can_logs"><a href="#highlighted-justified-tab1" class="nav-link active" data-toggle="tab"><i class="icon-pencil6 mr-2"></i></a></li>
+                    <li class="nav-item" v-if="can_logs"><a href="#highlighted-justified-tab2" class="nav-link" data-toggle="tab"><i class="icon-file-text mr-2"></i></a></li>
                 </ul>
 
                 <div class="tab-content">

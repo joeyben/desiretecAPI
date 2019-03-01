@@ -1,5 +1,8 @@
 export default [
   {
+    name: '__checkbox'
+  },
+  {
     name: '__component:custom-link-by-id',
     title: window.Lang.get('tables.id'),
     sortField: 'id',

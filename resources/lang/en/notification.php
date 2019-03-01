@@ -12,6 +12,7 @@ return [
     |
     */
 
-    'created'  => '<span class="badge badge-flat border-success text-success-600 rounded-0 mr-2"> Created </span> <strong>:name</strong> (:url) has been <strong>successfully created</strong> by <strong>:user</strong>',
-    'deleted'  => '<span class="badge badge-flat border-danger text-danger-600 rounded-0 mr-2"> Deleted </span><strong>:name</strong> (:url) has been <strong>successfully deleted</strong> by <strong>:user</strong>',
+    'created'   => '<span class="badge badge-flat border-success text-success-600 rounded-0 mr-2"> Created </span> <strong>:name</strong> (:url) has been <strong>successfully created</strong> by <strong>:user</strong>',
+    'deleted'   => '<span class="badge badge-flat border-danger text-danger-600 rounded-0 mr-2"> Deleted </span><strong>:name</strong> (:url) has been <strong>successfully deleted</strong> by <strong>:user</strong>',
+    'restored'  => '<span class="badge badge-flat border-info text-info-600 rounded-0 mr-2"> Restored </span><strong>:name</strong> (:url) has been <strong>successfully restored</strong> by <strong>:user</strong>',
 ];

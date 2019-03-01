@@ -3,10 +3,24 @@ import * as getters from './getters'
 
 const state = {
   wish: {},
+  checked: [],
   whitelabels: {}
 }
 
 const mutations = {
+  REMOVE_CHECKED_ID (state, id) {
+    let index = state.checked.findIndex((c) => c === id)
+    state.checked.splice(index, 1)
+  },
+  ADD_CHECKED_ID (state, id) {
+    state.checked.push(id)
+  },
+  ADD_CHECKED (state, checked) {
+    state.checked = checked
+  },
+  ADD_GROUP (state, group) {
+    state.group = group
+  },
   ADD_WISH (state, wish) {
     state.wish = wish
   },

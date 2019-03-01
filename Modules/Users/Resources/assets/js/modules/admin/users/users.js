@@ -42,13 +42,13 @@ if ($usersComponent) {
       name: 'root',
       component: require('./components/UsersComponent.vue'),
       children: [{
-        path: '/seller/:id(\\d+)',
-        name: 'root.seller',
-        component: require('./components/EditSellerComponent.vue')
+        path: '/edit/:id(\\d+)',
+        name: 'root.edit',
+        component: require('./components/EditUserComponent.vue')
       }, {
-        path: '/create/seller/:id(\\d+)',
-        name: 'root.create.seller',
-        component: require('./components/EditSellerComponent.vue')
+        path: '/create/:id(\\d+)',
+        name: 'root.create',
+        component: require('./components/EditUserComponent.vue')
       }]
     }]
   })

@@ -1,19 +1,10 @@
 <template>
-    <div class="input-group">
-        <textarea style="resize:none;height:100px;" id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage"></textarea>
-        <input id="edit-val" style="display: none;">
-        <span class="input-group-btn">
-            <button class="btn btn-primary btn-sm button-show" id="btn-chat" @click="sendMessage">
-                <span>Send</span>
-                 <div class="loader"></div>
-            </button>
-            <button class="btn btn-primary btn-sm button-hide" id="btn-chat" @click="cancel">
-                Cancel
-            </button>
-            <button class="btn btn-primary btn-sm button-hide" id="btn-chat" @click="updateMessage">
-                Save
-            </button>
-        </span>
+    <div class="col-md-12">
+        <textarea name="antworten" id="antworten" v-model="newMessage"></textarea>
+        <div class="cu-cl-buttons">
+            <button class="primary-btn antworten-btn" id="btn-chat" @click="sendMessage">Antworten</button>
+            <button class="secondary-btn">Ruckrufbitte einstellen</button>
+        </div>
     </div>
 </template>
 

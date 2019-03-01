@@ -8,5 +8,5 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'na
     Route::get('wishes/{id}/edit', 'WishesController@edit')->name('admin.wishes.edit')->where('id', '[0-9]+');
     Route::get('wishes/create', 'WishesController@create')->name('admin.wishes.create')->where('id', '[0-9]+');
     Route::put('wishes/{id}', 'WishesController@update')->name('admin.wishes.update')->where('id', '[0-9]+');
-    //Route::get('wishes/{id}/{token}', 'WishesController@token');
+    Route::get('wishes/export', 'WishesController@export')->name('admin.wishes.export');
 });

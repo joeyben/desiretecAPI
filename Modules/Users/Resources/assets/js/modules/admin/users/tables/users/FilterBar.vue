@@ -1,12 +1,11 @@
 <template>
     <div class="card-header header-elements-inline">
         <h5 class="card-title">
-            <button type="button" class="btn btn-outline bg-teal-300 text-teal-800 btn-icon dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-outline bg-steel text-steel btn-icon dropdown-toggle" data-toggle="dropdown">
                 <i class="icon-gear"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-left">
-                <a :href="createLink" class="dropdown-item" v-if="hasRole('Administrator')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>
-                <router-link class="dropdown-item" :to="{name: 'root.create.seller', params: { id: 0 }}"  v-if="can_edit_seller"><i class="icon-plus2"></i>{{ trans('button.create') }}</router-link>
+                <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}" v-if="can_edit"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
             </div>
         </h5>
         <div class="header-elements">
@@ -117,8 +116,8 @@
 
           return results
         },
-        can_edit_seller () {
-          return this.hasRole('Executive') && !this.hasRole('Administrator')
+        can_edit () {
+          return this.hasPermissionTo('create-user')
         }
       },
       methods: {

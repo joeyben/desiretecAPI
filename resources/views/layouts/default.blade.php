@@ -191,7 +191,7 @@
                     @if($module->has('Wishes')  && Auth::guard('web')->user()->hasPermission('read-wish'))
                     <li class="nav-item">
                         <a href="{{ route('admin.wishes') }}" class="nav-link">
-                            <i class="icon-check"></i>
+                            <i class="icon-heart5"></i>
                             <span>{{ __('menus.wishes') }}</span>
                         </a>
                     </li>
