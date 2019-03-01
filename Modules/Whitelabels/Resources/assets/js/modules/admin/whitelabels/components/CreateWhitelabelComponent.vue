@@ -90,7 +90,7 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css'
           cancelButtonText: this.trans('labels.cancel'),
           type: 'warning'
         }).then(() => {
-          window.location.href = window.laroute.route('admin.access.user.create')
+          window.location.href = window.laroute.route('admin.users') + '#/edit/0'
         }).catch(() => {
           window.location.href = window.laroute.route('admin.whitelabels')
         })
