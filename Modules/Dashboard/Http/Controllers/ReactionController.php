@@ -90,6 +90,7 @@ class ReactionController extends Controller
                 $diffInHours += $wishDate->diffInHours($offerDate);
             }
 
+
             $result['reactionTime'] = $wishesWithOffers->count() > 0 ? number_format($diffInHours / $wishesWithOffers->count(), 2) : 0;
             $result['success'] = true;
             $result['status'] = 200;
@@ -119,6 +120,7 @@ class ReactionController extends Controller
                     new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
                     new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
                     new WhereMonth($this->carbon->nowWithSameTz()->format('m')),
+                    new WhereDay($this->carbon->nowWithSameTz()->format('d')),
                     new Has('offers'),
                     new EagerLoad(['offers']),
                 ])->all();
@@ -128,15 +130,14 @@ class ReactionController extends Controller
                     new Where('wishes.whitelabel_id', '' . $whitelabelId),
                     new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
                     new WhereMonth($this->carbon->nowWithSameTz()->format('m')),
+                    new WhereDay($this->carbon->nowWithSameTz()->format('d')),
                     new Has('offers'),
                     new EagerLoad(['offers']),
                 ])->all();
             }
 
             $diffInHours = 0;
-            $count = 0;
             foreach ($wishesWithOffers as $wo) {
-                ++$count;
                 $wishDate = $this->carbon->parse($wo->created_at);
                 $offerDate = $this->carbon->parse($wo->offers->first()->created_at);
                 $diffInHours += $wishDate->diffInHours($offerDate);
