@@ -200,7 +200,9 @@ a, a:hover, a:active, a:focus {
   .img-background{
     height: 400px;
     display: flex;
-    background-image: linear-gradient(90deg, #fff, #ccc);
+    background-image: linear-gradient(to left,  rgba(250,250,250,0) 0%, rgba(250,250,250,0.4) 25%, rgba(250,250,250,0.6) 35%, rgba(250,250,250,0.9) 50%, rgba(250,250,250,1) 60%),  url(https://www.matthewwilliams-ellis.com/wp-content/uploads/2014/02/Italy-panoramic-landscape-photography-showing-Isola-Bella-Beach-in-Taormina-Sicily-Italy-panoramic-landscape-photography-by-landscape-photographer-Matthew-Williams-Ellis.jpg);
+    background-size: cover;
+    background-position: center right;
     flex-direction: column;
     justify-content: center;
     .bg-left-content{
@@ -210,12 +212,15 @@ a, a:hover, a:active, a:focus {
     }
   }
   h3{
-    margin-bottom: 35px;
+    margin-bottom: 25px;
+    font-size:30px;
   }
   p{
     margin-bottom: 15px;
-    font-size:14px;
     font-weight: 100;
+  }
+  p.header-p{
+    font-size:20px;
   }
   button{
     $btn-default-color: $text-color;
@@ -250,6 +255,9 @@ a, a:hover, a:active, a:focus {
     .c-info{
     display: flex;
     align-items: center;
+    a{
+      text-decoration: underline;
+    }
     }
     h4{
       padding-left: 15px;
@@ -300,8 +308,11 @@ a, a:hover, a:active, a:focus {
       float: left;
       display: inline-block;
     }
+    i{
+      font-size: 20px;
+    }
     .data-content{
-      padding: 4px 10px;
+      padding: 0px 10px;
       display: inline-block;
       margin-left:5px;
       font-weight: 100;
@@ -515,6 +526,7 @@ a, a:hover, a:active, a:focus {
     display: inline-block;
     float: left;
     margin-right: 25px;
+    margin-top:5px;
     img{
     border: 1px solid #ccc;
     width: 35px;
@@ -540,7 +552,10 @@ a, a:hover, a:active, a:focus {
     display: flex;
     flex-direction: column;
     position: relative;
+    margin-top:5px;
+    margin-bottom: 5px;
     p{
+      margin:0px;
       background:#ddd;
       padding: 15px 50px;
       border-bottom-left-radius: 10px;
@@ -564,42 +579,43 @@ a, a:hover, a:active, a:focus {
       left: -15px;
       top: 5px;
     }
-    .cu-cl-buttons{
-      margin-top:10px;
-      button{
-        border-radius: 5px;
-      }
-    .primary-btn{
-      background:$orange;
-      border:1px solid $orange;
-      color:#fff;
-      padding: 4px 25px;
-      margin-right: 5px;
-      font-weight: 100;
-    }
-    .primary-btn:focus{
-      background:$darkorange;
-      border: 1px solid $darkorange;
-    }
-    .secondary-btn{
-      border:1px solid $orange;
-      color:$orange;
-      background:transparent;
-      padding: 4px 30px;
-      font-weight: 100;
-    }
-    .secondary-btn:focus{
-      border:1px solid $darkorange;
-      color:$darkorange;
-      background:transparent;
-    }
+}
+.cu-cl-buttons{
+  margin-top:10px;
+  button{
+    border-radius: 5px;
   }
+.primary-btn{
+  background:$orange;
+  border:1px solid $orange;
+  color:#fff;
+  padding: 4px 25px;
+  margin-right: 5px;
+  font-weight: 100;
+}
+.primary-btn:focus{
+  background:$darkorange;
+  border: 1px solid $darkorange;
+}
+.secondary-btn{
+  border:1px solid $orange;
+  color:$orange;
+  background:transparent;
+  padding: 4px 30px;
+  font-weight: 100;
+}
+.secondary-btn:focus{
+  border:1px solid $darkorange;
+  color:$darkorange;
+  background:transparent;
+}
 }
 .cu-comment-right{
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-top:10px;
+  margin-top:5px;
+  margin-bottom: 5px;
   p{
     margin:0px;
     border: 1px solid #ddd;
@@ -627,6 +643,7 @@ a, a:hover, a:active, a:focus {
       top: 20px;
       transform: rotate(45deg);
     }
+}
 .cu-cr-buttons{
   margin-top:20px;
       button{
@@ -644,7 +661,6 @@ a, a:hover, a:active, a:focus {
     color:$darkorange;
     background:transparent;
   }
-}
 }
 }
 .section-angebote{
@@ -784,21 +800,210 @@ a, a:hover, a:active, a:focus {
   background:$darkgrey;
 }
 
+//modal style
+.wish-modal-1{
+  .modal-body-left{
+    border-right: 2px solid #999;
+    input{
+      padding-top: 25px !important;
+      padding-bottom: 15px !important;
+      outline:0;
+    }
+    input:hover, input:focus{
+      outline:0 !important;
+      box-shadow:none !important;
+    }
+    input:focus{
+      border: 1px solid #999;
+    }
+    label{
+      color:#999; 
+      font-size:14px;
+      font-weight:normal;
+      position:absolute;
+      pointer-events:none;
+      left:13px;
+      top:13px;
+      transition:0.2s ease all; 
+      -moz-transition:0.2s ease all; 
+      -webkit-transition:0.2s ease all;
+    }
+    input:focus ~ label, input:valid ~ label 		{
+      top:5px;
+      font-size:10px;
+      color:#bbb;
+    }
+    select{
+      height: 42px;
+      color:#999;
+    }
+    select:hover, select:focus{
+      outline:0 !important;
+      box-shadow:none !important;
+    }
+    select:focus{
+      border: 1px solid #999;
+    }
+    
+    .group{
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .primary-btn{
+      border-color:$orange;
+      color:#FFF;
+      background: $orange;
+      padding: 4px 30px;
+      font-weight: 100;
+      border-radius: 10px;
+      float:right;
+      margin-top:20px;
+    }
+
+  }
+  .modal-body-right{
+    img{
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+      display: flex;
+      object-fit: cover;
+      border-radius:100%;
+      border: 1px solid #ccc;
+    }
+    h4,p,.modal-contact{
+      width: 90%;
+      margin: 0 auto;
+    }
+    h4{
+      margin: 20px auto 10px auto;
+    }
+    p{
+      margin: 0 auto 10px auto;
+    }
+    .modal-contact{
+      div{
+        margin-bottom:10px;
+        display: flex;
+        align-items: center;
+        span{
+          font-size: 30px;
+          color:#ccc;
+        }
+        a{
+          color: #636b6f;
+          margin-left: 10px;
+          text-decoration: underline;
+        }
+        a:hover, a:focus{
+          color: #636b6f;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .modal-body-bottom{
+    margin-top:25px;
+    textarea{
+    resize: none;
+    height: 150px;
+    }
+    textarea:focus{
+      border: 1px solid #999;
+    }
+  }
+  .modal-header{
+    border-bottom:0px !important;
+    padding-top:30px;
+    padding-left: 45px;
+    padding-right: 45px;
+    .modal-title{
+      margin-bottom: 10px;
+    }
+    .close{
+      margin-top: -2px;
+      font-size: 25px;
+      border-radius: 100%;
+      border: 1px solid #CCC;
+      padding: 3px 8px 0px 8px;
+      opacity: 1;
+      color: #ccc;
+      line-height: 1;
+      font-weight: 100;
+    }
+    a,a:hover,a:focus{
+      color:#636b6f;
+      text-decoration: underline;
+    }
+  }
+  .modal-footer{
+    border-top:0px !important;
+    padding:0 45px 30px 45px;
+    .primary-btn{
+      border-color:$orange;
+      color:#FFF;
+      background: $orange;
+      padding: 4px 30px;
+      font-weight: 100;
+      border-radius: 5px;
+    }
+    .primary-btn:focus{
+        border:1px solid $darkorange;
+        color:#FFF;
+        background: $darkorange;
+      }
+  }
+}
+#antworten{
+  height: 80px;
+  border: 1px solid #ccc;
+  resize: none;
+  padding: 3px 10px;
+  display: none;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 25px;
+}
+#antworten:focus{
+  border: 1px solid #636b6f;
+}
 //mobile style
 @media (max-width: 768px){
   .sa-buttons{
+    margin: 0 auto;
+    display: table !important;
+    text-align: center;
+    margin-top: 20px !important;
     .primary-btn{
-      margin-bottom: 5px;
+      margin-bottom: 10px;
+      display:block;
+    }
+    .secondary-btn{
+      display:inline-block;
+    }
+    button{
+      margin-right: 0px !important;
     }
   }
   .sa2-buttons{
+    margin: 0 auto;
+    display: table !important;
+    text-align: center;
+    margin-top: 20px !important;
     .primary-btn{
-      margin-bottom: 5px;
+      margin-bottom: 10px;
+      display:block;
+    }
+    .secondary-btn{
+      display:inline-block;
+    }
+    button{
+      margin-right: 0px !important;
     }
   }
   .section-comments{
     margin-bottom: 40px;
-    .cu-comment-left{
       .cu-cl-buttons{
         margin-top:0px;
         button{
@@ -808,7 +1013,6 @@ a, a:hover, a:active, a:focus {
           margin-bottom:10px;
         }
       }
-    }
   }
   #accordion{
     .panel-title{
@@ -871,7 +1075,7 @@ a, a:hover, a:active, a:focus {
   padding:0px;
   margin:0 -15px 0 -15px;
   hr{
-    margin: 5px 0 5px 0;
+    margin: 10px 0 10px 0;
   }
 }
 .hr-mobile{
@@ -895,6 +1099,14 @@ a, a:hover, a:active, a:focus {
 .bg-bottom{
   .col-md-3{
     margin-bottom: 15px;
+  }
+  .c-tel{
+    a{
+    border: 1px solid #636b6f;
+    border-radius: 10px;
+    padding: 0px 20px;
+
+    }
   }
 }
 .section-contact{
