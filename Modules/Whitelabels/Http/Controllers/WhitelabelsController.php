@@ -20,6 +20,7 @@ use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Excel;
@@ -271,6 +272,8 @@ class WhitelabelsController extends Controller
 
             ini_set('max_execution_time', 300);
             $this->artisan->call('module:make', ['name' => [$result['whitelabel']->name], '--force' => true]);
+            $this->whitelabels->generateFiles($result['whitelabel']->id, $result['whitelabel']->name);
+
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
