@@ -11,7 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
-use Modules\Tui\Http\Requests\StoreWishRequest;
+use Modules\Master\Http\Requests\StoreWishRequest;
 
 class MasterController extends Controller
 {
@@ -138,11 +138,12 @@ class MasterController extends Controller
 
             return $new_user;
         }
-        $request->merge(
+        $input = array_merge(
+            $input,
             [
                 'first_name'     => 'John',
                 'last_name'      => 'Doe',
-                'password'       => 'master2019',
+                'password'       => 'tui2019',
                 'is_term_accept' => true
             ]
         );

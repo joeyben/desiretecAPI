@@ -133,7 +133,8 @@ class TuiController extends Controller
 
             return $new_user;
         }
-        $request->merge(
+        $input = array_merge(
+            $input,
             [
                 'first_name'     => 'John',
                 'last_name'      => 'Doe',

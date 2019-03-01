@@ -64,3 +64,57 @@ const app = new Vue({
 
     }
 });
+
+//jquery
+$(document).ready(function(){
+    $('.sa-p2').css('-webkit-box-orient','vertical')
+})
+$('.more-details').click(function(){
+    $('.sa-p2').css({'display':'block','height':'auto'})
+    $(this).css('display','none')
+})
+
+$('.wm-1-btn').click(function(){
+    var datas = {
+        name : $('#myModal .modal-body-left .name').val(),
+        nachname : $('#myModal .modal-body-left .nachname').val(),
+        email : $('#myModal .modal-body-left .email').val(),
+        tel : $('#myModal .modal-body-left .tel').val(),
+        betreff : $('#myModal .modal-body-left .betreff').val(),
+        message : $('#myModal .modal-body-bottom textarea').val()
+    }
+    $.ajax({
+        type: "POST",
+        url: "whatever.php",
+        data: {datas},
+        complete: function(){
+            console.log(datas)
+        }
+    })
+})
+
+$('.wm-2-btn').click(function(){
+    var datas = {
+        name : $('#myModal2 .modal-body-left .name').val(),
+        nachname : $('#myModal2 .modal-body-left .nachname').val(),
+        email : $('#myModal2 .modal-body-left .tel').val(),
+        tel : $('#myModal2 .modal-body-left #modal-select').val()
+    }
+    $.ajax({
+        type: "POST",
+        url: "method.php",
+        data: {datas},
+        complete: function(){
+            console.log(datas)
+        }
+    })
+})
+
+$('.antworten-btn').click(function(){
+    $('#antworten').slideDown()
+    if($(this).hasClass('sendAntworten')){
+        
+    }
+    $(this).addClass('sendAntworten');
+})
+

@@ -41,7 +41,7 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #092a5e url(../../images/layer/masterGuy_2.png) no-repeat bottom / 100%;
+  background: #092a5e url(../../images/layer/guy_2.png) no-repeat bottom / 100%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -105,7 +105,7 @@ $master-blue: #70CBF4;
     height: 90px !important;
     top: -110px;
     background-color: rgba(9,42,94,0.8);
-    background-image: url(../../images/layer/masterGuy_2.png);
+    background-image: url(../../images/layer/guy_2.png);
     width: 55%;
     padding: 0 0px;
     margin: auto;
@@ -797,6 +797,7 @@ p.kwp-info {
       border-left: 6px solid transparent !important;
       border-bottom: none !important;
       border-top: 6px dashed #092a5e !important;
+      display: none;
     }
     .filter-option-inner-inner{
       color: #092a5e;
@@ -1083,7 +1084,7 @@ p.kwp-info {
       margin: 0;
     }
     i{
-      top:0;
+      top:10px;
     }
   }
   .kwp-row{

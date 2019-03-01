@@ -18,6 +18,8 @@ class CreateAgentsTable extends Migration
             $table->increments('id');
             $table->string('name', 200);
             $table->string('display_name', 200);
+            $table->string('email', 191)->unique();
+            $table->string('telephone', 191);
             $table->enum('status', ['Active', 'Deleted', 'InActive']);
             $table->string('avatar', 200);
             $table->integer('user_id')->unsigned();
