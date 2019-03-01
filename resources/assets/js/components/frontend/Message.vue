@@ -4,7 +4,6 @@
             <h4>
                 Neue Nachrichten <span class="glyphicon glyphicon-bell"></span>
             </h4>
-            Badha
             <chat-messages :messages="messages" :avatar="avatar"></chat-messages>
             <message-form></message-form>
         </div>
