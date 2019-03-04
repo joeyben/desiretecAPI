@@ -4,6 +4,7 @@ namespace App\Models\Wishes\Traits\Relationship;
 
 use App\Models\Access\User\User;
 use App\Models\Comments\Comment;
+use App\Models\Messages\Message;
 use App\Models\Groups\Group;
 use App\Models\Offers\Offer;
 

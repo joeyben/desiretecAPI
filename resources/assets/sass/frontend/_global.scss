@@ -735,6 +735,46 @@ section {
   }
 }
 
+#antworten{
+  height: 80px;
+  border: 1px solid #ccc;
+  resize: none;
+  padding: 3px 10px;
+  display: none;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 25px;
+}
+#antworten:focus{
+  border: 1px solid #636b6f;
+}
+.confirm-popup .popup-body{
+  .primary-btn{
+    border:1px solid $orange;
+    color:#FFF;
+    background: $orange;
+    padding: 4px 30px;
+    font-weight: 100;
+    margin-right: 10px;
+    }
+  .primary-btn:focus{
+      border:1px solid $darkorange;
+      background:$darkorange;
+    }
+  .secondary-btn{
+      border:1px solid $orange;
+      color:$orange;
+      background: transparent;
+      padding: 4px 30px;
+      font-weight: 100;
+    }
+    .secondary-btn:focus{
+      border:1px solid $darkorange;
+      color:$darkorange;
+      background:transparent;
+    }
+}
+
 //mobile style
 @media (max-width: 768px){
   .sa-buttons{

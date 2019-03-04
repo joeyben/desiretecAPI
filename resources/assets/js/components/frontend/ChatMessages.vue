@@ -5,15 +5,15 @@
                 <img v-if="message.avatar" :src="message.avatar">
                 <img v-else :src="'/img/frontend/profile-picture/user.png'">
             </div>      
-        
-            <div v-bind:class="[userid == message.user_id ?  'cu-comment cu-comment-right' : 'cu-comment cu-comment-left']">
+            <confirmation-modal v-on:confirm="updateMessages" :id="message.id"></confirmation-modal>
+            <div v-bind:class="[userid == message.user_id ?  'cu-comment-right' : 'cu-comment-left']">
                 <p>
-                <span class="username">
-                    {{ userid == message.user_id ? 'Ich' : message.name  }}
+                <span>{{ message.created_at }} Uhr</span>
+                <span v-if="userid == message.user_id" class="action_buttons">
+                    <i v-on:click="editMessage(message.id, message.message)" class="far fa-edit"></i>
+                    <i v-on:click="showModal(message.id)" class="far fa-trash-alt"></i>
                 </span>
-                <span>{{ timestamp(message.created_at) }} Uhr</span>
-                {{ message.message }}
-                </p>
+                <b style="font-weight:100" class="message-holder">{{ message.message }}</b></p>
             </div>  
         </div>
         <message-form v-on:messaged="updateMessages" :username="this.user" :userid="userid" :wishid="wishid" :groupid="groupid"></message-form>
@@ -56,8 +56,10 @@ Vue.prototype.moment = moment
 
         editMessage(messageid, message) {
 
-            $('#btn-input').val('');
-            $('#btn-input').val(jQuery('#'+messageid+" .chat-body p").text());
+            $('#antworten').slideDown()
+            
+            $('#antworten').val('');
+            $('#antworten').val(jQuery('#'+messageid+" .message-holder").text());
             $('#edit-val').val(messageid);
 
             $('.button-show').css('display','none')
@@ -115,4 +117,17 @@ Vue.prototype.moment = moment
         cursor: pointer;
     }
 
+    .action_buttons{
+        position:absolute;
+        top:20px;
+        right:15px;
+    }
+    
+    .action_buttons .fa-edit {
+        margin-right:5px;
+    }
+
+     .action_buttons i {
+        cursor: pointer;
+    }
 </style>
