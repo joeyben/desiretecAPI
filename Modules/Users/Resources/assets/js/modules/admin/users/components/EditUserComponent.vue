@@ -81,17 +81,6 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.confirmed') }} </label>
-                                                <div class="col-lg-9">
-                                                    <el-switch
-                                                            @input="updateConfirmed"
-                                                            :value="user.confirmed"
-                                                            active-color="#13ce66"
-                                                            inactive-color="#ff4949">
-                                                    </el-switch>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.status') }} </label>
                                                 <div class="col-lg-9">
                                                     <el-switch
@@ -100,20 +89,6 @@
                                                             active-color="#13ce66"
                                                             inactive-color="#ff4949">
                                                     </el-switch>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row" v-if="!is_edit">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('validation.attributes.backend.access.users.send_confirmation_email') }} </label>
-                                                <div class="col-lg-9">
-                                                    <el-switch
-                                                            @input="updateConfirmationEmail"
-                                                            :value="user.confirmation_email"
-                                                            active-color="#13ce66"
-                                                            inactive-color="#ff4949">
-                                                    </el-switch>
-                                                    <div class="help-block">
-                                                        {{ trans('strings.backend.access.users.if_confirmed_off') }}
-                                                    </div>
                                                 </div>
                                             </div>
                                             <legend class="font-weight-semibold text-uppercase font-size-sm">

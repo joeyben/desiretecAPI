@@ -1,15 +1,14 @@
 <template>
     <!-- Large modal -->
-    <div class="card card-body bg-purple-400 has-bg-image">
+    <div class="card card-body bg-indigo-400 has-bg-image">
         <div class="media">
-            <div class="media-body text-left">
-                <h3 class="mb-0" v-text="reactionTimeByMonth"></h3>
-                <span class="text-uppercase font-size-xs">{{ trans('dashboard.reaction_time_average_month') }}</span>
+            <div class="media-body">
+                <h3 class="mb-0" v-text="wishCount"></h3>
+                <span class="text-uppercase font-size-xs">{{ trans('dashboard.total_wishes') }}</span>
             </div>
 
-            <div class="media-body text-right">
-                <h3 class="mb-0" v-text="reactionTimeByDay"></h3>
-                <span class="text-uppercase font-size-xs">{{ trans('dashboard.reaction_time_average_day') }}</span>
+            <div class="ml-3 align-self-center">
+                <i class="icon-heart5 icon-3x opacity-75"></i>
             </div>
         </div>
     </div>
@@ -19,20 +18,18 @@
   import Vuex from 'vuex'
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   export default {
-    name: 'TileGroupComponent',
+    name: 'TileWishComponent',
     components: { },
     data () {
       return {
         // eslint-disable-next-line
         errors: new Errors(),
-        reactionTimeByMonth: 0,
-        reactionTimeByDay: 0
+        wishCount: 0
       }
     },
     mounted () {
-      this.loadReationTimeByMonth()
-      this.loadReationTimeByDay()
-      this.$events.$on('whitelabel-set', whitelabelId => this.loadReationTimeByMonth(whitelabelId))
+      this.loadWish()
+      this.$events.$on('whitelabel-set', whitelabelId => this.loadWish(whitelabelId))
     },
     watch: {
     },
@@ -43,36 +40,19 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadReationTimeByMonth: function (whitelabelId) {
+      loadWish: function (whitelabelId = null) {
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.timeByMonth') + params)
-          .then(this.onLoadDashboardReationTimeByMonthSuccess)
+        this.$http.get(window.laroute.route('admin.dashboard.wishes') + params)
+          .then(this.onLoadDashboardWishSuccess)
           .catch(this.onFailed)
           .then(() => {
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
       },
-      loadReationTimeByDay: function (whitelabelId) {
-        let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
-        this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.timeByDay') + params)
-          .then(this.onLoadDashboardReationTimeByDaySuccess)
-          .catch(this.onFailed)
-          .then(() => {
-            this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
-          })
-      },
-      onLoadDashboardReationTimeByMonthSuccess (response) {
+      onLoadDashboardWishSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.reactionTimeByMonth = response.data.reactionTime
-        } else {
-          this.$notify.error({ title: 'Failed', message: response.data.message })
-        }
-      },
-      onLoadDashboardReationTimeByDaySuccess (response) {
-        if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.reactionTimeByDay = response.data.reactionTime
+          this.wishCount = response.data.wishCount
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
         }

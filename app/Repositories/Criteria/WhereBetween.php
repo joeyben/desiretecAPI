@@ -50,6 +50,6 @@ class WhereBetween
      */
     public function apply($model): Builder
     {
-        return null === $this->start || null === $this->end ? $model : $model->whereBetween($this->column, [$this->start, $this->end]);
+        return null === $this->start || null === $this->end ? $model->newQuery() : $model->whereBetween($this->column, [$this->start, $this->end]);
     }
 }

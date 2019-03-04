@@ -8,31 +8,28 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Lang;
 
-class CreatedUserNotificationForSeller extends Notification
+class CreatedUserNotificationForExecutive extends Notification
 {
     use Queueable;
-    /**
-     * @var string
-     */
-    private $password;
     /**
      * @var \App\Models\Access\User\User
      */
     private $user;
-    private $whitelabel;
+    /**
+     * @var string
+     */
+    private $password;
 
     /**
      * Create a new notification instance.
      *
      * @param \App\Models\Access\User\User $user
      * @param string                       $password
-     * @param                              $whitelabel
      */
-    public function __construct(User $user, string $password, $whitelabel)
+    public function __construct(User $user, string $password)
     {
         $this->user = $user;
         $this->password = $password;
-        $this->whitelabel = $whitelabel;
     }
 
     /**
@@ -57,8 +54,21 @@ class CreatedUserNotificationForSeller extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-            ->subject(Lang::get('email.account.subject_for_seller'))
-            ->view('users::emails.created_seller', ['user' => $this->user, 'password' => $this->password, 'whitelabel' => $this->whitelabel])
+            ->subject(Lang::get('email.account.subject_for_executive'))
+            ->view('users::emails.created_executive', ['user' => $this->user, 'password' => $this->password])
             ->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param mixed $notifiable
+     *
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return [
+        ];
     }
 }

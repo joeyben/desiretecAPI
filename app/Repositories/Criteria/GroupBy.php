@@ -3,8 +3,8 @@
 /**
  * Created by PhpStorm.
  * User: goldoni
- * Date: 10.12.18
- * Time: 13:36.
+ * Date: 27.02.19
+ * Time: 14:20.
  */
 
 namespace App\Repositories\Criteria;
@@ -12,29 +12,23 @@ namespace App\Repositories\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class Where.
+ * Class GroupBy.
  */
-class Where
+class GroupBy
 {
     /**
      * @var string
      */
     private $column;
-    /**
-     * @var string
-     */
-    private $value;
 
     /**
-     * Where constructor.
+     * GroupBy constructor.
      *
      * @param string $column
-     * @param string $value
      */
-    public function __construct(string $column, string $value = null)
+    public function __construct(string $column)
     {
         $this->column = $column;
-        $this->value = $value;
     }
 
     /**
@@ -44,6 +38,6 @@ class Where
      */
     public function apply($model): Builder
     {
-        return null === $this->value ? $model->newQuery() : $model->where($this->column, $this->value);
+        return null === $this->column ? $model->newQuery() : $model->groupBy($this->column);
     }
 }

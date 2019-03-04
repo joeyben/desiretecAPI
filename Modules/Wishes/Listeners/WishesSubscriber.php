@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Notification;
 use Modules\Groups\Entities\Group;
 use Modules\Wishes\Entities\Wish;
 use Modules\Wishes\Notifications\CreatedWishNotification;
+use Modules\Wishes\Notifications\CreatedWishNotificationForSeller;
 
 class WishesSubscriber
 {
@@ -51,7 +52,7 @@ class WishesSubscriber
 
         $users = Group::find($wish->group_id)->users()->get();
         Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));
-        Notification::send($users, new CreatedWishNotification($wish));
+        Notification::send($users, new CreatedWishNotificationForSeller($wish));
 
         $admins = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->where('users.id', '!=', Auth::guard('web')->user()->id)->get();
 
