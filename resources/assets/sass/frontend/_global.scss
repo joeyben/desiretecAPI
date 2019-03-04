@@ -1,3 +1,37 @@
+// Buttons
+
+button{
+  $btn-default-color: $text-color;
+  display:block;
+  border-radius:5px;
+  min-width: 210px;
+}
+.primary-btn {
+  background: $orange;
+  border: 1px solid $orange;
+  color: #fff;
+  margin-bottom: 10px;
+  padding: 7px 20px;
+  line-height: 1.5em;
+  &:focus {
+    background: $darkorange;
+    border: 1px solid $darkorange;
+  }
+}
+.secondary-btn {
+  border: 1px solid $orange;
+  color: $orange;
+  background: transparent;
+  padding: 7px 20px;
+  line-height: 1.5em;
+  font-weight: 100;
+  &:focus {
+    border: 1px solid $darkorange;
+    color: $darkorange;
+    background: transparent;
+  }
+}
+
 input:focus,
 select:focus,
 textarea:focus,
@@ -11,6 +45,14 @@ a, a:hover, a:active, a:focus {
   outline: 0;
 }
 
+section {
+  h1,h2,h3,h4{
+    font-weight: bold;
+  }
+  h4{
+    font-size: 20px;
+  }
+}
 
 // Header Styles
 
@@ -194,7 +236,7 @@ a, a:hover, a:active, a:focus {
 }
 //content style
 .section-top{
-  h1,h2,h3,h4,p,a{
+  p,a{
     font-weight: 100;
   }
   .img-background{
@@ -221,34 +263,6 @@ a, a:hover, a:active, a:focus {
   }
   p.header-p{
     font-size:20px;
-  }
-  button{
-    $btn-default-color: $text-color;
-    display:block;
-    border-radius:5px;
-  }
-  .primary-btn{
-    background:$orange;
-    border:1px solid $orange;
-    color:#fff;
-    margin-bottom:10px;
-    padding: 8px 20px;
-  }
-  .primary-btn:focus{
-    background:$darkorange;
-    border:1px solid $darkorange;
-  }
-  .secondary-btn{
-    border:1px solid $orange;
-    color:$orange;
-    background:transparent;
-    padding: 5px 20px;
-    font-weight: 100;
-  }
-  .secondary-btn:focus{
-    border:1px solid $darkorange;
-    color:$darkorange;
-    background:transparent;
   }
   .bg-bottom{
     margin-top:35px;
@@ -287,10 +301,7 @@ a, a:hover, a:active, a:focus {
   }
 }
 .section-contact{
-  h1,h2,h3,h4,p,a{
-    font-weight: 100;
-  }
-  h4,p{
+  p,a{
     font-weight: 100;
   }
   h4{
@@ -344,11 +355,7 @@ a, a:hover, a:active, a:focus {
 
 .section-contact-mobile{
   display: none;
-  h1,h2,h3,h4,p,a{
-    font-weight: 100;
-    color: #636b6f;
-  }
-  h4,p{
+  p,a{
     font-weight: 100;
     color: #636b6f;
   }
@@ -391,11 +398,8 @@ a, a:hover, a:active, a:focus {
   }
   .s2-first{
     padding:0 15px 0 0;
-    h4{
-      font-size: 16px;
-    }
     p{
-      font-size: 12px;
+      font-size: 14px;
     }
   }
   #accordion1{
@@ -448,7 +452,7 @@ a, a:hover, a:active, a:focus {
 }
 
 .section-data{
-  h1,h2,h3,h4,p,a{
+  p,a{
     font-weight: 100;
   }
   .s3-left-hidden{
@@ -511,160 +515,9 @@ a, a:hover, a:active, a:focus {
     }
   }
 }
-.section-comments{
-  h1,h2,h3,h4,p,a{
-    font-weight: 100;
-  }
-  h4{
-    margin-bottom:40px;
-  }
-  .glyphicon-bell{
-    top:3px;
-    color:#ddd;
-  }
-  .cu-img-left{
-    display: inline-block;
-    float: left;
-    margin-right: 25px;
-    margin-top:5px;
-    img{
-    border: 1px solid #ccc;
-    width: 35px;
-    height: 35px;
-    border-radius: 100%;
-    object-fit: cover;
-    }
-  }
-  .cu-img-right{
-    display: inline-block;
-    float: right;
-    margin-left: 25px;
-    margin-top: 20px;
-    img{
-    border: 1px solid #ccc;
-    width: 35px;
-    height: 35px;
-    border-radius: 100%;
-    object-fit: cover;
-    }
-  }
-  .cu-comment-left{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-top:5px;
-    margin-bottom: 5px;
-    p{
-      margin:0px;
-      background:#ddd;
-      padding: 15px 50px;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-      border-top-right-radius: 10px;
-      margin-top:5px;
-      font-weight: 100;
-      span{
-        display: block;
-        font-size: 10px;
-        font-weight: 100;
-        padding-bottom: 5px;
-      }
-    }
-    p:before{
-      content: "";
-      border-style: solid;
-      border-width: 12px 15px 12px 0;
-      border-color: transparent #ddd transparent transparent;
-      position: absolute;
-      left: -15px;
-      top: 5px;
-    }
-}
-.cu-cl-buttons{
-  margin-top:10px;
-  button{
-    border-radius: 5px;
-  }
-.primary-btn{
-  background:$orange;
-  border:1px solid $orange;
-  color:#fff;
-  padding: 4px 25px;
-  margin-right: 5px;
-  font-weight: 100;
-}
-.primary-btn:focus{
-  background:$darkorange;
-  border: 1px solid $darkorange;
-}
-.secondary-btn{
-  border:1px solid $orange;
-  color:$orange;
-  background:transparent;
-  padding: 4px 30px;
-  font-weight: 100;
-}
-.secondary-btn:focus{
-  border:1px solid $darkorange;
-  color:$darkorange;
-  background:transparent;
-}
-}
-.cu-comment-right{
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  margin-top:5px;
-  margin-bottom: 5px;
-  p{
-    margin:0px;
-    border: 1px solid #ddd;
-    padding: 15px 50px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
-    margin-top:5px;
-    font-weight: 100;
-    span{
-      display: block;
-      font-size: 10px;
-      font-weight: 100;
-      padding-bottom: 5px;
-    }
-}
-    p:after{
-      content: "";
-      height: 19px;
-      width: 19px;
-      border-top: 1px solid #ddd;
-      border-right: 1px solid #ddd;
-      position: absolute;
-      right: -10px;
-      top: 20px;
-      transform: rotate(45deg);
-    }
-}
-.cu-cr-buttons{
-  margin-top:20px;
-      button{
-        border-radius: 5px;
-      }
-  .secondary-btn{
-  border:1px solid $orange;
-  color:$orange;
-  background:transparent;
-  padding: 4px 15px;
-  font-weight: 100;
-  }
-  .secondary-btn:focus{
-    border: 1px solid $darkorange;
-    color:$darkorange;
-    background:transparent;
-  }
-}
-}
+
 .section-angebote{
-  h1,h2,h3,h4,p,a{
+  p,a{
     font-weight: 100;
   }
   h4{
@@ -683,11 +536,12 @@ a, a:hover, a:active, a:focus {
   }
 }
 .section-angebote-2{
-  h1,h2,h3,h4,p,a{
+  p,a{
     font-weight: 100;
   }
   h4{
     margin-top:0px;
+    margin-bottom:5px;
   }
   .sa2-p2{
     a,a:hover,a:focus{
@@ -697,33 +551,6 @@ a, a:hover, a:active, a:focus {
   .sa2-buttons{
     margin-top: 15px;
     display: inline-block;
-     button{
-       border-radius: 5px;
-     }
-    .primary-btn{
-      border:1px solid $orange;
-      color:#FFF;
-      background: $orange;
-      padding: 4px 30px;
-      font-weight: 100;
-      margin-right: 10px;
-      }
-      .primary-btn:focus{
-        border:1px solid $darkorange;
-        background:$darkorange;
-      }
-    .secondary-btn{
-        border:1px solid $orange;
-        color:$orange;
-        background: transparent;
-        padding: 4px 30px;
-        font-weight: 100;
-      }
-      .secondary-btn:focus{
-        border:1px solid $darkorange;
-        color:$darkorange;
-        background:transparent;
-      }
     }
 }
 .section-angebote-download{
@@ -731,7 +558,7 @@ a, a:hover, a:active, a:focus {
     .col-md-4{
       display: flex;
       align-items: center;
-      padding: 15px 0 15px;
+      padding: 5px 0;
       i{
         font-size: 30px;
         margin-right: 5px;
@@ -739,35 +566,12 @@ a, a:hover, a:active, a:focus {
       }
     }
    .sa-buttons{
-    margin-top: 15px;
-    display: inline-block;
+      margin-top: 15px;
+      display: inline-block;
      button{
-       border-radius: 5px;
+       display: inline-block;
      }
-    .primary-btn{
-      border:1px solid $orange;
-      color:#FFF;
-      background: $orange;
-      padding: 4px 30px;
-      font-weight: 100;
-      margin-right: 10px;
-      }
-    .primary-btn:focus{
-        border:1px solid $darkorange;
-        background:$darkorange;
-      }
-    .secondary-btn{
-        border:1px solid $orange;
-        color:$orange;
-        background: transparent;
-        padding: 4px 30px;
-        font-weight: 100;
-      }
-      .secondary-btn:focus{
-        border:1px solid $darkorange;
-        color:$darkorange;
-        background:transparent;
-      }
+
    }
     .sad-hr{
       border-color:#eee;
@@ -849,18 +653,6 @@ a, a:hover, a:active, a:focus {
       position: relative;
       margin-bottom: 15px;
     }
-
-    .primary-btn{
-      border-color:$orange;
-      color:#FFF;
-      background: $orange;
-      padding: 4px 30px;
-      font-weight: 100;
-      border-radius: 10px;
-      float:right;
-      margin-top:20px;
-    }
-
   }
   .modal-body-right{
     img{
@@ -922,15 +714,15 @@ a, a:hover, a:active, a:focus {
       margin-bottom: 10px;
     }
     .close{
-      margin-top: -2px;
       font-size: 25px;
-      border-radius: 100%;
-      border: 1px solid #CCC;
-      padding: 3px 8px 0px 8px;
       opacity: 1;
-      color: #ccc;
+      color: $medgray1;
       line-height: 1;
       font-weight: 100;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      min-width: initial;
     }
     a,a:hover,a:focus{
       color:#636b6f;
@@ -940,34 +732,9 @@ a, a:hover, a:active, a:focus {
   .modal-footer{
     border-top:0px !important;
     padding:0 45px 30px 45px;
-    .primary-btn{
-      border-color:$orange;
-      color:#FFF;
-      background: $orange;
-      padding: 4px 30px;
-      font-weight: 100;
-      border-radius: 5px;
-    }
-    .primary-btn:focus{
-        border:1px solid $darkorange;
-        color:#FFF;
-        background: $darkorange;
-      }
   }
 }
-#antworten{
-  height: 80px;
-  border: 1px solid #ccc;
-  resize: none;
-  padding: 3px 10px;
-  display: none;
-  border-radius: 10px;
-  width: 100%;
-  margin-top: 25px;
-}
-#antworten:focus{
-  border: 1px solid #636b6f;
-}
+
 //mobile style
 @media (max-width: 768px){
   .sa-buttons{
@@ -1027,9 +794,6 @@ a, a:hover, a:active, a:focus {
       display: block;
     }
     .s3-left-show{
-      h4{
-        font-size: 16px;
-      }
       p{
         display: none;
       }

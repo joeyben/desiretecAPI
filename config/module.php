@@ -42,6 +42,9 @@ return [
     'comments' => [
         'table' => 'comments',
     ],
+    'contact' => [
+        'table' => 'contacts',
+    ],
     'faqs' => [
         'table' => 'faqs',
     ],

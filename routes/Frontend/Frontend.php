@@ -99,6 +99,13 @@
 
         });
 
+        Route::group(['namespace' => 'Contact', 'as' => 'contact.'], function () {
+
+            Route::post('contact/store', 'ContactController@store')->name('store');
+            Route::post('callback/store', 'ContactController@storeCallback')->name('storecallback');
+
+        });
+
         Route::group(['namespace' => 'Messages', 'as' => 'messages.'], function () {
             Route::get('messages/{wish}/{group}', 'MessagesController@getMessages');
             Route::post('messages', 'MessagesController@sendMessage');

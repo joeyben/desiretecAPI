@@ -45,7 +45,7 @@ class PermissionRoleSeeder extends Seeder
             52, 53, 58, // CMS Pages
             59, 60, 61, 62, // Email template
             63, 64, 65, 66, // Blog Category
-            78, 79, 80, 81, 91, // Blog Tag
+            78, 79, 80, 81, 91,93,97
         ];
 
         Role::find(3)->permissions()->sync($sellerPermission);
@@ -55,7 +55,7 @@ class PermissionRoleSeeder extends Seeder
         */
         $userPermission = [
             43, 44, 45, 46, 48, 49, 50, 51, 52,
-            53, // CMS Pages
+            53,93,94,95,96,97
         ];
 
         Role::find(4)->permissions()->sync($userPermission);
