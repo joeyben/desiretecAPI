@@ -16,7 +16,7 @@ return [
         'subject'                 => 'Account Details for :username at :company',
         'subject_for_seller'      => 'Ihre Zugangsdaten zu Ihrem desiretec White Label',
         'subject_for_executive'   => 'Ihre Zugangsdaten zum desiretec System',
-        'hello'                   => 'Hello, :username',
+        'hello'                   => 'Hallo :username',
         'activate'                => 'Login',
         'activated'               => 'Für Sie wurde ein neuer :account Account für das desiretec Reisewunschportal erstellt.',
         'link'                    => 'Mit Klick auf den folgenden Button können Sie sich mit Ihren Benutzerdaten einloggen.',
@@ -30,10 +30,10 @@ return [
     ],
 
     'footer'              => [
-        'line1'     => 'Your Team from ' . config('app.name', 'Theme4Dev'),
-        'line2'     => 'TUI GROUP',
-        'line3'     => 'Tui Deutschland GmbH',
-        'line4'     => 'Auf dem Sande 1 | D-22529 Hamburg | Germany',
+        'line1'     => 'Sonnige Grüße',
+        'line2'     => 'Ihr desiretec Team',
+        'line3'     => 'DesireTec GmbH',
+        'line4'     => 'Auf dem Sande 1 | D-20457 Hamburg | Deutschland',
         'line5'     => 'Geschäftsführung: John Muster',
         'line6'     => 'Sitz der Gesellschaft: Hamburg',
         'line7'     => 'Handelsregister: Amtsgericht Hamburg HRB XXXXX',
