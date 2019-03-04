@@ -10,7 +10,7 @@
 
 @section('logo')
     <a href="{{ route('frontend.index') }}" class="logo">
-        <img class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
+        <img class="navbar-brand" src="{{ getWhiteLabelLogoUrl(getCurrentWhiteLabelId()) }}">
     </a>
 @endsection
 

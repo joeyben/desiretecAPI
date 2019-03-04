@@ -384,13 +384,13 @@ if (!function_exists('getWhiteLabelLogo')) {
      *
      * @return string
      */
-    function getWhiteLabelLogoUrl()
+    function getWhiteLabelLogoUrl($id)
     {
         return \Modules\Attachments\Entities\Attachment::select([
         config('module.attachments.table') . '.basename',
         config('module.attachments.table') . '.type',
         ])
-        ->where('attachable_id', getCurrentWhiteLabelId())
+        ->where('attachable_id', $id)
         ->where('type', 'whitelabels/logo')
         ->first()->toArray()['url'];
     }
