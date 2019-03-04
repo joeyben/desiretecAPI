@@ -13,51 +13,44 @@
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   exportingInit(Highcharts)
   export default {
-    name: 'TileChartComponent',
+    name: 'ChartWishComponent',
     components: { highcharts: Chart },
     data () {
       return {
         // eslint-disable-next-line
         errors: new Errors(),
+        data: [],
         updateArgs: [true, true, {duration: 1000}],
         chartOptions: {
           chart: {
-            type: 'column'
+            type: 'line'
           },
-
           title: {
-            text: 'Highcharts responsive chart'
+            text: this.trans('dashboard.monthly_average_wish')
           },
-
           subtitle: {
-            text: 'Resize the frame to see the legend position change'
+            text: this.trans('dashboard.source_2019')
           },
-
-          legend: {
-            align: 'right',
-            verticalAlign: 'middle',
-            layout: 'vertical'
-          },
-
           xAxis: {
-            categories: ['Apples', 'Oranges', 'Bananas']
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
           },
-
           yAxis: {
             title: {
-              text: 'Amount'
+              text: this.trans('dashboard.wishes')
+            }
+          },
+          plotOptions: {
+            line: {
+              dataLabels: {
+                enabled: true
+              },
+              enableMouseTracking: false
             }
           },
 
           series: [{
-            name: 'Christmas Eve',
-            data: [1, 4, 3]
-          }, {
-            name: 'Christmas Day before dinner',
-            data: [6, 4, 2]
-          }, {
-            name: 'Christmas Day after dinner',
-            data: [8, 4, 3]
+            name: this.trans('dashboard.wishes'),
+            data: []
           }],
 
           responsive: {
@@ -79,9 +72,10 @@
       }
     },
     mounted () {
+      this.loadWishByMonth()
+      this.$events.$on('whitelabel-set', whitelabelId => this.loadWishByMonth(whitelabelId))
     },
     updated () {
-      debugger
     },
     watch: {
     },
@@ -91,7 +85,25 @@
     },
     methods: {
       ...Vuex.mapActions({
-      })
+      }),
+      loadWishByMonth: function (whitelabelId = null) {
+        let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
+        this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
+        this.$http.get(window.laroute.route('admin.dashboard.wishes.byMonth') + params)
+          .then(this.onLoadDashboardSellerSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
+          })
+      },
+      onLoadDashboardSellerSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.chartOptions.series[0].data = response.data.data
+          this.data = response.data
+        } else {
+          this.$notify.error({ title: 'Failed', message: response.data.message })
+        }
+      }
     }
   }
 </script>

@@ -4,8 +4,13 @@ $body-bg: #ffffff;
 
 // Colors
 $orange: #F96500;
-$darkgrey: #575756;
 $darkorange: #be4d00;
+$gray1: #EEEEEE;
+$gray2: #DDDDDD;
+$medgray1: #BBBBBB;
+$medgray2: #888888;
+$darkgrey: #575756;
+$darkgrey2: #454545;
 
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
@@ -34,7 +39,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 $font-family-sans-serif: 'Comfortaa', cursive;
 $font-size-base: 14px;
 $line-height-base: 1.6;
-$text-color: #636b6f;
+$text-color: #000000;
 $main-color: #3097d1;
 // Navbar
 $navbar-default-bg: #fff;

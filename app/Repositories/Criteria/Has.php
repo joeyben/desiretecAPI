@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Criteria;
 
+use Illuminate\Database\Eloquent\Builder;
+
 /**
  * Class Has.
  */
@@ -24,7 +26,7 @@ class Has
      *
      * @param $model
      *
-     * @return \App\Repositories\Criteria\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply($model): Builder
     {

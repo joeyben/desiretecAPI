@@ -1,29 +1,21 @@
 <template>
     <div>
-        <ul class="chat">
-            <li :id="message.id" class="left" v-for="message in messages" :key="message.id">
-                    <div v-if="message.user_id == userid">
-                    <span v-on:click="showModal(message.id)" class="close_button">
-                        <i class="fa fa-times"></i>
-                    </span>
-                    <span v-on:click="editMessage(message.id, message.message)" class="edit_button">
-                        <i class="fa fa-pencil"></i>
-                    </span>
-
-                    <confirmation-modal v-on:confirm="updateMessages" :id="message.id"></confirmation-modal>
-                </div>
-                <div class="chat-body clearfix">
-                    <img v-if="message.avatar" :src="message.avatar">
-                    <img v-else :src="'/img/frontend/profile-picture/user.png'">
-                    <span v-if="message.first_name == null" class="user">{{ message.display_name }}</span>
-                    <span v-else class="user">{{ message.first_name }}</span>
-                    <span class="date-created">{{ timestamp(message.created_at) }}</span>
-                    <p>{{ message.message }}</p>
-                </div>
-               <hr>
-            </li>
-            
-        </ul>
+        <div class="col-md-12" :id="message.id" v-for="message in messages" :key="message.id">
+            <div v-bind:class="[userid == message.user_id ?  'cu-img-right' : 'cu-img-left']">
+                <img v-if="message.avatar" :src="message.avatar">
+                <img v-else :src="'/img/frontend/profile-picture/user.png'">
+            </div>      
+        
+            <div v-bind:class="[userid == message.user_id ?  'cu-comment cu-comment-right' : 'cu-comment cu-comment-left']">
+                <p>
+                <span class="username">
+                    {{ userid == message.user_id ? 'Ich' : message.name  }}
+                </span>
+                <span>{{ timestamp(message.created_at) }} Uhr</span>
+                {{ message.message }}
+                </p>
+            </div>  
+        </div>
         <message-form v-on:messaged="updateMessages" :username="this.user" :userid="userid" :wishid="wishid" :groupid="groupid"></message-form>
     </div>
 </template>

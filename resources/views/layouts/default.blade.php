@@ -71,9 +71,6 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{{ route("admin.profile.edit") }}" class="dropdown-item"><i class="icon-user-plus"></i> @lang('Edit Profile')</a>
-                        <a href="{{ route("admin.access.user.change-password", ['id' => access()->user()->id]) }}" class="dropdown-item"><i class="icon-lock"></i>@lang('Change Password')</a>
-                        <div class="dropdown-divider"></div>
                         @if ($logged_in_user && session()->has("admin_user_id") && session()->has("temp_user_id"))
                             <a href="{{ route("frontend.auth.logout-as") }}" class="dropdown-item  text-teal-800">
                                 <i class="icon-enter3"></i>

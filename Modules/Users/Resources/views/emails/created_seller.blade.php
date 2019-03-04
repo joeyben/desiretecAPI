@@ -107,6 +107,8 @@
 
                                     @lang('email.account.activated')<br><br>
 
+                                    @lang('email.account.link')<br><br>
+
                                     @lang('labels.email'): {{ $user->email }}<br><br>
 
                                     @lang('labels.password'): {{ $password }} </td></tr>
@@ -117,7 +119,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <a target="_blank" href="{{ route('frontend.auth.login') }}" class="button button-primary" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; border-radius: 3px; box-shadow: 0 2px 3px #0078ff; color: #FFF; display: inline-block; text-decoration: none; -webkit-text-size-adjust: none; background-color: #0078ff; border-top: 10px solid #0078ff; border-right: 18px solid #0078ff; border-bottom: 10px solid #0078ff; border-left: 18px solid #0078ff;">
+                                    <a target="_blank" href="{{ route('frontend.auth.login') }}" class="button button-primary" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; border-radius: 3px; box-shadow: 0 2px 3px #f96500; color: #FFF; display: inline-block; text-decoration: none; -webkit-text-size-adjust: none; background-color: #f96500; border-top: 10px solid #f96500; border-right: 18px solid #f96500; border-bottom: 10px solid #f96500; border-left: 18px solid #f96500;">
                                         {{ __('Login') }}
                                     </a>
                                 </td>
@@ -130,15 +132,13 @@
                             <tr>
                                 <td colspan="2">
 
-                                    @lang('email.account.greeting')
-
                                 </td>
                             </tr>
                             <tr><td colspan="2"><hr style="background: #e7e7e7;border: none;height: 1px;width: 100%;margin-top: 30px;"></td></tr>
 
                             <tr>
                                 <td colspan="2">
-                                    @include('layouts/footer')
+                                    desiretec signature
                                 </td>
                             </tr>
 

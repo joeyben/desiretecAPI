@@ -1,7 +1,8 @@
 <?php
 
 Route::group(['domain' => 'master.com'], function () {
-    config(['app.current_whitelabel' => 'master']);
+    setCurrentWhiteLabelId(\Config::get('master.id'));
+//    config(['app.current_whitelabel' => 'master']);
 //    config(['translation-loader.model', \Config::get('master.language_lines_model')]);
 //    dd(\Config::get('translation-loader.model'));
     Route::group(['middleware' => 'web', 'namespace' => 'Modules\Master\Http\Controllers', 'as' => 'master.'], function () {

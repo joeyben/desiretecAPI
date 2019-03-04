@@ -57,7 +57,7 @@ class CreatedUserNotificationForSeller extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-            ->subject('[' . config('app.name', 'Desiretec') . '] ' . Lang::get('email.account.subject', ['username' => $this->user->first_name . ' ' . $this->user->last_name, 'company' => $this->whitelabel->display_name]))
+            ->subject(Lang::get('email.account.subject_for_seller'))
             ->view('users::emails.created_seller', ['user' => $this->user, 'password' => $this->password, 'whitelabel' => $this->whitelabel])
             ->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
     }

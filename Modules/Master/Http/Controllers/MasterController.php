@@ -52,11 +52,9 @@ class MasterController extends Controller
     public function index()
     {
         $whitelabel = $this->whitelabel->getByName('master');
-
         return view('master::index')->with([
             'display_name'  => $whitelabel['display_name'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
-            'logo'          => $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['url'],
             'body_class'    => $this::BODY_CLASS,
         ]);
     }

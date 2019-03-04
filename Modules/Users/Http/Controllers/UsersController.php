@@ -4,7 +4,6 @@ namespace Modules\Users\Http\Controllers;
 
 use App\Events\Backend\Access\User\UserCreated;
 use App\Events\Backend\Access\User\UserUpdated;
-use App\Notifications\Frontend\Auth\UserNeedsConfirmation;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
@@ -14,6 +13,7 @@ use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +25,7 @@ use Modules\Groups\Repositories\Contracts\GroupsRepository;
 use Modules\Roles\Repositories\Contracts\RolesRepository;
 use Modules\Users\Http\Requests\StoreUserRequest;
 use Modules\Users\Http\Requests\UpdateUserRequest;
+use Modules\Users\Notifications\CreatedUserNotificationForExecutive;
 use Modules\Users\Repositories\Contracts\UsersRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
@@ -66,6 +67,10 @@ class UsersController extends Controller
      * @var \Modules\Roles\Repositories\Contracts\RolesRepository
      */
     private $roles;
+    /**
+     * @var \Illuminate\Notifications\ChannelManager
+     */
+    private $notification;
 
     /**
      * UsersController constructor.
@@ -79,8 +84,9 @@ class UsersController extends Controller
      * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
      * @param \Modules\Dashboard\Repositories\Contracts\DashboardRepository     $dashboards
      * @param \Modules\Roles\Repositories\Contracts\RolesRepository             $roles
+     * @param \Illuminate\Notifications\ChannelManager                          $notification
      */
-    public function __construct(UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, GroupsRepository $groups, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, DashboardRepository $dashboards, RolesRepository $roles)
+    public function __construct(UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, GroupsRepository $groups, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, DashboardRepository $dashboards, RolesRepository $roles, ChannelManager $notification)
     {
         $this->users = $users;
         $this->response = $response;
@@ -91,6 +97,7 @@ class UsersController extends Controller
         $this->whitelabels = $whitelabels;
         $this->dashboards = $dashboards;
         $this->roles = $roles;
+        $this->notification = $notification;
     }
 
     /**
@@ -202,28 +209,27 @@ class UsersController extends Controller
             if ($request->has('password')) {
                 $extras['password'] = bcrypt($request->get('password'));
             }
-            if ($request->has('last_name') && !is_null($request->get('last_name'))) {
+            if ($request->has('last_name') && null !== $request->get('last_name')) {
                 $extras['last_name'] = $request->get('last_name');
             }
 
             $extras['created_by'] = $this->auth->guard('web')->user()->id;
             $extras['updated_by'] = $this->auth->guard('web')->user()->id;
-            $extras['confirmation_code'] = md5(uniqid(mt_rand(), true));
-
+            $extras['confirmed'] = true;
 
             $result['user'] = $this->users->create(
-                array_merge($request->only('first_name', 'email', 'status', 'confirmed'), $extras)
+                array_merge($request->only('first_name', 'email', 'status'), $extras)
             );
-
-            if ($request->get('confirmation_email')  && !$request->get('confirmed')) {
-                $result['user']->notify(new UserNeedsConfirmation( $result['user']->confirmation_code));
-            }
 
             event(new UserCreated($result['user']));
 
             $this->users->sync($result['user']->id, 'whitelabels', $request->get('whitelabels'));
             $this->users->sync($result['user']->id, 'dashboards', $request->get('dashboards'));
             $this->users->sync($result['user']->id, 'roles', $request->get('roles'));
+
+            if ($result['user']->hasRole(Flag::EXECUTIVE_ROLE)) {
+                $this->notification->send($result['user'], new CreatedUserNotificationForExecutive($result['user'], $request->get('password')));
+            }
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Seller']);
             $result['success'] = true;

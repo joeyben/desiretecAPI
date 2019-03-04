@@ -26,8 +26,7 @@
     data () {
       return {
         // eslint-disable-next-line
-        errors: new Errors(),
-        createLink: window.laroute.route('admin.access.user.create')
+        errors: new Errors()
       }
     },
     mounted () {
@@ -37,7 +36,10 @@
     computed: {
       ...Vuex.mapGetters({
         whitelabel: 'whitelabel'
-      })
+      }),
+      createLink () {
+        return window.laroute.route('admin.users') + '#/edit/0'
+      }
     },
     methods: {
       ...Vuex.mapActions({

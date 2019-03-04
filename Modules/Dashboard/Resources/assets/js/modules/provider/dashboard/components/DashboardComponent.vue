@@ -1,6 +1,36 @@
 <template>
     <!-- Inner container -->
     <div>
+        <!-- Filter toolbar -->
+        <div class="navbar navbar-expand-lg navbar-light navbar-component rounded" v-if="can_filter">
+            <div class="text-center d-lg-none w-100">
+                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-filter">
+                    <i class="icon-unfold mr-2"></i>
+                    Filters
+                </button>
+            </div>
+
+            <div class="navbar-collapse collapse" id="navbar-filter">
+                <span class="navbar-text font-weight-semibold mr-3">
+                    Filter:
+                </span>
+
+                <ul class="navbar-nav flex-wrap">
+                    <li class="nav-item">
+                        <el-select v-model="whitelabelId" placeholder="Please choose a Whitelabel" style="width: 100%;" @input="doWhitelabel">
+                            <el-option
+                                    v-for="item in whitelabels"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
+                                <span style="float: left"><i :class="item.name"></i> {{ item.name }}</span>
+                            </el-option>
+                        </el-select>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /filter toolbar -->
         <grid-layout
                 :layout.sync="dashboards"
                 :col-num="12"
@@ -35,15 +65,16 @@
 <script>
   import Vuex from 'vuex'
   import VueGridLayout from 'vue-grid-layout'
+  import TileWishComponent from './TileWishComponent'
+  import TileGroupComponent from './TileGroupComponent'
+  import TileSellerComponent from './TileSellerComponent'
   import TileCommentComponent from './TileCommentComponent'
-  import TileClickComponent from './TileClickComponent'
-  import TileEventComponent from './TileEventComponent'
   import TileOrderComponent from './TileOrderComponent'
   import TileUserComponent from './TileUserComponent'
-  import TileChartComponent from './TileChartComponent'
+  import ChartWishDayComponent from './ChartWishDayComponent'
   import TilePieComponent from './TilePieComponent'
   import TileBarComponent from './TileBarComponent'
-  import TileUpdateComponent from './TileUpdateComponent'
+  import ChartWishComponent from './ChartWishComponent'
   import TileSpiderComponent from './TileSpiderComponent'
   import TileTdComponent from './TileTdComponent'
   import BackendAnalyticsComponent from './BackendAnalyticsComponent'
@@ -53,37 +84,25 @@ export default {
     components: {
       GridLayout: VueGridLayout.GridLayout,
       GridItem: VueGridLayout.GridItem,
+      TileWishComponent,
+      TileSellerComponent,
       TileCommentComponent,
-      TileEventComponent,
       TileOrderComponent,
       TileUserComponent,
-      TileChartComponent,
+      ChartWishDayComponent,
       TilePieComponent,
       TileBarComponent,
       TileSpiderComponent,
-      TileUpdateComponent,
+      ChartWishComponent,
       TileTdComponent,
-      TileClickComponent,
+      TileGroupComponent,
       GaDatatableComponent,
       BackendAnalyticsComponent
     },
     data () {
       return {
-        dashboards: [],
-        layout1: [
-          {'x': 0, 'y': 0, 'w': 2, 'h': 2, 'i': '0', 'component': 'tile-comment-component'},
-          {'x': 2, 'y': 0, 'w': 2, 'h': 2, 'i': '1', 'component': 'tile-click-component'},
-          {'x': 4, 'y': 0, 'w': 2, 'h': 2, 'i': '2', 'component': 'tile-event-component'},
-          {'x': 6, 'y': 0, 'w': 2, 'h': 2, 'i': '3', 'component': 'tile-user-component'},
-          {'x': 8, 'y': 0, 'w': 2, 'h': 2, 'i': '4', 'component': 'tile-order-component'},
-          {'x': 10, 'y': 0, 'w': 2, 'h': 2, 'i': '5', 'component': 'tile-comment-component'},
-          {'x': 0, 'y': 2, 'w': 4, 'h': 8, 'i': '6', 'component': 'tile-update-component'},
-          {'x': 4, 'y': 2, 'w': 4, 'h': 8, 'i': '7', 'component': 'tile-spider-component'},
-          {'x': 8, 'y': 2, 'w': 4, 'h': 8, 'i': '9', 'component': 'tile-pie-component'},
-          {'x': 0, 'y': 5, 'w': 4, 'h': 8, 'i': '11', 'component': 'tile-chart-component'},
-          {'x': 4, 'y': 5, 'w': 4, 'h': 8, 'i': '12', 'component': 'tile-bar-component'},
-          {'x': 8, 'y': 5, 'w': 4, 'h': 8, 'i': '13', 'component': 'tile-td-component'}
-        ]
+        whitelabelId: null,
+        dashboards: []
       }
     },
     mounted () {
@@ -95,14 +114,27 @@ export default {
     },
     computed: {
       ...Vuex.mapGetters({
-        user: 'currentUser'
-      })
+        user: 'currentUser',
+        whitelabels: 'whitelabels'
+      }),
+      can_filter () {
+        return this.hasRole('Administrator')
+      }
     },
     methods: {
       ...Vuex.mapActions({
         loadUser: 'loadLoggedUser',
         loadWhitelabels: 'loadWhitelabels'
       }),
+      doWhitelabel () {
+        this.$events.fire('whitelabel-set', this.whitelabelId)
+      },
+      hasPermissionTo (permission) {
+        return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
+      },
+      hasRole (permission) {
+        return this.user.hasOwnProperty('roles') && this.user.roles[permission]
+      },
       loadLayout: function () {
         this.$http.get(window.laroute.route('admin.dashboard.show'))
           .then(this.onLoadDashboardSuccess)
