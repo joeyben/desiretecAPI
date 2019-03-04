@@ -351,7 +351,7 @@ if (!function_exists('isWhiteLabel')) {
      */
     function isWhiteLabel()
     {
-        return config('app.current_whitelabel') !== null;
+        return session('current_whitelabel');
     }
 }
 
@@ -362,7 +362,7 @@ if (!function_exists('setCurrentWhiteLabelId')) {
      */
     function setCurrentWhiteLabelId($id)
     {
-        config(['app.current_whitelabel' => $id]);
+        session(['current_whitelabel' => $id]);
     }
 }
 
@@ -374,7 +374,7 @@ if (!function_exists('getCurrentWhiteLabelId')) {
      */
     function getCurrentWhiteLabelId()
     {
-        return config('app.current_whitelabel');
+        return session('current_whitelabel');
     }
 }
 
