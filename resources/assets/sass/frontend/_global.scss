@@ -548,22 +548,20 @@ section {
       color:#636b6f;
       text-decoration: underline;
     }
-    p{
-      .offer-avatar-cnt{
-        display: block;
-        margin-bottom: 10px;
-        margin-top: 15px;
-        .avatar{
-          border: 1px solid #ccc;
-          width: 35px;
-          height: 35px;
-          border-radius: 100%;
-          -o-object-fit: cover;
-          object-fit: cover;
-        }
-        .agent-name{
+    .offer-avatar-cnt{
+      display: block;
+      margin-bottom: 10px;
+      margin-top: 15px;
+      .avatar{
+        border: 1px solid #ccc;
+        width: 35px;
+        height: 35px;
+        border-radius: 100%;
+        -o-object-fit: cover;
+        object-fit: cover;
+      }
+      .agent-name{
 
-        }
       }
     }
   }

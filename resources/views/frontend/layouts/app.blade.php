@@ -28,6 +28,7 @@
         {!! Html::style('js/select2/select2.css') !!}
 
         {{ Html::style(mix('css/frontend-custom.css')) }}
+        {{ Html::style(mix('fontawsome/css/all.css')) }}
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous">
 
     @yield('after-styles')

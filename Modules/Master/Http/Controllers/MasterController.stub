@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Master\Http\Controllers;
+namespace Modules\$MODULE$\Http\Controllers;
 
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
@@ -41,7 +41,7 @@ class $MODULE$Controller extends Controller
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
-        $this->whitelabelId = \Config::get('master.id');
+        $this->whitelabelId = \Config::get('$MODULESMALL$.id');
     }
 
     /**
@@ -51,9 +51,9 @@ class $MODULE$Controller extends Controller
      */
     public function index()
     {
-        $whitelabel = $this->whitelabel->getByName('master');
+        $whitelabel = $this->whitelabel->getByName('$MODULESMALL$');
 
-        return view('master::index')->with([
+        return view('$MODULESMALL$::index')->with([
             'display_name'  => $whitelabel['display_name'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
             'logo'          => $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['url'],
@@ -69,7 +69,7 @@ class $MODULE$Controller extends Controller
      */
     public function show(Request $request)
     {
-        $html = view('master::layer.popup')->with([
+        $html = view('$MODULESMALL$::layer.popup')->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -91,7 +91,7 @@ class $MODULE$Controller extends Controller
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
         if ($request->failed()) {
-            $html = view('master::layer.popup')->with([
+            $html = view('$MODULESMALL$::layer.popup')->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
@@ -104,7 +104,7 @@ class $MODULE$Controller extends Controller
 
         $newUser = $this->createUserFromLayer($request, $user);
         $wish = $this->createWishFromLayer($request, $wish);
-        $html = view('master::layer.created')->with([
+        $html = view('$MODULESMALL$::layer.created')->with([
             'token' => $newUser->token->token,
             'id'    => $wish->id
         ])->render();

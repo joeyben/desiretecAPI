@@ -73,8 +73,8 @@
                 <p class="sa2-p1">Du hast {{ count($wish->offers) }} Angebote von <b>{{ $offer->owner->name }}</b> erhalten</p>
                 <p class="sa2-p2">
                     <span class="offer-avatar-cnt">
-                        <img class="avatar" title="{{ $wish->group->users[0]->agents[0]->name }}" alt="{{ $wish->group->users[0]->agents[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->group->users[0]->agents[0]->avatar }}" />
-                        <span class="agent-name">{{ $wish->group->users[0]->agents[0]->name }}</span>
+                        <img class="avatar" title="{{ $offer->agent->name }}" alt="{{ $offer->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $offer->agent->avatar }}" />
+                        <span class="agent-name">{{ $offer->agent->name }}</span>
                     </span>
                     <b>{{ $offer->title }}</b><br>
                     {{ $offer->description }}
