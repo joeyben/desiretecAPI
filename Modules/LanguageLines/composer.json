@@ -1,0 +1,26 @@
+{
+    "name": "nwidart/languagelines",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\LanguageLines\\Providers\\LanguageLinesServiceProvider",
+                "Modules\\LanguageLines\\Providers\\RepositoryServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\LanguageLines\\": ""
+        }
+    }
+}

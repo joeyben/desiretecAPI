@@ -135,6 +135,8 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+//    'current_whitelabel' => '',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -170,7 +172,7 @@ return [
         Illuminate\Redis\RedisServiceProvider::class,
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
+//        Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
@@ -187,6 +189,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Spatie\Analytics\AnalyticsServiceProvider::class,
+        Spatie\TranslationLoader\TranslationServiceProvider::class,
 
         /*
          * Application Service Providers...

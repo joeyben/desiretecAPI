@@ -188,6 +188,21 @@
                         </a>
                     </li>
                     @endif
+
+                    <li class="nav-item">
+                        <a href="{{ route('provider.languages') }}" class="nav-link">
+                            <i class="icon-flag3"></i>
+                            <span>Languages</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('provider.language-lines') }}" class="nav-link">
+                            <i class="icon-flag3"></i>
+                            <span>Language Lines</span>
+                        </a>
+                    </li>
+
                     @if($module->has('Wishes')  && Auth::guard('web')->user()->hasPermission('read-wish'))
                     <li class="nav-item">
                         <a href="{{ route('admin.wishes') }}" class="nav-link">
