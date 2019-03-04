@@ -41,7 +41,7 @@ class $MODULE$Controller extends Controller
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
-        $this->whitelabelId = \Config::get('$MODULE$.id');
+        $this->whitelabelId = \Config::get('$MODULESMAL$.id');
     }
 
     /**
