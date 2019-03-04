@@ -86,9 +86,7 @@
                             @endif
 
                             <li>{{ link_to_route('frontend.user.account', trans('navs.frontend.user.account')) }}</li>
-                            @if ($logged_in_user)
-                                <li>{{ link_to_route('frontend.auth.logout', trans('navs.general.logout')) }}</li>
-                            @endif
+
                         </ul>
                     </li>
                 @endif

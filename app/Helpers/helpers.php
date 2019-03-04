@@ -343,3 +343,55 @@ if (!function_exists('transformDuration')) {
         }
     }
 }
+
+if (!function_exists('isWhiteLabel')) {
+    /**
+     * Set current whitelabel Id.
+     * @return boolean
+     */
+    function isWhiteLabel()
+    {
+        return config('app.current_whitelabel') !== null;
+    }
+}
+
+if (!function_exists('setCurrentWhiteLabelId')) {
+    /**
+     * Set current whitelabel Id.
+     * @param int $id
+     */
+    function setCurrentWhiteLabelId($id)
+    {
+        config(['app.current_whitelabel' => $id]);
+    }
+}
+
+if (!function_exists('getCurrentWhiteLabelId')) {
+    /**
+     * return current whitelabel Id.
+     *
+     * @return int
+     */
+    function getCurrentWhiteLabelId()
+    {
+        return config('app.current_whitelabel');
+    }
+}
+
+if (!function_exists('getWhiteLabelLogo')) {
+    /**
+     * return current whitelabel logo url.
+     *
+     * @return string
+     */
+    function getWhiteLabelLogoUrl()
+    {
+        return \Modules\Attachments\Entities\Attachment::select([
+        config('module.attachments.table') . '.basename',
+        config('module.attachments.table') . '.type',
+        ])
+        ->where('attachable_id', getCurrentWhiteLabelId())
+        ->where('type', 'whitelabels/logo')
+        ->first()->toArray()['url'];
+    }
+}

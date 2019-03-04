@@ -33,6 +33,23 @@
   }
 }
 
+.navbar-default{
+  a.logo {
+    padding: 5px;
+    display: block;
+    box-sizing: border-box;
+    .navbar-brand {
+      margin: 2px 0 0;
+      height: 35px;
+      float: none;
+      padding: 5px;
+      &:focus, &:hover {
+        color: #777;
+        background-color: #fff;
+      }
+    }
+  }
+}
 
 @media (min-width: 768px), all{
   .navbar-nav{

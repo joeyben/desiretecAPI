@@ -173,7 +173,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <a href="{{ url('/wish') }}/{{ $wish->id}}?token={{ $token }}">
+                                <a href="{{ url('/wish') }}/{{ $wish->id}}/{{ $token }}">
                                     <img src="https://tui-reisewunsch.com/bundles/cstui/images/button.png" width="200"/>
                                 </a>
                             </td>

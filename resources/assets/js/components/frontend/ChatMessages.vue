@@ -6,9 +6,12 @@
                 <img v-else :src="'/img/frontend/profile-picture/user.png'">
             </div>      
         
-            <div v-bind:class="[userid == message.user_id ?  'cu-comment-right' : 'cu-comment-left']">
+            <div v-bind:class="[userid == message.user_id ?  'cu-comment cu-comment-right' : 'cu-comment cu-comment-left']">
                 <p>
-                <span>{{ message.created_at }} Uhr</span>
+                <span class="username">
+                    {{ userid == message.user_id ? 'Ich' : message.name  }}
+                </span>
+                <span>{{ timestamp(message.created_at) }} Uhr</span>
                 {{ message.message }}
                 </p>
             </div>  

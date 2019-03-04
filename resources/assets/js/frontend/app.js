@@ -74,41 +74,38 @@ $('.more-details').click(function(){
     $(this).css('display','none')
 })
 
-$('.wm-1-btn').click(function(){
-    var datas = {
-        name : $('#myModal .modal-body-left .name').val(),
-        nachname : $('#myModal .modal-body-left .nachname').val(),
-        email : $('#myModal .modal-body-left .email').val(),
-        tel : $('#myModal .modal-body-left .tel').val(),
-        betreff : $('#myModal .modal-body-left .betreff').val(),
-        message : $('#myModal .modal-body-bottom textarea').val()
-    }
+$(document).on('submit', 'form.contact_form', function (event) {
+    event.preventDefault();
+    var form = $(this);
+    var data = form.serializeArray();
+    var url = form.attr("action");
+    var this_modal = form.parents('.modal');
     $.ajax({
-        type: "POST",
-        url: "whatever.php",
-        data: {datas},
-        complete: function(){
-            console.log(datas)
+        type: form.attr('method'),
+        url: url,
+        data: data,
+        success: function(data){
+            if(data.success){
+                $('#first_name').val('');
+                $('#last_name').val('');
+                $('#email').val('');
+                $('#telephone').val('');
+                $('#subject').val('');
+                $('#message').val('');
+                this_modal.find('.alert-success').removeClass('fade').find('.text').text(data.message);
+                window.setTimeout(function(){
+                        this_modal.modal('toggle');
+                        this_modal.find('.alert-success').addClass('fade');
+                }, 3000);
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            alert("Error: " + errorThrown);
         }
-    })
+    });
+    return false;
 })
 
-$('.wm-2-btn').click(function(){
-    var datas = {
-        name : $('#myModal2 .modal-body-left .name').val(),
-        nachname : $('#myModal2 .modal-body-left .nachname').val(),
-        email : $('#myModal2 .modal-body-left .tel').val(),
-        tel : $('#myModal2 .modal-body-left #modal-select').val()
-    }
-    $.ajax({
-        type: "POST",
-        url: "method.php",
-        data: {datas},
-        complete: function(){
-            console.log(datas)
-        }
-    })
-})
 
 $('.antworten-btn').click(function(){
     $('#antworten').slideDown()
