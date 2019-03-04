@@ -3,6 +3,7 @@
 namespace App\Models\Offers\Traits\Relationship;
 
 use App\Models\Access\User\User;
+use App\Models\Agents\Agent;
 use App\Models\OfferFiles\OfferFile;
 use App\Models\Wishes\Wish;
 
@@ -25,6 +26,14 @@ trait OfferRelationship
     public function wish()
     {
         return $this->belongsTo(Wish::class, 'wish_id');
+    }
+
+    /**
+     * Offers belongsTo with Wish.
+     */
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class, 'agent_id');
     }
 
     /**
