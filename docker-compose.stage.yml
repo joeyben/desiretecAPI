@@ -4,7 +4,7 @@ services:
       volumes:
         - /var/www/desiretec-mvp-stage/storage:/var/www/html/storage
       environment:
-        - VIRTUAL_HOST=mvp.desiretec.com,master.desiretec.com
+        - VIRTUAL_HOST=mvp.desiretec.com,master.desiretec.com,*reisewunschservice.de
         - LETSENCRYPT_HOST=mvp.desiretec.com,master.desiretec.com
         - LETSENCRYPT_EMAIL=info@desiretec.com
       networks:

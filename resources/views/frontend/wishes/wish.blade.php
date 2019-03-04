@@ -72,6 +72,10 @@
                 </h4>
                 <p class="sa2-p1">Du hast {{ count($wish->offers) }} Angebote von <b>{{ $offer->owner->name }}</b> erhalten</p>
                 <p class="sa2-p2">
+                    <span class="offer-avatar-cnt">
+                        <img class="avatar" title="{{ $wish->group->users[0]->agents[0]->name }}" alt="{{ $wish->group->users[0]->agents[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->group->users[0]->agents[0]->avatar }}" />
+                        <span class="agent-name">{{ $wish->group->users[0]->agents[0]->name }}</span>
+                    </span>
                     <b>{{ $offer->title }}</b><br>
                     {{ $offer->description }}
                     @if ($offer->link)
@@ -98,9 +102,9 @@
                 @foreach($offer->offerFiles as $key => $file)
                     <div class="col-md-4">
                         @if (strpos($file->file, '.pdf') !== false)
-                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                            <i class="fal fa-file-pdf"></i>
                         @else
-                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                            <i class="fal fa-file-image"></i>
                         @endif
 
                         <a href="{{ Storage::disk('s3')->url($offer_url . $file->file) }}" target="_blank">{{ trans('wish.view.offer_number') }} {{ $key+1 }}</a>
@@ -275,7 +279,9 @@
 
 
 <div class="container">
-    <div class="col-md-12 hr hr-mobile"><hr></div>
+    <div class="col-md-12">
+        <hr class="sad-hr">
+    </div>
 </div>
 
 <section class="section-data">
