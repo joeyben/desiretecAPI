@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\$MODULE$\Http\Controllers;
+namespace Modules\TunisTours\Http\Controllers;
 
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
@@ -11,9 +11,9 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
-use Modules\$MODULE$\Http\Requests\StoreWishRequest;
+use Modules\TunisTours\Http\Requests\StoreWishRequest;
 
-class $MODULE$Controller extends Controller
+class TunisToursController extends Controller
 {
     protected $adults = [];
     protected $kids = [];
@@ -41,7 +41,7 @@ class $MODULE$Controller extends Controller
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
-        $this->whitelabelId = \Config::get('$MODULE$.id');
+        $this->whitelabelId = \Config::get('TunisTours.id');
     }
 
     /**
@@ -51,9 +51,9 @@ class $MODULE$Controller extends Controller
      */
     public function index()
     {
-        $whitelabel = $this->whitelabel->getByName('$MODULE$');
+        $whitelabel = $this->whitelabel->getByName('TunisTours');
 
-        return view('$MODULE$::index')->with([
+        return view('TunisTours::index')->with([
             'display_name'  => $whitelabel['display_name'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
             'logo'          => $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['url'],
@@ -69,7 +69,7 @@ class $MODULE$Controller extends Controller
      */
     public function show(Request $request)
     {
-        $html = view('$MODULE$::layer.popup')->with([
+        $html = view('TunisTours::layer.popup')->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -91,7 +91,7 @@ class $MODULE$Controller extends Controller
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
         if ($request->failed()) {
-            $html = view('$MODULE$::layer.popup')->with([
+            $html = view('TunisTours::layer.popup')->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
@@ -104,7 +104,7 @@ class $MODULE$Controller extends Controller
 
         $newUser = $this->createUserFromLayer($request, $user);
         $wish = $this->createWishFromLayer($request, $wish);
-        $html = view('$MODULE$::layer.created')->with([
+        $html = view('TunisTours::layer.created')->with([
             'token' => $newUser->token->token,
             'id'    => $wish->id
         ])->render();

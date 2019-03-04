@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/tunistours",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\TunisTours\\Providers\\TunisToursServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\TunisTours\\": ""
+        }
+    }
+}
