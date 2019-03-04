@@ -28,8 +28,8 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $this->generateFile(
             base_path('Modules/Master/Http/Controllers/MasterController.stub'),
             base_path("Modules/$name/Http/Controllers/{$name}Controller.php"),
-            ['$MODULE$'],
-            [$name]
+            ['$MODULE$','$MODULESMAL$'],
+            [$name, strtolower($name)]
         );
 
         $this->generateFile(
