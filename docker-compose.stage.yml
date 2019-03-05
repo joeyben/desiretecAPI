@@ -55,3 +55,4 @@ networks:
 
 volumes:
     reverseproxy_certs:
+      external: true
