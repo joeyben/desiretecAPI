@@ -30,6 +30,11 @@ class UserContactedSeller extends Notification
     protected $contact;
 
     /**
+     * @var
+     */
+    protected $wl_name;
+
+    /**
      * UserContactedSeller constructor.
      *
      * @param $wish_id
@@ -41,6 +46,7 @@ class UserContactedSeller extends Notification
         $this->wish_id = $wish_id;
         $this->token = $token;
         $this->contact = $contact;
+        $this->wl_name = \App\Models\Whitelabels\Whitelabel::find(getCurrentWhiteLabelId())->name;
     }
 
     /**
@@ -65,9 +71,14 @@ class UserContactedSeller extends Notification
     public function toMail()
     {
         $confirmation_url = route($this->getRoute(), [$this->wish_id, $this->token]);
+        $subject = ($this->contact->email !== "no data") ? trans('email.wish.user_cnt_seller')
+                : trans('email.wish.user_callback_seller');
+        $view = ($this->contact->email !== "no data") ? 'emails.user-contact-seller' : 'emails.user-callback-seller';
 
         return (new MailMessage())
-            ->view('emails.user-contact-seller', [
+            ->from('noreply@desiretec.com', $this->wl_name.' Portal')
+            ->subject($subject)
+            ->view($view, [
                     'confirmation_url' => $confirmation_url,
                     'contact'          => $this->contact
                 ]);
@@ -83,7 +94,7 @@ class UserContactedSeller extends Notification
     public function getRoute()
     {
         if (isWhiteLabel()) {
-            $whitelabelslug = \App\Models\Whitelabels\Whitelabel::find(getCurrentWhiteLabelId())->name;
+            $whitelabelslug = strtolower($this->wl_name);
 
             return $whitelabelslug . '.wish.details';
         }

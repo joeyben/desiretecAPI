@@ -11,7 +11,7 @@
                 <span class="username">
                     {{ userid == message.user_id ? 'Ich' : message.name  }}
                 </span>
-                <span>{{ timestamp(message.created_at) }} Uhr</span>
+                <span>{{ timestamp(message.created_at) }}</span>
                 {{ message.message }}
                 </p>
             </div>  
@@ -25,7 +25,7 @@
   import MessageForm from './MessageForm.vue'
   import ConfirmationModal from './ConfirmationModal.vue'
   import moment from 'moment'
-
+  moment.locale('de');
 Vue.prototype.moment = moment
 
   export default {

@@ -17,5 +17,6 @@ return [
         'email_placeholder'             => 'seller@seller.com',
         'tel'                           => 'Tel.',
         'tel_placeholder'               => '01761234567',
+        'create'                        => 'Agent hinzufügen',
     ],
 ];

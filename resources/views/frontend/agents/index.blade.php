@@ -16,18 +16,20 @@
                 @include("frontend.agents.form")
             </div>
             <div class="modal-footer">
-                {{ link_to_route('frontend.agents.index', 'Cancel', [], ['class' => 'btn btn-danger btn-md']) }}
-                {{ Form::submit('Create', ['class' => 'btn btn-primary btn-md']) }}
+                {{ link_to_route('frontend.agents.index', 'Cancel', [], ['class' => 'btn secondary-btn']) }}
+                {{ Form::button('Create', ['type' => 'submit','class' => 'btn primary-btn']) }}
             </div>
-        {{ Form::close() }} 
+        {{ Form::close() }}
         </div>
     </div>
 </div>
+
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">{{ trans('labels.frontend.agents.management') }}</h3>
+        @include('frontend.agents.partials.agents-header-buttons')
         <div class="box-tools pull-right">
-            @include('frontend.agents.partials.agents-header-buttons')
+
         </div>
     </div><!-- /.box-header -->
 
@@ -68,6 +70,8 @@
         var dataTable = $('#agents-table').dataTable({
             processing: true,
             serverSide: true,
+            bLengthChange:false,
+            bInfo:false,
             ajax: {
                 url: '{{ route("frontend.agents.get") }}',
                 type: 'post'
@@ -86,6 +90,15 @@
                 buttons: [
 
                 ]
+            },
+            language: {
+                "search": "Suche",
+                "paginate": {
+                    "first":      "Erster",
+                    "last":       "Letzter",
+                    "next":       "Nächster",
+                    "previous":   "Vorherige"
+                },
             }
         });
 

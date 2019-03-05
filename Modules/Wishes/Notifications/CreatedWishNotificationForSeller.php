@@ -52,7 +52,8 @@ class CreatedWishNotificationForSeller extends Notification
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
         return (new MailMessage())
-            ->subject(Lang::get('email.wish.subject_for_seller'))
-            ->view('wishes::emails.wish', ['wish' => $this->wish, 'token' => $notifiable->token->token, 'user' => $notifiable])->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
+            ->from('noreply@desiretec.com', $this->wish->whitelabel->display_name.' Portal')
+            ->subject(trans('email.wish.seller'))
+            ->view('wishes::emails.wish_seller', ['wish' => $this->wish, 'token' => $notifiable->token->token, 'user' => $notifiable]);
     }
 }

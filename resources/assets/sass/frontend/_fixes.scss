@@ -1,0 +1,14 @@
+.form-control{
+  background-color: #f8f8f8;
+  border: none;
+  border-bottom: 1px solid #666;
+  border-radius: 0;
+  box-shadow: none;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  -webkit-appearance: none;
+  &:focus {
+    border-color: $orange;
+    outline: 0;
+    box-shadow: none;
+  }
+}
