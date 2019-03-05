@@ -283,12 +283,13 @@ class WishesRepository extends BaseRepository
     /**
      * @param string $id
      *
-     * @return boolean
+     * @return bool
      */
     public function updateLastwish($id)
     {
-        $group = Group::find(intval($id));
+        $group = Group::find((int) $id);
         $group->lastwish = \Carbon\Carbon::now();
+
         return $group->save();
     }
 }

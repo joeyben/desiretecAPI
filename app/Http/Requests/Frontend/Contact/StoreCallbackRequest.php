@@ -27,10 +27,10 @@ class StoreCallbackRequest extends Request
     public function rules()
     {
         return [
-            'first_name'         => 'required|max:191',
-            'last_name'         => 'required|max:191',
+            'first_name'           => 'required|max:191',
+            'last_name'            => 'required|max:191',
             'telephone'            => 'required|max:191',
-            'period'            => 'required',
+            'period'               => 'required',
         ];
     }
 
@@ -43,9 +43,9 @@ class StoreCallbackRequest extends Request
     {
         return [
             'first_name.required' => 'Please insert Contact First name',
-            'last_name.required' => 'Please insert Contact Last name',
-            'telephone.required' => 'Please insert Contact Telephone',
-            'period.required' => 'Please insert Contact Period',
+            'last_name.required'  => 'Please insert Contact Last name',
+            'telephone.required'  => 'Please insert Contact Telephone',
+            'period.required'     => 'Please insert Contact Period',
         ];
     }
 }

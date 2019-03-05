@@ -7,5 +7,4 @@ namespace App\Models\Contact\Traits\Attribute;
  */
 trait ContactAttribute
 {
-
 }

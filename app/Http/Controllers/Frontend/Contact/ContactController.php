@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Frontend\Contact;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Contact\ManageContactRequest;
-use App\Http\Requests\Frontend\Contact\StoreContactRequest;
 use App\Http\Requests\Frontend\Contact\StoreCallbackRequest;
+use App\Http\Requests\Frontend\Contact\StoreContactRequest;
 use App\Http\Requests\Frontend\Contact\UpdateContactRequest;
 use App\Models\Contact\Contact;
 use App\Repositories\Frontend\Contact\ContactRepository;
@@ -37,7 +37,6 @@ class ContactController extends Controller
      */
     public function index(ManageContactRequest $request)
     {
-
     }
 
     /**
@@ -49,10 +48,9 @@ class ContactController extends Controller
     {
         $contact = $this->contact->create($request->except('_token'));
 
-
         return response()->json([
             'success' => true,
-            'message' => "Task was successful!"
+            'message' => 'Task was successful!'
         ]);
     }
 
@@ -65,15 +63,14 @@ class ContactController extends Controller
     {
         $contact = $this->contact->create($request->except('_token'));
 
-
         return response()->json([
             'success' => true,
-            'message' => "Task was successful!"
+            'message' => 'Task was successful!'
         ]);
     }
 
     /**
-     * @param \App\Models\Contact\Contact                               $contact
+     * @param \App\Models\Contact\Contact                              $contact
      * @param \App\Http\Requests\Frontend\Contact\ManageContactRequest $request
      *
      * @return mixed
@@ -90,7 +87,7 @@ class ContactController extends Controller
     }
 
     /**
-     * @param \App\Models\Contact\Contact                               $contact
+     * @param \App\Models\Contact\Contact                              $contact
      * @param \App\Http\Requests\Frontend\Contact\UpdateContactRequest $request
      *
      * @return mixed
@@ -107,7 +104,7 @@ class ContactController extends Controller
     }
 
     /**
-     * @param \App\Models\Contact\Contact                               $contact
+     * @param \App\Models\Contact\Contact                              $contact
      * @param \App\Http\Requests\Frontend\Contact\ManageContactRequest $request
      *
      * @return mixed

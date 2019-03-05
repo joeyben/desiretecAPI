@@ -347,17 +347,19 @@ if (!function_exists('transformDuration')) {
 if (!function_exists('isWhiteLabel')) {
     /**
      * Set current whitelabel Id.
-     * @return boolean
+     *
+     * @return bool
      */
     function isWhiteLabel()
     {
-        return config('app.current_whitelabel') !== null;
+        return null !== config('app.current_whitelabel');
     }
 }
 
 if (!function_exists('setCurrentWhiteLabelId')) {
     /**
      * Set current whitelabel Id.
+     *
      * @param int $id
      */
     function setCurrentWhiteLabelId($id)

@@ -24,7 +24,6 @@ class MessagesController extends Controller
 
         $userName = User::where('id', '=', $id)->first()->first_name;
 
-    
         $response = [
             'data'      => $messages,
             'user_name' => $userName
@@ -51,9 +50,9 @@ class MessagesController extends Controller
             Mail::to($consumer)->send(new MessageSent($message));
 
             $message = Message::create([
-                'user_id' => $consumerId,
-                'wish_id' => $request->wish_id,
-                'message' => $message,
+                'user_id'  => $consumerId,
+                'wish_id'  => $request->wish_id,
+                'message'  => $message,
                 'agent_id' => $agent
             ]);
         } else {
@@ -115,7 +114,7 @@ class MessagesController extends Controller
         }
 
         $messages = array_merge($userMessages->toArray(), $agentMessages->toArray());
-        array_multisort( array_column($messages, "created_at"), SORT_ASC, $messages );
+        array_multisort(array_column($messages, 'created_at'), SORT_ASC, $messages);
         $response = [
             'data'   => $messages,
             'user'   => $user,

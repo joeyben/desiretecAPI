@@ -64,7 +64,7 @@ class ContactRepository extends BaseRepository
     {
         return DB::transaction(function () use ($input) {
             $input['created_by'] = access()->user()->id;
-            $input['wish_id'] = intval($input['wish_id']);
+            $input['wish_id'] = (int) ($input['wish_id']);
             $input['group_id'] = $this->getGroupId($input['wish_id']);
 
             if ($contact = Contact::create($input)) {
@@ -81,7 +81,7 @@ class ContactRepository extends BaseRepository
      * Update Contact.
      *
      * @param \App\Models\Contact\Contact $contact
-     * @param array                        $input
+     * @param array                       $input
      */
     public function update(Contact $contact, array $input)
     {
@@ -123,13 +123,12 @@ class ContactRepository extends BaseRepository
     /**
      * @param string $id
      *
-     *
      * @return int
      */
     public function getGroupId($id)
     {
         $wish = Wish::find($id);
+
         return $wish->group->id;
     }
-
 }
