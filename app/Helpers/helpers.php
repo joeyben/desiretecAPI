@@ -351,7 +351,7 @@ if (!function_exists('isWhiteLabel')) {
      */
     function isWhiteLabel()
     {
-        return session('current_whitelabel');
+        return config('app.current_whitelabel') !== null;
     }
 }
 
@@ -362,7 +362,7 @@ if (!function_exists('setCurrentWhiteLabelId')) {
      */
     function setCurrentWhiteLabelId($id)
     {
-        session(['current_whitelabel' => $id]);
+        config(['app.current_whitelabel' => $id]);
     }
 }
 
@@ -374,7 +374,7 @@ if (!function_exists('getCurrentWhiteLabelId')) {
      */
     function getCurrentWhiteLabelId()
     {
-        return session('current_whitelabel');
+        return config('app.current_whitelabel');
     }
 }
 
@@ -384,13 +384,13 @@ if (!function_exists('getWhiteLabelLogo')) {
      *
      * @return string
      */
-    function getWhiteLabelLogoUrl($id)
+    function getWhiteLabelLogoUrl()
     {
         return \Modules\Attachments\Entities\Attachment::select([
         config('module.attachments.table') . '.basename',
         config('module.attachments.table') . '.type',
         ])
-        ->where('attachable_id', $id)
+        ->where('attachable_id', getCurrentWhiteLabelId())
         ->where('type', 'whitelabels/logo')
         ->first()->toArray()['url'];
     }
