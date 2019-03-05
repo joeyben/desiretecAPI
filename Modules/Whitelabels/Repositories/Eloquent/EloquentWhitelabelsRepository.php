@@ -49,7 +49,19 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         if (!file_exists(base_path("Modules/$name/Resources/views/layer"))) {
             mkdir(base_path("Modules/$name/Resources/views/layer"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/views/wish"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/lang/de"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/lang/en"), 0777, true);
         }
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/lang/de/layer.php'),
+            base_path("Modules/$name/Resources/lang/de/layer.php")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/lang/en/layer.php'),
+            base_path("Modules/$name/Resources/lang/en/layer.php")
+        );
 
         $this->generateFile(
             base_path('Modules/Master/Resources/views/layer/created.blade.stub'),
