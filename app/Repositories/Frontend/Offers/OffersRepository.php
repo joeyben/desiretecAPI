@@ -12,6 +12,7 @@ use App\Models\Offers\Offer;
 use App\Repositories\BaseRepository;
 use DB;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Frontend\Offers\StoreOffersRequest;
 
 /**
  * Class OffersRepository.
@@ -83,13 +84,13 @@ class OffersRepository extends BaseRepository
     }
 
     /**
-     * @param object $request
+     * @param StoreOffersRequest $request
      *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
      */
-    public function create(object $request)
+    public function create(StoreOffersRequest $request)
     {
         $files = $request->hasfile('file') ? $request->file('file') : [];
         $input = $request->except('_token', 'file');
