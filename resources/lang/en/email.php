@@ -28,6 +28,12 @@ return [
         'subject_for_seller'   => 'Es gibt einen neuen TUI Reisewunsch zur Bearbeitung!',
         'subject_for_seller'   => 'Es gibt einen neuen TUI Reisewunsch zur Bearbeitung!',
     ],
+    'token' => 'Ihr Login-Link lautet: <a href=":token">:token</a>',
+    'message' => [
+        'new' => 'Neue Nachricht!',
+        'subject' => 'Sie haben eine neue Nachricht erhalten',
+        'token' => 'Ihr Login-Link',
+    ],
 
     'footer'              => [
         'line1'     => 'Sonnige Grüße',
