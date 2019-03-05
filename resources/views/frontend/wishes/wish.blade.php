@@ -1,5 +1,14 @@
 @extends('frontend.layouts.app')
 
+@section('logo')
+    <a href="{{ route('frontend.index') }}" class="logo">
+        @if(isWhiteLabel())
+            <img class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
+        @else
+            <img class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
+        @endif
+    </a>
+@endsection
 
 @section('content')
 <section class="section-top">
@@ -110,6 +119,14 @@
         @endif
 </section>
 
+@if (count($wish->offers) > 0 && $logged_in_user->hasRole('Seller') && count($wish->contacts) === 0)
+    <div class="container">
+        <div class="col-md-12">
+            <p>&nbsp;</p>
+        </div>
+    </div>
+@endif
+
 @foreach($wish->offers as $key => $offer)
 
     <section class="section-angebote-2" id="angebote">
@@ -131,7 +148,7 @@
                         <b>Hier geht es zu unserer Angebotsseite:</b> <a href="{{ $offer->link }}" target="_blank">{{ $offer->link }}</a>
                     @endif
                 </p>
-                @if (!$offer->offerFiles)
+                @if (!$offer->offerFiles && $logged_in_user->hasRole('User'))
                 <div class="sa2-buttons">
                     <button class="primary-btn" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
                     <button class="secondary-btn" data-toggle="modal" data-target="#myModal2">Rückrufbitte einstellen</button>
@@ -159,12 +176,14 @@
                     </div>
                 @endforeach
             </div>
+            @if ($logged_in_user->hasRole('User'))
             <div class="col-md-12">
                 <hr class="sad-hr">
             </div>
+            @endif
         </div>
 
-
+        @if ($logged_in_user->hasRole('User'))
         <div class="container">
             <div class="col-md-12 sa-2">
                 <div class="sa-buttons">
@@ -173,7 +192,7 @@
                 </div>
             </div>
         </div>
-
+        @endif
     </section>
   @endif
 
@@ -512,7 +531,7 @@
             {{ Form::open(['route' => 'frontend.contact.storecallback', 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'callback-seller']) }}
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Kontakt zum zuständigen Reisebüro einstellen</h4>
+                <h4 class="modal-title">Rückrufbitte zum zuständigen Reisebüro einstellen</h4>
                 <p>Stelle einfach und bequem eine Rückrufbitte ein und das<br>
                     zuständige Reisebüro wird sich als bald bei dir melden
                 </p>

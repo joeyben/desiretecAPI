@@ -449,7 +449,7 @@ return [
 
         'agents' => [
             'create'     => 'Create new Agent',
-            'management' => 'Agente',
+            'management' => 'Agenten',
             'table'      => [
                 'avatar'           => 'Avatar',
                 'name'             => 'Name',

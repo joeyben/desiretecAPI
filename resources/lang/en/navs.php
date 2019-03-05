@@ -26,14 +26,14 @@ return [
         'create_wish'     => 'Wunsch erstellen',
         'wisheslist'      => 'Reisewünsche',
         'offers'          => 'Meine Angebote',
-        'agents'          => 'Agente',
+        'agents'          => 'Agenten',
         'user'            => [
             'account'         => 'Mein Konto',
             'administration'  => 'Administration',
             'change_password' => 'Passwort ändern',
             'my_information'  => 'Meine Informationen',
             'profile'         => 'Profil',
-            'agents'          => 'Agente',
+            'agents'          => 'Agenten',
         ],
     ],
 ];

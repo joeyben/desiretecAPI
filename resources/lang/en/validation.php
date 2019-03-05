@@ -295,7 +295,7 @@ return [
                 'file'                  => 'Datei',
                 'link'                  => 'Link',
                 'title_placeholder'     => 'Kurze Beschreibung des Angebotes',
-                'text_placeholder'      => 'Ihre Nachricht an den Kunder',
+                'text_placeholder'      => 'Ihre Nachricht an den Kunden',
                 'status_placeholder'    => 'Status',
                 'file_placeholder'      => 'File',
                 'link_placeholder'      => 'http://goo.gl/rxozgv',
