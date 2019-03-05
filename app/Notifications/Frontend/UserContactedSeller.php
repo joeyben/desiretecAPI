@@ -99,6 +99,6 @@ class UserContactedSeller extends Notification
             return $whitelabelslug . '.wish.details';
         }
 
-        return 'frontend.wishes.wish';
+        return 'frontend.wish.details';
     }
 }
