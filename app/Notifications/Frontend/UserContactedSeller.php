@@ -46,7 +46,7 @@ class UserContactedSeller extends Notification
         $this->wish_id = $wish_id;
         $this->token = $token;
         $this->contact = $contact;
-        $this->wl_name = \App\Models\Whitelabels\Whitelabel::find(getCurrentWhiteLabelId())->name;
+        $this->wl_name = \App\Models\Whitelabels\Whitelabel::find($contact->wish->whitelabel->id)->name;
     }
 
     /**
