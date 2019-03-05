@@ -19,11 +19,11 @@ return [
 
     'frontend' => [
         'dashboard'       => 'Dashboard',
-        'login'           => 'Login',
+        'login'           => 'Einloggen',
         'macros'          => 'Macros',
-        'register'        => 'Register',
-        'wishes'          => 'My Wishes',
-        'create_wish'     => 'Create Wish',
+        'register'        => 'Registrieren',
+        'wishes'          => 'Meine Reisewünsche',
+        'create_wish'     => 'Wunsch erstellen',
         'wisheslist'      => 'Reisewünsche',
         'offers'          => 'Meine Angebote',
         'agents'          => 'Agente',

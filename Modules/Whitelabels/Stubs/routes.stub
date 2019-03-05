@@ -5,5 +5,7 @@ Route::group(['domain' => '$DOMAIN$'], function () {
         Route::get('/', '$MODULE$Controller@index');
         Route::get('show', '$MODULE$Controller@show');
         Route::get('store', '$MODULE$Controller@store')->name('store');
+        Route::get('wish/{wish}/{token}', '$MODULE$WishesController@details')->name('wish.details');
+
     });
 });
