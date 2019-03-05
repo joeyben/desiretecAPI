@@ -8,7 +8,10 @@
     box-shadow: 0 0 25px #111 !important;
 }
 .navbar-dark {
-    background-color: #575756;
+    background-color: #FFF;
+}
+.navbar-dark .navbar-nav-link {
+    color: #575756 !important;
 }
 .vuetable thead {
     color: #fff;

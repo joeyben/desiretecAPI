@@ -39,7 +39,7 @@
 <div class="navbar navbar-dark navbar-expand-md fixed-top">
     <div class="navbar-brand">
         <a href="{{ route('admin.dashboard') }}" class="d-inline-block">
-            <img src="{{ asset('img/logo_desiretec.jpg') }}" alt="Logo">
+            <img src="{{ asset('img/logo_big.png') }}" alt="Logo">
         </a>
     </div>
 
