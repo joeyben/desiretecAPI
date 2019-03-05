@@ -136,15 +136,7 @@ class MasterController extends Controller
 
             return $new_user;
         }
-        $input = array_merge(
-            $input,
-            [
-                'first_name'     => 'John',
-                'last_name'      => 'Doe',
-                'password'       => 'tui2019',
-                'is_term_accept' => true
-            ]
-        );
+
         $new_user = $user->create($input);
         $new_user->storeToken();
         $new_user->attachWhitelabel($this->whitelabelId);

@@ -39,6 +39,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             [$name]
         );
 
+        $this->generateFile(
+            base_path('Modules/Master/Http/Requests/StoreWishRequest.stub'),
+            base_path("Modules/$name/Http/Requests/StoreWishRequest.php"),
+            ['$MODULE$'],
+            [$name]
+        );
+
         if (!file_exists(base_path("Modules/$name/Resources/views/layer"))) {
             mkdir(base_path("Modules/$name/Resources/views/layer"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/views/wish"), 0777, true);
@@ -67,6 +74,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $this->generateFile(
             base_path('Modules/Master/Resources/views/wish/details.blade.stub'),
             base_path("Modules/$name/Resources/views/wish/details.blade.php")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/views/index.blade.stub'),
+            base_path("Modules/$name/Resources/views/index.blade.php"),
+            ['$MODULESMAL$'],
+            [strtolower($name)]
         );
 
         $this->generateFile(

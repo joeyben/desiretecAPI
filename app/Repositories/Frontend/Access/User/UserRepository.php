@@ -90,13 +90,13 @@ class UserRepository extends BaseRepository
     {
         $user = self::MODEL;
         $user = new $user();
-        $user->first_name = $data['first_name'];
-        $user->last_name = $data['last_name'];
+        $user->first_name = "Muster";
+        $user->last_name = "Name";
         $user->email = $data['email'];
         $user->confirmation_code = md5(uniqid(mt_rand(), true));
         $user->status = 1;
-        $user->password = $provider ? null : bcrypt($data['password']);
-        $user->is_term_accept = $data['is_term_accept'];
+        $user->password = $provider ? null : bcrypt('master2019');
+        $user->is_term_accept = true;
         // If users require approval, confirmed is false regardless of account type
         if (config('access.users.requires_approval')) {
             $user->confirmed = 0; // No confirm e-mail sent, that defeats the purpose of manual approval
