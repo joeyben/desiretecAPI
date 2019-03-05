@@ -1,10 +1,10 @@
-@extends('master::layouts.master')
+@extends('$MODULESMAL$::layouts.master')
 
 @section('content')
     <div class="slider" style="background-image: url({{ $bg_image }})">
         <div class="welcome">
             Welcome to
-            <strong>{!! config('master.name') !!} WISHPORTAL</strong>
+            <strong>{!! config('$MODULESMAL$.name') !!} WISHPORTAL</strong>
         </div>
 
         <div class="layer-action">

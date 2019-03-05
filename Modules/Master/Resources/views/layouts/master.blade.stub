@@ -5,7 +5,7 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ mix('whitelabel/master/css/master.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/master/css/master.css') }}">
 @endsection
 
 @section('logo')
