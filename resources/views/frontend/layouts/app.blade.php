@@ -59,6 +59,7 @@
                     </div>
                 </div>
                 @yield('content')
+
             </div><!-- container -->
         </div><!--#app-->
 
