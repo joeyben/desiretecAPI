@@ -23,13 +23,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         return Whitelabel::class;
     }
 
-    public function generateFiles(int $id,string $name)
+    public function generateFiles(int $id, string $name)
     {
         $this->generateFile(
             base_path('Modules/Master/Http/Controllers/MasterController.stub'),
             base_path("Modules/$name/Http/Controllers/{$name}Controller.php"),
-            ['$MODULE$','$MODULESMAL$'],
-            [$name, strtolower($name)]
+            ['$MODULE$', '$MODULESMAL$'],
+            [$name, mb_strtolower($name)]
         );
 
         $this->generateFile(
@@ -67,16 +67,15 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             base_path('Modules/Master/Resources/views/layer/created.blade.stub'),
             base_path("Modules/$name/Resources/views/layer/created.blade.php"),
             ['$MODULESMAL$'],
-            [strtolower($name)]
+            [mb_strtolower($name)]
         );
 
         $this->generateFile(
             base_path('Modules/Master/Resources/views/layer/popup.blade.stub'),
             base_path("Modules/$name/Resources/views/layer/popup.blade.php"),
             ['$MODULESMAL$'],
-            [strtolower($name)]
+            [mb_strtolower($name)]
         );
-
 
         $this->generateFile(
             base_path('Modules/Master/Resources/views/layouts/master.blade.stub'),
@@ -92,7 +91,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             base_path('Modules/Master/Resources/views/index.blade.stub'),
             base_path("Modules/$name/Resources/views/index.blade.php"),
             ['$MODULESMAL$'],
-            [strtolower($name)]
+            [mb_strtolower($name)]
         );
 
         $this->generateFile(

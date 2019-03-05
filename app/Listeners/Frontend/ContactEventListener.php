@@ -11,7 +11,6 @@ use App\Notifications\Frontend\UserContactedSeller;
  */
 class ContactEventListener
 {
-
     /**
      * @var \App\Models\Contact\Contact
      */
@@ -34,7 +33,6 @@ class ContactEventListener
     {
         $events->listen('eloquent.created: App\Models\Contact\Contact', [$this, 'onCreatedContact']);
     }
-
 
     public function onCreatedContact(Contact $contact)
     {

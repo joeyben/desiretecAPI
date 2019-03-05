@@ -2,10 +2,11 @@
 
 namespace App\Notifications\Frontend;
 
+use App\Models\Contact\Contact;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\Contact\Contact;
+
 /**
  * Class UserContactedSeller.
  */
@@ -68,7 +69,7 @@ class UserContactedSeller extends Notification
         return (new MailMessage())
             ->view('emails.user-contact-seller', [
                     'confirmation_url' => $confirmation_url,
-                    'contact' => $this->contact
+                    'contact'          => $this->contact
                 ]);
     }
 
@@ -81,10 +82,12 @@ class UserContactedSeller extends Notification
      */
     public function getRoute()
     {
-        if (isWhiteLabel()){
+        if (isWhiteLabel()) {
             $whitelabelslug = \App\Models\Whitelabels\Whitelabel::find(getCurrentWhiteLabelId())->name;
-            return $whitelabelslug.'.wish.details';
+
+            return $whitelabelslug . '.wish.details';
         }
-        return "frontend.wishes.wish";
+
+        return 'frontend.wishes.wish';
     }
 }
