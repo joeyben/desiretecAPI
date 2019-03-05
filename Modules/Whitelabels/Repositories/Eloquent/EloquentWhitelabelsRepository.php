@@ -53,18 +53,18 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
         $this->generateFile(
             base_path('Modules/Master/Resources/views/layer/created.blade.stub'),
-            base_path("Modules/$name/Resources/views/layer/created.blade.php")
+            base_path("Modules/$name/Resources/views/layer/created.blade.php"),
+            ['$MODULESMAL$'],
+            [strtolower($name)]
         );
 
         $this->generateFile(
             base_path('Modules/Master/Resources/views/layer/popup.blade.stub'),
-            base_path("Modules/$name/Resources/views/layer/popup.blade.php")
+            base_path("Modules/$name/Resources/views/layer/popup.blade.php"),
+            ['$MODULESMAL$'],
+            [strtolower($name)]
         );
 
-        $this->generateFile(
-            base_path('Modules/Master/Resources/views/layer/popup.blade.stub'),
-            base_path("Modules/$name/Resources/views/layer/popup.blade.php")
-        );
 
         $this->generateFile(
             base_path('Modules/Master/Resources/views/layouts/master.blade.stub'),
