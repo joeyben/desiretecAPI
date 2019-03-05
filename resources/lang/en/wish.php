@@ -36,12 +36,12 @@ return [
         'offer_number'      => 'Angebot Nummer',
         'new_offers'        => 'Neue Angebote',
         'stage'             => [
-            'seller_empty' => 'Der Reisewunsch wurde am <b>:date</b> an Ihnen<br>
-                    übermittelt. Ersellen Sie jetzt einen Angebot.',
-            'seller_message' => 'Der Reisewunsch wurde am <b>:date</b> an Ihnen<br>
+            'seller_empty' => 'Der Reisewunsch wurde am <b>:date</b> an Sie<br>
+                    übermittelt. Erstellen Sie jetzt ein Angebot.',
+            'seller_message' => 'Der Reisewunsch wurde am <b>:date</b> an Sie<br>
                     übermittelt. Der Kunder hat Ihnen eine Nachricht hinterlassen.',
-            'seller_offer' => 'Der Reisewunsch wurde am <b>:date</b> an Ihnen<br>
-                    übermittelt. Sie haben einen Aangebot erstellt.',
+            'seller_offer' => 'Der Reisewunsch wurde am <b>:date</b> an Sie<br>
+                    übermittelt. Sie haben ein Angebot erstellt.',
             'user_empty' => 'Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>
                     übermittelt. Leider liegt momentan noch kein Angebot vor.',
             'user_offer' => 'Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>

@@ -39,7 +39,7 @@ class OfferCreated extends Notification
      *
      * @param $wish_id
      * @param $token
-     * @param Contact $contact
+     * @param Offer $offer
      */
     public function __construct($wish_id, $token, Offer $offer)
     {
@@ -71,16 +71,15 @@ class OfferCreated extends Notification
     public function toMail()
     {
         $confirmation_url = route($this->getRoute(), [$this->wish_id, $this->token]);
-        $subject = ($this->contact->email !== "no data") ? trans('email.wish.user_cnt_seller')
-                : trans('email.wish.user_callback_seller');
-        $view = ($this->contact->email !== "no data") ? 'emails.user-contact-seller' : 'emails.user-callback-seller';
+        $subject = trans('email.offer.created');
+        $view = 'emails.offer-created';
 
         return (new MailMessage())
             ->from('noreply@desiretec.com', $this->wl_name.' Portal')
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,
-                    'contact'          => $this->contact
+                    'offer'          => $this->offer
                 ]);
     }
 
