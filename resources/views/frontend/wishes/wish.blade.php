@@ -19,9 +19,12 @@
                 <h3>Hallo {{ $wish->owner->first_name }} {{ $wish->owner->last_name }},</h3>
                 <p class="header-p">Dein Reisewunsch wurde am <b>{{ \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y') }}</b> an <b>{{ $wish->group->users[0]->name }}</b> <br>
                     übermittelt. Leider liegt momentan noch kein Angebot vor.</p>
-
-                @if (count($wish->offers) > 0)
+                @if ($logged_in_user->hasRole('Seller') && $logged_in_user->allow('create-offer'))
+                    <a href="{{route('frontend.offers.create', $wish->id)}}" class="primary-btn">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
+                @elseif (count($wish->offers) > 0)
                     <button class="primary-btn" onclick="scrollToAnchor('angebote')">Angebot ansehen</button>
+                @elseif (count($wish->messages) > 0)
+                    <button class="primary-btn" onclick="scrollToAnchor('messages')">Nachricht ansehen</button>
                 @else
                     <button class="primary-btn" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
                     <button class="secondary-btn" data-toggle="modal" data-target="#myModal2">Rückrufbitte einstellen</button>
@@ -59,11 +62,12 @@
     </div>
 </section>
 
-<div class="container">
-    <div class="col-md-12 hr"><hr></div>
-</div>
-
 @foreach($wish->offers as $key => $offer)
+
+    <div class="container">
+        <div class="col-md-12 hr"><hr></div>
+    </div>
+
     <section class="section-angebote-2" id="angebote">
         <div class="container">
             <div class="col-md-12 sa2-1">
@@ -136,7 +140,7 @@
     </div>
 </div>
 
-<section class="section-comments">
+<section class="section-comments" id="messages">
     <div class="container">
         <div class="col-md-12">
             <h4>

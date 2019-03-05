@@ -13,7 +13,8 @@ button{
   margin-bottom: 10px;
   padding: 7px 20px;
   line-height: 1.5em;
-  &:focus {
+  text-align:center;
+  &:focus, &:hover {
     background: $darkorange;
     border: 1px solid $darkorange;
   }
@@ -25,7 +26,8 @@ button{
   padding: 7px 20px;
   line-height: 1.5em;
   font-weight: 100;
-  &:focus {
+  text-align:center;
+  &:focus, &:hover {
     border: 1px solid $darkorange;
     color: $darkorange;
     background: transparent;
@@ -54,6 +56,15 @@ section {
   }
 }
 
+a.primary-btn{
+  display: block;
+  border-radius: 5px;
+  min-width: 210px;
+  &:focus, &:hover {
+    background: $darkorange;
+    border: 1px solid $darkorange;
+  }
+}
 // Header Styles
 
 .logged-in-as {
@@ -193,7 +204,7 @@ section {
 }
 //navbar style
 .main-nav{
-  background-color: $darkgrey !important;
+  background-color: white !important;
 }
 .navbar-right{
   a,a:hover,a:focus{
@@ -201,10 +212,10 @@ section {
     color:#fff;
   }
   span{
-    color:#fff;
+    color:#000;
   }
   i{
-    color:#fff;
+    color:#000;
   }
 }
 

@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <textarea name="antworten" id="antworten" v-model="newMessage"></textarea>
         <div class="cu-cl-buttons">
-            <button class="primary-btn antworten-btn" id="btn-chat" @click="sendMessage">Antworten</button>
+            <button class="primary-btn antworten-btn" id="btn-chat" @click="sendMessage">Nachricht schreiben</button>
         </div>
     </div>
 </template>

@@ -14,7 +14,7 @@ class AddLinkToOffersTable extends Migration
     public function up()
     {
         Schema::table('offers', function (Blueprint $table) {
-            $table->string('link')->after('description');
+            $table->string('link')->nullable()->after('description');
         });
     }
 

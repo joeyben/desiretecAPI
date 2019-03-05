@@ -6,6 +6,7 @@ use App\Models\Access\User\User;
 use App\Models\Comments\Comment;
 use App\Models\Groups\Group;
 use App\Models\Offers\Offer;
+use App\Models\Messages\Message;
 
 /**
  * Class WishRelationship.
@@ -42,6 +43,14 @@ trait WishRelationship
     public function offers()
     {
         return $this->hasMany(Offer::class);
+    }
+
+    /**
+     * Wishes HasMany  Messages.
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 
     /**
@@ -87,11 +96,5 @@ trait WishRelationship
         return $this->hasMany(Offer::class)->count();
     }
 
-    /**
-     * Wishes HasMany  Messages.
-     */
-    public function messages()
-    {
-        return $this->hasMany(Message::class);
-    }
+
 }
