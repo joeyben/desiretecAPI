@@ -19,7 +19,7 @@
         {{ Form::label('link', trans('validation.attributes.frontend.offers.link'), ['class' => 'col-lg-2 control-label required']) }}
 
         <div class="col-lg-10">
-            {{ Form::text('link', null, ['class' => 'form-control box-size', 'placeholder' => trans('validation.attributes.frontend.offers.link_placeholder'), 'required' => 'required']) }}
+            {{ Form::text('link', null, ['class' => 'form-control box-size', 'placeholder' => trans('validation.attributes.frontend.offers.link_placeholder')]) }}
         </div><!--col-lg-10-->
     </div><!--form control-->
 

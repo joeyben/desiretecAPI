@@ -70,10 +70,12 @@ class WhitelabelMakeRouteCommand extends Command
             [
                 '$DOMAIN$',
                 '$MODULE$',
+                '$MODULESMAL$',
             ],
             [
                 $domain,
-                $module
+                $module,
+                strtolower($module)
             ],
             $this->getStub()
         );
