@@ -4,6 +4,7 @@ namespace App\Models\Wishes\Traits\Relationship;
 
 use App\Models\Access\User\User;
 use App\Models\Comments\Comment;
+use App\Models\Contact\Contact;
 use App\Models\Groups\Group;
 use App\Models\Offers\Offer;
 use App\Models\Messages\Message;
@@ -59,6 +60,14 @@ trait WishRelationship
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Wishes HasMany  Contacts.
+     */
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class, 'wish_id')->where('email', '!=', 'no data');
     }
 
     /**

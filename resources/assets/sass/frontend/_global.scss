@@ -1,36 +1,40 @@
 // Buttons
 
-button{
-  $btn-default-color: $text-color;
-  display:block;
-  border-radius:5px;
-  min-width: 210px;
-}
 .primary-btn {
   background: $orange;
   border: 1px solid $orange;
   color: #fff;
   margin-bottom: 10px;
-  padding: 7px 20px;
+  padding: 8px 20px;
   line-height: 1.5em;
   text-align:center;
+  border-radius:5px;
+  min-width: 210px;
+  font-family: Comfortaa,cursive;
   &:focus, &:hover {
     background: $darkorange;
     border: 1px solid $darkorange;
+    color: #fff;
+    text-decoration: none;
   }
 }
+
 .secondary-btn {
   border: 1px solid $orange;
   color: $orange;
   background: transparent;
-  padding: 7px 20px;
+  padding: 8px 20px;
   line-height: 1.5em;
   font-weight: 100;
   text-align:center;
+  border-radius:5px;
+  min-width: 210px;
+  font-family: Comfortaa,cursive;
   &:focus, &:hover {
     border: 1px solid $darkorange;
     color: $darkorange;
     background: transparent;
+    text-decoration: none;
   }
 }
 
@@ -55,14 +59,14 @@ section {
     font-size: 20px;
   }
 }
-
-a.primary-btn{
-  display: block;
-  border-radius: 5px;
-  min-width: 210px;
+input.primary-btn{
+  padding: 5px 20px;
+}
+a.primary-btn, input.primary-btn{
   &:focus, &:hover {
     background: $darkorange;
     border: 1px solid $darkorange;
+    color: #fff;
   }
 }
 // Header Styles
@@ -889,6 +893,9 @@ a.primary-btn{
   }
 }
 .bg-bottom{
+  .row{
+    margin: 0;
+  }
   .col-md-3{
     margin-bottom: 15px;
   }

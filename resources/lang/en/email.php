@@ -25,8 +25,11 @@ return [
         'greeting'                => 'Thank you for your trust in our services',
     ],
     'wish'              => [
-        'subject_for_seller'   => 'Es gibt einen neuen TUI Reisewunsch zur Bearbeitung!',
-        'subject_for_seller'   => 'Es gibt einen neuen TUI Reisewunsch zur Bearbeitung!',
+        'subject_for_seller'        => 'Es gibt einen neuen TUI Reisewunsch zur Bearbeitung!',
+        'user_cnt_seller'           => 'Ihr Angebot war erfolgreich, Sie haben einen neuen Kontakt erzeugt!',
+        'user_callback_seller'      => 'Ihr Kunde bittet Sie um einen Rückruf',
+        'user'                      => 'Herzlich willkommen beim desiretec Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.',
+        'seller'                    => 'Es gibt einen neuen TUI Reisewunsch zur Bearbeitung!',
     ],
     'token' => 'Ihr Login-Link lautet: <a href=":token">:token</a>',
     'message' => [
@@ -34,7 +37,6 @@ return [
         'subject' => 'Sie haben eine neue Nachricht erhalten',
         'token' => 'Ihr Login-Link',
     ],
-
     'footer'              => [
         'line1'     => 'Sonnige Grüße',
         'line2'     => 'Ihr desiretec Team',

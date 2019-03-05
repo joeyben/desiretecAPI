@@ -435,7 +435,7 @@ return [
         ],
 
         'offers' => [
-            'create'          => 'Create new Offer',
+            'create'          => 'Neues Angebot erstellen',
             'management'      => 'Offers',
             'offers_for_wish' => 'Offer for',
             'table'           => [
@@ -449,14 +449,14 @@ return [
 
         'agents' => [
             'create'     => 'Create new Agent',
-            'management' => 'Agents',
+            'management' => 'Agente',
             'table'      => [
                 'avatar'           => 'Avatar',
                 'name'             => 'Name',
                 'display_name'     => 'Display name',
                 'status'           => 'Status',
-                'created_at'       => 'Created At',
-                'createdby'        => 'Created By',
+                'created_at'       => 'Erstellt am',
+                'createdby'        => 'Erstellt von',
                 'id'               => 'Id',
             ],
         ],

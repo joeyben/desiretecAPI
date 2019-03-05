@@ -13,10 +13,14 @@
                     </p>
                     
                     <p style="line-height: 24px; margin-bottom:20px;">
-                        Herzlichen Glückwunsch, Ihr Kontaktangebot wurde angenommen.<br>
-                        Die Kontaktdaten des Kunden finden Sie jetzt {{ $confirmation_url }} in Ihren Kontakten</a> auf desiretec.<br><br>
+                        Lieber Anbieter, Ihr Kunde bittet Sie um einen Rückruf.<br>
+                        Am besten passt es ihm, wenn Sie ihn <strong>{{ $contact->period }}</strong> anrufen.<br><br>
 
-                        Wir wünschen Ihnen einen erfolgreichen Kontakt zum Kunden und freuen uns über Ihre weiteren Angebote.
+                        Hier finden sie seine Kontaktdaten:<br>
+
+                        <strong>Vorname:</strong> {{ $contact->first_name }}<br>
+                        <strong>Nachname:</strong> {{ $contact->last_name }}<br>
+                        <strong>Tel.:</strong> {{ $contact->telephone }}<br>
                     </p>
 
                     @include('emails.layouts.footer')
