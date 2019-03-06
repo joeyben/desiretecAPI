@@ -98,6 +98,6 @@ class OfferCreated extends Notification
             return $whitelabelslug . '.wish.details';
         }
 
-        return 'frontend.wishes.wish';
+        return 'frontend.wishes.details';
     }
 }

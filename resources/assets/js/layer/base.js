@@ -169,7 +169,6 @@ var dt = window.dt || {};
             return Cookies.get('utag.data.exclude_lead') == 1;
         },
         init: function() {
-            this.initExitIntent();
             if (this.initialized) {
                 Debug.warning('Popup script is already initialized. Preventing double init.');
                 return;
