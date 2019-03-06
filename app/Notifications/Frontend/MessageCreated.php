@@ -2,15 +2,15 @@
 
 namespace App\Notifications\Frontend;
 
-use App\Models\Offers\Offer;
+use App\Models\Messages\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 /**
- * Class OfferCreated.
+ * Class MessageCreated.
  */
-class OfferCreated extends Notification
+class MessageCreated extends Notification
 {
     use Queueable;
 
@@ -27,7 +27,12 @@ class OfferCreated extends Notification
     /**
      * @var
      */
-    protected $offer;
+    protected $type;
+
+    /**
+     * @var
+     */
+    protected $message;
 
     /**
      * @var
@@ -39,14 +44,16 @@ class OfferCreated extends Notification
      *
      * @param $wish_id
      * @param $token
-     * @param Offer $offer
+     * @param $type
+     * @param Message $message
      */
-    public function __construct($wish_id, $token, Offer $offer)
+    public function __construct($wish_id, $type, $token, Message $message)
     {
         $this->wish_id = $wish_id;
         $this->token = $token;
-        $this->offer = $offer;
-        $this->wl_name = \App\Models\Whitelabels\Whitelabel::find($offer->wish->whitelabel->id)->name;
+        $this->type = $type;
+        $this->message = $message;
+        $this->wl_name = \App\Models\Whitelabels\Whitelabel::find($message->wish->whitelabel->id)->name;
     }
 
     /**
@@ -71,15 +78,15 @@ class OfferCreated extends Notification
     public function toMail()
     {
         $confirmation_url = route($this->getRoute(), [$this->wish_id, $this->token]);
-        $subject = trans('email.offer.created');
-        $view = 'emails.offer.offer-created';
+        $subject = trans('email.message.created-'.$this->type);
+        $view = 'emails.messages.created-'.$this->type;
 
         return (new MailMessage())
             ->from('noreply@desiretec.com', $this->wl_name.' Portal')
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,
-                    'offer'          => $this->offer
+                    'messageModel'          => $this->message
                 ]);
     }
 

@@ -9,15 +9,16 @@
                         <!-- section text ======-->
 
                         <p style="line-height: 24px; margin-bottom:15px;">
-                            @lang('email.account.hello', ['username' => '']),
+                            Hallo {{ $messageModel->wish->owner->first_name }}!
                         </p>
 
                         <p style="line-height: 24px; margin-bottom:20px;">
-                            @lang('email.message.subject')
-                        </p>
-                        <p>{{ $bodyMessage }}</p>
 
-                        <br/>
+                            Sie haben eine neue Nachricht von Ihrem Kunden erhalten.<br><br>
+
+                            <a href="{{ $confirmation_url }}">Hier</a> können Sie sich einloggen und Ihrem Kunden antworten.
+
+                        </p>
 
                         @include('emails.layouts.footer')
                     </td>

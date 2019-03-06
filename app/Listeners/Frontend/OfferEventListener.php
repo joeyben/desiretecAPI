@@ -5,6 +5,8 @@ namespace App\Listeners\Frontend;
 use App\Models\Offers\Offer;
 use App\Models\Access\User\User;
 use App\Notifications\Frontend\OfferCreated;
+use App\Notifications\Frontend\OfferUser;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class OfferEventListener.
@@ -39,9 +41,13 @@ class OfferEventListener
         $user_id = $offer->wish->owner->id;
         $user = User::where('id', intval($user_id))->firstOrFail();
         $usertoken = $user->storeToken();
-
         $token = $usertoken->token->token;
 
-        $user->notify(new OfferCreated($offer->wish_id, $token, $offer));
+        $seller = Auth::guard('web')->user();
+        $sellertoken = $seller->storeToken();
+        $token_seller = $sellertoken->token->token;
+
+        $seller->notify(new OfferCreated($offer->wish_id, $token_seller, $offer));
+        $user->notify(new OfferUser($offer->wish_id, $token, $offer));
     }
 }

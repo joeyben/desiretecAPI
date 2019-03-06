@@ -9,12 +9,16 @@
                     <!-- section text ======-->
 
                     <p style="line-height: 24px; margin-bottom:15px;">
-                        Hallo {{ $offer->owner->first_name }}!
+                        Liebe Kundin, lieber Kunde!
                     </p>
                     
                     <p style="line-height: 24px; margin-bottom:20px;">
-                        Ihr Angebot {{ $confirmation_url }} wurde erfolgreich erstellt. Der Kunde wurde darüber informiert und wird Sie kontaktieren, wenn ihm das Angebot zusagt.<br>
-                        Sie haben jederzeit die Möglichkeit Ihr Angebot zu ändern.
+
+                        Einer unserer Spezialisten für das Reiseziel {{ $offer->wish->title }} hat ein Angebot für Ihren desiretec Reisewunsch erstellt! Sie können es unter dem folgenden Link direkt<br><br>
+
+                        {{ $confirmation_url }}<br><br>
+
+                        Wir hoffen, Ihnen sagt das Angebot zu.
                     </p>
 
                     @include('emails.layouts.footer')
