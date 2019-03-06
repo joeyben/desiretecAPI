@@ -1,5 +1,5 @@
 {
-	"authHost": "https://mvp.desiretec.com",
+	"authHost": "https://mvp.desiretec.com:6001",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [],
 	"database": "redis",
