@@ -482,11 +482,11 @@
                         <div class="modal-contact">
                             <div class="mc-tel">
                                 <span class="glyphicon glyphicon-earphone"></span>
-                                <a href="tel:08971459535">{{ $wish->group->users[0]->agents[0]->telephone }}</a>
+                                <a href="tel:08971459535">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->telephone }}@endif</a>
                             </div>
                             <div class="mc-mail">
                                 <span class="glyphicon glyphicon-envelope"></span>
-                                <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->agents[0]->email }}</a>
+                                <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
                             </div>
                         </div>
                     </div>
@@ -570,11 +570,11 @@
                         <div class="modal-contact">
                             <div class="mc-tel">
                                 <span class="glyphicon glyphicon-earphone"></span>
-                                <a href="tel:08971459535">{{ $wish->group->users[0]->agents[0]->telephone }}</a>
+                                <a href="tel:08971459535">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->telephone }}@endif</a>
                             </div>
                             <div class="mc-mail">
                                 <span class="glyphicon glyphicon-envelope"></span>
-                                <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->agents[0]->email }}</a>
+                                <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
                             </div>
                         </div>
                     </div>
