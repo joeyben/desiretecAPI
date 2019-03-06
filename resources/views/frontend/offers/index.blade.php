@@ -47,6 +47,8 @@
             var dataTable = $('#offers-table').dataTable({
                 processing: true,
                 serverSide: true,
+                bLengthChange:false,
+                bInfo:false,
                 ajax: {
                     url: '{{ route("frontend.offers.get") }}',
                     type: 'post'
@@ -65,6 +67,15 @@
                     buttons: [
 
                     ]
+                },
+                language: {
+                    "search": "Suche",
+                    "paginate": {
+                        "first":      "Erster",
+                        "last":       "Letzter",
+                        "next":       "Nächster",
+                        "previous":   "Vorherige"
+                    },
                 }
             });
 

@@ -30,8 +30,10 @@ class OffersTableController extends Controller
     public function __invoke(ManageOffersRequest $request)
     {
         return Datatables::of($this->offers->getForDataTable())
-            ->escapeColumns(['title'])
-
+            ->addColumn('title', function ($offers) {
+                return '<a href="'.route('frontend.wishes.show', [$offers->wish_id])
+                    .'">'.$offers->title.'</a>';
+            })
             ->addColumn('created_by', function ($offers) {
                 return $offers->first_name . ' ' . $offers->last_name;
             })
@@ -44,6 +46,7 @@ class OffersTableController extends Controller
             ->addColumn('actions', function ($offers) {
                 return $offers->action_buttons;
             })
+            ->rawColumns(['title'])
             ->make(true);
     }
 

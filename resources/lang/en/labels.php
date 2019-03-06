@@ -13,15 +13,15 @@ return [
     */
 
     'general' => [
-        'all'     => 'All',
-        'yes'     => 'Yes',
-        'no'      => 'No',
+        'all'     => 'Alle',
+        'yes'     => 'Ja',
+        'no'      => 'Nein',
         'custom'  => 'Custom',
         'actions' => 'Actions',
-        'active'  => 'Active',
+        'active'  => 'Aktiv',
         'buttons' => [
-            'save'   => 'Save',
-            'update' => 'Update',
+            'save'   => 'Speichern',
+            'update' => 'Aktualisieren',
         ],
         'hide'              => 'Hide',
         'inactive'          => 'Inactive',
@@ -441,8 +441,8 @@ return [
             'table'           => [
                 'title'     => 'Offer',
                 'status'    => 'Status',
-                'createdat' => 'Created At',
-                'createdby' => 'Created By',
+                'createdat' => 'Erstellt in',
+                'createdby' => 'Erstellt von',
                 'all'       => 'All',
             ],
         ],

@@ -1067,23 +1067,21 @@ var dt = window.dt || {};
     //    filterFormSelector: '.simpleSearch'
     //}));
 
-   /* dt.initCallbacks = dt.initCallbacks || [];
+    dt.initCallbacks = dt.initCallbacks || [];
     dt.initCallbacks.push(function (popup) {
-        dt.exitIntent = ExitIntent(function () {
-            popup.show();
-        }, {
-            oneTime: true,
-            useTopDist: true,
-            useMouseLeave: true,
-            useAccel: true,
-            useCookie: !window.dt.debug,
-            manualCookie: true,
-            excludeLeftPixels: 120,
-            cookieOptions: {
-                path: '/'
-            }
-        });
-    });*/
+        dt.exitIntent = $.exitIntent('enable', { 'sensitivity': 0 });
+
+        $(document).bind('exitintent',
+            function() {
+                if(getCookie('exitintent')){
+                    return;
+                }
+                else{
+                    setCookie('exitintent', 'yes');
+                    popup.show();
+                }
+            });
+    });
 
 
     dt.PopupManager.closePopup = function(event) {
@@ -1364,6 +1362,26 @@ var dt = window.dt || {};
         var url_string = window.location.href;
         var url = new URL(url_string);
         return url.searchParams.get(params);
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function setCookie(cname, cvalue) {
+        document.cookie = cname + "=" + cvalue + ";path=/";
     }
 
     function textareaAutosize(){
