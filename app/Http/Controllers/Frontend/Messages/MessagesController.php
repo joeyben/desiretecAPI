@@ -11,6 +11,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Mail;
+use App\Events\Frontend\Messages\MessageCreated;
 
 class MessagesController extends Controller
 {
@@ -35,42 +36,20 @@ class MessagesController extends Controller
     public function sendMessage(Request $request)
     {
         $consumerId = $request->user_id;
-        $groupId = $request->group_id;
         $message = $request->input('message');
         $id = Auth::id();
         $agent = Agent::where('user_id', $id)->where('status', 'Active')->value('id');
 
-        $sellersId = User::join('group_user', 'users.id', '=', 'group_user.user_id')
-                    ->join('groups', 'group_user.group_id', '=', 'groups.id')
-                    ->where('group_user.group_id', '=', $groupId)
-                    ->pluck('user_id');
 
-        if (\in_array($id, $sellersId->all(), true)) {
-            $consumer = User::where('id', '=', $consumerId)->pluck('email');
-            Mail::to($consumer)->send(new MessageSent($message));
+        $message = Message::create([
+            'user_id' => $consumerId,
+            'wish_id' => $request->wish_id,
+            'message' => $message,
+            'agent_id'=> $agent
+        ]);
 
-            $message = Message::create([
-                'user_id'  => $consumerId,
-                'wish_id'  => $request->wish_id,
-                'message'  => $message,
-                'agent_id' => $agent
-            ]);
-        } else {
-            $sellers = User::join('group_user', 'users.id', '=', 'group_user.user_id')
-                            ->join('groups', 'group_user.group_id', '=', 'groups.id')
-                            ->where('group_user.group_id', '=', $groupId)
-                            ->pluck('email');
-
-            foreach ($sellers as $seller) {
-                Mail::to($seller)->send(new MessageSent($message));
-            }
-
-            $message = Message::create([
-                'user_id' => $consumerId,
-                'wish_id' => $request->wish_id,
-                'message' => $message,
-                'agent_id'=> $agent
-            ]);
+        if ($message) {
+            event(new MessageCreated($message));
         }
 
         return ['status' => 'Message Sent!'];

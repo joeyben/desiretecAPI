@@ -13,7 +13,13 @@
             @else
              {{ link_to_route('frontend.index',app_name(), [], ['class' => 'navbar-brand']) }}
            {{--  @endif --}}
-            @yield('logo')
+            <a href="{{ route('frontend.index') }}" class="logo">
+                @if(isWhiteLabel())
+                    <img class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
+                @else
+                    <img class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
+                @endif
+            </a>
 
 
         </div><!--navbar-header-->

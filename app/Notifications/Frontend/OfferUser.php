@@ -8,9 +8,9 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 /**
- * Class OfferCreated.
+ * Class OfferUser.
  */
-class OfferCreated extends Notification
+class OfferUser extends Notification
 {
     use Queueable;
 
@@ -71,8 +71,8 @@ class OfferCreated extends Notification
     public function toMail()
     {
         $confirmation_url = route($this->getRoute(), [$this->wish_id, $this->token]);
-        $subject = trans('email.offer.created');
-        $view = 'emails.offer.offer-created';
+        $subject = trans('email.offer.created_user', ['whitelabel' => $this->wl_name]);
+        $view = 'emails.offer.offer-user';
 
         return (new MailMessage())
             ->from('noreply@desiretec.com', $this->wl_name.' Portal')

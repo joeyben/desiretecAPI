@@ -1,15 +1,5 @@
 @extends('frontend.layouts.app')
 
-@section('logo')
-    <a href="{{ route('frontend.index') }}" class="logo">
-        @if(isWhiteLabel())
-            <img class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
-        @else
-            <img class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
-        @endif
-    </a>
-@endsection
-
 @section('content')
 <section class="section-top">
 
@@ -40,7 +30,7 @@
         @if ($logged_in_user->hasRole('Seller') && count($wish->contacts) )
         <div class="bg-bottom">
             <div class="container">
-                <h4>Kontaktdaten der Kunder</h4>
+                <h4>Kontaktdaten des Kunden</h4>
                 <div class="row">
                     <div class="col-md-3 c-info">
                         <i class="fal fa-pencil"></i>
