@@ -2,8 +2,8 @@
     <div class="confirm-popup">
             <div class="popup-body">
                 <p>Are you sure?</p>
-                <button class='btn btn-primary' @click='cancelEvent'>No</button>
-                <button class='btn btn-primary' @click='deleteMessage'>Yes</button>
+                <button class='secondary-btn antworten-btn' @click='cancelEvent'>Nein</button>
+                <button class='primary-btn antworten-btn' @click='deleteMessage'>Ja</button>
             </div>
             <input class='hidden-popup-val' type="text">
     </div>
@@ -25,7 +25,11 @@ export default {
             axios.get('/message/delete/'+id).then(resp => {
                 $('.confirm-popup').css('display','none');
                 $('body').css('overflow', 'scroll');
-
+                
+                $('#antworten').val('');
+                $('#antworten').slideUp()
+                $('.button-show').css('display','inline-block')
+                $('.button-hide').css('display','none')
                 this.$emit('confirm');
             });
             

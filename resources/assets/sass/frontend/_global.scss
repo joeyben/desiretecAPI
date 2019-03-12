@@ -8,7 +8,7 @@
   padding: 8px 20px;
   line-height: 1.5em;
   text-align:center;
-  border-radius:5px;
+  @include border-radius(3px);
   min-width: 210px;
   font-family: Comfortaa,cursive;
   &:focus, &:hover {
@@ -27,7 +27,7 @@
   line-height: 1.5em;
   font-weight: 100;
   text-align:center;
-  border-radius:5px;
+  @include border-radius(3px);
   min-width: 210px;
   font-family: Comfortaa,cursive;
   &:focus, &:hover {
@@ -94,7 +94,7 @@ a.primary-btn, input.primary-btn{
 }
 .btn{
   padding: 5px 25px;
-  @include border-radius(2px);
+  @include border-radius(3px);
 }
 .row-no-padding {
   [class*="col-"] {
@@ -111,7 +111,7 @@ a.primary-btn, input.primary-btn{
   .arrow{
     padding: 5px 10px;
     margin-right: 10px;
-    @include border-radius(2px);
+    @include border-radius(3px);
     background: $main-color;
     color: white;
     cursor:pointer;
@@ -215,7 +215,7 @@ a.primary-btn, input.primary-btn{
   .img-background{
     height: 400px;
     display: flex;
-    background-image: linear-gradient(to left,  rgba(250,250,250,0) 0%, rgba(250,250,250,0.4) 25%, rgba(250,250,250,0.6) 35%, rgba(250,250,250,0.9) 50%, rgba(250,250,250,1) 60%),  url(https://www.matthewwilliams-ellis.com/wp-content/uploads/2014/02/Italy-panoramic-landscape-photography-showing-Isola-Bella-Beach-in-Taormina-Sicily-Italy-panoramic-landscape-photography-by-landscape-photographer-Matthew-Williams-Ellis.jpg);
+    background-image: linear-gradient(to left,  rgba(250,250,250,0) 0%, rgba(250,250,250,0.4) 35%, rgba(250,250,250,0.6) 45%, rgba(250,250,250,0.9) 60%, rgba(250,250,250,1) 70%),  url(https://www.matthewwilliams-ellis.com/wp-content/uploads/2014/02/Italy-panoramic-landscape-photography-showing-Isola-Bella-Beach-in-Taormina-Sicily-Italy-panoramic-landscape-photography-by-landscape-photographer-Matthew-Williams-Ellis.jpg);
     background-size: cover;
     background-position: center right;
     flex-direction: column;
@@ -723,6 +723,46 @@ a.primary-btn, input.primary-btn{
     border-top:0px !important;
     padding:0 45px 30px 45px;
   }
+}
+
+#antworten{
+  height: 80px;
+  border: 1px solid #ccc;
+  resize: none;
+  padding: 3px 10px;
+  display: none;
+  @include border-radius(3px);
+  width: 100%;
+  margin-top: 25px;
+}
+#antworten:focus{
+  border: 1px solid #636b6f;
+}
+.confirm-popup .popup-body{
+  .primary-btn{
+    border:1px solid $orange;
+    color:#FFF;
+    background: $orange;
+    padding: 4px 30px;
+    font-weight: 100;
+    margin-right: 10px;
+    }
+  .primary-btn:focus{
+      border:1px solid $darkorange;
+      background:$darkorange;
+    }
+  .secondary-btn{
+      border:1px solid $orange;
+      color:$orange;
+      background: transparent;
+      padding: 4px 30px;
+      font-weight: 100;
+    }
+    .secondary-btn:focus{
+      border:1px solid $darkorange;
+      color:$darkorange;
+      background:transparent;
+    }
 }
 
 //mobile style
