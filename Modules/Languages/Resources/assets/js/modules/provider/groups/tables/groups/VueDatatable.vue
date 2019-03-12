@@ -30,7 +30,7 @@ import CssConfig from './CssConfig.js'
     },
     data () {
       return {
-        apiUrl: window.laroute.route('provider.languages.view'),
+        apiUrl: window.laroute.route('provider.languages.list'),
         fields: config.fields,
         sortOrder: config.sortOrder,
         appendParams: config.moreParams,

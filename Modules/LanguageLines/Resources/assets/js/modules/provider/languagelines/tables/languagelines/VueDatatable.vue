@@ -54,6 +54,7 @@ import CssConfig from './CssConfig.js'
       this.$events.$on('restore-set', (id) => this.doRestore(id))
       this.$events.$on('range-date-set', (start, end) => this.doRangeDate(start, end))
       this.$events.$on('whitelabel-set', (id) => this.doWhitelabel(id))
+      this.$events.$on('locale-set', (locale) => this.doLocale(locale))
     },
     render (h) {
       return h(
@@ -98,11 +99,16 @@ import CssConfig from './CssConfig.js'
         this.appendParams.whitelabel = id
         Vue.nextTick(() => this.$refs.vuetable.refresh())
       },
+      doLocale (locale) {
+        this.appendParams.locale = locale
+        Vue.nextTick(() => this.$refs.vuetable.refresh())
+      },
       onFilterReset () {
         delete this.appendParams.filter
         delete this.appendParams.start
         delete this.appendParams.end
         delete this.appendParams.whitelabel
+        delete this.appendParams.locale
         Vue.nextTick(() => this.$refs.vuetable.refresh())
       },
       renderLoader (h) {

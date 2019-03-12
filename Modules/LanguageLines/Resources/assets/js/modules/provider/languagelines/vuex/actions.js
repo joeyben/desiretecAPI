@@ -33,3 +33,16 @@ export const loadWhitelabels = function (store) {
     console.log('LOGIN_USER not answer', error)
   })
 }
+
+export const loadLocales = function (store) {
+  api.loadLocales(response => {
+    if (!response) {
+      console.log('error', response)
+      return
+    }
+
+    store.commit(types.ADD_LOCALES, response.languages)
+  }, error => {
+    console.log('Locales not answer', error)
+  })
+}

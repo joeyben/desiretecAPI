@@ -3,6 +3,6 @@
 return [
     'name' => 'Master',
     'id'   => 7,
-//    'language_lines_model' => \Modules\Master\Entities\MasterLanguageLines::class
+    'locale' => 'de',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class
 ];

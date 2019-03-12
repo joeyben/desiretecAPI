@@ -6,22 +6,22 @@
             </button>
 
             <div class="dropdown-menu dropdown-menu-left">
-                <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}" v-if="hasPermissionTo('create-group') && !hasRole('Administrator')"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
-                <a href="javascript:;" class="dropdown-item" v-on:click="dialogFormVisible = true" v-if="hasRole('Administrator')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>
-                <a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>
-                <a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>
+                <router-link class="dropdown-item" :to="{name: 'root.create', params: { id: 0 }}"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
+                <!--<a href="javascript:;" class="dropdown-item" v-on:click="dialogFormVisible = true" v-if="hasRole('Administrator')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>-->
+                <!--<a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>-->
+                <!--<a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>-->
             </div>
         </h5>
         <div class="header-elements">
             <form action="#" class="row">
                 <div class="col-xl-2 col-md-12 col-sm-12">
-                    <div class="form-group" v-if="hasRole('Administrator')">
-                        <el-select v-model="whitelabel" :placeholder="trans('tables.whitelabel')" @input="doWhitelabel">
+                    <div class="form-group">
+                        <el-select v-model="locale" :placeholder="trans('tables.locale')" @input="doLocale">
                             <el-option style="width: 100%;"
-                                       v-for="item in whitelabels"
+                                       v-for="item in locales"
                                        :key="item.id"
-                                       :label="item.name"
-                                       :value="item.id">
+                                       :label="item.locale"
+                                       :value="item.locale">
                             </el-option>
                         </el-select>
                     </div>
@@ -117,6 +117,7 @@
           fields: config.fields,
           filterText: '',
           whitelabel: '',
+          locale: '',
           value: 10,
           options: [{
             value: 10,
@@ -136,6 +137,7 @@
       computed: {
         ...Vuex.mapGetters({
           whitelabels: 'whitelabels',
+          locales: 'locales',
           checked: 'checked',
           user: 'currentUser'
         }),
@@ -194,6 +196,9 @@
         doWhitelabel () {
           this.$events.fire('whitelabel-set', this.whitelabel)
         },
+        doLocale () {
+          this.$events.fire('locale-set', this.locale)
+        },
         doRange (e) {
           this.$events.fire('range-date-set', moment(e[0], moment.ISO_8601).startOf('day').format('YYYY-MM-DD HH:mm:ss'), moment(e[1], moment.ISO_8601).endOf('day').format('YYYY-MM-DD  HH:mm:ss'))
         },
@@ -208,6 +213,7 @@
           this.filterText = ''
           this.created = ''
           this.whitelabel = ''
+          this.locale = ''
           this.fields = config.fields
           this.$events.fire('filter-reset')
         },

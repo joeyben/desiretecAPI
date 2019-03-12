@@ -20,6 +20,7 @@
     mounted () {
       this.loadUser()
       this.loadWhitelabels()
+      this.loadLocales()
     },
     watch: {
     },
@@ -30,7 +31,8 @@
     methods: {
       ...Vuex.mapActions({
         loadUser: 'loadLoggedUser',
-        loadWhitelabels: 'loadWhitelabels'
+        loadWhitelabels: 'loadWhitelabels',
+        loadLocales: 'loadLocales'
       })
     }
   }

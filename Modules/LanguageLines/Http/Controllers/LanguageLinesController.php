@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\LanguageLines\Entities\LanguageLines;
+use Modules\LanguageLines\Http\Requests\StoreLanguageLineRequest;
 use Modules\LanguageLines\Http\Requests\UpdateLanguageLineRequest;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Illuminate\Support\Facades\Auth;
@@ -84,11 +85,8 @@ class LanguageLinesController extends Controller
 
             $result['data'] = $this->languageline->withCriteria([
                 new OrderBy($sort[0], $sort[1]),
-                new Where('locale', 'en'),
+                new Where('locale', $request->get('locale')),
             ])->paginate($perPage);
-
-//            config(['app.current_whitelabel' => 'master']);
-            $result['data']['currentWhitelabel'] = \Config::get('app.current_whitelabel');
 
             $result['success'] = true;
             $result['status'] = 200;
@@ -107,7 +105,24 @@ class LanguageLinesController extends Controller
      */
     public function create()
     {
-        return view('languagelines::create');
+        try {
+            $result['languageline'] = [
+                'id' => 0,
+                'locale' => '',
+                'group' => '',
+                'key' => '',
+                'text' => ''
+            ];
+
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**
@@ -115,9 +130,25 @@ class LanguageLinesController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreLanguageLineRequest $request)
     {
+        try {
+            $result['languageline'] = $this->languageline->create(
+                $request->only('locale', 'group', 'key', 'text')
+            );
+
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'LanguageLine']);
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
     }
+
 
     /**
      * Show the specified resource.
@@ -155,7 +186,6 @@ class LanguageLinesController extends Controller
         }
 
         return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
-
     }
 
     /**

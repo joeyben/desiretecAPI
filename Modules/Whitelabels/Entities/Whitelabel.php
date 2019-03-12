@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User;
 use Modules\Attachments\Traits\AttachableTrait;
+use Modules\Languages\Entities\Language;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -84,6 +85,14 @@ class Whitelabel extends Model
     public function wishes()
     {
         return $this->hasMany(Wish::class);
+    }
+
+    /**
+     * get languages(locales) for a Whitelabel.
+     */
+    public function languages()
+    {
+        return $this->hasMany(Language::class);
     }
 
     /**

@@ -32,24 +32,11 @@ class LanguageLines extends LanguageLine
     public static function getCacheKey(string $group, string $locale): string
     {
         $whitelabel = static::$whitelabel;
-//        dd("spatie.translation-loader.{$group}.{$locale}.{$whitelabel}");
-        return "spatie.translation-loader.{$group}.{$locale}.{$whitelabel}";
+        return "desiretec.translation-loader.{$group}.{$locale}.{$whitelabel}";
     }
 
     public static function getTranslationsForGroup(string $locale, string $group): array
     {
-        dd(static::query()
-            ->where('group', $group)
-            ->where('locale', $locale)
-            ->get()
-            ->map(function (LanguageLine $languageLine) use ($locale) {
-                return [
-                    'key' => $languageLine->key,
-                    'text' => $languageLine->text,
-                ];
-            })
-            ->pluck('text', 'key')
-            ->toArray());
         return Cache::rememberForever(static::getCacheKey($group, $locale), function () use ($group, $locale) {
             return static::query()
                 ->where('group', $group)

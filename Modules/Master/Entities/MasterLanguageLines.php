@@ -12,7 +12,8 @@ class MasterLanguageLines extends LanguageLines
      * @var string
      */
 
-    protected $table = 'language_lines_master';
+    // TODO: change to master table
+    protected $table = 'language_lines_tui';
 
     public static $whitelabel = 'master';
 }

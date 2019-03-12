@@ -3,6 +3,7 @@
 Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'provider', 'namespace' => 'Modules\Languages\Http\Controllers'], function () {
     Route::get('languages', 'LanguagesController@index')->name('provider.languages');
     Route::get('languages/view', 'LanguagesController@view')->name('provider.languages.view');
+    Route::get('languages/list', 'LanguagesController@view')->name('provider.languages.list');
     Route::put('languages', 'LanguagesController@store')->name('provider.languages.store');
     Route::get('languages/{id}', 'LanguagesController@show')->name('provider.languages.show')->where('id', '[0-9]+');
     Route::get('languages/{id}/edit', 'LanguagesController@edit')->name('provider.languages.edit')->where('id', '[0-9]+');

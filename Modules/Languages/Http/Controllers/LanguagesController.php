@@ -19,6 +19,7 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
+use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class LanguagesController extends Controller
 {
@@ -27,6 +28,10 @@ class LanguagesController extends Controller
      * @var \Modules\Languages\Repositories\Contracts\LanguagesRepository
      */
     private $languages;
+    /**
+     * @var \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository
+     */
+    private $whitelabels;
     /**
      * @var \Illuminate\Routing\ResponseFactory
      */
@@ -48,14 +53,16 @@ class LanguagesController extends Controller
      * GroupsController constructor.
      *
      * @param LanguagesRepository $languages
+     * @param WhitelabelsRepository $whitelabels
      * @param ResponseFactory $response
      * @param AuthManager $auth
      * @param Translator $lang
      * @param Carbon $carbon
      */
-    public function __construct(LanguagesRepository $languages, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
+    public function __construct(LanguagesRepository $languages, WhitelabelsRepository $whitelabels, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
     {
         $this->languages = $languages;
+        $this->whitelabels = $whitelabels;
         $this->response = $response;
         $this->auth = $auth;
         $this->lang = $lang;
@@ -72,6 +79,27 @@ class LanguagesController extends Controller
     }
 
     public function view(Request $request)
+    {
+        try {
+            if (isWhiteLabel()) {
+                $languages = $this->languages->findByWhitelabelId(getCurrentWhiteLabelId());
+            } else {
+                $languages = $this->languages->all();
+            }
+            $result['languages'] = $languages;
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
+    }
+
+
+    public function list(Request $request)
     {
 //        $this->authorize('view', Group::class);
 

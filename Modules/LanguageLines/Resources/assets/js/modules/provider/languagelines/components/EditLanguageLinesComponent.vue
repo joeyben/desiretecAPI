@@ -49,7 +49,7 @@
                                                 <div class="col-lg-9">
                                                     <input type="text" class="form-control" :class="errors.has('group') ? 'is-invalid': ''" id='group' name='group' :placeholder="trans('modals.group')" @input="updateGroup"  :value="languageline.group"/>
                                                     <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('locale')"></strong>
+                                                        <strong v-text="errors.get('group')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
@@ -65,79 +65,12 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.text') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('text') ? 'is-invalid': ''" id='text' name='locale' :placeholder="trans('modals.text')" @input="updateGroup"  :value="languageline.text"/>
+                                                    <input type="text" class="form-control" :class="errors.has('text') ? 'is-invalid': ''" id='text' name='text' :placeholder="trans('modals.text')" @input="updateGroup"  :value="languageline.text"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('text')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--<div class="form-group row">-->
-                                                <!--<label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.display_name') }} <span class="text-danger"> *</span></label>-->
-                                                <!--<div class="col-lg-9">-->
-                                                    <!--<input type="text" class="form-control" :class="errors.has('display_name') ? 'is-invalid': ''" id='display_name' name='display_name' :placeholder="trans('modals.display_name')" @input="updateGroup"  :value="group.display_name"/>-->
-                                                    <!--<div class="invalid-feedback">-->
-                                                        <!--<strong v-text="errors.get('display_name')"></strong>-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="form-group row">-->
-                                                <!--<label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.owner') }}</label>-->
-                                                <!--<div class="col-lg-9">-->
-                                                    <!--<input type="text" class="form-control"  id='owner' disabled readonly :placeholder="trans('modals.owner')"  :value="group.owner"/>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="form-group row">-->
-                                                <!--<label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.whitelabel') }}</label>-->
-                                                <!--<div class="col-lg-9">-->
-                                                    <!--<input type="text" class="form-control"  id='whitelabel' disabled readonly :placeholder="trans('modals.whitelabel')"  :value="getGroup('whitelabel', 'display_name')"/>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="form-group row">-->
-                                                <!--<label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.users') }} <span class="text-danger"> *</span></label>-->
-                                                <!--<div class="col-lg-9">-->
-                                                    <!--<el-transfer style="width: 100%;"-->
-                                                                 <!--@input="inputUsers"-->
-                                                                 <!--filterable-->
-                                                                 <!--:titles="['Source', 'Target']"-->
-                                                                 <!--:value="group.users"-->
-                                                                 <!--:data="generateUsers()">-->
-                                                    <!--</el-transfer>-->
-                                                    <!--<div class="help-block text-danger" v-if="errors.has('users')">-->
-                                                        <!--<strong v-text="errors.get('users')"></strong>-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="form-group row">-->
-                                                <!--<label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.description') }}</label>-->
-                                                <!--<div class="col-lg-9">-->
-                                                    <!--<textarea class="form-control" :class="errors.has('description') ? 'is-invalid': ''" rows="5" id='description' name='description' :placeholder="trans('modals.description')" @input="updateGroup"  :value="group.description"></textarea>-->
-                                                    <!--<div class="invalid-feedback">-->
-                                                        <!--<strong v-text="errors.get('description')"></strong>-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="form-group row">-->
-                                                <!--<label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.status') }} </label>-->
-                                                <!--<div class="col-lg-9">-->
-                                                    <!--<el-switch-->
-                                                            <!--@input="updateStatus"-->
-                                                            <!--:value="group.status"-->
-                                                            <!--active-color="#13ce66"-->
-                                                            <!--inactive-color="#ff4949">-->
-                                                    <!--</el-switch>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="form-group row">-->
-                                                <!--<label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.current') }} </label>-->
-                                                <!--<div class="col-lg-9">-->
-                                                    <!--<el-switch-->
-                                                            <!--@input="updateCurrent"-->
-                                                            <!--:value="group.current"-->
-                                                            <!--active-color="#13ce66"-->
-                                                            <!--inactive-color="#ff4949">-->
-                                                    <!--</el-switch>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
                                         </div>
 
                                     </fieldset>
@@ -251,14 +184,14 @@
         })
 
         if (id === 0) {
-          this.CreateGroup(parseInt(this.$route.params.whitelabel_id))
+          this.CreateGroup()
         } else {
           this.EditGroup(id)
         }
       },
-      CreateGroup (whitelabelId) {
+      CreateGroup () {
         this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
-        this.$http.get(window.laroute.route('provider.groups.create', {whitelabelId: whitelabelId}))
+        this.$http.get(window.laroute.route('provider.language-lines.create'))
           .then(this.onLoadGroupSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -294,7 +227,7 @@
       },
       onSubmitStore () {
         this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
-        this.$http.put(window.laroute.route('provider.groups.store'), this.group)
+        this.$http.put(window.laroute.route('provider.language-lines.store'), this.languageline)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {

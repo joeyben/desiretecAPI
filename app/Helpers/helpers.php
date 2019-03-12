@@ -386,12 +386,52 @@ if (!function_exists('getWhiteLabelLogo')) {
      */
     function getWhiteLabelLogoUrl()
     {
-        return \Modules\Attachments\Entities\Attachment::select([
+        $logo = \Modules\Attachments\Entities\Attachment::select([
         config('module.attachments.table') . '.basename',
         config('module.attachments.table') . '.type',
         ])
         ->where('attachable_id', getCurrentWhiteLabelId())
         ->where('type', 'whitelabels/logo')
-        ->first()->toArray()['url'];
+        ->first();
+
+        if ($logo) {
+            return $logo->toArray()['url'];
+        }
+
+        return null;
+    }
+}
+
+if (!function_exists('setTranslationLoaderModel')) {
+    /**
+     * Set translation-loader model.
+     * @param ClassDeclaration model
+     */
+    function setTranslationLoaderModel($model)
+    {
+        config(['translation-loader.model', $model]);
+    }
+}
+
+if (!function_exists('getTranslationLoaderModel')) {
+    /**
+     * return translation-loader model.
+     *
+     * @return int
+     */
+    function getTranslationLoaderModel()
+    {
+        return config('translation-loader.model');
+    }
+}
+
+if (!function_exists('setWhitelabelLocale')) {
+    /**
+     * Set locale
+     * @param string $locale
+     */
+    function setWhitelabelLocale($locale)
+    {
+        config(['app.locale' => $locale]);
     }
 }

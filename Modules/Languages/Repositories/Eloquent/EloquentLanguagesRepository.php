@@ -15,4 +15,11 @@ class EloquentLanguagesRepository extends RepositoryAbstract implements Language
     {
         return Language::class;
     }
+
+    public function findByWhitelabelId(int $whitelabelId)
+    {
+        return $this->model()::whereHas('whitelabels', function ($q) use ($whitelabelId) {
+            $q->where('whitelabels.id', $whitelabelId);
+        })->get();
+    }
 }

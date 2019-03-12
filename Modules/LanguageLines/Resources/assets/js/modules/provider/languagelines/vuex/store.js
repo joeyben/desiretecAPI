@@ -6,7 +6,8 @@ const state = {
   languageline: {},
   users: {},
   checked: [],
-  whitelabels: {}
+  whitelabels: {},
+  locales: {}
 }
 
 const mutations = {
@@ -28,6 +29,9 @@ const mutations = {
   },
   ADD_WHITELABELS (state, whitelabels) {
     state.whitelabels = whitelabels
+  },
+  ADD_LOCALES (state, locales) {
+    state.locales = locales
   },
   updateGroup (state, obj) {
     state.group[obj.name] = obj.value

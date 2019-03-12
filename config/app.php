@@ -147,8 +147,6 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
-//    'current_whitelabel' => '',
-
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
