@@ -1,6 +1,7 @@
 <?php
 
 Route::group(['domain' => '$DOMAIN$'], function () {
+    etCurrentWhiteLabelId(\Config::get('$MODULESMAL$.id'));
     Route::group(['middleware' => 'web', 'namespace' => 'Modules\$MODULE$\Http\Controllers' , 'as' => '$MODULESMAL$.'], function () {
         Route::get('/', '$MODULE$Controller@index');
         Route::get('show', '$MODULE$Controller@show');
