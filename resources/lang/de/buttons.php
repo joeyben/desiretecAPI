@@ -41,17 +41,17 @@ return [
     ],
 
     'general' => [
-        'cancel'   => 'Cancel',
-        'continue' => 'Continue',
-        'preview'  => 'Preview',
+        'cancel'   => 'Abbrechen',
+        'continue' => 'Fortsetzen',
+        'preview'  => 'Vorschau',
 
         'crud' => [
-            'create' => 'Create',
-            'add'    => 'Add',
-            'delete' => 'Delete',
-            'edit'   => 'Edit',
-            'update' => 'Update',
-            'view'   => 'View',
+            'create' => 'Erstellen',
+            'add'    => 'Hinzufügen',
+            'delete' => 'Löschen',
+            'edit'   => 'Editieren',
+            'update' => 'Aktualisieren',
+            'view'   => 'Ansehen',
         ],
 
         'save' => 'Save',

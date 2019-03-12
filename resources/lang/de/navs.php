@@ -19,21 +19,21 @@ return [
 
     'frontend' => [
         'dashboard'       => 'Dashboard',
-        'login'           => 'Login',
+        'login'           => 'Einloggen',
         'macros'          => 'Macros',
-        'register'        => 'Register',
-        'wishes'          => 'My Wishes',
-        'create_wish'     => 'Create Wish',
+        'register'        => 'Registrieren',
+        'wishes'          => 'Meine Reisewünsche',
+        'create_wish'     => 'Wunsch erstellen',
         'wisheslist'      => 'Reisewünsche',
         'offers'          => 'Meine Angebote',
-        'agents'          => 'Agente',
+        'agents'          => 'Agenten',
         'user'            => [
             'account'         => 'Mein Konto',
             'administration'  => 'Administration',
             'change_password' => 'Passwort ändern',
             'my_information'  => 'Meine Informationen',
             'profile'         => 'Profil',
-            'agents'          => 'Agente',
+            'agents'          => 'Agenten',
         ],
     ],
 ];
