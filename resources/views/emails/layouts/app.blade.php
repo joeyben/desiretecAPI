@@ -36,7 +36,9 @@
                             </tr>
                             <tr height='5'></tr>
                             <tr>
+                                <td>
                                 @yield('content')
+                                </td>
                             </tr>
 
                             </tbody>
