@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as actions from './actions'
 import * as getters from './getters'
-import groups from '../modules/provider/groups/vuex/store'
+import groups from '../modules/provider/languages/vuex/store'
 
 Vue.use(Vuex)
 

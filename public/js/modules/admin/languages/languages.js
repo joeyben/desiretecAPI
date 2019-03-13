@@ -24337,7 +24337,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/groups/components/EditGroupComponent.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/languages/components/AddLanguageComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -24346,9 +24346,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-af7722cc", Component.options)
+    hotAPI.createRecord("data-v-33d65ca5", Component.options)
   } else {
-    hotAPI.reload("data-v-af7722cc", Component.options)
+    hotAPI.reload("data-v-33d65ca5", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -24455,7 +24455,7 @@ if ($groupsComponent) {
         name: 'root.edit',
         component: __webpack_require__(215)
       }, {
-        path: '/create/:id(\\d+)/:whitelabel_id(\\d+)',
+        path: '/create/:id(\\d+)',
         name: 'root.create',
         component: __webpack_require__(215)
       }]
@@ -39473,10 +39473,11 @@ var getters = _interopRequireWildcard(_getters);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var state = {
-  group: {},
+  language: {},
   users: {},
   checked: [],
-  whitelabels: {}
+  whitelabels: {},
+  missingLanguages: {}
 };
 
 var mutations = {
@@ -39492,14 +39493,17 @@ var mutations = {
   ADD_CHECKED: function ADD_CHECKED(state, checked) {
     state.checked = checked;
   },
-  ADD_GROUP: function ADD_GROUP(state, group) {
-    state.group = group;
+  ADD_LANGUAGE: function ADD_LANGUAGE(state, language) {
+    state.language = language;
   },
   ADD_WHITELABELS: function ADD_WHITELABELS(state, whitelabels) {
     state.whitelabels = whitelabels;
   },
-  updateGroup: function updateGroup(state, obj) {
-    state.group[obj.name] = obj.value;
+  ADD_MISSING_LANGUAGES: function ADD_MISSING_LANGUAGES(state, missingLanguages) {
+    state.missingLanguages = missingLanguages;
+  },
+  updateLanguage: function updateLanguage(state, obj) {
+    state.language[obj.name] = obj.value;
   }
 };
 
@@ -39520,7 +39524,7 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.loadWhitelabels = exports.addChecked = exports.removeCheckedId = exports.addCheckedId = exports.addGroup = undefined;
+exports.loadMissingLanguages = exports.addChecked = exports.removeCheckedId = exports.addCheckedId = exports.addLanguage = undefined;
 
 var _mutationTypes = __webpack_require__(228);
 
@@ -39534,8 +39538,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var addGroup = exports.addGroup = function addGroup(store, group) {
-  store.commit(types.ADD_GROUP, group);
+var addLanguage = exports.addLanguage = function addLanguage(store, language) {
+  store.commit(types.ADD_LANGUAGE, language);
 };
 
 var addCheckedId = exports.addCheckedId = function addCheckedId(store, id) {
@@ -39550,14 +39554,14 @@ var addChecked = exports.addChecked = function addChecked(store, checked) {
   store.commit(types.ADD_CHECKED, checked);
 };
 
-var loadWhitelabels = exports.loadWhitelabels = function loadWhitelabels(store) {
-  _api2.default.loadWhitelabels(function (response) {
+var loadMissingLanguages = exports.loadMissingLanguages = function loadMissingLanguages(store) {
+  _api2.default.loadMissingLanguages(function (response) {
     if (!response) {
       console.log('error', response);
       return;
     }
 
-    store.commit(types.ADD_WHITELABELS, response.whitelabels);
+    store.commit(types.ADD_MISSING_LANGUAGES, response.missingLanguages);
   }, function (error) {
     console.log('LOGIN_USER not answer', error);
   });
@@ -39574,11 +39578,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var LOAD_LANGUAGES = exports.LOAD_LANGUAGES = 'LOAD_LANGUAGES';
-var ADD_GROUP = exports.ADD_GROUP = 'ADD_GROUP';
+var ADD_LANGUAGE = exports.ADD_LANGUAGE = 'ADD_LANGUAGE';
 var ADD_CHECKED = exports.ADD_CHECKED = 'ADD_CHECKED';
 var ADD_CHECKED_ID = exports.ADD_CHECKED_ID = 'ADD_CHECKED_ID';
 var REMOVE_CHECKED_ID = exports.REMOVE_CHECKED_ID = 'REMOVE_CHECKED_ID';
 var ADD_WHITELABELS = exports.ADD_WHITELABELS = 'ADD_WHITELABELS';
+var ADD_MISSING_LANGUAGES = exports.ADD_MISSING_LANGUAGES = 'ADD_MISSING_LANGUAGES';
 var ADD_USERS_BY_WHITELABEL = exports.ADD_USERS_BY_WHITELABEL = 'ADD_USERS_BY_WHITELABEL';
 var ADD_USERS = exports.ADD_USERS = 'ADD_USERS';
 
@@ -39593,8 +39598,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-  loadWhitelabels: function loadWhitelabels(success, error) {
-    return window.axios.get(window.laroute.route('admin.whitelabels.view')).then(function (response) {
+  loadMissingLanguages: function loadMissingLanguages(success, error) {
+    return window.axios.get(window.laroute.route('provider.languages.missing')).then(function (response) {
       return success(response.data);
     }, function (response) {
       return error(response);
@@ -39612,14 +39617,17 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var group = exports.group = function group(state) {
-  return state.group;
+var language = exports.language = function language(state) {
+  return state.language;
 };
 var checked = exports.checked = function checked(state) {
   return state.checked;
 };
 var whitelabels = exports.whitelabels = function whitelabels(state) {
   return state.whitelabels;
+};
+var missingLanguages = exports.missingLanguages = function missingLanguages(state) {
+  return state.missingLanguages;
 };
 
 /***/ }),
@@ -89550,7 +89558,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/groups/components/GroupsComponent.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/languages/components/LanguagesComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -89559,9 +89567,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-480ed3c7", Component.options)
+    hotAPI.createRecord("data-v-46836d23", Component.options)
   } else {
-    hotAPI.reload("data-v-480ed3c7", Component.options)
+    hotAPI.reload("data-v-46836d23", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -89603,21 +89611,21 @@ var _VueDatatable2 = _interopRequireDefault(_VueDatatable);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  name: 'GroupsComponent',
+  name: 'LanguagesComponent',
   components: { VueDatatable: _VueDatatable2.default },
   data: function data() {
     return {};
   },
   mounted: function mounted() {
     this.loadUser();
-    this.loadWhitelabels();
+    this.loadMissingLanguages();
   },
 
   watch: {},
   computed: _extends({}, _vuex2.default.mapGetters({})),
   methods: _extends({}, _vuex2.default.mapActions({
     loadUser: 'loadLoggedUser',
-    loadWhitelabels: 'loadWhitelabels'
+    loadMissingLanguages: 'loadMissingLanguages'
   }))
 };
 
@@ -89647,7 +89655,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/groups/tables/groups/VueDatatable.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/languages/tables/languages/VueDatatable.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -89656,9 +89664,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1e16fd26", Component.options)
+    hotAPI.createRecord("data-v-c84adc78", Component.options)
   } else {
-    hotAPI.reload("data-v-1e16fd26", Component.options)
+    hotAPI.reload("data-v-c84adc78", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -89942,10 +89950,10 @@ exports.default = {
       this.addChecked(data);
     },
     onLoading: function onLoading() {
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
+      this.$store.dispatch('block', { element: 'languagesComponent', load: true });
     },
     onLoaded: function onLoaded() {
-      this.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$store.dispatch('block', { element: 'languagesComponent', load: false });
     },
     boardsCallBack: function boardsCallBack(boards) {
       var data = [];
@@ -90016,27 +90024,27 @@ exports.default = {
     onDelete: function onDelete(id) {
       var _this12 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
+      this.$store.dispatch('block', { element: 'languagesComponent', load: true });
       this.$http.delete(window.laroute.route('provider.groups.destroy', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
-        _this12.$store.dispatch('block', { element: 'groupsComponent', load: false });
+        _this12.$store.dispatch('block', { element: 'languagesComponent', load: false });
       });
     },
     onForceDelete: function onForceDelete(id) {
       var _this13 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
+      this.$store.dispatch('block', { element: 'languagesComponent', load: true });
       // eslint-disable-next-line
       this.$http.delete(laroute.route('provider.groups.forceDelete', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
-        _this13.$store.dispatch('block', { element: 'groupsComponent', load: false });
+        _this13.$store.dispatch('block', { element: 'languagesComponent', load: false });
       });
     },
     onRestore: function onRestore(id) {
       var _this14 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
+      this.$store.dispatch('block', { element: 'languagesComponent', load: true });
       // eslint-disable-next-line
       this.$http.put(window.laroute.route('provider.groups.restore', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
-        _this14.$store.dispatch('block', { element: 'groupsComponent', load: false });
+        _this14.$store.dispatch('block', { element: 'languagesComponent', load: false });
       });
     },
     onDeleteSuccess: function onDeleteSuccess(response) {
@@ -104718,7 +104726,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/groups/tables/groups/Detail.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/languages/tables/languages/Detail.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -104727,9 +104735,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7f040c79", Component.options)
+    hotAPI.createRecord("data-v-29c2ef97", Component.options)
   } else {
-    hotAPI.reload("data-v-7f040c79", Component.options)
+    hotAPI.reload("data-v-29c2ef97", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -104819,7 +104827,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7f040c79", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-29c2ef97", module.exports)
   }
 }
 
@@ -104853,7 +104861,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/groups/tables/groups/Actions.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/languages/tables/languages/Actions.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -104862,9 +104870,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3dc0a505", Component.options)
+    hotAPI.createRecord("data-v-2a43b4b2", Component.options)
   } else {
-    hotAPI.reload("data-v-3dc0a505", Component.options)
+    hotAPI.reload("data-v-2a43b4b2", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -104885,13 +104893,13 @@ var content = __webpack_require__(396);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(208)("3c9bc1a6", content, false, {});
+var update = __webpack_require__(208)("4bbf6f96", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3dc0a505\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Actions.vue", function() {
-     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3dc0a505\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Actions.vue");
+   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2a43b4b2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Actions.vue", function() {
+     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2a43b4b2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Actions.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -105094,7 +105102,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3dc0a505", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-2a43b4b2", module.exports)
   }
 }
 
@@ -105124,7 +105132,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/groups/tables/groups/CustomLinkById.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/languages/tables/languages/CustomLinkById.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -105133,9 +105141,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3bdf4fa5", Component.options)
+    hotAPI.createRecord("data-v-571034c3", Component.options)
   } else {
-    hotAPI.reload("data-v-3bdf4fa5", Component.options)
+    hotAPI.reload("data-v-571034c3", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -105251,7 +105259,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3bdf4fa5", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-571034c3", module.exports)
   }
 }
 
@@ -105281,7 +105289,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/groups/tables/groups/CustomLinkByName.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/languages/tables/languages/CustomLinkByName.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -105290,9 +105298,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-d7221ed6", Component.options)
+    hotAPI.createRecord("data-v-b209f39a", Component.options)
   } else {
-    hotAPI.reload("data-v-d7221ed6", Component.options)
+    hotAPI.reload("data-v-b209f39a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -105406,7 +105414,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-d7221ed6", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-b209f39a", module.exports)
   }
 }
 
@@ -105436,7 +105444,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/groups/tables/groups/CustomStatus.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/languages/tables/languages/CustomStatus.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -105445,9 +105453,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-38b8cdeb", Component.options)
+    hotAPI.createRecord("data-v-93073aee", Component.options)
   } else {
-    hotAPI.reload("data-v-38b8cdeb", Component.options)
+    hotAPI.reload("data-v-93073aee", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -105521,7 +105529,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-38b8cdeb", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-93073aee", module.exports)
   }
 }
 
@@ -105551,7 +105559,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/groups/tables/groups/CustomUsers.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/languages/tables/languages/CustomUsers.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -105560,9 +105568,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-db1e4fc2", Component.options)
+    hotAPI.createRecord("data-v-7db937c1", Component.options)
   } else {
-    hotAPI.reload("data-v-db1e4fc2", Component.options)
+    hotAPI.reload("data-v-7db937c1", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -105634,7 +105642,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-db1e4fc2", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7db937c1", module.exports)
   }
 }
 
@@ -105664,7 +105672,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/groups/tables/groups/FilterBar.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/languages/tables/languages/FilterBar.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -105673,9 +105681,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-eb46d2fa", Component.options)
+    hotAPI.createRecord("data-v-661c76a5", Component.options)
   } else {
-    hotAPI.reload("data-v-eb46d2fa", Component.options)
+    hotAPI.reload("data-v-661c76a5", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -105948,38 +105956,17 @@ var render = function() {
           "div",
           { staticClass: "dropdown-menu dropdown-menu-left" },
           [
-            _vm.hasPermissionTo("create-group") && !_vm.hasRole("Administrator")
-              ? _c(
-                  "router-link",
-                  {
-                    staticClass: "dropdown-item",
-                    attrs: { to: { name: "root.edit", params: { id: 0 } } }
-                  },
-                  [
-                    _c("i", { staticClass: "icon-plus3" }),
-                    _vm._v(_vm._s(_vm.trans("button.create")))
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.hasRole("Administrator")
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-item",
-                    attrs: { href: "javascript:;" },
-                    on: {
-                      click: function($event) {
-                        _vm.dialogFormVisible = true
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "icon-plus3" }),
-                    _vm._v("  " + _vm._s(_vm.trans("button.create")))
-                  ]
-                )
-              : _vm._e(),
+            _c(
+              "router-link",
+              {
+                staticClass: "dropdown-item",
+                attrs: { to: { name: "root.create", params: { id: 0 } } }
+              },
+              [
+                _c("i", { staticClass: "icon-plus3" }),
+                _vm._v(_vm._s(_vm.trans("button.create")))
+              ]
+            ),
             _vm._v(" "),
             _c(
               "a",
@@ -106327,7 +106314,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-eb46d2fa", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-661c76a5", module.exports)
   }
 }
 
@@ -106390,7 +106377,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-480ed3c7", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-46836d23", module.exports)
   }
 }
 
@@ -106406,80 +106393,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -106566,34 +106479,29 @@ var _toastr2 = _interopRequireDefault(_toastr);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  name: 'EditGroupComponent',
+  name: 'AddLanguageComponent',
   components: { VueTable: _Table2.default, DateComponent: _DateComponent2.default },
   data: function data() {
     return {
       // eslint-disable-next-line
       errors: new _errors.Errors(),
-      close: false
+      close: false,
+      languageId: null
     };
   },
   mounted: function mounted() {
     this.loadModal();
   },
 
-  watch: {
-    '$route.params.id': function $routeParamsId() {
-      this.EditGroup(parseInt(this.$route.params.id));
-    }
-  },
+  watch: {},
   computed: _extends({}, _vuex2.default.mapGetters({
-    group: 'group',
-    user: 'currentUser'
-  }), {
-    can_logs: function can_logs() {
-      return !this.deleted && this.hasPermissionTo('logs-group');
-    }
-  }),
+    language: 'language',
+    user: 'currentUser',
+    whitelabels: 'whitelabels',
+    missingLanguages: 'missingLanguages'
+  })),
   methods: _extends({}, _vuex2.default.mapActions({
-    addGroup: 'addGroup'
+    addLanguage: 'addLanguage'
   }), {
     hasPermissionTo: function hasPermissionTo(permission) {
       return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
@@ -106601,71 +106509,38 @@ exports.default = {
     hasRole: function hasRole(permission) {
       return this.user.hasOwnProperty('roles') && this.user.roles[permission];
     },
-    generateUsers: function generateUsers() {
-      var data = [];
-      if (this.group.hasOwnProperty('usersList')) {
-        this.group['usersList'].forEach(function (user, index) {
-          data.push({
-            label: user['name'],
-            key: user['id']
-          });
-        });
-      }
-
-      return data;
-    },
-    inputUsers: function inputUsers(value) {
-      this.$store.commit('updateGroup', { name: 'users', value: value });
-    },
-    getGroup: function getGroup(key, value) {
-      return this.group.hasOwnProperty(key) ? this.group[key][value] : '';
-    },
-    updateGroup: function updateGroup(e) {
+    updateLanguage: function updateLanguage(e) {
       if (e.target.value !== null) {
-        this.$store.commit('updateGroup', { name: e.target.name, value: e.target.value });
+        console.log('name', e.target.name);
+        console.log('value', e.target.value);
+        this.$store.commit('updateLanguage', { name: e.target.name, value: e.target.value });
       }
-    },
-    updateStatus: function updateStatus(value) {
-      this.$store.commit('updateGroup', { name: 'status', value: value });
-    },
-    updateCurrent: function updateCurrent(value) {
-      this.$store.commit('updateGroup', { name: 'current', value: value });
     },
     loadModal: function loadModal() {
       var _this = this;
 
       var id = parseInt(this.$route.params.id);
-      $('#modal_large_group').on('hidden.bs.modal', function () {
+      $('#modal_large_language').on('hidden.bs.modal', function () {
         _this.$router.push({ name: 'root' });
       });
 
       if (id === 0) {
-        this.CreateGroup(parseInt(this.$route.params.whitelabel_id));
-      } else {
-        this.EditGroup(id);
+        this.CreateLanguage();
       }
     },
-    CreateGroup: function CreateGroup(whitelabelId) {
+    CreateLanguage: function CreateLanguage() {
       var _this2 = this;
 
       this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.get(window.laroute.route('provider.groups.create', { whitelabelId: whitelabelId })).then(this.onLoadGroupSuccess).catch(this.onFailed).then(function () {
+      this.$http.get(window.laroute.route('provider.languages.create')).then(this.onLoadLanguageSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'groupsComponent', load: false });
       });
     },
-    EditGroup: function EditGroup(id) {
-      var _this3 = this;
-
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.get(window.laroute.route('provider.groups.edit', { id: id })).then(this.onLoadGroupSuccess).catch(this.onFailed).then(function () {
-        _this3.$store.dispatch('block', { element: 'groupsComponent', load: false });
-      });
-    },
-    onLoadGroupSuccess: function onLoadGroupSuccess(response) {
+    onLoadLanguageSuccess: function onLoadLanguageSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.addGroup(response.data.group);
-        if (!($('#modal_large_group').data('bs.modal') || {}).isShown) {
-          $('#modal_large_group').modal('show');
+        this.addLanguage(response.data.language);
+        if (!($('#modal_large_language').data('bs.modal') || {}).isShown) {
+          $('#modal_large_language').modal('show');
         }
       } else {
         _toastr2.default.error(response.data.message);
@@ -106675,33 +106550,23 @@ exports.default = {
       var id = parseInt(this.$route.params.id);
       if (id === 0) {
         this.onSubmitStore();
-      } else {
-        this.onSubmitUpdate(id);
       }
     },
     onSubmitStore: function onSubmitStore() {
-      var _this4 = this;
+      var _this3 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.put(window.laroute.route('provider.groups.store'), this.group).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
-        _this4.$store.dispatch('block', { element: 'groupsComponent', load: false });
-      });
-    },
-    onSubmitUpdate: function onSubmitUpdate(id) {
-      var _this5 = this;
-
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.put(window.laroute.route('provider.groups.update', { id: id }), this.group).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
-        _this5.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$store.dispatch('block', { element: 'languagesComponent', load: true });
+      this.$http.put(window.laroute.route('provider.languages.store'), this.language).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+        _this3.$store.dispatch('block', { element: 'languagesComponent', load: false });
       });
     },
     onSubmitSuccess: function onSubmitSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
         if (this.close) {
-          $('#modal_large_group').modal('hide');
+          $('#modal_large_language').modal('hide');
           this.$router.push({ name: 'root' });
         } else {
-          this.$router.push({ name: 'root.edit', params: { id: response.data.group.id } });
+          this.$router.push({ name: 'root.edit', params: { id: response.data.language.id } });
         }
         this.$message({
           message: response.data.message,
@@ -106997,7 +106862,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/groups/components/DateComponent.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/languages/components/DateComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -107006,9 +106871,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-51da61ad", Component.options)
+    hotAPI.createRecord("data-v-a7dce404", Component.options)
   } else {
-    hotAPI.reload("data-v-51da61ad", Component.options)
+    hotAPI.reload("data-v-a7dce404", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -107151,7 +107016,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-51da61ad", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-a7dce404", module.exports)
   }
 }
 
@@ -107167,555 +107032,163 @@ var render = function() {
     "div",
     {
       staticClass: "modal fade",
-      attrs: { id: "modal_large_group", tabindex: "-1" }
+      attrs: { id: "modal_large_language", tabindex: "-1" }
     },
     [
       _c("div", { staticClass: "modal-dialog modal-lg" }, [
-        _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "nav nav-tabs nav-tabs-highlight nav-justified" },
-            [
-              _vm.can_logs
-                ? _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "nav-link active",
-                        attrs: {
-                          href: "#highlighted-justified-tab1",
-                          "data-toggle": "tab"
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "icon-pencil6 mr-2" }),
-                        _vm._v(" " + _vm._s(_vm.trans("modals.group")))
-                      ]
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.can_logs
-                ? _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "nav-link",
-                        attrs: {
-                          href: "#highlighted-justified-tab2",
-                          "data-toggle": "tab"
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "icon-file-text mr-2" }),
-                        _vm._v(" " + _vm._s(_vm.trans("modals.logs")))
-                      ]
-                    )
-                  ])
-                : _vm._e()
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "tab-content" }, [
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane fade show active",
-                attrs: { id: "highlighted-justified-tab1" }
+        _c(
+          "form",
+          {
+            attrs: { action: "#" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.onSubmit($event)
               },
-              [
-                _c("div", { staticClass: "card-body" }, [
+              keydown: function($event) {
+                return _vm.errors.clear($event.target.name)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("fieldset", [
+                  _vm._m(1),
+                  _vm._v(" "),
                   _c(
-                    "form",
-                    {
-                      attrs: { action: "#" },
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.onSubmit($event)
-                        },
-                        keydown: function($event) {
-                          return _vm.errors.clear($event.target.name)
-                        }
-                      }
-                    },
+                    "div",
+                    { staticClass: "collapse show", attrs: { id: "demo1" } },
                     [
-                      _c("div", { staticClass: "modal-body" }, [
-                        _c("fieldset", [
-                          _vm._m(1),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "collapse show",
-                              attrs: { id: "demo1" }
-                            },
-                            [
-                              _vm.group.id !== 0
-                                ? _c("div", { staticClass: "form-group row" }, [
-                                    _c(
-                                      "label",
-                                      {
-                                        staticClass: "col-lg-3 col-form-label"
-                                      },
-                                      [
-                                        _vm._v(
-                                          " " + _vm._s(_vm.trans("modals.id"))
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "col-lg-9" }, [
-                                      _c("input", {
-                                        staticClass: "form-control disabled",
-                                        attrs: {
-                                          type: "text",
-                                          disabled: "",
-                                          readonly: "",
-                                          id: "id",
-                                          name: "id",
-                                          placeholder: _vm.trans("modals.id")
-                                        },
-                                        domProps: { value: _vm.group.id }
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "invalid-feedback" },
-                                        [
-                                          _c("strong", {
-                                            domProps: {
-                                              textContent: _vm._s(
-                                                _vm.errors.get("id")
-                                              )
-                                            }
-                                          })
-                                        ]
-                                      )
-                                    ])
-                                  ])
-                                : _vm._e(),
+                      _vm.language.id !== 0
+                        ? _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-3 col-form-label" },
+                              [_vm._v(" " + _vm._s(_vm.trans("modals.id")))]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-9" }, [
+                              _c("input", {
+                                staticClass: "form-control disabled",
+                                attrs: {
+                                  type: "text",
+                                  disabled: "",
+                                  readonly: "",
+                                  id: "id",
+                                  name: "id",
+                                  placeholder: _vm.trans("modals.id")
+                                },
+                                domProps: { value: _vm.language.id }
+                              }),
                               _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(_vm.trans("modals.name")) +
-                                        " "
-                                    ),
-                                    _c("span", { staticClass: "text-danger" }, [
-                                      _vm._v(" *")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    class: _vm.errors.has("name")
-                                      ? "is-invalid"
-                                      : "",
-                                    attrs: {
-                                      type: "text",
-                                      id: "name",
-                                      name: "name",
-                                      placeholder: _vm.trans("modals.name")
-                                    },
-                                    domProps: { value: _vm.group.name },
-                                    on: { input: _vm.updateGroup }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "invalid-feedback" },
-                                    [
-                                      _c("strong", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.errors.get("name")
-                                          )
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(
-                                          _vm.trans("modals.display_name")
-                                        ) +
-                                        " "
-                                    ),
-                                    _c("span", { staticClass: "text-danger" }, [
-                                      _vm._v(" *")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    class: _vm.errors.has("display_name")
-                                      ? "is-invalid"
-                                      : "",
-                                    attrs: {
-                                      type: "text",
-                                      id: "display_name",
-                                      name: "display_name",
-                                      placeholder: _vm.trans(
-                                        "modals.display_name"
-                                      )
-                                    },
-                                    domProps: { value: _vm.group.display_name },
-                                    on: { input: _vm.updateGroup }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "invalid-feedback" },
-                                    [
-                                      _c("strong", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.errors.get("display_name")
-                                          )
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      " " + _vm._s(_vm.trans("modals.owner"))
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "owner",
-                                      disabled: "",
-                                      readonly: "",
-                                      placeholder: _vm.trans("modals.owner")
-                                    },
-                                    domProps: { value: _vm.group.owner }
-                                  })
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(_vm.trans("modals.whitelabel"))
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "whitelabel",
-                                      disabled: "",
-                                      readonly: "",
-                                      placeholder: _vm.trans(
-                                        "modals.whitelabel"
-                                      )
-                                    },
-                                    domProps: {
-                                      value: _vm.getGroup(
-                                        "whitelabel",
-                                        "display_name"
-                                      )
-                                    }
-                                  })
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      "  " +
-                                        _vm._s(_vm.trans("modals.users")) +
-                                        " "
-                                    ),
-                                    _c("span", { staticClass: "text-danger" }, [
-                                      _vm._v(" *")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "col-lg-9" },
-                                  [
-                                    _c("el-transfer", {
-                                      staticStyle: { width: "100%" },
-                                      attrs: {
-                                        filterable: "",
-                                        titles: ["Source", "Target"],
-                                        value: _vm.group.users,
-                                        data: _vm.generateUsers()
-                                      },
-                                      on: { input: _vm.inputUsers }
-                                    }),
-                                    _vm._v(" "),
-                                    _vm.errors.has("users")
-                                      ? _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "help-block text-danger"
-                                          },
-                                          [
-                                            _c("strong", {
-                                              domProps: {
-                                                textContent: _vm._s(
-                                                  _vm.errors.get("users")
-                                                )
-                                              }
-                                            })
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ],
-                                  1
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      "  " +
-                                        _vm._s(_vm.trans("modals.description"))
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("textarea", {
-                                    staticClass: "form-control",
-                                    class: _vm.errors.has("description")
-                                      ? "is-invalid"
-                                      : "",
-                                    attrs: {
-                                      rows: "5",
-                                      id: "description",
-                                      name: "description",
-                                      placeholder: _vm.trans(
-                                        "modals.description"
-                                      )
-                                    },
-                                    domProps: { value: _vm.group.description },
-                                    on: { input: _vm.updateGroup }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "invalid-feedback" },
-                                    [
-                                      _c("strong", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.errors.get("description")
-                                          )
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      "  " +
-                                        _vm._s(_vm.trans("modals.status")) +
-                                        " "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "col-lg-9" },
-                                  [
-                                    _c("el-switch", {
-                                      attrs: {
-                                        value: _vm.group.status,
-                                        "active-color": "#13ce66",
-                                        "inactive-color": "#ff4949"
-                                      },
-                                      on: { input: _vm.updateStatus }
-                                    })
-                                  ],
-                                  1
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      "  " +
-                                        _vm._s(_vm.trans("modals.current")) +
-                                        " "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "col-lg-9" },
-                                  [
-                                    _c("el-switch", {
-                                      attrs: {
-                                        value: _vm.group.current,
-                                        "active-color": "#13ce66",
-                                        "inactive-color": "#ff4949"
-                                      },
-                                      on: { input: _vm.updateCurrent }
-                                    })
-                                  ],
-                                  1
-                                )
+                              _c("div", { staticClass: "invalid-feedback" }, [
+                                _c("strong", {
+                                  domProps: {
+                                    textContent: _vm._s(_vm.errors.get("id"))
+                                  }
+                                })
                               ])
-                            ]
-                          )
-                        ])
-                      ]),
+                            ])
+                          ])
+                        : _vm._e(),
                       _vm._v(" "),
-                      _c("div", { staticClass: "modal-footer" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm",
-                            attrs: { type: "submit" },
-                            on: {
-                              click: function($event) {
-                                _vm.close = false
-                              }
-                            }
+                      _c(
+                        "el-select",
+                        {
+                          class: _vm.errors.has("language_id")
+                            ? "is-invalid"
+                            : "",
+                          attrs: {
+                            placeholder: _vm.trans("modals.language"),
+                            name: "language_id"
                           },
-                          [
-                            _c("i", {
-                              staticClass: "icon-checkmark-circle mr-1"
-                            }),
-                            _vm._v(_vm._s(_vm.trans("button.save")))
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-outline bg-teal-400 text-teal-400 border-teal-400 btn-sm",
-                            attrs: { type: "submit" },
-                            on: {
-                              click: function($event) {
-                                _vm.close = true
-                              }
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "icon-checkmark-circle mr-1"
-                            }),
-                            _vm._v(_vm._s(_vm.trans("button.save_and_close")))
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-outline-danger btn-sm",
-                            attrs: { type: "button", "data-dismiss": "modal" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "icon-cancel-circle2 mr-1"
-                            }),
-                            _vm._v(" " + _vm._s(_vm.trans("button.close")))
-                          ]
-                        )
+                          on: { input: _vm.updateLanguage },
+                          model: {
+                            value: _vm.languageId,
+                            callback: function($$v) {
+                              _vm.languageId = $$v
+                            },
+                            expression: "languageId"
+                          }
+                        },
+                        _vm._l(_vm.missingLanguages, function(item) {
+                          return _c("el-option", {
+                            key: item.id,
+                            staticStyle: { width: "100%" },
+                            attrs: { label: item.locale, value: item.id }
+                          })
+                        }),
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "invalid-feedback" }, [
+                        _c("strong", {
+                          domProps: {
+                            textContent: _vm._s(_vm.errors.get("language_id"))
+                          }
+                        })
                       ])
-                    ]
+                    ],
+                    1
                   )
                 ])
-              ]
-            ),
-            _vm._v(" "),
-            _vm.can_logs
-              ? _c(
-                  "div",
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
                   {
-                    staticClass: "tab-pane fade",
-                    attrs: { id: "highlighted-justified-tab2" }
+                    staticClass:
+                      "btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        _vm.close = false
+                      }
+                    }
                   },
                   [
-                    _c(
-                      "div",
-                      { staticClass: "modal-body" },
-                      [_c("vue-table", { attrs: { options: _vm.group.logs } })],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-footer" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-danger btn-sm",
-                          attrs: { type: "button", "data-dismiss": "modal" }
-                        },
-                        [
-                          _c("i", { staticClass: "icon-cancel-circle2 mr-1" }),
-                          _vm._v(" " + _vm._s(_vm.trans("button.close")))
-                        ]
-                      )
-                    ])
+                    _c("i", { staticClass: "icon-checkmark-circle mr-1" }),
+                    _vm._v(_vm._s(_vm.trans("button.save")))
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-outline bg-teal-400 text-teal-400 border-teal-400 btn-sm",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        _vm.close = true
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "icon-checkmark-circle mr-1" }),
+                    _vm._v(_vm._s(_vm.trans("button.save_and_close")))
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-danger btn-sm",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [
+                    _c("i", { staticClass: "icon-cancel-circle2 mr-1" }),
+                    _vm._v(" " + _vm._s(_vm.trans("button.close")))
                   ]
                 )
-              : _vm._e()
-          ])
-        ])
+              ])
+            ])
+          ]
+        )
       ])
     ]
   )
@@ -107725,7 +107198,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
+    return _c("div", { staticClass: "modal-header bg-steel" }, [
       _c("h5", { staticClass: "modal-title" }, [
         _c("i", { staticClass: "icon-menu7 mr-2" }),
         _vm._v("  Modal with icons")
@@ -107751,7 +107224,7 @@ var staticRenderFns = [
       [
         _c("i", { staticClass: "icon-collaboration mr-2" }),
         _vm._v(
-          "\n                                        Group details\n                                        "
+          "\n                            Language details\n                            "
         ),
         _c(
           "a",
@@ -107770,7 +107243,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-af7722cc", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-33d65ca5", module.exports)
   }
 }
 

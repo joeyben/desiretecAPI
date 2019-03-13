@@ -2,9 +2,11 @@
 
 namespace Modules\Languages\Http\Controllers;
 
+use App\Repositories\Criteria\ByWhitelabelLanguages;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Languages\Http\Requests\StoreLanguageRequest;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use App\Repositories\Criteria\ByWhitelabel;
 use App\Repositories\Criteria\EagerLoad;
@@ -78,15 +80,32 @@ class LanguagesController extends Controller
         return view('languages::index');
     }
 
-    public function view(Request $request)
+    public function view()
     {
         try {
-            if (isWhiteLabel()) {
-                $languages = $this->languages->findByWhitelabelId(getCurrentWhiteLabelId());
-            } else {
-                $languages = $this->languages->all();
-            }
+            $languages = $this->languages->findLanguages();
             $result['languages'] = $languages;
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
+    }
+
+    /**
+     * Languages missing on whitelabel
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function missing()
+    {
+        try {
+            $missingLanguages = $this->languages->findMissingLanguages();
+            $result['missingLanguages'] = $missingLanguages;
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -108,10 +127,9 @@ class LanguagesController extends Controller
             $sort = explode('|', $request->get('sort'));
 
             $result['data'] = $this->languages->withCriteria([
-                new OrderBy($sort[0], $sort[1])
+                new OrderBy($sort[0], $sort[1]),
+                new ByWhitelabelLanguages()
             ])->paginate($perPage);
-
-//            $result['data'] = 'test';
 
             $result['success'] = true;
             $result['status'] = 200;
@@ -130,7 +148,22 @@ class LanguagesController extends Controller
      */
     public function create()
     {
-        return view('languages::create');
+        try {
+            $result['language'] = [
+                'id' => 0,
+                'language_id' => 3,
+                'whitelabel_id' => getCurrentWhiteLabelId(),
+            ];
+
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**
@@ -138,8 +171,29 @@ class LanguagesController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreLanguageRequest $request)
     {
+        try {
+            $language = $this->languages->find($request->get('language_id'));
+
+            $language->whitelabels()->attach($request->get('whitelabel_id'));
+
+            $whitelabelLangTable = 'language_lines_' . strtolower($this->whitelabels->find($request->get('whitelabel_id'))->name);
+
+            $this->whitelabels->copyLanguage($whitelabelLangTable, $language->locale);
+
+            $result['language'] = $language;
+
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Language']);
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**

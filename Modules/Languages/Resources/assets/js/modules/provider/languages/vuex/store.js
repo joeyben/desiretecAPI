@@ -2,10 +2,11 @@ import * as actions from './actions'
 import * as getters from './getters'
 
 const state = {
-  group: {},
+  language: {},
   users: {},
   checked: [],
-  whitelabels: {}
+  whitelabels: {},
+  missingLanguages: {}
 }
 
 const mutations = {
@@ -19,14 +20,17 @@ const mutations = {
   ADD_CHECKED (state, checked) {
     state.checked = checked
   },
-  ADD_GROUP (state, group) {
-    state.group = group
+  ADD_LANGUAGE (state, language) {
+    state.language = language
   },
   ADD_WHITELABELS (state, whitelabels) {
     state.whitelabels = whitelabels
   },
-  updateGroup (state, obj) {
-    state.group[obj.name] = obj.value
+  ADD_MISSING_LANGUAGES (state, missingLanguages) {
+    state.missingLanguages = missingLanguages
+  },
+  updateLanguage (state, obj) {
+    state.language[obj.name] = obj.value
   }
 }
 

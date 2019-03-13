@@ -7,7 +7,7 @@ export default {
   },
 
   loadLocales (success, error) {
-    return window.axios.get(window.laroute.route('provider.languages.list')).then(
+    return window.axios.get(window.laroute.route('provider.languages.view')).then(
       (response) => success(response.data),
       (response) => error(response)
     )

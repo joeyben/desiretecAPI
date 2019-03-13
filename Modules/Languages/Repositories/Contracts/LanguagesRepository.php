@@ -4,5 +4,9 @@ namespace Modules\Languages\Repositories\Contracts;
 
 interface LanguagesRepository
 {
-    public function findByWhitelabelId(int $whitelabelId);
+    public function findLanguages();
+
+    public function findMissingLanguages();
+
+    public function copyLanguage(string $locale);
 }

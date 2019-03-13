@@ -39579,7 +39579,7 @@ exports.default = {
     });
   },
   loadLocales: function loadLocales(success, error) {
-    return window.axios.get(window.laroute.route('provider.languages.list')).then(function (response) {
+    return window.axios.get(window.laroute.route('provider.languages.view')).then(function (response) {
       return success(response.data);
     }, function (response) {
       return error(response);

@@ -40,15 +40,15 @@ if ($groupsComponent) {
     routes: [{
       path: '/',
       name: 'root',
-      component: require('./components/GroupsComponent.vue'),
+      component: require('./components/LanguagesComponent.vue'),
       children: [{
         path: '/edit/:id(\\d+)',
         name: 'root.edit',
-        component: require('./components/EditGroupComponent.vue')
+        component: require('./components/AddLanguageComponent.vue')
       }, {
-        path: '/create/:id(\\d+)/:whitelabel_id(\\d+)',
+        path: '/create/:id(\\d+)',
         name: 'root.create',
-        component: require('./components/EditGroupComponent.vue')
+        component: require('./components/AddLanguageComponent.vue')
       }]
     }]
   })

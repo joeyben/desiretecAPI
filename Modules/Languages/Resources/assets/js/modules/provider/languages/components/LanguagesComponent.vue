@@ -9,9 +9,9 @@
 
 <script>
   import Vuex from 'vuex'
-  import VueDatatable from '../tables/groups/VueDatatable'
+  import VueDatatable from '../tables/languages/VueDatatable'
   export default {
-    name: 'GroupsComponent',
+    name: 'LanguagesComponent',
     components: { VueDatatable },
     data () {
       return {
@@ -19,7 +19,7 @@
     },
     mounted () {
       this.loadUser()
-      this.loadWhitelabels()
+      this.loadMissingLanguages()
     },
     watch: {
     },
@@ -30,7 +30,7 @@
     methods: {
       ...Vuex.mapActions({
         loadUser: 'loadLoggedUser',
-        loadWhitelabels: 'loadWhitelabels'
+        loadMissingLanguages: 'loadMissingLanguages'
       })
     }
   }

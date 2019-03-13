@@ -16,10 +16,47 @@ class EloquentLanguagesRepository extends RepositoryAbstract implements Language
         return Language::class;
     }
 
-    public function findByWhitelabelId(int $whitelabelId)
+    public function findLanguages()
+    {
+        if (isWhiteLabel()) {
+            return $this->findByWhitelabelId(getCurrentWhiteLabelId());
+        }
+
+        return $this->all();
+    }
+
+    private function findByWhitelabelId(int $whitelabelId)
     {
         return $this->model()::whereHas('whitelabels', function ($q) use ($whitelabelId) {
             $q->where('whitelabels.id', $whitelabelId);
         })->get();
+    }
+
+    public function findMissingLanguages()
+    {
+        if (isWhiteLabel()) {
+            $whitelabelId = getCurrentWhiteLabelId();
+            return $this->model()::whereDoesntHave('whitelabels', function ($q) use ($whitelabelId) {
+                $q->where('whitelabels.id', $whitelabelId);
+            })->get();
+        }
+
+        return [];
+    }
+
+    public function copyLanguage(string $locale)
+    {
+        $languageLines = $this->getWithRelation(['locale' => 'en'], ['locale', 'group', 'key', 'text'])
+            ->map(function ($languageLine) use ($locale) {
+                return [
+                    'locale' => $locale,
+                    'group' => $languageLine->group,
+                    'key' => $languageLine->key,
+                    'text' => $languageLine->text,
+                ];
+            })
+            ->toArray();
+
+        return $this->create($languageLines);
     }
 }

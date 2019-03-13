@@ -20,7 +20,7 @@ mix.webpackConfig({
 	},
 });
 
-mix.js(__dirname + '/Resources/assets/js/modules/provider/groups/groups.js', 'js/modules/admin/languages/languages.js');
+mix.js(__dirname + '/Resources/assets/js/modules/provider/languages/languages.js', 'js/modules/admin/languages/languages.js');
 
 if (mix.inProduction()) {
 	mix.version();
