@@ -12,6 +12,7 @@ namespace Modules\Whitelabels\Repositories\Eloquent;
 use App\Repositories\RepositoryAbstract;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class EloquentPostsRepository.
@@ -25,6 +26,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function generateFiles(int $id,string $name)
     {
+        $slug =  strtolower($name);
         $this->generateFile(
             base_path('Modules/Master/Http/Controllers/MasterController.stub'),
             base_path("Modules/$name/Http/Controllers/{$name}Controller.php"),
@@ -35,6 +37,28 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $this->generateFile(
             base_path('Modules/Master/Http/Controllers/MasterWishesController.stub'),
             base_path("Modules/$name/Http/Controllers/{$name}WishesController.php"),
+            ['$MODULE$'],
+            [$name]
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Entities/MasterLanguageLines.stub'),
+            base_path("Modules/$name/Entities/{$name}LanguageLines.php"),
+            ['$MODULE$', '$SLUG$'],
+            [$name, $slug]
+        );
+
+        $datePrefix = date('Y_m_d_His');
+        $this->generateFile(
+            base_path('Modules/Master/Database/Migrations/create_language_lines_master_table.stub'),
+            base_path("Modules/$name/Database/Migrations/{$datePrefix}_create_language_lines_{$slug}_table.php"),
+            ['$MODULE$', '$SLUG$'],
+            [$name, $slug]
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Entities/MasterLanguageLines.stub'),
+            base_path("Modules/$name/Entities/{$name}LanguageLines.php"),
             ['$MODULE$'],
             [$name]
         );
@@ -91,5 +115,24 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
         $file = str_replace($placeholders, $values, file_get_contents($source));
         file_put_contents($destination, $file);
+    }
+
+    public function copyLanguage(string $table, string $locale)
+    {
+        $languageLines = DB::table('language_lines')
+            ->select('locale', 'group', 'key', 'text')
+            ->where('locale', 'en')
+            ->get()
+            ->map(function ($languageLine) use ($locale) {
+                return [
+                    'locale' => $locale,
+                    'group' => $languageLine->group,
+                    'key' => $languageLine->key,
+                    'text' => $languageLine->text,
+                ];
+            })
+            ->toArray();
+
+        return DB::table($table)->insert($languageLines);
     }
 }

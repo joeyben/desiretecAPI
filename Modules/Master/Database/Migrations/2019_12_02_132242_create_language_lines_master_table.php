@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLanguageLinesTable extends Migration
+class CreateLanguageLinesMasterTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateLanguageLinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('language_lines', function (Blueprint $table) {
+        Schema::create('language_lines_master', function (Blueprint $table) {
             $table->increments('id');
             $table->string('locale');
             $table->string('group');
@@ -30,6 +30,6 @@ class CreateLanguageLinesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('language_lines');
+        Schema::drop('language_lines_master');
     }
 }

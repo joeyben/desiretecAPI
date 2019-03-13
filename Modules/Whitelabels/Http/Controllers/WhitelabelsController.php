@@ -270,9 +270,12 @@ class WhitelabelsController extends Controller
                 );
             }
 
-            ini_set('max_execution_time', 300);
+            ini_set('max_execution_time', 500);
             $this->artisan->call('module:make', ['name' => [$result['whitelabel']->name], '--force' => true]);
             $this->whitelabels->generateFiles($result['whitelabel']->id, $result['whitelabel']->name);
+            $this->artisan->call('module:migrate', ['module' => $result['whitelabel']->name, '--force' => true]);
+            $whitelabelLangTable = 'language_lines_' . strtolower($result['whitelabel']->name);
+            $this->whitelabels->copyLanguage($whitelabelLangTable, 'en');
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
             $result['success'] = true;

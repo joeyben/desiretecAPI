@@ -15,14 +15,14 @@ class CopyLanguageCommand extends Command
      *
      * @var string
      */
-    protected $name = 'language:copy {table} {locale}';
+    protected $name = 'language:copy {fromTable} {toTable} {fromLocale} {toLocale}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Copy language from language_lines to another table.';
+    protected $description = 'Copy language from one table to another table.';
 
     /**
      * Create a new command instance.
@@ -42,7 +42,12 @@ class CopyLanguageCommand extends Command
     public function handle()
     {
 
-        $this->copyLanguage($this->argument('table'), $this->argument('locale'));
+        $this->copyLanguage(
+            $this->argument('fromTable'),
+            $this->argument('toTable'),
+            $this->argument('fromLocale'),
+            $this->argument('toLocale')
+        );
     }
 
     /**
@@ -53,8 +58,10 @@ class CopyLanguageCommand extends Command
     protected function getArguments()
     {
         return [
-            ['table', InputArgument::REQUIRED, 'A table argument is required.'],
-            ['locale', InputArgument::REQUIRED, 'A locale argument is required.'],
+            ['fromTable', InputArgument::REQUIRED, 'A table from argument is required.'],
+            ['toTable', InputArgument::REQUIRED, 'A table to argument is required.'],
+            ['fromLocale', InputArgument::REQUIRED, 'A locale from argument is required.'],
+            ['toLocale', InputArgument::REQUIRED, 'A locale to argument is required.'],
         ];
     }
 
@@ -70,20 +77,21 @@ class CopyLanguageCommand extends Command
     }
 
     /**
-     * @param string $table
-     * @param string $locale
+     * @param $fromTable
+     * @param $toTable
+     * @param $fromLocale
+     * @param $toLocale
+     *
+     * @return bool
      */
-    protected function copyLanguage($table, $locale) {
-        $this->info('Table rr' . $table);
-        $this->info('Locale rr' . $locale);
-
-        $languageLines = DB::table('language_lines')
+    protected function copyLanguage($fromTable, $toTable, $fromLocale, $toLocale) {
+        $languageLines = DB::table($fromTable)
             ->select('locale', 'group', 'key', 'text')
-            ->where('locale', $locale)
+            ->where('locale', $fromLocale)
             ->get()
-            ->map(function ($languageLine) {
+            ->map(function ($languageLine) use ($toLocale) {
                 return [
-                    'locale' => $languageLine->locale,
+                    'locale' => $toLocale,
                     'group' => $languageLine->group,
                     'key' => $languageLine->key,
                     'text' => $languageLine->text,
@@ -91,12 +99,6 @@ class CopyLanguageCommand extends Command
             })
             ->toArray();
 
-//        $this->info($languageLines);
-
-        DB::table('language_lines_test')->insert($languageLines);
-
-//        foreach ($language_lines as $lang) {
-//            $this->info($lang->group);
-//        }
+        return DB::table($toTable)->insert($languageLines);
     }
 }
