@@ -8,6 +8,7 @@ use App\Events\Frontend\Contact\ContactUpdated;
 use App\Exceptions\GeneralException;
 use App\Models\Contact\Contact;
 use App\Models\Wishes\Wish;
+use App\Models\Access\User\User;
 use App\Repositories\BaseRepository;
 use DB;
 
@@ -68,6 +69,9 @@ class ContactRepository extends BaseRepository
             $input['group_id'] = $this->getGroupId($input['wish_id']);
 
             if ($contact = Contact::create($input)) {
+                if($input['first_name']){
+                    $this->updateUserInfo($input);
+                }
                 event(new ContactCreated($contact));
 
                 return $contact;
@@ -130,5 +134,19 @@ class ContactRepository extends BaseRepository
         $wish = Wish::find($id);
 
         return $wish->group->id;
+    }
+
+    /**
+     * @param array $input
+     *
+     * @return bool
+     */
+    public function updateUserInfo($input)
+    {
+        $user = User::find(access()->user()->id);
+        $user->first_name = $input['first_name'];
+        $user->last_name = $input['last_name'];
+
+        return $user->save();
     }
 }
