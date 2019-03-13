@@ -274,7 +274,7 @@
                 <i class="fal fa-utensils"></i>
                 <input class="data-content" value="{{ $wish->catering }}">
             </div>
-        <!--<button class="secondary-btn">Daten andern</button>-->
+            <button class="secondary-btn">Daten andern</button>
         </div>
 
     </div>
@@ -309,37 +309,37 @@
                         </div>
                         <div class="col-md-12 s2-second">
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="Hamburg">
+                                <i class="fal fa-plane-departure"></i>
+                                <input class="data-content" value="{{ $wish->airport }}">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="17.01 - 17.04.19">
+                                <i class="fal fa-calendar-alt"></i>
+                                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }}">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="3.094€">
+                                <i class="fal fa-usd-circle"></i>
+                                <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="4 Sterne">
+                                <i class="fal fa-star"></i>
+                                <input class="data-content" value="{{ $wish->category }} Sterne">
                             </div>
 
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="Gran Canaria">
+                                <i class="fal fa-plane-arrival"></i>
+                                <input class="data-content" value="{{ $wish->destination }}">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="2 Etwachsene">
+                                <i class="fal fa-users"></i>
+                                <input class="data-content" value="{{ $wish->adults }}">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="Genau 10 Tage">
+                                <i class="fal fa-stopwatch"></i>
+                                <input class="data-content" value="{{ $wish->duration }}">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="Halbpension">
+                                <i class="fal fa-utensils"></i>
+                                <input class="data-content" value="{{ $wish->catering }}">
                             </div>
                             <button class="secondary-btn">Daten andern</button>
                         </div>
