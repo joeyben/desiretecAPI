@@ -6,6 +6,7 @@ use App\Models\Access\User\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Lang;
 
 class TokenLoginRequested extends Mailable
 {
@@ -30,7 +31,7 @@ class TokenLoginRequested extends Mailable
      */
     public function build()
     {
-        return $this->subject('Your login link')->view('emails.token.link')->with([
+        return $this->subject(Lang::get('email.message.token'))->view('emails.token.link')->with([
             'link' => $this->buildLink(),
         ]);
     }

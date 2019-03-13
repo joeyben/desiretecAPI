@@ -17,6 +17,7 @@ use App\Repositories\Criteria\HasRole;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WhereHas;
+use App\Repositories\Criteria\WhereIn;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -116,19 +117,23 @@ class SellersController
             $perPage = $request->get('per_page');
             $sort = explode('|', $request->get('sort'));
 
+            $usersForWhitelabels = null;
+
+            if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $whitelabelId = $this->auth->guard('web')->user()->whitelabels()->first()->id;
+                $usersForWhitelabels = $this->whitelabels->find($whitelabelId)->users()->get()->pluck('id')->all();
+            }
+
             $result['data'] = $this->users->withCriteria([
                 new OrderBy($sort[0], $sort[1]),
                 new WhereBetween('users.created_at', $request->get('start'), $request->get('end')),
+                new WhereIn('users.id', $usersForWhitelabels),
                 new Filter($request->get('filter')),
                 new EagerLoad(['owner' => function ($query) {
                     $query->select('id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'));
                 }, 'roles'  => function ($query) {
                     $query->select('roles.id', 'roles.name');
                 }]),
-                new WhereHas('whitelabels', function ($query) {
-                    $whitelabels = Auth::guard('web')->user()->whitelabels()->get()->pluck('id')->all();
-                    Auth::guard('web')->user()->hasRole('Administrator') ? $query->newQuery() : $query->whereIn('whitelabels.id', $whitelabels);
-                }),
                 new HasRole(Flag::SELLER_ROLE)
             ])->paginate($perPage, ['id', 'first_name', 'last_name', 'email', 'status', 'confirmed', 'created_by', 'created_at', 'updated_at', 'deleted_at']);
 

@@ -7,6 +7,7 @@ use Auth;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Lang;
 
 class MessageSent extends Mailable
 {
@@ -29,6 +30,6 @@ class MessageSent extends Mailable
     {
         $email = Auth::user()->email;
 
-        return $this->from($email)->subject('Support')->view('emails.messages.message')->with(['bodyMessage' => $this->message]);
+        return $this->from($email)->subject(Lang::get('email.message.new'))->view('emails.messages.message')->with(['bodyMessage' => $this->message]);
     }
 }

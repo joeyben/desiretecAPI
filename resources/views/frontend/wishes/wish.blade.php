@@ -1,15 +1,5 @@
 @extends('frontend.layouts.app')
 
-@section('logo')
-    <a href="{{ route('frontend.index') }}" class="logo">
-        @if(isWhiteLabel())
-            <img class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
-        @else
-            <img class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
-        @endif
-    </a>
-@endsection
-
 @section('content')
 <section class="section-top">
 
@@ -17,12 +7,18 @@
         <div class="container">
             <div class="col-md-8 bg-left-content">
                 <h3>Hallo {{ $wish->owner->first_name }} {{ $wish->owner->last_name }},</h3>
-                <p class="header-p">Dein Reisewunsch wurde am <b>{{ \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y') }}</b> an <b>{{ $wish->group->users[0]->name }}</b> <br>
-                    übermittelt. Leider liegt momentan noch kein Angebot vor.</p>
 
-                @if (count($wish->offers) > 0)
+                @if ($logged_in_user->hasRole('Seller') && $logged_in_user->allow('create-offer'))
+                    <p class="header-p">{!! trans('wish.view.stage.seller_empty',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y')]) !!}</p>
+                    <a href="{{route('frontend.offers.create', $wish->id)}}" class="primary-btn">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
+                @elseif (count($wish->offers) > 0)
+                    <p class="header-p">{!! trans('wish.view.stage.user_offer',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
                     <button class="primary-btn" onclick="scrollToAnchor('angebote')">Angebot ansehen</button>
+                @elseif (count($wish->messages) > 0)
+                    <p class="header-p">{!! trans('wish.view.stage.user_message',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
+                    <button class="primary-btn" onclick="scrollToAnchor('messages')">Nachricht ansehen</button>
                 @else
+                    <p class="header-p">{!! trans('wish.view.stage.user_empty',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
                     <button class="primary-btn" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
                     <button class="secondary-btn" data-toggle="modal" data-target="#myModal2">Rückrufbitte einstellen</button>
                 @endif
@@ -30,40 +26,99 @@
         </div>
     </div>
 
-    <div class="bg-bottom">
-        <div class="container">
-            <h4>Zuständiges Reisebüro</h4>
-            <div class="col-md-3">
-                <p>
-                    {{ $wish->group->users[0]->name }}</p>
-                <p>
-                    {{ $wish->group->users[0]->address }} <br>
-                    {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
-                </p>
+
+        @if ($logged_in_user->hasRole('Seller') && count($wish->contacts) )
+        <div class="bg-bottom">
+            <div class="container">
+                <h4>Kontaktdaten des Kunden</h4>
+                <div class="row">
+                    <div class="col-md-3 c-info">
+                        <i class="fal fa-pencil"></i>
+                        <span>{{ $wish->contacts[0]->subject }}</span>
+                    </div>
+                    <div class="col-md-3 c-info">
+                        <i class="fas fa-user"></i>
+                        <span>{{ $wish->contacts[0]->name }}</span>
+                    </div>
+                    <div class="col-md-3 c-info c-tel">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:{{ $wish->contacts[0]->telephone }}">{{ $wish->contacts[0]->telephone }}</a>
+                    </div>
+                    <div class="col-md-3 c-info">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:mail@reisebuero.de">{{ $wish->contacts[0]->email }}</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                           &nbsp;
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <h5>Nachricht:</h5>
+                        <p>
+                            {{ $wish->contacts[0]->message }}
+                        </p>
+                    </div>
+                </div>
             </div>
-            @if(count($wish->group->users[0]->agents))
-            <div class="col-md-3 c-info">
-                <i class="fas fa-user"></i>
-                <span>{{ $wish->group->users[0]->agents[0]->name }}</span>
-            </div>
-            <div class="col-md-3 c-info c-tel">
-                <i class="fas fa-phone"></i>
-                <a href="tel:{{ $wish->group->users[0]->agents[0]->telephone }}">{{ $wish->group->users[0]->agents[0]->telephone }}</a>
-            </div>
-            <div class="col-md-3 c-info">
-                <i class="fas fa-envelope"></i>
-                <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->agents[0]->email }}</a>
-            </div>
-            @endif
         </div>
-    </div>
+
+        <div class="container">
+            <div class="col-md-12">
+                <hr class="sad-hr">
+            </div>
+        </div>
+
+        @elseif ($logged_in_user->hasRole('User'))
+        <div class="bg-bottom">
+            <div class="container">
+                <h4>Zuständiges Reisebüro</h4>
+                <div class="col-md-3">
+                    <p>
+                        {{ $wish->group->users[0]->name }}</p>
+                    <p>
+                        {{ $wish->group->users[0]->address }} <br>
+                        {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
+                    </p>
+                </div>
+                @if(count($wish->group->users[0]->agents))
+                    <div class="col-md-3 c-info">
+                        <i class="fas fa-user"></i>
+                        <span>{{ $wish->group->users[0]->agents[0]->name }}</span>
+                    </div>
+                    <div class="col-md-3 c-info c-tel">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:{{ $wish->group->users[0]->agents[0]->telephone }}">{{ $wish->group->users[0]->agents[0]->telephone }}</a>
+                    </div>
+                    <div class="col-md-3 c-info">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->agents[0]->email }}</a>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="col-md-12">
+                <hr class="sad-hr">
+            </div>
+        </div>
+
+        @endif
 </section>
 
-<div class="container">
-    <div class="col-md-12 hr"><hr></div>
-</div>
+@if (count($wish->offers) > 0 && $logged_in_user->hasRole('Seller') && count($wish->contacts) === 0)
+    <div class="container">
+        <div class="col-md-12">
+            <p>&nbsp;</p>
+        </div>
+    </div>
+@endif
 
 @foreach($wish->offers as $key => $offer)
+
     <section class="section-angebote-2" id="angebote">
         <div class="container">
             <div class="col-md-12 sa2-1">
@@ -72,6 +127,10 @@
                 </h4>
                 <p class="sa2-p1">Du hast {{ count($wish->offers) }} Angebote von <b>{{ $offer->owner->name }}</b> erhalten</p>
                 <p class="sa2-p2">
+                    <span class="offer-avatar-cnt">
+                        <img class="avatar" title="{{ $offer->agent->name }}" alt="{{ $offer->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $offer->agent->avatar }}" />
+                        <span class="agent-name">{{ $offer->agent->name }}</span>
+                    </span>
                     <b>{{ $offer->title }}</b><br>
                     {{ $offer->description }}
                     @if ($offer->link)
@@ -79,7 +138,7 @@
                         <b>Hier geht es zu unserer Angebotsseite:</b> <a href="{{ $offer->link }}" target="_blank">{{ $offer->link }}</a>
                     @endif
                 </p>
-                @if (!$offer->offerFiles)
+                @if (!$offer->offerFiles && $logged_in_user->hasRole('User'))
                 <div class="sa2-buttons">
                     <button class="primary-btn" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
                     <button class="secondary-btn" data-toggle="modal" data-target="#myModal2">Rückrufbitte einstellen</button>
@@ -98,21 +157,23 @@
                 @foreach($offer->offerFiles as $key => $file)
                     <div class="col-md-4">
                         @if (strpos($file->file, '.pdf') !== false)
-                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                            <i class="fal fa-file-pdf"></i>
                         @else
-                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                            <i class="fal fa-file-image"></i>
                         @endif
 
                         <a href="{{ Storage::disk('s3')->url($offer_url . $file->file) }}" target="_blank">{{ trans('wish.view.offer_number') }} {{ $key+1 }}</a>
                     </div>
                 @endforeach
             </div>
+            @if ($logged_in_user->hasRole('User'))
             <div class="col-md-12">
                 <hr class="sad-hr">
             </div>
+            @endif
         </div>
 
-
+        @if ($logged_in_user->hasRole('User'))
         <div class="container">
             <div class="col-md-12 sa-2">
                 <div class="sa-buttons">
@@ -121,18 +182,27 @@
                 </div>
             </div>
         </div>
-
+        @endif
     </section>
   @endif
+
+    <div class="container">
+        <div class="col-md-12">
+            <hr class="sad-hr">
+        </div>
+    </div>
+
 @endforeach
 
-<div class="container">
-    <div class="col-md-12">
-        <hr class="sad-hr">
+@if (count($wish->offers) === 0 && $logged_in_user->hasRole('Seller') && count($wish->contacts) === 0)
+    <div class="container">
+        <div class="col-md-12">
+            <p>&nbsp;</p>
+        </div>
     </div>
-</div>
+@endif
 
-<section class="section-comments">
+<section class="section-comments" id="messages">
     <div class="container">
         <div class="col-md-12">
             <h4>
@@ -150,14 +220,24 @@
 
 <section class="section-contact">
     <div class="container">
+        @if ($logged_in_user->hasRole('Seller'))
+            <div class="col-md-12 s2-first">
+                <h4>Reisewunsch Angaben</h4>
+                <p>Dies sind die Angaben zum Reisewunsch.</p>
+                <p><b>Kundennachricht:</b><br>
+                    {{ $wish->description }}
+                </p>
+            </div>
+        @else
+            <div class="col-md-12 s2-first">
+                <h4>Dein Reisewunsch</h4>
+                <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
+                <p><b>Deine Nachricht:</b><br>
+                    {{ $wish->description }}
+                </p>
+            </div>
+        @endif
 
-        <div class="col-md-12 s2-first">
-            <h4>Dein Reisewunsch</h4>
-            <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
-            <p><b>Deine Nachricht:</b><br>
-                {{ $wish->description }}
-            </p>
-        </div>
 
         <div class="col-md-12 s2-second">
 
@@ -194,7 +274,7 @@
                 <i class="fal fa-utensils"></i>
                 <input class="data-content" value="{{ $wish->catering }}">
             </div>
-        <!--<button class="secondary-btn">Daten andern</button>-->
+            <button class="secondary-btn">Daten andern</button>
         </div>
 
     </div>
@@ -229,37 +309,37 @@
                         </div>
                         <div class="col-md-12 s2-second">
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="Hamburg">
+                                <i class="fal fa-plane-departure"></i>
+                                <input class="data-content" value="{{ $wish->airport }}">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="17.01 - 17.04.19">
+                                <i class="fal fa-calendar-alt"></i>
+                                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }}">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="3.094€">
+                                <i class="fal fa-usd-circle"></i>
+                                <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="4 Sterne">
+                                <i class="fal fa-star"></i>
+                                <input class="data-content" value="{{ $wish->category }} Sterne">
                             </div>
 
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="Gran Canaria">
+                                <i class="fal fa-plane-arrival"></i>
+                                <input class="data-content" value="{{ $wish->destination }}">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="2 Etwachsene">
+                                <i class="fal fa-users"></i>
+                                <input class="data-content" value="{{ $wish->adults }}">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="Genau 10 Tage">
+                                <i class="fal fa-stopwatch"></i>
+                                <input class="data-content" value="{{ $wish->duration }}">
                             </div>
                             <div class="col-md-3">
-                                <span class="circle"></span>
-                                <input class="data-content" value="Halbpension">
+                                <i class="fal fa-utensils"></i>
+                                <input class="data-content" value="{{ $wish->catering }}">
                             </div>
                             <button class="secondary-btn">Daten andern</button>
                         </div>
@@ -275,7 +355,9 @@
 
 
 <div class="container">
-    <div class="col-md-12 hr hr-mobile"><hr></div>
+    <div class="col-md-12">
+        <hr class="sad-hr">
+    </div>
 </div>
 
 <section class="section-data">
@@ -392,19 +474,19 @@
                     </div>
 
                     <div class="col-md-4 modal-body-right">
-                        <img src="/img/frontend/profile-picture/white.jpeg" alt="">
-                        <h4>Reisebüro Sonnenklar</h4>
-                        <p>Musterstrasse 7 <br>
-                            12345 Wusterhausen
+                        <img src="/img/frontend/profile-picture/travel-agency.jpg" alt="">
+                        <h4>{{ $wish->group->users[0]->name }}</h4>
+                        <p>{{ $wish->group->users[0]->address }}<br>
+                            {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
                         </p>
                         <div class="modal-contact">
                             <div class="mc-tel">
                                 <span class="glyphicon glyphicon-earphone"></span>
-                                <a href="tel:08971459535">089 - 714 595 35</a>
+                                <a href="tel:08971459535">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->telephone }}@endif</a>
                             </div>
                             <div class="mc-mail">
                                 <span class="glyphicon glyphicon-envelope"></span>
-                                <a href="mailto:mail@reisebuero.de">mail@reisebuero.de</a>
+                                <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
                             </div>
                         </div>
                     </div>
@@ -439,7 +521,7 @@
             {{ Form::open(['route' => 'frontend.contact.storecallback', 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'callback-seller']) }}
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Kontakt zum zuständigen Reisebüro einstellen</h4>
+                <h4 class="modal-title">Rückrufbitte zum zuständigen Reisebüro einstellen</h4>
                 <p>Stelle einfach und bequem eine Rückrufbitte ein und das<br>
                     zuständige Reisebüro wird sich als bald bei dir melden
                 </p>
@@ -480,19 +562,19 @@
                     </div>
 
                     <div class="col-md-4 modal-body-right">
-                        <img src="/img/frontend/profile-picture/white.jpeg" alt="">
-                        <h4>Reisebüro Sonnenklar</h4>
-                        <p>Musterstrasse 7 <br>
-                            12345 Wusterhausen
+                        <img src="/img/frontend/profile-picture/travel-agency.jpg" alt="">
+                        <h4>{{ $wish->group->users[0]->name }}</h4>
+                        <p>{{ $wish->group->users[0]->address }}<br>
+                            {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
                         </p>
                         <div class="modal-contact">
                             <div class="mc-tel">
                                 <span class="glyphicon glyphicon-earphone"></span>
-                                <a href="tel:08971459535">089 - 714 595 35</a>
+                                <a href="tel:08971459535">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->telephone }}@endif</a>
                             </div>
                             <div class="mc-mail">
                                 <span class="glyphicon glyphicon-envelope"></span>
-                                <a href="mailto:mail@reisebuero.de">mail@reisebuero.de</a>
+                                <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
                             </div>
                         </div>
                     </div>

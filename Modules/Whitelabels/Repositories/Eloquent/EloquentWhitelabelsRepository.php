@@ -24,14 +24,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         return Whitelabel::class;
     }
 
-    public function generateFiles(int $id,string $name)
+    public function generateFiles(int $id, string $name)
     {
-        $slug =  strtolower($name);
         $this->generateFile(
             base_path('Modules/Master/Http/Controllers/MasterController.stub'),
             base_path("Modules/$name/Http/Controllers/{$name}Controller.php"),
-            ['$MODULE$'],
-            [$name]
+            ['$MODULE$', '$MODULESMAL$'],
+            [$name, mb_strtolower($name)]
         );
 
         $this->generateFile(
@@ -41,6 +40,75 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             [$name]
         );
 
+        $this->generateFile(
+            base_path('Modules/Master/Http/Requests/StoreWishRequest.stub'),
+            base_path("Modules/$name/Http/Requests/StoreWishRequest.php"),
+            ['$MODULE$'],
+            [$name]
+        );
+
+        if (!file_exists(base_path("Modules/$name/Resources/views/layer"))) {
+            mkdir(base_path("Modules/$name/Resources/views/layer"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/views/wish"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/lang/de"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/lang/en"), 0777, true);
+        }
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/lang/de/layer.php'),
+            base_path("Modules/$name/Resources/lang/de/layer.php")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/lang/en/layer.php'),
+            base_path("Modules/$name/Resources/lang/en/layer.php")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/views/layer/created.blade.stub'),
+            base_path("Modules/$name/Resources/views/layer/created.blade.php"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/views/layer/popup.blade.stub'),
+            base_path("Modules/$name/Resources/views/layer/popup.blade.php"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/views/layouts/master.blade.stub'),
+            base_path("Modules/$name/Resources/views/layouts/master.blade.php")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/views/wish/details.blade.stub'),
+            base_path("Modules/$name/Resources/views/wish/details.blade.php")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/views/index.blade.stub'),
+            base_path("Modules/$name/Resources/views/index.blade.php"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Config/config.stub'),
+            base_path("Modules/$name/Config/config.php"),
+            [
+                '$MODULE$',
+                '$ID$'
+            ],
+            [
+                $name,
+                $id
+            ]
+        );
+
+        $slug =  strtolower($name);
         $this->generateFile(
             base_path('Modules/Master/Entities/MasterLanguageLines.stub'),
             base_path("Modules/$name/Entities/{$name}LanguageLines.php"),
@@ -61,49 +129,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             base_path("Modules/$name/Entities/{$name}LanguageLines.php"),
             ['$MODULE$'],
             [$name]
-        );
-
-        if (!file_exists(base_path("Modules/$name/Resources/views/layer"))) {
-            mkdir(base_path("Modules/$name/Resources/views/layer"), 0777, true);
-            mkdir(base_path("Modules/$name/Resources/views/wish"), 0777, true);
-        }
-
-        $this->generateFile(
-            base_path('Modules/Master/Resources/views/layer/created.blade.stub'),
-            base_path("Modules/$name/Resources/views/layer/created.blade.php")
-        );
-
-        $this->generateFile(
-            base_path('Modules/Master/Resources/views/layer/popup.blade.stub'),
-            base_path("Modules/$name/Resources/views/layer/popup.blade.php")
-        );
-
-        $this->generateFile(
-            base_path('Modules/Master/Resources/views/layer/popup.blade.stub'),
-            base_path("Modules/$name/Resources/views/layer/popup.blade.php")
-        );
-
-        $this->generateFile(
-            base_path('Modules/Master/Resources/views/layouts/master.blade.stub'),
-            base_path("Modules/$name/Resources/views/layouts/master.blade.php")
-        );
-
-        $this->generateFile(
-            base_path('Modules/Master/Resources/views/wish/details.blade.stub'),
-            base_path("Modules/$name/Resources/views/wish/details.blade.php")
-        );
-
-        $this->generateFile(
-            base_path('Modules/Master/Config/config.stub'),
-            base_path("Modules/$name/Config/config.php"),
-            [
-                '$MODULE$',
-                '$ID$'
-            ],
-            [
-                $name,
-                $id
-            ]
         );
     }
 

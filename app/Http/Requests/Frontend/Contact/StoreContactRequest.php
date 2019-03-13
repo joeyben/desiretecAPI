@@ -28,8 +28,8 @@ class StoreContactRequest extends Request
     {
         return [
             'first_name'         => 'required|max:191',
-            'last_name'         => 'required|max:191',
-            'email'            => ['required', 'email', 'max:255'],
+            'last_name'          => 'required|max:191',
+            'email'              => ['required', 'email', 'max:255'],
             'subject'            => 'required|max:191',
             'message'            => 'required',
         ];
@@ -44,10 +44,10 @@ class StoreContactRequest extends Request
     {
         return [
             'first_name.required' => 'Please insert Contact First name',
-            'last_name.required' => 'Please insert Contact Last name',
-            'email.required' => 'Please insert Contact Email',
-            'subject.required' => 'Please insert Contact Subject',
-            'message.required' => 'Please insert Contact Message',
+            'last_name.required'  => 'Please insert Contact Last name',
+            'email.required'      => 'Please insert Contact Email',
+            'subject.required'    => 'Please insert Contact Subject',
+            'message.required'    => 'Please insert Contact Message',
         ];
     }
 }

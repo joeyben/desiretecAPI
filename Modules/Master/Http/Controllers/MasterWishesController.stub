@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Master\Http\Controllers;
+namespace Modules\$MODULE$\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Wishes\Wish;
@@ -62,7 +62,7 @@ class $MODULE$WishesController extends Controller
     {
         $this->wish = $wish;
         $this->whitelabel = $whitelabel;
-        $this->whitelabelId = \Config::get('master.id');
+        $this->whitelabelId = \Config::get('$MODULESMALL$.id');
     }
 
     /**

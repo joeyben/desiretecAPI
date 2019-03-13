@@ -13,7 +13,13 @@
             @else
              {{ link_to_route('frontend.index',app_name(), [], ['class' => 'navbar-brand']) }}
            {{--  @endif --}}
-            @yield('logo')
+            <a href="{{ route('frontend.index') }}" class="logo">
+                @if(isWhiteLabel())
+                    <img class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
+                @else
+                    <img class="navbar-brand" src="{{route('frontend.index')}}/img/logo.png">
+                @endif
+            </a>
 
 
         </div><!--navbar-header-->
@@ -56,7 +62,7 @@
                 @endif
 
                 @if ($logged_in_user && $logged_in_user->hasRole('User'))
-                    <li>{{ link_to_route('frontend.wishes.create', trans('navs.frontend.create_wish')) }}</li>
+                   <!-- <li>{{ link_to_route('frontend.wishes.create', trans('navs.frontend.create_wish')) }}</li> -->
                 @endif
 
                 @if (! $logged_in_user)

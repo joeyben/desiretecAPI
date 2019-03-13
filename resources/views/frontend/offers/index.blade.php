@@ -1,5 +1,6 @@
 @extends('frontend.layouts.app')
 
+
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
@@ -46,6 +47,8 @@
             var dataTable = $('#offers-table').dataTable({
                 processing: true,
                 serverSide: true,
+                bLengthChange:false,
+                bInfo:false,
                 ajax: {
                     url: '{{ route("frontend.offers.get") }}',
                     type: 'post'
@@ -64,6 +67,15 @@
                     buttons: [
 
                     ]
+                },
+                language: {
+                    "search": "Suche",
+                    "paginate": {
+                        "first":      "Erster",
+                        "last":       "Letzter",
+                        "next":       "Nächster",
+                        "previous":   "Vorherige"
+                    },
                 }
             });
 

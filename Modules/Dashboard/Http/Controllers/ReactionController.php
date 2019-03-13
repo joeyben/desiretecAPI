@@ -62,7 +62,7 @@ class ReactionController extends Controller
     {
         try {
             $wishesWithOffers = null;
-            if($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                 $wishesWithOffers = $this->wishes->withCriteria([
                     new ByWhitelabel(),
                     new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
@@ -71,7 +71,7 @@ class ReactionController extends Controller
                     new Has('offers'),
                     new EagerLoad(['offers']),
                 ])->all();
-            } elseif($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+            } elseif ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                 $whitelabelId = $this->auth->guard('web')->user()->whitelabels()->first()->id;
                 $wishesWithOffers = $this->wishes->withCriteria([
                     new Where('wishes.whitelabel_id', '' . $whitelabelId),
@@ -82,14 +82,12 @@ class ReactionController extends Controller
                 ])->all();
             }
 
-
             $diffInHours = 0;
             foreach ($wishesWithOffers as $wo) {
                 $wishDate = $this->carbon->parse($wo->created_at);
                 $offerDate = $this->carbon->parse($wo->offers->first()->created_at);
                 $diffInHours += $wishDate->diffInHours($offerDate);
             }
-
 
             $result['reactionTime'] = $wishesWithOffers->count() > 0 ? number_format($diffInHours / $wishesWithOffers->count(), 2) : 0;
             $result['success'] = true;
@@ -114,7 +112,7 @@ class ReactionController extends Controller
     {
         try {
             $wishesWithOffers = null;
-            if($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                 $wishesWithOffers = $this->wishes->withCriteria([
                     new ByWhitelabel(),
                     new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
@@ -124,7 +122,7 @@ class ReactionController extends Controller
                     new Has('offers'),
                     new EagerLoad(['offers']),
                 ])->all();
-            } elseif($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+            } elseif ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                 $whitelabelId = $this->auth->guard('web')->user()->whitelabels()->first()->id;
                 $wishesWithOffers = $this->wishes->withCriteria([
                     new Where('wishes.whitelabel_id', '' . $whitelabelId),

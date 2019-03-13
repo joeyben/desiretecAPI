@@ -52,6 +52,7 @@ class MasterController extends Controller
     public function index()
     {
         $whitelabel = $this->whitelabel->getByName('master');
+
         return view('master::index')->with([
             'display_name'  => $whitelabel['display_name'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
@@ -136,15 +137,7 @@ class MasterController extends Controller
 
             return $new_user;
         }
-        $input = array_merge(
-            $input,
-            [
-                'first_name'     => 'John',
-                'last_name'      => 'Doe',
-                'password'       => 'tui2019',
-                'is_term_accept' => true
-            ]
-        );
+
         $new_user = $user->create($input);
         $new_user->storeToken();
         $new_user->attachWhitelabel($this->whitelabelId);

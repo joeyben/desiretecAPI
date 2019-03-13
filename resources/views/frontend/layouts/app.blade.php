@@ -9,7 +9,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('title', app_name())</title>
-
+        @if(isWhiteLabel())
+            <link rel="icon" type="image/png" href="{{ getWhiteLabelLogoUrl('favicon') }}">
+        @else
+            <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}">
+        @endif
         <!-- Meta -->
         <meta name="description" content="@yield('meta_description', 'desiretec')">
         <meta name="author" content="@yield('meta_author', 'Joe Ben Slimane')">
@@ -28,7 +32,7 @@
         {!! Html::style('js/select2/select2.css') !!}
 
         {{ Html::style(mix('css/frontend-custom.css')) }}
-        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous">
+        <link media="all" type="text/css" rel="stylesheet" href="{{ asset('fontawsome/css/all.css') }}">
 
     @yield('after-styles')
 
@@ -59,6 +63,7 @@
                     </div>
                 </div>
                 @yield('content')
+
             </div><!-- container -->
         </div><!--#app-->
 

@@ -1,9 +1,12 @@
 <?php
 
 Route::group(['domain' => '$DOMAIN$'], function () {
-    Route::group(['middleware' => 'web', 'namespace' => 'Modules\$MODULE$\Http\Controllers'], function () {
+    setCurrentWhiteLabelId(\Config::get('$MODULESMAL$.id'));
+    Route::group(['middleware' => 'web', 'namespace' => 'Modules\$MODULE$\Http\Controllers' , 'as' => '$MODULESMAL$.'], function () {
         Route::get('/', '$MODULE$Controller@index');
         Route::get('show', '$MODULE$Controller@show');
-        Route::post('store', '$MODULE$Controller@store')->name('store');
+        Route::get('store', '$MODULE$Controller@store')->name('store');
+        Route::get('wish/{wish}/{token}', '$MODULE$WishesController@details')->name('wish.details');
+
     });
 });

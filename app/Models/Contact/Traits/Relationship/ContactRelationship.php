@@ -3,8 +3,8 @@
 namespace App\Models\Contact\Traits\Relationship;
 
 use App\Models\Access\User\User;
-use App\Models\Wishes\Wish;
 use App\Models\Groups\Group;
+use App\Models\Wishes\Wish;
 
 /**
  * Class ContactRelationship.
@@ -34,5 +34,4 @@ trait ContactRelationship
     {
         return $this->belongsTo(Group::class, 'group_id');
     }
-
 }

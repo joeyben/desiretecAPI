@@ -103,9 +103,9 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    @lang('email.account.hello', ['username' => $user->first_name . ' ' . $user->last_name])<br><br>
+                                    @lang('email.account.hello', ['username' => $user->first_name . ' ' . $user->last_name])!<br><br>
 
-                                    @lang('email.account.activated')<br><br>
+                                    @lang('email.account.activated', ['account' => 'Anbieter'])<br><br>
 
                                     @lang('email.account.link')<br><br>
 
@@ -138,7 +138,10 @@
 
                             <tr>
                                 <td colspan="2">
-                                    desiretec signature
+                                    @lang('email.footer.line1'),<br>
+                                    @lang('email.footer.line2')<br><br>
+                                    @lang('email.footer.line3')<br>
+                                    @lang('email.footer.line4')<br>
                                 </td>
                             </tr>
 

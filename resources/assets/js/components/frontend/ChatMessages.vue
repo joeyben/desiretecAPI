@@ -4,15 +4,22 @@
             <div v-bind:class="[userid == message.user_id ?  'cu-img-right' : 'cu-img-left']">
                 <img v-if="message.avatar" :src="message.avatar">
                 <img v-else :src="'/img/frontend/profile-picture/user.png'">
-            </div>      
-        
+            </div>
+
+            <confirmation-modal v-on:confirm="updateMessages" :id="message.id"></confirmation-modal>
             <div v-bind:class="[userid == message.user_id ?  'cu-comment cu-comment-right' : 'cu-comment cu-comment-left']">
                 <p>
-                <span class="username">
+                     <span class="username">
                     {{ userid == message.user_id ? 'Ich' : message.name  }}
-                </span>
-                <span>{{ timestamp(message.created_at) }} Uhr</span>
-                {{ message.message }}
+                    </span>
+
+                    <span v-if="userid == message.user_id" class="action_buttons">
+                        <i v-on:click="editMessage(message.id, message.message)" class="far fa-edit"></i>
+                        <i v-on:click="showModal(message.id)" class="far fa-trash-alt"></i>
+                    </span>
+
+                    <span>{{ timestamp(message.created_at) }}</span>
+                    {{ message.message }}
                 </p>
             </div>  
         </div>
@@ -25,7 +32,7 @@
   import MessageForm from './MessageForm.vue'
   import ConfirmationModal from './ConfirmationModal.vue'
   import moment from 'moment'
-
+  moment.locale('de');
 Vue.prototype.moment = moment
 
   export default {
@@ -56,14 +63,15 @@ Vue.prototype.moment = moment
 
         editMessage(messageid, message) {
 
-            $('#btn-input').val('');
-            $('#btn-input').val(jQuery('#'+messageid+" .chat-body p").text());
+            $('#antworten').slideDown()
+
+            $('#antworten').val('');
+            $('#antworten').val(jQuery('#'+messageid+" .message-holder").text());
             $('#edit-val').val(messageid);
 
             $('.button-show').css('display','none')
             $('.button-hide').css('display','inline-block')
 
-            $('html, body').animate({scrollTop: $('.input-group').offset().top - 80}, 1000);            
         },
 
         showModal(id) {
@@ -112,6 +120,20 @@ Vue.prototype.moment = moment
     .edit_button i{
         margin-right: 15px;
         float: right;
+        cursor: pointer;
+    }
+
+    .action_buttons{
+        position:absolute;
+        top:20px;
+        right:15px;
+    }
+
+    .action_buttons .fa-edit {
+        margin-right:5px;
+    }
+
+    .action_buttons i {
         cursor: pointer;
     }
 

@@ -1,0 +1,16 @@
+{
+    "name": "HamburgReisen",
+    "alias": "hamburgreisen",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\HamburgReisen\\Providers\\HamburgReisenServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

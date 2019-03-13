@@ -1,16 +1,25 @@
 version: '3'
+
 services:
     app:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      depends_on:
+        - mariadb
+        - redis
+        - laravel-echo-server
       volumes:
         - /var/www/desiretec-mvp-stage/storage:/var/www/html/storage
       environment:
-        - VIRTUAL_HOST=mvp.desiretec.com,master.desiretec.com
-        - LETSENCRYPT_HOST=mvp.desiretec.com,master.desiretec.com
+        - VIRTUAL_HOST=mvp.desiretec.com,master.desiretec.com,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com
+        - LETSENCRYPT_HOST=mvp.desiretec.com,master.desiretec.com,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com
         - LETSENCRYPT_EMAIL=info@desiretec.com
       networks:
         - frontend
         - backend
     mariadb:
+      image: mariadb:latest
       environment:
         - MYSQL_USER=default
         - MYSQL_PASSWORD=${DB_STAGE_PW}
@@ -21,6 +30,7 @@ services:
       networks:
         - backend
     redis:
+      image: redis:latest
       networks:
         - backend
     laravel-echo-server:
@@ -45,3 +55,4 @@ networks:
 
 volumes:
     reverseproxy_certs:
+      external: true

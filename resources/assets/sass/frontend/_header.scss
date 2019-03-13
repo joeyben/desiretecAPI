@@ -1,3 +1,48 @@
+//navbar style
+.main-nav{
+  background-color: white !important;
+  @include box-shadow(0 0px  2px  1px  rgba(0,0,0,0.1));
+}
+.navbar-right{
+  a,a:hover,a:focus{
+    cursor: pointer;
+    color:#fff;
+  }
+  span{
+    color:#000;
+  }
+  i{
+    color:#000;
+  }
+}
+
+.navbar-header{
+  img{
+    background: #fff;
+  }
+}
+
+.navbar-right{
+  li{
+    span{
+      padding: 10px 15px;
+      display: block;
+    }
+  }
+}
+
+.nav-user{
+  img{
+    float: left;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    object-fit: cover;
+    margin: 10px 0;
+  }
+}
+
 // Header Fixes
 .navbar-right{
   li{
@@ -6,7 +51,7 @@
       padding: 0;
       color: #000000;
       &.caret{
-        color: #fff;
+        color: #000;
       }
     }
   }
@@ -18,7 +63,7 @@
       >a{
         &:focus,&:hover{
           background-color: transparent;
-          color: #fff;
+          color: #000;
         }
       }
     }
@@ -39,8 +84,8 @@
     display: block;
     box-sizing: border-box;
     .navbar-brand {
-      margin: 2px 0 0;
-      height: 35px;
+      margin: 0;
+      height: 40px;
       float: none;
       padding: 5px;
       &:focus, &:hover {
@@ -57,7 +102,7 @@
   }
   .navbar-default {
     .navbar-text{
-      color: #fff;
+      color: #000;
     }
     .navbar-nav{
       >li{
@@ -67,9 +112,9 @@
           right    : 0;
           z-index: 100;
           top  : 12px;
-          width  : 2px;
+          width  : 1px;
           height   : 50%;  /* or 100px */
-          background: #fff;
+          background: #000;
         }
         &:last-child{
           &:after{
@@ -79,7 +124,7 @@
           }
         }
         >a{
-          color: #fff;
+          color: #000;
         }
       }
     }

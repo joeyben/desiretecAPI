@@ -1,5 +1,6 @@
 @extends('frontend.layouts.app')
 
+
 @section('content')
     <div class="box box-info" style="display: none;">
         <div class="box-header with-border">
@@ -41,7 +42,7 @@
                         <option value="">{{ trans('menus.list.status.all') }}</option>
                         @foreach ($status as $st)
                             <option value="{{ $st }}">
-                                {{ $st }}
+                                {{ trans('menus.list.status.'.strtolower($st)) }}
                             </option>
                         @endforeach
                     </select>
@@ -74,13 +75,13 @@
                         </div>
                         <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
                         @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
-                            <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>
+                        <!--    <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>-->
                         @endif
-                        <a type="button" class="btn btn-primary btn-main" :href="'/wish/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
+                        <a type="button" class="primary-btn" :href="'/wish/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
                         @if($logged_in_user->allow('create-offer'))
-                            <a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
+                            <!--<a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a> -->
                         @endif
-                        <a :href="'/offer/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a>
+                        <!-- <a :href="'/offer/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a> -->
                     </div>
                 </div>
             </div>

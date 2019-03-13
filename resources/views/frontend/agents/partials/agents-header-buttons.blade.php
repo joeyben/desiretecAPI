@@ -2,12 +2,6 @@
 
 <!--Action Button-->
 <div class="btn-group">
-  <button type="button" class="btn btn-primary btn-flat dropdown-toggle" data-toggle="dropdown">Action
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu" role="menu">
-    <li><a href="#modalForm" data-toggle="modal" data-target="#modalForm"><i class="fa fa-plus"></i> {{trans('menus.frontend.agents.create')}}</a></li>
-  </ul>
+  <button class="primary-btn" data-toggle="modal" data-target="#modalForm">{{trans('seller.agent.create')}}</button>
 </div>
 <div class="clearfix"></div>

@@ -1,0 +1,16 @@
+{
+    "name": "Trendtours",
+    "alias": "trendtours",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Trendtours\\Providers\\TrendtoursServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

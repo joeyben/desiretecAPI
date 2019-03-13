@@ -347,17 +347,22 @@ if (!function_exists('transformDuration')) {
 if (!function_exists('isWhiteLabel')) {
     /**
      * Set current whitelabel Id.
-     * @return boolean
+     *
+     * @return bool
      */
     function isWhiteLabel()
     {
-        return config('app.current_whitelabel') !== null;
+        $url = str_replace('http://', '', url('/'));
+        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
+
+        return null !== $id;
     }
 }
 
 if (!function_exists('setCurrentWhiteLabelId')) {
     /**
      * Set current whitelabel Id.
+     *
      * @param int $id
      */
     function setCurrentWhiteLabelId($id)
@@ -374,31 +379,28 @@ if (!function_exists('getCurrentWhiteLabelId')) {
      */
     function getCurrentWhiteLabelId()
     {
-        return config('app.current_whitelabel');
+        $url = str_replace('http://', '', url('/'));
+        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
+
+        return $id;
     }
 }
 
 if (!function_exists('getWhiteLabelLogo')) {
     /**
      * return current whitelabel logo url.
-     *
+     * @param string $type
      * @return string
      */
-    function getWhiteLabelLogoUrl()
+    function getWhiteLabelLogoUrl($type = "logo")
     {
-        $logo = \Modules\Attachments\Entities\Attachment::select([
+        return \Modules\Attachments\Entities\Attachment::select([
         config('module.attachments.table') . '.basename',
         config('module.attachments.table') . '.type',
         ])
         ->where('attachable_id', getCurrentWhiteLabelId())
-        ->where('type', 'whitelabels/logo')
-        ->first();
-
-        if ($logo) {
-            return $logo->toArray()['url'];
-        }
-
-        return null;
+        ->where('type', 'whitelabels/'.$type)
+        ->first()->toArray()['url'];
     }
 }
 

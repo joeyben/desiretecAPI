@@ -2,7 +2,8 @@
     <div class="col-md-12">
         <textarea name="antworten" id="antworten" v-model="newMessage"></textarea>
         <div class="cu-cl-buttons">
-            <button class="primary-btn antworten-btn" id="btn-chat" @click="sendMessage">Antworten</button>
+            <button class="primary-btn antworten-btn button-show" id="btn-chat" @click="sendMessage">Nachricht schreiben</button>
+            <button class="primary-btn antworten-btn  button-hide" id="btn-chat" @click="updateMessage">Speichern</button>
         </div>
     </div>
 </template>
@@ -52,13 +53,15 @@
                 var messageid = $('#edit-val').val();
                 
                 axios.post('/message/edit/'+messageid+'/'+message).then(resp => {
-                    
-                    $('#btn-input').val('');
 
-                    jQuery('#'+messageid+" .chat-body p").text(message);
-                    
-                    $('.button-show').css('display','block')
+                    $('#antworten').val('');
+                    $('#antworten').slideUp()
+
+                    jQuery('#'+messageid+" .message-holder").text(message);
+
+                    $('.button-show').css('display','inline-block')
                     $('.button-hide').css('display','none')
+
                 });    
             }
         }
@@ -77,10 +80,6 @@
 
     #btn-chat {
         margin-top: 15px;
-    }
-
-    .button-show{
-        float: right;
     }
 
     .button-hide {
