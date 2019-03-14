@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\App;
 
 Route::group(['domain' => 'master.com'], function () {
-    setCurrentWhiteLabelId(8);
-    setTranslationLoaderModel(\Config::get('master.language_lines_model'));
+    setCurrentWhiteLabelId(\Config::get('master.id'));
+//    setTranslationLoaderModel(\Config::get('master.language_lines_model'));
 //    setWhitelabelLocale(\Config::get('master.locale'));
 
     Route::group(['middleware' => 'web', 'namespace' => 'Modules\Master\Http\Controllers', 'as' => 'master.'], function () {
