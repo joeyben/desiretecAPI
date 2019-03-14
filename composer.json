@@ -48,7 +48,7 @@
         "spatie/laravel-analytics": "^3.6",
         "spatie/laravel-cors": "^1.2",
         "spatie/laravel-translatable": "^2.2",
-        "spatie/laravel-translation-loader": "^2.2",
+        "spatie/laravel-translation-loader": "2.2",
         "squizlabs/php_codesniffer": "^3.3",
         "tecnickcom/tcpdf": "^6.2",
         "torann/geoip": "^1.0",
