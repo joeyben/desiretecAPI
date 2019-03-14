@@ -2,5 +2,7 @@
 
 return [
     'name' => '$MODULE$',
-    'id'   => $ID$
+    'id'   => $ID$,
+    'locale' => 'en',
+    'language_lines_model' => \Modules\$MODULE$\Entities\$MODULE$LanguageLines::class
 ];

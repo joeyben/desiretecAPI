@@ -8,7 +8,7 @@ return [
      *
      * @var bool
      */
-    'status' => false,
+    'status' => true,
 
     /*
      * Available languages

@@ -12,6 +12,7 @@ namespace Modules\Whitelabels\Repositories\Eloquent;
 use App\Repositories\RepositoryAbstract;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class EloquentPostsRepository.
@@ -106,6 +107,29 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 $id
             ]
         );
+
+        $slug =  strtolower($name);
+        $this->generateFile(
+            base_path('Modules/Master/Entities/MasterLanguageLines.stub'),
+            base_path("Modules/$name/Entities/{$name}LanguageLines.php"),
+            ['$MODULE$', '$SLUG$'],
+            [$name, $slug]
+        );
+
+        $datePrefix = date('Y_m_d_His');
+        $this->generateFile(
+            base_path('Modules/Master/Database/Migrations/create_language_lines_master_table.stub'),
+            base_path("Modules/$name/Database/Migrations/{$datePrefix}_create_language_lines_{$slug}_table.php"),
+            ['$MODULE$', '$SLUG$'],
+            [$name, $slug]
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Entities/MasterLanguageLines.stub'),
+            base_path("Modules/$name/Entities/{$name}LanguageLines.php"),
+            ['$MODULE$'],
+            [$name]
+        );
     }
 
     public function generateFile(string $source, string $destination, array $placeholders = [], array $values = [])
@@ -116,5 +140,24 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
         $file = str_replace($placeholders, $values, file_get_contents($source));
         file_put_contents($destination, $file);
+    }
+
+    public function copyLanguage(string $table, string $locale)
+    {
+        $languageLines = DB::table('language_lines')
+            ->select('locale', 'group', 'key', 'text')
+            ->where('locale', 'en')
+            ->get()
+            ->map(function ($languageLine) use ($locale) {
+                return [
+                    'locale' => $locale,
+                    'group' => $languageLine->group,
+                    'key' => $languageLine->key,
+                    'text' => $languageLine->text,
+                ];
+            })
+            ->toArray();
+
+        return DB::table($table)->insert($languageLines);
     }
 }
