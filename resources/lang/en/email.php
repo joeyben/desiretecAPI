@@ -18,7 +18,7 @@ return [
         'subject_for_executive'   => 'Ihre Zugangsdaten zum desiretec System',
         'hello'                   => 'Hallo :username',
         'activate'                => 'Login',
-        'activated'               => 'Für Sie wurde ein neuer :account Account für das desiretec Reisewunschportal erstellt.',
+        'activated'               => 'Für Sie wurde ein neuer :account Account für das :whitelabel Reisewunschportal erstellt.',
         'link'                    => 'Mit Klick auf den folgenden Button können Sie sich mit Ihren Benutzerdaten einloggen.',
         'username'                => 'Email address: :email',
         'password'                => 'Password : :password',
