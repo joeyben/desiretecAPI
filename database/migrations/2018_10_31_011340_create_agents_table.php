@@ -30,7 +30,7 @@ class CreateAgentsTable extends Migration
         if (Schema::hasTable('offers')) {
             Schema::table('offers', function (Blueprint $table) {
                 $table->integer('agent_id')->after('wish_id')->nullable()->unsigned()->index();
-                $table->foreign('agent_id')->references('id')->on('agents');
+                $table->foreign('agent_id')->references('id')->on('agents')->onDelete('cascade');
             });
         }
     }

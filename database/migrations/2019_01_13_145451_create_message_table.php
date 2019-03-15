@@ -20,9 +20,9 @@ class CreateMessageTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('wish_id')->unsigned();
             $table->integer('agent_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('wish_id')->references('id')->on('wishes');
-            $table->foreign('agent_id')->references('id')->on('agents');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('wish_id')->references('id')->on('wishes')->onDelete('cascade');
+            $table->foreign('agent_id')->references('id')->on('agents')->onDelete('cascade');
             $table->timestamps();
         });
     }
