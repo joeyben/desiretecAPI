@@ -434,6 +434,25 @@ if (!function_exists('getLanguageLinesTable')) {
     }
 }
 
+if (!function_exists('getLanguageLinesCacheKey')) {
+    /**
+     * return language lines cache key.
+     *
+     * @return string
+     */
+    function getLanguageLinesCacheKey()
+    {
+        if (isWhiteLabel()) {
+            $url = str_replace('http://', '', url('/'));
+            $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+
+            return $whitelabelName;
+        }
+
+        return 'admin';
+    }
+}
+
 if (!function_exists('setWhitelabelLocale')) {
     /**
      * Set locale
