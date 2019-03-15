@@ -415,15 +415,22 @@ if (!function_exists('setTranslationLoaderModel')) {
     }
 }
 
-if (!function_exists('getTranslationLoaderModel')) {
+if (!function_exists('getLanguageLinesTable')) {
     /**
-     * return translation-loader model.
+     * return language lines table name.
      *
-     * @return int
+     * @return string
      */
-    function getTranslationLoaderModel()
+    function getLanguageLinesTable()
     {
-        return config('translation-loader.model');
+        if (isWhiteLabel()) {
+            $url = str_replace('http://', '', url('/'));
+            $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+
+            return \Config::get(mb_strtolower($whitelabelName) . '.language_lines_table');
+        }
+
+        return 'language_lines';
     }
 }
 

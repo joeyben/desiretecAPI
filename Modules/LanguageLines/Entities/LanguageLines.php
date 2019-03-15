@@ -15,7 +15,7 @@ class LanguageLines extends LanguageLine
      * @var string
      */
 
-    protected $table = 'language_lines';
+//    protected $table = 'language_lines';
 
     public static $whitelabel = 'admin';
 
@@ -56,5 +56,15 @@ class LanguageLines extends LanguageLine
     protected function flushGroupCache()
     {
         Cache::forget(static::getCacheKey($this->group, $this->locale));
+    }
+
+    /**
+     * Override to get model from helpers
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return getLanguageLinesTable();
     }
 }
