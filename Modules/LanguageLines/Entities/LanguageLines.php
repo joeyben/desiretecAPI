@@ -15,10 +15,6 @@ class LanguageLines extends LanguageLine
      * @var string
      */
 
-//    protected $table = 'language_lines';
-
-    public static $whitelabel = 'admin';
-
     protected $casts = [];
 
     public static function boot()
@@ -31,8 +27,8 @@ class LanguageLines extends LanguageLine
 
     public static function getCacheKey(string $group, string $locale): string
     {
-        $whitelabel = static::$whitelabel;
-        return "desiretec.translation-loader.{$group}.{$locale}.{$whitelabel}";
+        $whitelabel = getLanguageLinesCacheKey();
+        return "desiretec.translation-loader.{$whitelabel}.{$group}.{$locale}";
     }
 
     public static function getTranslationsForGroup(string $locale, string $group): array

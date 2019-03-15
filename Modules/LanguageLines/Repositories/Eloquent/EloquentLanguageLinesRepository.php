@@ -3,7 +3,7 @@
 namespace Modules\LanguageLines\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
-//use Modules\LanguageLines\Entities\LanguageLines;
+use Modules\LanguageLines\Entities\LanguageLines;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 
 /**
@@ -13,6 +13,6 @@ class EloquentLanguageLinesRepository extends RepositoryAbstract implements Lang
 {
     public function model()
     {
-        return \Config::get('translation-loader.model');
+        return LanguageLines::class;
     }
 }
