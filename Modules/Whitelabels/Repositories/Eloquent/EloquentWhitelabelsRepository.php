@@ -52,7 +52,38 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             mkdir(base_path("Modules/$name/Resources/views/wish"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/lang/de"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/lang/en"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/assets/sass/layer"), 0777, true);
         }
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/_bootstrap-select.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/_bootstrap-select.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/_rangeslider.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/_rangeslider.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/_utils.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/_utils.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/bootstrap-select.css.map'),
+            base_path("Modules/$name/Resources/assets/sass/layer/bootstrap-select.css.map")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/layer.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/layer.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/app.scss'),
+            base_path("Modules/$name/Resources/assets/sass/app.scss")
+        );
 
         $this->generateFile(
             base_path('Modules/Master/Resources/lang/de/layer.php'),
