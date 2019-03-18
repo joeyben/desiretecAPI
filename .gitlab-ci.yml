@@ -41,3 +41,31 @@ build-stage:
     STAGE_DOTENV: $STAGE_ENV
     DB_ROOT_PW: $MARIADB_ROOT_PW
     DB_STAGE_PW: $MARIADB_STAGE_PW
+
+build-prod:
+  stage: build
+  before_script:
+    - apk add --update py-pip
+    - pip install docker-compose
+  script:
+    - mkdir $DOCKER_CERT_PATH
+    - echo "$MACHINE_CA" > $DOCKER_CERT_PATH/ca.pem
+    - echo "$CLIENT_CERT" > $DOCKER_CERT_PATH/cert.pem
+    - echo "$CLIENT_KEY" > $DOCKER_CERT_PATH/key.pem
+    - echo "$PROD_ENV" > .env
+    - docker-compose -f docker-compose.yml build
+    - docker-compose -f docker-compose.yml down
+    - docker-compose -f docker-compose.yml up -d
+    - rm -rf $DOCKER_CERT_PATH
+  only:
+    - production
+  variables:
+    DOCKER_TLS_VERIFY: "1"
+    DOCKER_HOST: "tcp://ec2-18-194-33-90.eu-central-1.compute.amazonaws.com:2376"
+    DOCKER_CERT_PATH: "certs"
+    CLIENT_CERT: $CLIENT_DOCKER_CERT
+    MACHINE_CA: $DOCKER_MACHINE_CA
+    CLIENT_KEY: $CLIENT_DOCKER_CERT_KEY
+    STAGE_DOTENV: $PROD_ENV
+    DB_ROOT_PW: $MARIADB_ROOT_PW
+    DB_STAGE_PW: $MARIADB_PROD_PW
