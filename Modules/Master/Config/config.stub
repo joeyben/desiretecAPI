@@ -3,6 +3,7 @@
 return [
     'name' => '$MODULE$',
     'id'   => $ID$,
-    'locale' => 'en',
-    'language_lines_model' => \Modules\$MODULE$\Entities\$MODULE$LanguageLines::class
+    'locale' => 'de',
+    'language_lines_table' => 'language_lines_$MODULESMAL$',
+    'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class
 ];

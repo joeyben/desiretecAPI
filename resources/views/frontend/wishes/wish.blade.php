@@ -6,7 +6,13 @@
     <div class="img-background">
         <div class="container">
             <div class="col-md-8 bg-left-content">
-                <h3>Hallo {{ $wish->owner->first_name }} {{ $wish->owner->last_name }},</h3>
+                @if ($logged_in_user->hasRole('User') && $wish->owner->first_name !== "Muster")
+                    <h3>Hallo {{ $wish->owner->first_name }} {{ $wish->owner->last_name }},</h3>
+                @elseif ($logged_in_user->hasRole('User') && $wish->owner->first_name)
+                    <h3>Hallo lieber Kunde,</h3>
+                @else
+                    <h3>Hallo {{ $offer->agent->name }},</h3>
+                @endif
 
                 @if ($logged_in_user->hasRole('Seller') && $logged_in_user->allow('create-offer'))
                     <p class="header-p">{!! trans('wish.view.stage.seller_empty',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y')]) !!}</p>
@@ -125,7 +131,13 @@
                 <h4>
                     {{ trans('wish.view.new_offers') }}
                 </h4>
-                <p class="sa2-p1">Du hast {{ count($wish->offers) }} Angebote von <b>{{ $offer->owner->name }}</b> erhalten</p>
+                <p class="sa2-p1">Du hast {{ count($wish->offers) }} Angebote von <b>{{ $offer->owner->name }}</b>
+                    @if ($logged_in_user->hasRole('Seller'))
+                        erstellt
+                    @else
+                        erhalten
+                    @endif
+                </p>
                 <p class="sa2-p2">
                     <span class="offer-avatar-cnt">
                         <img class="avatar" title="{{ $offer->agent->name }}" alt="{{ $offer->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $offer->agent->avatar }}" />
@@ -360,7 +372,7 @@
     </div>
 </div>
 
-<section class="section-data">
+<!-- <section class="section-data"> -->
     <div class="container">
         <div class="col-md-6 s3-left">
             <h4>Häufige Fragen anderer Nutzer</h4>
@@ -459,7 +471,7 @@
                             <label>Nachname</label>
                         </div>
                         <div class="group">
-                            <input type="text" class="form-control email" name="email" id="email" required>
+                            <input type="text" class="form-control email" name="email" id="email" required value="{{ $wish->owner->email }}">
                             <label>E-Mail-Adresse</label>
                         </div>
                         <div class="group">

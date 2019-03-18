@@ -277,7 +277,7 @@ return [
                 'country'                   => 'Land',
                 'state'                     => 'State',
                 'city'                      => 'Stadt',
-                'zipcode'                   => 'BLZ',
+                'zipcode'                   => 'PLZ',
                 'ssn'                       => 'SSN',
                 'password_confirmation'     => 'Passwort Bestätigung',
                 'old_password'              => 'Altes Passwort',
