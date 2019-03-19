@@ -275,7 +275,12 @@ class WhitelabelsController extends Controller
             $this->whitelabels->generateFiles($result['whitelabel']->id, $result['whitelabel']->name);
             $this->artisan->call('module:migrate', ['module' => $result['whitelabel']->name, '--force' => true]);
             $whitelabelLangTable = 'language_lines_' . strtolower($result['whitelabel']->name);
-            $this->whitelabels->copyLanguage($whitelabelLangTable, 'en');
+
+            $locales = array_keys(config('locale.languages'));
+            foreach ($locales as $locale) {
+                $this->whitelabels->copyLanguage($whitelabelLangTable, $locale);
+            }
+
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
             $result['success'] = true;

@@ -154,13 +154,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             ['$MODULE$', '$SLUG$'],
             [$name, $slug]
         );
-
-        $this->generateFile(
-            base_path('Modules/Master/Entities/MasterLanguageLines.stub'),
-            base_path("Modules/$name/Entities/{$name}LanguageLines.php"),
-            ['$MODULE$'],
-            [$name]
-        );
     }
 
     public function generateFile(string $source, string $destination, array $placeholders = [], array $values = [])
