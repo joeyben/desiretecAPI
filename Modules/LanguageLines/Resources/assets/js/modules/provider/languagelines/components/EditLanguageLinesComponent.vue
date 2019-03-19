@@ -45,6 +45,15 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.description') }} <span class="text-danger"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" :class="errors.has('description') ? 'is-invalid': ''" id='description' name='description' :placeholder="trans('modals.description')" @input="updateGroup"  :value="languageline.description"/>
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('description')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.group') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
                                                     <input type="text" class="form-control" :class="errors.has('group') ? 'is-invalid': ''" id='group' name='group' :placeholder="trans('modals.group')" @input="updateGroup"  :value="languageline.group"/>
