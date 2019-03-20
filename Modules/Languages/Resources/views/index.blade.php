@@ -4,7 +4,7 @@
 @stop
 @section('page-title')
     <i class="icon-arrow-left52 mr-2"></i>
-    <span class="font-weight-semibold">List of langauges</span>
+    <span class="font-weight-semibold">List of languages</span>
 @stop
 @section('breadcrumb')
     <div class="breadcrumb">
