@@ -2,6 +2,7 @@
 
 namespace Modules\LanguageLines\Entities;
 
+use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\TranslationLoader\LanguageLine;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class LanguageLines extends LanguageLine
 {
+    use SearchableTrait;
+
     /**
      * The database table used by the model.
      *
@@ -16,6 +19,28 @@ class LanguageLines extends LanguageLine
      */
 
     protected $casts = [];
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /*
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'language_lines.id'                         => 10,
+            'language_lines.locale'                     => 10,
+            'language_lines.group'                      => 10,
+            'language_lines.key'                        => 10,
+            'language_lines.text'                       => 10
+        ]
+    ];
 
     public static function boot()
     {

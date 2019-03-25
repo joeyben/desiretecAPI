@@ -6,6 +6,12 @@ export default [
     visible: true
   },
   {
+    name: 'description',
+    title: window.Lang.get('tables.description'),
+    sortField: 'description',
+    visible: true
+  },
+  {
     name: 'group',
     title: window.Lang.get('tables.group'),
     sortField: 'group',

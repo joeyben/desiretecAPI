@@ -126,40 +126,30 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             [mb_strtolower($name)]
         );
 
+
+        $whitelabelLangTable = 'language_lines_' . mb_strtolower($name);
         $this->generateFile(
             base_path('Modules/Master/Config/config.stub'),
             base_path("Modules/$name/Config/config.php"),
             [
                 '$MODULE$',
-                '$ID$'
+                '$ID$',
+                '$TABLE'
             ],
             [
                 $name,
-                $id
+                $id,
+                $whitelabelLangTable
             ]
         );
 
         $slug =  strtolower($name);
-        $this->generateFile(
-            base_path('Modules/Master/Entities/MasterLanguageLines.stub'),
-            base_path("Modules/$name/Entities/{$name}LanguageLines.php"),
-            ['$MODULE$', '$SLUG$'],
-            [$name, $slug]
-        );
-
         $datePrefix = date('Y_m_d_His');
         $this->generateFile(
             base_path('Modules/Master/Database/Migrations/create_language_lines_master_table.stub'),
             base_path("Modules/$name/Database/Migrations/{$datePrefix}_create_language_lines_{$slug}_table.php"),
             ['$MODULE$', '$SLUG$'],
             [$name, $slug]
-        );
-
-        $this->generateFile(
-            base_path('Modules/Master/Entities/MasterLanguageLines.stub'),
-            base_path("Modules/$name/Entities/{$name}LanguageLines.php"),
-            ['$MODULE$'],
-            [$name]
         );
     }
 

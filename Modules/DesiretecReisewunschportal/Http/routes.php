@@ -1,7 +1,6 @@
 <?php
 
 Route::group(['domain' => 'desiretec.reisewunschservice.de'], function () {
-    setCurrentWhiteLabelId(\Config::get('desiretecreisewunschportal.id'));
     Route::group(['middleware' => 'web', 'namespace' => 'Modules\DesiretecReisewunschportal\Http\Controllers' , 'as' => 'desiretecreisewunschportal.'], function () {
         Route::get('/', 'DesiretecReisewunschportalController@index');
         Route::get('show', 'DesiretecReisewunschportalController@show');

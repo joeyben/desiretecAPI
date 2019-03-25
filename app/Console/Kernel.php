@@ -7,6 +7,7 @@ use App\Console\Commands\WhitelabelMakeRouteCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\LanguageLines\Console\CopyLanguageCommand;
+use Modules\LanguageLines\Console\ExportLanguageLinesCommand;
 use Modules\LanguageLines\Console\ImportLanguageFilesCommand;
 
 class Kernel extends ConsoleKernel
@@ -20,7 +21,8 @@ class Kernel extends ConsoleKernel
         InstallAppCommand::class,
         WhitelabelMakeRouteCommand::class,
         ImportLanguageFilesCommand::class,
-        CopyLanguageCommand::class
+        CopyLanguageCommand::class,
+        ExportLanguageLinesCommand::class
     ];
 
     /**
