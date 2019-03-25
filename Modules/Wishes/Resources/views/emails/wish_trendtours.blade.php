@@ -28,7 +28,7 @@
                 <tbody>
                 <tr>
                     <td colspan="2" align="right">
-                        <img src="https://ci4.googleusercontent.com/proxy/GZh5x5f7hM8YDh5n4TXOqBdCqC3p1TXAZSZFXiguCFwlwVacDYUJxH0qAI9VGJ_KefNsELvbUwdJ7lVhBi8DwqhvOjK430VgekZoecMfsRY8RGgY=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cstui/tui/images/tui_logo.png" width="50" />
+                        <img src="{{ getWhiteLabelLogoUrl() }}" width="50" />
                     </td>
                 </tr>
                 <tr>
@@ -135,10 +135,10 @@
                                                                         {{ $wish->duration }} Wochen
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        *****
+                                                                        {{ $wish->category }} Hotel
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        beliebig
+                                                                        {{ $wish->catering }}
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>

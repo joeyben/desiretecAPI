@@ -28,7 +28,7 @@
                 <tbody>
                 <tr>
                     <td colspan="2" align="right">
-                        <img src="https://ci4.googleusercontent.com/proxy/GZh5x5f7hM8YDh5n4TXOqBdCqC3p1TXAZSZFXiguCFwlwVacDYUJxH0qAI9VGJ_KefNsELvbUwdJ7lVhBi8DwqhvOjK430VgekZoecMfsRY8RGgY=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cstui/tui/images/tui_logo.png" width="50" />
+                        <img src="{{ getWhiteLabelLogoUrl() }}" width="50" />
                     </td>
                 </tr>
                 <tr>
@@ -89,7 +89,7 @@
                                                                         {{ $wish->destination }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
-                                                                        {{ $wish->earliest_start }} - {{ $wish->latest_return }}
+                                                                        {{ \Illuminate\Support\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Illuminate\Support\Carbon::parse($wish->latest_return)->format('d.m.Y') }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
                                                                         {{ $wish->adults }} Erw.
@@ -135,10 +135,10 @@
                                                                         {{ $wish->duration }} Wochen
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        *****
+                                                                        {{ $wish->category }} Hotel
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        beliebig
+                                                                        {{ $wish->catering }}
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -176,13 +176,6 @@
                             <tr>
                                 <td colspan="2" height="10">
                                     &nbsp;
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-
-                                    Wir hoffen, dass Ihnen die Angebote zusagen. Bei Fragen stehen Ihnen unsere Reiseberater jederzeit zur Verfügung.
-
                                 </td>
                             </tr>
                             <tr><td colspan="2"><hr style="background: #e7e7e7;border: none;height: 1px;width: 100%;margin-top: 30px;"></td></tr>
