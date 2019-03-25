@@ -4,5 +4,5 @@ return [
     'name' => '$MODULE$',
     'id'   => $ID$,
     'locale' => 'en',
-    'language_lines_table' => 'language_lines_master'
+    'language_lines_table' => '$TABLE$'
 ];
