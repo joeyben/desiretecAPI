@@ -92,7 +92,7 @@
                                                                         {{ \Illuminate\Support\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Illuminate\Support\Carbon::parse($wish->latest_return)->format('d.m.Y') }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
-                                                                        {{ $wish->adults }} Erw.
+                                                                        {{ $wish->adults }} Erw. &nbsp; {{ $wish->kids }} Kids.
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -132,13 +132,13 @@
                                                                         {{ $wish->budget }} €
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ $wish->duration }} Wochen
+                                                                        {{ category_name_by_value($wish->duration) }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ $wish->category }} Hotel
+                                                                        {{ $wish->category }} Sterne
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ $wish->catering }}
+                                                                        {{ category_name_by_value($wish->catering) }}
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -161,11 +161,11 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    Hallo!<br><br>
+                                    Hallo {{ $user->first_name }}!<br><br>
 
-                                    Ihnen wurde ein neuer desiretec Reisewunsch zur Bearbeitung zugewiesen: <br><br>
-
+                                    Ihnen wurde ein neuer trendtours Reisewunsch zur Bearbeitung zugewiesen. <br>
                                     Bitte beachten Sie, dass bis zur Kontaktaufnahme mit dem Kunden nicht mehr als 24h, maximal aber 48h vergehen sollten.
+                                    <br><br>
                                 </td>
                             </tr>
                             <tr>

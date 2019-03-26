@@ -89,10 +89,10 @@
                                                                         {{ $wish->destination }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
-                                                                        {{ $wish->earliest_start }} - {{ $wish->latest_return }}
+                                                                        {{ \Illuminate\Support\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Illuminate\Support\Carbon::parse($wish->latest_return)->format('d.m.Y') }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
-                                                                        {{ $wish->adults }} Erw.
+                                                                        {{ $wish->adults }} Erw. &nbsp; {{ $wish->kids }} Kids.
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -132,13 +132,13 @@
                                                                         {{ $wish->budget }} €
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ $wish->duration }} Wochen
+                                                                        {{ category_name_by_value($wish->duration) }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ $wish->category }} Hotel
+                                                                        {{ $wish->category }} Sterne
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ $wish->catering }}
+                                                                        {{ category_name_by_value($wish->catering) }}
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -163,8 +163,8 @@
                                 <td colspan="2">
                                     Liebe Kundin, lieber Kunde!<br><br>
 
-                                    Sie haben Ihren Reisewunsch {{ $wish->title}} erfolgreich erstellt. Einer unserer Spezialisten für das Reiseziel {{ $wish->title}} wird sich in Kürze bei Ihnen melden.
-
+                                    Sie haben Ihren Reisewunsch {{ $wish->title}} erfolgreich erstellt.<br>
+                                    Einer unserer Spezialisten für das Reiseziel {{ $wish->title}} wird sich in Kürze bei Ihnen melden.
                                     </td></tr>
                             <tr>
                                 <td colspan="2" height="10">
@@ -174,13 +174,6 @@
                             <tr>
                                 <td colspan="2" height="10">
                                     &nbsp;
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-
-                                    Wir hoffen, dass Ihnen die Angebote zusagen. Bei Fragen stehen Ihnen unsere Reiseberater jederzeit zur Verfügung.
-
                                 </td>
                             </tr>
                             <tr><td colspan="2"><hr style="background: #e7e7e7;border: none;height: 1px;width: 100%;margin-top: 30px;"></td></tr>
