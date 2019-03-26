@@ -456,13 +456,13 @@ if (!function_exists('category_name_by_value')) {
     /**
      * Set locale
      *
-     * @param string $slug
+     * @param string $value
      *
      * @return string
      */
-    function category_name_by_value(string $slug)
+    function category_name_by_value(string $value)
     {
-        return \BrianFaust\Categories\Models\Category::where('value', $slug)->first()->name;
+        return \BrianFaust\Categories\Models\Category::where('value', $value)->first()->name;
     }
 }
 
