@@ -176,13 +176,6 @@
                                     &nbsp;
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2">
-
-                                    Wir hoffen, dass Ihnen die Angebote zusagen. Bei Fragen stehen Ihnen unsere Reiseberater jederzeit zur Verfügung.
-
-                                </td>
-                            </tr>
                             <tr><td colspan="2"><hr style="background: #e7e7e7;border: none;height: 1px;width: 100%;margin-top: 30px;"></td></tr>
 
                             <tr>
