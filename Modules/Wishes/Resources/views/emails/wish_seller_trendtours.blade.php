@@ -161,9 +161,9 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    Hallo!<br><br>
+                                    Hallo {{ $user->first_name }}!<br><br>
 
-                                    Ihnen wurde ein neuer desiretec Reisewunsch zur Bearbeitung zugewiesen: <br><br>
+                                    Ihnen wurde ein neuer trendtours Reisewunsch zur Bearbeitung zugewiesen. <br><br>
 
                                     Bitte beachten Sie, dass bis zur Kontaktaufnahme mit dem Kunden nicht mehr als 24h, maximal aber 48h vergehen sollten.
                                 </td>

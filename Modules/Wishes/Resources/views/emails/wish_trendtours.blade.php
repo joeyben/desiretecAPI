@@ -163,8 +163,8 @@
                                 <td colspan="2">
                                     Liebe Kundin, lieber Kunde!<br><br>
 
-                                    Sie haben Ihren Reisewunsch {{ $wish->title}} erfolgreich erstellt. Einer unserer Spezialisten für das Reiseziel {{ $wish->title}} wird sich in Kürze bei Ihnen melden.
-
+                                    Sie haben Ihren Reisewunsch {{ $wish->title}} erfolgreich erstellt.<br>
+                                    Einer unserer Spezialisten für das Reiseziel {{ $wish->title}} wird sich in Kürze bei Ihnen melden.
                                     </td></tr>
                             <tr>
                                 <td colspan="2" height="10">

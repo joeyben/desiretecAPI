@@ -57,7 +57,7 @@ class CreatedWishNotification extends Notification
             return (new MailMessage())
                 ->from('trendtours@desiretec.com', $this->wish->whitelabel->display_name . ' Portal')
                 ->replyTo('johannes.leisch@desiretec.com', $this->wish->whitelabel->display_name.' Portal')
-                ->subject(trans('email.wish.user'))
+                ->subject(trans('email.wish.user_trendtours'))
                 ->view('wishes::emails.wish_trendtours', ['wish' => $this->wish, 'token' => $this->wish->token]);
         }
 
