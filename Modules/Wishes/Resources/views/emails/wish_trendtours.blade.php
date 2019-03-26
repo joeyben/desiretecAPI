@@ -132,13 +132,13 @@
                                                                         {{ $wish->budget }} €
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ $wish->duration }} Wochen
+                                                                        {{ category_name_by_value($wish->duration) }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
                                                                         {{ $wish->category }} Hotel
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ $wish->catering }}
+                                                                        {{ category_name_by_value($wish->catering) }}
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
