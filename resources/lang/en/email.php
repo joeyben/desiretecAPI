@@ -26,9 +26,11 @@ return [
     ],
     'wish'              => [
         'subject_for_seller'        => 'Es gibt einen neuen TUI Reisewunsch zur Bearbeitung!',
+        'subject_for_seller_trendtours'        => 'Es gibt einen neuen trendtours Reisewunsch zur Bearbeitung!',
         'user_cnt_seller'           => 'Ihr Angebot war erfolgreich, Sie haben einen neuen Kontakt erzeugt!',
         'user_callback_seller'      => 'Ihr Kunde bittet Sie um einen Rückruf',
         'user'                      => 'Herzlich willkommen beim desiretec Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.',
+        'user_trendtours'           => 'Herzlich willkommen beim trendtours Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.',
         'seller'                    => 'Es gibt einen neuen TUI Reisewunsch zur Bearbeitung!',
     ],
     'offer' => [

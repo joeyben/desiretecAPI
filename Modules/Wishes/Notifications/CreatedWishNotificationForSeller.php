@@ -54,7 +54,7 @@ class CreatedWishNotificationForSeller extends Notification
         if ($this->wish->whitelabel->name === 'Trendtours') {
             return (new MailMessage())
                 ->from('trendtours@desiretec.com', $this->wish->whitelabel->display_name.' Portal')
-                ->subject(trans('email.wish.seller'))
+                ->subject(trans('email.wish.seller_trendtours'))
                 ->view('wishes::emails.wish_seller_trendtours', ['wish' => $this->wish, 'token' => $notifiable->token->token, 'user' => $notifiable]);
         }
 
