@@ -89,10 +89,10 @@
                                                                         {{ $wish->destination }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
-                                                                        {{ $wish->earliest_start }} - {{ $wish->latest_return }}
+                                                                        {{ \Illuminate\Support\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Illuminate\Support\Carbon::parse($wish->latest_return)->format('d.m.Y') }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
-                                                                        {{ $wish->adults }} Erw.
+                                                                        {{ $wish->adults }} Erw. &nbsp; {{ $wish->kids }} Kids.
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
