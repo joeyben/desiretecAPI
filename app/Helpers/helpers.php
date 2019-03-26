@@ -451,3 +451,18 @@ if (!function_exists('setWhitelabelLocale')) {
         config(['app.locale' => $locale]);
     }
 }
+
+if (!function_exists('category_name_by_value')) {
+    /**
+     * Set locale
+     *
+     * @param string $slug
+     *
+     * @return string
+     */
+    function category_name_by_value(string $slug)
+    {
+        return \BrianFaust\Categories\Models\Category::where('value', $slug)->first()->name;
+    }
+}
+
