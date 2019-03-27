@@ -2,7 +2,7 @@
 
 namespace Modules\LanguageLines\Entities;
 
-use Nicolaslopezj\Searchable\SearchableTrait;
+use Modules\LanguageLines\Traits\LanguageLinesSearchableTrait;
 use Spatie\TranslationLoader\LanguageLine;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LanguageLines extends LanguageLine
 {
-    use SearchableTrait;
+    use LanguageLinesSearchableTrait;
 
     /**
      * The database table used by the model.
@@ -34,11 +34,11 @@ class LanguageLines extends LanguageLine
          * @var array
          */
         'columns' => [
-            'language_lines.id'                         => 10,
-            'language_lines.locale'                     => 10,
-            'language_lines.group'                      => 10,
-            'language_lines.key'                        => 10,
-            'language_lines.text'                       => 10
+            'id'                         => 10,
+            'locale'                     => 10,
+            'group'                      => 10,
+            'key'                        => 10,
+            'text'                       => 10
         ]
     ];
 
