@@ -63,6 +63,19 @@
 
         <ul class="navbar-nav ml-auto" id="notificationsComponent">
             <notifications-component></notifications-component>
+
+
+            @if (config('locale.status') && count(config('locale.languages')) > 1)
+                <li class="nav-item dropdown dropdown-user backend-lang-switcher">
+                    <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" style="height: 100%" data-toggle="dropdown" role="button" aria-expanded="false">
+                        {{ trans('menus.language-picker.language') }}
+                        <span class="caret"></span>
+                    </a>
+
+                    @include('includes.partials.lang')
+                </li>
+            @endif
+
             @auth('web')
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
