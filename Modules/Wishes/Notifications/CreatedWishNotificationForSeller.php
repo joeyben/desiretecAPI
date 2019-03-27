@@ -51,6 +51,13 @@ class CreatedWishNotificationForSeller extends Notification
         $notifiable->storeToken();
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
+        if ($this->wish->whitelabel->name === 'Trendtours') {
+            return (new MailMessage())
+                ->from('trendtours@desiretec.com', $this->wish->whitelabel->display_name.' Portal')
+                ->subject(trans('email.wish.seller_trendtours'))
+                ->view('wishes::emails.wish_seller_trendtours', ['wish' => $this->wish, 'token' => $notifiable->token->token, 'user' => $notifiable]);
+        }
+
         return (new MailMessage())
             ->from('noreply@desiretec.com', $this->wish->whitelabel->display_name.' Portal')
             ->subject(trans('email.wish.seller'))

@@ -86,6 +86,7 @@ class LanguageLinesController extends Controller
             $result['data'] = $this->languageline->withCriteria([
                 new OrderBy($sort[0], $sort[1]),
                 new Where('locale', $request->get('locale')),
+                new Filter($request->get('filter')),
             ])->paginate($perPage);
 
             $result['success'] = true;
@@ -109,6 +110,7 @@ class LanguageLinesController extends Controller
             $result['languageline'] = [
                 'id' => 0,
                 'locale' => '',
+                'description' => '',
                 'group' => '',
                 'key' => '',
                 'text' => ''
@@ -134,7 +136,7 @@ class LanguageLinesController extends Controller
     {
         try {
             $result['languageline'] = $this->languageline->create(
-                $request->only('locale', 'group', 'key', 'text')
+                $request->only('locale', 'description', 'group', 'key', 'text')
             );
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'LanguageLine']);
@@ -172,6 +174,7 @@ class LanguageLinesController extends Controller
             $result['languageline'] = [
                 'id' => $languageline->id,
                 'locale' => $languageline->locale,
+                'description' => $languageline->description,
                 'group' => $languageline->group,
                 'key' => $languageline->key,
                 'text' => $languageline->text
@@ -202,6 +205,7 @@ class LanguageLinesController extends Controller
                 $request->only(
                     'locale',
                     'group',
+                    'description',
                     'key',
                     'text'
                 )

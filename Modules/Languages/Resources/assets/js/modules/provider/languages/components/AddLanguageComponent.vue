@@ -39,15 +39,6 @@
                                 <div class="invalid-feedback">
                                     <strong v-text="errors.get('language_id')"></strong>
                                 </div>
-                                <!--<div class="form-group row">-->
-                                    <!--<label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.language') }} <span class="text-danger"> *</span></label>-->
-                                    <!--<div class="col-lg-9">-->
-                                        <!--<input type="text" class="form-control" :class="errors.has('language_id') ? 'is-invalid': ''" id='language_id' name='language_id' :placeholder="trans('modals.language')" @input="updateLanguage"  :value="language.language_id"/>-->
-                                        <!--<div class="invalid-feedback">-->
-                                            <!--<strong v-text="errors.get('language_id')"></strong>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
                             </div>
 
                         </fieldset>
@@ -104,10 +95,8 @@
         return this.user.hasOwnProperty('roles') && this.user.roles[permission]
       },
       updateLanguage (e) {
-        if (e.target.value !== null) {
-          console.log('name', e.target.name)
-          console.log('value', e.target.value)
-          this.$store.commit('updateLanguage', {name: e.target.name, value: e.target.value})
+        if (this.languageId) {
+          this.$store.commit('updateLanguage', {name: 'language_id', value: this.languageId})
         }
       },
       loadModal () {

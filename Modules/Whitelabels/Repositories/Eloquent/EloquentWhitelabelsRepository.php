@@ -52,7 +52,38 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             mkdir(base_path("Modules/$name/Resources/views/wish"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/lang/de"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/lang/en"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/assets/sass/layer"), 0777, true);
         }
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/_bootstrap-select.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/_bootstrap-select.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/_rangeslider.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/_rangeslider.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/_utils.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/_utils.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/bootstrap-select.css.map'),
+            base_path("Modules/$name/Resources/assets/sass/layer/bootstrap-select.css.map")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/layer.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/layer.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/app.scss'),
+            base_path("Modules/$name/Resources/assets/sass/app.scss")
+        );
 
         $this->generateFile(
             base_path('Modules/Master/Resources/lang/de/layer.php'),
@@ -95,40 +126,30 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             [mb_strtolower($name)]
         );
 
+
+        $whitelabelLangTable = 'language_lines_' . mb_strtolower($name);
         $this->generateFile(
             base_path('Modules/Master/Config/config.stub'),
             base_path("Modules/$name/Config/config.php"),
             [
                 '$MODULE$',
-                '$ID$'
+                '$ID$',
+                '$TABLE$'
             ],
             [
                 $name,
-                $id
+                $id,
+                $whitelabelLangTable
             ]
         );
 
         $slug =  strtolower($name);
-        $this->generateFile(
-            base_path('Modules/Master/Entities/MasterLanguageLines.stub'),
-            base_path("Modules/$name/Entities/{$name}LanguageLines.php"),
-            ['$MODULE$', '$SLUG$'],
-            [$name, $slug]
-        );
-
         $datePrefix = date('Y_m_d_His');
         $this->generateFile(
             base_path('Modules/Master/Database/Migrations/create_language_lines_master_table.stub'),
             base_path("Modules/$name/Database/Migrations/{$datePrefix}_create_language_lines_{$slug}_table.php"),
             ['$MODULE$', '$SLUG$'],
             [$name, $slug]
-        );
-
-        $this->generateFile(
-            base_path('Modules/Master/Entities/MasterLanguageLines.stub'),
-            base_path("Modules/$name/Entities/{$name}LanguageLines.php"),
-            ['$MODULE$'],
-            [$name]
         );
     }
 

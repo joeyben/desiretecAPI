@@ -2,6 +2,7 @@
 
 namespace Modules\LanguageLines\Entities;
 
+use Modules\LanguageLines\Traits\LanguageLinesSearchableTrait;
 use Spatie\TranslationLoader\LanguageLine;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
@@ -9,17 +10,37 @@ use Illuminate\Support\Facades\Auth;
 
 class LanguageLines extends LanguageLine
 {
+    use LanguageLinesSearchableTrait;
+
     /**
      * The database table used by the model.
      *
      * @var string
      */
 
-    protected $table = 'language_lines';
-
-    public static $whitelabel = 'admin';
-
     protected $casts = [];
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /*
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'id'                         => 10,
+            'locale'                     => 10,
+            'group'                      => 10,
+            'key'                        => 10,
+            'text'                       => 10
+        ]
+    ];
 
     public static function boot()
     {
@@ -31,8 +52,8 @@ class LanguageLines extends LanguageLine
 
     public static function getCacheKey(string $group, string $locale): string
     {
-        $whitelabel = static::$whitelabel;
-        return "desiretec.translation-loader.{$group}.{$locale}.{$whitelabel}";
+        $whitelabel = getLanguageLinesCacheKey();
+        return "desiretec.translation-loader.{$whitelabel}.{$group}.{$locale}";
     }
 
     public static function getTranslationsForGroup(string $locale, string $group): array
@@ -56,5 +77,15 @@ class LanguageLines extends LanguageLine
     protected function flushGroupCache()
     {
         Cache::forget(static::getCacheKey($this->group, $this->locale));
+    }
+
+    /**
+     * Override to get model from helpers
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return getLanguageLinesTable();
     }
 }

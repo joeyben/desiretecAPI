@@ -53,6 +53,14 @@ class CreatedWishNotification extends Notification
     {
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
+        if ($this->wish->whitelabel->name === 'Trendtours') {
+            return (new MailMessage())
+                ->from('trendtours@desiretec.com', $this->wish->whitelabel->display_name . ' Portal')
+                ->replyTo('wunschreise@trendtours.de', $this->wish->whitelabel->display_name.' Portal')
+                ->subject(trans('email.wish.user_trendtours'))
+                ->view('wishes::emails.wish_trendtours', ['wish' => $this->wish, 'token' => $this->wish->token]);
+        }
+
         return (new MailMessage())
             ->from('noreply@desiretec.com', $this->wish->whitelabel->display_name.' Portal')
             ->subject(trans('email.wish.user'))

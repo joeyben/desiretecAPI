@@ -26,6 +26,7 @@ use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Excel;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Attachments\Repositories\Contracts\AttachmentsRepository;
+use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use Modules\Roles\Repositories\Contracts\RolesRepository;
 use Modules\Whitelabels\Http\Requests\DomainWhitelabelRequest;
 use Modules\Whitelabels\Http\Requests\SaveWhitelabelRequest;
@@ -92,26 +93,31 @@ class WhitelabelsController extends Controller
      * @var \Modules\Roles\Repositories\Contracts\RolesRepository
      */
     private $roles;
+    /**
+     * @var \Modules\Languages\Repositories\Contracts\LanguagesRepository
+     */
+    private $languages;
 
     /**
      * WhitelabelsController constructor.
      *
      * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
-     * @param \App\Repositories\Backend\Distributions\DistributionsRepository   $distributions
-     * @param \Illuminate\Routing\ResponseFactory                               $response
-     * @param \Illuminate\Auth\AuthManager                                      $auth
-     * @param \Illuminate\Translation\Translator                                $lang
-     * @param \Carbon\Carbon                                                    $carbon
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
-     * @param \Maatwebsite\Excel\Excel                                          $excel
-     * @param \Illuminate\Filesystem\FilesystemManager                          $storage
-     * @param \Illuminate\Contracts\Console\Kernel                              $artisan
-     * @param \Illuminate\Support\Str                                           $str
+     * @param \App\Repositories\Backend\Distributions\DistributionsRepository $distributions
+     * @param \Illuminate\Routing\ResponseFactory $response
+     * @param \Illuminate\Auth\AuthManager $auth
+     * @param \Illuminate\Translation\Translator $lang
+     * @param \Carbon\Carbon $carbon
+     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository $activities
+     * @param \Maatwebsite\Excel\Excel $excel
+     * @param \Illuminate\Filesystem\FilesystemManager $storage
+     * @param \Illuminate\Contracts\Console\Kernel $artisan
+     * @param \Illuminate\Support\Str $str
      * @param \Modules\Attachments\Repositories\Contracts\AttachmentsRepository $attachments
-     * @param \Illuminate\Notifications\ChannelManager                          $notification
-     * @param \Modules\Roles\Repositories\Contracts\RolesRepository             $roles
+     * @param \Illuminate\Notifications\ChannelManager $notification
+     * @param \Modules\Roles\Repositories\Contracts\RolesRepository $roles
+     * @param LanguagesRepository $languages
      */
-    public function __construct(WhitelabelsRepository $whitelabels, DistributionsRepository $distributions, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel, FilesystemManager $storage, Kernel $artisan, Str $str, AttachmentsRepository $attachments, ChannelManager $notification, RolesRepository $roles)
+    public function __construct(WhitelabelsRepository $whitelabels, DistributionsRepository $distributions, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel, FilesystemManager $storage, Kernel $artisan, Str $str, AttachmentsRepository $attachments, ChannelManager $notification, RolesRepository $roles, LanguagesRepository $languages)
     {
         $this->whitelabels = $whitelabels;
         $this->response = $response;
@@ -127,6 +133,7 @@ class WhitelabelsController extends Controller
         $this->attachments = $attachments;
         $this->notification = $notification;
         $this->roles = $roles;
+        $this->languages = $languages;
     }
 
     /**
@@ -275,9 +282,19 @@ class WhitelabelsController extends Controller
             $this->whitelabels->generateFiles($result['whitelabel']->id, $result['whitelabel']->name);
             $this->artisan->call('module:migrate', ['module' => $result['whitelabel']->name, '--force' => true]);
             $whitelabelLangTable = 'language_lines_' . strtolower($result['whitelabel']->name);
-            $this->whitelabels->copyLanguage($whitelabelLangTable, 'en');
+
+            $locales = array_keys(config('locale.languages'));
+
+            foreach ($locales as $locale) {
+                $language = $this->languages->findWhereFirst('locale', $locale);
+                $language->whitelabels()->attach($result['whitelabel']->id);
+
+                $this->whitelabels->copyLanguage($whitelabelLangTable, $locale);
+            }
+
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
+            $result['language'] = $language;
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {

@@ -4,6 +4,7 @@ use App\Helpers\uuid;
 use App\Models\Notification\Notification;
 use App\Models\Settings\Setting;
 use Carbon\Carbon as Carbon;
+use Modules\Languages\Entities\Language;
 
 /**
  * Henerate UUID.
@@ -359,18 +360,6 @@ if (!function_exists('isWhiteLabel')) {
     }
 }
 
-if (!function_exists('setCurrentWhiteLabelId')) {
-    /**
-     * Set current whitelabel Id.
-     *
-     * @param int $id
-     */
-    function setCurrentWhiteLabelId($id)
-    {
-        config(['app.current_whitelabel' => $id]);
-    }
-}
-
 if (!function_exists('getCurrentWhiteLabelId')) {
     /**
      * return current whitelabel Id.
@@ -415,15 +404,41 @@ if (!function_exists('setTranslationLoaderModel')) {
     }
 }
 
-if (!function_exists('getTranslationLoaderModel')) {
+if (!function_exists('getLanguageLinesTable')) {
     /**
-     * return translation-loader model.
+     * return language lines table name.
      *
-     * @return int
+     * @return string
      */
-    function getTranslationLoaderModel()
+    function getLanguageLinesTable()
     {
-        return config('translation-loader.model');
+        if (isWhiteLabel()) {
+            $url = str_replace('http://', '', url('/'));
+            $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+
+            return \Config::get(mb_strtolower($whitelabelName) . '.language_lines_table');
+        }
+
+        return 'language_lines';
+    }
+}
+
+if (!function_exists('getLanguageLinesCacheKey')) {
+    /**
+     * return language lines cache key.
+     *
+     * @return string
+     */
+    function getLanguageLinesCacheKey()
+    {
+        if (isWhiteLabel()) {
+            $url = str_replace('http://', '', url('/'));
+            $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+
+            return $whitelabelName;
+        }
+
+        return 'admin';
     }
 }
 
@@ -435,5 +450,39 @@ if (!function_exists('setWhitelabelLocale')) {
     function setWhitelabelLocale($locale)
     {
         config(['app.locale' => $locale]);
+    }
+}
+
+if (!function_exists('category_name_by_value')) {
+    /**
+     * Set locale
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    function category_name_by_value(string $value)
+    {
+        return \BrianFaust\Categories\Models\Category::where('value', $value)->first()->name;
+    }
+}
+
+
+if (!function_exists('getWhitelabelLocales')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getWhitelabelLocales()
+    {
+        if (isWhiteLabel()) {
+            $whitelabelId = getCurrentWhiteLabelId();
+            return Language::whereHas('whitelabels', function ($q) use ($whitelabelId) {
+                $q->where('whitelabels.id', $whitelabelId);
+            })->get();
+        }
+
+        return null;
     }
 }
