@@ -6,8 +6,8 @@ use App\Models\Access\User\User;
 use App\Models\Comments\Comment;
 use App\Models\Contact\Contact;
 use App\Models\Groups\Group;
-use App\Models\Offers\Offer;
 use App\Models\Messages\Message;
+use App\Models\Offers\Offer;
 
 /**
  * Class WishRelationship.
@@ -104,6 +104,4 @@ trait WishRelationship
     {
         return $this->hasMany(Offer::class)->count();
     }
-
-
 }

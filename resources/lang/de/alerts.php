@@ -14,32 +14,32 @@ return [
 
     'backend' => [
         'roles' => [
-            'created' => 'The role was successfully created.',
-            'deleted' => 'The role was successfully deleted.',
-            'updated' => 'The role was successfully updated.',
+            'created' => 'Die Rolle wurde erfolgreich erstellt.',
+            'deleted' => 'Die Rolle wurde erfolgreich gelöscht.',
+            'updated' => 'Die Rolle wurde erfolgreich geändert.',
         ],
 
         'permissions' => [
-            'created' => 'The permission was successfully created.',
-            'deleted' => 'The permission was successfully deleted.',
-            'updated' => 'The permission was successfully updated.',
+            'created' => 'Die Berechtigung wurde erfolgreich erstellt.',
+            'deleted' => 'Die Berechtigung wurde erfolgreich gelöscht.',
+            'updated' => 'Die Berechtigung wurde erfolgreich geändert.',
         ],
 
         'users' => [
-            'confirmation_email'  => 'A new confirmation e-mail has been sent to the address on file.',
-            'created'             => 'The user was successfully created.',
-            'deleted'             => 'The user was successfully deleted.',
-            'deleted_permanently' => 'The user was deleted permanently.',
-            'restored'            => 'The user was successfully restored.',
-            'session_cleared'     => "The user's session was successfully cleared.",
-            'updated'             => 'The user was successfully updated.',
-            'updated_password'    => "The user's password was successfully updated.",
+            'confirmation_email'  => 'Eine neue Bestätigungs E-Mail wurde gesendet.',
+            'created'             => 'Der User wurde erfolgreich erstellt.',
+            'deleted'             => 'Der User wurde erfolgreich gelöscht.',
+            'deleted_permanently' => 'Der User wurde dauerhaft gelöscht.',
+            'restored'            => 'Der User wurde erfolgreich wiederhergestellt.',
+            'session_cleared'     => 'Die User Session wurde erfolgreich gelöscht.',
+            'updated'             => 'Der User wurde erfolgreich geändert.',
+            'updated_password'    => 'Das Benutzer Passwort wurde erfolgreich aktualisiert.',
         ],
 
         'pages' => [
-            'created' => 'The Page was successfully created.',
-            'deleted' => 'The Page was successfully deleted.',
-            'updated' => 'The Page was successfully updated.',
+            'created' => 'Die Seite wurde erfolgreich erstellt.',
+            'deleted' => 'Die Seite wurde erfolgreich gelöscht.',
+            'updated' => 'Die Seite wurde erfolgreich geändert.',
         ],
 
         'blogcategories' => [
@@ -61,51 +61,51 @@ return [
         ],
 
         'wishes' => [
-            'created' => 'The Wish was successfully created.',
-            'deleted' => 'The Wish was successfully deleted.',
-            'updated' => 'The Wish was successfully updated.',
+            'created' => 'Der Wunsch wurde erfolgreich erstellt.',
+            'deleted' => 'Der Wunsch wurde erfolgreich gelöscht.',
+            'updated' => 'Der Wunsch wurde erfolgreich geändert.',
         ],
 
         'groups' => [
-            'created' => 'The Group was successfully created.',
-            'deleted' => 'The Group was successfully deleted.',
-            'updated' => 'The Group was successfully updated.',
+            'created' => 'Die Gruppe wurde erfolgreich erstellt.',
+            'deleted' => 'Die Gruppe wurde erfolgreich gelöscht.',
+            'updated' => 'Die Gruppe wurde erfolgreich geändert.',
         ],
 
         'whitelabels' => [
-            'created' => 'The Whitelabel was successfully created.',
-            'deleted' => 'The Whitelabel was successfully deleted.',
-            'updated' => 'The Whitelabel was successfully updated.',
+            'created' => 'Das Whitelabel wurde erfolgreich erstellt.',
+            'deleted' => 'Das Whitelabel wurde erfolgreich gelöscht.',
+            'updated' => 'Das Whitelabel wurde erfolgreich geändert.',
         ],
 
         'emailtemplates' => [
-            'deleted' => 'The Email Template was successfully deleted.',
-            'updated' => 'The Email Template was successfully updated.',
+            'deleted' => 'Das Email Template wurde erfolgreich gelöscht.',
+            'updated' => 'Das Email Template wurde erfolgreich geändert.',
         ],
 
         'settings' => [
-            'updated' => 'The Setting was successfully updated.',
+            'updated' => 'Die Einstellung wurde erfolgreich geändert.',
         ],
         'faqs' => [
-            'created' => 'The Faq was successfully created.',
-            'deleted' => 'The Faq was successfully deleted.',
-            'updated' => 'The Faq was successfully updated.',
+            'created' => 'Die FAQ wurde erfolgreich erstellt.',
+            'deleted' => 'Die FAQ wurde erfolgreich gelöscht.',
+            'updated' => 'Die FAQ wurde erfolgreich geändert.',
         ],
 
         'menus' => [
-            'created' => 'The Menu was successfully created.',
-            'deleted' => 'The Menu was successfully deleted.',
-            'updated' => 'The Menu was successfully updated.',
+            'created' => 'Das Menü wurde erfolgreich erstellt.',
+            'deleted' => 'Das Menü wurde erfolgreich gelöscht.',
+            'updated' => 'Das Menü wurde erfolgreich geändert.',
         ],
     ],
     'frontend' => [
         'offers' => [
-            'created' => 'Offer successfully created',
+            'created' => 'Das Angebot wurde erfolgreich erstellt.',
         ],
         'wishes' => [
-            'created' => 'The Wish was successfully created.',
-            'deleted' => 'The Wish was successfully deleted.',
-            'updated' => 'The Wish was successfully updated.',
+            'created' => 'Der Wunsch wurde erfolgreich erstellt.',
+            'deleted' => 'Der Wunsch wurde erfolgreich gelöscht.',
+            'updated' => 'Der Wunsch wurde erfolgreich geändert.',
         ],
     ],
 ];

@@ -3,12 +3,10 @@
 namespace Modules\LanguageLines\Console;
 
 use Illuminate\Console\Command;
-use Modules\LanguageLines\Entities\LanguageLines;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
+use Modules\LanguageLines\Entities\LanguageLines;
+use Symfony\Component\Console\Input\InputArgument;
 
 class ExportLanguageLinesCommand extends Command
 {
@@ -35,8 +33,6 @@ class ExportLanguageLinesCommand extends Command
      * Create a new command instance.
      *
      * @param $app
-     *
-     * @return void
      */
     public function __construct(Application $app, Filesystem $files)
     {
@@ -57,14 +53,14 @@ class ExportLanguageLinesCommand extends Command
 
         $table = $this->argument('table');
 
-        if (is_null($table)) {
+        if (null === $table) {
             $this->warn('Default table language_lines selected.');
             $table = 'language_lines';
         }
 
         $this->exportTranslations($group, false);
 
-        $this->info('Done writing language files for ' . (($group == '*') ? 'all groups' : $group . ' group'));
+        $this->info('Done writing language files for ' . (('*' === $group) ? 'all groups' : $group . ' group'));
         $this->info('Table ' . $table);
     }
 
@@ -72,14 +68,13 @@ class ExportLanguageLinesCommand extends Command
     {
         $basePath = $this->app['path.lang'];
 
-        if (!is_null($group) && !$json) {
+        if (null !== $group && !$json) {
             $vendor = false;
-            if ($group == '*') {
+            if ('*' === $group) {
                 return $this->exportAllTranslations();
-            } else {
-                if (starts_with($group, "vendor")) {
-                    $vendor = true;
-                }
+            }
+            if (starts_with($group, 'vendor')) {
+                $vendor = true;
             }
 
             $languageLines = LanguageLines::where('group', $group)->orderBy('key')->get();
@@ -88,23 +83,23 @@ class ExportLanguageLinesCommand extends Command
                 if (isset($groups[$group])) {
                     $translations = $groups[$group];
                     $path = $this->app['path.lang'];
-                    $locale_path = $locale . DIRECTORY_SEPARATOR . $group;
+                    $locale_path = $locale . \DIRECTORY_SEPARATOR . $group;
                     if ($vendor) {
                         $path = $basePath . '/' . $group . '/' . $locale;
-                        $locale_path = str_after($group, "/");
+                        $locale_path = str_after($group, '/');
                     }
-                    $subfolders = explode(DIRECTORY_SEPARATOR, $locale_path);
+                    $subfolders = explode(\DIRECTORY_SEPARATOR, $locale_path);
                     array_pop($subfolders);
                     $subfolder_level = '';
                     foreach ($subfolders as $subfolder) {
-                        $subfolder_level = $subfolder_level . $subfolder . DIRECTORY_SEPARATOR;
-                        $temp_path = rtrim($path . DIRECTORY_SEPARATOR . $subfolder_level, DIRECTORY_SEPARATOR);
+                        $subfolder_level = $subfolder_level . $subfolder . \DIRECTORY_SEPARATOR;
+                        $temp_path = rtrim($path . \DIRECTORY_SEPARATOR . $subfolder_level, \DIRECTORY_SEPARATOR);
                         if (!is_dir($temp_path)) {
                             mkdir($temp_path, 0777, true);
                         }
                     }
-                    $path = $path . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . $group . '.php';
-                    $output = "<?php\n\nreturn " . var_export($translations, true) . ";" . \PHP_EOL;
+                    $path = $path . \DIRECTORY_SEPARATOR . $locale . \DIRECTORY_SEPARATOR . $group . '.php';
+                    $output = "<?php\n\nreturn " . var_export($translations, true) . ';' . \PHP_EOL;
                     $this->files->put($path, $output);
                 }
             }
@@ -132,7 +127,7 @@ class ExportLanguageLinesCommand extends Command
     {
         $groups = LanguageLines::select('group')->distinct()->get();
         foreach ($groups as $group) {
-            if ($group->group == self::JSON_GROUP) {
+            if (self::JSON_GROUP === $group->group) {
                 $this->exportTranslations(null, true);
             } else {
                 $this->exportTranslations($group->group);
@@ -152,15 +147,17 @@ class ExportLanguageLinesCommand extends Command
                 array_set($array[$translation->locale][$translation->group], $translation->key, $translation->text);
             }
         }
+
         return $array;
     }
 
     public function jsonSet(&$array, $key, $value)
     {
-        if (is_null($key)) {
+        if (null === $key) {
             return $array = $value;
         }
         $array[$key] = $value;
+
         return $array;
     }
 

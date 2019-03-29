@@ -15,14 +15,14 @@ return [
     'backend' => [
         'access' => [
             'users' => [
-                'activate'           => 'Activate',
-                'change_password'    => 'Change Password',
-                'clear_session'      => 'Clear Session',
-                'deactivate'         => 'Deactivate',
-                'delete_permanently' => 'Delete Permanently',
-                'login_as'           => 'Login As :user',
-                'resend_email'       => 'Resend Confirmation E-mail',
-                'restore_user'       => 'Restore User',
+                'activate'           => 'Aktivieren',
+                'change_password'    => 'Passwort ändern',
+                'clear_session'      => 'Session löschen',
+                'deactivate'         => 'Deaktivieren',
+                'delete_permanently' => 'Dauerhaft löschen',
+                'login_as'           => 'Einloggen als :user',
+                'resend_email'       => 'Bestätigungs E-Mail erneut senden',
+                'restore_user'       => 'Benutzer wiederherstellen',
             ],
         ],
     ],
@@ -30,13 +30,13 @@ return [
     'wishes' => [
         'frontend' => [
             'create_offer'     => 'Angebot erstellen',
-            'create_autooffer' => 'Create Auto Offer',
+            'create_autooffer' => 'Automatisches Angebot erstellen',
         ]
     ],
     'emails' => [
         'auth' => [
-            'confirm_account' => 'Confirm Account',
-            'reset_password'  => 'Reset Password',
+            'confirm_account' => 'Account bestätigen',
+            'reset_password'  => 'Passwort zurücksetzen',
         ],
     ],
 
@@ -51,10 +51,10 @@ return [
             'delete' => 'Löschen',
             'edit'   => 'Editieren',
             'update' => 'Aktualisieren',
-            'view'   => 'Ansehen',
+            'view'   => 'Anzeigen',
         ],
 
-        'save' => 'Save',
-        'view' => 'View',
+        'save' => 'Speichern',
+        'view' => 'Anzeigen',
     ],
 ];

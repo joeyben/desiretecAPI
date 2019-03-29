@@ -78,14 +78,14 @@ class MessageCreated extends Notification
     public function toMail()
     {
         $confirmation_url = route($this->getRoute(), [$this->wish_id, $this->token]);
-        $subject = trans('email.message.created-'.$this->type);
-        $view = 'emails.messages.created-'.$this->type;
+        $subject = trans('email.message.created-' . $this->type);
+        $view = 'emails.messages.created-' . $this->type;
 
         return (new MailMessage())
-            ->from('noreply@desiretec.com', $this->wl_name.' Portal')
+            ->from('noreply@desiretec.com', $this->wl_name . ' Portal')
             ->subject($subject)
             ->view($view, [
-                    'confirmation_url' => $confirmation_url,
+                    'confirmation_url'      => $confirmation_url,
                     'messageModel'          => $this->message
                 ]);
     }
@@ -100,7 +100,7 @@ class MessageCreated extends Notification
     public function getRoute()
     {
         if (isWhiteLabel()) {
-            $whitelabelslug = strtolower($this->wl_name);
+            $whitelabelslug = mb_strtolower($this->wl_name);
 
             return $whitelabelslug . '.wish.details';
         }

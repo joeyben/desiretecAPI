@@ -99,7 +99,7 @@ class WishesRepository extends BaseRepository
         $input['updated_by'] = access()->user()->id;
 
         // Uploading Image
-        if (array_key_exists('featured_image', $input)) {
+        if (\array_key_exists('featured_image', $input)) {
             $this->deleteOldFile($wish);
             $input = $this->uploadImage($input);
         }

@@ -2,8 +2,8 @@
 
 namespace App\Listeners\Frontend;
 
-use App\Models\Offers\Offer;
 use App\Models\Access\User\User;
+use App\Models\Offers\Offer;
 use App\Notifications\Frontend\OfferCreated;
 use App\Notifications\Frontend\OfferUser;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +39,7 @@ class OfferEventListener
     public function onCreatedOffer(Offer $offer)
     {
         $user_id = $offer->wish->owner->id;
-        $user = User::where('id', intval($user_id))->firstOrFail();
+        $user = User::where('id', (int) $user_id)->firstOrFail();
         $usertoken = $user->storeToken();
         $token = $usertoken->token->token;
 

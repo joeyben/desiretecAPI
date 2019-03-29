@@ -31,8 +31,8 @@ class OffersTableController extends Controller
     {
         return Datatables::of($this->offers->getForDataTable())
             ->addColumn('title', function ($offers) {
-                return '<a href="'.route('frontend.wishes.show', [$offers->wish_id])
-                    .'">'.$offers->title.'</a>';
+                return '<a href="' . route('frontend.wishes.show', [$offers->wish_id])
+                    . '">' . $offers->title . '</a>';
             })
             ->addColumn('created_by', function ($offers) {
                 return $offers->first_name . ' ' . $offers->last_name;

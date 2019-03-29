@@ -102,20 +102,20 @@ class WhitelabelsController extends Controller
      * WhitelabelsController constructor.
      *
      * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
-     * @param \App\Repositories\Backend\Distributions\DistributionsRepository $distributions
-     * @param \Illuminate\Routing\ResponseFactory $response
-     * @param \Illuminate\Auth\AuthManager $auth
-     * @param \Illuminate\Translation\Translator $lang
-     * @param \Carbon\Carbon $carbon
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository $activities
-     * @param \Maatwebsite\Excel\Excel $excel
-     * @param \Illuminate\Filesystem\FilesystemManager $storage
-     * @param \Illuminate\Contracts\Console\Kernel $artisan
-     * @param \Illuminate\Support\Str $str
+     * @param \App\Repositories\Backend\Distributions\DistributionsRepository   $distributions
+     * @param \Illuminate\Routing\ResponseFactory                               $response
+     * @param \Illuminate\Auth\AuthManager                                      $auth
+     * @param \Illuminate\Translation\Translator                                $lang
+     * @param \Carbon\Carbon                                                    $carbon
+     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
+     * @param \Maatwebsite\Excel\Excel                                          $excel
+     * @param \Illuminate\Filesystem\FilesystemManager                          $storage
+     * @param \Illuminate\Contracts\Console\Kernel                              $artisan
+     * @param \Illuminate\Support\Str                                           $str
      * @param \Modules\Attachments\Repositories\Contracts\AttachmentsRepository $attachments
-     * @param \Illuminate\Notifications\ChannelManager $notification
-     * @param \Modules\Roles\Repositories\Contracts\RolesRepository $roles
-     * @param LanguagesRepository $languages
+     * @param \Illuminate\Notifications\ChannelManager                          $notification
+     * @param \Modules\Roles\Repositories\Contracts\RolesRepository             $roles
+     * @param LanguagesRepository                                               $languages
      */
     public function __construct(WhitelabelsRepository $whitelabels, DistributionsRepository $distributions, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel, FilesystemManager $storage, Kernel $artisan, Str $str, AttachmentsRepository $attachments, ChannelManager $notification, RolesRepository $roles, LanguagesRepository $languages)
     {
@@ -281,7 +281,7 @@ class WhitelabelsController extends Controller
             $this->artisan->call('module:make', ['name' => [$result['whitelabel']->name], '--force' => true]);
             $this->whitelabels->generateFiles($result['whitelabel']->id, $result['whitelabel']->name);
             $this->artisan->call('module:migrate', ['module' => $result['whitelabel']->name, '--force' => true]);
-            $whitelabelLangTable = 'language_lines_' . strtolower($result['whitelabel']->name);
+            $whitelabelLangTable = 'language_lines_' . mb_strtolower($result['whitelabel']->name);
 
             $locales = array_keys(config('locale.languages'));
 
@@ -291,7 +291,6 @@ class WhitelabelsController extends Controller
 
                 $this->whitelabels->copyLanguage($whitelabelLangTable, $locale);
             }
-
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
             $result['language'] = $language;

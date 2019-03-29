@@ -20,7 +20,7 @@ return [
     'frontend' => [
         'dashboard'       => 'Dashboard',
         'login'           => 'Einloggen',
-        'macros'          => 'Macros',
+        'macros'          => 'Makros',
         'register'        => 'Registrieren',
         'wishes'          => 'Meine Reisewünsche',
         'create_wish'     => 'Wunsch erstellen',

@@ -19,7 +19,7 @@ return [
     'delete_all'         => 'Alles löschen',
     'cancel'             => 'Abbrechen',
     'confirm'            => 'Bestätigen',
-    'edit'               => 'Edit',
+    'edit'               => 'Ändern',
     'delete'             => 'Löschen',
     'restore'            => 'Wiederherstellen',
     'create'             => 'Erstellen',

@@ -24,7 +24,7 @@ class WishesSubscriber
     /**
      * Create the event listener.
      *
-     * @param \Modules\Wishes\Entities\Wish                                   $wish
+     * @param \Modules\Wishes\Entities\Wish $wish
      */
     public function __construct(Wish $wish)
     {
@@ -50,7 +50,6 @@ class WishesSubscriber
         $token = $usertoken->token->token;
         $wish['token'] = $token;
         $wish->load('owner');
-
 
         $users = Group::find($wish->group_id)->users()->get();
         Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));

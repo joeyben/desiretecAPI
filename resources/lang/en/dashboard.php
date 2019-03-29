@@ -12,16 +12,16 @@ return [
     |
     */
 
-    'total_sellers'                             => 'Alle Anbieter',
-    'total_groups'                              => 'Alle Gruppen',
-    'total_wishes'                              => 'Alle Wünsche',
-    'reaction_time_average_month'               => 'Reaktionszeit / Monat',
-    'reaction_time_average_day'                 => 'Reaktionszeit / Tag',
-    'monthly_average_wish'                      => 'Wünsche pro Monat',
-    'daily_average_wish'                        => 'Wünsche pro Tag',
-    'source_2019'                               => 'Zeitraum: 2019',
-    'current_month'                             => 'Aktueller Monat',
-    'wish'                                      => 'Wunsch',
-    'wishes'                                    => 'Wünsche',
-    'date'                                      => 'Datum',
+    'total_sellers'                             => 'all sellers',
+    'total_groups'                              => 'all groups',
+    'total_wishes'                              => 'all wishes',
+    'reaction_time_average_month'               => 'reaction time / month',
+    'reaction_time_average_day'                 => 'reaction time / day',
+    'monthly_average_wish'                      => 'wishes per month',
+    'daily_average_wish'                        => 'wishes per day',
+    'source_2019'                               => 'period: 2019',
+    'current_month'                             => 'current month',
+    'wish'                                      => 'wish',
+    'wishes'                                    => 'wishes',
+    'date'                                      => 'date',
 ];

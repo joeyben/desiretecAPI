@@ -6,9 +6,9 @@ use App\Events\Frontend\Contact\ContactCreated;
 use App\Events\Frontend\Contact\ContactDeleted;
 use App\Events\Frontend\Contact\ContactUpdated;
 use App\Exceptions\GeneralException;
+use App\Models\Access\User\User;
 use App\Models\Contact\Contact;
 use App\Models\Wishes\Wish;
-use App\Models\Access\User\User;
 use App\Repositories\BaseRepository;
 use DB;
 
@@ -69,7 +69,7 @@ class ContactRepository extends BaseRepository
             $input['group_id'] = $this->getGroupId($input['wish_id']);
 
             if ($contact = Contact::create($input)) {
-                if($input['first_name']){
+                if ($input['first_name']) {
                     $this->updateUserInfo($input);
                 }
                 event(new ContactCreated($contact));

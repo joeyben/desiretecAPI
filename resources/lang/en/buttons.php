@@ -29,7 +29,7 @@ return [
 
     'wishes' => [
         'frontend' => [
-            'create_offer'     => 'Angebot erstellen',
+            'create_offer'     => 'Create Offer',
             'create_autooffer' => 'Create Auto Offer',
         ]
     ],
@@ -41,17 +41,17 @@ return [
     ],
 
     'general' => [
-        'cancel'   => 'Abbrechen',
-        'continue' => 'Fortsetzen',
-        'preview'  => 'Vorschau',
+        'cancel'   => 'Cancel',
+        'continue' => 'Continue',
+        'preview'  => 'Preview',
 
         'crud' => [
-            'create' => 'Erstellen',
-            'add'    => 'Hinzufügen',
-            'delete' => 'Löschen',
-            'edit'   => 'Editieren',
-            'update' => 'Aktualisieren',
-            'view'   => 'Ansehen',
+            'create' => 'Create',
+            'add'    => 'Add',
+            'delete' => 'Delete',
+            'edit'   => 'Edit',
+            'update' => 'Update',
+            'view'   => 'View',
         ],
 
         'save' => 'Save',

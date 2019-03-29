@@ -3,19 +3,19 @@
 return [
     'messages' => [
         'registeration' => [
-            'success' => 'You have registered successfully. Please check your email for activation!',
+            'success' => 'Du hast dich erfolgreich registriert. Bitte überprüfe zur Aktivierung deine E-Mails.',
         ],
         'login' => [
-            'success' => 'Login Successfull.',
-            'failed'  => 'Invalid Credentials! Please try again.',
+            'success' => 'Login erfolgreich.',
+            'failed'  => 'Ungültige Zugangsdaten! Bitte erneut versuchen.',
         ],
         'logout' => [
-            'success' => 'Successfully logged out.',
+            'success' => 'Erfolgreich ausgeloggt.',
         ],
         'forgot_password' => [
-            'success'    => 'We have sent email with reset password link. Please check your inbox!.',
+            'success'    => 'Wir haben eine E-Mail mit einem Link zum Zurücksetzen des Passworts geschickt.',
             'validation' => [
-                'email_not_found' => 'This email address is not registered.',
+                'email_not_found' => 'Diese E-Mail-Adresse ist uns nicht bekannt.',
             ],
         ],
         'refresh' => [

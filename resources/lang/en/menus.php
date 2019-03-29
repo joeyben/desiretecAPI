@@ -196,11 +196,10 @@ return [
 
     'list' => [
         'status' => [
-            'all'       => 'Alle Reisewünsche',
-            'active'    => 'Aktiv',
-            'inactive'  => 'Inaktiv',
-            'deleted'   => 'Gelöscht',
-
+            'all'       => 'All travel wishes',
+            'active'    => 'active',
+            'inactive'  => 'inactive',
+            'deleted'   => 'deleted',
         ]
     ],
     'wishes'  => 'Wishes',

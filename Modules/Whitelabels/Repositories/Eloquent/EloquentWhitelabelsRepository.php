@@ -10,9 +10,9 @@
 namespace Modules\Whitelabels\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
+use Illuminate\Support\Facades\DB;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class EloquentPostsRepository.
@@ -126,7 +126,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             [mb_strtolower($name)]
         );
 
-
         $whitelabelLangTable = 'language_lines_' . mb_strtolower($name);
         $this->generateFile(
             base_path('Modules/Master/Config/config.stub'),
@@ -143,7 +142,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             ]
         );
 
-        $slug =  strtolower($name);
+        $slug = mb_strtolower($name);
         $datePrefix = date('Y_m_d_His');
         $this->generateFile(
             base_path('Modules/Master/Database/Migrations/create_language_lines_master_table.stub'),
@@ -171,11 +170,11 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             ->get()
             ->map(function ($languageLine) use ($locale) {
                 return [
-                    'locale' => $locale,
+                    'locale'      => $locale,
                     'description' => $languageLine->description,
-                    'group' => $languageLine->group,
-                    'key' => $languageLine->key,
-                    'text' => $languageLine->text,
+                    'group'       => $languageLine->group,
+                    'key'         => $languageLine->key,
+                    'text'        => $languageLine->text,
                 ];
             })
             ->toArray();
