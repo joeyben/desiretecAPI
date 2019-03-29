@@ -15,6 +15,7 @@ class CreateLanguageLinesMasterTable extends Migration
         Schema::create('language_lines_master', function (Blueprint $table) {
             $table->increments('id');
             $table->string('locale');
+            $table->string('description');
             $table->string('group');
             $table->index('group');
             $table->string('key');

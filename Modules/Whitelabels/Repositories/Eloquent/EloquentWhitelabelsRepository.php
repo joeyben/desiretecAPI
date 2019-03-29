@@ -134,7 +134,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             [
                 '$MODULE$',
                 '$ID$',
-                '$TABLE'
+                '$TABLE$'
             ],
             [
                 $name,

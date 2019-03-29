@@ -4,6 +4,7 @@ use App\Helpers\uuid;
 use App\Models\Notification\Notification;
 use App\Models\Settings\Setting;
 use Carbon\Carbon as Carbon;
+use Modules\Languages\Entities\Language;
 
 /**
  * Henerate UUID.
@@ -461,5 +462,39 @@ if (!function_exists('setWhitelabelLocale')) {
     function setWhitelabelLocale($locale)
     {
         config(['app.locale' => $locale]);
+    }
+}
+
+if (!function_exists('category_name_by_value')) {
+    /**
+     * Set locale
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    function category_name_by_value(string $value)
+    {
+        return \BrianFaust\Categories\Models\Category::where('value', $value)->first()->name;
+    }
+}
+
+
+if (!function_exists('getWhitelabelLocales')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getWhitelabelLocales()
+    {
+        if (isWhiteLabel()) {
+            $whitelabelId = getCurrentWhiteLabelId();
+            return Language::whereHas('whitelabels', function ($q) use ($whitelabelId) {
+                $q->where('whitelabels.id', $whitelabelId);
+            })->get();
+        }
+
+        return null;
     }
 }

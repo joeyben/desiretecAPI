@@ -16,7 +16,7 @@ use Modules\Trendtours\Http\Requests\StoreWishRequest;
 class TrendtoursController extends Controller
 {
     protected $adults = [];
-    protected $kids = [];
+    protected $months = [];
     protected $catering = [];
     protected $duration = [];
 
@@ -37,8 +37,8 @@ class TrendtoursController extends Controller
     {
         $this->whitelabel = $whitelabel;
         $this->attachements = $attachements;
-        $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
-        $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
+        $this->adults = $this->putPersonLabel($categories->getChildrenFromSlug('slug', 'adults'), 'adults');
+        $this->months = $this->transformMonth($categories->getChildrenFromSlug('slug', 'months'));
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->whitelabelId = \Config::get('trendtours.id');
@@ -69,9 +69,11 @@ class TrendtoursController extends Controller
      */
     public function show(Request $request)
     {
-        $html = view('trendtours::layer.popup')->with([
+        $input = $request->only('variant');
+        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $html = view('trendtours::'.$layer)->with([
             'adults_arr'   => $this->adults,
-            'kids_arr'     => $this->kids,
+            'months_arr'     => $this->months,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
         ])->render();
@@ -94,7 +96,7 @@ class TrendtoursController extends Controller
             $html = view('trendtours::layer.popup')->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
-                'kids_arr'     => $this->kids,
+                'months_arr'     => $this->months,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
             ])->render();
@@ -182,5 +184,40 @@ class TrendtoursController extends Controller
         }
 
         return $duration;
+    }
+
+    /**
+     * @param array $children
+     * @param string $type
+     *
+     * @return array
+     */
+    private function putPersonLabel($children, $type)
+    {
+
+        foreach ($children as $key => $value) {
+            $label = $type ? " ".trans_choice('labels.categories.'.$type, intval($value)) : "";
+            $children[$key] = $value."".$label;
+        }
+
+        return $children;
+    }
+
+    /**
+    * @param array $children
+    * @param string $type
+    *
+    * @return array
+    */
+    private function transformMonth($children)
+    {
+
+        foreach ($children as $key => $value) {
+            $date_arr = explode('.', $value);
+            $date = \Carbon\Carbon::createFromFormat('Y-m-d', $date_arr[1]."-".$date_arr[0]."-01");
+            $children[$key] = $date->format('F Y');
+        }
+
+        return $children;
     }
 }

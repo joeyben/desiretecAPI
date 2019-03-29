@@ -259,7 +259,7 @@
             </div>
             <div class="col-md-3">
                 <i class="fal fa-calendar-alt"></i>
-                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }}">
+                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.Y') }}">
             </div>
             <div class="col-md-3">
                 <i class="fal fa-usd-circle"></i>
@@ -284,7 +284,7 @@
             </div>
             <div class="col-md-3">
                 <i class="fal fa-utensils"></i>
-                <input class="data-content" value="{{ $wish->catering }}">
+                <input class="data-content" value="{{ $categories->getCategoryByParentValue('catering', $wish->catering) }}">
             </div>
             <button class="secondary-btn">Daten andern</button>
         </div>
@@ -326,7 +326,7 @@
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-calendar-alt"></i>
-                                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }}">
+                                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }}">
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-usd-circle"></i>
@@ -351,7 +351,7 @@
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-utensils"></i>
-                                <input class="data-content" value="{{ $wish->catering }}">
+                                <input class="data-content" value="{{ $categories->getCategoryByParentValue('catering', $wish->catering) }}">
                             </div>
                             <button class="secondary-btn">Daten andern</button>
                         </div>
@@ -372,72 +372,7 @@
     </div>
 </div>
 
-<!-- <section class="section-data"> -->
-    <div class="container">
-        <div class="col-md-6 s3-left">
-            <h4>Häufige Fragen anderer Nutzer</h4>
-            <span><hr></span>
-            <p>
-                Ihre Frage ist nicht dabei? <br>
-                <b><a href="mailto:service@desirectec.de">service@desirectec.de</a></b>
-            </p>
-        </div>
-        <div class="col-md-6 s3-right">
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">&#60;Häufig festellte Frage 1 - Lorem ipsum dolor&#62; <span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-plus"></span></a>
-                        </h4>
-                    </div>
-                    <div id="collapse1" class="panel-collapse collapse">
-                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">&#60;Häufig festellte Frage 2 - Lorem ipsum dolor&#62; <span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-plus"></span></a>
-                        </h4>
-                    </div>
-                    <div id="collapse2" class="panel-collapse collapse">
-                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">&#60;Häufig festellte Frage 3 - Lorem ipsum dolor&#62; <span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-plus"></span></a>
-                        </h4>
-                    </div>
-                    <div id="collapse3" class="panel-collapse collapse">
-                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">&#60;Häufig festellte Frage 3 - Lorem ipsum dolor&#62; <span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-plus"></span></a>
-                        </h4>
-                    </div>
-                    <div id="collapse4" class="panel-collapse collapse">
-                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-
+{{-- @include('frontend.wishes.partials.faq') --}}
 
 <!-- Modal -->
 <div id="contact_modal" class="modal wish-modal-1 fade" role="dialog">

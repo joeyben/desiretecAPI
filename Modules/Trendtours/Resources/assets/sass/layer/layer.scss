@@ -96,7 +96,7 @@ $master-blue: #70CBF4;
 
   font-size: 14px;
   line-height: 19px;
-  font-family: $altfont;
+  font-family: 'Helvetica', 'Arial', sans-serif;
 
   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #dedede !important;
@@ -208,7 +208,7 @@ $master-blue: #70CBF4;
   width: 760px;
   margin: 25px auto 0 auto;
 
-  font-family: $altfont;
+  font-family: 'Helvetica', 'Arial', sans-serif;
   border-radius: 0;
   box-shadow: 0 0 4px 0px rgba(0,0,0,0.15);
   transition: transform 0.1s ease-out, opacity 0.15s ease-out;
@@ -246,7 +246,7 @@ $master-blue: #70CBF4;
 
     text-align: center;
 
-    font-family: $altfont;
+    font-family: 'Helvetica', 'Arial', sans-serif;
     color:  #fff;
     font-size: 18px;
     font-weight: 700;
@@ -285,7 +285,7 @@ $master-blue: #70CBF4;
     border: 1px solid #aaa;
     color: $mastercolor;
     font-size: 14px;
-    font-family: $altfont;
+    font-family: 'Helvetica', 'Arial', sans-serif;
   }
 
   input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus {
@@ -511,12 +511,12 @@ ul.kwp-form-errors {
   margin: 2px 0 0 0;
   font-size: 11px;
   color: #DB8021;
-  font-family: $altfont;
+  font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
 .kwp-form-email-hint {
   font-size: 14px;
-  font-family: $altfont;
+  font-family: 'Helvetica', 'Arial', sans-serif;
   color: #64C3D7;
   display: none;
   cursor: pointer;
@@ -556,7 +556,7 @@ ul.kwp-form-errors {
 
   p {
     margin: 10px 0 0 0;
-    font-family: $altfont;
+    font-family: 'Helvetica', 'Arial', sans-serif;
     color: #818181;
     font-size: 17px;
     font-weight: 400;
@@ -565,7 +565,7 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/visual_ipad_smile.jpg) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
@@ -654,11 +654,11 @@ ul.kwp-form-errors {
 
 .kwp-btn-expand {
   color: #252525;
-  background-color: #DCDCDC;
+  background-color: transparent;
   font-weight: bold;
   text-align: center;
   display: block;
-  margin: 0 -30px;
+  margin: 0;
   padding: 5px 0;
   position: relative;
 
@@ -699,13 +699,13 @@ p.kwp-info {
       border: solid 1px #cc0066;
       color: #fff;
       text-shadow: initial;
-      font-family: 'Foco W02 Light',sans-serif;
+      font-family: 'Helvetica', 'Arial', sans-serif;
       &:hover{
         background: #f39;
       }
     }
     input[type="text"]{
-      font-family: 'Foco W02 Light',sans-serif;
+      font-family: 'Helvetica', 'Arial', sans-serif;
       border-radius: 4px !important;
       &:focus,&:hover{
         border-color: #cc0066;
@@ -757,7 +757,7 @@ p.kwp-info {
 .kwp-agb {
   padding-top: 4px;
   font-size: 12px;
-  font-family: $altfont;
+  font-family: 'Helvetica', 'Arial', sans-serif;
 
   input {
     vertical-align: middle;
@@ -862,7 +862,7 @@ p.kwp-info {
     width: 100%;
     height: 25px;
 
-    font-family: $altfont;
+    font-family: 'Helvetica', 'Arial', sans-serif;
     font-size: 12px;
 
     appearance: none;
@@ -1102,6 +1102,9 @@ p.kwp-info {
     }
   }
   .kwp-row{
+    &.kwp-description{
+      display: none;
+    }
     &.email-auto{
       margin-top: 15px;
     }
@@ -1135,16 +1138,16 @@ p.kwp-info {
     margin-bottom: 0px;
   }
   .kwp-header-content p{
-    width: auto;
-    display: none;
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    margin: 5px 5px 0 0;
+    width: 70%;
+    font-size: 13px;
+    color: #000;
+    padding-left: 20px;
+    margin: 0 0;
     line-height: 1.2em;
     transition: all 0.7s ease;
     -webkit-transition: all 0.7s ease;
     -moz-transition: all 0.7s ease;
+    text-align: left;
   }
   .kwp input[type="text"],.kwp input[type="date"]{
     padding-left: 15px;
@@ -1159,6 +1162,11 @@ p.kwp-info {
       position: fixed;
       height:100%;
       margin: 0;
+
+      .no-bg{
+        background: transparent;
+      }
+
       &.teaser-on{
         height: 100px;
         display: block !important;
@@ -1258,10 +1266,10 @@ p.kwp-info {
         font-size: 20px;
         margin: 0px;
         color:#092a5e;
-        padding: 8px 0;
+        padding: 8px 20px;
         font-weight: bold;
-        font-family: $altfont;
-        text-align: center;
+        font-family: 'Helvetica', 'Arial', sans-serif;
+        text-align: left;
       }
     }
     .kwp-body{
@@ -1290,10 +1298,10 @@ p.kwp-info {
     }
     .kwp-header-content{
       margin-top: 0px;
-      font-family: $altfont;
+      font-family: 'Helvetica', 'Arial', sans-serif;
       font-weight: bold;
       position: absolute;
-      bottom: 0;
+      bottom: 40px;
       text-align: center;
       width: 100%;
     }
@@ -1348,7 +1356,7 @@ p.kwp-info {
         display: block;
         width: 100%;
         margin: 0px auto 0;
-        font-family: "TUITypeLight",sans-serif;
+        font-family: 'Helvetica', 'Arial', sans-serif;
         position:relative;
         i{
           position: absolute;
@@ -1507,7 +1515,7 @@ p.kwp-info {
     .kwp-custom-select:after{
       background: none;
     }
-    .kwp-content-extra, .kwp-btn-expand{
+    .kwp-content-extra{
       display: none;
     }
     .email-label-info{

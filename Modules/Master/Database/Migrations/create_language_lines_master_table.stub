@@ -15,6 +15,7 @@ class CreateLanguageLines$MODULE$Table extends Migration
         Schema::create('language_lines_$SLUG$', function (Blueprint $table) {
             $table->increments('id');
             $table->string('locale');
+            $table->string('description');
             $table->string('group');
             $table->index('group');
             $table->string('key');
