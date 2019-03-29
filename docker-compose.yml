@@ -3,59 +3,26 @@ version: '3'
 volumes:
   mariadb_data:
     driver: local
-  reverseproxy_certs:
-    external: true
+
 services:
   app:
+    image: desiretecmvp:latest
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
       - mariadb
       - redis
-      - laravel-echo-server
     volumes:
-      - /home/ubuntu/desiretech/storage:/var/www/html/storage
-    environment:
-      - VIRTUAL_HOST=mvpprod.desiretec.com
-      - LETSENCRYPT_HOST=mvpprod.desiretec.com
-      - LETSENCRYPT_EMAIL=info@desiretec.com
-    networks:
-      - frontend
-      - backend
+      - "./storage:/var/www/html/storage"
   mariadb:
     image: mariadb:latest
     volumes:
       - "mariadb_data:/var/lib/mysql"
     environment:
-      MYSQL_USER: default
-      MYSQL_PASSWORD: ${DB_PROD_PW}
+      MYSQL_ROOT_PASSWORD: mysql
       MYSQL_DATABASE: default
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PW}
-    ports:
-      - "127.0.0.1:3300:3306"
-    networks:
-      - backend
+      MYSQL_USER: default
+      MYSQL_PASSWORD: secret
   redis:
     image: redis:latest
-    networks:
-      - backend
-  laravel-echo-server:
-    build:
-      context: ./laravel-echo-server
-    volumes:
-      - ./laravel-echo-server/laravel-echo-server.json:/app/laravel-echo-server.json:ro
-      - reverseproxy_certs:/app/mvp_certs/:ro
-    ports:
-      - 6001:6001
-    links:
-      - redis
-    networks:
-      - frontend
-      - backend
-
-networks:
-  frontend:
-    external:
-      name: reverseproxy_http_proxy
-  backend:
