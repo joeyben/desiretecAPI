@@ -2,13 +2,9 @@
 
 namespace Modules\LanguageLines\Http\Controllers;
 
-use App\Repositories\Criteria\ByWhitelabel;
-use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
-use App\Repositories\Criteria\WhereBetween;
-use App\Repositories\Criteria\WithTrashed;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -16,13 +12,12 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Translation\Translator;
 use Modules\LanguageLines\Entities\LanguageLines;
 use Modules\LanguageLines\Http\Requests\StoreLanguageLineRequest;
 use Modules\LanguageLines\Http\Requests\UpdateLanguageLineRequest;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
-use Illuminate\Support\Facades\Auth;
 
 class LanguageLinesController extends Controller
 {
@@ -51,11 +46,11 @@ class LanguageLinesController extends Controller
     /**
      * LanguageLines constructor.
      *
-     * @param LanguageLinesRepository $languageline
+     * @param LanguageLinesRepository             $languageline
      * @param \Illuminate\Routing\ResponseFactory $response
-     * @param \Illuminate\Auth\AuthManager $auth
-     * @param \Illuminate\Translation\Translator $lang
-     * @param \Illuminate\Support\Carbon $carbon
+     * @param \Illuminate\Auth\AuthManager        $auth
+     * @param \Illuminate\Translation\Translator  $lang
+     * @param \Illuminate\Support\Carbon          $carbon
      */
     public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
     {
@@ -68,6 +63,7 @@ class LanguageLinesController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -102,18 +98,19 @@ class LanguageLinesController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
     {
         try {
             $result['languageline'] = [
-                'id' => 0,
-                'locale' => '',
+                'id'          => 0,
+                'locale'      => '',
                 'description' => '',
-                'group' => '',
-                'key' => '',
-                'text' => ''
+                'group'       => '',
+                'key'         => '',
+                'text'        => ''
             ];
 
             $result['success'] = true;
@@ -129,7 +126,9 @@ class LanguageLinesController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(StoreLanguageLineRequest $request)
@@ -151,9 +150,9 @@ class LanguageLinesController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
     }
 
-
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -163,7 +162,9 @@ class LanguageLinesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param int $id
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function edit(int $id)
@@ -172,12 +173,12 @@ class LanguageLinesController extends Controller
             $languageline = $this->languageline->find($id);
 
             $result['languageline'] = [
-                'id' => $languageline->id,
-                'locale' => $languageline->locale,
+                'id'          => $languageline->id,
+                'locale'      => $languageline->locale,
                 'description' => $languageline->description,
-                'group' => $languageline->group,
-                'key' => $languageline->key,
-                'text' => $languageline->text
+                'group'       => $languageline->group,
+                'key'         => $languageline->key,
+                'text'        => $languageline->text
             ];
 
             $result['success'] = true;
@@ -193,8 +194,10 @@ class LanguageLinesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  UpdateLanguageLineRequest $request
-     * @param int $id
+     *
+     * @param UpdateLanguageLineRequest $request
+     * @param int                       $id
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateLanguageLineRequest $request, int $id)
@@ -225,6 +228,7 @@ class LanguageLinesController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()

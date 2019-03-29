@@ -12,5 +12,5 @@ return [
     |
     */
 
-    'comments'        => 'Comments',
+    'comments'        => 'Kommentare',
 ];

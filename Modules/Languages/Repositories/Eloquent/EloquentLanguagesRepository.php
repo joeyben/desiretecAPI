@@ -36,6 +36,7 @@ class EloquentLanguagesRepository extends RepositoryAbstract implements Language
     {
         if (isWhiteLabel()) {
             $whitelabelId = getCurrentWhiteLabelId();
+
             return $this->model()::whereDoesntHave('whitelabels', function ($q) use ($whitelabelId) {
                 $q->where('whitelabels.id', $whitelabelId);
             })->get();
@@ -50,9 +51,9 @@ class EloquentLanguagesRepository extends RepositoryAbstract implements Language
             ->map(function ($languageLine) use ($locale) {
                 return [
                     'locale' => $locale,
-                    'group' => $languageLine->group,
-                    'key' => $languageLine->key,
-                    'text' => $languageLine->text,
+                    'group'  => $languageLine->group,
+                    'key'    => $languageLine->key,
+                    'text'   => $languageLine->text,
                 ];
             })
             ->toArray();

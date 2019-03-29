@@ -2,8 +2,8 @@
 
 namespace App\Listeners\Frontend;
 
-use App\Models\Messages\Message;
 use App\Models\Access\User\User;
+use App\Models\Messages\Message;
 use App\Notifications\Frontend\MessageCreated;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,7 +40,7 @@ class MessageEventListener
         $user_id = Auth::guard('web')->user()->id === $message->wish->owner->id ?
             $message->wish->group->users[0]->id : $message->wish->owner->id;
 
-        $user = User::where('id', intval($user_id))->firstOrFail();
+        $user = User::where('id', (int) $user_id)->firstOrFail();
         $usertoken = $user->storeToken();
         $token = $usertoken->token->token;
         $role = $user->hasRole('Seller') ? 'seller' : 'user';

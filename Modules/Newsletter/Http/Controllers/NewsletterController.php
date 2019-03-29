@@ -2,7 +2,6 @@
 
 namespace Modules\Newsletter\Http\Controllers;
 
-use App\Services\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -48,6 +47,7 @@ class NewsletterController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -57,6 +57,7 @@ class NewsletterController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
@@ -66,23 +67,29 @@ class NewsletterController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
     {
         try {
             $this->newsletter->subscribe($request->get('email'));
+
             return redirect()->back()->with('success', 'subscribed user successfully');
         } catch (Exception $e) {
             $result['message'] = $e->getMessage();
+
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
+     *
      * @return Response
      */
     public function show($id)
@@ -92,7 +99,9 @@ class NewsletterController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param int $id
+     *
      * @return Response
      */
     public function edit($id)
@@ -102,22 +111,24 @@ class NewsletterController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
+     *
      * @return Response
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param int $id
+     *
      * @return Response
      */
     public function destroy($id)
     {
-        //
     }
 }

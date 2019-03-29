@@ -3,24 +3,17 @@
 namespace Modules\Languages\Http\Controllers;
 
 use App\Repositories\Criteria\ByWhitelabelLanguages;
+use App\Repositories\Criteria\OrderBy;
+use Illuminate\Auth\AuthManager;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Languages\Http\Requests\StoreLanguageRequest;
-use Modules\Languages\Repositories\Contracts\LanguagesRepository;
-use App\Repositories\Criteria\ByWhitelabel;
-use App\Repositories\Criteria\EagerLoad;
-use App\Repositories\Criteria\Filter;
-use App\Repositories\Criteria\OrderBy;
-use App\Repositories\Criteria\Where;
-use App\Repositories\Criteria\WhereBetween;
-use App\Repositories\Criteria\WithTrashed;
-use Illuminate\Auth\AuthManager;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
+use Modules\Languages\Http\Requests\StoreLanguageRequest;
+use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class LanguagesController extends Controller
@@ -54,12 +47,12 @@ class LanguagesController extends Controller
     /**
      * GroupsController constructor.
      *
-     * @param LanguagesRepository $languages
+     * @param LanguagesRepository   $languages
      * @param WhitelabelsRepository $whitelabels
-     * @param ResponseFactory $response
-     * @param AuthManager $auth
-     * @param Translator $lang
-     * @param Carbon $carbon
+     * @param ResponseFactory       $response
+     * @param AuthManager           $auth
+     * @param Translator            $lang
+     * @param Carbon                $carbon
      */
     public function __construct(LanguagesRepository $languages, WhitelabelsRepository $whitelabels, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
     {
@@ -73,6 +66,7 @@ class LanguagesController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -97,7 +91,7 @@ class LanguagesController extends Controller
     }
 
     /**
-     * Languages missing on whitelabel
+     * Languages missing on whitelabel.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -116,7 +110,6 @@ class LanguagesController extends Controller
 
         return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
     }
-
 
     public function list(Request $request)
     {
@@ -144,14 +137,15 @@ class LanguagesController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
     {
         try {
             $result['language'] = [
-                'id' => 0,
-                'language_id' => 3,
+                'id'            => 0,
+                'language_id'   => 3,
                 'whitelabel_id' => getCurrentWhiteLabelId(),
             ];
 
@@ -168,7 +162,9 @@ class LanguagesController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(StoreLanguageRequest $request)
@@ -178,7 +174,7 @@ class LanguagesController extends Controller
 
             $language->whitelabels()->attach($request->get('whitelabel_id'));
 
-            $whitelabelLangTable = 'language_lines_' . strtolower($this->whitelabels->find($request->get('whitelabel_id'))->name);
+            $whitelabelLangTable = 'language_lines_' . mb_strtolower($this->whitelabels->find($request->get('whitelabel_id'))->name);
 
             $this->whitelabels->copyLanguage($whitelabelLangTable, $language->locale);
 
@@ -198,6 +194,7 @@ class LanguagesController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -207,6 +204,7 @@ class LanguagesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return Response
      */
     public function edit()
@@ -216,7 +214,9 @@ class LanguagesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function update(Request $request)
@@ -225,6 +225,7 @@ class LanguagesController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()

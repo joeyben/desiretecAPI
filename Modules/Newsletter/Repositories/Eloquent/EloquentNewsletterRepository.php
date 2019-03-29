@@ -11,8 +11,8 @@ namespace Modules\Newsletter\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
 use Modules\Newsletter\Entities\Newsletter;
-use Spatie\Newsletter\NewsletterFacade as NewsletterFacade;
 use Modules\Newsletter\Repositories\Contracts\NewsletterRepository;
+use Spatie\Newsletter\NewsletterFacade as NewsletterFacade;
 
 /**
  * Class EloquentNewsletterRepository.
