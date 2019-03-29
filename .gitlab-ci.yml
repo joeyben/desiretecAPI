@@ -9,7 +9,7 @@ services:
 build-master:
   stage: build
   before_script:
-    - apk add --update py-pip gcc
+    - apk add --update py-pip gcc musl-dev python-dev libffi-dev openssl-dev make
     - pip install docker-compose
   script:
     - mkdir $DOCKER_CERT_PATH
