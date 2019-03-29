@@ -71,12 +71,12 @@ class UserContactedSeller extends Notification
     public function toMail()
     {
         $confirmation_url = route($this->getRoute(), [$this->wish_id, $this->token]);
-        $subject = ($this->contact->email !== "no data") ? trans('email.wish.user_cnt_seller')
+        $subject = ('no data' !== $this->contact->email) ? trans('email.wish.user_cnt_seller')
                 : trans('email.wish.user_callback_seller');
-        $view = ($this->contact->email !== "no data") ? 'emails.user-contact-seller' : 'emails.user-callback-seller';
+        $view = ('no data' !== $this->contact->email) ? 'emails.user-contact-seller' : 'emails.user-callback-seller';
 
         return (new MailMessage())
-            ->from('noreply@desiretec.com', $this->wl_name.' Portal')
+            ->from('noreply@desiretec.com', $this->wl_name . ' Portal')
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,
@@ -94,7 +94,7 @@ class UserContactedSeller extends Notification
     public function getRoute()
     {
         if (isWhiteLabel()) {
-            $whitelabelslug = strtolower($this->wl_name);
+            $whitelabelslug = mb_strtolower($this->wl_name);
 
             return $whitelabelslug . '.wish.details';
         }

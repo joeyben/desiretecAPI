@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Frontend\Messages;
 
+use App\Events\Frontend\Messages\MessageCreated;
 use App\Http\Controllers\Controller;
-use App\Mail\MessageSent;
 use App\Models\Access\User\User;
 use App\Models\Agents\Agent;
 use App\Models\Messages\Message;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Mail;
-use App\Events\Frontend\Messages\MessageCreated;
 
 class MessagesController extends Controller
 {
@@ -39,7 +37,6 @@ class MessagesController extends Controller
         $message = $request->input('message');
         $id = Auth::id();
         $agent = Agent::where('user_id', $id)->where('status', 'Active')->value('id');
-
 
         $message = Message::create([
             'user_id' => $consumerId,

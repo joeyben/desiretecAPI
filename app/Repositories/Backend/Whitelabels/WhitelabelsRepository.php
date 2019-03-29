@@ -104,7 +104,7 @@ class WhitelabelsRepository extends BaseRepository
         $input['updated_by'] = access()->user()->id;
 
         // Uploading Image
-        if (array_key_exists('bg_image', $input)) {
+        if (\array_key_exists('bg_image', $input)) {
             $this->deleteOldFile($whitelabel);
             $input = $this->uploadImage($input);
         }

@@ -75,11 +75,11 @@ class OfferUser extends Notification
         $view = 'emails.offer.offer-user';
 
         return (new MailMessage())
-            ->from('noreply@desiretec.com', $this->wl_name.' Portal')
+            ->from('noreply@desiretec.com', $this->wl_name . ' Portal')
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,
-                    'offer'          => $this->offer
+                    'offer'            => $this->offer
                 ]);
     }
 
@@ -93,7 +93,7 @@ class OfferUser extends Notification
     public function getRoute()
     {
         if (isWhiteLabel()) {
-            $whitelabelslug = strtolower($this->wl_name);
+            $whitelabelslug = mb_strtolower($this->wl_name);
 
             return $whitelabelslug . '.wish.details';
         }

@@ -12,25 +12,25 @@ return [
     */
 
     'backend' => [
-        'none'            => 'There is no recent history.',
-        'none_for_type'   => 'There is no history for this type.',
-        'none_for_entity' => 'There is no history for this :entity.',
-        'recent_history'  => 'Recent History',
+        'none'            => 'Es existiert keine Historie.',
+        'none_for_type'   => 'Es existiert keine Historie für diesen Typ',
+        'none_for_entity' => 'Es existiert keine Historie für :entity.',
+        'recent_history'  => 'Historie',
 
         'roles' => [
-            'created' => 'created role',
-            'deleted' => 'deleted role',
-            'updated' => 'updated role',
+            'created' => 'Rolle erstellt',
+            'deleted' => 'Rolle gelöscht',
+            'updated' => 'Rolle geändert',
         ],
         'permissions' => [
-            'created' => 'created permission',
-            'deleted' => 'deleted permission',
-            'updated' => 'updated permission',
+            'created' => 'Berechtigung erstellt',
+            'deleted' => 'Berechtigung gelöscht',
+            'updated' => 'Berechtigung geändert',
         ],
         'pages' => [
-            'created' => 'created Page',
-            'deleted' => 'deleted Page',
-            'updated' => 'updated Page',
+            'created' => 'Seite erstelltcreated ',
+            'deleted' => 'Seite gelöscht',
+            'updated' => 'Seite geändert',
         ],
         'blogcategories' => [
             'created' => 'created Blog Category',
@@ -48,14 +48,14 @@ return [
             'updated' => 'updated Blog',
         ],
         'users' => [
-            'changed_password'    => 'changed password for user',
-            'created'             => 'created user',
-            'deactivated'         => 'deactivated user',
-            'deleted'             => 'deleted user',
-            'permanently_deleted' => 'permanently deleted user',
-            'updated'             => 'updated user',
-            'reactivated'         => 'reactivated user',
-            'restored'            => 'restored user',
+            'changed_password'    => 'User Passwort geändert',
+            'created'             => 'User erstellt',
+            'deactivated'         => 'User deaktiviert',
+            'deleted'             => 'User gelöscht',
+            'permanently_deleted' => 'User dauerhaft gelöscht',
+            'updated'             => 'User geändert',
+            'reactivated'         => 'User reaktiviert',
+            'restored'            => 'User wiederhergestellt',
         ],
     ],
 ];

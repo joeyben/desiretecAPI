@@ -3,12 +3,10 @@
 namespace Modules\LanguageLines\Console;
 
 use Illuminate\Console\Command;
-use Modules\LanguageLines\Entities\LanguageLines;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
+use Modules\LanguageLines\Entities\LanguageLines;
+use Symfony\Component\Console\Input\InputOption;
 
 class ImportLanguageFilesCommand extends Command
 {
@@ -39,15 +37,13 @@ class ImportLanguageFilesCommand extends Command
      *
      * @param $app
      * @param  $files
-     *
-     * @return void
      */
     public function __construct(Application $app, Filesystem $files)
     {
         parent::__construct();
 
-        $this->app            = $app;
-        $this->files          = $files;
+        $this->app = $app;
+        $this->files = $files;
     }
 
     /**
@@ -90,7 +86,7 @@ class ImportLanguageFilesCommand extends Command
         $counter = 0;
         //allows for vendor lang files to be properly recorded through recursion.
 //        $vendor = true;
-        if ($base == null) {
+        if (null === $base) {
             $base = $this->app['path.lang'];
             $vendor = false;
         }
@@ -108,9 +104,9 @@ class ImportLanguageFilesCommand extends Command
                 $info = pathinfo($file);
                 $group = $info['filename'];
 
-                $subLangPath = str_replace($langPath . DIRECTORY_SEPARATOR, '', $info['dirname']);
-                $subLangPath = str_replace(DIRECTORY_SEPARATOR, '/', $subLangPath);
-                $langPath = str_replace(DIRECTORY_SEPARATOR, '/', $langPath);
+                $subLangPath = str_replace($langPath . \DIRECTORY_SEPARATOR, '', $info['dirname']);
+                $subLangPath = str_replace(\DIRECTORY_SEPARATOR, '/', $subLangPath);
+                $langPath = str_replace(\DIRECTORY_SEPARATOR, '/', $langPath);
 //                if ($subLangPath != $langPath) {
 //                    $group = $subLangPath . '/' . $group;
 //                }
@@ -118,7 +114,7 @@ class ImportLanguageFilesCommand extends Command
                     $translations = \Lang::getLoader()->load($locale, $group);
                 }
 
-                if ($translations && is_array($translations)) {
+                if ($translations && \is_array($translations)) {
                     foreach (array_dot($translations) as $key => $value) {
                         $importedTranslation = $this->importTranslation($key, $value, $locale, $group, $replace);
                         $counter += $importedTranslation ? 1 : 0;
@@ -127,20 +123,21 @@ class ImportLanguageFilesCommand extends Command
             }
         }
         foreach ($this->files->files($this->app['path.lang']) as $jsonTranslationFile) {
-            if (strpos($jsonTranslationFile, '.json') === false) {
+            if (false === mb_strpos($jsonTranslationFile, '.json')) {
                 continue;
             }
             $locale = basename($jsonTranslationFile, '.json');
             $group = self::JSON_GROUP;
             $translations =
                 \Lang::getLoader()->load($locale, '*', '*'); // Retrieves JSON entries of the given locale only
-            if ($translations && is_array($translations)) {
+            if ($translations && \is_array($translations)) {
                 foreach ($translations as $key => $value) {
                     $importedTranslation = $this->importTranslation($key, $value, $locale, $group, $replace);
                     $counter += $importedTranslation ? 1 : 0;
                 }
             }
         }
+
         return $counter;
     }
 
@@ -151,15 +148,15 @@ class ImportLanguageFilesCommand extends Command
         $this->info('Locale ' . $locale);
         $this->info('Group ' . $group);
         // process only string values
-        if (is_array($text)) {
+        if (\is_array($text)) {
             return false;
         }
 
         LanguageLines::create([
             'locale' => $locale,
-            'group' => $group,
-            'key' => $key,
-            'text' => $text
+            'group'  => $group,
+            'key'    => $key,
+            'text'   => $text
         ]);
 
         return true;
