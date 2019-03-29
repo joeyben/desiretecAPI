@@ -35,13 +35,14 @@ return [
         'created'                   => 'Sie haben erfolgreich ein Angebot erstellt',
         'created_user'              => 'Es gibt ein neues Angebot für Ihren :whitelabel Reisewunsch!',
     ],
-    'token'   => 'Ihr Login-Link lautet: <a href=":token">:token</a>',
+    'token' => 'Ihr Login-Link lautet: <a href=":token">:token</a>',
     'message' => [
-        'new'            => 'Neue Nachricht!',
-        'subject'        => 'Sie haben eine neue Nachricht erhalten',
-        'token'          => 'Ihr Login-Link',
+        'new' => 'Neue Nachricht!',
+        'subject' => 'Sie haben eine neue Nachricht erhalten',
+        'token' => 'Ihr Login-Link',
         'created-seller' => 'Sie haben eine neue Nachricht von Ihrem Kunden erhalten',
-        'created-user'   => 'Wichtig: Es gibt eine neue Nachricht von Ihrem Berater im :whitelabel Reisewunschportal',
+        'created-user' => 'Wichtig: Es gibt eine neue Nachricht von Ihrem Berater im :whitelabel Reisewunschportal',
+
     ],
     'footer'              => [
         'line1'     => 'Sonnige Grüße',

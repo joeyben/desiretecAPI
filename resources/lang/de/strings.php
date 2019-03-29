@@ -16,30 +16,30 @@ return [
         'access' => [
             'users' => [
                 'delete_user_confirm'  => 'Are you sure you want to delete this user permanently? Anywhere in the application that references this user\'s id will most likely error. Proceed at your own risk. This can not be un-done.',
-                'if_confirmed_off'     => '(If confirmed is off)',
-                'restore_user_confirm' => 'Restore this user to its original state?',
+                'if_confirmed_off'     => '(Falls Auto - Bestätigung aus ist)',
+                'restore_user_confirm' => 'Diesen User in seinem Ursprungszustand wiederherstellen?',
             ],
         ],
 
         'dashboard' => [
-            'title'   => 'Administrative Dashboard',
-            'welcome' => 'Welcome',
+            'title'   => 'Admin Dashboard',
+            'welcome' => 'Willkommen',
         ],
 
         'general' => [
             'all_rights_reserved' => 'All Rights Reserved.',
-            'are_you_sure'        => 'Are you sure you want to do this?',
+            'are_you_sure'        => 'Sind Sie sicher?',
             'boilerplate_link'    => 'Laravel AdminPanel',
-            'continue'            => 'Continue',
+            'continue'            => 'Weiter',
             'member_since'        => 'Member since',
-            'minutes'             => ' minutes',
-            'search_placeholder'  => 'Search...',
-            'timeout'             => 'You were automatically logged out for security reasons since you had no activity in ',
+            'minutes'             => 'Minuten',
+            'search_placeholder'  => 'Suchen...',
+            'timeout'             => 'Sie wurden aus Sicherheitsgründen auf Grund von Inaktivität ausgeloggt.',
 
             'see_all' => [
-                'messages'      => 'See all messages',
-                'notifications' => 'View all',
-                'tasks'         => 'View all tasks',
+                'messages'      => 'Alle Nachrichten anzeigen',
+                'notifications' => 'Alle anzeigen',
+                'tasks'         => 'Alle Aufgaben anzeigen',
             ],
 
             'status' => [
@@ -55,10 +55,10 @@ return [
         ],
 
         'search' => [
-            'empty'      => 'Please enter a search term.',
+            'empty'      => 'Bitte geben Sie einen Suchbegriff.',
             'incomplete' => 'You must write your own search logic for this system.',
-            'title'      => 'Search Results',
-            'results'    => 'Search Results for :query',
+            'title'      => 'Suchergebnisse',
+            'results'    => 'Suchergebnisse für :query',
         ],
 
         'welcome' => '<p>This is the AdminLTE theme by <a href="https://almsaeedstudio.com/" target="_blank">https://almsaeedstudio.com/</a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.</p>
@@ -91,8 +91,8 @@ return [
 
         'tests' => [
             'based_on' => [
-                'permission' => 'Permission Based - ',
-                'role'       => 'Role Based - ',
+                'permission' => 'berechtigungsbasiert - ',
+                'role'       => 'rollenbasiert - ',
             ],
 
             'js_injected_from_controller' => 'Javascript Injected from a Controller',
@@ -116,12 +116,12 @@ return [
         ],
 
         'user' => [
-            'change_email_notice'  => 'If you change your e-mail you will be logged out until you confirm your new e-mail address.',
-            'email_changed_notice' => 'You must confirm your new e-mail address before you can log in again.',
-            'profile_updated'      => 'Profile successfully updated.',
-            'password_updated'     => 'Password successfully updated.',
+            'change_email_notice'  => 'Wenn Sie Ihre E-Mail-Adresse ändern, werden Sie ausgeloggt, bis Sie Ihre neue E-Mail-Adresse bestätigt haben.',
+            'email_changed_notice' => 'Sie müssen Ihre E-Mail-Adresse bestätigen, bevor Sie sich erneut einloggen können.',
+            'profile_updated'      => 'Profil erfolgreich aktualisiert.',
+            'password_updated'     => 'Passwort erfolgreich geändert.',
         ],
 
-        'welcome_to' => 'Welcome to :place',
+        'welcome_to' => 'Willkommen zum :place',
     ],
 ];
