@@ -86,12 +86,13 @@ class CopyLanguageCommand extends Command
      */
     protected function copyLanguage($fromTable, $toTable, $fromLocale, $toLocale) {
         $languageLines = DB::table($fromTable)
-            ->select('locale', 'group', 'key', 'text')
+            ->select('locale', 'description', 'group', 'key', 'text')
             ->where('locale', $fromLocale)
             ->get()
             ->map(function ($languageLine) use ($toLocale) {
                 return [
                     'locale' => $toLocale,
+                    'description' => $languageLine->description,
                     'group' => $languageLine->group,
                     'key' => $languageLine->key,
                     'text' => $languageLine->text,
