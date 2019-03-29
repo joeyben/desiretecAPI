@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
 class CreateLanguageLinesMasterTable extends Migration
 {
@@ -12,15 +13,17 @@ class CreateLanguageLinesMasterTable extends Migration
      */
     public function up()
     {
-        Schema::create('language_lines_master', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('locale');
-            $table->string('group');
-            $table->index('group');
-            $table->string('key');
-            $table->text('text');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('language_lines_master')) {
+            Schema::create('language_lines_master', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('locale');
+                $table->string('group');
+                $table->index('group');
+                $table->string('key');
+                $table->text('text');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

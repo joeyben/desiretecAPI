@@ -165,6 +165,8 @@
 
                                     Ihnen wurde ein neuer trendtours Reisewunsch zur Bearbeitung zugewiesen. <br>
                                     Bitte beachten Sie, dass bis zur Kontaktaufnahme mit dem Kunden nicht mehr als 24h, maximal aber 48h vergehen sollten.
+                                    <br>
+                                    @lang('labels.email'): &nbsp; {{ $wish->owner->email }}
                                     <br><br>
                                 </td>
                             </tr>
