@@ -12,7 +12,7 @@ class AddDescriptionToLanguageLinesMasterTable extends Migration
     public function up()
     {
         Schema::table('language_lines_master', function (Blueprint $table) {
-            $table->string('description');
+            $table->string('description')->nullable();
         });
     }
 
@@ -22,7 +22,7 @@ class AddDescriptionToLanguageLinesMasterTable extends Migration
     public function down()
     {
         Schema::table('language_lines_master', function (Blueprint $table) {
-            $table->dropColumn('description');
+            $table->dropColumn('description')->nullable();
         });
     }
 }

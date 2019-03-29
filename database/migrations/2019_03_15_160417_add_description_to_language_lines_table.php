@@ -14,7 +14,7 @@ class AddDescriptionToLanguageLinesTable extends Migration
     public function up()
     {
         Schema::table('language_lines', function (Blueprint $table) {
-            $table->string('description');
+            $table->string('description')->nullable();
         });
     }
 
