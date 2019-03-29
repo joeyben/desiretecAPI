@@ -166,12 +166,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     public function copyLanguage(string $table, string $locale)
     {
         $languageLines = DB::table('language_lines')
-            ->select('locale', 'group', 'key', 'text')
+            ->select('locale', 'description', 'group', 'key', 'text')
             ->where('locale', 'en')
             ->get()
             ->map(function ($languageLine) use ($locale) {
                 return [
                     'locale' => $locale,
+                    'description' => $languageLine->description,
                     'group' => $languageLine->group,
                     'key' => $languageLine->key,
                     'text' => $languageLine->text,
