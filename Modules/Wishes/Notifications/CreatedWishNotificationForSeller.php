@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Modules\Wishes\Entities\Wish;
+use Spatie\Newsletter\NewsletterFacade;
 
 class CreatedWishNotificationForSeller extends Notification
 {
@@ -24,6 +25,7 @@ class CreatedWishNotificationForSeller extends Notification
      */
     public function __construct(Wish $wish)
     {
+        $wish->load('owner');
         $this->wish = $wish;
     }
 
@@ -52,6 +54,8 @@ class CreatedWishNotificationForSeller extends Notification
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
         if ($this->wish->whitelabel->name === 'Trendtours') {
+            NewsletterFacade::subscribe($this->wish->owner->email);
+
             return (new MailMessage())
                 ->from('trendtours@desiretec.com', $this->wish->whitelabel->display_name.' Portal')
                 ->subject(trans('email.wish.seller_trendtours'))

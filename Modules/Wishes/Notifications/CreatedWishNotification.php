@@ -39,6 +39,10 @@ class CreatedWishNotification extends Notification
      */
     public function via($notifiable)
     {
+        if ($this->wish->whitelabel->name === 'Trendtours') {
+            return [];
+        }
+
         return ['mail'];
     }
 
