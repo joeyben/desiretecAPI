@@ -5,7 +5,7 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/master/css/master.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/trendtours/css/trendtours.css') }}">
 @endsection
 
 @section('logo')
@@ -15,7 +15,17 @@
 @endsection
 
 @section('before-scripts')
-    <script src="{{ mix('whitelabel/master/js/master.js') }}"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105970361-8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-105970361-8');
+    </script>
+
+    <script src="{{ mix('whitelabel/trendtours/js/trendtours.js') }}"></script>
 @endsection
 
 @section('after-scripts')
@@ -27,7 +37,7 @@
 
         var kwz = document.createElement('script');
         kwz.type = 'text/javascript'; kwz.async = true;
-        kwz.src = '/whitelabel/master/js/layer/layer-locale.js';
+        kwz.src = '/whitelabel/trendtours/js/layer/layer-locale.js';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(kwz, s);
 

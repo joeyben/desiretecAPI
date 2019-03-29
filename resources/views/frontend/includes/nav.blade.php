@@ -27,7 +27,7 @@
         <div class="collapse navbar-collapse" id="frontend-navbar-collapse">
 
             <ul class="nav navbar-nav navbar-right">
-                @if (config('locale.status') && count(config('locale.languages')) > 1)
+                @if (config('locale.status') && count(config('locale.languages')) > 1 && false)
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             {{ trans('menus.language-picker.language') }}
@@ -66,9 +66,9 @@
                 @endif
 
                 @if (! $logged_in_user)
-                    <li>{{ link_to_route('frontend.auth.login', trans('navs.frontend.login')) }}</li>
+                    <li>{{ link_to_route('frontend.auth.sendtoken', trans('navs.frontend.login')) }}</li>
 
-                    @if (config('access.users.registration'))
+                    @if (config('access.users.registration') && false)
                         <li>{{ link_to_route('frontend.auth.register', trans('navs.frontend.register')) }}</li>
                     @endif
                 @else

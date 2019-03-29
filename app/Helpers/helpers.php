@@ -360,6 +360,18 @@ if (!function_exists('isWhiteLabel')) {
     }
 }
 
+if (!function_exists('setCurrentWhiteLabelId')) {
+    /**
+     * Set current whitelabel Id.
+     *
+     * @param int $id
+     */
+    function setCurrentWhiteLabelId($id)
+    {
+        config(['app.current_whitelabel' => $id]);
+    }
+}
+
 if (!function_exists('getCurrentWhiteLabelId')) {
     /**
      * return current whitelabel Id.

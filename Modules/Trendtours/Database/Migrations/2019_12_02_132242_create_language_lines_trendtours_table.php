@@ -13,6 +13,7 @@ class CreateLanguageLinesTrendtoursTable extends Migration
         Schema::create('language_lines_trendtours', function (Blueprint $table) {
             $table->increments('id');
             $table->string('locale');
+            $table->string('description');
             $table->string('group');
             $table->index('group');
             $table->string('key');

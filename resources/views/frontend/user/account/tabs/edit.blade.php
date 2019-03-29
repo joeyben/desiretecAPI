@@ -1,4 +1,4 @@
-{{ Form::model($logged_in_user, ['route' => 'frontend.user.profile.update', 'class' => 'form-horizontal', 'method' => 'PATCH']) }}
+{{ Form::model($logged_in_user, ['route' => 'frontend.user.profile.update', 'class' => 'form-horizontal', 'method' => 'PUT']) }}
 
     <div class="form-group">
         {{ Form::label('first_name', trans('validation.attributes.frontend.register-user.firstName'), ['class' => 'col-md-4 control-label']) }}
@@ -38,7 +38,7 @@
     <div class="form-group">
         {{ Form::label('zip_code', trans('validation.attributes.frontend.register-user.zipcode'), ['class' => 'col-md-4 control-label']) }}
         <div class="col-md-6">
-            {{ Form::input('name', 'zip_code', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.register-user.zipcode')]) }}
+            {{ Form::input('text', 'zip_code', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.register-user.zipcode')]) }}
         </div><!--col-md-6-->
     </div><!--form-group-->
 

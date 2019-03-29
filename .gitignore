@@ -55,3 +55,5 @@ public/error.log
 Modules/Master/node_modules/
 /Modules/LanguageLines/node_modules/
 /Modules/Languages/node_modules/
+/Modules/Trendtours/node_modules/
+Modules/Trendtours/node_modules/

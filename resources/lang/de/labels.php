@@ -426,7 +426,7 @@ return [
                 'address'            => 'Adresse',
                 'country'            => 'Land',
                 'city'               => 'Stadt',
-                'zipcode'            => 'BLZ',
+                'zipcode'            => 'PLZ',
                 'ssn'                => 'SSN',
                 'update_information' => 'Profil ändern',
             ],
