@@ -13,6 +13,7 @@ use App\Models\Wishes\Wish;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use Auth;
 use Illuminate\Http\Request;
+use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Torann\GeoIP\Facades\GeoIP;
 
 /**
@@ -58,13 +59,15 @@ class WishesController extends Controller
      * @var WishesRepository
      */
     protected $wish;
+    protected $categories;
 
     /**
      * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
      */
-    public function __construct(WishesRepository $wish)
+    public function __construct(WishesRepository $wish, CategoriesRepository $categories)
     {
         $this->wish = $wish;
+        $this->categories = $categories;
     }
 
     /**
@@ -110,6 +113,7 @@ class WishesController extends Controller
             'agent_name'         => $agentName,
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
+            'categories'         => $this->categories,
         ]);
     }
 

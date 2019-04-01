@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-12">
+    <div class="col-md-12 no-pd">
         <textarea name="antworten" id="antworten" v-model="newMessage"></textarea>
         <div class="cu-cl-buttons">
             <button class="primary-btn antworten-btn button-show" id="btn-chat" @click="sendMessage">Nachricht schreiben</button>

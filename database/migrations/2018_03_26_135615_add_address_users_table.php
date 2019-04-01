@@ -14,10 +14,10 @@ class AddAddressUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('address', 255);
-            $table->string('city', 255);
-            $table->string('zip_code', 255);
-            $table->string('country', 255);
+            $table->string('address', 255)->nullable();
+            $table->string('city', 255)->nullable();
+            $table->string('zip_code', 255)->nullable();
+            $table->string('country', 255)->nullable();
         });
     }
 
