@@ -36,9 +36,7 @@ class CreateLanguageLinesMasterTable extends Migration
     public function down()
     {
         if (Schema::hasTable('language_lines_master')) {
-            Schema::table('language_lines_master', function (Blueprint $table) {
-                Schema::drop('language_lines_master');
-            });
+            Schema::drop('language_lines_master');
         }
     }
 }
