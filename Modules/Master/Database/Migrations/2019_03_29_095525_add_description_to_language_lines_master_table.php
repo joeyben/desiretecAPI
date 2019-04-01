@@ -11,9 +11,11 @@ class AddDescriptionToLanguageLinesMasterTable extends Migration
      */
     public function up()
     {
-        Schema::table('language_lines_master', function (Blueprint $table) {
-            $table->string('description')->nullable();
-        });
+        if (Schema::hasTable('language_lines_master') && !Schema::hasColumn('language_lines_master', 'description')) {
+            Schema::table('language_lines_master', function (Blueprint $table) {
+                $table->string('description')->after('group')->nullable();
+            });
+        }
     }
 
     /**
@@ -21,8 +23,10 @@ class AddDescriptionToLanguageLinesMasterTable extends Migration
      */
     public function down()
     {
-        Schema::table('language_lines_master', function (Blueprint $table) {
-            $table->dropColumn('description')->nullable();
-        });
+        if (Schema::hasTable('language_lines_master') && Schema::hasColumn('language_lines_master', 'description')) {
+            Schema::table('language_lines_master', function (Blueprint $table) {
+                $table->dropColumn('description');
+            });
+        }
     }
 }

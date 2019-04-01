@@ -13,9 +13,11 @@ class AddDescriptionToLanguageLinesTable extends Migration
      */
     public function up()
     {
-        Schema::table('language_lines', function (Blueprint $table) {
-            $table->string('description')->nullable();
-        });
+        if (Schema::hasTable('language_lines') && !Schema::hasColumn('language_lines', 'description')) {
+            Schema::table('language_lines', function (Blueprint $table) {
+                $table->string('description')->after('group')->nullable();
+            });
+        }
     }
 
     /**

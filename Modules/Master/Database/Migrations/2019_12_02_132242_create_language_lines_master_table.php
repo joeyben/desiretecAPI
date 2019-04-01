@@ -22,6 +22,12 @@ class CreateLanguageLinesMasterTable extends Migration
                 $table->timestamps();
             });
         }
+
+        if (Schema::hasTable('language_lines_master') && !Schema::hasColumn('language_lines_master', 'description')) {
+            Schema::table('language_lines_master', function (Blueprint $table) {
+                $table->string('description')->after('group')->nullable();
+            });
+        }
     }
 
     /**
@@ -29,6 +35,10 @@ class CreateLanguageLinesMasterTable extends Migration
      */
     public function down()
     {
-        Schema::drop('language_lines_master');
+        if (Schema::hasTable('language_lines_master')) {
+            Schema::table('language_lines_master', function (Blueprint $table) {
+                Schema::drop('language_lines_master');
+            });
+        }
     }
 }
