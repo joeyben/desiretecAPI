@@ -11,7 +11,7 @@ class CreateLanguageLinesTrendtoursTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('language_lines_master')) {
+        if (!Schema::hasTable('language_lines_trendtours')) {
             Schema::create('language_lines_trendtours', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('locale');
@@ -30,6 +30,8 @@ class CreateLanguageLinesTrendtoursTable extends Migration
      */
     public function down()
     {
-        Schema::drop('language_lines_trendtours');
+        if (Schema::hasTable('language_lines_trendtours')) {
+            Schema::drop('language_lines_trendtours');
+        }
     }
 }
