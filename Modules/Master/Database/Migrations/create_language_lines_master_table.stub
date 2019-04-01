@@ -35,9 +35,7 @@ class CreateLanguageLines$MODULE$Table extends Migration
     public function down()
     {
          if (Schema::hasTable('language_lines_$SLUG$')) {
-            Schema::table('language_lines_$SLUG$', function (Blueprint $table) {
-                Schema::drop('language_lines_$SLUG$');
-            });
-        }
+             Schema::drop('language_lines_$SLUG$');
+         }
     }
 }
