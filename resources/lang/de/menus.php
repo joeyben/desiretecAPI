@@ -200,6 +200,7 @@ return [
             'active'    => 'Aktiv',
             'inactive'  => 'Inaktiv',
             'deleted'   => 'Gelöscht',
+
         ]
     ],
     'wishes'  => 'Wünsche',

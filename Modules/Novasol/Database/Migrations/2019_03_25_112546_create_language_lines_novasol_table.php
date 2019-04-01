@@ -10,15 +10,18 @@ class CreateLanguageLinesNovasolTable extends Migration
      */
     public function up()
     {
-        Schema::create('language_lines_novasol', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('locale');
-            $table->string('group');
-            $table->index('group');
-            $table->string('key');
-            $table->text('text');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('language_lines_master')) {
+            Schema::create('language_lines_novasol', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('locale');
+                $table->string('group');
+                $table->index('group');
+                $table->string('description')->nullable();
+                $table->string('key');
+                $table->text('text');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

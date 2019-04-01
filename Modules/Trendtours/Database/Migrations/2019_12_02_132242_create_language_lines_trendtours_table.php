@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateLanguageLinesTrendtoursTable extends Migration
 {
@@ -10,16 +11,18 @@ class CreateLanguageLinesTrendtoursTable extends Migration
      */
     public function up()
     {
-        Schema::create('language_lines_trendtours', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('locale');
-            $table->string('description');
-            $table->string('group');
-            $table->index('group');
-            $table->string('key');
-            $table->text('text');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('language_lines_master')) {
+            Schema::create('language_lines_trendtours', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('locale');
+                $table->string('group');
+                $table->index('group');
+                $table->string('description')->nullable();
+                $table->string('key');
+                $table->text('text');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
