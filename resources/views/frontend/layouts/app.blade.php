@@ -66,7 +66,7 @@
 
             </div><!-- container -->
         </div><!--#app-->
-
+        @yield('footer')
         <!-- Scripts -->
         @yield('before-scripts')
         {!! Html::script(mix('js/frontend.js')) !!}

@@ -6,7 +6,7 @@ $gutter: 30px;
 $altfont: 'Comfortaa', cursive;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #092a5e;
+$mastercolor: #00509F;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
 
@@ -41,7 +41,7 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #092a5e url(../../images/layer/guy_2.png) no-repeat bottom / 100%;
+  background: #00509F url(../../images/layer/guy_2.png) no-repeat bottom / 100%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -242,14 +242,14 @@ $master-blue: #70CBF4;
 
   button[type=submit] {
     border-radius: 3px;
-    background: $mastercolor;
+    background: #FDD22C;
 
     text-align: center;
 
     font-family: 'Helvetica', 'Arial', sans-serif;
-    color:  #fff;
-    font-size: 18px;
-    font-weight: 700;
+    color:  #00509F;
+    font-size: 20px;
+    font-weight: 500;
 
     display: block;
     width: 100%;
@@ -354,7 +354,7 @@ $master-blue: #70CBF4;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: #00509F;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -415,7 +415,7 @@ $master-blue: #70CBF4;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #092a5e;
+              color: #00509F;
               padding: 0;
               margin: 20px 0;
               font-size: 15px !important;
@@ -444,7 +444,7 @@ $master-blue: #70CBF4;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: #00509F;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -806,15 +806,15 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .caret{
-      border-color: #092a5e !important;
+      border-color: #00509F !important;
       border-right: 6px solid transparent !important;
       border-left: 6px solid transparent !important;
       border-bottom: none !important;
-      border-top: 6px dashed #092a5e !important;
+      border-top: 6px dashed #00509F !important;
       display: none;
     }
     .filter-option-inner-inner{
-      color: #092a5e;
+      color: #00509F;
       font-size: 14px;
       font-weight: 500;
     }
@@ -1059,7 +1059,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: #00509F;
     }
     .text-hidden{
       padding: 5px 0;
@@ -1069,7 +1069,7 @@ p.kwp-info {
 
   .kwp-col-12{
     background: #fff;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 0;
     position: relative;
     &.button{
@@ -1080,7 +1080,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: #00509F;
     }
   }
   .description{
@@ -1124,7 +1124,7 @@ p.kwp-info {
         right: 10px;
         top: 30px;
         font-size: 16px;
-        color: #092a5e;
+        color: #00509F;
       }
     }
   }
@@ -1265,7 +1265,7 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#092a5e;
+        color:#00509F;
         padding: 8px 20px;
         font-weight: bold;
         font-family: 'Helvetica', 'Arial', sans-serif;
