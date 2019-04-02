@@ -24,7 +24,7 @@
                 <div class="kwp-form-group duration-group">
                     <label for="duration-time" class="required">{{ trans('layer.general.when') }}</label>
                     <div class="kwp-custom-select">
-                        {{ Form::select('month', array_merge(['' => trans('layer.general.months_empty')], $months_arr), ['class' => 'form-control box-size']) }}
+                        {{ Form::select('earliest_start', array_merge(['' => trans('layer.general.months_empty')], $months_arr), ['class' => 'form-control box-size']) }}
                     </div>
                     <i class="fal fa-calendar-alt"></i>
                 </div>
@@ -120,120 +120,10 @@
                 return false;
             });
 
-            $('#budgetRange').rangeslider({
-                // Callback function
-                polyfill: false,
-                onInit: function() {
-                    $('.rangeslider__handle').on('mousedown touchstart mousemove touchmove', function(e) {
-                        e.preventDefault();
-                    })
-                },
-                fillClass: 'rangeslider__fill',
-                onSlide: function(position, value) {
-                    if($(".rangeslider-wrapper .haserrors").length)
-                        $(".rangeslider-wrapper .haserrors").removeClass('haserrors');
 
-                    if(value === 10000){
-                        $(".rangeslider-wrapper .text").text("beliebig");
-                        $("#budget").val("beliebig");
-                    }else if(value === 100){
-                        $(".rangeslider-wrapper .text").html("&nbsp;");
-                        $("#budget").val("");
-                    }else{
-                        $(".rangeslider-wrapper .text").text("bis "+value+" €");
-                        $("#budget").val(""+value);
-                    }
-                    check_button();
-                },
-            });
 
             $(document).ready(function(){
-                $('.selectpicker').selectpicker();
 
-                dt.startDate = new Pikaday({
-                    field: document.getElementById('earliest_start'),
-                    format: 'dd.mm.YYYY',
-                    defaultDate: '01.01.2019',
-                    minDate: new Date(),
-                    toString: function(date, format) {
-                        // you should do formatting based on the passed format,
-                        // but we will just return 'D/M/YYYY' for simplicity
-                        const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                        const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-                        const year = date.getFullYear();
-                        return day+"."+month+"."+year;
-                    },
-                    i18n: {
-                        previousMonth: 'Vormonat',
-                        nextMonth: 'Nächsten Monat',
-                        months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
-                    },
-                    onSelect: function() {
-                        dt.endDate.setDate(this.getDate()+1);
-                        dt.endDate.setMinDate(this.getDate());
-                    },
-                    onOpen: function() {
-
-                    },
-                });
-                dt.endDate = new Pikaday({
-                    field: document.getElementById('latest_return'),
-                    format: 'dd.mm.YYYY',
-                    defaultDate: '01.01.2019',
-                    toString: function(date, format) {
-                        // you should do formatting based on the passed format,
-                        // but we will just return 'D/M/YYYY' for simplicity
-                        const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                        const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-                        const year = date.getFullYear();
-                        return day+"."+month+"."+year;
-                    },
-                    i18n: {
-                        previousMonth: 'Vormonat',
-                        nextMonth: 'Nächsten Monat',
-                        months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
-                    }
-                });
-
-                if(!$("#earliest_start").val()){
-                    var date = new Date();
-                    date.setDate(date.getDate() + 3);
-                    var d = date.getDate();
-                    var m = date.getMonth()+1;
-                    var y = date.getFullYear();
-                    if (d < 10) {
-                        d = "0" + d;
-                    }
-                    if (m < 10) {
-                        m = "0" + m;
-                    }
-                    $("#earliest_start").val(d+"."+m+"."+y);
-                }
-
-                if(!$("#latest_return").val()){
-                    var date = new Date();
-                    date.setDate(date.getDate() + 10);
-                    var d = date.getDate();
-                    var m = date.getMonth()+1;
-                    var y = date.getFullYear();
-                    if (d < 10) {
-                        d = "0" + d;
-                    }
-                    if (m < 10) {
-                        m = "0" + m;
-                    }
-                    $("#latest_return").val(d+"."+m+"."+y);
-                }
-
-                var range = parseInt($("#budget").val().replace('.',''));
-                if(range)
-                    $('input[type="range"]').val(range).change();
-
-                $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
                 var pax = $("#adults").val();
                 var children_count = parseInt($("#kids").val());
                 var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
@@ -267,7 +157,7 @@
         <div class="kwp-row">
             <div class="kwp-col-12 white-col">
                 <div class="kwp-agb ">
-                    {{ Form::checkbox('terms', null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                    {{ Form::checkbox('terms', null, null,['class' => 'dt_terms', 'required' => 'required']) }}
                     <p>Ich habe die <a id="datenschutz" href="https://www.trendtours.de/trendtours/datenschutz" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                 </div>
             </div>
