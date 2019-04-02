@@ -12,6 +12,7 @@ use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Trendtours\Http\Requests\StoreWishRequest;
+use Carbon\Carbon;
 
 class TrendtoursController extends Controller
 {
@@ -214,11 +215,10 @@ class TrendtoursController extends Controller
     */
     private function transformMonth($children)
     {
-
         foreach ($children as $key => $value) {
             $date_arr = explode('.', $value);
-            $date = \Carbon\Carbon::createFromFormat('Y-m-d', $date_arr[1]."-".$date_arr[0]."-01");
-            $children[$key] = $date->format('F Y');
+            $date = Carbon::parse($date_arr[1]."-".$date_arr[0]."-01");
+            $children[$key] = $date->formatLocalized('%B %Y');
         }
 
         return $children;
