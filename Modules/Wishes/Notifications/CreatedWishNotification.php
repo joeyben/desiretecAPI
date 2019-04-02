@@ -59,7 +59,7 @@ class CreatedWishNotification extends Notification
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
             return (new MailMessage())
-                ->from('trendtours@desiretec.com', $this->wish->whitelabel->display_name . ' Portal')
+                ->from('trendtours@reisewunschservice.de', $this->wish->whitelabel->display_name . ' Portal')
                 ->replyTo('wunschreise@trendtours.de', $this->wish->whitelabel->display_name . ' Portal')
                 ->subject(trans('email.wish.user_trendtours'))
                 ->view('wishes::emails.wish_trendtours', ['wish' => $this->wish, 'token' => $this->wish->token]);

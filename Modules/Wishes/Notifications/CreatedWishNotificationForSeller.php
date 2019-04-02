@@ -54,10 +54,10 @@ class CreatedWishNotificationForSeller extends Notification
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
-            NewsletterFacade::subscribe($this->wish->owner->email);
+            //NewsletterFacade::subscribe($this->wish->owner->email);
 
             return (new MailMessage())
-                ->from('trendtours@desiretec.com', $this->wish->whitelabel->display_name . ' Portal')
+                ->from('trendtours@reisewunschservice.de', $this->wish->whitelabel->display_name . ' Portal')
                 ->subject(trans('email.wish.seller_trendtours'))
                 ->view('wishes::emails.wish_seller_trendtours', ['wish' => $this->wish, 'token' => $notifiable->token->token, 'user' => $notifiable]);
         }

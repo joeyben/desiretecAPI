@@ -166,7 +166,10 @@ class TrendtoursController extends Controller
      */
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
-        $new_wish = $wish->create($request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'));
+        $input = $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'month');
+        $input['earliest_start'] = "01.01.2020";
+        $input['latest_return'] = "01.01.2020";
+        $new_wish = $wish->create($input);
 
         return $new_wish;
     }
