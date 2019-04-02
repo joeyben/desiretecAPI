@@ -166,7 +166,7 @@
                     @if($module->has('Users')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
                         @permission('view-access-management')
                             <li class="nav-item nav-item-submenu">
-                            <a href="#" class="nav-link"><i class="icon-copy"></i> <span> {{ __('Access Management') }}</span></a>
+                            <a href="#" class="nav-link"><i class="icon-copy"></i> <span> {{ __('menus.access_management') }}</span></a>
 
                             <ul class="nav nav-group-sub" data-submenu-title="Layouts">
                                 @permission('view-user-management')
@@ -186,7 +186,7 @@
                     <li class="nav-item">
                         <a href="{{ route('admin.categories') }}" class="nav-link">
                             <i class="icon-folder-open"></i>
-                            <span>{{ __('Categories Management') }} </span>
+                            <span>{{ __('menus.categories_management') }} </span>
                         </a>
                     </li>
                     @endif
@@ -194,7 +194,7 @@
                     <li class="nav-item">
                         <a href="{{ route('admin.groups') }}" class="nav-link">
                             <i class="icon-collaboration"></i>
-                            <span>{{ __('Groups Management') }}</span>
+                            <span>{{ __('menus.groups_management') }}</span>
                         </a>
                     </li>
                     @endif
@@ -202,14 +202,14 @@
                     <li class="nav-item">
                         <a href="{{ route('provider.languages') }}" class="nav-link">
                             <i class="icon-flag3"></i>
-                            <span>Languages</span>
+                            <span>{{ __('menus.languages') }}</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="{{ route('provider.language-lines') }}" class="nav-link">
                             <i class="icon-flag3"></i>
-                            <span>Language Lines</span>
+                            <span>{{ __('menus.languages_lines') }}</span>
                         </a>
                     </li>
 
@@ -217,7 +217,7 @@
                     <li class="nav-item">
                         <a href="{{ route('admin.wishes') }}" class="nav-link">
                             <i class="icon-heart5"></i>
-                            <span>{{ __('menus.wishes') }}</span>
+                            <span>{{ __('menus.wishes_management') }}</span>
                         </a>
                     </li>
                     @endif
@@ -237,7 +237,7 @@
                                 <li class="nav-item">
                                     <a href="{{ route('admin.sellers') }}" class="nav-link">
                                         <i class="icon-collaboration"></i>
-                                        <span>{{ __('menus.sellers') }}</span>
+                                        <span>{{ __('menus.sellers_management') }}</span>
                                     </a>
                                 </li>
                             @endauth

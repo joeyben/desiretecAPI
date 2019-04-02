@@ -205,4 +205,11 @@ return [
     ],
     'wishes'  => 'Wünsche',
     'sellers' => 'Seller',
+    'access_management' => 'Zugriffsverwaltung',
+    'categories_management' => 'Kategorienverwaltung',
+    'groups_management' => 'Gruppenmanagement',
+    'languages' => 'Sprachen',
+    'languages_lines' => 'Sprachenzeilen',
+    'wishes_management' => 'Wünsche Management',
+    'sellers_management' => 'Anbieter-Management',
 ];
