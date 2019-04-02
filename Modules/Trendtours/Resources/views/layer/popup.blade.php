@@ -43,7 +43,7 @@
 
         <div class="kwp-row">
             <div class="kwp-col-12 no-bg">
-                <a href="#" class="kwp-btn-expand">Reisewunsch konkreter beschreiben</a>
+                <a href="#" class="kwp-btn-expand kwp-open">Reisewunsch konkreter beschreiben</a>
             </div>
         </div>
 
@@ -268,7 +268,7 @@
             <div class="kwp-col-12 white-col">
                 <div class="kwp-agb ">
                     {{ Form::checkbox('terms', null, ['class' => 'form-control box-size', 'required' => 'required']) }}
-                    <p>Ich habe die <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.trendtours.de/trendtours/datenschutz" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    <p>Ich habe die <a id="datenschutz" href="https://www.trendtours.de/trendtours/datenschutz" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                 </div>
             </div>
         </div>
