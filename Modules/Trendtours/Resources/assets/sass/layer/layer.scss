@@ -256,7 +256,8 @@ $master-blue: #70CBF4;
     border: none;
     padding: 15px;
     margin-top: 5px;
-    &:active {
+    &:active, &:hover {
+      background: #FFB800;
     }
     &.error-button{
       background: #D40E14;
@@ -1255,8 +1256,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid #092A59;
-          background-color: #092A59;
+          border: 1px solid #00509F;
+          background-color: #00509F;
           background-image: url(../../svg/check-white.svg);
         }
       }
