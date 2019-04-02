@@ -89,10 +89,10 @@
                                                                         {{ $wish->destination }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
-                                                                        {{ \Illuminate\Support\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Illuminate\Support\Carbon::parse($wish->latest_return)->format('d.m.Y') }}
+                                                                        {{ \Illuminate\Support\Carbon::parse($wish->earliest_start)->format('m.Y') }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
-                                                                        {{ $wish->adults }} Erw.
+                                                                        {{ $wish->adults }} Pax.
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -105,17 +105,8 @@
                                                             <table width="600" cellpadding="0" cellspacing="0">
                                                                 <tbody>
                                                                 <tr>
-                                                                    <td width="140" align="left" style="padding-left:10px;">
-                                                                        <img width="15" src="https://ci6.googleusercontent.com/proxy/ToInio0qfJTQbdrrIVoN87ngpdbJ3wm4Vv9wjtwbpT-N28UXTjrjVKO0e8Xnlx8vAoQqrCpMAc5cMDezCJYKA737BxMmErfq44eRC27ZMHTU6iTx3-mAKvmGaUt0DUfD=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/budget.png" />
-                                                                    </td>
-                                                                    <td width="140" align="left" style="padding-left:10px;">
-                                                                        <img width="15" src="https://ci6.googleusercontent.com/proxy/ToInio0qfJTQbdrrIVoN87ngpdbJ3wm4Vv9wjtwbpT-N28UXTjrjVKO0e8Xnlx8vAoQqrCpMAc5cMDezCJYKA737BxMmErfq44eRC27ZMHTU6iTx3-mAKvmGaUt0DUfD=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/budget.png" />
-                                                                    </td>
-                                                                    <td width="140" align="left" style="padding-left:10px;">
-                                                                        <img width="15" src="https://ci5.googleusercontent.com/proxy/ZqmTrHLJEjRm4-XWW3fPT912psmXzsLXCRXE9wWJewzMxqGBElj4NUd8CbS_wfD8yx-X428uj_vRwoyCRn9ebeaPgG5nOziVHBN648mV3mU0K7FFDAM4jMpWJx32sg=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/time.png" />
-                                                                    </td>
-                                                                    <td width="140" align="left" style="padding-left:10px;">
-                                                                        <img width="15" src="https://ci5.googleusercontent.com/proxy/LYfHFIZwOn0ZyiseIPcIYRnjDYR90OdcD34bLNoZF4ADGyQISbW4v6953OXfC0E7Bcel_2buwLYI_bV9GUJfNb2nJDitpMGH13ieNHmfYFdnZpL621dXZD5cDzsGaxOvDEM=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/catering.png" />
+                                                                    <td colspan="4">
+                                                                        <p style="padding-left: 10px">{{ $wish->description }}</p>
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -168,8 +159,6 @@
                                     @lang('email.footer.line4')<br>
                                 </td>
                             </tr>
-
-                            <tr><td colspan="2"><hr style="background: #e7e7e7;border: none;height: 1px;width: 100%;margin-top: 30px;"></td></tr>
 
                             </tbody>
                         </table>
