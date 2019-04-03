@@ -69,6 +69,7 @@ class StoreWishRequest extends FormRequest
             'airport'         => 'required',
             'destination'     => 'required',
             'adults'          => 'required',
+            'terms'           => 'required',
             'email'           => 'required|email'
         ];
     }
@@ -86,6 +87,7 @@ class StoreWishRequest extends FormRequest
             'adults.required'           => trans('adults.required'),
             'airport.required'          => trans('airport.required'),
             'destination.required'      => trans('destination.required'),
+            'terms.required'            => trans('terms.required'),
         ];
     }
 }
