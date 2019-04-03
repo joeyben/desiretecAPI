@@ -382,7 +382,6 @@ $master-blue: #70CBF4;
     height: 90px !important;
     top: -110px;
     background-color: rgba(9,42,94,0.8);
-    background-image: url(../../images/layer/guy_2.png);
     width: 95%;
     padding: 0 0px;
     margin: auto;
@@ -412,8 +411,7 @@ $master-blue: #70CBF4;
     h1{
       font-size: 24px;
       margin: 10px;
-      padding-left: 90px;
-      text-align: left;
+      text-align: center;
       padding-top: 20px;
       color: white;
       line-height: 1.5em;
@@ -1046,6 +1044,11 @@ p.kwp-info {
   input {
     vertical-align: middle;
     float: left;
+    &.hasError{
+      &:after{
+        border: 2px solid #DB2128 !important;
+      }
+    }
   }
   p{
     padding-left: 40px;
@@ -1612,6 +1615,14 @@ p.kwp-info {
           }
         }
       }
+
+      .error-input{
+        display: block;
+        background: #EC6708;
+        padding: 0 10px;
+        color: #fff;
+      }
+
       .haserrors{
         .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
           border-color: #D40E14;

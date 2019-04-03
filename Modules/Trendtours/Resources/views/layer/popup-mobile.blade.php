@@ -66,18 +66,28 @@
                     <div class="kwp-col-4 email-col">
                         {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
                         {{ Form::text('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
-                        <i class="master-icon--mail"></i>
+                        <i class="fal fa-envelope"></i>
                         <div class="kwp-form-email-hint"></div>
                         @if ($errors->any() && $errors->get('email'))
                             @foreach ($errors->get('email') as $error)
-                                <span>{{ $error }}</span>
+                                <span class="error-input">{{ $error }}</span>
                             @endforeach
+                        @endif
+
+                        @php
+                            $terms_class = 'dt_terms'
+                        @endphp
+
+                        @if ($errors->any() && $errors->get('terms'))
+                            @php
+                                $terms_class = 'dt_terms hasError'
+                            @endphp
                         @endif
                     </div>
 
                     <div class="kwp-col-4 white-col">
                         <div class="kwp-agb">
-                            {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => 'dt_terms', 'required' => 'required']) }}
+                            {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
                             <p>Ich habe die <a id="datenschutz" href="https://www.trendtours.de/trendtours/datenschutz" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                             <script>$('#agb_link').click(dt.agbModal);</script>
                         </div>
