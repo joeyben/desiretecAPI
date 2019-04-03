@@ -77,6 +77,7 @@ class TrendtoursController extends Controller
             'months_arr'     => $this->months,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
+            'request' => $request->all()
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -93,13 +94,16 @@ class TrendtoursController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $input = $request->all();
         if ($request->failed()) {
-            $html = view('trendtours::layer.popup')->with([
+            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+            $html = view('trendtours::'.$layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'months_arr'     => $this->months,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
+                'request' => $input
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -218,7 +222,13 @@ class TrendtoursController extends Controller
         foreach ($children as $key => $value) {
             $date_arr = explode('.', $value);
             $date = Carbon::parse($date_arr[1]."-".$date_arr[0]."-01");
-            $children[$key] = $this->translateToDe($date->formatLocalized('%B'))." ".$date->formatLocalized('%Y');
+            $now = Carbon::now();
+            $length = $now->diffInDays($date, false);
+            if ($length > - 28) {
+                $children[$key] = $this->translateToDe($date->formatLocalized('%B')) . " " . $date->formatLocalized('%Y');
+            }else{
+                unset($children[$key]);
+            }
         }
 
         return $children;

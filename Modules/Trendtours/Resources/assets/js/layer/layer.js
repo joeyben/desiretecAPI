@@ -347,7 +347,8 @@ var dt = window.dt || {};
             if(!formSent) {
                 this.trigger =
                     $('<span/>', {'class': 'trigger-modal'});
-                $('body').prepend(this.trigger.fadeIn());
+                $('body').prepend(this.trigger);
+                this.trigger.fadeIn();
             }
         }else{
             this.modal.css('display', 'none');
@@ -422,6 +423,7 @@ var dt = window.dt || {};
     $(document).ready(function (e) {
         if(deviceDetector.device === "phone") {
             dt.PopupManager.teaser = true;
+            dt.PopupManager.teaserText = "Dürfen wir Ihnen helfen?";
             dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
             $(".dt-modal .kwp-close").on('touchend',function () {
                 dt.PopupManager.closePopup(e);
@@ -430,7 +432,7 @@ var dt = window.dt || {};
         dt.PopupManager.init();
         dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
 
-        if(isMobile() && dt.PopupManager.decoder){
+        if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
             dt.scrollUpDetect();
             dt.PopupManager.isMobile = true;
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
