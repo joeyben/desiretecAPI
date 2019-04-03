@@ -165,6 +165,8 @@ var dt = window.dt || {};
         regionCodes:{},
         testCookieId: 'desiretec',
         shown: false,
+        teaser:false,
+        teaserText: "Darf ich Sie beraten?",
         isFromPaidTraffic: function() {
             return Cookies.get('utag.data.exclude_lead') == 1;
         },
@@ -435,7 +437,10 @@ var dt = window.dt || {};
                         .append(this.popup)
                 //.click(jQuery.proxy(this.onBackdropClick, this))
                 ;
-
+                if(dt.PopupManager.teaser){
+                    this.teaser = jQuery('<div/>', {'class': 'teaser'}).append('<h1>'+this.teaserText+'</h1><i class="fa fa-close"></i>');
+                    this.modal.append(this.teaser);
+                }
                 jQuery('body').prepend(this.modal);
             }
 

@@ -81,11 +81,11 @@ class StoreWishRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required'            => 'Email is required!',
-            'email.email'               => 'Email must be a valid address!',
-            'adults.required'           => 'Number of Adults is required!',
-            'airport.required'          => 'Airport is required!',
-            'destination.required'      => 'Destination is required!',
+            'email.required'            => trans('email.required'),
+            'email.email'               => trans('email.email'),
+            'adults.required'           => trans('adults.required'),
+            'airport.required'          => trans('airport.required'),
+            'destination.required'      => trans('destination.required'),
         ];
     }
 }
