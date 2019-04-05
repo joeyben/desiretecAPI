@@ -38,6 +38,10 @@
   }
 }
 
+input{
+  @include placeholder-color($gray1);
+}
+
 input:focus,
 select:focus,
 textarea:focus,
@@ -381,18 +385,18 @@ a.primary-btn, input.primary-btn{
     margin-bottom:50px;
     border-bottom:1px solid #575756;
     a[aria-expanded="true"]{
-      .glyphicon-plus{
+      .fa-plus{
         display: none;
       }
-      .glyphicon-minus{
+      .fa-minus{
         display: block;
       }
     }
     a[aria-expanded="false"]{
-      .glyphicon-plus{
+      .fa-plus{
         display: block;
       }
-      .glyphicon-minus{
+      .fa-minus{
         display: none;
       }
     }
@@ -462,26 +466,26 @@ a.primary-btn, input.primary-btn{
         span{
           float: right;
         }
-        .glyphicon-plus{
+        .fa-plus{
           display: block;
         }
-        .glyphicon-minus{
+        .fa-minus{
           display: none;
         }
       }
       a[aria-expanded="true"]{
-        .glyphicon-plus{
+        .fa-plus{
           display: none;
         }
-        .glyphicon-minus{
+        .fa-minus{
           display: block;
         }
       }
       a[aria-expanded="false"]{
-        .glyphicon-plus{
+        .fa-plus{
           display: block;
         }
-        .glyphicon-minus{
+        .fa-minus{
           display: none;
         }
       }
@@ -835,7 +839,6 @@ a.primary-btn, input.primary-btn{
 .main-nav{
   .navbar-header{
     margin: 0;
-    float: left;
     padding: 5px 0;
     img{
       width: 100px;

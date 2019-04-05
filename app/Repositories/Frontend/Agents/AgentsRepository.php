@@ -89,7 +89,7 @@ class AgentsRepository extends BaseRepository
         $input['updated_by'] = access()->user()->id;
 
         // Uploading Image
-        if (array_key_exists('avatar', $input)) {
+        if (\array_key_exists('avatar', $input)) {
             $this->deleteOldFile($agent);
             $input = $this->uploadImage($input);
         }

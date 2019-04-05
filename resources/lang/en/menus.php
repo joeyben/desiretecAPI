@@ -196,13 +196,19 @@ return [
 
     'list' => [
         'status' => [
-            'all'       => 'Alle Reisewünsche',
-            'active'    => 'Aktiv',
-            'inactive'  => 'Inaktiv',
-            'deleted'   => 'Gelöscht',
-
+            'all'       => 'All travel wishes',
+            'active'    => 'active',
+            'inactive'  => 'inactive',
+            'deleted'   => 'deleted',
         ]
     ],
     'wishes'  => 'Wishes',
     'sellers' => 'Sellers',
+    'access_management' => 'Access Management',
+    'categories_management' => 'Categories Management',
+    'groups_management' => 'Groups Management',
+    'languages' => 'Languages',
+    'languages_lines' => 'Languages Lines',
+    'wishes_management' => 'Wishes Management',
+    'sellers_management' => 'Sellers Management',
 ];

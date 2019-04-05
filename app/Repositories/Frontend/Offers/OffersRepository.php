@@ -6,13 +6,13 @@ use App\Events\Frontend\Offers\OfferCreated;
 use App\Events\Frontend\Offers\OfferDeleted;
 use App\Events\Frontend\Offers\OfferUpdated;
 use App\Exceptions\GeneralException;
+use App\Http\Requests\Frontend\Offers\StoreOffersRequest;
 use App\Models\Agents\Agent;
 use App\Models\OfferFiles\OfferFile;
 use App\Models\Offers\Offer;
 use App\Repositories\BaseRepository;
 use DB;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\Frontend\Offers\StoreOffersRequest;
 
 /**
  * Class OffersRepository.
@@ -126,7 +126,7 @@ class OffersRepository extends BaseRepository
         $input['updated_by'] = access()->user()->id;
 
         // Uploading Image
-        if (array_key_exists('file', $input)) {
+        if (\array_key_exists('file', $input)) {
             $this->deleteOldFile($offer);
             $fileUploaded = $this->uploadImage($input);
         }

@@ -2,9 +2,9 @@
 
 namespace App\Models\Messages;
 
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Wishes\Wish;
 use App\Models\Access\User\User;
+use App\Models\Wishes\Wish;
+use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {

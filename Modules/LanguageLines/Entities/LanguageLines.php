@@ -2,11 +2,9 @@
 
 namespace Modules\LanguageLines\Entities;
 
+use Illuminate\Support\Facades\Cache;
 use Modules\LanguageLines\Traits\LanguageLinesSearchableTrait;
 use Spatie\TranslationLoader\LanguageLine;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Auth;
-
 
 class LanguageLines extends LanguageLine
 {
@@ -17,7 +15,6 @@ class LanguageLines extends LanguageLine
      *
      * @var string
      */
-
     protected $casts = [];
 
     /**
@@ -53,6 +50,7 @@ class LanguageLines extends LanguageLine
     public static function getCacheKey(string $group, string $locale): string
     {
         $whitelabel = getLanguageLinesCacheKey();
+
         return "desiretec.translation-loader.{$whitelabel}.{$group}.{$locale}";
     }
 
@@ -65,7 +63,7 @@ class LanguageLines extends LanguageLine
                 ->get()
                 ->map(function (LanguageLine $languageLine) use ($locale) {
                     return [
-                        'key' => $languageLine->key,
+                        'key'  => $languageLine->key,
                         'text' => $languageLine->text,
                     ];
                 })
@@ -80,7 +78,7 @@ class LanguageLines extends LanguageLine
     }
 
     /**
-     * Override to get model from helpers
+     * Override to get model from helpers.
      *
      * @return string
      */

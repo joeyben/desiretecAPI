@@ -13,10 +13,10 @@ return [
     */
 
     'agent'        => [
-        'email'                         => 'E-Mail Adresse',
+        'email'                         => 'email address',
         'email_placeholder'             => 'seller@seller.com',
         'tel'                           => 'Tel.',
         'tel_placeholder'               => '01761234567',
-        'create'                        => 'Agent hinzufügen',
+        'create'                        => 'create agent',
     ],
 ];

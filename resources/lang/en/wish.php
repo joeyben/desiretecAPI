@@ -13,7 +13,7 @@ return [
     */
 
     'view'        => [
-        'title'             => 'Wish',
+        'title'             => 'Wish title',
         'status'            => 'Status',
         'destination'       => 'Destination',
         'airport'           => 'Airport',
@@ -26,28 +26,28 @@ return [
         'category'          => 'Hotel category',
         'catering'          => 'Hotel catering',
         'duration'          => 'Duration',
-        'createdat'         => 'Created At',
-        'createdby'         => 'Created By',
+        'createdat'         => 'Created at',
+        'createdby'         => 'Created by',
         'whitelabel'        => 'Whitelabel',
         'offerCount'        => 'Offers',
         'owner'             => 'Name',
         'email'             => 'Email',
         'comment-header'    => 'Communicate with Agent',
-        'offer_number'      => 'Angebot Nummer',
-        'new_offers'        => 'Neue Angebote',
+        'offer_number'      => 'Offer number',
+        'new_offers'        => 'New offers',
         'stage'             => [
-            'seller_empty' => 'Der Reisewunsch wurde am <b>:date</b> an Sie<br>
-                    übermittelt. Erstellen Sie jetzt ein Angebot.',
-            'seller_message' => 'Der Reisewunsch wurde am <b>:date</b> an Sie<br>
-                    übermittelt. Der Kunder hat Ihnen eine Nachricht hinterlassen.',
-            'seller_offer' => 'Der Reisewunsch wurde am <b>:date</b> an Sie<br>
-                    übermittelt. Sie haben ein Angebot erstellt.',
-            'user_empty' => 'Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>
-                    übermittelt. Leider liegt momentan noch kein Angebot vor.',
-            'user_offer' => 'Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>
-                    übermittelt. Es gibt ein Angebot für Sie.',
-            'user_message' => 'Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>
-                    übermittelt. Es gibt eine neue Nachricht für Sie.',
+            'seller_empty' => 'This travel wish has been distributed on <b>:date</b> to you.<br>
+                    Please create an offer.',
+            'seller_message' => 'This travel wish has been distributed on <b>:date</b> to you.<br>
+                    The customer left a message for you.',
+            'seller_offer' => 'This travel wish has been distributed on <b>:date</b> to you.<br>
+                    You created an offer.',
+            'user_empty' => 'This travel wish has been distributed on <b>:date</b> to <b>:seller</b><br>
+                     . Unfortunately no received offers yet.',
+            'user_offer' => 'This travel wish has been distributed on <b>:date</b> to <b>:seller</b><br>
+                    . You received an offer.',
+            'user_message' => 'This travel wish has been distributed on <b>:date</b> to <b>:seller</b><br>
+                    . You received a new message.',
         ]
     ],
 ];

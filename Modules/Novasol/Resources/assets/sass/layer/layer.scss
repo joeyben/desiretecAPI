@@ -97,6 +97,20 @@ $master-blue: #70CBF4;
   font-size: 14px;
   line-height: 19px;
   font-family: $altfont;
+
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #dedede !important;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #dedede !important;
+  }
+
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: #dedede !important;
+  }
+
   textarea:focus, input:focus{
     outline: none !important;
     box-shadow: none;

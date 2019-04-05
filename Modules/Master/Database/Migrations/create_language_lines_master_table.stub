@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
 class CreateLanguageLines$MODULE$Table extends Migration
 {
@@ -12,16 +13,18 @@ class CreateLanguageLines$MODULE$Table extends Migration
      */
     public function up()
     {
-        Schema::create('language_lines_$SLUG$', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('locale');
-            $table->string('description');
-            $table->string('group');
-            $table->index('group');
-            $table->string('key');
-            $table->text('text');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('language_lines_$SLUG$')) {
+                Schema::create('language_lines_$SLUG$', function (Blueprint $table) {
+                    $table->increments('id');
+                    $table->string('locale');
+                    $table->string('description')->nullable();
+                    $table->string('group');
+                    $table->index('group');
+                    $table->string('key');
+                    $table->text('text');
+                    $table->timestamps();
+                });
+        }
     }
 
     /**
@@ -31,6 +34,8 @@ class CreateLanguageLines$MODULE$Table extends Migration
      */
     public function down()
     {
-        Schema::drop('language_lines_$SLUG$');
+         if (Schema::hasTable('language_lines_$SLUG$')) {
+             Schema::drop('language_lines_$SLUG$');
+         }
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\App;
-
 Route::group(['domain' => 'master.com'], function () {
 //    setWhitelabelLocale(\Config::get('master.locale'));
 

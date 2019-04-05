@@ -2,8 +2,8 @@
 
 namespace Modules\LanguageLines\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
 
 class LanguageLinesServiceProvider extends ServiceProvider
 {
@@ -16,8 +16,6 @@ class LanguageLinesServiceProvider extends ServiceProvider
 
     /**
      * Boot the application events.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -30,43 +28,36 @@ class LanguageLinesServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
-        //
     }
 
     /**
      * Register config.
-     *
-     * @return void
      */
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('languagelines.php'),
+            __DIR__ . '/../Config/config.php' => config_path('languagelines.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'languagelines'
+            __DIR__ . '/../Config/config.php', 'languagelines'
         );
     }
 
     /**
      * Register views.
-     *
-     * @return void
      */
     public function registerViews()
     {
         $viewPath = resource_path('views/modules/languagelines');
 
-        $sourcePath = __DIR__.'/../Resources/views';
+        $sourcePath = __DIR__ . '/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
-        ],'views');
+        ], 'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/languagelines';
@@ -75,8 +66,6 @@ class LanguageLinesServiceProvider extends ServiceProvider
 
     /**
      * Register translations.
-     *
-     * @return void
      */
     public function registerTranslations()
     {
@@ -85,18 +74,16 @@ class LanguageLinesServiceProvider extends ServiceProvider
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'languagelines');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'languagelines');
+            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'languagelines');
         }
     }
 
     /**
      * Register an additional directory of factories.
-     * 
-     * @return void
      */
     public function registerFactories()
     {
-        if (! app()->environment('production')) {
+        if (!app()->environment('production')) {
             app(Factory::class)->load(__DIR__ . '/../Database/factories');
         }
     }

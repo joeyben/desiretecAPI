@@ -68,9 +68,8 @@ class StoreWishRequest extends FormRequest
         return [
             'airport'         => 'required',
             'destination'     => 'required',
-            'earliest_start'  => 'required',
-            'latest_return'   => 'required',
             'adults'          => 'required',
+            'terms'           => 'required',
             'email'           => 'required|email'
         ];
     }
@@ -83,13 +82,12 @@ class StoreWishRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required'            => 'Email is required!',
-            'email.email'               => 'Email must be a valid address!',
-            'earliest_start.required'   => 'Start date is required!',
-            'latest_return.required'    => 'Return date is required!',
-            'adults.required'           => 'Number of Adults is required!',
-            'airport.required'          => 'Airport is required!',
-            'destination.required'      => 'Destination is required!',
+            'email.required'            => trans('email.required'),
+            'email.email'               => trans('email.email'),
+            'adults.required'           => trans('adults.required'),
+            'airport.required'          => trans('airport.required'),
+            'destination.required'      => trans('destination.required'),
+            'terms.required'            => trans('terms.required'),
         ];
     }
 }

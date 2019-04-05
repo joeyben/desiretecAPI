@@ -35,7 +35,7 @@
         <div class="col col-lg-12">
             <div class="filter">
                 <div class="count">
-                    <span class="count" v-cloak>@{{ pagination.total }} {{ trans('labels.frontend.wishes.wishes') }}</span>
+                    <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', intval($count)) }}</span>
                 </div>
                 <div class="filter-action">
                     <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">

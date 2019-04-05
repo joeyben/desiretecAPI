@@ -3,10 +3,8 @@
 namespace Modules\LanguageLines\Console;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Console\Input\InputArgument;
 
 class CopyLanguageCommand extends Command
 {
@@ -26,8 +24,6 @@ class CopyLanguageCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -41,7 +37,6 @@ class CopyLanguageCommand extends Command
      */
     public function handle()
     {
-
         $this->copyLanguage(
             $this->argument('fromTable'),
             $this->argument('toTable'),
@@ -84,18 +79,19 @@ class CopyLanguageCommand extends Command
      *
      * @return bool
      */
-    protected function copyLanguage($fromTable, $toTable, $fromLocale, $toLocale) {
+    protected function copyLanguage($fromTable, $toTable, $fromLocale, $toLocale)
+    {
         $languageLines = DB::table($fromTable)
             ->select('locale', 'description', 'group', 'key', 'text')
             ->where('locale', $fromLocale)
             ->get()
             ->map(function ($languageLine) use ($toLocale) {
                 return [
-                    'locale' => $toLocale,
+                    'locale'      => $toLocale,
                     'description' => $languageLine->description,
-                    'group' => $languageLine->group,
-                    'key' => $languageLine->key,
-                    'text' => $languageLine->text,
+                    'group'       => $languageLine->group,
+                    'key'         => $languageLine->key,
+                    'text'        => $languageLine->text,
                 ];
             })
             ->toArray();

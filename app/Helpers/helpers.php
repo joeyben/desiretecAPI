@@ -360,6 +360,18 @@ if (!function_exists('isWhiteLabel')) {
     }
 }
 
+if (!function_exists('setCurrentWhiteLabelId')) {
+    /**
+     * Set current whitelabel Id.
+     *
+     * @param int $id
+     */
+    function setCurrentWhiteLabelId($id)
+    {
+        config(['app.current_whitelabel' => $id]);
+    }
+}
+
 if (!function_exists('getCurrentWhiteLabelId')) {
     /**
      * return current whitelabel Id.
@@ -378,17 +390,19 @@ if (!function_exists('getCurrentWhiteLabelId')) {
 if (!function_exists('getWhiteLabelLogo')) {
     /**
      * return current whitelabel logo url.
+     *
      * @param string $type
+     *
      * @return string
      */
-    function getWhiteLabelLogoUrl($type = "logo")
+    function getWhiteLabelLogoUrl($type = 'logo')
     {
         return \Modules\Attachments\Entities\Attachment::select([
         config('module.attachments.table') . '.basename',
         config('module.attachments.table') . '.type',
         ])
         ->where('attachable_id', getCurrentWhiteLabelId())
-        ->where('type', 'whitelabels/'.$type)
+        ->where('type', 'whitelabels/' . $type)
         ->first()->toArray()['url'];
     }
 }
@@ -396,6 +410,7 @@ if (!function_exists('getWhiteLabelLogo')) {
 if (!function_exists('setTranslationLoaderModel')) {
     /**
      * Set translation-loader model.
+     *
      * @param ClassDeclaration model
      */
     function setTranslationLoaderModel($model)
@@ -444,7 +459,8 @@ if (!function_exists('getLanguageLinesCacheKey')) {
 
 if (!function_exists('setWhitelabelLocale')) {
     /**
-     * Set locale
+     * Set locale.
+     *
      * @param string $locale
      */
     function setWhitelabelLocale($locale)
@@ -455,7 +471,7 @@ if (!function_exists('setWhitelabelLocale')) {
 
 if (!function_exists('category_name_by_value')) {
     /**
-     * Set locale
+     * Set locale.
      *
      * @param string $value
      *
@@ -467,7 +483,6 @@ if (!function_exists('category_name_by_value')) {
     }
 }
 
-
 if (!function_exists('getWhitelabelLocales')) {
     /**
      * return language lines table name.
@@ -478,6 +493,7 @@ if (!function_exists('getWhitelabelLocales')) {
     {
         if (isWhiteLabel()) {
             $whitelabelId = getCurrentWhiteLabelId();
+
             return Language::whereHas('whitelabels', function ($q) use ($whitelabelId) {
                 $q->where('whitelabels.id', $whitelabelId);
             })->get();

@@ -1,6 +1,8 @@
 <?php
 
 Route::group(['domain' => '$DOMAIN$'], function () {
+    setCurrentWhiteLabelId(\Config::get('$MODULESMAL$.id'));
+    setTranslationLoaderModel(\Config::get('$MODULESMAL$.language_lines_model'));
     Route::group(['middleware' => 'web', 'namespace' => 'Modules\$MODULE$\Http\Controllers' , 'as' => '$MODULESMAL$.'], function () {
         Route::get('/', '$MODULE$Controller@index');
         Route::get('show', '$MODULE$Controller@show');

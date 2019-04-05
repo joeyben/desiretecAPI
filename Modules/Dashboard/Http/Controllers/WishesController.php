@@ -99,7 +99,7 @@ class WishesController extends Controller
                 ->toArray();
 
             for ($i = 1; $i <= $this->carbon->nowWithSameTz()->format('m'); ++$i) {
-                if (array_key_exists($i, $data)) {
+                if (\array_key_exists($i, $data)) {
                     $result['data'][] = $data[$i];
                 } else {
                     $result['data'][] = 0;
@@ -141,7 +141,7 @@ class WishesController extends Controller
             }
 
             for ($i = 1; $i <= $this->carbon->nowWithSameTz()->format('d'); ++$i) {
-                if (array_key_exists($i, $items)) {
+                if (\array_key_exists($i, $items)) {
                     $result['data'][] = $items[$i];
                 } else {
                     $result['data'][] = 0;

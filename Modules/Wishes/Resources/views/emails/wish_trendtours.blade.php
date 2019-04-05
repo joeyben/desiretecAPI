@@ -92,7 +92,7 @@
                                                                         {{ \Illuminate\Support\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Illuminate\Support\Carbon::parse($wish->latest_return)->format('d.m.Y') }}
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
-                                                                        {{ $wish->adults }} Erw. &nbsp; {{ $wish->kids }} Kids.
+                                                                        {{ $wish->adults }} Erw. &nbsp
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -123,28 +123,6 @@
                                                         </td>
                                                     </tr>
 
-                                                    <tr>
-                                                        <td>
-                                                            <table width="600" cellpadding="0" cellspacing="0">
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ $wish->budget }} €
-                                                                    </td>
-                                                                    <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ category_name_by_value($wish->duration) }}
-                                                                    </td>
-                                                                    <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ $wish->category }} Sterne
-                                                                    </td>
-                                                                    <td style="font-size:10px;padding-left:10px;" width="140" align="left">
-                                                                        {{ category_name_by_value($wish->catering) }}
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
                                                     </tbody>
                                                 </table>
                                             </td>

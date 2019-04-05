@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class ByWhitelabelLanguages implements CriterionInterface
 {
-
     /**
      * ByWhitelabelLanguages constructor.
      */
@@ -33,6 +32,7 @@ class ByWhitelabelLanguages implements CriterionInterface
     {
         if (isWhiteLabel()) {
             $whitelabelId = getCurrentWhiteLabelId();
+
             return $model->whereHas('whitelabels', function ($q) use ($whitelabelId) {
                 $q->where('whitelabels.id', $whitelabelId);
             });
@@ -41,4 +41,3 @@ class ByWhitelabelLanguages implements CriterionInterface
         return $model->select();
     }
 }
-

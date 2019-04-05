@@ -12,11 +12,12 @@ use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Trendtours\Http\Requests\StoreWishRequest;
+use Carbon\Carbon;
 
 class TrendtoursController extends Controller
 {
     protected $adults = [];
-    protected $kids = [];
+    protected $months = [];
     protected $catering = [];
     protected $duration = [];
 
@@ -37,8 +38,8 @@ class TrendtoursController extends Controller
     {
         $this->whitelabel = $whitelabel;
         $this->attachements = $attachements;
-        $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
-        $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
+        $this->adults = $this->putPersonLabel($categories->getChildrenFromSlug('slug', 'adults'), 'adults');
+        $this->months = $this->transformMonth($categories->getChildrenFromSlug('slug', 'months'));
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->whitelabelId = \Config::get('trendtours.id');
@@ -69,11 +70,14 @@ class TrendtoursController extends Controller
      */
     public function show(Request $request)
     {
-        $html = view('trendtours::layer.popup')->with([
+        $input = $request->only('variant');
+        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $html = view('trendtours::'.$layer)->with([
             'adults_arr'   => $this->adults,
-            'kids_arr'     => $this->kids,
+            'months_arr'     => $this->months,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
+            'request' => $request->all()
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -90,13 +94,16 @@ class TrendtoursController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $input = $request->all();
         if ($request->failed()) {
-            $html = view('trendtours::layer.popup')->with([
+            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+            $html = view('trendtours::'.$layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
-                'kids_arr'     => $this->kids,
+                'months_arr'     => $this->months,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
+                'request' => $input
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -164,7 +171,10 @@ class TrendtoursController extends Controller
      */
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
-        $new_wish = $wish->create($request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'));
+        $input = $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms');
+        $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('m.Y', $input['earliest_start'])->format('d.m.Y');
+        $input['latest_return'] = "01.01.2020";
+        $new_wish = $wish->create($input);
 
         return $new_wish;
     }
@@ -182,5 +192,92 @@ class TrendtoursController extends Controller
         }
 
         return $duration;
+    }
+
+    /**
+     * @param array $children
+     * @param string $type
+     *
+     * @return array
+     */
+    private function putPersonLabel($children, $type)
+    {
+
+        foreach ($children as $key => $value) {
+            $label = $type ? " ".trans_choice('labels.categories.'.$type, intval($value)) : "";
+            $children[$key] = $value."".$label;
+        }
+
+        return $children;
+    }
+
+    /**
+    * @param array $children
+    * @param string $type
+    *
+    * @return array
+    */
+    private function transformMonth($children)
+    {
+        foreach ($children as $key => $value) {
+            $date_arr = explode('.', $value);
+            $date = Carbon::parse($date_arr[1]."-".$date_arr[0]."-01");
+            $now = Carbon::now();
+            $length = $now->diffInDays($date, false);
+            if ($length > - 28) {
+                $children[$key] = $this->translateToDe($date->formatLocalized('%B')) . " " . $date->formatLocalized('%Y');
+            }else{
+                unset($children[$key]);
+            }
+        }
+
+        return $children;
+    }
+
+    /**
+     * @param string $date
+     *
+     * @return string
+     */
+    private function translateToDe($date)
+    {
+        switch ($date) {
+            case "January":
+                return "Januar";
+                break;
+            case "February":
+                return "Februar";
+                break;
+            case "March":
+                return "März";
+                break;
+            case "April":
+                return "April";
+                break;
+            case "May":
+                return "Mai";
+                break;
+            case "June":
+                return "Juni";
+                break;
+            case "July":
+                return "Juli";
+                break;
+            case "August":
+                return "August";
+                break;
+            case "September":
+                return "September";
+                break;
+            case "October":
+                return "Oktober";
+                break;
+            case "November":
+                return "November";
+                break;
+            case "December":
+                return "Dezember";
+                break;
+        }
     }
 }
