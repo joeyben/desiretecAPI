@@ -13,7 +13,7 @@ services:
         - /var/www/desiretec-mvp-stage/storage:/var/www/html/storage
       environment:
         - VIRTUAL_HOST=mvp.desiretec.com,master.desiretec.com,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com
-        - LETSENCRYPT_HOST=mvp.desiretec.com,master.desiretec.com,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com
+        - LETSENCRYPT_HOST=mvp.desiretec.com,master.desiretec.com,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com,trendtours.reisewunschservice.de,novasol.reisewunschservice.de
         - LETSENCRYPT_EMAIL=info@desiretec.com
       networks:
         - frontend
