@@ -310,6 +310,14 @@ $master-blue: #70CBF4;
     margin: 0;
   }
 
+  .header-bottom{
+    position: absolute;
+    top: -25px;
+    z-index: 1111111111;
+    right: 225px;
+  }
+
+
   form a {
     text-decoration: none;
   }
@@ -770,6 +778,11 @@ p.kwp-info {
   input {
     vertical-align: middle;
     float: left;
+    &.hasError{
+      &:after{
+        border: 2px solid #DB2128 !important;
+      }
+    }
   }
   p{
     padding-left: 40px;
