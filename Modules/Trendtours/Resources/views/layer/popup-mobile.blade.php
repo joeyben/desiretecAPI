@@ -10,7 +10,7 @@
             <div class="kwp-col-4">
                 {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
                 {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
-                <i class="fal fa-plane-arrival"></i>
+                <i class="fal fa-globe-europe"></i>
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -21,7 +21,7 @@
             <div class="kwp-col-4">
                 {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
                 {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.airport'), 'required' => 'required']) }}
-                <i class="fal fa-plane-departure"></i>
+                <i class="fal fa-home"></i>
                 @if ($errors->any() && $errors->get('airport'))
                     @foreach ($errors->get('airport') as $error)
                         <span class="error-input">{{ $error }}</span>
