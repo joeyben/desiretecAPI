@@ -113,17 +113,17 @@ class WishesRepository extends BaseRepository
 
     /**
      * @param array $input
-     *
+     * @param integer $whitelabelId
      * @throws \App\Exceptions\GeneralException
      *
      * @return mixed
      */
-    public function create(array $input)
+    public function create(array $input, $whitelabelId)
     {
-        $wish = DB::transaction(function () use ($input) {
+        $wish = DB::transaction(function () use ($input, $whitelabelId) {
             $input['featured_image'] = $this->uploadImage($input) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
             $input['created_by'] = access()->user()->id;
-            $input['whitelabel_id'] = access()->user()->getWhitelabels()[0];
+            $input['whitelabel_id'] = $whitelabelId;
             $input['group_id'] = $this->getGroup();
             $input['title'] = $input['destination'];
             $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
