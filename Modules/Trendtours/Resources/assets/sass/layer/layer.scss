@@ -702,7 +702,7 @@ p.kwp-info {
   position: relative;
   min-height: 150px;
   background: #f2f2f2;
-  height: 310px;
+  max-height: 310px;
   form, .kwp-minimal{
     height: 100%;
   }
