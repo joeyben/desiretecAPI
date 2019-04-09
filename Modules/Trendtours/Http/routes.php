@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['domain' => 'trendtours.reisewunschservice.de'], function () {
+Route::group(['domain' => 'https://trendtours.reisewunschservice.de'], function () {
     setCurrentWhiteLabelId(\Config::get('trendtours.id'));
     setTranslationLoaderModel(\Config::get('trendtours.language_lines_model'));
     Route::group(['middleware' => 'web', 'namespace' => 'Modules\Trendtours\Http\Controllers' , 'as' => 'trendtours.'], function () {
