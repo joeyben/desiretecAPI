@@ -45,7 +45,7 @@ class CreatedUserNotificationForExecutive extends Notification
     }
 
     /**
-     * Get the mail representation of the notification.
+     * Get the mail representation of the notification..
      *
      * @param mixed $notifiable
      *
