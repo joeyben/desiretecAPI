@@ -54,7 +54,7 @@ class CreatedUserNotificationForExecutive extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-            ->subject(Lang::get('email.account.subject_for_executive', ['whitelabel' => $this->whitelabel]))
+            ->subject(Lang::get('email.account.subject_for_executive', ['whitelabel' => $this->user->whitelabels()->first()->name]))
             ->view('users::emails.created_executive', ['user' => $this->user, 'password' => $this->password, 'whitelabel' => $this->user->whitelabels()->first()])
             ->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
     }
