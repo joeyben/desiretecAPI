@@ -58,7 +58,7 @@ class CreatedWishNotificationForSeller extends Notification
 
             return (new MailMessage())
                 ->from('trendtours@reisewunschservice.de', $this->wish->whitelabel->display_name . ' Portal')
-                ->subject(trans('email.wish.seller_trendtours', [ 'whitelabel' => $this->wish->whitelabel->display_name ]))
+                ->subject(trans('email.wish.seller_trendtours'))
                 ->view('wishes::emails.wish_seller_trendtours', ['wish' => $this->wish, 'token' => $notifiable->token->token, 'user' => $notifiable]);
         }
 
