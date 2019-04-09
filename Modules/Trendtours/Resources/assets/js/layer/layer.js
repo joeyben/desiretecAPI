@@ -223,7 +223,7 @@ var dt = window.dt || {};
                 return category;
             },
             'destination': function (form, formData) {
-                var destination = dataLayer[0].ecommerce.detail.products[0].name ? dataLayer[0].ecommerce.detail.products[0].name : '';
+                var destination = dataLayer[2].travelTitle ? dataLayer[2].travelTitle : '';
                 return destination;
             },
             'pax': function (form, formData) {
@@ -312,8 +312,9 @@ var dt = window.dt || {};
         }
     });
 
-    dt.decoders.push(KwizzmeFakeTripDataDecoder);
     dt.decoders.push(TrendtoursTripDataDecoder);
+    dt.decoders.push(KwizzmeFakeTripDataDecoder);
+
     //dt.decoders.push($.extend({}, MasterIBETripDataDecoder, {
     //    name: 'TUI Landingpages',
     //    matchesUrl: 'master.com/pauschalreisen',
