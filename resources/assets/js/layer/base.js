@@ -317,7 +317,7 @@ var dt = window.dt || {};
                 contentType: 'application/x-www-form-urlencoded',
                 success: jQuery.proxy(this.onPopupFetched, this),
                 xhrFields: {
-                    withCredentials: true
+                    withCredentials: false
                 }
             });
 
@@ -499,7 +499,7 @@ var dt = window.dt || {};
                 contentType: 'application/x-www-form-urlencoded',
                 success: jQuery.proxy(this.onPopupFetched, this),
                 xhrFields: {
-                    withCredentials: true
+                    withCredentials: false
                 }
             });
 

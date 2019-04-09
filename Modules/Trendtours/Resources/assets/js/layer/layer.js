@@ -58,7 +58,7 @@ var dt = window.dt || {};
                 'AP': 'all-inclusive',
                 'FB': 'Vollpension',
                 'FP': 'Vollpension',
-                'HB': 'Halbpension',
+                'gHB': 'Halbpension',
                 'HP': 'Halbpension',
                 'BB': 'Frühstück',
                 'AO': 'ohne Verpflegung',
