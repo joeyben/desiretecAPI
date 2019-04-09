@@ -131,9 +131,7 @@
                             <tr>
                                 <td colspan="2">
                                     Hallo {{ $user->first_name }}!<br><br>
-
                                     {!! trans('wish.email.body') !!}
-
                                     <br>
                                     @lang('labels.email'): &nbsp; {{ $wish->owner->email }}
                                     <br><br>
