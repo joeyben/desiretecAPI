@@ -17,8 +17,8 @@ services:
     volumes:
       - /home/ubuntu/desiretech/storage:/var/www/html/storage
     environment:
-      - VIRTUAL_HOST=mvpprod.desiretec.com
-      - LETSENCRYPT_HOST=mvpprod.desiretec.com
+      - VIRTUAL_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,*.reisewunschservice.de
+      - LETSENCRYPT_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,*.reisewunschservice.de
       - LETSENCRYPT_EMAIL=info@desiretec.com
     networks:
       - frontend
