@@ -132,8 +132,7 @@
                                 <td colspan="2">
                                     Hallo {{ $user->first_name }}!<br><br>
 
-                                    Ihnen wurde ein neuer trendtours Reisewunsch zur Bearbeitung zugewiesen. <br>
-                                    Bitte beachten Sie, dass bis zur Kontaktaufnahme mit dem Kunden nicht mehr als 24h, maximal aber 48h vergehen sollten.
+                                    {{ trans('wish.email.body') }}
                                     <br>
                                     @lang('labels.email'): &nbsp; {{ $wish->owner->email }}
                                     <br><br>
@@ -144,22 +143,6 @@
                                     &nbsp;
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2" height="10">
-                                    &nbsp;
-                                </td>
-                            </tr>
-                            <tr><td colspan="2"><hr style="background: #e7e7e7;border: none;height: 1px;width: 100%;margin-top: 30px;"></td></tr>
-
-                            <tr>
-                                <td colspan="2">
-                                    @lang('email.footer.line1'),<br>
-                                    @lang('email.footer.line2')<br><br>
-                                    @lang('email.footer.line3')<br>
-                                    @lang('email.footer.line4')<br>
-                                </td>
-                            </tr>
-
                             </tbody>
                         </table>
                     </td>
