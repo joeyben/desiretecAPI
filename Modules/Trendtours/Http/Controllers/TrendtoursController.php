@@ -174,7 +174,7 @@ class TrendtoursController extends Controller
         $input = $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms');
         $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('m.Y', $input['earliest_start'])->format('d.m.Y');
         $input['latest_return'] = "01.01.2020";
-        $new_wish = $wish->create($input);
+        $new_wish = $wish->create($input, $this->whitelabelId);
 
         return $new_wish;
     }
