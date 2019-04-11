@@ -21,6 +21,7 @@
                     <span>{{ timestamp(message.created_at) }}</span>
                     {{ message.message }}
                 </p>
+                <b style="font-weight:100; display: none;" class="message-holder">{{ message.message }}</b>
             </div>  
         </div>
         <message-form v-on:messaged="updateMessages" :username="this.user" :userid="userid" :wishid="wishid" :groupid="groupid"></message-form>

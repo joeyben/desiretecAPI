@@ -107,8 +107,8 @@
         });
 
         Route::group(['namespace' => 'Messages', 'as' => 'messages.'], function () {
-            Route::get('messages/{wish}/{group}', 'MessagesController@getMessages');
             Route::post('messages', 'MessagesController@sendMessage');
+            Route::get('messages/{wish}/{group}', 'MessagesController@getMessages');
             Route::get('message/delete/{message}', 'MessagesController@deleteMessage');
             Route::post('message/edit/{message}/{m}', 'MessagesController@editMessage');
 

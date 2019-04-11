@@ -1,9 +1,10 @@
 <template>
     <div class="col-md-12 no-pd">
         <textarea name="antworten" id="antworten" v-model="newMessage"></textarea>
+        <input id="edit-val" style="display: none;">
         <div class="cu-cl-buttons">
-            <button class="primary-btn antworten-btn button-show" id="btn-chat" @click="sendMessage">Nachricht schreiben</button>
-            <button class="primary-btn antworten-btn  button-hide" id="btn-chat" @click="updateMessage">Speichern</button>
+            <button class="primary-btn antworten-btn button-show btn-chat" id="send-button" @click="sendMessage">Nachricht schreiben</button>
+            <button class="primary-btn antworten-btn  button-hide btn-chat" @click="updateMessage">Speichern</button>
         </div>
     </div>
 </template>
@@ -27,17 +28,15 @@
                     group_id: this.groupid,
                     message: this.newMessage
                 }
-
-                $('.button-show span').css('display', 'none');
-                $('.loader').css('display', 'block');
-                    
-                axios.post('/messages', data).then(response => {
-                    $('.loader').css('display','none');
-                    $('.button-show span').css('display', 'block');
-                    this.$emit('messaged', response.data.data);
-
-                });
-
+                
+                if($('#send-button').hasClass('sendAntworten')){
+                    axios.post('/messages', data).then(response => {
+                        $('#antworten').val('');
+                        $('#antworten').slideUp();
+                        this.$emit('messaged');
+                    });
+                }
+                
                 this.newMessage = ''
             },
 
@@ -55,14 +54,15 @@
                 axios.post('/message/edit/'+messageid+'/'+message).then(resp => {
 
                     $('#antworten').val('');
-                    $('#antworten').slideUp()
-
+                    $('#antworten').slideUp();
                     jQuery('#'+messageid+" .message-holder").text(message);
 
                     $('.button-show').css('display','inline-block')
-                    $('.button-hide').css('display','none')
+                    $('.button-hide').css('display','none');
+                    this.$emit('messaged');
 
                 });    
+                
             }
         }
         
@@ -78,7 +78,7 @@
         text-align: right;
     }
 
-    #btn-chat {
+    .btn-chat {
         margin-top: 15px;
     }
 
