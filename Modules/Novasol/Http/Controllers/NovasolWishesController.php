@@ -4,6 +4,7 @@ namespace Modules\Novasol\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Wishes\Wish;
+use App\Models\Agents\Agent;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 
@@ -13,6 +14,7 @@ use App\Repositories\Frontend\Wishes\WishesRepository;
 class NovasolWishesController extends Controller
 {
     const BODY_CLASS = 'wish';
+    const OFFER_URL = 'img/offer/';
     /**
      * Wish Status.
      */
@@ -62,7 +64,7 @@ class NovasolWishesController extends Controller
     {
         $this->wish = $wish;
         $this->whitelabel = $whitelabel;
-        $this->whitelabelId = \Config::get('$MODULESMALL$.id');
+        $this->whitelabelId = \Config::get('novasol.id');
     }
 
     /**
@@ -74,7 +76,34 @@ class NovasolWishesController extends Controller
     public function details(Wish $wish, string $token)
     {
         $this->wish->validateToken($wish->id, $token);
-
         return redirect()->to('/wish/' . $wish->id);
+
+    }
+
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     *
+     * @return mixed
+     */
+    public function view(Wish $wish)
+    {
+
+        $offers = $wish->offers;
+        $avatar = [];
+        $agentName = [];
+
+        foreach ($offers as $offer) {
+            array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
+            array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
+        }
+
+        return view('novasol::wish.wish')->with([
+            'wish'               => $wish,
+            'avatar'             => $avatar,
+            'agent_name'         => $agentName,
+            'body_class'         => $this::BODY_CLASS,
+            'offer_url'          => $this::OFFER_URL,
+        ]);
+
     }
 }

@@ -6,9 +6,12 @@ $gutter: 30px;
 $altfont: 'Comfortaa', cursive;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #092a5e;
+$mastercolor: #ed1c24;
+$secondarycolor: #ed1c24;
+$colorblue: #062f57;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
+$fontcolor: #303030;
 
 @include make-columns(12, $gutter - 5px, 'kwp-');
 
@@ -41,7 +44,7 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #092a5e url(../../images/layer/guy_2.png) no-repeat bottom / 100%;
+  background: $fontcolor url(../../images/layer/guy_2.png) no-repeat bottom / 100%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -256,7 +259,9 @@ $master-blue: #70CBF4;
     border: none;
     padding: 15px;
     margin-top: 5px;
-    &:active {
+    &:active, &:hover {
+      background-color: #ed1c24;
+      border-color: #ed1c24;
     }
     &.error-button{
       background: #D40E14;
@@ -283,7 +288,7 @@ $master-blue: #70CBF4;
     padding-left: 10px;
     outline: none;
     border: 1px solid #aaa;
-    color: $mastercolor;
+    color: $fontcolor;
     font-size: 14px;
     font-family: $altfont;
   }
@@ -354,7 +359,7 @@ $master-blue: #70CBF4;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: $fontcolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -415,7 +420,7 @@ $master-blue: #70CBF4;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #092a5e;
+              color: $fontcolor;
               padding: 0;
               margin: 20px 0;
               font-size: 15px !important;
@@ -444,7 +449,7 @@ $master-blue: #70CBF4;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: $fontcolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -565,11 +570,11 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/visual_ipad_smile.jpg) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/visual_ipad_smile_TUI_auto.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/visual_ipad_smile.jpg) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
@@ -695,9 +700,9 @@ p.kwp-info {
   }
   &.eil-at-body{
     button[type=submit]{
-      background: #cc0066;
+      background: #ffdd00;
       border: solid 1px #cc0066;
-      color: #fff;
+      color: #303030;
       text-shadow: initial;
       font-family: 'Foco W02 Light',sans-serif;
       &:hover{
@@ -806,15 +811,15 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .caret{
-      border-color: #092a5e !important;
+      border-color: $fontcolor !important;
       border-right: 6px solid transparent !important;
       border-left: 6px solid transparent !important;
       border-bottom: none !important;
-      border-top: 6px dashed #092a5e !important;
+      border-top: 6px dashed $fontcolor !important;
       display: none;
     }
     .filter-option-inner-inner{
-      color: #092a5e;
+      color: $fontcolor;
       font-size: 14px;
       font-weight: 500;
     }
@@ -1059,7 +1064,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $fontcolor;
     }
     .text-hidden{
       padding: 5px 0;
@@ -1080,7 +1085,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $fontcolor;
     }
   }
   .description{
@@ -1121,7 +1126,7 @@ p.kwp-info {
         right: 10px;
         top: 30px;
         font-size: 16px;
-        color: #092a5e;
+        color: $fontcolor;
       }
     }
   }
@@ -1247,8 +1252,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid #092A59;
-          background-color: #092A59;
+          border: 1px solid #062f57;
+          background-color: #062f57;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1257,7 +1262,7 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#092a5e;
+        color:$fontcolor;
         padding: 8px 0;
         font-weight: bold;
         font-family: $altfont;
@@ -1341,7 +1346,7 @@ p.kwp-info {
         background-color: transparent;
         font-weight: 500;
         border-bottom: 1px solid $mastergrey;
-        color: $mastercolor;
+        color: $fontcolor;
         border-radius: 0;
         padding: 0 10px;
         font-size: 14px;
@@ -1365,7 +1370,6 @@ p.kwp-info {
       }
       .rangeslider-wrapper{
         background: transparent;
-        margin: 0 20px 0 0;
         padding: 0;
         .kwp-form-group{
           label{
@@ -1384,7 +1388,7 @@ p.kwp-info {
           margin-bottom: 0px;
           padding: 3px 0;
           font-size: 14px;
-          color: $mastercolor;
+          color: $fontcolor;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1405,7 +1409,7 @@ p.kwp-info {
             height: 25px;
             background: #fff;
             cursor: pointer;
-            border: 2px solid $mastercolor;
+            border: 2px solid $fontcolor;
             border-radius: 50%;
           }
           &::-moz-range-thumb {
@@ -1478,7 +1482,7 @@ p.kwp-info {
       border-radius: 0;
       padding: 0 10px;
       font-size: 14px;
-      color: $mastercolor;
+      color: $fontcolor;
     }
     .kwp-custom-select{
       #catering{

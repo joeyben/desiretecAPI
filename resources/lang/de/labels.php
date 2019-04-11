@@ -468,7 +468,7 @@ return [
             'night'         => ':value Nacht|:value Nächte',
             'table'         => [
                 'adults' => 'Erwachsener|Erwachsene',
-                'kids'   => '{0}|Kind|Kinder',
+                'kids'   => '{0}Kein Kinder|Kind|Kinder',
             ]
         ],
         'dashboard' => [
