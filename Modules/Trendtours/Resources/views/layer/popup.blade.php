@@ -1,3 +1,5 @@
+<link media="all" type="text/css" rel="stylesheet" href="/fontawsome/css/all.css">
+
 {{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <span class="header-bottom">
