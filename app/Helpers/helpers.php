@@ -302,7 +302,7 @@ if (!function_exists('transformTravelers')) {
      */
     function transformTravelers($travelers, $type)
     {
-        return $travelers . ' ' . trans_choice('labels.frontend.wishes.table.' . $type, (int) $travelers);
+        return trans_choice('labels.frontend.wishes.table.' . $type, $travelers, ['count' => $travelers]);
     }
 }
 

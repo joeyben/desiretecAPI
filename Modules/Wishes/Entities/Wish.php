@@ -5,6 +5,7 @@ namespace Modules\Wishes\Entities;
 use App\Models\Groups\Group;
 use App\Models\Offers\Offer;
 use App\Models\Whitelabels\Whitelabel;
+use BrianFaust\Categories\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User;
@@ -106,4 +107,31 @@ class Wish extends Model
     {
         return $this->hasMany(Offer::class);
     }
+
+    /**
+     * @return mixed
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, config('access.categories_wish_table'), 'wish_id', 'category_id');
+    }
+
+    /**
+     * Alias to eloquent many-to-many relation's attach() method.
+     *
+     * @param mixed $category
+     */
+    public function attachCategory($category)
+    {
+        if (\is_object($category)) {
+            $category = $category->getKey();
+        }
+
+        if (\is_array($category)) {
+            $category = $category['id'];
+        }
+
+        $this->categories()->attach($category);
+    }
+
 }

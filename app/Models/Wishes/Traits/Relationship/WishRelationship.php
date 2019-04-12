@@ -8,6 +8,7 @@ use App\Models\Contact\Contact;
 use App\Models\Groups\Group;
 use App\Models\Messages\Message;
 use App\Models\Offers\Offer;
+use BrianFaust\Categories\Models\Category;
 
 /**
  * Class WishRelationship.
@@ -68,6 +69,32 @@ trait WishRelationship
     public function contacts()
     {
         return $this->hasMany(Contact::class, 'wish_id')->where('email', '!=', 'no data');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, config('access.categories_wish_table'), 'wish_id', 'category_id');
+    }
+
+    /**
+     * Alias to eloquent many-to-many relation's attach() method.
+     *
+     * @param mixed $category
+     */
+    public function attachCategory($category)
+    {
+        if (\is_object($category)) {
+            $category = $category->getKey();
+        }
+
+        if (\is_array($category)) {
+            $category = $category['id'];
+        }
+
+        $this->categories()->attach($category);
     }
 
     /**

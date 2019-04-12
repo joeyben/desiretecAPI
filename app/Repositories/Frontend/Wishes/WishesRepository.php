@@ -292,4 +292,17 @@ class WishesRepository extends BaseRepository
 
         return $group->save();
     }
+
+    /**
+     * Find data by multiple values in one field.
+     *
+     * @param       \Modules\Wishes\Entities\Wish $wish
+     * @param       $category
+     *
+     * @return void
+     */
+    public function storeCategoryWish($category, \Modules\Wishes\Entities\Wish $wish)
+    {
+        $wish->attachCategory($category);
+    }
 }

@@ -42,7 +42,7 @@
 
 .rangeslider__handle {
   background: #fff;
-  border: 2px solid #092a5e;
+  border: 2px solid #ed1c24;
   cursor: pointer;
   display: inline-block;
   width: 30px;
@@ -68,7 +68,7 @@
   border-radius: 50%;
 }
 .rangeslider__handle:active, .rangeslider--active .rangeslider__handle {
-  background: #092a5e;
+  background: #ed1c24;
 }
 .rangeslider--horizontal .rangeslider__handle {
   top: -5px;

@@ -12,8 +12,7 @@
                     </p>
                     
                     <p style="line-height: 24px; margin-bottom:20px;">
-                        Ihr Angebot <a href="{{ $confirmation_url }}">{{ $offer->title }}</a> wurde erfolgreich erstellt. Der Kunde wurde darüber informiert und wird Sie kontaktieren, wenn ihm das Angebot zusagt.<br>
-                        Sie haben jederzeit die Möglichkeit Ihr Angebot zu ändern.
+                        {!! trans('email.offer.created.seller.body', ['confirmation_url' => $confirmation_url, 'title' => $offer->title]) !!}
                     </p>
 
                     @include('emails.layouts.footer')

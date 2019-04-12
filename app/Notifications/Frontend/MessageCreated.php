@@ -82,7 +82,7 @@ class MessageCreated extends Notification
         $view = 'emails.messages.created-' . $this->type;
 
         return (new MailMessage())
-            ->from('noreply@desiretec.com', $this->wl_name . ' Portal')
+            ->from($this->message->wish->whitelabel->email, $this->wl_name . ' Portal')
             ->subject($subject)
             ->view($view, [
                     'confirmation_url'      => $confirmation_url,

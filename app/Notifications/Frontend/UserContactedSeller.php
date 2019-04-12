@@ -76,7 +76,7 @@ class UserContactedSeller extends Notification
         $view = ('no data' !== $this->contact->email) ? 'emails.user-contact-seller' : 'emails.user-callback-seller';
 
         return (new MailMessage())
-            ->from('noreply@desiretec.com', $this->wl_name . ' Portal')
+            ->from($this->contact->wish->whitelabel->email, $this->wl_name . ' Portal')
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,

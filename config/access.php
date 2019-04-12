@@ -125,6 +125,15 @@ return [
     'notifications_table' => 'notifications',
 
     /*
+     * Categories table used to store categories for layer
+     */
+    'categories' => 'categories',
+
+    /*
+     * Categories wish relationship table categories_wish
+     */
+    'categories_wish_table' => 'categories_wish',
+    /*
      * Menus table used to store Menu and menu items
      */
     'menus_table'      => 'menus',

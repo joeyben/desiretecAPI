@@ -17,7 +17,7 @@ class NovasolController extends Controller
 {
     protected $adults = [];
     protected $kids = [];
-    protected $catering = [];
+    protected $pets = [];
     protected $duration = [];
 
     private $whitelabelId;
@@ -28,6 +28,7 @@ class NovasolController extends Controller
      */
     protected $whitelabel;
     protected $attachements;
+    protected $categories;
 
     /* @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
      * @param \Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository $attachements
@@ -39,9 +40,10 @@ class NovasolController extends Controller
         $this->attachements = $attachements;
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
-        $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
+        $this->pets = $this->translatePets($categories->getChildrenFromSlug('slug', 'pets'));
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->whitelabelId = \Config::get('novasol.id');
+        $this->categories = $categories;
     }
 
     /**
@@ -72,7 +74,7 @@ class NovasolController extends Controller
         $html = view('novasol::layer.popup')->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
-            'catering_arr' => $this->catering,
+            'pets_arr' => $this->pets,
             'duration_arr' => $this->duration,
         ])->render();
 
@@ -95,7 +97,7 @@ class NovasolController extends Controller
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
-                'catering_arr' => $this->catering,
+                'pets_arr' => $this->pets,
                 'duration_arr' => $this->duration,
             ])->render();
 
@@ -164,8 +166,12 @@ class NovasolController extends Controller
      */
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
-        $new_wish = $wish->create($request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'));
-
+        $new_wish = $wish->create(
+            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms','pets'),
+            $this->whitelabelId
+        );
+        $pets = $this->categories->getCategoryIdByParentValue('pets', $request->get('pets'));
+        $wish->storeCategoryWish($pets, $new_wish);
         return $new_wish;
     }
 
@@ -182,5 +188,20 @@ class NovasolController extends Controller
         }
 
         return $duration;
+    }
+
+    /**
+     * @param array $pets
+     *
+     * @return array
+     */
+    private function translatePets($pets)
+    {
+
+        foreach ($pets as $key => $value) {
+            $pets[$key] = trans('layer.pets.'.$value);
+        }
+
+        return $pets;
     }
 }
