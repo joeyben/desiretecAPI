@@ -223,7 +223,12 @@ var dt = window.dt || {};
                 return category;
             },
             'destination': function (form, formData) {
-                var destination = dataLayer[2].travelTitle ? dataLayer[2].travelTitle : '';
+                var destination =  '';
+                $.each(dataLayer, function (key, value) {
+                    if (value.travelTitle) {
+                        destination = value.travelTitle;
+                    }
+                });
                 return destination;
             },
             'pax': function (form, formData) {
