@@ -31,7 +31,7 @@ $master-blue: #70CBF4;
   cursor: pointer;
   width: 39px;
   height: 39px;
-  background: transparent url(../../images/layer/close.png) no-repeat center center;
+  background: transparent url(/whitelabel/trendtours/images/layer/close.png) no-repeat center center;
   position: absolute;
   top: -50px;
   right: 0;
@@ -42,7 +42,7 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #00509F url(../../images/layer/guy_2.png) no-repeat bottom / 100%;
+  background: #00509F url(/whitelabel/trendtours/images/layer/guy_2.png) no-repeat bottom / 100%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -120,7 +120,7 @@ $master-blue: #70CBF4;
     height: 90px !important;
     top: -110px;
     background-color: rgba(9,42,94,0.8);
-    background-image: url(../../images/layer/guy_2.png);
+    background-image: url(/whitelabel/trendtours/images/layer/guy_2.png);
     width: 55%;
     padding: 0 0px;
     margin: auto;
@@ -520,7 +520,7 @@ $master-blue: #70CBF4;
 }
 
 .kwp-date-input {
-  //background: #fff url(../../images/layer/calendar.png) no-repeat right 2px;
+  //background: #fff url(/whitelabel/trendtours/images/layer/calendar.png) no-repeat right 2px;
 }
 
 ul.kwp-form-errors {
@@ -549,7 +549,7 @@ ul.kwp-form-errors {
 .kwp-logo {
   display: block;
   height: 50px;
-  background: transparent url(../../images/layer/logo.png) no-repeat left top;
+  background: transparent url(/whitelabel/trendtours/images/layer/logo.png) no-repeat left top;
 }
 
 
@@ -583,15 +583,15 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/visual_ipad_smile.jpg) no-repeat center center;
+  background: transparent url(/whitelabel/trendtours/images/layer/visual_ipad_smile.jpg) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/visual_ipad_smile_TUI_auto.jpg) no-repeat center center;
+    background: transparent url(/whitelabel/trendtours/images/layer/visual_ipad_smile_TUI_auto.jpg) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
-    background-image: url(../../images/layer/visual_2_smile_TUI.jpg);
+    background-image: url(/whitelabel/trendtours/images/layer/visual_2_smile_TUI.jpg);
 
     .kwp-header-content {
       p {
@@ -682,7 +682,7 @@ ul.kwp-form-errors {
   &:after {
     display: inline-block;
     content: ' ';
-    background: transparent url(../../images/layer/arrow.png) no-repeat left -10px;
+    background: transparent url(/whitelabel/trendtours/images/layer/arrow.png) no-repeat left -10px;
     width: 18px;
     height: 10px;
     margin-left: 5px;
@@ -738,7 +738,7 @@ p.kwp-info {
     }
     .kwp-star {
       &:after {
-        background: transparent url(../../images/layer/star_r.png) no-repeat -30px center;
+        background: transparent url(/whitelabel/trendtours/images/layer/star_r.png) no-repeat -30px center;
       }
     }
   }
@@ -988,7 +988,7 @@ p.kwp-info {
 
 .kwp-tooltip-icon {
   display: inline-block;
-  background: transparent url(../../images/layer/info.png) no-repeat center center;
+  background: transparent url(/whitelabel/trendtours/images/layer/info.png) no-repeat center center;
   vertical-align: text-bottom;
   width: 17px;
   height: 17px;
