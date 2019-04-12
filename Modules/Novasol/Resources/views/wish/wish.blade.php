@@ -311,7 +311,7 @@
                 <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
             </div>
             @if ($logged_in_user->hasRole('User'))
-            <button class="secondary-btn">Daten andern</button>
+            <button class="secondary-btn" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
             @endif
         </div>
 
@@ -554,6 +554,83 @@
                                 <span class="glyphicon glyphicon-envelope"></span>
                                 <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
                             </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+            </div>
+            {{ Form::close() }}
+        </div>
+    </div>
+</div>
+
+
+<div id="edit-wish" class="modal wish-modal-1 fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="alert alert-success alert-dismissible fade" role="alert">
+                <span class="text"></span>
+                <a class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            {{ Form::open(['route' => ['frontend.wishes.update', $wish], 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'update-wish']) }}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Reisewunsch editieren</h4>
+                <p>Stelle einfach und bequem eine Rückrufbitte ein und das<br>
+                    zuständige Reisebüro wird sich als bald bei dir melden
+                </p>
+            </div>
+
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <div class="col-md-12 modal-body-left">
+                        <div class="row row-no-padding">
+                            <div class="group col-md-6">
+                                    <input class="form-control" value="{{ $wish->airport }}">
+                                <label>Airport</label>
+                            </div>
+                            <div class="group col-md-6">
+                                    <input class="form-control" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }}">
+                                <label>Date</label>
+                            </div>
+                        </div>
+                        <div class="row row-no-padding">
+                            <div class="group col-md-6">
+                                    <input class="form-control" value="{{ $wish->duration }}">
+                                <label>Duration</label>
+                                </div>
+                            <div class="group col-md-6">
+                                    <input class="form-control" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
+                                <label>Budget</label>
+                                </div>
+                        </div>
+                        <div class="row row-no-padding">
+                            <div class="group col-md-6">
+                                    <input class="form-control" value="{{ $wish->destination }}">
+                                <label>Destination</label>
+                                </div>
+                            <div class="group col-md-6">
+                                    <input class="form-control" value="{{ $wish->adults }}">
+                                <label>Pax</label>
+                                </div>
+                        </div>
+                        <div class="row row-no-padding">
+                            <div class="group col-md-6">
+                                    <input class="form-control" value="{{ $wish->kids }}">
+                                <label>Kids</label>
+                                </div>
+                            <div class="group col-md-6">
+                                    <input class="form-control" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
+                                <label>Pets</label>
+                                </div>
                         </div>
                     </div>
 
