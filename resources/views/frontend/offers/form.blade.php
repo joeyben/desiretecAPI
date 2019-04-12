@@ -37,9 +37,8 @@
             </div>
         @else
             <div class="col-lg-5">
-                <div class="custom-file-input">
-                    <input type="file" name="file[]" id="file-1" class="inputfile inputfile-1 hidden" data-multiple-caption="{count} files selected" multiple />
-                    <label for="file-1"><i class="fa fa-upload"></i><span>{{ trans('validation.attributes.frontend.offers.select_file') }}</span></label>
+                <div class="control-group input-group">
+                    <input type="file" name="file[]" id="file-1" class="form-control" data-multiple-caption="{count} files selected" multiple />
                 </div>
             </div>
         @endif

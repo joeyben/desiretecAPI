@@ -8,15 +8,13 @@
                         <!-- section text ======-->
 
                         <p style="line-height: 24px; margin-bottom:15px;">
-                            Liebe Kundin, lieber Kunde!
+                            {{ trans('email.wish.created.user.header') }}
                         </p>
 
                         <p style="line-height: 24px; margin-bottom:20px;">
-                            Sie haben Ihren Reisewunsch {{ $wish->title}} erfolgreich erstellt. Einer unserer Spezialisten für das Reiseziel {{ $wish->title}} wird sich in Kürze bei Ihnen melden.<br><br>
+                            {!! trans('email.wish.created.user.body', ['title' => $wish->title]) !!}
+                            {!! trans('email.wish.created.user.url', ['id' => $wish->id,'token' => $token, 'url' => url('/wish')]) !!}
 
-                            Sie haben jederzeit die Möglichkeit Ihren Reisewunsch zu verändern.<br><br>
-
-                            <a href="{{ url('/wish') }}/{{ $wish->id}}/{{ $token }}"> {{ url('/wish') }}/{{ $wish->id}}/{{ $token }}</a>
                         </p>
 
                         @include('emails.layouts.footer')

@@ -34,6 +34,7 @@ mix.scripts(
     .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/novasol/css/layer/layer_mobile.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/novasol/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/novasol/css/novasol.css')
+    .sass(__dirname + '/Resources/assets/sass/wish/details.scss', 'whitelabel/novasol/css/wish/details.css')
     .styles([
         base_url + '/public/whitelabel/novasol/css/datepicker.css',
         base_url + '/public/whitelabel/novasol/css/layer/layer.css',

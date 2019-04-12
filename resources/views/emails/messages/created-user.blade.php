@@ -8,17 +8,13 @@
                         <!-- section text ======-->
 
                         <p style="line-height: 24px; margin-bottom:15px;">
-                            Liebe Kundin, lieber Kunde!
+                            {!! trans('email.message.user.header') !!}
                         </p>
 
                         <p style="line-height: 24px; margin-bottom:20px;">
-
-                            Ihr persönlicher desiretec Reiseberater hat Ihnen eine Nachricht geschrieben, um Ihren Traumurlaub zu finden.<br><br>
-
-                            Am besten beantworten Sie die Nachricht noch heute. Über den folgenden Link können Sie die Nachricht lesen und beantworten: {{ $confirmation_url }} gelangen Sie zur Nachricht und können Ihrem Berater darauf antworten!<br><br>
-
-                            Alternative können Sie die Antworten Funktion Ihres Browsers benutzen.
-
+                            {!! trans('email.message.user.body_1') !!}
+                            {!! trans('email.message.user.body_2', ['confirmation_url' => $confirmation_url]) !!}
+                            {!! trans('email.message.user.body_3') !!}
                         </p>
 
                         @include('emails.layouts.footer')

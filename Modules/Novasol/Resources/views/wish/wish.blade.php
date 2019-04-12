@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('after-styles')
+    <link rel="stylesheet" href="{{ asset('whitelabel/novasol/css/wish/details.css') }}">
+@endsection
+
 @section('content')
 <section class="section-top">
 
@@ -302,7 +306,9 @@
                 <i class="fal fa-dog"></i>
                 <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
             </div>
+            @if ($logged_in_user->hasRole('User'))
             <button class="secondary-btn">Daten andern</button>
+            @endif
         </div>
 
     </div>
@@ -369,7 +375,9 @@
                                 <i class="fal fa-dog"></i>
                                 <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
                             </div>
+                            @if ($logged_in_user->hasRole('User'))
                             <button class="secondary-btn">Daten andern</button>
+                            @endif
                         </div>
 
 
@@ -390,25 +398,7 @@
 
 {{-- @include('frontend.wishes.partials.faq') --}}
 @section('footer')
-    <div class="footer">
-        <ul>
-            <li>
-                <a href="https://www.novasol.de/novasol/wir-ueber-uns">Wir über uns</a>
-            </li>
-            <li>
-                <a href="https://www.novasol.de/novasol/karriere">Karriere</a>
-            </li>
-            <li>
-                <a href="https://www.novasol.de/novasol/arb">ARB</a>
-            </li>
-            <li>
-                <a href="https://www.novasol.de/novasol/datenschutz">Datenschutz</a>
-            </li>
-            <li>
-                <a href="https://www.novasol.de/novasol/impressum">Impressum</a>
-            </li>
-        </ul>
-    </div>
+    @include('novasol::layouts.footer')
 @endsection
 
 <!-- Modal -->

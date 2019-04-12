@@ -8,20 +8,20 @@
                         <!-- section text ======-->
 
                         <p style="line-height: 24px; margin-bottom:15px;">
-                            Hallo!
+                            {!! trans('email.wish.created.seller.header') !!}
                         </p>
 
                         <p style="line-height: 24px; margin-bottom:20px;">
-                            Ihnen wurde ein neuer desiretec Reisewunsch zur Bearbeitung zugewiesen:<br><br>
+                            {!! trans('email.wish.created.seller.body_1') !!}
 
-                            <a href="{{ url('/wish') }}/{{ $wish->id}}"> {{ url('/wish') }}/{{ $wish->id}}</a><br><br>
+                            {!! trans('email.wish.created.seller.url', ['id' => $wish->id, 'url' => url('/wish')]) !!}
 
-                            Im desiretec System finden Sie alle Reisewünsche und können passende Angebote erstellen:<br><br>
+                            {!! trans('email.wish.created.seller.body_2') !!}
 
-                            <a href="{{ url('/wishlist') }}"> {{ url('/wishlist') }}</a><br><br>
+                            {!! trans('email.wish.created.seller.urllist', [ 'url' => url('/wishlist')]) !!}
 
+                            {!! trans('email.wish.created.seller.body_3') !!}
 
-                            Bitte beachten Sie, dass bis zur Kontaktaufnahme mit dem Kunden nicht mehr als 24h, maximal aber 48h vergehen sollten.
                         </p>
 
                         @include('emails.layouts.footer')

@@ -12,11 +12,7 @@
                         </p>
 
                         <p style="line-height: 24px; margin-bottom:20px;">
-
-                            Sie haben eine neue Nachricht von Ihrem Kunden erhalten.<br><br>
-
-                            <a href="{{ $confirmation_url }}">Hier</a> können Sie sich einloggen und Ihrem Kunden antworten.
-
+                            {!! trans('email.message.seller.body', ['confirmation_url' => $confirmation_url]) !!}
                         </p>
 
                         @include('emails.layouts.footer')

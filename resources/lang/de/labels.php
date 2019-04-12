@@ -467,7 +467,7 @@ return [
             'week'          => ':value Woche|:value Wochen',
             'night'         => ':value Nacht|:value Nächte',
             'table'         => [
-                'adults' => 'Erwachsener|Erwachsene',
+                'adults' => ':count Erwachsener|:count Erwachsene',
                 'kids'   => '{0}Kein Kinder|Kind|Kinder',
             ]
         ],
