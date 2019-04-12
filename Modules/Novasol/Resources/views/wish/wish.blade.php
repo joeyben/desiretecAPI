@@ -1,5 +1,7 @@
 @extends('frontend.layouts.app')
-
+@section('title')
+    {{ trans('general.whitelabel.browser.title') }}
+@endsection
 @section('after-styles')
     <link rel="stylesheet" href="{{ asset('whitelabel/novasol/css/wish/details.css') }}">
 @endsection
