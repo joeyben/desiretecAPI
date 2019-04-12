@@ -66,7 +66,7 @@ class CreatedWishNotification extends Notification
         }
 
         return (new MailMessage())
-            ->from('noreply@desiretec.com', $this->wish->whitelabel->display_name . ' Portal')
+            ->from($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Portal')
             ->subject(trans('email.wish.user'))
             ->view('wishes::emails.wish', ['wish' => $this->wish, 'token' => $this->wish->token]);
     }

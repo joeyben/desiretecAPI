@@ -60,4 +60,20 @@ class EloquentCategoriesRepository extends RepositoryAbstract implements Categor
 
         return $child['name'];
     }
+
+    /**
+     * Find data by multiple values in one field.
+     *
+     * @param       $value
+     * @param       $field
+     *
+     * @return mixed
+     */
+    public function getCategoryIdByParentValue($field, $value)
+    {
+        $parent = $this->model->where("value", $field)->first(['id'])->toArray();
+        $child = $this->model->where('parent_id', $parent['id'])->where('value', $value)->first(['id'])->toArray();
+
+        return $child['id'];
+    }
 }

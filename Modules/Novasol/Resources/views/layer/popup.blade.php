@@ -9,14 +9,14 @@
     <div class="kwp-content kwp-with-expansion">
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
-                {{ Form::label('destination', trans('novasol::layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('novasol::layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
+                {{ Form::text('destination', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
                 <i class="master-icon--location-fill"></i>
             </div>
 
             <div class="kwp-col-4">
-                {{ Form::label('airport', trans('novasol::layer.general.airport'), ['class' => 'control-label required']) }}
-                {{ Form::text('airport', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('novasol::layer.placeholder.airport'), 'required' => 'required']) }}
+                {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
+                {{ Form::text('airport', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.airport'), 'required' => 'required']) }}
                 <i class="master-icon--aircraft-up"></i>
             </div>
 
@@ -33,8 +33,8 @@
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
-                            {{ Form::label('earliest_start', trans('novasol::layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', null, ['class' => 'form-control box-size', 'placeholder' => trans('novasol::layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
+                            {{ Form::text('earliest_start', null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span>{{ $error }}</span>
@@ -44,8 +44,8 @@
                             <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-4">
-                            {{ Form::label('latest_return', trans('novasol::layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', null, ['class' => 'form-control box-size', 'placeholder' => trans('novasol::layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
+                            {{ Form::text('latest_return', null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span>{{ $error }}</span>
@@ -54,9 +54,9 @@
                             <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-12">
-                            {{ Form::label('duration', trans('novasol::layer.general.duration'), ['class' => 'control-label required']) }}
+                            {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('novasol::layer.general.duration_empty')], $duration_arr), ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), ['class' => 'form-control box-size']) }}
                             </div>
                             <i class="master-icon--time"></i>
                         </div>
@@ -79,7 +79,7 @@
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-12">
-                            {{ Form::label('adults', trans('novasol::layer.general.adults'), ['class' => 'control-label required']) }}
+                            {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="kwp-col-12 kids" style="position: relative;">
                             <div class="kwp-col-12">
-                                {{ Form::label('kids', trans('novasol::layer.general.kids'), ['class' => 'control-label required']) }}
+                                {{ Form::label('kids', trans('layer.general.kids'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
                                     {{ Form::select('kids', $kids_arr, ['class' => 'form-control box-size']) }}
                                 </div>
@@ -119,52 +119,36 @@
             </div>
         </div>
         <div class="kwp-row">
-            <div class="kwp-col-3 rangeslider-wrapper">
+
+            <div class="kwp-col-4 white-col catering">
+                {{ Form::label('pets', trans('layer.general.pets'), ['class' => 'control-label required']) }}
+                    {{ Form::select('pets', $pets_arr, '',['class' => 'selectpicker']) }}
+                <i class="master-icon--chevron-down"></i>
+            </div>
+
+            <div class="kwp-col-4 rangeslider-wrapper">
                 <div class="kwp-form-group ">
-                    {{ Form::label('budget', trans('novasol::layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', old('budget'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('novasol::layer.placeholder.budget'), 'required' => 'required']) }}
+                    {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
+                    {{ Form::number('budget', old('budget'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.budget'), 'required' => 'required']) }}
                 </div>
                 <span class="text">&nbsp;</span>
                 <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
-            </div>
-
-            <div class="kwp-col-3 white-col stars">
-                <div class="kwp-form-group">
-                    {{ Form::label('category', trans('novasol::layer.general.category'), ['class' => 'control-label required']) }}
-                    {{ Form::number('category', old('category'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('novasol::layer.placeholder.category')]) }}
-
-                    <span class="text">ab 0 Sonnen</span>
-                    <div class="kwp-star-input">
-                        <span class="kwp-star kwp-star-full" data-val="1"></span>
-                        <span class="kwp-star" data-val="2"></span>
-                        <span class="kwp-star" data-val="3"></span>
-                        <span class="kwp-star" data-val="4"></span>
-                        <span class="kwp-star" data-val="5"></span>
-                    </div>
-                    <script>dt.hotelStars();</script>
-                </div>
-            </div>
-
-            <div class="kwp-col-3 white-col catering">
-                {{ Form::label('catering', trans('novasol::layer.general.catering'), ['class' => 'control-label required']) }}
-                    {{ Form::select('catering', $catering_arr, '',['class' => 'selectpicker']) }}
-                <i class="master-icon--chevron-down"></i>
             </div>
 
         </div>
 
         <div class="kwp-row">
             <div class="kwp-col-12 description">
-                {{ Form::label('description', trans('novasol::layer.general.description'), ['class' => 'control-label required']) }}
-                {{ Form::textarea('description', null,['class' => 'form-control', 'placeholder' => trans('novasol::layer.placeholder.description')]) }}
+                {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
+                {{ Form::textarea('description', null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
                 <i class="master-icon--calendar-month"></i>
             </div>
         </div>
 
         <div class="kwp-row">
             <div class="kwp-col-4 email-col">
-                {{ Form::label('email', trans('novasol::layer.general.email'), ['class' => 'control-label']) }}
-                {{ Form::text('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('novasol::layer.placeholder.email'), 'required' => 'required']) }}
+                {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
+                {{ Form::text('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
                 <i class="master-icon--mail"></i>
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))

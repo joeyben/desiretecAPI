@@ -74,7 +74,13 @@
                 @else
                     <li class="dropdown nav-user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ $logged_in_user->name }} <span class="caret"></span>
+                            @if ($logged_in_user->name == "Muster Name")
+                                {{ trans('navs.frontend.user.name') }}
+                            @else
+                                {{ $logged_in_user->name }}
+                            @endif
+
+                            <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">

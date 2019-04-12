@@ -438,6 +438,9 @@ var dt = window.dt || {};
             dt.PopupManager.isMobile = true;
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
             textareaAutosize();
+            $(".dt-modal .teaser").find('i').on('click touchend',function () {
+                kwizzme.hideTeaser();
+            });
             if(getUrlParams('autoShow')){
                 dt.showMobileLayer();
                 shown = true;

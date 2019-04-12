@@ -302,7 +302,7 @@ if (!function_exists('transformTravelers')) {
      */
     function transformTravelers($travelers, $type)
     {
-        return $travelers . ' ' . trans_choice('labels.frontend.wishes.table.' . $type, (int) $travelers);
+        return trans_choice('labels.frontend.wishes.table.' . $type, $travelers, ['count' => $travelers]);
     }
 }
 
@@ -381,7 +381,25 @@ if (!function_exists('getCurrentWhiteLabelId')) {
     function getCurrentWhiteLabelId()
     {
         $url = str_replace('http://', '', url('/'));
+        $url = str_replace('https://', '', $url);
         $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
+
+        return $id;
+    }
+}
+
+if (!function_exists('getCurrentWhiteLabelField')) {
+    /**
+     * return current whitelabel Field.
+     * @param string $field
+     *
+     * @return int
+     */
+    function getCurrentWhiteLabelField($field)
+    {
+        $url = str_replace('http://', '', url('/'));
+        $url = str_replace('https://', '', $url);
+        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value($field);
 
         return $id;
     }

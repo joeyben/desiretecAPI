@@ -12,12 +12,7 @@
                     </p>
                     
                     <p style="line-height: 24px; margin-bottom:20px;">
-
-                        Einer unserer Spezialisten für das Reiseziel {{ $offer->wish->title }} hat ein Angebot für Ihren desiretec Reisewunsch erstellt! Sie können es unter dem folgenden Link direkt<br><br>
-
-                        {{ $confirmation_url }}<br><br>
-
-                        Wir hoffen, Ihnen sagt das Angebot zu.
+                        {!! trans('email.offer.created.user.body', ['confirmation_url' => $confirmation_url, 'title' => $offer->wish->title]) !!}
                     </p>
 
                     @include('emails.layouts.footer')
