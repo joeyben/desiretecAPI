@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['domain' => 'novasol.wunsch-service.de'], function () {
+Route::group(['domain' => 'novasol.org'], function () {
     setCurrentWhiteLabelId(\Config::get('novasol.id'));
     setTranslationLoaderModel(\Config::get('novasol.language_lines_model'));
     Route::group(['middleware' => 'web', 'namespace' => 'Modules\Novasol\Http\Controllers' , 'as' => 'novasol.'], function () {

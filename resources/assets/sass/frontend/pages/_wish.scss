@@ -154,4 +154,18 @@ body.wish{
       }
     }
   }
+
+  #edit-wish{
+    .modal-body-left{
+      border:none;
+      .group{
+        &:first-child{
+          padding-right: 10px !important;
+        }
+        &:last-child{
+          padding-left: 10px !important;
+        }
+      }
+    }
+  }
 }
