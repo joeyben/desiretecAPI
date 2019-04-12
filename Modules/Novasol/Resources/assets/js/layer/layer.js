@@ -3,7 +3,7 @@ var dt = window.dt || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'http://novasol.org',
+        baseUrl: 'http://novasol.wunsch-service.de',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/novasol/css/layer/whitelabel.css'
@@ -182,7 +182,7 @@ var dt = window.dt || {};
 
     var TrendtoursTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Trendtours WL',
-        matchesUrl: 'www.trendtours.de/*',
+        matchesUrl: 'www.novasol.de/*',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
@@ -223,19 +223,19 @@ var dt = window.dt || {};
                 return category;
             },
             'destination': function (form, formData) {
-                var destination = dataLayer[2].travelTitle ? dataLayer[2].travelTitle : '';
+                var destination = '';
                 return destination;
             },
             'pax': function (form, formData) {
-                var pax = getUrlParams('pax') ? getUrlParams('pax') : '';
+                var pax = dataLayer.length > 16 && ('adults' in dataLayer[16]) ? dataLayer[16].adults : '';
                 return pax;
             },
             'budget': function (form, formData) {
-                var budget = getUrlParams('budget') ? getUrlParams('budget') : '';
+                var budget = dataLayer.length > 16 && ('priceMaximum' in dataLayer[16]) ? dataLayer[16].priceMaximum: '';
                 return budget;
             },
             'children': function (form, formData) {
-                var kids = getUrlParams('kids') ? getUrlParams('kids') : '';
+                var kids = dataLayer.length > 16 && ('kids' in dataLayer[16]) ? dataLayer[16].kids : '';
                 return kids;
             },
             'age_1': function (form, formData) {
@@ -259,7 +259,7 @@ var dt = window.dt || {};
                 return dateTo;
             },
             'duration': function (form, formData) {
-                var duration = getUrlParams('duration') ? getUrlParams('duration') : '';
+                var duration = dataLayer.length > 16 && ('lengthOfStay' in dataLayer[16]) ? dataLayer[16].lengthOfStay : '';
                 return duration;
             },
             'airport': function (form, formData) {

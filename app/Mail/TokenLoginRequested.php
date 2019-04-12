@@ -31,7 +31,7 @@ class TokenLoginRequested extends Mailable
      */
     public function build()
     {
-        return $this->subject(Lang::get('email.message.token'))->view('emails.token.link')->with([
+        return $this->subject(Lang::get('email.message.token'))->from(getCurrentWhiteLabelField('email'), getCurrentWhiteLabelField('display_name') . ' Portal')->view('emails.token.link')->with([
             'link' => $this->buildLink(),
         ]);
     }
