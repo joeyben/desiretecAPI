@@ -37,10 +37,12 @@ mix.scripts(
     .styles([
         base_url + '/public/whitelabel/trendtours/css/datepicker.css',
         base_url + '/public/whitelabel/trendtours/css/layer/layer.css',
+        base_url + '/public/fontawsome/css/all.css',
     ], __dirname + '/../../public/whitelabel/trendtours/css/layer/whitelabel.css')
     .styles([
         base_url + '/public/whitelabel/trendtours/css/datepicker.css',
         base_url + '/public/whitelabel/trendtours/css/layer/layer_mobile.css',
+        base_url + '/public/fontawsome/css/all.css',
     ], __dirname + '/../../public/whitelabel/trendtours/css/layer/whitelabel_mobile.css')
     .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/trendtours/images/')
     .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/trendtours/svg/');
