@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Trendtours',
-    'id'   => 17,
+    'id'   => 39,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_trendtours',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class
