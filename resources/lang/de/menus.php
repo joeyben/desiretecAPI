@@ -212,4 +212,5 @@ return [
     'languages_lines' => 'Sprachenzeilen',
     'wishes_management' => 'Wünsche Management',
     'sellers_management' => 'Anbieter-Management',
+    'list_wishes' => 'Wünsche auflisten',
 ];
