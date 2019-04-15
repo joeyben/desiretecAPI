@@ -38232,7 +38232,8 @@ var mutations = {
     state.whitelabel[obj.name] = obj.value;
   },
   addWhitelabelFile: function addWhitelabelFile(state, obj) {
-    var key = obj.type.replace('whitelabels/', '');
+    var key = obj.type.replace('whitelabels', '').slice(1);
+
     if (state.whitelabel[key].length <= 0) {
       var index = state.whitelabel[key].findIndex(function (c) {
         return c.uid === obj.id;
@@ -96290,7 +96291,7 @@ var content = __webpack_require__(354);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(54)("c96b1a10", content, false, {});
+var update = __webpack_require__(54)("7e8276f8", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -99947,7 +99948,7 @@ var content = __webpack_require__(393);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(54)("21831729", content, false, {});
+var update = __webpack_require__(54)("1f673e43", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -101331,6 +101332,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -103251,6 +103261,46 @@ var render = function() {
                             _c(
                               "label",
                               { staticClass: "col-lg-3 col-form-label" },
+                              [
+                                _vm._v(
+                                  " " + _vm._s(_vm.trans("modals.email")) + " "
+                                ),
+                                _c("span", { staticClass: "text-danger" }, [
+                                  _vm._v(" *")
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-9" }, [
+                              _c("input", {
+                                staticClass: "form-control",
+                                class: _vm.errors.has("email")
+                                  ? "is-invalid"
+                                  : "",
+                                attrs: {
+                                  type: "email",
+                                  id: "email",
+                                  name: "email",
+                                  placeholder: _vm.trans("modals.email")
+                                },
+                                domProps: { value: _vm.whitelabel.email },
+                                on: { input: _vm.updateWhitelabel }
+                              }),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "invalid-feedback" }, [
+                                _c("strong", {
+                                  domProps: {
+                                    textContent: _vm._s(_vm.errors.get("email"))
+                                  }
+                                })
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-3 col-form-label" },
                               [_vm._v(" " + _vm._s(_vm.trans("modals.owner")))]
                             ),
                             _vm._v(" "),
@@ -104754,6 +104804,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vuex = __webpack_require__(5);
 
@@ -104917,6 +104976,34 @@ var render = function() {
                   })
                 ])
               ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c("label", { staticClass: "col-lg-3 col-form-label" }, [
+                _vm._v(" " + _vm._s(_vm.trans("modals.email")) + " "),
+                _c("span", { staticClass: "text-danger" }, [_vm._v(" *")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-9" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  class: _vm.errors.has("email") ? "is-invalid" : "",
+                  attrs: {
+                    type: "email",
+                    id: "email",
+                    name: "email",
+                    placeholder: _vm.trans("modals.email")
+                  },
+                  domProps: { value: _vm.whitelabel.email },
+                  on: { input: _vm.updateWhitelabel }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "invalid-feedback" }, [
+                  _c("strong", {
+                    domProps: { textContent: _vm._s(_vm.errors.get("email")) }
+                  })
+                ])
+              ])
             ])
           ])
         ])
@@ -104996,7 +105083,7 @@ var content = __webpack_require__(436);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(54)("469848f0", content, false, {});
+var update = __webpack_require__(54)("5548b1a2", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
