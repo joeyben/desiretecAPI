@@ -30,7 +30,7 @@ class WishObserver
     }
 
     /**
-     * Handle the group "deleted" event.
+     * Handle the wish "deleted" event.
      *
      * @param \Modules\Wishes\Entities\Wish $wish
      */
@@ -40,7 +40,7 @@ class WishObserver
     }
 
     /**
-     * Handle the group "restored" event.
+     * Handle the wish "restored" event.
      *
      * @param \Modules\Wishes\Entities\Wish $wish
      */
@@ -50,7 +50,7 @@ class WishObserver
     }
 
     /**
-     * Handle the group "force deleted" event.
+     * Handle the wish "force deleted" event.
      *
      * @param \Modules\Wishes\Entities\Wish $wish
      */
