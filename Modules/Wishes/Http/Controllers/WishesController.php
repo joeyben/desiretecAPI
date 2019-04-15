@@ -11,6 +11,8 @@ use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WhereIn;
+use App\Repositories\Criteria\WithTrashed;
+use App\Services\Flag\Src\Flag;
 use Auth;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -104,6 +106,7 @@ class WishesController extends Controller
             $sort = explode('|', $request->get('sort'));
 
             $result['data'] = $this->wishes->withCriteria([
+                new WithTrashed(),
                 new OrderBy($sort[0], $sort[1]),
                 new Where('wishes.whitelabel_id', $request->get('whitelabel')),
                 new WhereBetween('wishes.created_at', $request->get('start'), $request->get('end')),
@@ -301,5 +304,67 @@ class WishesController extends Controller
             }]),
             new ByWhitelabel()
         ]));
+    }
+
+    public function destroy(int $id)
+    {
+        try {
+            $result['wish'] = $this->wishes->delete($id);
+            $result['message'] = $this->lang->get('messages.deleted', ['attribute' => $this->lang->get('labels.wish')]);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function restore(int $id)
+    {
+        try {
+            $result['group'] = $this->wishes->restore($id);
+            $result['message'] = $this->lang->get('messages.restored', ['attribute' => $this->lang->get('labels.wish')]);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function forceDelete(int $id)
+    {
+        $this->authorize('forceDelete', Wish::class);
+
+        try {
+            $result['wish'] = $this->wishes->forceDelete($id);
+            $result['message'] = $this->lang->get('messages.destroyed', ['attribute' => $this->lang->get('labels.wish')]);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 }

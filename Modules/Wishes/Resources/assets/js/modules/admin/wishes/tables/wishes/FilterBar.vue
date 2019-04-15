@@ -6,8 +6,8 @@
             </button>
 
             <div class="dropdown-menu dropdown-menu-left">
-                <a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>
-                <a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>
+                <a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item"><i class="icon-file-text3"></i> {{ trans('labels.export_selected') }}</a>
+                <a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> {{ trans('labels.export_all') }}</a>
             </div>
         </h5>
         <div class="header-elements">

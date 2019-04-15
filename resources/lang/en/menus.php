@@ -211,4 +211,5 @@ return [
     'languages_lines' => 'Languages Lines',
     'wishes_management' => 'Wishes Management',
     'sellers_management' => 'Sellers Management',
+    'list_of_wishes' => 'List wishes',
 ];
