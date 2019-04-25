@@ -75,16 +75,16 @@ window.exitIntent = {
 		clearTimeout(timeoutID);
 
 		// timeoutID = setTimeout(this.goInactive, this.inactivitySeconds * 1000);
-		this.startTimer();
+		exitIntent.startTimer();
 	},
 
 	startTimer: function () {
 		// wait {inactivitySeconds} seconds before calling goInactive
-		timeoutID = setTimeout(this.goInactive, this.inactivitySeconds * 1000);
+		timeoutID = setTimeout(exitIntent.goInactive, exitIntent.inactivitySeconds * 1000);
 	},
 
 	goInactive: function () {
-		this.createEvent('exit-intent', true, true);
+		exitIntent.createEvent('exit-intent', true, true);
 	},
 
 
@@ -126,16 +126,16 @@ window.exitIntent = {
 		}.bind(this));
 
 		// detect user inactivity
-		//
-		// this.addEvent(document, "mousemove", this.resetTimer);
-		// this.addEvent(document, "mousedown", this.resetTimer);
-		// this.addEvent(document, "keypress", this.resetTimer);
-		// this.addEvent(document, "DOMMouseScroll", this.resetTimer);
-		// this.addEvent(document, "mousewheel", this.resetTimer);
-		// this.addEvent(document, "touchmove", this.resetTimer);
-		// this.addEvent(document, "MSPointerMove", this.resetTimer);
-		//
-		// this.startTimer();
+
+		this.addEvent(document, "mousemove", this.resetTimer);
+		this.addEvent(document, "mousedown", this.resetTimer);
+		this.addEvent(document, "keypress", this.resetTimer);
+		this.addEvent(document, "DOMMouseScroll", this.resetTimer);
+		this.addEvent(document, "mousewheel", this.resetTimer);
+		this.addEvent(document, "touchmove", this.resetTimer);
+		this.addEvent(document, "MSPointerMove", this.resetTimer);
+
+		this.startTimer();
 
 	},
 
