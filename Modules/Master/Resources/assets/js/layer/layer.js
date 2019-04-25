@@ -1,4 +1,5 @@
 var dt = window.dt || {};
+var exitIntent = window.exitIntent || {};
 
 (function ($) {
 
@@ -1069,18 +1070,17 @@ var dt = window.dt || {};
 
     dt.initCallbacks = dt.initCallbacks || [];
     dt.initCallbacks.push(function (popup) {
-        dt.exitIntent = $.exitIntent('enable', { 'sensitivity': 0 });
+			  exitIntent.init();
+			  document.addEventListener('exit-intent', function (e) {
+            if(!exitIntent.checkCookie()) {
+                popup.show();
 
-        $(document).bind('exitintent',
-            function() {
-                if(getCookie('exitintent')){
-                    return;
-                }
-                else{
-                    setCookie('exitintent', 'yes');
-                    popup.show();
-                }
-            });
+                // set cookies
+                exitIntent.cookieManager.create("exit_intent", "true", exitIntent.cookieExp, exitIntent.sessionOnly);
+                var exitIntentNumber = exitIntent.cookieManager.get("exit_intent_number") ? Number(exitIntent.cookieManager.get("exit_intent_number")) + 1 : 1;
+                exitIntent.cookieManager.create("exit_intent_number", exitIntentNumber, exitIntent.cookieExp, exitIntent.sessionOnly);
+            }
+       }, false);
     });
 
 
@@ -1359,9 +1359,21 @@ var dt = window.dt || {};
     }
 
     function getUrlParams(params){
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        return url.searchParams.get(params);
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        var queryString = null;
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            var key = decodeURIComponent(pair[0]);
+            var value = decodeURIComponent(pair[1]);
+
+            if (key === params) {
+                queryString = decodeURIComponent(value);
+                break;
+            }
+        }
+
+        return queryString;
     }
 
     function getCookie(cname) {
