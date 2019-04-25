@@ -1,8 +1,5 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvpprod.desiretec.com/fontawsome/css/all.css">
 
-<div class="kwp-middle">
-    Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
-</div>
 {{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <div class="kwp-minimal">
@@ -14,10 +11,62 @@
                 <i class="master-icon--location-fill"></i>
             </div>
 
-            <div class="kwp-col-4">
-                {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
-                {{ Form::text('airport', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.airport'), 'required' => 'required']) }}
-                <i class="master-icon--aircraft-up"></i>
+            <div class="kwp-col-4 pax-col main-col">
+                <div class="kwp-form-group pax-group">
+                    <label for="travelers" class="required">Wer reist mit?</label>
+                    <span class="travelers dd-trigger">
+                        <span class="txt">2 Erwachsener</span>
+                         <i class="master-icon--user-family not-triggered"></i>
+                         <i class="master-icon--close triggered"></i>
+                    </span>
+                    <div class="pax-more">
+                        <div class="kwp-col-12">
+                            {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
+                            <div class="kwp-custom-select">
+                                {{ Form::select('adults', $adults_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
+                            </div>
+                            <i class="master-icon--user-family"></i>
+                        </div>
+                        <div class="kwp-col-12 kids" style="position: relative;">
+                            <div class="kwp-col-12">
+                                {{ Form::label('kids', trans('layer.general.kids'), ['class' => 'control-label required']) }}
+                                <div class="kwp-custom-select">
+                                    {{ Form::select('kids', $kids_arr, ['class' => 'form-control box-size']) }}
+                                </div>
+                                <i class="master-icon--baby"></i>
+                            </div>
+                            <div class="kwp-col-ages">
+                                <div class="kwp-form-group">
+                                    <label class="main-label">Alter (Hinreise)</label>
+                                    <div class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                    </div>
+                                    <div class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                    </div>
+                                    <div class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <script>dt.childrenAges();</script>
+
+                        <div class="kwp-col-12">
+                            {{ Form::label('pets', trans('layer.general.pets'), ['class' => 'control-label required']) }}
+                            <div class="kwp-custom-select">
+                                {{ Form::select('pets', $pets_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
+                            </div>
+                            <i class="master-icon--chevron-down"></i>
+                        </div>
+
+                        <hr>
+                        <div class="kwp-col-12 button">
+                            <a href="#">OK</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -69,63 +118,6 @@
                 </div>
             </div>
 
-            <div class="kwp-col-4 pax-col main-col">
-                <div class="kwp-form-group pax-group">
-                    <label for="travelers" class="required">Wer reist mit?</label>
-                    <span class="travelers dd-trigger">
-                        <span class="txt">2 Erwachsener</span>
-                         <i class="master-icon--user-family not-triggered"></i>
-                         <i class="master-icon--close triggered"></i>
-                    </span>
-                    <div class="pax-more">
-                        <div class="kwp-col-12">
-                            {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
-                            <div class="kwp-custom-select">
-                                {{ Form::select('adults', $adults_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
-                            </div>
-                            <i class="master-icon--user-family"></i>
-                        </div>
-                        <div class="kwp-col-12 kids" style="position: relative;">
-                            <div class="kwp-col-12">
-                                {{ Form::label('kids', trans('layer.general.kids'), ['class' => 'control-label required']) }}
-                                <div class="kwp-custom-select">
-                                    {{ Form::select('kids', $kids_arr, ['class' => 'form-control box-size']) }}
-                                </div>
-                                <i class="master-icon--baby"></i>
-                            </div>
-                            <div class="kwp-col-ages">
-                                <div class="kwp-form-group">
-                                    <label class="main-label">Alter (Hinreise)</label>
-                                    <div class="kwp-col-3">
-                                        <i class="master-icon--aircraft-down"></i>
-                                    </div>
-                                    <div class="kwp-col-3">
-                                        <i class="master-icon--aircraft-down"></i>
-                                    </div>
-                                    <div class="kwp-col-3">
-                                        <i class="master-icon--aircraft-down"></i>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <script>dt.childrenAges();</script>
-                        <hr>
-                        <div class="kwp-col-12 button">
-                            <a href="#">OK</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="kwp-row">
-
-            <div class="kwp-col-4 white-col catering">
-                {{ Form::label('pets', trans('layer.general.pets'), ['class' => 'control-label required']) }}
-                    {{ Form::select('pets', $pets_arr, '',['class' => 'selectpicker']) }}
-                <i class="master-icon--chevron-down"></i>
-            </div>
-
             <div class="kwp-col-4 rangeslider-wrapper">
                 <div class="kwp-form-group ">
                     {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
@@ -134,8 +126,8 @@
                 <span class="text">&nbsp;</span>
                 <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
             </div>
-
         </div>
+
 
         <div class="kwp-row">
             <div class="kwp-col-12 description">
