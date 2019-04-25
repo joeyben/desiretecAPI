@@ -135,38 +135,9 @@
                 return false;
             });
 
-            $('#budgetRange').rangeslider({
-                // Callback function
-                polyfill: false,
-                onInit: function() {
-                    $('.rangeslider__handle').on('mousedown touchstart mousemove touchmove', function(e) {
-                        e.preventDefault();
-                    })
-                },
-                fillClass: 'rangeslider__fill',
-                onSlide: function(position, value) {
-                    if($(".rangeslider-wrapper .haserrors").length)
-                        $(".rangeslider-wrapper .haserrors").removeClass('haserrors');
 
-                    if(value === 10000){
-                        $(".rangeslider-wrapper .text").text("beliebig");
-                        $("#budget").val("beliebig");
-                    }else if(value === 100){
-                        $(".rangeslider-wrapper .text").text("");
-                        $("#budget").val("");
-                    }else{
-                        $(".rangeslider-wrapper .text").text("bis "+value+" €");
-                        $("#budget").val(""+value);
-                    }
-                    check_button();
-                },
-            });
 
             $(document).ready(function(){
-
-                var range = parseInt($("#budget").val().replace('.',''));
-                if(range)
-                    $('input[type="range"]').val(range).change();
 
                 var pax = $("#pax").val();
                 var children_count = parseInt($("#children").val());
