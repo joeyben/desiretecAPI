@@ -16,10 +16,11 @@ class Whitelabel extends Model
 {
     use SoftDeletes, SearchableTrait, LogsActivity, AttachableTrait;
 
-    protected $fillable = ['name', 'display_name', 'status', 'domain', 'created_by', 'distribution_id', 'ga_view_id', 'state'];
+    protected $fillable = ['name', 'display_name', 'status', 'domain', 'email', 'created_by', 'distribution_id', 'ga_view_id', 'state'];
 
     protected static $logAttributes = [
         'name',
+        'email',
         'display_name',
         'status',
         'created_by',
@@ -52,6 +53,7 @@ class Whitelabel extends Model
             'whitelabels.name'                       => 10,
             'whitelabels.display_name'               => 10,
             'whitelabels.domain'                     => 10,
+            'whitelabels.email'                     => 10,
             'users.first_name'                       => 10,
             'users.last_name'                        => 10,
             'users.email'                            => 10,

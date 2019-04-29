@@ -1,15 +1,15 @@
 @extends('layouts.default')
 @section('title')
-    List of wishes
+    @lang('menus.list_wishes')
 @stop
 @section('page-title')
     <i class="icon-arrow-left52 mr-2"></i>
-    <span class="font-weight-semibold">List of wishes</span>
+    <span class="font-weight-semibold"> @lang('menus.list_wishes')</span>
 @stop
 @section('breadcrumb')
     <div class="breadcrumb">
         <a href="{{ url('/') }}" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Dashboard</a>
-        <span class="breadcrumb-item active">List of wishes</span>
+        <span class="breadcrumb-item active"> @lang('menus.list_wishes')</span>
     </div>
 @stop
 @section('vue-js')

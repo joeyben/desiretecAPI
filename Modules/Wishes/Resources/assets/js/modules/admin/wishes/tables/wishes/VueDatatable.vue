@@ -239,21 +239,17 @@ import CssConfig from './CssConfig.js'
         this.$refs.vuetable.toggleDetailRow(data.id)
       },
       doDelete (id) {
-        this.$confirm(this.trans('messages.delete'), 'Warning', {
+        this.$confirm(this.trans('messages.delete'), this.trans('labels.warning'), {
           confirmButtonText: this.trans('labels.ok'),
           cancelButtonText: this.trans('labels.cancel'),
           type: 'warning'
         }).then(() => {
           this.onDelete(id)
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: this.trans('messages.delete_canceled')
-          })
         })
       },
       doDestroy (id) {
-        this.$confirm(this.trans('messages.destroy'), 'Warning', {
+        this.$confirm(this.trans('messages.destroy'), this.trans('labels.warning'), {
           confirmButtonText: this.trans('labels.ok'),
           cancelButtonText: this.trans('labels.cancel'),
           type: 'warning'
@@ -267,7 +263,7 @@ import CssConfig from './CssConfig.js'
         })
       },
       doRestore (id) {
-        this.$confirm(this.trans('messages.restore'), 'Warning', {
+        this.$confirm(this.trans('messages.restore'), this.trans('labels.warning'), {
           confirmButtonText: this.trans('labels.ok'),
           cancelButtonText: this.trans('labels.cancel'),
           type: 'warning'

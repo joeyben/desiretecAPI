@@ -13,6 +13,7 @@ mix.scripts(
     ], __dirname + '/../../public/whitelabel/master/js/master.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
+        base_url + '/resources/assets/js/layer/exitintent-new.js',
         base_url + '/node_modules/js-cookie/src/js.cookie.js',
         base_url + '/resources/assets/js/layer/base.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',
