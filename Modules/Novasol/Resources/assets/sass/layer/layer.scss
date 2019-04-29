@@ -271,6 +271,14 @@ $fontcolor: #303030;
     }
   }
 
+
+  .error-input{
+    display: block;
+    background: #EC6708;
+    padding: 0 10px;
+    color: #fff;
+  }
+
   /* TUI INPUT STYLES FOR WL */
 
 
@@ -768,6 +776,11 @@ p.kwp-info {
   input {
     vertical-align: middle;
     float: left;
+    &.hasError{
+      &:after{
+        border: 2px solid #DB2128 !important;
+      }
+    }
   }
   p{
     padding-left: 40px;
