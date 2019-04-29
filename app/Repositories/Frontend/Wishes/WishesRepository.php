@@ -121,7 +121,7 @@ class WishesRepository extends BaseRepository
     public function create(array $input, $whitelabelId)
     {
         $wish = DB::transaction(function () use ($input, $whitelabelId) {
-            $input['featured_image'] = $this->uploadImage($input) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
+            $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
             $input['created_by'] = access()->user()->id;
             $input['whitelabel_id'] = $whitelabelId;
             $input['group_id'] = $this->getGroup();
