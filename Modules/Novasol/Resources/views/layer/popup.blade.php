@@ -59,7 +59,7 @@
 
             <div class="kwp-col-4 duration-col main-col">
                 <div class="kwp-form-group duration-group">
-                    <label for="duration-time" class="required">Wann & wie lange?</label>
+                    <label for="duration-time" class="required">Wann & Wie lange?</label>
                     <span class="duration-time dd-trigger">
                         <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
                         <i class="fal fa-calendar-alt not-triggered"></i>
@@ -194,7 +194,6 @@
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',
-                    defaultDate: '01.01.2019',
                     minDate: new Date(),
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
@@ -222,7 +221,6 @@
                 dt.endDate = new Pikaday({
                     field: document.getElementById('latest_return'),
                     format: 'dd.mm.YYYY',
-                    defaultDate: '01.01.2019',
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
                         // but we will just return 'D/M/YYYY' for simplicity
