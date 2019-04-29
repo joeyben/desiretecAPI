@@ -8,6 +8,11 @@
             <div class="kwp-col-4 destination">
                 {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
                 {{ Form::text('destination', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
+                @if ($errors->any() && $errors->get('destination'))
+                    @foreach ($errors->get('destination') as $error)
+                        <span class="error-input">{{ $error }}</span>
+                    @endforeach
+                @endif
                 <i class="fal fa-home"></i>
             </div>
 
@@ -71,7 +76,7 @@
                             {{ Form::text('earliest_start', null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
-                                    <span>{{ $error }}</span>
+                                    <span class="error-input">{{ $error }}</span>
                                 @endforeach
 
                             @endif
@@ -82,7 +87,7 @@
                             {{ Form::text('latest_return', null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
-                                    <span>{{ $error }}</span>
+                                    <span class="error-input">{{ $error }}</span>
                                 @endforeach
                             @endif
                             <i class="fal fa-calendar-alt"></i>
@@ -93,6 +98,11 @@
                                 {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), ['class' => 'form-control box-size']) }}
                             </div>
                             <i class="fal fa-times"></i>
+                            @if ($errors->any() && $errors->get('duration'))
+                                @foreach ($errors->get('duration') as $error)
+                                    <span class="error-input">{{ $error }}</span>
+                                @endforeach
+                            @endif
                         </div>
                         <div class="clearfix"></div>
                         <hr>
@@ -129,7 +139,7 @@
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
                     @foreach ($errors->get('email') as $error)
-                        <span>{{ $error }}</span>
+                        <span class="error-input">{{ $error }}</span>
                     @endforeach
                 @endif
             </div>
@@ -194,6 +204,7 @@
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',
+                    defaultDate: '01.01.2019',
                     minDate: new Date(),
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
@@ -207,8 +218,8 @@
                         previousMonth: 'Vormonat',
                         nextMonth: 'Nächsten Monat',
                         months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+                        weekdays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
+                        weekdaysShort: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
                     },
                     onSelect: function() {
                         dt.endDate.setDate(this.getDate()+1);
@@ -221,6 +232,7 @@
                 dt.endDate = new Pikaday({
                     field: document.getElementById('latest_return'),
                     format: 'dd.mm.YYYY',
+                    defaultDate: '01.01.2019',
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
                         // but we will just return 'D/M/YYYY' for simplicity
@@ -233,8 +245,8 @@
                         previousMonth: 'Vormonat',
                         nextMonth: 'Nächsten Monat',
                         months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+                        weekdays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
+                        weekdaysShort: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
                     }
                 });
 
@@ -304,8 +316,19 @@
         <div class="kwp-row">
             <div class="kwp-col-12 white-col">
                 <div class="kwp-agb ">
-                    {{ Form::checkbox('terms', null, ['class' => 'form-control box-size', 'required' => 'required']) }}
-                    <p>Ich habe die <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.master.com/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    @php
+                        $terms_class = 'dt_terms'
+                    @endphp
+
+                    @if ($errors->any() && $errors->get('terms'))
+                        @php
+                            $terms_class = 'dt_terms hasError'
+                        @endphp
+                    @endif
+
+                    {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
+                    <p>Ich habe die <a href="https://www.novasol.de/faq/novasol_agb_deutsch/novasol_nutzungsbedingungen" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.novasol.de/faq/novasol_agb_deutsch/datenschutz" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+
                 </div>
             </div>
         </div>
