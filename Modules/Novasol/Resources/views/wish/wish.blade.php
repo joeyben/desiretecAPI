@@ -1,3 +1,8 @@
+@php
+    $contactInactivClass = count($wish->contacts) ? " inactiv" : "";
+    $callbackInactivClass = count($wish->callbacks) ? " inactiv" : "";
+@endphp
+
 @extends('frontend.layouts.app')
 @section('title')
     {{ trans('general.whitelabel.browser.title') }}
@@ -27,14 +32,14 @@
                     <a href="{{route('frontend.offers.create', $wish->id)}}" class="primary-btn">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
                 @elseif (count($wish->offers) > 0)
                     <p class="header-p">{!! trans('wish.view.stage.user_offer',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
-                    <button class="primary-btn" onclick="scrollToAnchor('angebote')">Angebot ansehen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('angebote')">Angebot ansehen</button>
                 @elseif (count($wish->messages) > 0)
                     <p class="header-p">{!! trans('wish.view.stage.user_message',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
-                    <button class="primary-btn" onclick="scrollToAnchor('messages')">Nachricht ansehen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('messages')">Nachricht ansehen</button>
                 @else
                     <p class="header-p">{!! trans('wish.view.stage.user_empty',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
-                    <button class="primary-btn" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
+                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
                 @endif
             </div>
         </div>
@@ -160,8 +165,8 @@
                 </p>
                 @if (!$offer->offerFiles && $logged_in_user->hasRole('User'))
                 <div class="sa2-buttons">
-                    <button class="primary-btn" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
+                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
                 </div>
                 @endif
             </div>
@@ -197,8 +202,8 @@
         <div class="container">
             <div class="col-md-12 sa-2">
                 <div class="sa-buttons">
-                    <button class="primary-btn" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
+                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
                 </div>
             </div>
         </div>
@@ -242,8 +247,8 @@
     <div class="container">
         <div class="col-md-12 sa-2">
             <div class="sa-buttons">
-                <button class="primary-btn" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                <button class="secondary-btn" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
+                <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
             </div>
         </div>
     </div>
@@ -279,8 +284,8 @@
         <div class="col-md-12 s2-second">
 
             <div class="col-md-3">
-                <i class="fal fa-plane-departure"></i>
-                <input class="data-content" value="{{ $wish->airport }}">
+                <i class="fal fa-minus"></i>
+                <input class="data-content">
             </div>
             <div class="col-md-3">
                 <i class="fal fa-calendar-alt"></i>
@@ -310,8 +315,8 @@
                 <i class="fal fa-dog"></i>
                 <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
             </div>
-            @if ($logged_in_user->hasRole('User'))
-            <button class="secondary-btn" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
+            @if (false && $logged_in_user->hasRole('User'))
+            <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
             @endif
         </div>
 
@@ -347,8 +352,8 @@
                         </div>
                         <div class="col-md-12 s2-second">
                             <div class="col-md-3">
-                                <i class="fal fa-plane-departure"></i>
-                                <input class="data-content" value="{{ $wish->airport }}">
+                                <i class="fal fa-minus"></i>
+                                <input class="data-content" >
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-calendar-alt"></i>
@@ -380,7 +385,7 @@
                                 <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
                             </div>
                             @if ($logged_in_user->hasRole('User'))
-                            <button class="secondary-btn">Daten andern</button>
+                            <button class="secondary-btn{{ $callbackInactivClass }}">Daten andern</button>
                             @endif
                         </div>
 
@@ -594,12 +599,12 @@
                     <div class="col-md-12 modal-body-left">
                         <div class="row row-no-padding">
                             <div class="group col-md-6">
-                                    <input class="form-control" value="{{ $wish->airport }}">
-                                <label>Airport</label>
+                                <input class="form-control" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }}">
+                                <label>Von</label>
                             </div>
                             <div class="group col-md-6">
-                                    <input class="form-control" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }}">
-                                <label>Date</label>
+                                    <input class="form-control" value="{{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }}">
+                                <label>Bis</label>
                             </div>
                         </div>
                         <div class="row row-no-padding">

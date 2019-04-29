@@ -72,6 +72,13 @@ trait WishRelationship
     }
 
     /**
+     * Wishes HasMany  Callback.
+     */
+    public function callbacks()
+    {
+        return $this->hasMany(Contact::class, 'wish_id')->where('email', '=', 'no data');
+    }
+    /**
      * @return mixed
      */
     public function categories()

@@ -17,8 +17,8 @@ services:
     volumes:
       - /home/ubuntu/desiretech/storage:/var/www/html/storage
     environment:
-      - VIRTUAL_HOST=mvpprod.desiretec.com
-      - LETSENCRYPT_HOST=mvpprod.desiretec.com
+      - VIRTUAL_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,novasol.reisewunschservice.de,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com
+      - LETSENCRYPT_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,novasol.reisewunschservice.de
       - LETSENCRYPT_EMAIL=info@desiretec.com
     networks:
       - frontend
@@ -28,10 +28,10 @@ services:
     volumes:
       - "mariadb_data:/var/lib/mysql"
     environment:
-      MYSQL_USER: default
-      MYSQL_PASSWORD: ${DB_PROD_PW}
-      MYSQL_DATABASE: default
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PW}
+      - MYSQL_USER=default
+      - MYSQL_PASSWORD=${DB_STAGE_PW}
+      - MYSQL_DATABASE=default
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PW}
     ports:
       - "127.0.0.1:3300:3306"
     networks:

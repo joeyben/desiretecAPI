@@ -78,7 +78,12 @@
     <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
         Header set Access-Control-Allow-Origin "*"
     </FilesMatch>
+
+    if ($filename ~* ^.*?\.(eot)|(ttf)|(woff)$){
+        add_header Access-Control-Allow-Origin *;
+    }
 </IfModule>
+
 
 # ----------------------------------------------------------------------
 # | Cross-origin resource timing                                       |
@@ -291,12 +296,6 @@ Options -MultiViews
 </IfModule>
 
 # Fonts
-
-<IfModule mod_headers.c>
-  <FilesMatch "\.(ttf|ttc|otf|eot|woff|font.css|css)$">
-    Header set Access-Control-Allow-Origin "*"
-  </FilesMatch>
-</IfModule>
 
 # ----------------------------------------------------------------------
 # | Character encodings                                                |

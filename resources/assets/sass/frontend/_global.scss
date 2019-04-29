@@ -17,6 +17,11 @@
     color: #fff;
     text-decoration: none;
   }
+  &.inactiv{
+    background: #000;
+    color: #fff;
+    border-color: #000000;
+  }
 }
 
 .secondary-btn {
@@ -35,6 +40,11 @@
     color: $darkorange;
     background: transparent;
     text-decoration: none;
+  }
+  &.inactiv{
+    background: #fff;
+    color: #000;
+    border-color: #000000;
   }
 }
 
@@ -646,6 +656,11 @@ a.primary-btn, input.primary-btn{
     .group{
       position: relative;
       margin-bottom: 15px;
+      &:last-child{
+        label{
+          left:23px;
+        }
+      }
     }
   }
   .modal-body-right{
@@ -727,20 +742,6 @@ a.primary-btn, input.primary-btn{
     border-top:0px !important;
     padding:0 45px 30px 45px;
   }
-}
-
-#antworten{
-  height: 80px;
-  border: 1px solid #ccc;
-  resize: none;
-  padding: 3px 10px;
-  display: none;
-  @include border-radius(3px);
-  width: 100%;
-  margin-top: 25px;
-}
-#antworten:focus{
-  border: 1px solid #636b6f;
 }
 .confirm-popup .popup-body{
   .primary-btn{

@@ -223,7 +223,12 @@ var dt = window.dt || {};
                 return category;
             },
             'destination': function (form, formData) {
-                var destination = dataLayer[2].travelTitle ? dataLayer[2].travelTitle : '';
+                var destination =  '';
+                $.each(dataLayer, function (key, value) {
+                    if (value.travelTitle) {
+                        destination = value.travelTitle;
+                    }
+                });
                 return destination;
             },
             'pax': function (form, formData) {
@@ -439,7 +444,7 @@ var dt = window.dt || {};
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
             textareaAutosize();
             $(".dt-modal .teaser").find('i').on('click touchend',function () {
-                kwizzme.hideTeaser();
+                dt.hideTeaser();
             });
             if(getUrlParams('autoShow')){
                 dt.showMobileLayer();

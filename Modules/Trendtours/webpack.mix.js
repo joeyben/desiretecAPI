@@ -35,15 +35,18 @@ mix.scripts(
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/trendtours/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/trendtours/css/trendtours.css')
     .styles([
+        base_url + '/public/fontawsome/css/all.css',
         base_url + '/public/whitelabel/trendtours/css/datepicker.css',
         base_url + '/public/whitelabel/trendtours/css/layer/layer.css',
     ], __dirname + '/../../public/whitelabel/trendtours/css/layer/whitelabel.css')
     .styles([
+        base_url + '/public/fontawsome/css/all.css',
         base_url + '/public/whitelabel/trendtours/css/datepicker.css',
         base_url + '/public/whitelabel/trendtours/css/layer/layer_mobile.css',
     ], __dirname + '/../../public/whitelabel/trendtours/css/layer/whitelabel_mobile.css')
     .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/trendtours/images/')
-    .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/trendtours/svg/');
+    .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/trendtours/svg/')
+    .copy(__dirname +'/../../public/fontawsome/webfonts/', __dirname +'/../../public/whitelabel/trendtours/css/webfonts/');
 if (mix.inProduction()) {
     mix.version();
 }

@@ -166,6 +166,7 @@ class NovasolController extends Controller
      */
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
+        $request->merge(['featured_image' => 'novasol.jpg']);
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms','pets'),
             $this->whitelabelId
