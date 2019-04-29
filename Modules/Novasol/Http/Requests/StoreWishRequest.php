@@ -66,7 +66,6 @@ class StoreWishRequest extends FormRequest
     public function rules()
     {
         return [
-            'airport'         => 'required',
             'destination'     => 'required',
             'earliest_start'  => 'required',
             'latest_return'   => 'required',
@@ -88,7 +87,6 @@ class StoreWishRequest extends FormRequest
             'earliest_start.required'   => 'Start date is required!',
             'latest_return.required'    => 'Return date is required!',
             'adults.required'           => 'Number of Adults is required!',
-            'airport.required'          => 'Airport is required!',
             'destination.required'      => 'Destination is required!',
         ];
     }

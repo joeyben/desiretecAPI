@@ -367,7 +367,7 @@ var dt = window.dt || {};
     dt.scrollUpDetect = function (e) {
         dt.PopupManager.layerShown = false;
         $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
-                if(direction === 'down' && parseInt(distance) > 50 && !dt.PopupManager.layerShown){
+                if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
                     dt.showTeaser(event);
                     dt.PopupManager.layerShown = true;
                 }
