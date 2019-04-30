@@ -5,3 +5,6 @@
         <a  href="{{ route('novasol.wish.details', [$id, $token]) }}" target="_blank">klicken Sie hier</a>, wenn Sie Ihren Reisewunsch ändern oder überprüfen möchten.
     </p>
 </div>
+<script type="application/javascript">
+    $(".kwp-header-content").hide();
+</script>
