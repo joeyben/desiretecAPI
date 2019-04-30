@@ -38,8 +38,8 @@
                     <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('messages')">Nachricht ansehen</button>
                 @else
                     <p class="header-p">{!! trans('wish.view.stage.user_empty',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
-                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
                 @endif
             </div>
         </div>
@@ -165,8 +165,8 @@
                 </p>
                 @if (!$offer->offerFiles && $logged_in_user->hasRole('User'))
                 <div class="sa2-buttons">
-                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
                 </div>
                 @endif
             </div>
@@ -202,8 +202,8 @@
         <div class="container">
             <div class="col-md-12 sa-2">
                 <div class="sa-buttons">
-                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
                 </div>
             </div>
         </div>
@@ -247,8 +247,8 @@
     <div class="container">
         <div class="col-md-12 sa-2">
             <div class="sa-buttons">
-                <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
             </div>
         </div>
     </div>
