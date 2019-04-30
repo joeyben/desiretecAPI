@@ -7,7 +7,7 @@
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
                 {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -28,7 +28,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('adults', $adults_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                {{ Form::select('adults', $adults_arr, key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
                             <i class="fal fa-users"></i>
                         </div>
@@ -36,7 +36,7 @@
                             <div class="kwp-col-12">
                                 {{ Form::label('kids', trans('layer.general.kids'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
-                                    {{ Form::select('kids', $kids_arr, ['class' => 'form-control box-size']) }}
+                                    {{ Form::select('kids', $kids_arr, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                                 </div>
                                 <i class="fal fa-child"></i>
                             </div>
@@ -46,7 +46,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('pets', trans('layer.general.pets'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('pets', $pets_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                {{ Form::select('pets', $pets_arr, key_exists('pets', $request) ? $request['pets'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
                             <i class="fal fa-chevron-down"></i>
                         </div>
@@ -73,7 +73,7 @@
                     <div class="duration-more">
                         <div class="kwp-col-4">
                             {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -95,7 +95,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
                             <i class="fal fa-times"></i>
                             @if ($errors->any() && $errors->get('duration'))
@@ -116,7 +116,7 @@
             <div class="kwp-col-4 destination">
                 <div class="kwp-form-group ">
                     {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', old('budget'), ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.budget'), 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
+                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.budget'), 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
                     <i class="fal fa-euro-sign"></i>
                 </div>
             </div>
@@ -126,7 +126,7 @@
         <div class="kwp-row">
             <div class="kwp-col-12 description">
                 {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
-                {{ Form::textarea('description', null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
+                {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
                 <i class="fal fa-comment-alt-lines"></i>
             </div>
         </div>
@@ -134,7 +134,7 @@
         <div class="kwp-row">
             <div class="kwp-col-4 email-col">
                 {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
-                {{ Form::text('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
+                {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
                 <i class="master-icon--mail"></i>
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
