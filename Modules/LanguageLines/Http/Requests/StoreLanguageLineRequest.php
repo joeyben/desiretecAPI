@@ -18,7 +18,7 @@ class StoreLanguageLineRequest extends FormRequest
             'description'                        => 'string|min:3|max:255',
             'group'                              => 'required|string|min:3|max:255',
             'key'                                => 'required|string|min:3|max:255',
-            'text'                               => 'required|string|max:255',
+            'text'                               => 'required|string',
         ];
     }
 
