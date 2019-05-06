@@ -323,25 +323,22 @@ var dt = window.dt || {};
 
     dt.initCallbacks = dt.initCallbacks || [];
     dt.initCallbacks.push(function (popup) {
-        dt.exitIntent = $.exitIntent('enable', { 'sensitivity': 0 });
-
-        $(document).bind('exitintent',
-            function() {
-                if(getCookie('exitintent')){
-                    return;
-                }
-                else{
-                    setCookie('exitintent', 'yes');
-                    popup.show();
-                }
-            });
+        exitIntent.init();
+        document.addEventListener('exitintent', function (e) {
+            if(!exitIntent.checkCookie()) {
+                popup.show();
+                // set cookies
+                exitIntent.cookieManager.create("exitintent", "yes", exitIntent.cookieExp, exitIntent.sessionOnly);
+                var exitIntentNumber = exitIntent.cookieManager.get("exit_intent_number") ? Number(exitIntent.cookieManager.get("exit_intent_number")) + 1 : 1;
+                exitIntent.cookieManager.create("exit_intent_number", exitIntentNumber, exitIntent.cookieExp, exitIntent.sessionOnly);
+            }
+        }, false);
     });
 
 
     dt.PopupManager.closePopup = function(event) {
         event.preventDefault();
 
-        if(isMobile()){
             var formSent = $('.kwp-content').hasClass('kwp-completed-master');
 
             this.modal.addClass('tmp-hidden');
@@ -351,9 +348,7 @@ var dt = window.dt || {};
                 $('body').prepend(this.trigger);
                 this.trigger.fadeIn();
             }
-        }else{
-            this.modal.css('display', 'none');
-        }
+
 
         this.shown = false;
         $("body").removeClass('mobile-layer');
@@ -415,7 +410,6 @@ var dt = window.dt || {};
     dt.showMobileLayer = function (e) {
         $(".dt-modal").removeClass('teaser-on').find('.teaser').remove();
         $( ".dt-modal" ).addClass('m-open');
-        dt.triggerButton(e);
         dt.PopupManager.show();
         //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
         ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
@@ -432,7 +426,7 @@ var dt = window.dt || {};
         }
         dt.PopupManager.init();
         dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
-
+        dt.triggerButton(e);
         if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
             dt.scrollUpDetect();
             dt.PopupManager.isMobile = true;

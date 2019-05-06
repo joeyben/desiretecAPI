@@ -14,6 +14,7 @@ require('../bootstrap');
  */
 
 Vue.use(require('vue-moment'));
+Vue.use(require('vue-js-modal'));
 Vue.component('v-select', require('../../../../node_modules/vue-select/src/components/Select.vue'))
 Vue.component('pagination', require('../components/frontend/PaginationComponent.vue'));
 Vue.component('comment', require('../components/frontend/Comment.vue'));
@@ -21,6 +22,7 @@ Vue.component('message', require('../components/frontend/Message.vue'));
 Vue.component('chat-messages', require('../components/frontend/ChatMessages.vue'));
 Vue.component('message-form', require('../components/frontend/MessageForm.vue'));
 Vue.component('confirmation-modal', require('../components/frontend/ConfirmationModal.vue'));
+Vue.component('wish-edit-modal', require('../components/frontend/WishEditModal.vue'));
 
 const app = new Vue({
     el: '#app',
@@ -61,7 +63,6 @@ const app = new Vue({
         formatPrice(value) {
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         },
-
     }
 });
 

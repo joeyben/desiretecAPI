@@ -71,7 +71,10 @@ class NovasolController extends Controller
      */
     public function show(Request $request)
     {
-        $html = view('novasol::layer.popup')->with([
+        $input = $request->only('variant');
+        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+
+        $html = view('novasol::'.$layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'pets_arr' => $this->pets,
@@ -93,8 +96,10 @@ class NovasolController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $input = $request->all();
         if ($request->failed()) {
-            $html = view('novasol::layer.popup')->with([
+            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+            $html = view('novasol::'.$layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,

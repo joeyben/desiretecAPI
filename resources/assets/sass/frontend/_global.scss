@@ -48,6 +48,11 @@
   }
 }
 
+.primary-btn, .secondary-btn{
+  &.full{
+    width: 100%;
+  }
+}
 input{
   @include placeholder-color($gray1);
 }
