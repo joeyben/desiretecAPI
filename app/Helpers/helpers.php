@@ -414,13 +414,15 @@ if (!function_exists('getWhiteLabelLogo')) {
      */
     function getWhiteLabelLogoUrl($type = 'logo')
     {
-        return \Modules\Attachments\Entities\Attachment::select([
-        config('module.attachments.table') . '.basename',
-        config('module.attachments.table') . '.type',
+        $attachment = \Modules\Attachments\Entities\Attachment::select([
+            config('module.attachments.table') . '.basename',
+            config('module.attachments.table') . '.type',
         ])
-        ->where('attachable_id', getCurrentWhiteLabelId())
-        ->where('type', 'whitelabels/' . $type)
-        ->first()->toArray()['url'];
+            ->where('attachable_id', getCurrentWhiteLabelId())
+            ->where('type', 'whitelabels/' . $type)
+            ->first();
+
+        return !is_null($attachment) ? $attachment->toArray()['url'] : asset('img/logo_big.png');
     }
 }
 
