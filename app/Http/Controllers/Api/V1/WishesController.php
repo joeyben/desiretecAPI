@@ -46,6 +46,11 @@ class WishesController extends APIController
         return response()->json(['success' => true, 'html'=>$html]);
     }
 
+    public function wish(Wish $wish)
+    {
+        return response()->json($wish->id);
+    }
+
     /**
      * Creates the Resource for Page.
      *

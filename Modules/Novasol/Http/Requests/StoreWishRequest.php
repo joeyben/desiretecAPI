@@ -70,7 +70,8 @@ class StoreWishRequest extends FormRequest
             'earliest_start'  => 'required',
             'latest_return'   => 'required',
             'adults'          => 'required',
-            'email'           => 'required|email'
+            'email'           => 'required|email',
+            'terms'           => 'required',
         ];
     }
 
@@ -82,12 +83,13 @@ class StoreWishRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required'            => 'Email is required!',
-            'email.email'               => 'Email must be a valid address!',
-            'earliest_start.required'   => 'Start date is required!',
-            'latest_return.required'    => 'Return date is required!',
-            'adults.required'           => 'Number of Adults is required!',
-            'destination.required'      => 'Destination is required!',
+            'email.required'            => trans('layer.email.required'),
+            'email.email'               => trans('layer.email.email'),
+            'adults.required'           => trans('layer.adults.required'),
+            'destination.required'      => trans('layer.destination.required'),
+            'terms.required'            => trans('layer.terms.required'),
+            'earliest_start'            => trans('layer.earliest_start.required'),
+            'latest_return'             => trans('layer.latest_return.required'),
         ];
     }
 }

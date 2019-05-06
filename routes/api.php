@@ -34,6 +34,11 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         // Users
         Route::resource('users', 'UsersController', ['except' => ['create', 'edit']]);
         Route::post('users/delete-all', 'UsersController@deleteAll');
+
+        // Wishes
+        Route::resource('wishes', 'WishesController', ['except' => ['create', 'edit', 'wish']]);
+        Route::get('wish/{wish}', 'WishesController@getWish');
+
         //@todo need to change the route name and related changes
         Route::get('deactivated-users', 'DeactivatedUsersController@index');
         Route::get('deleted-users', 'DeletedUsersController@index');

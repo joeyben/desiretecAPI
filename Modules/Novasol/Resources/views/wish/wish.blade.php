@@ -38,8 +38,8 @@
                     <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('messages')">Nachricht ansehen</button>
                 @else
                     <p class="header-p">{!! trans('wish.view.stage.user_empty',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
-                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
                 @endif
             </div>
         </div>
@@ -165,8 +165,8 @@
                 </p>
                 @if (!$offer->offerFiles && $logged_in_user->hasRole('User'))
                 <div class="sa2-buttons">
-                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
                 </div>
                 @endif
             </div>
@@ -202,8 +202,8 @@
         <div class="container">
             <div class="col-md-12 sa-2">
                 <div class="sa-buttons">
-                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
                 </div>
             </div>
         </div>
@@ -247,8 +247,8 @@
     <div class="container">
         <div class="col-md-12 sa-2">
             <div class="sa-buttons">
-                <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">Rückrufbitte einstellen</button>
+                <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
             </div>
         </div>
     </div>
@@ -315,7 +315,7 @@
                 <i class="fal fa-dog"></i>
                 <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
             </div>
-            @if (false && $logged_in_user->hasRole('User'))
+            @if ($logged_in_user->hasRole('User'))
             <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
             @endif
         </div>
@@ -384,8 +384,8 @@
                                 <i class="fal fa-dog"></i>
                                 <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
                             </div>
-                            @if ($logged_in_user->hasRole('User'))
-                            <button class="secondary-btn{{ $callbackInactivClass }}">Daten andern</button>
+                            @if ($logged_in_user->hasRole('User') && $is_owner)
+                                <button class="secondary-btn{{ $callbackInactivClass }}">Daten andern</button>
                             @endif
                         </div>
 
@@ -424,8 +424,8 @@
             {{ Form::open(['route' => 'frontend.contact.store', 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'contact-seller']) }}
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Kontakt zum zuständigen Reisebüro</h4>
-                <p>Schreibe dem zuständigen Reisebüro eine Nachricht oder nutze den <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#callback">Rückruf-Service</a></p>
+                <h4 class="modal-title">{{ trans('wish.contact.title') }}</h4>
+                <p>{{ trans('wish.contact.text') }}</p>
             </div>
 
             <div class="modal-body">
@@ -504,9 +504,8 @@
             {{ Form::open(['route' => 'frontend.contact.storecallback', 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'callback-seller']) }}
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Rückrufbitte zum zuständigen Reisebüro einstellen</h4>
-                <p>Stelle einfach und bequem eine Rückrufbitte ein und das<br>
-                    zuständige Reisebüro wird sich als bald bei dir melden
+                <h4 class="modal-title">{{ trans('wish.callback.title') }}</h4>
+                <p>{{ trans('wish.callback.text') }}
                 </p>
             </div>
 
@@ -573,82 +572,101 @@
     </div>
 </div>
 
+@if (false && $logged_in_user->hasRole('User') && $is_owner)
+    <div id="edit-wish" class="modal wish-modal-1 fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="alert alert-success alert-dismissible fade" role="alert">
+                    <span class="text"></span>
+                    <a class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                {{ Form::open(['route' => ['frontend.wishes.update', $wish], 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'update-wish']) }}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{ trans('wish.edit.title') }}</h4>
+                    <p>{{ trans('wish.edit.text') }}
+                    </p>
+                </div>
 
-<div id="edit-wish" class="modal wish-modal-1 fade" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="alert alert-success alert-dismissible fade" role="alert">
-                <span class="text"></span>
-                <a class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-            </div>
-            {{ Form::open(['route' => ['frontend.wishes.update', $wish], 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'update-wish']) }}
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Reisewunsch editieren</h4>
-                <p>Stelle einfach und bequem eine Rückrufbitte ein und das<br>
-                    zuständige Reisebüro wird sich als bald bei dir melden
-                </p>
-            </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
 
-            <div class="modal-body">
-                <div class="container-fluid">
-
-                    <div class="col-md-12 modal-body-left">
-                        <div class="row row-no-padding">
-                            <div class="group col-md-6">
-                                <input class="form-control" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }}">
-                                <label>Von</label>
-                            </div>
-                            <div class="group col-md-6">
+                        <div class="col-md-12 modal-body-left">
+                            <div class="row row-no-padding">
+                                <div class="group col-md-6">
+                                    <input class="form-control" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }}">
+                                    <label>Von</label>
+                                </div>
+                                <div class="group col-md-6">
                                     <input class="form-control" value="{{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }}">
-                                <label>Bis</label>
+                                    <label>Bis</label>
+                                </div>
+                            </div>
+                            <div class="row row-no-padding">
+                                <div class="group col-md-6">
+                                    {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), $wish->durationval, ['class' => 'form-control']) }}
+                                </div>
+                                <div class="group col-md-6">
+                                    <input class="form-control" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
+                                    <label>Budget</label>
+                                </div>
+                            </div>
+                            <div class="row row-no-padding">
+                                <div class="group col-md-6">
+                                    {{ Form::text('destination',  $wish->destination  ? $wish->destination  : null, ['class' => 'form-control','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
+                                    <label>Destination</label>
+                                </div>
+                                <div class="group col-md-6">
+                                    {{ Form::select('adults', $adults_arr, $wish->adults ? $wish->adults : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                </div>
+                            </div>
+                            <div class="row row-no-padding">
+                                <div class="group col-md-6">
+                                    {{ Form::select('kids', $kids_arr, $wish->kids ? $wish->kids : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                </div>
+                                <div class="group col-md-6">
+                                    {{ Form::select('pets', $pets_arr, $wish->pets ? $wish->pets : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                </div>
+                            </div>
+
+                            <div class="row row-no-padding">
+                                <div class="group col-md-6">
+
+                                </div>
+                                <div class="group col-md-6">
+                                    <button type="submit" class="primary-btn wm-2-btn full">{{ trans('wish.edit.save') }}</button>
+                                </div>
+
                             </div>
                         </div>
-                        <div class="row row-no-padding">
-                            <div class="group col-md-6">
-                                    <input class="form-control" value="{{ $wish->duration }}">
-                                <label>Duration</label>
-                                </div>
-                            <div class="group col-md-6">
-                                    <input class="form-control" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
-                                <label>Budget</label>
-                                </div>
-                        </div>
-                        <div class="row row-no-padding">
-                            <div class="group col-md-6">
-                                    <input class="form-control" value="{{ $wish->destination }}">
-                                <label>Destination</label>
-                                </div>
-                            <div class="group col-md-6">
-                                    <input class="form-control" value="{{ $wish->adults }}">
-                                <label>Pax</label>
-                                </div>
-                        </div>
-                        <div class="row row-no-padding">
-                            <div class="group col-md-6">
-                                    <input class="form-control" value="{{ $wish->kids }}">
-                                <label>Kids</label>
-                                </div>
-                            <div class="group col-md-6">
-                                    <input class="form-control" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
-                                <label>Pets</label>
-                                </div>
-                        </div>
+
                     </div>
+                </div>
+
+                <div class="modal-footer">
 
                 </div>
+                {{ Form::close() }}
             </div>
-
-            <div class="modal-footer">
-
-            </div>
-            {{ Form::close() }}
         </div>
     </div>
-</div>
+@endif
+
+@if ($logged_in_user->hasRole('User') && $is_owner)
+    <wish-edit-modal v-bind:wish_id="{{ $wish->id }}"
+                     v-bind:adults_arr="{{ json_encode($adults_arr) }}"
+                     v-bind:duration_arr="{{ json_encode(array_merge(['' => trans('layer.general.duration_empty')], $duration_arr)) }}"
+    ></wish-edit-modal>
+@endif
+
+@endsection
+
+@section('before-scripts')
+
+    <script src="{{ mix('whitelabel/novasol/js/novasol.js') }}"></script>
 @endsection
 
 @section('after-scripts')

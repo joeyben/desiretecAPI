@@ -117,6 +117,11 @@ class WishesController extends Controller
         ]);
     }
 
+    public function getWish(Wish $wish , ManageWishesRequest $request)
+    {
+        return response()->json($wish->id);
+    }
+
     public function newWish(ManageWishesRequest $request)
     {
         return view('frontend.wishes.newwishes.wish')->with([

@@ -320,7 +320,7 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #00509F url(../../images/layer/guy_2.png) no-repeat bottom / 100%;
+  background: #00509F url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -421,8 +421,7 @@ $master-blue: #70CBF4;
       color: #fff;
       right: 0px;
       top: 7px;
-      font-size: 40px;
-      background: url(../../svg/times.svg);
+      font-size: 30px;
       width: 30px;
       height: 30px;
     }
@@ -535,7 +534,7 @@ $master-blue: #70CBF4;
   /* TUI INPUT STYLES FOR WL */
 
 
-  input[type="text"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"], input[type="tel"], textarea {
+  input[type="text"], input[type="number"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"], input[type="tel"], textarea {
     -webkit-transition: border-color .3s ease;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
@@ -556,7 +555,7 @@ $master-blue: #70CBF4;
     font-size: 12px;
   }
 
-  input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus {
+  input[type="text"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="number"]:focus,input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus {
     -webkit-transition: border-color .3s ease;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
@@ -1624,7 +1623,7 @@ p.kwp-info {
       }
 
       .haserrors{
-        .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
+        .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="number"], input[type="date"]{
           border-color: #D40E14;
         }
 
@@ -1651,7 +1650,7 @@ p.kwp-info {
 
       }
     }
-    .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after,.kwp input[type="text"], .kwp input[type="date"]{
+    .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after,.kwp input[type="text"],.kwp input[type="number"], .kwp input[type="date"]{
       height: 35px;
       border: none;
       line-height: 1.5em;
@@ -1743,7 +1742,7 @@ p.kwp-info {
 and (max-device-width : 320px) {
   .mobile-layer {
     .kwp{
-      .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
+      .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="number"], input[type="date"]{
         font-size: 16px;
       }
       .duration-time, .travelers{
