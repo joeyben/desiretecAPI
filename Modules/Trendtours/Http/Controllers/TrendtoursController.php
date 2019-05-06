@@ -38,7 +38,7 @@ class TrendtoursController extends Controller
     {
         $this->whitelabel = $whitelabel;
         $this->attachements = $attachements;
-        $this->adults = $this->putPersonLabel($categories->getChildrenFromSlug('slug', 'adults'), 'adults');
+        $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->months = $this->transformMonth($categories->getChildrenFromSlug('slug', 'months'));
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
