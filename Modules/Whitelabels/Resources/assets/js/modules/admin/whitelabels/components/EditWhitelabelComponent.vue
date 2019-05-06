@@ -61,6 +61,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.email') }} <span class="text-danger"> *</span></label>
+                                            <div class="col-lg-9">
+                                                <input type="email" class="form-control" :class="errors.has('email') ? 'is-invalid': ''" id='email' name='email' :placeholder="trans('modals.email')" @input="updateWhitelabel"  :value="whitelabel.email"/>
+                                                <div class="invalid-feedback">
+                                                    <strong v-text="errors.get('email')"></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.owner') }}</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control"  id='owner' disabled readonly :placeholder="trans('modals.owner')"  :value="whitelabel.owner"/>

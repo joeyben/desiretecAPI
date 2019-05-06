@@ -568,4 +568,6 @@ return [
     'inbox'                    => 'Inbox',
     'whitelabel'               => 'Whitelabel',
     'role'                     => 'Role',
+    'export_selected'          => 'Export Selected',
+    'export_all'               => 'Export All',
 ];

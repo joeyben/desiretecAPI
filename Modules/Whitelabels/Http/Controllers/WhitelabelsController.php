@@ -212,6 +212,7 @@ class WhitelabelsController extends Controller
                 'display_name'                     => '',
                 'status'                           => true,
                 'domain'                           => null,
+                'email'                            => null,
                 'distribution_id'                  => 1,
                 'owner'                            => $this->auth->guard('web')->user()->first_name . ' ' . $this->auth->guard('web')->user()->last_name,
                 'background'                       => [],
@@ -339,6 +340,7 @@ class WhitelabelsController extends Controller
                 'display_name'                 => $whitelabel->display_name,
                 'status'                       => $whitelabel->status,
                 'domain'                       => $whitelabel->domain,
+                'email'                        => $whitelabel->email,
                 'owner'                        => $whitelabel->owner->full_name,
                 'distribution_id'              => $whitelabel->distribution_id,
                 'state'                        => $whitelabel->state,
@@ -449,7 +451,7 @@ class WhitelabelsController extends Controller
             $result['whitelabel'] = $this->whitelabels->update(
                 $id,
                 array_merge(
-                    $request->only('display_name', 'status', 'distribution_id'),
+                    $request->only('display_name', 'status', 'distribution_id', 'email'),
                     ['state' => 2]
                 )
             );
@@ -485,7 +487,7 @@ class WhitelabelsController extends Controller
         try {
             $result['whitelabel'] = $this->whitelabels->update(
                 $id,
-                ['domain' => $this->str->lower($request->get('domain')), 'state' => 2]
+                ['domain' => $this->str->lower($request->get('domain')), 'email' => $request->get('email'), 'state' => 2]
             );
 
             ini_set('max_execution_time', 300);

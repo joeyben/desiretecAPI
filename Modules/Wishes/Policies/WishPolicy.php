@@ -3,12 +3,26 @@
 namespace Modules\Wishes\Policies;
 
 use App\Models\Access\User\User;
+use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\Wishes\Entities\Wish;
 
 class WishPolicy
 {
     use HandlesAuthorization;
+
+    /**
+     * @param \App\Models\Access\User\User $user
+     * @param                              $ability
+     *
+     * @return bool
+     */
+    public function before(User $user, $ability)
+    {
+        if ($user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            return true;
+        }
+    }
 
     /**
      * Determine whether the user can view the wish.

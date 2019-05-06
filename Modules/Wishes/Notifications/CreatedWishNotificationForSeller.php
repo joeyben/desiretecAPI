@@ -54,7 +54,14 @@ class CreatedWishNotificationForSeller extends Notification
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
-            //NewsletterFacade::subscribe($this->wish->owner->email);
+            NewsletterFacade::subscribe($this->wish->owner->email,
+            [
+              'destination' => $this->wish->destination,
+              'airport' => $this->wish->airport,
+              'earliest_start' => $this->wish->earliest_start,
+              'adults' => $this->wish->adults,
+              'description' => $this->wish->description,
+            ]);
 
             return (new MailMessage())
                 ->from('trendtours@reisewunschservice.de', $this->wish->whitelabel->display_name . ' Portal')

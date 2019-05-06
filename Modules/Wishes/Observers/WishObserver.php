@@ -36,7 +36,7 @@ class WishObserver
      */
     public function deleting(Wish $wish)
     {
-        abort_if(true, 403, 'Forbidden. The user is authenticated, but does not have the permissions to perform an action. Please contact your Support');
+        abort_if(Auth::guard('web')->user()->cannot('delete', $wish), 403, 'Forbidden. The user is authenticated, but does not have the permissions to perform an action. Please contact your Support');
     }
 
     /**
@@ -46,7 +46,7 @@ class WishObserver
      */
     public function restoring(Wish $wish)
     {
-        abort_if(true, 403, 'Forbidden. The user is authenticated, but does not have the permissions to perform an action. Please contact your Support');
+        abort_if(Auth::guard('web')->user()->cannot('restore', $wish), 403, 'Forbidden. The user is authenticated, but does not have the permissions to perform an action. Please contact your Support');
     }
 
     /**
@@ -56,6 +56,6 @@ class WishObserver
      */
     public function forceDeleted(Wish $wish)
     {
-        abort_if(true, 403, 'Forbidden. The user is authenticated, but does not have the permissions to perform an action. Please contact your Support');
+        abort_if(Auth::guard('web')->user()->cannot('forceDelete', Wish::class), 403, 'Forbidden. The user is authenticated, but does not have the permissions to perform an action. Please contact your Support');
     }
 }
