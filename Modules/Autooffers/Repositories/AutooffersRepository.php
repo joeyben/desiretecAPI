@@ -246,7 +246,7 @@ class AutooffersRepository extends BaseRepository
     {
         $kidsCount = $this->kids ? \count(explode(',', $this->kids)) : 0;
 
-        return $this->adults + $kidsCount;
+        return intval($this->adults) + $kidsCount;
     }
 
     // Getters & Setters
