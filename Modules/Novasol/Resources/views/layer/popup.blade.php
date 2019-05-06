@@ -28,7 +28,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('adults', $adults_arr, key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                {{ Form::select('adults', $adults_arr, key_exists('adults', $request) ? $request['adults'] : 2, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
                             <i class="fal fa-users"></i>
                         </div>
