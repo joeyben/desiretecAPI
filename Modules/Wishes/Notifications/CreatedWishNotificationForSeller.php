@@ -5,6 +5,7 @@ namespace Modules\Wishes\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
@@ -56,6 +57,7 @@ class CreatedWishNotificationForSeller extends Notification
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
             Log::info($this->wish->earliest_start->format('M Y'));
+            Log::info(Carbon::parse($this->wish->earliest_start)->format('M Y'));
 
             NewsletterFacade::subscribe($this->wish->owner->email,
                 [
