@@ -3,7 +3,7 @@ var dt = window.dt || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://trendtours.reisewunschservice.de',
+        baseUrl: 'https://trendtours.reise-wunsch.com',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/trendtours/css/layer/whitelabel.css'
