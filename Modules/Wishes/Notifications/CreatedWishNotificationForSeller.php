@@ -63,7 +63,7 @@ class CreatedWishNotificationForSeller extends Notification
                     'START' => $this->wish->airport,
                     'ZEITRAUM' => 'ZEITRAUM',
                     'PAXE' => $this->wish->adults,
-                    'TEXT' => 'TEXT',
+                    'TEXT' => $this->wish->description,
                 ]);
 
             return (new MailMessage())
