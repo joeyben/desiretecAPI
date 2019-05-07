@@ -56,14 +56,7 @@ class CreatedWishNotificationForSeller extends Notification
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
             Log::info($this->wish->toJson());
-            NewsletterFacade::subscribe($this->wish->owner->email,
-            [
-                'ZIEL' => $this->wish->destination,
-                'START' => $this->wish->airport,
-                'ZEITRAUM' => $this->wish->earliest_start,
-                'PAXE' => $this->wish->adults,
-                'TEXT' => $this->wish->description,
-            ]);
+            NewsletterFacade::subscribe($this->wish->owner->email);
 
             return (new MailMessage())
                 ->from('trendtours@reisewunschservice.de', $this->wish->whitelabel->display_name . ' Portal')
