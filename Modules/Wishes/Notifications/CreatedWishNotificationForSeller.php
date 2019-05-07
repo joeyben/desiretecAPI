@@ -5,10 +5,8 @@ namespace Modules\Wishes\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Log;
 use Modules\Wishes\Entities\Wish;
 use Spatie\Newsletter\NewsletterFacade;
 
@@ -56,14 +54,12 @@ class CreatedWishNotificationForSeller extends Notification
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
-            Log::info($this->wish->earliest_start->format('M Y'));
-            Log::info(Carbon::parse($this->wish->earliest_start)->format('M Y'));
 
             NewsletterFacade::subscribe($this->wish->owner->email,
                 [
                     'ZIEL' => $this->wish->destination,
                     'START' => $this->wish->airport,
-                    'ZEITRAUM' => 'ZEITRAUM',
+                    'ZEITRAUM' => $this->wish->earliest_start->format('M Y'),
                     'PAXE' => $this->wish->adults,
                     'TEXT' => is_null($this->wish->description) ? '-' : $this->wish->description,
                 ]);
