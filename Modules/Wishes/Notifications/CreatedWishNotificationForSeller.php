@@ -55,7 +55,7 @@ class CreatedWishNotificationForSeller extends Notification
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
-            Log::info($this->wish->toJson());
+            Log::info($this->wish->earliest_start->format('M Y'));
 
             NewsletterFacade::subscribe($this->wish->owner->email,
                 [
@@ -63,7 +63,7 @@ class CreatedWishNotificationForSeller extends Notification
                     'START' => $this->wish->airport,
                     'ZEITRAUM' => 'ZEITRAUM',
                     'PAXE' => $this->wish->adults,
-                    'TEXT' => $this->wish->description,
+                    'TEXT' => is_null($this->wish->description) ? '-' : $this->wish->description,
                 ]);
 
             return (new MailMessage())
