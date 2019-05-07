@@ -60,7 +60,7 @@ class CreatedWishNotificationForSeller extends Notification
             NewsletterFacade::subscribe($this->wish->owner->email,
                 [
                     'ZIEL' => $this->wish->destination,
-                    'START' => $this->wish->destination,
+                    'START' => $this->wish->airport,
                     'ZEITRAUM' => 'ZEITRAUM',
                     'PAXE' => $this->wish->adults,
                     'TEXT' => 'TEXT',
