@@ -57,6 +57,8 @@ class CreatedWishNotificationForSeller extends Notification
 
             NewsletterFacade::subscribe($this->wish->owner->email,
                 [
+                    'FNAME' => $this->wish->owner->first_name === 'Muster' ? '-' : $this->wish->owner->first_name,
+                    'LNAME' => $this->wish->owner->last_name === 'Name' ? '-' : $this->wish->owner->last_name,
                     'ZIEL' => $this->wish->destination,
                     'ANREDE' => is_null($this->wish->title) ? '-' : $this->wish->title,
                     'START' => $this->wish->airport,
