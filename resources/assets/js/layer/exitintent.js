@@ -73,15 +73,15 @@ window.exitIntent = {
     },
 
     resetTimer: function () {
-        clearTimeout(timeoutID);
+        //clearTimeout(timeoutID);
 
         // timeoutID = setTimeout(this.goInactive, this.inactivitySeconds * 1000);
-        exitIntent.startTimer();
+        //exitIntent.startTimer();
     },
 
     startTimer: function () {
         // wait {inactivitySeconds} seconds before calling goInactive
-        timeoutID = setTimeout(exitIntent.goInactive, exitIntent.inactivitySeconds * 1000);
+        //timeoutID = setTimeout(exitIntent.goInactive, exitIntent.inactivitySeconds * 1000);
     },
 
     goInactive: function () {
