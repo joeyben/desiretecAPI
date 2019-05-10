@@ -54,14 +54,19 @@ class CreatedWishNotificationForSeller extends Notification
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
+
             NewsletterFacade::subscribe($this->wish->owner->email,
-            [
-              'destination' => $this->wish->destination,
-              'airport' => $this->wish->airport,
-              'earliest_start' => $this->wish->earliest_start,
-              'adults' => $this->wish->adults,
-              'description' => $this->wish->description,
-            ]);
+                [
+                    'FNAME' => $this->wish->owner->first_name === 'Muster' ? '-' : $this->wish->owner->first_name,
+                    'LNAME' => $this->wish->owner->last_name === 'Name' ? '-' : $this->wish->owner->last_name,
+                    'ZIEL' => $this->wish->destination,
+                    'ANREDE' => is_null($this->wish->title) ? '-' : $this->wish->title,
+                    'START' => $this->wish->airport,
+                    'ZEITRAUM' => $this->wish->earliest_start->format('M Y'),
+                    'PAXE' => $this->wish->adults,
+                    'TEXT' => is_null($this->wish->description) ? '-' : $this->wish->description,
+                    'BUDGET' => is_null($this->wish->budget) ? '-' : $this->wish->budget,
+                ]);
 
             return (new MailMessage())
                 ->from('trendtours@reisewunschservice.de', $this->wish->whitelabel->display_name . ' Portal')
