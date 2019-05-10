@@ -246,7 +246,7 @@ class AutooffersRepository extends BaseRepository
     {
         $kidsCount = $this->kids ? \count(explode(',', $this->kids)) : 0;
 
-        return $this->adults + $kidsCount;
+        return intval($this->adults) + $kidsCount;
     }
 
     // Getters & Setters
@@ -320,7 +320,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setAdults($adults)
     {
-        $this->adults = $adults;
+        $this->adults = intval($adults);
     }
 
     /**
@@ -328,7 +328,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setKids($kids)
     {
-        $this->kids = $kids;
+        $this->kids = intval($kids);
     }
 
     /**
@@ -336,7 +336,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setPeriod($period)
     {
-        $this->period = $period;
+        $this->period = intval($period);
     }
 
     /**

@@ -1,0 +1,25 @@
+#gallery{
+  position: relative;
+  .main-image{
+    width: 66.66%;
+    height: 620px;
+  }
+  .side-image{
+    width: 33.33%;
+    height: 310px;
+  }
+  .main-image, .side-image{
+    background-size: cover !important;
+    background-position: 50% 50% !important;
+    background-repeat: no-repeat !important;
+    float: left;
+  }
+  .primary-btn{
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100px;
+  }
+}

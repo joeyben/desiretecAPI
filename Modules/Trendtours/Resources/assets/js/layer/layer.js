@@ -328,18 +328,16 @@ var dt = window.dt || {};
 
     dt.initCallbacks = dt.initCallbacks || [];
     dt.initCallbacks.push(function (popup) {
-        dt.exitIntent = $.exitIntent('enable', { 'sensitivity': 0 });
-
-        $(document).bind('exitintent',
-            function() {
-                if(getCookie('exitintent')){
-                    return;
-                }
-                else{
-                    setCookie('exitintent', 'yes');
-                    popup.show();
-                }
-            });
+        exitIntent.init();
+        document.addEventListener('exitintent', function (e) {
+            if(!exitIntent.checkCookie()) {
+                popup.show();
+                // set cookies
+                exitIntent.cookieManager.create("exitintent", "yes", exitIntent.cookieExp, exitIntent.sessionOnly);
+                var exitIntentNumber = exitIntent.cookieManager.get("exit_intent_number") ? Number(exitIntent.cookieManager.get("exit_intent_number")) + 1 : 1;
+                exitIntent.cookieManager.create("exit_intent_number", exitIntentNumber, exitIntent.cookieExp, exitIntent.sessionOnly);
+            }
+        }, false);
     });
 
 
