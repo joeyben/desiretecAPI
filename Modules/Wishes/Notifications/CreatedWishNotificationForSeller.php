@@ -54,7 +54,7 @@ class CreatedWishNotificationForSeller extends Notification
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
-            if(session('newsletter') === "on") {
+            if(session('newsletter')) {
                 NewsletterFacade::subscribe($this->wish->owner->email,
                     [
                         'FNAME' => $this->wish->owner->first_name === 'Muster' ? '-' : $this->wish->owner->first_name,
