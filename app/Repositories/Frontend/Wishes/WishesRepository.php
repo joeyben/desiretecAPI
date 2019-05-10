@@ -125,7 +125,7 @@ class WishesRepository extends BaseRepository
             $input['created_by'] = access()->user()->id;
             $input['whitelabel_id'] = $whitelabelId;
             $input['group_id'] = $this->getGroup();
-            $input['title'] = $input['destination'];
+            $input['title'] = '-';
             $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
             $input['latest_return'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
             $input['adults'] = intval($input['adults']);
