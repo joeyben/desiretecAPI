@@ -12,6 +12,8 @@ use App\Http\Utilities\NotificationIos;
 use App\Http\Utilities\PushNotification;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Analytics;
+use Spatie\Analytics\Period;
 
 /**
  * Class LoginController.
@@ -56,6 +58,8 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
+        $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+        dd($analyticsData);
         return view('frontend.auth.login')
             ->withSocialiteLinks((new Socialite())->getSocialLinks());
     }
