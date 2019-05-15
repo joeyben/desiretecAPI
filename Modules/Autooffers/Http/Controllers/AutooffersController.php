@@ -70,13 +70,25 @@ class AutooffersController extends Controller
      *
      * @return mixed
      */
+    public function details(Wish $wish)
+    {
+
+
+        return view('autooffers::autooffer.details');
+    }
+
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     *
+     * @return mixed
+     */
     public function create(Wish $wish)
     {
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response, $wish->id);
 
-        return redirect()->to('offer/details/' . $wish->id);
+        return redirect()->to('offer/list/' . $wish->id);
     }
 
     /**

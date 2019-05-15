@@ -10,6 +10,6 @@ Route::group(['domain' => 'novasol.reisewunschservice.de'], function () {
         Route::get('wish/{wish}', 'NovasolWishesController@view')->name('wish.view');
         Route::get('wish/{wish}/{token}', 'NovasolWishesController@details')->name('wish.details');
         Route::get('getwish/{wish}', 'NovasolWishesController@getWish')->name('getWish');
-
+        Route::get('wishlist', 'NovasolWishesController@wishList')->name('list');
     });
 });

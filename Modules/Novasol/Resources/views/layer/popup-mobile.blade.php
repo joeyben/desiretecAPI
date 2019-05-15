@@ -48,7 +48,7 @@
                             <div class="kwp-custom-select">
                                 {{ Form::select('pets', $pets_arr, key_exists('pets', $request) ? $request['pets'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
-                            <i class="fal fa-chevron-down"></i>
+                            <i class="fal fa-dog-leashed"></i>
                         </div>
 
                         <hr>
@@ -193,7 +193,7 @@
                 var pax = $("#adults").val();
                 var children_count = parseInt($("#kids").val());
                 var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind(er)" : ", "+children_count+" Kind(er)")  : "" ;
-                var pets = $("#pets").val() === "yes" ? ", "+$( "#pets option:selected" ).text() : "";
+                var pets = $("#pets").val() !== "0" ? ", "+$( "#pets option:selected" ).text() : "";
                 var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
                 $(".travelers .txt").text(pax+" "+erwachsene+""+children+ ""+pets);
                 return false;

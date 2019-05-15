@@ -30,9 +30,9 @@ class NovasolController extends Controller
     protected $attachements;
     protected $categories;
 
-    /* @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
+    /* @param WhitelabelsRepository $whitelabel
+     * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
      * @param \Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository $attachements
-     * @param WhitelabelsRepository $whitelabel
      */
     public function __construct(WhitelabelsRepository $whitelabel, CategoriesRepository $categories, EloquentAttachmentsRepository $attachements)
     {

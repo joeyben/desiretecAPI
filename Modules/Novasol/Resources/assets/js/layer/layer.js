@@ -17,7 +17,7 @@ var dt = window.dt || {};
 
         var texts = {
             'eil-n1': {
-                header: 'Dürfen wir Ihnen helfen?',
+                header: 'Wir möchten Sie gerne beraten!',
                 body: 'Teilen Sie uns jetzt Ihre Reisewünsche mit und Sie erhalten innerhalb kürzester Zeit Ihre persönlichen Ferienhausangebote.'
             },
             'eil-mobile': {
@@ -418,7 +418,7 @@ var dt = window.dt || {};
     $(document).ready(function (e) {
         if(deviceDetector.device === "phone") {
             dt.PopupManager.teaser = true;
-            dt.PopupManager.teaserText = "Dürfen wir Ihnen helfen?";
+            dt.PopupManager.teaserText = "Wir möchten Sie gerne beraten!";
             dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
             $(".dt-modal .kwp-close").on('touchend',function () {
                 dt.PopupManager.closePopup(e);

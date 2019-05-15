@@ -29,6 +29,7 @@ class TrendtoursController extends Controller
      */
     protected $whitelabel;
     protected $attachements;
+    protected $categories;
 
     /* @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
      * @param \Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository $attachements
@@ -43,6 +44,7 @@ class TrendtoursController extends Controller
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->whitelabelId = \Config::get('trendtours.id');
+        $this->categories = $categories;
     }
 
     /**
@@ -94,6 +96,7 @@ class TrendtoursController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+
         $input = $request->all();
         if ($request->failed()) {
             $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
@@ -108,6 +111,8 @@ class TrendtoursController extends Controller
 
             return response()->json(['success' => true, 'html'=>$html]);
         }
+        $newsletter = $request->has('newsletter') ? true : false ;
+        session(['newsletter' => $newsletter]);
 
         $newUser = $this->createUserFromLayer($request, $user);
         $wish = $this->createWishFromLayer($request, $wish);
@@ -171,7 +176,7 @@ class TrendtoursController extends Controller
      */
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
-        $input = $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms');
+        $input = $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'newsletter');
         $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('m.Y', $input['earliest_start'])->format('d.m.Y');
         $input['latest_return'] = "01.01.2020";
         $new_wish = $wish->create($input, $this->whitelabelId);

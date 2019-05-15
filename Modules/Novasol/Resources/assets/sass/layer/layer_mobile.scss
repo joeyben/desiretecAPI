@@ -1,16 +1,17 @@
 @import "utils";
 @import "rangeslider";
 @import "bootstrap-select";
-@import "variables";
+@import "../variables";
 
 $gutter: 30px;
-$altfont: 'Helvetica', 'Arial', sans-serif;
+$altfont: 'Roboto', sans-serif;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #00509F;
+$mastercolor: #ed1c24;
+$secondarycolor: #fd0;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
-
+$fontcolor: #303030;
 /* dropdown */
 
 
@@ -320,11 +321,11 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #00509F url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: $secondarycolor url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
-  color: #fff;
+  color: $fontcolor;
   box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.1);
   /*transition: all 0.5s ease;
    -webkit-transition: all 0.5s ease;
@@ -381,7 +382,7 @@ $master-blue: #70CBF4;
   .teaser{
     height: 90px !important;
     top: -110px;
-    background-color: rgba(9,42,94,0.8);
+    background-color: rgba(255, 221, 0, 0.8);
     width: 95%;
     padding: 0 0px;
     margin: auto;
@@ -413,12 +414,12 @@ $master-blue: #70CBF4;
       margin: 10px;
       text-align: center;
       padding-top: 20px;
-      color: white;
+      color: $fontcolor;
       line-height: 1.5em;
     }
     i{
       position: absolute;
-      color: #fff;
+      color: $fontcolor;
       right: 0px;
       top: 7px;
       font-size: 30px;
@@ -512,7 +513,7 @@ $master-blue: #70CBF4;
 
     text-align: center;
 
-    color:  #00509F;
+    color:  $secondarycolor;
     font-size: 22px;
     font-weight: 500;
     line-height: 30px;
@@ -624,7 +625,7 @@ $master-blue: #70CBF4;
           margin-bottom: 0;
           height: auto;
           a{
-            background: #00509F;
+            background: $secondarycolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -686,7 +687,7 @@ $master-blue: #70CBF4;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #00509F;
+              color: $secondarycolor;
               padding: 0;
               margin: 20px 0;
               font-size: 20px !important;
@@ -718,7 +719,7 @@ $master-blue: #70CBF4;
           display: block;
           margin-bottom: 0;
           a{
-            background: #00509F;
+            background: $secondarycolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -1093,7 +1094,7 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .filter-option-inner-inner{
-      color: #00509F;
+      color: $secondarycolor;
       font-size: 18px;
     }
   }
@@ -1320,7 +1321,7 @@ p.kwp-info {
   }
   .kwp-header{
     /*background: linear-gradient(179deg, #fce136 0, #e4cd34 100%);*/
-    background: linear-gradient(179deg, #00509F 0, #00509F 100%);
+    background: linear-gradient(179deg, $secondarycolor 0, $secondarycolor 100%);
     min-height: 40px;
     height: 40px;
     position: relative;
@@ -1339,7 +1340,7 @@ p.kwp-info {
       right: 15px;
       top: 40px;
       font-size: 20px;
-      color: #00509F;
+      color: $fontcolor;
     }
   }
   .kwp-content-extra{
@@ -1450,8 +1451,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid #00509F;
-          background-color: #00509F;
+          border: 1px solid $secondarycolor;
+          background-color: $secondarycolor;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1460,7 +1461,7 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#fff;
+        color:$fontcolor;
         padding: 8px 0;
         font-weight: bold;
         text-align: center;
@@ -1541,8 +1542,8 @@ p.kwp-info {
         line-height: 2em;
         background-color: transparent;
         font-weight: 500;
-        border-bottom: 1px solid $mastercolor;
-        color: $mastercolor;
+        border-bottom: 1px solid $secondarycolor;
+        color: $fontcolor;
         border-radius: 0;
         padding: 0 10px;
         font-size: 18px;
@@ -1658,7 +1659,7 @@ p.kwp-info {
       background: none;
       background-color: transparent;
       font-weight: 500;
-      border-bottom: 1px solid $mastercolor;
+      border-bottom: 1px solid $secondarycolor;
       border-radius: 0;
       padding: 0 10px;
       font-size: 18px;

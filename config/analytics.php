@@ -9,12 +9,12 @@ return [
     |
     | Found in views/includes/partials/ga.blade.php
     */
-    'google-analytics' => env('GOOGLE_ANALYTICS_TRACKING_ID', 'UA-XXXXX-X'),
+    'google-analytics' => 'UA-105970361-8',
 
     /*
      * The view id of which you want to display data.
      */
-    'view_id' => env('GOOGLE_ANALYTICS_VIEW_ID'),
+    'view_id' => "192484069",
 
     /*
      * Path to the client secret json file. Take a look at the README of this package

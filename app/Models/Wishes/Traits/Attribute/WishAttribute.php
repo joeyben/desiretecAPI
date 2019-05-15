@@ -62,4 +62,5 @@ trait WishAttribute
     {
         return transformTravelers($value, 'kids');
     }
+
 }
