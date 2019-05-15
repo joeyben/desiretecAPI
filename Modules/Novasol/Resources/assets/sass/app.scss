@@ -15,14 +15,21 @@ p,a,h1,h2,h3,h4,button,input,textarea{
   color: $mastercolor;
 }
 
-body.wish{
+body{
   .landing &{
     padding-top: 20px;
+    .main-container{
+      margin: 0;
+      width: 100%;
+      padding: 0;
+    }
   }
-  .main-container{
-    margin: 0;
-    width: 100%;
-    padding: 0;
+  .wish &{
+    .main-container{
+      margin: 0;
+      width: 100%;
+      padding: 0;
+    }
   }
 }
 
