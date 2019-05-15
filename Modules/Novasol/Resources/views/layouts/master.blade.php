@@ -4,6 +4,10 @@
     {!! $display_name !!}
 @endsection
 
+@section('before-styles')
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700,700italic,900" media="all">
+@endsection
+
 @section('after-styles')
     <link rel="stylesheet" href="{{ asset('whitelabel/novasol/css/novasol.css') }}">
 @endsection

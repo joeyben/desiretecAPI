@@ -7,9 +7,16 @@
 @section('title')
     {{ trans('general.whitelabel.browser.title') }}
 @endsection
+
+@section('before-styles')
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700,700italic,900" media="all">
+@endsection
+
 @section('after-styles')
     <link rel="stylesheet" href="{{ asset('whitelabel/novasol/css/wish/details.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/novasol/css/novasol.css') }}">
 @endsection
+
 
 @section('content')
 <section class="section-top">
@@ -264,16 +271,16 @@
     <div class="container">
         @if ($logged_in_user->hasRole('Seller'))
             <div class="col-md-12 s2-first">
-                <h4>Reisewunsch Angaben</h4>
-                <p>Dies sind die Angaben zum Reisewunsch.</p>
+                <h4>{{ trans('wish.details.subheadline.giving_wish') }}</h4>
+                <p>{{ trans('wish.details.subheadline.giving_wish_sub') }}</p>
                 <p><b>Kundennachricht:</b><br>
                     {{ $wish->description }}
                 </p>
             </div>
         @else
             <div class="col-md-12 s2-first">
-                <h4>Dein Reisewunsch</h4>
-                <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
+                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
+                <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
                 <p><b>Deine Nachricht:</b><br>
                     {{ $wish->description }}
                 </p>
@@ -333,7 +340,7 @@
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion1" href="#content">
                             <div class="col-md-12 s2-first">
-                                <h4>Dein Reisewunsch</h4>
+                                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
                                 <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
                             </div>
                             <span class="glyphicon glyphicon-plus"></span></a>
@@ -344,7 +351,7 @@
                 <div id="content" class="panel-collapse collapse">
                     <div class="panel-body">
                         <div class="col-md-12 s2-first">
-                            <p><b>Deine Nachricht:</b><br>
+                            <p><b>{{ trans('wish.details.subheadline.your_message') }}</b><br>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec purus libero, tempor eget mi vel,
                                 pellentesque sodales dui. Nam pharetra neque et nibh vehicula, ut rutrum orci varius.
                                 In quis sapien non turpis fermentum venenatis quis sed felis. Sed commodo scelerisque metus, consequat tempor turpis consectetur nec. Nullam a fermentum dolor.
@@ -435,23 +442,23 @@
 
                         <div class="group">
                             <input type="text" class="form-control name" name="first_name" id="first_name" required>
-                            <label>Name</label>
+                            <label>{{ trans('wish.details.contact.firstname') }}</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control nachname" name="last_name" id="last_name" required>
-                            <label>Nachname</label>
+                            <label>{{ trans('wish.details.contact.lastname') }}</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control email" name="email" id="email" required value="{{ $wish->owner->email }}">
-                            <label>E-Mail-Adresse</label>
+                            <label>{{ trans('wish.details.contact.email') }}</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control tel" name="telephone" id="telephone" >
-                            <label>Telefon-Nr.(optional)</label>
+                            <label>{{ trans('wish.details.contact.telephone') }}</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control betreff" name="subject" id="subject" >
-                            <label>Betreff</label>
+                            <label>{{ trans('wish.details.contact.subject') }}</label>
                         </div>
 
                     </div>
@@ -484,7 +491,7 @@
             <div class="modal-footer">
                 <input type="hidden" name="wish_id" value="{{ $wish->id }}" />
                 <input type="hidden" name="period" value="no data" />
-                <input type="submit" class="primary-btn wm-1-btn" value="Nachricht absenden" />
+                <input type="submit" class="primary-btn wm-1-btn" value="{{ trans('wish.details.contact.send') }}" />
             </div>
             {{ Form::close() }}
         </div>
@@ -516,22 +523,22 @@
 
                         <div class="group">
                             <input type="text" class="form-control name" name="first_name" id="first_name_" required>
-                            <label>Vorname</label>
+                            <label>{{ trans('wish.details.callback.firstname') }}</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control nachname" name="last_name" id="first_name_" required>
-                            <label>Nachname</label>
+                            <label>{{ trans('wish.details.callback.lastname') }}</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control tel" name="telephone" id="telephone_" required>
-                            <label>Telefon-Nr unter der wir dich erreichen</label>
+                            <label>{{ trans('wish.details.callback.telephone') }}</label>
                         </div>
                         <div class="group">
                             <select name="period" id="period_" class="form-control">
-                                <option value="">Wähle einen Zeitraum</option>
-                                <option value="vormittags" id="">vormittags</option>
-                                <option value="nachmittags" id="">nachmittags</option>
-                                <option value="abends" id="">abends</option>
+                                <option value="">{{ trans('wish.details.callback.choose_period') }}</option>
+                                <option value="vormittags" id="">{{ trans('wish.details.callback.period1') }}</option>
+                                <option value="nachmittags" id="">{{ trans('wish.details.callback.period2') }}</option>
+                                <option value="abends" id="">{{ trans('wish.details.callback.period3') }}</option>
                             </select>
                         </div>
 
@@ -540,7 +547,7 @@
                         <input type="hidden" name="message" value="no data" />
                         <input type="hidden" name="email" value="no data" />
 
-                        <button type="submit" class="primary-btn wm-2-btn">Nachricht absenden</button>
+                        <button type="submit" class="primary-btn wm-2-btn">{{ trans('wish.details.callback.send') }}</button>
                     </div>
 
                     <div class="col-md-4 modal-body-right">

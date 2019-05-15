@@ -58,6 +58,8 @@ class WishesRepository extends BaseRepository
             ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.wishes.table') . '.created_by')
             ->leftjoin(config('module.whitelabels.table'), config('module.whitelabels.table') . '.id', '=', config('module.wishes.table') . '.whitelabel_id')
             ->leftjoin(config('module.offers.table'), config('module.offers.table') . '.wish_id', '=', config('module.wishes.table') . '.id')
+            ->leftJoin('categories_wish', 'categories_wish.wish_id', '=', config('module.wishes.table') .'.id')
+            ->leftJoin('categories', 'categories_wish.category_id', '=', 'categories.id')
             ->select([
                 config('module.wishes.table') . '.id',
                 config('module.wishes.table') . '.title',
@@ -78,6 +80,7 @@ class WishesRepository extends BaseRepository
                 config('module.whitelabels.table') . '.id as whitelabel_id',
                 config('module.whitelabels.table') . '.display_name as whitelabel_name',
                 DB::raw('count(' . config('module.offers.table') . '.id) as offers'),
+                DB::raw('GROUP_CONCAT(categories.value) as categories'),
             ])
             ->whereIn('whitelabel_id', $whitelabels)
             ->groupBy(config('module.wishes.table') . '.id')->orderBy(config('module.wishes.table') . '.id', 'DESC');

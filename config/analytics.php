@@ -9,12 +9,12 @@ return [
     |
     | Found in views/includes/partials/ga.blade.php
     */
-    'google-analytics' => 'UA-105970361-1',
+    'google-analytics' => 'UA-105970361-8',
 
     /*
      * The view id of which you want to display data.
      */
-    'view_id' => "159641355",
+    'view_id' => "192484069",
 
     /*
      * Path to the client secret json file. Take a look at the README of this package
