@@ -135,7 +135,7 @@ window.exitIntent = {
 		this.addEvent(document, "touchmove", this.resetTimer);
 		this.addEvent(document, "MSPointerMove", this.resetTimer);
 
-		this.startTimer();
+		//this.startTimer();
 
 	},
 
