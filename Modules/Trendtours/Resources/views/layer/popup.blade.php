@@ -173,17 +173,17 @@
 
         <div class="kwp-row">
             <div class="kwp-col-12 white-col">
-                <div class="kwp-agb ">
+                @php
+                    $terms_class = 'dt_terms'
+                @endphp
 
+                @if ($errors->any() && $errors->get('terms'))
                     @php
-                        $terms_class = 'dt_terms'
+                        $terms_class = 'dt_terms hasError'
                     @endphp
+                @endif
 
-                    @if ($errors->any() && $errors->get('terms'))
-                        @php
-                            $terms_class = 'dt_terms hasError'
-                        @endphp
-                    @endif
+                <div class="kwp-agb {{ $terms_class }}">
 
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
                     <span class="cberror"></span>
