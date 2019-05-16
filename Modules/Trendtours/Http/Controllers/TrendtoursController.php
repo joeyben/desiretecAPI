@@ -114,7 +114,11 @@ class TrendtoursController extends Controller
         $newsletter = $request->has('newsletter') ? true : false ;
         session(['newsletter' => $newsletter]);
 
-        $newUser = $this->createUserFromLayer($request, $user);
+        $newUser = $user->createUserFromLayer(
+            $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'),
+            $this->whitelabelId
+        );
+
         $wish = $this->createWishFromLayer($request, $wish);
         $html = view('trendtours::layer.created')->with([
             'token' => $newUser->token->token,
@@ -134,37 +138,6 @@ class TrendtoursController extends Controller
         }
     }
 
-    /**
-     * Create new user from Layer.
-     *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
-     *
-     * @return UserRepository $user
-     */
-    private function createUserFromLayer(StoreWishRequest $request, $user)
-    {
-        $input = $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms');
-        if ($new_user = $user->findByEmail($input['email'])) {
-            access()->login($new_user);
-
-            return $new_user;
-        }
-        $request->merge(
-            [
-                'first_name'     => 'John',
-                'last_name'      => 'Doe',
-                'password'       => 'master2019',
-                'is_term_accept' => true
-            ]
-        );
-        $new_user = $user->create($input);
-        $new_user->storeToken();
-        $new_user->attachWhitelabel($this->whitelabelId);
-        access()->login($new_user);
-
-        return $new_user;
-    }
 
     /**
      * Create new user from Layer.

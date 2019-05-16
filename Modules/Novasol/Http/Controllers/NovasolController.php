@@ -111,7 +111,11 @@ class NovasolController extends Controller
             return response()->json(['success' => true, 'html'=>$html]);
         }
 
-        $newUser = $this->createUserFromLayer($request, $user);
+        $newUser = $user->createUserFromLayer(
+            $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'),
+            $this->whitelabelId
+        );
+
         $wish = $this->createWishFromLayer($request, $wish);
         $html = view('novasol::layer.created')->with([
             'token' => $newUser->token->token,
@@ -129,38 +133,6 @@ class NovasolController extends Controller
         for ($i = 0; $i <= 3; ++$i) {
             $this->kids[$i] = $i;
         }
-    }
-
-    /**
-     * Create new user from Layer.
-     *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
-     *
-     * @return UserRepository $user
-     */
-    private function createUserFromLayer(StoreWishRequest $request, $user)
-    {
-        $input = $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms');
-        if ($new_user = $user->findByEmail($input['email'])) {
-            access()->login($new_user);
-
-            return $new_user;
-        }
-        $request->merge(
-            [
-                'first_name'     => 'John',
-                'last_name'      => 'Doe',
-                'password'       => 'master2019',
-                'is_term_accept' => true
-            ]
-        );
-        $new_user = $user->create($input);
-        $new_user->storeToken();
-        $new_user->attachWhitelabel($this->whitelabelId);
-        access()->login($new_user);
-
-        return $new_user;
     }
 
     /**
