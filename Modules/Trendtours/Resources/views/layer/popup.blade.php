@@ -187,10 +187,7 @@
 
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
                     <p>Ich habe die <a id="datenschutz" href="https://www.trendtours.de/trendtours/datenschutz" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
-
-                    {{ Form::checkbox('newsletter', null, key_exists('newsletter', $request) && $request['newsletter']  ? 'true' : null) }}
-                    <p>Informieren Sie mich kostenlos über Reiseideen, Angebote & Gutscheine per E-Mail. Abmeldung jederzeit möglich.</p>
-                </div>
+                    
             </div>
         </div>
     </div>
