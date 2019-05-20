@@ -7,9 +7,16 @@
 @section('title')
     {{ trans('general.whitelabel.browser.title') }}
 @endsection
+
+@section('before-styles')
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700,700italic,900" media="all">
+@endsection
+
 @section('after-styles')
     <link rel="stylesheet" href="{{ asset('whitelabel/novasol/css/wish/details.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/novasol/css/novasol.css') }}">
 @endsection
+
 
 @section('content')
 <section class="section-top">
@@ -264,16 +271,16 @@
     <div class="container">
         @if ($logged_in_user->hasRole('Seller'))
             <div class="col-md-12 s2-first">
-                <h4>Reisewunsch Angaben</h4>
-                <p>Dies sind die Angaben zum Reisewunsch.</p>
+                <h4>{{ trans('wish.details.subheadline.giving_wish') }}</h4>
+                <p>{{ trans('wish.details.subheadline.giving_wish_sub') }}</p>
                 <p><b>Kundennachricht:</b><br>
                     {{ $wish->description }}
                 </p>
             </div>
         @else
             <div class="col-md-12 s2-first">
-                <h4>Dein Reisewunsch</h4>
-                <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
+                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
+                <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
                 <p><b>Deine Nachricht:</b><br>
                     {{ $wish->description }}
                 </p>
@@ -333,7 +340,7 @@
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion1" href="#content">
                             <div class="col-md-12 s2-first">
-                                <h4>Dein Reisewunsch</h4>
+                                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
                                 <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
                             </div>
                             <span class="glyphicon glyphicon-plus"></span></a>
@@ -344,7 +351,7 @@
                 <div id="content" class="panel-collapse collapse">
                     <div class="panel-body">
                         <div class="col-md-12 s2-first">
-                            <p><b>Deine Nachricht:</b><br>
+                            <p><b>{{ trans('wish.details.subheadline.your_message') }}</b><br>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec purus libero, tempor eget mi vel,
                                 pellentesque sodales dui. Nam pharetra neque et nibh vehicula, ut rutrum orci varius.
                                 In quis sapien non turpis fermentum venenatis quis sed felis. Sed commodo scelerisque metus, consequat tempor turpis consectetur nec. Nullam a fermentum dolor.

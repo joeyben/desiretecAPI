@@ -1,15 +1,36 @@
+@import "variables";
 body{
-  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
-#app{
-  .landing &{
-    padding-top: 20px;
+p,a,h1,h2,h3,h4,button,input,textarea{
+  font-family: 'Roboto', sans-serif !important;
+}
+.primary-btn{
+  background: $mastercolor;
+  border: 1px solid $mastercolor;
+}
+.secondary-btn{
+  border: 1px solid $mastercolor;
+  color: $mastercolor;
+}
+.landing{
+  padding-top: 0px;
+  #app{
+    .main-container{
+      margin: 0;
+      width: 100%;
+      padding: 0;
+    }
   }
-  .main-container{
-    margin: 0;
-    width: 100%;
-    padding: 0;
+}
+body{
+  .wish &{
+    .main-container{
+      margin: 0;
+      width: 100%;
+      padding: 0;
+    }
   }
 }
 
@@ -49,6 +70,8 @@ body{
       text-transform: uppercase;
       padding: 10px 50px;
       line-height: 1.5em;
+      background-color: $brand-primary;
+      border-color: transparent;
       @media (max-width: 768px){
         font-size: 20px;
       }

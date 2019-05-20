@@ -1,5 +1,9 @@
-const { mix } = require('laravel-mix');
+require('dotenv').config({ path: '../../.env' })
+const mix = require('laravel-mix');
 require('laravel-mix-merge-manifest');
+
+var envirement = process.env.APP_JS_ENV || 'local';
+
 
 var base_url = '../../';
 
@@ -20,6 +24,7 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/devicedetector.min.js',
         base_url + '/resources/assets/js/layer/touchswipe.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
+        __dirname + '/Resources/assets/js/layer/urls/layer_url_' + envirement + '.js',
     ], __dirname + '/../../public/whitelabel/trendtours/js/layer/layer.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
@@ -29,6 +34,7 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/touchswipe.js',
         base_url + '/resources/assets/js/layer/devicedetector.min.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
+        __dirname + '/Resources/assets/js/layer/urls/layer_url_' + envirement + '.js',
     ], __dirname + '/../../public/whitelabel/trendtours/js/layer/layer-locale.js')
     .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/trendtours/css/layer/layer.css')
     .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/trendtours/css/layer/layer_mobile.css')

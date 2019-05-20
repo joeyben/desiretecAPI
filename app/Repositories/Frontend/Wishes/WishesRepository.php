@@ -38,6 +38,8 @@ class WishesRepository extends BaseRepository
      */
     protected $storage;
 
+    protected $whitelabel_id = null;
+
     public function __construct()
     {
         $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
@@ -58,6 +60,8 @@ class WishesRepository extends BaseRepository
             ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.wishes.table') . '.created_by')
             ->leftjoin(config('module.whitelabels.table'), config('module.whitelabels.table') . '.id', '=', config('module.wishes.table') . '.whitelabel_id')
             ->leftjoin(config('module.offers.table'), config('module.offers.table') . '.wish_id', '=', config('module.wishes.table') . '.id')
+            ->leftJoin('categories_wish', 'categories_wish.wish_id', '=', config('module.wishes.table') .'.id')
+            ->leftJoin('categories', 'categories_wish.category_id', '=', 'categories.id')
             ->select([
                 config('module.wishes.table') . '.id',
                 config('module.wishes.table') . '.title',
@@ -78,6 +82,7 @@ class WishesRepository extends BaseRepository
                 config('module.whitelabels.table') . '.id as whitelabel_id',
                 config('module.whitelabels.table') . '.display_name as whitelabel_name',
                 DB::raw('count(' . config('module.offers.table') . '.id) as offers'),
+                DB::raw('GROUP_CONCAT(categories.value) as categories'),
             ])
             ->whereIn('whitelabel_id', $whitelabels)
             ->groupBy(config('module.wishes.table') . '.id')->orderBy(config('module.wishes.table') . '.id', 'DESC');
@@ -120,6 +125,8 @@ class WishesRepository extends BaseRepository
      */
     public function create(array $input, $whitelabelId)
     {
+        $this->whitelabel_id = $whitelabelId;
+
         $wish = DB::transaction(function () use ($input, $whitelabelId) {
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
             $input['created_by'] = access()->user()->id;
@@ -231,12 +238,16 @@ class WishesRepository extends BaseRepository
 
     public function getGroup()
     {
+        if (!$this->whitelabel_id) {
+            return null;
+        }
+
         $distribution = $this->getDistribution();
 
         if ($distribution === $this::ROUND_ROBIN) {
-            return $this->getLowestWishesGroup(access()->user()->whitelabels[0]->id);
+            return $this->getLowestWishesGroup($this->whitelabel_id);
         } elseif ($distribution === $this::REGIONAL) {
-            return $this->getLowestWishesGroup(access()->user()->whitelabels[0]->id);
+            return $this->getLowestWishesGroup($this->whitelabel_id);
         }
     }
 

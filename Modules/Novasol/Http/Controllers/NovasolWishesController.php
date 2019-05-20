@@ -16,6 +16,7 @@ use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 class NovasolWishesController extends Controller
 {
     const BODY_CLASS = 'wish';
+    const BODY_CLASS_LIST = 'wishlist';
     const OFFER_URL = 'img/offer/';
     /**
      * Wish Status.
@@ -104,6 +105,21 @@ class NovasolWishesController extends Controller
             'is_owner'            => $isOwner
         ]);
 
+    }
+
+    /**
+     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
+     *
+     * @return mixed
+     */
+    public function wishList(ManageWishesRequest $request)
+    {
+        //var_dump($request->ip());
+        return view('novasol::wish.index')->with([
+            'status'     => $this->status,
+            'count'      => $this->wish->getForDataTable()->count(),
+            'body_class' => $this::BODY_CLASS_LIST,
+        ]);
     }
 
     public function getWish(Wish $wish)
