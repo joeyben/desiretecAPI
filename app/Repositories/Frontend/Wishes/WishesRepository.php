@@ -38,6 +38,8 @@ class WishesRepository extends BaseRepository
      */
     protected $storage;
 
+    protected $whitelabel_id = null;
+
     public function __construct()
     {
         $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
@@ -123,6 +125,8 @@ class WishesRepository extends BaseRepository
      */
     public function create(array $input, $whitelabelId)
     {
+        $this->whitelabel_id = $whitelabelId;
+
         $wish = DB::transaction(function () use ($input, $whitelabelId) {
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
             $input['created_by'] = access()->user()->id;
@@ -234,12 +238,16 @@ class WishesRepository extends BaseRepository
 
     public function getGroup()
     {
+        if (!$this->whitelabel_id) {
+            return null;
+        }
+
         $distribution = $this->getDistribution();
 
         if ($distribution === $this::ROUND_ROBIN) {
-            return $this->getLowestWishesGroup(access()->user()->whitelabels[0]->id);
+            return $this->getLowestWishesGroup($this->whitelabel_id);
         } elseif ($distribution === $this::REGIONAL) {
-            return $this->getLowestWishesGroup(access()->user()->whitelabels[0]->id);
+            return $this->getLowestWishesGroup($this->whitelabel_id);
         }
     }
 
