@@ -26,4 +26,7 @@ return [
     'mark_as_read'       => 'mark as read',
     'save_and_create'    => 'save and create',
     'save_and_create_new'=> 'save and create new',
+    'copy'               => 'Copy',
+    'clone'              => 'Clone',
+    'language'           => 'Language',
 ];
