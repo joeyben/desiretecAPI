@@ -363,10 +363,10 @@ class LanguageLinesController extends Controller
         try {
             if (Schema::hasTable($table)) {
                 $translations = $this->languageline->withCriteria([
-                    new Where($table . '.locale', $request->get('from')),
+                    new Where($table . '.locale', $from),
                 ])->get();
 
-                $persistedTranslations = $this->database->table($table)->where($table . '.locale', $request->get('to'))->get();
+                $persistedTranslations = $this->database->table($table)->where($table . '.locale', $to)->get();
 
                 foreach ($translations as $translation) {
                     $translationToCreate = $persistedTranslations->filter(function ($item) use ($translation) {
