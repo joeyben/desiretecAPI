@@ -98,7 +98,7 @@
                             <div class="kwp-custom-select">
                                 {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
-                            <i class="fal fa-times"></i>
+                            <i class="fal fa-alarm-clock"></i>
                             @if ($errors->any() && $errors->get('duration'))
                                 @foreach ($errors->get('duration') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -202,7 +202,85 @@
 
 
             $(document).ready(function(){
+                dt.startDate = new Pikaday({
+                    field: document.getElementById('earliest_start'),
+                    format: 'dd.mm.YYYY',
+                    defaultDate: '01.01.2019',
+                    minDate: new Date(),
+                    toString: function(date, format) {
+                        // you should do formatting based on the passed format,
+                        // but we will just return 'D/M/YYYY' for simplicity
+                        const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                        const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+                        const year = date.getFullYear();
+                        return day+"."+month+"."+year;
+                    },
+                    i18n: {
+                        previousMonth: 'Vormonat',
+                        nextMonth: 'Nächsten Monat',
+                        months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+                    },
+                    onSelect: function() {
+                        dt.endDate.setDate(this.getDate()+1);
+                        dt.endDate.setMinDate(this.getDate());
+                    },
+                    onOpen: function() {
 
+                    },
+                });
+                dt.endDate = new Pikaday({
+                    field: document.getElementById('latest_return'),
+                    format: 'dd.mm.YYYY',
+                    defaultDate: '01.01.2019',
+                    toString: function(date, format) {
+                        // you should do formatting based on the passed format,
+                        // but we will just return 'D/M/YYYY' for simplicity
+                        const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                        const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+                        const year = date.getFullYear();
+                        return day+"."+month+"."+year;
+                    },
+                    i18n: {
+                        previousMonth: 'Vormonat',
+                        nextMonth: 'Nächsten Monat',
+                        months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+                    }
+                });
+
+                if(!$("#earliest_start").val()){
+                    var date = new Date();
+                    date.setDate(date.getDate() + 3);
+                    var d = date.getDate();
+                    var m = date.getMonth()+1;
+                    var y = date.getFullYear();
+                    if (d < 10) {
+                        d = "0" + d;
+                    }
+                    if (m < 10) {
+                        m = "0" + m;
+                    }
+                    $("#earliest_start").val(d+"."+m+"."+y);
+                }
+
+                if(!$("#latest_return").val()){
+                    var date = new Date();
+                    date.setDate(date.getDate() + 10);
+                    var d = date.getDate();
+                    var m = date.getMonth()+1;
+                    var y = date.getFullYear();
+                    if (d < 10) {
+                        d = "0" + d;
+                    }
+                    if (m < 10) {
+                        m = "0" + m;
+                    }
+                    $("#latest_return").val(d+"."+m+"."+y);
+                }
+                +$(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
                 var pax = $("#adults").val();
                 var children_count = parseInt($("#kids").val());
                 var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
@@ -213,7 +291,9 @@
                     $('.dt-modal #submit-button').addClass('error-button');
                 }
 
-
+                if($(".duration-more .haserrors").length){
+                    $('.duration-group').addClass('haserrors');
+                }
 
                 $( ".haserrors input" ).keydown(function( event ) {
                     $(this).parents('.haserrors').removeClass('haserrors');
