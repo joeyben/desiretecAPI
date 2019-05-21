@@ -109232,6 +109232,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 var _vuex = __webpack_require__(7);
 
@@ -109254,8 +109259,9 @@ exports.default = {
     return {
       dialogFormVisible: false,
       form: {
-        id: '',
-        selected: null
+        localeFrom: null,
+        localeTo: null,
+        id: ''
       },
       formLabelWidth: '120px',
       created: '',
@@ -109288,6 +109294,9 @@ exports.default = {
     user: 'currentUser'
   }), {
     can_copy: function can_copy() {
+      return this.hasRole('Administrator');
+    },
+    can_clone: function can_clone() {
       return this.hasRole('Administrator');
     },
     urlExportSelected: function urlExportSelected() {
@@ -109433,6 +109442,25 @@ var render = function() {
                   [
                     _c("i", { staticClass: "icon-copy4" }),
                     _vm._v(_vm._s(_vm.trans("button.copy")))
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.can_clone
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "dropdown-item",
+                    attrs: { href: "javascript:;" },
+                    on: {
+                      click: function($event) {
+                        _vm.dialogFormVisible = true
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "icon-stack" }),
+                    _vm._v("  " + _vm._s(_vm.trans("button.clone")))
                   ]
                 )
               : _vm._e()
@@ -109622,7 +109650,7 @@ var render = function() {
         "el-dialog",
         {
           attrs: {
-            title: "Please choose a Whitelabel",
+            title: _vm.trans("button.clone"),
             visible: _vm.dialogFormVisible,
             width: "35%"
           },
@@ -109639,40 +109667,63 @@ var render = function() {
             [
               _c(
                 "el-form-item",
-                { attrs: { label: _vm.trans("modals.whitelabel") } },
+                { attrs: { label: "From" } },
                 [
                   _c(
-                    "el-select",
-                    {
-                      staticStyle: { width: "100%" },
-                      attrs: { placeholder: "Please choose a Whitelabel" },
-                      model: {
-                        value: _vm.form.id,
-                        callback: function($$v) {
-                          _vm.$set(_vm.form, "id", $$v)
-                        },
-                        expression: "form.id"
-                      }
-                    },
-                    _vm._l(_vm.whitelabels, function(item) {
-                      return _c(
-                        "el-option",
+                    "el-col",
+                    { attrs: { span: 8 } },
+                    [
+                      _c(
+                        "el-select",
                         {
-                          key: item.id,
-                          attrs: {
-                            multiple: "",
-                            label: item.name,
-                            value: item.id
+                          staticStyle: { width: "100%" },
+                          attrs: { placeholder: "Please choose a locale" },
+                          model: {
+                            value: _vm.form.localeFrom,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "localeFrom", $$v)
+                            },
+                            expression: "form.localeFrom"
                           }
                         },
-                        [
-                          _c("span", { staticStyle: { float: "left" } }, [
-                            _c("i", { class: item.name }),
-                            _vm._v(" " + _vm._s(item.name))
-                          ])
-                        ]
+                        _vm._l(_vm.locales, function(key, index) {
+                          return _c(
+                            "el-option",
+                            {
+                              key: key.locale,
+                              attrs: { label: key.locale, value: key.locale }
+                            },
+                            [
+                              _c("span", { staticStyle: { float: "left" } }, [
+                                _vm._v(_vm._s(key.locale))
+                              ])
+                            ]
+                          )
+                        }),
+                        1
                       )
-                    }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("el-col", { staticClass: "line", attrs: { span: 2 } }, [
+                    _vm._v("   To")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "el-col",
+                    { attrs: { span: 8 } },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.form.localeTo,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "localeTo", $$v)
+                          },
+                          expression: "form.localeTo"
+                        }
+                      })
+                    ],
                     1
                   )
                 ],
