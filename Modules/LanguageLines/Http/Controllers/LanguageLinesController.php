@@ -11,10 +11,10 @@ use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Schema\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
@@ -60,9 +60,13 @@ class LanguageLinesController extends Controller
      */
     private $database;
     /**
-     * @var \Illuminate\Database\Schema\Builder
+     * @var \Illuminate\Notifications\ChannelManager
      */
-    private $schema;
+    private $notification;
+    /**
+     * @var \App\Models\Access\Role\Role
+     */
+    private $role;
 
     /**
      * LanguageLines constructor.
@@ -74,9 +78,10 @@ class LanguageLinesController extends Controller
      * @param \Illuminate\Support\Carbon                                        $carbon
      * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
      * @param \Illuminate\Database\DatabaseManager                              $database
-     * @param \Illuminate\Database\Schema\Builder                               $schema
+     * @param \Illuminate\Notifications\ChannelManager                          $notification
+     * @param \App\Models\Access\Role\Role                                      $role
      */
-    public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, Builder $schema)
+    public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role)
     {
         $this->languageline = $languageline;
         $this->response = $response;
@@ -85,7 +90,8 @@ class LanguageLinesController extends Controller
         $this->carbon = $carbon;
         $this->whitelabels = $whitelabels;
         $this->database = $database;
-        $this->schema = $schema;
+        $this->notification = $notification;
+        $this->role = $role;
     }
 
     /**
@@ -288,10 +294,10 @@ class LanguageLinesController extends Controller
                     $persistedTranslations = $this->database->table($table)->get();
 
                     foreach ($translations as $translation) {
-                        $translationToCreate = $persistedTranslations->filter(function($item) use ($translation){
+                        $translationToCreate = $persistedTranslations->filter(function ($item) use ($translation) {
                             return ($item->locale === $translation->locale) && ($item->group === $translation->group) && ($item->key === $translation->key);
                         })->first();
-                        if(is_null($translationToCreate)) {
+                        if (null === $translationToCreate) {
                             $collection->add($translation);
                         }
                     }
@@ -306,19 +312,17 @@ class LanguageLinesController extends Controller
                         ];
                     })->toArray();
 
-                    if (count($items) > 0) {
+                    if (\count($items) > 0) {
                         ini_set('max_execution_time', 600);
                         $this->database->table($table)->insert($items);
                     }
 
-                    $count[$whitelabel->name] = count($items);
+                    $count[$whitelabel->name] = \count($items);
                 }
             }
 
-            $admins = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->get();
-            Notification::send($admins, new CopyLanguageLinesNotification(json_encode($count)));
-
-
+            $admins = $this->role->newQuery()->where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->get();
+            $this->notification->send($admins, new CopyLanguageLinesNotification(json_encode($count)));
 
             $result['message'] = $this->lang->get(json_encode($count));
             $result['success'] = true;
