@@ -90,4 +90,5 @@ return [
     'from'                          => 'From',
     'booking_status'                => 'Booking status',
     'empty_table'                   => 'No data accessable in the table',
+    'locale'                        => 'Locale',
 ];

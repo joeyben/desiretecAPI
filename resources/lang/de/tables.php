@@ -90,4 +90,5 @@ return [
     'from'                          => 'Von',
     'booking_status'                => 'Buchungsstatus',
     'empty_table'                   => 'Keine Daten in der Tabelle verfügbar',
+    'locale'                        => 'Lokal',
 ];
