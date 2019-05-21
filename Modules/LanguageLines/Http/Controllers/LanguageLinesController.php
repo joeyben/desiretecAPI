@@ -2,27 +2,31 @@
 
 namespace Modules\LanguageLines\Http\Controllers;
 
+use App\Models\Access\Role\Role;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereIn;
+use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Schema\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Translation\Translator;
-use Modules\LanguageLines\Entities\LanguageLines;
+use Modules\LanguageLines\Http\Requests\CopyLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\StoreLanguageLineRequest;
 use Modules\LanguageLines\Http\Requests\UpdateLanguageLineRequest;
+use Modules\LanguageLines\Notifications\CopyLanguageLinesNotification;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
-use phpDocumentor\Reflection\DocBlock\Tags\Reference\Reference;
 
 class LanguageLinesController extends Controller
 {
@@ -51,6 +55,14 @@ class LanguageLinesController extends Controller
      * @var \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository
      */
     private $whitelabels;
+    /**
+     * @var \Illuminate\Database\DatabaseManager
+     */
+    private $database;
+    /**
+     * @var \Illuminate\Database\Schema\Builder
+     */
+    private $schema;
 
     /**
      * LanguageLines constructor.
@@ -61,8 +73,10 @@ class LanguageLinesController extends Controller
      * @param \Illuminate\Translation\Translator                                $lang
      * @param \Illuminate\Support\Carbon                                        $carbon
      * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
+     * @param \Illuminate\Database\DatabaseManager                              $database
+     * @param \Illuminate\Database\Schema\Builder                               $schema
      */
-    public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels)
+    public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, Builder $schema)
     {
         $this->languageline = $languageline;
         $this->response = $response;
@@ -70,6 +84,8 @@ class LanguageLinesController extends Controller
         $this->lang = $lang;
         $this->carbon = $carbon;
         $this->whitelabels = $whitelabels;
+        $this->database = $database;
+        $this->schema = $schema;
     }
 
     /**
@@ -249,13 +265,15 @@ class LanguageLinesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Modules\LanguageLines\Http\Requests\CopyLanguageLinesRequest $request
      *
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function copy(Request $request)
+    public function copy(CopyLanguageLinesRequest $request)
     {
         $collection = new Collection();
+        $count = [];
+
         try {
             $translations = $this->languageline->get();
 
@@ -264,37 +282,45 @@ class LanguageLinesController extends Controller
             ])->get();
 
             foreach ($whitelabels as $whitelabel) {
-                $persistedTranslations = DB::table('language_lines_' . mb_strtolower($whitelabel->name))->get();
+                $table = 'language_lines_' . mb_strtolower($whitelabel->name);
 
-                foreach ($translations as $translation) {
-                    $translationToCreate = $persistedTranslations->filter(function($item) use ($translation){
-                        return ($item->locale === $translation->locale) && ($item->group === $translation->group) && ($item->key === $translation->key);
-                    })->first();
-                    if(is_null($translationToCreate)) {
-                        $collection->add($translation);
+                if (Schema::hasTable($table)) {
+                    $persistedTranslations = $this->database->table($table)->get();
+
+                    foreach ($translations as $translation) {
+                        $translationToCreate = $persistedTranslations->filter(function($item) use ($translation){
+                            return ($item->locale === $translation->locale) && ($item->group === $translation->group) && ($item->key === $translation->key);
+                        })->first();
+                        if(is_null($translationToCreate)) {
+                            $collection->add($translation);
+                        }
                     }
+
+                    $items = $collection->map(function ($languageLine) {
+                        return [
+                            'locale'      => $languageLine->locale,
+                            'description' => $languageLine->description,
+                            'group'       => $languageLine->group,
+                            'key'         => $languageLine->key,
+                            'text'        => $languageLine->text,
+                        ];
+                    })->toArray();
+
+                    if (count($items) > 0) {
+                        ini_set('max_execution_time', 600);
+                        $this->database->table($table)->insert($items);
+                    }
+
+                    $count[$whitelabel->name] = count($items);
                 }
-                $items = $collection->map(function ($languageLine) {
-                    return [
-                        'locale'      => $languageLine->locale,
-                        'description' => $languageLine->description,
-                        'group'       => $languageLine->group,
-                        'key'         => $languageLine->key,
-                        'text'        => $languageLine->text,
-                    ];
-                })->toArray();
-                ini_set('max_execution_time', 600);
-                DB::table('language_lines_' . mb_strtolower($whitelabel->name))->insert($items);
             }
 
-            dd($items);
+            $admins = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->get();
+            Notification::send($admins, new CopyLanguageLinesNotification(json_encode($count)));
 
 
 
-
-
-
-            $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'LanguageLine']);
+            $result['message'] = $this->lang->get(json_encode($count));
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {

@@ -26,4 +26,7 @@ return [
     'mark_as_read'       => 'Als gelesen markieren',
     'save_and_create'    => 'Speichern und erstellen',
     'save_and_create_new'=> 'Speichern und neu erstellen',
+    'copy'               => 'Kopieren',
+    'clone'              => 'Klonen',
+    'language'           => 'Sprache',
 ];

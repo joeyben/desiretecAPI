@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="icon-menu7 mr-2"></i> &nbsp;Modal with icons</h5>
+                    <h5 class="modal-title"><i class="icon-menu7 mr-2"></i> &nbsp;</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -12,13 +12,10 @@
                         <div class="modal-body">
                             <fieldset>
                                 <legend class="font-weight-semibold text-uppercase font-size-sm">
-                                    <i class="icon-collaboration mr-2"></i>
-                                    LanguageLine details
-                                    <a class="float-right text-default" data-toggle="collapse" data-target="#demo1">
-                                        <i class="icon-circle-down2"></i>
-                                    </a>
+                                    <i class="icon-copy4 mr-2"></i>
+                                    {{ trans('button.copy') }}
                                 </legend>
-                                <div class="collapse show" id="demo1">
+                                <div class="collapse show">
                                     <div class="form-group">
                                         <el-transfer style="width: 100%;margin-left: 5%;"
                                                      @input="inputWhitelabels"
@@ -36,7 +33,8 @@
                             </fieldset>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save') }}</button>
+                            <button type="submit" class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" v-on:click="close = false"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save') }}</button>
+                            <button type="submit" class="btn btn-outline bg-teal-400 text-teal-400 border-teal-400 btn-sm" v-on:click="close = true"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save_and_close') }}</button>
                             <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.close') }}</button>
                         </div>
                     </form>
@@ -57,7 +55,8 @@
       return {
         // eslint-disable-next-line
         errors: new Errors(),
-        selected: []
+        selected: [],
+        close: false
       }
     },
     mounted () {
@@ -84,14 +83,15 @@
 
         return data
       },
-      can_logs () {
-        return !this.deleted && this.hasPermissionTo('logs-group')
+      can_copy () {
+        return this.hasRole('Administrator')
       }
     },
     methods: {
       ...Vuex.mapActions({
       }),
       inputWhitelabels (value) {
+        this.errors.clear('whitelabels')
         this.selected = value
       },
       hasPermissionTo (permission) {
@@ -110,7 +110,7 @@
       },
       onSubmit (e) {
         this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
-        this.$http.put(window.laroute.route('provider.language-lines.copy'), { whitelabels: this.selected})
+        this.$http.put(window.laroute.route('provider.language-lines.copy'), {whitelabels: this.selected})
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -119,8 +119,13 @@
       },
       onSubmitSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          $('#modal_large_languagelines').modal('hide')
-          this.$router.push({name: 'root'})
+          if (this.close) {
+            $('#modal_large_languagelines').modal('hide')
+            this.$router.push({name: 'root'})
+          } else {
+            this.$router.push({name: 'root.export'})
+          }
+
           this.$message({
             message: response.data.message,
             showClose: true,

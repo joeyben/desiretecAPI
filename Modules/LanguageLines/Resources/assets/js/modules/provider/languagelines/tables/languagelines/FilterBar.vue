@@ -7,7 +7,7 @@
 
             <div class="dropdown-menu dropdown-menu-left">
                 <router-link class="dropdown-item" :to="{name: 'root.create', params: { id: 0 }}"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
-                <router-link class="dropdown-item" :to="{name: 'root.export', params: { id: 0 }}"><i class="icon-plus3"></i>{{ trans('button.copy') }}</router-link>
+                <router-link class="dropdown-item" :to="{name: 'root.export', params: { id: 0 }}" v-if="can_copy"><i class="icon-copy4"></i>{{ trans('button.copy') }}</router-link>
                 <!--<a href="javascript:;" class="dropdown-item" v-on:click="dialogFormVisible = true" v-if="hasRole('Administrator')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>-->
                 <!--<a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>-->
                 <!--<a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>-->
@@ -144,6 +144,9 @@
           checked: 'checked',
           user: 'currentUser'
         }),
+        can_copy () {
+          return this.hasRole('Administrator')
+        },
         urlExportSelected () {
           return window.laroute.route('provider.groups.export', {checked: this.checked})
         },
