@@ -55,6 +55,7 @@ import CssConfig from './CssConfig.js'
       this.$events.$on('range-date-set', (start, end) => this.doRangeDate(start, end))
       this.$events.$on('whitelabel-set', (id) => this.doWhitelabel(id))
       this.$events.$on('locale-set', (locale) => this.doLocale(locale))
+      this.$events.$on('clone-set', (from, to) => this.doClone(from, to))
     },
     render (h) {
       return h(
@@ -102,6 +103,15 @@ import CssConfig from './CssConfig.js'
       doLocale (locale) {
         this.appendParams.locale = locale
         Vue.nextTick(() => this.$refs.vuetable.refresh())
+      },
+      doClone (from, to) {
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
+        this.$http.put(window.laroute.route('provider.language-lines.clone'), {from: from, to: to})
+          .then(this.onCloneSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
+          })
       },
       onFilterReset () {
         delete this.appendParams.filter
@@ -317,6 +327,17 @@ import CssConfig from './CssConfig.js'
           })
       },
       onDeleteSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.$message({
+            type: 'success',
+            message: response.data.message
+          })
+          Vue.nextTick(() => this.$refs.vuetable.refresh())
+        } else {
+          toastr.error(response.message)
+        }
+      },
+      onCloneSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
           this.$message({
             type: 'success',

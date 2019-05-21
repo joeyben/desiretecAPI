@@ -8,7 +8,7 @@
             <div class="dropdown-menu dropdown-menu-left">
                 <router-link class="dropdown-item" :to="{name: 'root.create', params: { id: 0 }}"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
                 <router-link class="dropdown-item" :to="{name: 'root.export', params: { id: 0 }}" v-if="can_copy"><i class="icon-copy4"></i>{{ trans('button.copy') }}</router-link>
-                <!--<a href="javascript:;" class="dropdown-item" v-on:click="dialogFormVisible = true" v-if="hasRole('Administrator')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>-->
+                <a href="javascript:;" class="dropdown-item" v-on:click="dialogFormVisible = true" v-if="can_clone"><i class="icon-stack"></i>  {{ trans('button.clone') }}</a>
                 <!--<a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>-->
                 <!--<a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>-->
             </div>
@@ -77,24 +77,37 @@
                 </div>
             </form>
         </div>
-        <el-dialog title="Please choose a Whitelabel" :visible.sync="dialogFormVisible" width="35%">
+        <el-dialog :title="trans('button.clone')" :visible.sync="dialogFormVisible" width="35%">
             <el-form :model="form">
-                <el-form-item :label="trans('modals.whitelabel')">
-                    <el-select v-model="form.id" placeholder="Please choose a Whitelabel" style="width: 100%;">
-                        <el-option
-                                v-for="item in whitelabels"
-                                multiple
-                                :key="item.id"
-                                :label="item.name"
-                                :value="item.id">
-                            <span style="float: left"><i :class="item.name"></i> {{ item.name }}</span>
-                        </el-option>
-                    </el-select>
+                <el-form-item label="From">
+                    <el-col :span="8">
+                        <el-select v-model="form.localeFrom" placeholder="Please choose a locale" style="width: 100%;">
+                            <el-option
+                                    v-for="(key, index) in locales"
+                                    :key="key.locale"
+                                    :label="key.locale"
+                                    :value="key.locale">
+                                <span style="float: left">{{ key.locale }}</span>
+                            </el-option>
+                        </el-select>
+                    </el-col>
+                    <el-col class="line" :span="2"> &nbsp;&nbsp;To</el-col>
+                    <el-col :span="8">
+                        <el-select v-model="form.localeTo" placeholder="Please choose a locale" style="width: 100%;">
+                            <el-option
+                                    v-for="(key, index) in locales"
+                                    :key="key.locale"
+                                    :label="key.locale"
+                                    :value="key.locale">
+                                <span style="float: left">{{ key.locale }}</span>
+                            </el-option>
+                        </el-select>
+                    </el-col>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <button class="btn btn-outline-danger btn-sm" @click="dialogFormVisible = false"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.cancel') }}</button>
-                <button class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" @click="onCreate()" v-if="form.id !== ''"> {{ trans('button.confirm') }}</button>
+                 <button class="btn btn-outline-danger btn-sm" @click="dialogFormVisible = false"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.cancel') }}</button>
+                <button class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" @click="onClone()" v-if="form.localeTo !== null"> {{ trans('button.confirm') }}</button>
             </span>
         </el-dialog>
     </div>
@@ -111,8 +124,9 @@
         return {
           dialogFormVisible: false,
           form: {
-            id: '',
-            selected: null
+            localeFrom: null,
+            localeTo: null,
+            id: ''
           },
           formLabelWidth: '120px',
           created: '',
@@ -147,6 +161,9 @@
         can_copy () {
           return this.hasRole('Administrator')
         },
+        can_clone () {
+          return this.hasRole('Administrator')
+        },
         urlExportSelected () {
           return window.laroute.route('provider.groups.export', {checked: this.checked})
         },
@@ -164,8 +181,9 @@
         }
       },
       methods: {
-        inputWhitelabels (value) {
-          debugger
+        onClone () {
+          this.dialogFormVisible = false
+          this.$events.fire('clone-set', this.form.localeFrom, this.form.localeTo)
         },
         generateWhitelabels () {
           let data = []
