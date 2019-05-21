@@ -513,7 +513,7 @@ $fontcolor: #303030;
 
     text-align: center;
 
-    color:  $secondarycolor;
+    color:  $fontcolor;
     font-size: 22px;
     font-weight: 500;
     line-height: 30px;
@@ -552,7 +552,7 @@ $fontcolor: #303030;
     padding-left: 7px;
     outline: none;
     border: 1px solid #aaa;
-    color: $mastercolor;
+    color: $fontcolor;
     font-size: 12px;
   }
 
@@ -632,7 +632,7 @@ $fontcolor: #303030;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: #fff;
+            color: $fontcolor;
           }
         }
         hr{
@@ -726,7 +726,7 @@ $fontcolor: #303030;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: #fff;
+            color: $fontcolor;
           }
         }
         hr{
@@ -1663,7 +1663,7 @@ p.kwp-info {
       border-radius: 0;
       padding: 0 10px;
       font-size: 18px;
-      color: $mastercolor;
+      color: $fontcolor;
     }
     .kwp-custom-select{
       #catering{

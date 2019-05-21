@@ -442,23 +442,23 @@
 
                         <div class="group">
                             <input type="text" class="form-control name" name="first_name" id="first_name" required>
-                            <label>{{ trans('wish.details.contact.firstname') }}</label>
+                            <label>Name</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control nachname" name="last_name" id="last_name" required>
-                            <label>{{ trans('wish.details.contact.lastname') }}</label>
+                            <label>Nachname</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control email" name="email" id="email" required value="{{ $wish->owner->email }}">
-                            <label>{{ trans('wish.details.contact.email') }}</label>
+                            <label>E-Mail-Adresse</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control tel" name="telephone" id="telephone" >
-                            <label>{{ trans('wish.details.contact.telephone') }}</label>
+                            <label>Telefon-Nr.(optional)</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control betreff" name="subject" id="subject" >
-                            <label>{{ trans('wish.details.contact.subject') }}</label>
+                            <label>Betreff</label>
                         </div>
 
                     </div>
@@ -491,7 +491,7 @@
             <div class="modal-footer">
                 <input type="hidden" name="wish_id" value="{{ $wish->id }}" />
                 <input type="hidden" name="period" value="no data" />
-                <input type="submit" class="primary-btn wm-1-btn" value="{{ trans('wish.details.contact.send') }}" />
+                <input type="submit" class="primary-btn wm-1-btn" value="Nachricht absenden" />
             </div>
             {{ Form::close() }}
         </div>
@@ -523,22 +523,22 @@
 
                         <div class="group">
                             <input type="text" class="form-control name" name="first_name" id="first_name_" required>
-                            <label>{{ trans('wish.details.callback.firstname') }}</label>
+                            <label>Vorname</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control nachname" name="last_name" id="first_name_" required>
-                            <label>{{ trans('wish.details.callback.lastname') }}</label>
+                            <label>Nachname</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control tel" name="telephone" id="telephone_" required>
-                            <label>{{ trans('wish.details.callback.telephone') }}</label>
+                            <label>Telefon-Nr unter der wir Sie erreichen</label>
                         </div>
                         <div class="group">
                             <select name="period" id="period_" class="form-control">
-                                <option value="">{{ trans('wish.details.callback.choose_period') }}</option>
-                                <option value="vormittags" id="">{{ trans('wish.details.callback.period1') }}</option>
-                                <option value="nachmittags" id="">{{ trans('wish.details.callback.period2') }}</option>
-                                <option value="abends" id="">{{ trans('wish.details.callback.period3') }}</option>
+                                <option value="">Wähle einen Zeitraum</option>
+                                <option value="vormittags" id="">vormittags</option>
+                                <option value="nachmittags" id="">nachmittags</option>
+                                <option value="abends" id="">abends</option>
                             </select>
                         </div>
 
@@ -547,7 +547,7 @@
                         <input type="hidden" name="message" value="no data" />
                         <input type="hidden" name="email" value="no data" />
 
-                        <button type="submit" class="primary-btn wm-2-btn">{{ trans('wish.details.callback.send') }}</button>
+                        <button type="submit" class="primary-btn wm-2-btn">Nachricht absenden</button>
                     </div>
 
                     <div class="col-md-4 modal-body-right">
