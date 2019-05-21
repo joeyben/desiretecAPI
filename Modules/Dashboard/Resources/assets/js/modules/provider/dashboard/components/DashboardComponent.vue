@@ -66,6 +66,7 @@
   import Vuex from 'vuex'
   import VueGridLayout from 'vue-grid-layout'
   import TileWishComponent from './TileWishComponent'
+  import TileOfferComponent from './TileOfferComponent'
   import TileGroupComponent from './TileGroupComponent'
   import TileSellerComponent from './TileSellerComponent'
   import TileCommentComponent from './TileCommentComponent'
@@ -85,6 +86,7 @@ export default {
       GridLayout: VueGridLayout.GridLayout,
       GridItem: VueGridLayout.GridItem,
       TileWishComponent,
+      TileOfferComponent,
       TileSellerComponent,
       TileCommentComponent,
       TileOrderComponent,
