@@ -55,7 +55,7 @@ class CreatedWishNotificationForSeller extends Notification
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
             if (session()->has('newsletter')) {
-                NewsletterFacade::subscribeOrUpdate($this->wish->owner->email,
+                NewsletterFacade::subscribePending($this->wish->owner->email,
                     [
                         'FNAME' => $this->wish->owner->first_name === 'Muster' ? '-' : $this->wish->owner->first_name,
                         'LNAME' => $this->wish->owner->last_name === 'Name' ? '-' : $this->wish->owner->last_name,
