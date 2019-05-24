@@ -13,6 +13,8 @@ p,a,h1,h2,h3,h4,button,input,textarea{
 .secondary-btn{
   border: 1px solid $mastercolor;
   color: $mastercolor;
+  min-width: 230px;
+  padding: 5px 20px;
 }
 
 .confirm-popup {
@@ -40,11 +42,13 @@ body{
       }
     }
   }
-  &.wish{
-    .main-container{
-      margin: 0;
-      width: 100%;
-      padding: 0;
+  &.wish, &.wishlist{
+    #app {
+      .main-container {
+        margin: 0;
+        width: 100%;
+        padding: 0;
+      }
     }
   }
 }

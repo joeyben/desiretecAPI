@@ -335,7 +335,7 @@
                 &nbsp;
                 <input class="data-content">
             </div>
-            @if ($logged_in_user->hasRole('User'))
+            @if ($logged_in_user->hasRole('User') && false)
             <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
             @endif
         </div>
@@ -402,7 +402,7 @@
                                 &nbsp;
                                 <input class="data-content" >
                             </div>
-                            @if ($logged_in_user->hasRole('User') && $is_owner)
+                            @if ($logged_in_user->hasRole('User') && $is_owner && false)
                                 <button class="secondary-btn{{ $callbackInactivClass }}">Daten andern</button>
                             @endif
                         </div>
