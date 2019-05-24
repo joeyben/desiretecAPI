@@ -3,10 +3,12 @@
 
 @section('content')
     <div class="box box-info">
+        @if (session('flash_success'))
         <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert">×</button>
             {{ session('flash_success') }}
         </div>
+        @endif
         <div class="box-header with-border">
             <h3 class="box-title">{{ trans('labels.frontend.offers.management') }}</h3>
 

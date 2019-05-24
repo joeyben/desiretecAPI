@@ -24,12 +24,17 @@
 
         <!-- Check if the language is set to RTL, so apply the RTL layouts -->
         <!-- Otherwise apply the normal LTR layouts -->
+
         @langRTL
             {{ Html::style(getRtlCss(mix('css/frontend.css'))) }}
         @else
             {{ Html::style(mix('css/frontend.css')) }}
         @endif
         {!! Html::style('js/select2/select2.css') !!}
+
+        @if(isWhiteLabel())
+            {{ Html::style(mix('whitelabel/'.getCurrentWhiteLabelName().'/css/'.getCurrentWhiteLabelName().'.css')) }}
+        @endif
 
         {{ Html::style(mix('css/frontend-custom.css')) }}
         <link media="all" type="text/css" rel="stylesheet" href="{{ asset('fontawsome/css/all.css') }}">

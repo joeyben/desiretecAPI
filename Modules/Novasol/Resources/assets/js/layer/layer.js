@@ -354,7 +354,7 @@ var dt = window.dt || {};
         $("body").removeClass('mobile-layer');
         $("body, html").css({'overflow':'auto'});
 
-        dt.Tracking.event('close', this.trackingLabel);
+        //dt.Tracking.event('close', this.trackingLabel);
 
     };
 
@@ -411,11 +411,13 @@ var dt = window.dt || {};
         $(".dt-modal").removeClass('teaser-on').find('.teaser').remove();
         $( ".dt-modal" ).addClass('m-open');
         dt.PopupManager.show();
+        $("body, html").css({'overflow':'hidden'});
         //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
         ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
     };
 
     $(document).ready(function (e) {
+        var $event = e;
         if(deviceDetector.device === "phone") {
             dt.PopupManager.teaser = true;
             dt.PopupManager.teaserText = "Wir möchten Sie gerne beraten!";
@@ -432,6 +434,9 @@ var dt = window.dt || {};
             dt.PopupManager.isMobile = true;
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
             textareaAutosize();
+            $(".dt-modal .teaser").find('i').on('click touchend',function () {
+                dt.hideTeaser($event);
+            });
             if(getUrlParams('autoShow')){
                 dt.showMobileLayer();
                 shown = true;
@@ -620,6 +625,15 @@ var dt = window.dt || {};
 
     function setCookie(cname, cvalue) {
         document.cookie = cname + "=" + cvalue + ";path=/";
+    }
+
+    function removeLayer(e){
+        var $event = e;
+        setTimeout(function(){
+            dt.triggerButton($event);
+            dt.PopupManager.closePopup($event);
+            dt.PopupManager.teaserSwiped = true;
+        }, 500);
     }
 
     function textareaAutosize(){

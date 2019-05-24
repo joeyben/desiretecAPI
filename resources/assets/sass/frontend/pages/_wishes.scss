@@ -26,6 +26,10 @@ body.wishlist{
         margin-bottom: 30px;
         padding-bottom: 30px;
         border-bottom: $border-default;
+        @media screen and (max-width: $break-small) {
+          display: block;
+          grid-template-columns: none;
+        }
         &:last-child{
           border: none;
         }
@@ -36,6 +40,9 @@ body.wishlist{
             background-position: center;
             background-size: cover;
             @include border-radius(2px);
+            @media screen and (max-width: $break-small) {
+              height: 200px;
+            }
           }
         }
         .main-info {

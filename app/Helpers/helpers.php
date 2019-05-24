@@ -387,6 +387,21 @@ if (!function_exists('getCurrentWhiteLabelId')) {
     }
 }
 
+if (!function_exists('getCurrentWhiteLabelName')) {
+    /**
+     * return current whitelabel Name.
+     *
+     * @return string
+     */
+    function getCurrentWhiteLabelName()
+    {
+        $url = str_replace('http://', '', url('/'));
+        $name = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+
+        return strtolower($name);
+    }
+}
+
 if (!function_exists('getCurrentWhiteLabelField')) {
     /**
      * return current whitelabel Field.

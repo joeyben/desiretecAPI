@@ -123,21 +123,31 @@
     </div>
 @endif
 
-@foreach($wish->offers as $key => $offer)
-
+@if (count($wish->offers) > 0)
     <section class="section-angebote-2" id="angebote">
         <div class="container">
             <div class="col-md-12 sa2-1">
                 <h4>
                     {{ trans('wish.view.new_offers') }}
                 </h4>
-                <p class="sa2-p1">Du hast {{ count($wish->offers) }} Angebote von <b>{{ $offer->owner->name }}</b>
+                <p class="sa2-p1">Du hast {{ count($wish->offers) }} Angebote</b>
                     @if ($logged_in_user->hasRole('Seller'))
                         erstellt
                     @else
                         erhalten
                     @endif
                 </p>
+            </div>
+        </div>
+    </section>
+@endif
+
+@foreach($wish->offers as $key => $offer)
+
+    <section class="section-angebote-2" id="angebote">
+        <div class="container">
+            <div class="col-md-12 sa2-1">
+                <h4>Angebot {{ $key+1 }}</h4>
                 <p class="sa2-p2">
                     <span class="offer-avatar-cnt">
                         <img class="avatar" title="{{ $offer->agent->name }}" alt="{{ $offer->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $offer->agent->avatar }}" />
@@ -159,7 +169,7 @@
             </div>
         </div>
     </section>
-    @if ($offer->offerFiles)
+    @if (count($offer->offerFiles) > 0)
     <section class="section-angebote-download">
         <div class="container">
             <div class="col-md-12">

@@ -1,6 +1,7 @@
 @php
     $contactInactivClass = count($wish->contacts) ? " inactiv" : "";
     $callbackInactivClass = count($wish->callbacks) ? " inactiv" : "";
+    $actionButtonsSet = false;
 @endphp
 
 @extends('frontend.layouts.app')
@@ -40,10 +41,13 @@
                 @elseif (count($wish->offers) > 0)
                     <p class="header-p">{!! trans('wish.view.stage.user_offer',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
                     <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('angebote')">Angebot ansehen</button>
-                @elseif (count($wish->messages) > 0)
+                @elseif (count($wish->messages) > 0 && $wish->messages[count($wish->messages)-1]->user_id !== Auth::user()->id)
                     <p class="header-p">{!! trans('wish.view.stage.user_message',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
                     <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('messages')">Nachricht ansehen</button>
                 @else
+                    @php
+                        $actionButtonsSet = true;
+                    @endphp
                     <p class="header-p">{!! trans('wish.view.stage.user_empty',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
                     <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
                     <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
@@ -100,7 +104,7 @@
         @elseif ($logged_in_user->hasRole('User'))
         <div class="bg-bottom">
             <div class="container">
-                <h4>Zuständiges Reisebüro</h4>
+                <h4>{{ trans('wish.details.seller_title') }}</h4>
                 <div class="col-md-3">
                     <p>
                         {{ $wish->group->users[0]->name }}</p>
@@ -143,21 +147,31 @@
     </div>
 @endif
 
-@foreach($wish->offers as $key => $offer)
-
+@if (count($wish->offers) > 0)
     <section class="section-angebote-2" id="angebote">
         <div class="container">
             <div class="col-md-12 sa2-1">
                 <h4>
                     {{ trans('wish.view.new_offers') }}
                 </h4>
-                <p class="sa2-p1">Du hast {{ count($wish->offers) }} Angebote von <b>{{ $offer->owner->name }}</b>
+                <p class="sa2-p1">Du hast {{ count($wish->offers) }} Angebote</b>
                     @if ($logged_in_user->hasRole('Seller'))
                         erstellt
                     @else
                         erhalten
                     @endif
                 </p>
+            </div>
+        </div>
+    </section>
+@endif
+
+@foreach($wish->offers as $key => $offer)
+
+    <section class="section-angebote-2" id="angebote">
+        <div class="container">
+            <div class="col-md-12 sa2-1">
+                <h4>Angebot {{ $key+1 }}</h4>
                 <p class="sa2-p2">
                     <span class="offer-avatar-cnt">
                         <img class="avatar" title="{{ $offer->agent->name }}" alt="{{ $offer->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $offer->agent->avatar }}" />
@@ -179,7 +193,7 @@
             </div>
         </div>
     </section>
-    @if ($offer->offerFiles)
+    @if (count($offer->offerFiles) > 0)
     <section class="section-angebote-download">
         <div class="container">
             <div class="col-md-12">
@@ -244,7 +258,7 @@
     </div>
 </section>
 
-@if ($logged_in_user->hasRole('User') && count($wish->offers) == 0)
+@if ($logged_in_user->hasRole('User') && count($wish->offers) == 0 && !$actionButtonsSet)
     <div class="container">
         <div class="col-md-12">
             <hr class="sad-hr">
@@ -289,11 +303,6 @@
 
 
         <div class="col-md-12 s2-second">
-
-            <div class="col-md-3">
-                <i class="fal fa-minus"></i>
-                <input class="data-content">
-            </div>
             <div class="col-md-3">
                 <i class="fal fa-calendar-alt"></i>
                 <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.Y') }}">
@@ -321,6 +330,10 @@
             <div class="col-md-3">
                 <i class="fal fa-dog"></i>
                 <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
+            </div>
+            <div class="col-md-3">
+                &nbsp;
+                <input class="data-content">
             </div>
             @if ($logged_in_user->hasRole('User'))
             <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
@@ -352,16 +365,10 @@
                     <div class="panel-body">
                         <div class="col-md-12 s2-first">
                             <p><b>{{ trans('wish.details.subheadline.your_message') }}</b><br>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec purus libero, tempor eget mi vel,
-                                pellentesque sodales dui. Nam pharetra neque et nibh vehicula, ut rutrum orci varius.
-                                In quis sapien non turpis fermentum venenatis quis sed felis. Sed commodo scelerisque metus, consequat tempor turpis consectetur nec. Nullam a fermentum dolor.
+                                {{ $wish->description }}
                             </p>
                         </div>
                         <div class="col-md-12 s2-second">
-                            <div class="col-md-3">
-                                <i class="fal fa-minus"></i>
-                                <input class="data-content" >
-                            </div>
                             <div class="col-md-3">
                                 <i class="fal fa-calendar-alt"></i>
                                 <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }}">
@@ -390,6 +397,10 @@
                             <div class="col-md-3">
                                 <i class="fal fa-dog"></i>
                                 <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
+                            </div>
+                            <div class="col-md-3">
+                                &nbsp;
+                                <input class="data-content" >
                             </div>
                             @if ($logged_in_user->hasRole('User') && $is_owner)
                                 <button class="secondary-btn{{ $callbackInactivClass }}">Daten andern</button>
@@ -457,7 +468,7 @@
                             <label>Telefon-Nr.(optional)</label>
                         </div>
                         <div class="group">
-                            <input type="text" class="form-control betreff" name="subject" id="subject" >
+                            <input type="text" class="form-control betreff" name="subject" id="subject" required autocomplete="off">
                             <label>Betreff</label>
                         </div>
 
@@ -535,7 +546,7 @@
                         </div>
                         <div class="group">
                             <select name="period" id="period_" class="form-control">
-                                <option value="">Wähle einen Zeitraum</option>
+                                <option value="">{{ trans('wish.details.callback_period_empty') }}</option>
                                 <option value="vormittags" id="">vormittags</option>
                                 <option value="nachmittags" id="">nachmittags</option>
                                 <option value="abends" id="">abends</option>

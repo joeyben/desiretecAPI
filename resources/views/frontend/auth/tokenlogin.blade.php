@@ -36,9 +36,13 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn primary-btn mb-0">
                                     Send login link
                                 </button>
+                                <a href="{{route('frontend.auth.login')}}" class="btn secondary-btn">
+                                    {{ trans('account.login.seller') }}
+                                </a>
+
 
                                 <!--<a href="{{ url('/login') }}" class="btn btn-link">Login with password instead</a>-->
                             </div>

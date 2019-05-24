@@ -275,7 +275,7 @@ $fontcolor: #303030;
 
   .error-input{
     display: block;
-    background: #EC6708;
+    background: $mastercolor;
     padding: 0 10px;
     color: #fff;
   }
@@ -1381,6 +1381,13 @@ p.kwp-info {
           &.not-triggered{
             display: block;
           }
+        }
+        .txt{
+          text-overflow: ellipsis;
+          display: block;
+          overflow: hidden;
+          white-space: nowrap;
+          width: 95%;
         }
       }
       .rangeslider-wrapper{
