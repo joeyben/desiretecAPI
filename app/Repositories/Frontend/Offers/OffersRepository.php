@@ -57,7 +57,8 @@ class OffersRepository extends BaseRepository
                 config('access.users_table') . '.last_name as last_name',
                 config('module.wishes.table') . '.id as wish_id',
                 config('module.wishes.table') . '.title as wish_title',
-            ])->where(config('module.offers.table') . '.created_by', access()->user()->id);
+            ])->where(config('module.offers.table') . '.created_by', access()->user()->id)
+            ->orderBy(config('module.offers.table') . '.id', 'DESC');
     }
 
     /**

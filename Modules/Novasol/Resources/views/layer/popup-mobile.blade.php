@@ -185,7 +185,16 @@
                 $('.kwp-content').animate({ scrollTop: $(this).offset().top - 60}, 500);
             });
 
+            $(".duration-more .button a").click(function(e) {
+                e.preventDefault();
+                $(this).parents('.duration-col').removeClass('open');
+                var from = $("#earliest_start").val();
+                var back = $("#latest_return").val();
+                var duration = $("#duration option:selected").text();
 
+                $(".duration-time .txt").text(from+" - "+back+", "+duration);
+                return false;
+            });
 
             $(".pax-more .button a").click(function(e) {
                 e.preventDefault();
@@ -242,6 +251,9 @@
                         const year = date.getFullYear();
                         return day+"."+month+"."+year;
                     },
+                    onSelect: function() {
+                        validateDuration();
+                    },
                     i18n: {
                         previousMonth: 'Vormonat',
                         nextMonth: 'Nächsten Monat',
@@ -280,7 +292,14 @@
                     }
                     $("#latest_return").val(d+"."+m+"."+y);
                 }
-                +$(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
+                $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
+                var $start_date = $("#earliest_start").val().split('.');
+                var $end_date = $("#latest_return").val().split('.');
+
+                dt.startDate.setDate($start_date[2]+"."+$start_date[1]+"."+$start_date[0]);
+                dt.endDate.setDate($end_date[2]+"."+$end_date[1]+"."+$end_date[0]);
+
+                validateDuration();
                 var pax = $("#adults").val();
                 var children_count = parseInt($("#kids").val());
                 var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
@@ -308,6 +327,21 @@
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
+            }
+            
+            function validateDuration() {
+                var days_diff = (dt.endDate.getDate() - dt.startDate.getDate()) / 60000 / 60 / 24;
+                var $element = $('#duration > option');
+                $element.removeClass('hidden');
+                $element.each(function() {
+                    var $value_arr = $(this).val().split("-");
+                    var $value = $value_arr.length > 1 && $value_arr[1] ? parseInt($value_arr[1]) : ($value_arr.length > 1 ? parseInt($value_arr[0]) : parseInt($value_arr[0])+1 );
+
+                    if($value > days_diff){
+                        $(this).addClass('hidden');
+                    }
+                });
+                $element.removeAttr('selected').parent().val('');
             }
         </script>
 

@@ -8,10 +8,10 @@
     </div><!--form control-->
 
     <div class="form-group">
-        {{ Form::label('description', trans('validation.attributes.frontend.offers.text'), ['class' => 'col-lg-2 control-label']) }}
+        {{ Form::label('description', trans('validation.attributes.frontend.offers.text'), ['class' => 'col-lg-2 control-label required']) }}
 
         <div class="col-lg-10 mce-box">
-            {{ Form::textarea('description', null,['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.offers.text_placeholder')]) }}
+            {{ Form::textarea('description', null,['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.offers.text_placeholder'), 'required' => 'required']) }}
         </div><!--col-lg-3-->
     </div><!--form control-->
 

@@ -38,7 +38,7 @@ class OffersTableController extends Controller
                 return $offers->first_name . ' ' . $offers->last_name;
             })
             ->addColumn('created_at', function ($offers) {
-                return $offers->created_at->toFormattedDateString() . ' ' . $offers->created_at->toTimeString();
+                return $offers->created_at->format('d.m.Y') . ' ' . $offers->created_at->toTimeString();
             })
             ->addColumn('status', function ($offers) {
                 return $offers->status;

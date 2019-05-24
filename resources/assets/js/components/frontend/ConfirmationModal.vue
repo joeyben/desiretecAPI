@@ -1,7 +1,7 @@
 <template>
     <div class="confirm-popup">
             <div class="popup-body">
-                <p>Are you sure?</p>
+                <p>Nachricht löschen?</p>
                 <button class='secondary-btn antworten-btn' @click='cancelEvent'>Nein</button>
                 <button class='primary-btn antworten-btn' @click='deleteMessage'>Ja</button>
             </div>

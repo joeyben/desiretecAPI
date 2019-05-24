@@ -35,7 +35,7 @@
             /*
              * User Profile Specific
              */
-            Route::patch('profile/update', 'ProfileController@update')->name('profile.update');
+            Route::post('profile/update', 'ProfileController@update')->name('profile.update');
 
             /*
              * User Profile Picture

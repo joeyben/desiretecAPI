@@ -13,3 +13,45 @@
   }
 }
 
+.dataTables_wrapper{
+  .dataTables_paginate{
+    .paginate_button{
+      &:hover{
+        background: transparent !important;
+      }
+    }
+  }
+}
+
+.main-nav{
+  .navbar-right{
+    .nav-user{
+      span{
+        @media screen and (max-width: $break-small) {
+          padding-left: 0px;
+        }
+      }
+    }
+  }
+}
+
+.navbar-nav{
+  .open{
+    .dropdown-menu{
+      @media screen and (max-width: $break-small) {
+        position: absolute;
+        float: left;
+        background-color: #fff;
+        box-shadow: 0 6px 12px rgba(0,0,0,.175);
+      }
+    }
+  }
+}
+
+.navbar-collapse{
+  &.in{
+    @media screen and (max-width: $break-small) {
+      overflow: visible;
+    }
+  }
+}
