@@ -180,7 +180,7 @@ var dt = window.dt || {};
         }
     });
 
-    var TrendtoursTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
+    var NovasolTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Trendtours WL',
         matchesUrl: 'www.novasol.de/*',
         filterFormSelector: 'body',
@@ -219,7 +219,7 @@ var dt = window.dt || {};
                 return catering;
             },
             'hotel_category': function (form, formData) {
-                var category = getUrlParams('category') ? getUrlParams('category') : '';
+                var category = formData.hasOwnProperty('rating') ? formData['rating'] : '';
                 return category;
             },
             'destination': function (form, formData) {
@@ -227,15 +227,15 @@ var dt = window.dt || {};
                 return destination;
             },
             'pax': function (form, formData) {
-                var pax = dataLayer.length > 16 && ('adults' in dataLayer[16]) ? dataLayer[16].adults : '';
+                var pax =  form.hasOwnProperty('adults') ? form['adults'] : '';
                 return pax;
             },
             'budget': function (form, formData) {
-                var budget = dataLayer.length > 16 && ('priceMaximum' in dataLayer[16]) ? dataLayer[16].priceMaximum: '';
+                var budget = form.hasOwnProperty('priceMaximum') ? form['priceMaximum'] : '';
                 return budget;
             },
             'children': function (form, formData) {
-                var kids = dataLayer.length > 16 && ('kids' in dataLayer[16]) ? dataLayer[16].kids : '';
+                var kids = form.hasOwnProperty('kids') ? form['kids'] : '';
                 return kids;
             },
             'age_1': function (form, formData) {
@@ -251,15 +251,15 @@ var dt = window.dt || {};
                 return age3;
             },
             'earliest_start': function (form, formData) {
-                var dateFrom = getUrlParams('from') ? getUrlParams('from') : '';
+                var dateFrom = formData.hasOwnProperty('startDate') ? this.formatDate(form['startDate']) : '';
                 return dateFrom;
             },
             'latest_return': function (form, formData) {
-                var dateTo = getUrlParams('to') ? getUrlParams('to') : '';
+                var dateTo = formData.hasOwnProperty('endDate') ? this.formatDate(form['endDate']) : '';
                 return dateTo;
             },
             'duration': function (form, formData) {
-                var duration = dataLayer.length > 16 && ('lengthOfStay' in dataLayer[16]) ? dataLayer[16].lengthOfStay : '';
+                var duration = form.hasOwnProperty('lengthOfStay') ? form['lengthOfStay'] : '';
                 return duration;
             },
             'airport': function (form, formData) {
@@ -275,6 +275,14 @@ var dt = window.dt || {};
             var form = null,
                 formData = null;
 
+            $.each(window.dataLayer, function (key, value) {
+                if (value.event === "searchFilters") {
+                    formData = value.searchFilters;
+                }else if (value.event === "searchEvent") {
+                    form = value;
+                }
+            });
+
             return this.decodeFilterData(form, formData);
         },
         formatDate: function (d) {
@@ -282,14 +290,9 @@ var dt = window.dt || {};
                 return null;
             }
 
-            function pad(val, len) {
-                val = String(val);
-                len = len || 2;
-                while (val.length < len) val = "0" + val;
-                return val;
-            }
+            var f_date = d.split('-');
 
-            return pad(d.getDate(), 2) + '.' + pad(d.getMonth() + 1) + '.' + d.getFullYear();
+            return f_date[2] + '.' + f_date[1] + '.' + f_date[0];
         },
         getScope: function () {
             return null;
@@ -312,7 +315,7 @@ var dt = window.dt || {};
         }
     });
 
-    dt.decoders.push(TrendtoursTripDataDecoder);
+    dt.decoders.push(NovasolTripDataDecoder);
     dt.decoders.push(KwizzmeFakeTripDataDecoder);
 
     //dt.decoders.push($.extend({}, MasterIBETripDataDecoder, {
