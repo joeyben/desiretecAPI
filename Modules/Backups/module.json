@@ -1,0 +1,16 @@
+{
+    "name": "Backups",
+    "alias": "backups",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Backups\\Providers\\BackupsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
