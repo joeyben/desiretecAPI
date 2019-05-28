@@ -300,8 +300,8 @@
                                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
                                 <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
                             </div>
-                            <span class="glyphicon glyphicon-plus"></span>
-                            <span class="glyphicon glyphicon-minus"></span>
+                            <i class="fal fa-plus"></i>
+                            <i class="fal fa-minus"></i>
                         </a>
                     </h4>
                 </div>

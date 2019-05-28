@@ -401,8 +401,7 @@ a.primary-btn, input.primary-btn{
   #accordion1{
     margin-left:15px;
     margin-right: 15px;
-    margin-bottom:50px;
-    border-bottom:1px solid #575756;
+    margin-bottom:0px;
     a[aria-expanded="true"]{
       .fa-plus{
         display: none;
@@ -424,13 +423,13 @@ a.primary-btn, input.primary-btn{
       a,a:hover,a:focus{
         text-decoration: none;
       }
-      span{
+      i{
         position: absolute;
-    top: 45%;
-    right: 0;
-    font-size:12px;
-    display: block;
-    color: #636b6f;
+        bottom: 15px;
+        right: 0;
+        font-size:12px;
+        display: block;
+        color: #636b6f;
       }
     }
     .panel-heading{
