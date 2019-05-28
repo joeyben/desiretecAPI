@@ -223,7 +223,7 @@ var dt = window.dt || {};
                 return category;
             },
             'destination': function (form, formData) {
-                var destination = '';
+                var destination = $(".search-form__destination-item-name").text();
                 return destination;
             },
             'pax': function (form, formData) {

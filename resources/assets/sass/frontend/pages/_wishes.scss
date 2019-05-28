@@ -5,14 +5,25 @@ body.wishlist{
     grid-template-columns: 35% 65%;
     padding: 20px 0 0;
     .count{
+      @media screen and (max-width: $break-small) {
+        padding-top: 5px;
+      }
       span{
         color: $text-color;
         font-size: 18px;
         font-weight: 600;
+        @media screen and (max-width: $break-small) {
+          font-size: 14px;
+        }
       }
     }
     .filter-action{
       padding: 0 30px;
+      .dropdown{
+        @media screen and (max-width: $break-small) {
+          width: 190px;
+        }
+      }
     }
   }
   .list-container {
