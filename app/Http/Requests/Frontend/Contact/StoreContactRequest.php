@@ -30,8 +30,7 @@ class StoreContactRequest extends Request
             'first_name'         => 'required|max:191',
             'last_name'          => 'required|max:191',
             'email'              => ['required', 'email', 'max:255'],
-            'subject'            => 'required|max:191',
-            'message'            => 'required',
+            'subject'            => 'required|max:191'
         ];
     }
 
@@ -46,8 +45,7 @@ class StoreContactRequest extends Request
             'first_name.required' => 'Please insert Contact First name',
             'last_name.required'  => 'Please insert Contact Last name',
             'email.required'      => 'Please insert Contact Email',
-            'subject.required'    => 'Please insert Contact Subject',
-            'message.required'    => 'Please insert Contact Message',
+            'subject.required'    => 'Please insert Contact Subject'
         ];
     }
 }

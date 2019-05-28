@@ -283,63 +283,7 @@
 
 <section class="section-contact">
     <div class="container">
-        @if ($logged_in_user->hasRole('Seller'))
-            <div class="col-md-12 s2-first">
-                <h4>{{ trans('wish.details.subheadline.giving_wish') }}</h4>
-                <p>{{ trans('wish.details.subheadline.giving_wish_sub') }}</p>
-                <p><b>Kundennachricht:</b><br>
-                    {{ $wish->description }}
-                </p>
-            </div>
-        @else
-            <div class="col-md-12 s2-first">
-                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
-                <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
-                <p><b>Deine Nachricht:</b><br>
-                    {{ $wish->description }}
-                </p>
-            </div>
-        @endif
-
-
-        <div class="col-md-12 s2-second">
-            <div class="col-md-3">
-                <i class="fal fa-calendar-alt"></i>
-                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.Y') }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-stopwatch"></i>
-                <input class="data-content" value="{{ $wish->duration }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-usd-circle"></i>
-                <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-plane-arrival"></i>
-                <input class="data-content" value="{{ $wish->destination }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-users"></i>
-                <input class="data-content" value="{{ $wish->adults }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-child"></i>
-                <input class="data-content" value="{{ $wish->kids }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-dog"></i>
-                <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
-            </div>
-            <div class="col-md-3">
-                &nbsp;
-                <input class="data-content">
-            </div>
-            @if ($logged_in_user->hasRole('User') && false)
-            <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
-            @endif
-        </div>
-
+        @include('novasol::wish.partial.wish-user-details')
     </div>
 
 </section>
@@ -356,58 +300,15 @@
                                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
                                 <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
                             </div>
-                            <span class="glyphicon glyphicon-plus"></span></a>
-                        <span class="glyphicon glyphicon-minus"></span></a>
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </a>
                     </h4>
                 </div>
 
                 <div id="content" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <div class="col-md-12 s2-first">
-                            <p><b>{{ trans('wish.details.subheadline.your_message') }}</b><br>
-                                {{ $wish->description }}
-                            </p>
-                        </div>
-                        <div class="col-md-12 s2-second">
-                            <div class="col-md-3">
-                                <i class="fal fa-calendar-alt"></i>
-                                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }}">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-stopwatch"></i>
-                                <input class="data-content" value="{{ $wish->duration }}">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-usd-circle"></i>
-                                <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
-                            </div>
-
-                            <div class="col-md-3">
-                                <i class="fal fa-plane-arrival"></i>
-                                <input class="data-content" value="{{ $wish->destination }}">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-users"></i>
-                                <input class="data-content" value="{{ $wish->adults }}">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-star"></i>
-                                <input class="data-content" value="{{ $wish->kids }} Sterne">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-dog"></i>
-                                <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
-                            </div>
-                            <div class="col-md-3">
-                                &nbsp;
-                                <input class="data-content" >
-                            </div>
-                            @if ($logged_in_user->hasRole('User') && $is_owner && false)
-                                <button class="secondary-btn{{ $callbackInactivClass }}">Daten andern</button>
-                            @endif
-                        </div>
-
-
+                        @include('novasol::wish.partial.wish-user-details')
                     </div>
                 </div>
             </div>
@@ -443,7 +344,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">{{ trans('wish.contact.title') }}</h4>
-                <p>{{ trans('wish.contact.text') }}</p>
+                <p>{!! trans('wish.contact.text') !!}</p>
             </div>
 
             <div class="modal-body">
@@ -553,12 +454,7 @@
                             </select>
                         </div>
 
-                        <input type="hidden" name="wish_id" value="{{ $wish->id }}" />
-                        <input type="hidden" name="subject" value="no data" />
-                        <input type="hidden" name="message" value="no data" />
-                        <input type="hidden" name="email" value="no data" />
 
-                        <button type="submit" class="primary-btn wm-2-btn">Nachricht absenden</button>
                     </div>
 
                     <div class="col-md-4 modal-body-right">
@@ -583,7 +479,12 @@
             </div>
 
             <div class="modal-footer">
+                <input type="hidden" name="wish_id" value="{{ $wish->id }}" />
+                <input type="hidden" name="subject" value="no data" />
+                <input type="hidden" name="message" value="no data" />
+                <input type="hidden" name="email" value="no data" />
 
+                <input type="submit" class="primary-btn wm-1-btn" value="Nachricht absenden" />
             </div>
             {{ Form::close() }}
         </div>
