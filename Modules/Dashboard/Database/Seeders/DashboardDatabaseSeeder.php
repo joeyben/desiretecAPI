@@ -31,10 +31,22 @@ class DashboardDatabaseSeeder extends Seeder
             'name'            => 'Tile Offer',
             'x'               => 0,
             'y'               => 15,
-            'w'               => 2,
-            'h'               => 2,
-            'i'               => 14,
+            'w'               => 4,
+            'h'               => 8,
+            'i'               => 4,
             'component'       => 'tile-offer-component',
+            'created_at'      => DB::raw('now()'),
+            'updated_at'      => DB::raw('now()')
+        ]);
+
+        DB::table('dashboards')->insert([
+            'name'            => 'Tile Offerday',
+            'x'               => 6,
+            'y'               => 15,
+            'w'               => 4,
+            'h'               => 8,
+            'i'               => 4,
+            'component'       => 'tile-offerday-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
         ]);

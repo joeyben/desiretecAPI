@@ -26,13 +26,13 @@
             type: 'line'
           },
           title: {
-            text: this.trans('Ereignisse pro Monat')
+            text: this.trans('Ereignisse pro Tag')
           },
           subtitle: {
             text: this.trans('dashboard.source_2019')
           },
           xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            // categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']
           },
           yAxis: {
             title: {
@@ -72,8 +72,8 @@
       }
     },
     mounted () {
-      this.loadOfferByMonth()
-      this.$events.$on('whitelabel-set', whitelabelId => this.loadOfferByMonth(whitelabelId))
+      this.loadOfferByDay()
+      this.$events.$on('whitelabel-set', whitelabelId => this.loadOfferByDay(whitelabelId))
     },
     updated () {
     },
@@ -86,10 +86,10 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadOfferByMonth: function (whitelabelId = null) {
+      loadOfferByDay: function (whitelabelId = null) {
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.events.perMonth') + params)
+        this.$http.get(window.laroute.route('admin.dashboard.events.perDay') + params)
           .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {

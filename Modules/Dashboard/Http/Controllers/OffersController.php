@@ -16,13 +16,15 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
+use Analytics;
+use Spatie\Analytics\Period;
 
 class OffersController extends Controller
 {
     /**
      * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
      */
-    private $wishes;
+    private $events;
     /**
      * @var \Illuminate\Routing\ResponseFactory
      */
@@ -49,9 +51,9 @@ class OffersController extends Controller
      * @param \Illuminate\Translation\Translator                      $lang
      * @param \Carbon\Carbon                                          $carbon
      */
-    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
+    public function __construct(WishesRepository $events, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
     {
-        $this->wishes = $wishes;
+        $this->events = $events;
         $this->response = $response;
         $this->auth = $auth;
         $this->lang = $lang;
@@ -65,20 +67,7 @@ class OffersController extends Controller
      */
     public function index(Request $request)
     {
-        try {
-            $result['wishCount'] = $this->wishes->withCriteria([
-                new ByWhitelabel(),
-                new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-            ])->all()->count();
-            $result['success'] = true;
-            $result['status'] = 200;
-        } catch (Exception $e) {
-            $result['success'] = false;
-            $result['message'] = $e->getMessage();
-            $result['status'] = 500;
-        }
-
-        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+        
     }
 
     /**
@@ -86,66 +75,68 @@ class OffersController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function byMonth(Request $request)
+    public function perMonth(Request $request)
     {
         try {
-            $data = $this->wishes->withCriteria([
-                new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
-                new ByWhitelabel(),
-                new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-                new GroupBy('month')
-            ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count')])
-                ->pluck('wishes_count', 'month')
-                ->toArray();
+            $whitelabelId = $request->get('whitelabel');
 
-            for ($i = 1; $i <= $this->carbon->nowWithSameTz()->format('m'); ++$i) {
-                if (\array_key_exists($i, $data)) {
-                    $result['data'][] = $data[$i];
-                } else {
-                    $result['data'][] = 0;
-                }
-            }
+            $gaViewId = '192484069';
 
-            $result['success'] = true;
-            $result['status'] = 200;
-        } catch (Exception $e) {
-            $result['success'] = false;
-            $result['message'] = $e->getMessage();
-            $result['status'] = 500;
-        }
-
-        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function byDay(Request $request)
-    {
-        try {
-            $data = $this->wishes->withCriteria([
-                new WhereYear($this->carbon->nowWithSameTz()->format('Y')),
-                new WhereMonth($this->carbon->nowWithSameTz()->format('m')),
-                new ByWhitelabel(),
-                new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-                new GroupBy('day')
-            ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('DAY(created_at) as day'), DB::raw('count(*) as wishes_count')]);
-            $items = [];
-            foreach ($data as $item) {
-                $items[$item->day] = [
-                    $item->created_at->format('Y-m-d'),
-                    $item->wishes_count
+            if ('' !== $gaViewId) {
+                $optParams = [
                 ];
+
+                $result['ga'] = \Analytics::performQuery(
+                        Period::months(12),
+                        'ga:totalEvents',
+                        [
+                        'dimensions' => 'ga:month'
+                        ]
+                        )->rows;
+
+                $data = [];
+
+
+                $result['data'] = $data;
+            } else {
+                $result['data'] = [];
             }
 
-            for ($i = 1; $i <= $this->carbon->nowWithSameTz()->format('d'); ++$i) {
-                if (\array_key_exists($i, $items)) {
-                    $result['data'][] = $items[$i];
-                } else {
-                    $result['data'][] = 0;
-                }
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function perDay(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabel');
+
+            $gaViewId = '192484069';
+
+            if ('' !== $gaViewId) {
+                $optParams = [
+                ];
+
+                $result['ga'] = \Analytics::performQuery(
+                        Period::days(30),
+                        'ga:totalEvents',
+                        [
+                        'dimensions' => 'ga:day'
+                        ]
+                        )->rows;
+
+                $data = [];
+
+                $result['data'] = $data;
+            } else {
+                $result['data'] = [];
             }
 
             $result['success'] = true;

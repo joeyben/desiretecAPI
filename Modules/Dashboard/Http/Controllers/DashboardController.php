@@ -14,6 +14,8 @@ use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
+use Analytics;
+use Spatie\Analytics\Period;
 
 class DashboardController extends Controller
 {
@@ -85,6 +87,28 @@ class DashboardController extends Controller
      */
     public function index()
     {
+
+        // Total Events per day
+        $eventsperday = Analytics::performQuery(
+            Period::days(7),
+            'ga:totalEvents',
+            [
+            'dimensions' => 'ga:day'
+            ]
+        );
+        //echo json_encode($eventsperday->rows);
+
+        // Total Events per month
+        $eventspermonth = Analytics::performQuery(
+            Period::months(12),
+            'ga:totalEvents',
+            [
+            'dimensions' => 'ga:month'
+            ]
+        );
+        //echo json_encode($eventspermonth->rows);
+
+
         return view('dashboard::index');
     }
 
