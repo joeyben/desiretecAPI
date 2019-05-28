@@ -64,7 +64,7 @@ class WishExport implements FromCollection, Responsable, WithMapping, WithHeadin
     {
         return [
             $wish->id,
-            $wish->title,
+            $wish->destination,
             $wish->airport,
             $wish->destination,
             '€ ' . $wish->budget,
