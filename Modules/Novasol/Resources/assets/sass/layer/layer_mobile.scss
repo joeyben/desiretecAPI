@@ -1669,6 +1669,9 @@ p.kwp-info {
       #catering{
         padding: 0;
       }
+      .hidden{
+        display: none;
+      }
     }
     .kwp textarea, .kwp input[type="email"]{
       resize: none;

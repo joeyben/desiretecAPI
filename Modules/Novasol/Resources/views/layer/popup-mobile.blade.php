@@ -1,4 +1,4 @@
-{{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
+{{ Form::open(['route' => 'novasol.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 
 <div class="kwp-minimal">
@@ -207,7 +207,6 @@
                 $(".travelers .txt").text(pax+" "+erwachsene+""+children+ ""+pets);
                 return false;
             });
-
 
 
             $(document).ready(function(){
