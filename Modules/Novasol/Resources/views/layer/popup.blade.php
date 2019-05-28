@@ -1,6 +1,6 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvpprod.desiretec.com/fontawsome/css/all.css">
 
-{{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
+{{ Form::open(['route' => 'novasol.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <div class="kwp-minimal">
     <div class="kwp-content kwp-with-expansion">
@@ -155,13 +155,6 @@
 
     <div class="kwp-footer">
         <script>
-            $('.kwp-btn-expand').click(function(e) {
-                e.preventDefault();
-                $(this).toggleClass('kwp-open');
-                $('.kwp-content-extra').toggleClass('kwp-collapsed');
-                //$('.kwp-content-extra').stop().slideToggle();
-                return false;
-            });
 
             $(".dd-trigger").click(function(e) {
                 if(!$(this).parents('.main-col').hasClass('open')){
@@ -195,8 +188,6 @@
                 $(".travelers .txt").text(pax+" "+erwachsene+""+children+ ""+pets);
                 return false;
             });
-
-
 
             $(document).ready(function(){
                 dt.startDate = new Pikaday({
