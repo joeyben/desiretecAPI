@@ -331,13 +331,13 @@
             function validateDuration() {
                 var days_diff = (dt.endDate.getDate() - dt.startDate.getDate()) / 60000 / 60 / 24;
                 var $element = $('#duration > option');
-                $element.removeClass('hidden');
+                $element.attr('disabled',false) ;
                 $element.each(function() {
                     var $value_arr = $(this).val().split("-");
                     var $value = $value_arr.length > 1 && $value_arr[1] ? parseInt($value_arr[1]) : ($value_arr.length > 1 ? parseInt($value_arr[0]) : parseInt($value_arr[0])+1 );
 
                     if($value > days_diff){
-                        $(this).addClass('hidden');
+                        $(this).attr('disabled','disabled');
                     }
                 });
                 $element.removeAttr('selected').parent().val('');
