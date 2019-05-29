@@ -32,7 +32,9 @@
             text: this.trans('dashboard.source_2019')
           },
           xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            title: {
+              text: this.trans('dashboard.date')
+            }
           },
           yAxis: {
             title: {

@@ -18,6 +18,8 @@ use Illuminate\Translation\Translator;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
 use Analytics;
 use Spatie\Analytics\Period;
+use Spatie\Analytics\AnalyticsClientFactory;
+
 
 class OffersController extends Controller
 {
@@ -78,9 +80,12 @@ class OffersController extends Controller
     public function perMonth(Request $request)
     {
         try {
-            $whitelabelId = $request->get('whitelabel');
 
-            $gaViewId = '192484069';
+            $whitelabelId = $request->get('whitelabelId');
+            $gaViewId = DB::table('whitelabels')->where('id',$whitelabelId)->value('ga_view_id');
+            //$config = config('analytics');
+            //$client = AnalyticsClientFactory::createForConfig($config);
+            //return new Analytics($client, $gaViewId);
 
             if ('' !== $gaViewId) {
                 $optParams = [
