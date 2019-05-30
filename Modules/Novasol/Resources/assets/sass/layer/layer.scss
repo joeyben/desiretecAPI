@@ -547,8 +547,13 @@ ul.kwp-form-errors {
 
 .kwp-logo {
   display: block;
-  height: 50px;
+  height: 60px;
+  width: 50px;
   background: transparent url(../../images/layer/logo.png) no-repeat left top;
+  background-size: 50px;
+  position: absolute;
+  left: 20px;
+  top: 10px;
 }
 
 

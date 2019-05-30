@@ -1,5 +1,5 @@
 <div class="form-group">
-    {{ Form::label('name', 'First Name', ['class' => 'col-lg-2 control-label required']) }}
+    {{ Form::label('name', trans('seller.agent.name'), ['class' => 'col-lg-2 control-label required']) }}
     <div class="col-lg-10">
         {{ Form::text('name', null, ['class' => 'form-control box-size', 'placeholder' => 'First Name', 'required' => 'required']) }}
     </div>
@@ -16,13 +16,6 @@
     {{ Form::label('telephone', trans('seller.agent.tel'), ['class' => 'col-lg-2 control-label required']) }}
     <div class="col-lg-10">
         {{ Form::text('telephone', null, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.tel_placeholder'), 'required' => 'required']) }}
-    </div>
-</div>
-
-<div class="form-group">
-    {{ Form::label('status', 'Status', ['class' => 'col-lg-2 control-label required']) }}
-    <div class="col-lg-10">
-        {{ Form::select('status', array('active' => 'Active', 'inactive' => 'InActive', 'deleted' => 'Deleted'), 'Active') }}
     </div>
 </div>
 

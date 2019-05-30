@@ -154,7 +154,7 @@
                 <h4>
                     {{ trans('wish.view.new_offers') }}
                 </h4>
-                <p class="sa2-p1">Du hast {{ count($wish->offers) }} Angebote</b>
+                <p class="sa2-p1">{{ trans_choice('wish.view.offers_title_count', count($wish->offers), ['count' => count($wish->offers)]) }}
                     @if ($logged_in_user->hasRole('Seller'))
                         erstellt
                     @else
@@ -232,6 +232,17 @@
     </section>
   @endif
 
+    @if (count($offer->offerFiles) === 0 && $logged_in_user->hasRole('User'))
+        <div class="container">
+            <div class="col-md-12 sa-2">
+                <div class="sa-buttons">
+                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="container">
         <div class="col-md-12">
             <hr class="sad-hr">
@@ -298,7 +309,7 @@
                         <a data-toggle="collapse" data-parent="#accordion1" href="#content">
                             <div class="col-md-12 s2-first">
                                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
-                                <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
+                                <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
                             </div>
                             <i class="fal fa-plus"></i>
                             <i class="fal fa-minus"></i>
@@ -365,7 +376,7 @@
                             <label>E-Mail-Adresse</label>
                         </div>
                         <div class="group">
-                            <input type="text" class="form-control tel" name="telephone" id="telephone" >
+                            <input type="text" class="form-control tel not-required" name="telephone" id="telephone" value="">
                             <label>Telefon-Nr.(optional)</label>
                         </div>
                         <div class="group">
@@ -382,10 +393,6 @@
                             {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
                         </p>
                         <div class="modal-contact">
-                            <div class="mc-tel">
-                                <span class="glyphicon glyphicon-earphone"></span>
-                                <a href="tel:08971459535">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->telephone }}@endif</a>
-                            </div>
                             <div class="mc-mail">
                                 <span class="glyphicon glyphicon-envelope"></span>
                                 <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
@@ -394,7 +401,7 @@
                     </div>
 
                     <div class="col-md-12 modal-body-bottom">
-                        <textarea name="message" id="modal-textarea" class="form-control" placeholder="Worum geht es? Deine Nachricht an uns."></textarea>
+                        <textarea name="message" id="modal-textarea" class="form-control" placeholder="{{ trans('wish.contact.message_placeholder') }}"></textarea>
                     </div>
 
                 </div>
@@ -464,10 +471,6 @@
                             {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
                         </p>
                         <div class="modal-contact">
-                            <div class="mc-tel">
-                                <span class="glyphicon glyphicon-earphone"></span>
-                                <a href="tel:08971459535">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->telephone }}@endif</a>
-                            </div>
                             <div class="mc-mail">
                                 <span class="glyphicon glyphicon-envelope"></span>
                                 <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
@@ -596,5 +599,8 @@
                 scrollTop: $("#"+id).offset().top - 75
             }, 1000);
         }
+        $(".not-required").focusout(function() {
+            $(this).attr('value',$(this).val());
+        });
     </script>
 @endsection

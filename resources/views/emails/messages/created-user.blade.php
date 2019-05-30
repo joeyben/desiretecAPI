@@ -14,7 +14,6 @@
                         <p style="line-height: 24px; margin-bottom:20px;">
                             {!! trans('email.message.user.body_1') !!}
                             {!! trans('email.message.user.body_2', ['confirmation_url' => $confirmation_url]) !!}
-                            {!! trans('email.message.user.body_3') !!}
                         </p>
 
                         @include('emails.layouts.footer')

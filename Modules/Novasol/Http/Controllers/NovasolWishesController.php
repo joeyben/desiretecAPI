@@ -70,9 +70,23 @@ class NovasolWishesController extends Controller
      */
     public function details(Wish $wish, string $token)
     {
-        $this->wish->validateToken($wish->id, $token);
-        return redirect()->to('/wish/' . $wish->id);
+        if ($this->wish->validateToken($token)) {
+            return redirect()->to('/wish/' . $wish->id);
+        }
+        return redirect()->to('/');
+    }
 
+    /**
+     * @param string $token
+     *
+     * @return mixed
+     */
+    public function validateTokenList($token)
+    {
+        if ($this->wish->validateToken($token)) {
+            return redirect()->to('/wishlist');
+        }
+        return redirect()->to('/');
     }
 
     /**
@@ -82,6 +96,9 @@ class NovasolWishesController extends Controller
      */
     public function view(Wish $wish)
     {
+        if (!auth()->user()){
+            return redirect()->to('/');
+        }
 
         $offers = $wish->offers;
         $avatar = [];

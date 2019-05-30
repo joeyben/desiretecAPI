@@ -14,11 +14,11 @@
                         <p style="line-height: 24px; margin-bottom:20px;">
                             {!! trans('email.wish.created.seller.body_1') !!}
 
-                            {!! trans('email.wish.created.seller.url', ['id' => $wish->id, 'url' => url('/wish')]) !!}
+                            {!! trans('email.wish.created.seller.url', ['id' => $wish->id, 'token' => $token, 'url' => url('/wish')]) !!}
 
                             {!! trans('email.wish.created.seller.body_2') !!}
 
-                            {!! trans('email.wish.created.seller.urllist', [ 'url' => url('/wishlist')]) !!}
+                            {!! trans('email.wish.created.seller.urllist', [ 'url' => url('/wishlist'), 'token' => $token]) !!}
 
                             {!! trans('email.wish.created.seller.body_3') !!}
 
