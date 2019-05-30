@@ -13,7 +13,7 @@
                     
                     <p style="line-height: 24px; margin-bottom:20px;">
                         Herzlichen Glückwunsch, Ihr Kontaktangebot wurde angenommen.<br>
-                        Die Kontaktdaten des Kunden finden Sie jetzt {{ $confirmation_url }} in Ihren Kontakten</a> auf desiretec.<br><br>
+                        Die Kontaktdaten des Kunden finden Sie jetzt <a href="{{ $confirmation_url }}">in Ihren Kontakten</a> auf desiretec.<br><br>
 
                         Wir wünschen Ihnen einen erfolgreichen Kontakt zum Kunden und freuen uns über Ihre weiteren Angebote.
                     </p>

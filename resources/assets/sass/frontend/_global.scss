@@ -645,11 +645,22 @@ a.primary-btn, input.primary-btn{
       -moz-transition:0.2s ease all; 
       -webkit-transition:0.2s ease all;
     }
-    input:focus ~ label, input:valid ~ label 		{
+    input:valid ~ label{
       top:5px;
       font-size:10px;
       color:#bbb;
     }
+    input:focus ~ label{
+      top:5px !important;
+      font-size:10px !important;
+      color:#bbb !important;
+    }
+    input[value=""] ~ label{
+      top: 13px;
+      font-size:14px;
+      color:#999;
+    }
+    input[value=""] ~ label{}
     select{
       height: 42px;
       color:#999;
@@ -665,11 +676,6 @@ a.primary-btn, input.primary-btn{
     .group{
       position: relative;
       margin-bottom: 15px;
-      &:last-child{
-        label{
-          left:23px;
-        }
-      }
     }
   }
   .modal-body-right{

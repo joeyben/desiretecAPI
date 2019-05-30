@@ -288,7 +288,7 @@ class WishesController extends Controller
             ->with('flash_success', trans('alerts.frontend.wishes.deleted'));
     }
 
-    public function validateToken(Wish $wish, $token)
+    public function validateTokenWish(Wish $wish, $token)
     {
         $usertoken = UserToken::where('token', $token)->firstOrFail();
 
@@ -296,8 +296,12 @@ class WishesController extends Controller
 
         $user = User::where('id', $user_id)->firstOrFail();
 
-        Auth::login($user);
+        if ($user) {
+            Auth::login($user);
+            return redirect()->to('/wish/' . $wish->id);
+        }
 
-        return redirect()->to('/wish/' . $wish->id);
+        return redirect()->to('/');
     }
+
 }

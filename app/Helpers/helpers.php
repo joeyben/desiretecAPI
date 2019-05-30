@@ -314,6 +314,7 @@ if (!function_exists('transformDuration')) {
      *
      * @return string
      */
+
     function transformDuration($duration)
     {
         switch ($duration) {
@@ -332,6 +333,38 @@ if (!function_exists('transformDuration')) {
 
             case '28':
                 return trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]);
+                break;
+
+            case '7-':
+                return trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]);
+                break;
+
+            case '14-':
+                return trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]);
+                break;
+
+            case '21-':
+                return trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]);
+                break;
+
+            case '28-':
+                return trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]);
+                break;
+
+            case '1-4':
+                return trans('labels.frontend.wishes.nights', ['nights' => "1-4"]);
+                break;
+
+            case '5-8':
+                return trans('labels.frontend.wishes.nights', ['nights' => "5-8"]);
+                break;
+
+            case '9-12':
+                return trans('labels.frontend.wishes.nights', ['nights' => "9-12"]);
+                break;
+
+            case '13-15':
+                return trans('labels.frontend.wishes.nights', ['nights' => "13-15"]);
                 break;
 
             case null:

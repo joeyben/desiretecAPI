@@ -58,7 +58,7 @@
 
             Route::get('wishes/create', 'WishesController@create')->name('create');
 
-            Route::get('wish/{wish}/{token}', 'WishesController@validateToken')->name('details');
+            Route::get('wish/{wish}/{token}', 'WishesController@validateTokenWish')->name('details');
             Route::get('wish/{wish}', 'WishesController@show')->name('show');
             Route::get('getwish/{wish}', 'WishesController@getWish')->name('getWish');
             Route::post('wish/store', 'WishesController@store')->name('store');

@@ -268,10 +268,9 @@ class WishesRepository extends BaseRepository
     }
 
     /**
-     * @param string $id
      * @param string $token
      */
-    public function validateToken($id, $token)
+    public function validateToken($token)
     {
         try {
             $usertoken = UserToken::where('token', $token)->firstOrFail();
