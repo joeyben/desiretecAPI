@@ -32,11 +32,17 @@
                 </div>
             </div>
         @else
-            <div class="col-lg-5">
-                <div class="custom-file-input">
-                    <input type="file" name="avatar" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" />
-                    <label for="file-1"><i class="fa fa-upload"></i><span>Choose a file</span></label>
-                </div>
+            <div class="col-lg-10">
+                <div class="input-group">
+                    <input type="text" class="form-control readonly" readonly>
+                    <div class="input-group-btn">
+                      <span class="fileUpload btn primary-btn">
+                          <span class="upl" id="upload">{{ trans('agent.image.upload') }}</span>
+                          <input type="file" name="avatar" class="upload up" id="up" onchange="" />
+                      </span><!-- btn-orange -->
+                    </div><!-- btn -->
+                </div><!-- group -->
             </div>
         @endif
 </div>
+
