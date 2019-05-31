@@ -10,7 +10,7 @@
   text-align:center;
   @include border-radius(3px);
   min-width: 210px;
-  font-family: Comfortaa,cursive;
+  font-family: Comfortaa;
   &:focus, &:hover {
     background: $darkorange;
     border: 1px solid $darkorange;
@@ -157,6 +157,26 @@ a.primary-btn, input.primary-btn{
         }
       }
     }
+  }
+}
+// Upload Input File
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+  input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+  .btn{
+    padding: 7px 10px;
+    border: none;
   }
 }
 

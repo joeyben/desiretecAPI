@@ -37,9 +37,16 @@
             </div>
         @else
             <div class="col-lg-5">
-                <div class="control-group input-group">
-                    <input type="file" name="file[]" id="file-1" class="form-control" data-multiple-caption="{count} files selected" multiple />
-                </div>
+                <div class="input-group">
+                    <input type="text" class="form-control readonly" readonly>
+                    <div class="input-group-btn">
+                      <span class="fileUpload btn primary-btn">
+                          <span class="upl" id="upload">{{ trans('offer.file.upload') }}</span>
+                          <input type="file" name="file[]" id="file-1" class="upload up" id="up" onchange="" multiple/>
+                      </span><!-- btn-orange -->
+                    </div><!-- btn -->
+                </div><!-- group -->
+
             </div>
         @endif
     </div><!--form control-->
@@ -52,7 +59,21 @@
 
 @section("after-scripts")
     <script type="text/javascript">
-
+        $(document).on('change','.up', function(){
+            var names = [];
+            var length = $(this).get(0).files.length;
+            for (var i = 0; i < $(this).get(0).files.length; ++i) {
+                names.push($(this).get(0).files[i].name);
+            }
+            // $("input[name=file]").val(names);
+            if(length>2){
+                var fileName = names.join(', ');
+                $(this).closest('.form-group').find('.form-control').attr("value",length+" files selected");
+            }
+            else{
+                $(this).closest('.form-group').find('.form-control').attr("value",names);
+            }
+        });
         
     </script>
 @endsection

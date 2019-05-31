@@ -445,7 +445,6 @@ if (!function_exists('getCurrentWhiteLabelField')) {
     function getCurrentWhiteLabelField($field)
     {
         $url = str_replace('http://', '', url('/'));
-        $url = str_replace('https://', '', $url);
         $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value($field);
 
         return $id;
