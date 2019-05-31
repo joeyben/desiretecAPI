@@ -44,6 +44,7 @@ class OffersController extends Controller
      */
     private $carbon;
 
+
     /**
      * WishesController constructor.
      *
@@ -69,8 +70,9 @@ class OffersController extends Controller
      */
     public function index(Request $request)
     {
-        
+       
     }
+
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -82,22 +84,26 @@ class OffersController extends Controller
         try {
 
             $whitelabelId = $request->get('whitelabelId');
-            $gaViewId = DB::table('whitelabels')->where('id',$whitelabelId)->value('ga_view_id');
-            //$config = config('analytics');
-            //$client = AnalyticsClientFactory::createForConfig($config);
-            //return new Analytics($client, $gaViewId);
+            $ViewId = DB::table('whitelabels')->where('id',$whitelabelId)->value('ga_view_id');
+            $gaViewId = ($ViewId == '') ? '192484069' : $ViewId;
+
 
             if ('' !== $gaViewId) {
-                $optParams = [
+
+                $filter = $this->getFilter($gaViewId);
+
+                 $optParams = [
+                    'dimensions' => 'ga:yearMonth',
+                    'filters' => $filter['filterd'],
                 ];
 
-                $result['ga'] = \Analytics::performQuery(
-                        Period::months(12),
-                        'ga:totalEvents',
-                        [
-                        'dimensions' => 'ga:month'
-                        ]
-                        )->rows;
+                 $result['ga'] = \Analytics::getAnalyticsService()->data_ga->get(
+                    'ga:'.$gaViewId,
+                    '365daysAgo',
+                    'yesterday',
+                    'ga:totalEvents',
+                    $optParams
+                )->rows;
 
                 $data = [];
 
@@ -121,21 +127,27 @@ class OffersController extends Controller
     public function perDay(Request $request)
     {
         try {
-            $whitelabelId = $request->get('whitelabel');
+            $whitelabelId = $request->get('whitelabelId');
+            $ViewId = DB::table('whitelabels')->where('id',$whitelabelId)->value('ga_view_id');
 
-            $gaViewId = '192484069';
+            $gaViewId = ($ViewId == '') ? '192484069' : $ViewId;
+
+            $filter = $this->getFilter($gaViewId);
+
 
             if ('' !== $gaViewId) {
-                $optParams = [
+                 $optParams = [
+                    'dimensions' => 'ga:date',
+                    'filters' => $filter['filterd'],
                 ];
 
-                $result['ga'] = \Analytics::performQuery(
-                        Period::days(30),
-                        'ga:totalEvents',
-                        [
-                        'dimensions' => 'ga:day'
-                        ]
-                        )->rows;
+                 $result['ga'] = \Analytics::getAnalyticsService()->data_ga->get(
+                    'ga:'.$gaViewId,
+                    '30daysAgo',
+                    'yesterday',
+                    'ga:totalEvents',
+                    $optParams
+                )->rows;
 
                 $data = [];
 
@@ -155,6 +167,87 @@ class OffersController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
+
+    public function mobileMonth(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $ViewId = DB::table('whitelabels')->where('id',$whitelabelId)->value('ga_view_id');
+
+            $gaViewId = ($ViewId == '') ? '192484069' : $ViewId;
+
+            $filter = $this->getFilter($gaViewId);
+
+
+            if ('' !== $gaViewId) {
+                 $optParams = [
+                    'dimensions' => 'ga:yearMonth',
+                    'filters' => $filter['filterm'],
+                ];
+
+                 $result['ga'] = \Analytics::getAnalyticsService()->data_ga->get(
+                    'ga:'.$gaViewId,
+                    '365daysAgo',
+                    'yesterday',
+                    'ga:totalEvents',
+                    $optParams
+                )->rows;
+
+                $data = [];
+
+                $result['data'] = $data;
+            } else {
+                $result['data'] = [];
+            }
+
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+
+    public function getFilter(string $viewid)
+    {
+        $filterdesk = '';
+        $filtermobile = '';
+
+        switch($viewid){
+
+            case '192484069':
+            $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
+            $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
+            break;
+
+            case '159641355':
+            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            break;
+
+            case '162076862':
+            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            break;
+
+            case '174270531':
+            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            break;
+
+            case '185523513':
+            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            break;
+
+        }
+
+        return array('filterd'=>$filterdesk, 'filterm'=>$filtermobile);
+    }
     /**
      * Show the form for creating a new resource.
      *

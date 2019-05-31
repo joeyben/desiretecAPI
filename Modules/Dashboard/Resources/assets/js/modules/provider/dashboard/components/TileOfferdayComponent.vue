@@ -11,6 +11,7 @@
   import Highcharts from 'highcharts'
   import exportingInit from 'highcharts/modules/exporting'
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
+  import moment from 'moment'
   exportingInit(Highcharts)
   export default {
     name: 'TileOfferComponent',
@@ -32,7 +33,11 @@
             text: this.trans('dashboard.source_2019')
           },
           xAxis: {
-  
+            type: 'datetime',
+            dateTimeLabelFormats: { // don't display the dummy year
+              month: '%e. %b',
+              year: '%b'
+            }
           },
           yAxis: {
             title: {
@@ -96,9 +101,17 @@
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
       },
+      generateData (items) {
+        let data = []
+        items.forEach((item, index) => {
+          data.push([moment(item[0], 'YYYY-MM-DD').utc(+1).valueOf(), item[1]])
+        })
+  
+        return data
+      },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.chartOptions.series[0].data = response.data.ga
+          this.chartOptions.series[0].data = this.generateData(response.data.ga)
           this.data = response.data
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })

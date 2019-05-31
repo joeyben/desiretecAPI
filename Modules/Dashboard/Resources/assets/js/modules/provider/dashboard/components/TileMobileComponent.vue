@@ -14,7 +14,7 @@
   import moment from 'moment'
   exportingInit(Highcharts)
   export default {
-    name: 'TileOfferComponent',
+    name: 'TileMobileComponent',
     components: { highcharts: Chart },
     data () {
       return {
@@ -27,7 +27,7 @@
             type: 'line'
           },
           title: {
-            text: this.trans('Ereignisse pro Monat')
+            text: this.trans('Mobile Ereignisse pro Monat')
           },
           subtitle: {
             text: this.trans('dashboard.source_2019')
@@ -76,8 +76,8 @@
       }
     },
     mounted () {
-      this.loadOfferByMonth()
-      this.$events.$on('whitelabel-set', whitelabelId => this.loadOfferByMonth(whitelabelId))
+      this.loadMobileByMonth()
+      this.$events.$on('whitelabel-set', whitelabelId => this.loadMobileByMonth(whitelabelId))
     },
     updated () {
     },
@@ -90,10 +90,10 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadOfferByMonth: function (whitelabelId = null) {
+      loadMobileByMonth: function (whitelabelId = null) {
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.events.perMonth') + params)
+        this.$http.get(window.laroute.route('admin.dashboard.events.mobileMonth') + params)
           .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {
