@@ -28,7 +28,7 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
         Route::post('login', 'LoginController@login')->name('login');
 
         // Token Login Routes
-        Route::get('login/gettoken', 'TokenLoginController@show')->name('sendtoken');
+        Route::get('login/token', 'TokenLoginController@show')->name('sendtoken');
         Route::post('/login/token', 'TokenLoginController@sendToken');
         Route::get('/login/token/{token}', 'TokenLoginController@validateToken');
 

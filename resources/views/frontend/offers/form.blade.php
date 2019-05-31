@@ -42,11 +42,10 @@
                     <div class="input-group-btn">
                       <span class="fileUpload btn primary-btn">
                           <span class="upl" id="upload">{{ trans('offer.file.upload') }}</span>
-                          <input type="file" name="file[]" id="file-1" class="upload up" id="up" onchange="" multiple/>
+                          <input type="file" name="file[]" class="upload up" id="up" onchange="" multiple/>
                       </span><!-- btn-orange -->
                     </div><!-- btn -->
                 </div><!-- group -->
-
             </div>
         @endif
     </div><!--form control-->
