@@ -7,6 +7,7 @@ use App\Repositories\Criteria\GroupBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereMonth;
 use App\Repositories\Criteria\WhereYear;
+use App\Services\Flag\Src\Flag;
 use Carbon\Carbon;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -15,6 +16,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
+use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
+use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
 use Analytics;
 use Spatie\Analytics\Period;
@@ -46,25 +49,36 @@ class OffersController extends Controller
      * @var \Carbon\Carbon
      */
     private $carbon;
+    /**
+     * @var \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository
+     */
+    private $whitelabels;
+    /**
+     * @var \Modules\Dashboard\Repositories\Contracts\DashboardRepository
+     */
+    private $dashboard;
 
 
     /**
      * WishesController constructor.
      *
-     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository $wishes
-     * @param \Illuminate\Routing\ResponseFactory                     $response
-     * @param \Illuminate\Auth\AuthManager                            $auth
-     * @param \Illuminate\Translation\Translator                      $lang
-     * @param \Carbon\Carbon                                          $carbon
+     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository           $wishes
+     * @param \Illuminate\Routing\ResponseFactory                               $response
+     * @param \Illuminate\Auth\AuthManager                                      $auth
+     * @param \Illuminate\Translation\Translator                                $lang
+     * @param \Carbon\Carbon                                                    $carbon
+     * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
+     * @param \Modules\Dashboard\Repositories\Contracts\DashboardRepository     $dashboard
      */
-    public function __construct(WishesRepository $wishes, WishesRepository $events, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
+    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DashboardRepository $dashboard)
     {
         $this->wishes = $wishes;
-        $this->events = $events;
         $this->response = $response;
         $this->auth = $auth;
         $this->lang = $lang;
         $this->carbon = $carbon;
+        $this->whitelabels = $whitelabels;
+        $this->dashboard = $dashboard;
     }
 
     /**
@@ -86,43 +100,24 @@ class OffersController extends Controller
     public function perMonth(Request $request)
     {
         try {
-
             $whitelabelId = $request->get('whitelabelId');
-            $ViewId = DB::table('whitelabels')->where('id',$whitelabelId)->value('ga_view_id');
+            $ViewId = $this->whitelabels->find($whitelabelId)->value('ga_view_id');
             $gaViewId = ($ViewId == '') ? '192484069' : $ViewId;
+            $filter = $this->getFilter($gaViewId);
 
+            $optParams = [
+                'dimensions' => 'ga:yearMonth',
+                'filters' => $filter['filterd'],
+            ];
 
-            if ('' !== $gaViewId) {
-
-                $filter = $this->getFilter($gaViewId);
-
-                 $optParams = [
-                    'dimensions' => 'ga:yearMonth',
-                    'filters' => $filter['filterd'],
-                ];
-
-                 $result['ga'] = \Analytics::getAnalyticsService()->data_ga->get(
-                    'ga:'.$gaViewId,
-                    '365daysAgo',
-                    'yesterday',
-                    'ga:totalEvents',
-                    $optParams
-                )->rows;
-
-                $data = [];
-
-
-                $result['data'] = $data;
-            } else {
-                $result['data'] = [];
-            }
+            $result['ga'] = $this->dashboard->totalEvents($gaViewId, $optParams);
 
             $result['success'] = true;
-            $result['status'] = 200;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
             $result['success'] = false;
             $result['message'] = $e->getMessage();
-            $result['status'] = 500;
+            $result['status'] = Flag::STATUS_CODE_ERROR;
         }
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);

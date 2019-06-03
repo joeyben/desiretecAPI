@@ -22,4 +22,15 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
     {
         return Dashboard::class;
     }
+
+    public function totalEvents(string $gaViewId, array $optParams)
+    {
+        return \Analytics::getAnalyticsService()->data_ga->get(
+            'ga:'.$gaViewId,
+            '365daysAgo',
+            'yesterday',
+            'ga:totalEvents',
+            $optParams
+        )->rows;
+    }
 }
