@@ -85,7 +85,7 @@ class DashboardController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('dashboard::index');
     }

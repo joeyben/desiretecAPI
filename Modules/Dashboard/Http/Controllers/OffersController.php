@@ -26,6 +26,9 @@ class OffersController extends Controller
     /**
      * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
      */
+    private $wishes;
+
+
     private $events;
     /**
      * @var \Illuminate\Routing\ResponseFactory
@@ -54,8 +57,9 @@ class OffersController extends Controller
      * @param \Illuminate\Translation\Translator                      $lang
      * @param \Carbon\Carbon                                          $carbon
      */
-    public function __construct(WishesRepository $events, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
+    public function __construct(WishesRepository $wishes, WishesRepository $events, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
     {
+        $this->wishes = $wishes;
         $this->events = $events;
         $this->response = $response;
         $this->auth = $auth;
@@ -70,7 +74,7 @@ class OffersController extends Controller
      */
     public function index(Request $request)
     {
-       
+
     }
 
 
@@ -210,6 +214,121 @@ class OffersController extends Controller
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
+
+
+    public function responseMonth(Request $request)
+    {
+        try {
+
+            $whitelabelId = $request->get('whitelabelId');
+            $ViewId = DB::table('whitelabels')->where('id',$whitelabelId)->value('ga_view_id');
+            $gaViewId = ($ViewId == '') ? '192484069' : $ViewId;
+
+
+            if ('' !== $gaViewId) {
+
+                $filter = $this->getFilter($gaViewId);
+
+                 $optParams = [
+                    'dimensions' => 'ga:yearMonth',
+                    'filters' => $filter['filterd'],
+                ];
+
+                    $result['ga'] = \Analytics::getAnalyticsService()->data_ga->get(
+                    'ga:'.$gaViewId,
+                    '365daysAgo',
+                    'yesterday',
+                    'ga:uniqueEvents',
+                    $optParams
+                )->rows;
+
+                    $result['wishCount'] = $this->wishes->withCriteria([
+                    new ByWhitelabel(),
+                    new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
+                     ])->all()->count();
+
+                foreach ($result['ga'] as $key => $value) {
+                        if($result['ga'][$key][1]!=0)
+                     $result['ga'][$key][1] = intval(($result['wishCount']/$result['ga'][$key][1])*100);
+                 } 
+
+                $data = [];
+
+
+                $result['data'] = $data;
+            } else {
+                $result['data'] = [];
+            }
+
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+
+    public function responsemMonth(Request $request)
+    {
+        try {
+
+            $whitelabelId = $request->get('whitelabelId');
+            $ViewId = DB::table('whitelabels')->where('id',$whitelabelId)->value('ga_view_id');
+            $gaViewId = ($ViewId == '') ? '192484069' : $ViewId;
+
+
+            if ('' !== $gaViewId) {
+
+                $filter = $this->getFilter($gaViewId);
+
+                 $optParams = [
+                    'dimensions' => 'ga:yearMonth',
+                    'filters' => $filter['filterm'],
+                ];
+
+                    $result['ga'] = \Analytics::getAnalyticsService()->data_ga->get(
+                    'ga:'.$gaViewId,
+                    '365daysAgo',
+                    'yesterday',
+                    'ga:uniqueEvents',
+                    $optParams
+                )->rows;
+
+                    $result['wishCount'] = $this->wishes->withCriteria([
+                    new ByWhitelabel(),
+                    new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
+                     ])->all()->count();
+
+                foreach ($result['ga'] as $key => $value) {
+                        if($result['ga'][$key][1]!=0)
+                     $result['ga'][$key][1] = intval(($result['wishCount']/$result['ga'][$key][1])*100);
+                 } 
+
+                $data = [];
+
+
+                $result['data'] = $data;
+            } else {
+                $result['data'] = [];
+            }
+
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+
+
 
 
     public function getFilter(string $viewid)
