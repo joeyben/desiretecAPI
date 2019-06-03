@@ -128,8 +128,14 @@ class OffersController extends Controller
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
-            $whitelabelId = ($whitelabelId === null) ? '1' : $whitelabelId;
-            $ViewId = $this->whitelabels->find($whitelabelId)->value('ga_view_id');
+            
+            if (is_null($whitelabelId)) {
+                $whitelabel = $this->whitelabels->first();
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+
+            $ViewId = $whitelabel->value('ga_view_id');
             $gaViewId = ($ViewId === '') ? '192484069' : $ViewId;
             $filter = $this->getFilter($gaViewId);
 
@@ -156,8 +162,14 @@ class OffersController extends Controller
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
-            $whitelabelId = ($whitelabelId === null) ? '1' : $whitelabelId;
-            $ViewId = $this->whitelabels->find($whitelabelId)->value('ga_view_id');
+            
+            if (is_null($whitelabelId)) {
+                $whitelabel = $this->whitelabels->first();
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+
+            $ViewId = $whitelabel->value('ga_view_id');
             $gaViewId = ($ViewId == '') ? '192484069' : $ViewId;
             $filter = $this->getFilter($gaViewId);
 
@@ -185,8 +197,14 @@ class OffersController extends Controller
         try {
 
             $whitelabelId = $request->get('whitelabelId');
-            $whitelabelId = ($whitelabelId === null) ? '1' : $whitelabelId;
-            $ViewId = $this->whitelabels->find($whitelabelId)->value('ga_view_id');
+            
+            if (is_null($whitelabelId)) {
+                $whitelabel = $this->whitelabels->first();
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+
+            $ViewId = $whitelabel->value('ga_view_id');
             $gaViewId = ($ViewId === '') ? '192484069' : $ViewId;
 
                 $filter = $this->getFilter($gaViewId);
@@ -225,8 +243,14 @@ class OffersController extends Controller
         try {
 
             $whitelabelId = $request->get('whitelabelId');
-            $whitelabelId = ($whitelabelId === null) ? '1' : $whitelabelId;
-            $ViewId = $this->whitelabels->find($whitelabelId)->value('ga_view_id');
+            
+            if (is_null($whitelabelId)) {
+                $whitelabel = $this->whitelabels->first();
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+            
+            $ViewId = $whitelabel->value('ga_view_id');
             $gaViewId = ($ViewId === '') ? '192484069' : $ViewId;
 
                 $filter = $this->getFilter($gaViewId);
