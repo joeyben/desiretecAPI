@@ -283,7 +283,7 @@ import CssConfig from './CssConfig.js'
       },
       onDelete (id) {
         this.$store.dispatch('block', {element: 'languagesComponent', load: true})
-        this.$http.delete(window.laroute.route('provider.groups.destroy', {id: id}))
+        this.$http.delete(window.laroute.route('provider.languages.destroy', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {

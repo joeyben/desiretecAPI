@@ -25,7 +25,7 @@
         user: 'currentUser'
       }),
       can_edit () {
-        return !this.deleted && this.hasPermissionTo('update-group')
+        return !this.deleted && this.hasRole('Administrator')
       },
       can_restore () {
         return this.deleted && this.hasRole('Administrator')
@@ -34,7 +34,7 @@
         return this.deleted && this.hasRole('Administrator')
       },
       can_delete () {
-        return !this.deleted && this.hasPermissionTo('delete-group')
+        return !this.deleted && this.hasRole('Administrator')
       },
       deleted: function () {
         return this.rowData.deleted_at !== null

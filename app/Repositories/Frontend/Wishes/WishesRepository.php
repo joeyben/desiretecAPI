@@ -9,6 +9,7 @@ use App\Exceptions\GeneralException;
 use App\Models\Access\User\User;
 use App\Models\Access\User\UserToken;
 use App\Models\Groups\Group;
+use App\Models\Whitelabels\Whitelabel;
 use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
 use Auth;
@@ -271,7 +272,9 @@ class WishesRepository extends BaseRepository
 
     public function getDistribution()
     {
-        return access()->user()->whitelabels[0]->distribution->name;
+        $whitelabel = Whitelabel::find((int) $this->whitelabel_id);
+
+        return $whitelabel->distribution->name;
     }
 
     /**
