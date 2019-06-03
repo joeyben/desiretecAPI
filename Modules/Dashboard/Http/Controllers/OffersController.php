@@ -103,7 +103,7 @@ class OffersController extends Controller
             }
 
             $ViewId = $whitelabel->value('ga_view_id');
-            $gaViewId = ($ViewId == '' || is_null($ViewId) ) ? '192484069' : $ViewId;
+            $gaViewId = (is_null($ViewId)) ? '192484069' : $ViewId;
             $filter = $this->getFilter($gaViewId);
 
             $optParams = [
@@ -136,7 +136,7 @@ class OffersController extends Controller
             }
 
             $ViewId = $whitelabel->value('ga_view_id');
-            $gaViewId = ($ViewId == '' || is_null($ViewId) ) ? '192484069' : $ViewId;
+            $gaViewId = (is_null($ViewId)) ? '192484069' : $ViewId;
             $filter = $this->getFilter($gaViewId);
 
                  $optParams = [
@@ -170,7 +170,7 @@ class OffersController extends Controller
             }
 
             $ViewId = $whitelabel->value('ga_view_id');
-            $gaViewId = ($ViewId == '' || is_null($ViewId) ) ? '192484069' : $ViewId;
+            $gaViewId = (is_null($ViewId)) ? '192484069' : $ViewId;
             $filter = $this->getFilter($gaViewId);
 
                  $optParams = [
@@ -205,7 +205,7 @@ class OffersController extends Controller
             }
 
             $ViewId = $whitelabel->value('ga_view_id');
-            $gaViewId = ($ViewId == '' || is_null($ViewId) ) ? '192484069' : $ViewId;
+            $gaViewId = (is_null($ViewId)) ? '192484069' : $ViewId;
 
                 $filter = $this->getFilter($gaViewId);
 
@@ -251,7 +251,7 @@ class OffersController extends Controller
             }
             
             $ViewId = $whitelabel->value('ga_view_id');
-            $gaViewId = ($ViewId == '' || is_null($ViewId)) ? '192484069' : $ViewId;
+            $gaViewId = (is_null($ViewId)) ? '192484069' : $ViewId;
 
                 $filter = $this->getFilter($gaViewId);
 
