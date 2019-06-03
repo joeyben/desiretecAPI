@@ -13,9 +13,8 @@
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   import moment from 'moment'
   exportingInit(Highcharts)
-  moment.locale(window.i18.lang)
   export default {
-    name: 'ChartWishDayComponent',
+    name: 'TileOfferComponent',
     components: { highcharts: Chart },
     data () {
       return {
@@ -28,48 +27,34 @@
             type: 'line'
           },
           title: {
-            text: this.trans('dashboard.daily_average_wish')
+            text: this.trans('Ereignisse pro Tag')
           },
           subtitle: {
-            text: this.trans('dashboard.current_month')
+            text: this.trans('dashboard.source_2019')
           },
           xAxis: {
             type: 'datetime',
             dateTimeLabelFormats: { // don't display the dummy year
               month: '%e. %b',
               year: '%b'
-            },
-            title: {
-              text: this.trans('dashboard.date')
             }
           },
           yAxis: {
             title: {
-              text: this.trans('dashboard.wishes')
+              text: this.trans('Ereignisse')
             }
-          },
-          legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle'
           },
           plotOptions: {
             line: {
               dataLabels: {
                 enabled: true
               },
-              chartOptions: {
-                legend: {
-                  layout: 'horizontal',
-                  align: 'center',
-                  verticalAlign: 'bottom'
-                }
-              }
+              enableMouseTracking: false
             }
           },
 
           series: [{
-            name: this.trans('dashboard.wishes'),
+            name: this.trans('Ereignisse'),
             data: []
           }],
 
@@ -92,8 +77,8 @@
       }
     },
     mounted () {
-      this.loadWishByMonth()
-      this.$events.$on('whitelabel-set', whitelabelId => this.loadWishByMonth(whitelabelId))
+      this.loadOfferByDay()
+      this.$events.$on('whitelabel-set', whitelabelId => this.loadOfferByDay(whitelabelId))
     },
     updated () {
     },
@@ -106,10 +91,10 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadWishByMonth: function (whitelabelId = null) {
+      loadOfferByDay: function (whitelabelId = null) {
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.wishes.byDay') + params)
+        this.$http.get(window.laroute.route('admin.dashboard.events.perDay') + params)
           .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -126,7 +111,8 @@
       },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.chartOptions.series[0].data = this.generateData(response.data.data)
+          this.chartOptions.series[0].data = this.generateData(response.data.ga)
+          this.data = response.data
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
         }

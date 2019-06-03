@@ -18,6 +18,11 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'na
 
     Route::get('dashboard/wishes', 'WishesController@index')->name('admin.dashboard.wishes');
     Route::get('dashboard/wishes/byMonth', 'WishesController@byMonth')->name('admin.dashboard.wishes.byMonth');
+    Route::get('dashboard/events/perMonth', 'OffersController@perMonth')->name('admin.dashboard.events.perMonth');
+    Route::get('dashboard/events/perDay', 'OffersController@perDay')->name('admin.dashboard.events.perDay');
+    Route::get('dashboard/events/mobileMonth', 'OffersController@mobileMonth')->name('admin.dashboard.events.mobileMonth');
+    Route::get('dashboard/events/responseMonth', 'OffersController@responseMonth')->name('admin.dashboard.events.responseMonth');
+    Route::get('dashboard/events/responsemMonth', 'OffersController@responsemMonth')->name('admin.dashboard.events.responsemMonth');
     Route::get('dashboard/wishes/byDay', 'WishesController@byDay')->name('admin.dashboard.wishes.byDay');
     Route::get('dashboard/sellers', 'SellersController@index')->name('admin.dashboard.sellers');
     Route::get('dashboard/groups', 'GroupsController@index')->name('admin.dashboard.groups');

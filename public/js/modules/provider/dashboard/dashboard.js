@@ -1902,7 +1902,7 @@
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(370)("./" + name);
+                __webpack_require__(355)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4574,215 +4574,10 @@
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(369)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(354)(module)))
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return warning; });
-/* harmony export (immutable) */ __webpack_exports__["d"] = format;
-/* harmony export (immutable) */ __webpack_exports__["e"] = isEmptyValue;
-/* unused harmony export isEmptyObject */
-/* harmony export (immutable) */ __webpack_exports__["a"] = asyncMap;
-/* harmony export (immutable) */ __webpack_exports__["b"] = complementError;
-/* harmony export (immutable) */ __webpack_exports__["c"] = deepMerge;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__);
-
-
-var formatRegExp = /%[sdj%]/g;
-
-var warning = function warning() {};
-
-// don't print warning message when in production env or node runtime
-if ("development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
-  warning = function warning(type, errors) {
-    if (typeof console !== 'undefined' && console.warn) {
-      if (errors.every(function (e) {
-        return typeof e === 'string';
-      })) {
-        console.warn(type, errors);
-      }
-    }
-  };
-}
-
-function format() {
-  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-    args[_key] = arguments[_key];
-  }
-
-  var i = 1;
-  var f = args[0];
-  var len = args.length;
-  if (typeof f === 'function') {
-    return f.apply(null, args.slice(1));
-  }
-  if (typeof f === 'string') {
-    var str = String(f).replace(formatRegExp, function (x) {
-      if (x === '%%') {
-        return '%';
-      }
-      if (i >= len) {
-        return x;
-      }
-      switch (x) {
-        case '%s':
-          return String(args[i++]);
-        case '%d':
-          return Number(args[i++]);
-        case '%j':
-          try {
-            return JSON.stringify(args[i++]);
-          } catch (_) {
-            return '[Circular]';
-          }
-          break;
-        default:
-          return x;
-      }
-    });
-    for (var arg = args[i]; i < len; arg = args[++i]) {
-      str += ' ' + arg;
-    }
-    return str;
-  }
-  return f;
-}
-
-function isNativeStringType(type) {
-  return type === 'string' || type === 'url' || type === 'hex' || type === 'email' || type === 'pattern';
-}
-
-function isEmptyValue(value, type) {
-  if (value === undefined || value === null) {
-    return true;
-  }
-  if (type === 'array' && Array.isArray(value) && !value.length) {
-    return true;
-  }
-  if (isNativeStringType(type) && typeof value === 'string' && !value) {
-    return true;
-  }
-  return false;
-}
-
-function isEmptyObject(obj) {
-  return Object.keys(obj).length === 0;
-}
-
-function asyncParallelArray(arr, func, callback) {
-  var results = [];
-  var total = 0;
-  var arrLength = arr.length;
-
-  function count(errors) {
-    results.push.apply(results, errors);
-    total++;
-    if (total === arrLength) {
-      callback(results);
-    }
-  }
-
-  arr.forEach(function (a) {
-    func(a, count);
-  });
-}
-
-function asyncSerialArray(arr, func, callback) {
-  var index = 0;
-  var arrLength = arr.length;
-
-  function next(errors) {
-    if (errors && errors.length) {
-      callback(errors);
-      return;
-    }
-    var original = index;
-    index = index + 1;
-    if (original < arrLength) {
-      func(arr[original], next);
-    } else {
-      callback([]);
-    }
-  }
-
-  next([]);
-}
-
-function flattenObjArr(objArr) {
-  var ret = [];
-  Object.keys(objArr).forEach(function (k) {
-    ret.push.apply(ret, objArr[k]);
-  });
-  return ret;
-}
-
-function asyncMap(objArr, option, func, callback) {
-  if (option.first) {
-    var flattenArr = flattenObjArr(objArr);
-    return asyncSerialArray(flattenArr, func, callback);
-  }
-  var firstFields = option.firstFields || [];
-  if (firstFields === true) {
-    firstFields = Object.keys(objArr);
-  }
-  var objArrKeys = Object.keys(objArr);
-  var objArrLength = objArrKeys.length;
-  var total = 0;
-  var results = [];
-  var next = function next(errors) {
-    results.push.apply(results, errors);
-    total++;
-    if (total === objArrLength) {
-      callback(results);
-    }
-  };
-  objArrKeys.forEach(function (key) {
-    var arr = objArr[key];
-    if (firstFields.indexOf(key) !== -1) {
-      asyncSerialArray(arr, func, next);
-    } else {
-      asyncParallelArray(arr, func, next);
-    }
-  });
-}
-
-function complementError(rule) {
-  return function (oe) {
-    if (oe && oe.message) {
-      oe.field = oe.field || rule.fullField;
-      return oe;
-    }
-    return {
-      message: oe,
-      field: oe.field || rule.fullField
-    };
-  };
-}
-
-function deepMerge(target, source) {
-  if (source) {
-    for (var s in source) {
-      if (source.hasOwnProperty(s)) {
-        var value = source[s];
-        if ((typeof value === 'undefined' ? 'undefined' : __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default()(value)) === 'object' && __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default()(target[s]) === 'object') {
-          target[s] = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, target[s], value);
-        } else {
-          target[s] = value;
-        }
-      }
-    }
-  }
-  return target;
-}
-
-/***/ }),
-/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5728,7 +5523,7 @@ var index_esm = {
 
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -5837,7 +5632,295 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return warning; });
+/* harmony export (immutable) */ __webpack_exports__["d"] = format;
+/* harmony export (immutable) */ __webpack_exports__["e"] = isEmptyValue;
+/* unused harmony export isEmptyObject */
+/* harmony export (immutable) */ __webpack_exports__["a"] = asyncMap;
+/* harmony export (immutable) */ __webpack_exports__["b"] = complementError;
+/* harmony export (immutable) */ __webpack_exports__["c"] = deepMerge;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__);
+
+
+var formatRegExp = /%[sdj%]/g;
+
+var warning = function warning() {};
+
+// don't print warning message when in production env or node runtime
+if ("development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
+  warning = function warning(type, errors) {
+    if (typeof console !== 'undefined' && console.warn) {
+      if (errors.every(function (e) {
+        return typeof e === 'string';
+      })) {
+        console.warn(type, errors);
+      }
+    }
+  };
+}
+
+function format() {
+  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  var i = 1;
+  var f = args[0];
+  var len = args.length;
+  if (typeof f === 'function') {
+    return f.apply(null, args.slice(1));
+  }
+  if (typeof f === 'string') {
+    var str = String(f).replace(formatRegExp, function (x) {
+      if (x === '%%') {
+        return '%';
+      }
+      if (i >= len) {
+        return x;
+      }
+      switch (x) {
+        case '%s':
+          return String(args[i++]);
+        case '%d':
+          return Number(args[i++]);
+        case '%j':
+          try {
+            return JSON.stringify(args[i++]);
+          } catch (_) {
+            return '[Circular]';
+          }
+          break;
+        default:
+          return x;
+      }
+    });
+    for (var arg = args[i]; i < len; arg = args[++i]) {
+      str += ' ' + arg;
+    }
+    return str;
+  }
+  return f;
+}
+
+function isNativeStringType(type) {
+  return type === 'string' || type === 'url' || type === 'hex' || type === 'email' || type === 'pattern';
+}
+
+function isEmptyValue(value, type) {
+  if (value === undefined || value === null) {
+    return true;
+  }
+  if (type === 'array' && Array.isArray(value) && !value.length) {
+    return true;
+  }
+  if (isNativeStringType(type) && typeof value === 'string' && !value) {
+    return true;
+  }
+  return false;
+}
+
+function isEmptyObject(obj) {
+  return Object.keys(obj).length === 0;
+}
+
+function asyncParallelArray(arr, func, callback) {
+  var results = [];
+  var total = 0;
+  var arrLength = arr.length;
+
+  function count(errors) {
+    results.push.apply(results, errors);
+    total++;
+    if (total === arrLength) {
+      callback(results);
+    }
+  }
+
+  arr.forEach(function (a) {
+    func(a, count);
+  });
+}
+
+function asyncSerialArray(arr, func, callback) {
+  var index = 0;
+  var arrLength = arr.length;
+
+  function next(errors) {
+    if (errors && errors.length) {
+      callback(errors);
+      return;
+    }
+    var original = index;
+    index = index + 1;
+    if (original < arrLength) {
+      func(arr[original], next);
+    } else {
+      callback([]);
+    }
+  }
+
+  next([]);
+}
+
+function flattenObjArr(objArr) {
+  var ret = [];
+  Object.keys(objArr).forEach(function (k) {
+    ret.push.apply(ret, objArr[k]);
+  });
+  return ret;
+}
+
+function asyncMap(objArr, option, func, callback) {
+  if (option.first) {
+    var flattenArr = flattenObjArr(objArr);
+    return asyncSerialArray(flattenArr, func, callback);
+  }
+  var firstFields = option.firstFields || [];
+  if (firstFields === true) {
+    firstFields = Object.keys(objArr);
+  }
+  var objArrKeys = Object.keys(objArr);
+  var objArrLength = objArrKeys.length;
+  var total = 0;
+  var results = [];
+  var next = function next(errors) {
+    results.push.apply(results, errors);
+    total++;
+    if (total === objArrLength) {
+      callback(results);
+    }
+  };
+  objArrKeys.forEach(function (key) {
+    var arr = objArr[key];
+    if (firstFields.indexOf(key) !== -1) {
+      asyncSerialArray(arr, func, next);
+    } else {
+      asyncParallelArray(arr, func, next);
+    }
+  });
+}
+
+function complementError(rule) {
+  return function (oe) {
+    if (oe && oe.message) {
+      oe.field = oe.field || rule.fullField;
+      return oe;
+    }
+    return {
+      message: oe,
+      field: oe.field || rule.fullField
+    };
+  };
+}
+
+function deepMerge(target, source) {
+  if (source) {
+    for (var s in source) {
+      if (source.hasOwnProperty(s)) {
+        var value = source[s];
+        if ((typeof value === 'undefined' ? 'undefined' : __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default()(value)) === 'object' && __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default()(target[s]) === 'object') {
+          target[s] = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, target[s], value);
+        } else {
+          target[s] = value;
+        }
+      }
+    }
+  }
+  return target;
+}
+
+/***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// eslint-disable-next-line
+var Errors = exports.Errors = function () {
+  function Errors() {
+    _classCallCheck(this, Errors);
+
+    this.errors = {};
+  }
+
+  _createClass(Errors, [{
+    key: 'get',
+    value: function get(field) {
+      if (this.errors[field]) {
+        return this.errors[field][0];
+      }
+    }
+  }, {
+    key: 'getWithMutator',
+    value: function getWithMutator(field, mutator) {
+      if (this.errors[field]) {
+        return this.errors[field][0].replace(field, mutator);
+      }
+    }
+  }, {
+    key: 'clear',
+    value: function clear(field) {
+      if (this.errors !== undefined && this.errors[field]) delete this.errors[field];
+    }
+  }, {
+    key: 'drop',
+    value: function drop() {
+      this.errors = {};
+    }
+  }, {
+    key: 'has',
+    value: function has(field) {
+      return this.errors.hasOwnProperty(field);
+    }
+  }, {
+    key: 'first',
+    value: function first(field) {
+      if (this.errors[field]) {
+        return this.errors[field];
+      }
+    }
+  }, {
+    key: 'any',
+    value: function any() {
+      return Object.keys(this.errors).length > 0;
+    }
+  }, {
+    key: 'record',
+    value: function record(errors) {
+      this.errors = errors;
+    }
+  }, {
+    key: 'getErrors',
+    value: function getErrors() {
+      var msg = '';
+      for (var field in this.errors) {
+        msg += this.errors[field][0] + '<br/>';
+      }
+      return msg;
+    }
+  }]);
+
+  return Errors;
+}();
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16803,7 +16886,7 @@ module.exports = Vue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26), __webpack_require__(216).setImmediate))
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16828,89 +16911,6 @@ module.exports = Vue;
   'enum': __WEBPACK_IMPORTED_MODULE_4__enum__["a" /* default */],
   pattern: __WEBPACK_IMPORTED_MODULE_5__pattern__["a" /* default */]
 });
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// eslint-disable-next-line
-var Errors = exports.Errors = function () {
-  function Errors() {
-    _classCallCheck(this, Errors);
-
-    this.errors = {};
-  }
-
-  _createClass(Errors, [{
-    key: 'get',
-    value: function get(field) {
-      if (this.errors[field]) {
-        return this.errors[field][0];
-      }
-    }
-  }, {
-    key: 'getWithMutator',
-    value: function getWithMutator(field, mutator) {
-      if (this.errors[field]) {
-        return this.errors[field][0].replace(field, mutator);
-      }
-    }
-  }, {
-    key: 'clear',
-    value: function clear(field) {
-      if (this.errors !== undefined && this.errors[field]) delete this.errors[field];
-    }
-  }, {
-    key: 'drop',
-    value: function drop() {
-      this.errors = {};
-    }
-  }, {
-    key: 'has',
-    value: function has(field) {
-      return this.errors.hasOwnProperty(field);
-    }
-  }, {
-    key: 'first',
-    value: function first(field) {
-      if (this.errors[field]) {
-        return this.errors[field];
-      }
-    }
-  }, {
-    key: 'any',
-    value: function any() {
-      return Object.keys(this.errors).length > 0;
-    }
-  }, {
-    key: 'record',
-    value: function record(errors) {
-      this.errors = errors;
-    }
-  }, {
-    key: 'getErrors',
-    value: function getErrors() {
-      var msg = '';
-      for (var field in this.errors) {
-        msg += this.errors[field][0] + '<br/>';
-      }
-      return msg;
-    }
-  }]);
-
-  return Errors;
-}();
 
 /***/ }),
 /* 7 */
@@ -17224,672 +17224,6 @@ module.exports = {
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var bind = __webpack_require__(208);
-
-/*global toString:true*/
-
-// utils is a library of generic helper functions non-specific to axios
-
-var toString = Object.prototype.toString;
-
-/**
- * Determine if a value is an Array
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Array, otherwise false
- */
-function isArray(val) {
-  return toString.call(val) === '[object Array]';
-}
-
-/**
- * Determine if a value is an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an ArrayBuffer, otherwise false
- */
-function isArrayBuffer(val) {
-  return toString.call(val) === '[object ArrayBuffer]';
-}
-
-/**
- * Determine if a value is a FormData
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an FormData, otherwise false
- */
-function isFormData(val) {
-  return (typeof FormData !== 'undefined') && (val instanceof FormData);
-}
-
-/**
- * Determine if a value is a view on an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
- */
-function isArrayBufferView(val) {
-  var result;
-  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
-    result = ArrayBuffer.isView(val);
-  } else {
-    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
-  }
-  return result;
-}
-
-/**
- * Determine if a value is a String
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a String, otherwise false
- */
-function isString(val) {
-  return typeof val === 'string';
-}
-
-/**
- * Determine if a value is a Number
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Number, otherwise false
- */
-function isNumber(val) {
-  return typeof val === 'number';
-}
-
-/**
- * Determine if a value is undefined
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if the value is undefined, otherwise false
- */
-function isUndefined(val) {
-  return typeof val === 'undefined';
-}
-
-/**
- * Determine if a value is an Object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Object, otherwise false
- */
-function isObject(val) {
-  return val !== null && typeof val === 'object';
-}
-
-/**
- * Determine if a value is a Date
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Date, otherwise false
- */
-function isDate(val) {
-  return toString.call(val) === '[object Date]';
-}
-
-/**
- * Determine if a value is a File
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a File, otherwise false
- */
-function isFile(val) {
-  return toString.call(val) === '[object File]';
-}
-
-/**
- * Determine if a value is a Blob
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Blob, otherwise false
- */
-function isBlob(val) {
-  return toString.call(val) === '[object Blob]';
-}
-
-/**
- * Determine if a value is a Function
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Function, otherwise false
- */
-function isFunction(val) {
-  return toString.call(val) === '[object Function]';
-}
-
-/**
- * Determine if a value is a Stream
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Stream, otherwise false
- */
-function isStream(val) {
-  return isObject(val) && isFunction(val.pipe);
-}
-
-/**
- * Determine if a value is a URLSearchParams object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a URLSearchParams object, otherwise false
- */
-function isURLSearchParams(val) {
-  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
-}
-
-/**
- * Trim excess whitespace off the beginning and end of a string
- *
- * @param {String} str The String to trim
- * @returns {String} The String freed of excess whitespace
- */
-function trim(str) {
-  return str.replace(/^\s*/, '').replace(/\s*$/, '');
-}
-
-/**
- * Determine if we're running in a standard browser environment
- *
- * This allows axios to run in a web worker, and react-native.
- * Both environments support XMLHttpRequest, but not fully standard globals.
- *
- * web workers:
- *  typeof window -> undefined
- *  typeof document -> undefined
- *
- * react-native:
- *  typeof document.createElement -> undefined
- */
-function isStandardBrowserEnv() {
-  return (
-    typeof window !== 'undefined' &&
-    typeof document !== 'undefined' &&
-    typeof document.createElement === 'function'
-  );
-}
-
-/**
- * Iterate over an Array or an Object invoking a function for each item.
- *
- * If `obj` is an Array callback will be called passing
- * the value, index, and complete array for each item.
- *
- * If 'obj' is an Object callback will be called passing
- * the value, key, and complete object for each property.
- *
- * @param {Object|Array} obj The object to iterate
- * @param {Function} fn The callback to invoke for each item
- */
-function forEach(obj, fn) {
-  // Don't bother if no value provided
-  if (obj === null || typeof obj === 'undefined') {
-    return;
-  }
-
-  // Force an array if not already something iterable
-  if (typeof obj !== 'object' && !isArray(obj)) {
-    /*eslint no-param-reassign:0*/
-    obj = [obj];
-  }
-
-  if (isArray(obj)) {
-    // Iterate over array values
-    for (var i = 0, l = obj.length; i < l; i++) {
-      fn.call(null, obj[i], i, obj);
-    }
-  } else {
-    // Iterate over object keys
-    for (var key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        fn.call(null, obj[key], key, obj);
-      }
-    }
-  }
-}
-
-/**
- * Accepts varargs expecting each argument to be an object, then
- * immutably merges the properties of each object and returns result.
- *
- * When multiple objects contain the same key the later object in
- * the arguments list will take precedence.
- *
- * Example:
- *
- * ```js
- * var result = merge({foo: 123}, {foo: 456});
- * console.log(result.foo); // outputs 456
- * ```
- *
- * @param {Object} obj1 Object to merge
- * @returns {Object} Result of all merge properties
- */
-function merge(/* obj1, obj2, obj3, ... */) {
-  var result = {};
-  function assignValue(val, key) {
-    if (typeof result[key] === 'object' && typeof val === 'object') {
-      result[key] = merge(result[key], val);
-    } else {
-      result[key] = val;
-    }
-  }
-
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    forEach(arguments[i], assignValue);
-  }
-  return result;
-}
-
-/**
- * Extends object a by mutably adding to it the properties of object b.
- *
- * @param {Object} a The object to be extended
- * @param {Object} b The object to copy properties from
- * @param {Object} thisArg The object to bind function to
- * @return {Object} The resulting value of object a
- */
-function extend(a, b, thisArg) {
-  forEach(b, function assignValue(val, key) {
-    if (thisArg && typeof val === 'function') {
-      a[key] = bind(val, thisArg);
-    } else {
-      a[key] = val;
-    }
-  });
-  return a;
-}
-
-module.exports = {
-  isArray: isArray,
-  isArrayBuffer: isArrayBuffer,
-  isFormData: isFormData,
-  isArrayBufferView: isArrayBufferView,
-  isString: isString,
-  isNumber: isNumber,
-  isObject: isObject,
-  isUndefined: isUndefined,
-  isDate: isDate,
-  isFile: isFile,
-  isBlob: isBlob,
-  isFunction: isFunction,
-  isStream: isStream,
-  isURLSearchParams: isURLSearchParams,
-  isStandardBrowserEnv: isStandardBrowserEnv,
-  forEach: forEach,
-  merge: merge,
-  extend: extend,
-  trim: trim
-};
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.getStyle = exports.once = exports.off = exports.on = undefined;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /* istanbul ignore next */
-
-exports.hasClass = hasClass;
-exports.addClass = addClass;
-exports.removeClass = removeClass;
-exports.setStyle = setStyle;
-
-var _vue = __webpack_require__(4);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var isServer = _vue2.default.prototype.$isServer;
-var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
-var MOZ_HACK_REGEXP = /^moz([A-Z])/;
-var ieVersion = isServer ? 0 : Number(document.documentMode);
-
-/* istanbul ignore next */
-var trim = function trim(string) {
-  return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
-};
-/* istanbul ignore next */
-var camelCase = function camelCase(name) {
-  return name.replace(SPECIAL_CHARS_REGEXP, function (_, separator, letter, offset) {
-    return offset ? letter.toUpperCase() : letter;
-  }).replace(MOZ_HACK_REGEXP, 'Moz$1');
-};
-
-/* istanbul ignore next */
-var on = exports.on = function () {
-  if (!isServer && document.addEventListener) {
-    return function (element, event, handler) {
-      if (element && event && handler) {
-        element.addEventListener(event, handler, false);
-      }
-    };
-  } else {
-    return function (element, event, handler) {
-      if (element && event && handler) {
-        element.attachEvent('on' + event, handler);
-      }
-    };
-  }
-}();
-
-/* istanbul ignore next */
-var off = exports.off = function () {
-  if (!isServer && document.removeEventListener) {
-    return function (element, event, handler) {
-      if (element && event) {
-        element.removeEventListener(event, handler, false);
-      }
-    };
-  } else {
-    return function (element, event, handler) {
-      if (element && event) {
-        element.detachEvent('on' + event, handler);
-      }
-    };
-  }
-}();
-
-/* istanbul ignore next */
-var once = exports.once = function once(el, event, fn) {
-  var listener = function listener() {
-    if (fn) {
-      fn.apply(this, arguments);
-    }
-    off(el, event, listener);
-  };
-  on(el, event, listener);
-};
-
-/* istanbul ignore next */
-function hasClass(el, cls) {
-  if (!el || !cls) return false;
-  if (cls.indexOf(' ') !== -1) throw new Error('className should not contain space.');
-  if (el.classList) {
-    return el.classList.contains(cls);
-  } else {
-    return (' ' + el.className + ' ').indexOf(' ' + cls + ' ') > -1;
-  }
-};
-
-/* istanbul ignore next */
-function addClass(el, cls) {
-  if (!el) return;
-  var curClass = el.className;
-  var classes = (cls || '').split(' ');
-
-  for (var i = 0, j = classes.length; i < j; i++) {
-    var clsName = classes[i];
-    if (!clsName) continue;
-
-    if (el.classList) {
-      el.classList.add(clsName);
-    } else if (!hasClass(el, clsName)) {
-      curClass += ' ' + clsName;
-    }
-  }
-  if (!el.classList) {
-    el.className = curClass;
-  }
-};
-
-/* istanbul ignore next */
-function removeClass(el, cls) {
-  if (!el || !cls) return;
-  var classes = cls.split(' ');
-  var curClass = ' ' + el.className + ' ';
-
-  for (var i = 0, j = classes.length; i < j; i++) {
-    var clsName = classes[i];
-    if (!clsName) continue;
-
-    if (el.classList) {
-      el.classList.remove(clsName);
-    } else if (hasClass(el, clsName)) {
-      curClass = curClass.replace(' ' + clsName + ' ', ' ');
-    }
-  }
-  if (!el.classList) {
-    el.className = trim(curClass);
-  }
-};
-
-/* istanbul ignore next */
-var getStyle = exports.getStyle = ieVersion < 9 ? function (element, styleName) {
-  if (isServer) return;
-  if (!element || !styleName) return null;
-  styleName = camelCase(styleName);
-  if (styleName === 'float') {
-    styleName = 'styleFloat';
-  }
-  try {
-    switch (styleName) {
-      case 'opacity':
-        try {
-          return element.filters.item('alpha').opacity / 100;
-        } catch (e) {
-          return 1.0;
-        }
-      default:
-        return element.style[styleName] || element.currentStyle ? element.currentStyle[styleName] : null;
-    }
-  } catch (e) {
-    return element.style[styleName];
-  }
-} : function (element, styleName) {
-  if (isServer) return;
-  if (!element || !styleName) return null;
-  styleName = camelCase(styleName);
-  if (styleName === 'float') {
-    styleName = 'cssFloat';
-  }
-  try {
-    var computed = document.defaultView.getComputedStyle(element, '');
-    return element.style[styleName] || computed ? computed[styleName] : null;
-  } catch (e) {
-    return element.style[styleName];
-  }
-};
-
-/* istanbul ignore next */
-function setStyle(element, styleName, value) {
-  if (!element || !styleName) return;
-
-  if ((typeof styleName === 'undefined' ? 'undefined' : _typeof(styleName)) === 'object') {
-    for (var prop in styleName) {
-      if (styleName.hasOwnProperty(prop)) {
-        setStyle(element, prop, styleName[prop]);
-      }
-    }
-  } else {
-    styleName = camelCase(styleName);
-    if (styleName === 'opacity' && ieVersion < 9) {
-      element.style.filter = isNaN(value) ? '' : 'alpha(opacity=' + value * 100 + ')';
-    } else {
-      element.style[styleName] = value;
-    }
-  }
-};
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  // eslint-disable-next-line no-new-func
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.isEdge = exports.isIE = exports.coerceTruthyValueToArray = exports.arrayFind = exports.arrayFindIndex = exports.escapeRegexpString = exports.valueEquals = exports.generateId = exports.getValueByPath = undefined;
-exports.noop = noop;
-exports.hasOwn = hasOwn;
-exports.toObject = toObject;
-exports.getPropByPath = getPropByPath;
-
-var _vue = __webpack_require__(4);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-function noop() {};
-
-function hasOwn(obj, key) {
-  return hasOwnProperty.call(obj, key);
-};
-
-function extend(to, _from) {
-  for (var key in _from) {
-    to[key] = _from[key];
-  }
-  return to;
-};
-
-function toObject(arr) {
-  var res = {};
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i]) {
-      extend(res, arr[i]);
-    }
-  }
-  return res;
-};
-
-var getValueByPath = exports.getValueByPath = function getValueByPath(object, prop) {
-  prop = prop || '';
-  var paths = prop.split('.');
-  var current = object;
-  var result = null;
-  for (var i = 0, j = paths.length; i < j; i++) {
-    var path = paths[i];
-    if (!current) break;
-
-    if (i === j - 1) {
-      result = current[path];
-      break;
-    }
-    current = current[path];
-  }
-  return result;
-};
-
-function getPropByPath(obj, path, strict) {
-  var tempObj = obj;
-  path = path.replace(/\[(\w+)\]/g, '.$1');
-  path = path.replace(/^\./, '');
-
-  var keyArr = path.split('.');
-  var i = 0;
-  for (var len = keyArr.length; i < len - 1; ++i) {
-    if (!tempObj && !strict) break;
-    var key = keyArr[i];
-    if (key in tempObj) {
-      tempObj = tempObj[key];
-    } else {
-      if (strict) {
-        throw new Error('please transfer a valid prop path to form item!');
-      }
-      break;
-    }
-  }
-  return {
-    o: tempObj,
-    k: keyArr[i],
-    v: tempObj ? tempObj[keyArr[i]] : null
-  };
-};
-
-var generateId = exports.generateId = function generateId() {
-  return Math.floor(Math.random() * 10000);
-};
-
-var valueEquals = exports.valueEquals = function valueEquals(a, b) {
-  // see: https://stackoverflow.com/questions/3115982/how-to-check-if-two-arrays-are-equal-with-javascript
-  if (a === b) return true;
-  if (!(a instanceof Array)) return false;
-  if (!(b instanceof Array)) return false;
-  if (a.length !== b.length) return false;
-  for (var i = 0; i !== a.length; ++i) {
-    if (a[i] !== b[i]) return false;
-  }
-  return true;
-};
-
-var escapeRegexpString = exports.escapeRegexpString = function escapeRegexpString() {
-  var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  return String(value).replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
-};
-
-// TODO: use native Array.find, Array.findIndex when IE support is dropped
-var arrayFindIndex = exports.arrayFindIndex = function arrayFindIndex(arr, pred) {
-  for (var i = 0; i !== arr.length; ++i) {
-    if (pred(arr[i])) {
-      return i;
-    }
-  }
-  return -1;
-};
-
-var arrayFind = exports.arrayFind = function arrayFind(arr, pred) {
-  var idx = arrayFindIndex(arr, pred);
-  return idx !== -1 ? arr[idx] : undefined;
-};
-
-// coerce truthy value to array
-var coerceTruthyValueToArray = exports.coerceTruthyValueToArray = function coerceTruthyValueToArray(val) {
-  if (Array.isArray(val)) {
-    return val;
-  } else if (val) {
-    return [val];
-  } else {
-    return [];
-  }
-};
-
-var isIE = exports.isIE = function isIE() {
-  return !_vue2.default.prototype.$isServer && !isNaN(Number(document.documentMode));
-};
-
-var isEdge = exports.isEdge = function isEdge() {
-  return !_vue2.default.prototype.$isServer && navigator.userAgent.indexOf('Edge') > -1;
-};
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-
-/***/ }),
-/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -18318,7 +17652,715 @@ this.currentResponsive=void 0)};C.prototype.matchResponsiveRule=function(a,f){va
 
 
 /***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(208);
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  typeof document.createElement -> undefined
+ */
+function isStandardBrowserEnv() {
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined' &&
+    typeof document.createElement === 'function'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object' && !isArray(obj)) {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim
+};
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,e){ true?module.exports=e(__webpack_require__(8)):"function"==typeof define&&define.amd?define(["highcharts"],e):"object"==typeof exports?exports.HighchartsVue=e(require("highcharts")):t.HighchartsVue=e(t.highcharts)}("undefined"!=typeof self?self:this,function(t){return function(t){function e(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return t[n].call(o.exports,o,o.exports,e),o.l=!0,o.exports}var r={};return e.m=t,e.c=r,e.d=function(t,r,n){e.o(t,r)||Object.defineProperty(t,r,{configurable:!1,enumerable:!0,get:n})},e.n=function(t){var r=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(r,"a",r),r},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=0)}([function(t,e,r){"use strict";function n(t,e){var r=e&&e.tagName||"highcharts";t.component(r,o.a)}Object.defineProperty(e,"__esModule",{value:!0}),e.default=n;var o=r(1);r.d(e,"Chart",function(){return o.a})},function(t,e,r){"use strict";function n(t){if(Array.isArray(t)){for(var e=0,r=new Array(t.length);e<t.length;e++)r[e]=t[e];return r}return Array.from(t)}var o=r(2),c=r.n(o),i={template:'<div ref="chart"></div>',render:function(t){return t("div",{ref:"chart"})},props:{constructorType:{type:String,default:"chart"},options:{type:Object,required:!0},callback:Function,updateArgs:{type:Array,default:function(){return[!0,!0]}}},watch:{options:{handler:function(t){var e;(e=this.chart).update.apply(e,[Object.assign({},t)].concat(n(this.updateArgs)))},deep:!0}},mounted:function(){this.options&&c.a[this.constructorType]?this.chart=c.a[this.constructorType](this.$refs.chart,Object.assign({},this.options),this.callback?this.callback:null):this.options?console.warn("'".concat(this.constructorType,"' constructor-type is incorrect. Sometimes this error is casued by the fact, that the corresponding module wasn't imported.")):console.warn('The "options" parameter was not passed.')},beforeDestroy:function(){this.chart&&this.chart.destroy()}};e.a=i},function(e,r){e.exports=t}])});
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_RESULT__;/*
+ Highcharts JS v6.2.0 (2018-10-17)
+ Exporting module
+
+ (c) 2010-2018 Torstein Honsi
+
+ License: www.highcharts.com/license
+*/
+(function(g){"object"===typeof module&&module.exports?module.exports=g: true?!(__WEBPACK_AMD_DEFINE_RESULT__ = (function(){return g}).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):g(Highcharts)})(function(g){(function(f){var g=f.defaultOptions,y=f.doc,z=f.Chart,q=f.addEvent,H=f.removeEvent,B=f.fireEvent,r=f.createElement,C=f.discardElement,u=f.css,p=f.merge,A=f.pick,l=f.each,E=f.objectEach,t=f.extend,I=f.isTouchDevice,D=f.win,F=D.navigator.userAgent,J=f.Renderer.prototype.symbols;/Edge\/|Trident\/|MSIE /.test(F);/firefox/i.test(F);t(g.lang,
+{printChart:"Print chart",downloadPNG:"Download PNG image",downloadJPEG:"Download JPEG image",downloadPDF:"Download PDF document",downloadSVG:"Download SVG vector image",contextButtonTitle:"Chart context menu"});g.navigation={buttonOptions:{theme:{},symbolSize:14,symbolX:12.5,symbolY:10.5,align:"right",buttonSpacing:3,height:22,verticalAlign:"top",width:24}};p(!0,g.navigation,{menuStyle:{border:"1px solid #999999",background:"#ffffff",padding:"5px 0"},menuItemStyle:{padding:"0.5em 1em",background:"none",
+color:"#333333",fontSize:I?"14px":"11px",transition:"background 250ms, color 250ms"},menuItemHoverStyle:{background:"#335cad",color:"#ffffff"},buttonOptions:{symbolFill:"#666666",symbolStroke:"#666666",symbolStrokeWidth:3,theme:{fill:"#ffffff",stroke:"none",padding:5}}});g.exporting={type:"image/png",url:"https://export.highcharts.com/",printMaxWidth:780,scale:2,buttons:{contextButton:{className:"highcharts-contextbutton",menuClassName:"highcharts-contextmenu",symbol:"menu",titleKey:"contextButtonTitle",
+menuItems:"printChart separator downloadPNG downloadJPEG downloadPDF downloadSVG".split(" ")}},menuItemDefinitions:{printChart:{textKey:"printChart",onclick:function(){this.print()}},separator:{separator:!0},downloadPNG:{textKey:"downloadPNG",onclick:function(){this.exportChart()}},downloadJPEG:{textKey:"downloadJPEG",onclick:function(){this.exportChart({type:"image/jpeg"})}},downloadPDF:{textKey:"downloadPDF",onclick:function(){this.exportChart({type:"application/pdf"})}},downloadSVG:{textKey:"downloadSVG",
+onclick:function(){this.exportChart({type:"image/svg+xml"})}}}};f.post=function(a,b,e){var c=r("form",p({method:"post",action:a,enctype:"multipart/form-data"},e),{display:"none"},y.body);E(b,function(a,b){r("input",{type:"hidden",name:b,value:a},null,c)});c.submit();C(c)};t(z.prototype,{sanitizeSVG:function(a,b){if(b&&b.exporting&&b.exporting.allowHTML){var e=a.match(/<\/svg>(.*?$)/);e&&e[1]&&(e='\x3cforeignObject x\x3d"0" y\x3d"0" width\x3d"'+b.chart.width+'" height\x3d"'+b.chart.height+'"\x3e\x3cbody xmlns\x3d"http://www.w3.org/1999/xhtml"\x3e'+
+e[1]+"\x3c/body\x3e\x3c/foreignObject\x3e",a=a.replace("\x3c/svg\x3e",e+"\x3c/svg\x3e"))}a=a.replace(/zIndex="[^"]+"/g,"").replace(/symbolName="[^"]+"/g,"").replace(/jQuery[0-9]+="[^"]+"/g,"").replace(/url\(("|&quot;)(\S+)("|&quot;)\)/g,"url($2)").replace(/url\([^#]+#/g,"url(#").replace(/<svg /,'\x3csvg xmlns:xlink\x3d"http://www.w3.org/1999/xlink" ').replace(/ (|NS[0-9]+\:)href=/g," xlink:href\x3d").replace(/\n/," ").replace(/<\/svg>.*?$/,"\x3c/svg\x3e").replace(/(fill|stroke)="rgba\(([ 0-9]+,[ 0-9]+,[ 0-9]+),([ 0-9\.]+)\)"/g,
+'$1\x3d"rgb($2)" $1-opacity\x3d"$3"').replace(/&nbsp;/g,"\u00a0").replace(/&shy;/g,"\u00ad");this.ieSanitizeSVG&&(a=this.ieSanitizeSVG(a));return a},getChartHTML:function(){return this.container.innerHTML},getSVG:function(a){var b,e,c,v,m,h=p(this.options,a);e=r("div",null,{position:"absolute",top:"-9999em",width:this.chartWidth+"px",height:this.chartHeight+"px"},y.body);c=this.renderTo.style.width;m=this.renderTo.style.height;c=h.exporting.sourceWidth||h.chart.width||/px$/.test(c)&&parseInt(c,10)||
+600;m=h.exporting.sourceHeight||h.chart.height||/px$/.test(m)&&parseInt(m,10)||400;t(h.chart,{animation:!1,renderTo:e,forExport:!0,renderer:"SVGRenderer",width:c,height:m});h.exporting.enabled=!1;delete h.data;h.series=[];l(this.series,function(a){v=p(a.userOptions,{animation:!1,enableMouseTracking:!1,showCheckbox:!1,visible:a.visible});v.isInternal||h.series.push(v)});l(this.axes,function(a){a.userOptions.internalKey||(a.userOptions.internalKey=f.uniqueKey())});b=new f.Chart(h,this.callback);a&&
+l(["xAxis","yAxis","series"],function(c){var d={};a[c]&&(d[c]=a[c],b.update(d))});l(this.axes,function(a){var c=f.find(b.axes,function(b){return b.options.internalKey===a.userOptions.internalKey}),d=a.getExtremes(),e=d.userMin,d=d.userMax;c&&(void 0!==e&&e!==c.min||void 0!==d&&d!==c.max)&&c.setExtremes(e,d,!0,!1)});c=b.getChartHTML();B(this,"getSVG",{chartCopy:b});c=this.sanitizeSVG(c,h);h=null;b.destroy();C(e);return c},getSVGForExport:function(a,b){var e=this.options.exporting;return this.getSVG(p({chart:{borderRadius:0}},
+e.chartOptions,b,{exporting:{sourceWidth:a&&a.sourceWidth||e.sourceWidth,sourceHeight:a&&a.sourceHeight||e.sourceHeight}}))},exportChart:function(a,b){b=this.getSVGForExport(a,b);a=p(this.options.exporting,a);f.post(a.url,{filename:a.filename||"chart",type:a.type,width:a.width||0,scale:a.scale,svg:b},a.formAttributes)},print:function(){var a=this,b=a.container,e=[],c=b.parentNode,f=y.body,m=f.childNodes,h=a.options.exporting.printMaxWidth,d,n;if(!a.isPrinting){a.isPrinting=!0;a.pointer.reset(null,
+0);B(a,"beforePrint");if(n=h&&a.chartWidth>h)d=[a.options.chart.width,void 0,!1],a.setSize(h,void 0,!1);l(m,function(a,b){1===a.nodeType&&(e[b]=a.style.display,a.style.display="none")});f.appendChild(b);setTimeout(function(){D.focus();D.print();setTimeout(function(){c.appendChild(b);l(m,function(a,b){1===a.nodeType&&(a.style.display=e[b])});a.isPrinting=!1;n&&a.setSize.apply(a,d);B(a,"afterPrint")},1E3)},1)}},contextMenu:function(a,b,e,c,v,m,h){var d=this,n=d.options.navigation,g=d.chartWidth,G=d.chartHeight,
+p="cache-"+a,k=d[p],w=Math.max(v,m),x;k||(d.exportContextMenu=d[p]=k=r("div",{className:a},{position:"absolute",zIndex:1E3,padding:w+"px",pointerEvents:"auto"},d.fixedDiv||d.container),x=r("div",{className:"highcharts-menu"},null,k),u(x,t({MozBoxShadow:"3px 3px 10px #888",WebkitBoxShadow:"3px 3px 10px #888",boxShadow:"3px 3px 10px #888"},n.menuStyle)),k.hideMenu=function(){u(k,{display:"none"});h&&h.setState(0);d.openMenu=!1;f.clearTimeout(k.hideTimer)},d.exportEvents.push(q(k,"mouseleave",function(){k.hideTimer=
+setTimeout(k.hideMenu,500)}),q(k,"mouseenter",function(){f.clearTimeout(k.hideTimer)}),q(y,"mouseup",function(b){d.pointer.inClass(b.target,a)||k.hideMenu()}),q(k,"click",function(){d.openMenu&&k.hideMenu()})),l(b,function(a){"string"===typeof a&&(a=d.options.exporting.menuItemDefinitions[a]);if(f.isObject(a,!0)){var b;a.separator?b=r("hr",null,null,x):(b=r("div",{className:"highcharts-menu-item",onclick:function(b){b&&b.stopPropagation();k.hideMenu();a.onclick&&a.onclick.apply(d,arguments)},innerHTML:a.text||
+d.options.lang[a.textKey]},null,x),b.onmouseover=function(){u(this,n.menuItemHoverStyle)},b.onmouseout=function(){u(this,n.menuItemStyle)},u(b,t({cursor:"pointer"},n.menuItemStyle)));d.exportDivElements.push(b)}}),d.exportDivElements.push(x,k),d.exportMenuWidth=k.offsetWidth,d.exportMenuHeight=k.offsetHeight);b={display:"block"};e+d.exportMenuWidth>g?b.right=g-e-v-w+"px":b.left=e-w+"px";c+m+d.exportMenuHeight>G&&"top"!==h.alignOptions.verticalAlign?b.bottom=G-c-w+"px":b.top=c+m-w+"px";u(k,b);d.openMenu=
+!0},addButton:function(a){var b=this,e=b.renderer,c=p(b.options.navigation.buttonOptions,a),f=c.onclick,m=c.menuItems,h,d,n=c.symbolSize||12;b.btnCount||(b.btnCount=0);b.exportDivElements||(b.exportDivElements=[],b.exportSVGElements=[]);if(!1!==c.enabled){var g=c.theme,l=g.states,q=l&&l.hover,l=l&&l.select,k;delete g.states;f?k=function(a){a&&a.stopPropagation();f.call(b,a)}:m&&(k=function(a){a&&a.stopPropagation();b.contextMenu(d.menuClassName,m,d.translateX,d.translateY,d.width,d.height,d);d.setState(2)});
+c.text&&c.symbol?g.paddingLeft=A(g.paddingLeft,25):c.text||t(g,{width:c.width,height:c.height,padding:0});d=e.button(c.text,0,0,k,g,q,l).addClass(a.className).attr({"stroke-linecap":"round",title:A(b.options.lang[c._titleKey||c.titleKey],"")});d.menuClassName=a.menuClassName||"highcharts-menu-"+b.btnCount++;c.symbol&&(h=e.symbol(c.symbol,c.symbolX-n/2,c.symbolY-n/2,n,n,{width:n,height:n}).addClass("highcharts-button-symbol").attr({zIndex:1}).add(d),h.attr({stroke:c.symbolStroke,fill:c.symbolFill,
+"stroke-width":c.symbolStrokeWidth||1}));d.add(b.exportingGroup).align(t(c,{width:d.width,x:A(c.x,b.buttonOffset)}),!0,"spacingBox");b.buttonOffset+=(d.width+c.buttonSpacing)*("right"===c.align?-1:1);b.exportSVGElements.push(d,h)}},destroyExport:function(a){var b=a?a.target:this;a=b.exportSVGElements;var e=b.exportDivElements,c=b.exportEvents,g;a&&(l(a,function(a,c){a&&(a.onclick=a.ontouchstart=null,g="cache-"+a.menuClassName,b[g]&&delete b[g],b.exportSVGElements[c]=a.destroy())}),a.length=0);b.exportingGroup&&
+(b.exportingGroup.destroy(),delete b.exportingGroup);e&&(l(e,function(a,c){f.clearTimeout(a.hideTimer);H(a,"mouseleave");b.exportDivElements[c]=a.onmouseout=a.onmouseover=a.ontouchstart=a.onclick=null;C(a)}),e.length=0);c&&(l(c,function(a){a()}),c.length=0)}});J.menu=function(a,b,e,c){return["M",a,b+2.5,"L",a+e,b+2.5,"M",a,b+c/2+.5,"L",a+e,b+c/2+.5,"M",a,b+c-1.5,"L",a+e,b+c-1.5]};z.prototype.renderExporting=function(){var a=this,b=a.options.exporting,e=b.buttons,c=a.isDirtyExporting||!a.exportSVGElements;
+a.buttonOffset=0;a.isDirtyExporting&&a.destroyExport();c&&!1!==b.enabled&&(a.exportEvents=[],a.exportingGroup=a.exportingGroup||a.renderer.g("exporting-group").attr({zIndex:3}).add(),E(e,function(b){a.addButton(b)}),a.isDirtyExporting=!1);q(a,"destroy",a.destroyExport)};q(z,"init",function(){var a=this;l(["exporting","navigation"],function(b){a[b]={update:function(e,c){a.isDirtyExporting=!0;p(!0,a.options[b],e);A(c,!0)&&a.redraw()}}})});z.prototype.callbacks.push(function(a){a.renderExporting();q(a,
+"redraw",a.renderExporting)})})(g)});
+//# sourceMappingURL=exporting.js.map
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.getStyle = exports.once = exports.off = exports.on = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /* istanbul ignore next */
+
+exports.hasClass = hasClass;
+exports.addClass = addClass;
+exports.removeClass = removeClass;
+exports.setStyle = setStyle;
+
+var _vue = __webpack_require__(5);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var isServer = _vue2.default.prototype.$isServer;
+var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
+var MOZ_HACK_REGEXP = /^moz([A-Z])/;
+var ieVersion = isServer ? 0 : Number(document.documentMode);
+
+/* istanbul ignore next */
+var trim = function trim(string) {
+  return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
+};
+/* istanbul ignore next */
+var camelCase = function camelCase(name) {
+  return name.replace(SPECIAL_CHARS_REGEXP, function (_, separator, letter, offset) {
+    return offset ? letter.toUpperCase() : letter;
+  }).replace(MOZ_HACK_REGEXP, 'Moz$1');
+};
+
+/* istanbul ignore next */
+var on = exports.on = function () {
+  if (!isServer && document.addEventListener) {
+    return function (element, event, handler) {
+      if (element && event && handler) {
+        element.addEventListener(event, handler, false);
+      }
+    };
+  } else {
+    return function (element, event, handler) {
+      if (element && event && handler) {
+        element.attachEvent('on' + event, handler);
+      }
+    };
+  }
+}();
+
+/* istanbul ignore next */
+var off = exports.off = function () {
+  if (!isServer && document.removeEventListener) {
+    return function (element, event, handler) {
+      if (element && event) {
+        element.removeEventListener(event, handler, false);
+      }
+    };
+  } else {
+    return function (element, event, handler) {
+      if (element && event) {
+        element.detachEvent('on' + event, handler);
+      }
+    };
+  }
+}();
+
+/* istanbul ignore next */
+var once = exports.once = function once(el, event, fn) {
+  var listener = function listener() {
+    if (fn) {
+      fn.apply(this, arguments);
+    }
+    off(el, event, listener);
+  };
+  on(el, event, listener);
+};
+
+/* istanbul ignore next */
+function hasClass(el, cls) {
+  if (!el || !cls) return false;
+  if (cls.indexOf(' ') !== -1) throw new Error('className should not contain space.');
+  if (el.classList) {
+    return el.classList.contains(cls);
+  } else {
+    return (' ' + el.className + ' ').indexOf(' ' + cls + ' ') > -1;
+  }
+};
+
+/* istanbul ignore next */
+function addClass(el, cls) {
+  if (!el) return;
+  var curClass = el.className;
+  var classes = (cls || '').split(' ');
+
+  for (var i = 0, j = classes.length; i < j; i++) {
+    var clsName = classes[i];
+    if (!clsName) continue;
+
+    if (el.classList) {
+      el.classList.add(clsName);
+    } else if (!hasClass(el, clsName)) {
+      curClass += ' ' + clsName;
+    }
+  }
+  if (!el.classList) {
+    el.className = curClass;
+  }
+};
+
+/* istanbul ignore next */
+function removeClass(el, cls) {
+  if (!el || !cls) return;
+  var classes = cls.split(' ');
+  var curClass = ' ' + el.className + ' ';
+
+  for (var i = 0, j = classes.length; i < j; i++) {
+    var clsName = classes[i];
+    if (!clsName) continue;
+
+    if (el.classList) {
+      el.classList.remove(clsName);
+    } else if (hasClass(el, clsName)) {
+      curClass = curClass.replace(' ' + clsName + ' ', ' ');
+    }
+  }
+  if (!el.classList) {
+    el.className = trim(curClass);
+  }
+};
+
+/* istanbul ignore next */
+var getStyle = exports.getStyle = ieVersion < 9 ? function (element, styleName) {
+  if (isServer) return;
+  if (!element || !styleName) return null;
+  styleName = camelCase(styleName);
+  if (styleName === 'float') {
+    styleName = 'styleFloat';
+  }
+  try {
+    switch (styleName) {
+      case 'opacity':
+        try {
+          return element.filters.item('alpha').opacity / 100;
+        } catch (e) {
+          return 1.0;
+        }
+      default:
+        return element.style[styleName] || element.currentStyle ? element.currentStyle[styleName] : null;
+    }
+  } catch (e) {
+    return element.style[styleName];
+  }
+} : function (element, styleName) {
+  if (isServer) return;
+  if (!element || !styleName) return null;
+  styleName = camelCase(styleName);
+  if (styleName === 'float') {
+    styleName = 'cssFloat';
+  }
+  try {
+    var computed = document.defaultView.getComputedStyle(element, '');
+    return element.style[styleName] || computed ? computed[styleName] : null;
+  } catch (e) {
+    return element.style[styleName];
+  }
+};
+
+/* istanbul ignore next */
+function setStyle(element, styleName, value) {
+  if (!element || !styleName) return;
+
+  if ((typeof styleName === 'undefined' ? 'undefined' : _typeof(styleName)) === 'object') {
+    for (var prop in styleName) {
+      if (styleName.hasOwnProperty(prop)) {
+        setStyle(element, prop, styleName[prop]);
+      }
+    }
+  } else {
+    styleName = camelCase(styleName);
+    if (styleName === 'opacity' && ieVersion < 9) {
+      element.style.filter = isNaN(value) ? '' : 'alpha(opacity=' + value * 100 + ')';
+    } else {
+      element.style[styleName] = value;
+    }
+  }
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  // eslint-disable-next-line no-new-func
+  : Function('return this')();
+if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+
+
+/***/ }),
 /* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.isEdge = exports.isIE = exports.coerceTruthyValueToArray = exports.arrayFind = exports.arrayFindIndex = exports.escapeRegexpString = exports.valueEquals = exports.generateId = exports.getValueByPath = undefined;
+exports.noop = noop;
+exports.hasOwn = hasOwn;
+exports.toObject = toObject;
+exports.getPropByPath = getPropByPath;
+
+var _vue = __webpack_require__(5);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function noop() {};
+
+function hasOwn(obj, key) {
+  return hasOwnProperty.call(obj, key);
+};
+
+function extend(to, _from) {
+  for (var key in _from) {
+    to[key] = _from[key];
+  }
+  return to;
+};
+
+function toObject(arr) {
+  var res = {};
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i]) {
+      extend(res, arr[i]);
+    }
+  }
+  return res;
+};
+
+var getValueByPath = exports.getValueByPath = function getValueByPath(object, prop) {
+  prop = prop || '';
+  var paths = prop.split('.');
+  var current = object;
+  var result = null;
+  for (var i = 0, j = paths.length; i < j; i++) {
+    var path = paths[i];
+    if (!current) break;
+
+    if (i === j - 1) {
+      result = current[path];
+      break;
+    }
+    current = current[path];
+  }
+  return result;
+};
+
+function getPropByPath(obj, path, strict) {
+  var tempObj = obj;
+  path = path.replace(/\[(\w+)\]/g, '.$1');
+  path = path.replace(/^\./, '');
+
+  var keyArr = path.split('.');
+  var i = 0;
+  for (var len = keyArr.length; i < len - 1; ++i) {
+    if (!tempObj && !strict) break;
+    var key = keyArr[i];
+    if (key in tempObj) {
+      tempObj = tempObj[key];
+    } else {
+      if (strict) {
+        throw new Error('please transfer a valid prop path to form item!');
+      }
+      break;
+    }
+  }
+  return {
+    o: tempObj,
+    k: keyArr[i],
+    v: tempObj ? tempObj[keyArr[i]] : null
+  };
+};
+
+var generateId = exports.generateId = function generateId() {
+  return Math.floor(Math.random() * 10000);
+};
+
+var valueEquals = exports.valueEquals = function valueEquals(a, b) {
+  // see: https://stackoverflow.com/questions/3115982/how-to-check-if-two-arrays-are-equal-with-javascript
+  if (a === b) return true;
+  if (!(a instanceof Array)) return false;
+  if (!(b instanceof Array)) return false;
+  if (a.length !== b.length) return false;
+  for (var i = 0; i !== a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+};
+
+var escapeRegexpString = exports.escapeRegexpString = function escapeRegexpString() {
+  var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  return String(value).replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+};
+
+// TODO: use native Array.find, Array.findIndex when IE support is dropped
+var arrayFindIndex = exports.arrayFindIndex = function arrayFindIndex(arr, pred) {
+  for (var i = 0; i !== arr.length; ++i) {
+    if (pred(arr[i])) {
+      return i;
+    }
+  }
+  return -1;
+};
+
+var arrayFind = exports.arrayFind = function arrayFind(arr, pred) {
+  var idx = arrayFindIndex(arr, pred);
+  return idx !== -1 ? arr[idx] : undefined;
+};
+
+// coerce truthy value to array
+var coerceTruthyValueToArray = exports.coerceTruthyValueToArray = function coerceTruthyValueToArray(val) {
+  if (Array.isArray(val)) {
+    return val;
+  } else if (val) {
+    return [val];
+  } else {
+    return [];
+  }
+};
+
+var isIE = exports.isIE = function isIE() {
+  return !_vue2.default.prototype.$isServer && !isNaN(Number(document.documentMode));
+};
+
+var isEdge = exports.isEdge = function isEdge() {
+  return !_vue2.default.prototype.$isServer && navigator.userAgent.indexOf('Edge') > -1;
+};
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18360,12 +18402,12 @@ exports.default = {
 };
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(16);
+var dP = __webpack_require__(18);
 var createDesc = __webpack_require__(29);
-module.exports = __webpack_require__(17) ? function (object, key, value) {
+module.exports = __webpack_require__(19) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
   object[key] = value;
@@ -18374,7 +18416,7 @@ module.exports = __webpack_require__(17) ? function (object, key, value) {
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(28);
@@ -18382,7 +18424,7 @@ var IE8_DOM_DEFINE = __webpack_require__(69);
 var toPrimitive = __webpack_require__(45);
 var dP = Object.defineProperty;
 
-exports.f = __webpack_require__(17) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+exports.f = __webpack_require__(19) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -18396,7 +18438,7 @@ exports.f = __webpack_require__(17) ? Object.defineProperty : function definePro
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
@@ -18406,7 +18448,7 @@ module.exports = !__webpack_require__(24)(function () {
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
@@ -18418,12 +18460,12 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var store = __webpack_require__(49)('wks');
 var uid = __webpack_require__(32);
-var Symbol = __webpack_require__(10).Symbol;
+var Symbol = __webpack_require__(13).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
 var $exports = module.exports = function (name) {
@@ -18432,48 +18474,6 @@ var $exports = module.exports = function (name) {
 };
 
 $exports.store = store;
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-!function(t,e){ true?module.exports=e(__webpack_require__(13)):"function"==typeof define&&define.amd?define(["highcharts"],e):"object"==typeof exports?exports.HighchartsVue=e(require("highcharts")):t.HighchartsVue=e(t.highcharts)}("undefined"!=typeof self?self:this,function(t){return function(t){function e(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return t[n].call(o.exports,o,o.exports,e),o.l=!0,o.exports}var r={};return e.m=t,e.c=r,e.d=function(t,r,n){e.o(t,r)||Object.defineProperty(t,r,{configurable:!1,enumerable:!0,get:n})},e.n=function(t){var r=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(r,"a",r),r},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=0)}([function(t,e,r){"use strict";function n(t,e){var r=e&&e.tagName||"highcharts";t.component(r,o.a)}Object.defineProperty(e,"__esModule",{value:!0}),e.default=n;var o=r(1);r.d(e,"Chart",function(){return o.a})},function(t,e,r){"use strict";function n(t){if(Array.isArray(t)){for(var e=0,r=new Array(t.length);e<t.length;e++)r[e]=t[e];return r}return Array.from(t)}var o=r(2),c=r.n(o),i={template:'<div ref="chart"></div>',render:function(t){return t("div",{ref:"chart"})},props:{constructorType:{type:String,default:"chart"},options:{type:Object,required:!0},callback:Function,updateArgs:{type:Array,default:function(){return[!0,!0]}}},watch:{options:{handler:function(t){var e;(e=this.chart).update.apply(e,[Object.assign({},t)].concat(n(this.updateArgs)))},deep:!0}},mounted:function(){this.options&&c.a[this.constructorType]?this.chart=c.a[this.constructorType](this.$refs.chart,Object.assign({},this.options),this.callback?this.callback:null):this.options?console.warn("'".concat(this.constructorType,"' constructor-type is incorrect. Sometimes this error is casued by the fact, that the corresponding module wasn't imported.")):console.warn('The "options" parameter was not passed.')},beforeDestroy:function(){this.chart&&this.chart.destroy()}};e.a=i},function(e,r){e.exports=t}])});
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/*
- Highcharts JS v6.2.0 (2018-10-17)
- Exporting module
-
- (c) 2010-2018 Torstein Honsi
-
- License: www.highcharts.com/license
-*/
-(function(g){"object"===typeof module&&module.exports?module.exports=g: true?!(__WEBPACK_AMD_DEFINE_RESULT__ = (function(){return g}).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):g(Highcharts)})(function(g){(function(f){var g=f.defaultOptions,y=f.doc,z=f.Chart,q=f.addEvent,H=f.removeEvent,B=f.fireEvent,r=f.createElement,C=f.discardElement,u=f.css,p=f.merge,A=f.pick,l=f.each,E=f.objectEach,t=f.extend,I=f.isTouchDevice,D=f.win,F=D.navigator.userAgent,J=f.Renderer.prototype.symbols;/Edge\/|Trident\/|MSIE /.test(F);/firefox/i.test(F);t(g.lang,
-{printChart:"Print chart",downloadPNG:"Download PNG image",downloadJPEG:"Download JPEG image",downloadPDF:"Download PDF document",downloadSVG:"Download SVG vector image",contextButtonTitle:"Chart context menu"});g.navigation={buttonOptions:{theme:{},symbolSize:14,symbolX:12.5,symbolY:10.5,align:"right",buttonSpacing:3,height:22,verticalAlign:"top",width:24}};p(!0,g.navigation,{menuStyle:{border:"1px solid #999999",background:"#ffffff",padding:"5px 0"},menuItemStyle:{padding:"0.5em 1em",background:"none",
-color:"#333333",fontSize:I?"14px":"11px",transition:"background 250ms, color 250ms"},menuItemHoverStyle:{background:"#335cad",color:"#ffffff"},buttonOptions:{symbolFill:"#666666",symbolStroke:"#666666",symbolStrokeWidth:3,theme:{fill:"#ffffff",stroke:"none",padding:5}}});g.exporting={type:"image/png",url:"https://export.highcharts.com/",printMaxWidth:780,scale:2,buttons:{contextButton:{className:"highcharts-contextbutton",menuClassName:"highcharts-contextmenu",symbol:"menu",titleKey:"contextButtonTitle",
-menuItems:"printChart separator downloadPNG downloadJPEG downloadPDF downloadSVG".split(" ")}},menuItemDefinitions:{printChart:{textKey:"printChart",onclick:function(){this.print()}},separator:{separator:!0},downloadPNG:{textKey:"downloadPNG",onclick:function(){this.exportChart()}},downloadJPEG:{textKey:"downloadJPEG",onclick:function(){this.exportChart({type:"image/jpeg"})}},downloadPDF:{textKey:"downloadPDF",onclick:function(){this.exportChart({type:"application/pdf"})}},downloadSVG:{textKey:"downloadSVG",
-onclick:function(){this.exportChart({type:"image/svg+xml"})}}}};f.post=function(a,b,e){var c=r("form",p({method:"post",action:a,enctype:"multipart/form-data"},e),{display:"none"},y.body);E(b,function(a,b){r("input",{type:"hidden",name:b,value:a},null,c)});c.submit();C(c)};t(z.prototype,{sanitizeSVG:function(a,b){if(b&&b.exporting&&b.exporting.allowHTML){var e=a.match(/<\/svg>(.*?$)/);e&&e[1]&&(e='\x3cforeignObject x\x3d"0" y\x3d"0" width\x3d"'+b.chart.width+'" height\x3d"'+b.chart.height+'"\x3e\x3cbody xmlns\x3d"http://www.w3.org/1999/xhtml"\x3e'+
-e[1]+"\x3c/body\x3e\x3c/foreignObject\x3e",a=a.replace("\x3c/svg\x3e",e+"\x3c/svg\x3e"))}a=a.replace(/zIndex="[^"]+"/g,"").replace(/symbolName="[^"]+"/g,"").replace(/jQuery[0-9]+="[^"]+"/g,"").replace(/url\(("|&quot;)(\S+)("|&quot;)\)/g,"url($2)").replace(/url\([^#]+#/g,"url(#").replace(/<svg /,'\x3csvg xmlns:xlink\x3d"http://www.w3.org/1999/xlink" ').replace(/ (|NS[0-9]+\:)href=/g," xlink:href\x3d").replace(/\n/," ").replace(/<\/svg>.*?$/,"\x3c/svg\x3e").replace(/(fill|stroke)="rgba\(([ 0-9]+,[ 0-9]+,[ 0-9]+),([ 0-9\.]+)\)"/g,
-'$1\x3d"rgb($2)" $1-opacity\x3d"$3"').replace(/&nbsp;/g,"\u00a0").replace(/&shy;/g,"\u00ad");this.ieSanitizeSVG&&(a=this.ieSanitizeSVG(a));return a},getChartHTML:function(){return this.container.innerHTML},getSVG:function(a){var b,e,c,v,m,h=p(this.options,a);e=r("div",null,{position:"absolute",top:"-9999em",width:this.chartWidth+"px",height:this.chartHeight+"px"},y.body);c=this.renderTo.style.width;m=this.renderTo.style.height;c=h.exporting.sourceWidth||h.chart.width||/px$/.test(c)&&parseInt(c,10)||
-600;m=h.exporting.sourceHeight||h.chart.height||/px$/.test(m)&&parseInt(m,10)||400;t(h.chart,{animation:!1,renderTo:e,forExport:!0,renderer:"SVGRenderer",width:c,height:m});h.exporting.enabled=!1;delete h.data;h.series=[];l(this.series,function(a){v=p(a.userOptions,{animation:!1,enableMouseTracking:!1,showCheckbox:!1,visible:a.visible});v.isInternal||h.series.push(v)});l(this.axes,function(a){a.userOptions.internalKey||(a.userOptions.internalKey=f.uniqueKey())});b=new f.Chart(h,this.callback);a&&
-l(["xAxis","yAxis","series"],function(c){var d={};a[c]&&(d[c]=a[c],b.update(d))});l(this.axes,function(a){var c=f.find(b.axes,function(b){return b.options.internalKey===a.userOptions.internalKey}),d=a.getExtremes(),e=d.userMin,d=d.userMax;c&&(void 0!==e&&e!==c.min||void 0!==d&&d!==c.max)&&c.setExtremes(e,d,!0,!1)});c=b.getChartHTML();B(this,"getSVG",{chartCopy:b});c=this.sanitizeSVG(c,h);h=null;b.destroy();C(e);return c},getSVGForExport:function(a,b){var e=this.options.exporting;return this.getSVG(p({chart:{borderRadius:0}},
-e.chartOptions,b,{exporting:{sourceWidth:a&&a.sourceWidth||e.sourceWidth,sourceHeight:a&&a.sourceHeight||e.sourceHeight}}))},exportChart:function(a,b){b=this.getSVGForExport(a,b);a=p(this.options.exporting,a);f.post(a.url,{filename:a.filename||"chart",type:a.type,width:a.width||0,scale:a.scale,svg:b},a.formAttributes)},print:function(){var a=this,b=a.container,e=[],c=b.parentNode,f=y.body,m=f.childNodes,h=a.options.exporting.printMaxWidth,d,n;if(!a.isPrinting){a.isPrinting=!0;a.pointer.reset(null,
-0);B(a,"beforePrint");if(n=h&&a.chartWidth>h)d=[a.options.chart.width,void 0,!1],a.setSize(h,void 0,!1);l(m,function(a,b){1===a.nodeType&&(e[b]=a.style.display,a.style.display="none")});f.appendChild(b);setTimeout(function(){D.focus();D.print();setTimeout(function(){c.appendChild(b);l(m,function(a,b){1===a.nodeType&&(a.style.display=e[b])});a.isPrinting=!1;n&&a.setSize.apply(a,d);B(a,"afterPrint")},1E3)},1)}},contextMenu:function(a,b,e,c,v,m,h){var d=this,n=d.options.navigation,g=d.chartWidth,G=d.chartHeight,
-p="cache-"+a,k=d[p],w=Math.max(v,m),x;k||(d.exportContextMenu=d[p]=k=r("div",{className:a},{position:"absolute",zIndex:1E3,padding:w+"px",pointerEvents:"auto"},d.fixedDiv||d.container),x=r("div",{className:"highcharts-menu"},null,k),u(x,t({MozBoxShadow:"3px 3px 10px #888",WebkitBoxShadow:"3px 3px 10px #888",boxShadow:"3px 3px 10px #888"},n.menuStyle)),k.hideMenu=function(){u(k,{display:"none"});h&&h.setState(0);d.openMenu=!1;f.clearTimeout(k.hideTimer)},d.exportEvents.push(q(k,"mouseleave",function(){k.hideTimer=
-setTimeout(k.hideMenu,500)}),q(k,"mouseenter",function(){f.clearTimeout(k.hideTimer)}),q(y,"mouseup",function(b){d.pointer.inClass(b.target,a)||k.hideMenu()}),q(k,"click",function(){d.openMenu&&k.hideMenu()})),l(b,function(a){"string"===typeof a&&(a=d.options.exporting.menuItemDefinitions[a]);if(f.isObject(a,!0)){var b;a.separator?b=r("hr",null,null,x):(b=r("div",{className:"highcharts-menu-item",onclick:function(b){b&&b.stopPropagation();k.hideMenu();a.onclick&&a.onclick.apply(d,arguments)},innerHTML:a.text||
-d.options.lang[a.textKey]},null,x),b.onmouseover=function(){u(this,n.menuItemHoverStyle)},b.onmouseout=function(){u(this,n.menuItemStyle)},u(b,t({cursor:"pointer"},n.menuItemStyle)));d.exportDivElements.push(b)}}),d.exportDivElements.push(x,k),d.exportMenuWidth=k.offsetWidth,d.exportMenuHeight=k.offsetHeight);b={display:"block"};e+d.exportMenuWidth>g?b.right=g-e-v-w+"px":b.left=e-w+"px";c+m+d.exportMenuHeight>G&&"top"!==h.alignOptions.verticalAlign?b.bottom=G-c-w+"px":b.top=c+m-w+"px";u(k,b);d.openMenu=
-!0},addButton:function(a){var b=this,e=b.renderer,c=p(b.options.navigation.buttonOptions,a),f=c.onclick,m=c.menuItems,h,d,n=c.symbolSize||12;b.btnCount||(b.btnCount=0);b.exportDivElements||(b.exportDivElements=[],b.exportSVGElements=[]);if(!1!==c.enabled){var g=c.theme,l=g.states,q=l&&l.hover,l=l&&l.select,k;delete g.states;f?k=function(a){a&&a.stopPropagation();f.call(b,a)}:m&&(k=function(a){a&&a.stopPropagation();b.contextMenu(d.menuClassName,m,d.translateX,d.translateY,d.width,d.height,d);d.setState(2)});
-c.text&&c.symbol?g.paddingLeft=A(g.paddingLeft,25):c.text||t(g,{width:c.width,height:c.height,padding:0});d=e.button(c.text,0,0,k,g,q,l).addClass(a.className).attr({"stroke-linecap":"round",title:A(b.options.lang[c._titleKey||c.titleKey],"")});d.menuClassName=a.menuClassName||"highcharts-menu-"+b.btnCount++;c.symbol&&(h=e.symbol(c.symbol,c.symbolX-n/2,c.symbolY-n/2,n,n,{width:n,height:n}).addClass("highcharts-button-symbol").attr({zIndex:1}).add(d),h.attr({stroke:c.symbolStroke,fill:c.symbolFill,
-"stroke-width":c.symbolStrokeWidth||1}));d.add(b.exportingGroup).align(t(c,{width:d.width,x:A(c.x,b.buttonOffset)}),!0,"spacingBox");b.buttonOffset+=(d.width+c.buttonSpacing)*("right"===c.align?-1:1);b.exportSVGElements.push(d,h)}},destroyExport:function(a){var b=a?a.target:this;a=b.exportSVGElements;var e=b.exportDivElements,c=b.exportEvents,g;a&&(l(a,function(a,c){a&&(a.onclick=a.ontouchstart=null,g="cache-"+a.menuClassName,b[g]&&delete b[g],b.exportSVGElements[c]=a.destroy())}),a.length=0);b.exportingGroup&&
-(b.exportingGroup.destroy(),delete b.exportingGroup);e&&(l(e,function(a,c){f.clearTimeout(a.hideTimer);H(a,"mouseleave");b.exportDivElements[c]=a.onmouseout=a.onmouseover=a.ontouchstart=a.onclick=null;C(a)}),e.length=0);c&&(l(c,function(a){a()}),c.length=0)}});J.menu=function(a,b,e,c){return["M",a,b+2.5,"L",a+e,b+2.5,"M",a,b+c/2+.5,"L",a+e,b+c/2+.5,"M",a,b+c-1.5,"L",a+e,b+c-1.5]};z.prototype.renderExporting=function(){var a=this,b=a.options.exporting,e=b.buttons,c=a.isDirtyExporting||!a.exportSVGElements;
-a.buttonOffset=0;a.isDirtyExporting&&a.destroyExport();c&&!1!==b.enabled&&(a.exportEvents=[],a.exportingGroup=a.exportingGroup||a.renderer.g("exporting-group").attr({zIndex:3}).add(),E(e,function(b){a.addButton(b)}),a.isDirtyExporting=!1);q(a,"destroy",a.destroyExport)};q(z,"init",function(){var a=this;l(["exporting","navigation"],function(b){a[b]={update:function(e,c){a.isDirtyExporting=!0;p(!0,a.options[b],e);A(c,!0)&&a.redraw()}}})});z.prototype.callbacks.push(function(a){a.renderExporting();q(a,
-"redraw",a.renderExporting)})})(g)});
-//# sourceMappingURL=exporting.js.map
 
 
 /***/ }),
@@ -18574,7 +18574,7 @@ var _zhCN = __webpack_require__(232);
 
 var _zhCN2 = _interopRequireDefault(_zhCN);
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -19149,7 +19149,7 @@ module.exports = function normalizeComponent (
 /***/ 1:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 
@@ -19758,7 +19758,7 @@ exports.default = function (target) {
 
 exports.__esModule = true;
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -19994,7 +19994,7 @@ exports.default = function () {
   return scrollBarWidth;
 };
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -20119,11 +20119,11 @@ exports.default = function (ref) {
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(10);
+var global = __webpack_require__(13);
 var core = __webpack_require__(22);
 var ctx = __webpack_require__(261);
-var hide = __webpack_require__(15);
-var has = __webpack_require__(12);
+var hide = __webpack_require__(17);
+var has = __webpack_require__(15);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -20240,7 +20240,7 @@ module.exports = function (key) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var core = __webpack_require__(22);
-var global = __webpack_require__(10);
+var global = __webpack_require__(13);
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || (global[SHARED] = {});
 
@@ -20281,9 +20281,9 @@ module.exports = {};
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(16).f;
-var has = __webpack_require__(12);
-var TAG = __webpack_require__(19)('toStringTag');
+var def = __webpack_require__(18).f;
+var has = __webpack_require__(15);
+var TAG = __webpack_require__(21)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -20294,18 +20294,18 @@ module.exports = function (it, tag, stat) {
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(19);
+exports.f = __webpack_require__(21);
 
 
 /***/ }),
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(10);
+var global = __webpack_require__(13);
 var core = __webpack_require__(22);
 var LIBRARY = __webpack_require__(31);
 var wksExt = __webpack_require__(54);
-var defineProperty = __webpack_require__(16).f;
+var defineProperty = __webpack_require__(18).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -20651,8 +20651,8 @@ function applyToTag (styleElement, obj) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(8);
-var normalizeHeaderName = __webpack_require__(406);
+var utils = __webpack_require__(9);
+var normalizeHeaderName = __webpack_require__(421);
 
 var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 var DEFAULT_CONTENT_TYPE = {
@@ -20848,7 +20848,7 @@ exports.default = {
 exports.__esModule = true;
 exports.PopupManager = undefined;
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -20864,7 +20864,7 @@ var _scrollbarWidth = __webpack_require__(40);
 
 var _scrollbarWidth2 = _interopRequireDefault(_scrollbarWidth);
 
-var _dom = __webpack_require__(9);
+var _dom = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21094,11 +21094,11 @@ exports.PopupManager = _popupManager2.default;
 
 exports.__esModule = true;
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _dom = __webpack_require__(9);
+var _dom = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21349,14 +21349,14 @@ module.exports = __webpack_require__(42);
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(14);
 
 /***/ }),
 
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(12);
 
 /***/ }),
 
@@ -21727,7 +21727,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 exports.isVNode = isVNode;
 exports.getFirstComponentChild = getFirstComponentChild;
 
-var _util = __webpack_require__(11);
+var _util = __webpack_require__(14);
 
 function isVNode(node) {
   return node !== null && (typeof node === 'undefined' ? 'undefined' : _typeof(node)) === 'object' && (0, _util.hasOwn)(node, 'componentOptions');
@@ -22046,7 +22046,7 @@ exports.default = {
 exports.__esModule = true;
 exports.default = scrollIntoView;
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -22113,7 +22113,7 @@ exports.default = _assign2.default || function (target) {
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(17) && !__webpack_require__(24)(function () {
+module.exports = !__webpack_require__(19) && !__webpack_require__(24)(function () {
   return Object.defineProperty(__webpack_require__(70)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -22123,7 +22123,7 @@ module.exports = !__webpack_require__(17) && !__webpack_require__(24)(function (
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(23);
-var document = __webpack_require__(10).document;
+var document = __webpack_require__(13).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
 module.exports = function (it) {
@@ -22135,8 +22135,8 @@ module.exports = function (it) {
 /* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(12);
-var toIObject = __webpack_require__(18);
+var has = __webpack_require__(15);
+var toIObject = __webpack_require__(20);
 var arrayIndexOf = __webpack_require__(264)(false);
 var IE_PROTO = __webpack_require__(48)('IE_PROTO');
 
@@ -22197,12 +22197,12 @@ module.exports = function (it) {
 var LIBRARY = __webpack_require__(31);
 var $export = __webpack_require__(44);
 var redefine = __webpack_require__(76);
-var hide = __webpack_require__(15);
+var hide = __webpack_require__(17);
 var Iterators = __webpack_require__(52);
 var $iterCreate = __webpack_require__(271);
 var setToStringTag = __webpack_require__(53);
 var getPrototypeOf = __webpack_require__(274);
-var ITERATOR = __webpack_require__(19)('iterator');
+var ITERATOR = __webpack_require__(21)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -22268,7 +22268,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 /* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(15);
+module.exports = __webpack_require__(17);
 
 
 /***/ }),
@@ -22336,7 +22336,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(3);
 
 
 /**
@@ -34496,13 +34496,13 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 
 
-var utils = __webpack_require__(8);
-var settle = __webpack_require__(407);
-var buildURL = __webpack_require__(409);
-var parseHeaders = __webpack_require__(410);
-var isURLSameOrigin = __webpack_require__(411);
+var utils = __webpack_require__(9);
+var settle = __webpack_require__(422);
+var buildURL = __webpack_require__(424);
+var parseHeaders = __webpack_require__(425);
+var isURLSameOrigin = __webpack_require__(426);
 var createError = __webpack_require__(210);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(412);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(427);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -34598,7 +34598,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(413);
+      var cookies = __webpack_require__(428);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -34680,7 +34680,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(408);
+var enhanceError = __webpack_require__(423);
 
 /**
  * Create an Error with the specified message, config, error code, and response.
@@ -34746,7 +34746,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _columns = __webpack_require__(422);
+var _columns = __webpack_require__(437);
 
 var _columns2 = _interopRequireDefault(_columns);
 
@@ -34771,7 +34771,7 @@ module.exports = __webpack_require__(215);
 "use strict";
 
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -37767,11 +37767,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
@@ -38854,7 +38854,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /* eslint-disable */
-module.exports = { "ar.log-viewer::general": { "all": "\u062C\u0645\u064A\u0639", "date": "\u062A\u0627\u0631\u064A\u062E" }, "ar.log-viewer::levels": { "alert": "\u0625\u0646\u0630\u0627\u0631", "all": "\u0627\u0644\u062C\u0645\u064A\u0639", "critical": "\u062D\u0631\u062C", "debug": "\u0627\u0644\u062A\u0635\u062D\u064A\u062D", "emergency": "\u062D\u0627\u0644\u0627\u062A \u0627\u0644\u0637\u0648\u0627\u0631\u0626", "error": "\u062E\u0637\u0623", "info": "\u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062A", "notice": "\u0645\u0644\u0627\u062D\u0638\u0629", "warning": "\u062A\u062D\u0630\u064A\u0631" }, "bg.log-viewer::general": { "all": "\u0412\u0441\u0438\u0447\u043A\u0438", "date": "\u0414\u0430\u0442\u0430", "empty-logs": "\u041D\u0435 \u0441\u0430 \u043D\u0430\u043C\u0435\u0440\u0435\u043D\u0438 \u043B\u043E\u0433\u043E\u0432\u0435!" }, "bg.log-viewer::levels": { "alert": "Alert", "all": "\u0412\u0441\u0438\u0447\u043A\u0438", "critical": "Critical", "debug": "Debug", "emergency": "Emergency", "error": "Error", "info": "Info", "notice": "Notice", "warning": "Warning" }, "de.alerts": { "backend": { "blogcategories": { "created": "The Blog Category was successfully created.", "deleted": "The Blog Category was successfully deleted.", "updated": "The Blog Category was successfully updated." }, "blogs": { "created": "The Blog was successfully created.", "deleted": "The Blog was successfully deleted.", "updated": "The Blog was successfully updated." }, "blogtags": { "created": "The Blog Tag was successfully created.", "deleted": "The Blog Tag was successfully deleted.", "updated": "The Blog Tag was successfully updated." }, "emailtemplates": { "deleted": "Das Email Template wurde erfolgreich gel\xF6scht.", "updated": "Das Email Template wurde erfolgreich ge\xE4ndert." }, "faqs": { "created": "Die FAQ wurde erfolgreich erstellt.", "deleted": "Die FAQ wurde erfolgreich gel\xF6scht.", "updated": "Die FAQ wurde erfolgreich ge\xE4ndert." }, "groups": { "created": "Die Gruppe wurde erfolgreich erstellt.", "deleted": "Die Gruppe wurde erfolgreich gel\xF6scht.", "updated": "Die Gruppe wurde erfolgreich ge\xE4ndert." }, "menus": { "created": "Das Men\xFC wurde erfolgreich erstellt.", "deleted": "Das Men\xFC wurde erfolgreich gel\xF6scht.", "updated": "Das Men\xFC wurde erfolgreich ge\xE4ndert." }, "pages": { "created": "Die Seite wurde erfolgreich erstellt.", "deleted": "Die Seite wurde erfolgreich gel\xF6scht.", "updated": "Die Seite wurde erfolgreich ge\xE4ndert." }, "permissions": { "created": "Die Berechtigung wurde erfolgreich erstellt.", "deleted": "Die Berechtigung wurde erfolgreich gel\xF6scht.", "updated": "Die Berechtigung wurde erfolgreich ge\xE4ndert." }, "roles": { "created": "Die Rolle wurde erfolgreich erstellt.", "deleted": "Die Rolle wurde erfolgreich gel\xF6scht.", "updated": "Die Rolle wurde erfolgreich ge\xE4ndert." }, "settings": { "updated": "Die Einstellung wurde erfolgreich ge\xE4ndert." }, "users": { "confirmation_email": "Eine neue Best\xE4tigungs E-Mail wurde gesendet.", "created": "Der User wurde erfolgreich erstellt.", "deleted": "Der User wurde erfolgreich gel\xF6scht.", "deleted_permanently": "Der User wurde dauerhaft gel\xF6scht.", "restored": "Der User wurde erfolgreich wiederhergestellt.", "session_cleared": "Die User Session wurde erfolgreich gel\xF6scht.", "updated": "Der User wurde erfolgreich ge\xE4ndert.", "updated_password": "Das Benutzer Passwort wurde erfolgreich aktualisiert." }, "whitelabels": { "created": "Das Whitelabel wurde erfolgreich erstellt.", "deleted": "Das Whitelabel wurde erfolgreich gel\xF6scht.", "updated": "Das Whitelabel wurde erfolgreich ge\xE4ndert." }, "wishes": { "created": "Der Wunsch wurde erfolgreich erstellt.", "deleted": "Der Wunsch wurde erfolgreich gel\xF6scht.", "updated": "Der Wunsch wurde erfolgreich ge\xE4ndert." } }, "frontend": { "offers": { "created": "Das Angebot wurde erfolgreich erstellt." }, "wishes": { "created": "Der Wunsch wurde erfolgreich erstellt.", "deleted": "Der Wunsch wurde erfolgreich gel\xF6scht.", "updated": "Der Wunsch wurde erfolgreich ge\xE4ndert." } } }, "de.api": { "messages": { "forgot_password": { "success": "Wir haben eine E-Mail mit einem Link zum Zur\xFCcksetzen des Passworts geschickt.", "validation": { "email_not_found": "Diese E-Mail-Adresse ist uns nicht bekannt." } }, "login": { "failed": "Ung\xFCltige Zugangsdaten! Bitte erneut versuchen.", "success": "Login erfolgreich." }, "logout": { "success": "Erfolgreich ausgeloggt." }, "refresh": { "status": "Ok", "token": { "not_provided": "Token not provided." } }, "registeration": { "success": "Du hast dich erfolgreich registriert. Bitte \xFCberpr\xFCfe zur Aktivierung deine E-Mails." } } }, "de.auth": { "failed": "Diese Kombination aus Zugangsdaten wurde nicht in unserer Datenbank gefunden.", "throttle": "Zu viele Loginversuche. Versuchen Sie es bitte in :seconds Sekunden nochmal." }, "de.button": { "cancel": "Abbrechen", "close": "Schlie\xDFen", "confirm": "Best\xE4tigen", "create": "Erstellen", "delete": "L\xF6schen", "delete_all": "Alles l\xF6schen", "edit": "\xC4ndern", "mark_as_read": "Als gelesen markieren", "required": "Erforderlich", "restore": "Wiederherstellen", "save": "Speichern", "save_and_close": "Speichern und schlie\xDFen", "save_and_create": "Speichern und erstellen", "save_and_create_new": "Speichern und neu erstellen" }, "de.buttons": { "backend": { "access": { "users": { "activate": "Aktivieren", "change_password": "Passwort \xE4ndern", "clear_session": "Session l\xF6schen", "deactivate": "Deaktivieren", "delete_permanently": "Dauerhaft l\xF6schen", "login_as": "Einloggen als :user", "resend_email": "Best\xE4tigungs E-Mail erneut senden", "restore_user": "Benutzer wiederherstellen" } } }, "emails": { "auth": { "confirm_account": "Account best\xE4tigen", "reset_password": "Passwort zur\xFCcksetzen" } }, "general": { "cancel": "Abbrechen", "continue": "Fortsetzen", "crud": { "add": "Hinzuf\xFCgen", "create": "Erstellen", "delete": "L\xF6schen", "edit": "Editieren", "update": "Aktualisieren", "view": "Anzeigen" }, "preview": "Vorschau", "save": "Speichern", "view": "Anzeigen" }, "wishes": { "frontend": { "create_autooffer": "Automatisches Angebot erstellen", "create_offer": "Angebot erstellen" } } }, "de.comment": { "comments": "Kommentare" }, "de.dashboard": { "current_month": "Aktueller Monat", "daily_average_wish": "W\xFCnsche pro Tag", "date": "Datum", "monthly_average_wish": "W\xFCnsche pro Monat", "reaction_time_average_day": "Reaktionszeit \/ Tag", "reaction_time_average_month": "Reaktionszeit \/ Monat", "source_2019": "Zeitraum: 2019", "total_groups": "Alle Gruppen", "total_sellers": "Alle Anbieter", "total_wishes": "Alle W\xFCnsche", "wish": "Wunsch", "wishes": "W\xFCnsche" }, "de.email": { "account": { "activate": "Login", "activated": "F\xFCr Sie wurde ein neuer :account Account f\xFCr das :whitelabel Reisewunschportal erstellt.", "greeting": "Thank you for your trust in our services", "hello": "Hallo :username", "link": "Mit Klick auf den folgenden Button k\xF6nnen Sie sich mit Ihren Benutzerdaten einloggen.", "password": "Passwort: :password", "subject": "Account Details for :username at :company", "subject_for_executive": "Ihre Zugangsdaten zu Ihrem :whitelabel Reisewunschportal", "subject_for_seller": "Ihre Zugangsdaten zum :whitelabel Reisewunschportal", "username": "E-Mail-Adresse: :email" }, "footer": { "line1": "Sonnige Gr\xFC\xDFe", "line2": "Ihr desiretec Team", "line3": "DesireTec GmbH", "line4": "Auf dem Sande 1 | D-20457 Hamburg | Deutschland", "line5": "Gesch\xE4ftsf\xFChrung: John Muster", "line6": "Sitz der Gesellschaft: Hamburg", "line7": "Handelsregister: Amtsgericht Hamburg HRB XXXXX", "line8": "BAN: DEXX XXXX XXXX XXXX XXXX XX", "line9": "BIC: XXXXXXXXXX" }, "message": { "created-seller": "Sie haben eine neue Nachricht von Ihrem Kunden erhalten", "created-user": "Wichtig: Es gibt eine neue Nachricht von Ihrem Berater im :whitelabel Reisewunschportal", "new": "Neue Nachricht!", "subject": "Sie haben eine neue Nachricht erhalten", "token": "Ihr Login-Link" }, "offer": { "created": "Sie haben erfolgreich ein Angebot erstellt", "created_user": "Es gibt ein neues Angebot f\xFCr Ihren :whitelabel Reisewunsch!" }, "token": "Ihr Login-Link lautet: <a href=\":token\">:token<\/a>", "wish": { "seller": "Es gibt einen neuen :whitelabel Reisewunsch zur Bearbeitung!", "subject_for_seller": "Es gibt einen neuen :whitelabel Reisewunsch zur Bearbeitung!", "user": "Herzlich willkommen beim :whitelabel Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.", "user_callback_seller": "Ihr Kunde bittet Sie um einen R\xFCckruf", "user_cnt_seller": "Ihr Angebot war erfolgreich, Sie haben einen neuen Kontakt erzeugt!" } }, "de.exceptions": { "backend": { "access": { "permissions": { "already_exists": "Diese Berechtigung existiert bereits. Bitte w\xE4hlen Sie einen anderen Namen.", "create_error": "Es gab ein Problem bei der Erstellung dieser Berechtigung. Bitte erneut versuchen.", "delete_error": "Es gab ein Problem beim L\xF6schen dieser Berechtigung. Bitte erneut versuchen.", "not_found": "Diese Berechtigung existiert nicht.", "update_error": "Es gab ein Problem beim \xC4ndern dieser Berechtigung. Bitter erneut versuchen." }, "roles": { "already_exists": "Diese Rolle existiert bereits. Bitte w\xE4hlen Sie einen anderen Namen.", "cant_delete_admin": "Die Administrator Rolle kann nicht gel\xF6scht werden.", "create_error": "Es gab ein Problem bei der Erstellung dieser Rolle. Bitte erneut versuchen.", "delete_error": "Es gab ein Problem beim L\xF6schen dieser Rolle. Bitte erneut versuchen.", "has_users": "Sie k\xF6nnen keine mit Benutzern verkn\xFCpfte Rolle l\xF6schen.", "needs_permission": "Sie m\xFCssen mindestens 1 Berechtigung f\xFCr diese Rolle ausw\xE4hlen.", "not_found": "Diese Rolle existiert nicht.", "update_error": "Es gab ein Problem beim \xC4ndern dieser Rolle. Bitter erneut versuchen." }, "users": { "cant_deactivate_self": "Sie k\xF6nnen das nicht mit sich selbst machen.", "cant_delete_admin": "Sie k\xF6nnen keinen Administrator l\xF6schen.", "cant_delete_own_session": "Sie k\xF6nnen nicht Ihre eigene Session l\xF6schen.", "cant_delete_self": "Sie k\xF6nnen sich nicht selbst l\xF6schen.", "cant_restore": "Dieser User ist nicht gel\xF6scht und kann nicht wiederhergestellt werden.", "change_mismatch": "Das ist nicht Ihr altes Passwort.", "create_error": "Es gab ein Problem bei der Erstellung dieses Users. Bitte erneut versuchen.", "delete_error": "Es gab ein Problem beim L\xF6schen dieses Users. Bitte erneut versuchen.", "delete_first": "Dieser Benutzer muss zun\xE4chst gel\xF6scht werden, bevor er dauerhaft gel\xF6scht werden kann.", "email_error": "Diese E-Mail-Adresse geh\xF6rt zu einem anderen User.", "mark_error": "Es gab ein Problem beim \xC4ndern dieses Users. Bitter erneut versuchen.", "not_found": "Dieser User existiert nicht.", "restore_error": "Es gab ein Problem bei der Wiederherstellung des Users. Bitte erneut versuchen.", "role_needed": "Sie m\xFCssen mindestens eine Rolle ausw\xE4hlen.", "role_needed_create": "Sie m\xFCssen mindestens eine Rolle ausw\xE4hlen.", "session_wrong_driver": "Your session driver must be set to database to use this feature.", "update_error": "Es gab ein Problem bei der \xC4nderung dieses Users. Bitte erneut versuchen.", "update_password_error": "Es gab ein Problem bei \xC4ndern dieses User Passworts. Bitte erneut versuchen." } }, "blogcategories": { "already_exists": "That Blog Category already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Category. Please try again.", "delete_error": "There was a problem deleting this Blog Category. Please try again.", "not_found": "That Blog Category does not exist.", "update_error": "There was a problem updating this Blog Category. Please try again." }, "blogtags": { "already_exists": "That Blog Tag already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Tag. Please try again.", "delete_error": "There was a problem deleting this Blog Tag. Please try again.", "not_found": "That Blog Tag does not exist.", "update_error": "There was a problem updating this Blog Tag. Please try again." }, "menus": { "already_exists": "That Menu already exists. Please choose a different name.", "create_error": "There was a problem creating this Menu. Please try again.", "delete_error": "There was a problem deleting this Menu. Please try again.", "not_found": "That Menu does not exist.", "update_error": "There was a problem updating this Menu. Please try again." }, "modules": { "already_exists": "That Module already exists. Please choose a different name.", "create_error": "There was a problem creating this Module. Please try again.", "delete_error": "There was a problem deleting this Module. Please try again.", "not_found": "That Module does not exist.", "update_error": "There was a problem updating this Module. Please try again." }, "pages": { "already_exists": "That Page already exists. Please choose a different name.", "create_error": "There was a problem creating this Page. Please try again.", "delete_error": "There was a problem deleting this Page. Please try again.", "not_found": "That Page does not exist.", "update_error": "There was a problem updating this Page. Please try again." }, "settings": { "update_error": "Es gab ein Problem beim \xC4ndern dieser Einstellung. Bitte erneut versuchen." } }, "frontend": { "auth": { "confirmation": { "already_confirmed": "Ihr Account wurde bereits best\xE4tigt.", "confirm": "Best\xE4tigen Sie Ihren Account!", "created_confirm": "Ihr Account wurde erfolgreich erstellt. Wir haben Ihnen eine E-Mail zur Best\xE4tigung geschickt.", "created_pending": "Ihr Account wurde erfolgreich erstellt und wartet auf Genehmigung. Nach Genehmigung wird eine E-Mail gesendet.", "mismatch": "Ihr Best\xE4tigungs-Code stimmt nicht.", "not_found": "Ihr Best\xE4tigungs-Code existiert nicht.", "resend": "Ihr Account ist nicht best\xE4tigt. Bitte klicken Sie auf den Best\xE4tigungslink in Ihrer E-Mail, oder <a href=http://localhost:8000/account/confirm/resend/:user_id>klicken Sie hier</a> um sich die Best\xE4tigungs E-Mail erneut zusenden zu lassen.", "resent": "Eine neue Best\xE4tigungs E-Mail wurde an Ihre E-Mail-Adresse geschickt.", "success": "Ihr Account wurde erfolgreich best\xE4tigt!" }, "deactivated": "Ihr Account wurde deaktiviert.", "email_taken": "Diese E-Mail-Adresse wird bereits verwendet.", "password": { "change_mismatch": "Dies ist nicht Ihr altes Passwort." }, "registration_disabled": "Eine Registrierung ist derzeit nicht m\xF6glich." } } }, "de.general": { "currency": "\u20AC" }, "de.history": { "backend": { "blogcategories": { "created": "created Blog Category", "deleted": "deleted Blog Category", "updated": "updated Blog Category" }, "blogs": { "created": "created Blog", "deleted": "deleted Blog", "updated": "updated Blog" }, "blogtags": { "created": "created Blog Tag", "deleted": "deleted Blog Tag", "updated": "updated Blog Tag" }, "none": "Es existiert keine Historie.", "none_for_entity": "Es existiert keine Historie f\xFCr :entity.", "none_for_type": "Es existiert keine Historie f\xFCr diesen Typ", "pages": { "created": "Seite erstelltcreated ", "deleted": "Seite gel\xF6scht", "updated": "Seite ge\xE4ndert" }, "permissions": { "created": "Berechtigung erstellt", "deleted": "Berechtigung gel\xF6scht", "updated": "Berechtigung ge\xE4ndert" }, "recent_history": "Historie", "roles": { "created": "Rolle erstellt", "deleted": "Rolle gel\xF6scht", "updated": "Rolle ge\xE4ndert" }, "users": { "changed_password": "User Passwort ge\xE4ndert", "created": "User erstellt", "deactivated": "User deaktiviert", "deleted": "User gel\xF6scht", "permanently_deleted": "User dauerhaft gel\xF6scht", "reactivated": "User reaktiviert", "restored": "User wiederhergestellt", "updated": "User ge\xE4ndert" } } }, "de.http": { "404": { "description": "Entschuldigung, diese Seite existiert leider nicht.", "title": "Seite nicht gefunden" }, "503": { "description": "Gleich wieder da.", "title": "Gleich wieder da." } }, "de.labels": { "about": "\xDCber uns", "account": "Account", "activated": "aktiviert", "address": "Adresse", "attendee": "Teilnehmer", "attendees": "Teilnehmer", "backend": { "access": { "permissions": { "create": "Berechtigung erstellen", "edit": "Berechtigung bearbeiten", "management": "Management Berechtigungen", "table": { "display_name": "Anzeigename", "permission": "Berechtigung", "sort": "Sorte", "status": "Status", "total": "Rollen gesamt" } }, "roles": { "create": "Rolle erstellen", "edit": "Rolle bearbeiten", "management": "Management Rollen", "table": { "number_of_users": "Useranzahl", "permissions": "Berechtigungen", "role": "Rolle", "sort": "Sorte", "total": "Rollen gesamt" } }, "users": { "active": "Aktive User", "all_permissions": "Password \xE4ndern", "change_password_for": "Passwort \xE4ndern f\xFCr :user", "create": "User erstellen", "deactivated": "Deaktivierte User", "deleted": "Gel\xF6schte User", "edit": "User bearbeiten", "edit-profile": "Profil bearbeiten", "management": "Management User", "no_permissions": "Keine Berechtigungen", "no_roles": "Keine Rolle zum Vergeben.", "permissions": "Berechtigungen", "table": { "confirmed": "Best\xE4tigt", "created": "Erstellt", "email": "E-Mail-Adresse", "id": "ID", "last_name": "Nachname", "last_updated": "Vorname", "no_deactivated": "Keine deaktivieren User", "no_deleted": "Keine gel\xF6schten User", "roles": "Rollen", "total": "User gesamt" }, "tabs": { "content": { "overview": { "avatar": "Avatar", "confirmed": "Best\xE4tigt", "created_at": "Erstellt am", "deleted_at": "Gel\xF6scht am", "email": "E-Mail-Adresse", "last_updated": "Zuletzt aktualisiert", "name": "Name", "status": "Status", "whitelabels": "Whitelabel" } }, "titles": { "history": "Historie", "overview": "\xDCbersicht" } }, "view": "User ansehen" } }, "blogcategories": { "create": "Blogkategorie erstellen", "edit": "Blogkategorie bearbeiten", "management": "Management Blogkategorie", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "status": "Status", "title": "Blogkategorie" }, "title": "Blogkategorie" }, "blogs": { "create": "Blog erstellen", "edit": "Blog bearbeiten", "management": "Management Blogs", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "publish": "Ver\xF6ffentlichungsdatum", "status": "Status", "title": "Blog" }, "title": "Blogs" }, "blogtags": { "create": "Blog-Tag erstellen", "edit": "Blog-Tag bearbeiten", "management": "Management Blog-Tag", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "status": "Status", "title": "Blog-Tag" }, "title": "Blog-Tags" }, "distributions": { "create": "Verteilung erstellen", "edit": "Verteilung bearbeiten", "management": "Verteilungen", "no_distributions": "keine Verteilungen", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "description": "Beschreibung", "display_name": "Anzeigename", "name": "Verteilung", "whitelabel": "Whitelabel" }, "title": "Verteilungen" }, "emailtemplates": { "create": "E-Mail-Template erstellen", "edit": "E-Mail-Template bearbeiten", "management": "Management E-Mail-Templates", "table": { "all": "Alle", "createdat": "Erstellt am", "status": "Status", "subject": "Betreff", "title": "Titel", "updatedat": "Aktualisiert am" }, "title": "E-Mail-Templates" }, "faqs": { "create": "FAQ erstellen", "edit": "FAQ bearbeiten", "management": "Management FAQ ", "table": { "all": "Alle", "answer": "Antwort", "createdat": "Erstellt am", "createdby": "Erstellt von", "publish": "Ver\xF6ffentlichungsdatum", "question": "Frage", "status": "Status", "title": "FAQs", "updatedat": "Aktualisiert am" }, "title": "FAQ" }, "groups": { "create": "Gruppe erstellen", "edit": "Gruppe bearbeiten", "management": "Gruppen", "no_whitelabels": "keine Whitelabel", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "description": "Beschreibung", "display_name": "Anzeigename", "name": "Gruppe", "status": "Status", "users": "User", "whitelabel": "Whitelabel" }, "title": "Gruppen" }, "menus": { "create": "Men\xFC erstellen", "edit": "Men\xFC bearbeiten", "field": { "icon": "Icon-Klasse", "icon_title": "Font Awesome Class. eg. fa-edit", "items": "Men\xFCfelder", "name": "Name", "open_in_new_tab": "\xD6ffne URL in neuem Tab", "type": "Typ", "url": "URL", "url_type": "URL-Typ", "url_types": { "route": "Route", "static": "Statisch" }, "view_permission_id": "Berechtigung" }, "management": "Management Men\xFC", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "name": "Name", "type": "Typ" }, "title": "Men\xFCs" }, "modules": { "create": "Modul erstellen", "edit": "Module bearbeiten", "form": { "controller_name": "Controller &nbsp;Name", "create_file": "Erstellen", "directory_name": "Directory Name", "edit_file": "Bearbeiten", "event": "Event Name", "form_file": "Form", "index_file": "Index", "model_name": "Model Name", "name": "Modulname", "namespace": "Namespace", "repo_name": "Repository Name", "resource_controller": "Resourceful Controller", "resource_route": "Resourceful Routes", "route_controller_name": "Controller &nbsp;Name", "route_name": "Pfadname", "table_controller_name": "Controller &nbsp;Name", "table_name": "Tabellen Name", "url": "Pfad", "view_permission_id": "Berechtigung ansehen", "views_directory": "Directory &nbsp;&nbsp;&nbsp;Name" }, "management": "Management Module", "table": { "created_by": "Erstellt von", "name": "Modulname", "url": "Modul Pfad anzeigen", "view_permission_id": "Berechtigung sehen" }, "title": "Module" }, "pages": { "create": "Seite erstellen", "edit": "Seite erstellen", "management": "Management Seiten", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "status": "Status", "title": "Titel", "updatedat": "Aktualisiert am" }, "title": "Seiten" }, "profile_updated": "Dein Profil wurde aktualisiert.", "settings": { "companydetails": "Unternehmenskontaktdaten", "edit": "Einstellungen bearbeiten", "footer": "Footer-Einstellungen", "google": "Google Analytics Tracking Code", "mail": "E-Mail-Einstellungen", "management": "Management Einstellungen", "seo": "SEO-Einstellungen", "terms": "Gesch\xE4ftsbedingungen-Einstellungen", "title": "Einstellungen" }, "whitelabels": { "create": "Whitelabel erstellen", "edit": "Whitelabel bearbeiten", "management": "Whitelabel", "management_client": "Whitelabel", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "display_name": "Whitelabel", "distribution": "Verteilung", "ga_view_id": "Google View Id", "name": "Key", "status": "Status" }, "title": "Whitelabel" }, "wishes": { "create": "Wunsch erstellen", "edit": "Wunsch bearbeiten", "management": "W\xFCnsche", "no_whitelabels": "keine Whitelabel", "table": { "airport": "Flughafen", "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "destination": "Destination", "earliest_start": "Fr\xFChester Start", "group": "Gruppe", "latest_return": "Sp\xE4teste R\xFCckkehr", "offerCount": "Angebote", "status": "Status", "title": "Wunsch", "whitelabel": "Whitelabel" }, "title": "W\xFCnsche" } }, "cancel": "Abbrechen", "contact": "Kontakt", "content": "Inhalt", "country": "Land", "current": "Aktuell", "current_password": "Aktuelles Passwort", "description": "Beschreibung", "details": "Details", "documents": "Dokumente", "domain": "Domain", "download": "Download", "email": "E-Mail-Adresse", "events": "Events", "fax": "Fax", "feedback": "Feedback", "finish": "Fertig", "first_name": "Vorname", "frontend": { "agents": { "create": "Neuen Agenten erstellen", "management": "Agenten", "table": { "avatar": "Avatar", "created_at": "Erstellt am", "createdby": "Erstellt von", "display_name": "Anzeigename", "id": "ID", "name": "Name", "status": "Status" } }, "auth": { "login_box_title": "Login", "login_button": "Login", "login_with": "Login mit :social_media", "register_box_title": "Registrieren", "register_button": "Registrieren", "remember_me": "Erinnere mich" }, "dashboard": { "analytics": { "answered_wishes": "Beantwortete Reisew\xFCnsche", "bookings": "Buchungen", "changed_wishes": "Bearbeitete Reisew\xFCnsche", "created_wishes": "Erstellte Reisew\xFCnsche", "free_text": "Freitext", "latest_answered_wishes": "Zuletzt beantwortete Reisew\xFCnsche", "latest_reaction_quota": "Aktuelle Reaktionsquote", "reaction_quota": "Reaktionsquote", "reaction_time": "Reaktionszeit" } }, "macros": { "country": { "alpha": "Country Alpha Codes", "alpha2": "Country Alpha 2 Codes", "alpha3": "Country Alpha 3 Codes", "numeric": "Country Numeric Codes" }, "macro_examples": "Makrobeispiele", "state": { "mexico": "Mexico State List", "us": { "armed": "US Armed Forces", "outlying": "US Outlying Territories", "us": "US States" } }, "territories": { "canada": "Canada Province & Territories List" }, "timezone": "Zeitzone" }, "offers": { "create": "Neues Angebot erstellen", "management": "Angebote", "offers_for_wish": "Angebote f\xFCr", "table": { "all": "Alle", "createdat": "Erstellt in", "createdby": "Erstellt von", "status": "Status", "title": "Angebot" } }, "passwords": { "forgot_password": "Passwort vergessen?", "reset_password_box_title": "Passwort zur\xFCcksetzen", "reset_password_button": "Passwort zur\xFCcksetzen", "send_password_reset_link_button": "Sende Passwort-Reset-Link" }, "user": { "passwords": { "change": "Passwort \xE4ndern" }, "profile": { "address": "Adresse", "avatar": "Avatar", "city": "Stadt", "country": "Land", "created_at": "Erstellt am", "edit_information": "Informationen bearbeiten", "email": "E-Mail-Adresse", "first_name": "Vorname", "last_name": "Nachname", "last_updated": "Zuletzt ge\xE4ndert", "ssn": "SSN", "update_information": "Profil \xE4ndern", "zipcode": "BLZ" } }, "wishes": { "add-comment": "Kommentar hinzuf\xFCgen", "created_at": "erstellt am", "edit": "Reisewunsch bearbeiten", "goto": "Reisewunsch ansehen", "night": ":value Nacht|:value N\xE4chte", "table": { "adults": "Erwachsener|Erwachsene", "kids": "{0}|Kind|Kinder" }, "week": ":value Woche|:value Wochen", "wishes": "Reisew\xFCnsche" } }, "full_name": "Name", "general": { "actions": "Actionen", "active": "Aktiv", "all": "Alle", "buttons": { "save": "Speichern", "update": "Aktualisieren" }, "custom": "Custom", "hide": "Verstecken", "inactive": "Inaktiv", "no": "Nein", "none": "Keine", "show": "Anzeigen", "toggle_navigation": "Navigation einblenden", "yes": "Ja" }, "go_back": "Zur\xFCck!", "go_next": "Weiter!", "id": "ID", "inbox": "Posteingang", "interest": "Internet", "join": "Beitreten", "language": "Sprache", "last_name": "Nachname", "login": "Login", "logo": "Logo", "logout": "Logout", "message": "Nachricht", "message_text": "Nachrichtentext", "mobile": "Mobile", "name": "Name", "new": "Neu", "note": "Notiz", "notes": "Notizen", "notifications": "Benachrichtigungen", "now": "Jetzt", "occupation": "Beruf", "ok": "Ok", "online": "Online", "password": "Passwort", "password_confirm": "Passwort best\xE4tigen", "personal_timezone": "Zeitzone", "phone": "Telefon", "plus": "plus", "posts": "Posts", "ratings": "Bewertungen", "recipient": "Empf\xE4nger", "register": "Registrieren", "reset": "Passwort zur\xFCcksetzen", "reset_link": "Passwort-Reset-Link senden", "review": "Rezension", "role": "Rolle", "send": "Jetzt senden", "street": "Stra\xDFe", "subject": "Betreff", "tel": "Telefonnummer", "title": "Titel", "user": "User", "username": "Username", "verify": "E-Mail-Verifizierung", "verify_email": "Verifiziere Deine E-Mail-Adresse", "warning": "Warnung", "whitelabel": "Whitelabel", "whitelabel_executive": "Whitelabel Executive", "whitelabel_information": "Whitelabel Informationen", "whitelabel_subtitle": "Ein neuer Untertitel", "whitelabel_title": "Neues Whitelabel", "wish": "Reisewunsch", "wishes": "Reisew\xFCnsche", "zipcode": "PLZ" }, "de.log-viewer::general": { "all": "Alle", "date": "Datum" }, "de.log-viewer::levels": { "alert": "Alarm", "all": "Alle", "critical": "Kritisch", "debug": "Debug", "emergency": "Notfall", "error": "Fehler", "info": "Info", "notice": "Hinweis", "warning": "Warnung" }, "de.menus": { "backend": { "access": { "permissions": { "all": "Alle Berechtigungen", "create": "Berechtigung erstellen", "edit": "Berechtigung bearbeiten", "main": "Berechtigungen", "management": "Management Berechtigungen" }, "roles": { "all": "Alle Rollen", "create": "Rolle erstellen", "edit": "Rolle bearbeiten", "main": "Rollen", "management": "Management Rollen" }, "title": "Management Zug\xE4nge", "users": { "all": "Alle User", "change-password": "Passwort \xE4ndern", "create": "User erstellen", "deactivated": "User deaktivieren", "deleted": "User l\xF6schen", "edit": "User bearbeiten", "main": "User", "view": "User ansehen" } }, "blog": { "all": "Alle Blogseiten", "create": "Blogseite erstellen", "edit": "Blogseite bearbeiten", "main": "Blogseiten", "management": "Management Blogseiten" }, "blogcategories": { "all": "Alle Blogkategorien", "create": "Blogkategorie erstellen", "edit": "Blogkategorie bearbeiten", "main": "CMS-Seiten", "management": "Management Blogkategorie" }, "blogs": { "all": "Alle Blogs", "create": "Blog erstellen", "edit": "Blog bearbeiten", "main": "Blogs", "management": "Management Blogs" }, "blogtags": { "all": "Alle Blog-Tags", "create": "Blog-Tag erstellen", "edit": "Blog-Tag bearbeiten", "main": "Blog-Tags", "management": "Management Blog-Tags" }, "distributions": { "all": "Alle Verteilungen", "create": "Verteilung erstellen", "edit": "Verteilung bearbeiten", "main": "Verteilungen", "management": "Management Verteilungen" }, "faqs": { "all": "Alle FAQ-Seiten", "create": "FAQ-Seite erstellen", "edit": "FAQ-Seite bearbeiten", "main": "FAQ-Seiten", "management": "Management FAQ" }, "groups": { "all": "Alle Gruppen", "create": "Gruppe erstellen", "edit": "Gruppe bearbeiten", "main": "Gruppen", "management": "Management Gruppen" }, "log-viewer": { "dashboard": "Dashboard", "logs": "Logs", "main": "Log Viewer" }, "menus": { "all": "Alle Men\xFCs", "create": "Men\xFC erstellen", "edit": "Men\xFC bearbeiten", "main": "Men\xFCs", "management": "Management Men\xFCs" }, "modules": { "all": "Alle Modulseiten", "create": "Modulseite erstellen", "main": "Modulseiten", "management": "Management Module" }, "pages": { "all": "Alle Seiten", "create": "Seite erstellen", "edit": "Seite bearbeiten", "main": "Seiten", "management": "Management Seiten" }, "settings": { "all": "Alle Einstellungen", "create": "Einstellungen erstellen", "edit": "Einstellungen bearbeiten", "main": "Einstellungen", "management": "Management Einstellungen" }, "sidebar": { "dashboard": "Dashboard", "general": "General", "system": "System" }, "whitelabels": { "all": "Alle Whitelabel", "create": "Whitelabel erstellen", "edit": "Whitelabel bearbeiten", "main": "Whitelabel", "management": "Management Whitelabel" }, "wishes": { "all": "Alle W\xFCnsche", "create": "Wunsch erstellen", "edit": "Wunsch bearbeiten", "main": "W\xFCnsche", "management": "Management W\xFCnsche" } }, "frontend": { "agents": { "all": "Alle Men\xFCs", "create": "Agent erstellen", "edit": "Men\xFC bearbeiten", "main": "Men\xFCs", "management": "Management Men\xFCs" } }, "language-picker": { "langs": { "ar": "Arabisch", "da": "D\xE4nisch", "de": "Deutsch", "el": "Griechisch", "en": "Englisch", "es": "Spanisch", "fr": "Franz\xF6sisch", "id": "Indonesisch", "it": "Italienisch", "nl": "Niederl\xE4ndisch", "pt_BR": "Portugiesisch", "ru": "Russisch", "sv": "Schwedisch", "th": "Thai" }, "language": "Sprache" }, "list": { "status": { "active": "Aktiv", "all": "Alle Reisew\xFCnsche", "deleted": "Gel\xF6scht", "inactive": "Inaktiv" } }, "sellers": "Seller", "wishes": "W\xFCnsche" }, "de.messages": { "_account": "Hast Du einen Account", "account": "Kein Account gefunden", "background": "The background image must be --- x --- pixels in PNG\/JPG\/JPEG format. Maximum file size is ---KB.", "contact": "Kontaktiere uns", "contact_success": "Deine Nachricht wurde erfolgreich gesendet", "created": ":attribute wurde erfolgreich erstellt", "delete": "M\xF6chtest Du mit der L\xF6schung des Artikels fortfahren?", "delete_canceled": "L\xF6schen abgebrochen", "deleted": ":attribute wurde erfolgreich gel\xF6scht", "destroy": "M\xF6chtest Du den ausgew\xE4hlten Artikel wirklich permanent l\xF6schen?", "destroyed": ":attribute wurde permanent gel\xF6scht", "event_upcoming": "Bevorstehendes Event", "favicon": "The favicon must be --- x --- pixels in PNG\/ICON format. Maximum file size is ---KB.", "forgot": "Passwort vergessen", "here": "Hier einloggen", "install": "Modul[:attribute] wurde erfolgreich installiert", "join": "Du bist dem Event erfolgreich beigetreten.", "login": "Login", "logo": "The logo must be --- x --- pixels in PNG\/JPG\/JPEG\/SVG format. Maximum file size is ---KB.", "new_posts": "Letzte Posts", "recent_event": "K\xFCrzliche Events", "register": "Erstelle Deinen Account", "remember": "Erinnere mich", "reset": "Passwort zur\xFCcksetzen", "restore": "M\xF6chtest Du mit der Wiederherstellung des Artikels fortfahren?", "restore_canceled": "Wiederherstellung abgebrochen", "restored": ":attribute wurde erfolgreich wiederhergestellt", "show_all": "Alle Artikel anzeigen", "show_all_events": "Alle Events anzeigen", "sign_up": "Registrieren", "terms": "Gesch\xE4ftsbedingungen zustimmen", "title": "Willkomen zur\xFCck", "uninstall": "Modul[:attribute] wurde erfolgreich deinstalliert", "unsaved": "Du hast nicht gespeicherte \xC4nderungen - sichern und fortfahren?", "updated": ":attribute wurde erfolgreich aktualisiert", "verify": "Bevor Du fortf\xE4hrst, \xFCberpr\xFCfe bitte Deine E-Mails auf einen Verifizierungslink.", "verify_link": "Falls Du die E-Mail nicht erhalten hast,", "verify_request": "klicke hier, um eine neue E-Mail zu erhalten", "whitelabel_user": "Erstelle Whitelabel User" }, "de.modals": { "activated": "Aktiviert", "active": "Aktiv", "add_document": "Dokument hinzuf\xFCgen", "add_documents": "Dokumente hinzuf\xFCgen", "address": "Adresse", "adults": "Erwachsene", "airport": "Flughafen", "boards": "Boards", "budget": "Budget", "categories": "Kategorien", "category": "Hotelkategorie", "catering": "Verpflegung", "click_to_upload": "Klick zum Hochladen", "color": "Farbe", "confirmed": "Best\xE4tigt", "content": "Inhalt", "create": "Erstellen", "created_at": "Erstellt am", "createdat": "Erstellt am", "createdby": "Erstellt von", "current": "Aktuell", "dashboard": "Dashboard", "description": "Beschreibung", "destination": "Ziel", "display_name": "Anzeigename", "domain": "Domain", "duration": "Dauer", "earliest_start": "Fr\xFChester", "email": "Email", "email_verified_at": "Verifiziert am", "end": "Ende", "first_name": "Vorname", "full_name": "Name", "group": "Gruppe", "groups": "Gruppen", "id": "ID", "image": "Bild", "kids": "Kinder", "last_login": "Letzter Login", "last_name": "Nachname", "latest_return": "Sp\xE4teste R\xFCckker", "lockout_time": "Sperrzeit", "login_failures": "Loginfehler", "logs": "Logs", "mobile": "Mobile", "name": "Name", "occupation": "Beruf", "offerCount": "Angebote", "online": "Online", "owner": "Inhaber", "password": "Passwort", "password_confirm": "Passwortbest\xE4tigung", "pending": "Ausstehend", "period": "Zeitraum", "permission": "Berechtigung", "permissions": "Berechtigungen", "phone": "Telefon", "role": "Rolle", "roles": "Rollen", "start": "Start", "status": "Status", "summary": "Zusammenfassung", "text": "Text", "title": "Titel", "unconfirmed": "Unbest\xE4tigt", "updated_at": "Aktualisiert am", "upload_documents": "Dokumente hochladen", "upload_photo": "Foto hochladen", "upload_tip": "Upload Tipp", "url": "Url", "users": "Benutzer", "value": "Wert", "whitelabel": "Whitelabel", "wish": "Wunsch" }, "de.navs": { "frontend": { "agents": "Agenten", "create_wish": "Wunsch erstellen", "dashboard": "Dashboard", "login": "Einloggen", "macros": "Makros", "offers": "Meine Angebote", "register": "Registrieren", "user": { "account": "Mein Konto", "administration": "Administration", "agents": "Agenten", "change_password": "Passwort \xE4ndern", "my_information": "Meine Informationen", "profile": "Profil" }, "wishes": "Meine Reisew\xFCnsche", "wisheslist": "Reisew\xFCnsche" }, "general": { "home": "Home", "logout": "Ausloggen" } }, "de.notification": { "created": "<span class=\"badge badge-flat border-success text-success-600 rounded-0 mr-2\"> Erstellt <\/span> <strong>:name<\/strong> (:url) wurde <strong>erfolgreich erstellt<\/strong> by <strong>:user<\/strong>", "deleted": "<span class=\"badge badge-flat border-danger text-danger-600 rounded-0 mr-2\"> Gel\xF6scht </span><strong>:name</strong> (:url) wurde <strong>erfolgreich gel\xF6scht</strong> by <strong>:user</strong>", "restored": "<span class=\"badge badge-flat border-info text-info-600 rounded-0 mr-2\"> Wiederhergestellt <\/span><strong>:name<\/strong> (:url) wurde <strong>erfolgreich wiederhergestellt<\/strong> by <strong>:user<\/strong>" }, "de.pagination": { "next": "Weiter &raquo;", "previous": "&laquo; Zur\xFCck" }, "de.passwords": { "password": "Passw\xF6rter m\xFCssen mindestens 6 Zeichen lang sein und korrekt best\xE4tigt werden.", "reset": "Das Passwort wurde zur\xFCckgesetzt!", "sent": "Passworterinnerung wurde gesendet!", "token": "Der Passwort-Wiederherstellungs-Schl\xFCssel ist ung\xFCltig oder abgelaufen.", "user": "Es konnte leider kein Nutzer mit dieser E-Mail-Adresse gefunden werden." }, "de.roles": { "administrator": "Administrator", "user": "User" }, "de.seller": { "agent": { "create": "Agent hinzuf\xFCgen", "email": "E-Mail Adresse", "email_placeholder": "seller@seller.com", "tel": "Tel.", "tel_placeholder": "01761234567" } }, "de.strings": { "backend": { "access": { "users": { "delete_user_confirm": "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", "if_confirmed_off": "(If confirmed is off)", "restore_user_confirm": "Restore this user to its original state?" } }, "dashboard": { "title": "Administrative Dashboard", "welcome": "Welcome" }, "general": { "all_rights_reserved": "All Rights Reserved.", "are_you_sure": "Are you sure you want to do this?", "boilerplate_link": "Laravel AdminPanel", "continue": "Continue", "member_since": "Member since", "minutes": " minutes", "search_placeholder": "Search...", "see_all": { "messages": "See all messages", "notifications": "View all", "tasks": "View all tasks" }, "status": { "offline": "Offline", "online": "Online" }, "timeout": "You were automatically logged out for security reasons since you had no activity in ", "you_have": { "messages": "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", "notifications": "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", "tasks": "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, "search": { "empty": "Please enter a search term.", "incomplete": "You must write your own search logic for this system.", "results": "Search Results for :query", "title": "Search Results" }, "welcome": "<p>This is the AdminLTE theme by <a href=\"https:\/\/almsaeedstudio.com\/\" target=\"_blank\">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href=\"https:\/\/github.com\/rappasoft\/laravel-5-boilerplate\" target=\"_blank\">GitHub<\/a> page for more information and report any <a href=\"https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues\" target=\"_blank\">issues here<\/a>.<\/p>\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\n<p>- Viral Solani<\/p>" }, "emails": { "auth": { "click_to_confirm": "Click here to confirm your account:", "error": "Whoops!", "greeting": "Hello!", "password_cause_of_email": "You are receiving this email because we received a password reset request for your account.", "password_if_not_requested": "If you did not request a password reset, no further action is required.", "password_reset_subject": "Reset Password", "regards": "Regards,", "reset_password": "Click here to reset your password", "thank_you_for_using_app": "Thank you for using our application!", "trouble_clicking_button": "If you\u2019re having trouble clicking the \":action_text\" button, copy and paste the URL below into your web browser:" } }, "frontend": { "test": "Test", "tests": { "based_on": { "permission": "Permission Based - ", "role": "Role Based - " }, "js_injected_from_controller": "Javascript Injected from a Controller", "using_access_helper": { "array_permissions": "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", "array_permissions_not": "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", "array_roles": "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", "array_roles_not": "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", "permission_id": "Using Access Helper with Permission ID", "permission_name": "Using Access Helper with Permission Name", "role_id": "Using Access Helper with Role ID", "role_name": "Using Access Helper with Role Name" }, "using_blade_extensions": "Using Blade Extensions", "view_console_it_works": "View console, you should see 'it works!' which is coming from FrontendController@index", "you_can_see_because": "You can see this because you have the role of ':role'!", "you_can_see_because_permission": "You can see this because you have the permission of ':permission'!" }, "user": { "change_email_notice": "If you change your e-mail you will be logged out until you confirm your new e-mail address.", "email_changed_notice": "You must confirm your new e-mail address before you can log in again.", "password_updated": "Password successfully updated.", "profile_updated": "Profile successfully updated." }, "welcome_to": "Welcome to :place" } }, "de.tables": { "actions": "Aktionen", "activated": "Aktiviert", "activities": "Aktivit\xE4ten", "activity": "Aktivit\xE4t", "add_documents": "Dokumente hinzuf\xFCgen", "address": "Adresse", "adults": "Erwachsene", "ago": "Vor", "airport": "Flughafen", "alias": "alias", "boards": "Boards", "booking_status": "Buchungsstatus", "budget": "Budget", "categories": "Kategorien", "category": "Hotelkategorie", "catering": "Verpflegung", "color": "Farbe", "confirmed": "Best\xE4tigt", "content": "Inhalt", "created_at": "Erstellt am", "created_by": "Erstellt von", "date": "Datum", "description": "Beschreibung", "destination": "Ziel", "display_name": "Anzeigename", "duration": "Dauer", "earliest_start": "Fr\xFChester Start", "email": "Email", "email_verified_at": "Verifiziert am", "empty_table": "Keine Daten in der Tabelle verf\xFCgbar", "end": "Ende", "eventAction": "Eventaktion", "eventCategory": "Eventkategorie", "eventLabel": "Eventlabel", "first_name": "Vorname", "from": "Von", "full_name": "Namen", "group": "Gruppe", "groups": "Gruppen", "id": "ID", "install": "Installation", "kids": "Kinder", "last_login": "Letzter Login", "last_name": "Nachname", "latest_return": "Sp\xE4teste R\xFCckkehr", "lockout_time": "Sperrzeit", "login_failures": "Loginfehler", "message": "Benachrichtigung", "migrate": "Migrierung", "mobile": "Mobile", "name": "Name", "occupation": "Beruf", "offerCount": "Angebote", "online": "online", "owner": "Inhaber", "package": "Paket", "pending": "Ausstehend", "period": "Zeitraum", "permissions": "Berechtigungen", "phone": "Telefon", "roles": "Rollen", "start": "Start", "status": "Status", "subject": "Betreff", "text": "Text", "title": "Wunsch", "unconfirmed": "Unbest\xE4tigt", "uninstall": "Deinstallation", "updated_at": "Aktualisiert am", "url": "Url", "users": "Benutzer", "when": "Wann", "whitelabel": "Whitelabel" }, "de.validation": { "accepted": ":attribute muss akzeptiert werden.", "active_url": ":attribute ist keine g\xFCltige Internet-Adresse.", "after": ":attribute muss ein Datum nach dem :date sein.", "after_or_equal": ":attribute muss ein Datum nach dem :date oder gleich dem :date sein.", "alpha": ":attribute darf nur aus Buchstaben bestehen.", "alpha_dash": ":attribute darf nur aus Buchstaben, Zahlen, Binde- und Unterstrichen bestehen.", "alpha_num": ":attribute darf nur aus Buchstaben und Zahlen bestehen.", "array": ":attribute muss ein Array sein.", "attributes": { "address": "Adresse", "age": "Alter", "available": "verf\xFCgbar", "city": "Stadt", "content": "Inhalt", "country": "Land", "date": "Datum", "day": "Tag", "description": "Beschreibung", "email": "E-Mail-Adresse", "excerpt": "Auszug", "first_name": "Vorname", "gender": "Geschlecht", "hour": "Stunde", "last_name": "Nachname", "minute": "Minute", "mobile": "Handynummer", "month": "Monat", "name": "Name", "password": "Passwort", "password_confirmation": "Passwort-Best\xE4tigung", "phone": "Telefonnummer", "second": "Sekunde", "sex": "Geschlecht", "size": "Gr\xF6\xDFe", "time": "Uhrzeit", "title": "Titel", "username": "Benutzername", "year": "Jahr" }, "before": ":attribute muss ein Datum vor dem :date sein.", "before_or_equal": ":attribute muss ein Datum vor dem :date oder gleich dem :date sein.", "between": { "array": ":attribute muss zwischen :min & :max Elemente haben.", "file": ":attribute muss zwischen :min & :max Kilobytes gro\xDF sein.", "numeric": ":attribute muss zwischen :min & :max liegen.", "string": ":attribute muss zwischen :min & :max Zeichen lang sein." }, "boolean": ":attribute muss entweder 'true' oder 'false' sein.", "confirmed": ":attribute stimmt nicht mit der Best\xE4tigung \xFCberein.", "custom": { "attribute-name": { "rule-name": "custom-message" } }, "date": ":attribute muss ein g\xFCltiges Datum sein.", "date_equals": "The :attribute must be a date equal to :date.", "date_format": ":attribute entspricht nicht dem g\xFCltigen Format f\xFCr :format.", "different": ":attribute und :other m\xFCssen sich unterscheiden.", "digits": ":attribute muss :digits Stellen haben.", "digits_between": ":attribute muss zwischen :min und :max Stellen haben.", "dimensions": ":attribute hat ung\xFCltige Bildabmessungen.", "distinct": ":attribute beinhaltet einen bereits vorhandenen Wert.", "email": ":attribute muss eine g\xFCltige E-Mail-Adresse sein.", "exists": "Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.", "file": ":attribute muss eine Datei sein.", "filled": ":attribute muss ausgef\xFCllt sein.", "gt": { "array": ":attribute muss mindestens :min Elemente haben.", "file": ":attribute muss mindestens :min Kilobytes gro\xDF sein.", "numeric": ":attribute muss mindestens :min sein.", "string": ":attribute muss mindestens :min Zeichen lang sein." }, "gte": { "array": ":attribute muss gr\xF6\xDFer oder gleich :min Elemente haben.", "file": ":attribute muss gr\xF6\xDFer oder gleich :min Kilobytes sein.", "numeric": ":attribute muss gr\xF6\xDFer oder gleich :min sein.", "string": ":attribute muss gr\xF6\xDFer oder gleich :min Zeichen lang sein." }, "image": ":attribute muss ein Bild sein.", "in": "Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.", "in_array": "Der gew\xE4hlte Wert f\xFCr :attribute kommt nicht in :other vor.", "integer": ":attribute muss eine ganze Zahl sein.", "ip": ":attribute muss eine g\xFCltige IP-Adresse sein.", "ipv4": ":attribute muss eine g\xFCltige IPv4-Adresse sein.", "ipv6": ":attribute muss eine g\xFCltige IPv6-Adresse sein.", "json": ":attribute muss ein g\xFCltiger JSON-String sein.", "lt": { "array": ":attribute muss kleiner :min Elemente haben.", "file": ":attribute muss kleiner :min Kilobytes gro\xDF sein.", "numeric": ":attribute muss kleiner :min sein.", "string": ":attribute muss kleiner :min Zeichen lang sein." }, "lte": { "array": ":attribute muss kleiner oder gleich :min Elemente haben.", "file": ":attribute muss kleiner oder gleich :min Kilobytes sein.", "numeric": ":attribute muss kleiner oder gleich :min sein.", "string": ":attribute muss kleiner oder gleich :min Zeichen lang sein." }, "max": { "array": ":attribute darf nicht mehr als :max Elemente haben.", "file": ":attribute darf maximal :max Kilobytes gro\xDF sein.", "numeric": ":attribute darf maximal :max sein.", "string": ":attribute darf maximal :max Zeichen haben." }, "mimes": ":attribute muss den Dateityp :values haben.", "mimetypes": ":attribute muss den Dateityp :values haben.", "min": { "array": ":attribute muss mindestens :min Elemente haben.", "file": ":attribute muss mindestens :min Kilobytes gro\xDF sein.", "numeric": ":attribute muss mindestens :min sein.", "string": ":attribute muss mindestens :min Zeichen lang sein." }, "not_in": "Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.", "not_regex": ":attribute hat ein ung\xFCltiges Format.", "numeric": ":attribute muss eine Zahl sein.", "present": ":attribute muss vorhanden sein.", "regex": ":attribute Format ist ung\xFCltig.", "required": ":attribute muss ausgef\xFCllt sein.", "required_if": ":attribute muss ausgef\xFCllt sein, wenn :other :value ist.", "required_unless": ":attribute muss ausgef\xFCllt sein, wenn :other nicht :values ist.", "required_with": ":attribute muss angegeben werden, wenn :values ausgef\xFCllt wurde.", "required_with_all": ":attribute muss angegeben werden, wenn :values ausgef\xFCllt wurde.", "required_without": ":attribute muss angegeben werden, wenn :values nicht ausgef\xFCllt wurde.", "required_without_all": ":attribute muss angegeben werden, wenn keines der Felder :values ausgef\xFCllt wurde.", "same": ":attribute und :other m\xFCssen \xFCbereinstimmen.", "size": { "array": ":attribute muss genau :size Elemente haben.", "file": ":attribute muss :size Kilobyte gro\xDF sein.", "numeric": ":attribute muss gleich :size sein.", "string": ":attribute muss :size Zeichen lang sein." }, "starts_with": "The :attribute must start with one of the following: :values", "string": ":attribute muss ein String sein.", "timezone": ":attribute muss eine g\xFCltige Zeitzone sein.", "unique": ":attribute ist schon vergeben.", "uploaded": ":attribute konnte nicht hochgeladen werden.", "url": ":attribute muss eine URL sein.", "uuid": ":attribute muss ein UUID sein." }, "de.wish": { "view": { "adults": "Erwachsene", "airport": "Flughafen", "budget": "Budget", "category": "Hotelkategorie", "catering": "Verpflegung", "comment-header": "Nachricht an Agenten", "createdat": "Erstellt am", "createdby": "Erstellt von", "destination": "Destination", "duration": "Reisedauer", "earliest_start": "Fr\xFChester Start", "email": "E-Mail", "kids": "Kinder", "latest_return": "Sp\xE4teste R\xFCckkehr", "new_offers": "Neue Angebote", "offerCount": "Angebote", "offer_number": "Angebot Nummer", "owner": "Name", "stage": { "seller_empty": "Der Reisewunsch wurde am <b>:date</b> an Sie<br>\n                    \xFCbermittelt. Erstellen Sie jetzt ein Angebot.", "seller_message": "Der Reisewunsch wurde am <b>:date</b> an Sie<br>\n                    \xFCbermittelt. Der Kunder hat Ihnen eine Nachricht hinterlassen.", "seller_offer": "Der Reisewunsch wurde am <b>:date</b> an Sie<br>\n                    \xFCbermittelt. Sie haben ein Angebot erstellt.", "user_empty": "Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\n                    \xFCbermittelt. Leider liegt momentan noch kein Angebot vor.", "user_message": "Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\n                    \xFCbermittelt. Es gibt eine neue Nachricht f\xFCr Sie.", "user_offer": "Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\n                    \xFCbermittelt. Es gibt ein Angebot f\xFCr Sie." }, "status": "Status", "text": "Text", "title": "Wunschtitel", "whitelabel": "Whitelabel" } }, "en.alerts": { "backend": { "blogcategories": { "created": "The Blog Category was successfully created.", "deleted": "The Blog Category was successfully deleted.", "updated": "The Blog Category was successfully updated." }, "blogs": { "created": "The Blog was successfully created.", "deleted": "The Blog was successfully deleted.", "updated": "The Blog was successfully updated." }, "blogtags": { "created": "The Blog Tag was successfully created.", "deleted": "The Blog Tag was successfully deleted.", "updated": "The Blog Tag was successfully updated." }, "emailtemplates": { "deleted": "The Email Template was successfully deleted.", "updated": "The Email Template was successfully updated." }, "faqs": { "created": "The Faq was successfully created.", "deleted": "The Faq was successfully deleted.", "updated": "The Faq was successfully updated." }, "groups": { "created": "The Group was successfully created.", "deleted": "The Group was successfully deleted.", "updated": "The Group was successfully updated." }, "menus": { "created": "The Menu was successfully created.", "deleted": "The Menu was successfully deleted.", "updated": "The Menu was successfully updated." }, "pages": { "created": "The Page was successfully created.", "deleted": "The Page was successfully deleted.", "updated": "The Page was successfully updated." }, "permissions": { "created": "The permission was successfully created.", "deleted": "The permission was successfully deleted.", "updated": "The permission was successfully updated." }, "roles": { "created": "The role was successfully created.", "deleted": "The role was successfully deleted.", "updated": "The role was successfully updated." }, "settings": { "updated": "The Setting was successfully updated." }, "users": { "confirmation_email": "A new confirmation e-mail has been sent to the address on file.", "created": "The user was successfully created.", "deleted": "The user was successfully deleted.", "deleted_permanently": "The user was deleted permanently.", "restored": "The user was successfully restored.", "session_cleared": "The user's session was successfully cleared.", "updated": "The user was successfully updated.", "updated_password": "The user's password was successfully updated." }, "whitelabels": { "created": "The Whitelabel was successfully created.", "deleted": "The Whitelabel was successfully deleted.", "updated": "The Whitelabel was successfully updated." }, "wishes": { "created": "The Wish was successfully created.", "deleted": "The Wish was successfully deleted.", "updated": "The Wish was successfully updated." } }, "frontend": { "offers": { "created": "Offer successfully created" }, "wishes": { "created": "The Wish was successfully created.", "deleted": "The Wish was successfully deleted.", "updated": "The Wish was successfully updated." } } }, "en.api": { "messages": { "forgot_password": { "success": "We have sent email with reset password link. Please check your inbox!.", "validation": { "email_not_found": "This email address is not registered." } }, "login": { "failed": "Invalid Credentials! Please try again.", "success": "Login Successfull." }, "logout": { "success": "Successfully logged out." }, "refresh": { "status": "Ok", "token": { "not_provided": "Token not provided." } }, "registeration": { "success": "You have registered successfully. Please check your email for activation!" } } }, "en.auth": { "failed": "These credentials do not match our records.", "general_error": "You do not have access to do that.", "socialite": { "unacceptable": ":provider is not an acceptable login type." }, "throttle": "Too many login attempts. Please try again in :seconds seconds.", "unknown": "An unknown error occurred" }, "en.button": { "cancel": "cancel", "close": "close", "confirm": "confirm", "create": "create", "delete": "delete", "delete_all": "delete all", "edit": "edit", "mark_as_read": "mark as read", "required": "required", "restore": "restore", "save": "save", "save_and_close": "save and close", "save_and_create": "save and create", "save_and_create_new": "save and create new" }, "en.buttons": { "backend": { "access": { "users": { "activate": "Activate", "change_password": "Change Password", "clear_session": "Clear Session", "deactivate": "Deactivate", "delete_permanently": "Delete Permanently", "login_as": "Login As :user", "resend_email": "Resend Confirmation E-mail", "restore_user": "Restore User" } } }, "emails": { "auth": { "confirm_account": "Confirm Account", "reset_password": "Reset Password" } }, "general": { "cancel": "Cancel", "continue": "Continue", "crud": { "add": "Add", "create": "Create", "delete": "Delete", "edit": "Edit", "update": "Update", "view": "View" }, "preview": "Preview", "save": "Save", "view": "View" }, "wishes": { "frontend": { "create_autooffer": "Create Auto Offer", "create_offer": "Create Offer" } } }, "en.comment": { "comments": "Comments" }, "en.dashboard": { "current_month": "current month", "daily_average_wish": "wishes per day", "date": "date", "monthly_average_wish": "wishes per month", "reaction_time_average_day": "reaction time \/ day", "reaction_time_average_month": "reaction time \/ month", "source_2019": "period: 2019", "total_groups": "all groups", "total_sellers": "all sellers", "total_wishes": "all wishes", "wish": "wish", "wishes": "wishes" }, "en.email": { "account": { "activate": "Login", "activated": "A new :account account for the :whitelabel wish portal has been created for you.", "greeting": "Thank you for your trust in our services", "hello": "Hello :username", "link": "You can login with your user data via click on the following button.", "password": "Password : :password", "subject": "Account Details for :username at :company", "subject_for_executive": "Your login data for desiretec portal", "subject_for_seller": "Your login data for desiretec whitelabel", "username": "Email address: :email" }, "footer": { "line1": "Sunny greetings", "line2": "Your desiretec team", "line3": "DesireTec GmbH", "line4": "Auf dem Sande 1 | D-20457 Hamburg | Deutschland", "line5": "Gesch\xE4ftsf\xFChrung: John Muster", "line6": "Sitz der Gesellschaft: Hamburg", "line7": "Handelsregister: Amtsgericht Hamburg HRB XXXXX", "line8": "BAN: DEXX XXXX XXXX XXXX XXXX XX", "line9": "BIC: XXXXXXXXXX" }, "message": { "created-seller": "You received a new message from your customer", "created-user": "Important: There is a new message from your consultant waiting in the desiretec travel wish portal for you", "new": "New message!", "subject": "You received a new message", "token": "Your login link" }, "offer": { "created": "Your offer has been created successfully", "created_user": "You received a new offer for your :whitelabel travel wish!" }, "token": "Your login link: <a href=\":token\">:token<\/a>", "wish": { "seller_trendtours": "A new travel wish is waiting for you!", "subject_for_seller": "A new travel wish is waiting for you!", "user": "Welcome to the desiretec wish portal! Your travel wish has been created successfully.", "user_callback_seller": "Your customer is asking for a callback", "user_cnt_seller": "Your offer has been successful, a new contact has been created!", "user_trendtours": "Welcome to the trendtours wish portal! Your travel wish has been created successfully." } }, "en.exceptions": { "backend": { "access": { "permissions": { "already_exists": "That permission already exists. Please choose a different name.", "create_error": "There was a problem creating this permission. Please try again.", "delete_error": "There was a problem deleting this permission. Please try again.", "not_found": "That permission does not exist.", "update_error": "There was a problem updating this permission. Please try again." }, "roles": { "already_exists": "That role already exists. Please choose a different name.", "cant_delete_admin": "You can not delete the Administrator role.", "create_error": "There was a problem creating this role. Please try again.", "delete_error": "There was a problem deleting this role. Please try again.", "has_users": "You can not delete a role with associated users.", "needs_permission": "You must select at least one permission for this role.", "not_found": "That role does not exist.", "update_error": "There was a problem updating this role. Please try again." }, "users": { "cant_deactivate_self": "You can not do that to yourself.", "cant_delete_admin": "You can not delete Admin.", "cant_delete_own_session": "You can not delete your own session.", "cant_delete_self": "You can not delete yourself.", "cant_restore": "This user is not deleted so it can not be restored.", "change_mismatch": "That is not your old password.", "create_error": "There was a problem creating this user. Please try again.", "delete_error": "There was a problem deleting this user. Please try again.", "delete_first": "This user must be deleted first before it can be destroyed permanently.", "email_error": "That email address belongs to a different user.", "mark_error": "There was a problem updating this user. Please try again.", "not_found": "That user does not exist.", "restore_error": "There was a problem restoring this user. Please try again.", "role_needed": "You must choose at least one role.", "role_needed_create": "You must choose at lease one role.", "session_wrong_driver": "Your session driver must be set to database to use this feature.", "update_error": "There was a problem updating this user. Please try again.", "update_password_error": "There was a problem changing this users password. Please try again." } }, "blogcategories": { "already_exists": "That Blog Category already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Category. Please try again.", "delete_error": "There was a problem deleting this Blog Category. Please try again.", "not_found": "That Blog Category does not exist.", "update_error": "There was a problem updating this Blog Category. Please try again." }, "blogtags": { "already_exists": "That Blog Tag already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Tag. Please try again.", "delete_error": "There was a problem deleting this Blog Tag. Please try again.", "not_found": "That Blog Tag does not exist.", "update_error": "There was a problem updating this Blog Tag. Please try again." }, "menus": { "already_exists": "That Menu already exists. Please choose a different name.", "create_error": "There was a problem creating this Menu. Please try again.", "delete_error": "There was a problem deleting this Menu. Please try again.", "not_found": "That Menu does not exist.", "update_error": "There was a problem updating this Menu. Please try again." }, "modules": { "already_exists": "That Module already exists. Please choose a different name.", "create_error": "There was a problem creating this Module. Please try again.", "delete_error": "There was a problem deleting this Module. Please try again.", "not_found": "That Module does not exist.", "update_error": "There was a problem updating this Module. Please try again." }, "pages": { "already_exists": "That Page already exists. Please choose a different name.", "create_error": "There was a problem creating this Page. Please try again.", "delete_error": "There was a problem deleting this Page. Please try again.", "not_found": "That Page does not exist.", "update_error": "There was a problem updating this Page. Please try again." }, "settings": { "update_error": "There was a problem updating this Settings. Please try again." } }, "frontend": { "auth": { "confirmation": { "already_confirmed": "Your account is already confirmed.", "confirm": "Confirm your account!", "created_confirm": "Your account was successfully created. We have sent you an e-mail to confirm your account.", "created_pending": "Your account was successfully created and is pending approval. An e-mail will be sent when your account is approved.", "mismatch": "Your confirmation code does not match.", "not_found": "That confirmation code does not exist.", "resend": "Your account is not confirmed. Please click the confirmation link in your e-mail, or <a href=http:\/\/localhost:8000\/account\/confirm\/resend\/:user_id>click here<\/a> to resend the confirmation e-mail.", "resent": "A new confirmation e-mail has been sent to the address on file.", "success": "Your account has been successfully confirmed!" }, "deactivated": "Your account has been deactivated.", "email_taken": "That e-mail address is already taken.", "password": { "change_mismatch": "That is not your old password." }, "registration_disabled": "Registration is currently closed." } } }, "en.general": { "currency": "\u20AC" }, "en.history": { "backend": { "blogcategories": { "created": "created Blog Category", "deleted": "deleted Blog Category", "updated": "updated Blog Category" }, "blogs": { "created": "created Blog", "deleted": "deleted Blog", "updated": "updated Blog" }, "blogtags": { "created": "created Blog Tag", "deleted": "deleted Blog Tag", "updated": "updated Blog Tag" }, "none": "There is no recent history.", "none_for_entity": "There is no history for this :entity.", "none_for_type": "There is no history for this type.", "pages": { "created": "created Page", "deleted": "deleted Page", "updated": "updated Page" }, "permissions": { "created": "created permission", "deleted": "deleted permission", "updated": "updated permission" }, "recent_history": "Recent History", "roles": { "created": "created role", "deleted": "deleted role", "updated": "updated role" }, "users": { "changed_password": "changed password for user", "created": "created user", "deactivated": "deactivated user", "deleted": "deleted user", "permanently_deleted": "permanently deleted user", "reactivated": "reactivated user", "restored": "restored user", "updated": "updated user" } } }, "en.http": { "404": { "description": "Sorry, but the page you were trying to view does not exist.", "title": "Page Not Found" }, "503": { "description": "Be right back.", "title": "Be right back." } }, "en.labels": { "about": "About us", "account": "Account", "activated": "activated", "address": "Address", "attendee": "Attendee", "attendees": "Attendees", "backend": { "access": { "permissions": { "create": "Create Permission", "edit": "Edit Permission", "management": "Permission Management", "table": { "display_name": "Display Name", "permission": "Permission", "sort": "Sort", "status": "Status", "total": "role total|roles total" } }, "roles": { "create": "Create Role", "edit": "Edit Role", "management": "Role Management", "table": { "number_of_users": "Number of Users", "permissions": "Permissions", "role": "Role", "sort": "Sort", "total": "role total|roles total" } }, "users": { "active": "Active Users", "all_permissions": "All Permissions", "change_password": "Change Password", "change_password_for": "Change Password for :user", "create": "Create User", "deactivated": "Deactivated Users", "deleted": "Deleted Users", "edit": "Edit User", "edit-profile": "Edit Profile", "management": "User Management", "no_permissions": "No Permissions", "no_roles": "No Roles to set.", "permissions": "Permissions", "table": { "confirmed": "Confirmed", "created": "Created", "email": "E-Mail-Adresse", "first_name": "First Name", "id": "ID", "last_name": "Last Name", "last_updated": "Last Updated", "no_deactivated": "No Deactivated Users", "no_deleted": "No Deleted Users", "roles": "Roles", "total": "user total|users total" }, "tabs": { "content": { "overview": { "avatar": "Avatar", "confirmed": "Confirmed", "created_at": "Created At", "deleted_at": "Deleted At", "email": "Email address", "last_updated": "Last Updated", "name": "Name", "status": "Status", "whitelabels": "Whitelabels" } }, "titles": { "history": "History", "overview": "Overview" } }, "view": "View User" } }, "blogcategories": { "create": "Create Blog Category", "edit": "Edit Blog Category", "management": "Blog Category Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "status": "Status", "title": "Blog Category" }, "title": "Blog Category" }, "blogs": { "create": "Create Blog", "edit": "Edit Blog", "management": "Blog Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "publish": "PublishDateTime", "status": "Status", "title": "Blog" }, "title": "Blogs" }, "blogtags": { "create": "Create Blog Tag", "edit": "Edit Blog Tag", "management": "Blog Tag Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "status": "Status", "title": "Blog Tag" }, "title": "Blog Tags" }, "distributions": { "create": "Create Distribution", "edit": "Edit Distribution", "management": "Distributions", "no_distributions": "no Distributions", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "description": "Description", "display_name": "Display Name", "name": "Distribution", "whitelabel": "Whitelabel" }, "title": "Distributions" }, "emailtemplates": { "create": "Create Email Template", "edit": "Edit Email Template", "management": "Email Template Management", "table": { "all": "All", "createdat": "Created At", "status": "Status", "subject": "Subject", "title": "Title", "updatedat": "Updated At" }, "title": "Email Templates" }, "faqs": { "create": "Create FAQ", "edit": "Edit FAQ", "management": "FAQ Management", "table": { "all": "All", "answer": "Answer", "createdat": "Created At", "createdby": "Created By", "publish": "PublishDateTime", "question": "Question", "status": "Status", "title": "FAQs", "updatedat": "Updated At" }, "title": "FAQ" }, "groups": { "create": "Create Group", "edit": "Edit Group", "management": "Groups", "no_whitelabels": "no Whitelabels", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "description": "Description", "display_name": "Display Name", "name": "Group", "status": "Status", "users": "Users", "whitelabel": "Whitelabel" }, "title": "Groups" }, "menus": { "create": "Create Menu", "edit": "Edit Menu", "field": { "icon": "Icon Class", "icon_title": "Font Awesome Class. eg. fa-edit", "items": "Menu Items", "name": "Name", "open_in_new_tab": "Open URL in new tab", "type": "Type", "url": "URL", "url_type": "URL Type", "url_types": { "route": "Route", "static": "Static" }, "view_permission_id": "Permission" }, "management": "Menu Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "name": "Name", "type": "Type" }, "title": "Menus" }, "modules": { "create": "Create Module", "edit": "Edit Module", "form": { "controller_name": "Controller &nbsp;Name", "create_file": "Create", "directory_name": "Directory Name", "edit_file": "Edit", "event": "Event Name", "form_file": "Form", "index_file": "Index", "model_name": "Model Name", "name": "Module Name", "namespace": "Namespace", "repo_name": "Repository Name", "resource_controller": "Resourceful Controller", "resource_route": "Resourceful Routes", "route_controller_name": "Controller &nbsp;Name", "route_name": "Route Name", "table_controller_name": "Controller &nbsp;Name", "table_name": "Table Name", "url": "View Route", "view_permission_id": "View Permission", "views_directory": "Directory &nbsp;&nbsp;&nbsp;Name" }, "management": "Module Management", "table": { "created_by": "Created By", "name": "Module Name", "url": "Module View Route", "view_permission_id": "View Permission" }, "title": "Module" }, "pages": { "create": "Create Page", "edit": "Edit Page", "management": "Page Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "status": "Status", "title": "Title", "updatedat": "Updated At" }, "title": "Pages" }, "profile_updated": "Your profile has been updated.", "settings": { "companydetails": "Company Contact Details", "edit": "Edit Settings", "footer": "Footer Settings", "google": "Google Analytics Track Code", "mail": "Mail Settings", "management": "Settings Management", "seo": "SEO Settings", "terms": "Terms and Condition Settings", "title": "Settings" }, "whitelabels": { "create": "Create Whitelabel", "edit": "Edit Whitelabel", "management": "Whitelabels", "management_client": "Whitelabel", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "display_name": "Whitelabel", "distribution": "Distribution", "ga_view_id": "Google View Id", "name": "Identifier", "status": "Status" }, "title": "Whitelabels" }, "wishes": { "create": "Create Wish", "edit": "Edit Wish", "management": "Wishes", "no_whitelabels": "no Whitelabels", "table": { "airport": "Airport", "all": "All", "createdat": "Created At", "createdby": "Created By", "destination": "Destination", "earliest_start": "Earliest Start", "group": "Group", "latest_return": "Latest Return", "offerCount": "Offers", "status": "Status", "title": "Wish", "whitelabel": "Whitelabel" }, "title": "Wishes" } }, "cancel": "Cancel", "contact": "Contact", "content": "Content", "country": "Country", "current": "Current", "current_password": "Current Password", "description": "Description", "details": "Details", "documents": "Documents", "domain": "Domain", "download": "Download", "email": "Email address", "events": "Events", "fax": "Fax", "feedback": "Feedback", "finish": "Finish", "first_name": "Firstname", "frontend": { "agents": { "create": "Create new Agent", "management": "Agenten", "table": { "avatar": "Avatar", "created_at": "Created at", "createdby": "Created by", "display_name": "Display name", "id": "Id", "name": "Name", "status": "Status" } }, "auth": { "login_box_title": "Login", "login_button": "Login", "login_with": "Login with :social_media", "register_box_title": "Register", "register_button": "Register", "remember_me": "Remember Me" }, "dashboard": { "analytics": { "answered_wishes": "Answered Wishes", "bookings": "Bookings", "changed_wishes": "Changed Wishes", "created_wishes": "Created Wishes", "free_text": "Free text", "latest_answered_wishes": "Latest Answered Wishes", "latest_reaction_quota": "Latest Reaction Quota", "reaction_quota": "Reaction Quota", "reaction_time": "Reaction Time" } }, "macros": { "country": { "alpha": "Country Alpha Codes", "alpha2": "Country Alpha 2 Codes", "alpha3": "Country Alpha 3 Codes", "numeric": "Country Numeric Codes" }, "macro_examples": "Macro Examples", "state": { "mexico": "Mexico State List", "us": { "armed": "US Armed Forces", "outlying": "US Outlying Territories", "us": "US States" } }, "territories": { "canada": "Canada Province & Territories List" }, "timezone": "Timezone" }, "offers": { "create": "Create new offer", "management": "Offers", "offers_for_wish": "Offer for", "table": { "all": "All", "createdat": "Created at", "createdby": "Created by", "status": "Status", "title": "Offer" } }, "passwords": { "forgot_password": "Forgot Your Password?", "reset_password_box_title": "Reset Password", "reset_password_button": "Reset Password", "send_password_reset_link_button": "Send Password Reset Link" }, "user": { "passwords": { "change": "Change Password" }, "profile": { "address": "Address", "avatar": "Avatar", "city": "City", "country": "Country", "created_at": "Created at", "edit_information": "Edit Information", "email": "Email address", "first_name": "First name", "last_name": "Last name", "last_updated": "Last updated", "ssn": "SSN", "update_information": "Update information", "zipcode": "Zip" } }, "wishes": { "add-comment": "Add comment", "created_at": "Created at", "edit": "Edit wish", "goto": "View travel wish", "night": ":value night|:value nights", "table": { "adults": "adult|adults", "kids": "{0}|kid|kids" }, "week": ":value week|:value weeks", "wishes": "Travel wishes" } }, "full_name": "Full Name", "general": { "actions": "Actions", "active": "Active", "all": "All", "buttons": { "save": "Save", "update": "Update" }, "custom": "Custom", "hide": "Hide", "inactive": "Inactive", "no": "No", "none": "None", "show": "Show", "toggle_navigation": "Toggle Navigation", "yes": "Yes" }, "go_back": "Back!", "go_next": "Next!", "id": "Id", "inbox": "Inbox", "interest": "Interest", "join": "Join Now", "language": "Language", "last_name": "Lastname", "login": "Sign", "logo": "Logo", "logout": "Logout", "message": "Message", "message_text": "Message text", "mobile": "Mobile", "name": "Name", "new": "New", "note": "note", "notes": "notes", "notifications": "Notifications", "now": "Now", "occupation": "Occupation", "ok": "Ok", "online": "Online", "password": "Password", "password_confirm": "Confirm Password", "personal_timezone": "Timezone", "phone": "Phone", "plus": "More", "posts": "Posts", "ratings": "Ratings", "recipient": "Recipient", "register": "Register", "reset": "Reset Password", "reset_link": "Send Password Reset Link", "review": "Review", "role": "Role", "send": "Send Now", "street": "Street", "subject": "Subject", "tel": "Telephone number", "title": "Title", "user": "User", "username": "Username", "verify": "Email Verification", "verify_email": "Verify Your Email Address", "warning": "Warning", "whitelabel": "Whitelabel", "whitelabel_executive": "Whitelabel executive", "whitelabel_information": "Whitelabel information", "whitelabel_subtitle": "New subtitle", "whitelabel_title": "New whitelabel", "wish": "Wish", "wishes": "Wishes", "zipcode": "Zip" }, "en.log-viewer::general": { "all": "All", "date": "Date" }, "en.log-viewer::levels": { "alert": "Alert", "all": "All", "critical": "Critical", "debug": "Debug", "emergency": "Emergency", "error": "Error", "info": "Info", "notice": "Notice", "warning": "Warning" }, "en.menus": { "backend": { "access": { "permissions": { "all": "All Permissions", "create": "Create Permission", "edit": "Edit Permission", "main": "Permissions", "management": "Permission Management" }, "roles": { "all": "All Roles", "create": "Create Role", "edit": "Edit Role", "main": "Roles", "management": "Role Management" }, "title": "Access Management", "users": { "all": "All Users", "change-password": "Change Password", "create": "Create User", "deactivated": "Deactivated Users", "deleted": "Deleted Users", "edit": "Edit User", "main": "Users", "view": "View User" } }, "blog": { "all": "All Blog Page", "create": "Create Blog Page", "edit": "Edit Blog Page", "main": "Blog Pages", "management": "Blog Management" }, "blogcategories": { "all": "All Blog Categories", "create": "Create Blog Category", "edit": "Edit Blog Category", "main": "CMS Pages", "management": "Blog Category Management" }, "blogs": { "all": "All Blog", "create": "Create Blog", "edit": "Edit Blog", "main": "Blogs", "management": "Blog Management" }, "blogtags": { "all": "All Blog Tag", "create": "Create Blog Tag", "edit": "Edit Blog Tag", "main": "Blog Tags", "management": "Blog Tag Management" }, "distributions": { "all": "All Distributions", "create": "Create Distribution", "edit": "Edit Distribution", "main": "Distributions", "management": "Distribution Management" }, "faqs": { "all": "All Faq Page", "create": "Create Faq Page", "edit": "Edit Faq Page", "main": "Faq Pages", "management": "Faq Management" }, "groups": { "all": "All Groups", "create": "Create Group", "edit": "Edit Group", "main": "Groups", "management": "Group Management" }, "log-viewer": { "dashboard": "Dashboard", "logs": "Logs", "main": "Log Viewer" }, "menus": { "all": "All Menu", "create": "Create Menu", "edit": "Edit Menu", "main": "Menus", "management": "Menu Management" }, "modules": { "all": "All Modules Page", "create": "Create Module Page", "main": "Module Pages", "management": "Module Management" }, "pages": { "all": "All Pages", "create": "Create Page", "edit": "Edit Page", "main": "Pages", "management": "Page Management" }, "settings": { "all": "All Settings", "create": "Create Settings", "edit": "Edit Settings", "main": "Settings", "management": "Settings Management" }, "sidebar": { "dashboard": "Dashboard", "general": "General", "system": "System" }, "whitelabels": { "all": "All Whitelabels", "create": "Create Whitelabel", "edit": "Edit Whitelabel", "main": "Whitelabels", "management": "Whitelabel Management" }, "wishes": { "all": "All Wishes", "create": "Create Wish", "edit": "Edit Wish", "main": "Wishes", "management": "Wish Management" } }, "frontend": { "agents": { "all": "All Menu", "create": "Create Agent", "edit": "Edit Menu", "main": "Menus", "management": "Menu Management" } }, "language-picker": { "langs": { "ar": "Arabic", "da": "Danish", "de": "German", "el": "Greek", "en": "English", "es": "Spanish", "fr": "French", "id": "Indonesian", "it": "Italian", "nl": "Dutch", "pt_BR": "Brazilian Portuguese", "ru": "Russian", "sv": "Swedish", "th": "Thai" }, "language": "Language" }, "list": { "status": { "active": "active", "all": "All travel wishes", "deleted": "deleted", "inactive": "inactive" } }, "sellers": "Sellers", "wishes": "Wishes" }, "en.messages": { "_account": "Do you have an account", "account": "Don't have an account", "background": "The background image has to be--- x --- Pixel in PNG \/ JPG \/ JPEG format. Maximum size --- KB.", "contact": "Contact us", "contact_success": "Your message has been sent successfully", "created": ":attribute wurde erfolgreich erstellt", "delete": "Do you really want to delete this item? Continue?", "delete_canceled": "Delete canceled", "deleted": ":attribute wurde erfolgreich gel\xF6scht", "destroy": "Do you really want to delete this item permanently? Continue?", "destroyed": ":attribute wurde endg\xFCltig gel\xF6scht", "event_upcoming": "Event Upcoming", "favicon": "Favicon has to be --- x --- Pixel in PNG \/ ICON format. Maximum size --- KB.", "forgot": "Forgot Password", "here": "login here", "install": "Module[:attribute] has been installed successfully", "join": "you successfully joined event", "login": "Login", "logo": "Logo has to be --- x --- Pixel in PNG \/ JPG \/ JPEG \/ SVG format. Maximum size --- KB.", "new_posts": "Latest Posts", "recent_event": "Recent event", "register": "Create your account", "remember": "Remember me", "reset": "Reset Password", "restore": "Do you really want to restore this item? Continue?", "restore_canceled": "Restore canceled", "restored": ":attribute wurde erfolgreich wiederhergestellt", "show_all": "Show all articles", "show_all_events": "Show all events", "sign_up": "Sign Up", "terms": "Agree to terms and conditions", "title": "Welcome Back", "uninstall": "Module[:attribute] has been uninstalled successfully", "unsaved": "You have unsaved changes, save and proceed ?", "updated": ":attribute wurde erfolgreich aktualisiert", "verify": "Before proceeding, please check your email for a verification link.", "verify_link": "If you did not receive the email,", "verify_request": "click here to request another.", "whitelabel_user": "Create an associate whitelabel user" }, "en.modals": { "activated": "Activated", "active": "Active", "add_document": "Add document", "add_documents": "Add documents", "address": "Address", "adults": "Adults", "airport": "Airport", "boards": "Boards", "budget": "Budget", "categories": "Categories", "category": "Hotel category", "catering": "Hotel catering", "click_to_upload": "Click to upload", "color": "Color", "confirmed": "Confirmed", "content": "Content", "create": "Create", "created_at": "Created at", "createdat": "created at", "createdby": "created by", "current": "Current", "dashboard": "Dashboard", "description": "Description", "destination": "Destination", "display_name": "Display name", "domain": "Domain", "duration": "duration", "earliest_start": "Earliest Start", "email": "Email", "email_verified_at": "Verified at", "end": "End", "first_name": "First name", "full_name": "Name", "group": "Group", "groups": "Groups", "id": "ID", "image": "Image", "kids": "Children", "last_login": "Last login ", "last_name": "Last name", "latest_return": "Latest Return", "lockout_time": "Lockout time", "login_failures": "Login failures", "logs": "Logs", "mobile": "Mobile", "name": "Name", "occupation": "Occupation", "offerCount": "Offers", "online": "Online", "owner": "Owner", "password": "Password", "password_confirm": "Password confirmation", "pending": "Pending", "period": "Period", "permission": "Permission", "permissions": "Permissions", "phone": "Phone", "role": "Role", "roles": "Roles", "start": "Start", "status": "Status", "summary": "Summary", "text": "Text", "title": "Title", "unconfirmed": "Unconfirmed", "updated_at": "Updated at", "upload_documents": "Upload documents", "upload_photo": "Upload photo", "upload_tip": "Upload tip", "url": "Url", "users": "User", "value": "Value", "whitelabel": "Whitelabel", "wish": "Wish" }, "en.navs": { "frontend": { "agents": "Agents", "create_wish": "Create wish", "dashboard": "Dashboard", "login": "Login", "macros": "Macros", "offers": "My offers", "register": "Register", "user": { "account": "Account", "administration": "Administration", "agents": "Agents", "change_password": "Change password", "my_information": "My information", "profile": "Profile" }, "wishes": "My wishes", "wisheslist": "Wishes" }, "general": { "home": "Home", "logout": "Logout" } }, "en.notification": { "created": "<span class=\"badge badge-flat border-success text-success-600 rounded-0 mr-2\"> Created <\/span> <strong>:name<\/strong> (:url) has been <strong>successfully created<\/strong> by <strong>:user<\/strong>", "deleted": "<span class=\"badge badge-flat border-danger text-danger-600 rounded-0 mr-2\"> Deleted <\/span><strong>:name<\/strong> (:url) has been <strong>successfully deleted<\/strong> by <strong>:user<\/strong>", "restored": "<span class=\"badge badge-flat border-info text-info-600 rounded-0 mr-2\"> Restored <\/span><strong>:name<\/strong> (:url) has been <strong>successfully restored<\/strong> by <strong>:user<\/strong>" }, "en.pagination": { "next": "Next &raquo;", "previous": "&laquo; Previous" }, "en.passwords": { "password": "Passwords must be at least six characters and match the confirmation.", "reset": "Your password has been reset!", "sent": "We have e-mailed your password reset link!", "token": "This password reset token is invalid.", "user": "We can't find a user with that e-mail address." }, "en.roles": { "administrator": "Administrator", "user": "User" }, "en.seller": { "agent": { "create": "create agent", "email": "email address", "email_placeholder": "seller@seller.com", "tel": "Tel.", "tel_placeholder": "01761234567" } }, "en.strings": { "backend": { "access": { "users": { "delete_user_confirm": "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", "if_confirmed_off": "(If confirmed is off)", "restore_user_confirm": "Restore this user to its original state?" } }, "dashboard": { "title": "Administrative Dashboard", "welcome": "Welcome" }, "general": { "all_rights_reserved": "All Rights Reserved.", "are_you_sure": "Are you sure you want to do this?", "boilerplate_link": "Laravel AdminPanel", "continue": "Continue", "member_since": "Member since", "minutes": " minutes", "search_placeholder": "Search...", "see_all": { "messages": "See all messages", "notifications": "View all", "tasks": "View all tasks" }, "status": { "offline": "Offline", "online": "Online" }, "timeout": "You were automatically logged out for security reasons since you had no activity in ", "you_have": { "messages": "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", "notifications": "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", "tasks": "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, "search": { "empty": "Please enter a search term.", "incomplete": "You must write your own search logic for this system.", "results": "Search Results for :query", "title": "Search Results" }, "welcome": "<p>This is the AdminLTE theme by <a href=\"https:\/\/almsaeedstudio.com\/\" target=\"_blank\">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href=\"https:\/\/github.com\/rappasoft\/laravel-5-boilerplate\" target=\"_blank\">GitHub<\/a> page for more information and report any <a href=\"https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues\" target=\"_blank\">issues here<\/a>.<\/p>\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\n<p>- Viral Solani<\/p>" }, "emails": { "auth": { "click_to_confirm": "Click here to confirm your account:", "error": "Whoops!", "greeting": "Hello!", "password_cause_of_email": "You are receiving this email because we received a password reset request for your account.", "password_if_not_requested": "If you did not request a password reset, no further action is required.", "password_reset_subject": "Reset Password", "regards": "Regards,", "reset_password": "Click here to reset your password", "thank_you_for_using_app": "Thank you for using our application!", "trouble_clicking_button": "If you\u2019re having trouble clicking the \":action_text\" button, copy and paste the URL below into your web browser:" } }, "frontend": { "test": "Test", "tests": { "based_on": { "permission": "Permission Based - ", "role": "Role Based - " }, "js_injected_from_controller": "Javascript Injected from a Controller", "using_access_helper": { "array_permissions": "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", "array_permissions_not": "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", "array_roles": "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", "array_roles_not": "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", "permission_id": "Using Access Helper with Permission ID", "permission_name": "Using Access Helper with Permission Name", "role_id": "Using Access Helper with Role ID", "role_name": "Using Access Helper with Role Name" }, "using_blade_extensions": "Using Blade Extensions", "view_console_it_works": "View console, you should see 'it works!' which is coming from FrontendController@index", "you_can_see_because": "You can see this because you have the role of ':role'!", "you_can_see_because_permission": "You can see this because you have the permission of ':permission'!" }, "user": { "change_email_notice": "If you change your e-mail you will be logged out until you confirm your new e-mail address.", "email_changed_notice": "You must confirm your new e-mail address before you can log in again.", "password_updated": "Password successfully updated.", "profile_updated": "Profile successfully updated." }, "welcome_to": "Welcome to :place" } }, "en.tables": { "actions": "Actions", "activated": "Activated", "activities": "Activities", "activity": "Activity", "add_documents": "Add documents", "address": "Address", "adults": "Adults", "ago": "Ago", "airport": "Airport", "alias": "Alias", "boards": "Boards", "booking_status": "Booking status", "budget": "Budget", "categories": "Categories", "category": "Hotel category", "catering": "Hotel catering", "color": "Color", "confirmed": "Confirmed", "content": "Content", "created_at": "Created at", "created_by": "Created by", "date": "Date", "description": "Description", "destination": "Destination", "display_name": "Display name", "duration": "Duration", "earliest_start": "Earliest start", "email": "Email", "email_verified_at": "Verified at", "empty_table": "No data accessable in the table", "end": "End", "eventAction": "Event Action", "eventCategory": "Event Category", "eventLabel": "Event Label", "first_name": "First name", "from": "From", "full_name": "Name", "group": "Group", "groups": "Groups", "id": "Id", "install": "Install", "kids": "Children", "last_login": "Last login ", "last_name": "Last name", "latest_return": "Latest return", "lockout_time": "Lockout time", "login_failures": "Login failures", "message": "Message", "migrate": "Migrate", "mobile": "Mobile", "name": "Name", "occupation": "Occupation", "offerCount": "Offer count", "online": "online", "owner": "Owner", "package": "Package", "pending": "Pending", "period": "Period", "permissions": "Permissions", "phone": "Phone", "roles": "Roles", "start": "Start", "status": "Status", "subject": "Subject", "text": "Text", "title": "Wish", "unconfirmed": "Unconfirmed", "uninstall": "Uninstall", "updated_at": "Updated at", "url": "Url", "users": "Users", "when": "When", "whitelabel": "Whitelabel" }, "en.validation": { "accepted": "The :attribute must be accepted.", "active_url": "The :attribute is not a valid URL.", "after": "The :attribute must be a date after :date.", "after_or_equal": "The :attribute must be a date after or equal to :date.", "alpha": "The :attribute may only contain letters.", "alpha_dash": "The :attribute may only contain letters, numbers, and dashes.", "alpha_num": "The :attribute may only contain letters and numbers.", "api": { "confirmaccount": { "already_confirmed": "Account is already confirmed.", "invalid_email": "Email is not register with fin builders", "invalid_otp": "Please enter valid otp." }, "forgotpassword": { "email_not_valid": "Email you entered is not register with fin builders.", "email_required": "Please enter email", "valid_email": "Please enter valid email address." }, "login": { "email_required": "Please enter email", "password_required": "Please enter passsword.", "username_password_didnt_match": "Please enter valid credentials.", "valid_email": "Please enter valid email address." }, "register": { "city_required": "Please enter city.", "state_required": "Please enter state." }, "resetpassword": { "confirm_password_required": "Please enter confirm password.", "email_not_valid": "Email you entered is not register with fin builders.", "email_required": "Please enter email", "password_confirmed": "passsword and confirm passsword do not match.", "password_required": "Please enter passsword.", "token_not_valid": "Given token is invalid.", "token_required": "Please enter token.", "valid_email": "Please enter valid email address." } }, "array": "The :attribute must be an array.", "attributes": { "backend": { "access": { "permissions": { "associated_roles": "Associated Roles", "dependencies": "Dependencies", "display_name": "Display Name", "group": "Group", "group_sort": "Group Sort", "groups": { "name": "Group Name" }, "name": "Name", "sort": "Sort", "system": "System?" }, "roles": { "active": "Active", "associated_permissions": "Associated Permissions", "name": "Name", "sort": "Sort" }, "users": { "active": "Active", "associated_roles": "Associated Roles", "associated_whitelabels": "Associated Whitelabels", "confirmed": "Confirmed", "email": "E-mail Address", "firstName": "First Name", "groups": "User Groups", "lastName": "Last Name", "no-group": "None", "old_password": "Old password", "other_permissions": "Other Permissions", "password": "New Password", "password_confirmation": "New Password Confirmation", "send_confirmation_email": "Send Confirmation E-mail" } }, "blogcategories": { "is_active": "Active", "title": "Blog Category" }, "blogs": { "cannonical_link": "Cannonical Link", "category": "Blog Category", "content": "Content", "image": "Featured Image", "meta-title": "Meta Title", "meta_description": "Meta Description", "meta_keyword": "Meta Keyword", "publish": "Publish Date & Time", "slug": "Slug", "status": "Status", "tags": "Tags", "title": "Blog Title" }, "blogtags": { "is_active": "Active", "title": "Blog Tag" }, "distributions": { "description": "Description", "display_name": "Display Name", "name": "Name" }, "faqs": { "answer": "Answer", "question": "Question", "status": "Status" }, "groups": { "associated_whitelabels": "Associated Whitelabels", "description": "Description", "display_name": "Display Name", "groups": "Seller Groups", "name": "Group Name", "status": "Status" }, "pages": { "cannonical_link": "Cannonical Link", "description": "Description", "is_active": "Active", "seo_description": "SEO Description", "seo_keyword": "SEO Keyword", "seo_title": "SEO Title", "title": "Title" }, "settings": { "companydetails": { "address": "Company Address", "contactnumber": "Contact Number" }, "favicon": "Fav Icon", "footer": { "copyright": "Copyright Text", "text": "Footer Text" }, "google": { "analytic": "Google Analytics" }, "mail": { "fromemail": "From Email", "fromname": "From Name" }, "metadescription": "Meta Description", "metakeyword": "Meta Keyawords", "metatitle": "Meta Title", "sitelogo": "Site Logo", "termscondition": { "disclaimer": "Disclaimer", "terms": "Terms & Condition" } }, "whitelabels": { "associated_distribution": "Associated Distribution", "display_name": "Display Name", "ga_view_id": "Google View Id", "image": "Background Image", "name": "Name", "status": "Status" }, "wishes": { "adults": "Adults", "airport": "Airport", "associated_whitelabels": "Associated Whitelabels", "budget": "Budget", "category": "Hotel category", "catering": "Hotel catering", "description": "Description", "destination": "Destination", "duration": "Duration", "earliest_start": "Earliest start", "image": "Featured Image", "kids": "Kids", "latest_return": "Latest return", "status": "Status", "title": "Wish Title" } }, "frontend": { "offers": { "file": "file(filename)", "file_placeholder": "file", "link": "link(target, link)", "link_placeholder": "http:\/\/goo.gl\/abc", "select_file": "select a file", "status": "status", "status_placeholder": "status", "text": "messages", "text_placeholder": "your message to your customer", "title": "offer title", "title_placeholder": "short offer description" }, "register-user": { "address": "address", "city": "city", "country": "country", "email": "email address", "firstName": "first name", "lastName": "last name", "new_password": "new password", "new_password_confirmation": "new password confirmation", "old_password": "old password", "password": "password", "password_confirmation": "password confirmation", "ssn": "SSN", "state": "state", "terms_and_conditions": "terms and conditions", "user_type": "I use the white label as a", "user_type_seller": "seller", "user_type_user": "user", "zipcode": "zip code" } } }, "before": "The :attribute must be a date before :date.", "before_or_equal": "The :attribute must be a date before or equal to :date.", "between": { "array": "The :attribute must have between :min and :max items.", "file": "The :attribute must be between :min and :max kilobytes.", "numeric": "The :attribute must be between :min and :max.", "string": "The :attribute must be between :min and :max characters." }, "boolean": "The :attribute field must be true or false.", "confirmed": "The :attribute confirmation does not match.", "custom": { "attribute-name": { "rule-name": "custom-message" } }, "date": "The :attribute is not a valid date.", "date_format": "The :attribute does not match the format :format.", "different": "The :attribute and :other must be different.", "digits": "The :attribute must be :digits digits.", "digits_between": "The :attribute must be between :min and :max digits.", "dimensions": "The :attribute has invalid image dimensions.", "distinct": "The :attribute field has a duplicate value.", "email": "The :attribute must be a valid email address.", "exists": "The selected :attribute is invalid.", "file": "The :attribute must be a file.", "filled": "The :attribute field must have a value.", "image": "The :attribute must be an image.", "in": "The selected :attribute is invalid.", "in_array": "The :attribute field does not exist in :other.", "integer": "The :attribute must be an integer.", "ip": "The :attribute must be a valid IP address.", "json": "The :attribute must be a valid JSON string.", "max": { "array": "The :attribute may not have more than :max items.", "file": "The :attribute may not be greater than :max kilobytes.", "numeric": "The :attribute may not be greater than :max.", "string": "The :attribute may not be greater than :max characters." }, "mimes": "The :attribute must be a file of type: :values.", "mimetypes": "The :attribute must be a file of type: :values.", "min": { "array": "The :attribute must have at least :min items.", "file": "The :attribute must be at least :min kilobytes.", "numeric": "The :attribute must be at least :min.", "string": "The :attribute must be at least :min characters." }, "not_in": "The selected :attribute is invalid.", "numeric": "The :attribute must be a number.", "present": "The :attribute field must be present.", "regex": "The :attribute format is invalid.", "required": "The :attribute field is required.", "required_if": "The :attribute field is required when :other is :value.", "required_unless": "The :attribute field is required unless :other is in :values.", "required_with": "The :attribute field is required when :values is present.", "required_with_all": "The :attribute field is required when :values is present.", "required_without": "The :attribute field is required when :values is not present.", "required_without_all": "The :attribute field is required when none of :values are present.", "same": "The :attribute and :other must match.", "size": { "array": "The :attribute must contain :size items.", "file": "The :attribute must be :size kilobytes.", "numeric": "The :attribute must be :size.", "string": "The :attribute must be :size characters." }, "string": "The :attribute must be a string.", "timezone": "The :attribute must be a valid zone.", "unique": "The :attribute has already been taken.", "uploaded": "The :attribute failed to upload.", "url": "The :attribute format is invalid." }, "en.wish": { "view": { "adults": "Adults", "airport": "Airport", "budget": "Budget", "category": "Hotel category", "catering": "Hotel catering", "comment-header": "Communicate with Agent", "createdat": "Created at", "createdby": "Created by", "destination": "Destination", "duration": "Duration", "earliest_start": "Earliest Start", "email": "Email", "kids": "Kids", "latest_return": "Latest Return", "new_offers": "New offers", "offerCount": "Offers", "offer_number": "Offer number", "owner": "Name", "stage": { "seller_empty": "This travel wish has been distributed on <b>:date<\/b> to you.<br>\n                    Please create an offer.", "seller_message": "This travel wish has been distributed on <b>:date<\/b> to you.<br>\n                    The customer left a message for you.", "seller_offer": "This travel wish has been distributed on <b>:date<\/b> to you.<br>\n                    You created an offer.", "user_empty": "This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\n                     . Unfortunately no received offers yet.", "user_message": "This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\n                    . You received a new message.", "user_offer": "This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\n                    . You received an offer." }, "status": "Status", "text": "Text", "title": "Wish title", "whitelabel": "Whitelabel" } }, "es.log-viewer::general": { "all": "Todos", "date": "Fecha" }, "es.log-viewer::levels": { "alert": "Alerta", "all": "Todos", "critical": "Criticos", "debug": "Debug", "emergency": "Emergencia", "error": "Errores", "info": "Info", "notice": "Aviso", "warning": "Advertencia" }, "et.log-viewer::general": { "all": "K\xF5ik", "date": "Kuup\xE4ev", "empty-logs": "Logide nimekiri on t\xFChi!" }, "et.log-viewer::levels": { "alert": "H\xE4ire", "all": "K\xF5ik", "critical": "Kriitiline", "debug": "Silumine", "emergency": "Erakorraline", "error": "Viga", "info": "Info", "notice": "Teade", "warning": "Hoiatus" }, "fa.log-viewer::general": { "all": "\u0647\u0645\u0647", "date": "\u062A\u0627\u0631\u06CC\u062E" }, "fa.log-viewer::levels": { "alert": "\u0627\u062E\u0637\u0627\u0631", "all": "\u0647\u0645\u0647", "critical": "\u0628\u062D\u0631\u0627\u0646\u06CC", "debug": "\u062F\u06CC\u0628\u0627\u06AF", "emergency": "\u0627\u0648\u0631\u0698\u0627\u0646\u0633\u06CC", "error": "\u062E\u0637\u0627", "info": "\u0627\u0637\u0644\u0627\u0639\u0627\u062A", "notice": "\u0627\u0639\u0644\u0627\u0646", "warning": "\u0647\u0634\u062F\u0627\u0631" }, "fr.log-viewer::general": { "all": "Tous", "date": "Date" }, "fr.log-viewer::levels": { "alert": "Alerte", "all": "Tous", "critical": "Critique", "debug": "Debug", "emergency": "Urgence", "error": "Erreur", "info": "Info", "notice": "Notice", "warning": "Avertissement" }, "hu.log-viewer::general": { "all": "\xD6sszes", "date": "D\xE1tum", "empty-logs": "The list of logs is empty!" }, "hu.log-viewer::levels": { "alert": "Riaszt\xE1s", "all": "\xD6sszes", "critical": "Kritikus", "debug": "Hibakeres\xE9s", "emergency": "V\xE9szhelyzet", "error": "Hiba", "info": "Inform\xE1ci\xF3", "notice": "\xC9rtes\xEDt\xE9s", "warning": "Figyelmeztet\xE9s" }, "hy.log-viewer::general": { "all": "\u0532\u0578\u056C\u0578\u0580\u0568", "date": "\u0531\u0574\u057D\u0561\u0569\u056B\u057E" }, "hy.log-viewer::levels": { "alert": "\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574", "all": "\u0532\u0578\u056C\u0578\u0580\u0568", "critical": "\u053F\u0580\u056B\u057F\u056B\u056F\u0561\u056F\u0561\u0576", "debug": "\u053F\u0561\u0580\u0563\u0561\u0562\u0565\u0580\u0578\u0582\u0574", "emergency": "\u054E\u0569\u0561\u0580\u0561\u0575\u056B\u0576", "error": "\u054D\u056D\u0561\u056C", "info": "\u054F\u0565\u0572\u0565\u056F\u0561\u057F\u057E\u0578\u0582\u0569\u0575\u0578\u0582\u0576", "notice": "\u053E\u0561\u0576\u0578\u0582\u0581\u0578\u0582\u0574", "warning": "\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574" }, "id.log-viewer::general": { "all": "Semua", "date": "Tanggal" }, "id.log-viewer::levels": { "alert": "Waspada", "all": "Semua", "critical": "Kritis", "debug": "Debug", "emergency": "Darurat", "error": "Kesalahan", "info": "Info", "notice": "Perhatian", "warning": "Peringatan" }, "it.log-viewer::general": { "all": "Tutti", "date": "Data" }, "it.log-viewer::levels": { "alert": "Allarme", "all": "Tutti", "critical": "Critico", "debug": "Debug", "emergency": "Emergenza", "error": "Errore", "info": "Info", "notice": "Notifica", "warning": "Avviso" }, "ja.log-viewer::general": { "all": "\u3059\u3079\u3066", "date": "\u65E5\u4ED8", "empty-logs": "\u30ED\u30B0\u30EA\u30B9\u30C8\u304C\u7A7A\u3067\u3059!" }, "ja.log-viewer::levels": { "alert": "\u8B66\u6212", "all": "\u3059\u3079\u3066", "critical": "\u81F4\u547D\u7684", "debug": "\u30C7\u30D0\u30C3\u30B0", "emergency": "\u7DCA\u6025", "error": "\u30A8\u30E9\u30FC", "info": "\u60C5\u5831", "notice": "\u901A\u77E5", "warning": "\u8B66\u544A" }, "ko.log-viewer::general": { "all": "\uC804\uCCB4", "date": "\uB0A0\uC9DC" }, "ko.log-viewer::levels": { "alert": "\uACBD\uACE0", "all": "\uC804\uCCB4", "critical": "\uC2EC\uAC01", "debug": "\uB514\uBC84\uADF8", "emergency": "\uAE34\uAE09", "error": "\uC624\uB958", "info": "\uC815\uBCF4", "notice": "\uC54C\uB9BC", "warning": "\uC8FC\uC758" }, "nl.log-viewer::general": { "all": "Alles", "date": "Datum" }, "nl.log-viewer::levels": { "alert": "Alarm", "all": "Alle", "critical": "Cruciaal", "debug": "Debug", "emergency": "Noodgeval", "error": "Error", "info": "Informatie", "notice": "Opmerking", "warning": "Waarschuwing" }, "pl.log-viewer::general": { "all": "Wszystkie", "date": "Data" }, "pl.log-viewer::levels": { "alert": "Alerty", "all": "Wszystkie", "critical": "Krytyczne", "debug": "Debug", "emergency": "Awaryjne", "error": "B\u0142\u0119dy", "info": "Informacje", "notice": "Warte uwagi", "warning": "Ostrze\u017Cenia" }, "pt-BR.log-viewer::general": { "all": "Todos", "date": "Data" }, "pt-BR.log-viewer::levels": { "alert": "Alerta", "all": "Todos", "critical": "Cr\xEDtico", "debug": "Debug", "emergency": "Emerg\xEAncia", "error": "Erro", "info": "Informa\xE7\xE3o", "notice": "Not\xEDcia", "warning": "Aviso" }, "ro.log-viewer::general": { "all": "Toate", "date": "Dat\u0103" }, "ro.log-viewer::levels": { "alert": "Alert\u0103", "all": "Toate", "critical": "Critic", "debug": "Depanare", "emergency": "Urgen\u021B\u0103", "error": "Eroare", "info": "Informare", "notice": "Avertisment", "warning": "Pericol" }, "ru.log-viewer::general": { "all": "\u0412\u0441\u0435", "date": "\u0414\u0430\u0442\u0430" }, "ru.log-viewer::levels": { "alert": "\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435", "all": "\u0412\u0441\u0435", "critical": "\u041A\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439", "debug": "\u041E\u0442\u043B\u0430\u0434\u043A\u0430", "emergency": "\u0410\u0432\u0430\u0440\u0438\u0439\u043D\u0430\u044F", "error": "\u041E\u0448\u0438\u0431\u043A\u0430", "info": "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F", "notice": "\u0423\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u0435", "warning": "\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435" }, "sv.log-viewer::general": { "all": "Alla", "date": "Datum" }, "sv.log-viewer::levels": { "alert": "Alarmerande", "all": "Alla", "critical": "Kritisk", "debug": "Debug", "emergency": "Akut", "error": "Error", "info": "Information", "notice": "Notis", "warning": "Varning" }, "th.log-viewer::general": { "all": "\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14", "date": "\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48", "empty-logs": "The list of logs is empty!" }, "th.log-viewer::levels": { "alert": "\u0E27\u0E34\u0E01\u0E24\u0E15\u0E34", "all": "\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14", "critical": "\u0E23\u0E49\u0E32\u0E22\u0E41\u0E23\u0E07", "debug": "\u0E14\u0E35\u0E1A\u0E31\u0E01", "emergency": "\u0E09\u0E38\u0E01\u0E40\u0E09\u0E34\u0E19", "error": "\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14", "info": "\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25", "notice": "\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28", "warning": "\u0E04\u0E33\u0E40\u0E15\u0E37\u0E2D\u0E19" }, "tr.log-viewer::general": { "all": "Toplam", "date": "Tarih" }, "tr.log-viewer::levels": { "alert": "Alarm", "all": "Toplam", "critical": "Kritik", "debug": "Debug", "emergency": "Acil", "error": "Hata", "info": "Bilgi", "notice": "Bildirim", "warning": "Uyar\u0131" }, "zh-TW.log-viewer::general": { "all": "\u5168\u90E8", "date": "\u65E5\u671F" }, "zh-TW.log-viewer::levels": { "alert": "\u8B66\u5831", "all": "\u5168\u90E8", "critical": "\u56B4\u91CD", "debug": "\u9664\u932F", "emergency": "\u7DCA\u6025", "error": "\u932F\u8AA4", "info": "\u8A0A\u606F", "notice": "\u6CE8\u610F", "warning": "\u8B66\u544A" }, "zh.log-viewer::general": { "all": "\u5168\u90E8", "date": "\u65E5\u671F" }, "zh.log-viewer::levels": { "alert": "\u7D27\u6025", "all": "\u5168\u90E8", "critical": "\u4E25\u91CD", "debug": "\u8C03\u8BD5", "emergency": "\u5371\u6025", "error": "\u9519\u8BEF", "info": "\u4FE1\u606F", "notice": "\u6CE8\u610F", "warning": "\u8B66\u544A" } };
+module.exports = { "ar.log-viewer::general": { "all": "\u062C\u0645\u064A\u0639", "date": "\u062A\u0627\u0631\u064A\u062E" }, "ar.log-viewer::levels": { "alert": "\u0625\u0646\u0630\u0627\u0631", "all": "\u0627\u0644\u062C\u0645\u064A\u0639", "critical": "\u062D\u0631\u062C", "debug": "\u0627\u0644\u062A\u0635\u062D\u064A\u062D", "emergency": "\u062D\u0627\u0644\u0627\u062A \u0627\u0644\u0637\u0648\u0627\u0631\u0626", "error": "\u062E\u0637\u0623", "info": "\u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062A", "notice": "\u0645\u0644\u0627\u062D\u0638\u0629", "warning": "\u062A\u062D\u0630\u064A\u0631" }, "bg.log-viewer::general": { "all": "\u0412\u0441\u0438\u0447\u043A\u0438", "date": "\u0414\u0430\u0442\u0430", "empty-logs": "\u041D\u0435 \u0441\u0430 \u043D\u0430\u043C\u0435\u0440\u0435\u043D\u0438 \u043B\u043E\u0433\u043E\u0432\u0435!" }, "bg.log-viewer::levels": { "alert": "Alert", "all": "\u0412\u0441\u0438\u0447\u043A\u0438", "critical": "Critical", "debug": "Debug", "emergency": "Emergency", "error": "Error", "info": "Info", "notice": "Notice", "warning": "Warning" }, "de.alerts": { "backend": { "blogcategories": { "created": "The Blog Category was successfully created.", "deleted": "The Blog Category was successfully deleted.", "updated": "The Blog Category was successfully updated." }, "blogs": { "created": "The Blog was successfully created.", "deleted": "The Blog was successfully deleted.", "updated": "The Blog was successfully updated." }, "blogtags": { "created": "The Blog Tag was successfully created.", "deleted": "The Blog Tag was successfully deleted.", "updated": "The Blog Tag was successfully updated." }, "emailtemplates": { "deleted": "Das Email Template wurde erfolgreich gel\xF6scht.", "updated": "Das Email Template wurde erfolgreich ge\xE4ndert." }, "faqs": { "created": "Die FAQ wurde erfolgreich erstellt.", "deleted": "Die FAQ wurde erfolgreich gel\xF6scht.", "updated": "Die FAQ wurde erfolgreich ge\xE4ndert." }, "groups": { "created": "Die Gruppe wurde erfolgreich erstellt.", "deleted": "Die Gruppe wurde erfolgreich gel\xF6scht.", "updated": "Die Gruppe wurde erfolgreich ge\xE4ndert." }, "menus": { "created": "Das Men\xFC wurde erfolgreich erstellt.", "deleted": "Das Men\xFC wurde erfolgreich gel\xF6scht.", "updated": "Das Men\xFC wurde erfolgreich ge\xE4ndert." }, "pages": { "created": "Die Seite wurde erfolgreich erstellt.", "deleted": "Die Seite wurde erfolgreich gel\xF6scht.", "updated": "Die Seite wurde erfolgreich ge\xE4ndert." }, "permissions": { "created": "Die Berechtigung wurde erfolgreich erstellt.", "deleted": "Die Berechtigung wurde erfolgreich gel\xF6scht.", "updated": "Die Berechtigung wurde erfolgreich ge\xE4ndert." }, "roles": { "created": "Die Rolle wurde erfolgreich erstellt.", "deleted": "Die Rolle wurde erfolgreich gel\xF6scht.", "updated": "Die Rolle wurde erfolgreich ge\xE4ndert." }, "settings": { "updated": "Die Einstellung wurde erfolgreich ge\xE4ndert." }, "users": { "confirmation_email": "Eine neue Best\xE4tigungs E-Mail wurde gesendet.", "created": "Der User wurde erfolgreich erstellt.", "deleted": "Der User wurde erfolgreich gel\xF6scht.", "deleted_permanently": "Der User wurde dauerhaft gel\xF6scht.", "restored": "Der User wurde erfolgreich wiederhergestellt.", "session_cleared": "Die User Session wurde erfolgreich gel\xF6scht.", "updated": "Der User wurde erfolgreich ge\xE4ndert.", "updated_password": "Das Benutzer Passwort wurde erfolgreich aktualisiert." }, "whitelabels": { "created": "Das Whitelabel wurde erfolgreich erstellt.", "deleted": "Das Whitelabel wurde erfolgreich gel\xF6scht.", "updated": "Das Whitelabel wurde erfolgreich ge\xE4ndert." }, "wishes": { "created": "Der Wunsch wurde erfolgreich erstellt.", "deleted": "Der Wunsch wurde erfolgreich gel\xF6scht.", "updated": "Der Wunsch wurde erfolgreich ge\xE4ndert." } }, "frontend": { "offers": { "created": "Das Angebot wurde erfolgreich erstellt." }, "wishes": { "created": "Der Wunsch wurde erfolgreich erstellt.", "deleted": "Der Wunsch wurde erfolgreich gel\xF6scht.", "updated": "Der Wunsch wurde erfolgreich ge\xE4ndert." } } }, "de.api": { "messages": { "forgot_password": { "success": "Wir haben eine E-Mail mit einem Link zum Zur\xFCcksetzen des Passworts geschickt.", "validation": { "email_not_found": "Diese E-Mail-Adresse ist uns nicht bekannt." } }, "login": { "failed": "Ung\xFCltige Zugangsdaten! Bitte erneut versuchen.", "success": "Login erfolgreich." }, "logout": { "success": "Erfolgreich ausgeloggt." }, "refresh": { "status": "Ok", "token": { "not_provided": "Token not provided." } }, "registeration": { "success": "Du hast dich erfolgreich registriert. Bitte \xFCberpr\xFCfe zur Aktivierung deine E-Mails." } } }, "de.auth": { "failed": "Diese Kombination aus Zugangsdaten wurde nicht in unserer Datenbank gefunden.", "throttle": "Zu viele Loginversuche. Versuchen Sie es bitte in :seconds Sekunden nochmal." }, "de.button": { "cancel": "Abbrechen", "clone": "Klonen", "close": "Schlie\xDFen", "confirm": "Best\xE4tigen", "copy": "Kopieren", "create": "Erstellen", "delete": "L\xF6schen", "delete_all": "Alles l\xF6schen", "edit": "\xC4ndern", "language": "Sprache", "mark_as_read": "Als gelesen markieren", "required": "Erforderlich", "restore": "Wiederherstellen", "save": "Speichern", "save_and_close": "Speichern und schlie\xDFen", "save_and_create": "Speichern und erstellen", "save_and_create_new": "Speichern und neu erstellen" }, "de.buttons": { "backend": { "access": { "users": { "activate": "Aktivieren", "change_password": "Passwort \xE4ndern", "clear_session": "Session l\xF6schen", "deactivate": "Deaktivieren", "delete_permanently": "Dauerhaft l\xF6schen", "login_as": "Einloggen als :user", "resend_email": "Best\xE4tigungs E-Mail erneut senden", "restore_user": "Benutzer wiederherstellen" } } }, "emails": { "auth": { "confirm_account": "Account best\xE4tigen", "reset_password": "Passwort zur\xFCcksetzen" } }, "general": { "cancel": "Abbrechen", "continue": "Fortsetzen", "crud": { "add": "Hinzuf\xFCgen", "create": "Erstellen", "delete": "L\xF6schen", "edit": "Editieren", "update": "Aktualisieren", "view": "Anzeigen" }, "preview": "Vorschau", "save": "Speichern", "view": "Anzeigen" }, "wishes": { "frontend": { "create_autooffer": "Automatisches Angebot erstellen", "create_offer": "Angebot erstellen" } } }, "de.comment": { "comments": "Kommentare" }, "de.dashboard": { "current_month": "Aktueller Monat", "daily_average_wish": "W\xFCnsche pro Tag", "date": "Datum", "monthly_average_wish": "W\xFCnsche pro Monat", "reaction_time_average_day": "Reaktionszeit \/ Tag", "reaction_time_average_month": "Reaktionszeit \/ Monat", "source_2019": "Zeitraum: 2019", "total_groups": "Alle Gruppen", "total_sellers": "Alle Anbieter", "total_wishes": "Alle W\xFCnsche", "wish": "Wunsch", "wishes": "W\xFCnsche" }, "de.email": { "account": { "activate": "Login", "activated": "F\xFCr Sie wurde ein neuer :account Account f\xFCr das :whitelabel Reisewunschportal erstellt.", "greeting": "Thank you for your trust in our services", "hello": "Hallo :username", "link": "Mit Klick auf den folgenden Button k\xF6nnen Sie sich mit Ihren Benutzerdaten einloggen.", "password": "Passwort: :password", "subject": "Account Details for :username at :company", "subject_for_executive": "Ihre Zugangsdaten zu Ihrem :whitelabel Reisewunschportal", "subject_for_seller": "Ihre Zugangsdaten zum :whitelabel Reisewunschportal", "username": "E-Mail-Adresse: :email" }, "footer": { "line1": "Sonnige Gr\xFC\xDFe", "line2": "Ihr desiretec Team", "line3": "DesireTec GmbH", "line4": "Auf dem Sande 1 | D-20457 Hamburg | Deutschland", "line5": "Gesch\xE4ftsf\xFChrung: John Muster", "line6": "Sitz der Gesellschaft: Hamburg", "line7": "Handelsregister: Amtsgericht Hamburg HRB XXXXX", "line8": "BAN: DEXX XXXX XXXX XXXX XXXX XX", "line9": "BIC: XXXXXXXXXX" }, "message": { "created-seller": "Sie haben eine neue Nachricht von Ihrem Kunden erhalten", "created-user": "Wichtig: Es gibt eine neue Nachricht von Ihrem Berater im :whitelabel Reisewunschportal", "new": "Neue Nachricht!", "subject": "Sie haben eine neue Nachricht erhalten", "token": "Ihr Login-Link" }, "offer": { "created": "Sie haben erfolgreich ein Angebot erstellt", "created_user": "Es gibt ein neues Angebot f\xFCr Ihren :whitelabel Reisewunsch!" }, "token": "Ihr Login-Link lautet: <a href=\":token\">:token<\/a>", "wish": { "seller": "Es gibt einen neuen :whitelabel Reisewunsch zur Bearbeitung!", "subject_for_seller": "Es gibt einen neuen :whitelabel Reisewunsch zur Bearbeitung!", "user": "Herzlich willkommen beim :whitelabel Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.", "user_callback_seller": "Ihr Kunde bittet Sie um einen R\xFCckruf", "user_cnt_seller": "Ihr Angebot war erfolgreich, Sie haben einen neuen Kontakt erzeugt!" } }, "de.exceptions": { "backend": { "access": { "permissions": { "already_exists": "Diese Berechtigung existiert bereits. Bitte w\xE4hlen Sie einen anderen Namen.", "create_error": "Es gab ein Problem bei der Erstellung dieser Berechtigung. Bitte erneut versuchen.", "delete_error": "Es gab ein Problem beim L\xF6schen dieser Berechtigung. Bitte erneut versuchen.", "not_found": "Diese Berechtigung existiert nicht.", "update_error": "Es gab ein Problem beim \xC4ndern dieser Berechtigung. Bitter erneut versuchen." }, "roles": { "already_exists": "Diese Rolle existiert bereits. Bitte w\xE4hlen Sie einen anderen Namen.", "cant_delete_admin": "Die Administrator Rolle kann nicht gel\xF6scht werden.", "create_error": "Es gab ein Problem bei der Erstellung dieser Rolle. Bitte erneut versuchen.", "delete_error": "Es gab ein Problem beim L\xF6schen dieser Rolle. Bitte erneut versuchen.", "has_users": "Sie k\xF6nnen keine mit Benutzern verkn\xFCpfte Rolle l\xF6schen.", "needs_permission": "Sie m\xFCssen mindestens 1 Berechtigung f\xFCr diese Rolle ausw\xE4hlen.", "not_found": "Diese Rolle existiert nicht.", "update_error": "Es gab ein Problem beim \xC4ndern dieser Rolle. Bitter erneut versuchen." }, "users": { "cant_deactivate_self": "Sie k\xF6nnen das nicht mit sich selbst machen.", "cant_delete_admin": "Sie k\xF6nnen keinen Administrator l\xF6schen.", "cant_delete_own_session": "Sie k\xF6nnen nicht Ihre eigene Session l\xF6schen.", "cant_delete_self": "Sie k\xF6nnen sich nicht selbst l\xF6schen.", "cant_restore": "Dieser User ist nicht gel\xF6scht und kann nicht wiederhergestellt werden.", "change_mismatch": "Das ist nicht Ihr altes Passwort.", "create_error": "Es gab ein Problem bei der Erstellung dieses Users. Bitte erneut versuchen.", "delete_error": "Es gab ein Problem beim L\xF6schen dieses Users. Bitte erneut versuchen.", "delete_first": "Dieser Benutzer muss zun\xE4chst gel\xF6scht werden, bevor er dauerhaft gel\xF6scht werden kann.", "email_error": "Diese E-Mail-Adresse geh\xF6rt zu einem anderen User.", "mark_error": "Es gab ein Problem beim \xC4ndern dieses Users. Bitter erneut versuchen.", "not_found": "Dieser User existiert nicht.", "restore_error": "Es gab ein Problem bei der Wiederherstellung des Users. Bitte erneut versuchen.", "role_needed": "Sie m\xFCssen mindestens eine Rolle ausw\xE4hlen.", "role_needed_create": "Sie m\xFCssen mindestens eine Rolle ausw\xE4hlen.", "session_wrong_driver": "Your session driver must be set to database to use this feature.", "update_error": "Es gab ein Problem bei der \xC4nderung dieses Users. Bitte erneut versuchen.", "update_password_error": "Es gab ein Problem bei \xC4ndern dieses User Passworts. Bitte erneut versuchen." } }, "blogcategories": { "already_exists": "That Blog Category already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Category. Please try again.", "delete_error": "There was a problem deleting this Blog Category. Please try again.", "not_found": "That Blog Category does not exist.", "update_error": "There was a problem updating this Blog Category. Please try again." }, "blogtags": { "already_exists": "That Blog Tag already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Tag. Please try again.", "delete_error": "There was a problem deleting this Blog Tag. Please try again.", "not_found": "That Blog Tag does not exist.", "update_error": "There was a problem updating this Blog Tag. Please try again." }, "menus": { "already_exists": "That Menu already exists. Please choose a different name.", "create_error": "There was a problem creating this Menu. Please try again.", "delete_error": "There was a problem deleting this Menu. Please try again.", "not_found": "That Menu does not exist.", "update_error": "There was a problem updating this Menu. Please try again." }, "modules": { "already_exists": "That Module already exists. Please choose a different name.", "create_error": "There was a problem creating this Module. Please try again.", "delete_error": "There was a problem deleting this Module. Please try again.", "not_found": "That Module does not exist.", "update_error": "There was a problem updating this Module. Please try again." }, "pages": { "already_exists": "That Page already exists. Please choose a different name.", "create_error": "There was a problem creating this Page. Please try again.", "delete_error": "There was a problem deleting this Page. Please try again.", "not_found": "That Page does not exist.", "update_error": "There was a problem updating this Page. Please try again." }, "settings": { "update_error": "Es gab ein Problem beim \xC4ndern dieser Einstellung. Bitte erneut versuchen." } }, "frontend": { "auth": { "confirmation": { "already_confirmed": "Ihr Account wurde bereits best\xE4tigt.", "confirm": "Best\xE4tigen Sie Ihren Account!", "created_confirm": "Ihr Account wurde erfolgreich erstellt. Wir haben Ihnen eine E-Mail zur Best\xE4tigung geschickt.", "created_pending": "Ihr Account wurde erfolgreich erstellt und wartet auf Genehmigung. Nach Genehmigung wird eine E-Mail gesendet.", "mismatch": "Ihr Best\xE4tigungs-Code stimmt nicht.", "not_found": "Ihr Best\xE4tigungs-Code existiert nicht.", "resend": "Ihr Account ist nicht best\xE4tigt. Bitte klicken Sie auf den Best\xE4tigungslink in Ihrer E-Mail, oder <a href=http://localhost:8000/account/confirm/resend/:user_id>klicken Sie hier</a> um sich die Best\xE4tigungs E-Mail erneut zusenden zu lassen.", "resent": "Eine neue Best\xE4tigungs E-Mail wurde an Ihre E-Mail-Adresse geschickt.", "success": "Ihr Account wurde erfolgreich best\xE4tigt!" }, "deactivated": "Ihr Account wurde deaktiviert.", "email_taken": "Diese E-Mail-Adresse wird bereits verwendet.", "password": { "change_mismatch": "Dies ist nicht Ihr altes Passwort." }, "registration_disabled": "Eine Registrierung ist derzeit nicht m\xF6glich." } } }, "de.general": { "currency": "\u20AC" }, "de.history": { "backend": { "blogcategories": { "created": "created Blog Category", "deleted": "deleted Blog Category", "updated": "updated Blog Category" }, "blogs": { "created": "created Blog", "deleted": "deleted Blog", "updated": "updated Blog" }, "blogtags": { "created": "created Blog Tag", "deleted": "deleted Blog Tag", "updated": "updated Blog Tag" }, "none": "Es existiert keine Historie.", "none_for_entity": "Es existiert keine Historie f\xFCr :entity.", "none_for_type": "Es existiert keine Historie f\xFCr diesen Typ", "pages": { "created": "Seite erstelltcreated ", "deleted": "Seite gel\xF6scht", "updated": "Seite ge\xE4ndert" }, "permissions": { "created": "Berechtigung erstellt", "deleted": "Berechtigung gel\xF6scht", "updated": "Berechtigung ge\xE4ndert" }, "recent_history": "Historie", "roles": { "created": "Rolle erstellt", "deleted": "Rolle gel\xF6scht", "updated": "Rolle ge\xE4ndert" }, "users": { "changed_password": "User Passwort ge\xE4ndert", "created": "User erstellt", "deactivated": "User deaktiviert", "deleted": "User gel\xF6scht", "permanently_deleted": "User dauerhaft gel\xF6scht", "reactivated": "User reaktiviert", "restored": "User wiederhergestellt", "updated": "User ge\xE4ndert" } } }, "de.http": { "404": { "description": "Entschuldigung, diese Seite existiert leider nicht.", "title": "Seite nicht gefunden" }, "503": { "description": "Gleich wieder da.", "title": "Gleich wieder da." } }, "de.labels": { "about": "\xDCber uns", "account": "Account", "activated": "aktiviert", "address": "Adresse", "attendee": "Teilnehmer", "attendees": "Teilnehmer", "backend": { "access": { "permissions": { "create": "Berechtigung erstellen", "edit": "Berechtigung bearbeiten", "management": "Management Berechtigungen", "table": { "display_name": "Anzeigename", "permission": "Berechtigung", "sort": "Sorte", "status": "Status", "total": "Rollen gesamt" } }, "roles": { "create": "Rolle erstellen", "edit": "Rolle bearbeiten", "management": "Management Rollen", "table": { "number_of_users": "Useranzahl", "permissions": "Berechtigungen", "role": "Rolle", "sort": "Sorte", "total": "Rollen gesamt" } }, "users": { "active": "Aktive User", "all_permissions": "Password \xE4ndern", "change_password_for": "Passwort \xE4ndern f\xFCr :user", "create": "User erstellen", "deactivated": "Deaktivierte User", "deleted": "Gel\xF6schte User", "edit": "User bearbeiten", "edit-profile": "Profil bearbeiten", "management": "Management User", "no_permissions": "Keine Berechtigungen", "no_roles": "Keine Rolle zum Vergeben.", "permissions": "Berechtigungen", "table": { "confirmed": "Best\xE4tigt", "created": "Erstellt", "email": "E-Mail-Adresse", "id": "ID", "last_name": "Nachname", "last_updated": "Vorname", "no_deactivated": "Keine deaktivieren User", "no_deleted": "Keine gel\xF6schten User", "roles": "Rollen", "total": "User gesamt" }, "tabs": { "content": { "overview": { "avatar": "Avatar", "confirmed": "Best\xE4tigt", "created_at": "Erstellt am", "deleted_at": "Gel\xF6scht am", "email": "E-Mail-Adresse", "last_updated": "Zuletzt aktualisiert", "name": "Name", "status": "Status", "whitelabels": "Whitelabel" } }, "titles": { "history": "Historie", "overview": "\xDCbersicht" } }, "view": "User ansehen" } }, "blogcategories": { "create": "Blogkategorie erstellen", "edit": "Blogkategorie bearbeiten", "management": "Management Blogkategorie", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "status": "Status", "title": "Blogkategorie" }, "title": "Blogkategorie" }, "blogs": { "create": "Blog erstellen", "edit": "Blog bearbeiten", "management": "Management Blogs", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "publish": "Ver\xF6ffentlichungsdatum", "status": "Status", "title": "Blog" }, "title": "Blogs" }, "blogtags": { "create": "Blog-Tag erstellen", "edit": "Blog-Tag bearbeiten", "management": "Management Blog-Tag", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "status": "Status", "title": "Blog-Tag" }, "title": "Blog-Tags" }, "distributions": { "create": "Verteilung erstellen", "edit": "Verteilung bearbeiten", "management": "Verteilungen", "no_distributions": "keine Verteilungen", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "description": "Beschreibung", "display_name": "Anzeigename", "name": "Verteilung", "whitelabel": "Whitelabel" }, "title": "Verteilungen" }, "emailtemplates": { "create": "E-Mail-Template erstellen", "edit": "E-Mail-Template bearbeiten", "management": "Management E-Mail-Templates", "table": { "all": "Alle", "createdat": "Erstellt am", "status": "Status", "subject": "Betreff", "title": "Titel", "updatedat": "Aktualisiert am" }, "title": "E-Mail-Templates" }, "faqs": { "create": "FAQ erstellen", "edit": "FAQ bearbeiten", "management": "Management FAQ ", "table": { "all": "Alle", "answer": "Antwort", "createdat": "Erstellt am", "createdby": "Erstellt von", "publish": "Ver\xF6ffentlichungsdatum", "question": "Frage", "status": "Status", "title": "FAQs", "updatedat": "Aktualisiert am" }, "title": "FAQ" }, "groups": { "create": "Gruppe erstellen", "edit": "Gruppe bearbeiten", "management": "Gruppen", "no_whitelabels": "keine Whitelabel", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "description": "Beschreibung", "display_name": "Anzeigename", "name": "Gruppe", "status": "Status", "users": "User", "whitelabel": "Whitelabel" }, "title": "Gruppen" }, "menus": { "create": "Men\xFC erstellen", "edit": "Men\xFC bearbeiten", "field": { "icon": "Icon-Klasse", "icon_title": "Font Awesome Class. eg. fa-edit", "items": "Men\xFCfelder", "name": "Name", "open_in_new_tab": "\xD6ffne URL in neuem Tab", "type": "Typ", "url": "URL", "url_type": "URL-Typ", "url_types": { "route": "Route", "static": "Statisch" }, "view_permission_id": "Berechtigung" }, "management": "Management Men\xFC", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "name": "Name", "type": "Typ" }, "title": "Men\xFCs" }, "modules": { "create": "Modul erstellen", "edit": "Module bearbeiten", "form": { "controller_name": "Controller &nbsp;Name", "create_file": "Erstellen", "directory_name": "Directory Name", "edit_file": "Bearbeiten", "event": "Event Name", "form_file": "Form", "index_file": "Index", "model_name": "Model Name", "name": "Modulname", "namespace": "Namespace", "repo_name": "Repository Name", "resource_controller": "Resourceful Controller", "resource_route": "Resourceful Routes", "route_controller_name": "Controller &nbsp;Name", "route_name": "Pfadname", "table_controller_name": "Controller &nbsp;Name", "table_name": "Tabellen Name", "url": "Pfad", "view_permission_id": "Berechtigung ansehen", "views_directory": "Directory &nbsp;&nbsp;&nbsp;Name" }, "management": "Management Module", "table": { "created_by": "Erstellt von", "name": "Modulname", "url": "Modul Pfad anzeigen", "view_permission_id": "Berechtigung sehen" }, "title": "Module" }, "pages": { "create": "Seite erstellen", "edit": "Seite erstellen", "management": "Management Seiten", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "status": "Status", "title": "Titel", "updatedat": "Aktualisiert am" }, "title": "Seiten" }, "profile_updated": "Dein Profil wurde aktualisiert.", "settings": { "companydetails": "Unternehmenskontaktdaten", "edit": "Einstellungen bearbeiten", "footer": "Footer-Einstellungen", "google": "Google Analytics Tracking Code", "mail": "E-Mail-Einstellungen", "management": "Management Einstellungen", "seo": "SEO-Einstellungen", "terms": "Gesch\xE4ftsbedingungen-Einstellungen", "title": "Einstellungen" }, "whitelabels": { "create": "Whitelabel erstellen", "edit": "Whitelabel bearbeiten", "management": "Whitelabel", "management_client": "Whitelabel", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "display_name": "Whitelabel", "distribution": "Verteilung", "ga_view_id": "Google View Id", "name": "Key", "status": "Status" }, "title": "Whitelabel" }, "wishes": { "create": "Wunsch erstellen", "edit": "Wunsch bearbeiten", "management": "W\xFCnsche", "no_whitelabels": "keine Whitelabel", "table": { "airport": "Flughafen", "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "destination": "Destination", "earliest_start": "Fr\xFChester Start", "group": "Gruppe", "latest_return": "Sp\xE4teste R\xFCckkehr", "offerCount": "Angebote", "status": "Status", "title": "Wunsch", "whitelabel": "Whitelabel" }, "title": "W\xFCnsche" } }, "cancel": "Abbrechen", "contact": "Kontakt", "content": "Inhalt", "country": "Land", "current": "Aktuell", "current_password": "Aktuelles Passwort", "description": "Beschreibung", "details": "Details", "documents": "Dokumente", "domain": "Domain", "download": "Download", "email": "E-Mail-Adresse", "events": "Events", "export_all": "Alles exportieren", "export_selected": "Auswahl exportieren", "fax": "Fax", "feedback": "Feedback", "finish": "Fertig", "first_name": "Vorname", "frontend": { "agents": { "create": "Neuen Agenten erstellen", "management": "Agenten", "table": { "avatar": "Avatar", "created_at": "Erstellt am", "createdby": "Erstellt von", "display_name": "Anzeigename", "id": "ID", "name": "Name", "status": "Status" } }, "auth": { "login_box_title": "Login", "login_button": "Login", "login_with": "Login mit :social_media", "register_box_title": "Registrieren", "register_button": "Registrieren", "remember_me": "Erinnere mich" }, "dashboard": { "analytics": { "answered_wishes": "Beantwortete Reisew\xFCnsche", "bookings": "Buchungen", "changed_wishes": "Bearbeitete Reisew\xFCnsche", "created_wishes": "Erstellte Reisew\xFCnsche", "free_text": "Freitext", "latest_answered_wishes": "Zuletzt beantwortete Reisew\xFCnsche", "latest_reaction_quota": "Aktuelle Reaktionsquote", "reaction_quota": "Reaktionsquote", "reaction_time": "Reaktionszeit" } }, "macros": { "country": { "alpha": "Country Alpha Codes", "alpha2": "Country Alpha 2 Codes", "alpha3": "Country Alpha 3 Codes", "numeric": "Country Numeric Codes" }, "macro_examples": "Makrobeispiele", "state": { "mexico": "Mexico State List", "us": { "armed": "US Armed Forces", "outlying": "US Outlying Territories", "us": "US States" } }, "territories": { "canada": "Canada Province & Territories List" }, "timezone": "Zeitzone" }, "offers": { "create": "Neues Angebot erstellen", "management": "Angebote", "offers_for_wish": "Angebote f\xFCr", "table": { "all": "Alle", "createdat": "Erstellt in", "createdby": "Erstellt von", "status": "Status", "title": "Angebot" } }, "passwords": { "forgot_password": "Passwort vergessen?", "reset_password_box_title": "Passwort zur\xFCcksetzen", "reset_password_button": "Passwort zur\xFCcksetzen", "send_password_reset_link_button": "Sende Passwort-Reset-Link" }, "user": { "passwords": { "change": "Passwort \xE4ndern" }, "profile": { "address": "Adresse", "avatar": "Avatar", "city": "Stadt", "country": "Land", "created_at": "Erstellt am", "edit_information": "Informationen bearbeiten", "email": "E-Mail-Adresse", "first_name": "Vorname", "last_name": "Nachname", "last_updated": "Zuletzt ge\xE4ndert", "ssn": "SSN", "update_information": "Profil \xE4ndern", "zipcode": "PLZ" } }, "wishes": { "add-comment": "Kommentar hinzuf\xFCgen", "created_at": "erstellt am", "edit": "Reisewunsch bearbeiten", "goto": "Reisewunsch ansehen", "night": ":value Nacht|:value N\xE4chte", "table": { "adults": ":count Erwachsener|:count Erwachsene", "kids": "{0}Kein Kinder|Kind|Kinder" }, "week": ":value Woche|:value Wochen", "wishes": "Reisew\xFCnsche" } }, "full_name": "Name", "general": { "actions": "Actionen", "active": "Aktiv", "all": "Alle", "buttons": { "save": "Speichern", "update": "Aktualisieren" }, "custom": "Custom", "hide": "Verstecken", "inactive": "Inaktiv", "no": "Nein", "none": "Keine", "show": "Anzeigen", "toggle_navigation": "Navigation einblenden", "yes": "Ja" }, "go_back": "Zur\xFCck!", "go_next": "Weiter!", "id": "ID", "inbox": "Posteingang", "interest": "Internet", "join": "Beitreten", "language": "Sprache", "last_name": "Nachname", "login": "Login", "logo": "Logo", "logout": "Logout", "message": "Nachricht", "message_text": "Nachrichtentext", "mobile": "Mobile", "name": "Name", "new": "Neu", "note": "Notiz", "notes": "Notizen", "notifications": "Benachrichtigungen", "now": "Jetzt", "occupation": "Beruf", "ok": "Ok", "online": "Online", "password": "Passwort", "password_confirm": "Passwort best\xE4tigen", "personal_timezone": "Zeitzone", "phone": "Telefon", "plus": "plus", "posts": "Posts", "ratings": "Bewertungen", "recipient": "Empf\xE4nger", "register": "Registrieren", "reset": "Passwort zur\xFCcksetzen", "reset_link": "Passwort-Reset-Link senden", "review": "Rezension", "role": "Rolle", "send": "Jetzt senden", "street": "Stra\xDFe", "subject": "Betreff", "tel": "Telefonnummer", "title": "Titel", "user": "User", "username": "Username", "verify": "E-Mail-Verifizierung", "verify_email": "Verifiziere Deine E-Mail-Adresse", "warning": "Warnung", "whitelabel": "Whitelabel", "whitelabel_executive": "Whitelabel Executive", "whitelabel_information": "Whitelabel Informationen", "whitelabel_subtitle": "Ein neuer Untertitel", "whitelabel_title": "Neues Whitelabel", "wish": "Reisewunsch", "wishes": "Reisew\xFCnsche", "zipcode": "PLZ" }, "de.log-viewer::general": { "all": "Alle", "date": "Datum" }, "de.log-viewer::levels": { "alert": "Alarm", "all": "Alle", "critical": "Kritisch", "debug": "Debug", "emergency": "Notfall", "error": "Fehler", "info": "Info", "notice": "Hinweis", "warning": "Warnung" }, "de.menus": { "access_management": "Zugriffsverwaltung", "backend": { "access": { "permissions": { "all": "Alle Berechtigungen", "create": "Berechtigung erstellen", "edit": "Berechtigung bearbeiten", "main": "Berechtigungen", "management": "Management Berechtigungen" }, "roles": { "all": "Alle Rollen", "create": "Rolle erstellen", "edit": "Rolle bearbeiten", "main": "Rollen", "management": "Management Rollen" }, "title": "Management Zug\xE4nge", "users": { "all": "Alle User", "change-password": "Passwort \xE4ndern", "create": "User erstellen", "deactivated": "User deaktivieren", "deleted": "User l\xF6schen", "edit": "User bearbeiten", "main": "User", "view": "User ansehen" } }, "blog": { "all": "Alle Blogseiten", "create": "Blogseite erstellen", "edit": "Blogseite bearbeiten", "main": "Blogseiten", "management": "Management Blogseiten" }, "blogcategories": { "all": "Alle Blogkategorien", "create": "Blogkategorie erstellen", "edit": "Blogkategorie bearbeiten", "main": "CMS-Seiten", "management": "Management Blogkategorie" }, "blogs": { "all": "Alle Blogs", "create": "Blog erstellen", "edit": "Blog bearbeiten", "main": "Blogs", "management": "Management Blogs" }, "blogtags": { "all": "Alle Blog-Tags", "create": "Blog-Tag erstellen", "edit": "Blog-Tag bearbeiten", "main": "Blog-Tags", "management": "Management Blog-Tags" }, "distributions": { "all": "Alle Verteilungen", "create": "Verteilung erstellen", "edit": "Verteilung bearbeiten", "main": "Verteilungen", "management": "Management Verteilungen" }, "faqs": { "all": "Alle FAQ-Seiten", "create": "FAQ-Seite erstellen", "edit": "FAQ-Seite bearbeiten", "main": "FAQ-Seiten", "management": "Management FAQ" }, "groups": { "all": "Alle Gruppen", "create": "Gruppe erstellen", "edit": "Gruppe bearbeiten", "main": "Gruppen", "management": "Management Gruppen" }, "log-viewer": { "dashboard": "Dashboard", "logs": "Logs", "main": "Log Viewer" }, "menus": { "all": "Alle Men\xFCs", "create": "Men\xFC erstellen", "edit": "Men\xFC bearbeiten", "main": "Men\xFCs", "management": "Management Men\xFCs" }, "modules": { "all": "Alle Modulseiten", "create": "Modulseite erstellen", "main": "Modulseiten", "management": "Management Module" }, "pages": { "all": "Alle Seiten", "create": "Seite erstellen", "edit": "Seite bearbeiten", "main": "Seiten", "management": "Management Seiten" }, "settings": { "all": "Alle Einstellungen", "create": "Einstellungen erstellen", "edit": "Einstellungen bearbeiten", "main": "Einstellungen", "management": "Management Einstellungen" }, "sidebar": { "dashboard": "Dashboard", "general": "General", "system": "System" }, "whitelabels": { "all": "Alle Whitelabel", "create": "Whitelabel erstellen", "edit": "Whitelabel bearbeiten", "main": "Whitelabel", "management": "Management Whitelabel" }, "wishes": { "all": "Alle W\xFCnsche", "create": "Wunsch erstellen", "edit": "Wunsch bearbeiten", "main": "W\xFCnsche", "management": "Management W\xFCnsche" } }, "categories_management": "Kategorienverwaltung", "frontend": { "agents": { "all": "Alle Men\xFCs", "create": "Agent erstellen", "edit": "Men\xFC bearbeiten", "main": "Men\xFCs", "management": "Management Men\xFCs" } }, "groups_management": "Gruppenmanagement", "language-picker": { "langs": { "ar": "Arabisch", "da": "D\xE4nisch", "de": "Deutsch", "el": "Griechisch", "en": "Englisch", "es": "Spanisch", "fr": "Franz\xF6sisch", "id": "Indonesisch", "it": "Italienisch", "nl": "Niederl\xE4ndisch", "pt_BR": "Portugiesisch", "ru": "Russisch", "sv": "Schwedisch", "th": "Thai" }, "language": "Sprache" }, "languages": "Sprachen", "languages_lines": "Sprachenzeilen", "list": { "status": { "active": "Aktiv", "all": "Alle Reisew\xFCnsche", "deleted": "Gel\xF6scht", "inactive": "Inaktiv" } }, "list_wishes": "W\xFCnsche auflisten", "sellers": "Seller", "sellers_management": "Anbieter-Management", "wishes": "W\xFCnsche", "wishes_management": "W\xFCnsche Management" }, "de.messages": { "_account": "Hast Du einen Account", "account": "Kein Account gefunden", "background": "The background image must be --- x --- pixels in PNG\/JPG\/JPEG format. Maximum file size is ---KB.", "contact": "Kontaktiere uns", "contact_success": "Deine Nachricht wurde erfolgreich gesendet", "created": ":attribute wurde erfolgreich erstellt", "delete": "M\xF6chten Sie das wirklich l\xF6schen?", "delete_canceled": "L\xF6schen abgebrochen", "deleted": ":attribute wurde erfolgreich gel\xF6scht", "destroy": "M\xF6chten Sie das wirklich permanent l\xF6schen?", "destroyed": ":attribute wurde permanent gel\xF6scht", "event_upcoming": "Bevorstehendes Event", "favicon": "The favicon must be --- x --- pixels in PNG\/ICON format. Maximum file size is ---KB.", "forgot": "Passwort vergessen", "here": "Hier einloggen", "install": "Modul[:attribute] wurde erfolgreich installiert", "join": "Du bist dem Event erfolgreich beigetreten.", "login": "Login", "logo": "The logo must be --- x --- pixels in PNG\/JPG\/JPEG\/SVG format. Maximum file size is ---KB.", "new_posts": "Letzte Posts", "recent_event": "K\xFCrzliche Events", "register": "Erstelle Deinen Account", "remember": "Erinnere mich", "reset": "Passwort zur\xFCcksetzen", "restore": "M\xF6chten Sie mit der Wiederherstellung fortfahren?", "restore_canceled": "Wiederherstellung abgebrochen", "restored": ":attribute wurde erfolgreich wiederhergestellt", "show_all": "Alle Artikel anzeigen", "show_all_events": "Alle Events anzeigen", "sign_up": "Registrieren", "terms": "Gesch\xE4ftsbedingungen zustimmen", "title": "Willkomen zur\xFCck", "uninstall": "Modul[:attribute] wurde erfolgreich deinstalliert", "unsaved": "Du hast nicht gespeicherte \xC4nderungen - sichern und fortfahren?", "updated": ":attribute wurde erfolgreich aktualisiert", "verify": "Bevor Du fortf\xE4hrst, \xFCberpr\xFCfe bitte Deine E-Mails auf einen Verifizierungslink.", "verify_link": "Falls Du die E-Mail nicht erhalten hast,", "verify_request": "klicke hier, um eine neue E-Mail zu erhalten", "whitelabel_user": "Erstelle Whitelabel User" }, "de.modals": { "activated": "Aktiviert", "active": "Aktiv", "add_document": "Dokument hinzuf\xFCgen", "add_documents": "Dokumente hinzuf\xFCgen", "address": "Adresse", "adults": "Erwachsene", "airport": "Flughafen", "boards": "Boards", "budget": "Budget", "categories": "Kategorien", "category": "Hotelkategorie", "catering": "Verpflegung", "click_to_upload": "Klick zum Hochladen", "color": "Farbe", "confirmed": "Best\xE4tigt", "content": "Inhalt", "create": "Erstellen", "created_at": "Erstellt am", "createdat": "Erstellt am", "createdby": "Erstellt von", "current": "Aktuell", "dashboard": "Dashboard", "description": "Beschreibung", "destination": "Ziel", "display_name": "Anzeigename", "domain": "Domain", "duration": "Dauer", "earliest_start": "Fr\xFChester", "email": "Email", "email_verified_at": "Verifiziert am", "end": "Ende", "first_name": "Vorname", "full_name": "Name", "group": "Gruppe", "groups": "Gruppen", "id": "ID", "image": "Bild", "kids": "Kinder", "last_login": "Letzter Login", "last_name": "Nachname", "latest_return": "Sp\xE4teste R\xFCckker", "lockout_time": "Sperrzeit", "login_failures": "Loginfehler", "logs": "Logs", "mobile": "Mobile", "name": "Name", "occupation": "Beruf", "offerCount": "Angebote", "online": "Online", "owner": "Inhaber", "password": "Passwort", "password_confirm": "Passwortbest\xE4tigung", "pending": "Ausstehend", "period": "Zeitraum", "permission": "Berechtigung", "permissions": "Berechtigungen", "phone": "Telefon", "role": "Rolle", "roles": "Rollen", "start": "Start", "status": "Status", "summary": "Zusammenfassung", "text": "Text", "title": "Titel", "unconfirmed": "Unbest\xE4tigt", "updated_at": "Aktualisiert am", "upload_documents": "Dokumente hochladen", "upload_photo": "Foto hochladen", "upload_tip": "Upload Tipp", "url": "Url", "users": "Benutzer", "value": "Wert", "whitelabel": "Whitelabel", "wish": "Wunsch" }, "de.navs": { "frontend": { "agents": "Agenten", "create_wish": "Wunsch erstellen", "dashboard": "Dashboard", "login": "Einloggen", "macros": "Makros", "offers": "Meine Angebote", "register": "Registrieren", "user": { "account": "Mein Konto", "administration": "Administration", "agents": "Agenten", "change_password": "Passwort \xE4ndern", "my_information": "Meine Informationen", "name": "Ich", "profile": "Profil" }, "wishes": "Meine Reisew\xFCnsche", "wisheslist": "Reisew\xFCnsche" }, "general": { "home": "Home", "logout": "Ausloggen" } }, "de.notification": { "created": "<span class=\"badge badge-flat border-success text-success-600 rounded-0 mr-2\"> Erstellt <\/span> <strong>:name<\/strong> (:url) wurde <strong>erfolgreich erstellt<\/strong> by <strong>:user<\/strong>", "deleted": "<span class=\"badge badge-flat border-danger text-danger-600 rounded-0 mr-2\"> Gel\xF6scht </span><strong>:name</strong> (:url) wurde <strong>erfolgreich gel\xF6scht</strong> by <strong>:user</strong>", "restored": "<span class=\"badge badge-flat border-info text-info-600 rounded-0 mr-2\"> Wiederhergestellt <\/span><strong>:name<\/strong> (:url) wurde <strong>erfolgreich wiederhergestellt<\/strong> by <strong>:user<\/strong>" }, "de.pagination": { "next": "Weiter &raquo;", "previous": "&laquo; Zur\xFCck" }, "de.passwords": { "password": "Passw\xF6rter m\xFCssen mindestens 6 Zeichen lang sein und korrekt best\xE4tigt werden.", "reset": "Das Passwort wurde zur\xFCckgesetzt!", "sent": "Passworterinnerung wurde gesendet!", "token": "Der Passwort-Wiederherstellungs-Schl\xFCssel ist ung\xFCltig oder abgelaufen.", "user": "Es konnte leider kein Nutzer mit dieser E-Mail-Adresse gefunden werden." }, "de.roles": { "administrator": "Administrator", "user": "User" }, "de.seller": { "agent": { "create": "Agent hinzuf\xFCgen", "email": "E-Mail Adresse", "email_placeholder": "seller@seller.com", "tel": "Tel.", "tel_placeholder": "01761234567" } }, "de.strings": { "backend": { "access": { "users": { "delete_user_confirm": "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", "if_confirmed_off": "(Falls Auto - Best\xE4tigung aus ist)", "restore_user_confirm": "Diesen User in seinem Ursprungszustand wiederherstellen?" } }, "dashboard": { "title": "Admin Dashboard", "welcome": "Willkommen" }, "general": { "all_rights_reserved": "All Rights Reserved.", "are_you_sure": "Sind Sie sicher?", "boilerplate_link": "Laravel AdminPanel", "continue": "Weiter", "member_since": "Member since", "minutes": "Minuten", "search_placeholder": "Suchen...", "see_all": { "messages": "Alle Nachrichten anzeigen", "notifications": "Alle anzeigen", "tasks": "Alle Aufgaben anzeigen" }, "status": { "offline": "Offline", "online": "Online" }, "timeout": "Sie wurden aus Sicherheitsgr\xFCnden auf Grund von Inaktivit\xE4t ausgeloggt.", "you_have": { "messages": "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", "notifications": "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", "tasks": "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, "search": { "empty": "Bitte geben Sie einen Suchbegriff.", "incomplete": "You must write your own search logic for this system.", "results": "Suchergebnisse f\xFCr :query", "title": "Suchergebnisse" }, "welcome": "<p>This is the AdminLTE theme by <a href=\"https:\/\/almsaeedstudio.com\/\" target=\"_blank\">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\r\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\r\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\r\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href=\"https:\/\/github.com\/rappasoft\/laravel-5-boilerplate\" target=\"_blank\">GitHub<\/a> page for more information and report any <a href=\"https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues\" target=\"_blank\">issues here<\/a>.<\/p>\r\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\r\n<p>- Viral Solani<\/p>" }, "emails": { "auth": { "click_to_confirm": "Click here to confirm your account:", "error": "Whoops!", "greeting": "Hello!", "password_cause_of_email": "You are receiving this email because we received a password reset request for your account.", "password_if_not_requested": "If you did not request a password reset, no further action is required.", "password_reset_subject": "Reset Password", "regards": "Regards,", "reset_password": "Click here to reset your password", "thank_you_for_using_app": "Thank you for using our application!", "trouble_clicking_button": "If you\u2019re having trouble clicking the \":action_text\" button, copy and paste the URL below into your web browser:" } }, "frontend": { "test": "Test", "tests": { "based_on": { "permission": "berechtigungsbasiert - ", "role": "rollenbasiert - " }, "js_injected_from_controller": "Javascript Injected from a Controller", "using_access_helper": { "array_permissions": "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", "array_permissions_not": "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", "array_roles": "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", "array_roles_not": "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", "permission_id": "Using Access Helper with Permission ID", "permission_name": "Using Access Helper with Permission Name", "role_id": "Using Access Helper with Role ID", "role_name": "Using Access Helper with Role Name" }, "using_blade_extensions": "Using Blade Extensions", "view_console_it_works": "View console, you should see 'it works!' which is coming from FrontendController@index", "you_can_see_because": "You can see this because you have the role of ':role'!", "you_can_see_because_permission": "You can see this because you have the permission of ':permission'!" }, "user": { "change_email_notice": "Wenn Sie Ihre E-Mail-Adresse \xE4ndern, werden Sie ausgeloggt, bis Sie Ihre neue E-Mail-Adresse best\xE4tigt haben.", "email_changed_notice": "Sie m\xFCssen Ihre E-Mail-Adresse best\xE4tigen, bevor Sie sich erneut einloggen k\xF6nnen.", "password_updated": "Passwort erfolgreich ge\xE4ndert.", "profile_updated": "Profil erfolgreich aktualisiert." }, "welcome_to": "Willkommen zum :place" } }, "de.tables": { "actions": "Aktionen", "activated": "Aktiviert", "activities": "Aktivit\xE4ten", "activity": "Aktivit\xE4t", "add_documents": "Dokumente hinzuf\xFCgen", "address": "Adresse", "adults": "Erwachsene", "ago": "Vor", "airport": "Flughafen", "alias": "alias", "boards": "Boards", "booking_status": "Buchungsstatus", "budget": "Budget", "categories": "Kategorien", "category": "Hotelkategorie", "catering": "Verpflegung", "color": "Farbe", "confirmed": "Best\xE4tigt", "content": "Inhalt", "created_at": "Erstellt am", "created_by": "Erstellt von", "date": "Datum", "description": "Beschreibung", "destination": "Ziel", "display_name": "Anzeigename", "duration": "Dauer", "earliest_start": "Fr\xFChester Start", "email": "Email", "email_verified_at": "Verifiziert am", "empty_table": "Keine Daten in der Tabelle verf\xFCgbar", "end": "Ende", "eventAction": "Eventaktion", "eventCategory": "Eventkategorie", "eventLabel": "Eventlabel", "first_name": "Vorname", "from": "Von", "full_name": "Namen", "group": "Gruppe", "groups": "Gruppen", "id": "ID", "install": "Installation", "kids": "Kinder", "last_login": "Letzter Login", "last_name": "Nachname", "latest_return": "Sp\xE4teste R\xFCckkehr", "locale": "Lokal", "lockout_time": "Sperrzeit", "login_failures": "Loginfehler", "message": "Benachrichtigung", "migrate": "Migrierung", "mobile": "Mobile", "name": "Name", "occupation": "Beruf", "offerCount": "Angebote", "online": "online", "owner": "Inhaber", "package": "Paket", "pending": "Ausstehend", "period": "Zeitraum", "permissions": "Berechtigungen", "phone": "Telefon", "roles": "Rollen", "start": "Start", "status": "Status", "subject": "Betreff", "text": "Text", "title": "Wunsch", "unconfirmed": "Unbest\xE4tigt", "uninstall": "Deinstallation", "updated_at": "Aktualisiert am", "url": "Url", "users": "Benutzer", "when": "Wann", "whitelabel": "Whitelabel" }, "de.validation": { "accepted": ":attribute muss akzeptiert werden.", "active_url": ":attribute ist keine g\xFCltige Internet-Adresse.", "after": ":attribute muss ein Datum nach dem :date sein.", "after_or_equal": ":attribute muss ein Datum nach dem :date oder gleich dem :date sein.", "alpha": ":attribute darf nur aus Buchstaben bestehen.", "alpha_dash": ":attribute darf nur aus Buchstaben, Zahlen, Binde- und Unterstrichen bestehen.", "alpha_num": ":attribute darf nur aus Buchstaben und Zahlen bestehen.", "array": ":attribute muss ein Array sein.", "attributes": { "address": "Adresse", "age": "Alter", "available": "verf\xFCgbar", "city": "Stadt", "content": "Inhalt", "country": "Land", "date": "Datum", "day": "Tag", "description": "Beschreibung", "email": "E-Mail-Adresse", "excerpt": "Auszug", "first_name": "Vorname", "gender": "Geschlecht", "hour": "Stunde", "last_name": "Nachname", "minute": "Minute", "mobile": "Handynummer", "month": "Monat", "name": "Name", "password": "Passwort", "password_confirmation": "Passwort-Best\xE4tigung", "phone": "Telefonnummer", "second": "Sekunde", "sex": "Geschlecht", "size": "Gr\xF6\xDFe", "time": "Uhrzeit", "title": "Titel", "username": "Benutzername", "year": "Jahr" }, "before": ":attribute muss ein Datum vor dem :date sein.", "before_or_equal": ":attribute muss ein Datum vor dem :date oder gleich dem :date sein.", "between": { "array": ":attribute muss zwischen :min & :max Elemente haben.", "file": ":attribute muss zwischen :min & :max Kilobytes gro\xDF sein.", "numeric": ":attribute muss zwischen :min & :max liegen.", "string": ":attribute muss zwischen :min & :max Zeichen lang sein." }, "boolean": ":attribute muss entweder 'true' oder 'false' sein.", "confirmed": ":attribute stimmt nicht mit der Best\xE4tigung \xFCberein.", "custom": { "attribute-name": { "rule-name": "custom-message" } }, "date": ":attribute muss ein g\xFCltiges Datum sein.", "date_equals": "The :attribute must be a date equal to :date.", "date_format": ":attribute entspricht nicht dem g\xFCltigen Format f\xFCr :format.", "different": ":attribute und :other m\xFCssen sich unterscheiden.", "digits": ":attribute muss :digits Stellen haben.", "digits_between": ":attribute muss zwischen :min und :max Stellen haben.", "dimensions": ":attribute hat ung\xFCltige Bildabmessungen.", "distinct": ":attribute beinhaltet einen bereits vorhandenen Wert.", "email": ":attribute muss eine g\xFCltige E-Mail-Adresse sein.", "exists": "Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.", "file": ":attribute muss eine Datei sein.", "filled": ":attribute muss ausgef\xFCllt sein.", "gt": { "array": ":attribute muss mindestens :min Elemente haben.", "file": ":attribute muss mindestens :min Kilobytes gro\xDF sein.", "numeric": ":attribute muss mindestens :min sein.", "string": ":attribute muss mindestens :min Zeichen lang sein." }, "gte": { "array": ":attribute muss gr\xF6\xDFer oder gleich :min Elemente haben.", "file": ":attribute muss gr\xF6\xDFer oder gleich :min Kilobytes sein.", "numeric": ":attribute muss gr\xF6\xDFer oder gleich :min sein.", "string": ":attribute muss gr\xF6\xDFer oder gleich :min Zeichen lang sein." }, "image": ":attribute muss ein Bild sein.", "in": "Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.", "in_array": "Der gew\xE4hlte Wert f\xFCr :attribute kommt nicht in :other vor.", "integer": ":attribute muss eine ganze Zahl sein.", "ip": ":attribute muss eine g\xFCltige IP-Adresse sein.", "ipv4": ":attribute muss eine g\xFCltige IPv4-Adresse sein.", "ipv6": ":attribute muss eine g\xFCltige IPv6-Adresse sein.", "json": ":attribute muss ein g\xFCltiger JSON-String sein.", "lt": { "array": ":attribute muss kleiner :min Elemente haben.", "file": ":attribute muss kleiner :min Kilobytes gro\xDF sein.", "numeric": ":attribute muss kleiner :min sein.", "string": ":attribute muss kleiner :min Zeichen lang sein." }, "lte": { "array": ":attribute muss kleiner oder gleich :min Elemente haben.", "file": ":attribute muss kleiner oder gleich :min Kilobytes sein.", "numeric": ":attribute muss kleiner oder gleich :min sein.", "string": ":attribute muss kleiner oder gleich :min Zeichen lang sein." }, "max": { "array": ":attribute darf nicht mehr als :max Elemente haben.", "file": ":attribute darf maximal :max Kilobytes gro\xDF sein.", "numeric": ":attribute darf maximal :max sein.", "string": ":attribute darf maximal :max Zeichen haben." }, "mimes": ":attribute muss den Dateityp :values haben.", "mimetypes": ":attribute muss den Dateityp :values haben.", "min": { "array": ":attribute muss mindestens :min Elemente haben.", "file": ":attribute muss mindestens :min Kilobytes gro\xDF sein.", "numeric": ":attribute muss mindestens :min sein.", "string": ":attribute muss mindestens :min Zeichen lang sein." }, "not_in": "Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.", "not_regex": ":attribute hat ein ung\xFCltiges Format.", "numeric": ":attribute muss eine Zahl sein.", "present": ":attribute muss vorhanden sein.", "regex": ":attribute Format ist ung\xFCltig.", "required": ":attribute muss ausgef\xFCllt sein.", "required_if": ":attribute muss ausgef\xFCllt sein, wenn :other :value ist.", "required_unless": ":attribute muss ausgef\xFCllt sein, wenn :other nicht :values ist.", "required_with": ":attribute muss angegeben werden, wenn :values ausgef\xFCllt wurde.", "required_with_all": ":attribute muss angegeben werden, wenn :values ausgef\xFCllt wurde.", "required_without": ":attribute muss angegeben werden, wenn :values nicht ausgef\xFCllt wurde.", "required_without_all": ":attribute muss angegeben werden, wenn keines der Felder :values ausgef\xFCllt wurde.", "same": ":attribute und :other m\xFCssen \xFCbereinstimmen.", "size": { "array": ":attribute muss genau :size Elemente haben.", "file": ":attribute muss :size Kilobyte gro\xDF sein.", "numeric": ":attribute muss gleich :size sein.", "string": ":attribute muss :size Zeichen lang sein." }, "starts_with": "The :attribute must start with one of the following: :values", "string": ":attribute muss ein String sein.", "timezone": ":attribute muss eine g\xFCltige Zeitzone sein.", "unique": ":attribute ist schon vergeben.", "uploaded": ":attribute konnte nicht hochgeladen werden.", "url": ":attribute muss eine URL sein.", "uuid": ":attribute muss ein UUID sein." }, "de.wish": { "view": { "adults": "Erwachsene", "airport": "Flughafen", "budget": "Budget", "category": "Hotelkategorie", "catering": "Verpflegung", "comment-header": "Nachricht an Agenten", "createdat": "Erstellt am", "createdby": "Erstellt von", "destination": "Destination", "duration": "Reisedauer", "earliest_start": "Fr\xFChester Start", "email": "E-Mail", "kids": "Kinder", "latest_return": "Sp\xE4teste R\xFCckkehr", "new_offers": "Neue Angebote", "offerCount": "Angebote", "offer_number": "Angebot Nummer", "owner": "Name", "stage": { "seller_empty": "Der Reisewunsch wurde am <b>:date</b> an Sie<br>\r\n                    \xFCbermittelt. Erstellen Sie jetzt ein Angebot.", "seller_message": "Der Reisewunsch wurde am <b>:date</b> an Sie<br>\r\n                    \xFCbermittelt. Der Kunder hat Ihnen eine Nachricht hinterlassen.", "seller_offer": "Der Reisewunsch wurde am <b>:date</b> an Sie<br>\r\n                    \xFCbermittelt. Sie haben ein Angebot erstellt.", "user_empty": "Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\r\n                    \xFCbermittelt. Leider liegt momentan noch kein Angebot vor.", "user_message": "Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\r\n                    \xFCbermittelt. Es gibt eine neue Nachricht f\xFCr Sie.", "user_offer": "Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\r\n                    \xFCbermittelt. Es gibt ein Angebot f\xFCr Sie." }, "status": "Status", "text": "Text", "title": "Wunschtitel", "whitelabel": "Whitelabel" } }, "en.alerts": { "backend": { "blogcategories": { "created": "The Blog Category was successfully created.", "deleted": "The Blog Category was successfully deleted.", "updated": "The Blog Category was successfully updated." }, "blogs": { "created": "The Blog was successfully created.", "deleted": "The Blog was successfully deleted.", "updated": "The Blog was successfully updated." }, "blogtags": { "created": "The Blog Tag was successfully created.", "deleted": "The Blog Tag was successfully deleted.", "updated": "The Blog Tag was successfully updated." }, "emailtemplates": { "deleted": "The Email Template was successfully deleted.", "updated": "The Email Template was successfully updated." }, "faqs": { "created": "The Faq was successfully created.", "deleted": "The Faq was successfully deleted.", "updated": "The Faq was successfully updated." }, "groups": { "created": "The Group was successfully created.", "deleted": "The Group was successfully deleted.", "updated": "The Group was successfully updated." }, "menus": { "created": "The Menu was successfully created.", "deleted": "The Menu was successfully deleted.", "updated": "The Menu was successfully updated." }, "pages": { "created": "The Page was successfully created.", "deleted": "The Page was successfully deleted.", "updated": "The Page was successfully updated." }, "permissions": { "created": "The permission was successfully created.", "deleted": "The permission was successfully deleted.", "updated": "The permission was successfully updated." }, "roles": { "created": "The role was successfully created.", "deleted": "The role was successfully deleted.", "updated": "The role was successfully updated." }, "settings": { "updated": "The Setting was successfully updated." }, "users": { "confirmation_email": "A new confirmation e-mail has been sent to the address on file.", "created": "The user was successfully created.", "deleted": "The user was successfully deleted.", "deleted_permanently": "The user was deleted permanently.", "restored": "The user was successfully restored.", "session_cleared": "The user's session was successfully cleared.", "updated": "The user was successfully updated.", "updated_password": "The user's password was successfully updated." }, "whitelabels": { "created": "The Whitelabel was successfully created.", "deleted": "The Whitelabel was successfully deleted.", "updated": "The Whitelabel was successfully updated." }, "wishes": { "created": "The Wish was successfully created.", "deleted": "The Wish was successfully deleted.", "updated": "The Wish was successfully updated." } }, "frontend": { "offers": { "created": "Offer successfully created" }, "wishes": { "created": "The Wish was successfully created.", "deleted": "The Wish was successfully deleted.", "updated": "The Wish was successfully updated." } } }, "en.api": { "messages": { "forgot_password": { "success": "We have sent email with reset password link. Please check your inbox!.", "validation": { "email_not_found": "This email address is not registered." } }, "login": { "failed": "Invalid Credentials! Please try again.", "success": "Login Successfull." }, "logout": { "success": "Successfully logged out." }, "refresh": { "status": "Ok", "token": { "not_provided": "Token not provided." } }, "registeration": { "success": "You have registered successfully. Please check your email for activation!" } } }, "en.auth": { "failed": "These credentials do not match our records.", "general_error": "You do not have access to do that.", "socialite": { "unacceptable": ":provider is not an acceptable login type." }, "throttle": "Too many login attempts. Please try again in :seconds seconds.", "unknown": "An unknown error occurred" }, "en.button": { "cancel": "cancel", "clone": "Clone", "close": "close", "confirm": "confirm", "copy": "Copy", "create": "create", "delete": "delete", "delete_all": "delete all", "edit": "edit", "language": "Language", "mark_as_read": "mark as read", "required": "required", "restore": "restore", "save": "save", "save_and_close": "save and close", "save_and_create": "save and create", "save_and_create_new": "save and create new" }, "en.buttons": { "backend": { "access": { "users": { "activate": "Activate", "change_password": "Change Password", "clear_session": "Clear Session", "deactivate": "Deactivate", "delete_permanently": "Delete Permanently", "login_as": "Login As :user", "resend_email": "Resend Confirmation E-mail", "restore_user": "Restore User" } } }, "emails": { "auth": { "confirm_account": "Confirm Account", "reset_password": "Reset Password" } }, "general": { "cancel": "Cancel", "continue": "Continue", "crud": { "add": "Add", "create": "Create", "delete": "Delete", "edit": "Edit", "update": "Update", "view": "View" }, "preview": "Preview", "save": "Save", "view": "View" }, "wishes": { "frontend": { "create_autooffer": "Create Auto Offer", "create_offer": "Create Offer" } } }, "en.comment": { "comments": "Comments" }, "en.dashboard": { "current_month": "current month", "daily_average_wish": "wishes per day", "date": "date", "monthly_average_wish": "wishes per month", "reaction_time_average_day": "reaction time \/ day", "reaction_time_average_month": "reaction time \/ month", "source_2019": "period: 2019", "total_groups": "all groups", "total_sellers": "all sellers", "total_wishes": "all wishes", "wish": "wish", "wishes": "wishes" }, "en.email": { "account": { "activate": "Login", "activated": "A new :account account for the :whitelabel wish portal has been created for you.", "greeting": "Thank you for your trust in our services", "hello": "Hello :username", "link": "You can login with your user data via click on the following button.", "password": "Password : :password", "subject": "Account Details for :username at :company", "subject_for_executive": "Your login data for desiretec portal", "subject_for_seller": "Your login data for desiretec whitelabel", "username": "Email address: :email" }, "footer": { "line1": "Sunny greetings", "line2": "Your desiretec team", "line3": "DesireTec GmbH", "line4": "Auf dem Sande 1 | D-20457 Hamburg | Deutschland", "line5": "Gesch\xE4ftsf\xFChrung: John Muster", "line6": "Sitz der Gesellschaft: Hamburg", "line7": "Handelsregister: Amtsgericht Hamburg HRB XXXXX", "line8": "BAN: DEXX XXXX XXXX XXXX XXXX XX", "line9": "BIC: XXXXXXXXXX" }, "message": { "created-seller": "You received a new message from your customer", "created-user": "Important: There is a new message from your consultant waiting in the desiretec travel wish portal for you", "new": "New message!", "subject": "You received a new message", "token": "Your login link" }, "offer": { "created": "Your offer has been created successfully", "created_user": "You received a new offer for your :whitelabel travel wish!" }, "token": "Your login link: <a href=\":token\">:token<\/a>", "wish": { "seller_trendtours": "A new travel wish is waiting for you!", "subject_for_seller": "A new travel wish is waiting for you!", "user": "Welcome to the desiretec wish portal! Your travel wish has been created successfully.", "user_callback_seller": "Your customer is asking for a callback", "user_cnt_seller": "Your offer has been successful, a new contact has been created!", "user_trendtours": "Welcome to the trendtours wish portal! Your travel wish has been created successfully." } }, "en.exceptions": { "backend": { "access": { "permissions": { "already_exists": "That permission already exists. Please choose a different name.", "create_error": "There was a problem creating this permission. Please try again.", "delete_error": "There was a problem deleting this permission. Please try again.", "not_found": "That permission does not exist.", "update_error": "There was a problem updating this permission. Please try again." }, "roles": { "already_exists": "That role already exists. Please choose a different name.", "cant_delete_admin": "You can not delete the Administrator role.", "create_error": "There was a problem creating this role. Please try again.", "delete_error": "There was a problem deleting this role. Please try again.", "has_users": "You can not delete a role with associated users.", "needs_permission": "You must select at least one permission for this role.", "not_found": "That role does not exist.", "update_error": "There was a problem updating this role. Please try again." }, "users": { "cant_deactivate_self": "You can not do that to yourself.", "cant_delete_admin": "You can not delete Admin.", "cant_delete_own_session": "You can not delete your own session.", "cant_delete_self": "You can not delete yourself.", "cant_restore": "This user is not deleted so it can not be restored.", "change_mismatch": "That is not your old password.", "create_error": "There was a problem creating this user. Please try again.", "delete_error": "There was a problem deleting this user. Please try again.", "delete_first": "This user must be deleted first before it can be destroyed permanently.", "email_error": "That email address belongs to a different user.", "mark_error": "There was a problem updating this user. Please try again.", "not_found": "That user does not exist.", "restore_error": "There was a problem restoring this user. Please try again.", "role_needed": "You must choose at least one role.", "role_needed_create": "You must choose at lease one role.", "session_wrong_driver": "Your session driver must be set to database to use this feature.", "update_error": "There was a problem updating this user. Please try again.", "update_password_error": "There was a problem changing this users password. Please try again." } }, "blogcategories": { "already_exists": "That Blog Category already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Category. Please try again.", "delete_error": "There was a problem deleting this Blog Category. Please try again.", "not_found": "That Blog Category does not exist.", "update_error": "There was a problem updating this Blog Category. Please try again." }, "blogtags": { "already_exists": "That Blog Tag already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Tag. Please try again.", "delete_error": "There was a problem deleting this Blog Tag. Please try again.", "not_found": "That Blog Tag does not exist.", "update_error": "There was a problem updating this Blog Tag. Please try again." }, "menus": { "already_exists": "That Menu already exists. Please choose a different name.", "create_error": "There was a problem creating this Menu. Please try again.", "delete_error": "There was a problem deleting this Menu. Please try again.", "not_found": "That Menu does not exist.", "update_error": "There was a problem updating this Menu. Please try again." }, "modules": { "already_exists": "That Module already exists. Please choose a different name.", "create_error": "There was a problem creating this Module. Please try again.", "delete_error": "There was a problem deleting this Module. Please try again.", "not_found": "That Module does not exist.", "update_error": "There was a problem updating this Module. Please try again." }, "pages": { "already_exists": "That Page already exists. Please choose a different name.", "create_error": "There was a problem creating this Page. Please try again.", "delete_error": "There was a problem deleting this Page. Please try again.", "not_found": "That Page does not exist.", "update_error": "There was a problem updating this Page. Please try again." }, "settings": { "update_error": "There was a problem updating this Settings. Please try again." } }, "frontend": { "auth": { "confirmation": { "already_confirmed": "Your account is already confirmed.", "confirm": "Confirm your account!", "created_confirm": "Your account was successfully created. We have sent you an e-mail to confirm your account.", "created_pending": "Your account was successfully created and is pending approval. An e-mail will be sent when your account is approved.", "mismatch": "Your confirmation code does not match.", "not_found": "That confirmation code does not exist.", "resend": "Your account is not confirmed. Please click the confirmation link in your e-mail, or <a href=http:\/\/localhost:8000\/account\/confirm\/resend\/:user_id>click here<\/a> to resend the confirmation e-mail.", "resent": "A new confirmation e-mail has been sent to the address on file.", "success": "Your account has been successfully confirmed!" }, "deactivated": "Your account has been deactivated.", "email_taken": "That e-mail address is already taken.", "password": { "change_mismatch": "That is not your old password." }, "registration_disabled": "Registration is currently closed." } } }, "en.general": { "currency": "\u20AC" }, "en.history": { "backend": { "blogcategories": { "created": "created Blog Category", "deleted": "deleted Blog Category", "updated": "updated Blog Category" }, "blogs": { "created": "created Blog", "deleted": "deleted Blog", "updated": "updated Blog" }, "blogtags": { "created": "created Blog Tag", "deleted": "deleted Blog Tag", "updated": "updated Blog Tag" }, "none": "There is no recent history.", "none_for_entity": "There is no history for this :entity.", "none_for_type": "There is no history for this type.", "pages": { "created": "created Page", "deleted": "deleted Page", "updated": "updated Page" }, "permissions": { "created": "created permission", "deleted": "deleted permission", "updated": "updated permission" }, "recent_history": "Recent History", "roles": { "created": "created role", "deleted": "deleted role", "updated": "updated role" }, "users": { "changed_password": "changed password for user", "created": "created user", "deactivated": "deactivated user", "deleted": "deleted user", "permanently_deleted": "permanently deleted user", "reactivated": "reactivated user", "restored": "restored user", "updated": "updated user" } } }, "en.http": { "404": { "description": "Sorry, but the page you were trying to view does not exist.", "title": "Page Not Found" }, "503": { "description": "Be right back.", "title": "Be right back." } }, "en.labels": { "about": "About us", "account": "Account", "activated": "activated", "address": "Address", "attendee": "Attendee", "attendees": "Attendees", "backend": { "access": { "permissions": { "create": "Create Permission", "edit": "Edit Permission", "management": "Permission Management", "table": { "display_name": "Display Name", "permission": "Permission", "sort": "Sort", "status": "Status", "total": "role total|roles total" } }, "roles": { "create": "Create Role", "edit": "Edit Role", "management": "Role Management", "table": { "number_of_users": "Number of Users", "permissions": "Permissions", "role": "Role", "sort": "Sort", "total": "role total|roles total" } }, "users": { "active": "Active Users", "all_permissions": "All Permissions", "change_password": "Change Password", "change_password_for": "Change Password for :user", "create": "Create User", "deactivated": "Deactivated Users", "deleted": "Deleted Users", "edit": "Edit User", "edit-profile": "Edit Profile", "management": "User Management", "no_permissions": "No Permissions", "no_roles": "No Roles to set.", "permissions": "Permissions", "table": { "confirmed": "Confirmed", "created": "Created", "email": "E-Mail-Adresse", "first_name": "First Name", "id": "ID", "last_name": "Last Name", "last_updated": "Last Updated", "no_deactivated": "No Deactivated Users", "no_deleted": "No Deleted Users", "roles": "Roles", "total": "user total|users total" }, "tabs": { "content": { "overview": { "avatar": "Avatar", "confirmed": "Confirmed", "created_at": "Created At", "deleted_at": "Deleted At", "email": "Email address", "last_updated": "Last Updated", "name": "Name", "status": "Status", "whitelabels": "Whitelabels" } }, "titles": { "history": "History", "overview": "Overview" } }, "view": "View User" } }, "blogcategories": { "create": "Create Blog Category", "edit": "Edit Blog Category", "management": "Blog Category Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "status": "Status", "title": "Blog Category" }, "title": "Blog Category" }, "blogs": { "create": "Create Blog", "edit": "Edit Blog", "management": "Blog Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "publish": "PublishDateTime", "status": "Status", "title": "Blog" }, "title": "Blogs" }, "blogtags": { "create": "Create Blog Tag", "edit": "Edit Blog Tag", "management": "Blog Tag Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "status": "Status", "title": "Blog Tag" }, "title": "Blog Tags" }, "distributions": { "create": "Create Distribution", "edit": "Edit Distribution", "management": "Distributions", "no_distributions": "no Distributions", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "description": "Description", "display_name": "Display Name", "name": "Distribution", "whitelabel": "Whitelabel" }, "title": "Distributions" }, "emailtemplates": { "create": "Create Email Template", "edit": "Edit Email Template", "management": "Email Template Management", "table": { "all": "All", "createdat": "Created At", "status": "Status", "subject": "Subject", "title": "Title", "updatedat": "Updated At" }, "title": "Email Templates" }, "faqs": { "create": "Create FAQ", "edit": "Edit FAQ", "management": "FAQ Management", "table": { "all": "All", "answer": "Answer", "createdat": "Created At", "createdby": "Created By", "publish": "PublishDateTime", "question": "Question", "status": "Status", "title": "FAQs", "updatedat": "Updated At" }, "title": "FAQ" }, "groups": { "create": "Create Group", "edit": "Edit Group", "management": "Groups", "no_whitelabels": "no Whitelabels", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "description": "Description", "display_name": "Display Name", "name": "Group", "status": "Status", "users": "Users", "whitelabel": "Whitelabel" }, "title": "Groups" }, "menus": { "create": "Create Menu", "edit": "Edit Menu", "field": { "icon": "Icon Class", "icon_title": "Font Awesome Class. eg. fa-edit", "items": "Menu Items", "name": "Name", "open_in_new_tab": "Open URL in new tab", "type": "Type", "url": "URL", "url_type": "URL Type", "url_types": { "route": "Route", "static": "Static" }, "view_permission_id": "Permission" }, "management": "Menu Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "name": "Name", "type": "Type" }, "title": "Menus" }, "modules": { "create": "Create Module", "edit": "Edit Module", "form": { "controller_name": "Controller &nbsp;Name", "create_file": "Create", "directory_name": "Directory Name", "edit_file": "Edit", "event": "Event Name", "form_file": "Form", "index_file": "Index", "model_name": "Model Name", "name": "Module Name", "namespace": "Namespace", "repo_name": "Repository Name", "resource_controller": "Resourceful Controller", "resource_route": "Resourceful Routes", "route_controller_name": "Controller &nbsp;Name", "route_name": "Route Name", "table_controller_name": "Controller &nbsp;Name", "table_name": "Table Name", "url": "View Route", "view_permission_id": "View Permission", "views_directory": "Directory &nbsp;&nbsp;&nbsp;Name" }, "management": "Module Management", "table": { "created_by": "Created By", "name": "Module Name", "url": "Module View Route", "view_permission_id": "View Permission" }, "title": "Module" }, "pages": { "create": "Create Page", "edit": "Edit Page", "management": "Page Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "status": "Status", "title": "Title", "updatedat": "Updated At" }, "title": "Pages" }, "profile_updated": "Your profile has been updated.", "settings": { "companydetails": "Company Contact Details", "edit": "Edit Settings", "footer": "Footer Settings", "google": "Google Analytics Track Code", "mail": "Mail Settings", "management": "Settings Management", "seo": "SEO Settings", "terms": "Terms and Condition Settings", "title": "Settings" }, "whitelabels": { "create": "Create Whitelabel", "edit": "Edit Whitelabel", "management": "Whitelabels", "management_client": "Whitelabel", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "display_name": "Whitelabel", "distribution": "Distribution", "ga_view_id": "Google View Id", "name": "Identifier", "status": "Status" }, "title": "Whitelabels" }, "wishes": { "create": "Create Wish", "edit": "Edit Wish", "management": "Wishes", "no_whitelabels": "no Whitelabels", "table": { "airport": "Airport", "all": "All", "createdat": "Created At", "createdby": "Created By", "destination": "Destination", "earliest_start": "Earliest Start", "group": "Group", "latest_return": "Latest Return", "offerCount": "Offers", "status": "Status", "title": "Wish", "whitelabel": "Whitelabel" }, "title": "Wishes" } }, "cancel": "Cancel", "contact": "Contact", "content": "Content", "country": "Country", "current": "Current", "current_password": "Current Password", "description": "Description", "details": "Details", "documents": "Documents", "domain": "Domain", "download": "Download", "email": "Email address", "events": "Events", "export_all": "Export All", "export_selected": "Export Selected", "fax": "Fax", "feedback": "Feedback", "finish": "Finish", "first_name": "Firstname", "frontend": { "agents": { "create": "Create new Agent", "management": "Agenten", "table": { "avatar": "Avatar", "created_at": "Created at", "createdby": "Created by", "display_name": "Display name", "id": "Id", "name": "Name", "status": "Status" } }, "auth": { "login_box_title": "Login", "login_button": "Login", "login_with": "Login with :social_media", "register_box_title": "Register", "register_button": "Register", "remember_me": "Remember Me" }, "dashboard": { "analytics": { "answered_wishes": "Answered Wishes", "bookings": "Bookings", "changed_wishes": "Changed Wishes", "created_wishes": "Created Wishes", "free_text": "Free text", "latest_answered_wishes": "Latest Answered Wishes", "latest_reaction_quota": "Latest Reaction Quota", "reaction_quota": "Reaction Quota", "reaction_time": "Reaction Time" } }, "macros": { "country": { "alpha": "Country Alpha Codes", "alpha2": "Country Alpha 2 Codes", "alpha3": "Country Alpha 3 Codes", "numeric": "Country Numeric Codes" }, "macro_examples": "Macro Examples", "state": { "mexico": "Mexico State List", "us": { "armed": "US Armed Forces", "outlying": "US Outlying Territories", "us": "US States" } }, "territories": { "canada": "Canada Province & Territories List" }, "timezone": "Timezone" }, "offers": { "create": "Create new offer", "management": "Offers", "offers_for_wish": "Offer for", "table": { "all": "All", "createdat": "Created at", "createdby": "Created by", "status": "Status", "title": "Offer" } }, "passwords": { "forgot_password": "Forgot Your Password?", "reset_password_box_title": "Reset Password", "reset_password_button": "Reset Password", "send_password_reset_link_button": "Send Password Reset Link" }, "user": { "passwords": { "change": "Change Password" }, "profile": { "address": "Address", "avatar": "Avatar", "city": "City", "country": "Country", "created_at": "Created at", "edit_information": "Edit Information", "email": "Email address", "first_name": "First name", "last_name": "Last name", "last_updated": "Last updated", "ssn": "SSN", "update_information": "Update information", "zipcode": "Zip" } }, "wishes": { "add-comment": "Add comment", "created_at": "Created at", "edit": "Edit wish", "goto": "View travel wish", "night": ":value night|:value nights", "table": { "adults": "adult|adults", "kids": "{0}|kid|kids" }, "week": ":value week|:value weeks", "wishes": "Travel wishes" } }, "full_name": "Full Name", "general": { "actions": "Actions", "active": "Active", "all": "All", "buttons": { "save": "Save", "update": "Update" }, "custom": "Custom", "hide": "Hide", "inactive": "Inactive", "no": "No", "none": "None", "show": "Show", "toggle_navigation": "Toggle Navigation", "yes": "Yes" }, "go_back": "Back!", "go_next": "Next!", "id": "Id", "inbox": "Inbox", "interest": "Interest", "join": "Join Now", "language": "Language", "last_name": "Lastname", "login": "Sign", "logo": "Logo", "logout": "Logout", "message": "Message", "message_text": "Message text", "mobile": "Mobile", "name": "Name", "new": "New", "note": "note", "notes": "notes", "notifications": "Notifications", "now": "Now", "occupation": "Occupation", "ok": "Ok", "online": "Online", "password": "Password", "password_confirm": "Confirm Password", "personal_timezone": "Timezone", "phone": "Phone", "plus": "More", "posts": "Posts", "ratings": "Ratings", "recipient": "Recipient", "register": "Register", "reset": "Reset Password", "reset_link": "Send Password Reset Link", "review": "Review", "role": "Role", "send": "Send Now", "street": "Street", "subject": "Subject", "tel": "Telephone number", "title": "Title", "user": "User", "username": "Username", "verify": "Email Verification", "verify_email": "Verify Your Email Address", "warning": "Warning", "whitelabel": "Whitelabel", "whitelabel_executive": "Whitelabel executive", "whitelabel_information": "Whitelabel information", "whitelabel_subtitle": "New subtitle", "whitelabel_title": "New whitelabel", "wish": "Wish", "wishes": "Wishes", "zipcode": "Zip" }, "en.log-viewer::general": { "all": "All", "date": "Date" }, "en.log-viewer::levels": { "alert": "Alert", "all": "All", "critical": "Critical", "debug": "Debug", "emergency": "Emergency", "error": "Error", "info": "Info", "notice": "Notice", "warning": "Warning" }, "en.menus": { "access_management": "Access Management", "backend": { "access": { "permissions": { "all": "All Permissions", "create": "Create Permission", "edit": "Edit Permission", "main": "Permissions", "management": "Permission Management" }, "roles": { "all": "All Roles", "create": "Create Role", "edit": "Edit Role", "main": "Roles", "management": "Role Management" }, "title": "Access Management", "users": { "all": "All Users", "change-password": "Change Password", "create": "Create User", "deactivated": "Deactivated Users", "deleted": "Deleted Users", "edit": "Edit User", "main": "Users", "view": "View User" } }, "blog": { "all": "All Blog Page", "create": "Create Blog Page", "edit": "Edit Blog Page", "main": "Blog Pages", "management": "Blog Management" }, "blogcategories": { "all": "All Blog Categories", "create": "Create Blog Category", "edit": "Edit Blog Category", "main": "CMS Pages", "management": "Blog Category Management" }, "blogs": { "all": "All Blog", "create": "Create Blog", "edit": "Edit Blog", "main": "Blogs", "management": "Blog Management" }, "blogtags": { "all": "All Blog Tag", "create": "Create Blog Tag", "edit": "Edit Blog Tag", "main": "Blog Tags", "management": "Blog Tag Management" }, "distributions": { "all": "All Distributions", "create": "Create Distribution", "edit": "Edit Distribution", "main": "Distributions", "management": "Distribution Management" }, "faqs": { "all": "All Faq Page", "create": "Create Faq Page", "edit": "Edit Faq Page", "main": "Faq Pages", "management": "Faq Management" }, "groups": { "all": "All Groups", "create": "Create Group", "edit": "Edit Group", "main": "Groups", "management": "Group Management" }, "log-viewer": { "dashboard": "Dashboard", "logs": "Logs", "main": "Log Viewer" }, "menus": { "all": "All Menu", "create": "Create Menu", "edit": "Edit Menu", "main": "Menus", "management": "Menu Management" }, "modules": { "all": "All Modules Page", "create": "Create Module Page", "main": "Module Pages", "management": "Module Management" }, "pages": { "all": "All Pages", "create": "Create Page", "edit": "Edit Page", "main": "Pages", "management": "Page Management" }, "settings": { "all": "All Settings", "create": "Create Settings", "edit": "Edit Settings", "main": "Settings", "management": "Settings Management" }, "sidebar": { "dashboard": "Dashboard", "general": "General", "system": "System" }, "whitelabels": { "all": "All Whitelabels", "create": "Create Whitelabel", "edit": "Edit Whitelabel", "main": "Whitelabels", "management": "Whitelabel Management" }, "wishes": { "all": "All Wishes", "create": "Create Wish", "edit": "Edit Wish", "main": "Wishes", "management": "Wish Management" } }, "categories_management": "Categories Management", "frontend": { "agents": { "all": "All Menu", "create": "Create Agent", "edit": "Edit Menu", "main": "Menus", "management": "Menu Management" } }, "groups_management": "Groups Management", "language-picker": { "langs": { "ar": "Arabic", "da": "Danish", "de": "German", "el": "Greek", "en": "English", "es": "Spanish", "fr": "French", "id": "Indonesian", "it": "Italian", "nl": "Dutch", "pt_BR": "Brazilian Portuguese", "ru": "Russian", "sv": "Swedish", "th": "Thai" }, "language": "Language" }, "languages": "Languages", "languages_lines": "Languages Lines", "list": { "status": { "active": "active", "all": "All travel wishes", "deleted": "deleted", "inactive": "inactive" } }, "list_of_wishes": "List wishes", "sellers": "Sellers", "sellers_management": "Sellers Management", "wishes": "Wishes", "wishes_management": "Wishes Management" }, "en.messages": { "_account": "Do you have an account", "account": "Don't have an account", "background": "The background image has to be--- x --- Pixel in PNG \/ JPG \/ JPEG format. Maximum size --- KB.", "contact": "Contact us", "contact_success": "Your message has been sent successfully", "created": ":attribute wurde erfolgreich erstellt", "delete": "Do you really want to delete this item? Continue?", "delete_canceled": "Delete canceled", "deleted": ":attribute wurde erfolgreich gel\xF6scht", "destroy": "Do you really want to delete this item permanently? Continue?", "destroyed": ":attribute wurde endg\xFCltig gel\xF6scht", "event_upcoming": "Event Upcoming", "favicon": "Favicon has to be --- x --- Pixel in PNG \/ ICON format. Maximum size --- KB.", "forgot": "Forgot Password", "here": "login here", "install": "Module[:attribute] has been installed successfully", "join": "you successfully joined event", "login": "Login", "logo": "Logo has to be --- x --- Pixel in PNG \/ JPG \/ JPEG \/ SVG format. Maximum size --- KB.", "new_posts": "Latest Posts", "recent_event": "Recent event", "register": "Create your account", "remember": "Remember me", "reset": "Reset Password", "restore": "Do you really want to restore this item? Continue?", "restore_canceled": "Restore canceled", "restored": ":attribute wurde erfolgreich wiederhergestellt", "show_all": "Show all articles", "show_all_events": "Show all events", "sign_up": "Sign Up", "terms": "Agree to terms and conditions", "title": "Welcome Back", "uninstall": "Module[:attribute] has been uninstalled successfully", "unsaved": "You have unsaved changes, save and proceed ?", "updated": ":attribute wurde erfolgreich aktualisiert", "verify": "Before proceeding, please check your email for a verification link.", "verify_link": "If you did not receive the email,", "verify_request": "click here to request another.", "whitelabel_user": "Create an associate whitelabel user" }, "en.modals": { "activated": "Activated", "active": "Active", "add_document": "Add document", "add_documents": "Add documents", "address": "Address", "adults": "Adults", "airport": "Airport", "boards": "Boards", "budget": "Budget", "categories": "Categories", "category": "Hotel category", "catering": "Hotel catering", "click_to_upload": "Click to upload", "color": "Color", "confirmed": "Confirmed", "content": "Content", "create": "Create", "created_at": "Created at", "createdat": "created at", "createdby": "created by", "current": "Current", "dashboard": "Dashboard", "description": "Description", "destination": "Destination", "display_name": "Display name", "domain": "Domain", "duration": "duration", "earliest_start": "Earliest Start", "email": "Email", "email_verified_at": "Verified at", "end": "End", "first_name": "First name", "full_name": "Name", "group": "Group", "groups": "Groups", "id": "ID", "image": "Image", "kids": "Children", "last_login": "Last login ", "last_name": "Last name", "latest_return": "Latest Return", "lockout_time": "Lockout time", "login_failures": "Login failures", "logs": "Logs", "mobile": "Mobile", "name": "Name", "occupation": "Occupation", "offerCount": "Offers", "online": "Online", "owner": "Owner", "password": "Password", "password_confirm": "Password confirmation", "pending": "Pending", "period": "Period", "permission": "Permission", "permissions": "Permissions", "phone": "Phone", "role": "Role", "roles": "Roles", "start": "Start", "status": "Status", "summary": "Summary", "text": "Text", "title": "Title", "unconfirmed": "Unconfirmed", "updated_at": "Updated at", "upload_documents": "Upload documents", "upload_photo": "Upload photo", "upload_tip": "Upload tip", "url": "Url", "users": "User", "value": "Value", "whitelabel": "Whitelabel", "wish": "Wish" }, "en.navs": { "frontend": { "agents": "Agents", "create_wish": "Create wish", "dashboard": "Dashboard", "login": "Login", "macros": "Macros", "offers": "My offers", "register": "Register", "user": { "account": "Account", "administration": "Administration", "agents": "Agents", "change_password": "Change password", "my_information": "My information", "profile": "Profile" }, "wishes": "My wishes", "wisheslist": "Wishes" }, "general": { "home": "Home", "logout": "Logout" } }, "en.notification": { "created": "<span class=\"badge badge-flat border-success text-success-600 rounded-0 mr-2\"> Created <\/span> <strong>:name<\/strong> (:url) has been <strong>successfully created<\/strong> by <strong>:user<\/strong>", "deleted": "<span class=\"badge badge-flat border-danger text-danger-600 rounded-0 mr-2\"> Deleted <\/span><strong>:name<\/strong> (:url) has been <strong>successfully deleted<\/strong> by <strong>:user<\/strong>", "restored": "<span class=\"badge badge-flat border-info text-info-600 rounded-0 mr-2\"> Restored <\/span><strong>:name<\/strong> (:url) has been <strong>successfully restored<\/strong> by <strong>:user<\/strong>" }, "en.pagination": { "next": "Next &raquo;", "previous": "&laquo; Previous" }, "en.passwords": { "password": "Passwords must be at least six characters and match the confirmation.", "reset": "Your password has been reset!", "sent": "We have e-mailed your password reset link!", "token": "This password reset token is invalid.", "user": "We can't find a user with that e-mail address." }, "en.roles": { "administrator": "Administrator", "user": "User" }, "en.seller": { "agent": { "create": "create agent", "email": "email address", "email_placeholder": "seller@seller.com", "tel": "Tel.", "tel_placeholder": "01761234567" } }, "en.strings": { "backend": { "access": { "users": { "delete_user_confirm": "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", "if_confirmed_off": "(If confirmed is off)", "restore_user_confirm": "Restore this user to its original state?" } }, "dashboard": { "title": "Administrative Dashboard", "welcome": "Welcome" }, "general": { "all_rights_reserved": "All Rights Reserved.", "are_you_sure": "Are you sure you want to do this?", "boilerplate_link": "Laravel AdminPanel", "continue": "Continue", "member_since": "Member since", "minutes": " minutes", "search_placeholder": "Search...", "see_all": { "messages": "See all messages", "notifications": "View all", "tasks": "View all tasks" }, "status": { "offline": "Offline", "online": "Online" }, "timeout": "You were automatically logged out for security reasons since you had no activity in ", "you_have": { "messages": "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", "notifications": "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", "tasks": "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, "search": { "empty": "Please enter a search term.", "incomplete": "You must write your own search logic for this system.", "results": "Search Results for :query", "title": "Search Results" }, "welcome": "<p>This is the AdminLTE theme by <a href=\"https:\/\/almsaeedstudio.com\/\" target=\"_blank\">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\r\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\r\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\r\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href=\"https:\/\/github.com\/rappasoft\/laravel-5-boilerplate\" target=\"_blank\">GitHub<\/a> page for more information and report any <a href=\"https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues\" target=\"_blank\">issues here<\/a>.<\/p>\r\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\r\n<p>- Viral Solani<\/p>" }, "emails": { "auth": { "click_to_confirm": "Click here to confirm your account:", "error": "Whoops!", "greeting": "Hello!", "password_cause_of_email": "You are receiving this email because we received a password reset request for your account.", "password_if_not_requested": "If you did not request a password reset, no further action is required.", "password_reset_subject": "Reset Password", "regards": "Regards,", "reset_password": "Click here to reset your password", "thank_you_for_using_app": "Thank you for using our application!", "trouble_clicking_button": "If you\u2019re having trouble clicking the \":action_text\" button, copy and paste the URL below into your web browser:" } }, "frontend": { "test": "Test", "tests": { "based_on": { "permission": "Permission Based - ", "role": "Role Based - " }, "js_injected_from_controller": "Javascript Injected from a Controller", "using_access_helper": { "array_permissions": "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", "array_permissions_not": "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", "array_roles": "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", "array_roles_not": "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", "permission_id": "Using Access Helper with Permission ID", "permission_name": "Using Access Helper with Permission Name", "role_id": "Using Access Helper with Role ID", "role_name": "Using Access Helper with Role Name" }, "using_blade_extensions": "Using Blade Extensions", "view_console_it_works": "View console, you should see 'it works!' which is coming from FrontendController@index", "you_can_see_because": "You can see this because you have the role of ':role'!", "you_can_see_because_permission": "You can see this because you have the permission of ':permission'!" }, "user": { "change_email_notice": "If you change your e-mail you will be logged out until you confirm your new e-mail address.", "email_changed_notice": "You must confirm your new e-mail address before you can log in again.", "password_updated": "Password successfully updated.", "profile_updated": "Profile successfully updated." }, "welcome_to": "Welcome to :place" } }, "en.tables": { "actions": "Actions", "activated": "Activated", "activities": "Activities", "activity": "Activity", "add_documents": "Add documents", "address": "Address", "adults": "Adults", "ago": "Ago", "airport": "Airport", "alias": "Alias", "boards": "Boards", "booking_status": "Booking status", "budget": "Budget", "categories": "Categories", "category": "Hotel category", "catering": "Hotel catering", "color": "Color", "confirmed": "Confirmed", "content": "Content", "created_at": "Created at", "created_by": "Created by", "date": "Date", "description": "Description", "destination": "Destination", "display_name": "Display name", "duration": "Duration", "earliest_start": "Earliest start", "email": "Email", "email_verified_at": "Verified at", "empty_table": "No data accessable in the table", "end": "End", "eventAction": "Event Action", "eventCategory": "Event Category", "eventLabel": "Event Label", "first_name": "First name", "from": "From", "full_name": "Name", "group": "Group", "groups": "Groups", "id": "Id", "install": "Install", "kids": "Children", "last_login": "Last login ", "last_name": "Last name", "latest_return": "Latest return", "locale": "Locale", "lockout_time": "Lockout time", "login_failures": "Login failures", "message": "Message", "migrate": "Migrate", "mobile": "Mobile", "name": "Name", "occupation": "Occupation", "offerCount": "Offer count", "online": "online", "owner": "Owner", "package": "Package", "pending": "Pending", "period": "Period", "permissions": "Permissions", "phone": "Phone", "roles": "Roles", "start": "Start", "status": "Status", "subject": "Subject", "text": "Text", "title": "Wish", "unconfirmed": "Unconfirmed", "uninstall": "Uninstall", "updated_at": "Updated at", "url": "Url", "users": "Users", "when": "When", "whitelabel": "Whitelabel" }, "en.validation": { "accepted": "The :attribute must be accepted.", "active_url": "The :attribute is not a valid URL.", "after": "The :attribute must be a date after :date.", "after_or_equal": "The :attribute must be a date after or equal to :date.", "alpha": "The :attribute may only contain letters.", "alpha_dash": "The :attribute may only contain letters, numbers, and dashes.", "alpha_num": "The :attribute may only contain letters and numbers.", "api": { "confirmaccount": { "already_confirmed": "Account is already confirmed.", "invalid_email": "Email is not register with fin builders", "invalid_otp": "Please enter valid otp." }, "forgotpassword": { "email_not_valid": "Email you entered is not register with fin builders.", "email_required": "Please enter email", "valid_email": "Please enter valid email address." }, "login": { "email_required": "Please enter email", "password_required": "Please enter passsword.", "username_password_didnt_match": "Please enter valid credentials.", "valid_email": "Please enter valid email address." }, "register": { "city_required": "Please enter city.", "state_required": "Please enter state." }, "resetpassword": { "confirm_password_required": "Please enter confirm password.", "email_not_valid": "Email you entered is not register with fin builders.", "email_required": "Please enter email", "password_confirmed": "passsword and confirm passsword do not match.", "password_required": "Please enter passsword.", "token_not_valid": "Given token is invalid.", "token_required": "Please enter token.", "valid_email": "Please enter valid email address." } }, "array": "The :attribute must be an array.", "attributes": { "backend": { "access": { "permissions": { "associated_roles": "Associated Roles", "dependencies": "Dependencies", "display_name": "Display Name", "group": "Group", "group_sort": "Group Sort", "groups": { "name": "Group Name" }, "name": "Name", "sort": "Sort", "system": "System?" }, "roles": { "active": "Active", "associated_permissions": "Associated Permissions", "name": "Name", "sort": "Sort" }, "users": { "active": "Active", "associated_roles": "Associated Roles", "associated_whitelabels": "Associated Whitelabels", "confirmed": "Confirmed", "email": "E-mail Address", "firstName": "First Name", "groups": "User Groups", "lastName": "Last Name", "no-group": "None", "old_password": "Old password", "other_permissions": "Other Permissions", "password": "New Password", "password_confirmation": "New Password Confirmation", "send_confirmation_email": "Send Confirmation E-mail" } }, "blogcategories": { "is_active": "Active", "title": "Blog Category" }, "blogs": { "cannonical_link": "Cannonical Link", "category": "Blog Category", "content": "Content", "image": "Featured Image", "meta-title": "Meta Title", "meta_description": "Meta Description", "meta_keyword": "Meta Keyword", "publish": "Publish Date & Time", "slug": "Slug", "status": "Status", "tags": "Tags", "title": "Blog Title" }, "blogtags": { "is_active": "Active", "title": "Blog Tag" }, "distributions": { "description": "Description", "display_name": "Display Name", "name": "Name" }, "faqs": { "answer": "Answer", "question": "Question", "status": "Status" }, "groups": { "associated_whitelabels": "Associated Whitelabels", "description": "Description", "display_name": "Display Name", "groups": "Seller Groups", "name": "Group Name", "status": "Status" }, "pages": { "cannonical_link": "Cannonical Link", "description": "Description", "is_active": "Active", "seo_description": "SEO Description", "seo_keyword": "SEO Keyword", "seo_title": "SEO Title", "title": "Title" }, "settings": { "companydetails": { "address": "Company Address", "contactnumber": "Contact Number" }, "favicon": "Fav Icon", "footer": { "copyright": "Copyright Text", "text": "Footer Text" }, "google": { "analytic": "Google Analytics" }, "mail": { "fromemail": "From Email", "fromname": "From Name" }, "metadescription": "Meta Description", "metakeyword": "Meta Keyawords", "metatitle": "Meta Title", "sitelogo": "Site Logo", "termscondition": { "disclaimer": "Disclaimer", "terms": "Terms & Condition" } }, "whitelabels": { "associated_distribution": "Associated Distribution", "display_name": "Display Name", "ga_view_id": "Google View Id", "image": "Background Image", "name": "Name", "status": "Status" }, "wishes": { "adults": "Adults", "airport": "Airport", "associated_whitelabels": "Associated Whitelabels", "budget": "Budget", "category": "Hotel category", "catering": "Hotel catering", "description": "Description", "destination": "Destination", "duration": "Duration", "earliest_start": "Earliest start", "image": "Featured Image", "kids": "Kids", "latest_return": "Latest return", "status": "Status", "title": "Wish Title" } }, "frontend": { "offers": { "file": "file(filename)", "file_placeholder": "file", "link": "link(target, link)", "link_placeholder": "http:\/\/goo.gl\/abc", "select_file": "select a file", "status": "status", "status_placeholder": "status", "text": "messages", "text_placeholder": "your message to your customer", "title": "offer title", "title_placeholder": "short offer description" }, "register-user": { "address": "address", "city": "city", "country": "country", "email": "email address", "firstName": "first name", "lastName": "last name", "new_password": "new password", "new_password_confirmation": "new password confirmation", "old_password": "old password", "password": "password", "password_confirmation": "password confirmation", "ssn": "SSN", "state": "state", "terms_and_conditions": "terms and conditions", "user_type": "I use the white label as a", "user_type_seller": "seller", "user_type_user": "user", "zipcode": "zip code" } } }, "before": "The :attribute must be a date before :date.", "before_or_equal": "The :attribute must be a date before or equal to :date.", "between": { "array": "The :attribute must have between :min and :max items.", "file": "The :attribute must be between :min and :max kilobytes.", "numeric": "The :attribute must be between :min and :max.", "string": "The :attribute must be between :min and :max characters." }, "boolean": "The :attribute field must be true or false.", "confirmed": "The :attribute confirmation does not match.", "custom": { "attribute-name": { "rule-name": "custom-message" } }, "date": "The :attribute is not a valid date.", "date_format": "The :attribute does not match the format :format.", "different": "The :attribute and :other must be different.", "digits": "The :attribute must be :digits digits.", "digits_between": "The :attribute must be between :min and :max digits.", "dimensions": "The :attribute has invalid image dimensions.", "distinct": "The :attribute field has a duplicate value.", "email": "The :attribute must be a valid email address.", "exists": "The selected :attribute is invalid.", "file": "The :attribute must be a file.", "filled": "The :attribute field must have a value.", "image": "The :attribute must be an image.", "in": "The selected :attribute is invalid.", "in_array": "The :attribute field does not exist in :other.", "integer": "The :attribute must be an integer.", "ip": "The :attribute must be a valid IP address.", "json": "The :attribute must be a valid JSON string.", "max": { "array": "The :attribute may not have more than :max items.", "file": "The :attribute may not be greater than :max kilobytes.", "numeric": "The :attribute may not be greater than :max.", "string": "The :attribute may not be greater than :max characters." }, "mimes": "The :attribute must be a file of type: :values.", "mimetypes": "The :attribute must be a file of type: :values.", "min": { "array": "The :attribute must have at least :min items.", "file": "The :attribute must be at least :min kilobytes.", "numeric": "The :attribute must be at least :min.", "string": "The :attribute must be at least :min characters." }, "not_in": "The selected :attribute is invalid.", "numeric": "The :attribute must be a number.", "present": "The :attribute field must be present.", "regex": "The :attribute format is invalid.", "required": "The :attribute field is required.", "required_if": "The :attribute field is required when :other is :value.", "required_unless": "The :attribute field is required unless :other is in :values.", "required_with": "The :attribute field is required when :values is present.", "required_with_all": "The :attribute field is required when :values is present.", "required_without": "The :attribute field is required when :values is not present.", "required_without_all": "The :attribute field is required when none of :values are present.", "same": "The :attribute and :other must match.", "size": { "array": "The :attribute must contain :size items.", "file": "The :attribute must be :size kilobytes.", "numeric": "The :attribute must be :size.", "string": "The :attribute must be :size characters." }, "string": "The :attribute must be a string.", "timezone": "The :attribute must be a valid zone.", "unique": "The :attribute has already been taken.", "uploaded": "The :attribute failed to upload.", "url": "The :attribute format is invalid." }, "en.wish": { "view": { "adults": "Adults", "airport": "Airport", "budget": "Budget", "category": "Hotel category", "catering": "Hotel catering", "comment-header": "Communicate with Agent", "createdat": "Created at", "createdby": "Created by", "destination": "Destination", "duration": "Duration", "earliest_start": "Earliest Start", "email": "Email", "kids": "Kids", "latest_return": "Latest Return", "new_offers": "New offers", "offerCount": "Offers", "offer_number": "Offer number", "owner": "Name", "stage": { "seller_empty": "This travel wish has been distributed on <b>:date<\/b> to you.<br>\r\n                    Please create an offer.", "seller_message": "This travel wish has been distributed on <b>:date<\/b> to you.<br>\r\n                    The customer left a message for you.", "seller_offer": "This travel wish has been distributed on <b>:date<\/b> to you.<br>\r\n                    You created an offer.", "user_empty": "This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\r\n                     . Unfortunately no received offers yet.", "user_message": "This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\r\n                    . You received a new message.", "user_offer": "This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\r\n                    . You received an offer." }, "status": "Status", "text": "Text", "title": "Wish title", "whitelabel": "Whitelabel" } }, "es.log-viewer::general": { "all": "Todos", "date": "Fecha" }, "es.log-viewer::levels": { "alert": "Alerta", "all": "Todos", "critical": "Criticos", "debug": "Debug", "emergency": "Emergencia", "error": "Errores", "info": "Info", "notice": "Aviso", "warning": "Advertencia" }, "et.log-viewer::general": { "all": "K\xF5ik", "date": "Kuup\xE4ev", "empty-logs": "Logide nimekiri on t\xFChi!" }, "et.log-viewer::levels": { "alert": "H\xE4ire", "all": "K\xF5ik", "critical": "Kriitiline", "debug": "Silumine", "emergency": "Erakorraline", "error": "Viga", "info": "Info", "notice": "Teade", "warning": "Hoiatus" }, "fa.log-viewer::general": { "all": "\u0647\u0645\u0647", "date": "\u062A\u0627\u0631\u06CC\u062E" }, "fa.log-viewer::levels": { "alert": "\u0627\u062E\u0637\u0627\u0631", "all": "\u0647\u0645\u0647", "critical": "\u0628\u062D\u0631\u0627\u0646\u06CC", "debug": "\u062F\u06CC\u0628\u0627\u06AF", "emergency": "\u0627\u0648\u0631\u0698\u0627\u0646\u0633\u06CC", "error": "\u062E\u0637\u0627", "info": "\u0627\u0637\u0644\u0627\u0639\u0627\u062A", "notice": "\u0627\u0639\u0644\u0627\u0646", "warning": "\u0647\u0634\u062F\u0627\u0631" }, "fr.log-viewer::general": { "all": "Tous", "date": "Date" }, "fr.log-viewer::levels": { "alert": "Alerte", "all": "Tous", "critical": "Critique", "debug": "Debug", "emergency": "Urgence", "error": "Erreur", "info": "Info", "notice": "Notice", "warning": "Avertissement" }, "hu.log-viewer::general": { "all": "\xD6sszes", "date": "D\xE1tum", "empty-logs": "The list of logs is empty!" }, "hu.log-viewer::levels": { "alert": "Riaszt\xE1s", "all": "\xD6sszes", "critical": "Kritikus", "debug": "Hibakeres\xE9s", "emergency": "V\xE9szhelyzet", "error": "Hiba", "info": "Inform\xE1ci\xF3", "notice": "\xC9rtes\xEDt\xE9s", "warning": "Figyelmeztet\xE9s" }, "hy.log-viewer::general": { "all": "\u0532\u0578\u056C\u0578\u0580\u0568", "date": "\u0531\u0574\u057D\u0561\u0569\u056B\u057E" }, "hy.log-viewer::levels": { "alert": "\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574", "all": "\u0532\u0578\u056C\u0578\u0580\u0568", "critical": "\u053F\u0580\u056B\u057F\u056B\u056F\u0561\u056F\u0561\u0576", "debug": "\u053F\u0561\u0580\u0563\u0561\u0562\u0565\u0580\u0578\u0582\u0574", "emergency": "\u054E\u0569\u0561\u0580\u0561\u0575\u056B\u0576", "error": "\u054D\u056D\u0561\u056C", "info": "\u054F\u0565\u0572\u0565\u056F\u0561\u057F\u057E\u0578\u0582\u0569\u0575\u0578\u0582\u0576", "notice": "\u053E\u0561\u0576\u0578\u0582\u0581\u0578\u0582\u0574", "warning": "\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574" }, "id.log-viewer::general": { "all": "Semua", "date": "Tanggal" }, "id.log-viewer::levels": { "alert": "Waspada", "all": "Semua", "critical": "Kritis", "debug": "Debug", "emergency": "Darurat", "error": "Kesalahan", "info": "Info", "notice": "Perhatian", "warning": "Peringatan" }, "it.log-viewer::general": { "all": "Tutti", "date": "Data" }, "it.log-viewer::levels": { "alert": "Allarme", "all": "Tutti", "critical": "Critico", "debug": "Debug", "emergency": "Emergenza", "error": "Errore", "info": "Info", "notice": "Notifica", "warning": "Avviso" }, "ja.log-viewer::general": { "all": "\u3059\u3079\u3066", "date": "\u65E5\u4ED8", "empty-logs": "\u30ED\u30B0\u30EA\u30B9\u30C8\u304C\u7A7A\u3067\u3059!" }, "ja.log-viewer::levels": { "alert": "\u8B66\u6212", "all": "\u3059\u3079\u3066", "critical": "\u81F4\u547D\u7684", "debug": "\u30C7\u30D0\u30C3\u30B0", "emergency": "\u7DCA\u6025", "error": "\u30A8\u30E9\u30FC", "info": "\u60C5\u5831", "notice": "\u901A\u77E5", "warning": "\u8B66\u544A" }, "ko.log-viewer::general": { "all": "\uC804\uCCB4", "date": "\uB0A0\uC9DC" }, "ko.log-viewer::levels": { "alert": "\uACBD\uACE0", "all": "\uC804\uCCB4", "critical": "\uC2EC\uAC01", "debug": "\uB514\uBC84\uADF8", "emergency": "\uAE34\uAE09", "error": "\uC624\uB958", "info": "\uC815\uBCF4", "notice": "\uC54C\uB9BC", "warning": "\uC8FC\uC758" }, "nl.log-viewer::general": { "all": "Alles", "date": "Datum" }, "nl.log-viewer::levels": { "alert": "Alarm", "all": "Alle", "critical": "Cruciaal", "debug": "Debug", "emergency": "Noodgeval", "error": "Error", "info": "Informatie", "notice": "Opmerking", "warning": "Waarschuwing" }, "pl.log-viewer::general": { "all": "Wszystkie", "date": "Data" }, "pl.log-viewer::levels": { "alert": "Alerty", "all": "Wszystkie", "critical": "Krytyczne", "debug": "Debug", "emergency": "Awaryjne", "error": "B\u0142\u0119dy", "info": "Informacje", "notice": "Warte uwagi", "warning": "Ostrze\u017Cenia" }, "pt-BR.log-viewer::general": { "all": "Todos", "date": "Data" }, "pt-BR.log-viewer::levels": { "alert": "Alerta", "all": "Todos", "critical": "Cr\xEDtico", "debug": "Debug", "emergency": "Emerg\xEAncia", "error": "Erro", "info": "Informa\xE7\xE3o", "notice": "Not\xEDcia", "warning": "Aviso" }, "ro.log-viewer::general": { "all": "Toate", "date": "Dat\u0103" }, "ro.log-viewer::levels": { "alert": "Alert\u0103", "all": "Toate", "critical": "Critic", "debug": "Depanare", "emergency": "Urgen\u021B\u0103", "error": "Eroare", "info": "Informare", "notice": "Avertisment", "warning": "Pericol" }, "ru.log-viewer::general": { "all": "\u0412\u0441\u0435", "date": "\u0414\u0430\u0442\u0430" }, "ru.log-viewer::levels": { "alert": "\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435", "all": "\u0412\u0441\u0435", "critical": "\u041A\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439", "debug": "\u041E\u0442\u043B\u0430\u0434\u043A\u0430", "emergency": "\u0410\u0432\u0430\u0440\u0438\u0439\u043D\u0430\u044F", "error": "\u041E\u0448\u0438\u0431\u043A\u0430", "info": "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F", "notice": "\u0423\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u0435", "warning": "\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435" }, "sv.log-viewer::general": { "all": "Alla", "date": "Datum" }, "sv.log-viewer::levels": { "alert": "Alarmerande", "all": "Alla", "critical": "Kritisk", "debug": "Debug", "emergency": "Akut", "error": "Error", "info": "Information", "notice": "Notis", "warning": "Varning" }, "th.log-viewer::general": { "all": "\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14", "date": "\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48", "empty-logs": "The list of logs is empty!" }, "th.log-viewer::levels": { "alert": "\u0E27\u0E34\u0E01\u0E24\u0E15\u0E34", "all": "\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14", "critical": "\u0E23\u0E49\u0E32\u0E22\u0E41\u0E23\u0E07", "debug": "\u0E14\u0E35\u0E1A\u0E31\u0E01", "emergency": "\u0E09\u0E38\u0E01\u0E40\u0E09\u0E34\u0E19", "error": "\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14", "info": "\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25", "notice": "\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28", "warning": "\u0E04\u0E33\u0E40\u0E15\u0E37\u0E2D\u0E19" }, "tr.log-viewer::general": { "all": "Toplam", "date": "Tarih" }, "tr.log-viewer::levels": { "alert": "Alarm", "all": "Toplam", "critical": "Kritik", "debug": "Debug", "emergency": "Acil", "error": "Hata", "info": "Bilgi", "notice": "Bildirim", "warning": "Uyar\u0131" }, "zh-TW.log-viewer::general": { "all": "\u5168\u90E8", "date": "\u65E5\u671F" }, "zh-TW.log-viewer::levels": { "alert": "\u8B66\u5831", "all": "\u5168\u90E8", "critical": "\u56B4\u91CD", "debug": "\u9664\u932F", "emergency": "\u7DCA\u6025", "error": "\u932F\u8AA4", "info": "\u8A0A\u606F", "notice": "\u6CE8\u610F", "warning": "\u8B66\u544A" }, "zh.log-viewer::general": { "all": "\u5168\u90E8", "date": "\u65E5\u671F" }, "zh.log-viewer::levels": { "alert": "\u7D27\u6025", "all": "\u5168\u90E8", "critical": "\u4E25\u91CD", "debug": "\u8C03\u8BD5", "emergency": "\u5371\u6025", "error": "\u9519\u8BEF", "info": "\u4FE1\u606F", "notice": "\u6CE8\u610F", "warning": "\u8B66\u544A" } };
 
 /***/ }),
 /* 231 */
@@ -39039,13 +39039,13 @@ module.exports = function normalizeComponent (
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(14);
 
 /***/ }),
 /* 3 */
@@ -39057,13 +39057,13 @@ module.exports = __webpack_require__(59);
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(12);
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(5);
 
 /***/ }),
 /* 6 */
@@ -71528,7 +71528,7 @@ exports.default = function (Vue) {
   return template;
 };
 
-var _util = __webpack_require__(11);
+var _util = __webpack_require__(14);
 
 var RE_NARGS = /(%|)\{([0-9a-zA-Z_]+)\}/g;
 /**
@@ -71546,11 +71546,11 @@ var RE_NARGS = /(%|)\{([0-9a-zA-Z_]+)\}/g;
 
 exports.__esModule = true;
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _dom = __webpack_require__(9);
+var _dom = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -73204,7 +73204,7 @@ module.exports = function normalizeComponent (
 /***/ 1:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 
@@ -74893,7 +74893,7 @@ var index = (function () {
 
 exports.__esModule = true;
 
-var _dom = __webpack_require__(9);
+var _dom = __webpack_require__(12);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -75063,7 +75063,7 @@ module.exports = __webpack_require__(41);
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(14);
 
 /***/ }),
 
@@ -75363,14 +75363,14 @@ exports.default = {
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(12);
 
 /***/ }),
 
 /***/ 4:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(5);
 
 /***/ }),
 
@@ -75568,7 +75568,7 @@ module.exports = function normalizeComponent (
 /***/ 1:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 
@@ -76391,7 +76391,7 @@ module.exports = function normalizeComponent (
 /***/ 1:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 
@@ -77627,7 +77627,7 @@ module.exports = __webpack_require__(43);
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(14);
 
 /***/ }),
 
@@ -78087,7 +78087,7 @@ module.exports = function normalizeComponent (
 /***/ 1:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 
@@ -78117,7 +78117,7 @@ exports.default = _option2.default;
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(14);
 
 /***/ }),
 
@@ -79828,7 +79828,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__validator___ = __webpack_require__(290);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__messages__ = __webpack_require__(310);
 
@@ -80201,7 +80201,7 @@ module.exports = !$assign || __webpack_require__(24)(function () {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(18);
+var toIObject = __webpack_require__(20);
 var toLength = __webpack_require__(265);
 var toAbsoluteIndex = __webpack_require__(266);
 module.exports = function (IS_INCLUDES) {
@@ -80323,7 +80323,7 @@ var setToStringTag = __webpack_require__(53);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(15)(IteratorPrototype, __webpack_require__(19)('iterator'), function () { return this; });
+__webpack_require__(17)(IteratorPrototype, __webpack_require__(21)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -80335,11 +80335,11 @@ module.exports = function (Constructor, NAME, next) {
 /* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(16);
+var dP = __webpack_require__(18);
 var anObject = __webpack_require__(28);
 var getKeys = __webpack_require__(30);
 
-module.exports = __webpack_require__(17) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(19) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -80354,7 +80354,7 @@ module.exports = __webpack_require__(17) ? Object.defineProperties : function de
 /* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var document = __webpack_require__(10).document;
+var document = __webpack_require__(13).document;
 module.exports = document && document.documentElement;
 
 
@@ -80363,7 +80363,7 @@ module.exports = document && document.documentElement;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(12);
+var has = __webpack_require__(15);
 var toObject = __webpack_require__(74);
 var IE_PROTO = __webpack_require__(48)('IE_PROTO');
 var ObjectProto = Object.prototype;
@@ -80382,10 +80382,10 @@ module.exports = Object.getPrototypeOf || function (O) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(276);
-var global = __webpack_require__(10);
-var hide = __webpack_require__(15);
+var global = __webpack_require__(13);
+var hide = __webpack_require__(17);
 var Iterators = __webpack_require__(52);
-var TO_STRING_TAG = __webpack_require__(19)('toStringTag');
+var TO_STRING_TAG = __webpack_require__(21)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
   'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
@@ -80411,7 +80411,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 var addToUnscopables = __webpack_require__(277);
 var step = __webpack_require__(278);
 var Iterators = __webpack_require__(52);
-var toIObject = __webpack_require__(18);
+var toIObject = __webpack_require__(20);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
@@ -80483,9 +80483,9 @@ module.exports = __webpack_require__(22).Symbol;
 "use strict";
 
 // ECMAScript 6 symbols shim
-var global = __webpack_require__(10);
-var has = __webpack_require__(12);
-var DESCRIPTORS = __webpack_require__(17);
+var global = __webpack_require__(13);
+var has = __webpack_require__(15);
+var DESCRIPTORS = __webpack_require__(19);
 var $export = __webpack_require__(44);
 var redefine = __webpack_require__(76);
 var META = __webpack_require__(282).KEY;
@@ -80493,20 +80493,20 @@ var $fails = __webpack_require__(24);
 var shared = __webpack_require__(49);
 var setToStringTag = __webpack_require__(53);
 var uid = __webpack_require__(32);
-var wks = __webpack_require__(19);
+var wks = __webpack_require__(21);
 var wksExt = __webpack_require__(54);
 var wksDefine = __webpack_require__(55);
 var enumKeys = __webpack_require__(283);
 var isArray = __webpack_require__(284);
 var anObject = __webpack_require__(28);
 var isObject = __webpack_require__(23);
-var toIObject = __webpack_require__(18);
+var toIObject = __webpack_require__(20);
 var toPrimitive = __webpack_require__(45);
 var createDesc = __webpack_require__(29);
 var _create = __webpack_require__(77);
 var gOPNExt = __webpack_require__(285);
 var $GOPD = __webpack_require__(286);
-var $DP = __webpack_require__(16);
+var $DP = __webpack_require__(18);
 var $keys = __webpack_require__(30);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -80708,7 +80708,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(15)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(17)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -80723,8 +80723,8 @@ setToStringTag(global.JSON, 'JSON', true);
 
 var META = __webpack_require__(32)('meta');
 var isObject = __webpack_require__(23);
-var has = __webpack_require__(12);
-var setDesc = __webpack_require__(16).f;
+var has = __webpack_require__(15);
+var setDesc = __webpack_require__(18).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -80813,7 +80813,7 @@ module.exports = Array.isArray || function isArray(arg) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(18);
+var toIObject = __webpack_require__(20);
 var gOPN = __webpack_require__(78).f;
 var toString = {}.toString;
 
@@ -80839,13 +80839,13 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 var pIE = __webpack_require__(33);
 var createDesc = __webpack_require__(29);
-var toIObject = __webpack_require__(18);
+var toIObject = __webpack_require__(20);
 var toPrimitive = __webpack_require__(45);
-var has = __webpack_require__(12);
+var has = __webpack_require__(15);
 var IE8_DOM_DEFINE = __webpack_require__(69);
 var gOPD = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(17) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+exports.f = __webpack_require__(19) ? gOPD : function getOwnPropertyDescriptor(O, P) {
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -80933,8 +80933,8 @@ __webpack_require__(55)('observable');
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 
@@ -80975,7 +80975,7 @@ function string(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(3);
 
 
 /**
@@ -81004,7 +81004,7 @@ function whitespace(rule, value, source, errors, options) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__required__ = __webpack_require__(79);
 
 
@@ -81100,7 +81100,7 @@ function type(rule, value, source, errors, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(3);
 
 
 /**
@@ -81165,7 +81165,7 @@ function range(rule, value, source, errors, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(3);
 
 var ENUM = 'enum';
 
@@ -81194,7 +81194,7 @@ function enumerable(rule, value, source, errors, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(3);
 
 
 /**
@@ -81234,8 +81234,8 @@ function pattern(rule, value, source, errors, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 
@@ -81271,8 +81271,8 @@ function method(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 
@@ -81309,8 +81309,8 @@ function number(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rule___ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rule___ = __webpack_require__(6);
 
 
 
@@ -81346,8 +81346,8 @@ function boolean(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 
@@ -81383,8 +81383,8 @@ function regexp(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 
@@ -81421,8 +81421,8 @@ function integer(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 
@@ -81459,8 +81459,8 @@ function floatFn(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 /**
@@ -81496,8 +81496,8 @@ function array(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 
@@ -81533,8 +81533,8 @@ function object(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 var ENUM = 'enum';
@@ -81571,8 +81571,8 @@ function enumerable(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 
@@ -81611,8 +81611,8 @@ function pattern(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 
@@ -81653,7 +81653,7 @@ function date(rule, value, callback, source, options) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rule___ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rule___ = __webpack_require__(6);
 
 
 
@@ -81671,8 +81671,8 @@ function required(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rule___ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(3);
 
 
 
@@ -82340,7 +82340,7 @@ exports.default = {
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(12);
 
 /***/ }),
 
@@ -84312,11 +84312,11 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(344)
 }
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(347)
 /* template */
-var __vue_template__ = __webpack_require__(427)
+var __vue_template__ = __webpack_require__(442)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -84365,7 +84365,7 @@ var content = __webpack_require__(345);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(57)("0482d212", content, false, {});
+var update = __webpack_require__(57)("235ddd02", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -84503,7 +84503,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
@@ -84515,55 +84515,75 @@ var _TileWishComponent = __webpack_require__(349);
 
 var _TileWishComponent2 = _interopRequireDefault(_TileWishComponent);
 
-var _TileGroupComponent = __webpack_require__(352);
+var _TileOfferComponent = __webpack_require__(352);
+
+var _TileOfferComponent2 = _interopRequireDefault(_TileOfferComponent);
+
+var _TileOfferdayComponent = __webpack_require__(357);
+
+var _TileOfferdayComponent2 = _interopRequireDefault(_TileOfferdayComponent);
+
+var _TileMobileComponent = __webpack_require__(360);
+
+var _TileMobileComponent2 = _interopRequireDefault(_TileMobileComponent);
+
+var _TileResponseComponent = __webpack_require__(363);
+
+var _TileResponseComponent2 = _interopRequireDefault(_TileResponseComponent);
+
+var _TileResponsemComponent = __webpack_require__(366);
+
+var _TileResponsemComponent2 = _interopRequireDefault(_TileResponsemComponent);
+
+var _TileGroupComponent = __webpack_require__(369);
 
 var _TileGroupComponent2 = _interopRequireDefault(_TileGroupComponent);
 
-var _TileSellerComponent = __webpack_require__(355);
+var _TileSellerComponent = __webpack_require__(372);
 
 var _TileSellerComponent2 = _interopRequireDefault(_TileSellerComponent);
 
-var _TileCommentComponent = __webpack_require__(358);
+var _TileCommentComponent = __webpack_require__(375);
 
 var _TileCommentComponent2 = _interopRequireDefault(_TileCommentComponent);
 
-var _TileOrderComponent = __webpack_require__(361);
+var _TileOrderComponent = __webpack_require__(378);
 
 var _TileOrderComponent2 = _interopRequireDefault(_TileOrderComponent);
 
-var _TileUserComponent = __webpack_require__(364);
+var _TileUserComponent = __webpack_require__(381);
 
 var _TileUserComponent2 = _interopRequireDefault(_TileUserComponent);
 
-var _ChartWishDayComponent = __webpack_require__(367);
+var _ChartWishDayComponent = __webpack_require__(384);
 
 var _ChartWishDayComponent2 = _interopRequireDefault(_ChartWishDayComponent);
 
-var _TilePieComponent = __webpack_require__(372);
+var _TilePieComponent = __webpack_require__(387);
 
 var _TilePieComponent2 = _interopRequireDefault(_TilePieComponent);
 
-var _TileBarComponent = __webpack_require__(375);
+var _TileBarComponent = __webpack_require__(390);
 
 var _TileBarComponent2 = _interopRequireDefault(_TileBarComponent);
 
-var _ChartWishComponent = __webpack_require__(378);
+var _ChartWishComponent = __webpack_require__(393);
 
 var _ChartWishComponent2 = _interopRequireDefault(_ChartWishComponent);
 
-var _TileSpiderComponent = __webpack_require__(381);
+var _TileSpiderComponent = __webpack_require__(396);
 
 var _TileSpiderComponent2 = _interopRequireDefault(_TileSpiderComponent);
 
-var _TileTdComponent = __webpack_require__(385);
+var _TileTdComponent = __webpack_require__(400);
 
 var _TileTdComponent2 = _interopRequireDefault(_TileTdComponent);
 
-var _BackendAnalyticsComponent = __webpack_require__(389);
+var _BackendAnalyticsComponent = __webpack_require__(404);
 
 var _BackendAnalyticsComponent2 = _interopRequireDefault(_BackendAnalyticsComponent);
 
-var _GaDatatableComponent = __webpack_require__(394);
+var _GaDatatableComponent = __webpack_require__(409);
 
 var _GaDatatableComponent2 = _interopRequireDefault(_GaDatatableComponent);
 
@@ -84575,6 +84595,11 @@ exports.default = {
     GridLayout: _vueGridLayout2.default.GridLayout,
     GridItem: _vueGridLayout2.default.GridItem,
     TileWishComponent: _TileWishComponent2.default,
+    TileOfferComponent: _TileOfferComponent2.default,
+    TileOfferdayComponent: _TileOfferdayComponent2.default,
+    TileMobileComponent: _TileMobileComponent2.default,
+    TileResponseComponent: _TileResponseComponent2.default,
+    TileResponsemComponent: _TileResponsemComponent2.default,
     TileSellerComponent: _TileSellerComponent2.default,
     TileCommentComponent: _TileCommentComponent2.default,
     TileOrderComponent: _TileOrderComponent2.default,
@@ -86480,7 +86505,7 @@ module.exports = {
 /***/ "8bbf":
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(5);
 
 /***/ }),
 
@@ -97847,7 +97872,7 @@ module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u20
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(350)
 /* template */
@@ -97917,11 +97942,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(6);
+var _errors = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -98038,11 +98063,11 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(353)
 /* template */
-var __vue_template__ = __webpack_require__(354)
+var __vue_template__ = __webpack_require__(356)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -98059,7 +98084,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileGroupComponent.vue"
+Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileOfferComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -98068,9 +98093,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-40d704c6", Component.options)
+    hotAPI.createRecord("data-v-55585fee", Component.options)
   } else {
-    hotAPI.reload("data-v-40d704c6", Component.options)
+    hotAPI.reload("data-v-55585fee", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -98098,933 +98123,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(6);
+var _highchartsVue = __webpack_require__(10);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  name: 'TileGroupComponent',
-  components: {},
-  data: function data() {
-    return {
-      // eslint-disable-next-line
-      errors: new _errors.Errors(),
-      groupCount: 0
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    this.loadGroup();
-    this.$events.$on('whitelabel-set', function (whitelabelId) {
-      return _this.loadGroup(whitelabelId);
-    });
-  },
-
-  watch: {},
-  computed: _extends({}, _vuex2.default.mapGetters({})),
-  methods: _extends({}, _vuex2.default.mapActions({}), {
-    loadGroup: function loadGroup(whitelabelId) {
-      var _this2 = this;
-
-      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
-      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
-      this.$http.get(window.laroute.route('admin.dashboard.groups') + params).then(this.onLoadDashboardGroupSuccess).catch(this.onFailed).then(function () {
-        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
-      });
-    },
-    onLoadDashboardGroupSuccess: function onLoadDashboardGroupSuccess(response) {
-      if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.groupCount = response.data.groupCount;
-      } else {
-        this.$notify.error({ title: 'Failed', message: response.data.message });
-      }
-    },
-    onFailed: function onFailed(error) {
-      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
-        this.errors.record(error.response.data.errors);
-        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
-          this.$notify.error({ title: 'Failed', message: error.response.data.message });
-        } else {
-          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
-        }
-      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
-        this.$notify.error({ title: 'Failed', message: error.response.data.message });
-      } else if (error.hasOwnProperty('message')) {
-        this.$notify.error({ title: 'Error', message: error.message });
-      } else {
-        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
-        console.log(error);
-      }
-    }
-  })
-};
-
-/***/ }),
-/* 354 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card card-body bg-teal-400 has-bg-image" }, [
-    _c("div", { staticClass: "media" }, [
-      _c("div", { staticClass: "media-body" }, [
-        _c("h3", {
-          staticClass: "mb-0",
-          domProps: { textContent: _vm._s(_vm.groupCount) }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "text-uppercase font-size-xs" }, [
-          _vm._v(_vm._s(_vm.trans("dashboard.total_groups")))
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ml-3 align-self-center" }, [
-      _c("i", { staticClass: "icon-collaboration icon-3x opacity-75" })
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-40d704c6", module.exports)
-  }
-}
-
-/***/ }),
-/* 355 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(356)
-/* template */
-var __vue_template__ = __webpack_require__(357)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileSellerComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-46525c34", Component.options)
-  } else {
-    hotAPI.reload("data-v-46525c34", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 356 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var _vuex = __webpack_require__(2);
-
-var _vuex2 = _interopRequireDefault(_vuex);
-
-var _errors = __webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  name: 'TileSellerComponent',
-  components: {},
-  data: function data() {
-    return {
-      // eslint-disable-next-line
-      errors: new _errors.Errors(),
-      sellerCount: { all: 0, active: 0 }
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    this.loadSeller();
-    this.$events.$on('whitelabel-set', function (whitelabelId) {
-      return _this.loadSeller(whitelabelId);
-    });
-  },
-
-  watch: {},
-  computed: _extends({}, _vuex2.default.mapGetters({})),
-  methods: _extends({}, _vuex2.default.mapActions({}), {
-    loadSeller: function loadSeller() {
-      var _this2 = this;
-
-      var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
-      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
-      this.$http.get(window.laroute.route('admin.dashboard.sellers') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
-        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
-      });
-    },
-    onLoadDashboardSellerSuccess: function onLoadDashboardSellerSuccess(response) {
-      if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.sellerCount = response.data.sellerCount;
-      } else {
-        this.$notify.error({ title: 'Failed', message: response.data.message });
-      }
-    },
-    onFailed: function onFailed(error) {
-      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
-        this.errors.record(error.response.data.errors);
-        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
-          this.$notify.error({ title: 'Failed', message: error.response.data.message });
-        } else {
-          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
-        }
-      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
-        this.$notify.error({ title: 'Failed', message: error.response.data.message });
-      } else if (error.hasOwnProperty('message')) {
-        this.$notify.error({ title: 'Error', message: error.message });
-      } else {
-        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
-        console.log(error);
-      }
-    }
-  })
-};
-
-/***/ }),
-/* 357 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card card-body bg-primary has-bg-image" }, [
-    _c("div", { staticClass: "media" }, [
-      _c("div", { staticClass: "media-body" }, [
-        _c("h3", {
-          staticClass: "mb-0",
-          domProps: {
-            textContent: _vm._s(
-              _vm.sellerCount.active + "/" + _vm.sellerCount.all
-            )
-          }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "text-uppercase font-size-xs" }, [
-          _vm._v(_vm._s(_vm.trans("dashboard.total_sellers")))
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ml-3 align-self-center" }, [
-      _c("i", { staticClass: "icon-users2 icon-3x opacity-75" })
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-46525c34", module.exports)
-  }
-}
-
-/***/ }),
-/* 358 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(359)
-/* template */
-var __vue_template__ = __webpack_require__(360)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileCommentComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5646c634", Component.options)
-  } else {
-    hotAPI.reload("data-v-5646c634", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 359 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var _vuex = __webpack_require__(2);
-
-var _vuex2 = _interopRequireDefault(_vuex);
-
-var _errors = __webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  name: 'TileGroupComponent',
-  components: {},
-  data: function data() {
-    return {
-      // eslint-disable-next-line
-      errors: new _errors.Errors(),
-      groupCount: 0
-    };
-  },
-  mounted: function mounted() {
-    this.loadGroup();
-  },
-
-  watch: {},
-  computed: _extends({}, _vuex2.default.mapGetters({})),
-  methods: _extends({}, _vuex2.default.mapActions({}), {
-    loadGroup: function loadGroup() {
-      var _this = this;
-
-      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
-      this.$http.get(window.laroute.route('admin.dashboard.groups')).then(this.onLoadDashboardGroupSuccess).catch(this.onFailed).then(function () {
-        _this.$store.dispatch('block', { element: 'dashboardComponent', load: false });
-      });
-    },
-    onLoadDashboardGroupSuccess: function onLoadDashboardGroupSuccess(response) {
-      if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.groupCount = response.data.groupCount;
-      } else {
-        this.$notify.error({ title: 'Failed', message: response.data.message });
-      }
-    },
-    onFailed: function onFailed(error) {
-      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
-        this.errors.record(error.response.data.errors);
-        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
-          this.$notify.error({ title: 'Failed', message: error.response.data.message });
-        } else {
-          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
-        }
-      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
-        this.$notify.error({ title: 'Failed', message: error.response.data.message });
-      } else if (error.hasOwnProperty('message')) {
-        this.$notify.error({ title: 'Error', message: error.message });
-      } else {
-        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
-        console.log(error);
-      }
-    }
-  })
-};
-
-/***/ }),
-/* 360 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card card-body bg-teal-400 has-bg-image" }, [
-    _c("div", { staticClass: "media" }, [
-      _c("div", { staticClass: "media-body" }, [
-        _c("h3", {
-          staticClass: "mb-0",
-          domProps: { textContent: _vm._s(_vm.groupCount) }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "text-uppercase font-size-xs" }, [
-          _vm._v(_vm._s(_vm.trans("dashboard.total_groups")))
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ml-3 align-self-center" }, [
-      _c("i", { staticClass: "icon-collaboration icon-3x opacity-75" })
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5646c634", module.exports)
-  }
-}
-
-/***/ }),
-/* 361 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(362)
-/* template */
-var __vue_template__ = __webpack_require__(363)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileOrderComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4bb30752", Component.options)
-  } else {
-    hotAPI.reload("data-v-4bb30752", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 362 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var _vuex = __webpack_require__(2);
-
-var _vuex2 = _interopRequireDefault(_vuex);
-
-var _errors = __webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  name: 'TileClickComponent',
-  components: {},
-  data: function data() {
-    return {
-      // eslint-disable-next-line
-      errors: new _errors.Errors()
-    };
-  },
-  mounted: function mounted() {},
-
-  watch: {},
-  computed: _extends({}, _vuex2.default.mapGetters({})),
-  methods: _extends({}, _vuex2.default.mapActions({}))
-};
-
-/***/ }),
-/* 363 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticStyle: { width: "100%", height: "100%" } }, [
-      _c("div", { staticClass: "card card-body" }, [
-        _c("div", { staticClass: "media" }, [
-          _c("div", { staticClass: "media-body" }, [
-            _c("h3", { staticClass: "font-weight-semibold mb-0" }, [
-              _vm._v("389,438")
-            ]),
-            _vm._v(" "),
-            _c(
-              "span",
-              { staticClass: "text-uppercase font-size-sm text-muted" },
-              [_vm._v("total orders")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "ml-3 align-self-center" }, [
-            _c("i", { staticClass: "icon-bag icon-3x text-danger-400" })
-          ])
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4bb30752", module.exports)
-  }
-}
-
-/***/ }),
-/* 364 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(365)
-/* template */
-var __vue_template__ = __webpack_require__(366)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileUserComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1ee455cc", Component.options)
-  } else {
-    hotAPI.reload("data-v-1ee455cc", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 365 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var _vuex = __webpack_require__(2);
-
-var _vuex2 = _interopRequireDefault(_vuex);
-
-var _errors = __webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  name: 'TileGroupComponent',
-  components: {},
-  data: function data() {
-    return {
-      // eslint-disable-next-line
-      errors: new _errors.Errors(),
-      reactionTimeByMonth: 0,
-      reactionTimeByDay: 0
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    this.loadReationTimeByMonth();
-    this.loadReationTimeByDay();
-    this.$events.$on('whitelabel-set', function (whitelabelId) {
-      return _this.loadReationTimeByMonth(whitelabelId);
-    });
-  },
-
-  watch: {},
-  computed: _extends({}, _vuex2.default.mapGetters({})),
-  methods: _extends({}, _vuex2.default.mapActions({}), {
-    loadReationTimeByMonth: function loadReationTimeByMonth(whitelabelId) {
-      var _this2 = this;
-
-      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
-      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
-      this.$http.get(window.laroute.route('admin.dashboard.timeByMonth') + params).then(this.onLoadDashboardReationTimeByMonthSuccess).catch(this.onFailed).then(function () {
-        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
-      });
-    },
-    loadReationTimeByDay: function loadReationTimeByDay(whitelabelId) {
-      var _this3 = this;
-
-      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
-      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
-      this.$http.get(window.laroute.route('admin.dashboard.timeByDay') + params).then(this.onLoadDashboardReationTimeByDaySuccess).catch(this.onFailed).then(function () {
-        _this3.$store.dispatch('block', { element: 'dashboardComponent', load: false });
-      });
-    },
-    onLoadDashboardReationTimeByMonthSuccess: function onLoadDashboardReationTimeByMonthSuccess(response) {
-      if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.reactionTimeByMonth = response.data.reactionTime;
-      } else {
-        this.$notify.error({ title: 'Failed', message: response.data.message });
-      }
-    },
-    onLoadDashboardReationTimeByDaySuccess: function onLoadDashboardReationTimeByDaySuccess(response) {
-      if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.reactionTimeByDay = response.data.reactionTime;
-      } else {
-        this.$notify.error({ title: 'Failed', message: response.data.message });
-      }
-    },
-    onFailed: function onFailed(error) {
-      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
-        this.errors.record(error.response.data.errors);
-        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
-          this.$notify.error({ title: 'Failed', message: error.response.data.message });
-        } else {
-          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
-        }
-      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
-        this.$notify.error({ title: 'Failed', message: error.response.data.message });
-      } else if (error.hasOwnProperty('message')) {
-        this.$notify.error({ title: 'Error', message: error.message });
-      } else {
-        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
-        console.log(error);
-      }
-    }
-  })
-};
-
-/***/ }),
-/* 366 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "card card-body bg-purple-400 has-bg-image" },
-    [
-      _c("div", { staticClass: "media" }, [
-        _c("div", { staticClass: "media-body text-left" }, [
-          _c("h3", {
-            staticClass: "mb-0",
-            domProps: { textContent: _vm._s(_vm.reactionTimeByMonth) }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "text-uppercase font-size-xs" }, [
-            _vm._v(_vm._s(_vm.trans("dashboard.reaction_time_average_month")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "media-body text-right" }, [
-          _c("h3", {
-            staticClass: "mb-0",
-            domProps: { textContent: _vm._s(_vm.reactionTimeByDay) }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "text-uppercase font-size-xs" }, [
-            _vm._v(_vm._s(_vm.trans("dashboard.reaction_time_average_day")))
-          ])
-        ])
-      ])
-    ]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1ee455cc", module.exports)
-  }
-}
-
-/***/ }),
-/* 367 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(368)
-/* template */
-var __vue_template__ = __webpack_require__(371)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/ChartWishDayComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-47a1d2bc", Component.options)
-  } else {
-    hotAPI.reload("data-v-47a1d2bc", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 368 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-
-var _vuex = __webpack_require__(2);
-
-var _vuex2 = _interopRequireDefault(_vuex);
-
-var _highchartsVue = __webpack_require__(20);
-
-var _highcharts = __webpack_require__(13);
+var _highcharts = __webpack_require__(8);
 
 var _highcharts2 = _interopRequireDefault(_highcharts);
 
-var _exporting = __webpack_require__(21);
+var _exporting = __webpack_require__(11);
 
 var _exporting2 = _interopRequireDefault(_exporting);
 
-var _errors = __webpack_require__(6);
+var _errors = __webpack_require__(4);
 
 var _moment = __webpack_require__(0);
 
@@ -99033,9 +98147,8 @@ var _moment2 = _interopRequireDefault(_moment);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _exporting2.default)(_highcharts2.default);
-_moment2.default.locale(window.i18.lang);
 exports.default = {
-  name: 'ChartWishComponent',
+  name: 'TileOfferComponent',
   components: { highcharts: _highchartsVue.Chart },
   data: function data() {
     return {
@@ -99048,48 +98161,33 @@ exports.default = {
           type: 'line'
         },
         title: {
-          text: this.trans('dashboard.daily_average_wish')
+          text: this.trans('Ereignisse pro Monat')
         },
         subtitle: {
-          text: this.trans('dashboard.current_month')
+          text: this.trans('dashboard.source_2019')
         },
         xAxis: {
           type: 'datetime',
-          dateTimeLabelFormats: { // don't display the dummy year
-            month: '%e. %b',
-            year: '%b'
-          },
           title: {
             text: this.trans('dashboard.date')
           }
         },
         yAxis: {
           title: {
-            text: this.trans('dashboard.wishes')
+            text: this.trans('Ereignisse')
           }
-        },
-        legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'middle'
         },
         plotOptions: {
           line: {
             dataLabels: {
               enabled: true
             },
-            chartOptions: {
-              legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom'
-              }
-            }
+            enableMouseTracking: false
           }
         },
 
         series: [{
-          name: this.trans('dashboard.wishes'),
+          name: this.trans('Ereignisse'),
           data: []
         }],
 
@@ -99114,9 +98212,9 @@ exports.default = {
   mounted: function mounted() {
     var _this = this;
 
-    this.loadWishByMonth();
+    this.loadOfferByMonth();
     this.$events.$on('whitelabel-set', function (whitelabelId) {
-      return _this.loadWishByMonth(whitelabelId);
+      return _this.loadOfferByMonth(whitelabelId);
     });
   },
   updated: function updated() {},
@@ -99124,14 +98222,14 @@ exports.default = {
   watch: {},
   computed: _extends({}, _vuex2.default.mapGetters({})),
   methods: _extends({}, _vuex2.default.mapActions({}), {
-    loadWishByMonth: function loadWishByMonth() {
+    loadOfferByMonth: function loadOfferByMonth() {
       var _this2 = this;
 
       var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
       var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
       this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
-      this.$http.get(window.laroute.route('admin.dashboard.wishes.byDay') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+      this.$http.get(window.laroute.route('admin.dashboard.events.perMonth') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
     },
@@ -99145,7 +98243,8 @@ exports.default = {
     },
     onLoadDashboardSellerSuccess: function onLoadDashboardSellerSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.chartOptions.series[0].data = this.generateData(response.data.data);
+        this.chartOptions.series[0].data = this.generateData(response.data.ga);
+        this.data = response.data;
       } else {
         this.$notify.error({ title: 'Failed', message: response.data.message });
       }
@@ -99154,7 +98253,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 369 */
+/* 354 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -99182,7 +98281,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 370 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -99447,10 +98546,2097 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 370;
+webpackContext.id = 355;
+
+/***/ }),
+/* 356 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticStyle: {
+        height: "200px",
+        "min-width": "310px",
+        "max-width": "573px",
+        "max-height": "200px"
+      },
+      attrs: { id: "chart-component" }
+    },
+    [
+      _c("highcharts", {
+        staticClass: "chart",
+        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-55585fee", module.exports)
+  }
+}
+
+/***/ }),
+/* 357 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(358)
+/* template */
+var __vue_template__ = __webpack_require__(359)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileOfferdayComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-56749345", Component.options)
+  } else {
+    hotAPI.reload("data-v-56749345", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 358 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__(1);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+var _highchartsVue = __webpack_require__(10);
+
+var _highcharts = __webpack_require__(8);
+
+var _highcharts2 = _interopRequireDefault(_highcharts);
+
+var _exporting = __webpack_require__(11);
+
+var _exporting2 = _interopRequireDefault(_exporting);
+
+var _errors = __webpack_require__(4);
+
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _exporting2.default)(_highcharts2.default);
+exports.default = {
+  name: 'TileOfferComponent',
+  components: { highcharts: _highchartsVue.Chart },
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      data: [],
+      updateArgs: [true, true, { duration: 1000 }],
+      chartOptions: {
+        chart: {
+          type: 'line'
+        },
+        title: {
+          text: this.trans('Ereignisse pro Tag')
+        },
+        subtitle: {
+          text: this.trans('dashboard.source_2019')
+        },
+        xAxis: {
+          type: 'datetime',
+          dateTimeLabelFormats: { // don't display the dummy year
+            month: '%e. %b',
+            year: '%b'
+          }
+        },
+        yAxis: {
+          title: {
+            text: this.trans('Ereignisse')
+          }
+        },
+        plotOptions: {
+          line: {
+            dataLabels: {
+              enabled: true
+            },
+            enableMouseTracking: false
+          }
+        },
+
+        series: [{
+          name: this.trans('Ereignisse'),
+          data: []
+        }],
+
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 573,
+              maxHeight: 200
+            },
+            chartOptions: {
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+              }
+            }
+          }]
+        }
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.loadOfferByDay();
+    this.$events.$on('whitelabel-set', function (whitelabelId) {
+      return _this.loadOfferByDay(whitelabelId);
+    });
+  },
+  updated: function updated() {},
+
+  watch: {},
+  computed: _extends({}, _vuex2.default.mapGetters({})),
+  methods: _extends({}, _vuex2.default.mapActions({}), {
+    loadOfferByDay: function loadOfferByDay() {
+      var _this2 = this;
+
+      var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
+      this.$http.get(window.laroute.route('admin.dashboard.events.perDay') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+      });
+    },
+    generateData: function generateData(items) {
+      var data = [];
+      items.forEach(function (item, index) {
+        data.push([(0, _moment2.default)(item[0], 'YYYY-MM-DD').utc(+1).valueOf(), item[1]]);
+      });
+
+      return data;
+    },
+    onLoadDashboardSellerSuccess: function onLoadDashboardSellerSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.chartOptions.series[0].data = this.generateData(response.data.ga);
+        this.data = response.data;
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message });
+      }
+    }
+  })
+};
+
+/***/ }),
+/* 359 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticStyle: {
+        height: "200px",
+        "min-width": "310px",
+        "max-width": "573px",
+        "max-height": "200px"
+      },
+      attrs: { id: "chart-component" }
+    },
+    [
+      _c("highcharts", {
+        staticClass: "chart",
+        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-56749345", module.exports)
+  }
+}
+
+/***/ }),
+/* 360 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(361)
+/* template */
+var __vue_template__ = __webpack_require__(362)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileMobileComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2c207cba", Component.options)
+  } else {
+    hotAPI.reload("data-v-2c207cba", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 361 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__(1);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+var _highchartsVue = __webpack_require__(10);
+
+var _highcharts = __webpack_require__(8);
+
+var _highcharts2 = _interopRequireDefault(_highcharts);
+
+var _exporting = __webpack_require__(11);
+
+var _exporting2 = _interopRequireDefault(_exporting);
+
+var _errors = __webpack_require__(4);
+
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _exporting2.default)(_highcharts2.default);
+exports.default = {
+  name: 'TileMobileComponent',
+  components: { highcharts: _highchartsVue.Chart },
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      data: [],
+      updateArgs: [true, true, { duration: 1000 }],
+      chartOptions: {
+        chart: {
+          type: 'line'
+        },
+        title: {
+          text: this.trans('Mobile Ereignisse pro Monat')
+        },
+        subtitle: {
+          text: this.trans('dashboard.source_2019')
+        },
+        xAxis: {
+          type: 'datetime',
+          title: {
+            text: this.trans('dashboard.date')
+          }
+        },
+        yAxis: {
+          title: {
+            text: this.trans('Ereignisse')
+          }
+        },
+        plotOptions: {
+          line: {
+            dataLabels: {
+              enabled: true
+            },
+            enableMouseTracking: false
+          }
+        },
+
+        series: [{
+          name: this.trans('Ereignisse'),
+          data: []
+        }],
+
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 573,
+              maxHeight: 200
+            },
+            chartOptions: {
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+              }
+            }
+          }]
+        }
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.loadMobileByMonth();
+    this.$events.$on('whitelabel-set', function (whitelabelId) {
+      return _this.loadMobileByMonth(whitelabelId);
+    });
+  },
+  updated: function updated() {},
+
+  watch: {},
+  computed: _extends({}, _vuex2.default.mapGetters({})),
+  methods: _extends({}, _vuex2.default.mapActions({}), {
+    loadMobileByMonth: function loadMobileByMonth() {
+      var _this2 = this;
+
+      var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
+      this.$http.get(window.laroute.route('admin.dashboard.events.mobileMonth') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+      });
+    },
+    generateData: function generateData(items) {
+      var data = [];
+      items.forEach(function (item, index) {
+        data.push([(0, _moment2.default)(item[0], 'YYYY-MM-DD').utc(+1).valueOf(), item[1]]);
+      });
+
+      return data;
+    },
+    onLoadDashboardSellerSuccess: function onLoadDashboardSellerSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.chartOptions.series[0].data = this.generateData(response.data.ga);
+        this.data = response.data;
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message });
+      }
+    }
+  })
+};
+
+/***/ }),
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticStyle: {
+        height: "200px",
+        "min-width": "310px",
+        "max-width": "573px",
+        "max-height": "200px"
+      },
+      attrs: { id: "chart-component" }
+    },
+    [
+      _c("highcharts", {
+        staticClass: "chart",
+        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2c207cba", module.exports)
+  }
+}
+
+/***/ }),
+/* 363 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(364)
+/* template */
+var __vue_template__ = __webpack_require__(365)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileResponseComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-02581464", Component.options)
+  } else {
+    hotAPI.reload("data-v-02581464", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 364 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__(1);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+var _highchartsVue = __webpack_require__(10);
+
+var _highcharts = __webpack_require__(8);
+
+var _highcharts2 = _interopRequireDefault(_highcharts);
+
+var _exporting = __webpack_require__(11);
+
+var _exporting2 = _interopRequireDefault(_exporting);
+
+var _errors = __webpack_require__(4);
+
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _exporting2.default)(_highcharts2.default);
+exports.default = {
+  name: 'TileResponseComponent',
+  components: { highcharts: _highchartsVue.Chart },
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      data: [],
+      updateArgs: [true, true, { duration: 1000 }],
+      chartOptions: {
+        chart: {
+          type: 'line'
+        },
+        title: {
+          text: this.trans('Response Rate pro Monat')
+        },
+        subtitle: {
+          text: this.trans('dashboard.source_2019')
+        },
+        xAxis: {
+          type: 'datetime',
+          title: {
+            text: this.trans('dashboard.date')
+          }
+        },
+        yAxis: {
+          title: {
+            text: this.trans('Response Rate')
+          }
+        },
+        plotOptions: {
+          line: {
+            dataLabels: {
+              enabled: true
+            },
+            enableMouseTracking: false
+          }
+        },
+
+        series: [{
+          name: this.trans('Response Rate(%)'),
+          data: []
+        }],
+
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 573,
+              maxHeight: 200
+            },
+            chartOptions: {
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+              }
+            }
+          }]
+        }
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.loadMobileByMonth();
+    this.$events.$on('whitelabel-set', function (whitelabelId) {
+      return _this.loadMobileByMonth(whitelabelId);
+    });
+  },
+  updated: function updated() {},
+
+  watch: {},
+  computed: _extends({}, _vuex2.default.mapGetters({})),
+  methods: _extends({}, _vuex2.default.mapActions({}), {
+    loadMobileByMonth: function loadMobileByMonth() {
+      var _this2 = this;
+
+      var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
+      this.$http.get(window.laroute.route('admin.dashboard.events.responseMonth') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+      });
+    },
+    generateData: function generateData(items) {
+      var data = [];
+      items.forEach(function (item, index) {
+        data.push([(0, _moment2.default)(item[0], 'YYYY-MM-DD').utc(+1).valueOf(), item[1]]);
+      });
+
+      return data;
+    },
+    onLoadDashboardSellerSuccess: function onLoadDashboardSellerSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.chartOptions.series[0].data = this.generateData(response.data.ga);
+        this.data = response.data;
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message });
+      }
+    }
+  })
+};
+
+/***/ }),
+/* 365 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticStyle: {
+        height: "200px",
+        "min-width": "310px",
+        "max-width": "573px",
+        "max-height": "200px"
+      },
+      attrs: { id: "chart-component" }
+    },
+    [
+      _c("highcharts", {
+        staticClass: "chart",
+        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-02581464", module.exports)
+  }
+}
+
+/***/ }),
+/* 366 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(367)
+/* template */
+var __vue_template__ = __webpack_require__(368)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileResponsemComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-13cab7ce", Component.options)
+  } else {
+    hotAPI.reload("data-v-13cab7ce", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 367 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__(1);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+var _highchartsVue = __webpack_require__(10);
+
+var _highcharts = __webpack_require__(8);
+
+var _highcharts2 = _interopRequireDefault(_highcharts);
+
+var _exporting = __webpack_require__(11);
+
+var _exporting2 = _interopRequireDefault(_exporting);
+
+var _errors = __webpack_require__(4);
+
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _exporting2.default)(_highcharts2.default);
+exports.default = {
+  name: 'TileResponsemComponent',
+  components: { highcharts: _highchartsVue.Chart },
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      data: [],
+      updateArgs: [true, true, { duration: 1000 }],
+      chartOptions: {
+        chart: {
+          type: 'line'
+        },
+        title: {
+          text: this.trans('Mobile Response Rate pro Monat')
+        },
+        subtitle: {
+          text: this.trans('dashboard.source_2019')
+        },
+        xAxis: {
+          type: 'datetime',
+          title: {
+            text: this.trans('dashboard.date')
+          }
+        },
+        yAxis: {
+          title: {
+            text: this.trans('Mobile Response Rate')
+          }
+        },
+        plotOptions: {
+          line: {
+            dataLabels: {
+              enabled: true
+            },
+            enableMouseTracking: false
+          }
+        },
+
+        series: [{
+          name: this.trans('Response Rate(%)'),
+          data: []
+        }],
+
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 573,
+              maxHeight: 200
+            },
+            chartOptions: {
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+              }
+            }
+          }]
+        }
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.loadMobileByMonth();
+    this.$events.$on('whitelabel-set', function (whitelabelId) {
+      return _this.loadMobileByMonth(whitelabelId);
+    });
+  },
+  updated: function updated() {},
+
+  watch: {},
+  computed: _extends({}, _vuex2.default.mapGetters({})),
+  methods: _extends({}, _vuex2.default.mapActions({}), {
+    loadMobileByMonth: function loadMobileByMonth() {
+      var _this2 = this;
+
+      var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
+      this.$http.get(window.laroute.route('admin.dashboard.events.responsemMonth') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+      });
+    },
+    generateData: function generateData(items) {
+      var data = [];
+      items.forEach(function (item, index) {
+        data.push([(0, _moment2.default)(item[0], 'YYYY-MM-DD').utc(+1).valueOf(), item[1]]);
+      });
+
+      return data;
+    },
+    onLoadDashboardSellerSuccess: function onLoadDashboardSellerSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.chartOptions.series[0].data = this.generateData(response.data.ga);
+        this.data = response.data;
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message });
+      }
+    }
+  })
+};
+
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticStyle: {
+        height: "200px",
+        "min-width": "310px",
+        "max-width": "573px",
+        "max-height": "200px"
+      },
+      attrs: { id: "chart-component" }
+    },
+    [
+      _c("highcharts", {
+        staticClass: "chart",
+        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-13cab7ce", module.exports)
+  }
+}
+
+/***/ }),
+/* 369 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(370)
+/* template */
+var __vue_template__ = __webpack_require__(371)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileGroupComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-40d704c6", Component.options)
+  } else {
+    hotAPI.reload("data-v-40d704c6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 370 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__(1);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+var _errors = __webpack_require__(4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  name: 'TileGroupComponent',
+  components: {},
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      groupCount: 0
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.loadGroup();
+    this.$events.$on('whitelabel-set', function (whitelabelId) {
+      return _this.loadGroup(whitelabelId);
+    });
+  },
+
+  watch: {},
+  computed: _extends({}, _vuex2.default.mapGetters({})),
+  methods: _extends({}, _vuex2.default.mapActions({}), {
+    loadGroup: function loadGroup(whitelabelId) {
+      var _this2 = this;
+
+      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
+      this.$http.get(window.laroute.route('admin.dashboard.groups') + params).then(this.onLoadDashboardGroupSuccess).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+      });
+    },
+    onLoadDashboardGroupSuccess: function onLoadDashboardGroupSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.groupCount = response.data.groupCount;
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message });
+      }
+    },
+    onFailed: function onFailed(error) {
+      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+        this.errors.record(error.response.data.errors);
+        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
+          this.$notify.error({ title: 'Failed', message: error.response.data.message });
+        } else {
+          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
+        }
+      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Failed', message: error.response.data.message });
+      } else if (error.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Error', message: error.message });
+      } else {
+        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
+        console.log(error);
+      }
+    }
+  })
+};
 
 /***/ }),
 /* 371 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card card-body bg-teal-400 has-bg-image" }, [
+    _c("div", { staticClass: "media" }, [
+      _c("div", { staticClass: "media-body" }, [
+        _c("h3", {
+          staticClass: "mb-0",
+          domProps: { textContent: _vm._s(_vm.groupCount) }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "text-uppercase font-size-xs" }, [
+          _vm._v(_vm._s(_vm.trans("dashboard.total_groups")))
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ml-3 align-self-center" }, [
+      _c("i", { staticClass: "icon-collaboration icon-3x opacity-75" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-40d704c6", module.exports)
+  }
+}
+
+/***/ }),
+/* 372 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(373)
+/* template */
+var __vue_template__ = __webpack_require__(374)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileSellerComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-46525c34", Component.options)
+  } else {
+    hotAPI.reload("data-v-46525c34", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 373 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__(1);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+var _errors = __webpack_require__(4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  name: 'TileSellerComponent',
+  components: {},
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      sellerCount: { all: 0, active: 0 }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.loadSeller();
+    this.$events.$on('whitelabel-set', function (whitelabelId) {
+      return _this.loadSeller(whitelabelId);
+    });
+  },
+
+  watch: {},
+  computed: _extends({}, _vuex2.default.mapGetters({})),
+  methods: _extends({}, _vuex2.default.mapActions({}), {
+    loadSeller: function loadSeller() {
+      var _this2 = this;
+
+      var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
+      this.$http.get(window.laroute.route('admin.dashboard.sellers') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+      });
+    },
+    onLoadDashboardSellerSuccess: function onLoadDashboardSellerSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.sellerCount = response.data.sellerCount;
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message });
+      }
+    },
+    onFailed: function onFailed(error) {
+      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+        this.errors.record(error.response.data.errors);
+        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
+          this.$notify.error({ title: 'Failed', message: error.response.data.message });
+        } else {
+          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
+        }
+      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Failed', message: error.response.data.message });
+      } else if (error.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Error', message: error.message });
+      } else {
+        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
+        console.log(error);
+      }
+    }
+  })
+};
+
+/***/ }),
+/* 374 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card card-body bg-primary has-bg-image" }, [
+    _c("div", { staticClass: "media" }, [
+      _c("div", { staticClass: "media-body" }, [
+        _c("h3", {
+          staticClass: "mb-0",
+          domProps: {
+            textContent: _vm._s(
+              _vm.sellerCount.active + "/" + _vm.sellerCount.all
+            )
+          }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "text-uppercase font-size-xs" }, [
+          _vm._v(_vm._s(_vm.trans("dashboard.total_sellers")))
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ml-3 align-self-center" }, [
+      _c("i", { staticClass: "icon-users2 icon-3x opacity-75" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-46525c34", module.exports)
+  }
+}
+
+/***/ }),
+/* 375 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(376)
+/* template */
+var __vue_template__ = __webpack_require__(377)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileCommentComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5646c634", Component.options)
+  } else {
+    hotAPI.reload("data-v-5646c634", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 376 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__(1);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+var _errors = __webpack_require__(4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  name: 'TileGroupComponent',
+  components: {},
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      groupCount: 0
+    };
+  },
+  mounted: function mounted() {
+    this.loadGroup();
+  },
+
+  watch: {},
+  computed: _extends({}, _vuex2.default.mapGetters({})),
+  methods: _extends({}, _vuex2.default.mapActions({}), {
+    loadGroup: function loadGroup() {
+      var _this = this;
+
+      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
+      this.$http.get(window.laroute.route('admin.dashboard.groups')).then(this.onLoadDashboardGroupSuccess).catch(this.onFailed).then(function () {
+        _this.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+      });
+    },
+    onLoadDashboardGroupSuccess: function onLoadDashboardGroupSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.groupCount = response.data.groupCount;
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message });
+      }
+    },
+    onFailed: function onFailed(error) {
+      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+        this.errors.record(error.response.data.errors);
+        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
+          this.$notify.error({ title: 'Failed', message: error.response.data.message });
+        } else {
+          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
+        }
+      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Failed', message: error.response.data.message });
+      } else if (error.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Error', message: error.message });
+      } else {
+        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
+        console.log(error);
+      }
+    }
+  })
+};
+
+/***/ }),
+/* 377 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card card-body bg-teal-400 has-bg-image" }, [
+    _c("div", { staticClass: "media" }, [
+      _c("div", { staticClass: "media-body" }, [
+        _c("h3", {
+          staticClass: "mb-0",
+          domProps: { textContent: _vm._s(_vm.groupCount) }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "text-uppercase font-size-xs" }, [
+          _vm._v(_vm._s(_vm.trans("dashboard.total_groups")))
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ml-3 align-self-center" }, [
+      _c("i", { staticClass: "icon-collaboration icon-3x opacity-75" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5646c634", module.exports)
+  }
+}
+
+/***/ }),
+/* 378 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(379)
+/* template */
+var __vue_template__ = __webpack_require__(380)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileOrderComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4bb30752", Component.options)
+  } else {
+    hotAPI.reload("data-v-4bb30752", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__(1);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+var _errors = __webpack_require__(4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  name: 'TileClickComponent',
+  components: {},
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors()
+    };
+  },
+  mounted: function mounted() {},
+
+  watch: {},
+  computed: _extends({}, _vuex2.default.mapGetters({})),
+  methods: _extends({}, _vuex2.default.mapActions({}))
+};
+
+/***/ }),
+/* 380 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticStyle: { width: "100%", height: "100%" } }, [
+      _c("div", { staticClass: "card card-body" }, [
+        _c("div", { staticClass: "media" }, [
+          _c("div", { staticClass: "media-body" }, [
+            _c("h3", { staticClass: "font-weight-semibold mb-0" }, [
+              _vm._v("389,438")
+            ]),
+            _vm._v(" "),
+            _c(
+              "span",
+              { staticClass: "text-uppercase font-size-sm text-muted" },
+              [_vm._v("total orders")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "ml-3 align-self-center" }, [
+            _c("i", { staticClass: "icon-bag icon-3x text-danger-400" })
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4bb30752", module.exports)
+  }
+}
+
+/***/ }),
+/* 381 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(382)
+/* template */
+var __vue_template__ = __webpack_require__(383)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/TileUserComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1ee455cc", Component.options)
+  } else {
+    hotAPI.reload("data-v-1ee455cc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 382 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__(1);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+var _errors = __webpack_require__(4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  name: 'TileGroupComponent',
+  components: {},
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      reactionTimeByMonth: 0,
+      reactionTimeByDay: 0
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.loadReationTimeByMonth();
+    this.loadReationTimeByDay();
+    this.$events.$on('whitelabel-set', function (whitelabelId) {
+      return _this.loadReationTimeByMonth(whitelabelId);
+    });
+  },
+
+  watch: {},
+  computed: _extends({}, _vuex2.default.mapGetters({})),
+  methods: _extends({}, _vuex2.default.mapActions({}), {
+    loadReationTimeByMonth: function loadReationTimeByMonth(whitelabelId) {
+      var _this2 = this;
+
+      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
+      this.$http.get(window.laroute.route('admin.dashboard.timeByMonth') + params).then(this.onLoadDashboardReationTimeByMonthSuccess).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+      });
+    },
+    loadReationTimeByDay: function loadReationTimeByDay(whitelabelId) {
+      var _this3 = this;
+
+      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
+      this.$http.get(window.laroute.route('admin.dashboard.timeByDay') + params).then(this.onLoadDashboardReationTimeByDaySuccess).catch(this.onFailed).then(function () {
+        _this3.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+      });
+    },
+    onLoadDashboardReationTimeByMonthSuccess: function onLoadDashboardReationTimeByMonthSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.reactionTimeByMonth = response.data.reactionTime;
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message });
+      }
+    },
+    onLoadDashboardReationTimeByDaySuccess: function onLoadDashboardReationTimeByDaySuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.reactionTimeByDay = response.data.reactionTime;
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message });
+      }
+    },
+    onFailed: function onFailed(error) {
+      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+        this.errors.record(error.response.data.errors);
+        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
+          this.$notify.error({ title: 'Failed', message: error.response.data.message });
+        } else {
+          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
+        }
+      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Failed', message: error.response.data.message });
+      } else if (error.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Error', message: error.message });
+      } else {
+        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
+        console.log(error);
+      }
+    }
+  })
+};
+
+/***/ }),
+/* 383 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "card card-body bg-purple-400 has-bg-image" },
+    [
+      _c("div", { staticClass: "media" }, [
+        _c("div", { staticClass: "media-body text-left" }, [
+          _c("h3", {
+            staticClass: "mb-0",
+            domProps: { textContent: _vm._s(_vm.reactionTimeByMonth) }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "text-uppercase font-size-xs" }, [
+            _vm._v(_vm._s(_vm.trans("dashboard.reaction_time_average_month")))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "media-body text-right" }, [
+          _c("h3", {
+            staticClass: "mb-0",
+            domProps: { textContent: _vm._s(_vm.reactionTimeByDay) }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "text-uppercase font-size-xs" }, [
+            _vm._v(_vm._s(_vm.trans("dashboard.reaction_time_average_day")))
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1ee455cc", module.exports)
+  }
+}
+
+/***/ }),
+/* 384 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(385)
+/* template */
+var __vue_template__ = __webpack_require__(386)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/provider/dashboard/components/ChartWishDayComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-47a1d2bc", Component.options)
+  } else {
+    hotAPI.reload("data-v-47a1d2bc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 385 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__(1);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+var _highchartsVue = __webpack_require__(10);
+
+var _highcharts = __webpack_require__(8);
+
+var _highcharts2 = _interopRequireDefault(_highcharts);
+
+var _exporting = __webpack_require__(11);
+
+var _exporting2 = _interopRequireDefault(_exporting);
+
+var _errors = __webpack_require__(4);
+
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _exporting2.default)(_highcharts2.default);
+_moment2.default.locale(window.i18.lang);
+exports.default = {
+  name: 'ChartWishDayComponent',
+  components: { highcharts: _highchartsVue.Chart },
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      data: [],
+      updateArgs: [true, true, { duration: 1000 }],
+      chartOptions: {
+        chart: {
+          type: 'line'
+        },
+        title: {
+          text: this.trans('dashboard.daily_average_wish')
+        },
+        subtitle: {
+          text: this.trans('dashboard.current_month')
+        },
+        xAxis: {
+          type: 'datetime',
+          dateTimeLabelFormats: { // don't display the dummy year
+            month: '%e. %b',
+            year: '%b'
+          },
+          title: {
+            text: this.trans('dashboard.date')
+          }
+        },
+        yAxis: {
+          title: {
+            text: this.trans('dashboard.wishes')
+          }
+        },
+        legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle'
+        },
+        plotOptions: {
+          line: {
+            dataLabels: {
+              enabled: true
+            },
+            chartOptions: {
+              legend: {
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom'
+              }
+            }
+          }
+        },
+
+        series: [{
+          name: this.trans('dashboard.wishes'),
+          data: []
+        }],
+
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 573,
+              maxHeight: 200
+            },
+            chartOptions: {
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+              }
+            }
+          }]
+        }
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.loadWishByMonth();
+    this.$events.$on('whitelabel-set', function (whitelabelId) {
+      return _this.loadWishByMonth(whitelabelId);
+    });
+  },
+  updated: function updated() {},
+
+  watch: {},
+  computed: _extends({}, _vuex2.default.mapGetters({})),
+  methods: _extends({}, _vuex2.default.mapActions({}), {
+    loadWishByMonth: function loadWishByMonth() {
+      var _this2 = this;
+
+      var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
+      this.$http.get(window.laroute.route('admin.dashboard.wishes.byDay') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+      });
+    },
+    generateData: function generateData(items) {
+      var data = [];
+      items.forEach(function (item, index) {
+        data.push([(0, _moment2.default)(item[0], 'YYYY-MM-DD').utc(+1).valueOf(), item[1]]);
+      });
+
+      return data;
+    },
+    onLoadDashboardSellerSuccess: function onLoadDashboardSellerSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.chartOptions.series[0].data = this.generateData(response.data.data);
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message });
+      }
+    }
+  })
+};
+
+/***/ }),
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -99488,15 +100674,15 @@ if (false) {
 }
 
 /***/ }),
-/* 372 */
+/* 387 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(373)
+var __vue_script__ = __webpack_require__(388)
 /* template */
-var __vue_template__ = __webpack_require__(374)
+var __vue_template__ = __webpack_require__(389)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -99535,7 +100721,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 373 */
+/* 388 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -99553,21 +100739,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _highchartsVue = __webpack_require__(20);
+var _highchartsVue = __webpack_require__(10);
 
-var _highcharts = __webpack_require__(13);
+var _highcharts = __webpack_require__(8);
 
 var _highcharts2 = _interopRequireDefault(_highcharts);
 
-var _exporting = __webpack_require__(21);
+var _exporting = __webpack_require__(11);
 
 var _exporting2 = _interopRequireDefault(_exporting);
 
-var _errors = __webpack_require__(6);
+var _errors = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -99658,7 +100844,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 374 */
+/* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -99696,15 +100882,15 @@ if (false) {
 }
 
 /***/ }),
-/* 375 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(376)
+var __vue_script__ = __webpack_require__(391)
 /* template */
-var __vue_template__ = __webpack_require__(377)
+var __vue_template__ = __webpack_require__(392)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -99743,7 +100929,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 376 */
+/* 391 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -99761,21 +100947,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _highchartsVue = __webpack_require__(20);
+var _highchartsVue = __webpack_require__(10);
 
-var _highcharts = __webpack_require__(13);
+var _highcharts = __webpack_require__(8);
 
 var _highcharts2 = _interopRequireDefault(_highcharts);
 
-var _exporting = __webpack_require__(21);
+var _exporting = __webpack_require__(11);
 
 var _exporting2 = _interopRequireDefault(_exporting);
 
-var _errors = __webpack_require__(6);
+var _errors = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -99876,7 +101062,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 377 */
+/* 392 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -99914,15 +101100,15 @@ if (false) {
 }
 
 /***/ }),
-/* 378 */
+/* 393 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(379)
+var __vue_script__ = __webpack_require__(394)
 /* template */
-var __vue_template__ = __webpack_require__(380)
+var __vue_template__ = __webpack_require__(395)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -99961,7 +101147,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 379 */
+/* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -99979,21 +101165,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _highchartsVue = __webpack_require__(20);
+var _highchartsVue = __webpack_require__(10);
 
-var _highcharts = __webpack_require__(13);
+var _highcharts = __webpack_require__(8);
 
 var _highcharts2 = _interopRequireDefault(_highcharts);
 
-var _exporting = __webpack_require__(21);
+var _exporting = __webpack_require__(11);
 
 var _exporting2 = _interopRequireDefault(_exporting);
 
-var _errors = __webpack_require__(6);
+var _errors = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -100093,7 +101279,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 380 */
+/* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100131,15 +101317,15 @@ if (false) {
 }
 
 /***/ }),
-/* 381 */
+/* 396 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(382)
+var __vue_script__ = __webpack_require__(397)
 /* template */
-var __vue_template__ = __webpack_require__(384)
+var __vue_template__ = __webpack_require__(399)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -100178,7 +101364,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 382 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100196,25 +101382,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _highchartsVue = __webpack_require__(20);
+var _highchartsVue = __webpack_require__(10);
 
-var _highcharts = __webpack_require__(13);
+var _highcharts = __webpack_require__(8);
 
 var _highcharts2 = _interopRequireDefault(_highcharts);
 
-var _exporting = __webpack_require__(21);
+var _exporting = __webpack_require__(11);
 
 var _exporting2 = _interopRequireDefault(_exporting);
 
-var _errors = __webpack_require__(6);
+var _errors = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-__webpack_require__(383)(_highcharts2.default);
+__webpack_require__(398)(_highcharts2.default);
 (0, _exporting2.default)(_highcharts2.default);
 exports.default = {
   name: 'TileSpiderComponent',
@@ -100303,7 +101489,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 383 */
+/* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -100382,7 +101568,7 @@ this)},this)}),b.addEvent(b.Chart,"afterDrawChartBox",function(){q(this.pane,fun
 
 
 /***/ }),
-/* 384 */
+/* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100420,15 +101606,15 @@ if (false) {
 }
 
 /***/ }),
-/* 385 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(386)
+var __vue_script__ = __webpack_require__(401)
 /* template */
-var __vue_template__ = __webpack_require__(388)
+var __vue_template__ = __webpack_require__(403)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -100467,7 +101653,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 386 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100485,25 +101671,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _highchartsVue = __webpack_require__(20);
+var _highchartsVue = __webpack_require__(10);
 
-var _highcharts = __webpack_require__(13);
+var _highcharts = __webpack_require__(8);
 
 var _highcharts2 = _interopRequireDefault(_highcharts);
 
-var _exporting = __webpack_require__(21);
+var _exporting = __webpack_require__(11);
 
 var _exporting2 = _interopRequireDefault(_exporting);
 
-var _errors = __webpack_require__(6);
+var _errors = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-__webpack_require__(387)(_highcharts2.default);
+__webpack_require__(402)(_highcharts2.default);
 (0, _exporting2.default)(_highcharts2.default);
 exports.default = {
   name: 'TileTdComponent',
@@ -100582,7 +101768,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 387 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -100672,7 +101858,7 @@ this.bottomFrame.front.attr({fill:this.bottomFrame.color}));this.backFrame&&(thi
 
 
 /***/ }),
-/* 388 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100710,19 +101896,19 @@ if (false) {
 }
 
 /***/ }),
-/* 389 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(390)
+  __webpack_require__(405)
 }
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(392)
+var __vue_script__ = __webpack_require__(407)
 /* template */
-var __vue_template__ = __webpack_require__(393)
+var __vue_template__ = __webpack_require__(408)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -100761,17 +101947,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 390 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(391);
+var content = __webpack_require__(406);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(57)("53a15d4a", content, false, {});
+var update = __webpack_require__(57)("e4e76564", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -100787,7 +101973,7 @@ if(false) {
 }
 
 /***/ }),
-/* 391 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(34)(false);
@@ -100801,7 +101987,7 @@ exports.push([module.i, "\n.backend-analytics {\n    display: flex;\n    flex-di
 
 
 /***/ }),
-/* 392 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100871,11 +102057,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(6);
+var _errors = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -100902,7 +102088,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 393 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -101063,13 +102249,13 @@ if (false) {
 }
 
 /***/ }),
-/* 394 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(395)
+var __vue_script__ = __webpack_require__(410)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -101110,7 +102296,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 395 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101122,15 +102308,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _toastr = __webpack_require__(396);
+var _toastr = __webpack_require__(411);
 
 var _toastr2 = _interopRequireDefault(_toastr);
 
@@ -101138,7 +102324,7 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _Vuetable = __webpack_require__(399);
+var _Vuetable = __webpack_require__(414);
 
 var _Vuetable2 = _interopRequireDefault(_Vuetable);
 
@@ -101146,11 +102332,11 @@ var _config = __webpack_require__(213);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _FilterBar = __webpack_require__(423);
+var _FilterBar = __webpack_require__(438);
 
 var _FilterBar2 = _interopRequireDefault(_FilterBar);
 
-var _CssConfig = __webpack_require__(426);
+var _CssConfig = __webpack_require__(441);
 
 var _CssConfig2 = _interopRequireDefault(_CssConfig);
 
@@ -101266,7 +102452,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 396 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -101283,7 +102469,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
  */
 /* global define */
 (function (define) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(397)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ($) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(412)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ($) {
         return (function () {
             var $container;
             var listener;
@@ -101739,11 +102925,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
         })();
     }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-}(__webpack_require__(398)));
+}(__webpack_require__(413)));
 
 
 /***/ }),
-/* 397 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -112114,7 +113300,7 @@ return jQuery;
 
 
 /***/ }),
-/* 398 */
+/* 413 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
@@ -112123,19 +113309,19 @@ module.exports = function() {
 
 
 /***/ }),
-/* 399 */
+/* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(400)
+  __webpack_require__(415)
 }
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(402)
+var __vue_script__ = __webpack_require__(417)
 /* template */
-var __vue_template__ = __webpack_require__(421)
+var __vue_template__ = __webpack_require__(436)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -112174,17 +113360,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 400 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(401);
+var content = __webpack_require__(416);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(57)("c96b1a10", content, false, {});
+var update = __webpack_require__(57)("7e8276f8", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -112200,7 +113386,7 @@ if(false) {
 }
 
 /***/ }),
-/* 401 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(34)(false);
@@ -112214,14 +113400,14 @@ exports.push([module.i, "\n[v-cloak][data-v-15965e3b] {\n  display: none;\n}\n.v
 
 
 /***/ }),
-/* 402 */
+/* 417 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(403);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(418);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 
 
@@ -113163,21 +114349,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 403 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(404);
+module.exports = __webpack_require__(419);
 
 /***/ }),
-/* 404 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(8);
+var utils = __webpack_require__(9);
 var bind = __webpack_require__(208);
-var Axios = __webpack_require__(405);
+var Axios = __webpack_require__(420);
 var defaults = __webpack_require__(58);
 
 /**
@@ -113212,14 +114398,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(212);
-axios.CancelToken = __webpack_require__(419);
+axios.CancelToken = __webpack_require__(434);
 axios.isCancel = __webpack_require__(211);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(420);
+axios.spread = __webpack_require__(435);
 
 module.exports = axios;
 
@@ -113228,18 +114414,18 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 405 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var defaults = __webpack_require__(58);
-var utils = __webpack_require__(8);
-var InterceptorManager = __webpack_require__(414);
-var dispatchRequest = __webpack_require__(415);
-var isAbsoluteURL = __webpack_require__(417);
-var combineURLs = __webpack_require__(418);
+var utils = __webpack_require__(9);
+var InterceptorManager = __webpack_require__(429);
+var dispatchRequest = __webpack_require__(430);
+var isAbsoluteURL = __webpack_require__(432);
+var combineURLs = __webpack_require__(433);
 
 /**
  * Create a new instance of Axios
@@ -113320,13 +114506,13 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 406 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(8);
+var utils = __webpack_require__(9);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -113339,7 +114525,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 407 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -113371,7 +114557,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 408 */
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -113397,13 +114583,13 @@ module.exports = function enhanceError(error, config, code, response) {
 
 
 /***/ }),
-/* 409 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(8);
+var utils = __webpack_require__(9);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -113472,13 +114658,13 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 410 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(8);
+var utils = __webpack_require__(9);
 
 /**
  * Parse headers into an object
@@ -113516,13 +114702,13 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 411 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(8);
+var utils = __webpack_require__(9);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -113591,7 +114777,7 @@ module.exports = (
 
 
 /***/ }),
-/* 412 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -113634,13 +114820,13 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 413 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(8);
+var utils = __webpack_require__(9);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -113694,13 +114880,13 @@ module.exports = (
 
 
 /***/ }),
-/* 414 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(8);
+var utils = __webpack_require__(9);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -113753,14 +114939,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 415 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(8);
-var transformData = __webpack_require__(416);
+var utils = __webpack_require__(9);
+var transformData = __webpack_require__(431);
 var isCancel = __webpack_require__(211);
 var defaults = __webpack_require__(58);
 
@@ -113839,13 +115025,13 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 416 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(8);
+var utils = __webpack_require__(9);
 
 /**
  * Transform the data for a request or a response
@@ -113866,7 +115052,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 417 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -113887,7 +115073,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 418 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -113906,7 +115092,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 419 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -113970,7 +115156,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 420 */
+/* 435 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114004,7 +115190,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 421 */
+/* 436 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -115005,7 +116191,7 @@ if (false) {
 }
 
 /***/ }),
-/* 422 */
+/* 437 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -115026,15 +116212,15 @@ exports.default = [{
 }];
 
 /***/ }),
-/* 423 */
+/* 438 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(424)
+var __vue_script__ = __webpack_require__(439)
 /* template */
-var __vue_template__ = __webpack_require__(425)
+var __vue_template__ = __webpack_require__(440)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -115073,7 +116259,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 424 */
+/* 439 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -115113,7 +116299,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _vuex = __webpack_require__(2);
+var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
@@ -115165,7 +116351,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 425 */
+/* 440 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -115256,7 +116442,7 @@ if (false) {
 }
 
 /***/ }),
-/* 426 */
+/* 441 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -115276,7 +116462,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 427 */
+/* 442 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

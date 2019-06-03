@@ -14,6 +14,8 @@ use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
+use Analytics;
+use Spatie\Analytics\Period;
 
 class DashboardController extends Controller
 {
