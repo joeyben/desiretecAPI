@@ -45,6 +45,8 @@ RUN echo "SetEnvIf x-forwarded-proto https HTTPS=on" >> /etc/apache2/conf-availa
 RUN composer dump-autoload
 
 USER root
+RUN apt update && \
+    apt install -y mysql-client
 
 RUN rm -r /var/www/html/docker
 RUN make routes
