@@ -261,6 +261,12 @@
                                     <span>Components Mgnt</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.backups') }}" class="nav-link">
+                                    <i class="icon-file-text"></i>
+                                    <span>Backups Mgnt</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     @endif
