@@ -1,6 +1,6 @@
 @php
-    $contactInactivClass = count($wish->contacts) ? " inactiv" : "";
-    $callbackInactivClass = count($wish->callbacks) ? " inactiv" : "";
+    $contactInactivClass = count($wish->contacts) ? "" : "";
+    $callbackInactivClass = count($wish->callbacks) ? "" : "";
     $actionButtonsSet = false;
 @endphp
 
