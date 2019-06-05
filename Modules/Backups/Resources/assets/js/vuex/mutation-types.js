@@ -1,0 +1,5 @@
+export const LOAD_LANGUAGES = 'LOAD_LANGUAGES'
+export const ADD_POST = 'ADD_POST'
+export const ADD_CATEGORIES = 'ADD_CATEGORIES'
+export const ADD_ROLES = 'ADD_ROLES'
+export const ADD_USERS = 'ADD_USERS'
