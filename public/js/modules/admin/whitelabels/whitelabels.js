@@ -114240,6 +114240,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vuex = __webpack_require__(5);
 
@@ -116007,6 +116016,45 @@ var render = function() {
                                   domProps: {
                                     textContent: _vm._s(
                                       _vm.errors.get("domain")
+                                    )
+                                  }
+                                })
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-3 col-form-label" },
+                              [
+                                _vm._v(
+                                  " " + _vm._s(_vm.trans("Google View Id"))
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-9" }, [
+                              _c("input", {
+                                staticClass: "form-control",
+                                class: _vm.errors.has("ga_view_id")
+                                  ? "is-invalid"
+                                  : "",
+                                attrs: {
+                                  type: "text",
+                                  id: "ga_view_id",
+                                  name: "ga_view_id",
+                                  placeholder: _vm.trans("Google View Id")
+                                },
+                                domProps: { value: _vm.whitelabel.ga_view_id },
+                                on: { input: _vm.updateWhitelabel }
+                              }),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "invalid-feedback" }, [
+                                _c("strong", {
+                                  domProps: {
+                                    textContent: _vm._s(
+                                      _vm.errors.get("ga_view_id")
                                     )
                                   }
                                 })
