@@ -21,8 +21,68 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 0,
             'w'               => 2,
             'h'               => 2,
-            'i'               => 0,
+            'i'               => 1,
             'component'       => 'tile-wish-component',
+            'created_at'      => DB::raw('now()'),
+            'updated_at'      => DB::raw('now()')
+        ]);
+
+        DB::table('dashboards')->insert([
+            'name'            => 'Tile Offer',
+            'x'               => 0,
+            'y'               => 15,
+            'w'               => 4,
+            'h'               => 8,
+            'i'               => 2,
+            'component'       => 'tile-offer-component',
+            'created_at'      => DB::raw('now()'),
+            'updated_at'      => DB::raw('now()')
+        ]);
+
+        DB::table('dashboards')->insert([
+            'name'            => 'Tile Mobile',
+            'x'               => 0,
+            'y'               => 23,
+            'w'               => 4,
+            'h'               => 8,
+            'i'               => 3,
+            'component'       => 'tile-mobile-component',
+            'created_at'      => DB::raw('now()'),
+            'updated_at'      => DB::raw('now()')
+        ]);
+
+        DB::table('dashboards')->insert([
+            'name'            => 'Tile Response',
+            'x'               => 0,
+            'y'               => 31,
+            'w'               => 4,
+            'h'               => 8,
+            'i'               => 4,
+            'component'       => 'tile-response-component',
+            'created_at'      => DB::raw('now()'),
+            'updated_at'      => DB::raw('now()')
+        ]);
+
+        DB::table('dashboards')->insert([
+            'name'            => 'Tile Response Mobile',
+            'x'               => 6,
+            'y'               => 31,
+            'w'               => 4,
+            'h'               => 8,
+            'i'               => 5,
+            'component'       => 'tile-responsem-component',
+            'created_at'      => DB::raw('now()'),
+            'updated_at'      => DB::raw('now()')
+        ]);
+
+        DB::table('dashboards')->insert([
+            'name'            => 'Tile Offerday',
+            'x'               => 6,
+            'y'               => 15,
+            'w'               => 4,
+            'h'               => 8,
+            'i'               => 6,
+            'component'       => 'tile-offerday-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
         ]);
@@ -33,7 +93,7 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 0,
             'w'               => 2,
             'h'               => 2,
-            'i'               => 1,
+            'i'               => 7,
             'component'       => 'tile-seller-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
@@ -45,7 +105,7 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 0,
             'w'               => 2,
             'h'               => 2,
-            'i'               => 2,
+            'i'               => 8,
             'component'       => 'tile-group-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
@@ -57,7 +117,7 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 0,
             'w'               => 3,
             'h'               => 2,
-            'i'               => 3,
+            'i'               => 9,
             'component'       => 'tile-user-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
@@ -69,7 +129,7 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 0,
             'w'               => 3,
             'h'               => 2,
-            'i'               => 5,
+            'i'               => 10,
             'component'       => 'tile-comment-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
@@ -81,7 +141,7 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 2,
             'w'               => 4,
             'h'               => 8,
-            'i'               => 6,
+            'i'               => 11,
             'component'       => 'chart-wish-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
@@ -93,7 +153,7 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 2,
             'w'               => 4,
             'h'               => 8,
-            'i'               => 7,
+            'i'               => 12,
             'component'       => 'tile-spider-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
@@ -105,7 +165,7 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 2,
             'w'               => 4,
             'h'               => 8,
-            'i'               => 8,
+            'i'               => 13,
             'component'       => 'tile-pie-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
@@ -117,7 +177,7 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 5,
             'w'               => 4,
             'h'               => 8,
-            'i'               => 9,
+            'i'               => 14,
             'component'       => 'chart-wish-day-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
@@ -129,7 +189,7 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 5,
             'w'               => 4,
             'h'               => 8,
-            'i'               => 10,
+            'i'               => 15,
             'component'       => 'tile-bar-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
@@ -141,7 +201,7 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 5,
             'w'               => 4,
             'h'               => 8,
-            'i'               => 11,
+            'i'               => 16,
             'component'       => 'tile-td-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
@@ -153,7 +213,7 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 0,
             'w'               => 12,
             'h'               => 5,
-            'i'               => 12,
+            'i'               => 17,
             'component'       => 'ga-datatable-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
@@ -165,13 +225,13 @@ class DashboardDatabaseSeeder extends Seeder
             'y'               => 0,
             'w'               => 12,
             'h'               => 10,
-            'i'               => 13,
+            'i'               => 18,
             'component'       => 'backend-analytics-component',
             'created_at'      => DB::raw('now()'),
             'updated_at'      => DB::raw('now()')
         ]);
 
-        for ($i = 1; $i <= 13; ++$i) {
+        for ($i = 1; $i <= 18; ++$i) {
             DB::table('dashboard_user')->insertGetId([
                 'user_id'              => 1,
                 'dashboard_id'         => $i,
