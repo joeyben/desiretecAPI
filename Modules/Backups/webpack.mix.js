@@ -3,8 +3,23 @@ require('laravel-mix-merge-manifest');
 
 mix.setPublicPath('../../public').mergeManifest();
 
-mix.js(__dirname + '/Resources/assets/js/app.js', 'js/backups.js')
-    .sass( __dirname + '/Resources/assets/sass/app.scss', 'css/backups.css');
+mix.webpackConfig({
+  module: {
+    rules:[
+      {
+        enforce: 'pre',
+        test: /\.(js|vue)$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'eslint-loader',
+        options: {
+          fix: true
+        }
+      }
+    ]
+  },
+});
+
+mix.js(__dirname + '/Resources/assets/js/modules/admin/backups/backups.js', 'js/modules/admin/backups/backups.js');
 
 if (mix.inProduction()) {
     mix.version();

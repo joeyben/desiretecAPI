@@ -9,8 +9,6 @@
         "Modules\\Backups\\Providers\\BackupsServiceProvider"
     ],
     "aliases": {},
-    "files": [
-        "start.php"
-    ],
+    "files": [],
     "requires": []
 }
