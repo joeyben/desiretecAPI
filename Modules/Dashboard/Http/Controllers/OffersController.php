@@ -105,7 +105,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = $whitelabel['ga_view_id'];
+            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter($viewId);
 
             $optParams = [
@@ -138,7 +138,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = $whitelabel['ga_view_id'];
+            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter($viewId);
 
                  $optParams = [
@@ -173,7 +173,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = $whitelabel['ga_view_id'];
+            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter($viewId);
 
                  $optParams = [
@@ -209,7 +209,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = $whitelabel['ga_view_id'];
+            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter($viewId);
 
                  $optParams = [
@@ -265,7 +265,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
             
-            $viewId = $whitelabel['ga_view_id'];
+            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter($viewId);
 
                  $optParams = [
