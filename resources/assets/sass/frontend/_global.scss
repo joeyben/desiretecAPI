@@ -696,6 +696,11 @@ a.primary-btn, input.primary-btn{
     .group{
       position: relative;
       margin-bottom: 15px;
+      i{
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
     }
   }
   .modal-body-right{

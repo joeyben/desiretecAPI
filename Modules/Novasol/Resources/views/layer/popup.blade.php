@@ -116,8 +116,13 @@
             <div class="kwp-col-4 destination">
                 <div class="kwp-form-group ">
                     {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.budget'), 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
+                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.budget'), 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
                     <i class="fal fa-euro-sign"></i>
+                    @if ($errors->any() && $errors->get('budget'))
+                        @foreach ($errors->get('budget') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>

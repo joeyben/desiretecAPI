@@ -1,6 +1,6 @@
 @php
-    $contactInactivClass = count($wish->contacts) ? " inactiv" : "";
-    $callbackInactivClass = count($wish->callbacks) ? " inactiv" : "";
+    $contactInactivClass = count($wish->contacts) ? "" : "";
+    $callbackInactivClass = count($wish->callbacks) ? "" : "";
     $actionButtonsSet = false;
 @endphp
 
@@ -125,6 +125,11 @@
                     <div class="col-md-3 c-info">
                         <i class="fas fa-envelope"></i>
                         <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->agents[0]->email }}</a>
+                    </div>
+                @else
+                    <div class="col-md-3 c-info">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->email }}</a>
                     </div>
                 @endif
             </div>
@@ -386,19 +391,8 @@
 
                     </div>
 
-                    <div class="col-md-4 modal-body-right">
-                        <img src="/img/frontend/profile-picture/travel-agency.jpg" alt="">
-                        <h4>{{ $wish->group->users[0]->name }}</h4>
-                        <p>{{ $wish->group->users[0]->address }}<br>
-                            {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
-                        </p>
-                        <div class="modal-contact">
-                            <div class="mc-mail">
-                                <span class="glyphicon glyphicon-envelope"></span>
-                                <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
-                            </div>
-                        </div>
-                    </div>
+                    @include('novasol::wish.partial.modal-right-panel')
+
 
                     <div class="col-md-12 modal-body-bottom">
                         <textarea name="message" id="modal-textarea" class="form-control" placeholder="{{ trans('wish.contact.message_placeholder') }}"></textarea>
@@ -453,6 +447,7 @@
                             <label>Telefon-Nr unter der wir Sie erreichen</label>
                         </div>
                         <div class="group">
+                            <i class="fas fa-sort-down"></i>
                             <select name="period" id="period_" class="form-control">
                                 <option value="">{{ trans('wish.details.callback_period_empty') }}</option>
                                 <option value="vormittags" id="">vormittags</option>
@@ -464,19 +459,7 @@
 
                     </div>
 
-                    <div class="col-md-4 modal-body-right">
-                        <img src="/img/frontend/profile-picture/travel-agency.jpg" alt="">
-                        <h4>{{ $wish->group->users[0]->name }}</h4>
-                        <p>{{ $wish->group->users[0]->address }}<br>
-                            {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
-                        </p>
-                        <div class="modal-contact">
-                            <div class="mc-mail">
-                                <span class="glyphicon glyphicon-envelope"></span>
-                                <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
-                            </div>
-                        </div>
-                    </div>
+                    @include('novasol::wish.partial.modal-right-panel')
 
                 </div>
             </div>
