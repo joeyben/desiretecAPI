@@ -23,34 +23,23 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         return Dashboard::class;
     }
 
-    public function totalEventsMonth(string $gaViewId, array $optParams)
+    public function uniqueEventsDay(string $gaViewId, array $optParams, string $startDate, string $endDate)
     {
         return \Analytics::getAnalyticsService()->data_ga->get(
             'ga:'.$gaViewId,
-            '365daysAgo',
-            'yesterday',
-            'ga:totalEvents',
+            ($startDate === '') ? '30daysAgo' : $startDate ,
+            ($endDate === '') ?'yesterday' : $endDate,
+            'ga:uniqueEvents',
             $optParams
         )->rows;
     }
 
-    public function totalEventsDay(string $gaViewId, array $optParams)
+    public function uniqueEventsMonth(string $gaViewId, array $optParams, string $startDate, string $endDate)
     {
         return \Analytics::getAnalyticsService()->data_ga->get(
             'ga:'.$gaViewId,
-            '30daysAgo',
-            'yesterday',
-            'ga:totalEvents',
-            $optParams
-        )->rows;
-    }
-
-    public function uniqueEventsMonth(string $gaViewId, array $optParams)
-    {
-        return \Analytics::getAnalyticsService()->data_ga->get(
-            'ga:'.$gaViewId,
-            '365daysAgo',
-            'yesterday',
+            ($startDate === '') ? '365daysAgo' : $startDate,
+            ($endDate === '') ? 'yesterday' : $endDate,
             'ga:uniqueEvents',
             $optParams
         )->rows;

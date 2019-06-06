@@ -4,6 +4,8 @@ namespace Modules\Dashboard\Http\Controllers;
 
 use App\Repositories\Criteria\ByWhitelabel;
 use App\Repositories\Criteria\Where;
+use App\Repositories\Criteria\GroupBy;
+use Illuminate\Support\Facades\DB;
 use App\Services\Flag\Src\Flag;
 use Carbon\Carbon;
 use Illuminate\Auth\AuthManager;
@@ -82,7 +84,6 @@ class OffersController extends Controller
      */
     public function index()
     {
-
     }
 
 
@@ -95,6 +96,8 @@ class OffersController extends Controller
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
+            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
 
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
@@ -111,7 +114,7 @@ class OffersController extends Controller
                 'filters' => $filter['filterd'],
             ];
 
-            $result['ga'] = $this->dashboard->totalEventsMonth($gaViewId, $optParams);
+            $result['ga'] = $this->dashboard->uniqueEventsMonth($gaViewId, $optParams, $startDate, $endDate);
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -128,6 +131,8 @@ class OffersController extends Controller
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
+            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
             
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
@@ -144,7 +149,7 @@ class OffersController extends Controller
                     'filters' => $filter['filterd'],
                 ];
 
-                 $result['ga'] = $this->dashboard->totalEventsDay($gaViewId, $optParams);
+                 $result['ga'] = $this->dashboard->uniqueEventsDay($gaViewId, $optParams, $startDate, $endDate);
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -162,6 +167,8 @@ class OffersController extends Controller
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
+            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
             
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
@@ -178,7 +185,7 @@ class OffersController extends Controller
                     'filters' => $filter['filterm'],
                 ];
 
-                 $result['ga'] = $this->dashboard->totalEventsMonth($gaViewId, $optParams);  
+                 $result['ga'] = $this->dashboard->uniqueEventsMonth($gaViewId, $optParams, $startDate, $endDate);  
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -197,6 +204,8 @@ class OffersController extends Controller
         try {
 
             $whitelabelId = $request->get('whitelabelId');
+            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
             
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
@@ -214,17 +223,27 @@ class OffersController extends Controller
                     'filters' => $filter['filterd'],
                 ];
 
-                    $result['ga'] = $this->dashboard->uniqueEventsMonth($gaViewId, $optParams);
+                    $result['ga'] = $this->dashboard->uniqueEventsMonth($gaViewId, $optParams, $startDate, $endDate);
 
-                    $result['wishCount'] = $this->wishes->withCriteria([
+                    $data = $this->wishes->withCriteria([
                     new ByWhitelabel(),
                     new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-                     ])->all()->count();
+                    new GroupBy('month')
+                     ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
+                ->pluck('wishes_count', 'date');
+                    $stack = array();
+                foreach ($data as $k => $v) {
+                    list($year, $month, $day) = explode("-", $k);
+                    $k = $year.$month; 
+                    $stack['date'] = $k;
+                    $stack['wish'] = $v;
+                }
 
-                foreach ($result['ga'] as $key => $value) {
-                        if($result['ga'][$key][1]!=0)
-                     $result['ga'][$key][1] = intval(($result['wishCount']/$result['ga'][$key][1])*100);
-                 }             
+                 foreach ($result['ga'] as $key => $value) {
+                        if($result['ga'][$key][1]!=0 && in_array($result['ga'][$key][0], $stack)){
+                     $result['ga'][$key][1] = intval(($stack['wish']/$result['ga'][$key][1])*100);
+                        }else{ $result['ga'][$key][1] = 0; }
+                 }          
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -243,6 +262,8 @@ class OffersController extends Controller
         try {
 
             $whitelabelId = $request->get('whitelabelId');
+            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
             
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
@@ -260,17 +281,28 @@ class OffersController extends Controller
                     'filters' => $filter['filterm'],
                 ];
 
-                    $result['ga'] = $this->dashboard->uniqueEventsMonth($gaViewId, $optParams);
+                    $result['ga'] = $this->dashboard->uniqueEventsMonth($gaViewId, $optParams, $startDate, $endDate);
 
-                    $result['wishCount'] = $this->wishes->withCriteria([
+                    $data = $this->wishes->withCriteria([
                     new ByWhitelabel(),
                     new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-                     ])->all()->count();
+                    new GroupBy('month')
+                     ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
+                ->pluck('wishes_count', 'date');
+                    $stack = array();
 
-                foreach ($result['ga'] as $key => $value) {
-                        if($result['ga'][$key][1]!=0)
-                     $result['ga'][$key][1] = intval(($result['wishCount']/$result['ga'][$key][1])*100);
-                 } 
+                foreach ($data as $k => $v) {
+                    list($year, $month, $day) = explode("-", $k);
+                    $k = $year.$month; 
+                    $stack['date'] = $k;
+                    $stack['wish'] = $v;
+                }
+
+                 foreach ($result['ga'] as $key => $value) {
+                        if($result['ga'][$key][1]!=0 && in_array($result['ga'][$key][0], $stack)){
+                     $result['ga'][$key][1] = intval(($stack['wish']/$result['ga'][$key][1])*100);
+                        }else{ $result['ga'][$key][1] = 0; }
+                 }        
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -283,10 +315,7 @@ class OffersController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-
-
-
-
+    
     public function getFilter(string $viewid)
     {
         $filterdesk = '';

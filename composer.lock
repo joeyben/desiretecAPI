@@ -1688,12 +1688,12 @@
             "version": "5.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/faustbrian/Laravel-Categories.git",
+                "url": "https://github.com/artisanry/categories.git",
                 "reference": "8db40515721e4f59ddd337e7f8cf732441b76ba8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/faustbrian/Laravel-Categories/zipball/8db40515721e4f59ddd337e7f8cf732441b76ba8",
+                "url": "https://api.github.com/repos/artisanry/categories/zipball/8db40515721e4f59ddd337e7f8cf732441b76ba8",
                 "reference": "8db40515721e4f59ddd337e7f8cf732441b76ba8",
                 "shasum": ""
             },
@@ -1744,6 +1744,7 @@
                 "laravel",
                 "polymorphic"
             ],
+            "abandoned": "artisanry/categories",
             "time": "2018-11-10T06:33:58+00:00"
         },
         {
@@ -10413,16 +10414,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v4.2.4",
+            "version": "v4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "53c97769814c80a84a8403efcf3ae7ae966d53bb"
+                "reference": "28edb1d371640654fbfb9df53d70fa03fdf69fb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/53c97769814c80a84a8403efcf3ae7ae966d53bb",
-                "reference": "53c97769814c80a84a8403efcf3ae7ae966d53bb",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/28edb1d371640654fbfb9df53d70fa03fdf69fb6",
+                "reference": "28edb1d371640654fbfb9df53d70fa03fdf69fb6",
                 "shasum": ""
             },
             "require": {
@@ -10430,7 +10431,11 @@
                 "symfony/polyfill-ctype": "~1.8",
                 "symfony/polyfill-mbstring": "~1.0"
             },
+            "conflict": {
+                "masterminds/html5": "<2.6"
+            },
             "require-dev": {
+                "masterminds/html5": "^2.6",
                 "symfony/css-selector": "~3.4|~4.0"
             },
             "suggest": {
@@ -10439,7 +10444,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -10466,7 +10471,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2019-02-23T15:17:42+00:00"
+            "time": "2019-04-26T05:53:56+00:00"
         },
         {
             "name": "symfony/yaml",
