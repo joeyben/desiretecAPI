@@ -18,6 +18,8 @@
     components: { highcharts: Chart },
     data () {
       return {
+        created: '',
+        whitelabelId: null,
         // eslint-disable-next-line
         errors: new Errors(),
         data: [],
@@ -47,8 +49,7 @@
             line: {
               dataLabels: {
                 enabled: true
-              },
-              enableMouseTracking: false
+              }
             }
           },
 
@@ -77,7 +78,8 @@
     },
     mounted () {
       this.loadOfferByMonth()
-      this.$events.$on('whitelabel-set', whitelabelId => this.loadOfferByMonth(whitelabelId))
+      this.$events.$on('whitelabel-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
+      this.$events.$on('range-date-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
     },
     updated () {
     },
@@ -90,10 +92,11 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadOfferByMonth: function (whitelabelId = null) {
+      loadOfferByMonth: function (whitelabelId = null, start = '', end = '') {
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
+        let paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.events.perMonth') + params)
+        this.$http.get(window.laroute.route('admin.dashboard.events.perMonth') + params + paramsdate)
           .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {

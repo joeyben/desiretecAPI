@@ -27,6 +27,17 @@
                             </el-option>
                         </el-select>
                     </li>
+                    <div>
+                    <li>
+                      <el-date-picker style="width: 100%;"
+                                        v-model="created"
+                                        @input="doRange"
+                                        type="daterange"
+                                        start-placeholder="Start"
+                                        end-placeholder="End">
+                        </el-date-picker>
+                    </li>
+                  </div>
                 </ul>
             </div>
         </div>
@@ -64,6 +75,7 @@
 
 <script>
   import Vuex from 'vuex'
+  import moment from 'moment'
   import VueGridLayout from 'vue-grid-layout'
   import TileWishComponent from './TileWishComponent'
   import TileOfferComponent from './TileOfferComponent'
@@ -111,6 +123,7 @@ export default {
     },
     data () {
       return {
+        created: '',
         whitelabelId: null,
         dashboards: []
       }
@@ -138,6 +151,9 @@ export default {
       }),
       doWhitelabel () {
         this.$events.fire('whitelabel-set', this.whitelabelId)
+      },
+      doRange (e) {
+        this.$events.fire('range-date-set', this.whitelabelId, moment(e[0], moment.ISO_8601).startOf('day').format('YYYY-MM-DD'), moment(e[1], moment.ISO_8601).endOf('day').format('YYYY-MM-DD '))
       },
       hasPermissionTo (permission) {
         return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]

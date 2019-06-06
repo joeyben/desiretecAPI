@@ -1902,7 +1902,7 @@
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(355)("./" + name);
+                __webpack_require__(349)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4574,7 +4574,7 @@
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(354)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(348)(module)))
 
 /***/ }),
 /* 1 */
@@ -84502,20 +84502,35 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vuex = __webpack_require__(1);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _vueGridLayout = __webpack_require__(348);
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _vueGridLayout = __webpack_require__(350);
 
 var _vueGridLayout2 = _interopRequireDefault(_vueGridLayout);
 
-var _TileWishComponent = __webpack_require__(349);
+var _TileWishComponent = __webpack_require__(351);
 
 var _TileWishComponent2 = _interopRequireDefault(_TileWishComponent);
 
-var _TileOfferComponent = __webpack_require__(352);
+var _TileOfferComponent = __webpack_require__(354);
 
 var _TileOfferComponent2 = _interopRequireDefault(_TileOfferComponent);
 
@@ -84616,6 +84631,7 @@ exports.default = {
   },
   data: function data() {
     return {
+      created: '',
       whitelabelId: null,
       dashboards: []
     };
@@ -84641,6 +84657,9 @@ exports.default = {
   }), {
     doWhitelabel: function doWhitelabel() {
       this.$events.fire('whitelabel-set', this.whitelabelId);
+    },
+    doRange: function doRange(e) {
+      this.$events.fire('range-date-set', this.whitelabelId, (0, _moment2.default)(e[0], _moment2.default.ISO_8601).startOf('day').format('YYYY-MM-DD'), (0, _moment2.default)(e[1], _moment2.default.ISO_8601).endOf('day').format('YYYY-MM-DD '));
     },
     hasPermissionTo: function hasPermissionTo(permission) {
       return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
@@ -84697,6 +84716,302 @@ exports.default = {
 
 /***/ }),
 /* 348 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 349 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./af": 85,
+	"./af.js": 85,
+	"./ar": 86,
+	"./ar-dz": 87,
+	"./ar-dz.js": 87,
+	"./ar-kw": 88,
+	"./ar-kw.js": 88,
+	"./ar-ly": 89,
+	"./ar-ly.js": 89,
+	"./ar-ma": 90,
+	"./ar-ma.js": 90,
+	"./ar-sa": 91,
+	"./ar-sa.js": 91,
+	"./ar-tn": 92,
+	"./ar-tn.js": 92,
+	"./ar.js": 86,
+	"./az": 93,
+	"./az.js": 93,
+	"./be": 94,
+	"./be.js": 94,
+	"./bg": 95,
+	"./bg.js": 95,
+	"./bm": 96,
+	"./bm.js": 96,
+	"./bn": 97,
+	"./bn.js": 97,
+	"./bo": 98,
+	"./bo.js": 98,
+	"./br": 99,
+	"./br.js": 99,
+	"./bs": 100,
+	"./bs.js": 100,
+	"./ca": 101,
+	"./ca.js": 101,
+	"./cs": 102,
+	"./cs.js": 102,
+	"./cv": 103,
+	"./cv.js": 103,
+	"./cy": 104,
+	"./cy.js": 104,
+	"./da": 105,
+	"./da.js": 105,
+	"./de": 106,
+	"./de-at": 107,
+	"./de-at.js": 107,
+	"./de-ch": 108,
+	"./de-ch.js": 108,
+	"./de.js": 106,
+	"./dv": 109,
+	"./dv.js": 109,
+	"./el": 110,
+	"./el.js": 110,
+	"./en-au": 111,
+	"./en-au.js": 111,
+	"./en-ca": 112,
+	"./en-ca.js": 112,
+	"./en-gb": 113,
+	"./en-gb.js": 113,
+	"./en-ie": 114,
+	"./en-ie.js": 114,
+	"./en-il": 115,
+	"./en-il.js": 115,
+	"./en-nz": 116,
+	"./en-nz.js": 116,
+	"./eo": 117,
+	"./eo.js": 117,
+	"./es": 118,
+	"./es-do": 119,
+	"./es-do.js": 119,
+	"./es-us": 120,
+	"./es-us.js": 120,
+	"./es.js": 118,
+	"./et": 121,
+	"./et.js": 121,
+	"./eu": 122,
+	"./eu.js": 122,
+	"./fa": 123,
+	"./fa.js": 123,
+	"./fi": 124,
+	"./fi.js": 124,
+	"./fo": 125,
+	"./fo.js": 125,
+	"./fr": 126,
+	"./fr-ca": 127,
+	"./fr-ca.js": 127,
+	"./fr-ch": 128,
+	"./fr-ch.js": 128,
+	"./fr.js": 126,
+	"./fy": 129,
+	"./fy.js": 129,
+	"./gd": 130,
+	"./gd.js": 130,
+	"./gl": 131,
+	"./gl.js": 131,
+	"./gom-latn": 132,
+	"./gom-latn.js": 132,
+	"./gu": 133,
+	"./gu.js": 133,
+	"./he": 134,
+	"./he.js": 134,
+	"./hi": 135,
+	"./hi.js": 135,
+	"./hr": 136,
+	"./hr.js": 136,
+	"./hu": 137,
+	"./hu.js": 137,
+	"./hy-am": 138,
+	"./hy-am.js": 138,
+	"./id": 139,
+	"./id.js": 139,
+	"./is": 140,
+	"./is.js": 140,
+	"./it": 141,
+	"./it.js": 141,
+	"./ja": 142,
+	"./ja.js": 142,
+	"./jv": 143,
+	"./jv.js": 143,
+	"./ka": 144,
+	"./ka.js": 144,
+	"./kk": 145,
+	"./kk.js": 145,
+	"./km": 146,
+	"./km.js": 146,
+	"./kn": 147,
+	"./kn.js": 147,
+	"./ko": 148,
+	"./ko.js": 148,
+	"./ky": 149,
+	"./ky.js": 149,
+	"./lb": 150,
+	"./lb.js": 150,
+	"./lo": 151,
+	"./lo.js": 151,
+	"./lt": 152,
+	"./lt.js": 152,
+	"./lv": 153,
+	"./lv.js": 153,
+	"./me": 154,
+	"./me.js": 154,
+	"./mi": 155,
+	"./mi.js": 155,
+	"./mk": 156,
+	"./mk.js": 156,
+	"./ml": 157,
+	"./ml.js": 157,
+	"./mn": 158,
+	"./mn.js": 158,
+	"./mr": 159,
+	"./mr.js": 159,
+	"./ms": 160,
+	"./ms-my": 161,
+	"./ms-my.js": 161,
+	"./ms.js": 160,
+	"./mt": 162,
+	"./mt.js": 162,
+	"./my": 163,
+	"./my.js": 163,
+	"./nb": 164,
+	"./nb.js": 164,
+	"./ne": 165,
+	"./ne.js": 165,
+	"./nl": 166,
+	"./nl-be": 167,
+	"./nl-be.js": 167,
+	"./nl.js": 166,
+	"./nn": 168,
+	"./nn.js": 168,
+	"./pa-in": 169,
+	"./pa-in.js": 169,
+	"./pl": 170,
+	"./pl.js": 170,
+	"./pt": 171,
+	"./pt-br": 172,
+	"./pt-br.js": 172,
+	"./pt.js": 171,
+	"./ro": 173,
+	"./ro.js": 173,
+	"./ru": 174,
+	"./ru.js": 174,
+	"./sd": 175,
+	"./sd.js": 175,
+	"./se": 176,
+	"./se.js": 176,
+	"./si": 177,
+	"./si.js": 177,
+	"./sk": 178,
+	"./sk.js": 178,
+	"./sl": 179,
+	"./sl.js": 179,
+	"./sq": 180,
+	"./sq.js": 180,
+	"./sr": 181,
+	"./sr-cyrl": 182,
+	"./sr-cyrl.js": 182,
+	"./sr.js": 181,
+	"./ss": 183,
+	"./ss.js": 183,
+	"./sv": 184,
+	"./sv.js": 184,
+	"./sw": 185,
+	"./sw.js": 185,
+	"./ta": 186,
+	"./ta.js": 186,
+	"./te": 187,
+	"./te.js": 187,
+	"./tet": 188,
+	"./tet.js": 188,
+	"./tg": 189,
+	"./tg.js": 189,
+	"./th": 190,
+	"./th.js": 190,
+	"./tl-ph": 191,
+	"./tl-ph.js": 191,
+	"./tlh": 192,
+	"./tlh.js": 192,
+	"./tr": 193,
+	"./tr.js": 193,
+	"./tzl": 194,
+	"./tzl.js": 194,
+	"./tzm": 195,
+	"./tzm-latn": 196,
+	"./tzm-latn.js": 196,
+	"./tzm.js": 195,
+	"./ug-cn": 197,
+	"./ug-cn.js": 197,
+	"./uk": 198,
+	"./uk.js": 198,
+	"./ur": 199,
+	"./ur.js": 199,
+	"./uz": 200,
+	"./uz-latn": 201,
+	"./uz-latn.js": 201,
+	"./uz.js": 200,
+	"./vi": 202,
+	"./vi.js": 202,
+	"./x-pseudo": 203,
+	"./x-pseudo.js": 203,
+	"./yo": 204,
+	"./yo.js": 204,
+	"./zh-cn": 205,
+	"./zh-cn.js": 205,
+	"./zh-hk": 206,
+	"./zh-hk.js": 206,
+	"./zh-tw": 207,
+	"./zh-tw.js": 207
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 349;
+
+/***/ }),
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports =
@@ -97868,15 +98183,15 @@ module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u20
 //# sourceMappingURL=vue-grid-layout.common.js.map
 
 /***/ }),
-/* 349 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(350)
+var __vue_script__ = __webpack_require__(352)
 /* template */
-var __vue_template__ = __webpack_require__(351)
+var __vue_template__ = __webpack_require__(353)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -97915,7 +98230,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 350 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -98011,7 +98326,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 351 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -98059,13 +98374,13 @@ if (false) {
 }
 
 /***/ }),
-/* 352 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(353)
+var __vue_script__ = __webpack_require__(355)
 /* template */
 var __vue_template__ = __webpack_require__(356)
 /* template functional */
@@ -98106,7 +98421,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 353 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -98152,6 +98467,8 @@ exports.default = {
   components: { highcharts: _highchartsVue.Chart },
   data: function data() {
     return {
+      created: '',
+      whitelabelId: null,
       // eslint-disable-next-line
       errors: new _errors.Errors(),
       data: [],
@@ -98181,8 +98498,7 @@ exports.default = {
           line: {
             dataLabels: {
               enabled: true
-            },
-            enableMouseTracking: false
+            }
           }
         },
 
@@ -98213,8 +98529,11 @@ exports.default = {
     var _this = this;
 
     this.loadOfferByMonth();
-    this.$events.$on('whitelabel-set', function (whitelabelId) {
-      return _this.loadOfferByMonth(whitelabelId);
+    this.$events.$on('whitelabel-set', function (whitelabelId, start, end) {
+      return _this.loadOfferByMonth(whitelabelId, start, end);
+    });
+    this.$events.$on('range-date-set', function (whitelabelId, start, end) {
+      return _this.loadOfferByMonth(whitelabelId, start, end);
     });
   },
   updated: function updated() {},
@@ -98223,13 +98542,17 @@ exports.default = {
   computed: _extends({}, _vuex2.default.mapGetters({})),
   methods: _extends({}, _vuex2.default.mapActions({}), {
     loadOfferByMonth: function loadOfferByMonth() {
-      var _this2 = this;
-
       var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
+      var _this2 = this;
+
+      var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var end = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
       var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      var paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end;
       this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
-      this.$http.get(window.laroute.route('admin.dashboard.events.perMonth') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+      this.$http.get(window.laroute.route('admin.dashboard.events.perMonth') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
     },
@@ -98251,302 +98574,6 @@ exports.default = {
     }
   })
 };
-
-/***/ }),
-/* 354 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 355 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./af": 85,
-	"./af.js": 85,
-	"./ar": 86,
-	"./ar-dz": 87,
-	"./ar-dz.js": 87,
-	"./ar-kw": 88,
-	"./ar-kw.js": 88,
-	"./ar-ly": 89,
-	"./ar-ly.js": 89,
-	"./ar-ma": 90,
-	"./ar-ma.js": 90,
-	"./ar-sa": 91,
-	"./ar-sa.js": 91,
-	"./ar-tn": 92,
-	"./ar-tn.js": 92,
-	"./ar.js": 86,
-	"./az": 93,
-	"./az.js": 93,
-	"./be": 94,
-	"./be.js": 94,
-	"./bg": 95,
-	"./bg.js": 95,
-	"./bm": 96,
-	"./bm.js": 96,
-	"./bn": 97,
-	"./bn.js": 97,
-	"./bo": 98,
-	"./bo.js": 98,
-	"./br": 99,
-	"./br.js": 99,
-	"./bs": 100,
-	"./bs.js": 100,
-	"./ca": 101,
-	"./ca.js": 101,
-	"./cs": 102,
-	"./cs.js": 102,
-	"./cv": 103,
-	"./cv.js": 103,
-	"./cy": 104,
-	"./cy.js": 104,
-	"./da": 105,
-	"./da.js": 105,
-	"./de": 106,
-	"./de-at": 107,
-	"./de-at.js": 107,
-	"./de-ch": 108,
-	"./de-ch.js": 108,
-	"./de.js": 106,
-	"./dv": 109,
-	"./dv.js": 109,
-	"./el": 110,
-	"./el.js": 110,
-	"./en-au": 111,
-	"./en-au.js": 111,
-	"./en-ca": 112,
-	"./en-ca.js": 112,
-	"./en-gb": 113,
-	"./en-gb.js": 113,
-	"./en-ie": 114,
-	"./en-ie.js": 114,
-	"./en-il": 115,
-	"./en-il.js": 115,
-	"./en-nz": 116,
-	"./en-nz.js": 116,
-	"./eo": 117,
-	"./eo.js": 117,
-	"./es": 118,
-	"./es-do": 119,
-	"./es-do.js": 119,
-	"./es-us": 120,
-	"./es-us.js": 120,
-	"./es.js": 118,
-	"./et": 121,
-	"./et.js": 121,
-	"./eu": 122,
-	"./eu.js": 122,
-	"./fa": 123,
-	"./fa.js": 123,
-	"./fi": 124,
-	"./fi.js": 124,
-	"./fo": 125,
-	"./fo.js": 125,
-	"./fr": 126,
-	"./fr-ca": 127,
-	"./fr-ca.js": 127,
-	"./fr-ch": 128,
-	"./fr-ch.js": 128,
-	"./fr.js": 126,
-	"./fy": 129,
-	"./fy.js": 129,
-	"./gd": 130,
-	"./gd.js": 130,
-	"./gl": 131,
-	"./gl.js": 131,
-	"./gom-latn": 132,
-	"./gom-latn.js": 132,
-	"./gu": 133,
-	"./gu.js": 133,
-	"./he": 134,
-	"./he.js": 134,
-	"./hi": 135,
-	"./hi.js": 135,
-	"./hr": 136,
-	"./hr.js": 136,
-	"./hu": 137,
-	"./hu.js": 137,
-	"./hy-am": 138,
-	"./hy-am.js": 138,
-	"./id": 139,
-	"./id.js": 139,
-	"./is": 140,
-	"./is.js": 140,
-	"./it": 141,
-	"./it.js": 141,
-	"./ja": 142,
-	"./ja.js": 142,
-	"./jv": 143,
-	"./jv.js": 143,
-	"./ka": 144,
-	"./ka.js": 144,
-	"./kk": 145,
-	"./kk.js": 145,
-	"./km": 146,
-	"./km.js": 146,
-	"./kn": 147,
-	"./kn.js": 147,
-	"./ko": 148,
-	"./ko.js": 148,
-	"./ky": 149,
-	"./ky.js": 149,
-	"./lb": 150,
-	"./lb.js": 150,
-	"./lo": 151,
-	"./lo.js": 151,
-	"./lt": 152,
-	"./lt.js": 152,
-	"./lv": 153,
-	"./lv.js": 153,
-	"./me": 154,
-	"./me.js": 154,
-	"./mi": 155,
-	"./mi.js": 155,
-	"./mk": 156,
-	"./mk.js": 156,
-	"./ml": 157,
-	"./ml.js": 157,
-	"./mn": 158,
-	"./mn.js": 158,
-	"./mr": 159,
-	"./mr.js": 159,
-	"./ms": 160,
-	"./ms-my": 161,
-	"./ms-my.js": 161,
-	"./ms.js": 160,
-	"./mt": 162,
-	"./mt.js": 162,
-	"./my": 163,
-	"./my.js": 163,
-	"./nb": 164,
-	"./nb.js": 164,
-	"./ne": 165,
-	"./ne.js": 165,
-	"./nl": 166,
-	"./nl-be": 167,
-	"./nl-be.js": 167,
-	"./nl.js": 166,
-	"./nn": 168,
-	"./nn.js": 168,
-	"./pa-in": 169,
-	"./pa-in.js": 169,
-	"./pl": 170,
-	"./pl.js": 170,
-	"./pt": 171,
-	"./pt-br": 172,
-	"./pt-br.js": 172,
-	"./pt.js": 171,
-	"./ro": 173,
-	"./ro.js": 173,
-	"./ru": 174,
-	"./ru.js": 174,
-	"./sd": 175,
-	"./sd.js": 175,
-	"./se": 176,
-	"./se.js": 176,
-	"./si": 177,
-	"./si.js": 177,
-	"./sk": 178,
-	"./sk.js": 178,
-	"./sl": 179,
-	"./sl.js": 179,
-	"./sq": 180,
-	"./sq.js": 180,
-	"./sr": 181,
-	"./sr-cyrl": 182,
-	"./sr-cyrl.js": 182,
-	"./sr.js": 181,
-	"./ss": 183,
-	"./ss.js": 183,
-	"./sv": 184,
-	"./sv.js": 184,
-	"./sw": 185,
-	"./sw.js": 185,
-	"./ta": 186,
-	"./ta.js": 186,
-	"./te": 187,
-	"./te.js": 187,
-	"./tet": 188,
-	"./tet.js": 188,
-	"./tg": 189,
-	"./tg.js": 189,
-	"./th": 190,
-	"./th.js": 190,
-	"./tl-ph": 191,
-	"./tl-ph.js": 191,
-	"./tlh": 192,
-	"./tlh.js": 192,
-	"./tr": 193,
-	"./tr.js": 193,
-	"./tzl": 194,
-	"./tzl.js": 194,
-	"./tzm": 195,
-	"./tzm-latn": 196,
-	"./tzm-latn.js": 196,
-	"./tzm.js": 195,
-	"./ug-cn": 197,
-	"./ug-cn.js": 197,
-	"./uk": 198,
-	"./uk.js": 198,
-	"./ur": 199,
-	"./ur.js": 199,
-	"./uz": 200,
-	"./uz-latn": 201,
-	"./uz-latn.js": 201,
-	"./uz.js": 200,
-	"./vi": 202,
-	"./vi.js": 202,
-	"./x-pseudo": 203,
-	"./x-pseudo.js": 203,
-	"./yo": 204,
-	"./yo.js": 204,
-	"./zh-cn": 205,
-	"./zh-cn.js": 205,
-	"./zh-hk": 206,
-	"./zh-hk.js": 206,
-	"./zh-tw": 207,
-	"./zh-tw.js": 207
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 355;
 
 /***/ }),
 /* 356 */
@@ -98710,8 +98737,7 @@ exports.default = {
           line: {
             dataLabels: {
               enabled: true
-            },
-            enableMouseTracking: false
+            }
           }
         },
 
@@ -98742,8 +98768,11 @@ exports.default = {
     var _this = this;
 
     this.loadOfferByDay();
-    this.$events.$on('whitelabel-set', function (whitelabelId) {
-      return _this.loadOfferByDay(whitelabelId);
+    this.$events.$on('whitelabel-set', function (whitelabelId, start, end) {
+      return _this.loadOfferByDay(whitelabelId, start, end);
+    });
+    this.$events.$on('range-date-set', function (whitelabelId, start, end) {
+      return _this.loadOfferByDay(whitelabelId, start, end);
     });
   },
   updated: function updated() {},
@@ -98752,13 +98781,17 @@ exports.default = {
   computed: _extends({}, _vuex2.default.mapGetters({})),
   methods: _extends({}, _vuex2.default.mapActions({}), {
     loadOfferByDay: function loadOfferByDay() {
-      var _this2 = this;
-
       var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
+      var _this2 = this;
+
+      var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var end = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
       var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      var paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end;
       this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
-      this.$http.get(window.laroute.route('admin.dashboard.events.perDay') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+      this.$http.get(window.laroute.route('admin.dashboard.events.perDay') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
     },
@@ -98942,9 +98975,8 @@ exports.default = {
           line: {
             dataLabels: {
               enabled: true
-            },
-            enableMouseTracking: false
-          }
+              // enableMouseTracking: false
+            } }
         },
 
         series: [{
@@ -98974,8 +99006,11 @@ exports.default = {
     var _this = this;
 
     this.loadMobileByMonth();
-    this.$events.$on('whitelabel-set', function (whitelabelId) {
-      return _this.loadMobileByMonth(whitelabelId);
+    this.$events.$on('whitelabel-set', function (whitelabelId, start, end) {
+      return _this.loadMobileByMonth(whitelabelId, start, end);
+    });
+    this.$events.$on('range-date-set', function (whitelabelId, start, end) {
+      return _this.loadMobileByMonth(whitelabelId, start, end);
     });
   },
   updated: function updated() {},
@@ -98984,13 +99019,17 @@ exports.default = {
   computed: _extends({}, _vuex2.default.mapGetters({})),
   methods: _extends({}, _vuex2.default.mapActions({}), {
     loadMobileByMonth: function loadMobileByMonth() {
-      var _this2 = this;
-
       var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
+      var _this2 = this;
+
+      var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var end = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
       var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      var paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end;
       this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
-      this.$http.get(window.laroute.route('admin.dashboard.events.mobileMonth') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+      this.$http.get(window.laroute.route('admin.dashboard.events.mobileMonth') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
     },
@@ -99174,8 +99213,7 @@ exports.default = {
           line: {
             dataLabels: {
               enabled: true
-            },
-            enableMouseTracking: false
+            }
           }
         },
 
@@ -99206,8 +99244,11 @@ exports.default = {
     var _this = this;
 
     this.loadMobileByMonth();
-    this.$events.$on('whitelabel-set', function (whitelabelId) {
-      return _this.loadMobileByMonth(whitelabelId);
+    this.$events.$on('whitelabel-set', function (whitelabelId, start, end) {
+      return _this.loadMobileByMonth(whitelabelId, start, end);
+    });
+    this.$events.$on('range-date-set', function (whitelabelId, start, end) {
+      return _this.loadMobileByMonth(whitelabelId, start, end);
     });
   },
   updated: function updated() {},
@@ -99216,13 +99257,17 @@ exports.default = {
   computed: _extends({}, _vuex2.default.mapGetters({})),
   methods: _extends({}, _vuex2.default.mapActions({}), {
     loadMobileByMonth: function loadMobileByMonth() {
-      var _this2 = this;
-
       var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
+      var _this2 = this;
+
+      var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var end = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
       var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      var paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end;
       this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
-      this.$http.get(window.laroute.route('admin.dashboard.events.responseMonth') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+      this.$http.get(window.laroute.route('admin.dashboard.events.responseMonth') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
     },
@@ -99406,8 +99451,7 @@ exports.default = {
           line: {
             dataLabels: {
               enabled: true
-            },
-            enableMouseTracking: false
+            }
           }
         },
 
@@ -99438,8 +99482,11 @@ exports.default = {
     var _this = this;
 
     this.loadMobileByMonth();
-    this.$events.$on('whitelabel-set', function (whitelabelId) {
-      return _this.loadMobileByMonth(whitelabelId);
+    this.$events.$on('whitelabel-set', function (whitelabelId, start, end) {
+      return _this.loadMobileByMonth(whitelabelId, start, end);
+    });
+    this.$events.$on('range-date-set', function (whitelabelId, start, end) {
+      return _this.loadMobileByMonth(whitelabelId, start, end);
     });
   },
   updated: function updated() {},
@@ -99448,13 +99495,17 @@ exports.default = {
   computed: _extends({}, _vuex2.default.mapGetters({})),
   methods: _extends({}, _vuex2.default.mapActions({}), {
     loadMobileByMonth: function loadMobileByMonth() {
-      var _this2 = this;
-
       var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
+      var _this2 = this;
+
+      var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var end = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
       var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      var paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end;
       this.$store.dispatch('block', { element: 'dashboardComponent', load: true });
-      this.$http.get(window.laroute.route('admin.dashboard.events.responsemMonth') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
+      this.$http.get(window.laroute.route('admin.dashboard.events.responsemMonth') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
     },
@@ -116534,7 +116585,32 @@ var render = function() {
                         )
                       ],
                       1
-                    )
+                    ),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c(
+                        "li",
+                        [
+                          _c("el-date-picker", {
+                            staticStyle: { width: "100%" },
+                            attrs: {
+                              type: "daterange",
+                              "start-placeholder": "Start",
+                              "end-placeholder": "End"
+                            },
+                            on: { input: _vm.doRange },
+                            model: {
+                              value: _vm.created,
+                              callback: function($$v) {
+                                _vm.created = $$v
+                              },
+                              expression: "created"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
                   ])
                 ]
               )
