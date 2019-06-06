@@ -84511,6 +84511,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 var _vuex = __webpack_require__(1);
 
@@ -98494,8 +98496,7 @@ exports.default = {
           line: {
             dataLabels: {
               enabled: true
-            },
-            enableMouseTracking: false
+            }
           }
         },
 
@@ -98734,8 +98735,7 @@ exports.default = {
           line: {
             dataLabels: {
               enabled: true
-            },
-            enableMouseTracking: false
+            }
           }
         },
 
@@ -98973,9 +98973,8 @@ exports.default = {
           line: {
             dataLabels: {
               enabled: true
-            },
-            enableMouseTracking: false
-          }
+              // enableMouseTracking: false
+            } }
         },
 
         series: [{
@@ -99212,8 +99211,7 @@ exports.default = {
           line: {
             dataLabels: {
               enabled: true
-            },
-            enableMouseTracking: false
+            }
           }
         },
 
@@ -99451,8 +99449,7 @@ exports.default = {
           line: {
             dataLabels: {
               enabled: true
-            },
-            enableMouseTracking: false
+            }
           }
         },
 
@@ -116588,28 +116585,30 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _c(
-                      "li",
-                      [
-                        _c("el-date-picker", {
-                          staticStyle: { width: "100%" },
-                          attrs: {
-                            type: "daterange",
-                            "start-placeholder": "Start",
-                            "end-placeholder": "End"
-                          },
-                          on: { input: _vm.doRange },
-                          model: {
-                            value: _vm.created,
-                            callback: function($$v) {
-                              _vm.created = $$v
+                    _c("div", [
+                      _c(
+                        "li",
+                        [
+                          _c("el-date-picker", {
+                            staticStyle: { width: "100%" },
+                            attrs: {
+                              type: "daterange",
+                              "start-placeholder": "Start",
+                              "end-placeholder": "End"
                             },
-                            expression: "created"
-                          }
-                        })
-                      ],
-                      1
-                    )
+                            on: { input: _vm.doRange },
+                            model: {
+                              value: _vm.created,
+                              callback: function($$v) {
+                                _vm.created = $$v
+                              },
+                              expression: "created"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
                   ])
                 ]
               )

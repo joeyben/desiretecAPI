@@ -241,7 +241,7 @@ class OffersController extends Controller
 
                  foreach ($result['ga'] as $key => $value) {
                         if($result['ga'][$key][1]!=0 && in_array($result['ga'][$key][0], $stack)){
-                     $result['ga'][$key][1] = intval(($stack['wish']/$result['ga'][$key][1])*100);
+                     $result['ga'][$key][1] = round(($stack['wish']/$result['ga'][$key][1])*100,1);
                         }else{ $result['ga'][$key][1] = 0; }
                  }          
 
@@ -300,7 +300,7 @@ class OffersController extends Controller
 
                  foreach ($result['ga'] as $key => $value) {
                         if($result['ga'][$key][1]!=0 && in_array($result['ga'][$key][0], $stack)){
-                     $result['ga'][$key][1] = intval(($stack['wish']/$result['ga'][$key][1])*100);
+                     $result['ga'][$key][1] = round(($stack['wish']/$result['ga'][$key][1])*100,1);
                         }else{ $result['ga'][$key][1] = 0; }
                  }        
 

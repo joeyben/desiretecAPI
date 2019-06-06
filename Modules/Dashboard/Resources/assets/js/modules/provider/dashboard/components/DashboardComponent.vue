@@ -27,6 +27,7 @@
                             </el-option>
                         </el-select>
                     </li>
+                    <div>
                     <li>
                       <el-date-picker style="width: 100%;"
                                         v-model="created"
@@ -36,6 +37,7 @@
                                         end-placeholder="End">
                         </el-date-picker>
                     </li>
+                  </div>
                 </ul>
             </div>
         </div>
