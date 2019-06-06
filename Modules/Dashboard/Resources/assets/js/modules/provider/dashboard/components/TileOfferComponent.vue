@@ -18,6 +18,8 @@
     components: { highcharts: Chart },
     data () {
       return {
+        created: '',
+        whitelabelId: null,
         // eslint-disable-next-line
         errors: new Errors(),
         data: [],

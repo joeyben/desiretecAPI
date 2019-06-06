@@ -98467,6 +98467,8 @@ exports.default = {
   components: { highcharts: _highchartsVue.Chart },
   data: function data() {
     return {
+      created: '',
+      whitelabelId: null,
       // eslint-disable-next-line
       errors: new _errors.Errors(),
       data: [],

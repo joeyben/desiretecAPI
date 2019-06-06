@@ -105,17 +105,15 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $ViewId = $whitelabel->value('ga_view_id');
-            $gaViewId = is_null($ViewId) ? '192484069' : $ViewId;
-            $filter = $this->getFilter($gaViewId);
+            $viewId = $whitelabel['ga_view_id'];
+            $filter = $this->getFilter($viewId);
 
             $optParams = [
                 'dimensions' => 'ga:yearMonth',
                 'filters' => $filter['filterd'],
             ];
 
-            $result['ga'] = $this->dashboard->uniqueEventsMonth($gaViewId, $optParams, $startDate, $endDate);
-
+            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -140,16 +138,15 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $ViewId = $whitelabel->value('ga_view_id');
-            $gaViewId = is_null($ViewId) ? '192484069' : $ViewId;
-            $filter = $this->getFilter($gaViewId);
+            $viewId = $whitelabel['ga_view_id'];
+            $filter = $this->getFilter($viewId);
 
                  $optParams = [
                     'dimensions' => 'ga:date',
                     'filters' => $filter['filterd'],
                 ];
 
-                 $result['ga'] = $this->dashboard->uniqueEventsDay($gaViewId, $optParams, $startDate, $endDate);
+                 $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -176,16 +173,15 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $ViewId = $whitelabel->value('ga_view_id');
-            $gaViewId = is_null($ViewId) ? '192484069' : $ViewId;
-            $filter = $this->getFilter($gaViewId);
+            $viewId = $whitelabel['ga_view_id'];
+            $filter = $this->getFilter($viewId);
 
                  $optParams = [
                     'dimensions' => 'ga:yearMonth',
                     'filters' => $filter['filterm'],
                 ];
 
-                 $result['ga'] = $this->dashboard->uniqueEventsMonth($gaViewId, $optParams, $startDate, $endDate);  
+                 $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);  
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -213,17 +209,15 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $ViewId = $whitelabel->value('ga_view_id');
-            $gaViewId = is_null($ViewId) ? '192484069' : $ViewId;
-
-                $filter = $this->getFilter($gaViewId);
+            $viewId = $whitelabel['ga_view_id'];
+            $filter = $this->getFilter($viewId);
 
                  $optParams = [
                     'dimensions' => 'ga:yearMonth',
                     'filters' => $filter['filterd'],
                 ];
 
-                    $result['ga'] = $this->dashboard->uniqueEventsMonth($gaViewId, $optParams, $startDate, $endDate);
+                    $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
 
                     $data = $this->wishes->withCriteria([
                     new ByWhitelabel(),
@@ -271,17 +265,15 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
             
-            $ViewId = $whitelabel->value('ga_view_id');
-            $gaViewId = is_null($ViewId) ? '192484069' : $ViewId;
-
-                $filter = $this->getFilter($gaViewId);
+            $viewId = $whitelabel['ga_view_id'];
+            $filter = $this->getFilter($viewId);
 
                  $optParams = [
                     'dimensions' => 'ga:yearMonth',
                     'filters' => $filter['filterm'],
                 ];
 
-                    $result['ga'] = $this->dashboard->uniqueEventsMonth($gaViewId, $optParams, $startDate, $endDate);
+                    $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
 
                     $data = $this->wishes->withCriteria([
                     new ByWhitelabel(),
@@ -346,6 +338,11 @@ class OffersController extends Controller
             case '185523513':
             $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
             $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            break;
+
+            case '188170994':
+            $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
+            $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
             break;
 
         }
