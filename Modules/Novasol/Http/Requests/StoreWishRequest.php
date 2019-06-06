@@ -72,6 +72,7 @@ class StoreWishRequest extends FormRequest
             'adults'          => 'required',
             'email'           => 'required|email',
             'terms'           => 'required',
+            'budget'          => 'required|int|min:0',
         ];
     }
 
@@ -90,6 +91,7 @@ class StoreWishRequest extends FormRequest
             'terms.required'            => trans('layer.terms.required'),
             'earliest_start'            => trans('layer.earliest_start.required'),
             'latest_return'             => trans('layer.latest_return.required'),
+            'budget'                    => trans('layer.budget.required'),
         ];
     }
 }

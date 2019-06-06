@@ -15,7 +15,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">{{ trans('label.tokenlogin.email') }}</label>
+                            <label for="email" class="col-md-4 control-label">{{ trans('label.tokenlogin.email') }}</label>
 
                             <div class="col-md-8">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn primary-btn mb-0">
-                                    {{ trans('button.tokenlogin.send') }}
+                                    {{ trans('button.tokenlogin.send') }}
                                 </button>
                                 <a href="{{route('frontend.auth.login')}}" class="btn secondary-btn">
                                     {{ trans('account.login.seller') }}
