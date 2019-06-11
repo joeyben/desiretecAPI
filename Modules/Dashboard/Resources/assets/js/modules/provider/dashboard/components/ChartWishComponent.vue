@@ -43,8 +43,7 @@
             line: {
               dataLabels: {
                 enabled: true
-              },
-              enableMouseTracking: false
+              }
             }
           },
 

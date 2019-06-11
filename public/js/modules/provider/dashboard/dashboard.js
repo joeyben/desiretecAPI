@@ -101266,8 +101266,7 @@ exports.default = {
           line: {
             dataLabels: {
               enabled: true
-            },
-            enableMouseTracking: false
+            }
           }
         },
 
