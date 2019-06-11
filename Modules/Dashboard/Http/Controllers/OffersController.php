@@ -225,19 +225,33 @@ class OffersController extends Controller
                     new GroupBy('month')
                      ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
                 ->pluck('wishes_count', 'date');
-                    $stack = array();
+                $stack = array();
+                $i = 0;
+                $j = 0;
                 foreach ($data as $k => $v) {
-                    list($year, $month, $day) = explode("-", $k);
-                    $k = $year.$month; 
-                    $stack['date'] = $k;
-                    $stack['wish'] = $v;
+                    list($year, $month, $day) = explode("-", $k); 
+                    $stack[$k]['date'] = $year.$month;
+                    $stack[$k]['wish'] = $v;
                 }
 
-                 foreach ($result['ga'] as $key => $value) {
-                        if($result['ga'][$key][1]!=0 && in_array($result['ga'][$key][0], $stack)){
-                     $result['ga'][$key][1] = round(($stack['wish']/$result['ga'][$key][1])*100,1);
-                        }else{ $result['ga'][$key][1] = 0; }
-                 }          
+                $result['wishes'] = $stack;
+                $result['data'] = $data;
+                
+                foreach ($result['ga'] as $key => $value) {
+                        foreach ($result['wishes'] as $kk => $vv) {
+                           if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
+                                $i++;
+                                $j = 0;
+                                $result['ga'][$key][1] = round(($result['wishes'][$kk]['wish'])/($result['ga'][$key][1])*100,1);
+                                break;
+                            }else{
+                                $j++;
+                            }
+                        }
+                    if ($j!=0) {
+                       $result['ga'][$key][1] = 0;
+                    }
+                 } 
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
