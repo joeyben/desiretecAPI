@@ -61,6 +61,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <label class="col-lg-3 col-form-label">&nbsp;{{ trans('Google View Id') }}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" :class="errors.has('ga_view_id') ? 'is-invalid': ''" id='ga_view_id' name='ga_view_id' :placeholder="trans('Google View Id')" @input="updateWhitelabel"  :value="whitelabel.ga_view_id"/>
+                                                <div class="invalid-feedback">
+                                                    <strong v-text="errors.get('ga_view_id')"></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.email') }} <span class="text-danger"> *</span></label>
                                             <div class="col-lg-9">
                                                 <input type="email" class="form-control" :class="errors.has('email') ? 'is-invalid': ''" id='email' name='email' :placeholder="trans('modals.email')" @input="updateWhitelabel"  :value="whitelabel.email"/>
