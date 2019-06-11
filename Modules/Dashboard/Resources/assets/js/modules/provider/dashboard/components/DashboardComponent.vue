@@ -81,6 +81,7 @@
   import TileOfferComponent from './TileOfferComponent'
   import TileOfferdayComponent from './TileOfferdayComponent'
   import TileMobileComponent from './TileMobileComponent'
+  import TileMobiledComponent from './TileMobiledComponent'
   import TileResponseComponent from './TileResponseComponent'
   import TileResponsemComponent from './TileResponsemComponent'
   import TileGroupComponent from './TileGroupComponent'
@@ -105,6 +106,7 @@ export default {
       TileOfferComponent,
       TileOfferdayComponent,
       TileMobileComponent,
+      TileMobiledComponent,
       TileResponseComponent,
       TileResponsemComponent,
       TileSellerComponent,

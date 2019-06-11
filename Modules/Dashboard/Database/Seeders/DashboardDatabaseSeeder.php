@@ -231,7 +231,19 @@ class DashboardDatabaseSeeder extends Seeder
             'updated_at'      => DB::raw('now()')
         ]);
 
-        for ($i = 1; $i <= 18; ++$i) {
+        DB::table('dashboards')->insert([
+            'name'            => 'Tile Mobile Day',
+            'x'               => 6,
+            'y'               => 23,
+            'w'               => 4,
+            'h'               => 8,
+            'i'               => 19,
+            'component'       => 'tile-mobiled-component',
+            'created_at'      => DB::raw('now()'),
+            'updated_at'      => DB::raw('now()')
+        ]);
+
+        for ($i = 1; $i <= 19; ++$i) {
             DB::table('dashboard_user')->insertGetId([
                 'user_id'              => 1,
                 'dashboard_id'         => $i,
