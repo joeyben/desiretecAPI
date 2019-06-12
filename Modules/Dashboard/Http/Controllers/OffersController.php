@@ -276,7 +276,9 @@ class OffersController extends Controller
                            if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
                                 $i++;
                                 $j = 0;
-                                $result['ga'][$key][1] = round(($result['wishes'][$kk]['wish'])/($result['ga'][$key][1])*100,1);
+                                if ($result['ga'][$key][1]!=0) {
+                                    $result['ga'][$key][1] = round(($result['wishes'][$kk]['wish'])/($result['ga'][$key][1])*100,1);
+                                }
                                 break;
                             }else{
                                 $j++;
@@ -346,7 +348,9 @@ class OffersController extends Controller
                            if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
                                 $i++;
                                 $j = 0;
+                                if ($result['ga'][$key][1]!=0) {
                                 $result['ga'][$key][1] = round(($result['wishes'][$kk]['wish'])/($result['ga'][$key][1])*100,1);
+                                }
                                 break;
                             }else{
                                 $j++;
