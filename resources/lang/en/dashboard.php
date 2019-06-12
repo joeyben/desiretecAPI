@@ -24,4 +24,10 @@ return [
     'wish'                                      => 'wish',
     'wishes'                                    => 'wishes',
     'date'                                      => 'date',
+    'monthly_desktop_layer'                     => 'Layerimpressions Desktop / Month',
+    'daily_desktop_layer'                       => 'Layerimpressions Desktop / Day',
+    'daily_mobile_layer'                        => 'Layerimpressions Mobile / Day',
+    'monthly_mobile_layer'                      => 'Layerimpressions Mobile / Month',
+    'monthly_mobile_response'                   => 'Mobile Response Rate / Month',
+    'monthly_desktop_response'                  => 'Desktop Response Rate / Month',
 ];
