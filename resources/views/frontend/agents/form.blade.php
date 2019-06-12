@@ -1,6 +1,6 @@
 <div class="form-group">
     <div class="col-lg-12">
-        {{ Form::text('name', null, ['class' => 'form-control box-size', 'placeholder' => 'First Name', 'required' => 'required']) }}
+        {{ Form::text('name', null, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.first_name'), 'required' => 'required']) }}
     </div>
 </div>
 

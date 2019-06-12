@@ -113,18 +113,18 @@
                         {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
                     </p>
                 </div>
-                @if(count($wish->offers) > 0 || count($wish->messages) > 0)
+                @if(count($wish->offers) > 0 || count($wish->sellerMessages) > 0)
                     <div class="col-md-3 c-info">
                         <i class="fas fa-user"></i>
-                        <span>{{ $wish->group->users[0]->agents[0]->name }}</span>
+                        <span>{{ $wish->group->users[0]->currentAgent->name }}</span>
                     </div>
                     <div class="col-md-3 c-info c-tel">
                         <i class="fas fa-phone"></i>
-                        <a href="tel:{{ $wish->group->users[0]->agents[0]->telephone }}">{{ $wish->group->users[0]->agents[0]->telephone }}</a>
+                        <a href="tel:{{ $wish->group->users[0]->currentAgent->telephone }}">{{ $wish->group->users[0]->currentAgent->telephone }}</a>
                     </div>
                     <div class="col-md-3 c-info">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->agents[0]->email }}</a>
+                        <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->currentAgent->email }}</a>
                     </div>
                 @else
                     <div class="col-md-3 c-info">

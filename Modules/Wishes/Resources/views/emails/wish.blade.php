@@ -12,7 +12,7 @@
                         </p>
 
                         <p style="line-height: 24px; margin-bottom:20px;">
-                            {!! trans('email.wish.created.user.body', ['title' => $wish->title]) !!}
+                            {!! trans('email.wish.created.user.body', ['title' => $wish->destination]) !!}
                             {!! trans('email.wish.created.user.url', ['id' => $wish->id,'token' => $token, 'url' => url('/wish')]) !!}
 
                         </p>

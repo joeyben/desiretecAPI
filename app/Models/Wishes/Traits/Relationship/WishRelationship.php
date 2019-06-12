@@ -56,6 +56,14 @@ trait WishRelationship
     }
 
     /**
+     * Wishes HasMany  Messages.
+     */
+    public function sellerMessages()
+    {
+        return $this->hasMany(Message::class)->where('agent_id', '!=', null);
+    }
+
+    /**
      * Wishes HasMany  Comments.
      */
     public function comments()
