@@ -14,7 +14,7 @@
   import moment from 'moment'
   exportingInit(Highcharts)
   export default {
-    name: 'TileResponseComponent',
+    name: 'TileMobiledComponent',
     components: { highcharts: Chart },
     data () {
       return {
@@ -27,20 +27,21 @@
             type: 'line'
           },
           title: {
-            text: this.trans('dashboard.monthly_desktop_response')
+            text: this.trans('dashboard.daily_mobile_layer')
           },
           subtitle: {
             text: this.trans('dashboard.source_2019')
           },
           xAxis: {
             type: 'datetime',
-            title: {
-              text: this.trans('dashboard.date')
+            dateTimeLabelFormats: { // don't display the dummy year
+              month: '%e. %b',
+              year: '%b'
             }
           },
           yAxis: {
             title: {
-              text: this.trans('dashboard.response')
+              text: this.trans('dashboard.layers')
             }
           },
           plotOptions: {
@@ -48,11 +49,12 @@
               dataLabels: {
                 enabled: true
               }
+              // enableMouseTracking: false
             }
           },
 
           series: [{
-            name: this.trans('dashboard.response'),
+            name: this.trans('dashboard.layers'),
             data: []
           }],
 
@@ -94,7 +96,7 @@
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         let paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.events.responseMonth') + params + paramsdate)
+        this.$http.get(window.laroute.route('admin.dashboard.events.mobileDay') + params + paramsdate)
           .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {

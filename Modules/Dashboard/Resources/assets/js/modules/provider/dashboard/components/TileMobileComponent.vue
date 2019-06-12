@@ -27,7 +27,7 @@
             type: 'line'
           },
           title: {
-            text: this.trans('Mobile Ereignisse pro Monat')
+            text: this.trans('dashboard.monthly_mobile_layer')
           },
           subtitle: {
             text: this.trans('dashboard.source_2019')
@@ -40,7 +40,7 @@
           },
           yAxis: {
             title: {
-              text: this.trans('Ereignisse')
+              text: this.trans('dashboard.layers')
             }
           },
           plotOptions: {
@@ -53,7 +53,7 @@
           },
 
           series: [{
-            name: this.trans('Ereignisse'),
+            name: this.trans('dashboard.layers'),
             data: []
           }],
 

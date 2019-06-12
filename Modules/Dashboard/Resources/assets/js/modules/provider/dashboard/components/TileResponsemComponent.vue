@@ -27,7 +27,7 @@
             type: 'line'
           },
           title: {
-            text: this.trans('Mobile Response Rate pro Monat')
+            text: this.trans('dashboard.monthly_mobile_response')
           },
           subtitle: {
             text: this.trans('dashboard.source_2019')
@@ -40,7 +40,7 @@
           },
           yAxis: {
             title: {
-              text: this.trans('Mobile Response Rate')
+              text: this.trans('dashboard.response')
             }
           },
           plotOptions: {
@@ -52,7 +52,7 @@
           },
 
           series: [{
-            name: this.trans('Response Rate(%)'),
+            name: this.trans('dashboard.response'),
             data: []
           }],
 

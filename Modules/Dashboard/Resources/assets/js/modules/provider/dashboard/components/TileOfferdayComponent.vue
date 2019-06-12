@@ -27,7 +27,7 @@
             type: 'line'
           },
           title: {
-            text: this.trans('Ereignisse pro Tag')
+            text: this.trans('dashboard.daily_desktop_layer')
           },
           subtitle: {
             text: this.trans('dashboard.source_2019')
@@ -41,7 +41,7 @@
           },
           yAxis: {
             title: {
-              text: this.trans('Ereignisse')
+              text: this.trans('dashboard.layers')
             }
           },
           plotOptions: {
@@ -53,7 +53,7 @@
           },
 
           series: [{
-            name: this.trans('Ereignisse'),
+            name: this.trans('dashboard.layers'),
             data: []
           }],
 
