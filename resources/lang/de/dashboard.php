@@ -30,4 +30,6 @@ return [
     'monthly_mobile_layer'                      => 'Layerimpressions Mobile pro Monat',
     'monthly_mobile_response'                   => 'Mobile Response Rate pro Monat',
     'monthly_desktop_response'                  => 'Desktop Response Rate pro Monat',
+    'layers'                                    => 'Layers',
+    'response'                                  => 'Response Rate (%)',
 ];
