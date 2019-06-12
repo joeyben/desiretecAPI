@@ -259,7 +259,7 @@ class OffersController extends Controller
                     new GroupBy('month')
                      ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
                 ->pluck('wishes_count', 'date');
-                $stack = array();
+                $stack = [];
                 $i = 0;
                 $j = 0;
                 foreach ($data as $k => $v) {
@@ -329,7 +329,7 @@ class OffersController extends Controller
                     new GroupBy('month')
                      ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
                 ->pluck('wishes_count', 'date');
-                    $stack = array();
+                    $stack = [];
                 $i = 0;
                 $j = 0;
                 foreach ($data as $k => $v) {
