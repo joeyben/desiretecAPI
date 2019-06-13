@@ -43,7 +43,7 @@
                                 @include('frontend.user.account.tabs.edit')
                             </div><!--tab panel profile-->
 
-                            @if ($logged_in_user->canChangePassword())
+                            @if ($logged_in_user->canChangePassword() && !$logged_in_user->hasRole('User'))
                                 <div role="tabpanel" class="tab-pane mt-30" id="password">
                                     @include('frontend.user.account.tabs.change-password')
                                 </div><!--tab panel change password-->
