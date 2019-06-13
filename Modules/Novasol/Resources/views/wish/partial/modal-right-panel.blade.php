@@ -1,4 +1,4 @@
-@if(count($wish->offers) > 0 || count($wish->messages) > 0)
+@if(count($wish->offers) > 0 || count($wish->sellerMessages) > 0)
     <div class="col-md-4 modal-body-right">
         <img title="{{ $wish->group->users[0]->currentAgent[0]->name }}" alt="{{ $wish->group->users[0]->currentAgent[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->group->users[0]->currentAgent[0]->avatar }}" />
         <h4>{{ $wish->group->users[0]->currentAgent[0]->name }}</h4>

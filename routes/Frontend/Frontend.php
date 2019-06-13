@@ -111,7 +111,7 @@
             Route::post('messages', 'MessagesController@sendMessage');
             Route::get('messages/{wish}/{group}', 'MessagesController@getMessages');
             Route::get('message/delete/{message}', 'MessagesController@deleteMessage');
-            Route::post('message/edit/{message}/{m}', 'MessagesController@editMessage');
+            Route::post('message/edit', 'MessagesController@editMessage');
 
         });
 

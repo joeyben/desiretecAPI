@@ -51,7 +51,10 @@
                 var message = this.newMessage;
                 var messageid = $('#edit-val').val();
                 
-                axios.post('/message/edit/'+messageid+'/'+message).then(resp => {
+                axios.post('/message/edit', {
+                    id: messageid,
+                    message: message,
+                }).then(resp => {
 
                     $('#antworten').val('');
                     $('#antworten').slideUp();
