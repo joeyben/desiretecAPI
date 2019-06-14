@@ -13,7 +13,7 @@
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   exportingInit(Highcharts)
   export default {
-    name: 'TilePieComponent',
+    name: 'TileShareComponent',
     components: { highcharts: Chart },
     data () {
       return {
@@ -28,7 +28,7 @@
             type: 'pie'
           },
           title: {
-            text: this.trans('dashboard.monthly_desktop_browser_share')
+            text: this.trans('dashboard.monthly_desktop_browser_shareklicks')
           },
           tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -82,7 +82,7 @@
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         let paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.events.browserperMonth') + params + paramsdate)
+        this.$http.get(window.laroute.route('admin.dashboard.events.shareperMonth') + params + paramsdate)
           .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {

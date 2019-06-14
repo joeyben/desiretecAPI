@@ -141,12 +141,12 @@ class OffersController extends Controller
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter($viewId);
 
-                 $optParams = [
-                    'dimensions' => 'ga:date',
-                    'filters' => $filter['filterd'],
-                ];
+            $optParams = [
+                'dimensions' => 'ga:date',
+                'filters' => $filter['filterd'],
+            ];
 
-                 $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);
+            $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -176,12 +176,12 @@ class OffersController extends Controller
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter($viewId);
 
-                 $optParams = [
-                    'dimensions' => 'ga:yearMonth',
-                    'filters' => $filter['filterm'],
-                ];
+            $optParams = [
+                'dimensions' => 'ga:yearMonth',
+                'filters' => $filter['filterm'],
+            ];
 
-                 $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);  
+            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);  
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -210,12 +210,12 @@ class OffersController extends Controller
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter($viewId);
 
-                 $optParams = [
-                    'dimensions' => 'ga:date',
-                    'filters' => $filter['filterm'],
-                ];
+            $optParams = [
+                'dimensions' => 'ga:date',
+                'filters' => $filter['filterm'],
+            ];
 
-                 $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);  
+            $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);  
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -228,11 +228,9 @@ class OffersController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-
-    public function responseMonth(Request $request)
+    public function browserperMonth(Request $request)
     {
         try {
-
             $whitelabelId = $request->get('whitelabelId');
             $startDate = is_null($request->get('start')) ? '' : $request->get('start');
             $endDate = is_null($request->get('end')) ? '' : $request->get('end');
@@ -246,176 +244,276 @@ class OffersController extends Controller
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter($viewId);
 
-                 $optParams = [
-                    'dimensions' => 'ga:yearMonth',
-                    'filters' => $filter['filterd'],
-                ];
+            $optParams = [
+                'dimensions' => 'ga:browser',
+                'filters' => $filter['filterd'],
+            ];
 
-                    $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
-
-                    $data = $this->wishes->withCriteria([
-                    new ByWhitelabel(),
-                    new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-                    new GroupBy('month')
-                     ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
-                ->pluck('wishes_count', 'date');
-                $stack = [];
-                $i = 0;
-                $j = 0;
-                foreach ($data as $k => $v) {
-                    list($year, $month, $day) = explode("-", $k); 
-                    $stack[$k]['date'] = $year.$month;
-                    $stack[$k]['wish'] = $v;
-                }
-
-                $result['wishes'] = $stack;
-                $result['data'] = $data;
-                
-                foreach ($result['ga'] as $key => $value) {
-                        foreach ($result['wishes'] as $kk => $vv) {
-                           if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
-                                $i++;
-                                $j = 0;
-                                if ($result['ga'][$key][1]!==0) {
-                                    $result['ga'][$key][1] = round(($result['wishes'][$kk]['wish'])/($result['ga'][$key][1])*100,1);
-                                }
-                                break;
-                            }else{
-                                $j++;
-                            }
-                        }
-                    if ($j!=0) {
-                       $result['ga'][$key][1] = 0;
-                    }
-                 } 
-
-            $result['success'] = true;
-            $result['status'] = Flag::STATUS_CODE_SUCCESS;
-        } catch (Exception $e) {
-            $result['success'] = false;
-            $result['message'] = $e->getMessage();
-            $result['status'] = Flag::STATUS_CODE_ERROR;
+            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+            $sum = 0;
+            $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
+            foreach ($result['ga'] as $key => $value) {
+                if (!in_array($result['ga'][$key][0], $browsers)) {
+                  unset($result['ga'][$key]);
+              }  
+          }
+          $result['ga'] = array_values($result['ga']);
+          foreach ($result['ga'] as $key => $value) {
+            $sum = $sum +  $result['ga'][$key][1];  
+        }
+        foreach ($result['ga'] as $key => $value) {
+            $result['ga'][$key][1] = round($result['ga'][$key][1]/$sum*100,1);  
         }
 
-        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+        $result['success'] = true;
+        $result['status'] = Flag::STATUS_CODE_SUCCESS;
+    } catch (Exception $e) {
+        $result['success'] = false;
+        $result['message'] = $e->getMessage();
+        $result['status'] = Flag::STATUS_CODE_ERROR;
     }
 
+    return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+}
 
-    public function responsemMonth(Request $request)
-    {
-        try {
+public function shareperMonth(Request $request)
+{
+    try {
+        $whitelabelId = $request->get('whitelabelId');
+        $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+        $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+        
+        if (is_null($whitelabelId)) {
+            $whitelabel = $this->whitelabels->first();
+        } else {
+            $whitelabel = $this->whitelabels->find($whitelabelId);
+        }
 
-            $whitelabelId = $request->get('whitelabelId');
-            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
-            
-            if (is_null($whitelabelId)) {
-                $whitelabel = $this->whitelabels->first();
-            } else {
-                $whitelabel = $this->whitelabels->find($whitelabelId);
+        $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
+        $filter = $this->getFilter($viewId);
+
+        $optParams = [
+            'dimensions' => 'ga:browser',
+            'filters' => $filter['filters'],
+        ];
+
+        $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+        $sum = 0;
+        $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
+        foreach ($result['ga'] as $key => $value) {
+            if (!in_array($result['ga'][$key][0], $browsers)) {
+              unset($result['ga'][$key]);
+          }  
+      }
+      $result['ga'] = array_values($result['ga']);
+      foreach ($result['ga'] as $key => $value) {
+        $sum = $sum +  $result['ga'][$key][1];  
+    }
+    foreach ($result['ga'] as $key => $value) {
+        $result['ga'][$key][1] = round($result['ga'][$key][1]/$sum*100,1);  
+    }
+
+    $result['success'] = true;
+    $result['status'] = Flag::STATUS_CODE_SUCCESS;
+} catch (Exception $e) {
+    $result['success'] = false;
+    $result['message'] = $e->getMessage();
+    $result['status'] = Flag::STATUS_CODE_ERROR;
+}
+
+return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+}
+
+
+public function responseMonth(Request $request)
+{
+    try {
+
+        $whitelabelId = $request->get('whitelabelId');
+        $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+        $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+        
+        if (is_null($whitelabelId)) {
+            $whitelabel = $this->whitelabels->first();
+        } else {
+            $whitelabel = $this->whitelabels->find($whitelabelId);
+        }
+
+        $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
+        $filter = $this->getFilter($viewId);
+
+        $optParams = [
+            'dimensions' => 'ga:yearMonth',
+            'filters' => $filter['filterd'],
+        ];
+
+        $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+
+        $data = $this->wishes->withCriteria([
+            new ByWhitelabel(),
+            new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
+            new GroupBy('month')
+        ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
+        ->pluck('wishes_count', 'date');
+        $stack = [];
+        $i = 0;
+        $j = 0;
+        foreach ($data as $k => $v) {
+            list($year, $month, $day) = explode("-", $k); 
+            $stack[$k]['date'] = $year.$month;
+            $stack[$k]['wish'] = $v;
+        }
+
+        $result['wishes'] = $stack;
+        $result['data'] = $data;
+
+        foreach ($result['ga'] as $key => $value) {
+            foreach ($result['wishes'] as $kk => $vv) {
+             if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
+                $i++;
+                $j = 0;
+                $result['ga'][$key][1] = $result['ga'][$key][1]===0 ? 0 : round(($result['wishes'][$kk]['wish']/$result['ga'][$key][1])*100,1);
+                break;
+            }else{
+                $j++;
             }
-            
-            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter($viewId);
+        }
+        if ($j!=0) {
+         $result['ga'][$key][1] = 0;
+     }
+ } 
 
-                 $optParams = [
-                    'dimensions' => 'ga:yearMonth',
-                    'filters' => $filter['filterm'],
-                ];
+ $result['success'] = true;
+ $result['status'] = Flag::STATUS_CODE_SUCCESS;
+} catch (Exception $e) {
+    $result['success'] = false;
+    $result['message'] = $e->getMessage();
+    $result['status'] = Flag::STATUS_CODE_ERROR;
+}
 
-                    $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+}
 
-                    $data = $this->wishes->withCriteria([
-                    new ByWhitelabel(),
-                    new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-                    new GroupBy('month')
-                     ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
-                ->pluck('wishes_count', 'date');
-                    $stack = [];
-                $i = 0;
+
+public function responsemMonth(Request $request)
+{
+    try {
+
+        $whitelabelId = $request->get('whitelabelId');
+        $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+        $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+        
+        if (is_null($whitelabelId)) {
+            $whitelabel = $this->whitelabels->first();
+        } else {
+            $whitelabel = $this->whitelabels->find($whitelabelId);
+        }
+        
+        $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
+        $filter = $this->getFilter($viewId);
+
+        $optParams = [
+            'dimensions' => 'ga:yearMonth',
+            'filters' => $filter['filterm'],
+        ];
+
+        $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+
+        $data = $this->wishes->withCriteria([
+            new ByWhitelabel(),
+            new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
+            new GroupBy('month')
+        ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
+        ->pluck('wishes_count', 'date');
+        $stack = [];
+        $i = 0;
+        $j = 0;
+        foreach ($data as $k => $v) {
+            list($year, $month, $day) = explode("-", $k); 
+            $stack[$k]['date'] = $year.$month;
+            $stack[$k]['wish'] = $v;
+        }
+
+        $result['wishes'] = $stack;
+        $result['data'] = $data;
+
+        foreach ($result['ga'] as $key => $value) {
+            foreach ($result['wishes'] as $kk => $vv) {
+             if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
+                $i++;
                 $j = 0;
-                foreach ($data as $k => $v) {
-                    list($year, $month, $day) = explode("-", $k); 
-                    $stack[$k]['date'] = $year.$month;
-                    $stack[$k]['wish'] = $v;
-                }
-
-                $result['wishes'] = $stack;
-                $result['data'] = $data;
-                
-                foreach ($result['ga'] as $key => $value) {
-                        foreach ($result['wishes'] as $kk => $vv) {
-                           if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
-                                $i++;
-                                $j = 0;
-                                if ($result['ga'][$key][1]!==0) {
-                                $result['ga'][$key][1] = round(($result['wishes'][$kk]['wish'])/($result['ga'][$key][1])*100,1);
-                                }
-                                break;
-                            }else{
-                                $j++;
-                            }
-                        }
-                    if ($j!=0) {
-                       $result['ga'][$key][1] = 0;
-                    }
-                 } 
-
-                     
-
-            $result['success'] = true;
-            $result['status'] = Flag::STATUS_CODE_SUCCESS;
-        } catch (Exception $e) {
-            $result['success'] = false;
-            $result['message'] = $e->getMessage();
-            $result['status'] = Flag::STATUS_CODE_ERROR;
+                $result['ga'][$key][1] = $result['ga'][$key][1]===0 ? 0 : round(($result['wishes'][$kk]['wish']/$result['ga'][$key][1])*100,1);
+                break;
+            }else{
+                $j++;
+            }
         }
+        if ($j!=0) {
+         $result['ga'][$key][1] = 0;
+     }
+ } 
 
-        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+ 
+
+ $result['success'] = true;
+ $result['status'] = Flag::STATUS_CODE_SUCCESS;
+} catch (Exception $e) {
+    $result['success'] = false;
+    $result['message'] = $e->getMessage();
+    $result['status'] = Flag::STATUS_CODE_ERROR;
+}
+
+return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+}
+
+
+public function getFilter(string $viewid)
+{
+    $filterdesk = '';
+    $filtermobile = '';
+
+    switch($viewid){
+
+        case '192484069':
+        $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
+        $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
+        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
+        break;
+
+        case '159641355':
+        $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+        $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+        $filtershare = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow_3.0';
+        break;
+
+        case '162076862':
+        $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+        $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
+        break;
+
+        case '174270531':
+        $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+        $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
+        break;
+
+        case '185523513':
+        $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+        $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
+        break;
+
+        case '188170994':
+        $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
+        $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
+        $filtershare = 'ga:eventLabel==eil-mobile;ga:eventAction==Submit-Button;ga:eventCategory==tui_exitwindow';
+        break;
+
     }
 
-    
-    public function getFilter(string $viewid)
-    {
-        $filterdesk = '';
-        $filtermobile = '';
-
-        switch($viewid){
-
-            case '192484069':
-            $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-            $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-            break;
-
-            case '159641355':
-            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            break;
-
-            case '162076862':
-            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            break;
-
-            case '174270531':
-            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            break;
-
-            case '185523513':
-            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            break;
-
-            case '188170994':
-            $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
-            $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
-            break;
-
-        }
-
-        return array('filterd'=>$filterdesk, 'filterm'=>$filtermobile);
-    }
+    return array('filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare);
+}
     /**
      * Show the form for creating a new resource.
      *

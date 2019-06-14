@@ -32,4 +32,7 @@ return [
     'monthly_desktop_response'                  => 'Desktop Response Rate / Month',
     'layers'                                    => 'Layers',
     'response'                                  => 'Response Rate (%)',
+    'monthly_desktop_browser_share'             => 'Browser-Share Desktop / Month',
+    'browsers'                                  => 'Browser Share',
+    'monthly_desktop_browser_shareklicks'       => 'Browser-Share Desktop Klicks / Month',
 ];
