@@ -251,13 +251,67 @@ class OffersController extends Controller
 
                  $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
                  $sum = 0;
+                 $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
+                 foreach ($result['ga'] as $key => $value) {
+                    if (!in_array($result['ga'][$key][0], $browsers)) {
+                          unset($result['ga'][$key]);
+                      }  
+                   }
+                   $result['ga'] = array_values($result['ga']);
                  foreach ($result['ga'] as $key => $value) {
                     $sum = $sum +  $result['ga'][$key][1];  
                    }
                  foreach ($result['ga'] as $key => $value) {
-                    $result['ga'][$key][1] = round($result['ga'][$key][1]/$sum*100);  
+                    $result['ga'][$key][1] = round($result['ga'][$key][1]/$sum*100,1);  
                    }
-                $result['sum'] = $sum;  
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function shareperMonth(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+            
+            if (is_null($whitelabelId)) {
+                $whitelabel = $this->whitelabels->first();
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+
+            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
+            $filter = $this->getFilter($viewId);
+
+                 $optParams = [
+                    'dimensions' => 'ga:browser',
+                    'filters' => $filter['filters'],
+                ];
+
+                 $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+                 $sum = 0;
+                 $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
+                 foreach ($result['ga'] as $key => $value) {
+                    if (!in_array($result['ga'][$key][0], $browsers)) {
+                          unset($result['ga'][$key]);
+                      }  
+                   }
+                   $result['ga'] = array_values($result['ga']);
+                 foreach ($result['ga'] as $key => $value) {
+                    $sum = $sum +  $result['ga'][$key][1];  
+                   }
+                 foreach ($result['ga'] as $key => $value) {
+                    $result['ga'][$key][1] = round($result['ga'][$key][1]/$sum*100,1);  
+                   }
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -312,13 +366,13 @@ class OffersController extends Controller
 
                 $result['wishes'] = $stack;
                 $result['data'] = $data;
-                
+
                 foreach ($result['ga'] as $key => $value) {
                         foreach ($result['wishes'] as $kk => $vv) {
                            if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
                                 $i++;
                                 $j = 0;
-                                $result['ga'][$key][1] = $result['ga'][$key][1]===0 ? 0 : round(($result['wishes'][$kk]['wish'])/($result['ga'][$key][1])*100,1);
+                                $result['ga'][$key][1] = $result['ga'][$key][1]===0 ? 0 : round(($result['wishes'][$kk]['wish']/$result['ga'][$key][1])*100,1);
                                 break;
                             }else{
                                 $j++;
@@ -382,15 +436,13 @@ class OffersController extends Controller
 
                 $result['wishes'] = $stack;
                 $result['data'] = $data;
-                
+
                 foreach ($result['ga'] as $key => $value) {
                         foreach ($result['wishes'] as $kk => $vv) {
                            if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
                                 $i++;
                                 $j = 0;
-                                if ($result['ga'][$key][1]!==0) {
-                                $result['ga'][$key][1] = round(($result['wishes'][$kk]['wish'])/($result['ga'][$key][1])*100,1);
-                                }
+                                $result['ga'][$key][1] = $result['ga'][$key][1]===0 ? 0 : round(($result['wishes'][$kk]['wish']/$result['ga'][$key][1])*100,1);
                                 break;
                             }else{
                                 $j++;
@@ -425,36 +477,42 @@ class OffersController extends Controller
             case '192484069':
             $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
             $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
+            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
             break;
 
             case '159641355':
             $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
             $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            $filtershare = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow_3.0';
             break;
 
             case '162076862':
             $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
             $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
             break;
 
             case '174270531':
             $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
             $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
             break;
 
             case '185523513':
             $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
             $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
             break;
 
             case '188170994':
             $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
             $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
+            $filtershare = 'ga:eventLabel==eil-mobile;ga:eventAction==Submit-Button;ga:eventCategory==tui_exitwindow';
             break;
 
         }
 
-        return array('filterd'=>$filterdesk, 'filterm'=>$filtermobile);
+        return array('filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare);
     }
     /**
      * Show the form for creating a new resource.

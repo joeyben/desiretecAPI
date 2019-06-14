@@ -34,4 +34,5 @@ return [
     'response'                                  => 'Response Rate (%)',
     'monthly_desktop_browser_share'             => 'Browser-Share Desktop pro Monat',
     'browsers'                                  => 'Browser Share',
+    'monthly_desktop_browser_shareklicks'       => 'Browser-Share Desktop Klicks pro Monat',
 ];

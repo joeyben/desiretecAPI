@@ -95,6 +95,7 @@
   import ChartWishComponent from './ChartWishComponent'
   import TileSpiderComponent from './TileSpiderComponent'
   import TileTdComponent from './TileTdComponent'
+  import TileShareComponent from './TileShareComponent'
   import BackendAnalyticsComponent from './BackendAnalyticsComponent'
   import GaDatatableComponent from '../tables/ga/GaDatatableComponent'
 export default {
@@ -120,6 +121,7 @@ export default {
       ChartWishComponent,
       TileTdComponent,
       TileGroupComponent,
+      TileShareComponent,
       GaDatatableComponent,
       BackendAnalyticsComponent
     },
