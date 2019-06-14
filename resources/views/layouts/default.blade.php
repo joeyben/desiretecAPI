@@ -198,13 +198,15 @@
                         </a>
                     </li>
                     @endif
+                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('provider.languages') }}" class="nav-link">
+                                <i class="icon-flag3"></i>
+                                <span>{{ __('menus.languages') }}</span>
+                            </a>
+                        </li>
+                    @endif
 
-                    <li class="nav-item">
-                        <a href="{{ route('provider.languages') }}" class="nav-link">
-                            <i class="icon-flag3"></i>
-                            <span>{{ __('menus.languages') }}</span>
-                        </a>
-                    </li>
 
                     <li class="nav-item">
                         <a href="{{ route('provider.language-lines') }}" class="nav-link">
