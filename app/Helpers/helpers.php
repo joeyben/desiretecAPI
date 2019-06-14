@@ -380,7 +380,7 @@ if (!function_exists('getCurrentWhiteLabelId')) {
      */
     function getCurrentWhiteLabelId()
     {
-        $url = url('/');
+        $url = str_replace('http://', '', url('/'));
         $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
 
         return $id;
