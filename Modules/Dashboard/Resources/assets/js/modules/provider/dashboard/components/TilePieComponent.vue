@@ -17,58 +17,33 @@
     components: { highcharts: Chart },
     data () {
       return {
+        created: '',
+        whitelabelId: null,
         // eslint-disable-next-line
         errors: new Errors(),
+        data: [],
         updateArgs: [true, true, {duration: 1000}],
         chartOptions: {
           chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
             type: 'pie'
           },
           title: {
-            text: 'Browser market shares in January, 2018'
+            text: this.trans('dashboard.monthly_desktop_browser_share')
           },
           tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
           },
           plotOptions: {
-            pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
+            line: {
               dataLabels: {
-                enabled: false
-              },
-              showInLegend: true
+                enabled: true
+              }
             }
           },
           series: [{
-            name: 'Brands',
-            colorByPoint: true,
-            data: [{
-              name: 'Chrome',
-              y: 61.41,
-              sliced: true,
-              selected: true
-            }, {
-              name: 'Internet Explorer',
-              y: 11.84
-            }, {
-              name: 'Firefox',
-              y: 10.85
-            }, {
-              name: 'Edge',
-              y: 4.67
-            }, {
-              name: 'Safari',
-              y: 4.18
-            }, {
-              name: 'Other',
-              y: 7.05
-            }]
+            name: this.trans('dashboard.browsers'),
+            data: []
           }],
-
           responsive: {
             rules: [{
               condition: {
@@ -88,9 +63,11 @@
       }
     },
     mounted () {
+      this.loadOfferByMonth()
+      this.$events.$on('whitelabel-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
+      this.$events.$on('range-date-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
     },
     updated () {
-      debugger
     },
     watch: {
     },
@@ -100,7 +77,34 @@
     },
     methods: {
       ...Vuex.mapActions({
-      })
+      }),
+      loadOfferByMonth: function (whitelabelId = null, start = '', end = '') {
+        let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
+        let paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end
+        this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
+        this.$http.get(window.laroute.route('admin.dashboard.events.browserperMonth') + params + paramsdate)
+          .then(this.onLoadDashboardSellerSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
+          })
+      },
+      generateData (items) {
+        let data = []
+        items.forEach((item, index) => {
+          data.push([item[0], item[1]])
+        })
+  
+        return data
+      },
+      onLoadDashboardSellerSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.chartOptions.series[0].data = this.generateData(response.data.ga)
+          this.data = response.data
+        } else {
+          this.$notify.error({ title: 'Failed', message: response.data.message })
+        }
+      }
     }
   }
 </script>
