@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Schema;
 use Modules\Attachments\Traits\AttachableTrait;
 use Modules\Languages\Entities\Language;
+use Modules\Wishes\Entities\Wish;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -105,7 +106,7 @@ class Whitelabel extends Model
      */
     public function languages()
     {
-        return $this->hasMany(Language::class);
+        return $this->belongsToMany(Language::class);
     }
 
     /**

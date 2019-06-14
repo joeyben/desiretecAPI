@@ -271,10 +271,24 @@ class LanguageLinesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @return Response
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy()
+    public function destroy(int $id)
     {
+        try {
+            $result['languageline'] = $this->languageline->delete($id);
+            $result['message'] = $this->lang->get('messages.deleted', ['attribute' => 'Translation']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**

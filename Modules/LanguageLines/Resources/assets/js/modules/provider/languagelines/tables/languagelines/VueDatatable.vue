@@ -232,10 +232,10 @@ import CssConfig from './CssConfig.js'
         this.addChecked(data)
       },
       onLoading () {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
       },
       onLoaded () {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
       },
       boardsCallBack (boards) {
         let data = []
@@ -298,32 +298,32 @@ import CssConfig from './CssConfig.js'
         })
       },
       onDelete (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.delete(window.laroute.route('provider.groups.destroy', {id: id}))
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
+        this.$http.delete(window.laroute.route('provider.language-lines.destroy', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
           })
       },
       onForceDelete (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
         // eslint-disable-next-line
-        this.$http.delete(laroute.route('provider.groups.forceDelete', {id: id}))
+        this.$http.delete(laroute.route('provider.language-lines.forceDelete', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
           })
       },
       onRestore (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
         // eslint-disable-next-line
-        this.$http.put(window.laroute.route('provider.groups.restore', {id: id}))
+        this.$http.put(window.laroute.route('provider.language-lines.restore', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
           })
       },
       onDeleteSuccess (response) {
