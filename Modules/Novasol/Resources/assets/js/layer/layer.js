@@ -183,7 +183,7 @@ var dt = window.dt || {};
     });
 
     var NovasolTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
-        name: 'Trendtours WL',
+        name: 'Novasol WL',
         matchesUrl: 'www.novasol.de/*',
         filterFormSelector: 'body',
         dictionaries: {
@@ -253,11 +253,11 @@ var dt = window.dt || {};
                 return age3;
             },
             'earliest_start': function (form, formData) {
-                var dateFrom = formData.hasOwnProperty('startDate') ? this.formatDate(form['startDate']) : '';
+                var dateFrom = formData.hasOwnProperty('startDate') ? this.formatDate(formData['startDate']) : '';
                 return dateFrom;
             },
             'latest_return': function (form, formData) {
-                var dateTo = formData.hasOwnProperty('endDate') ? this.formatDate(form['endDate']) : '';
+                var dateTo = formData.hasOwnProperty('endDate') ? this.formatDate(formData['endDate']) : '';
                 return dateTo;
             },
             'duration': function (form, formData) {
