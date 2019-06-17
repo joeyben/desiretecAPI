@@ -326,7 +326,11 @@
                     $(this).parents('.haserrors').removeClass('haserrors');
                     check_button();
                 });
+                $(".duration-time").on('click',function(){
+                    validateDuration();
+                });
             });
+
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
