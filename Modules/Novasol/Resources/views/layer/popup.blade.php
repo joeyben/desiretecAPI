@@ -290,8 +290,9 @@
                 var pax = $("#adults").val();
                 var children_count = parseInt($("#kids").val());
                 var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
+                var pets = $("#pets").val() !== "0" ? ", "+$( "#pets option:selected" ).text() : "";
                 var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
-                $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
+                $(".travelers .txt").text(pax+" "+erwachsene+" "+children+ ""+pets);
 
                 if($(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').addClass('error-button');
@@ -328,7 +329,9 @@
                         $(this).attr('disabled','disabled');
                     }
                 });
-                $element.removeAttr('selected').parent().val('');
+                if($element.parent().val()) {
+                    $element.removeAttr('selected').parent().val('');
+                }
             }
         </script>
 
