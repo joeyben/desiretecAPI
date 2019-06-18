@@ -119,9 +119,11 @@ body{
     }
     ul{
       list-style: none;
+      text-align: center !important;
       li{
         margin-right: 20px;
-        float: left;
+        float: none;
+        display: inline-block;
         @media screen and (max-width: $break-small) {
           width: 100%;
         }
