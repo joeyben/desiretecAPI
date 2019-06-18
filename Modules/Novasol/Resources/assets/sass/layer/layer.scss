@@ -355,7 +355,7 @@ $fontcolor: #303030;
         position: absolute;
         top: 100%;
         background: #f3f0ec;
-        padding: 5px 10px 30px;
+        padding: 5px 10px 10px;
         left: -1px;
         border-top: none;
         width: calc(100% + 2px);
@@ -422,7 +422,7 @@ $fontcolor: #303030;
         position: absolute;
         top: 100%;
         background: #f3f0ec;
-        padding: 5px 10px 30px;
+        padding: 5px 10px 10px;
         left: -1px;
         border-top: none;
         width: calc(100% + 2px);
@@ -1537,6 +1537,7 @@ p.kwp-info {
     }
     .kwp-custom-select:after{
       background: none;
+      border: none;
     }
     .kwp-content-extra, .kwp-btn-expand{
       display: none;
