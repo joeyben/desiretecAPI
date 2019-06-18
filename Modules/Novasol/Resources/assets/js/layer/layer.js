@@ -236,9 +236,13 @@ var dt = window.dt || {};
                 var budget = form.hasOwnProperty('priceMaximum') ? form['priceMaximum'] : '';
                 return budget;
             },
-            'children': function (form, formData) {
+            'kids': function (form, formData) {
                 var kids = form.hasOwnProperty('kids') ? form['kids'] : '';
                 return kids;
+            },
+            'pets': function (form, formData) {
+                var pets = form.hasOwnProperty('pets') ? form['pets'] : '';
+                return pets;
             },
             'age_1': function (form, formData) {
                 var age1 = getUrlParams('age1') ? getUrlParams('age1') : '';
@@ -261,7 +265,7 @@ var dt = window.dt || {};
                 return dateTo;
             },
             'duration': function (form, formData) {
-                var duration = form.hasOwnProperty('lengthOfStay') ? form['lengthOfStay'] : '';
+                var duration = form.hasOwnProperty('lengthOfStay') ? parseInt(form['lengthOfStay']) - 1 : '';
                 return duration;
             },
             'airport': function (form, formData) {
