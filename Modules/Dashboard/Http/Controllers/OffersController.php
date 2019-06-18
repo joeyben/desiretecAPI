@@ -252,18 +252,8 @@ class OffersController extends Controller
             $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
             $sum = 0;
             $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
-            foreach ($result['ga'] as $key => $value) {
-                if (!in_array($result['ga'][$key][0], $browsers)) {
-                  unset($result['ga'][$key]);
-              }  
-          }
-          $result['ga'] = array_values($result['ga']);
-          foreach ($result['ga'] as $key => $value) {
-            $sum = $sum +  $result['ga'][$key][1];  
-        }
-        foreach ($result['ga'] as $key => $value) {
-            $result['ga'][$key][1] = round($result['ga'][$key][1]/$sum*100,1);  
-        }
+            
+            $result['ga'] = $this->dashboard->calculateBrowserData($result, $browsers, $sum);
 
         $result['success'] = true;
         $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -300,18 +290,8 @@ public function shareperMonth(Request $request)
         $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
         $sum = 0;
         $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
-        foreach ($result['ga'] as $key => $value) {
-            if (!in_array($result['ga'][$key][0], $browsers)) {
-              unset($result['ga'][$key]);
-          }  
-      }
-      $result['ga'] = array_values($result['ga']);
-      foreach ($result['ga'] as $key => $value) {
-        $sum = $sum +  $result['ga'][$key][1];  
-    }
-    foreach ($result['ga'] as $key => $value) {
-        $result['ga'][$key][1] = round($result['ga'][$key][1]/$sum*100,1);  
-    }
+        
+        $result['ga'] = $this->dashboard->calculateBrowserData($result, $browsers, $sum);
 
     $result['success'] = true;
     $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -356,32 +336,8 @@ public function responseMonth(Request $request)
         ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
         ->pluck('wishes_count', 'date');
         $stack = [];
-        $i = 0;
-        $j = 0;
-        foreach ($data as $k => $v) {
-            list($year, $month, $day) = explode("-", $k); 
-            $stack[$k]['date'] = $year.$month;
-            $stack[$k]['wish'] = $v;
-        }
-
-        $result['wishes'] = $stack;
-        $result['data'] = $data;
-
-        foreach ($result['ga'] as $key => $value) {
-            foreach ($result['wishes'] as $kk => $vv) {
-             if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
-                $i++;
-                $j = 0;
-                $result['ga'][$key][1] = $result['ga'][$key][1]==='0' ? 0 : round(($result['wishes'][$kk]['wish']/$result['ga'][$key][1])*100,1);
-                break;
-            }else{
-                $j++;
-            }
-        }
-        if ($j!=0) {
-         $result['ga'][$key][1] = 0;
-     }
- } 
+        
+        $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
 
  $result['success'] = true;
  $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -426,34 +382,8 @@ public function responsemMonth(Request $request)
         ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
         ->pluck('wishes_count', 'date');
         $stack = [];
-        $i = 0;
-        $j = 0;
-        foreach ($data as $k => $v) {
-            list($year, $month, $day) = explode("-", $k); 
-            $stack[$k]['date'] = $year.$month;
-            $stack[$k]['wish'] = $v;
-        }
-
-        $result['wishes'] = $stack;
-        $result['data'] = $data;
-
-        foreach ($result['ga'] as $key => $value) {
-            foreach ($result['wishes'] as $kk => $vv) {
-             if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
-                $i++;
-                $j = 0;
-                $result['ga'][$key][1] = $result['ga'][$key][1]==='0' ? 0 : round(($result['wishes'][$kk]['wish']/$result['ga'][$key][1])*100,1);
-                break;
-            }else{
-                $j++;
-            }
-        }
-        if ($j!=0) {
-         $result['ga'][$key][1] = 0;
-     }
- } 
-
-
+        
+        $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
 
  $result['success'] = true;
  $result['status'] = Flag::STATUS_CODE_SUCCESS;

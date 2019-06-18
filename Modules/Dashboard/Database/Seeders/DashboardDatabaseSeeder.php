@@ -16,7 +16,7 @@ class DashboardDatabaseSeeder extends Seeder
         Model::unguard();
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Wish',
+            'name'            => 'Alle Wünsche',
             'x'               => 0,
             'y'               => 0,
             'w'               => 2,
@@ -28,7 +28,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Offer',
+            'name'            => 'LI Desktop Monat',
             'x'               => 0,
             'y'               => 15,
             'w'               => 4,
@@ -40,7 +40,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Mobile',
+            'name'            => 'LI Mobile Monat',
             'x'               => 0,
             'y'               => 23,
             'w'               => 4,
@@ -52,7 +52,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Response',
+            'name'            => 'Response Rate Desktop Gesamt',
             'x'               => 0,
             'y'               => 31,
             'w'               => 4,
@@ -64,7 +64,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Response Mobile',
+            'name'            => 'Response Rate Mobile Gesamt',
             'x'               => 6,
             'y'               => 31,
             'w'               => 4,
@@ -76,7 +76,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Offerday',
+            'name'            => 'LI Desktop Tag',
             'x'               => 6,
             'y'               => 15,
             'w'               => 4,
@@ -88,7 +88,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Seller',
+            'name'            => 'Anbieter',
             'x'               => 2,
             'y'               => 0,
             'w'               => 2,
@@ -100,7 +100,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Group',
+            'name'            => 'Gruppen',
             'x'               => 4,
             'y'               => 0,
             'w'               => 2,
@@ -112,7 +112,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Reaction Time',
+            'name'            => 'Reaktionszeit',
             'x'               => 6,
             'y'               => 0,
             'w'               => 3,
@@ -136,7 +136,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Chart Wish',
+            'name'            => 'Alle Wünsche pro Monat',
             'x'               => 0,
             'y'               => 2,
             'w'               => 4,
@@ -160,7 +160,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile pie',
+            'name'            => 'LI Desktop Monat Browser',
             'x'               => 8,
             'y'               => 2,
             'w'               => 4,
@@ -172,7 +172,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Wishes overall per day',
+            'name'            => 'Alle Wünsche pro Tag',
             'x'               => 0,
             'y'               => 5,
             'w'               => 4,
@@ -232,7 +232,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Mobile Day',
+            'name'            => 'LI Mobile Tag',
             'x'               => 6,
             'y'               => 23,
             'w'               => 4,
@@ -244,7 +244,7 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Share Klicks',
+            'name'            => 'Klicks Desktop Monat Browser',
             'x'               => 6,
             'y'               => 31,
             'w'               => 4,

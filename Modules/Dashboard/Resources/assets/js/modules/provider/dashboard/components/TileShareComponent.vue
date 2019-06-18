@@ -38,10 +38,23 @@
               dataLabels: {
                 enabled: true
               }
+            },
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                  color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                },
+                connectorColor: 'silver'
+              }
             }
           },
           series: [{
             name: this.trans('dashboard.browsers'),
+            colorByPoint: true,
             data: []
           }],
           responsive: {
