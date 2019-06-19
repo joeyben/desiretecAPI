@@ -134,7 +134,7 @@ class NovasolWishesController extends Controller
         //var_dump($request->ip());
         return view('novasol::wish.index')->with([
             'status'     => $this->status,
-            'count'      => $this->wish->getForDataTable()->count(),
+            'count'      => count($this->wish->getForDataTable()->get()->toArray()),
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }

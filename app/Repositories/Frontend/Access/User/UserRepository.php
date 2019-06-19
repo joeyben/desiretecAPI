@@ -90,7 +90,7 @@ class UserRepository extends BaseRepository
     {
         $user = self::MODEL;
         $user = new $user();
-        $user->first_name = trans('user.default.first_name');
+        $user->first_name = trans('user.default.first_name', ['whitelabel' => $data['whitelabel_name']]);
         $user->last_name = trans('user.default.last_name');
         $user->email = $data['email'];
         $user->confirmation_code = md5(uniqid(mt_rand(), true));

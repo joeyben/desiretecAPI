@@ -25,7 +25,7 @@
     <div class="img-background">
         <div class="container">
             <div class="col-md-8 bg-left-content">
-                @if ($logged_in_user->hasRole('User') && $wish->owner->first_name !== "Muster")
+                @if ($logged_in_user->hasRole('User') && $wish->owner->last_name !== trans('user.default.last_name'))
                     <h3>Hallo {{ $wish->owner->first_name }} {{ $wish->owner->last_name }},</h3>
                 @elseif ($logged_in_user->hasRole('User') && $wish->owner->first_name)
                     <h3>Hallo lieber Kunde,</h3>
@@ -189,12 +189,6 @@
                         <b>Hier geht es zu unserer Angebotsseite:</b> <a href="{{ $offer->link }}" target="_blank">{{ $offer->link }}</a>
                     @endif
                 </p>
-                @if (!$offer->offerFiles && $logged_in_user->hasRole('User'))
-                <div class="sa2-buttons">
-                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
-                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
-                </div>
-                @endif
             </div>
         </div>
     </section>
@@ -217,36 +211,15 @@
                     </div>
                 @endforeach
             </div>
-            @if ($logged_in_user->hasRole('User'))
+            @if ($logged_in_user->hasRole('User') && count($wish->offers) < ($key - 1))
             <div class="col-md-12">
                 <hr class="sad-hr">
             </div>
             @endif
         </div>
 
-        @if ($logged_in_user->hasRole('User'))
-        <div class="container">
-            <div class="col-md-12 sa-2">
-                <div class="sa-buttons">
-                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
-                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
-                </div>
-            </div>
-        </div>
-        @endif
     </section>
   @endif
-
-    @if (count($offer->offerFiles) === 0 && $logged_in_user->hasRole('User'))
-        <div class="container">
-            <div class="col-md-12 sa-2">
-                <div class="sa-buttons">
-                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
-                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
-                </div>
-            </div>
-        </div>
-    @endif
 
     <div class="container">
         <div class="col-md-12">
@@ -255,6 +228,22 @@
     </div>
 
 @endforeach
+
+@if (count($wish->offers) > 0 && $logged_in_user->hasRole('User'))
+    <div class="container">
+        <div class="col-md-12 sa-2">
+            <div class="sa-buttons">
+                <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-12">
+            <hr class="sad-hr">
+        </div>
+    </div>
+@endif
 
 @if (count($wish->offers) === 0 && $logged_in_user->hasRole('Seller') && count($wish->contacts) === 0)
     <div class="container">

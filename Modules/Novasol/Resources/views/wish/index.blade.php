@@ -19,7 +19,7 @@
         <div class="col col-lg-12">
             <div class="filter">
                 <div class="count">
-                    <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', intval($count),['count' => intval($count)]) }}</span>
+                    <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', $count) }}</span>
                 </div>
                 <div class="filter-action">
                     <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
@@ -44,10 +44,10 @@
                     <div class="main-info">
 
                         <ul class="info">
-                            <li><i class="icon_pin"></i><span class="value">@{{ wish.destination }}</span></li>
-                            <li><i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
-                            <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
-                            <li><i class="icon_group"></i><span class="value">@{{ wish.adults }} @{{ wish.kids }} @{{ wish.categories > 0 ? ', '+wish.categories+' Haustier(e)' : ''  }}</span></li>
+                            <li><i class="fal fa-home-alt"></i><span class="value">@{{ wish.destination }}</span></li>
+                            <li><i class="fal fa-calendar-alt"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
+                            <li><i class="fal fa-hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
+                            <li><i class="fas fa-user-friends"></i><span class="value">@{{ wish.adults }}@{{ wish.kids ? ', '+wish.kids : ''  }}  @{{ wish.categories > 0 ? ', '+wish.categories+' Haustier(e)' : ''  }}</span></li>
                             <li><i class="fal fa-usd-circle"></i><span class="value">@{{ wish.budget }}€</span></li>
                             <li>{{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("DD.MM.YYYY") }}</span></li>
                         </ul>
