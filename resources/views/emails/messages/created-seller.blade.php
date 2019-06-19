@@ -7,10 +7,7 @@
                     <td align="left" style="color: #888888; width:20px; font-size: 16px; line-height: 24px;">
 
                         <p style="line-height: 24px; margin-bottom:15px;">
-                            Hallo
-                            @if ($messageModel->wish->owner->first_name != "Muster")
-                                {{ " ".$messageModel->wish->owner->first_name."," }}
-                            @endif
+                            Hallo!
                         </p>
 
                         <p style="line-height: 24px; margin-bottom:20px;">
