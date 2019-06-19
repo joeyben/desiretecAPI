@@ -31,7 +31,7 @@
         <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
     </div>
     <div class="col-md-3">
-        <i class="fal fa-plane-arrival"></i>
+        <i class="fal fa-home-lg"></i>
         <input class="data-content" value="{{ $wish->destination }}">
     </div>
     <div class="col-md-3">
