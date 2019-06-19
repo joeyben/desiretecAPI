@@ -318,6 +318,9 @@
             }
 
             function validateDuration() {
+                if($("#duration").val()){
+                    return false;
+                }
                 var days_diff = (dt.endDate.getDate() - dt.startDate.getDate()) / 60000 / 60 / 24;
                 var $element = $('#duration > option');
                 $element.attr('disabled',false) ;

@@ -6,6 +6,16 @@
     background-position: -200% center;
   }
 }
+
+.navbar-default{
+  a.logo{
+    .navbar-brand{
+      padding: 0
+    ;
+    }
+  }
+}
+
 .footer{
   padding: 30px 0;
   ul{

@@ -19,7 +19,7 @@
                     </span>
 
                     <span>{{ timestamp(message.created_at) }}</span>
-                    {{ message.message }}
+                    <span class="pre-formatted" v-html="message.message">{{ message.message }}</span>
                 </p>
                 <b style="font-weight:100; display: none;" class="message-holder">{{ message.message }}</b>
             </div>  

@@ -40,10 +40,10 @@
                     <a href="{{route('frontend.offers.create', $wish->id)}}" class="primary-btn">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
                 @elseif (count($wish->offers) > 0)
                     <p class="header-p">{!! trans('wish.view.stage.user_offer',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
-                    <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('angebote')">Angebot ansehen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('angebote')">{{ trans_choice('wish.details.view-offers-button', count($wish->offers), ['count' => count($wish->offers)]) }}</button>
                 @elseif (count($wish->messages) > 0 && $wish->messages[count($wish->messages)-1]->user_id !== Auth::user()->id)
                     <p class="header-p">{!! trans('wish.view.stage.user_message',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
-                    <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('messages')">Nachricht ansehen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('messages')">{{ trans('wish.details.view-messages-button') }}</button>
                 @else
                     @php
                         $actionButtonsSet = true;
@@ -183,7 +183,7 @@
                         <span class="agent-name">{{ $offer->agent->name }}</span>
                     </span>
                     <b>{{ $offer->title }}</b><br>
-                    {{ $offer->description }}
+                    {!! nl2br(e($offer->description)) !!}
                     @if ($offer->link)
                         <br><br>
                         <b>Hier geht es zu unserer Angebotsseite:</b> <a href="{{ $offer->link }}" target="_blank">{{ $offer->link }}</a>
@@ -369,11 +369,11 @@
                     <div class="col-md-8 modal-body-left">
 
                         <div class="group">
-                            <input type="text" class="form-control name" name="first_name" id="first_name" required>
+                            <input type="text" class="form-control name" name="first_name" id="first_name" value="{{ $wish->owner->first_name }}" required>
                             <label>Name</label>
                         </div>
                         <div class="group">
-                            <input type="text" class="form-control nachname" name="last_name" id="last_name" required>
+                            <input type="text" class="form-control nachname" name="last_name" id="last_name" value="{{ $wish->owner->last_name }}" required>
                             <label>Nachname</label>
                         </div>
                         <div class="group">
