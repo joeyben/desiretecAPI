@@ -60,7 +60,17 @@ body{
   }
 }
 
-  // Slider
+// Logo Fix
+.navbar-default{
+  a.logo{
+    .navbar-brand{
+      padding: 0
+    ;
+    }
+  }
+}
+
+// Slider
 
   .slider{
     width: 100%;
