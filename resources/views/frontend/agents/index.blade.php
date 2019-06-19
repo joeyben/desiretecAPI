@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    {{ trans('general.url.agent') }}
+@endsection
+
 @section('content')
 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog" role="document">

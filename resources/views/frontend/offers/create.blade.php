@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    {{ trans('general.url.offer_create') }}
+@endsection
+
 @section('content')
     {{ Form::open(['route' => 'frontend.offers.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-permission', 'files' => true]) }}
 
