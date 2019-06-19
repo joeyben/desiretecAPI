@@ -147,14 +147,8 @@ class NovasolController extends Controller
 
             return $new_user;
         }
-        $request->merge(
-            [
-                'first_name'     => 'John',
-                'last_name'      => 'Doe',
-                'password'       => 'master2019',
-                'is_term_accept' => true
-            ]
-        );
+        $input['whitelabel_name'] = $this->whitelabel->getById(intval($this->whitelabelId))['display_name'];
+
         $new_user = $user->create($input);
         $new_user->storeToken();
         $new_user->attachWhitelabel($this->whitelabelId);

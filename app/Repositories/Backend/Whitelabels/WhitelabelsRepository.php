@@ -163,6 +163,26 @@ class WhitelabelsRepository extends BaseRepository
     }
 
     /**
+     * @param integer $id
+     *
+     * @return mixed
+     */
+    public function getById($id)
+    {
+        return $this->query()
+
+            ->select([
+                config('module.whitelabels.table') . '.id',
+                config('module.whitelabels.table') . '.name',
+                config('module.whitelabels.table') . '.display_name',
+                config('module.whitelabels.table') . '.status',
+                config('module.whitelabels.table') . '.bg_image',
+            ])
+            ->where('id', $id)
+            ->first()->toArray();
+    }
+
+    /**
      * Upload Image.
      *
      * @param array $input
