@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    {{ trans('general.url.offer_list') }}
+@endsection
+
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
