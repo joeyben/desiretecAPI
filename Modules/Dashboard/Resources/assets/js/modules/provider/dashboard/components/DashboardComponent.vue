@@ -38,6 +38,14 @@
                         </el-date-picker>
                     </li>
                   </div>
+                  <li class="nav-item">
+                      <el-checkbox-button label="Basis" key="basis" @change="doBasis" v-model="basis">Basis</el-checkbox-button>
+                      <el-checkbox-button label="Wünsche" key="wünsche" @change="doWunsch" v-model="wunsch">Wünsche</el-checkbox-button>
+                      <el-checkbox-button label="LI Desktop" key="lidesktop" @change="doLiDesktop" v-model="lidesktop">LI Desktop</el-checkbox-button>
+                      <el-checkbox-button label="LI Mobile" key="limobile" @change="doLiMobile" v-model="limobile">LI Mobile</el-checkbox-button>
+                      <el-checkbox-button label="Desktop Browser" key="browser" @change="doBrowser" v-model="browser">Desktop Browser</el-checkbox-button>
+                      <el-checkbox-button label="Response Rate" key="response" @change="doResponse" v-model="response">Response Rate</el-checkbox-button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -129,6 +137,12 @@ export default {
       return {
         created: '',
         whitelabelId: null,
+        basis: true,
+        wunsch: true,
+        lidesktop: true,
+        limobile: true,
+        browser: true,
+        response: true,
         dashboards: []
       }
     },
@@ -155,6 +169,24 @@ export default {
       }),
       doWhitelabel () {
         this.$events.fire('whitelabel-set', this.whitelabelId)
+      },
+      doLiDesktop (e) {
+        this.$events.fire('lidesktop-set', e)
+      },
+      doLiMobile (e) {
+        this.$events.fire('limobile-set', e)
+      },
+      doBasis (e) {
+        this.$events.fire('basis-set', e)
+      },
+      doWunsch (e) {
+        this.$events.fire('wunsch-set', e)
+      },
+      doBrowser (e) {
+        this.$events.fire('browser-set', e)
+      },
+      doResponse (e) {
+        this.$events.fire('response-set', e)
       },
       doRange (e) {
         this.$events.fire('range-date-set', this.whitelabelId, moment(e[0], moment.ISO_8601).startOf('day').format('YYYY-MM-DD'), moment(e[1], moment.ISO_8601).endOf('day').format('YYYY-MM-DD '))

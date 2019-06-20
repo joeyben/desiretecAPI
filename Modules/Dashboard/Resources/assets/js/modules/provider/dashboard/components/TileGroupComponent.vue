@@ -1,6 +1,6 @@
 <template>
     <!-- Large modal -->
-    <div class="card card-body bg-teal-400 has-bg-image">
+    <div v-if="basis" class="card card-body bg-teal-400 has-bg-image">
         <div class="media">
             <div class="media-body">
                 <h3 class="mb-0" v-text="groupCount"></h3>
@@ -23,6 +23,7 @@
     data () {
       return {
         // eslint-disable-next-line
+        basis: true,
         errors: new Errors(),
         groupCount: 0
       }
@@ -30,6 +31,7 @@
     mounted () {
       this.loadGroup()
       this.$events.$on('whitelabel-set', whitelabelId => this.loadGroup(whitelabelId))
+      this.$events.$on('basis-set', basis => this.loadBasis(basis))
     },
     watch: {
     },
@@ -49,6 +51,13 @@
           .then(() => {
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
+      },
+      loadBasis: function () {
+        if (this.basis === true) {
+          this.basis = false
+        } else {
+          this.basis = true
+        }
       },
       onLoadDashboardGroupSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
