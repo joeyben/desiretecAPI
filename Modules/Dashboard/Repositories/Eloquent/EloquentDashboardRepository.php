@@ -63,7 +63,7 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
     return $result['ga'];
     }
 
-    public function calculateResponseData(array $result, object $data, array $stack)
+    public function calculateResponseData( $result, $data, $stack)
     {
         $i = 0;
         $j = 0;
