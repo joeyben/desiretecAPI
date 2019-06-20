@@ -1,6 +1,6 @@
 <template>
     <!-- Large modal -->
-    <div id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
+    <div v-if="browser" id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
         <highcharts class="chart" :options="chartOptions" :updateArgs="updateArgs"></highcharts>
     </div>
     <!-- /large modal -->
@@ -19,6 +19,7 @@
       return {
         created: '',
         whitelabelId: null,
+        browser: true,
         // eslint-disable-next-line
         errors: new Errors(),
         data: [],
@@ -79,6 +80,7 @@
       this.loadOfferByMonth()
       this.$events.$on('whitelabel-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
       this.$events.$on('range-date-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
+      this.$events.$on('browser-set', browser => this.loadBrowser(browser))
     },
     updated () {
     },
@@ -101,6 +103,13 @@
           .then(() => {
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
+      },
+      loadBrowser: function () {
+        if (this.browser === true) {
+          this.browser = false
+        } else {
+          this.browser = true
+        }
       },
       generateData (items) {
         let data = []

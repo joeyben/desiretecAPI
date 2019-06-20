@@ -1,6 +1,6 @@
 <template>
     <!-- Large modal -->
-    <div id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
+    <div v-if="lidesktop" id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
         <highcharts class="chart" :options="chartOptions" :updateArgs="updateArgs"></highcharts>
     </div>
     <!-- /large modal -->
@@ -19,6 +19,7 @@
     data () {
       return {
         // eslint-disable-next-line
+        lidesktop: true,
         errors: new Errors(),
         data: [],
         updateArgs: [true, true, {duration: 1000}],
@@ -79,6 +80,7 @@
       this.loadOfferByDay()
       this.$events.$on('whitelabel-set', (whitelabelId, start, end) => this.loadOfferByDay(whitelabelId, start, end))
       this.$events.$on('range-date-set', (whitelabelId, start, end) => this.loadOfferByDay(whitelabelId, start, end))
+      this.$events.$on('lidesktop-set', lidesktop => this.loadLiDesktop(lidesktop))
     },
     updated () {
     },
@@ -101,6 +103,13 @@
           .then(() => {
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
+      },
+      loadLiDesktop: function () {
+        if (this.lidesktop === true) {
+          this.lidesktop = false
+        } else {
+          this.lidesktop = true
+        }
       },
       generateData (items) {
         let data = []

@@ -84513,6 +84513,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vuex = __webpack_require__(1);
 
@@ -84643,6 +84651,12 @@ exports.default = {
     return {
       created: '',
       whitelabelId: null,
+      basis: true,
+      wunsch: true,
+      lidesktop: true,
+      limobile: true,
+      browser: true,
+      response: true,
       dashboards: []
     };
   },
@@ -84667,6 +84681,24 @@ exports.default = {
   }), {
     doWhitelabel: function doWhitelabel() {
       this.$events.fire('whitelabel-set', this.whitelabelId);
+    },
+    doLiDesktop: function doLiDesktop(e) {
+      this.$events.fire('lidesktop-set', e);
+    },
+    doLiMobile: function doLiMobile(e) {
+      this.$events.fire('limobile-set', e);
+    },
+    doBasis: function doBasis(e) {
+      this.$events.fire('basis-set', e);
+    },
+    doWunsch: function doWunsch(e) {
+      this.$events.fire('wunsch-set', e);
+    },
+    doBrowser: function doBrowser(e) {
+      this.$events.fire('browser-set', e);
+    },
+    doResponse: function doResponse(e) {
+      this.$events.fire('response-set', e);
     },
     doRange: function doRange(e) {
       this.$events.fire('range-date-set', this.whitelabelId, (0, _moment2.default)(e[0], _moment2.default.ISO_8601).startOf('day').format('YYYY-MM-DD'), (0, _moment2.default)(e[1], _moment2.default.ISO_8601).endOf('day').format('YYYY-MM-DD '));
@@ -98281,6 +98313,7 @@ exports.default = {
   data: function data() {
     return {
       // eslint-disable-next-line
+      basis: true,
       errors: new _errors.Errors(),
       wishCount: 0
     };
@@ -98291,6 +98324,9 @@ exports.default = {
     this.loadWish();
     this.$events.$on('whitelabel-set', function (whitelabelId) {
       return _this.loadWish(whitelabelId);
+    });
+    this.$events.$on('basis-set', function (basis) {
+      return _this.loadBasis(basis);
     });
   },
 
@@ -98307,6 +98343,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.wishes') + params).then(this.onLoadDashboardWishSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadBasis: function loadBasis() {
+      if (this.basis === true) {
+        this.basis = false;
+      } else {
+        this.basis = true;
+      }
     },
     onLoadDashboardWishSuccess: function onLoadDashboardWishSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
@@ -98343,26 +98386,24 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "card card-body bg-indigo-400 has-bg-image" },
-    [
-      _c("div", { staticClass: "media" }, [
-        _c("div", { staticClass: "media-body" }, [
-          _c("h3", {
-            staticClass: "mb-0",
-            domProps: { textContent: _vm._s(_vm.wishCount) }
-          }),
+  return _vm.basis
+    ? _c("div", { staticClass: "card card-body bg-indigo-400 has-bg-image" }, [
+        _c("div", { staticClass: "media" }, [
+          _c("div", { staticClass: "media-body" }, [
+            _c("h3", {
+              staticClass: "mb-0",
+              domProps: { textContent: _vm._s(_vm.wishCount) }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-uppercase font-size-xs" }, [
+              _vm._v(_vm._s(_vm.trans("dashboard.total_wishes")))
+            ])
+          ]),
           _vm._v(" "),
-          _c("span", { staticClass: "text-uppercase font-size-xs" }, [
-            _vm._v(_vm._s(_vm.trans("dashboard.total_wishes")))
-          ])
-        ]),
-        _vm._v(" "),
-        _vm._m(0)
+          _vm._m(0)
+        ])
       ])
-    ]
-  )
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -98479,6 +98520,7 @@ exports.default = {
     return {
       created: '',
       whitelabelId: null,
+      lidesktop: true,
       // eslint-disable-next-line
       errors: new _errors.Errors(),
       data: [],
@@ -98545,6 +98587,9 @@ exports.default = {
     this.$events.$on('range-date-set', function (whitelabelId, start, end) {
       return _this.loadOfferByMonth(whitelabelId, start, end);
     });
+    this.$events.$on('lidesktop-set', function (lidesktop) {
+      return _this.loadLiDesktop(lidesktop);
+    });
   },
   updated: function updated() {},
 
@@ -98565,6 +98610,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.events.perMonth') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadLiDesktop: function loadLiDesktop() {
+      if (this.lidesktop === true) {
+        this.lidesktop = false;
+      } else {
+        this.lidesktop = true;
+      }
     },
     generateData: function generateData(items) {
       var data = [];
@@ -98593,25 +98645,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticStyle: {
-        height: "200px",
-        "min-width": "310px",
-        "max-width": "573px",
-        "max-height": "200px"
-      },
-      attrs: { id: "chart-component" }
-    },
-    [
-      _c("highcharts", {
-        staticClass: "chart",
-        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
-      })
-    ],
-    1
-  )
+  return _vm.lidesktop
+    ? _c(
+        "div",
+        {
+          staticStyle: {
+            height: "200px",
+            "min-width": "310px",
+            "max-width": "573px",
+            "max-height": "200px"
+          },
+          attrs: { id: "chart-component" }
+        },
+        [
+          _c("highcharts", {
+            staticClass: "chart",
+            attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -98718,6 +98772,7 @@ exports.default = {
   data: function data() {
     return {
       // eslint-disable-next-line
+      lidesktop: true,
       errors: new _errors.Errors(),
       data: [],
       updateArgs: [true, true, { duration: 1000 }],
@@ -98784,6 +98839,9 @@ exports.default = {
     this.$events.$on('range-date-set', function (whitelabelId, start, end) {
       return _this.loadOfferByDay(whitelabelId, start, end);
     });
+    this.$events.$on('lidesktop-set', function (lidesktop) {
+      return _this.loadLiDesktop(lidesktop);
+    });
   },
   updated: function updated() {},
 
@@ -98804,6 +98862,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.events.perDay') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadLiDesktop: function loadLiDesktop() {
+      if (this.lidesktop === true) {
+        this.lidesktop = false;
+      } else {
+        this.lidesktop = true;
+      }
     },
     generateData: function generateData(items) {
       var data = [];
@@ -98832,25 +98897,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticStyle: {
-        height: "200px",
-        "min-width": "310px",
-        "max-width": "573px",
-        "max-height": "200px"
-      },
-      attrs: { id: "chart-component" }
-    },
-    [
-      _c("highcharts", {
-        staticClass: "chart",
-        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
-      })
-    ],
-    1
-  )
+  return _vm.lidesktop
+    ? _c(
+        "div",
+        {
+          staticStyle: {
+            height: "200px",
+            "min-width": "310px",
+            "max-width": "573px",
+            "max-height": "200px"
+          },
+          attrs: { id: "chart-component" }
+        },
+        [
+          _c("highcharts", {
+            staticClass: "chart",
+            attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -98957,6 +99024,7 @@ exports.default = {
   data: function data() {
     return {
       // eslint-disable-next-line
+      limobile: true,
       errors: new _errors.Errors(),
       data: [],
       updateArgs: [true, true, { duration: 1000 }],
@@ -99022,6 +99090,9 @@ exports.default = {
     this.$events.$on('range-date-set', function (whitelabelId, start, end) {
       return _this.loadMobileByMonth(whitelabelId, start, end);
     });
+    this.$events.$on('limobile-set', function (checkId) {
+      return _this.loadLiMobile(checkId);
+    });
   },
   updated: function updated() {},
 
@@ -99042,6 +99113,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.events.mobileMonth') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadLiMobile: function loadLiMobile() {
+      if (this.checkId === true) {
+        this.checkId = false;
+      } else {
+        this.checkId = true;
+      }
     },
     generateData: function generateData(items) {
       var data = [];
@@ -99070,25 +99148,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticStyle: {
-        height: "200px",
-        "min-width": "310px",
-        "max-width": "573px",
-        "max-height": "200px"
-      },
-      attrs: { id: "chart-component" }
-    },
-    [
-      _c("highcharts", {
-        staticClass: "chart",
-        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
-      })
-    ],
-    1
-  )
+  return _vm.limobile
+    ? _c(
+        "div",
+        {
+          staticStyle: {
+            height: "200px",
+            "min-width": "310px",
+            "max-width": "573px",
+            "max-height": "200px"
+          },
+          attrs: { id: "chart-component" }
+        },
+        [
+          _c("highcharts", {
+            staticClass: "chart",
+            attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -99195,6 +99275,7 @@ exports.default = {
   data: function data() {
     return {
       // eslint-disable-next-line
+      limobile: true,
       errors: new _errors.Errors(),
       data: [],
       updateArgs: [true, true, { duration: 1000 }],
@@ -99261,6 +99342,9 @@ exports.default = {
     this.$events.$on('range-date-set', function (whitelabelId, start, end) {
       return _this.loadMobileByMonth(whitelabelId, start, end);
     });
+    this.$events.$on('limobile-set', function (limobile) {
+      return _this.loadLiMobile(limobile);
+    });
   },
   updated: function updated() {},
 
@@ -99281,6 +99365,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.events.mobileDay') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadLiMobile: function loadLiMobile() {
+      if (this.limobile === true) {
+        this.limobile = false;
+      } else {
+        this.limobile = true;
+      }
     },
     generateData: function generateData(items) {
       var data = [];
@@ -99309,25 +99400,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticStyle: {
-        height: "200px",
-        "min-width": "310px",
-        "max-width": "573px",
-        "max-height": "200px"
-      },
-      attrs: { id: "chart-component" }
-    },
-    [
-      _c("highcharts", {
-        staticClass: "chart",
-        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
-      })
-    ],
-    1
-  )
+  return _vm.limobile
+    ? _c(
+        "div",
+        {
+          staticStyle: {
+            height: "200px",
+            "min-width": "310px",
+            "max-width": "573px",
+            "max-height": "200px"
+          },
+          attrs: { id: "chart-component" }
+        },
+        [
+          _c("highcharts", {
+            staticClass: "chart",
+            attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -99434,6 +99527,7 @@ exports.default = {
   data: function data() {
     return {
       // eslint-disable-next-line
+      response: true,
       errors: new _errors.Errors(),
       data: [],
       updateArgs: [true, true, { duration: 1000 }],
@@ -99499,6 +99593,9 @@ exports.default = {
     this.$events.$on('range-date-set', function (whitelabelId, start, end) {
       return _this.loadMobileByMonth(whitelabelId, start, end);
     });
+    this.$events.$on('response-set', function (response) {
+      return _this.loadResponse(response);
+    });
   },
   updated: function updated() {},
 
@@ -99519,6 +99616,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.events.responseMonth') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadResponse: function loadResponse() {
+      if (this.response === true) {
+        this.response = false;
+      } else {
+        this.response = true;
+      }
     },
     generateData: function generateData(items) {
       var data = [];
@@ -99547,25 +99651,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticStyle: {
-        height: "200px",
-        "min-width": "310px",
-        "max-width": "573px",
-        "max-height": "200px"
-      },
-      attrs: { id: "chart-component" }
-    },
-    [
-      _c("highcharts", {
-        staticClass: "chart",
-        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
-      })
-    ],
-    1
-  )
+  return _vm.response
+    ? _c(
+        "div",
+        {
+          staticStyle: {
+            height: "200px",
+            "min-width": "310px",
+            "max-width": "573px",
+            "max-height": "200px"
+          },
+          attrs: { id: "chart-component" }
+        },
+        [
+          _c("highcharts", {
+            staticClass: "chart",
+            attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -99672,6 +99778,7 @@ exports.default = {
   data: function data() {
     return {
       // eslint-disable-next-line
+      response: true,
       errors: new _errors.Errors(),
       data: [],
       updateArgs: [true, true, { duration: 1000 }],
@@ -99737,6 +99844,9 @@ exports.default = {
     this.$events.$on('range-date-set', function (whitelabelId, start, end) {
       return _this.loadMobileByMonth(whitelabelId, start, end);
     });
+    this.$events.$on('response-set', function (response) {
+      return _this.loadResponse(response);
+    });
   },
   updated: function updated() {},
 
@@ -99757,6 +99867,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.events.responsemMonth') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadResponse: function loadResponse() {
+      if (this.response === true) {
+        this.response = false;
+      } else {
+        this.response = true;
+      }
     },
     generateData: function generateData(items) {
       var data = [];
@@ -99785,25 +99902,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticStyle: {
-        height: "200px",
-        "min-width": "310px",
-        "max-width": "573px",
-        "max-height": "200px"
-      },
-      attrs: { id: "chart-component" }
-    },
-    [
-      _c("highcharts", {
-        staticClass: "chart",
-        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
-      })
-    ],
-    1
-  )
+  return _vm.response
+    ? _c(
+        "div",
+        {
+          staticStyle: {
+            height: "200px",
+            "min-width": "310px",
+            "max-width": "573px",
+            "max-height": "200px"
+          },
+          attrs: { id: "chart-component" }
+        },
+        [
+          _c("highcharts", {
+            staticClass: "chart",
+            attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -99904,6 +100023,7 @@ exports.default = {
   data: function data() {
     return {
       // eslint-disable-next-line
+      basis: true,
       errors: new _errors.Errors(),
       groupCount: 0
     };
@@ -99914,6 +100034,9 @@ exports.default = {
     this.loadGroup();
     this.$events.$on('whitelabel-set', function (whitelabelId) {
       return _this.loadGroup(whitelabelId);
+    });
+    this.$events.$on('basis-set', function (basis) {
+      return _this.loadBasis(basis);
     });
   },
 
@@ -99928,6 +100051,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.groups') + params).then(this.onLoadDashboardGroupSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadBasis: function loadBasis() {
+      if (this.basis === true) {
+        this.basis = false;
+      } else {
+        this.basis = true;
+      }
     },
     onLoadDashboardGroupSuccess: function onLoadDashboardGroupSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
@@ -99964,22 +100094,24 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card card-body bg-teal-400 has-bg-image" }, [
-    _c("div", { staticClass: "media" }, [
-      _c("div", { staticClass: "media-body" }, [
-        _c("h3", {
-          staticClass: "mb-0",
-          domProps: { textContent: _vm._s(_vm.groupCount) }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "text-uppercase font-size-xs" }, [
-          _vm._v(_vm._s(_vm.trans("dashboard.total_groups")))
+  return _vm.basis
+    ? _c("div", { staticClass: "card card-body bg-teal-400 has-bg-image" }, [
+        _c("div", { staticClass: "media" }, [
+          _c("div", { staticClass: "media-body" }, [
+            _c("h3", {
+              staticClass: "mb-0",
+              domProps: { textContent: _vm._s(_vm.groupCount) }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-uppercase font-size-xs" }, [
+              _vm._v(_vm._s(_vm.trans("dashboard.total_groups")))
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
         ])
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
-    ])
-  ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -100089,6 +100221,7 @@ exports.default = {
   data: function data() {
     return {
       // eslint-disable-next-line
+      basis: true,
       errors: new _errors.Errors(),
       sellerCount: { all: 0, active: 0 }
     };
@@ -100099,6 +100232,9 @@ exports.default = {
     this.loadSeller();
     this.$events.$on('whitelabel-set', function (whitelabelId) {
       return _this.loadSeller(whitelabelId);
+    });
+    this.$events.$on('basis-set', function (basis) {
+      return _this.loadBasis(basis);
     });
   },
 
@@ -100115,6 +100251,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.sellers') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadBasis: function loadBasis() {
+      if (this.basis === true) {
+        this.basis = false;
+      } else {
+        this.basis = true;
+      }
     },
     onLoadDashboardSellerSuccess: function onLoadDashboardSellerSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
@@ -100151,26 +100294,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card card-body bg-primary has-bg-image" }, [
-    _c("div", { staticClass: "media" }, [
-      _c("div", { staticClass: "media-body" }, [
-        _c("h3", {
-          staticClass: "mb-0",
-          domProps: {
-            textContent: _vm._s(
-              _vm.sellerCount.active + "/" + _vm.sellerCount.all
-            )
-          }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "text-uppercase font-size-xs" }, [
-          _vm._v(_vm._s(_vm.trans("dashboard.total_sellers")))
+  return _vm.basis
+    ? _c("div", { staticClass: "card card-body bg-primary has-bg-image" }, [
+        _c("div", { staticClass: "media" }, [
+          _c("div", { staticClass: "media-body" }, [
+            _c("h3", {
+              staticClass: "mb-0",
+              domProps: {
+                textContent: _vm._s(
+                  _vm.sellerCount.active + "/" + _vm.sellerCount.all
+                )
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-uppercase font-size-xs" }, [
+              _vm._v(_vm._s(_vm.trans("dashboard.total_sellers")))
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
         ])
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
-    ])
-  ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -100608,6 +100753,7 @@ exports.default = {
   data: function data() {
     return {
       // eslint-disable-next-line
+      basis: true,
       errors: new _errors.Errors(),
       reactionTimeByMonth: 0,
       reactionTimeByDay: 0
@@ -100620,6 +100766,9 @@ exports.default = {
     this.loadReationTimeByDay();
     this.$events.$on('whitelabel-set', function (whitelabelId) {
       return _this.loadReationTimeByMonth(whitelabelId);
+    });
+    this.$events.$on('basis-set', function (basis) {
+      return _this.loadBasis(basis);
     });
   },
 
@@ -100634,6 +100783,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.timeByMonth') + params).then(this.onLoadDashboardReationTimeByMonthSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadBasis: function loadBasis() {
+      if (this.basis === true) {
+        this.basis = false;
+      } else {
+        this.basis = true;
+      }
     },
     loadReationTimeByDay: function loadReationTimeByDay(whitelabelId) {
       var _this3 = this;
@@ -100686,35 +100842,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "card card-body bg-purple-400 has-bg-image" },
-    [
-      _c("div", { staticClass: "media" }, [
-        _c("div", { staticClass: "media-body text-left" }, [
-          _c("h3", {
-            staticClass: "mb-0",
-            domProps: { textContent: _vm._s(_vm.reactionTimeByMonth) }
-          }),
+  return _vm.basis
+    ? _c("div", { staticClass: "card card-body bg-purple-400 has-bg-image" }, [
+        _c("div", { staticClass: "media" }, [
+          _c("div", { staticClass: "media-body text-left" }, [
+            _c("h3", {
+              staticClass: "mb-0",
+              domProps: { textContent: _vm._s(_vm.reactionTimeByMonth) }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-uppercase font-size-xs" }, [
+              _vm._v(_vm._s(_vm.trans("dashboard.reaction_time_average_month")))
+            ])
+          ]),
           _vm._v(" "),
-          _c("span", { staticClass: "text-uppercase font-size-xs" }, [
-            _vm._v(_vm._s(_vm.trans("dashboard.reaction_time_average_month")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "media-body text-right" }, [
-          _c("h3", {
-            staticClass: "mb-0",
-            domProps: { textContent: _vm._s(_vm.reactionTimeByDay) }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "text-uppercase font-size-xs" }, [
-            _vm._v(_vm._s(_vm.trans("dashboard.reaction_time_average_day")))
+          _c("div", { staticClass: "media-body text-right" }, [
+            _c("h3", {
+              staticClass: "mb-0",
+              domProps: { textContent: _vm._s(_vm.reactionTimeByDay) }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-uppercase font-size-xs" }, [
+              _vm._v(_vm._s(_vm.trans("dashboard.reaction_time_average_day")))
+            ])
           ])
         ])
       ])
-    ]
-  )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -100822,6 +100976,7 @@ exports.default = {
   data: function data() {
     return {
       // eslint-disable-next-line
+      wunsch: true,
       errors: new _errors.Errors(),
       data: [],
       updateArgs: [true, true, { duration: 1000 }],
@@ -100900,6 +101055,9 @@ exports.default = {
     this.$events.$on('whitelabel-set', function (whitelabelId) {
       return _this.loadWishByMonth(whitelabelId);
     });
+    this.$events.$on('wunsch-set', function (wunsch) {
+      return _this.loadWunsch(wunsch);
+    });
   },
   updated: function updated() {},
 
@@ -100916,6 +101074,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.wishes.byDay') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadWunsch: function loadWunsch() {
+      if (this.wunsch === true) {
+        this.wunsch = false;
+      } else {
+        this.wunsch = true;
+      }
     },
     generateData: function generateData(items) {
       var data = [];
@@ -100943,25 +101108,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticStyle: {
-        height: "200px",
-        "min-width": "310px",
-        "max-width": "573px",
-        "max-height": "200px"
-      },
-      attrs: { id: "chart-component" }
-    },
-    [
-      _c("highcharts", {
-        staticClass: "chart",
-        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
-      })
-    ],
-    1
-  )
+  return _vm.wunsch
+    ? _c(
+        "div",
+        {
+          staticStyle: {
+            height: "200px",
+            "min-width": "310px",
+            "max-width": "573px",
+            "max-height": "200px"
+          },
+          attrs: { id: "chart-component" }
+        },
+        [
+          _c("highcharts", {
+            staticClass: "chart",
+            attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -101065,6 +101232,7 @@ exports.default = {
     return {
       created: '',
       whitelabelId: null,
+      browser: true,
       // eslint-disable-next-line
       errors: new _errors.Errors(),
       data: [],
@@ -101131,6 +101299,9 @@ exports.default = {
     this.$events.$on('range-date-set', function (whitelabelId, start, end) {
       return _this.loadOfferByMonth(whitelabelId, start, end);
     });
+    this.$events.$on('browser-set', function (browser) {
+      return _this.loadBrowser(browser);
+    });
   },
   updated: function updated() {},
 
@@ -101151,6 +101322,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.events.browserperMonth') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadBrowser: function loadBrowser() {
+      if (this.browser === true) {
+        this.browser = false;
+      } else {
+        this.browser = true;
+      }
     },
     generateData: function generateData(items) {
       var data = [];
@@ -101179,25 +101357,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticStyle: {
-        height: "200px",
-        "min-width": "310px",
-        "max-width": "573px",
-        "max-height": "200px"
-      },
-      attrs: { id: "chart-component" }
-    },
-    [
-      _c("highcharts", {
-        staticClass: "chart",
-        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
-      })
-    ],
-    1
-  )
+  return _vm.browser
+    ? _c(
+        "div",
+        {
+          staticStyle: {
+            height: "200px",
+            "min-width": "310px",
+            "max-width": "573px",
+            "max-height": "200px"
+          },
+          attrs: { id: "chart-component" }
+        },
+        [
+          _c("highcharts", {
+            staticClass: "chart",
+            attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -101518,6 +101698,7 @@ exports.default = {
   data: function data() {
     return {
       // eslint-disable-next-line
+      wunsch: true,
       errors: new _errors.Errors(),
       data: [],
       updateArgs: [true, true, { duration: 1000 }],
@@ -101577,6 +101758,9 @@ exports.default = {
     this.$events.$on('whitelabel-set', function (whitelabelId) {
       return _this.loadWishByMonth(whitelabelId);
     });
+    this.$events.$on('wunsch-set', function (wunsch) {
+      return _this.loadWunsch(wunsch);
+    });
   },
   updated: function updated() {},
 
@@ -101593,6 +101777,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.wishes.byMonth') + params).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadWunsch: function loadWunsch() {
+      if (this.wunsch === true) {
+        this.wunsch = false;
+      } else {
+        this.wunsch = true;
+      }
     },
     onLoadDashboardSellerSuccess: function onLoadDashboardSellerSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
@@ -101613,25 +101804,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticStyle: {
-        height: "200px",
-        "min-width": "310px",
-        "max-width": "573px",
-        "max-height": "200px"
-      },
-      attrs: { id: "chart-component" }
-    },
-    [
-      _c("highcharts", {
-        staticClass: "chart",
-        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
-      })
-    ],
-    1
-  )
+  return _vm.wunsch
+    ? _c(
+        "div",
+        {
+          staticStyle: {
+            height: "200px",
+            "min-width": "310px",
+            "max-width": "573px",
+            "max-height": "200px"
+          },
+          attrs: { id: "chart-component" }
+        },
+        [
+          _c("highcharts", {
+            staticClass: "chart",
+            attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -102314,6 +102507,7 @@ exports.default = {
     return {
       created: '',
       whitelabelId: null,
+      browser: true,
       // eslint-disable-next-line
       errors: new _errors.Errors(),
       data: [],
@@ -102380,6 +102574,9 @@ exports.default = {
     this.$events.$on('range-date-set', function (whitelabelId, start, end) {
       return _this.loadOfferByMonth(whitelabelId, start, end);
     });
+    this.$events.$on('browser-set', function (browser) {
+      return _this.loadBrowser(browser);
+    });
   },
   updated: function updated() {},
 
@@ -102400,6 +102597,13 @@ exports.default = {
       this.$http.get(window.laroute.route('admin.dashboard.events.shareperMonth') + params + paramsdate).then(this.onLoadDashboardSellerSuccess).catch(this.onFailed).then(function () {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
+    },
+    loadBrowser: function loadBrowser() {
+      if (this.browser === true) {
+        this.browser = false;
+      } else {
+        this.browser = true;
+      }
     },
     generateData: function generateData(items) {
       var data = [];
@@ -102428,25 +102632,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticStyle: {
-        height: "200px",
-        "min-width": "310px",
-        "max-width": "573px",
-        "max-height": "200px"
-      },
-      attrs: { id: "chart-component" }
-    },
-    [
-      _c("highcharts", {
-        staticClass: "chart",
-        attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
-      })
-    ],
-    1
-  )
+  return _vm.browser
+    ? _c(
+        "div",
+        {
+          staticStyle: {
+            height: "200px",
+            "min-width": "310px",
+            "max-width": "573px",
+            "max-height": "200px"
+          },
+          attrs: { id: "chart-component" }
+        },
+        [
+          _c("highcharts", {
+            staticClass: "chart",
+            attrs: { options: _vm.chartOptions, updateArgs: _vm.updateArgs }
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -117122,7 +117328,116 @@ var render = function() {
                         ],
                         1
                       )
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      { staticClass: "nav-item" },
+                      [
+                        _c(
+                          "el-checkbox-button",
+                          {
+                            key: "basis",
+                            attrs: { label: "Basis" },
+                            on: { change: _vm.doBasis },
+                            model: {
+                              value: _vm.basis,
+                              callback: function($$v) {
+                                _vm.basis = $$v
+                              },
+                              expression: "basis"
+                            }
+                          },
+                          [_vm._v("Basis")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-checkbox-button",
+                          {
+                            key: "wünsche",
+                            attrs: { label: "Wünsche" },
+                            on: { change: _vm.doWunsch },
+                            model: {
+                              value: _vm.wunsch,
+                              callback: function($$v) {
+                                _vm.wunsch = $$v
+                              },
+                              expression: "wunsch"
+                            }
+                          },
+                          [_vm._v("Wünsche")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-checkbox-button",
+                          {
+                            key: "lidesktop",
+                            attrs: { label: "LI Desktop" },
+                            on: { change: _vm.doLiDesktop },
+                            model: {
+                              value: _vm.lidesktop,
+                              callback: function($$v) {
+                                _vm.lidesktop = $$v
+                              },
+                              expression: "lidesktop"
+                            }
+                          },
+                          [_vm._v("LI Desktop")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-checkbox-button",
+                          {
+                            key: "limobile",
+                            attrs: { label: "LI Mobile" },
+                            on: { change: _vm.doLiMobile },
+                            model: {
+                              value: _vm.limobile,
+                              callback: function($$v) {
+                                _vm.limobile = $$v
+                              },
+                              expression: "limobile"
+                            }
+                          },
+                          [_vm._v("LI Mobile")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-checkbox-button",
+                          {
+                            key: "browser",
+                            attrs: { label: "Desktop Browser" },
+                            on: { change: _vm.doBrowser },
+                            model: {
+                              value: _vm.browser,
+                              callback: function($$v) {
+                                _vm.browser = $$v
+                              },
+                              expression: "browser"
+                            }
+                          },
+                          [_vm._v("Desktop Browser")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-checkbox-button",
+                          {
+                            key: "response",
+                            attrs: { label: "Response Rate" },
+                            on: { change: _vm.doResponse },
+                            model: {
+                              value: _vm.response,
+                              callback: function($$v) {
+                                _vm.response = $$v
+                              },
+                              expression: "response"
+                            }
+                          },
+                          [_vm._v("Response Rate")]
+                        )
+                      ],
+                      1
+                    )
                   ])
                 ]
               )

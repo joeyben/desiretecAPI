@@ -1,6 +1,6 @@
 <template>
     <!-- Large modal -->
-    <div id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
+    <div v-if="wunsch" id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
         <highcharts class="chart" :options="chartOptions" :updateArgs="updateArgs"></highcharts>
     </div>
     <!-- /large modal -->
@@ -18,6 +18,7 @@
     data () {
       return {
         // eslint-disable-next-line
+        wunsch: true,
         errors: new Errors(),
         data: [],
         updateArgs: [true, true, {duration: 1000}],
@@ -73,6 +74,7 @@
     mounted () {
       this.loadWishByMonth()
       this.$events.$on('whitelabel-set', whitelabelId => this.loadWishByMonth(whitelabelId))
+      this.$events.$on('wunsch-set', wunsch => this.loadWunsch(wunsch))
     },
     updated () {
     },
@@ -94,6 +96,13 @@
           .then(() => {
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
+      },
+      loadWunsch: function () {
+        if (this.wunsch === true) {
+          this.wunsch = false
+        } else {
+          this.wunsch = true
+        }
       },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
