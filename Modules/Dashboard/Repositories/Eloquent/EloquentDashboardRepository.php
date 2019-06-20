@@ -57,7 +57,7 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         $sum = $sum +  $result['ga'][$key][1];  
     }
     foreach ($result['ga'] as $key => $value) {
-        $result['ga'][$key][1] = round($result['ga'][$key][1]/$sum*100,1);  
+        $result['ga'][$key][1] = round($result['ga'][$key][1]/$sum*100,1);
     }
 
     return $result['ga'];
