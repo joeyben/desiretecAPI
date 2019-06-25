@@ -16,7 +16,7 @@
                 </span>
 
                 <ul class="navbar-nav flex-wrap">
-                    <li class="nav-item">
+                    <li class="nav-item m-1">
                         <el-select v-model="whitelabelId" placeholder="Please choose a Whitelabel" style="width: 100%;" @input="doWhitelabel">
                             <el-option
                                     v-for="item in whitelabels"
@@ -28,7 +28,7 @@
                         </el-select>
                     </li>
                     <div>
-                    <li>
+                    <li class="m-1">
                       <el-date-picker style="width: 100%;"
                                         v-model="created"
                                         @input="doRange"
@@ -38,7 +38,7 @@
                         </el-date-picker>
                     </li>
                   </div>
-                  <li class="nav-item">
+                  <li class="nav-item m-1">
                       <el-checkbox-button label="Basis" key="basis" @change="doBasis" v-model="basis">Basis</el-checkbox-button>
                       <el-checkbox-button label="Wünsche" key="wünsche" @change="doWunsch" v-model="wunsch">Wünsche</el-checkbox-button>
                       <el-checkbox-button label="LI Desktop" key="lidesktop" @change="doLiDesktop" v-model="lidesktop">LI Desktop</el-checkbox-button>
@@ -88,6 +88,7 @@
   import TileWishComponent from './TileWishComponent'
   import TileOfferComponent from './TileOfferComponent'
   import TileOfferdayComponent from './TileOfferdayComponent'
+  import TileClickrateComponent from './TileClickrateComponent'
   import TileMobileComponent from './TileMobileComponent'
   import TileMobiledComponent from './TileMobiledComponent'
   import TileResponseComponent from './TileResponseComponent'
@@ -114,6 +115,7 @@ export default {
       TileWishComponent,
       TileOfferComponent,
       TileOfferdayComponent,
+      TileClickrateComponent,
       TileMobileComponent,
       TileMobiledComponent,
       TileResponseComponent,

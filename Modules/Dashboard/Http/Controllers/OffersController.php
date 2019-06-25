@@ -396,6 +396,31 @@ public function responsemMonth(Request $request)
 return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
 }
 
+public function clickRate(Request $request)
+{
+    try {
+
+        $whitelabelId = $request->get('whitelabelId');
+        $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+        $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+
+        if (is_null($whitelabelId)) {
+            $whitelabel = $this->whitelabels->first();
+        } else {
+            $whitelabel = $this->whitelabels->find($whitelabelId);
+        }
+        $result['clickrate'] = $this->dashboard->loadClickRate();
+ $result['success'] = true;
+ $result['status'] = Flag::STATUS_CODE_SUCCESS;
+} catch (Exception $e){ 
+    $result['success'] = false;
+    $result['message'] = $e->getMessage();
+    $result['status'] = Flag::STATUS_CODE_ERROR;
+}
+
+return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+}
+
 
 public function getFilter(string $viewid)
 {

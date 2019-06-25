@@ -1,6 +1,6 @@
 <template>
     <!-- Large modal -->
-    <div v-if="limobile" id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
+    <div v-if="response" id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
         <highcharts class="chart" :options="chartOptions" :updateArgs="updateArgs"></highcharts>
     </div>
     <!-- /large modal -->
@@ -14,12 +14,14 @@
   import moment from 'moment'
   exportingInit(Highcharts)
   export default {
-    name: 'TileMobileComponent',
+    name: 'TileClickrateComponent',
     components: { highcharts: Chart },
     data () {
       return {
+        created: '',
+        whitelabelId: null,
+        response: true,
         // eslint-disable-next-line
-        limobile: true,
         errors: new Errors(),
         data: [],
         updateArgs: [true, true, {duration: 1000}],
@@ -28,20 +30,21 @@
             type: 'line'
           },
           title: {
-            text: this.trans('dashboard.monthly_mobile_layer')
+            text: this.trans('dashboard.clickrate_manuell')
           },
           subtitle: {
             text: this.trans('dashboard.source_2019')
           },
           xAxis: {
             type: 'datetime',
-            title: {
-              text: this.trans('dashboard.date')
+            dateTimeLabelFormats: { // don't display the dummy year
+              month: '%e. %b',
+              year: '%b'
             }
           },
           yAxis: {
             title: {
-              text: this.trans('dashboard.layers')
+              text: this.trans('dashboard.clickrate')
             }
           },
           plotOptions: {
@@ -49,12 +52,11 @@
               dataLabels: {
                 enabled: true
               }
-              // enableMouseTracking: false
             }
           },
 
           series: [{
-            name: this.trans('dashboard.layers'),
+            name: this.trans('dashboard.clickrate'),
             data: []
           }],
 
@@ -77,10 +79,10 @@
       }
     },
     mounted () {
-      this.loadMobileByMonth()
-      this.$events.$on('whitelabel-set', (whitelabelId, start, end) => this.loadMobileByMonth(whitelabelId, start, end))
-      this.$events.$on('range-date-set', (whitelabelId, start, end) => this.loadMobileByMonth(whitelabelId, start, end))
-      this.$events.$on('limobile-set', limobile => this.loadLiMobile(limobile))
+      this.loadOfferByMonth()
+      this.$events.$on('whitelabel-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
+      this.$events.$on('range-date-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
+      this.$events.$on('response-set', response => this.loadLiDesktop(response))
     },
     updated () {
     },
@@ -93,22 +95,22 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadMobileByMonth: function (whitelabelId = null, start = '', end = '') {
+      loadOfferByMonth: function (whitelabelId = null, start = '', end = '') {
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         let paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.events.mobileMonth') + params + paramsdate)
+        this.$http.get(window.laroute.route('admin.dashboard.events.clickRate') + params + paramsdate)
           .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
       },
-      loadLiMobile: function () {
-        if (this.limobile === true) {
-          this.limobile = false
+      loadLiDesktop: function () {
+        if (this.response === true) {
+          this.response = false
         } else {
-          this.limobile = true
+          this.response = true
         }
       },
       generateData (items) {
@@ -121,7 +123,7 @@
       },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.chartOptions.series[0].data = this.generateData(response.data.ga)
+          this.chartOptions.series[0].data = this.generateData(response.data.clickrate)
           this.data = response.data
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
