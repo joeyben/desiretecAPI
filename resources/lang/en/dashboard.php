@@ -35,4 +35,6 @@ return [
     'monthly_desktop_browser_share'             => 'Browser-Share Desktop / Month',
     'browsers'                                  => 'Browser Share',
     'monthly_desktop_browser_shareklicks'       => 'Browser-Share Desktop Klicks / Month',
+    'clickrate_manuell'                         => 'Click-Rate manuall Offer',
+    'clickrate'                                 => 'Click-Rate (%)',
 ];

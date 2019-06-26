@@ -8,4 +8,5 @@ interface DashboardRepository
     public function uniqueEventsMonth(string $gaViewId, array $optParams, string $startDate, string $endDate);
     public function calculateBrowserData(array $result, array $browsers, int $sum);
     public function calculateResponseData($result, $data, $stack);
+    public function loadClickRate();
 }
