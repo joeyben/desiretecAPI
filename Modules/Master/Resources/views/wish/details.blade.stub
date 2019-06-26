@@ -1,4 +1,4 @@
-@extends('master::layouts.master')
+@extends('$MODULESMAL$::layouts.master')
 
 @section('content')
     <!-- Wish lis Box -->
