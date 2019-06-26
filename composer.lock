@@ -298,16 +298,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.99.1",
+            "version": "3.101.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "455e93cc4feb99847f88f4229659da2c79aa6371"
+                "reference": "68d933f09a7f43e7c17f5af83896d01f04577ddb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/455e93cc4feb99847f88f4229659da2c79aa6371",
-                "reference": "455e93cc4feb99847f88f4229659da2c79aa6371",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/68d933f09a7f43e7c17f5af83896d01f04577ddb",
+                "reference": "68d933f09a7f43e7c17f5af83896d01f04577ddb",
                 "shasum": ""
             },
             "require": {
@@ -377,7 +377,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-06-04T18:08:27+00:00"
+            "time": "2019-06-25T18:51:55+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -2614,16 +2614,16 @@
         },
         {
             "name": "jdavidbakr/mail-tracker",
-            "version": "2.1.24",
+            "version": "2.1.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jdavidbakr/mail-tracker.git",
-                "reference": "a0aa4ffd1c9acf71e04001f3c14b3c65ec3c87c6"
+                "reference": "519426793d52c1c230720cc001ab5fa7d8922462"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jdavidbakr/mail-tracker/zipball/a0aa4ffd1c9acf71e04001f3c14b3c65ec3c87c6",
-                "reference": "a0aa4ffd1c9acf71e04001f3c14b3c65ec3c87c6",
+                "url": "https://api.github.com/repos/jdavidbakr/mail-tracker/zipball/519426793d52c1c230720cc001ab5fa7d8922462",
+                "reference": "519426793d52c1c230720cc001ab5fa7d8922462",
                 "shasum": ""
             },
             "require": {
@@ -2678,7 +2678,7 @@
                 "MailTracker",
                 "jdavidbakr"
             ],
-            "time": "2019-02-27T20:04:27+00:00"
+            "time": "2019-06-20T13:45:57+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
