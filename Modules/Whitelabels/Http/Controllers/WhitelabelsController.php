@@ -257,6 +257,8 @@ class WhitelabelsController extends Controller
                 )
             );
 
+
+
             foreach ($request->get('background') as $item) {
                 $this->attachments->update(
                     $item['uid'],
@@ -292,6 +294,8 @@ class WhitelabelsController extends Controller
 
                 $this->whitelabels->copyLanguage($whitelabelLangTable, $locale);
             }
+            $whitelabelName = $result['whitelabel']->name;
+            $output = shell_exec("cd ../Modules/$whitelabelName &&  npm install");
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
             $result['language'] = $language;
