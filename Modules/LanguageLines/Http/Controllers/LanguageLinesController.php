@@ -3,9 +3,12 @@
 namespace Modules\LanguageLines\Http\Controllers;
 
 use App\Models\Access\Role\Role;
+use App\Repositories\Criteria\ByWhitelabel;
+use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
+use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WhereIn;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
@@ -18,6 +21,7 @@ use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Translation\Translator;
@@ -28,6 +32,7 @@ use Modules\LanguageLines\Http\Requests\UpdateLanguageLineRequest;
 use Modules\LanguageLines\Notifications\CloneLanguageLinesNotification;
 use Modules\LanguageLines\Notifications\CopyLanguageLinesNotification;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
+use Modules\Languages\Exports\LanguageExport;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
@@ -424,5 +429,15 @@ class LanguageLinesController extends Controller
         }
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function export(Request $request)
+    {
+        $records = $request->has('checked') ? explode(',', $request->get('checked')) : null;
+
+        return new LanguageExport($this->languageline->withCriteria([
+            new OrderBy('id', 'ASC'),
+            new WhereIn('id', $records)
+        ]));
     }
 }

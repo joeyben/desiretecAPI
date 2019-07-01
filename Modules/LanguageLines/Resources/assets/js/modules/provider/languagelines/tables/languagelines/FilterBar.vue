@@ -9,8 +9,8 @@
                 <router-link class="dropdown-item" :to="{name: 'root.create', params: { id: 0 }}"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
                 <router-link class="dropdown-item" :to="{name: 'root.export', params: { id: 0 }}" v-if="can_copy"><i class="icon-copy4"></i>{{ trans('button.copy') }}</router-link>
                 <a href="javascript:;" class="dropdown-item" v-on:click="dialogFormVisible = true" v-if="can_clone"><i class="icon-stack"></i>  {{ trans('button.clone') }}</a>
-                <!--<a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>-->
-                <!--<a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>-->
+                <a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>
+                <a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> Import</a>
             </div>
         </h5>
         <div class="header-elements">
@@ -148,6 +148,9 @@
           }, {
             value: 100,
             label: '100'
+          }, {
+            value: 500,
+            label: '500'
           }]
         }
       },
@@ -165,7 +168,7 @@
           return this.hasRole('Administrator')
         },
         urlExportSelected () {
-          return window.laroute.route('provider.groups.export', {checked: this.checked})
+          return window.laroute.route('provider.language-lines.export', {checked: this.checked})
         },
         show () {
           let results = []
