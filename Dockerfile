@@ -27,6 +27,7 @@ RUN npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
 RUN cd /myapp && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Trendtours && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Novasol && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Master && yarn install --ignore-engines && npm run production
 
 FROM horrorhorst/laravel-base:latest
 
