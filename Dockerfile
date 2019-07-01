@@ -48,7 +48,7 @@ RUN composer dump-autoload
 USER root
 
 RUN apt update && \
-    apt install -y mysql-client
+    apt install -y mysql-client && apt install -y nodejs
 RUN rm -r /var/www/html/docker
 RUN make routes
 RUN make message
