@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Translation\Translator;
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\LanguageLines\Exports\LanguageImport;
 use Modules\LanguageLines\Http\Requests\CloneLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\CopyLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\StoreLanguageLineRequest;
@@ -439,5 +441,22 @@ class LanguageLinesController extends Controller
             new OrderBy('id', 'ASC'),
             new WhereIn('id', $records)
         ]));
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new LanguageImport, $request->file('file'));
+        try {
+            $result['languageline'] =   Excel::import(new LanguageImport, $request->file('file'));
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Translation']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 }

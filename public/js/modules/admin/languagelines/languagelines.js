@@ -97405,6 +97405,9 @@ exports.default = {
     this.$events.$on('clone-set', function (from, to) {
       return _this.doClone(from, to);
     });
+    this.$events.$on('import-set', function (file) {
+      return _this.doImport(file);
+    });
   },
   render: function render(h) {
     return h('div', {
@@ -97481,8 +97484,18 @@ exports.default = {
         _this9.$store.dispatch('block', { element: 'languageLinesComponent', load: false });
       });
     },
-    onFilterReset: function onFilterReset() {
+    doImport: function doImport(file) {
       var _this10 = this;
+
+      this.$store.dispatch('block', { element: 'languageLinesComponent', load: true });
+      var formData = new FormData();
+      formData.append('file', file);
+      this.$http.post(window.laroute.route('provider.language-lines.import'), formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(this.onCloneSuccess).catch(this.onFailed).then(function () {
+        _this10.$store.dispatch('block', { element: 'languageLinesComponent', load: false });
+      });
+    },
+    onFilterReset: function onFilterReset() {
+      var _this11 = this;
 
       delete this.appendParams.filter;
       delete this.appendParams.start;
@@ -97490,7 +97503,7 @@ exports.default = {
       delete this.appendParams.whitelabel;
       delete this.appendParams.locale;
       _vue2.default.nextTick(function () {
-        return _this10.$refs.vuetable.refresh();
+        return _this11.$refs.vuetable.refresh();
       });
     },
     renderLoader: function renderLoader(h) {
@@ -97598,30 +97611,14 @@ exports.default = {
       this.$refs.vuetable.toggleDetailRow(data.id);
     },
     doDelete: function doDelete(id) {
-      var _this11 = this;
+      var _this12 = this;
 
       this.$confirm(this.trans('messages.delete'), 'Warning', {
         confirmButtonText: this.trans('labels.ok'),
         cancelButtonText: this.trans('labels.cancel'),
         type: 'warning'
       }).then(function () {
-        _this11.onDelete(id);
-      }).catch(function () {
-        _this11.$message({
-          type: 'info',
-          message: _this11.trans('messages.delete_canceled')
-        });
-      });
-    },
-    doDestroy: function doDestroy(id) {
-      var _this12 = this;
-
-      this.$confirm(this.trans('messages.destroy'), 'Warning', {
-        confirmButtonText: this.trans('labels.ok'),
-        cancelButtonText: this.trans('labels.cancel'),
-        type: 'warning'
-      }).then(function () {
-        _this12.onForceDelete(id);
+        _this12.onDelete(id);
       }).catch(function () {
         _this12.$message({
           type: 'info',
@@ -97629,64 +97626,65 @@ exports.default = {
         });
       });
     },
-    doRestore: function doRestore(id) {
+    doDestroy: function doDestroy(id) {
       var _this13 = this;
+
+      this.$confirm(this.trans('messages.destroy'), 'Warning', {
+        confirmButtonText: this.trans('labels.ok'),
+        cancelButtonText: this.trans('labels.cancel'),
+        type: 'warning'
+      }).then(function () {
+        _this13.onForceDelete(id);
+      }).catch(function () {
+        _this13.$message({
+          type: 'info',
+          message: _this13.trans('messages.delete_canceled')
+        });
+      });
+    },
+    doRestore: function doRestore(id) {
+      var _this14 = this;
 
       this.$confirm(this.trans('messages.restore'), 'Warning', {
         confirmButtonText: this.trans('labels.ok'),
         cancelButtonText: this.trans('labels.cancel'),
         type: 'warning'
       }).then(function () {
-        _this13.onRestore(id);
+        _this14.onRestore(id);
       }).catch(function () {
-        _this13.$message({
+        _this14.$message({
           type: 'info',
-          message: _this13.trans('messages.restore_canceled')
+          message: _this14.trans('messages.restore_canceled')
         });
       });
     },
     onDelete: function onDelete(id) {
-      var _this14 = this;
-
-      this.$store.dispatch('block', { element: 'languageLinesComponent', load: true });
-      this.$http.delete(window.laroute.route('provider.language-lines.destroy', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
-        _this14.$store.dispatch('block', { element: 'languageLinesComponent', load: false });
-      });
-    },
-    onForceDelete: function onForceDelete(id) {
       var _this15 = this;
 
       this.$store.dispatch('block', { element: 'languageLinesComponent', load: true });
-      // eslint-disable-next-line
-      this.$http.delete(laroute.route('provider.language-lines.forceDelete', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+      this.$http.delete(window.laroute.route('provider.language-lines.destroy', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
         _this15.$store.dispatch('block', { element: 'languageLinesComponent', load: false });
       });
     },
-    onRestore: function onRestore(id) {
+    onForceDelete: function onForceDelete(id) {
       var _this16 = this;
 
       this.$store.dispatch('block', { element: 'languageLinesComponent', load: true });
       // eslint-disable-next-line
-      this.$http.put(window.laroute.route('provider.language-lines.restore', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+      this.$http.delete(laroute.route('provider.language-lines.forceDelete', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
         _this16.$store.dispatch('block', { element: 'languageLinesComponent', load: false });
       });
     },
-    onDeleteSuccess: function onDeleteSuccess(response) {
+    onRestore: function onRestore(id) {
       var _this17 = this;
 
-      if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.$message({
-          type: 'success',
-          message: response.data.message
-        });
-        _vue2.default.nextTick(function () {
-          return _this17.$refs.vuetable.refresh();
-        });
-      } else {
-        _toastr2.default.error(response.message);
-      }
+      this.$store.dispatch('block', { element: 'languageLinesComponent', load: true });
+      // eslint-disable-next-line
+      this.$http.put(window.laroute.route('provider.language-lines.restore', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+        _this17.$store.dispatch('block', { element: 'languageLinesComponent', load: false });
+      });
     },
-    onCloneSuccess: function onCloneSuccess(response) {
+    onDeleteSuccess: function onDeleteSuccess(response) {
       var _this18 = this;
 
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
@@ -97696,6 +97694,21 @@ exports.default = {
         });
         _vue2.default.nextTick(function () {
           return _this18.$refs.vuetable.refresh();
+        });
+      } else {
+        _toastr2.default.error(response.message);
+      }
+    },
+    onCloneSuccess: function onCloneSuccess(response) {
+      var _this19 = this;
+
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.$message({
+          type: 'success',
+          message: response.data.message
+        });
+        _vue2.default.nextTick(function () {
+          return _this19.$refs.vuetable.refresh();
         });
       } else {
         _toastr2.default.error(response.message);
@@ -113672,6 +113685,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 var _vuex = __webpack_require__(7);
 
@@ -113754,6 +113770,9 @@ exports.default = {
     }
   }),
   methods: {
+    processFile: function processFile(event) {
+      this.$events.fire('import-set', event.target.files[0]);
+    },
     onClone: function onClone() {
       this.dialogFormVisible = false;
       this.$events.fire('clone-set', this.form.localeFrom, this.form.localeTo);
@@ -113784,6 +113803,9 @@ exports.default = {
       }
 
       window.location.href = this.urlExportSelected;
+    },
+    onImportSelected: function onImportSelected() {
+      debugger;
     },
     onCreate: function onCreate() {
       this.dialogFormVisible = false;
@@ -113919,7 +113941,35 @@ var render = function() {
                 _c("i", { staticClass: "icon-file-text3" }),
                 _vm._v(" Export Selected")
               ]
-            )
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "dropdown-item",
+                attrs: { href: "javascript:;" },
+                on: {
+                  click: function($event) {
+                    return _vm.$refs.fileInput.click()
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "icon-file-text3" }),
+                _vm._v(" Import\n            ")
+              ]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              ref: "fileInput",
+              staticStyle: { display: "none" },
+              attrs: { type: "file" },
+              on: {
+                change: function($event) {
+                  return _vm.processFile($event)
+                }
+              }
+            })
           ],
           1
         )
