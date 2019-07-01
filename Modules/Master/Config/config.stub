@@ -5,5 +5,8 @@ return [
     'id'   => $ID$,
     'locale' => 'de',
     'language_lines_table' => '$TABLE$',
-    'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class
+    'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
+    'local_url' => '$MODULESMAL$.com',
+    'development_url' => '$MODULESMAL$.reise-wunsch.com',
+    'production_url' => '$MODULESMAL$.reisewunschservice.de',
 ];

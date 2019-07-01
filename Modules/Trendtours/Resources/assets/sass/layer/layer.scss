@@ -98,6 +98,8 @@ $master-blue: #70CBF4;
   font-size: 14px;
   line-height: 19px;
   font-family: 'Helvetica', 'Arial', sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #dedede !important;
@@ -800,6 +802,28 @@ p.kwp-info {
     color: #a7a7a7;
     margin: 0;
   }
+  .cberror{
+    content: "";
+    display: block;
+    height: 20px;
+    width: 20px;
+    border: 1px solid #737373;
+    border-radius: 2px;
+    background-color: #fff;
+    background-size: 20px;
+    background-position: center center;
+    margin-left: 0px;
+    margin-top: 0px;
+    position: absolute;
+    left: 0;
+    pointer-events: none;
+  }
+  &.hasError{
+    .cberror{
+      border: 2px solid #DB2128 !important;
+      background-color: #DB2128;
+    }
+  }
 }
 
 .kw-overlay-notActive{
@@ -1261,26 +1285,12 @@ p.kwp-info {
         display: block;
         margin-top: 5px;
         margin-left: 5px;
-        &:after{
-          content: "";
-          display: inline-block;
-          height: 20px;
-          width: 20px;
-          border: 1px solid #737373;
-          border-radius: 2px;
-          background-color: #fff;
-          background-size: 20px;
-          background-position: center center;
-          margin-left: -5px;
-          margin-top: -5px;
-        }
       }
-      input[type="checkbox"]:checked{
-        &:after{
-          border: 1px solid #00509F;
-          background-color: #00509F;
-          background-image: url(../../svg/check-white.svg);
-        }
+
+      input[type="checkbox"]:checked + .cberror{
+        border: 1px solid #092A59;
+        background-color: #092A59;
+        background-image: url(../../svg/check-white.svg);
       }
     }
     .kwp-header{

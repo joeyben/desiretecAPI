@@ -1,0 +1,16 @@
+{
+    "name": "Johannes",
+    "alias": "johannes",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Johannes\\Providers\\JohannesServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
