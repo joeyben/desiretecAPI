@@ -173,24 +173,22 @@
 
         <div class="kwp-row">
             <div class="kwp-col-12 white-col">
-                <div class="kwp-agb ">
+                @php
+                    $terms_class = 'dt_terms'
+                @endphp
 
+                @if ($errors->any() && $errors->get('terms'))
                     @php
-                        $terms_class = 'dt_terms'
+                        $terms_class = 'dt_terms hasError'
                     @endphp
+                @endif
 
-                    @if ($errors->any() && $errors->get('terms'))
-                        @php
-                            $terms_class = 'dt_terms hasError'
-                        @endphp
-                    @endif
+                <div class="kwp-agb {{ $terms_class }}">
 
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
+                    <span class="cberror"></span>
                     <p>Ich habe die <a id="datenschutz" href="https://www.trendtours.de/trendtours/datenschutz" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
 
-                    {{ Form::checkbox('newsletter', null, key_exists('newsletter', $request) && $request['newsletter']  ? 'true' : null) }}
-                    <p>Informieren Sie mich kostenlos über Reiseideen, Angebote & Gutscheine per E-Mail. Abmeldung jederzeit möglich.</p>
-                </div>
             </div>
         </div>
     </div>

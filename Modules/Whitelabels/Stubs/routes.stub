@@ -1,13 +1,23 @@
 <?php
+$domain_env = array(
+    'local_url' => '$MODULESMAL$.com',
+    'development_url' => '$MODULESMAL$.reise-wunsch.com',
+    'production_url' => '$MODULESMAL$.reisewunschservice.de',
+);
 
-Route::group(['domain' => '$DOMAIN$'], function () {
+$domain = $domain_env[\Config::get('app.js_env') . '_url'];
+
+Route::group(['domain' => $domain], function () {
     setCurrentWhiteLabelId(\Config::get('$MODULESMAL$.id'));
     setTranslationLoaderModel(\Config::get('$MODULESMAL$.language_lines_model'));
-    Route::group(['middleware' => 'web', 'namespace' => 'Modules\$MODULE$\Http\Controllers' , 'as' => '$MODULESMAL$.'], function () {
+    Route::group(['middleware' => 'web', 'namespace' => 'Modules\$MODULE$\Http\Controllers', 'as' => '$MODULESMAL$.'], function () {
         Route::get('/', '$MODULE$Controller@index');
         Route::get('show', '$MODULE$Controller@show');
         Route::get('store', '$MODULE$Controller@store')->name('store');
+        Route::get('wish/{wish}', '$MODULE$WishesController@view')->name('wish.view');
         Route::get('wish/{wish}/{token}', '$MODULE$WishesController@details')->name('wish.details');
+        Route::get('getwish/{wish}', '$MODULE$WishesController@getWish')->name('getWish');
 
     });
 });
+
