@@ -3,9 +3,12 @@
 namespace Modules\LanguageLines\Http\Controllers;
 
 use App\Models\Access\Role\Role;
+use App\Repositories\Criteria\ByWhitelabel;
+use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
+use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WhereIn;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
@@ -18,9 +21,12 @@ use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Translation\Translator;
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\LanguageLines\Exports\LanguageImport;
 use Modules\LanguageLines\Http\Requests\CloneLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\CopyLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\StoreLanguageLineRequest;
@@ -28,6 +34,7 @@ use Modules\LanguageLines\Http\Requests\UpdateLanguageLineRequest;
 use Modules\LanguageLines\Notifications\CloneLanguageLinesNotification;
 use Modules\LanguageLines\Notifications\CopyLanguageLinesNotification;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
+use Modules\Languages\Exports\LanguageExport;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
@@ -421,6 +428,33 @@ class LanguageLinesController extends Controller
             $result['success'] = false;
             $result['message'] = $e->getMessage();
             $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function export(Request $request)
+    {
+        $records = $request->has('checked') ? explode(',', $request->get('checked')) : null;
+
+        return new LanguageExport($this->languageline->withCriteria([
+            new OrderBy('id', 'ASC'),
+            new WhereIn('id', $records)
+        ]));
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new LanguageImport, $request->file('file'));
+        try {
+            $result['languageline'] =   Excel::import(new LanguageImport, $request->file('file'));
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Translation']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
         }
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);

@@ -1,5 +1,8 @@
 export default [
   {
+    name: '__checkbox'
+  },
+  {
     name: 'id',
     title: window.Lang.get('tables.id'),
     sortField: 'id',
