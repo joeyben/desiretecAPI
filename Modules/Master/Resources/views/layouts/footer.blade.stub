@@ -3,19 +3,19 @@
         <div class="col-md-12">
             <ul>
                 <li>
-                    <a href="https://www.novasol.de/uber-novasol">Über NOVASOL</a>
+                    <a href="#">Über uns</a>
                 </li>
                 <li>
-                    <a href="https://www.novasol.de/faq/novasol_agb_deutsch/datenschutz">Datenschutz</a>
+                    <a href="#">Datenschutz</a>
                 </li>
                 <li>
-                    <a href="https://www.novasol.de/faq/novasol_agb_deutsch/novasol_nutzungsbedingungen">Nutzungsbedingung</a>
+                    <a href="#">Nutzungsbedingung</a>
                 </li>
                 <li>
-                    <a href="https://www.novasol.de/site/terms/nov/2019/terms-de.pdf">Allgemeine Geschäftsbedingungen</a>
+                    <a href="#">Allgemeine Geschäftsbedingungen</a>
                 </li>
                 <li>
-                    <a href="https://www.novasol.de/uber_novasol/impressum/kontakt">Impressum</a>
+                    <a href="#">Impressum</a>
                 </li>
             </ul>
         </div>

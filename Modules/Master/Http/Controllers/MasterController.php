@@ -109,11 +109,7 @@ class MasterController extends Controller
             return response()->json(['success' => true, 'html'=>$html]);
         }
 
-        $newUser = $user->createUserFromLayer(
-            $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'),
-            $this->whitelabelId
-        );
-
+        $newUser = $this->createUserFromLayer($request, $user);
         $wish = $this->createWishFromLayer($request, $wish);
         $html = view('master::layer.created')->with([
             'token' => $newUser->token->token,
@@ -133,6 +129,32 @@ class MasterController extends Controller
         }
     }
 
+
+    /**
+     * Create new user from Layer.
+     *
+     * @param UserRepository   $user
+     * @param \Modules\Reiseexperten\Http\Requests\StoreWishRequest $request
+     *
+     * @return UserRepository $user
+     */
+    private function createUserFromLayer(StoreWishRequest $request, $user)
+    {
+        $input = $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms');
+        if ($new_user = $user->findByEmail($input['email'])) {
+            access()->login($new_user);
+
+            return $new_user;
+        }
+        $input['whitelabel_name'] = $this->whitelabel->getById(intval($this->whitelabelId))['display_name'];
+
+        $new_user = $user->create($input);
+        $new_user->storeToken();
+        $new_user->attachWhitelabel($this->whitelabelId);
+        access()->login($new_user);
+
+        return $new_user;
+    }
 
     /**
      * Create new user from Layer.
