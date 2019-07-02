@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    {{ trans('general.url.login') }}
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -11,9 +15,9 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                            <label for="email" class="col-md-4 control-label">{{ trans('label.tokenlogin.email') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
                                 @if ($errors->has('email'))
@@ -36,9 +40,13 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send login link
+                                <button type="submit" class="btn primary-btn mb-0">
+                                    {{ trans('button.tokenlogin.send') }}
                                 </button>
+                                <a href="{{route('frontend.auth.login')}}" class="btn secondary-btn">
+                                    {{ trans('account.login.seller') }}
+                                </a>
+
 
                                 <!--<a href="{{ url('/login') }}" class="btn btn-link">Login with password instead</a>-->
                             </div>
