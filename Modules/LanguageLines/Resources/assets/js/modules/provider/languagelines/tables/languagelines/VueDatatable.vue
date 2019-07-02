@@ -56,6 +56,7 @@ import CssConfig from './CssConfig.js'
       this.$events.$on('whitelabel-set', (id) => this.doWhitelabel(id))
       this.$events.$on('locale-set', (locale) => this.doLocale(locale))
       this.$events.$on('clone-set', (from, to) => this.doClone(from, to))
+      this.$events.$on('import-set', (file) => this.doImport(file))
     },
     render (h) {
       return h(
@@ -107,6 +108,17 @@ import CssConfig from './CssConfig.js'
       doClone (from, to) {
         this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
         this.$http.put(window.laroute.route('provider.language-lines.clone'), {from: from, to: to})
+          .then(this.onCloneSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
+          })
+      },
+      doImport (file) {
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
+        let formData = new FormData()
+        formData.append('file', file)
+        this.$http.post(window.laroute.route('provider.language-lines.import'), formData, {headers: {'Content-Type': 'multipart/form-data'}})
           .then(this.onCloneSuccess)
           .catch(this.onFailed)
           .then(() => {

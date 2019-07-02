@@ -91,4 +91,5 @@ return [
     'booking_status'                => 'Buchungsstatus',
     'empty_table'                   => 'Keine Daten in der Tabelle verfügbar',
     'locale'                        => 'Lokal',
+    'key'                           => 'Key',
 ];
