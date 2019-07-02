@@ -363,6 +363,28 @@ class UserRepository extends BaseRepository
         ]);
     }
 
-    // Using the scope:
-//return Restaurant::closeTo($myLatitude, $myLongitude);
+    /**
+     * Create new user from Layer.
+     *
+     * @param array $input
+     * @param string $whitelabelId
+     *
+     * @return UserRepository $user
+     */
+    public function createUserFromLayer($input, $whitelabelId)
+    {
+        if ($new_user = $this->findByEmail($input['email'])) {
+            $new_user->attachWhitelabel($whitelabelId);
+            access()->login($new_user);
+
+            return $new_user;
+        }
+
+        $new_user = $this->create($input);
+        $new_user->storeToken();
+        $new_user->attachWhitelabel($whitelabelId);
+        access()->login($new_user);
+
+        return $new_user;
+    }
 }
