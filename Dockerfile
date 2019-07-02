@@ -27,6 +27,8 @@ RUN npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
 RUN cd /myapp && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Trendtours && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Novasol && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Master && yarn install --ignore-engines && npm run production
+
 
 FROM horrorhorst/laravel-base:latest
 
@@ -47,7 +49,7 @@ RUN composer dump-autoload
 USER root
 
 RUN apt update && \
-    apt install -y mysql-client
+    apt install -y mysql-client && curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt install -y nodejs && apt install -y npm
 RUN rm -r /var/www/html/docker
 RUN make routes
 RUN make message
