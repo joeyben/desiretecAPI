@@ -153,6 +153,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         );
 
         $this->generateFile(
+            base_path('Modules/Master/Resources/views/wish/wish.blade.stub'),
+            base_path("Modules/$name/Resources/views/wish/wish.blade.php"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
+        );
+
+        $this->generateFile(
             base_path('Modules/Master/Resources/views/wish/index.blade.stub'),
             base_path("Modules/$name/Resources/views/wish/index.blade.php"),
             ['$MODULESMAL$'],
@@ -251,7 +258,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     {
         $languageLines = DB::table('language_lines')
             ->select('locale', 'description', 'group', 'key', 'text')
-            ->where('locale', 'en')
+            ->where('locale', $locale)
             ->get()
             ->map(function ($languageLine) use ($locale) {
                 return [
