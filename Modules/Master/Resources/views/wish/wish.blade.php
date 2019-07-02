@@ -292,21 +292,22 @@
         <div class="col-md-12 s2-second">
 
             <div class="col-md-3">
-                <i class="fal fa-minus"></i>
-                <input class="data-content">
+                <i class="fal fa-plane-departure"></i>
+                <input class="data-content" value="{{ $wish->airport }}">
             </div>
             <div class="col-md-3">
                 <i class="fal fa-calendar-alt"></i>
-                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.Y') }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-stopwatch"></i>
-                <input class="data-content" value="{{ $wish->duration }}">
+                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }}">
             </div>
             <div class="col-md-3">
                 <i class="fal fa-usd-circle"></i>
                 <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
             </div>
+            <div class="col-md-3">
+                <i class="fal fa-star"></i>
+                <input class="data-content" value="{{ $wish->category }} Sterne">
+            </div>
+
             <div class="col-md-3">
                 <i class="fal fa-plane-arrival"></i>
                 <input class="data-content" value="{{ $wish->destination }}">
@@ -316,12 +317,12 @@
                 <input class="data-content" value="{{ $wish->adults }}">
             </div>
             <div class="col-md-3">
-                <i class="fal fa-child"></i>
-                <input class="data-content" value="{{ $wish->kids }}">
+                <i class="fal fa-stopwatch"></i>
+                <input class="data-content" value="{{ $wish->duration }}">
             </div>
             <div class="col-md-3">
-                <i class="fal fa-dog"></i>
-                <input class="data-content" value="{{ trans('layer.pets.'.$wish->categories[0]->value) }}">
+                <i class="fal fa-utensils"></i>
+                <input class="data-content" value="{{ $categories->getCategoryByParentValue('catering', $wish->catering) }}">
             </div>
             @if ($logged_in_user->hasRole('User'))
             <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
