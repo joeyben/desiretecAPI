@@ -14,7 +14,6 @@ Route::group(['domain' => $domain], function () {
         Route::get('/', 'ReiseexpertenController@index');
         Route::get('show', 'ReiseexpertenController@show');
         Route::get('store', 'ReiseexpertenController@store')->name('store');
-        Route::get('wish/{wish}', 'ReiseexpertenWishesController@view')->name('wish.view');
         Route::get('wish/{wish}/{token}', 'ReiseexpertenWishesController@details')->name('wish.details');
         Route::get('getwish/{wish}', 'ReiseexpertenWishesController@getWish')->name('getWish');
 
