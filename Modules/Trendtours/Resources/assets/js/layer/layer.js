@@ -182,7 +182,7 @@ var dt = window.dt || {};
 
     var TrendtoursTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Trendtours WL',
-        matchesUrl: 'www.trendtoursss.de/*',
+        matchesUrl: 'www.trendtours.de/*',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
