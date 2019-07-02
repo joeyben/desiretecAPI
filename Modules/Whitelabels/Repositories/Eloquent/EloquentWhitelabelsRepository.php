@@ -258,7 +258,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     {
         $languageLines = DB::table('language_lines')
             ->select('locale', 'description', 'group', 'key', 'text')
-            ->where('locale', 'en')
+            ->where('locale', $locale)
             ->get()
             ->map(function ($languageLine) use ($locale) {
                 return [
