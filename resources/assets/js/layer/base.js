@@ -438,7 +438,7 @@ var dt = window.dt || {};
                 //.click(jQuery.proxy(this.onBackdropClick, this))
                 ;
                 if(dt.PopupManager.teaser){
-                    this.teaser = jQuery('<div/>', {'class': 'teaser'}).append('<h1>'+this.teaserText+'</h1><i class="fa fa-close"></i>');
+                    this.teaser = jQuery('<div/>', {'class': 'teaser'}).append('<h1>'+this.teaserText+'</h1><i class="fal fa-times"></i>');
                     this.modal.append(this.teaser);
                 }
                 jQuery('body').prepend(this.modal);

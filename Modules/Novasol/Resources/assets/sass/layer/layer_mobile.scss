@@ -513,7 +513,7 @@ $fontcolor: #303030;
 
     text-align: center;
 
-    color:  $secondarycolor;
+    color:  $fontcolor;
     font-size: 22px;
     font-weight: 500;
     line-height: 30px;
@@ -552,7 +552,7 @@ $fontcolor: #303030;
     padding-left: 7px;
     outline: none;
     border: 1px solid #aaa;
-    color: $mastercolor;
+    color: $fontcolor;
     font-size: 12px;
   }
 
@@ -632,7 +632,7 @@ $fontcolor: #303030;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: #fff;
+            color: $fontcolor;
           }
         }
         hr{
@@ -726,7 +726,7 @@ $fontcolor: #303030;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: #fff;
+            color: $fontcolor;
           }
         }
         hr{
@@ -787,7 +787,7 @@ ul.kwp-form-errors {
 }
 
 .kwp-logo {
-  display: block;
+  display: none;
   height: 50px;
   background: transparent url(../../images/layer/logo.png) no-repeat left top;
 }
@@ -1618,7 +1618,7 @@ p.kwp-info {
 
       .error-input{
         display: block;
-        background: #EC6708;
+        background: $mastercolor;
         padding: 0 10px;
         color: #fff;
       }
@@ -1663,11 +1663,14 @@ p.kwp-info {
       border-radius: 0;
       padding: 0 10px;
       font-size: 18px;
-      color: $mastercolor;
+      color: $fontcolor;
     }
     .kwp-custom-select{
       #catering{
         padding: 0;
+      }
+      .hidden{
+        display: none;
       }
     }
     .kwp textarea, .kwp input[type="email"]{

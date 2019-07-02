@@ -10,7 +10,7 @@
   text-align:center;
   @include border-radius(3px);
   min-width: 210px;
-  font-family: Comfortaa,cursive;
+  font-family: Comfortaa;
   &:focus, &:hover {
     background: $darkorange;
     border: 1px solid $darkorange;
@@ -159,6 +159,26 @@ a.primary-btn, input.primary-btn{
     }
   }
 }
+// Upload Input File
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+  input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+  .btn{
+    padding: 7px 10px;
+    border: none;
+  }
+}
 
 // Skeleton
 
@@ -239,6 +259,9 @@ a.primary-btn, input.primary-btn{
     background-position: center right;
     flex-direction: column;
     justify-content: center;
+    @media screen and (max-width: $break-small) {
+      background-position: center;
+    }
     .bg-left-content{
       display: flex;
       flex-direction: column;
@@ -313,6 +336,7 @@ a.primary-btn, input.primary-btn{
     }
     i{
       font-size: 20px;
+      width: 30px;
     }
     .data-content{
       padding: 0px 10px;
@@ -322,6 +346,7 @@ a.primary-btn, input.primary-btn{
       pointer-events: none;
       border: none;
       background:transparent;
+      width: 100%;
     }
     .col-md-3{
       margin-bottom:15px;
@@ -352,7 +377,8 @@ a.primary-btn, input.primary-btn{
     color: #636b6f;
   }
   .s2-second{
-    margin-top:35px;
+    margin-top:20px;
+    padding: 0;
     .circle{
       padding:15px;
       background: #DEDEDE;
@@ -371,7 +397,7 @@ a.primary-btn, input.primary-btn{
     }
     .col-md-3{
       margin-bottom:15px;
-      display: flex;
+      padding: 0;
     }
     .secondary-btn{
       border:1px solid $orange;
@@ -397,8 +423,7 @@ a.primary-btn, input.primary-btn{
   #accordion1{
     margin-left:15px;
     margin-right: 15px;
-    margin-bottom:50px;
-    border-bottom:1px solid #575756;
+    margin-bottom:0px;
     a[aria-expanded="true"]{
       .fa-plus{
         display: none;
@@ -420,13 +445,13 @@ a.primary-btn, input.primary-btn{
       a,a:hover,a:focus{
         text-decoration: none;
       }
-      span{
+      i{
         position: absolute;
-    top: 45%;
-    right: 0;
-    font-size:12px;
-    display: block;
-    color: #636b6f;
+        bottom: 15px;
+        right: 0;
+        font-size:12px;
+        display: block;
+        color: #636b6f;
       }
     }
     .panel-heading{
@@ -439,6 +464,7 @@ a.primary-btn, input.primary-btn{
       border:0px;
       background:transparent;
       box-shadow: none;
+      padding: 0;
     }
   }
 }
@@ -641,11 +667,22 @@ a.primary-btn, input.primary-btn{
       -moz-transition:0.2s ease all; 
       -webkit-transition:0.2s ease all;
     }
-    input:focus ~ label, input:valid ~ label 		{
+    input:valid ~ label{
       top:5px;
       font-size:10px;
       color:#bbb;
     }
+    input:focus ~ label{
+      top:5px !important;
+      font-size:10px !important;
+      color:#bbb !important;
+    }
+    input[value=""] ~ label{
+      top: 13px;
+      font-size:14px;
+      color:#999;
+    }
+    input[value=""] ~ label{}
     select{
       height: 42px;
       color:#999;
@@ -661,10 +698,10 @@ a.primary-btn, input.primary-btn{
     .group{
       position: relative;
       margin-bottom: 15px;
-      &:last-child{
-        label{
-          left:23px;
-        }
+      i{
+        position: absolute;
+        right: 10px;
+        top: 10px;
       }
     }
   }
@@ -780,7 +817,6 @@ a.primary-btn, input.primary-btn{
   .sa-buttons{
     margin: 0 auto;
     display: table !important;
-    text-align: center;
     margin-top: 20px !important;
     .primary-btn{
       margin-bottom: 10px;

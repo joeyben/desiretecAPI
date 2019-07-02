@@ -35,7 +35,7 @@
             /*
              * User Profile Specific
              */
-            Route::patch('profile/update', 'ProfileController@update')->name('profile.update');
+            Route::post('profile/update', 'ProfileController@update')->name('profile.update');
 
             /*
              * User Profile Picture
@@ -58,7 +58,7 @@
 
             Route::get('wishes/create', 'WishesController@create')->name('create');
 
-            Route::get('wish/{wish}/{token}', 'WishesController@validateToken')->name('details');
+            Route::get('wish/{wish}/{token}', 'WishesController@validateTokenWish')->name('details');
             Route::get('wish/{wish}', 'WishesController@show')->name('show');
             Route::get('getwish/{wish}', 'WishesController@getWish')->name('getWish');
             Route::post('wish/store', 'WishesController@store')->name('store');
@@ -111,7 +111,7 @@
             Route::post('messages', 'MessagesController@sendMessage');
             Route::get('messages/{wish}/{group}', 'MessagesController@getMessages');
             Route::get('message/delete/{message}', 'MessagesController@deleteMessage');
-            Route::post('message/edit/{message}/{m}', 'MessagesController@editMessage');
+            Route::post('message/edit', 'MessagesController@editMessage');
 
         });
 

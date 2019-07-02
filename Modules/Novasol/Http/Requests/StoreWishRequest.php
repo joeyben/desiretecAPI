@@ -72,6 +72,7 @@ class StoreWishRequest extends FormRequest
             'adults'          => 'required',
             'email'           => 'required|email',
             'terms'           => 'required',
+            'budget'          => 'required|int|min:0',
         ];
     }
 
@@ -88,8 +89,9 @@ class StoreWishRequest extends FormRequest
             'adults.required'           => trans('layer.adults.required'),
             'destination.required'      => trans('layer.destination.required'),
             'terms.required'            => trans('layer.terms.required'),
-            'earliest_start'            => trans('layer.earliest_start.required'),
-            'latest_return'             => trans('layer.latest_return.required'),
+            'earliest_start.required'   => trans('layer.earliest_start.required'),
+            'latest_return.required'    => trans('layer.latest_return.required'),
+            'budget.required'           => trans('layer.budget.required'),
         ];
     }
 }

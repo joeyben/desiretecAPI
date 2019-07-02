@@ -104,11 +104,11 @@ class MessagesController extends Controller
         Message::find($id)->delete();
     }
 
-    public function editMessage($id, $message)
+    public function editMessage(Request $request)
     {
-        $m = Message::find($id);
+        $m = Message::find($request->input('id'));
 
-        $m->message = $message;
+        $m->message = $request->input('message');
 
         $m->save();
     }

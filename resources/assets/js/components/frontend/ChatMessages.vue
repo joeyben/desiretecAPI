@@ -14,12 +14,12 @@
                     </span>
 
                     <span v-if="userid == message.user_id" class="action_buttons">
-                        <i v-on:click="editMessage(message.id, message.message)" class="far fa-edit"></i>
-                        <i v-on:click="showModal(message.id)" class="far fa-trash-alt"></i>
+                        <i v-on:click="editMessage(message.id, message.message)" class="fal fa-edit"></i>
+                        <i v-on:click="showModal(message.id)" class="fal fa-trash-alt"></i>
                     </span>
 
                     <span>{{ timestamp(message.created_at) }}</span>
-                    {{ message.message }}
+                    <span class="pre-formatted" v-html="message.message">{{ message.message }}</span>
                 </p>
                 <b style="font-weight:100; display: none;" class="message-holder">{{ message.message }}</b>
             </div>  

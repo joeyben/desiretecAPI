@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    {{ trans('general.url.dashboard') }}
+@endsection
+
 @section('content')
     <div class="row">
 

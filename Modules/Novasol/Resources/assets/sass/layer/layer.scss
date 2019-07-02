@@ -275,7 +275,7 @@ $fontcolor: #303030;
 
   .error-input{
     display: block;
-    background: #EC6708;
+    background: $mastercolor;
     padding: 0 10px;
     color: #fff;
   }
@@ -355,7 +355,7 @@ $fontcolor: #303030;
         position: absolute;
         top: 100%;
         background: #f3f0ec;
-        padding: 5px 10px 30px;
+        padding: 5px 10px 10px;
         left: -1px;
         border-top: none;
         width: calc(100% + 2px);
@@ -422,7 +422,7 @@ $fontcolor: #303030;
         position: absolute;
         top: 100%;
         background: #f3f0ec;
-        padding: 5px 10px 30px;
+        padding: 5px 10px 10px;
         left: -1px;
         border-top: none;
         width: calc(100% + 2px);
@@ -547,8 +547,13 @@ ul.kwp-form-errors {
 
 .kwp-logo {
   display: block;
-  height: 50px;
+  height: 60px;
+  width: 50px;
   background: transparent url(../../images/layer/logo.png) no-repeat left top;
+  background-size: 50px;
+  position: absolute;
+  left: 20px;
+  top: 10px;
 }
 
 
@@ -1382,6 +1387,13 @@ p.kwp-info {
             display: block;
           }
         }
+        .txt{
+          text-overflow: ellipsis;
+          display: block;
+          overflow: hidden;
+          white-space: nowrap;
+          width: 95%;
+        }
       }
       .rangeslider-wrapper{
         background: transparent;
@@ -1525,6 +1537,7 @@ p.kwp-info {
     }
     .kwp-custom-select:after{
       background: none;
+      border: none;
     }
     .kwp-content-extra, .kwp-btn-expand{
       display: none;

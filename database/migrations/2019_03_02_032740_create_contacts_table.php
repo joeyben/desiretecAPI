@@ -21,7 +21,7 @@ class CreateContactsTable extends Migration
             $table->string('telephone', 191)->nullable();
             $table->boolean('status')->default(1);
             $table->string('subject', 191);
-            $table->text('message');
+            $table->text('message')->nullable();
             $table->string('period', 191);
             $table->integer('created_by')->unsigned();
             $table->integer('wish_id')->unsigned();

@@ -31,10 +31,10 @@
 
     <tr>
         <th>{{ trans('labels.frontend.user.profile.created_at') }}</th>
-        <td>{{ $logged_in_user->created_at }} ({{ $logged_in_user->created_at->diffForHumans() }})</td>
+        <td>{{ $logged_in_user->created_at }} </td>
     </tr>
     <tr>
         <th>{{ trans('labels.frontend.user.profile.last_updated') }}</th>
-        <td>{{ $logged_in_user->updated_at }} ({{ $logged_in_user->updated_at->diffForHumans() }})</td>
+        <td>{{ $logged_in_user->updated_at }}</td>
     </tr>
 </table>

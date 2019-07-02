@@ -70,6 +70,7 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.destination',
                 config('module.wishes.table') . '.duration',
                 config('module.wishes.table') . '.adults',
+                config('module.wishes.table') . '.kids',
                 config('module.wishes.table') . '.budget',
                 config('module.wishes.table') . '.earliest_start',
                 config('module.wishes.table') . '.latest_return',
@@ -278,10 +279,9 @@ class WishesRepository extends BaseRepository
     }
 
     /**
-     * @param string $id
      * @param string $token
      */
-    public function validateToken($id, $token)
+    public function validateToken($token)
     {
         try {
             $usertoken = UserToken::where('token', $token)->firstOrFail();

@@ -5,14 +5,25 @@ body.wishlist{
     grid-template-columns: 35% 65%;
     padding: 20px 0 0;
     .count{
+      @media screen and (max-width: $break-small) {
+        padding-top: 5px;
+      }
       span{
         color: $text-color;
         font-size: 18px;
         font-weight: 600;
+        @media screen and (max-width: $break-small) {
+          font-size: 14px;
+        }
       }
     }
     .filter-action{
       padding: 0 30px;
+      .dropdown{
+        @media screen and (max-width: $break-small) {
+          width: 190px;
+        }
+      }
     }
   }
   .list-container {
@@ -26,6 +37,10 @@ body.wishlist{
         margin-bottom: 30px;
         padding-bottom: 30px;
         border-bottom: $border-default;
+        @media screen and (max-width: $break-small) {
+          display: block;
+          grid-template-columns: none;
+        }
         &:last-child{
           border: none;
         }
@@ -36,6 +51,9 @@ body.wishlist{
             background-position: center;
             background-size: cover;
             @include border-radius(2px);
+            @media screen and (max-width: $break-small) {
+              height: 200px;
+            }
           }
         }
         .main-info {

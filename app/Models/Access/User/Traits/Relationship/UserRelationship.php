@@ -65,6 +65,15 @@ trait UserRelationship
     /**
      * @return mixed
      */
+    public function currentAgent()
+    {
+        return $this->hasMany(config('access.agent'), 'user_id', 'id')->where('status', '=', 'Active');
+    }
+
+
+    /**
+     * @return mixed
+     */
     public function providers()
     {
         return $this->hasMany(SocialLogin::class);

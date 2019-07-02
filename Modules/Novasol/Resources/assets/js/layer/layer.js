@@ -3,6 +3,8 @@ var dt = window.dt || {};
 (function ($) {
 
     dt.defaultConfig = {
+        baseUrl: 'https://novasol.reisewunschservice.de',
+        logoPath: '/whitelabel/novasol/images/layer/logo.png',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/novasol/css/layer/whitelabel.css'
@@ -29,6 +31,7 @@ var dt = window.dt || {};
             '<div class="kwp-header kwp-variant-' + variant + '">' +
             '<div class="kwp-close-button kwp-close"></div>' +
             '<div class="kwp-overlay"></div>' +
+            '<div class="kwp-logo"></div>' +
             '<div class="kwp-header-content">' +
             '<h1>' +
             texts[variant].header + ' <br/>' +
@@ -179,8 +182,8 @@ var dt = window.dt || {};
         }
     });
 
-    var TrendtoursTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
-        name: 'Trendtours WL',
+    var NovasolTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
+        name: 'Novasol WL',
         matchesUrl: 'www.novasol.de/*',
         filterFormSelector: 'body',
         dictionaries: {
@@ -218,24 +221,28 @@ var dt = window.dt || {};
                 return catering;
             },
             'hotel_category': function (form, formData) {
-                var category = getUrlParams('category') ? getUrlParams('category') : '';
+                var category = formData.hasOwnProperty('rating') ? formData['rating'] : '';
                 return category;
             },
             'destination': function (form, formData) {
-                var destination = '';
+                var destination = $(".search-form__destination-item-name").text();
                 return destination;
             },
             'pax': function (form, formData) {
-                var pax = dataLayer.length > 16 && ('adults' in dataLayer[16]) ? dataLayer[16].adults : '';
+                var pax =  form.hasOwnProperty('adults') ? form['adults'] : '';
                 return pax;
             },
             'budget': function (form, formData) {
-                var budget = dataLayer.length > 16 && ('priceMaximum' in dataLayer[16]) ? dataLayer[16].priceMaximum: '';
+                var budget = form.hasOwnProperty('priceMaximum') ? form['priceMaximum'] : '';
                 return budget;
             },
-            'children': function (form, formData) {
-                var kids = dataLayer.length > 16 && ('kids' in dataLayer[16]) ? dataLayer[16].kids : '';
+            'kids': function (form, formData) {
+                var kids = form.hasOwnProperty('kids') ? form['kids'] : '';
                 return kids;
+            },
+            'pets': function (form, formData) {
+                var pets = form.hasOwnProperty('pets') ? form['pets'] : '';
+                return pets;
             },
             'age_1': function (form, formData) {
                 var age1 = getUrlParams('age1') ? getUrlParams('age1') : '';
@@ -250,15 +257,15 @@ var dt = window.dt || {};
                 return age3;
             },
             'earliest_start': function (form, formData) {
-                var dateFrom = getUrlParams('from') ? getUrlParams('from') : '';
+                var dateFrom = formData.hasOwnProperty('startDate') ? this.formatDate(formData['startDate']) : '';
                 return dateFrom;
             },
             'latest_return': function (form, formData) {
-                var dateTo = getUrlParams('to') ? getUrlParams('to') : '';
+                var dateTo = formData.hasOwnProperty('endDate') ? this.formatDate(formData['endDate']) : '';
                 return dateTo;
             },
             'duration': function (form, formData) {
-                var duration = dataLayer.length > 16 && ('lengthOfStay' in dataLayer[16]) ? dataLayer[16].lengthOfStay : '';
+                var duration = form.hasOwnProperty('lengthOfStay') ? parseInt(form['lengthOfStay']) - 1 : '';
                 return duration;
             },
             'airport': function (form, formData) {
@@ -274,6 +281,14 @@ var dt = window.dt || {};
             var form = null,
                 formData = null;
 
+            $.each(window.dataLayer, function (key, value) {
+                if (value.event === "searchFilters") {
+                    formData = value.searchFilters;
+                }else if (value.event === "searchEvent") {
+                    form = value;
+                }
+            });
+
             return this.decodeFilterData(form, formData);
         },
         formatDate: function (d) {
@@ -281,14 +296,9 @@ var dt = window.dt || {};
                 return null;
             }
 
-            function pad(val, len) {
-                val = String(val);
-                len = len || 2;
-                while (val.length < len) val = "0" + val;
-                return val;
-            }
+            var f_date = d.split('-');
 
-            return pad(d.getDate(), 2) + '.' + pad(d.getMonth() + 1) + '.' + d.getFullYear();
+            return f_date[2] + '.' + f_date[1] + '.' + f_date[0];
         },
         getScope: function () {
             return null;
@@ -311,7 +321,7 @@ var dt = window.dt || {};
         }
     });
 
-    dt.decoders.push(TrendtoursTripDataDecoder);
+    dt.decoders.push(NovasolTripDataDecoder);
     dt.decoders.push(KwizzmeFakeTripDataDecoder);
 
     //dt.decoders.push($.extend({}, MasterIBETripDataDecoder, {
@@ -353,7 +363,7 @@ var dt = window.dt || {};
         $("body").removeClass('mobile-layer');
         $("body, html").css({'overflow':'auto'});
 
-        dt.Tracking.event('close', this.trackingLabel);
+        //dt.Tracking.event('close', this.trackingLabel);
 
     };
 
@@ -410,11 +420,13 @@ var dt = window.dt || {};
         $(".dt-modal").removeClass('teaser-on').find('.teaser').remove();
         $( ".dt-modal" ).addClass('m-open');
         dt.PopupManager.show();
+        $("body, html").css({'overflow':'hidden'});
         //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
         ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
     };
 
     $(document).ready(function (e) {
+        var $event = e;
         if(deviceDetector.device === "phone") {
             dt.PopupManager.teaser = true;
             dt.PopupManager.teaserText = "Wir möchten Sie gerne beraten!";
@@ -431,6 +443,9 @@ var dt = window.dt || {};
             dt.PopupManager.isMobile = true;
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
             textareaAutosize();
+            $(".dt-modal .teaser").find('i').on('click touchend',function () {
+                dt.hideTeaser($event);
+            });
             if(getUrlParams('autoShow')){
                 dt.showMobileLayer();
                 shown = true;
@@ -619,6 +634,15 @@ var dt = window.dt || {};
 
     function setCookie(cname, cvalue) {
         document.cookie = cname + "=" + cvalue + ";path=/";
+    }
+
+    function removeLayer(e){
+        var $event = e;
+        setTimeout(function(){
+            dt.triggerButton($event);
+            dt.PopupManager.closePopup($event);
+            dt.PopupManager.teaserSwiped = true;
+        }, 500);
     }
 
     function textareaAutosize(){

@@ -19,12 +19,15 @@ $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 
 $mastercolor:           #ed1c24;
 $secondarycolor:        #fd0;
+$orange:                #ed1c24;
 $brand-primary:         #ed1c24 !default;
 $brand-success:         #5cb85c !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
 
+// @Media
+$break-small:           768px;
 
 //== Scaffolding
 //

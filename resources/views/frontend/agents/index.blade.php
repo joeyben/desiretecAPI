@@ -1,12 +1,16 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    {{ trans('general.url.agent') }}
+@endsection
+
 @section('content')
 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content" id="modal_content">
         {{ Form::open(['route' => 'frontend.agents.store', 'class' => 'form-horizontal', 'method' => 'post', 'files' => true]) }}
             <div class="modal-header">
-                <h5 class="modal-title">{{isset($customer)?'Edit':'New'}} Customer</h5>
+                <h5 class="modal-title">{{isset($customer) ? trans('agent.modal.title.edit') : trans('agent.modal.title.new') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -16,8 +20,8 @@
                 @include("frontend.agents.form")
             </div>
             <div class="modal-footer">
-                {{ link_to_route('frontend.agents.index', 'Cancel', [], ['class' => 'btn secondary-btn']) }}
-                {{ Form::button('Create', ['type' => 'submit','class' => 'btn primary-btn']) }}
+                {{ link_to_route('frontend.agents.index', trans('seller.agent.create.cancel'), [], ['class' => 'btn secondary-btn']) }}
+                {{ Form::button(trans('seller.agent.create.submit'), ['type' => 'submit','class' => 'btn primary-btn']) }}
             </div>
         {{ Form::close() }}
         </div>
@@ -103,7 +107,25 @@
         });
 
         //Backend.DataTableSearch.init(dataTable);
+
+        $(document).on('change','.up', function(){
+            var names = [];
+            var length = $(this).get(0).files.length;
+            for (var i = 0; i < $(this).get(0).files.length; ++i) {
+                names.push($(this).get(0).files[i].name);
+            }
+            // $("input[name=file]").val(names);
+            if(length>2){
+                var fileName = names.join(', ');
+                $(this).closest('.form-group').find('.form-control').attr("value",length+" files selected");
+            }
+            else{
+                $(this).closest('.form-group').find('.form-control').attr("value",names);
+            }
+        });
     });
+
+
 </script>
 
 @endsection

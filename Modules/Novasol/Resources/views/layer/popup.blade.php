@@ -1,6 +1,6 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvpprod.desiretec.com/fontawsome/css/all.css">
 
-{{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
+{{ Form::open(['route' => 'novasol.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <div class="kwp-minimal">
     <div class="kwp-content kwp-with-expansion">
@@ -116,8 +116,13 @@
             <div class="kwp-col-4 destination">
                 <div class="kwp-form-group ">
                     {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.budget'), 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
+                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.budget'), 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
                     <i class="fal fa-euro-sign"></i>
+                    @if ($errors->any() && $errors->get('budget'))
+                        @foreach ($errors->get('budget') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
@@ -155,13 +160,6 @@
 
     <div class="kwp-footer">
         <script>
-            $('.kwp-btn-expand').click(function(e) {
-                e.preventDefault();
-                $(this).toggleClass('kwp-open');
-                $('.kwp-content-extra').toggleClass('kwp-collapsed');
-                //$('.kwp-content-extra').stop().slideToggle();
-                return false;
-            });
 
             $(".dd-trigger").click(function(e) {
                 if(!$(this).parents('.main-col').hasClass('open')){
@@ -196,11 +194,7 @@
                 return false;
             });
 
-
-
             $(document).ready(function(){
-                $('.selectpicker').selectpicker();
-
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',
@@ -240,6 +234,9 @@
                         const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
                         const year = date.getFullYear();
                         return day+"."+month+"."+year;
+                    },
+                    onSelect: function() {
+                        validateDuration();
                     },
                     i18n: {
                         previousMonth: 'Vormonat',
@@ -283,11 +280,19 @@
 
 
                 $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
+                var $start_date = $("#earliest_start").val().split('.');
+                var $end_date = $("#latest_return").val().split('.');
+
+                dt.startDate.setDate($start_date[2]+"."+$start_date[1]+"."+$start_date[0]);
+                dt.endDate.setDate($end_date[2]+"."+$end_date[1]+"."+$end_date[0]);
+                validateDuration();
+
                 var pax = $("#adults").val();
                 var children_count = parseInt($("#kids").val());
                 var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
+                var pets = $("#pets").val() !== "0" ? ", "+$( "#pets option:selected" ).text() : "";
                 var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
-                $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
+                $(".travelers .txt").text(pax+" "+erwachsene+" "+children+ ""+pets);
 
                 if($(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').addClass('error-button');
@@ -309,6 +314,26 @@
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
+                }
+            }
+
+            function validateDuration() {
+                if($("#duration").val()){
+                    return false;
+                }
+                var days_diff = (dt.endDate.getDate() - dt.startDate.getDate()) / 60000 / 60 / 24;
+                var $element = $('#duration > option');
+                $element.attr('disabled',false) ;
+                $element.each(function() {
+                    var $value_arr = $(this).val().split("-");
+                    var $value = $value_arr.length > 1 && $value_arr[1] ? parseInt($value_arr[1]) : ($value_arr.length > 1 ? parseInt($value_arr[0]) : parseInt($value_arr[0])+1 );
+
+                    if($value > days_diff){
+                        $(this).attr('disabled','disabled');
+                    }
+                });
+                if($element.parent().val()) {
+                    $element.removeAttr('selected').parent().val('');
                 }
             }
         </script>

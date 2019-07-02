@@ -181,7 +181,14 @@ class WishesController extends Controller
      */
     public function getList(ManageWishesRequest $request)
     {
-        $status = $request->get('status');
+        $status_arr = array(
+            'Active'       => '1',
+            'Inactive'     => '2',
+            'Deleted'      => '3',
+        );
+
+        $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+
         $wish = $this->wish->getForDataTable()
             ->when($status, function ($wish, $status) {
                 return $wish->where(config('module.wishes.table') . '.status', $status);
@@ -281,7 +288,7 @@ class WishesController extends Controller
             ->with('flash_success', trans('alerts.frontend.wishes.deleted'));
     }
 
-    public function validateToken(Wish $wish, $token)
+    public function validateTokenWish(Wish $wish, $token)
     {
         $usertoken = UserToken::where('token', $token)->firstOrFail();
 
@@ -289,8 +296,12 @@ class WishesController extends Controller
 
         $user = User::where('id', $user_id)->firstOrFail();
 
-        Auth::login($user);
+        if ($user) {
+            Auth::login($user);
+            return redirect()->to('/wish/' . $wish->id);
+        }
 
-        return redirect()->to('/wish/' . $wish->id);
+        return redirect()->to('/');
     }
+
 }

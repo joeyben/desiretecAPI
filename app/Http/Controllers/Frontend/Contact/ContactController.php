@@ -50,7 +50,7 @@ class ContactController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Task was successful!'
+            'message' => trans('alerts.frontend.contact.success')
         ]);
     }
 
@@ -65,7 +65,7 @@ class ContactController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Task was successful!'
+            'message' => trans('alerts.frontend.contact.success')
         ]);
     }
 
