@@ -57,6 +57,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             mkdir(base_path("Modules/$name/Resources/lang/de"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/lang/en"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/assets/sass/layer"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/assets/sass/wish"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/assets/images/layer"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/assets/svg"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/assets/js/layer"), 0777, true);
@@ -75,6 +76,16 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $this->generateFile(
             base_path('Modules/Master/Resources/assets/sass/layer/_bootstrap-select.scss'),
             base_path("Modules/$name/Resources/assets/sass/layer/_bootstrap-select.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/wish/details.scss'),
+            base_path("Modules/$name/Resources/assets/sass/wish/details.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/_variables.scss'),
+            base_path("Modules/$name/Resources/assets/sass/_variables.scss")
         );
 
         $this->generateFile(
