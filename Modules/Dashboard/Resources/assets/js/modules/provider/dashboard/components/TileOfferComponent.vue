@@ -20,7 +20,7 @@
       return {
         created: '',
         whitelabelId: null,
-        lidesktop: true,
+        lidesktop: 1,
         // eslint-disable-next-line
         errors: new Errors(),
         data: [],
@@ -106,10 +106,12 @@
           })
       },
       loadLiDesktop: function () {
-        if (this.lidesktop === true) {
-          this.lidesktop = false
+        if (this.lidesktop === 1) {
+          this.lidesktop = 0
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.lidesktop, id: 3})
         } else {
-          this.lidesktop = true
+          this.lidesktop = 1
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.lidesktop, id: 3})
         }
       },
       generateData (items) {
@@ -122,6 +124,7 @@
       },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.lidesktop = response.data.lidesktop
           this.chartOptions.series[0].data = this.generateData(response.data.ga)
           this.data = response.data
         } else {

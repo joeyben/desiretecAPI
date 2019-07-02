@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\Dashboard\Repositories\Contracts;
+use Illuminate\Http\Request;
 
 interface DashboardRepository
 {
@@ -9,4 +10,6 @@ interface DashboardRepository
     public function calculateBrowserData(array $result, array $browsers, int $sum);
     public function calculateResponseData($result, $data, $stack);
     public function loadClickRate();
+    public function getFilterCategory(string $category);
+    public function setFilterCategory(Request $request);
 }

@@ -16,6 +16,7 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
+use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 
 class WishesController extends Controller
 {
@@ -40,6 +41,8 @@ class WishesController extends Controller
      */
     private $carbon;
 
+    private $dashboard;
+
     /**
      * WishesController constructor.
      *
@@ -49,13 +52,14 @@ class WishesController extends Controller
      * @param \Illuminate\Translation\Translator                      $lang
      * @param \Carbon\Carbon                                          $carbon
      */
-    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
+    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, DashboardRepository $dashboard)
     {
         $this->wishes = $wishes;
         $this->response = $response;
         $this->auth = $auth;
         $this->lang = $lang;
         $this->carbon = $carbon;
+        $this->dashboard = $dashboard;
     }
 
     /**
@@ -70,6 +74,7 @@ class WishesController extends Controller
                 new ByWhitelabel(),
                 new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
             ])->all()->count();
+            $result['basis'] = $this->dashboard->getFilterCategory('Basis');
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -105,7 +110,7 @@ class WishesController extends Controller
                     $result['data'][] = 0;
                 }
             }
-
+            $result['wunsch'] = $this->dashboard->getFilterCategory('Wünsche');
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -147,7 +152,8 @@ class WishesController extends Controller
                     $result['data'][] = 0;
                 }
             }
-
+            
+            $result['wunsch'] = $this->dashboard->getFilterCategory('Wünsche');
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {

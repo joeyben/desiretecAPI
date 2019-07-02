@@ -120,6 +120,12 @@ class DashboardController extends Controller
     {
         try {
             $result['dashboards'] = $this->auth->guard('web')->user()->dashboards()->get();
+            $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
+            $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
+            $result['wunsch'] = $this->dashboard->getFilterCategory('Wünsche');
+            $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
+            $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
+            $result['basis'] = $this->dashboard->getFilterCategory('Basis');
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {

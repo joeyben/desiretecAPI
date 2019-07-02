@@ -20,7 +20,7 @@
       return {
         created: '',
         whitelabelId: null,
-        response: true,
+        response: 1,
         // eslint-disable-next-line
         errors: new Errors(),
         data: [],
@@ -107,10 +107,10 @@
           })
       },
       loadLiDesktop: function () {
-        if (this.response === true) {
-          this.response = false
+        if (this.response === 1) {
+          this.response = 0
         } else {
-          this.response = true
+          this.response = 1
         }
       },
       generateData (items) {

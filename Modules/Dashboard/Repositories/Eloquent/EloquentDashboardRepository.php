@@ -13,6 +13,8 @@ use App\Repositories\RepositoryAbstract;
 use Modules\Dashboard\Entities\Dashboard;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+
 
 /**
  * Class EloquentDashboardRepository.
@@ -99,7 +101,7 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
     {
         $sent_emails = DB::table('sent_emails')
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')),DB::raw('count(*) as nb_emails'))
-        ->groupBy('created_at')
+        ->groupBy('date')
         ->get()->toArray();
         $click_links = DB::table('sent_emails_url_clicked')
         ->join('sent_emails','sent_email_id','=','sent_emails.id')
@@ -136,5 +138,24 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['clickrate'] = [0,0];
         }
         return $result['clickrate'];
+    }
+
+    public function getFilterCategory(string $category)
+    {
+        $shown = DB::table('filter_category')->where('name', $category)->value('shown');
+        return $shown;
+    }
+
+    public function setFilterCategory(Request $request)
+    {
+        if ($request->shown===1) {
+            DB::table('filter_category')
+            ->where('id', $request->id)
+            ->update(['shown' => 1]);   
+        }else{
+          DB::table('filter_category')
+          ->where('id', $request->id)
+          ->update(['shown' => 0]);  
+      }
     }
 }

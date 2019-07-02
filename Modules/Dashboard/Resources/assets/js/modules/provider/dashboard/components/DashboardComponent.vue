@@ -139,12 +139,12 @@ export default {
       return {
         created: '',
         whitelabelId: null,
-        basis: true,
-        wunsch: true,
-        lidesktop: true,
-        limobile: true,
-        browser: true,
-        response: true,
+        basis: 1,
+        wunsch: 1,
+        lidesktop: 1,
+        limobile: 1,
+        browser: 1,
+        response: 1,
         dashboards: []
       }
     },
@@ -218,6 +218,12 @@ export default {
       onLoadDashboardSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
           this.dashboards = response.data.dashboards
+          response.data.basis === 1 ? this.basis = true : this.basis = false
+          response.data.wunsch === 1 ? this.wunsch = true : this.wunsch = false
+          response.data.lidesktop === 1 ? this.lidesktop = true : this.lidesktop = false
+          response.data.limobile === 1 ? this.limobile = true : this.limobile = false
+          response.data.browser === 1 ? this.browser = true : this.browser = false
+          response.data.response === 1 ? this.response = true : this.response = false
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
         }

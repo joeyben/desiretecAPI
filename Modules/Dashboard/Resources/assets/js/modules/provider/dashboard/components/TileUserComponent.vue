@@ -24,7 +24,7 @@
     data () {
       return {
         // eslint-disable-next-line
-        basis: true,
+        basis: 1,
         errors: new Errors(),
         reactionTimeByMonth: 0,
         reactionTimeByDay: 0
@@ -56,10 +56,10 @@
           })
       },
       loadBasis: function () {
-        if (this.basis === true) {
-          this.basis = false
+        if (this.basis === 1) {
+          this.basis = 0
         } else {
-          this.basis = true
+          this.basis = 1
         }
       },
       loadReationTimeByDay: function (whitelabelId) {
@@ -74,6 +74,7 @@
       },
       onLoadDashboardReationTimeByMonthSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.basis = response.data.basis
           this.reactionTimeByMonth = response.data.reactionTime
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
