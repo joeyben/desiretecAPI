@@ -174,21 +174,26 @@ export default {
       },
       doLiDesktop (e) {
         this.$events.fire('lidesktop-set', e)
+        this.loadLayout()
       },
       doLiMobile (e) {
         this.$events.fire('limobile-set', e)
+        this.loadLayout()
       },
       doBasis (e) {
         this.$events.fire('basis-set', e)
       },
       doWunsch (e) {
         this.$events.fire('wunsch-set', e)
+        this.loadLayout()
       },
       doBrowser (e) {
         this.$events.fire('browser-set', e)
+        this.loadLayout()
       },
       doResponse (e) {
         this.$events.fire('response-set', e)
+        this.loadLayout()
       },
       doRange (e) {
         this.$events.fire('range-date-set', this.whitelabelId, moment(e[0], moment.ISO_8601).startOf('day').format('YYYY-MM-DD'), moment(e[1], moment.ISO_8601).endOf('day').format('YYYY-MM-DD '))

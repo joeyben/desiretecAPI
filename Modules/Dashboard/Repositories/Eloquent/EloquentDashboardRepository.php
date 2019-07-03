@@ -146,6 +146,12 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         return $shown;
     }
 
+    public function getFilterCategoryPosition(string $category)
+    {
+        $position = DB::table('filter_category')->where('name', $category)->value('position');
+        return $position;
+    }
+
     public function setFilterCategory(Request $request)
     {
         if ($request->shown===1) {
@@ -155,7 +161,282 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         }else{
           DB::table('filter_category')
           ->where('id', $request->id)
-          ->update(['shown' => 0]);  
+          ->update(['shown' => 0]);
+          $position = DB::table('filter_category')->where('id', $request->id)->value('position');
+          if ($position!==0) {
+           DB::table('filter_category')
+          ->where('position','>', $position)
+          ->decrement('position',1);
+          DB::table('filter_category')
+          ->where('id', $request->id)
+          ->update(['position' => 5]);   
+          }  
       }
+    }
+    public function setFilterCategoryPosition($result, string $position,int $id1,int $id2,int $id3=14)
+    {
+        switch ($position) {
+            case 1:
+                $result['dashboards'][$id1]->y=2;
+                $result['dashboards'][$id2]->y=2;
+                $result['dashboards'][$id3]->y=10;
+                break;
+            case 2:
+                $result['dashboards'][$id1]->y=10;
+                $result['dashboards'][$id2]->y=10;
+                $result['dashboards'][$id3]->y=18;
+                break;
+            case 3:
+                $result['dashboards'][$id1]->y=18;
+                $result['dashboards'][$id2]->y=18;
+                $result['dashboards'][$id3]->y=26;
+                break;
+            case 4:
+                $result['dashboards'][$id1]->y=26;
+                $result['dashboards'][$id2]->y=26;
+                $result['dashboards'][$id3]->y=34;
+                break;
+            case 5:
+                $result['dashboards'][$id1]->y=34;
+                $result['dashboards'][$id2]->y=34;
+                $result['dashboards'][$id3]->y=42;
+                break;
+        }
+    }
+
+    public function setFilterCategoryPositionById($dashboard)
+    {
+        switch ($dashboard['id']) {
+            case 2:
+                if ($dashboard['y']===2) {
+                DB::table('filter_category')
+                ->where('id', 3)
+                ->update(['position' => 1]);
+            }elseif ($dashboard['y']===10) {
+              DB::table('filter_category')
+              ->where('id', 3)
+              ->update(['position' => 2]);
+          }elseif ($dashboard['y']===18) {
+             DB::table('filter_category')
+             ->where('id', 3)
+             ->update(['position' => 3]);
+         }elseif ($dashboard['y']===26) {
+             DB::table('filter_category')
+             ->where('id', 3)
+             ->update(['position' => 4]);
+         }elseif ($dashboard['y']===34) {
+             DB::table('filter_category')
+             ->where('id', 3)
+             ->update(['position' => 5]);
+         }
+         break;
+            case 3:
+                if ($dashboard['y']===2) {
+                DB::table('filter_category')
+                ->where('id', 4)
+                ->update(['position' => 1]);
+            }elseif ($dashboard['y']===10) {
+              DB::table('filter_category')
+              ->where('id', 4)
+              ->update(['position' => 2]);
+          }elseif ($dashboard['y']===18) {
+             DB::table('filter_category')
+             ->where('id', 4)
+             ->update(['position' => 3]);
+         }elseif ($dashboard['y']===26) {
+             DB::table('filter_category')
+             ->where('id', 4)
+             ->update(['position' => 4]);
+         }elseif ($dashboard['y']===34) {
+             DB::table('filter_category')
+             ->where('id', 4)
+             ->update(['position' => 5]);
+         }
+         break;
+            case 4:
+                if ($dashboard['y']===2) {
+                DB::table('filter_category')
+                ->where('id', 6)
+                ->update(['position' => 1]);
+            }elseif ($dashboard['y']===10) {
+              DB::table('filter_category')
+              ->where('id', 6)
+              ->update(['position' => 2]);
+          }elseif ($dashboard['y']===18) {
+             DB::table('filter_category')
+             ->where('id', 6)
+             ->update(['position' => 3]);
+         }elseif ($dashboard['y']===26) {
+             DB::table('filter_category')
+             ->where('id', 6)
+             ->update(['position' => 4]);
+         }elseif ($dashboard['y']===34) {
+             DB::table('filter_category')
+             ->where('id', 6)
+             ->update(['position' => 5]);
+         }
+         break;
+            case 5:
+                if ($dashboard['y']===2) {
+                DB::table('filter_category')
+                ->where('id', 6)
+                ->update(['position' => 1]);
+            }elseif ($dashboard['y']===10) {
+              DB::table('filter_category')
+              ->where('id', 6)
+              ->update(['position' => 2]);
+          }elseif ($dashboard['y']===18) {
+             DB::table('filter_category')
+             ->where('id', 6)
+             ->update(['position' => 3]);
+         }elseif ($dashboard['y']===26) {
+             DB::table('filter_category')
+             ->where('id', 6)
+             ->update(['position' => 4]);
+         }elseif ($dashboard['y']===34) {
+             DB::table('filter_category')
+             ->where('id', 6)
+             ->update(['position' => 5]);
+         }
+         break;
+            case 6:
+                if ($dashboard['y']===2) {
+                DB::table('filter_category')
+                ->where('id', 3)
+                ->update(['position' => 1]);
+            }elseif ($dashboard['y']===10) {
+              DB::table('filter_category')
+              ->where('id', 3)
+              ->update(['position' => 2]);
+          }elseif ($dashboard['y']===18) {
+             DB::table('filter_category')
+             ->where('id', 3)
+             ->update(['position' => 3]);
+         }elseif ($dashboard['y']===26) {
+             DB::table('filter_category')
+             ->where('id', 3)
+             ->update(['position' => 4]);
+         }elseif ($dashboard['y']===34) {
+             DB::table('filter_category')
+             ->where('id', 3)
+             ->update(['position' => 5]);
+         }
+         break;
+            case 11:
+                if ($dashboard['y']===2) {
+                DB::table('filter_category')
+                ->where('id', 2)
+                ->update(['position' => 1]);
+            }elseif ($dashboard['y']===10) {
+              DB::table('filter_category')
+              ->where('id', 2)
+              ->update(['position' => 2]);
+          }elseif ($dashboard['y']===18) {
+             DB::table('filter_category')
+             ->where('id', 2)
+             ->update(['position' => 3]);
+         }elseif ($dashboard['y']===26) {
+             DB::table('filter_category')
+             ->where('id', 2)
+             ->update(['position' => 4]);
+         }elseif ($dashboard['y']===34) {
+             DB::table('filter_category')
+             ->where('id', 2)
+             ->update(['position' => 5]);
+         }
+         break;
+            case 13:
+                if ($dashboard['y']===2) {
+                DB::table('filter_category')
+                ->where('id', 5)
+                ->update(['position' => 1]);
+            }elseif ($dashboard['y']===10) {
+              DB::table('filter_category')
+              ->where('id', 5)
+              ->update(['position' => 2]);
+          }elseif ($dashboard['y']===18) {
+             DB::table('filter_category')
+             ->where('id', 5)
+             ->update(['position' => 3]);
+         }elseif ($dashboard['y']===26) {
+             DB::table('filter_category')
+             ->where('id', 5)
+             ->update(['position' => 4]);
+         }elseif ($dashboard['y']===34) {
+             DB::table('filter_category')
+             ->where('id', 5)
+             ->update(['position' => 5]);
+         }
+         break;
+            case 14:
+                if ($dashboard['y']===2) {
+                DB::table('filter_category')
+                ->where('id', 2)
+                ->update(['position' => 1]);
+            }elseif ($dashboard['y']===10) {
+              DB::table('filter_category')
+              ->where('id', 2)
+              ->update(['position' => 2]);
+          }elseif ($dashboard['y']===18) {
+             DB::table('filter_category')
+             ->where('id', 2)
+             ->update(['position' => 3]);
+         }elseif ($dashboard['y']===26) {
+             DB::table('filter_category')
+             ->where('id', 2)
+             ->update(['position' => 4]);
+         }elseif ($dashboard['y']===34) {
+             DB::table('filter_category')
+             ->where('id', 2)
+             ->update(['position' => 5]);
+         }
+         break;
+            case 19:
+                if ($dashboard['y']===2) {
+                DB::table('filter_category')
+                ->where('id', 4)
+                ->update(['position' => 1]);
+            }elseif ($dashboard['y']===10) {
+              DB::table('filter_category')
+              ->where('id', 4)
+              ->update(['position' => 2]);
+          }elseif ($dashboard['y']===18) {
+             DB::table('filter_category')
+             ->where('id', 4)
+             ->update(['position' => 3]);
+         }elseif ($dashboard['y']===26) {
+             DB::table('filter_category')
+             ->where('id', 4)
+             ->update(['position' => 4]);
+         }elseif ($dashboard['y']===34) {
+             DB::table('filter_category')
+             ->where('id', 4)
+             ->update(['position' => 5]);
+         }
+         break;
+            case 20:
+                if ($dashboard['y']===2) {
+                DB::table('filter_category')
+                ->where('id', 5)
+                ->update(['position' => 1]);
+            }elseif ($dashboard['y']===10) {
+              DB::table('filter_category')
+              ->where('id', 5)
+              ->update(['position' => 2]);
+          }elseif ($dashboard['y']===18) {
+             DB::table('filter_category')
+             ->where('id', 5)
+             ->update(['position' => 3]);
+         }elseif ($dashboard['y']===26) {
+             DB::table('filter_category')
+             ->where('id', 5)
+             ->update(['position' => 4]);
+         }elseif ($dashboard['y']===34) {
+             DB::table('filter_category')
+             ->where('id', 5)
+             ->update(['position' => 5]);
+         }
+         break;
+        }
     }
 }

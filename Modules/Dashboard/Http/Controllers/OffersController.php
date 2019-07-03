@@ -113,7 +113,9 @@ class OffersController extends Controller
                 'filters' => $filter['filterd'],
             ];
 
-            $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop'); 
+            $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
+            $result['postion'] = $this->dashboard->getFilterCategoryPosition('LI Desktop');
+            $this->dashboard->update(2, ['y' => 2]); 
             $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;

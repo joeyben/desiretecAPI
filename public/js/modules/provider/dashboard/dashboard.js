@@ -84689,21 +84689,26 @@ exports.default = {
     },
     doLiDesktop: function doLiDesktop(e) {
       this.$events.fire('lidesktop-set', e);
+      this.loadLayout();
     },
     doLiMobile: function doLiMobile(e) {
       this.$events.fire('limobile-set', e);
+      this.loadLayout();
     },
     doBasis: function doBasis(e) {
       this.$events.fire('basis-set', e);
     },
     doWunsch: function doWunsch(e) {
       this.$events.fire('wunsch-set', e);
+      this.loadLayout();
     },
     doBrowser: function doBrowser(e) {
       this.$events.fire('browser-set', e);
+      this.loadLayout();
     },
     doResponse: function doResponse(e) {
       this.$events.fire('response-set', e);
+      this.loadLayout();
     },
     doRange: function doRange(e) {
       this.$events.fire('range-date-set', this.whitelabelId, (0, _moment2.default)(e[0], _moment2.default.ISO_8601).startOf('day').format('YYYY-MM-DD'), (0, _moment2.default)(e[1], _moment2.default.ISO_8601).endOf('day').format('YYYY-MM-DD '));
@@ -99041,10 +99046,10 @@ exports.default = {
   components: { highcharts: _highchartsVue.Chart },
   data: function data() {
     return {
+      // eslint-disable-next-line
       created: '',
       whitelabelId: null,
       response: 1,
-      // eslint-disable-next-line
       errors: new _errors.Errors(),
       data: [],
       updateArgs: [true, true, { duration: 1000 }],
@@ -99112,7 +99117,7 @@ exports.default = {
       return _this.loadOfferByMonth(whitelabelId, start, end);
     });
     this.$events.$on('response-set', function (response) {
-      return _this.loadLiDesktop(response);
+      return _this.loadResponse(response);
     });
   },
   updated: function updated() {},
@@ -99135,7 +99140,7 @@ exports.default = {
         _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
     },
-    loadLiDesktop: function loadLiDesktop() {
+    loadResponse: function loadResponse() {
       if (this.response === 1) {
         this.response = 0;
       } else {
