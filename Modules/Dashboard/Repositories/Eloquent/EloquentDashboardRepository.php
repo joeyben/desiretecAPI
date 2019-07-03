@@ -106,7 +106,7 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         $click_links = DB::table('sent_emails_url_clicked')
         ->join('sent_emails','sent_email_id','=','sent_emails.id')
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')),DB::raw('sum(sent_emails_url_clicked.clicks) as clicks'))
-        ->groupBy('sent_emails.created_at')
+        ->groupBy('date')
         ->get()->toArray();
 
         if (!empty($sent_emails)) {
