@@ -273,5 +273,7 @@ class DashboardDatabaseSeeder extends Seeder
                 'dashboard_id'         => $i,
             ]);
         }
+
+        $this->call(FilterCategorySeeder::class);
     }
 }
