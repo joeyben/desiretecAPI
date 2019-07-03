@@ -103,6 +103,7 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')),DB::raw('count(*) as nb_emails'))
         ->groupBy('date')
         ->get()->toArray();
+
         $click_links = DB::table('sent_emails_url_clicked')
         ->join('sent_emails','sent_email_id','=','sent_emails.id')
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')),DB::raw('sum(sent_emails_url_clicked.clicks) as clicks'))
@@ -112,23 +113,25 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         if (!empty($sent_emails)) {
             foreach ($sent_emails as $key => $value) {
                 $result['sent'][$key][0] = $sent_emails[$key]->date;
-                unset($sent_emails[$key]->date);
                 $result['sent'][$key][1] = $sent_emails[$key]->nb_emails;
-                unset($sent_emails[$key]->nb_emails);
             }
             if (!empty($click_links)) {
                 foreach ($click_links as $key => $value) {
                     $result['click'][$key][0] = $click_links[$key]->date;
-                    unset($click_links[$key]->date);
                     $result['click'][$key][1] = $click_links[$key]->clicks;
-                    unset($click_links[$key]->clicks);    
                 }
             }
             $result['clickrate'] = $result['sent'];
             foreach ($result['clickrate'] as $key => $value) {
                 $result['clickrate'][$key][0] = $result['sent'][$key][0];
-                if (!empty($click_links) && array_key_exists($key, $result['click'])) {
-                    $result['clickrate'][$key][1] = round($result['click'][$key][1]/$result['sent'][$key][1]*100,1);
+                if (!empty($click_links)) {
+                    foreach ($result['click'] as $k => $v) {
+                        if ($result['clickrate'][$key][0]===$result['click'][$k][0]) {
+                           $result['clickrate'][$key][1] = round($result['clickrate'][$key][1]/$result['click'][$k][1]*100,1); 
+                        }else{
+                           $result['clickrate'][$key][1] = 0; 
+                        }
+                    }
                 }else{
                     $result['clickrate'][$key][1] = 0;
                 }
