@@ -20,7 +20,7 @@ mix.webpackConfig({
   },
 });
 
-mix.js(__dirname + '/Resources/assets/js/modules/admin/groups/groups.js', 'js/modules/admin/groups/groups.js');
+mix.js(__dirname + '/Resources/assets/js/modules/admin/footers/footers.js', 'js/modules/admin/footers/footers.js');
 
 if (mix.inProduction()) {
   mix.version();

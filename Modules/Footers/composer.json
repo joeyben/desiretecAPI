@@ -10,7 +10,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\Footers\\Providers\\FootersServiceProvider"
+                "Modules\\Footers\\Providers\\FootersServiceProvider",
+                "Modules\\Footers\\Providers\\RepositoryServiceProvider"
             ],
             "aliases": {
                 
