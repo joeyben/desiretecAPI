@@ -87,7 +87,7 @@ class ReiseexpertenWishesController extends Controller
      */
     public function details(Wish $wish, string $token)
     {
-        $this->wish->validateToken($wish->id, $token);
+        $this->wish->validateToken($token);
 
         return redirect()->to('/wish/' . $wish->id);
     }
