@@ -90,7 +90,7 @@ class UserRepository extends BaseRepository
     {
         $user = self::MODEL;
         $user = new $user();
-        $whitelabelName = isset($data['whitelabel_name']) ? $data['whitelabel_name'] : 'Muster'
+        $whitelabelName = isset($data['whitelabel_name']) ? $data['whitelabel_name'] : 'Muster';
         $user->first_name = trans('user.default.first_name', ['whitelabel' => $whitelabelName]);
         $user->last_name = trans('user.default.last_name');
         $user->email = $data['email'];
