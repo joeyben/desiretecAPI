@@ -282,9 +282,9 @@ class WhitelabelsController extends Controller
 
             ini_set('max_execution_time', 500);
             $this->artisan->call('module:make', ['name' => [$result['whitelabel']->name], '--force' => true]);
-            $this->artisan->call('cache:clear', ['--force' => true]);
-            $this->artisan->call('config:clear', ['--force' => true]);
-            $this->artisan->call('view:clear', ['--force' => true]);
+            $this->artisan->call('cache:clear');
+            $this->artisan->call('config:clear');
+            $this->artisan->call('view:clear');
             $this->whitelabels->generateFiles($result['whitelabel']->id, $result['whitelabel']->name);
             $this->artisan->call('module:migrate', ['module' => $result['whitelabel']->name, '--force' => true]);
             $whitelabelLangTable = 'language_lines_' . mb_strtolower($result['whitelabel']->name);
