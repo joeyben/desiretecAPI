@@ -19,7 +19,7 @@
     data () {
       return {
         // eslint-disable-next-line
-        limobile: true,
+        limobile: 1,
         errors: new Errors(),
         data: [],
         updateArgs: [true, true, {duration: 1000}],
@@ -105,10 +105,12 @@
           })
       },
       loadLiMobile: function () {
-        if (this.limobile === true) {
-          this.limobile = false
+        if (this.limobile === 1) {
+          this.limobile = 0
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.limobile, id: 4})
         } else {
-          this.limobile = true
+          this.limobile = 1
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.limobile, id: 4})
         }
       },
       generateData (items) {
@@ -121,6 +123,7 @@
       },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.limobile = response.data.limobile
           this.chartOptions.series[0].data = this.generateData(response.data.ga)
           this.data = response.data
         } else {

@@ -18,7 +18,7 @@
     data () {
       return {
         // eslint-disable-next-line
-        wunsch: true,
+        wunsch: 1,
         errors: new Errors(),
         data: [],
         updateArgs: [true, true, {duration: 1000}],
@@ -98,14 +98,17 @@
           })
       },
       loadWunsch: function () {
-        if (this.wunsch === true) {
-          this.wunsch = false
+        if (this.wunsch === 1) {
+          this.wunsch = 0
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.wunsch, id: 2})
         } else {
-          this.wunsch = true
+          this.wunsch = 1
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.wunsch, id: 2})
         }
       },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.wunsch = response.data.wunsch
           this.chartOptions.series[0].data = response.data.data
           this.data = response.data
         } else {

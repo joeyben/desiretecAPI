@@ -18,10 +18,10 @@
     components: { highcharts: Chart },
     data () {
       return {
+        // eslint-disable-next-line
         created: '',
         whitelabelId: null,
-        response: true,
-        // eslint-disable-next-line
+        response: 1,
         errors: new Errors(),
         data: [],
         updateArgs: [true, true, {duration: 1000}],
@@ -82,7 +82,7 @@
       this.loadOfferByMonth()
       this.$events.$on('whitelabel-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
       this.$events.$on('range-date-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
-      this.$events.$on('response-set', response => this.loadLiDesktop(response))
+      this.$events.$on('response-set', response => this.loadResponse(response))
     },
     updated () {
     },
@@ -106,11 +106,11 @@
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
       },
-      loadLiDesktop: function () {
-        if (this.response === true) {
-          this.response = false
+      loadResponse: function () {
+        if (this.response === 1) {
+          this.response = 0
         } else {
-          this.response = true
+          this.response = 1
         }
       },
       generateData (items) {

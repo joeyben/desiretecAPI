@@ -120,6 +120,25 @@ class DashboardController extends Controller
     {
         try {
             $result['dashboards'] = $this->auth->guard('web')->user()->dashboards()->get();
+
+            $result['p_desktop'] = $this->dashboard->getFilterCategoryPosition('LI Desktop');
+            $this->dashboard->setFilterCategoryPosition($result,$result['p_desktop'],1,5);
+            $result['p_mobile'] = $this->dashboard->getFilterCategoryPosition('LI Mobile');
+            $this->dashboard->setFilterCategoryPosition($result,$result['p_mobile'],2,12);
+            $result['p_wunsch'] = $this->dashboard->getFilterCategoryPosition('Wünsche');
+            $this->dashboard->setFilterCategoryPosition($result,$result['p_wunsch'],9,11);
+            $result['p_browser'] = $this->dashboard->getFilterCategoryPosition('Desktop Browser');
+            $this->dashboard->setFilterCategoryPosition($result,$result['p_browser'],10,13);
+            $result['p_response'] = $this->dashboard->getFilterCategoryPosition('Response Rate');
+            $this->dashboard->setFilterCategoryPosition($result,$result['p_response'],3,4);
+
+            $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
+            $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
+            $result['wunsch'] = $this->dashboard->getFilterCategory('Wünsche');
+            $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
+            $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
+            $result['basis'] = $this->dashboard->getFilterCategory('Basis');
+            
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -160,6 +179,7 @@ class DashboardController extends Controller
             foreach ($request->get('dashboards') as $dashboard) {
                 if (\in_array($dashboard['id'], $dashboards, true)) {
                     $this->dashboard->update($dashboard['id'], ['x' => $dashboard['x'], 'y' => $dashboard['y']]);
+                    $this->dashboard->setFilterCategoryPositionById($dashboard);
                 }
             }
             $result['success'] = true;
