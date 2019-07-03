@@ -113,6 +113,7 @@ class OffersController extends Controller
                 'filters' => $filter['filterd'],
             ];
 
+            $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop'); 
             $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -146,6 +147,7 @@ class OffersController extends Controller
                 'filters' => $filter['filterd'],
             ];
 
+            $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
             $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);
 
             $result['success'] = true;
@@ -181,6 +183,7 @@ class OffersController extends Controller
                 'filters' => $filter['filterm'],
             ];
 
+            $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
             $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);  
 
             $result['success'] = true;
@@ -215,6 +218,7 @@ class OffersController extends Controller
                 'filters' => $filter['filterm'],
             ];
 
+            $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
             $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);  
 
             $result['success'] = true;
@@ -249,6 +253,7 @@ class OffersController extends Controller
                 'filters' => $filter['filterd'],
             ];
 
+            $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
             $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
             $sum = 0;
             $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
@@ -287,6 +292,7 @@ public function shareperMonth(Request $request)
             'filters' => $filter['filters'],
         ];
 
+        $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
         $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
         $sum = 0;
         $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
@@ -327,6 +333,7 @@ public function responseMonth(Request $request)
             'filters' => $filter['filterd'],
         ];
 
+        $result['response'] = $this->dashboard->getFilterCategory('Response Rate');        
         $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
 
         $data = $this->wishes->withCriteria([
@@ -373,6 +380,7 @@ public function responsemMonth(Request $request)
             'filters' => $filter['filterm'],
         ];
 
+        $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
         $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
 
         $data = $this->wishes->withCriteria([
@@ -409,6 +417,8 @@ public function clickRate(Request $request)
         } else {
             $whitelabel = $this->whitelabels->find($whitelabelId);
         }
+
+        $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
         $result['clickrate'] = $this->dashboard->loadClickRate();
  $result['success'] = true;
  $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -416,6 +426,21 @@ public function clickRate(Request $request)
     $result['success'] = false;
     $result['message'] = $e->getMessage();
     $result['status'] = Flag::STATUS_CODE_ERROR;
+}
+
+return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+}
+
+public function save(Request $request)
+{
+    try {
+      $this->dashboard->setFilterCategory($request);  
+      $result['success'] = true;
+      $result['status'] = 200;
+  } catch (Exception $e) {
+    $result['success'] = false;
+    $result['message'] = $e->getMessage();
+    $result['status'] = 500;
 }
 
 return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);

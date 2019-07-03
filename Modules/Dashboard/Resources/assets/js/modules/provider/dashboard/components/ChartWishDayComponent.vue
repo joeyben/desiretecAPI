@@ -20,7 +20,7 @@
     data () {
       return {
         // eslint-disable-next-line
-        wunsch: true,
+        wunsch: 1,
         errors: new Errors(),
         data: [],
         updateArgs: [true, true, {duration: 1000}],
@@ -119,10 +119,10 @@
           })
       },
       loadWunsch: function () {
-        if (this.wunsch === true) {
-          this.wunsch = false
+        if (this.wunsch === 1) {
+          this.wunsch = 0
         } else {
-          this.wunsch = true
+          this.wunsch = 1
         }
       },
       generateData (items) {
@@ -135,6 +135,7 @@
       },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.wunsch = response.data.wunsch
           this.chartOptions.series[0].data = this.generateData(response.data.data)
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })

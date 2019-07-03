@@ -19,7 +19,7 @@
     data () {
       return {
         // eslint-disable-next-line
-        lidesktop: true,
+        lidesktop: 1,
         errors: new Errors(),
         data: [],
         updateArgs: [true, true, {duration: 1000}],
@@ -105,10 +105,10 @@
           })
       },
       loadLiDesktop: function () {
-        if (this.lidesktop === true) {
-          this.lidesktop = false
+        if (this.lidesktop === 1) {
+          this.lidesktop = 0
         } else {
-          this.lidesktop = true
+          this.lidesktop = 1
         }
       },
       generateData (items) {
@@ -121,6 +121,7 @@
       },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.lidesktop = response.data.lidesktop
           this.chartOptions.series[0].data = this.generateData(response.data.ga)
           this.data = response.data
         } else {

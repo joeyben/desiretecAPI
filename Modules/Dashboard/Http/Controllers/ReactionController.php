@@ -18,6 +18,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
+use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 
 class ReactionController extends Controller
 {
@@ -42,13 +43,16 @@ class ReactionController extends Controller
      */
     private $carbon;
 
-    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
+    private $dashboard;
+
+    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, DashboardRepository $dashboard)
     {
         $this->wishes = $wishes;
         $this->response = $response;
         $this->auth = $auth;
         $this->lang = $lang;
         $this->carbon = $carbon;
+        $this->dashboard = $dashboard;
     }
 
     /**
@@ -90,6 +94,7 @@ class ReactionController extends Controller
             }
 
             $result['reactionTime'] = $wishesWithOffers->count() > 0 ? number_format($diffInHours / $wishesWithOffers->count(), 2) : 0;
+            $result['basis'] = $this->dashboard->getFilterCategory('Basis');
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
