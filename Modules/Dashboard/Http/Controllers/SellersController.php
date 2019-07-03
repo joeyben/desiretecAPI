@@ -13,6 +13,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
 use Modules\Users\Repositories\Contracts\UsersRepository;
+use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 
 class SellersController extends Controller
 {
@@ -33,12 +34,15 @@ class SellersController extends Controller
      */
     private $lang;
 
-    public function __construct(UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang)
+    private $dashboard;
+
+    public function __construct(UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, DashboardRepository $dashboard)
     {
         $this->users = $users;
         $this->response = $response;
         $this->auth = $auth;
         $this->lang = $lang;
+        $this->dashboard = $dashboard;
     }
 
     /**
@@ -80,7 +84,7 @@ class SellersController extends Controller
                     ++$result['sellerCount']['active'];
                 }
             }
-
+            $result['basis'] = $this->dashboard->getFilterCategory('Basis');
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {

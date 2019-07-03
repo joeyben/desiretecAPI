@@ -19,7 +19,7 @@
     data () {
       return {
         // eslint-disable-next-line
-        response:true,
+        response:1,
         errors: new Errors(),
         data: [],
         updateArgs: [true, true, {duration: 1000}],
@@ -104,10 +104,10 @@
           })
       },
       loadResponse: function () {
-        if (this.response === true) {
-          this.response = false
+        if (this.response === 1) {
+          this.response = 0
         } else {
-          this.response = true
+          this.response = 1
         }
       },
       generateData (items) {
@@ -120,6 +120,7 @@
       },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.response = response.data.response
           this.chartOptions.series[0].data = this.generateData(response.data.ga)
           this.data = response.data
         } else {

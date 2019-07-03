@@ -231,6 +231,12 @@
                                 <span>{{ __('labels.backend.whitelabels.table.display_name') }}</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.footers') }}" class="nav-link">
+                                <i class="icon-atom2"></i>
+                                <span>{{ __('labels.footers') }}</span>
+                            </a>
+                        </li>
                     @endif
 
                     @if($module->has('Users')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))

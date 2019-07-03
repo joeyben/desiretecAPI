@@ -12,6 +12,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
+use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 
 class GroupsController extends Controller
 {
@@ -32,6 +33,8 @@ class GroupsController extends Controller
      */
     private $groups;
 
+    private $dashboard;
+
     /**
      * GroupsController constructor.
      *
@@ -40,12 +43,13 @@ class GroupsController extends Controller
      * @param \Illuminate\Auth\AuthManager                            $auth
      * @param \Illuminate\Translation\Translator                      $lang
      */
-    public function __construct(GroupsRepository $groups, ResponseFactory $response, AuthManager $auth, Translator $lang)
+    public function __construct(GroupsRepository $groups, ResponseFactory $response, AuthManager $auth, Translator $lang, DashboardRepository $dashboard)
     {
         $this->response = $response;
         $this->auth = $auth;
         $this->lang = $lang;
         $this->groups = $groups;
+        $this->dashboard = $dashboard;
     }
 
     /**
@@ -62,7 +66,7 @@ class GroupsController extends Controller
                 new ByWhitelabel('groups'),
                  new Where('groups.whitelabel_id', $request->get('whitelabelId'))
             ])->all()->count();
-
+            $result['basis'] = $this->dashboard->getFilterCategory('Basis');
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {

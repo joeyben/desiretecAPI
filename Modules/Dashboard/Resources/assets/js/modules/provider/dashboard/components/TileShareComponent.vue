@@ -19,7 +19,7 @@
       return {
         created: '',
         whitelabelId: null,
-        browser: true,
+        browser: 1,
         // eslint-disable-next-line
         errors: new Errors(),
         data: [],
@@ -105,10 +105,12 @@
           })
       },
       loadBrowser: function () {
-        if (this.browser === true) {
-          this.browser = false
+        if (this.browser === 1) {
+          this.browser = 0
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.browser, id: 5})
         } else {
-          this.browser = true
+          this.browser = 1
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.browser, id: 5})
         }
       },
       generateData (items) {
@@ -121,6 +123,7 @@
       },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.browser = response.data.browser
           this.chartOptions.series[0].data = this.generateData(response.data.ga)
           this.data = response.data
         } else {

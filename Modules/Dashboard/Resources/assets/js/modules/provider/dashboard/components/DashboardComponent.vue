@@ -139,12 +139,12 @@ export default {
       return {
         created: '',
         whitelabelId: null,
-        basis: true,
-        wunsch: true,
-        lidesktop: true,
-        limobile: true,
-        browser: true,
-        response: true,
+        basis: 1,
+        wunsch: 1,
+        lidesktop: 1,
+        limobile: 1,
+        browser: 1,
+        response: 1,
         dashboards: []
       }
     },
@@ -174,21 +174,26 @@ export default {
       },
       doLiDesktop (e) {
         this.$events.fire('lidesktop-set', e)
+        this.loadLayout()
       },
       doLiMobile (e) {
         this.$events.fire('limobile-set', e)
+        this.loadLayout()
       },
       doBasis (e) {
         this.$events.fire('basis-set', e)
       },
       doWunsch (e) {
         this.$events.fire('wunsch-set', e)
+        this.loadLayout()
       },
       doBrowser (e) {
         this.$events.fire('browser-set', e)
+        this.loadLayout()
       },
       doResponse (e) {
         this.$events.fire('response-set', e)
+        this.loadLayout()
       },
       doRange (e) {
         this.$events.fire('range-date-set', this.whitelabelId, moment(e[0], moment.ISO_8601).startOf('day').format('YYYY-MM-DD'), moment(e[1], moment.ISO_8601).endOf('day').format('YYYY-MM-DD '))
@@ -218,6 +223,12 @@ export default {
       onLoadDashboardSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
           this.dashboards = response.data.dashboards
+          response.data.basis === 1 ? this.basis = true : this.basis = false
+          response.data.wunsch === 1 ? this.wunsch = true : this.wunsch = false
+          response.data.lidesktop === 1 ? this.lidesktop = true : this.lidesktop = false
+          response.data.limobile === 1 ? this.limobile = true : this.limobile = false
+          response.data.browser === 1 ? this.browser = true : this.browser = false
+          response.data.response === 1 ? this.response = true : this.response = false
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
         }
