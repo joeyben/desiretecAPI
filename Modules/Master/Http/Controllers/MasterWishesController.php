@@ -8,6 +8,7 @@ use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
+use Illuminate\Support\Facades\Route;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 
 /**
@@ -122,6 +123,24 @@ class MasterWishesController extends Controller
             'is_owner'            => $isOwner
         ]);
 
+    }
+
+
+    /**
+     * @param string $token
+     *
+     * @return mixed
+     */
+    public function validateTokenList($token)
+    {
+
+        if ($this->wish->validateToken($token)) {
+            if (Route::has('master.list')) {
+                return redirect()->route('master.list');
+            }
+        }
+
+        return redirect()->route('frontend.wishes.list');
     }
 
     /**
