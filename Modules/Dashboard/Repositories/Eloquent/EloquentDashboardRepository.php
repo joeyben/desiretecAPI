@@ -127,7 +127,7 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
                 if (!empty($click_links)) {
                     foreach ($result['click'] as $k => $v) {
                         if ($result['clickrate'][$key][0]===$result['click'][$k][0]) {
-                           $result['clickrate'][$key][1] = round($result['clickrate'][$key][1]/$result['click'][$k][1]*100,1); 
+                           $result['clickrate'][$key][1] = round($result['click'][$k][1]/$result['clickrate'][$key][1]*100,1); 
                         }else{
                            $result['clickrate'][$key][1] = 0; 
                         }
