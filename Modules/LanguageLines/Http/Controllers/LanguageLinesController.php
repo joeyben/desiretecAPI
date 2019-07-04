@@ -12,6 +12,7 @@ use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WhereIn;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -81,6 +82,10 @@ class LanguageLinesController extends Controller
      * @var \Modules\Languages\Repositories\Contracts\LanguagesRepository
      */
     private $languages;
+    /**
+     * @var \Illuminate\Contracts\Console\Kernel
+     */
+    private $artisan;
 
     /**
      * LanguageLines constructor.
@@ -95,8 +100,9 @@ class LanguageLinesController extends Controller
      * @param \Illuminate\Notifications\ChannelManager                          $notification
      * @param \App\Models\Access\Role\Role                                      $role
      * @param \Modules\Languages\Repositories\Contracts\LanguagesRepository     $languages
+     * @param \Illuminate\Contracts\Console\Kernel                              $artisan
      */
-    public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role, LanguagesRepository $languages)
+    public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role, LanguagesRepository $languages, Kernel $artisan)
     {
         $this->languageline = $languageline;
         $this->response = $response;
@@ -108,6 +114,7 @@ class LanguageLinesController extends Controller
         $this->notification = $notification;
         $this->role = $role;
         $this->languages = $languages;
+        $this->artisan = $artisan;
     }
 
     /**
@@ -118,6 +125,30 @@ class LanguageLinesController extends Controller
     public function index()
     {
         return view('languagelines::index');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function cacheClear()
+    {
+        try {
+            $this->artisan->call('config:clear');
+            $this->artisan->call('view:clear');
+            $this->artisan->call('cache:clear');
+
+            $result['message'] = $this->artisan->output();
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     public function view(Request $request)

@@ -16,4 +16,5 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'provider', 
     Route::post('language-lines/import', 'LanguageLinesController@import')->name('provider.language-lines.import');
     Route::put('language-lines/copy', 'LanguageLinesController@copy')->name('provider.language-lines.copy');
     Route::put('language-lines/clone', 'LanguageLinesController@clone')->name('provider.language-lines.clone');
+    Route::get('language-lines/cacheClear', 'LanguageLinesController@cacheClear')->name('provider.language-lines.cacheClear');
 });
