@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Excel;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\Footers\Http\Requests\StoreFooterRequest;
+use Modules\Footers\Http\Requests\UpdateFooterRequest;
 use Modules\Footers\Repositories\Contracts\FootersRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
@@ -124,16 +126,53 @@ class FootersController extends Controller
      */
     public function create()
     {
-        return view('footers::create');
+        try {
+            $result['footer'] = [
+                'id'                               => 0,
+                'name'                             => '',
+                'url'                              => '',
+                'position'                         => 1,
+                'whitelabel'                       => null,
+                'whitelabel_id'                    => null,
+            ];
+
+            $result['footer']['logs'] = [];
+            $result['footer']['whitelabels'] = $this->whitelabels->all(['id', 'display_name']);
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
+     *
+     * @param \Modules\Footers\Http\Requests\StoreFooterRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(StoreFooterRequest $request)
     {
+        try {
+
+            $result['footer'] = $this->footers->create($request->only('name', 'url', 'position', 'whitelabel_id'));
+
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Footer']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -185,18 +224,93 @@ class FootersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
+     *
+     * @param \Modules\Footers\Http\Requests\UpdateFooterRequest $request
+     * @param int                                                $id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request)
+    public function update(UpdateFooterRequest $request, int $id)
     {
+        try {
+            $footer = $this->footers->update($id, $request->only('name', 'url', 'position', 'whitelabel_id'));
+
+            $result['footer'] = $footer;
+            $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Footer']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**
      * Remove the specified resource from storage.
-     * @return Response
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy()
+    public function destroy(int $id)
     {
+        try {
+            $result['footer'] = $this->footers->delete($id);
+            $result['message'] = $this->lang->get('messages.deleted', ['attribute' => 'Footer']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param int $id
+     *
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function forceDelete(int $id)
+    {
+        try {
+            $result['footer'] = $this->footers->forceDelete($id);
+            $result['message'] = $this->lang->get('messages.destroyed', ['attribute' => 'Footer']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function restore(int $id)
+    {
+        try {
+            $result['group'] = $this->footers->restore($id);
+            $result['message'] = $this->lang->get('messages.restored', ['attribute' => 'Footer']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 }

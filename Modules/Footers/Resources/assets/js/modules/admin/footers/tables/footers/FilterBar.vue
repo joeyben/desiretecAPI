@@ -5,7 +5,7 @@
                 <i class="icon-gear"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-left">
-                <a :href="createLink" class="dropdown-item" v-if="hasPermissionTo('create-role')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>
+                <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
             </div>
         </h5>
         <div class="header-elements">

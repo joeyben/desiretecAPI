@@ -65,9 +65,9 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-lg-3 col-form-label"> &nbsp; {{ trans('modals.group') }}</label>
+                                            <label class="col-lg-3 col-form-label"> &nbsp; {{ trans('modals.whitelabel') }}<span class="text-danger"> *</span></label>
                                             <div class="col-lg-9">
-                                                <el-select :value="footer.whitelabel_id" :placeholder="trans('labels.whitelabel')" size="small" style="width: 100%;" @input="inputWhitelabel">
+                                                <el-select :value="footer.whitelabel_id" :placeholder="trans('labels.whitelabel')" size="small" style="width: 100%;" @input="inputWhitelabel" :class="errors.has('whitelabel_id') ? 'is-invalid': ''">
                                                     <el-option
                                                             v-for="item in footer.whitelabels"
                                                             :key="item.id"
@@ -76,6 +76,9 @@
                                                         <span style="float: left"> {{ item.display_name }}</span>
                                                     </el-option>
                                                 </el-select>
+                                                <div class="help-block-invalid" v-if="errors.has('whitelabel_id')">
+                                                    <strong v-text="errors.get('whitelabel_id')"></strong>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -140,6 +143,7 @@
         addFooter: 'addFooter'
       }),
       inputWhitelabel (value) {
+        this.errors.clear('whitelabel_id')
         this.$store.commit('updateFooter', {name: 'whitelabel_id', value: value})
       },
       hasPermissionTo (permission) {
@@ -185,14 +189,14 @@
         })
 
         if (id === 0) {
-          this.CreateFooter(parseInt(this.$route.params.whitelabel_id))
+          this.CreateFooter()
         } else {
           this.EditFooter(id)
         }
       },
-      CreateFooter (whitelabelId) {
+      CreateFooter () {
         this.$store.dispatch('block', {element: 'footersComponent', load: true})
-        this.$http.get(window.laroute.route('admin.footers.create', {whitelabelId: whitelabelId}))
+        this.$http.get(window.laroute.route('admin.footers.create'))
           .then(this.onLoadFooterSuccess)
           .catch(this.onFailed)
           .then(() => {
