@@ -4,7 +4,7 @@
             <ul>
                 @foreach (footers_by_whitelabel() as $footer)
                     <li>
-                        <a href="{{ $footer->url }}">{{ $footer->name }}</a>
+                        <a href="{{ $footer->url }}" target="_blank">{{ $footer->name }}</a>
                     </li>
                 @endforeach
             </ul>
