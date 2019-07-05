@@ -57,6 +57,7 @@ import CssConfig from './CssConfig.js'
       this.$events.$on('locale-set', (locale) => this.doLocale(locale))
       this.$events.$on('clone-set', (from, to) => this.doClone(from, to))
       this.$events.$on('import-set', (file) => this.doImport(file))
+      this.$events.$on('cache-clear-set', () => this.doCacheClear())
     },
     render (h) {
       return h(
@@ -120,6 +121,15 @@ import CssConfig from './CssConfig.js'
         formData.append('file', file)
         this.$http.post(window.laroute.route('provider.language-lines.import'), formData, {headers: {'Content-Type': 'multipart/form-data'}})
           .then(this.onCloneSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
+          })
+      },
+      doCacheClear () {
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
+        this.$http.get(window.laroute.route('provider.language-lines.cacheClear'))
+          .then(this.onCacheSuccess)
           .catch(this.onFailed)
           .then(() => {
             this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
@@ -356,6 +366,16 @@ import CssConfig from './CssConfig.js'
             message: response.data.message
           })
           Vue.nextTick(() => this.$refs.vuetable.refresh())
+        } else {
+          toastr.error(response.message)
+        }
+      },
+      onCacheSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.$message({
+            type: 'success',
+            message: response.data.message
+          })
         } else {
           toastr.error(response.message)
         }
