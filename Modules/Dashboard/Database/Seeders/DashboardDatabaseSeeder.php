@@ -267,7 +267,19 @@ class DashboardDatabaseSeeder extends Seeder
             'updated_at'      => DB::raw('now()')
         ]);
 
-        for ($i = 1; $i <= 21; ++$i) {
+        DB::table('dashboards')->insert([
+            'name'            => 'Open-Rate Angebot manuell',
+            'x'               => 6,
+            'y'               => 40,
+            'w'               => 4,
+            'h'               => 8,
+            'i'               => 22,
+            'component'       => 'tile-openrate-component',
+            'created_at'      => DB::raw('now()'),
+            'updated_at'      => DB::raw('now()')
+        ]);
+
+        for ($i = 1; $i <= 22; ++$i) {
             DB::table('dashboard_user')->insertGetId([
                 'user_id'              => 1,
                 'dashboard_id'         => $i,

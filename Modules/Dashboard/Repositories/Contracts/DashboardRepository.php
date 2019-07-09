@@ -10,6 +10,7 @@ interface DashboardRepository
     public function calculateBrowserData(array $result, array $browsers, int $sum);
     public function calculateResponseData($result, $data, $stack);
     public function loadClickRate();
+    public function loadOpenRate();
     public function getFilterCategory(string $category);
     public function getFilterCategoryPosition(string $category);
     public function setFilterCategory(Request $request);

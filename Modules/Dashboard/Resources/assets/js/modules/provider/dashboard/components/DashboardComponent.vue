@@ -45,6 +45,7 @@
                       <el-checkbox-button label="LI Mobile" key="limobile" @change="doLiMobile" v-model="limobile">LI Mobile</el-checkbox-button>
                       <el-checkbox-button label="Desktop Browser" key="browser" @change="doBrowser" v-model="browser">Desktop Browser</el-checkbox-button>
                       <el-checkbox-button label="Response Rate" key="response" @change="doResponse" v-model="response">Response Rate</el-checkbox-button>
+                      <el-checkbox-button label="E-Mail" key="email" @change="doEmail" v-model="email">E-Mail</el-checkbox-button>
                     </li>
                 </ul>
             </div>
@@ -89,6 +90,7 @@
   import TileOfferComponent from './TileOfferComponent'
   import TileOfferdayComponent from './TileOfferdayComponent'
   import TileClickrateComponent from './TileClickrateComponent'
+  import TileOpenrateComponent from './TileOpenrateComponent'
   import TileMobileComponent from './TileMobileComponent'
   import TileMobiledComponent from './TileMobiledComponent'
   import TileResponseComponent from './TileResponseComponent'
@@ -116,6 +118,7 @@ export default {
       TileOfferComponent,
       TileOfferdayComponent,
       TileClickrateComponent,
+      TileOpenrateComponent,
       TileMobileComponent,
       TileMobiledComponent,
       TileResponseComponent,
@@ -145,6 +148,7 @@ export default {
         limobile: 1,
         browser: 1,
         response: 1,
+        email: 1,
         dashboards: []
       }
     },
@@ -195,6 +199,10 @@ export default {
         this.$events.fire('response-set', e)
         this.loadLayout()
       },
+      doEmail (e) {
+        this.$events.fire('email-set', e)
+        this.loadLayout()
+      },
       doRange (e) {
         this.$events.fire('range-date-set', this.whitelabelId, moment(e[0], moment.ISO_8601).startOf('day').format('YYYY-MM-DD'), moment(e[1], moment.ISO_8601).endOf('day').format('YYYY-MM-DD '))
       },
@@ -229,6 +237,7 @@ export default {
           response.data.limobile === 1 ? this.limobile = true : this.limobile = false
           response.data.browser === 1 ? this.browser = true : this.browser = false
           response.data.response === 1 ? this.response = true : this.response = false
+          response.data.email === 1 ? this.email = true : this.email = false
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
         }

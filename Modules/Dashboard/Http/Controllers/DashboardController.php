@@ -131,6 +131,8 @@ class DashboardController extends Controller
             $this->dashboard->setFilterCategoryPosition($result,$result['p_browser'],10,13);
             $result['p_response'] = $this->dashboard->getFilterCategoryPosition('Response Rate');
             $this->dashboard->setFilterCategoryPosition($result,$result['p_response'],3,4);
+            $result['p_email'] = $this->dashboard->getFilterCategoryPosition('E-Mail');
+            $this->dashboard->setFilterCategoryPosition($result,$result['p_email'],14,15);
 
             $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
@@ -138,6 +140,7 @@ class DashboardController extends Controller
             $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
             $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
             $result['basis'] = $this->dashboard->getFilterCategory('Basis');
+            $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
             
             $result['success'] = true;
             $result['status'] = 200;

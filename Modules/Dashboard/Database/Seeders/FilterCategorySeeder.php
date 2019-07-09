@@ -45,5 +45,10 @@ class FilterCategorySeeder extends Seeder
             'shown'           => 1,
             'position'        => 5
         ]);
+        DB::table('filter_category')->insert([
+            'name'            => 'E-Mail',
+            'shown'           => 1,
+            'position'        => 6
+        ]);
     }
 }
