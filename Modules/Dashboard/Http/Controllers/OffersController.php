@@ -418,7 +418,7 @@ public function clickRate(Request $request)
             $whitelabel = $this->whitelabels->find($whitelabelId);
         }
 
-        $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
+        $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
         $result['clickrate'] = $this->dashboard->loadClickRate();
  $result['success'] = true;
  $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -445,7 +445,7 @@ public function openRate(Request $request)
             $whitelabel = $this->whitelabels->find($whitelabelId);
         }
 
-        $result['response'] = $this->dashboard->getFilterCategory('E-Mail');
+        $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
         $result['openrate'] = $this->dashboard->loadOpenRate();
  $result['success'] = true;
  $result['status'] = Flag::STATUS_CODE_SUCCESS;

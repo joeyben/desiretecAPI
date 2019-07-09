@@ -109,8 +109,10 @@
       loadEmail: function () {
         if (this.email === 1) {
           this.email = 0
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.email, id: 7})
         } else {
           this.email = 1
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.email, id: 7})
         }
       },
       generateData (items) {
