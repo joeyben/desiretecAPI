@@ -11,6 +11,7 @@
             </div>
 
             <div class="navbar-collapse collapse" id="navbar-filter">
+                <a href="javascript:;" v-on:click="onExport()" class="nav-item m-2"><i class="icon-file-text3"></i> Export</a>
                 <span class="navbar-text font-weight-semibold mr-3">
                     Filter:
                 </span>
@@ -140,6 +141,7 @@ export default {
     },
     data () {
       return {
+        urlExport: window.laroute.route('admin.dashboard.export'),
         created: '',
         whitelabelId: null,
         basis: 1,

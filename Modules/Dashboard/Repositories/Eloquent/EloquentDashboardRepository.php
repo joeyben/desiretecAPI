@@ -99,6 +99,8 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function loadClickRate()
     {
+        $i = 0;
+        $j = 0;
         $sent_emails = DB::table('sent_emails')
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')),DB::raw('count(*) as nb_emails'))
         ->groupBy('date')
@@ -125,18 +127,24 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['clickrate'] = $result['sent'];
             foreach ($result['clickrate'] as $key => $value) {
                 $result['clickrate'][$key][0] = $result['sent'][$key][0];
-                if (!empty($click_links)) {
+                if (!empty($click_links) && $result['clickrate'][$key][1]!=='0') {
                     foreach ($result['click'] as $k => $v) {
                         if ($result['clickrate'][$key][0]===$result['click'][$k][0]) {
+                            $i++;
+                            $j = 0;
                            $result['clickrate'][$key][1] = round($result['click'][$k][1]/$result['clickrate'][$key][1]*100,1); 
+                           break;
                         }else{
-                           $result['clickrate'][$key][1] = 0; 
+                            $j++;
                         }
+                        
                     }
+                    if ($j!=0) {
+                            $result['clickrate'][$key][1] = 0;
+                        }
                 }else{
                     $result['clickrate'][$key][1] = 0;
                 }
-
             }
         }else{
             $result['clickrate'] = [0,0];
@@ -145,6 +153,8 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
     }
 
     public function loadOpenRate(){
+        $i = 0;
+        $j = 0;
         $open_emails = DB::table('sent_emails')
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')),DB::raw('count(*) as nb_opens'))
         ->where('opens','>=', 1)
@@ -171,11 +181,19 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['openrate'] = $result['sent'];
             foreach ($result['openrate'] as $key => $value) {
                 $result['openrate'][$key][0] = $result['sent'][$key][0];
-                if (!empty($open_emails) && $result['openrate'][$key][1]!='0') {
+                if (!empty($open_emails) && $result['openrate'][$key][1]!=='0') {
                     foreach ($result['open'] as $k => $v) {
                         if ($result['openrate'][$key][0]===$result['open'][$k][0]) {
-                           $result['openrate'][$key][1] = round($result['open'][$k][1]/$result['openrate'][$key][1]*100,1); 
+                            $i++;
+                            $j = 0;
+                           $result['openrate'][$key][1] = round($result['open'][$k][1]/$result['openrate'][$key][1]*100,1);
+                           break; 
+                        }else{
+                            $j++;
                         }
+                    }
+                    if ($j!=0) {
+                        $result['openrate'][$key][1] = 0;
                     }
                 }
             }

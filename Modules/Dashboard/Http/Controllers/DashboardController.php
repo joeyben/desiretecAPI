@@ -16,6 +16,8 @@ use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
 use Analytics;
 use Spatie\Analytics\Period;
+use Modules\Dashboard\Exports\DashboardExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
 {
@@ -195,7 +197,6 @@ class DashboardController extends Controller
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -205,6 +206,10 @@ class DashboardController extends Controller
     {
     }
 
+    public function export(Request $request)
+    {
+        return new DashboardExport();
+    }
     /**
      * Google analytics.
      *
