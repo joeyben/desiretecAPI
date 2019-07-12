@@ -64,9 +64,6 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
     {
         return [
             'LI Desktop',
-            'LI Mobile',
-            'LI Tablet',
-            'LI Total',
         ];
     }
 
