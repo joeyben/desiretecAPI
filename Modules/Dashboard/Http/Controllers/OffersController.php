@@ -113,7 +113,7 @@ class OffersController extends Controller
                 'filters' => $filter['filterd'],
             ];
 
-            $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop'); 
+            $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
             $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -132,7 +132,7 @@ class OffersController extends Controller
             $whitelabelId = $request->get('whitelabelId');
             $startDate = is_null($request->get('start')) ? '' : $request->get('start');
             $endDate = is_null($request->get('end')) ? '' : $request->get('end');
-            
+
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
             } else {
@@ -168,7 +168,7 @@ class OffersController extends Controller
             $whitelabelId = $request->get('whitelabelId');
             $startDate = is_null($request->get('start')) ? '' : $request->get('start');
             $endDate = is_null($request->get('end')) ? '' : $request->get('end');
-            
+
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
             } else {
@@ -184,7 +184,7 @@ class OffersController extends Controller
             ];
 
             $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
-            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);  
+            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -203,7 +203,7 @@ class OffersController extends Controller
             $whitelabelId = $request->get('whitelabelId');
             $startDate = is_null($request->get('start')) ? '' : $request->get('start');
             $endDate = is_null($request->get('end')) ? '' : $request->get('end');
-            
+
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
             } else {
@@ -219,7 +219,7 @@ class OffersController extends Controller
             ];
 
             $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
-            $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);  
+            $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -238,7 +238,7 @@ class OffersController extends Controller
             $whitelabelId = $request->get('whitelabelId');
             $startDate = is_null($request->get('start')) ? '' : $request->get('start');
             $endDate = is_null($request->get('end')) ? '' : $request->get('end');
-            
+
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
             } else {
@@ -257,7 +257,7 @@ class OffersController extends Controller
             $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
             $sum = 0;
             $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
-            
+
             $result['ga'] = $this->dashboard->calculateBrowserData($result, $browsers, $sum);
 
         $result['success'] = true;
@@ -296,7 +296,7 @@ public function shareperMonth(Request $request)
         $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
         $sum = 0;
         $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
-        
+
         $result['ga'] = $this->dashboard->calculateBrowserData($result, $browsers, $sum);
 
     $result['success'] = true;
@@ -333,7 +333,7 @@ public function responseMonth(Request $request)
             'filters' => $filter['filterd'],
         ];
 
-        $result['response'] = $this->dashboard->getFilterCategory('Response Rate');        
+        $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
         $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
 
         $data = $this->wishes->withCriteria([
@@ -343,7 +343,7 @@ public function responseMonth(Request $request)
         ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
         ->pluck('wishes_count', 'date');
         $stack = [];
-        
+
         $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
 
  $result['success'] = true;
@@ -390,7 +390,7 @@ public function responsemMonth(Request $request)
         ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
         ->pluck('wishes_count', 'date');
         $stack = [];
-        
+
         $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
 
  $result['success'] = true;
@@ -418,11 +418,38 @@ public function clickRate(Request $request)
             $whitelabel = $this->whitelabels->find($whitelabelId);
         }
 
-        $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
+        $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
         $result['clickrate'] = $this->dashboard->loadClickRate();
  $result['success'] = true;
  $result['status'] = Flag::STATUS_CODE_SUCCESS;
-} catch (Exception $e){ 
+} catch (Exception $e){
+    $result['success'] = false;
+    $result['message'] = $e->getMessage();
+    $result['status'] = Flag::STATUS_CODE_ERROR;
+}
+
+return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+}
+
+public function openRate(Request $request)
+{
+    try {
+
+        $whitelabelId = $request->get('whitelabelId');
+        $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+        $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+
+        if (is_null($whitelabelId)) {
+            $whitelabel = $this->whitelabels->first();
+        } else {
+            $whitelabel = $this->whitelabels->find($whitelabelId);
+        }
+
+        $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
+        $result['openrate'] = $this->dashboard->loadOpenRate();
+ $result['success'] = true;
+ $result['status'] = Flag::STATUS_CODE_SUCCESS;
+} catch (Exception $e){
     $result['success'] = false;
     $result['message'] = $e->getMessage();
     $result['status'] = Flag::STATUS_CODE_ERROR;
@@ -434,7 +461,7 @@ return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK)
 public function save(Request $request)
 {
     try {
-      $this->dashboard->setFilterCategory($request);  
+      $this->dashboard->setFilterCategory($request);
       $result['success'] = true;
       $result['status'] = 200;
   } catch (Exception $e) {
