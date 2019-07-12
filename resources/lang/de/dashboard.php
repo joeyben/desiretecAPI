@@ -37,4 +37,6 @@ return [
     'monthly_desktop_browser_shareklicks'       => 'Browser-Share Desktop Klicks pro Monat',
     'clickrate_manuell'                         => 'Click-Rate Angebot manuell',
     'clickrate'                                 => 'Click-Rate (%)',
+    'openrate'                                  => 'Open-Rate (%)',
+    'openrate_manuell'                          => 'Open-Rate Angebot manuell',
 ];

@@ -14,7 +14,7 @@
   import moment from 'moment'
   exportingInit(Highcharts)
   export default {
-    name: 'TileClickrateComponent',
+    name: 'TileOpenrateComponent',
     components: { highcharts: Chart },
     data () {
       return {
@@ -30,7 +30,7 @@
             type: 'line'
           },
           title: {
-            text: this.trans('dashboard.clickrate_manuell')
+            text: this.trans('dashboard.openrate_manuell')
           },
           subtitle: {
             text: this.trans('dashboard.source_2019')
@@ -44,7 +44,7 @@
           },
           yAxis: {
             title: {
-              text: this.trans('dashboard.clickrate')
+              text: this.trans('dashboard.openrate')
             }
           },
           plotOptions: {
@@ -56,7 +56,7 @@
           },
 
           series: [{
-            name: this.trans('dashboard.clickrate'),
+            name: this.trans('dashboard.openrate'),
             data: []
           }],
 
@@ -99,7 +99,7 @@
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         let paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.events.clickRate') + params + paramsdate)
+        this.$http.get(window.laroute.route('admin.dashboard.events.openRate') + params + paramsdate)
           .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -109,10 +109,8 @@
       loadEmail: function () {
         if (this.email === 1) {
           this.email = 0
-          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.email, id: 7})
         } else {
           this.email = 1
-          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.email, id: 7})
         }
       },
       generateData (items) {
@@ -125,7 +123,7 @@
       },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.chartOptions.series[0].data = this.generateData(response.data.clickrate)
+          this.chartOptions.series[0].data = this.generateData(response.data.openrate)
           this.data = response.data
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
