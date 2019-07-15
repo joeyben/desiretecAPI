@@ -52,7 +52,7 @@ build-stage:
   only:
     - development
   variables:
-    DOCKER_TLS_VERIFY: "1"
+    #DOCKER_TLS_VERIFY: "1"
     DOCKER_HOST: "tcp://mvp.desiretec.com:2376"
     DOCKER_CERT_PATH: "certs"
     CLIENT_CERT: $CLIENT_DOCKER_CERT
