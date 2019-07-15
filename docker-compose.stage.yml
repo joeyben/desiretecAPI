@@ -18,8 +18,6 @@ services:
       networks:
         - frontend
         - backend
-    certbot:
-     image: certbot/certbot
     mariadb:
       image: mariadb:latest
       environment:
