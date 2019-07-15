@@ -40,14 +40,24 @@ build-stage:
     - apk add --update py-pip gcc musl-dev python-dev libffi-dev openssl-dev make
     - pip install docker-compose
   script:
+    - mkdir $DOCKER_CERT_PATH
+    - echo "$MACHINE_CA" > $DOCKER_CERT_PATH/ca.pem
+    - echo "$CLIENT_CERT" > $DOCKER_CERT_PATH/cert.pem
+    - echo "$CLIENT_KEY" > $DOCKER_CERT_PATH/key.pem
     - echo "$STAGE_DOTENV" > .env
     - docker-compose -f docker-compose.yml -f docker-compose.stage.yml build
     - docker-compose -f docker-compose.yml -f docker-compose.stage.yml down
     - docker-compose -f docker-compose.yml -f docker-compose.stage.yml up -d
+    - rm -rf $DOCKER_CERT_PATH
   only:
     - development
   variables:
-    DOCKER_HOST: "tcp://mvp.desiretec.com:2376"
+    DOCKER_TLS_VERIFY: "1"
+    DOCKER_HOST: "tcp://52.59.198.40:2376"
+    DOCKER_CERT_PATH: "certs"
+    CLIENT_CERT: $CLIENT_DOCKER_CERT
+    MACHINE_CA: $DOCKER_MACHINE_CA
+    CLIENT_KEY: $CLIENT_DOCKER_CERT_KEY
     STAGE_DOTENV: $STAGE_ENV
     DB_ROOT_PW: $MARIADB_ROOT_PW
     DB_STAGE_PW: $MARIADB_STAGE_PW
