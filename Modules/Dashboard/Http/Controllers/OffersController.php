@@ -149,7 +149,6 @@ class OffersController extends Controller
 
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
             $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);
-
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {

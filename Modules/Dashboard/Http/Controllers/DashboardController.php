@@ -10,10 +10,12 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
+use App\Services\Flag\Src\Flag;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
+use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Analytics;
 use Spatie\Analytics\Period;
 use Modules\Dashboard\Exports\DashboardExport;
@@ -58,6 +60,8 @@ class DashboardController extends Controller
      */
     private $offers;
 
+    private $whitelabels;
+
     /**
      * DashboardController constructor.
      *
@@ -69,7 +73,7 @@ class DashboardController extends Controller
      * @param \App\Repositories\Backend\Access\User\UserRepository            $users
      * @param \Illuminate\Support\Carbon                                      $carbon
      */
-    public function __construct(DashboardRepository $dashboard, ActivitiesRepository $activities, ResponseFactory $response, AuthManager $auth, Translator $lang, UserRepository $users, Carbon $carbon, WishesRepository $wishes, OffersRepository $offers)
+    public function __construct(DashboardRepository $dashboard, ActivitiesRepository $activities, ResponseFactory $response, AuthManager $auth, Translator $lang, UserRepository $users, Carbon $carbon, WishesRepository $wishes, OffersRepository $offers,WhitelabelsRepository $whitelabels)
     {
         $this->dashboard = $dashboard;
         $this->activities = $activities;
@@ -80,6 +84,7 @@ class DashboardController extends Controller
         $this->carbon = $carbon;
         $this->wishes = $wishes;
         $this->offers = $offers;
+        $this->whitelabels = $whitelabels;
     }
 
     /**
@@ -208,7 +213,40 @@ class DashboardController extends Controller
 
     public function export(Request $request)
     {
-        return new DashboardExport();
+        return new DashboardExport($this->dashboard,$this->wishes,$this->carbon);
+    }
+
+    public function exportw(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
+            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+
+            if (is_null($whitelabelId)) {
+                $whitelabel = $this->whitelabels->first();
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+
+            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
+
+            $file = storage_path().'/test.txt';
+            $current = file_get_contents($file);
+            $current = $viewId."\n";
+            $current .= $whitelabelId."\n";
+            $current .= $startDate."\n";
+            $current .= $endDate;
+            file_put_contents($file, $current); 
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
     }
     /**
      * Google analytics.

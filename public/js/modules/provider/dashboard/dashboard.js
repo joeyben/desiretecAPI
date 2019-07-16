@@ -84675,9 +84675,17 @@ exports.default = {
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.loadUser();
     this.loadLayout();
     this.loadWhitelabels();
+    this.$events.$on('whitelabel-set', function (whitelabelId, start, end) {
+      return _this.onExportW(whitelabelId, start, end);
+    });
+    this.$events.$on('range-date-set', function (whitelabelId, start, end) {
+      return _this.onExportW(whitelabelId, start, end);
+    });
   },
 
   watch: {},
@@ -84693,6 +84701,24 @@ exports.default = {
     loadUser: 'loadLoggedUser',
     loadWhitelabels: 'loadWhitelabels'
   }), {
+    onExport: function onExport() {
+      window.location.href = this.urlExport;
+    },
+
+    onExportW: function onExportW() {
+      var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      var _this2 = this;
+
+      var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var end = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
+      var params = whitelabelId ? '?whitelabelId=' + whitelabelId : '';
+      var paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end;
+      this.$http.get(window.laroute.route('admin.dashboard.exportw') + params + paramsdate).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+      });
+    },
     doWhitelabel: function doWhitelabel() {
       this.$events.fire('whitelabel-set', this.whitelabelId);
     },
@@ -84734,17 +84760,17 @@ exports.default = {
     },
 
     loadLayout: function loadLayout() {
-      var _this = this;
+      var _this3 = this;
 
       this.$http.get(window.laroute.route('admin.dashboard.show')).then(this.onLoadDashboardSuccess).catch(this.onFailed).then(function () {
-        _this.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+        _this3.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
     },
     movedEvent: function movedEvent(i, newX, newY) {
-      var _this2 = this;
+      var _this4 = this;
 
       this.$http.put(window.laroute.route('admin.dashboard.save'), { dashboards: this.dashboards }).then(this.onSaveDashboardSuccess).catch(this.onFailed).then(function () {
-        _this2.$store.dispatch('block', { element: 'dashboardComponent', load: false });
+        _this4.$store.dispatch('block', { element: 'dashboardComponent', load: false });
       });
     },
     onLoadDashboardSuccess: function onLoadDashboardSuccess(response) {
@@ -117828,7 +117854,7 @@ var render = function() {
                     "a",
                     {
                       staticClass: "nav-item m-2",
-                      attrs: { href: "javascript:;" },
+                      attrs: { href: "#" },
                       on: {
                         click: function($event) {
                           _vm.onExport()
