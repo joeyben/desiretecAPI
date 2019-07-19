@@ -335,38 +335,6 @@ if (!function_exists('transformDuration')) {
                 return trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]);
                 break;
 
-            case '7-':
-                return trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]);
-                break;
-
-            case '14-':
-                return trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]);
-                break;
-
-            case '21-':
-                return trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]);
-                break;
-
-            case '28-':
-                return trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]);
-                break;
-
-            case '1-4':
-                return trans('labels.frontend.wishes.nights', ['nights' => "1-4"]);
-                break;
-
-            case '5-8':
-                return trans('labels.frontend.wishes.nights', ['nights' => "5-8"]);
-                break;
-
-            case '9-12':
-                return trans('labels.frontend.wishes.nights', ['nights' => "9-12"]);
-                break;
-
-            case '13-15':
-                return trans('labels.frontend.wishes.nights', ['nights' => "13-15"]);
-                break;
-
             case null:
                 return 'beliebig';
                 break;
@@ -415,7 +383,6 @@ if (!function_exists('getCurrentWhiteLabelId')) {
     {
         $url = str_replace('http://', '', url('/'));
         $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
-
         return $id;
     }
 }
@@ -445,6 +412,7 @@ if (!function_exists('getCurrentWhiteLabelField')) {
     function getCurrentWhiteLabelField($field)
     {
         $url = str_replace('http://', '', url('/'));
+        $url = str_replace('https://', '', $url);
         $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value($field);
 
         return $id;
