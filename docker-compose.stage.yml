@@ -12,7 +12,7 @@ services:
       volumes:
         - /var/www/desiretec-mvp-stage/storage:/var/www/html/storage
       environment:
-        - VIRTUAL_HOST=mvp.desiretec.com,novasol.reise-wunsch.com,trendtours.reise-wunsch.com,
+        - VIRTUAL_HOST=mvp.desiretec.com,novasol.wunsch-service.de,trendtours.reise-wunsch.com
         - LETSENCRYPT_HOST=mvp.desiretec.com,novasol.wunsch-service.de,trendtours.reise-wunsch.com
 #        - VIRTUAL_HOST=mvp.desiretec.com,novasol.wunsch-service.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com,trendtours.reise-wunsch.com
 #        - LETSENCRYPT_HOST=mvp.desiretec.com,novasol.wunsch-service.de,*.reise-wunsch.com,trendtours.reise-wunsch.com
