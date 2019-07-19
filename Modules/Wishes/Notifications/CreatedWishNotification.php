@@ -65,6 +65,14 @@ class CreatedWishNotification extends Notification
                 ->view('wishes::emails.wish_trendtours', ['wish' => $this->wish, 'token' => $this->wish->token]);
         }
 
+        if ('Novasol' === $this->wish->whitelabel->name) {
+            return (new MailMessage())
+                ->from('novasol@reisewunschservice.de', $this->wish->whitelabel->display_name . ' Portal')
+                ->replyTo('wunschreise@novasol.de', $this->wish->whitelabel->display_name . ' Portal')
+                ->subject(trans('email.wish.user_novasol'))
+                ->view('wishes::emails.wish_novasol', ['wish' => $this->wish, 'token' => $this->wish->token]);
+        }
+
         return (new MailMessage())
             ->from($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Portal')
             ->subject(trans('email.wish.user'))

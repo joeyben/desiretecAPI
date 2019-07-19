@@ -11,7 +11,7 @@
             </div>
 
             <div class="navbar-collapse collapse" id="navbar-filter">
-                <a href="javascript:;" v-on:click="onExport()" class="nav-item m-2"><i class="icon-file-text3"></i> Export</a>
+                <a href="#" v-on:click="onExport()" class="nav-item m-2"><i class="icon-file-text3"></i> Export</a>
                 <span class="navbar-text font-weight-semibold mr-3">
                     Filter:
                 </span>
@@ -158,6 +158,8 @@ export default {
       this.loadUser()
       this.loadLayout()
       this.loadWhitelabels()
+      this.$events.$on('whitelabel-set', (whitelabelId, start, end) => this.onExportW(whitelabelId, start, end))
+      this.$events.$on('range-date-set', (whitelabelId, start, end) => this.onExportW(whitelabelId, start, end))
     },
     watch: {
     },
@@ -168,6 +170,9 @@ export default {
       }),
       can_filter () {
         return this.hasRole('Administrator')
+      },
+      onExport () {
+        window.location.href = this.urlExport
       }
     },
     methods: {
@@ -175,6 +180,15 @@ export default {
         loadUser: 'loadLoggedUser',
         loadWhitelabels: 'loadWhitelabels'
       }),
+      onExportW: function (whitelabelId = null, start = '', end = '') {
+        let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
+        let paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end
+        this.$http.get(window.laroute.route('admin.dashboard.exportw') + params + paramsdate)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
+          })
+      },
       doWhitelabel () {
         this.$events.fire('whitelabel-set', this.whitelabelId)
       },

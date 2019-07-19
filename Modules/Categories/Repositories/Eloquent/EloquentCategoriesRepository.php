@@ -34,7 +34,10 @@ class EloquentCategoriesRepository extends RepositoryAbstract implements Categor
      */
     public function getChildrenFromSlug($column, $field, $columns = ['*'])
     {
-        $parent = $this->model->where($column, $field)->first($columns)->toArray();
+        $parent = $this->model->where($column, $field)->first($columns);
+        if($parent){
+            $parent = $parent->toArray();
+        }
         $children = $this->model->where('parent_id', $parent['id'])->select('value', 'name')->get()->toArray();
         $category = [];
 
@@ -71,8 +74,14 @@ class EloquentCategoriesRepository extends RepositoryAbstract implements Categor
      */
     public function getCategoryIdByParentValue($field, $value)
     {
-        $parent = $this->model->where("value", $field)->first(['id'])->toArray();
-        $child = $this->model->where('parent_id', $parent['id'])->where('value', $value)->first(['id'])->toArray();
+        $parent = $this->model->where("value", $field)->first(['id']);
+        if($parent){
+            $parent = $parent->toArray();
+        }
+        $child = $this->model->where('parent_id', $parent['id'])->where('value', $value)->first(['id']);
+        if($child){
+            $child = $child->toArray();
+        }
 
         return $child['id'];
     }

@@ -31,6 +31,7 @@ return [
         'user'                                 => 'Welcome to the desiretec wish portal! Your travel wish has been created successfully.',
         'user_trendtours'                      => 'Welcome to the trendtours wish portal! Your travel wish has been created successfully.',
         'seller_trendtours'                    => 'A new travel wish is waiting for you!',
+        'user_novasol'                         => 'Welcome to the Novasol wish portal! Your travel wish has been created',
     ],
     'offer' => [
         'created'                   => 'Your offer has been created successfully',
@@ -54,5 +55,14 @@ return [
         'line7'     => 'Handelsregister: Amtsgericht Hamburg HRB XXXXX',
         'line8'     => 'BAN: DEXX XXXX XXXX XXXX XXXX XX',
         'line9'     => 'BIC: XXXXXXXXXX',
+    ],
+    'footer_novasol'              => [
+        'line1'     => 'Mit freundlichen Grüßen | With kind regards | Med venlig hilsen',
+        'line2'     => 'Your NOVASOL booking service',
+        'line3'     => 'NOVASOL Reise GmbH',
+        'line4'     => 'Gotenstrasse 11 - 20097 Hamburg, Germany',
+        'line5'     => 'Phone +49 (0) 40 238859 - 82 | novasol@novasol.de – an Awaze Company',
+        'line6'     => 'Handelsregister Amtsgericht Hamburg, HRB 95067 | Geschäftsführer: Jan Haapanen',
+        'line7'     => 'www.novasol.de | www.dansommer.de | www.cuendet.de',
     ]
 ];
