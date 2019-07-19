@@ -170,6 +170,9 @@ export default {
       }),
       can_filter () {
         return this.hasRole('Administrator')
+      },
+      onExport () {
+        window.location.href = this.urlExport
       }
     },
     methods: {
@@ -177,9 +180,6 @@ export default {
         loadUser: 'loadLoggedUser',
         loadWhitelabels: 'loadWhitelabels'
       }),
-      onExport () {
-        window.location.href = this.urlExport
-      },
       onExportW: function (whitelabelId = null, start = '', end = '') {
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
         let paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end

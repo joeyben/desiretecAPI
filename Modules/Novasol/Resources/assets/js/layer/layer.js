@@ -13,17 +13,17 @@ var dt = window.dt || {};
     dt.popupTemplate = function (variant) {
 
         var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Wir möchten Sie gerne beraten!',
+            'Traumreise noch nicht gefunden? ',
         ]);
 
         var texts = {
             'eil-n1': {
-                header: 'Wir möchten Sie gerne beraten!',
-                body: 'Teilen Sie uns jetzt Ihre Reisewünsche mit und Sie erhalten innerhalb kürzester Zeit Ihre persönlichen Ferienhausangebote.'
+                header: 'Traumreise noch nicht gefunden? ',
+                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!'
             },
             'eil-mobile': {
                 header: mobileHeader,
-                body: 'Teilen Sie uns jetzt Ihre Reisewünsche mit und Sie erhalten innerhalb kürzester Zeit Ihre persönlichen Ferienhausangebote.'
+                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!'
             }
         };
 

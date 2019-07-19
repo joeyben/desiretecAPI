@@ -1,7 +1,7 @@
 <div class="kwp-content kwp-completed-master">
-    <h1><i class="master-icon--check"></i>Ihr Reisewunsch wurde erfolgreich versandt.</h1>
+    <h1><i class="master-icon--check"></i>Vielen Dank, Ihr Reisewunsch ist erfolgreich bei uns eingegangen.</h1>
     <p>
-        Ein Mitarbeiter aus unserem Buchungsservice kümmert sich persönlich um Ihren Reisewunsch.<br>
+        Wir suchen jetzt nach passenden Angeboten für Sie. In wenigen Minuten werden Sie per E-Mail informiert und können sich Ihre neuen individuellen Angebote ansehen.<br>
         <a  href="{{ route('novasol.wish.details', [$id, $token]) }}" target="_blank">Klicken Sie hier</a>, wenn Sie Ihren Reisewunsch ändern oder überprüfen möchten.
     </p>
 </div>

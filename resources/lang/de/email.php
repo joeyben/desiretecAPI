@@ -30,6 +30,7 @@ return [
         'user_callback_seller'      => 'Ihr Kunde bittet Sie um einen Rückruf',
         'user'                      => 'Herzlich willkommen beim :whitelabel Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.',
         'seller'                    => 'Es gibt einen neuen :whitelabel Reisewunsch zur Bearbeitung!',
+        'user_novasol'              => 'Herzlich willkommen beim Novasol Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.',
     ],
     'offer' => [
         'created'                   => 'Sie haben erfolgreich ein Angebot erstellt',
@@ -54,5 +55,14 @@ return [
         'line7'     => 'Handelsregister: Amtsgericht Hamburg HRB XXXXX',
         'line8'     => 'BAN: DEXX XXXX XXXX XXXX XXXX XX',
         'line9'     => 'BIC: XXXXXXXXXX',
+    ],
+    'footer_novasol'              => [
+        'line1'     => 'Mit freundlichen Grüßen | With kind regards | Med venlig hilsen',
+        'line2'     => 'Ihr NOVASOL Buchungsservice',
+        'line3'     => 'NOVASOL Reise GmbH',
+        'line4'     => 'Gotenstrasse 11 - 20097 Hamburg, Germany',
+        'line5'     => 'Phone +49 (0) 40 238859 - 82 | novasol@novasol.de – an Awaze Company',
+        'line6'     => 'Handelsregister Amtsgericht Hamburg, HRB 95067 | Geschäftsführer: Jan Haapanen',
+        'line7'     => 'www.novasol.de | www.dansommer.de | www.cuendet.de',
     ]
 ];

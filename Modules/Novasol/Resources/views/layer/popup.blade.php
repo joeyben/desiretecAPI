@@ -128,13 +128,13 @@
         </div>
 
 
-        <div class="kwp-row">
+        <!--div class="kwp-row">
             <div class="kwp-col-12 description">
                 {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
                 {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
                 <i class="fal fa-comment-alt-lines"></i>
             </div>
-        </div>
+        </div-->
 
         <div class="kwp-row">
             <div class="kwp-col-4 email-col">

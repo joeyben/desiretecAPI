@@ -80,9 +80,9 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
             'filters' => $filter['filterm'],
         ];
 
-        $result = $this->dashboard->uniqueEventsDay($viewid,$optParams,'','');
-        $wishes = $this->getWishes($whitelabel);
-        $uem = $this->dashboard->uniqueEventsDay($viewid,$optParams1,'','');
+        $result = $this->dashboard->uniqueEventsDay($viewid,$optParams,$start,$end);
+        $wishes = $this->getWishes($whitelabel,$start,$end);
+        $uem = $this->dashboard->uniqueEventsDay($viewid,$optParams1,$start,$end);
 
         $i = 0;
         $j = 0;
@@ -113,22 +113,24 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
      */
     public function map($dash): array
     {
+        $d31 = $dash['1']!='0' ? round($dash['3']/$dash['1']*100,1) : 0;
+        $d32 = $dash['2']!='0' ? round($dash['3']/$dash['2']*100,1) : 0;
         return [
             $dash['0'],
             $dash['1'],
             $dash['2'],
             '',
-            '',
+            $dash['1']+$dash['2'],
             '',
             $dash['3'],
             '',
             '',
+            $dash['3'],
             '',
+            $d31.'%',
+            $d32.'%',
             '',
-            '',
-            '',
-            '',
-            '',
+            ($d31+$d32).'%',
             '',
             '',
             '',
@@ -168,7 +170,8 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
         ];
     }
 
-    public function getWishes($whitelabel){
+    public function getWishes($whitelabel,$start,$end){
+        if ($start=='') {
         $data = DB::table('wishes')
         ->select((DB::raw('DATE_FORMAT(created_at,"%Y%m%d") as date')),DB::raw('count(*) as wishes_count'))
         ->Where([
@@ -179,6 +182,19 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
         ->get()
         ->pluck('wishes_count','date')
         ->toArray();
+        }else{
+        $data = DB::table('wishes')
+        ->select((DB::raw('DATE_FORMAT(created_at,"%Y%m%d") as date')),DB::raw('count(*) as wishes_count'))
+        ->Where([
+            ['whitelabel_id','=',$whitelabel],
+        ])
+        ->whereBetween('created_at',[$start,$end])
+        ->groupBy('date')
+        ->get()
+        ->pluck('wishes_count','date')
+        ->toArray();
+        }
+        
         return $data;
     }
 

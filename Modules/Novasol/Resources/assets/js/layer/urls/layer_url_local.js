@@ -1,6 +1,6 @@
 
 (function ($) {
 
-    dt.defaultConfig.baseUrl = 'http://novasol.org';
+    dt.defaultConfig.baseUrl = 'testnovasol.org';
 
 })(jQuery);
