@@ -12,8 +12,10 @@ services:
       volumes:
         - /var/www/desiretec-mvp-stage/storage:/var/www/html/storage
       environment:
-        - VIRTUAL_HOST=mvp.desiretec.com,master.desiretec.com,novasol.wunsch-service.de,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com,trendtours.reise-wunsch.com
-        - LETSENCRYPT_HOST=mvp.desiretec.com,master.desiretec.com,novasol.wunsch-service.de,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com,trendtours.reise-wunsch.com
+        - VIRTUAL_HOST=mvp.desiretec.com,novasol.wunsch-service.de,trendtours.reise-wunsch.com
+        - LETSENCRYPT_HOST=mvp.desiretec.com,novasol.wunsch-service.de,trendtours.reise-wunsch.com
+#        - VIRTUAL_HOST=mvp.desiretec.com,novasol.wunsch-service.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com,trendtours.reise-wunsch.com
+#        - LETSENCRYPT_HOST=mvp.desiretec.com,novasol.wunsch-service.de,*.reise-wunsch.com,trendtours.reise-wunsch.com
         - LETSENCRYPT_EMAIL=info@desiretec.com
       networks:
         - frontend
@@ -38,7 +40,8 @@ services:
         context: ./laravel-echo-server
       volumes:
         - ./laravel-echo-server/laravel-echo-server.json:/app/laravel-echo-server.json:ro
-        - reverseproxy_certs:/app/mvp_certs/:ro
+        - nginx-reverse-proxy_le-certs:/app/mvp_certs/:ro
+#        - reverseproxy_certs:/app/mvp_certs/:ro
       ports:
         - 6001:6001
       links:
@@ -50,9 +53,10 @@ services:
 networks:
     frontend:
       external:
-        name: reverseproxy_http_proxy
+        name: nginx-reverse-proxy_http_proxy
+#        name: reverseproxy_http_proxy
     backend:
 
 volumes:
-    reverseproxy_certs:
+    nginx-reverse-proxy_le-certs:
       external: true
