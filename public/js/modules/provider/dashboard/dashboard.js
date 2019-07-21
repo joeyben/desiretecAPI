@@ -84695,15 +84695,16 @@ exports.default = {
   }), {
     can_filter: function can_filter() {
       return this.hasRole('Administrator');
-    },
-    onExport: function onExport() {
-      window.location.href = this.urlExport;
     }
   }),
   methods: _extends({}, _vuex2.default.mapActions({
     loadUser: 'loadLoggedUser',
     loadWhitelabels: 'loadWhitelabels'
   }), {
+    onExport: function onExport() {
+      window.location.href = this.urlExport;
+    },
+
     onExportW: function onExportW() {
       var whitelabelId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
