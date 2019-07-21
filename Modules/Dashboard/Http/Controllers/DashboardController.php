@@ -231,8 +231,7 @@ class DashboardController extends Controller
 
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
 
-            //chmod(storage_path().'/export', 777);
-            $file = storage_path().'/app/export.txt';
+            $file = base_path().'/export.txt';
             $current = file_get_contents($file);
             $current = $viewId."\n";
             $current .= $whitelabelId."\n";
