@@ -66,8 +66,8 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
      */
     public function collection()
     {   
-        chmod(storage_path().'/export', 777);
-        $file = storage_path().'/export/export.txt';
+        //chmod(storage_path().'/export', 777);
+        $file = storage_path().'/app/export.txt';
         $content = file_get_contents($file);
         list($viewid,$whitelabel,$start,$end) = explode("\n", $content);
 
