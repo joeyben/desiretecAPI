@@ -5,6 +5,14 @@
 @section("after-styles")
     <link rel="stylesheet" href="{{ mix('modules/css/offers.css') }}">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
 @endsection
 
 @section('page-header')
@@ -94,7 +102,8 @@
                 @endif
             </div>
         </div>
-        @if (count($offers) > 0)<div id="top-map" class="map"></div>@endif
+        @if (count($offers) > 0)<div id="map" class="map"></div>@endif
+
     </div>
 </div>
 <div class="container-fluid">
