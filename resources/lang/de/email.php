@@ -35,6 +35,13 @@ return [
     'offer' => [
         'created'                   => 'Sie haben erfolgreich ein Angebot erstellt',
         'created_user'              => 'Es gibt ein neues Angebot für Ihren :whitelabel Reisewunsch!',
+        'novasol_created_user'      =>[
+            'subject'=> 'Wir haben Ihre Traumferien gefunden – Novasol Reisewunschportal',
+            'header' => 'Hallo lieber Kunde!',
+            'body'   => 'Herzlichen Glückwunsch! Wir haben neue passende Angebote für Ihren Reisewunsch gefunden.',
+            'link'   => 'Sie können diese unter dem folgenden Link direkt aufrufen <a href=":link">:link</a>',
+            'footer' => 'Wir hoffen, dass Ihnen die Angebote zusagen. Bei Fragen stehen Ihnen unsere Reiseberater jederzeit zur Verfügung.'
+        ]
     ],
     'token' => 'Ihr Login-Link lautet: <a href=":token">:token</a>',
     'message' => [

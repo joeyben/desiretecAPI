@@ -90,7 +90,7 @@
                 @if (count($offers) === 0)
                 "Leider haben wir noch keine Angebote für Deinen Reisewunsch "{{ $wish->destination }}" für dich finden können. Wir erfüllen Dir jedoch gerne unter folgender Nummer Deine Wünsche <br><a href="tel:089710459535">089-710459535</a>."
                 @else
-                "Hallo, wir haben wunderbare Angebote zu deinem Reisewunsch "{{ $wish->destination }}" für dich gefunden. Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <br><a href="tel:089710459535">089-710459535</a>."
+                <h1>Herzlich Wilkommen</h1>"Hallo, wir haben wunderbare Angebote zu deinem Reisewunsch "{{ $wish->destination }}" für dich gefunden. Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <br><a href="tel:089710459535">089-710459535</a>."
                 @endif
             </div>
         </div>
@@ -109,6 +109,7 @@ $counter = 0;
 
 @foreach ($offers as $key => $offer)
 @php
+if($counter==3) break;
 $counter++;
 @endphp
 <div class="pagecontainer">

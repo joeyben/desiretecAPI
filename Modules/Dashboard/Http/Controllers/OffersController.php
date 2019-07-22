@@ -418,7 +418,7 @@ public function clickRate(Request $request)
         }
 
         $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-        $result['clickrate'] = $this->dashboard->loadClickRate();
+        $result['clickrate'] = $this->dashboard->loadClickRate($whitelabelId);
  $result['success'] = true;
  $result['status'] = Flag::STATUS_CODE_SUCCESS;
 } catch (Exception $e){
@@ -445,7 +445,7 @@ public function openRate(Request $request)
         }
 
         $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-        $result['openrate'] = $this->dashboard->loadOpenRate();
+        $result['openrate'] = $this->dashboard->loadOpenRate($whitelabelId);
  $result['success'] = true;
  $result['status'] = Flag::STATUS_CODE_SUCCESS;
 } catch (Exception $e){

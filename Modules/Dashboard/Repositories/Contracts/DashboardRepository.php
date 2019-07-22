@@ -9,8 +9,8 @@ interface DashboardRepository
     public function uniqueEventsMonth(string $gaViewId, array $optParams, string $startDate, string $endDate);
     public function calculateBrowserData(array $result, array $browsers, int $sum);
     public function calculateResponseData($result, $data, $stack);
-    public function loadClickRate();
-    public function loadOpenRate();
+    public function loadClickRate($whitelabel);
+    public function loadOpenRate($whitelabel);
     public function getFilterCategory(string $category);
     public function getFilterCategoryPosition(string $category);
     public function setFilterCategory(Request $request);

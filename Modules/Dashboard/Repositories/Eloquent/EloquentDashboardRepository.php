@@ -97,12 +97,13 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
    return $result['ga'];
     }
 
-    public function loadClickRate()
+    public function loadClickRate($whitelabel)
     {
         $i = 0;
         $j = 0;
         $sent_emails = DB::table('sent_emails')
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')),DB::raw('count(*) as nb_emails'))
+        ->where('content','like','%manual,'.$whitelabel.'%')
         ->groupBy('date')
         ->get()->toArray();
 
@@ -152,17 +153,19 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         return $result['clickrate'];
     }
 
-    public function loadOpenRate(){
+    public function loadOpenRate($whitelabel){
         $i = 0;
         $j = 0;
         $open_emails = DB::table('sent_emails')
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')),DB::raw('count(*) as nb_opens'))
         ->where('opens','>=', 1)
+        ->where('content','like','%manual,'.$whitelabel.'%')
         ->groupBy('date')
         ->get()->toArray();
 
         $sent_emails = DB::table('sent_emails')
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')),DB::raw('count(*) as nb_emails'))
+        ->where('content','like','%manual,'.$whitelabel.'%')
         ->groupBy('date')
         ->get()->toArray();
 
