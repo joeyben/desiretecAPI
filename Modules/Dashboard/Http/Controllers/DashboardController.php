@@ -219,6 +219,7 @@ class DashboardController extends Controller
     public function exportw(Request $request)
     {
         try {
+            session_start();
             $whitelabelId = $request->get('whitelabelId');
             $startDate = is_null($request->get('start')) ? '' : $request->get('start');
             $endDate = is_null($request->get('end')) ? '' : $request->get('end');
@@ -231,13 +232,10 @@ class DashboardController extends Controller
 
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
 
-            $file = base_path().'/export.txt';
-            $current = file_get_contents($file);
-            $current = $viewId."\n";
-            $current .= $whitelabelId."\n";
-            $current .= $startDate."\n";
-            $current .= $endDate;
-            file_put_contents($file, $current); 
+            $_SESSION['viewid'] = $viewId;
+            $_SESSION['whitelabel'] = $whitelabelId;
+            $_SESSION['start'] = $startDate;
+            $_SESSION['end'] = $endDate;
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;

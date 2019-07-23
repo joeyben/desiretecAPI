@@ -66,9 +66,11 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
      */
     public function collection()
     {   
-        $file = base_path().'/export.txt';
-        $content = file_get_contents($file);
-        list($viewid,$whitelabel,$start,$end) = explode("\n", $content);
+        session_start();
+        $viewid = $_SESSION['viewid'];
+        $whitelabel = $_SESSION['whitelabel'];
+        $start = $_SESSION['start'];
+        $end = $_SESSION['end'];
 
         $filter = $this->getFilter($viewid);
         $optParams = [
@@ -79,7 +81,6 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
             'dimensions' => 'ga:date',
             'filters' => $filter['filterm'],
         ];
-
         $result = $this->dashboard->uniqueEventsDay($viewid,$optParams,$start,$end);
         $wishes = $this->getWishes($whitelabel,$start,$end);
         $uem = $this->dashboard->uniqueEventsDay($viewid,$optParams1,$start,$end);
@@ -202,6 +203,7 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
     {
         $filterdesk = '';
         $filtermobile = '';
+        $filtershare = '';
 
         switch($viewid){
 
