@@ -89,6 +89,9 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
         $j = 0;
         foreach ($result as $key => $value) {
             $result[$key]['2'] = $uem[$key]['1'];
+            if (!$wishes) {
+                $result[$key]['3']= '0';
+            }
 
             foreach ($wishes as $k => $v) {
                 if ($k == $result[$key]['0'] ) {
