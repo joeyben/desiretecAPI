@@ -125,18 +125,11 @@ class AutooffersRepository extends BaseRepository
                         'Host' => 'novasol.reise-wunsch.com',
                         'Accept-encoding' => 'gzip',
                     ],
-                    'on_stats' => function (TransferStats $stats) use (&$url) {
-                        $url = $stats->getEffectiveUri();
-                    }
                 ]
             );
         } catch (RequestException $e) {
             return $e->getResponse();
         }
-        echo "<pre>";
-        var_dump($response);
-        echo "</pre>";
-        die();
 
         return json_decode($response->getBody());
     }
