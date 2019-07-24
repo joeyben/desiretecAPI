@@ -30,6 +30,8 @@ class AutooffersRepository extends BaseRepository
 
     private $url = 'https://connector.traffics.de/v3/rest';
 
+    private $novasolapi = 'https://safe.novasol.com/api';
+
     protected $region;
 
     protected $location;
@@ -106,6 +108,35 @@ class AutooffersRepository extends BaseRepository
         var_dump($response->getBody()->getContents());
         echo "</pre>";
         die();*/
+
+        return json_decode($response->getBody());
+    }
+
+    public function getNovasolData()
+    {
+        $client = new Client();
+        try {
+            $response = $client->get(
+                $this->url . '/products',
+                [
+                    'headers' => 
+                    [
+                        'Key' => 'WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB',
+                        'Host' => 'novasol.reise-wunsch.com',
+                        'Accept-encoding' => 'gzip',
+                    ],
+                    'on_stats' => function (TransferStats $stats) use (&$url) {
+                        $url = $stats->getEffectiveUri();
+                    }
+                ]
+            );
+        } catch (RequestException $e) {
+            return $e->getResponse();
+        }
+        echo "<pre>";
+        var_dump($response);
+        echo "</pre>";
+        die();
 
         return json_decode($response->getBody());
     }
