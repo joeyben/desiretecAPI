@@ -84,11 +84,12 @@ class AutooffersNovasolController extends Controller
      */
     public function create(Wish $wish)
     {
-        $this->autooffers->saveWishData($wish);
+        //$this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getNovasolData();
+        dd($response);
         //$this->autooffers->storeMany($response, $wish->id);
 
-        return redirect()->to('offer/list/' . $wish->id);
+        //return redirect()->to('offer/list/' . $wish->id);
     }
 
     /**
@@ -100,9 +101,9 @@ class AutooffersNovasolController extends Controller
      */
     public function store(Request $request)
     {
-        $this->autooffers->saveWishData($request->all());
+        //$this->autooffers->saveWishData($request->all());
         $response = $this->autooffers->getTrafficsData();
-        $this->autooffers->storeMany($response);
+        //$this->autooffers->storeMany($response);
     }
 
     /**
