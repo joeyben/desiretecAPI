@@ -117,7 +117,7 @@ class AutooffersRepository extends BaseRepository
         $client = new Client();
         try {
             $response = $client->get(
-                $this->url . '/products',
+                $this->novasolapi . '/products',
                 [
                     'headers' => 
                     [
