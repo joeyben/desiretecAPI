@@ -130,12 +130,12 @@ class AutooffersRepository extends BaseRepository
 
             // Open the file using the HTTP headers set above
             $file = file_get_contents('https://safe.novasol.com/api/products', false, $context);
-            
+
+            return $file;
+
         } catch (RequestException $e) {
             return $e->getResponse();
         }
-
-        return $response;
     }
 
     /**
