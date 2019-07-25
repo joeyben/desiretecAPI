@@ -15,6 +15,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\TransferStats;
 use Modules\Autooffers\Entities\Autooffer;
+use Underscore\Parse;
 
 /**
  * Class EloquentPostsRepository.
@@ -131,7 +132,7 @@ class AutooffersRepository extends BaseRepository
             // Open the file using the HTTP headers set above
             $file = file_get_contents('https://safe.novasol.com/api/products', false, $context);
             
-            return Parse::xml($file);
+            return Parse::fromXML($file);
 
         } catch (RequestException $e) {
             return $e->getResponse();
