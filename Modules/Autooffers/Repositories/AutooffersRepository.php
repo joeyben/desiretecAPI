@@ -130,7 +130,7 @@ class AutooffersRepository extends BaseRepository
             $context = stream_context_create($opts);
 
             // Open the file using the HTTP headers set above
-            $file = file_get_contents('https://safe.novasol.com/api/products', false, $context);
+            $file = file_get_contents('https://safe.novasol.com/api/available?country=280&company=nov&arrival=20190730&departure=20190805&salesmarket=280&adults=3', false, $context);
             
             return Parse::fromXML($file);
 
