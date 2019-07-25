@@ -86,7 +86,7 @@ class AutooffersNovasolController extends Controller
     {
         //$this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getNovasolData();
-        dd($response);
+        var_dump($response);
         //$this->autooffers->storeMany($response, $wish->id);
 
         //return redirect()->to('offer/list/' . $wish->id);
