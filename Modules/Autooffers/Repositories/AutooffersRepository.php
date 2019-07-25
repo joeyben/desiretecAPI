@@ -117,34 +117,35 @@ class AutooffersRepository extends BaseRepository
         $client = new Client();
         try {
 
-            $opts = [
+            /*$opts = [
                 "http" => [
                     "method" => "GET",
                     "header" => "Accept-language: en\r\n" .
                     "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
                     "Host: novasol.reise-wunsch.com\r\n"
                 ]
-            ];
+            ];*/
 
-            $context = stream_context_create($opts);
+            //$context = stream_context_create($opts);
 
             // Open the file using the HTTP headers set above
-            $file = file_get_contents('https://safe.novasol.com/api/products', false, $context);
-            /*$response = $client->get(
+            //$file = file_get_contents('https://safe.novasol.com/api/products', false, $context);
+            $response = $client->get(
                 $this->novasolapi . '/products',
                 [
-                    'headers' => 
+                    'header' => 
                     [
+                        'Accept-language' => 'en',
                         'Key' => 'WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB',
                         'Host' => 'novasol.reise-wunsch.com',
                     ],
                 ]
-            );*/
+            );
         } catch (RequestException $e) {
             return $e->getResponse();
         }
 
-        return $file;
+        return $response;
     }
 
     /**
