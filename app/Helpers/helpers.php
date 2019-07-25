@@ -536,3 +536,24 @@ if (!function_exists('getWhitelabelLocales')) {
         return null;
     }
 }
+
+if (!function_exists('footers_by_whitelabel')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function footers_by_whitelabel()
+    {
+        $url = str_replace('http://', '', url('/'));
+        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
+
+        if(!is_null($id)) {
+            $footers = \Modules\Footers\Entities\Footer::where('whitelabel_id', $id)->orderBy('position', 'ASC')->get();
+
+            return $footers;
+        }
+
+        return [];
+    }
+}

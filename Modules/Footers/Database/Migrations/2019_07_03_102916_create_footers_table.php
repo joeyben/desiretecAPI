@@ -15,9 +15,19 @@ class CreateFootersTable extends Migration
     {
         Schema::create('footers', function (Blueprint $table) {
             $table->increments('id');
-
+            $table->string('name');
+            $table->string('url');
+            $table->smallInteger('position')->nullable();
+            $table->integer('whitelabel_id')->nullable()->unsigned();
+            $table->softDeletes();
             $table->timestamps();
         });
+
+        if (Schema::hasTable('whitelabels')) {
+            Schema::table('footers', function (Blueprint $table) {
+                $table->foreign('whitelabel_id')->references('id')->on('whitelabels')->onDelete('cascade');
+            });
+        }
     }
 
     /**

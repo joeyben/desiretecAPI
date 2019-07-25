@@ -568,4 +568,5 @@ return [
     'role'                     => 'Rolle',
     'export_selected'          => 'Auswahl exportieren',
     'export_all'               => 'Alles exportieren',
+    'footers'                  => 'Footers',
 ];
