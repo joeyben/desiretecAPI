@@ -79,7 +79,7 @@ class NovasolController extends Controller
             'kids_arr'     => $this->kids,
             'pets_arr' => $this->pets,
             'duration_arr' => $this->duration,
-            'request' => $request->all()
+            'request' => $request->all(),
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -177,7 +177,6 @@ class NovasolController extends Controller
      */
     private function translatePets($pets)
     {
-
         foreach ($pets as $key => $value) {
             $pets[$key] = trans('layer.pets.'.$value);
         }

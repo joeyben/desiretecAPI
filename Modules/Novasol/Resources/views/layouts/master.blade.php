@@ -19,8 +19,7 @@
 @endsection
 
 @section('before-scripts')
-
-    <script src="{{ mix('whitelabel/novasol/js/novasol.js') }}"></script>
+    <script src="{{ mix('whitelabel/test/js/layer/layer.js') }}"></script>
 @endsection
 
 @section('after-scripts')
@@ -32,7 +31,8 @@
 
         var kwz = document.createElement('script');
         kwz.type = 'text/javascript'; kwz.async = true;
-        kwz.src = '/whitelabel/novasol/js/layer/layer.js';
+        kwz.src = '/whitelabel/test/js/layer/layer.js';
+        //kwz.src = '/whitelabel/novasol/js/layer/layer.js';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(kwz, s);
 
@@ -58,5 +58,7 @@
                 dt.PopupManager.layerShown = true;
             }
         }
+
+
     </script>
 @endsection

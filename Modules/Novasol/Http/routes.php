@@ -8,6 +8,20 @@ $domain_env = array(
 
 $domain = $domain_env[\Config::get('app.js_env'). '_url'];
 
+Route::get('test', function(){
+
+
+    $client = new GuzzleHttp\Client();
+    $res = $client->get('https://de-staging-ttxml.traveltainment.eu/TTXml-1.8/DispatcherWS', [
+        'auth' => [
+            'MKT_315150_DE', 'G6zP4s=gbNM891e'
+        ]
+    ]);
+
+    dd($res);
+
+});
+
 Route::group(['domain' => $domain], function () {
     setCurrentWhiteLabelId(\Config::get('novasol.id'));
     setTranslationLoaderModel(\Config::get('novasol.language_lines_model'));

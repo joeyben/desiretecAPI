@@ -110,16 +110,16 @@ class NovasolWishesController extends Controller
         }
 
         return view('novasol::wish.wish')->with([
-            'wish'               => $wish,
-            'avatar'             => $avatar,
-            'agent_name'         => $agentName,
-            'body_class'         => $this::BODY_CLASS,
-            'offer_url'          => $this::OFFER_URL,
+            'wish'         => $wish,
+            'avatar'       => $avatar,
+            'agent_name'   => $agentName,
+            'body_class'   => $this::BODY_CLASS,
+            'offer_url'    => $this::OFFER_URL,
             'kids_arr'     => $this->kids,
-            'pets_arr' => $this->pets,
+            'pets_arr'     => $this->pets,
             'duration_arr' => $this->duration,
             'adults_arr'   => $this->adults,
-            'is_owner'            => $isOwner
+            'is_owner'     => $isOwner
         ]);
 
     }
