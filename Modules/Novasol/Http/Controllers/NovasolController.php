@@ -244,7 +244,7 @@ class NovasolController extends Controller
         return $file;
     }
 
-    public function fillAreasFromNovasolApi(){
+    /*public function fillAreasFromNovasolApi(){
         $countries_xml = $this->fillCountriesFromNovasolApi();
         $xml=simplexml_load_string($countries_xml);
             foreach ($xml as $country) {
@@ -266,5 +266,5 @@ class NovasolController extends Controller
 
         dd(Parse::fromXML($file));
         }
-    }
+    }*/
 }
