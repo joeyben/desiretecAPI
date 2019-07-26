@@ -20,7 +20,7 @@ use Underscore\Parse;
 /**
  * Class EloquentPostsRepository.
  */
-class AutooffersRepository extends BaseRepository
+class AutooffersNovasolRepository extends BaseRepository
 {
     /**
      * Associated Repository Model.
