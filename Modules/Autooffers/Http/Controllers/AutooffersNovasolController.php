@@ -50,7 +50,7 @@ class AutooffersNovasolController extends Controller
     /**
      * @param \Modules\Autooffers\Repositories\AutooffersRepository $autooffers
      */
-    public function __construct(AutooffersRepository $autooffers)
+    public function __construct(AutooffersNovasolRepository $autooffers)
     {
         $this->autooffers = $autooffers;
     }
