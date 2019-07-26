@@ -241,8 +241,6 @@ class NovasolController extends Controller
         XML;
 
         return $file;
-        
-        dd($coutry_codes);
     }
 
     public function fillAreasFromNovasolApi(){
