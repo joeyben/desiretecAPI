@@ -133,6 +133,7 @@ class AutooffersNovasolRepository extends BaseRepository
      */
     public function saveWishData(Wish $wish)
     {
+        dd(['test', $wish]);
         $this->setMinBudget(0);
         $this->setMaxBudget(0);
         $this->setAdults($wish->adults);
