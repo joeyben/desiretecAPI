@@ -29,7 +29,7 @@ class AutooffersNovasolRepository extends BaseRepository
 
     private $key = 'WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB';
 
-    private $novasolapi = 'https://safe.novasol.com/api';
+    private $novasolapi = 'https://safe.novasol.com/api/';
 
     protected $region;
 
@@ -68,10 +68,22 @@ class AutooffersNovasolRepository extends BaseRepository
         return Autooffer::class;
     }
 
-    public function getNovasolData()
+    public function getNovasolData(array $params = [])
     {
         $client = new Client();
         try {
+            
+        $this->novasolapi .= 'available?';
+        $lastItem = end($params);
+        
+        foreach ($params as $key => $value) {
+          $this->novasolapi .= $key.'='.$value;
+
+          if($value != $lastItem){
+            $this->novasolapi .= '&';
+          }
+        }
+        
 
             $opts = [
                 "http" => [
@@ -85,7 +97,7 @@ class AutooffersNovasolRepository extends BaseRepository
             $context = stream_context_create($opts);
 
             // Open the file using the HTTP headers set above
-            $file = file_get_contents('https://safe.novasol.com/api/available?country=280&company=nov&arrival=20190730&departure=20190805&salesmarket=280&adults=3', false, $context);
+            $file = file_get_contents($this->novasolapi, false, $context);
             
             return Parse::fromXML($file);
 
