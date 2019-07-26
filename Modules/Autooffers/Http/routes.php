@@ -10,6 +10,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'offer', 'namespace' => 'Module
 
 Route::group(['middleware' => 'web', 'prefix' => 'novasoloffer', 'namespace' => 'Modules\Autooffers\Http\Controllers', 'as' => 'autooffer.'], function () {
     Route::get('/', 'AutooffersNovasolController@index');
+
     Route::get('create/{wish}', 'AutooffersNovasolController@create')->name('create');
     Route::get('list/{wish}', 'AutooffersNovasolController@show')->name('list');
     Route::get('details/{wish}', 'AutooffersNovasolController@details')->name('details');

@@ -85,14 +85,14 @@ class AutooffersNovasolController extends Controller
     public function create(Wish $wish)
     {
         $params = [
-            'country' => 'ES',
+            'country' => '280',
             'company' => 'nov',
             'arrival' => str_replace(['-'], [''], $wish->earliest_start),
             'departure' =>str_replace(['-'], [''], $wish->latest_return),
             'salesmarket' => '280',
             'adults' => $wish->adults,
         ];
-        //$this->autooffers->saveWishData($wish);
+        $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getNovasolData($params);
         var_dump($response);
         //$this->autooffers->storeMany($response, $wish->id);
