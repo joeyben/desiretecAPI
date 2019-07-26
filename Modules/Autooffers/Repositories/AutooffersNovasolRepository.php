@@ -20,16 +20,16 @@ use Underscore\Parse;
 /**
  * Class EloquentPostsRepository.
  */
-class AutooffersRepository extends BaseRepository
+class AutooffersNovasolRepository extends BaseRepository
 {
     /**
      * Associated Repository Model.
      */
     const MODEL = Autooffer::class;
 
-    private $auth = 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
+    private $key = 'WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB';
 
-    private $url = 'https://connector.traffics.de/v3/rest';
+    private $novasolapi = 'https://safe.novasol.com/api';
 
     protected $region;
 
@@ -68,47 +68,30 @@ class AutooffersRepository extends BaseRepository
         return Autooffer::class;
     }
 
-    public function getTrafficsData()
+    public function getNovasolData()
     {
         $client = new Client();
         try {
-            $response = $client->get(
-                $this->url . '/offers/pauschal',
-                [
-                    'query' => [
-                        'auth'                 => $this->auth,
-                        'sortBy'               => 'quality',
-                        'productSubType'       => 'all',
-                        'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
-                        'adults'               => $this->adults,
-                        'children'             => $this->kids,
-                        'navigation'           => '1,3',
-                        'departureAirportList' => $this->airport,
-                        'regionList'           => $this->region,
-                        //'locationList' => $this->location,
-                        'minPricePerPerson' => (int) ($this->minBudget / $this->getPersonsCount()),
-                        'maxPricePerPerson' => (int) ($this->maxBudget / $this->getPersonsCount()),
-                        'minCategory'       => $this->category,
-                        //'minBoardType' => $this->catering,
-                        'rating[source]'   => 'holidaycheck',
-                        'sortDir'          => 'down',
-                        'tourOperatorList' => $this->tourOperatorList,
-                    ],
-                    'on_stats' => function (TransferStats $stats) use (&$url) {
-                        $url = $stats->getEffectiveUri();
-                    }
+
+            $opts = [
+                "http" => [
+                    "method" => "GET",
+                    "header" => "Accept-language: en\r\n" .
+                    "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
+                    "Host: novasol.reise-wunsch.com\r\n"
                 ]
-            );
+            ];
+
+            $context = stream_context_create($opts);
+
+            // Open the file using the HTTP headers set above
+            $file = file_get_contents('https://safe.novasol.com/api/available?country=280&company=nov&arrival=20190730&departure=20190805&salesmarket=280&adults=3', false, $context);
+            
+            return Parse::fromXML($file);
+
         } catch (RequestException $e) {
             return $e->getResponse();
         }
-        /*echo "<pre>";
-        var_dump($url);
-        var_dump($response->getBody()->getContents());
-        echo "</pre>";
-        die();*/
-
-        return json_decode($response->getBody());
     }
 
     /**

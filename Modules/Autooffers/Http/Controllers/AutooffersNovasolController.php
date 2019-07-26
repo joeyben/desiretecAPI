@@ -6,7 +6,7 @@ use App\Models\Wishes\Wish;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Autooffers\Repositories\AutooffersRepository;
+use Modules\Autooffers\Repositories\AutooffersNovasolRepository;
 
 class AutooffersNovasolController extends Controller
 {
@@ -102,7 +102,7 @@ class AutooffersNovasolController extends Controller
     public function store(Request $request)
     {
         //$this->autooffers->saveWishData($request->all());
-        $response = $this->autooffers->getTrafficsData();
+        //$response = $this->autooffers->getTrafficsData();
         //$this->autooffers->storeMany($response);
     }
 
