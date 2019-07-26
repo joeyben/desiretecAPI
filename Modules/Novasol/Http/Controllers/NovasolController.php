@@ -12,6 +12,8 @@ use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Novasol\Http\Requests\StoreWishRequest;
+use Underscore\Parse;
+
 
 class NovasolController extends Controller
 {
@@ -185,8 +187,70 @@ class NovasolController extends Controller
     }
 
     public function fillCountriesFromNovasolApi(){
-        $url = 'https://safe.novasol.com/api/countries';
+        /*$url = 'https://safe.novasol.com/api/countries';
 
+        $opts = [
+                "http" => [
+                    "method" => "GET",
+                    "header" => "Accept-language: en\r\n" .
+                    "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
+                    "Host: novasol.reise-wunsch.com\r\n"
+                ]
+            ];
+
+        $context = stream_context_create($opts);
+
+        // Open the file using the HTTP headers set above
+        $file = file_get_contents($url, false, $context);*/
+
+        $file = <<<XML
+        <countries>
+            <country iso="056">Belgium</country>
+            <country iso="826">United Kingdom</country>
+            <country iso="280">Germany</country>
+            <country iso="196">Cyprus</country>
+            <country iso="191">Croatia</country>
+            <country iso="380">Italy</country>
+            <country iso="558">Nicaragua</country>
+            <country iso="724">Spain</country>
+            <country iso="620">Portugal</country>
+            <country iso="703">Slovakia</country>
+            <country iso="578">Norway</country>
+            <country iso="705">Slovenia</country>
+            <country iso="100">Bulgaria</country>
+            <country iso="246">Finland</country>
+            <country iso="250">France</country>
+            <country iso="203">Czech Republic</country>
+            <country iso="300">Greece</country>
+            <country iso="752">Sweden</country>
+            <country iso="008">Albania</country>
+            <country iso="818">Egypt</country>
+            <country iso="188">Costa Rica</country>
+            <country iso="499">Montenegro</country>
+            <country iso="630">Puerto Rico</country>
+            <country iso="208">Denmark</country>
+            <country iso="756">Switzerland</country>
+            <country iso="348">Hungary</country>
+            <country iso="792">Turkey</country>
+            <country iso="352">Iceland</country>
+            <country iso="442">Luxembourg</country>
+            <country iso="040">Austria</country>
+            <country iso="616">Poland</country>
+            <country iso="528">Holland</country>
+        </countries>
+        XML;
+
+        return $file;
+        
+        dd($coutry_codes);
+    }
+
+    public function fillAreasFromNovasolApi(){
+        $countries_xml = $this->fillCountriesFromNovasolApi();
+        $xml=simplexml_load_string($countries_xml);
+            foreach ($xml as $country) {
+                $url = 'https://safe.novasol.com/api/countries/'. $country['iso'];
+                var_dump($url);
         $opts = [
                 "http" => [
                     "method" => "GET",
@@ -201,6 +265,7 @@ class NovasolController extends Controller
         // Open the file using the HTTP headers set above
         $file = file_get_contents($url, false, $context);
 
-        dd($file);
+        dd(Parse::fromXML($file));
+        }
     }
 }

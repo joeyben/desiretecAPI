@@ -92,7 +92,7 @@ class AutooffersNovasolController extends Controller
             'salesmarket' => '280',
             'adults' => $wish->adults,
         ];
-        $this->autooffers->saveWishData($wish);
+        //$this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getNovasolData($params);
         var_dump($response);
         //$this->autooffers->storeMany($response, $wish->id);
