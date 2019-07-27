@@ -1,5 +1,7 @@
 FROM composer:latest as vendor
 
+LABEL maintainer="desiretec"
+
 COPY composer.json composer.json
 COPY composer.lock composer.lock
 COPY tests tests
@@ -55,9 +57,3 @@ RUN apt update && \
 RUN rm -r /var/www/html/docker
 RUN make routes
 RUN make message
-
-
-
-
-
-
