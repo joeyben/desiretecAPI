@@ -21,8 +21,7 @@ services:
     volumes:
       - "./storage:/var/www/html/storage"
     networks:
-      nginx-proxy-wildcard:
-        ipv4_address: 178.30.0.4
+      - nginx-proxy-wildcard
 
   mariadb:
     image: mariadb:latest
@@ -33,5 +32,10 @@ services:
       MYSQL_DATABASE: default
       MYSQL_USER: default
       MYSQL_PASSWORD: secret
+    networks:
+      - nginx-proxy-wildcard
+
   redis:
     image: redis:latest
+    networks:
+      - nginx-proxy-wildcard
