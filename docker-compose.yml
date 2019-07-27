@@ -28,5 +28,3 @@ services:
 
   redis:
     image: redis:latest
-    networks:
-      - nginx-proxy-wildcard
