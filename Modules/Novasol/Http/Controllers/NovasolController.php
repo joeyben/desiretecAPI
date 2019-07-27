@@ -252,7 +252,7 @@ class NovasolController extends Controller
         $countries_xml = $this->fillCountriesFromNovasolApi();
         $countries = simplexml_load_string($countries_xml);
             foreach ($countries as $country) {
-                $url = 'https://safe.novasol.com/api/countries/'. $country['iso'];
+                $url = 'https://safe.novasol.com/api/countries/'. $country['iso'] . '?salesmarket=280';
 
         $opts = [
                 "http" => [
