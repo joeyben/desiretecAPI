@@ -188,7 +188,7 @@ class NovasolController extends Controller
     
     public function getProduct($id)
     {
-        $url = 'https://safe.novasol.com/api/products?'.$id;
+        $url = 'https://safe.novasol.com/api/products/'. $id;
 
         $opts = [
                 "http" => [
