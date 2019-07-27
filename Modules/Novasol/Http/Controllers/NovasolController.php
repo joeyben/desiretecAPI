@@ -187,8 +187,7 @@ class NovasolController extends Controller
         return $pets;
     }
 
-    public function fillCountriesFromNovasolApi()
-    {
+    public function fillCountriesFromNovasolApi(){
         /*$url = 'https://safe.novasol.com/api/countries';
 
         $opts = [
@@ -241,7 +240,5 @@ class NovasolController extends Controller
             <country iso="528">Holland</country>
         </countries>
         XML;
-
-        return $file;
     }
 }
