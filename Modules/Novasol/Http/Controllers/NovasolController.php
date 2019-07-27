@@ -185,6 +185,27 @@ class NovasolController extends Controller
 
         return $pets;
     }
+    
+    public function getProduct($id)
+    {
+        $url = 'https://safe.novasol.com/api/products?'.$id;
+
+        $opts = [
+                "http" => [
+                    "method" => "GET",
+                    "header" => "Accept-language: en\r\n" .
+                    "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
+                    "Host: novasol.reise-wunsch.com\r\n"
+                ]
+            ];
+
+        $context = stream_context_create($opts);
+
+        // Open the file using the HTTP headers set above
+        $file = file_get_contents($url, false, $context);
+
+        var_dump(Parse::fromXML($file));
+    }
 
     public function fillCountriesFromNovasolApi()
     {
