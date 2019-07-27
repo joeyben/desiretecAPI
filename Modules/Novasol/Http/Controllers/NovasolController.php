@@ -187,7 +187,8 @@ class NovasolController extends Controller
         return $pets;
     }
 
-    public function fillCountriesFromNovasolApi(){
+    public function fillCountriesFromNovasolApi()
+    {
         /*$url = 'https://safe.novasol.com/api/countries';
 
         $opts = [
@@ -243,28 +244,4 @@ class NovasolController extends Controller
 
         return $file;
     }
-
-    /*public function fillAreasFromNovasolApi(){
-        $countries_xml = $this->fillCountriesFromNovasolApi();
-        $xml=simplexml_load_string($countries_xml);
-            foreach ($xml as $country) {
-                $url = 'https://safe.novasol.com/api/countries/'. $country['iso'];
-                var_dump($url);
-        $opts = [
-                "http" => [
-                    "method" => "GET",
-                    "header" => "Accept-language: en\r\n" .
-                    "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
-                    "Host: novasol.reise-wunsch.com\r\n"
-                ]
-            ];
-
-        $context = stream_context_create($opts);
-
-        // Open the file using the HTTP headers set above
-        $file = file_get_contents($url, false, $context);
-
-        dd(Parse::fromXML($file));
-        }
-    }*/
 }
