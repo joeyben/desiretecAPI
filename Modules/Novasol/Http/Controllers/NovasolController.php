@@ -187,8 +187,9 @@ class NovasolController extends Controller
         return $pets;
     }
 
-    public function fillCountriesFromNovasolApi(){
-        /*$url = 'https://safe.novasol.com/api/countries';
+    public function fillCountriesFromNovasolApi()
+    {
+        $url = 'https://safe.novasol.com/api/countries';
 
         $opts = [
                 "http" => [
@@ -202,9 +203,13 @@ class NovasolController extends Controller
         $context = stream_context_create($opts);
 
         // Open the file using the HTTP headers set above
-        $file = file_get_contents($url, false, $context);*/
+        $file = file_get_contents($url, false, $context);
 
-        $file = <<<XML
+        var_dump(Parse::fromXML($file));
+
+        return $file;
+
+        /*$file = <<<XML
         <countries>
             <country iso="056">Belgium</country>
             <country iso="826">United Kingdom</country>
@@ -239,6 +244,32 @@ class NovasolController extends Controller
             <country iso="616">Poland</country>
             <country iso="528">Holland</country>
         </countries>
-        XML;
+        XML;*/
+
+    }
+
+    public function fillAreasFromNovasolApi()
+    {
+        $countries_xml = $this->fillCountriesFromNovasolApi();
+        $countries = simplexml_load_string($countries_xml);
+            foreach ($countries as $country) {
+                $url = 'https://safe.novasol.com/api/countries/'. $country['iso'];
+
+        $opts = [
+                "http" => [
+                    "method" => "GET",
+                    "header" => "Accept-language: en\r\n" .
+                    "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
+                    "Host: novasol.reise-wunsch.com\r\n"
+                ]
+            ];
+
+        $context = stream_context_create($opts);
+
+        // Open the file using the HTTP headers set above
+        $file = file_get_contents($url, false, $context);
+
+        var_dump(Parse::fromXML($file));
+        }
     }
 }
