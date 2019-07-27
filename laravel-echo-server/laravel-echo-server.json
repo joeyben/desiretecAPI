@@ -14,6 +14,6 @@
 	"port": "6001",
 	"protocol": "https",
 	"socketio": {},
-	"sslCertPath": "/app/mvp_certs/live/live//mvp.desiretec.com.crt",
-	"sslKeyPath": "/app/mvp_certs/live/live/mvp.desiretec.com.key"
+	"sslCertPath": "/app/mvp_certs/live/mvp.desiretec.com.crt",
+	"sslKeyPath": "/app/mvp_certs/live/mvp.desiretec.com.key"
 }

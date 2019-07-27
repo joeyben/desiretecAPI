@@ -40,7 +40,7 @@ services:
       build:
         context: ./laravel-echo-server
       volumes:
-        - /etc/letsencrypt:/app/mvp_certs/live:ro
+        - /etc/letsencrypt:/app/mvp_certs:ro
 #      ports:
 #        - 6001:6001
       links:
