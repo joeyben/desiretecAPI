@@ -1,7 +1,5 @@
 FROM composer:latest as vendor
 
-LABEL maintainer="desiretec"
-
 COPY composer.json composer.json
 COPY composer.lock composer.lock
 COPY tests tests
@@ -35,6 +33,8 @@ RUN cd /myapp/Modules/Lastminute && yarn install --ignore-engines && npm run pro
 
 
 FROM horrorhorst/laravel-base:latest
+
+LABEL maintainer="desiretec"
 
 RUN docker-php-ext-install zip
 
