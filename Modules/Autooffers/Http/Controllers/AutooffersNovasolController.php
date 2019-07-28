@@ -111,6 +111,10 @@ class AutooffersNovasolController extends Controller
      */
     public function show(Wish $wish)
     {
+        $prices = [];
+        $thumbnails = [];
+        $qualities = [];
+
         $params = [
             'country' => $this->autooffers->to_country_code($wish->destination),
             'company' => 'nov',
@@ -122,11 +126,18 @@ class AutooffersNovasolController extends Controller
         $response = $this->autooffers->getNovasolData($params);
 
         $offers = simplexml_load_string($response);
+        $count = 0;
         foreach ($offers as $offer) {
-                    $this->autooffers->getProduct($offer->property->propertyid);
+                    if ($count<3) {
+                    array_push($prices, $offer->property->price);
+                    array_push($thumbnails, $offer->property->thumbnail);
+                    array_push($qualities, $offer->property->quality);
+                    $count++;
+                    }
+                    break;
         }
 
-        //return view('autooffers::autooffer.show', compact('wish', 'offers'));
+        return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities'));
     }
 
     /**
