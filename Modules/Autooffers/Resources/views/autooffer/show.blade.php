@@ -121,25 +121,13 @@
                 <div class="card" id="hotel-0">
                     <div class="offer-content">
                         <div class="offer-block offer-block--first">
-                            @php
-                                $pictureArray = array();
-                            @endphp
-
-                            ($thumbnails[0] as  $image)
-                                @php
-                                $pictureUrl = str_replace('size=180', 'size=800', $image);
-                                array_push($pictureArray, $pictureUrl);
-                                @endphp
-                            <!-- carousel -->
-                            @include('autooffers::autooffer.carousel', ['images' => $pictureArray, 'attachments' => [$pictureUrl], 'keyNumber' => $key])
-                            <!-- End carousel -->
-
+                            
                         </div>
                         <div class="offer-block no-border">
 
 
                             <div class="stars hide-mobile">
-                                <h3 class="hide-mobile">{{ $offer["data"]["hotelOffer"]["hotel"]["name"] }}</h3>
+                                <h3 class="hide-mobile"></h3>
 
                                 @for ($i = 1; $i <= intval($qualities[0]); $i++)
                                     <i class="fa fa-heart"></i>
