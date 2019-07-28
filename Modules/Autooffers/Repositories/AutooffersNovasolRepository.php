@@ -97,10 +97,8 @@ class AutooffersNovasolRepository extends BaseRepository
             $context = stream_context_create($opts);
 
             // Open the file using the HTTP headers set above
-            $file = file_get_contents($this->novasolapi, false, $context);
+            return $file = file_get_contents($this->novasolapi, false, $context);
             
-            return Parse::fromXML($file);
-
         } catch (RequestException $e) {
             return $e->getResponse();
         }
