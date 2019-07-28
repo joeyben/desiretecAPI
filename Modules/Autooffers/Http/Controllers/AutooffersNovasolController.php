@@ -85,7 +85,7 @@ class AutooffersNovasolController extends Controller
     public function create(Wish $wish)
     {
         $params = [
-            'country' => $wish->destination,
+            'country' => $this->autooffers->to_country_code($wish->destination),
             'company' => 'nov',
             'arrival' => str_replace(['-'], [''], $wish->earliest_start),
             'departure' =>str_replace(['-'], [''], $wish->latest_return),
