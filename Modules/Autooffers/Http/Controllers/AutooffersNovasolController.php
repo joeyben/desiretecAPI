@@ -84,20 +84,10 @@ class AutooffersNovasolController extends Controller
      */
     public function create(Wish $wish)
     {
-        $params = [
-            'country' => $this->autooffers->to_country_code($wish->destination),
-            'company' => 'nov',
-            'arrival' => str_replace(['-'], [''], $wish->earliest_start),
-            'departure' =>str_replace(['-'], [''], $wish->latest_return),
-            'salesmarket' => '280',
-            'adults' => $wish->adults,
-        ];
         //$this->autooffers->saveWishData($wish);
-        $response = $this->autooffers->getNovasolData($params);
-        var_dump($response);
         //$this->autooffers->storeMany($response, $wish->id);
 
-        //return redirect()->to('novasoloffer/list/' . $wish->id);
+        return redirect()->to('novasoloffer/list/' . $wish->id);
     }
 
     /**
@@ -121,9 +111,22 @@ class AutooffersNovasolController extends Controller
      */
     public function show(Wish $wish)
     {
-        $offers = $this->autooffers->getOffersDataFromId($wish->id);
+        $params = [
+            'country' => $this->autooffers->to_country_code($wish->destination),
+            'company' => 'nov',
+            'arrival' => str_replace(['-'], [''], $wish->earliest_start),
+            'departure' =>str_replace(['-'], [''], $wish->latest_return),
+            'salesmarket' => '280',
+            'adults' => $wish->adults,
+        ];
+        $response = $this->autooffers->getNovasolData($params);
 
-        return view('autooffers::autooffer.show', compact('wish', 'offers'));
+        $offers = simplexml_load_string($response);
+        foreach ($offers as $offer) {
+                    $this->autooffers->getProduct($offer->property->propertyid);
+        }
+
+        //return view('autooffers::autooffer.show', compact('wish', 'offers'));
     }
 
     /**
