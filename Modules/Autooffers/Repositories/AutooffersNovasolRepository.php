@@ -441,10 +441,10 @@ class AutooffersNovasolRepository extends BaseRepository
 
     public function to_country_code($land)
     {
-        return $code = DB::table('novasol_country')
+         return $code = DB::table('novasol_country')
             ->select('novasol_code')
             ->where('name', '=', $land)
-            ->get();
+            ->get()->first();
     }
 
     public function getProduct($id)
