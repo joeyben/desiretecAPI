@@ -230,7 +230,7 @@ class NovasolController extends Controller
 
         return $file;*/
 
-        /*$file = <<<XML
+        $file = <<<XML
         <countries>
             <country iso="056">Belgium</country>
             <country iso="826">United Kingdom</country>
@@ -265,7 +265,7 @@ class NovasolController extends Controller
             <country iso="616">Poland</country>
             <country iso="528">Holland</country>
         </countries>
-        XML;*/
+        XML;
 
         $arr = [];
         $countries = simplexml_load_string($file);
@@ -276,7 +276,7 @@ class NovasolController extends Controller
             ];
         }    
 
-       // DB::table('novasol_country')->insert($arr);
+        DB::table('novasol_country')->insert($arr);
     }
 
     public function fillAreasFromNovasolApi()
