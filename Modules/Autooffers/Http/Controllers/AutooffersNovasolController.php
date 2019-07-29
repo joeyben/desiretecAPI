@@ -131,6 +131,7 @@ class AutooffersNovasolController extends Controller
                     $thumbnails[] = $offer->thumbnail;
                     $qualities[] = $offer->quality;
                     }
+        dd($prices);
         return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities'));
     }
 
