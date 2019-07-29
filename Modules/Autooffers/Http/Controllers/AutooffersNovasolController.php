@@ -120,7 +120,7 @@ class AutooffersNovasolController extends Controller
             'arrival' => str_replace(['-'], [''], $wish->earliest_start),
             'departure' => str_replace(['-'], [''], $wish->latest_return),
             'salesmarket' => '280',
-            'adults' => preg_replace("/[^0-9]/", '', $wish->adults),
+            'adults' => $wish->adults,
         ];
         $response = $this->autooffers->getNovasolData($params);
         $offers = simplexml_load_string($response);
