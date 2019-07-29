@@ -88,7 +88,7 @@
     </div>
 
     <div class="top-panels">
-        <div class="seller" {>
+        <div class="seller">
             <div class="seller-image">
                 <span class="img" style="background-image: url({{ asset('bundles/cssonnenklar/sonnenklar/images/logo.svg') }});"></span>
             </div>

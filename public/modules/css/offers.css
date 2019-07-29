@@ -919,7 +919,7 @@ ul.checklist li:before {
 
 .facts-summary .summary-icon i {
   font-size: 20px;
-  color: #ed1c24;
+  color: #f96500;
 }
 
 .facts-summary .summary-icon span.text {
@@ -1001,7 +1001,7 @@ ul.checklist li:before {
 .price {
   width: calc(50% - 40px);
   padding: 0;
-  border-top: 1px solid #ed1c24;
+  border-top: 1px solid #000;
   float: left;
   margin-left: 20px;
   height: 70px;
@@ -1236,7 +1236,7 @@ ul.checklist li:before {
   font-size: 30px;
   color: #fff;
   padding: 10px 15px;
-  background: #062f57;
+  background: #f96500;
   border-radius: 3px;
 }
 
@@ -1715,7 +1715,7 @@ ul.checklist li:before {
   margin: 0;
   width: 25px;
   font-size: 20px;
-  color: #fd0;
+  color: #f96500;
 }
 
 .offer-block h3 {
@@ -2137,7 +2137,7 @@ ul.checklist li:before {
 }
 
 .c-hotel-rating__recommendation {
-  border: 3px solid #ed1c24;
+  border: 3px solid #f96500;
   color: #000;
   display: inline-block;
   padding: 10px;
@@ -2371,7 +2371,7 @@ ul.checklist li:before {
   width: 19px;
   left: 0;
   right: 0;
-  color: #ed1c24;
+  color: #f96500;
   background: #fff;
   -webkit-box-sizing: initial;
           box-sizing: initial;
