@@ -114,12 +114,11 @@ class AutooffersNovasolController extends Controller
         $prices = [];
         $thumbnails = [];
         $qualities = [];
-
         $params = [
             'country' => $this->autooffers->to_country_code($wish->destination),
             'company' => 'nov',
             'arrival' => str_replace(['-'], [''], $wish->earliest_start),
-            'departure' =>str_replace(['-'], [''], $wish->latest_return),
+            'departure' => str_replace(['-'], [''], $wish->latest_return),
             'salesmarket' => '280',
             'adults' => $wish->adults,
         ];
