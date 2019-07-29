@@ -228,6 +228,7 @@ class NovasolController extends Controller
         $file = file_get_contents($url, false, $context);
 
         $areas = simplexml_load_string($file);
+        var_dump($areas);
                 foreach ($areas as $area) {
                     $arr[] = [
                         'name' => $area->area->name,
@@ -238,7 +239,6 @@ class NovasolController extends Controller
                 }
 
             }
-        DB::table('novasol_area')->insert($arr);
-            dd($arr);
+        //DB::table('novasol_area')->insert($arr);
     }
 }
