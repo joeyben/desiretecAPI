@@ -221,8 +221,7 @@ var dt = window.dt || {};
                 return catering;
             },
             'hotel_category': function (form, formData) {
-                var category = formData.hasOwnProperty('rating') ? formData['rating'] : '';
-                return category;
+                return '';
             },
             'destination': function (form, formData) {
                 var destination = $(".search-form__destination-item-name").text();
