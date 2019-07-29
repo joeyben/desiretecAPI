@@ -226,7 +226,12 @@ class NovasolController extends Controller
 
         // Open the file using the HTTP headers set above
         $file = file_get_contents($url, false, $context);
-        dd([$file, $url]);
-        }
+
+        $areas = simplexml_load_string($file);
+                foreach ($areas as $area) {
+                    dd($area);
+                }
+
+            }
     }
 }
