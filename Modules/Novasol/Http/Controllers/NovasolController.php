@@ -12,6 +12,9 @@ use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Novasol\Http\Requests\StoreWishRequest;
+use Underscore\Parse;
+use Illuminate\Support\Facades\DB;
+
 
 class NovasolController extends Controller
 {
@@ -182,5 +185,60 @@ class NovasolController extends Controller
         }
 
         return $pets;
+    }
+    
+    public function getProduct($id)
+    {
+        $url = 'https://safe.novasol.com/api/products/'. $id . '?salesmarket=208&season=2019';
+
+        $opts = [
+                "http" => [
+                    "method" => "GET",
+                    "header" => "Accept-language: en\r\n" .
+                    "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
+                    "Host: novasol.reise-wunsch.com\r\n"
+                ]
+            ];
+
+        $context = stream_context_create($opts);
+
+        // Open the file using the HTTP headers set above
+        $file = file_get_contents($url, false, $context);
+
+        var_dump(Parse::fromXML($file));
+    }
+
+    public function fillAreasFromNovasolApi()
+    {
+        $countries = DB::table('novasol_country')->get();
+        $arr = [];
+            foreach ($countries as $country) {
+                $url = 'https://safe.novasol.com/api/countries/'. $country->novasol_code . '?salesmarket=280';
+        $opts = [
+                "http" => [
+                    "method" => "GET",
+                    "header" => "Accept-language: en\r\n" .
+                    "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
+                    "Host: novasol.reise-wunsch.com\r\n"
+                ]
+            ];
+        $context = stream_context_create($opts);
+
+        // Open the file using the HTTP headers set above
+        $file = file_get_contents($url, false, $context);
+
+        $areas = simplexml_load_string($file);
+        var_dump($areas);
+                foreach ($areas as $area) {
+                    $arr[] = [
+                        'name' => $area->area->name,
+                        'novasol_country_id' => $country->id,
+                        'novasol_area_code' => $area->area['id'],
+                    ];
+
+                }
+
+            }
+        //DB::table('novasol_area')->insert($arr);
     }
 }

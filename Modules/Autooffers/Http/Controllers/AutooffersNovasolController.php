@@ -6,7 +6,7 @@ use App\Models\Wishes\Wish;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Autooffers\Repositories\AutooffersRepository;
+use Modules\Autooffers\Repositories\AutooffersNovasolRepository;
 
 class AutooffersNovasolController extends Controller
 {
@@ -50,7 +50,7 @@ class AutooffersNovasolController extends Controller
     /**
      * @param \Modules\Autooffers\Repositories\AutooffersRepository $autooffers
      */
-    public function __construct(AutooffersRepository $autooffers)
+    public function __construct(AutooffersNovasolRepository $autooffers)
     {
         $this->autooffers = $autooffers;
     }
@@ -85,11 +85,9 @@ class AutooffersNovasolController extends Controller
     public function create(Wish $wish)
     {
         //$this->autooffers->saveWishData($wish);
-        $response = $this->autooffers->getNovasolData();
-        dd($response);
         //$this->autooffers->storeMany($response, $wish->id);
 
-        //return redirect()->to('offer/list/' . $wish->id);
+        return redirect()->to('novasoloffer/list/' . $wish->id);
     }
 
     /**
@@ -102,7 +100,7 @@ class AutooffersNovasolController extends Controller
     public function store(Request $request)
     {
         //$this->autooffers->saveWishData($request->all());
-        $response = $this->autooffers->getTrafficsData();
+        //$response = $this->autooffers->getTrafficsData();
         //$this->autooffers->storeMany($response);
     }
 
@@ -113,9 +111,33 @@ class AutooffersNovasolController extends Controller
      */
     public function show(Wish $wish)
     {
-        $offers = $this->autooffers->getOffersDataFromId($wish->id);
+        $prices = [];
+        $thumbnails = [];
+        $qualities = [];
 
-        return view('autooffers::autooffer.show', compact('wish', 'offers'));
+        $params = [
+            'country' => $this->autooffers->to_country_code($wish->destination),
+            'company' => 'nov',
+            'arrival' => str_replace(['-'], [''], $wish->earliest_start),
+            'departure' =>str_replace(['-'], [''], $wish->latest_return),
+            'salesmarket' => '280',
+            'adults' => $wish->adults,
+        ];
+        $response = $this->autooffers->getNovasolData($params);
+
+        $offers = simplexml_load_string($response);
+        $count = 0;
+        foreach ($offers as $offer) {
+                    if ($count<3) {
+                    array_push($prices, $offer->property->price);
+                    array_push($thumbnails, $offer->property->thumbnail);
+                    array_push($qualities, $offer->property->quality);
+                    $count++;
+                    }
+                    break;
+        }
+        dd($prices);
+        return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities'));
     }
 
     /**

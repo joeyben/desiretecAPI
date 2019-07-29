@@ -13,13 +13,10 @@ services:
         - /var/www/desiretec-mvp-stage/storage:/var/www/html/storage
       environment:
         - VIRTUAL_HOST=mvp.desiretec.com,novasol.wunsch-service.de,trendtours.reise-wunsch.com,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com
-#        - LETSENCRYPT_HOST=mvp.desiretec.com,novasol.wunsch-service.de,trendtours.reise-wunsch.com
-#        - VIRTUAL_HOST=mvp.desiretec.com,novasol.wunsch-service.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com,trendtours.reise-wunsch.com
-#        - LETSENCRYPT_HOST=mvp.desiretec.com,novasol.wunsch-service.de,*.reise-wunsch.com,trendtours.reise-wunsch.com
-#        - LETSENCRYPT_EMAIL=info@desiretec.com
       networks:
-        - frontend
-        - backend
+        nginx-proxy-wildcard:
+          ipv4_address: 178.30.0.3
+
     mariadb:
       image: mariadb:latest
       environment:
@@ -30,36 +27,29 @@ services:
       ports:
         - "127.0.0.1:3300:3306"
       networks:
-        - backend
+        nginx-proxy-wildcard:
+          ipv4_address: 178.30.0.4
+
     redis:
       image: redis:latest
       networks:
-        - backend
+        nginx-proxy-wildcard:
+          ipv4_address: 178.30.0.5
+
     laravel-echo-server:
       build:
         context: ./laravel-echo-server
       volumes:
-        - ./laravel-echo-server/laravel-echo-server.json:/app/laravel-echo-server.json:ro
-        - /etc/letsencrypt:/app/mvp_certs/live:ro
-#        - nginx-reverse-proxy_le-certs:/app/mvp_certs/:ro
-#        - reverseproxy_certs:/app/mvp_certs/:ro
+        - /etc/letsencrypt:/app/mvp_certs:ro
       ports:
         - 6001:6001
       links:
         - redis
       networks:
-        - frontend
-        - backend
-      command: tail -f /dev/null
+        nginx-proxy-wildcard:
+          ipv4_address: 178.30.0.6
 
 networks:
-    frontend:
+    nginx-proxy-wildcard:
       external:
         name: nginx-proxy-wildcard
-#        name: nginx-reverse-proxy_http_proxy
-#        name: reverseproxy_http_proxy
-    backend:
-
-volumes:
-    nginx-reverse-proxy_le-certs:
-      external: true

@@ -48,6 +48,7 @@ build-stage:
     - docker-compose -f docker-compose.yml -f docker-compose.stage.yml build
     - docker-compose -f docker-compose.yml -f docker-compose.stage.yml down
     - docker-compose -f docker-compose.yml -f docker-compose.stage.yml up -d
+    - docker image prune -a --force --filter "until=12h" --filter "label=maintainer=desiretec"
     - rm -rf $DOCKER_CERT_PATH
   only:
     - development

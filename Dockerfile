@@ -34,6 +34,8 @@ RUN cd /myapp/Modules/Lastminute && yarn install --ignore-engines && npm run pro
 
 FROM horrorhorst/laravel-base:latest
 
+LABEL maintainer="desiretec"
+
 RUN docker-php-ext-install zip
 
 COPY . /var/www/html
@@ -55,9 +57,3 @@ RUN apt update && \
 RUN rm -r /var/www/html/docker
 RUN make routes
 RUN make message
-
-
-
-
-
-

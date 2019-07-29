@@ -88,21 +88,21 @@
     </div>
 
     <div class="top-panels">
-        <div class="seller" {>
+        <div class="seller">
             <div class="seller-image">
                 <span class="img" style="background-image: url({{ asset('bundles/cssonnenklar/sonnenklar/images/logo.svg') }});"></span>
             </div>
             <div class="seller-name">
             </div>
             <div class="seller-message">
-                @if (count($offers) === 0)
+                @if (count($prices) === 0)
                 "Leider haben wir noch keine Angebote für Deinen Reisewunsch "{{ $wish->destination }}" für dich finden können. Wir erfüllen Dir jedoch gerne unter folgender Nummer Deine Wünsche <br><a href="tel:089710459535">089-710459535</a>."
                 @else
                 <h1>Herzlich Wilkommen</h1>"Hallo, wir haben wunderbare Angebote zu deinem Reisewunsch "{{ $wish->destination }}" für dich gefunden. Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <br><a href="tel:089710459535">089-710459535</a>."
                 @endif
             </div>
         </div>
-        @if (count($offers) > 0)<div id="map" class="map"></div>@endif
+        @if (count($prices) > 0)<div id="map" class="map"></div>@endif
 
     </div>
 </div>
@@ -112,15 +112,6 @@
     </div>
 </div>
 
-@php
-$counter = 0;
-@endphp
-
-@foreach ($offers as $key => $offer)
-@php
-if($counter==3) break;
-$counter++;
-@endphp
 <div class="pagecontainer">
     <div class="row">
 
@@ -129,30 +120,16 @@ $counter++;
             <div class="c-card c-card-1">
                 <div class="card" id="hotel-0">
                     <div class="offer-content">
-                        @if($counter&1)
                         <div class="offer-block offer-block--first">
-                            @php
-                                $pictureArray = array();
-                            @endphp
-
-                            @foreach ($offer["hotel_data"]["hotel"]["catalogData"]["imageList"] as  $image)
-                                @php
-                                $pictureUrl = str_replace('size=180', 'size=800', $image);
-                                array_push($pictureArray, $pictureUrl);
-                                @endphp
-                            @endforeach
-                            <!-- carousel -->
-                            @include('autooffers::autooffer.carousel', ['images' => $pictureArray, 'attachments' => [$pictureUrl], 'keyNumber' => $key])
-                            <!-- End carousel -->
-
+                            
                         </div>
                         <div class="offer-block no-border">
 
 
                             <div class="stars hide-mobile">
-                                <h3 class="hide-mobile">{{ $offer["data"]["hotelOffer"]["hotel"]["name"] }}</h3>
+                                <h3 class="hide-mobile"></h3>
 
-                                @for ($i = 1; $i <= intval($offer["data"]["hotelOffer"]["hotel"]["category"]); $i++)
+                                @for ($i = 1; $i <= intval($qualities[0]); $i++)
                                     <i class="fa fa-heart"></i>
                                 @endfor
                             </div>
@@ -161,7 +138,7 @@ $counter++;
 
                             <span class="location launch-map hide-mobile" data-address=",  Avsallar, TR" lat="36.60976" lng="31.77992">
                                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            <span>{{ $offer["hotel_data"]["hotel"]["location"]["name"] }}, {{ $offer["hotel_data"]["hotel"]["location"]["region"]["name"] }}</span>
+                                            <span></span>
                                             </span>
                             <div class="offer-touroperator hide-mobile">
                                 <div class="c-hotel-rating__recommendation" data-key="0" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="
@@ -248,14 +225,10 @@ $counter++;
 
                             <div class="facts-summary">
                                 <h5>Highlight der Unterkunft:</h5>
-                                @foreach ($offer["hotel_data"]["hotel"]["keywordList"] as $key => $keyword)
-                                    @if ($key < 3)
                                         <div class="summary-icon">
                                             <i class="fa fa-check" aria-hidden="true"></i>
-                                            <span class="text">{{ $keyword }}</span>
+                                            <span class="text"></span>
                                         </div>
-                                    @endif
-                                @endforeach
                                     <div class="summary-icon">
                                         <i class="fa fa-check" aria-hidden="true"></i>
                                         <span class="text">Direkt am Strand</span>
@@ -273,160 +246,11 @@ $counter++;
                             <div class="clearfix"></div>
 
                             <div class="offer-facilities">
-                                <div>{{ $offer["data"]['travelDate']['duration'] }} Tage, {{ $offer["data"]["hotelOffer"]['boardType']['name'] }}@if (count($offer["data"]['hotelOffer']['facilityList'])), {{ $offer["data"]['hotelOffer']['facilityList'][0] }}@endif</div>
+                                <div></div>
                             </div>
 
                         </div>
-                        @else
-                        <div class="offer-block no-border">
-
-
-                            <div class="stars hide-mobile">
-                                <h3 class="hide-mobile">{{ $offer["data"]["hotelOffer"]["hotel"]["name"] }}</h3>
-
-                                @for ($i = 1; $i <= intval($offer["data"]["hotelOffer"]["hotel"]["category"]); $i++)
-                                    <i class="fa fa-heart"></i>
-                                @endfor
-                            </div>
-
-
-
-                            <span class="location launch-map hide-mobile" data-address=",  Avsallar, TR" lat="36.60976" lng="31.77992">
-                                                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            <span>{{ $offer["hotel_data"]["hotel"]["location"]["name"] }}, {{ $offer["hotel_data"]["hotel"]["location"]["region"]["name"] }}</span>
-                                            </span>
-                            <div class="offer-touroperator hide-mobile">
-                                <div class="c-hotel-rating__recommendation" data-key="0" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="
-                                    <div class=&quot;ttp-ctn&quot;>
-                                        <div>
-                                            <p class=&quot;review_score_name&quot;>Allgemein</p>
-                                            <div class=&quot;score_bar&quot;>
-                                                <div class=&quot;score_bar_value&quot; data-score=&quot;88&quot; style=&quot;width: 88%;&quot;></div>
-                                            </div>
-
-                                            <p class=&quot;review_score_value&quot;>8.8</p>
-                                        </div>
-                                        <div>
-                                            <p class=&quot;review_score_name&quot;>Hotel</p>
-                                            <div class=&quot;score_bar&quot;>
-                                                <div class=&quot;score_bar_value&quot; data-score=&quot;88&quot; style=&quot;width: 88%;&quot;></div>
-                                            </div>
-
-                                            <p class=&quot;review_score_value&quot;>8.8</p>
-                                        </div>
-                                        <div>
-                                            <p class=&quot;review_score_name&quot;>Zimmer</p>
-                                            <div class=&quot;score_bar&quot;>
-                                                <div class=&quot;score_bar_value&quot; data-score=&quot;88&quot; style=&quot;width: 88%;&quot;></div>
-                                            </div>
-
-                                            <p class=&quot;review_score_value&quot;>8.8</p>
-                                        </div>
-                                        <div>
-                                            <p class=&quot;review_score_name&quot;>Lage</p>
-                                            <div class=&quot;score_bar&quot;>
-                                                <div class=&quot;score_bar_value&quot; data-score=&quot;90&quot; style=&quot;width: 90%;&quot;></div>
-                                            </div>
-
-                                            <p class=&quot;review_score_value&quot;>9</p>
-                                        </div>
-                                    </div>
-                                    <div class=&quot;ttp-ctn&quot;>
-                                        <div>
-                                            <p class=&quot;review_score_name&quot;>Sport &amp; Unterhaltung</p>
-                                            <div class=&quot;score_bar&quot;>
-                                                <div class=&quot;score_bar_value&quot; data-score=&quot;87&quot; style=&quot;width: 87%;&quot;></div>
-                                            </div>
-
-                                            <p class=&quot;review_score_value&quot;>8.7</p>
-                                        </div>
-                                        <div>
-                                            <p class=&quot;review_score_name&quot;>Service</p>
-                                            <div class=&quot;score_bar&quot;>
-                                                <div class=&quot;score_bar_value&quot; data-score=&quot;89&quot; style=&quot;width: 89%;&quot;></div>
-                                            </div>
-
-                                            <p class=&quot;review_score_value&quot;>8.9</p>
-                                        </div>
-
-                                        <div>
-                                            <p class=&quot;review_score_name&quot;>Gastronomie</p>
-                                            <div class=&quot;score_bar&quot;>
-                                                <div class=&quot;score_bar_value&quot; data-score=&quot;89&quot; style=&quot;width: 89%;&quot;></div>
-                                            </div>
-
-                                            <p class=&quot;review_score_value&quot;>8.9</p>
-                                        </div>
-                                        <div>
-                                            <p class=&quot;review_score_name&quot;>Weiterempfehlung</p>
-                                            <div class=&quot;score_bar&quot;>
-                                                <div class=&quot;score_bar_value&quot; data-score=&quot;90&quot; style=&quot;width: 90%;&quot;></div>
-                                            </div>
-
-                                            <p class=&quot;review_score_value&quot;>9</p>
-                                        </div>
-                                    </div><div class=&quot;clearfix&quot;></div>" data-original-title="" title="">
-                                    8.8
-                                </div>
-                                <div class="rating-info">
-
-                                    <span class="text">sehr gut</span>
-                                    <span>4899 Bewertungen</span>
-                                </div>
-                                <!-- <img width="70" src="https://media.traffics-switch.de/vadata/logo/gif/h50/xpur.gif" alt="XPUR" title="XPUR Reisen" class="offer-tourop-logo"> -->
-                            </div>
-
-                            <div class="clearfix"></div>
-
-                            <div class="facts-summary">
-                                <h5>Highlight der Unterkunft:</h5>
-                                @foreach ($offer["hotel_data"]["hotel"]["keywordList"] as $key => $keyword)
-                                    @if ($key < 3)
-                                        <div class="summary-icon">
-                                            <i class="fa fa-check" aria-hidden="true"></i>
-                                            <span class="text">{{ $keyword }}</span>
-                                        </div>
-                                    @endif
-                                @endforeach
-                                    <div class="summary-icon">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                        <span class="text">Direkt am Strand</span>
-                                    </div>
-                                    <div class="summary-icon">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                        <span class="text">Strandnah</span>
-                                    </div>
-                                    <div class="summary-icon">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                        <span class="text">Kinderfreundlich</span>
-                                    </div>
-                            </div>
-
-                            <div class="clearfix"></div>
-
-                            <div class="offer-facilities">
-                                <div>{{ $offer["data"]['travelDate']['duration'] }} Tage, {{ $offer["data"]["hotelOffer"]['boardType']['name'] }}@if (count($offer["data"]['hotelOffer']['facilityList'])), {{ $offer["data"]['hotelOffer']['facilityList'][0] }}@endif</div>
-                            </div>
-
-                        </div>
-                        <div class="offer-block offer-block--first">
-                            @php
-                                $pictureArray = array();
-                            @endphp
-
-                            @foreach ($offer["hotel_data"]["hotel"]["catalogData"]["imageList"] as  $image)
-                                @php
-                                $pictureUrl = str_replace('size=180', 'size=800', $image);
-                                array_push($pictureArray, $pictureUrl);
-                                @endphp
-                            @endforeach
-                            <!-- carousel -->
-                            @include('autooffers::autooffer.carousel', ['images' => $pictureArray, 'attachments' => [$pictureUrl], 'keyNumber' => $key])
-                            <!-- End carousel -->
-
-                        </div>
-                        @endif
-                        <div class="price">
+                                                <div class="price">
                             <div class="offer-action">
 
                                 <div class="left">
@@ -441,7 +265,7 @@ $counter++;
                                         <div class="offer-price">
                                             <div class="price-all">
                                                 <div class="js-price-person">
-                                                    <span>{{  number_format($offer["data"]['personPrice']['value'], 0, ',', '.') }}€</span>
+                                                    <span>{{  number_format($prices[0], 0, ',', '.') }}€</span>
                                                     <span class="type">p.P.</span>
                                                 </div>
                                                 <!--<div class="js-price-total">
@@ -468,8 +292,6 @@ $counter++;
     </div>
 
 </div>
-@endforeach
-
 <!-- END OF CONTENT -->
 @endsection
 

@@ -4,11 +4,6 @@ volumes:
   mariadb_data:
     driver: local
 
-networks:
-    nginx-proxy-wildcard:
-      external:
-        name: nginx-proxy-wildcard
-
 services:
   app:
     image: desiretecmvp:latest
@@ -20,9 +15,6 @@ services:
       - redis
     volumes:
       - "./storage:/var/www/html/storage"
-    networks:
-      nginx-proxy-wildcard:
-        ipv4_address: 178.30.0.4
 
   mariadb:
     image: mariadb:latest
@@ -33,5 +25,6 @@ services:
       MYSQL_DATABASE: default
       MYSQL_USER: default
       MYSQL_PASSWORD: secret
+
   redis:
     image: redis:latest
