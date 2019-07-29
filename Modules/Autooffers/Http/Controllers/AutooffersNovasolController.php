@@ -125,6 +125,7 @@ class AutooffersNovasolController extends Controller
         $response = $this->autooffers->getNovasolData($params);
 
         $offers = simplexml_load_string($response);
+        dd($offers);
         foreach ($offers as $offer) {
                     $prices[] = $offer->property->price;
                     $thumbnails[] = $offer->property->thumbnail;
