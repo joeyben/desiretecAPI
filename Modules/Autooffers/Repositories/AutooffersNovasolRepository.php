@@ -16,6 +16,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\TransferStats;
 use Modules\Autooffers\Entities\Autooffer;
 use Underscore\Parse;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class EloquentPostsRepository.
