@@ -136,7 +136,7 @@ class AutooffersNovasolController extends Controller
                     }
                     break;
         }
-
+        dd($prices);
         return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities'));
     }
 
