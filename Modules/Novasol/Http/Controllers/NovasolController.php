@@ -229,9 +229,16 @@ class NovasolController extends Controller
 
         $areas = simplexml_load_string($file);
                 foreach ($areas as $area) {
-                    dd($area);
+                    $arr[] = [
+                        'name' => $area->area->name,
+                        'novasol_country_id' => $country->id,
+                        'novasol_area_code' => $area->area['id'],
+                    ];
+
                 }
 
             }
+        DB::table('novasol_area')->insert($arr);
+            dd($arr);
     }
 }
