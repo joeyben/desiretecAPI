@@ -221,25 +221,36 @@ var dt = window.dt || {};
                 return catering;
             },
             'hotel_category': function (form, formData) {
-                return '';
+                if(!formData)
+                    return '';
+                var category = formData.hasOwnProperty('rating') ? formData['rating'] : '';
+                return category;
             },
             'destination': function (form, formData) {
                 var destination = $(".search-form__destination-item-name").text();
                 return destination;
             },
             'pax': function (form, formData) {
+                if(!form)
+                    return '';
                 var pax =  form.hasOwnProperty('adults') ? form['adults'] : '';
                 return pax;
             },
             'budget': function (form, formData) {
+                if(!form)
+                    return '';
                 var budget = form.hasOwnProperty('priceMaximum') ? form['priceMaximum'] : '';
                 return budget;
             },
             'kids': function (form, formData) {
+                if(!form)
+                    return '';
                 var kids = form.hasOwnProperty('kids') ? form['kids'] : '';
                 return kids;
             },
             'pets': function (form, formData) {
+                if(!form)
+                    return '';
                 var pets = form.hasOwnProperty('pets') ? form['pets'] : '';
                 return pets;
             },
@@ -256,14 +267,20 @@ var dt = window.dt || {};
                 return age3;
             },
             'earliest_start': function (form, formData) {
+                if(!formData)
+                    return '';
                 var dateFrom = formData.hasOwnProperty('startDate') ? this.formatDate(formData['startDate']) : '';
                 return dateFrom;
             },
             'latest_return': function (form, formData) {
+                if(!formData)
+                    return '';
                 var dateTo = formData.hasOwnProperty('endDate') ? this.formatDate(formData['endDate']) : '';
                 return dateTo;
             },
             'duration': function (form, formData) {
+                if(!form)
+                    return '';
                 var duration = form.hasOwnProperty('lengthOfStay') ? parseInt(form['lengthOfStay']) - 1 : '';
                 return duration;
             },
