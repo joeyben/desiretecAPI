@@ -125,11 +125,11 @@ class AutooffersNovasolController extends Controller
         $response = $this->autooffers->getNovasolData($params);
 
         $offers = simplexml_load_string($response);
-        dd($offers);
-        foreach ($offers as $offer) {
-                    $prices[] = $offer->property->price;
-                    $thumbnails[] = $offer->property->thumbnail;
-                    $qualities[] = $offer->property->quality;
+        //dd($offers);
+        foreach ($offers->property as $offer) {
+                    $prices[] = $offer->price;
+                    $thumbnails[] = $offer->thumbnail;
+                    $qualities[] = $offer->quality;
                     }
         dd($prices);
         //return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities'));
