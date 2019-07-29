@@ -241,7 +241,6 @@ class NovasolController extends Controller
                 }
 
             }
-            dd($arr);
-        //DB::table('novasol_area')->insert($arr);
+        DB::table('novasol_area')->insert($arr);
     }
 }
