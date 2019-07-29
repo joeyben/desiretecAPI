@@ -13,6 +13,7 @@ use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Novasol\Http\Requests\StoreWishRequest;
 use Underscore\Parse;
+use Illuminate\Support\Facades\DB;
 
 
 class NovasolController extends Controller
@@ -209,7 +210,7 @@ class NovasolController extends Controller
 
     public function fillCountriesFromNovasolApi()
     {
-        $url = 'https://safe.novasol.com/api/countries';
+        /*$url = 'https://safe.novasol.com/api/countries';
 
         $opts = [
                 "http" => [
@@ -225,9 +226,9 @@ class NovasolController extends Controller
         // Open the file using the HTTP headers set above
         $file = file_get_contents($url, false, $context);
 
-        var_dump(Parse::fromXML($file));
+        dd(Parse::fromXML($file));
 
-        return $file;
+        return $file;*/
 
         /*$file = <<<XML
         <countries>
@@ -266,15 +267,24 @@ class NovasolController extends Controller
         </countries>
         XML;*/
 
+        $arr = [];
+        $countries = simplexml_load_string($file);
+        foreach ($countries as $country) {
+            $arr[] = [
+                'name' => $country,
+                'novasol_code' => $country['iso']
+            ];
+        }    
+
+       // DB::table('novasol_country')->insert($arr);
     }
 
     public function fillAreasFromNovasolApi()
     {
-        $countries_xml = $this->fillCountriesFromNovasolApi();
-        $countries = simplexml_load_string($countries_xml);
+        $countries = DB::table('novasol_country')->get();
+        $arr = [];
             foreach ($countries as $country) {
-                $url = 'https://safe.novasol.com/api/countries/'. $country['iso'] . '?salesmarket=280';
-
+                $url = 'https://safe.novasol.com/api/countries/'. $country->novasol_code . '?salesmarket=280';
         $opts = [
                 "http" => [
                     "method" => "GET",
@@ -283,13 +293,11 @@ class NovasolController extends Controller
                     "Host: novasol.reise-wunsch.com\r\n"
                 ]
             ];
-
         $context = stream_context_create($opts);
 
         // Open the file using the HTTP headers set above
         $file = file_get_contents($url, false, $context);
-
-        var_dump(Parse::fromXML($file));
+        dd($file);
         }
     }
 }
