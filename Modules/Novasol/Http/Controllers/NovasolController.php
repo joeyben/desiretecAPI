@@ -240,6 +240,7 @@ class NovasolController extends Controller
 
     public function fillAreasFromNovasolApi()
     {
+        $areas ='';
         $countries = DB::table('novasol_country')->get();
         $arr = [];
             foreach ($countries as $country) {
