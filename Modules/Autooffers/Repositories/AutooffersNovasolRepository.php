@@ -446,7 +446,7 @@ class AutooffersNovasolRepository extends BaseRepository
             ->where('name', '=', $land)
             ->get()->first();
 
-         if (!$code){
+         if ($code === null){
              $land = strtoupper($land);
              $code = DB::table('novasol_area')
                  ->join('novasol_country', 'novasol_area.novasol_country_id', '=', 'novasol_country.id')
@@ -457,9 +457,9 @@ class AutooffersNovasolRepository extends BaseRepository
                  ->select('novasol_area_code')
                  ->where('name', '=', $land)
                  ->get()->first();
-             return [$code,$area];
+             return [$code->novasol_code,$area->novasol_area];
          }else{
-             return  [$code,''];
+             return  [$code->novasol_code,''];
          }
 
     }
