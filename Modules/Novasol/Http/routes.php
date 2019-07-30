@@ -35,6 +35,7 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist', 'NovasolWishesController@wishList')->name('list');
         Route::get('wishlist/{token}', 'NovasolWishesController@validateTokenList');
         Route::get('/fill-areas-from-novasol-api', 'NovasolController@fillAreasFromNovasolApi');
+        Route::get('/fill-countries-from-novasol-api', 'NovasolController@fillCountriesFromNovasolApi');
         Route::get('/product/{id}', 'NovasolController@getProduct');
     });
 });
