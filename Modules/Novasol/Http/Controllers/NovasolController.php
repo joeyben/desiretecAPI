@@ -210,7 +210,7 @@ class NovasolController extends Controller
 
     public function fillCountriesFromNovasolApi()
     {
-        $url = 'https://safe.novasol.com/api/countries?salesmarket=208';
+        $url = 'https://safe.novasol.com/api/countries?salesmarket=280';
 
         $opts = [
                 "http" => [
