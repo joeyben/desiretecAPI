@@ -125,9 +125,12 @@ class AutooffersNovasolController extends Controller
             'arrival' => str_replace(['-'], [''], $wish->earliest_start),
             'departure' => str_replace(['-'], [''], $wish->latest_return),
             'salesmarket' => '280',
-            'adults' => $wish->adults,
+            'adults' => str_replace(' Erwachsene','',$wish->adults),
+            'children' => $wish->kids == 'Kein Kinder' ? '':str_replace(' Kinder','',$wish->kids),
+            'maxprice' => $wish->budget,
         ];
         $response = $this->autooffers->getNovasolData($params);
+        dd($response);
         $offers = simplexml_load_string($response);
         foreach ($offers->property as $offer) {
                     $prices[] = (float) $offer->price;
