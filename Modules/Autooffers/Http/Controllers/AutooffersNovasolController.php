@@ -114,6 +114,7 @@ class AutooffersNovasolController extends Controller
         $prices = [];
         $thumbnails = [];
         $qualities = [];
+        $locations = [];
         $params = [
             'country' => $this->autooffers->to_country_code($wish->destination),
             'company' => 'nov',
@@ -129,6 +130,7 @@ class AutooffersNovasolController extends Controller
                     $prices[] = (float) $offer->price;
                     $thumbnails[] = (string) $offer->thumbnail;
                     $qualities[] = (int) $offer->quality;
+                    $locations[] = (string) $offer->location;
                     }
         return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities'));
     }
