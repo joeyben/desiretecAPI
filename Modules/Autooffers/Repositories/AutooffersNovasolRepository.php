@@ -441,22 +441,20 @@ class AutooffersNovasolRepository extends BaseRepository
 
     public function to_country_code($land)
     {
-         $land = strtoupper($land);
          $code = DB::table('novasol_country')
             ->select('novasol_code')
-            ->where('UPPER(name)', '=', $land)
+            ->where('name', '=', $land)
             ->get()->first();
 
          if ($code === null){
-             $land = strtoupper($land);
              $code = DB::table('novasol_area')
                  ->join('novasol_country', 'novasol_area.novasol_country_id', '=', 'novasol_country.id')
                  ->select('novasol_code')
-                 ->where('UPPER(novasol_area.name)', '=', $land)
+                 ->where('novasol_area.name', '=', $land)
                  ->get()->first();
              $area = DB::table('novasol_area')
                  ->select('novasol_area_code')
-                 ->where('UPPER(name)', '=', $land)
+                 ->where('name', '=', $land)
                  ->get()->first();
              return [$code->novasol_code,$area->novasol_area_code];
          }else{
