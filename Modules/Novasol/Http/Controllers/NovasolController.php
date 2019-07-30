@@ -256,9 +256,9 @@ class NovasolController extends Controller
 
         // Open the file using the HTTP headers set above
         $file = file_get_contents($url, false, $context);
-
-        $areas = simplexml_load_string($file);
-                foreach ($areas as $area) {
+                $areas .= $file;
+        //$areas = simplexml_load_string($file);
+                /*foreach ($areas as $area) {
                     $arr[] = [
                         'name' => $area->name,
                         'novasol_country_id' => $country->id,
@@ -279,10 +279,9 @@ class NovasolController extends Controller
                      }
                     }
 
-                }
-
+                }*/
             }
-            //dd($arr);
-        DB::table('novasol_area')->insert($arr);
+            dd($areas);
+        //DB::table('novasol_area')->insert($arr);
     }
 }
