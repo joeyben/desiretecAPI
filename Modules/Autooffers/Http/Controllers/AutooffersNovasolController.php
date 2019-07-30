@@ -132,7 +132,7 @@ class AutooffersNovasolController extends Controller
                     $qualities[] = (int) $offer->quality;
                     $locations[] = (string) $offer->location;
                     }
-        return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities'));
+        return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities','locations'));
     }
 
     /**
