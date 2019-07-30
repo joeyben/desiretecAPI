@@ -121,7 +121,7 @@
                 <div class="card" id="hotel-0">
                     <div class="offer-content">
                         <div class="offer-block offer-block--first">
-                            {{  $thumbnails[0] }}
+                            <img src="{{ str_replace('/100/','/600/',$thumbnails[0]) }}" style="width: 100%">
                         </div>
                         <div class="offer-block no-border">
 
@@ -138,7 +138,7 @@
 
                             <span class="location launch-map hide-mobile" data-address=",  Avsallar, TR" lat="36.60976" lng="31.77992">
                                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            <span></span>
+                                            <span>{{ $locations[0] }}</span>
                                             </span>
                             <div class="offer-touroperator hide-mobile">
                                 <div class="c-hotel-rating__recommendation" data-key="0" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="
@@ -315,7 +315,7 @@
 
                             <span class="location launch-map hide-mobile" data-address=",  Avsallar, TR" lat="36.60976" lng="31.77992">
                                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            <span></span>
+                                            <span>{{ $locations[1] }}</span>
                                             </span>
                             <div class="offer-touroperator hide-mobile">
                                 <div class="c-hotel-rating__recommendation" data-key="0" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="
@@ -428,7 +428,7 @@
 
                         </div>
                         <div class="offer-block offer-block--first">
-
+                            <img src="{{ str_replace('/100/','/600/',$thumbnails[1]) }}" style="width: 100%">
                         </div>
                         <div class="price">
                             <div class="offer-action">
@@ -481,7 +481,7 @@
                 <div class="card" id="hotel-0">
                     <div class="offer-content">
                         <div class="offer-block offer-block--first">
-
+                            <img src="{{ str_replace('/100/','/600/',$thumbnails[2]) }}" style="width: 100%">
                         </div>
                         <div class="offer-block no-border">
 
@@ -498,7 +498,7 @@
 
                             <span class="location launch-map hide-mobile" data-address=",  Avsallar, TR" lat="36.60976" lng="31.77992">
                                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            <span></span>
+                                            <span>{{ $locations[2] }}</span>
                                             </span>
                             <div class="offer-touroperator hide-mobile">
                                 <div class="c-hotel-rating__recommendation" data-key="0" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="
