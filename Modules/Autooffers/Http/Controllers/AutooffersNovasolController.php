@@ -117,7 +117,7 @@ class AutooffersNovasolController extends Controller
         $qualities = [];
         $locations = [];
 
-        $country_area[] = $this->autooffers->to_country_code($wish->destination);
+        $country_area = $this->autooffers->to_country_code($wish->destination);
         $params = [
             'country' => $country_area[0],
             'area' => $country_area[1],
