@@ -130,7 +130,6 @@ class AutooffersNovasolController extends Controller
             'maxprice' => $wish->budget,
         ];
         $response = $this->autooffers->getNovasolData($params);
-        dd($response);
         $offers = simplexml_load_string($response);
         foreach ($offers->property as $offer) {
                     $prices[] = (float) $offer->price;
