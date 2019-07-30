@@ -129,7 +129,6 @@ class AutooffersNovasolController extends Controller
         ];
         $response = $this->autooffers->getNovasolData($params);
         $offers = simplexml_load_string($response);
-        dd($offers);
         foreach ($offers->property as $offer) {
                     $prices[] = (float) $offer->price;
                     $thumbnails[] = (string) $offer->thumbnail;
