@@ -210,7 +210,7 @@ class NovasolController extends Controller
 
     public function fillCountriesFromNovasolApi()
     {
-        $url = 'https://safe.novasol.com/api/countries';
+        $url = 'https://safe.novasol.com/api/countries?salesmarket=208';
 
         $opts = [
                 "http" => [
@@ -235,7 +235,7 @@ class NovasolController extends Controller
             ];
         }
 
-        //DB::table('novasol_country')->insert($arr);
+        DB::table('novasol_country')->insert($arr);
     }
 
     public function fillAreasFromNovasolApi()
