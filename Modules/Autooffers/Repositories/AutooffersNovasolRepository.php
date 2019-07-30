@@ -445,7 +445,22 @@ class AutooffersNovasolRepository extends BaseRepository
             ->select('novasol_code')
             ->where('name', '=', $land)
             ->get()->first();
-         return $code->novasol_code;
+
+         if (!$code){
+             $code = DB::table('novasol_area')
+                 ->join('novasol_country', 'novasol_area.novasol_country_id', '=', 'novasol_country.id')
+                 ->select('novasol_code')
+                 ->where('name', '=', $land)
+                 ->get()->first();
+             $area = DB::table('novasol_area')
+                 ->select('novasol_area_code')
+                 ->where('name', '=', $land)
+                 ->get()->first();
+             return [$code->novasol_code,$area->novasol_area];
+         }else{
+             return  [$code->novasol_code,''];
+         }
+
     }
 
     public function getProduct($id)
