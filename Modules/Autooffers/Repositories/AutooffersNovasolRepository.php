@@ -444,13 +444,14 @@ class AutooffersNovasolRepository extends BaseRepository
          $code = DB::table('novasol_country')
             ->select('novasol_code')
             ->where('name', '=', $land)
-            ->get()->first();
+            ->get();
 
          if (!$code){
+             $land = strtoupper($land);
              $code = DB::table('novasol_area')
                  ->join('novasol_country', 'novasol_area.novasol_country_id', '=', 'novasol_country.id')
                  ->select('novasol_code')
-                 ->where('name', '=', $land)
+                 ->where('novasol_area.name', '=', $land)
                  ->get()->first();
              $area = DB::table('novasol_area')
                  ->select('novasol_area_code')
@@ -458,6 +459,7 @@ class AutooffersNovasolRepository extends BaseRepository
                  ->get()->first();
              return [$code->novasol_code,$area->novasol_area];
          }else{
+             $code = $code->first();
              return  [$code->novasol_code,''];
          }
 
