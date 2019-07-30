@@ -457,7 +457,7 @@ class AutooffersNovasolRepository extends BaseRepository
                  ->select('novasol_area_code')
                  ->where('name', '=', $land)
                  ->get()->first();
-             return [$code->novasol_code,$area->novasol_area];
+             return [$code->novasol_code,$area->novasol_area_code];
          }else{
              return  [$code->novasol_code,''];
          }
