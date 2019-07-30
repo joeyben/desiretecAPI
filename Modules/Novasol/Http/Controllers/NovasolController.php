@@ -235,7 +235,7 @@ class NovasolController extends Controller
             ];
         }
 
-        DB::table('novasol_country')->insert($arr);
+        //DB::table('novasol_country')->insert($arr);
     }
 
     public function fillAreasFromNovasolApi()
@@ -258,7 +258,7 @@ class NovasolController extends Controller
         $file = file_get_contents($url, false, $context);
 
         $areas = simplexml_load_string($file);
-
+        dd($areas);
                 foreach ($areas as $area) {
                     foreach ($area->area as $subarea) {
                         $arr[] = [
@@ -279,6 +279,6 @@ class NovasolController extends Controller
 
             }
             //dd($arr);
-        DB::table('novasol_area')->insert($arr);
+        //DB::table('novasol_area')->insert($arr);
     }
 }
