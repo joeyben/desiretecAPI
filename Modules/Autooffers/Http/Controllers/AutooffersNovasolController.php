@@ -111,12 +111,16 @@ class AutooffersNovasolController extends Controller
      */
     public function show(Wish $wish)
     {
+        $country_area = [];
         $prices = [];
         $thumbnails = [];
         $qualities = [];
         $locations = [];
+
+        $country_area[] = $this->autooffers->to_country_code($wish->destination);
         $params = [
-            'country' => $this->autooffers->to_country_code($wish->destination),
+            'country' => $country_area[0],
+            'area' => $country_area[1],
             'company' => 'nov',
             'arrival' => str_replace(['-'], [''], $wish->earliest_start),
             'departure' => str_replace(['-'], [''], $wish->latest_return),
