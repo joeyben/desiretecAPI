@@ -16,6 +16,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\TransferStats;
 use Modules\Autooffers\Entities\Autooffer;
 use Underscore\Parse;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class EloquentPostsRepository.
@@ -440,29 +441,26 @@ class AutooffersNovasolRepository extends BaseRepository
 
     public function to_country_code($land)
     {
-        $url = 'https://safe.novasol.com/api/countries';
+         $code = DB::table('novasol_country')
+            ->select('novasol_code')
+            ->where('name', '=', $land)
+            ->get()->first();
 
-        $opts = [
-                "http" => [
-                    "method" => "GET",
-                    "header" => "Accept-language: en\r\n" .
-                    "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
-                    "Host: novasol.reise-wunsch.com\r\n"
-                ]
-            ];
+         if ($code === null){
+             $code = DB::table('novasol_area')
+                 ->join('novasol_country', 'novasol_area.novasol_country_id', '=', 'novasol_country.id')
+                 ->select('novasol_code')
+                 ->where('novasol_area.name', '=', $land)
+                 ->get()->first();
+             $area = DB::table('novasol_area')
+                 ->select('novasol_area_code')
+                 ->where('name', '=', $land)
+                 ->get()->first();
+             return [$code->novasol_code,$area->novasol_area_code];
+         }else{
+             return  [$code->novasol_code,''];
+         }
 
-        $context = stream_context_create($opts);
-
-        // Open the file using the HTTP headers set above
-        $file = file_get_contents($url, false, $context);
-
-        $countries = simplexml_load_string($file);
-
-        foreach ($countries as $country) {
-                if ($country == $land) {
-                    return $country['iso'];
-                }
-        }
     }
 
     public function getProduct($id)

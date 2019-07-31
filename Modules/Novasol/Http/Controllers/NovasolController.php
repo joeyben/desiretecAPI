@@ -208,6 +208,36 @@ class NovasolController extends Controller
         var_dump(Parse::fromXML($file));
     }
 
+    public function fillCountriesFromNovasolApi()
+    {
+        $url = 'https://safe.novasol.com/api/countries?salesmarket=280';
+
+        $opts = [
+                "http" => [
+                    "method" => "GET",
+                    "header" => "Accept-language: en\r\n" .
+                    "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
+                    "Host: novasol.reise-wunsch.com\r\n"
+                ]
+            ];
+
+        $context = stream_context_create($opts);
+
+        // Open the file using the HTTP headers set above
+        $file = file_get_contents($url, false, $context);
+
+        $arr = [];
+        $countries = simplexml_load_string($file);
+        foreach ($countries as $country) {
+            $arr[] = [
+                'name' => $country,
+                'novasol_code' => $country['iso']
+            ];
+        }
+
+        DB::table('novasol_country')->insert($arr);
+    }
+
     public function fillAreasFromNovasolApi()
     {
         $countries = DB::table('novasol_country')->get();
@@ -228,17 +258,35 @@ class NovasolController extends Controller
         $file = file_get_contents($url, false, $context);
 
         $areas = simplexml_load_string($file);
-        var_dump($areas);
+
                 foreach ($areas as $area) {
-                    $arr[] = [
-                        'name' => $area->area->name,
-                        'novasol_country_id' => $country->id,
-                        'novasol_area_code' => $area->area['id'],
-                    ];
+                    foreach ($area->area as $subarea) {
+                        $arr[] = [
+                            'name' => $subarea->name,
+                            'novasol_country_id' => $country->id,
+                            'novasol_area_code' => $subarea['id'],
+                        ];
+                     foreach ($subarea->area as $subsubarea){
+                         $arr[] = [
+                             'name' => $subsubarea->name,
+                             'novasol_country_id' => $country->id,
+                             'novasol_area_code' => $subsubarea['id'],
+                         ];
+                         foreach ($subsubarea->area as $lastarea) {
+                             $arr[] = [
+                                 'name' => $lastarea->name,
+                                 'novasol_country_id' => $country->id,
+                                 'novasol_area_code' => $lastarea['id'],
+                             ];
+                         }
+
+                     }
+                    }
 
                 }
 
             }
-        //DB::table('novasol_area')->insert($arr);
+            //dd($arr);
+        DB::table('novasol_area')->insert($arr);
     }
 }

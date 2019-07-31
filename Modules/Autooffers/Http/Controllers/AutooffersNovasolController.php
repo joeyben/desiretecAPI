@@ -111,33 +111,33 @@ class AutooffersNovasolController extends Controller
      */
     public function show(Wish $wish)
     {
+        $country_area = [];
         $prices = [];
         $thumbnails = [];
         $qualities = [];
+        $locations = [];
 
+        $country_area = $this->autooffers->to_country_code($wish->destination);
         $params = [
-            'country' => $this->autooffers->to_country_code($wish->destination),
+            'country' => $country_area[0],
+            'area' => $country_area[1],
             'company' => 'nov',
             'arrival' => str_replace(['-'], [''], $wish->earliest_start),
-            'departure' =>str_replace(['-'], [''], $wish->latest_return),
+            'departure' => str_replace(['-'], [''], $wish->latest_return),
             'salesmarket' => '280',
-            'adults' => $wish->adults,
+            'adults' => str_replace(' Erwachsene','',$wish->adults),
+            'children' => $wish->kids == 'Kein Kinder' ? '':str_replace(' Kinder','',$wish->kids),
+            'maxprice' => $wish->budget,
         ];
         $response = $this->autooffers->getNovasolData($params);
-
         $offers = simplexml_load_string($response);
-        $count = 0;
-        foreach ($offers as $offer) {
-                    if ($count<3) {
-                    array_push($prices, $offer->property->price);
-                    array_push($thumbnails, $offer->property->thumbnail);
-                    array_push($qualities, $offer->property->quality);
-                    $count++;
+        foreach ($offers->property as $offer) {
+                    $prices[] = (float) $offer->price;
+                    $thumbnails[] = (string) $offer->thumbnail;
+                    $qualities[] = (int) $offer->quality;
+                    $locations[] = (string) $offer->location;
                     }
-                    break;
-        }
-        dd($prices);
-        return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities'));
+        return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities','locations'));
     }
 
     /**
