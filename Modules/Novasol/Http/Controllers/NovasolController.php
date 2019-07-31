@@ -235,12 +235,11 @@ class NovasolController extends Controller
             ];
         }
 
-        //DB::table('novasol_country')->insert($arr);
+        DB::table('novasol_country')->insert($arr);
     }
 
     public function fillAreasFromNovasolApi()
     {
-        $areas ='';
         $countries = DB::table('novasol_country')->get();
         $arr = [];
             foreach ($countries as $country) {
@@ -257,24 +256,29 @@ class NovasolController extends Controller
 
         // Open the file using the HTTP headers set above
         $file = file_get_contents($url, false, $context);
-        $cntrys = simplexml_load_string($file);
-                foreach ($cntrys as $cntry) {
-                    $arr[] = [
-                        'name' => $cntry->area->name,
-                        'novasol_country_id' => $country->id,
-                        'novasol_area_code' => $cntry->area['id'],
-                    ];
-                    foreach ($cntry->children() as $subarea) {
+
+        $areas = simplexml_load_string($file);
+
+                foreach ($areas as $area) {
+                    foreach ($area->area as $subarea) {
                         $arr[] = [
-                            'name' => $subarea->area->name,
+                            'name' => $subarea->name,
                             'novasol_country_id' => $country->id,
-                            'novasol_area_code' => $subarea->area['id'],
+                            'novasol_area_code' => $subarea['id'],
                         ];
+                     foreach ($subarea->area as $subsubarea){
+                         $arr[] = [
+                             'name' => $subsubarea->name,
+                             'novasol_country_id' => $country->id,
+                             'novasol_area_code' => $subsubarea['id'],
+                         ];
+                     }
                     }
 
                 }
+
             }
-            //dd($areas);
+            //dd($arr);
         DB::table('novasol_area')->insert($arr);
     }
 }
