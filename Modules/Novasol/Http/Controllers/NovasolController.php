@@ -272,6 +272,14 @@ class NovasolController extends Controller
                              'novasol_country_id' => $country->id,
                              'novasol_area_code' => $subsubarea['id'],
                          ];
+                         foreach ($subsubarea->area as $lastarea) {
+                             $arr[] = [
+                                 'name' => $lastarea->name,
+                                 'novasol_country_id' => $country->id,
+                                 'novasol_area_code' => $lastarea['id'],
+                             ];
+                         }
+
                      }
                     }
 
