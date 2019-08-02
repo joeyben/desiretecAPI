@@ -18,7 +18,7 @@
 
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
-                    <label for="travelers" class="required">Wer reist mit?</label>
+                    <label for="travelers" class="required">Anzahl Personen</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
                          <i class="fal fa-users not-triggered"></i>

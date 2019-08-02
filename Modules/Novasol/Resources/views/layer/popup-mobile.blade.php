@@ -20,7 +20,7 @@
 
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
-                    <label for="travelers" class="required">Wer reist mit?</label>
+                    <label for="travelers" class="required">Anzahl Personen</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
                          <i class="fal fa-users not-triggered"></i>
@@ -337,7 +337,7 @@
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
             }
-            
+
             function validateDuration() {
                 var days_diff = (dt.endDate.getDate() - dt.startDate.getDate()) / 60000 / 60 / 24;
                 var $element = $('#duration > option');
