@@ -53,6 +53,11 @@
     width: 100%;
   }
 }
+
+.small-btn{
+  min-width: 150px;
+}
+
 input{
   @include placeholder-color($gray1);
 }
