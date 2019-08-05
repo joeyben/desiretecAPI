@@ -73,10 +73,10 @@ class AutooffersNovasolRepository extends BaseRepository
     {
         $client = new Client();
         try {
-            
+
         $this->novasolapi .= 'available?';
         $lastItem = end($params);
-        
+
         foreach ($params as $key => $value) {
           $this->novasolapi .= $key.'='.$value;
 
@@ -84,7 +84,7 @@ class AutooffersNovasolRepository extends BaseRepository
             $this->novasolapi .= '&';
           }
         }
-        
+
 
             $opts = [
                 "http" => [
@@ -99,7 +99,7 @@ class AutooffersNovasolRepository extends BaseRepository
 
             // Open the file using the HTTP headers set above
             return $file = file_get_contents($this->novasolapi, false, $context);
-            
+
         } catch (RequestException $e) {
             return $e->getResponse();
         }
@@ -456,7 +456,19 @@ class AutooffersNovasolRepository extends BaseRepository
                  ->select('novasol_area_code')
                  ->where('name', '=', $land)
                  ->get()->first();
-             return [$code->novasol_code,$area->novasol_area_code];
+
+
+             $novasol_code = null;
+             $novasol_area_code = null;
+             if(!is_null($code)){
+                 $novasol_code = $code->novsol_code;
+             }
+             if(!is_null($novasol_area_code)){
+                 $novasol_area_code = $area->novasol_area_code;
+             }
+
+             return [$novasol_code, $novasol_area_code];
+             //return [$code->novasol_code,$area->novasol_area_code];
          }else{
              return  [$code->novasol_code,''];
          }
