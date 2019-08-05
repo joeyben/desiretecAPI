@@ -5,6 +5,10 @@ var base_url = '../../';
 
 mix.setPublicPath('../../public').mergeManifest();
 
+mix.options({
+    processCssUrls: false
+});
+
 mix.scripts(
     [
         base_url + "node_modules/jquery/dist/jquery.min.js",

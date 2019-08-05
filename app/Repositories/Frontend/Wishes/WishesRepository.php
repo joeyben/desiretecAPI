@@ -104,11 +104,13 @@ class WishesRepository extends BaseRepository
     {
         $group = Group::where('whitelabel_id', $whitelabel_id)
             ->oldest('lastwish')
+            ->where('status', 1)
             ->first();
 
         if (!$group) {
             $group = Group::where('whitelabel_id', $whitelabel_id)
                 ->orderby('id', 'ASC')
+                ->where('status', 1)
                 ->first();
         }
 

@@ -7,6 +7,9 @@ var envirement = process.env.APP_JS_ENV || 'local';
 var base_url = '../../';
 
 mix.setPublicPath('../../public').mergeManifest();
+mix.options({
+    processCssUrls: false
+});
 
 mix.scripts(
     [
