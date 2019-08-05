@@ -424,11 +424,11 @@
                     <div class="col-md-8 modal-body-left">
 
                         <div class="group">
-                            <input type="text" class="form-control name" name="first_name" id="first_name_" required>
+                            <input type="text" class="form-control name" name="first_name" id="first_name_" value="{{ $wish->owner->first_name }}" required>
                             <label>Vorname</label>
                         </div>
                         <div class="group">
-                            <input type="text" class="form-control nachname" name="last_name" id="first_name_" required>
+                            <input type="text" class="form-control nachname" name="last_name" id="last_name_" value="{{ $wish->owner->last_name }}" required>
                             <label>Nachname</label>
                         </div>
                         <div class="group">
