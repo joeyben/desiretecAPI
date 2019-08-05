@@ -1,5 +1,7 @@
 FROM composer:latest as vendor
 
+LABEL maintainer="desiretec"
+
 COPY composer.json composer.json
 COPY composer.lock composer.lock
 COPY tests tests
@@ -12,14 +14,16 @@ RUN composer install \
     --no-scripts \
     --prefer-dist
 
+
 FROM node:latest as frontend
+
+LABEL maintainer="desiretec"
 
 RUN mkdir -p /myapp
 COPY Modules /myapp/Modules
 COPY public /myapp/public
 COPY resources /myapp/resources
 COPY package-lock.json package.json webpack.mix.js webpack.config.js yarn.lock /myapp/
-
 
 WORKDIR /myapp
 RUN npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
