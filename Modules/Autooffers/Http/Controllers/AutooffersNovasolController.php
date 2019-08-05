@@ -143,6 +143,8 @@ class AutooffersNovasolController extends Controller
 
         sort($prices);
 
+        dd($offers[0]);
+
 
 //        dd([
 //            'wish' => $wish,
@@ -152,6 +154,15 @@ class AutooffersNovasolController extends Controller
 //            'locations' => $locations,
 //            'offers'    => $offers
 //        ]);
+
+
+        return view('autooffers::autooffer.show', [
+            'wish' => $wish,
+            'prices' => $prices,
+            'thumbnails' => $thumbnails,
+            'qualities' => $qualities,
+            'locations' => $locations,
+        ]);
 
         return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities','locations'));
     }

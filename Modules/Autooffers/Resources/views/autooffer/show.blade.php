@@ -90,19 +90,42 @@
     <div class="top-panels">
         <div class="seller">
             <div class="seller-image">
-                <span class="img" style="background-image: url({{ asset('bundles/cssonnenklar/sonnenklar/images/logo.svg') }});"></span>
+                @if(isset($logo) and !is_null($logo))
+                    <span class="img"
+                          style="background-image: url({{ $logo }});">
+                    </span>
+                @else
+                    <span class="img"
+                          style="background-image: url({{ asset('bundles/cssonnenklar/sonnenklar/images/logo.svg') }});">
+                    </span>
+                @endif
             </div>
             <div class="seller-name">
             </div>
             <div class="seller-message">
                 @if (count($prices) === 0)
-                "Leider haben wir noch keine Angebote für Deinen Reisewunsch "{{ $wish->destination }}" für dich finden können. Wir erfüllen Dir jedoch gerne unter folgender Nummer Deine Wünsche <br><a href="tel:089710459535">089-710459535</a>."
+                    "Leider haben wir noch keine Angebote für Deinen Reisewunsch"
+                    {{ $wish->destination }}
+                    " für dich finden können. Wir erfüllen Dir jedoch gerne unter folgender Nummer Deine Wünsche
+                    <br>
+                    <a href="tel:040238859-82">
+                        040 23 88 59-82
+                    </a>."
                 @else
-                <h1>Herzlich Wilkommen</h1>"Hallo, wir haben wunderbare Angebote zu deinem Reisewunsch "{{ $wish->destination }}" für dich gefunden. Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <br><a href="tel:089710459535">089-710459535</a>."
+                <h1>Herzlich Wilkommen</h1>
+                    "Hallo, wir haben wunderbare Angebote zu deinem Reisewunsch "{{ $wish->destination }}" für dich gefunden.
+                    Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung:
+                    <br>
+                    <a href="tel:040238859-82">
+                        040 23 88 59-82
+                    </a>."
                 @endif
             </div>
         </div>
-        @if (count($prices) > 0)<div id="map" class="map"></div>@endif
+
+        @if (count($prices) > 0)
+            <div id="map" class="map"></div>
+        @endif
 
     </div>
 </div>
@@ -111,11 +134,10 @@
         <h1 class="offer-header-text">Meine Angebote</h1>
     </div>
 </div>
-
-@for($count = 0; $count < 3; $count++)
-    <div class="pagecontainer">
-    <div class="row">
-
+@if(count($prices) > 0)
+    @for($count = 0; $count < 3; $count++)
+        <div class="pagecontainer">
+        <div class="row">
         <div class="col-md-12 details-slider">
             <span class="wid">#52280-1</span>
             <div class="c-card c-card-1">
@@ -289,9 +311,9 @@
         </div>
 
     </div>
-
-</div>
-@endfor
+    </div>
+    @endfor
+@endif
 {{--
 <div class="pagecontainer">
     <div class="row">
