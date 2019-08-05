@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Autooffers\Repositories\AutooffersNovasolRepository;
+use Nwidart\Modules\Collection;
 
 class AutooffersNovasolController extends Controller
 {
@@ -138,18 +139,19 @@ class AutooffersNovasolController extends Controller
                     $thumbnails[] = (string) $offer->thumbnail;
                     $qualities[] = (int) $offer->quality;
                     $locations[] = (string) $offer->location;
-                    }
+        }
+
+        sort($prices);
 
 
-
-        dd([
-            'wish' => $wish,
-            'prices' => $prices,
-            'thumbnails' => $thumbnails,
-            'qualities' => $qualities,
-            'locations' => $locations,
-            'offers'    => $offers
-        ]);
+//        dd([
+//            'wish' => $wish,
+//            'prices' => $prices,
+//            'thumbnails' => $thumbnails,
+//            'qualities' => $qualities,
+//            'locations' => $locations,
+//            'offers'    => $offers
+//        ]);
 
         return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities','locations'));
     }

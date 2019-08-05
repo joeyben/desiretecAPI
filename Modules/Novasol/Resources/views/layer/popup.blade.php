@@ -92,19 +92,6 @@
                             @endif
                             <i class="fal fa-calendar-alt"></i>
                         </div>
-                        <div class="kwp-col-12">
-                            {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
-                            <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
-                            </div>
-                            <i class="fal fa-times"></i>
-                            @if ($errors->any() && $errors->get('duration'))
-                                @foreach ($errors->get('duration') as $error)
-                                    <span class="error-input">{{ $error }}</span>
-                                @endforeach
-                            @endif
-                        </div>
-                        <div class="clearfix"></div>
                         <hr>
                         <div class="kwp-col-12 button">
                             <a href="#">OK</a>

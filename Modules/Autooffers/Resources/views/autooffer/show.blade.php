@@ -112,7 +112,8 @@
     </div>
 </div>
 
-<div class="pagecontainer">
+@for($count = 0; $count < 3; $count++)
+    <div class="pagecontainer">
     <div class="row">
 
         <div class="col-md-12 details-slider">
@@ -121,7 +122,7 @@
                 <div class="card" id="hotel-0">
                     <div class="offer-content">
                         <div class="offer-block offer-block--first">
-                            <img src="{{ str_replace('/100/','/600/',$thumbnails[0]) }}" style="width: 100%">
+                            <img src="{{ str_replace('/100/','/600/',$thumbnails[$count]) }}" style="width: 100%">
                         </div>
                         <div class="offer-block no-border">
 
@@ -129,16 +130,14 @@
                             <div class="stars hide-mobile">
                                 <h3 class="hide-mobile"></h3>
 
-                                @for ($i = 1; $i <= intval($qualities[0]); $i++)
+                                @for ($i = 1; $i <= intval($qualities[$count]); $i++)
                                     <i class="fa fa-heart"></i>
                                 @endfor
                             </div>
 
-
-
                             <span class="location launch-map hide-mobile" data-address=",  Avsallar, TR" lat="36.60976" lng="31.77992">
                                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            <span>{{ $locations[0] }}</span>
+                                            <span>{{ $locations[$count] }}</span>
                                             </span>
                             <div class="offer-touroperator hide-mobile">
                                 <div class="c-hotel-rating__recommendation" data-key="0" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="
@@ -265,7 +264,7 @@
                                         <div class="offer-price">
                                             <div class="price-all">
                                                 <div class="js-price-person">
-                                                    <span>{{  number_format($prices[0], 0, ',', '.') }}€</span>
+                                                    <span>{{  number_format($prices[$count], 0, ',', '.') }}€</span>
                                                     <span class="type">p.P.</span>
                                                 </div>
                                                 <!--<div class="js-price-total">
@@ -292,6 +291,8 @@
     </div>
 
 </div>
+@endfor
+{{--
 <div class="pagecontainer">
     <div class="row">
 
@@ -652,6 +653,7 @@
     </div>
 
 </div>
+--}}
 <!-- END OF CONTENT -->
 @endsection
 

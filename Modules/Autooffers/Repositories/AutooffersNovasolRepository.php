@@ -75,6 +75,8 @@ class AutooffersNovasolRepository extends BaseRepository
             $this->novasolapi .= 'available?';
             $lastItem = end($params);
 
+            logger()->info(print_r($params, true));
+
             foreach ($params as $key => $value) {
                   $this->novasolapi .= $key.'='.$value;
 
@@ -97,7 +99,7 @@ class AutooffersNovasolRepository extends BaseRepository
                 logger()->info('novasol-api-url: '. $this->novasolapi);
 
                 // Open the file using the HTTP headers set above
-                return $file = file_get_contents($this->novasolapi, false, $context);
+                return file_get_contents($this->novasolapi, false, $context);
 
         } catch (RequestException $e) {
             return $e->getResponse();
