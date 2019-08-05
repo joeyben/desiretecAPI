@@ -143,8 +143,13 @@ class AutooffersNovasolController extends Controller
 
         sort($prices);
 
-        dd($offers->property[0]->thumbnail);
-
+        // TEST --------------
+       $thumbs = [];
+       foreach ($offers->property[0]->thumbnail as $thumb){
+           $thumbs[] = $thumb;
+       }
+       dd($thumbs);
+       //--------------------
 
 //        dd([
 //            'wish' => $wish,
