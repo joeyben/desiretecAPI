@@ -4,7 +4,7 @@
     <div class="slider" style="background-image: url({{ $bg_image }})">
         <div class="welcome">
             {{ trans('whitelabel.frontend.welcome') }}
-            <strong>{!! config('novasol.name') !!} {{ trans('whitelabel.frontend.portal') }}</strong>
+            <strong>{!! $display_name !!} {{ trans('whitelabel.frontend.portal') }}</strong>
         </div>
 
         <div class="layer-action">
