@@ -129,8 +129,10 @@ class AutooffersNovasolController extends Controller
             'children' => $wish->kids == 'Kein Kinder' ? '':str_replace(' Kinder','',$wish->kids),
             'maxprice' => $wish->budget,
         ];
+
         $response = $this->autooffers->getNovasolData($params);
         $offers = simplexml_load_string($response);
+
         foreach ($offers->property as $offer) {
                     $prices[] = (float) $offer->price;
                     $thumbnails[] = (string) $offer->thumbnail;
@@ -138,12 +140,15 @@ class AutooffersNovasolController extends Controller
                     $locations[] = (string) $offer->location;
                     }
 
+
+
         dd([
             'wish' => $wish,
             'prices' => $prices,
             'thumbnails' => $thumbnails,
             'qualities' => $qualities,
-            'locations' => $locations
+            'locations' => $locations,
+            'offers'    => $offers
         ]);
 
         return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities','locations'));
