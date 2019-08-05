@@ -439,32 +439,35 @@ class AutooffersNovasolRepository extends BaseRepository
         $this->giataIds = $giataIds;
     }
 
-    public function to_country_code($land)
-    {
+    public function to_country_code($land){
+
+        logger()->info("to_country_code() was called with: $land");
+        logger()->info("lang-type: ". gettype($land));
+
          $code = DB::table('novasol_country')
             ->select('novasol_code')
             ->where('name', '=', $land)
             ->get()->first();
 
          if ($code === null){
-             $code = DB::table('novasol_area')
+             $codes = DB::table('novasol_area')
                  ->join('novasol_country', 'novasol_area.novasol_country_id', '=', 'novasol_country.id')
-                 ->select('novasol_code')
+                 ->select(['novasol_code', 'novasol_area.novasol_area_code'])
                  ->where('novasol_area.name', '=', $land)
-                 ->get()->first();
-             $area = DB::table('novasol_area')
-                 ->select('novasol_area_code')
-                 ->where('name', '=', $land)
-                 ->get()->first();
+                 ->get()
+                 ->first();
 
+//             $area = DB::table('novasol_area')
+//                        ->select('novasol_area_code')
+//                        ->where('name', '=', $land)
+//                        ->get()
+//                        ->first();
 
-             $novasol_code = null;
+             $novasol_code      = null;
              $novasol_area_code = null;
-             if(!is_null($code)){
-                 $novasol_code = $code->novsol_code;
-             }
-             if(!is_null($novasol_area_code)){
-                 $novasol_area_code = $area->novasol_area_code;
+             if(!is_null($codes)){
+                 $novasol_code      = $codes->novasol_code;
+                 $novasol_area_code = $codes->novasol_area_code;
              }
 
              return [$novasol_code, $novasol_area_code];
