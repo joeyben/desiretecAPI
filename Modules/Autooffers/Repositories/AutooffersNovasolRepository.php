@@ -441,8 +441,8 @@ class AutooffersNovasolRepository extends BaseRepository
 
     public function to_country_code($land){
 
-        logger()->info("to_country_code() was called with: $land");
-        logger()->info("lang-type: ". gettype($land));
+//        logger()->info("to_country_code() was called with: $land");
+//        logger()->info("lang-type: ". gettype($land));
 
          $code = DB::table('novasol_country')
             ->select('novasol_code')
