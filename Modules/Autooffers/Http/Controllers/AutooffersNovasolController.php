@@ -143,7 +143,7 @@ class AutooffersNovasolController extends Controller
 
         sort($prices);
 
-        dd($offers[0]);
+        dd($offers->property[0]);
 
 
 //        dd([
