@@ -15,6 +15,35 @@
             font-family: ‘Noto Sans’, sans-serif;
         }
 
+        #background-area{
+            word-break:normal;
+            border-collapse:collapse!important;
+            vertical-align:top;
+            margin-top:0;
+            margin-bottom:0;
+            margin-right:0;
+            margin-left:0;
+            text-align:left;
+            font-size:14px;
+            line-height:19px;
+            padding-top:0px;
+            padding-bottom:0;
+            padding-right:0px;
+            padding-left:0px;
+            width:100%
+        }
+        #background-img{
+            height:auto;
+            outline-style:none;
+            text-decoration:none;
+            display:block;
+            margin-top:0;
+            margin-bottom:0;
+            margin-right:auto;
+            margin-left:auto;
+            float:none;
+        }
+
         @media only screen and (max-width: 480px) {
 
         }
@@ -44,7 +73,11 @@
                                                 <table cellpadding="0" cellspacing="0" border="0" align="left" width="600" style="border: 1px solid #eee;border-bottom:none;">
                                                     <tbody>
                                                     <tr>
-                                                        <td align="left" style="word-break:normal;border-collapse:collapse!important;vertical-align:top;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;text-align:left;font-size:14px;line-height:19px;padding-top:0px;padding-bottom:0;padding-right:0px;padding-left:0px;width:100%""><img  style="height:auto;outline-style:none;text-decoration:none;display:block;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;float:none" src="https://ci3.googleusercontent.com/proxy/TmxcINUrGaEGvEjoIJkFCwL1YezoPK-m52M-4uDp1axn2t_SXFZzNKpgCjtW-mDISrJrRO5drbl3SmBs3MNS997aU5iETtGPmJmemmgD3rVcsA=s0-d-e1-ft#http://35.158.151.101:8080/image/index/5c0f8d81e4b02bc8e2133c88" /></td>
+                                                        <td align="left" id="background-area">
+                                                            <img  id="background-img"
+                                                                  src="{{ getWhiteLabelLogoUrl('background') }}" />
+                                                            {{-- src="https://ci3.googleusercontent.com/proxy/TmxcINUrGaEGvEjoIJkFCwL1YezoPK-m52M-4uDp1axn2t_SXFZzNKpgCjtW-mDISrJrRO5drbl3SmBs3MNS997aU5iETtGPmJmemmgD3rVcsA=s0-d-e1-ft#http://35.158.151.101:8080/image/index/5c0f8d81e4b02bc8e2133c88" /> --}}
+                                                        </td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -63,7 +96,11 @@
                                                                         <img width="15" style="margin:0;padding:0;" src="https://ci3.googleusercontent.com/proxy/iLnUVy06JTSnrXdK4cAmwQrFD9W7ufKvh-RW39WGE2yWbIG4hifg4erw6fJKy5kTRWPAqsVmDSHzimADkoyQ64zTt43-1JSQmZ6LDT6wWHasweuyVCc9s6WEIcLlzlg=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/plane.png" />
                                                                     </td>
                                                                     <td align="left" width="140" colspan="1" align="left" style="padding-left:10px;">
-                                                                        <img width="15" style="margin:0;padding:0;"  src="https://ci3.googleusercontent.com/proxy/YxhiOL4JOm10gJ2csqBzTYilyDASZIU_8wmAW7dkkVsvc4kxwSczk0RwSuBaEtIPMP3W0qmSwoBe_AibKPVMDF8ZlJSz-osWVnTAvo_3QUjJsED0QFKul9rUhuhVVlb13MDvug=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/plane-down.png" />
+                                                                        <img width="15"
+                                                                             style="margin:0;padding:0;"
+                                                                             src="https://ci3.googleusercontent.com/proxy/YxhiOL4JOm10gJ2csqBzTYilyDASZIU_8wmAW7dkkVsvc4kxwSczk0RwSuBaEtIPMP3W0qmSwoBe_AibKPVMDF8ZlJSz-osWVnTAvo_3QUjJsED0QFKul9rUhuhVVlb13MDvug=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/plane-down.png" />
+                                                                        <br>
+                                                                        <i class="fas fa-plane-arrival"></i>
                                                                     </td>
                                                                     <td align="left" width="140" colspan="1" align="left" style="padding-left:10px;">
                                                                         <img width="15" style="margin:0;padding:0;"  src="https://ci3.googleusercontent.com/proxy/NN0EXnO96ZSYaYlvNQhXFMwLONfOWzSv_aVCgMdfMJRfl7VbFoh2X9hUmLUOlID7Ceou2EPynIX_qkMBtUhRJn4ArlJUBBidfpvwiqvRMXX331-0lV0UnVqrpGpUhsjy8wE=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/calendar.png" />
