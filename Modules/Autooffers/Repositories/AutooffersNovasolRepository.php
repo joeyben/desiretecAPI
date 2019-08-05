@@ -69,36 +69,35 @@ class AutooffersNovasolRepository extends BaseRepository
         return Autooffer::class;
     }
 
-    public function getNovasolData(array $params = [])
-    {
-        $client = new Client();
+    public function getNovasolData(array $params = []){
+
         try {
+            $this->novasolapi .= 'available?';
+            $lastItem = end($params);
 
-        $this->novasolapi .= 'available?';
-        $lastItem = end($params);
+            foreach ($params as $key => $value) {
+                  $this->novasolapi .= $key.'='.$value;
 
-        foreach ($params as $key => $value) {
-          $this->novasolapi .= $key.'='.$value;
+                  if($value != $lastItem){
+                    $this->novasolapi .= '&';
+                  }
+            }
 
-          if($value != $lastItem){
-            $this->novasolapi .= '&';
-          }
-        }
+                $opts = [
+                    "http" => [
+                        "method" => "GET",
+                        "header" => "Accept-language: en\r\n" .
+                        "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
+                        "Host: novasol.reise-wunsch.com\r\n"
+                    ]
+                ];
 
+                $context = stream_context_create($opts);
 
-            $opts = [
-                "http" => [
-                    "method" => "GET",
-                    "header" => "Accept-language: en\r\n" .
-                    "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
-                    "Host: novasol.reise-wunsch.com\r\n"
-                ]
-            ];
+                logger()->info('novasol-api-url: '. $this->novasolapi);
 
-            $context = stream_context_create($opts);
-
-            // Open the file using the HTTP headers set above
-            return $file = file_get_contents($this->novasolapi, false, $context);
+                // Open the file using the HTTP headers set above
+                return $file = file_get_contents($this->novasolapi, false, $context);
 
         } catch (RequestException $e) {
             return $e->getResponse();
