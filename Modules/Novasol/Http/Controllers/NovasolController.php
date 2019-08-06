@@ -58,6 +58,9 @@ class NovasolController extends Controller
     {
         $whitelabel = $this->whitelabel->getByName('Novasol');
 
+//        dd($this->attachements->getAttachementsByType($this->whitelabelId, 'background'));
+
+
         return view('novasol::index')->with([
             'display_name'  => $whitelabel['display_name'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
@@ -186,7 +189,7 @@ class NovasolController extends Controller
 
         return $pets;
     }
-    
+
     public function getProduct($id)
     {
         $url = 'https://safe.novasol.com/api/products/'. $id . '?salesmarket=208&season=2019';

@@ -42,6 +42,7 @@
             margin-right:auto;
             margin-left:auto;
             float:none;
+            width: 600px;
         }
 
         @media only screen and (max-width: 480px) {
@@ -92,15 +93,11 @@
                                                             <table width="600" cellpadding="0" cellspacing="0">
                                                                 <tbody>
                                                                 <tr>
-                                                                    <td align="left" width="140" colspan="1" align="left" style="padding-left:10px;">
-                                                                        <img width="15" style="margin:0;padding:0;" src="https://ci3.googleusercontent.com/proxy/iLnUVy06JTSnrXdK4cAmwQrFD9W7ufKvh-RW39WGE2yWbIG4hifg4erw6fJKy5kTRWPAqsVmDSHzimADkoyQ64zTt43-1JSQmZ6LDT6wWHasweuyVCc9s6WEIcLlzlg=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/plane.png" />
-                                                                    </td>
+
                                                                     <td align="left" width="140" colspan="1" align="left" style="padding-left:10px;">
                                                                         <img width="15"
                                                                              style="margin:0;padding:0;"
                                                                              src="https://ci3.googleusercontent.com/proxy/YxhiOL4JOm10gJ2csqBzTYilyDASZIU_8wmAW7dkkVsvc4kxwSczk0RwSuBaEtIPMP3W0qmSwoBe_AibKPVMDF8ZlJSz-osWVnTAvo_3QUjJsED0QFKul9rUhuhVVlb13MDvug=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/plane-down.png" />
-                                                                        <br>
-                                                                        <i class="fas fa-plane-arrival"></i>
                                                                     </td>
                                                                     <td align="left" width="140" colspan="1" align="left" style="padding-left:10px;">
                                                                         <img width="15" style="margin:0;padding:0;"  src="https://ci3.googleusercontent.com/proxy/NN0EXnO96ZSYaYlvNQhXFMwLONfOWzSv_aVCgMdfMJRfl7VbFoh2X9hUmLUOlID7Ceou2EPynIX_qkMBtUhRJn4ArlJUBBidfpvwiqvRMXX331-0lV0UnVqrpGpUhsjy8wE=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/calendar.png" />
@@ -147,12 +144,6 @@
                                                                     </td>
                                                                     <td width="140" align="left" style="padding-left:10px;">
                                                                         <img width="15" src="https://ci6.googleusercontent.com/proxy/ToInio0qfJTQbdrrIVoN87ngpdbJ3wm4Vv9wjtwbpT-N28UXTjrjVKO0e8Xnlx8vAoQqrCpMAc5cMDezCJYKA737BxMmErfq44eRC27ZMHTU6iTx3-mAKvmGaUt0DUfD=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/budget.png" />
-                                                                    </td>
-                                                                    <td width="140" align="left" style="padding-left:10px;">
-                                                                        <img width="15" src="https://ci5.googleusercontent.com/proxy/ZqmTrHLJEjRm4-XWW3fPT912psmXzsLXCRXE9wWJewzMxqGBElj4NUd8CbS_wfD8yx-X428uj_vRwoyCRn9ebeaPgG5nOziVHBN648mV3mU0K7FFDAM4jMpWJx32sg=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/time.png" />
-                                                                    </td>
-                                                                    <td width="140" align="left" style="padding-left:10px;">
-                                                                        <img width="15" src="https://ci5.googleusercontent.com/proxy/LYfHFIZwOn0ZyiseIPcIYRnjDYR90OdcD34bLNoZF4ADGyQISbW4v6953OXfC0E7Bcel_2buwLYI_bV9GUJfNb2nJDitpMGH13ieNHmfYFdnZpL621dXZD5cDzsGaxOvDEM=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/catering.png" />
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>

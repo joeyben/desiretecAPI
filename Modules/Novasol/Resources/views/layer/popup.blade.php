@@ -6,8 +6,8 @@
     <div class="kwp-content kwp-with-expansion">
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
-                {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::label('destination', trans('novasol::layer.general.destination'), ['class' => 'control-label required']) }}
+                {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('novasol::layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -26,7 +26,7 @@
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-12">
-                            {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
+                            {{ Form::label('adults', trans('novasol::layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr, key_exists('adults', $request) ? $request['adults'] : 2, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
@@ -34,7 +34,7 @@
                         </div>
                         <div class="kwp-col-12 kids" style="position: relative;">
                             <div class="kwp-col-12">
-                                {{ Form::label('kids', trans('layer.general.kids'), ['class' => 'control-label required']) }}
+                                {{ Form::label('kids', trans('novasol::layer.general.kids'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
                                     {{ Form::select('kids', $kids_arr, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                                 </div>
@@ -44,7 +44,7 @@
                         <script>dt.childrenAges();</script>
 
                         <div class="kwp-col-12">
-                            {{ Form::label('pets', trans('layer.general.pets'), ['class' => 'control-label required']) }}
+                            {{ Form::label('pets', trans('novasol::layer.general.pets'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('pets', $pets_arr, key_exists('pets', $request) ? $request['pets'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
@@ -72,8 +72,8 @@
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
-                            {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::label('earliest_start', trans('novasol::layer.general.earliest_start'), ['class' => 'control-label required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('novasol::layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -83,8 +83,8 @@
                             <i class="fal fa-calendar-alt"></i>
                         </div>
                         <div class="kwp-col-4">
-                            {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::label('latest_return', trans('novasol::layer.general.latest_return'), ['class' => 'control-label required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('novasol::layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -92,6 +92,19 @@
                             @endif
                             <i class="fal fa-calendar-alt"></i>
                         </div>
+                        <div class="kwp-col-12">
+                            {{ Form::label('duration', trans('novasol::layer.general.duration'), ['class' => 'control-label required']) }}
+                            <div class="kwp-custom-select">
+                                {{ Form::select('duration', array_merge(['' => trans('novasol::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                            </div>
+                            <i class="fal fa-times"></i>
+                            @if ($errors->any() && $errors->get('duration'))
+                                @foreach ($errors->get('duration') as $error)
+                                    <span class="error-input">{{ $error }}</span>
+                                @endforeach
+                            @endif
+                        </div>
+                        <div class="clearfix"></div>
                         <hr>
                         <div class="kwp-col-12 button">
                             <a href="#">OK</a>
@@ -102,8 +115,8 @@
 
             <div class="kwp-col-4 destination">
                 <div class="kwp-form-group ">
-                    {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.budget'), 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
+                    {{ Form::label('budget', trans('novasol::layer.general.budget'), ['class' => 'control-label required']) }}
+                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('novasol::layer.placeholder.budget_example', ['budget' => 1000]), 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
                     <i class="fal fa-euro-sign"></i>
                     @if ($errors->any() && $errors->get('budget'))
                         @foreach ($errors->get('budget') as $error)
@@ -117,16 +130,16 @@
 
     <!--div class="kwp-row">
             <div class="kwp-col-12 description">
-                {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
-    {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
+                {{ Form::label('description', trans('novasol::layer.general.description'), ['class' => 'control-label required']) }}
+    {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('novasol::layer.placeholder.description')]) }}
             <i class="fal fa-comment-alt-lines"></i>
         </div>
     </div-->
 
         <div class="kwp-row">
             <div class="kwp-col-4 email-col">
-                {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
-                {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
+                {{ Form::label('email', trans('novasol::layer.general.email'), ['class' => 'control-label']) }}
+                {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('novasol::layer.placeholder.email'), 'required' => 'required']) }}
                 <i class="master-icon--mail"></i>
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
@@ -339,7 +352,7 @@
                     @endif
 
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                    <p>Ich habe die <a href="/pdfs/tnb_NOVASOL.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.novasol.de/faq/novasol_agb_deutsch/datenschutz" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    <p>Ich habe die <a href="https://novasol.reise-wunsch.com/pdfs/tnb_NOVASOL.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.novasol.de/faq/novasol_agb_deutsch/datenschutz" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
 
                 </div>
             </div>

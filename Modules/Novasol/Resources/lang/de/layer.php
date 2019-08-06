@@ -29,6 +29,7 @@ return [
         'email'            => 'Ihre E-Mail-Adresse',
         'name'             => 'Name',
         'terms'            => 'Name',
+        'pets'             => 'Haustiere'
     ],
     'placeholder' => [
         'title'            => 'Wish Title',
@@ -40,6 +41,7 @@ return [
         'adults'           => 'Erwachsene',
         'kids'             => 'Kinder',
         'budget'           => 'Gesamtpreis',
+        'budget_example'   => 'z.b.: :budget',
         'category'         => 'Hotelkategorie',
         'catering'         => 'Verpflegung (mind.)',
         'duration'         => 'Bitte auswählen',

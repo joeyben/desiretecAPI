@@ -118,6 +118,8 @@ class AutooffersNovasolController extends Controller
         $qualities = [];
         $locations = [];
 
+        logger()->info(print_r($wish, true));
+
         $country_area = $this->autooffers->to_country_code($wish->destination);
         $params = [
             'country' => $country_area[0],
@@ -126,7 +128,8 @@ class AutooffersNovasolController extends Controller
             'arrival' => str_replace(['-'], [''], $wish->earliest_start),
             'departure' => str_replace(['-'], [''], $wish->latest_return),
             'salesmarket' => '280',
-            'adults' => str_replace(' Erwachsene','',$wish->adults),
+            //'adults' => str_replace(' Erwachsene','',$wish->adults),
+            'adults' => str_replace('1','',$wish->adults),
             'children' => $wish->kids == 'Kein Kinder' ? '':str_replace(' Kinder','',$wish->kids),
             'maxprice' => $wish->budget,
         ];
@@ -148,7 +151,7 @@ class AutooffersNovasolController extends Controller
        foreach ($offers->property[0]->thumbnail as $thumb){
            $thumbs[] = $thumb;
        }
-       dd($thumbs);
+       //dd($thumbs);
        //--------------------
 
 //        dd([
@@ -169,7 +172,7 @@ class AutooffersNovasolController extends Controller
             'locations' => $locations,
         ]);
 
-        return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities','locations'));
+        //return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities','locations'));
     }
 
     /**

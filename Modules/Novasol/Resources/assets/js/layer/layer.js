@@ -11,7 +11,6 @@ var dt = window.dt || {};
     };
 
     dt.popupTemplate = function (variant) {
-
         var mobileHeader = dt.PopupManager.decoder.getRandomElement([
             'Traumreise noch nicht gefunden? ',
         ]);
