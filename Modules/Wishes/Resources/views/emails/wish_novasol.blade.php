@@ -116,9 +116,6 @@
                                                             <table width="600" cellpadding="0" cellspacing="0">
                                                                 <tbody>
                                                                 <tr>
-                                                                    <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left" >
-                                                                        {{ $wish->airport }}
-                                                                    </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
                                                                         {{ $wish->destination }}
                                                                     </td>
@@ -142,8 +139,19 @@
                                                                     <td width="140" align="left" style="padding-left:10px;">
                                                                         <img width="15" src="https://ci6.googleusercontent.com/proxy/ToInio0qfJTQbdrrIVoN87ngpdbJ3wm4Vv9wjtwbpT-N28UXTjrjVKO0e8Xnlx8vAoQqrCpMAc5cMDezCJYKA737BxMmErfq44eRC27ZMHTU6iTx3-mAKvmGaUt0DUfD=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/budget.png" />
                                                                     </td>
-                                                                    <td width="140" align="left" style="padding-left:10px;">
-                                                                        <img width="15" src="https://ci6.googleusercontent.com/proxy/ToInio0qfJTQbdrrIVoN87ngpdbJ3wm4Vv9wjtwbpT-N28UXTjrjVKO0e8Xnlx8vAoQqrCpMAc5cMDezCJYKA737BxMmErfq44eRC27ZMHTU6iTx3-mAKvmGaUt0DUfD=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/budget.png" />
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <table width="600" cellpadding="0" cellspacing="0">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
+                                                                        {{ $wish->budget }}
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
