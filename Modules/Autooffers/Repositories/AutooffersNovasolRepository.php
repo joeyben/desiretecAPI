@@ -96,6 +96,8 @@ class AutooffersNovasolRepository extends BaseRepository
 
                 $context = stream_context_create($opts);
 
+                $this->novasolapi = str_replace(['&amp;'], ['&'], $this->novasolapi);
+
                 logger()->info('novasol-api-url: '. $this->novasolapi);
 
                 // Open the file using the HTTP headers set above

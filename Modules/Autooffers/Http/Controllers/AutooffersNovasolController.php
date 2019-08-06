@@ -118,8 +118,6 @@ class AutooffersNovasolController extends Controller
         $qualities = [];
         $locations = [];
 
-        logger()->info(implode(' -- ', $wish));
-
         $country_area = $this->autooffers->to_country_code($wish->destination);
 
         $params = [
@@ -129,8 +127,8 @@ class AutooffersNovasolController extends Controller
             'arrival' => str_replace(['-'], [''], $wish->earliest_start),
             'departure' => str_replace(['-'], [''], $wish->latest_return),
             'salesmarket' => '280',
-            'adults' => ($wish->adults == 0) ? 1 : $wish->adults,
-            //'adults' => str_replace(' Erwachsene','',$wish->adults),
+            //'adults' => ($wish->adults == 0) ? 1 : $wish->adults,
+            'adults' => str_replace(' Erwachsene','',$wish->adults),
             'children' => $wish->kids == 'Kein Kinder' ? '':str_replace(' Kinder','',$wish->kids),
             'maxprice' => $wish->budget,
         ];
