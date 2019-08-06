@@ -11,6 +11,18 @@
         height: 400px;
         width: 100%;
       }
+      .c-hotel-rating__recommendation{
+          border: 3px solid #f96500 !important;
+      }
+      .action-offer i{
+          background: #61BA01 !important;
+      }
+      .facts-summary .summary-icon i{
+          color: #ed1c23 !important;
+      }
+      .offer-block .stars i{
+          color: #ffdd00 !important;
+      }
     </style>
     <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
 @endsection
@@ -30,7 +42,6 @@
         <div class="wishlabel">
                 <span class="text">
                     Dein Reisewunsch
-
                 </span>
             <i class="toggle-wish">
                 <i class="fa fa-plus" aria-hidden="true"></i>
@@ -38,7 +49,7 @@
             </i>
         </div>
         <ul class="wish-list">
-            <li>
+            <li style="display: none">
                 <span class="top"><i class="fa fa-plane" aria-hidden="true"></i></span>
                 <span class="bottom" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="{{ $wish->airport }}">{{ $wish->airport }}</span>
             </li>
@@ -56,8 +67,13 @@
 
             <li class="no-border">
                 <span class="top"><i class="fa fa-users" aria-hidden="true"></i></span>
-                <span class="bottom" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="{{ $wish->adults }}">{{ $wish->adults }} Erw.
-                            </span>
+                <span class="bottom"
+                      data-toggle="tooltip"
+                      data-html="true"
+                      data-placement="bottom"
+                      data-title="{{ $wish->adults }}">
+                    {{ $wish->adults }}
+                </span>
             </li>
 
             <li>
@@ -65,21 +81,22 @@
                 <span class="bottom">{{ $wish->budget }}€</span>
             </li>
 
-            <li>
-                <span class="top"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
-
-                <span class="bottom">{{ $wish->duration }} Tage
-                             </span>
+            <li style="display: none;">
+                <span class="top">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                <span class="bottom">
+                    {{ $wish->duration }}/Tage
+                </span>
             </li>
 
-            <li>
+            <li style="display: none">
                 <span class="top"><i class="fa fa-bed" aria-hidden="true"></i></span>
                 <span class="bottom">
                         Hotel: {{ $wish->category }}
                             </span>
             </li>
 
-            <li>
+            <li style="display: none;">
                 <span class="top"><i class="fa fa-h-square" aria-hidden="true"></i></span>
                 <span class="bottom">{{ $wish->catering }}</span>
             </li>
@@ -112,7 +129,7 @@
                         040 23 88 59-82
                     </a>."
                 @else
-                <h1>Herzlich Wilkommen</h1>
+                <h1>Herzlich willkommen</h1>
                     "Hallo, wir haben wunderbare Angebote zu deinem Reisewunsch "{{ $wish->destination }}" für dich gefunden.
                     Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung:
                     <br>
@@ -161,7 +178,7 @@
                                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                                             <span>{{ $locations[$count] }}</span>
                                             </span>
-                            <div class="offer-touroperator hide-mobile">
+                            <div class="offer-touroperator hide-mobile" style="display: none">
                                 <div class="c-hotel-rating__recommendation" data-key="0" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="
                                     <div class=&quot;ttp-ctn&quot;>
                                         <div>
@@ -246,7 +263,7 @@
 
                             <div class="facts-summary">
                                 <h5>Highlight der Unterkunft:</h5>
-                                        <div class="summary-icon">
+                                        <div class="summary-icon" style="display: none">
                                             <i class="fa fa-check" aria-hidden="true"></i>
                                             <span class="text"></span>
                                         </div>
