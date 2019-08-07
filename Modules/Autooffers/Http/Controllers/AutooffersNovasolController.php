@@ -128,7 +128,7 @@ class AutooffersNovasolController extends Controller
             'departure' => str_replace(['-'], [''], $wish->latest_return),
             'salesmarket' => '280',
             //'adults' => ($wish->adults == 0) ? 1 : $wish->adults,
-            'adults' => str_replace(' Erwachsene','',$wish->adults),
+            'adults' => str_replace([' Erwachsene', ' Erwachsener'],['',''],$wish->adults),
             'children' => $wish->kids == 'Kein Kinder' ? '':str_replace(' Kinder','',$wish->kids),
             'maxprice' => $wish->budget,
         ];
