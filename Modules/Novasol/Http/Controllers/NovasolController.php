@@ -12,6 +12,7 @@ use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Novasol\Http\Requests\StoreWishRequest;
+use Nwidart\Modules\Module;
 use Underscore\Parse;
 use Illuminate\Support\Facades\DB;
 
@@ -57,9 +58,6 @@ class NovasolController extends Controller
     public function index()
     {
         $whitelabel = $this->whitelabel->getByName('Novasol');
-
-//        dd($this->attachements->getAttachementsByType($this->whitelabelId, 'background'));
-
 
         return view('novasol::index')->with([
             'display_name'  => $whitelabel['display_name'],

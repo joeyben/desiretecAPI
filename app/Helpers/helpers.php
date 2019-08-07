@@ -427,8 +427,8 @@ if (!function_exists('getWhiteLabelLogo')) {
      *
      * @return string
      */
-    function getWhiteLabelLogoUrl($type = 'logo')
-    {
+    function getWhiteLabelLogoUrl($type = 'logo'){
+
         $attachment = \Modules\Attachments\Entities\Attachment::select([
             config('module.attachments.table') . '.basename',
             config('module.attachments.table') . '.type',

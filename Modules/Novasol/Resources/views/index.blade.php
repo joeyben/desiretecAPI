@@ -12,7 +12,6 @@
         }
     </style>
 
-
     <div class="slider" style="background-image: url({{ $bg_image }})">
         <div class="welcome">
             {{ trans('whitelabel.frontend.welcome') }}
