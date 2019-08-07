@@ -26,10 +26,12 @@ return [
         'catering'         => 'Verpflegung (mind.)',
         'duration'         => 'Reisedauer',
         'duration_empty'   => 'Beliebig',
+        'duration_time'    => 'Wann & Wie lange?',
         'email'            => 'Ihre E-Mail-Adresse',
         'name'             => 'Name',
         'terms'            => 'Name',
-        'pets'             => 'Haustiere'
+        'pets'             => 'Haustiere',
+        'travelers'        => 'Anzahl Personen'
     ],
     'placeholder' => [
         'title'            => 'Wish Title',

@@ -18,7 +18,7 @@
 
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
-                    <label for="travelers" class="required">Wer reist mit?</label>
+                    <label for="travelers" class="required">{{ trans('novasol::layer.general.travelers') }}</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
                          <i class="fal fa-users not-triggered"></i>
@@ -64,9 +64,9 @@
 
             <div class="kwp-col-4 duration-col main-col">
                 <div class="kwp-form-group duration-group">
-                    <label for="duration-time" class="required">Wann & Wie lange?</label>
+                    <label for="duration-time" class="required">{{trans('novasol::layer.general.duration_time')}}</label>
                     <span class="duration-time dd-trigger">
-                        <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
+                        <span class="txt">15.11.2018 - 17.06.2019</span>
                         <i class="fal fa-calendar-alt not-triggered"></i>
                         <i class="fal fa-times triggered"></i>
                     </span>
@@ -92,19 +92,6 @@
                             @endif
                             <i class="fal fa-calendar-alt"></i>
                         </div>
-                        <div class="kwp-col-12">
-                            {{ Form::label('duration', trans('novasol::layer.general.duration'), ['class' => 'control-label required']) }}
-                            <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('novasol::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
-                            </div>
-                            <i class="fal fa-times"></i>
-                            @if ($errors->any() && $errors->get('duration'))
-                                @foreach ($errors->get('duration') as $error)
-                                    <span class="error-input">{{ $error }}</span>
-                                @endforeach
-                            @endif
-                        </div>
-                        <div class="clearfix"></div>
                         <hr>
                         <div class="kwp-col-12 button">
                             <a href="#">OK</a>
@@ -178,7 +165,7 @@
             var back = $("#latest_return").val();
             var duration = $("#duration option:selected").text();
 
-            $(".duration-time .txt").text(from+" - "+back+", "+duration);
+            $(".duration-time .txt").text(from+" - "+back);
             return false;
           });
 
@@ -279,7 +266,8 @@
 
 
 
-            $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
+            //$(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
+            $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val());
             var $start_date = $("#earliest_start").val().split('.');
             var $end_date = $("#latest_return").val().split('.');
 
