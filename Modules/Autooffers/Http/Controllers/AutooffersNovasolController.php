@@ -96,6 +96,15 @@ class AutooffersNovasolController extends Controller
         //$this->autooffers->saveWishData($wish);
         //$this->autooffers->storeMany($response, $wish->id);
 
+
+
+        logger()->info('AufoofferNovasolController.php > create() wurde aufgerufen!');
+        $this->autooffers->saveWishData($wish);
+        $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($this->autooffers, $wish));
+        //$response = $this->autooffers->getTrafficsData();
+        $this->autooffers->storeMany($response);
+
+
         return redirect()->to('novasoloffer/list/' . $wish->id);
     }
 
@@ -123,13 +132,15 @@ class AutooffersNovasolController extends Controller
      *
      * @return Response
      */
-    public function show(Wish $wish)
-    {
+    public function show(Wish $wish){
+
+
         $country_area = [];
         $prices = [];
         $thumbnails = [];
         $qualities = [];
         $locations = [];
+
 
         $country_area = $this->autooffers->to_country_code($wish->destination);
 
