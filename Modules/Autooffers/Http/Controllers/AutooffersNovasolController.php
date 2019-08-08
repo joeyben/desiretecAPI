@@ -125,7 +125,7 @@ class AutooffersNovasolController extends Controller
         //$response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response);
 
-        //dd(['request' => $request, 'response' => $response]);
+        dd(['request' => $request, 'response' => $response]);
     }
 
     /**
@@ -134,11 +134,6 @@ class AutooffersNovasolController extends Controller
      * @return Response
      */
     public function show(Wish $wish){
-        $autooffers = Autooffer::join('wishes', 'autooffers.wish_id', '=', 'wishes.id')
-            ->orderBy('wishes.budget', 'desc')
-            ->select('autooffers.*')
-            ->where('autooffers.wish_id', $wish->id)
-            ->get();
 
         $autooffers = Autooffer::where('wish_id', $wish->id)->orderBy('totalPrice', 'asc')->paginate(5);
         return view('autooffers::autooffer.show', [
