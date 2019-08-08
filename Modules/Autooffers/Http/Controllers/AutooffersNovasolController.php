@@ -101,9 +101,9 @@ class AutooffersNovasolController extends Controller
         $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($this->autooffers, $wish));
         //$response = $this->autooffers->getTrafficsData();
 
-        dd($response);
+        //dd($response);
 
-        $this->autooffers->storeMany($response, $wish->id);
+        $this->autooffers->storeMany(simplexml_load_string($response), $wish->id);
 
 
         return redirect()->to('novasoloffer/list/' . $wish->id);
@@ -246,7 +246,6 @@ class AutooffersNovasolController extends Controller
        if(!is_null($autooffer)){
            $url = "https://www.novasol.de/ferienhaeuser/";
            $url .= str_replace(' ', '-', strtolower($autooffer->destination)).'/';
-
 
 
            $url .= str_replace(' ', '-', strtolower($autooffer->destination)).'/';
