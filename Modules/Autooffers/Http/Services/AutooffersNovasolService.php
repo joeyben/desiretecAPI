@@ -39,9 +39,9 @@ class AutooffersNovasolService{
      * @param array $properties
      * @return array
      */
-    public function fetchAllProperties($properties = []){
+    public function fetchAllProperties($response = []){
         $props = [];
-        foreach ($properties as $property){
+        foreach ($response->property as $property){
             $props[] = $property;
         }
         return $props;
