@@ -177,6 +177,7 @@ class AutooffersNovasolRepository extends BaseRepository
      */
     public function storeAutooffer($offer, $hotel, $wish_id)
     {
+        dd($offer);
         try {
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
