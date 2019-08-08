@@ -133,7 +133,7 @@ class AutooffersNovasolController extends Controller
      *
      * @return Response
      */
-    public function show($wish_id){
+    public function show(Wish $wish){
 
 //        $autooffers = Autooffer::join('wishes', 'autooffers.wish_id', '=', 'wishes.id')
 //            ->orderBy('wishes.budget', 'desc')
@@ -141,7 +141,7 @@ class AutooffersNovasolController extends Controller
 //            ->where('autooffers.wish_id', $wish_id)
 //            ->get();
 
-        $autooffers = Autooffer::where('wish_id', $wish_id)->orderBy('totalPrice', 'asc')->paginate(5);
+        //$autooffers = Autooffer::where('wish_id', $wish_id)->orderBy('totalPrice', 'asc')->paginate(5);
 
         //dd(json_decode($autooffers[0]->hotel_data)->hotel->address);
 
