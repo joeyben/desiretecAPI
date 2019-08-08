@@ -6,7 +6,11 @@ use App\Models\Wishes\Wish;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Redirect;
+use Modules\Autooffers\Entities\Autooffer;
+use Modules\Autooffers\Http\Services\AutooffersNovasolService;
 use Modules\Autooffers\Repositories\AutooffersNovasolRepository;
+use Mpdf\Tag\Input;
 use Nwidart\Modules\Collection;
 
 class AutooffersNovasolController extends Controller
@@ -49,11 +53,17 @@ class AutooffersNovasolController extends Controller
     private $autooffers;
 
     /**
+     * @var AutooffersNovasolService
+     */
+    private $service;
+
+    /**
      * @param \Modules\Autooffers\Repositories\AutooffersRepository $autooffers
      */
-    public function __construct(AutooffersNovasolRepository $autooffers)
+    public function __construct(AutooffersNovasolRepository $autooffers, AutooffersNovasolService $service)
     {
         $this->autooffers = $autooffers;
+        $this->service    = $service;
     }
 
     /**
@@ -73,8 +83,6 @@ class AutooffersNovasolController extends Controller
      */
     public function details(Wish $wish)
     {
-
-
         return view('autooffers::autooffer.details');
     }
 
@@ -100,9 +108,13 @@ class AutooffersNovasolController extends Controller
      */
     public function store(Request $request)
     {
-        //$this->autooffers->saveWishData($request->all());
+        // todo: die NOVASOL-Daten abspeichern!00
+        $this->autooffers->saveWishData($request->all());
+        $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($request->all()));
         //$response = $this->autooffers->getTrafficsData();
-        //$this->autooffers->storeMany($response);
+        $this->autooffers->storeMany($response);
+
+        dd(['request' => $request, 'response' => $response]);
     }
 
     /**
@@ -195,5 +207,29 @@ class AutooffersNovasolController extends Controller
      */
     public function destroy()
     {
+    }
+
+    /**
+     * Creates the url to novasol and opens it on new tab
+     */
+    public function toTheOffer($wishid){
+       $autooffer = Autooffer::where('wish_id', $wishid)->first();
+       dd(json_decode($autooffer->hotel_data));
+       if(!is_null($autooffer)){
+           $url = "https://www.novasol.de/ferienhaeuser/";
+           $url .= str_replace(' ', '-', strtolower($autooffer->destination)).'/';
+
+
+
+           $url .= str_replace(' ', '-', strtolower($autooffer->destination)).'/';
+           $url .= str_replace(' ', '-', strtolower($autooffer->catering)).'/';
+           $url .= '?adults='. str_replace(' Erwachsene', '',$autooffer->adults);
+           $url .= '&children='. $autooffer->kids;
+           $url .= '&from='. str_replace('-', '', $autooffer->earliest_start);
+           $url .= '&to='. str_replace('-', '', $autooffer->latest_return);
+
+           // todo: The NOVASOL-ID is mising into the URL
+           return Redirect::away($url);
+       }
     }
 }
