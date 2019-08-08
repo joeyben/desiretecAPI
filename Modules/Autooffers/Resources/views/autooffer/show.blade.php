@@ -113,11 +113,14 @@
                     </span>
                 @else
                     <span class="img"
-                          style="background-image: url({{ asset('bundles/cssonnenklar/sonnenklar/images/logo.svg') }});">
+                          style="background-image: url('https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/1565014951novasol.png');">
                     </span>
                 @endif
             </div>
             <div class="seller-name">
+                <span class="img"
+                      style="background-image: url('/whitelabel/novasol/images/layer/Sabine_Buchungsservice.jpg');">
+                    </span>
             </div>
             <div class="seller-message">
                 @if (count($prices) === 0)
