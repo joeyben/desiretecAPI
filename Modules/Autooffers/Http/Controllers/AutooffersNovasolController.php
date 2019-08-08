@@ -100,6 +100,9 @@ class AutooffersNovasolController extends Controller
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($this->autooffers, $wish));
         //$response = $this->autooffers->getTrafficsData();
+
+        dd($response);
+
         $this->autooffers->storeMany($response, $wish->id);
 
 
@@ -119,7 +122,6 @@ class AutooffersNovasolController extends Controller
         logger()->info('AufoofferNovasolController.php > store() wurde aufgerufen!');
         $this->autooffers->saveWishData($request->all());
         $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($this->autooffers, $request->all()));
-        dd($response);
 
         //$response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response);
