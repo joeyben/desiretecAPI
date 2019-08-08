@@ -145,9 +145,9 @@ class AutooffersNovasolController extends Controller
 
         //dd(json_decode($autooffers[0]->hotel_data)->hotel->address);
 
-        return view('autooffers::autooffer.show', [
-            'autooffers' => $autooffers
-        ]);
+        //return view('autooffers::autooffer.show', [
+        //    'autooffers' => $autooffers
+        //]);
 
 
         $country_area = [];
