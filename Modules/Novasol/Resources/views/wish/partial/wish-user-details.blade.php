@@ -40,7 +40,7 @@
     </div>
     <div class="col-md-3">
         <i class="fal fa-child"></i>
-        <input class="data-content" value="{{ $wish->kids }}">
+        <input class="data-content" value="{{ $wish->kids_extended }}">
     </div>
     <div class="col-md-3">
         <i class="fal fa-dog"></i>
