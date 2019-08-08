@@ -183,10 +183,10 @@ class AutooffersNovasolRepository extends BaseRepository
             $autooffer->code = $offer['propertyid'];
             $autooffer->type = null;
             $autooffer->totalPrice = $offer['price'];
-            $autooffer->personPrice = null;
+            $autooffer->personPrice = $offer['thumbnail'];
             $autooffer->from = $offer['arrival'];
             $autooffer->to = $offer['departure'];
-            $autooffer->tourOperator_code = null;
+            $autooffer->tourOperator_code = $offer['quality'];
             $autooffer->tourOperator_name = null;
             $autooffer->hotel_code = $offer['propertyid'];
             $autooffer->hotel_name = null;//$hotel->title;

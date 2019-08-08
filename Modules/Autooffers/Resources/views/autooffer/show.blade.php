@@ -137,7 +137,7 @@
                     </span>
             </div>
             <div class="seller-message">
-                @if (count($prices) === 0)
+                @if (count($autooffers) === 0)
                     "Leider haben wir noch keine Angebote für Deinen Reisewunsch"
                     {{ $wish->destination }}
                     " für dich finden können. Wir erfüllen Dir jedoch gerne unter folgender Nummer Deine Wünsche
@@ -157,7 +157,7 @@
             </div>
         </div>
 
-        @if (count($prices) > 0)
+        @if (count($autooffers) > 0)
             <div id="map" class="map"></div>
         @endif
 
@@ -168,7 +168,6 @@
         <h1 class="offer-header-text">Meine Angebote</h1>
     </div>
 </div>
-@if(count($prices) > 0)
     @for($count = 0; $count < 5; $count++)
         <div class="pagecontainer">
         <div class="row">
@@ -178,7 +177,7 @@
                 <div class="card" id="hotel-0">
                     <div class="offer-content">
                         <div class="offer-block offer-block--first">
-                            <img src="{{ str_replace('/100/','/600/',$thumbnails[$count]) }}" style="width: 100%">
+                            <img src="{{ str_replace('/100/','/600/',$autooffers[$count]->personPrice) }}" style="width: 100%">
                         </div>
                         <div class="offer-block no-border">
 
@@ -186,14 +185,14 @@
                             <div class="stars hide-mobile">
                                 <h3 class="hide-mobile"></h3>
 
-                                @for ($i = 1; $i <= intval($qualities[$count]); $i++)
+                                @for ($i = 1; $i <= intval($autooffers[$count]->quality); $i++)
                                     <i class="fa fa-heart"></i>
                                 @endfor
                             </div>
 
                             <span class="location launch-map hide-mobile" data-address=",  Avsallar, TR" lat="36.60976" lng="31.77992">
                                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            <span>{{ $locations[$count] }}</span>
+                                            <span></span>
                                             </span>
                             <div class="offer-touroperator hide-mobile" style="display: none">
                                 <div class="c-hotel-rating__recommendation" data-key="0" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="
@@ -321,7 +320,7 @@
                                         <div class="offer-price">
                                             <div class="price-all">
                                                 <div class="js-price-person">
-                                                    <span>{{  number_format($prices[$count], 0, ',', '.') }}€</span>
+                                                    <span>{{  number_format($autooffers[$count]->totalPrice, 0, ',', '.') }}€</span>
                                                     <span class="type">p.P.</span>
                                                 </div>
                                                 <!--<div class="js-price-total">
@@ -348,7 +347,6 @@
     </div>
     </div>
     @endfor
-@endif
 
 
 

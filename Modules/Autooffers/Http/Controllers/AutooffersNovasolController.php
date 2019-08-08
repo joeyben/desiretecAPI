@@ -134,76 +134,17 @@ class AutooffersNovasolController extends Controller
      * @return Response
      */
     public function show(Wish $wish){
+        $autooffers = Autooffer::join('wishes', 'autooffers.wish_id', '=', 'wishes.id')
+            ->orderBy('wishes.budget', 'desc')
+            ->select('autooffers.*')
+            ->where('autooffers.wish_id', $wish->id)
+            ->get();
 
-//        $autooffers = Autooffer::join('wishes', 'autooffers.wish_id', '=', 'wishes.id')
-//            ->orderBy('wishes.budget', 'desc')
-//            ->select('autooffers.*')
-//            ->where('autooffers.wish_id', $wish_id)
-//            ->get();
-
-        //$autooffers = Autooffer::where('wish_id', $wish_id)->orderBy('totalPrice', 'asc')->paginate(5);
-
-        //dd(json_decode($autooffers[0]->hotel_data)->hotel->address);
-
-        //return view('autooffers::autooffer.show', [
-        //    'autooffers' => $autooffers
-        //]);
-
-
-        $country_area = [];
-        $prices = [];
-        $thumbnails = [];
-        $qualities = [];
-        $locations = [];
-
-
-        $country_area = $this->autooffers->to_country_code($wish->destination);
-
-        $params = [
-            'country' => $country_area[0],
-            'area' => $country_area[1],
-            'company' => 'nov',
-            'arrival' => str_replace(['-'], [''], $wish->earliest_start),
-            'departure' => str_replace(['-'], [''], $wish->latest_return),
-            'salesmarket' => '280',
-            //'adults' => ($wish->adults == 0) ? 1 : $wish->adults,
-            'adults' => str_replace([' Erwachsene', ' Erwachsener'],['',''],$wish->adults),
-            'children' => $wish->kids == 'Kein Kinder' ? '':str_replace(' Kinder','',$wish->kids),
-            'maxprice' => $wish->budget,
-        ];
-
-        $response = $this->autooffers->getNovasolData($params);
-        $offers = simplexml_load_string($response);
-
-        foreach ($offers->property as $offer) {
-                    $prices[] = (float) $offer->price;
-                    $thumbnails[] = (string) $offer->thumbnail;
-                    $qualities[] = (int) $offer->quality;
-                    $locations[] = (string) $offer->location;
-        }
-
-        sort($prices);
-
-
-//        dd([
-//            'wish' => $wish,
-//            'prices' => $prices,
-//            'thumbnails' => $thumbnails,
-//            'qualities' => $qualities,
-//            'locations' => $locations,
-//            'offers'    => $offers
-//        ]);
-
-
+        $autooffers = Autooffer::where('wish_id', $wish->id)->orderBy('totalPrice', 'asc')->paginate(5);
         return view('autooffers::autooffer.show', [
-            'wish' => $wish,
-            'prices' => $prices,
-            'thumbnails' => $thumbnails,
-            'qualities' => $qualities,
-            'locations' => $locations,
+            'autooffers' => $autooffers,
+            'wish' => $wish
         ]);
-
-        //return view('autooffers::autooffer.show', compact('wish', 'prices','thumbnails','qualities','locations'));
     }
 
     /**
