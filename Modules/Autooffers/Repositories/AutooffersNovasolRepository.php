@@ -197,8 +197,8 @@ class AutooffersNovasolRepository extends BaseRepository
             $autooffer->hotel_location_region_name = $offer['location'];
             $autooffer->airport_code = null;
             $autooffer->airport_name = null; //$hotel->airport;
-            $autooffer->data = json_encode($offer);
-            $autooffer->hotel_data = json_encode($hotel);
+            //$autooffer->data = json_encode($offer);
+            //$autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
 
