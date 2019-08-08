@@ -108,7 +108,8 @@ class AutooffersNovasolController extends Controller
      */
     public function store(Request $request)
     {
-        // todo: die NOVASOL-Daten abspeichern!00
+        // todo: die NOVASOL-Daten abspeichern!!!
+        logger()->info('AufoofferNovasolController.php > store() wurde aufgerufen!');
         $this->autooffers->saveWishData($request->all());
         $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($this->autooffers, $request->all()));
         //$response = $this->autooffers->getTrafficsData();
