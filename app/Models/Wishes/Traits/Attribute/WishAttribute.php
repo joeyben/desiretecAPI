@@ -60,7 +60,6 @@ trait WishAttribute
      */
     public function getAdultsExtendedAttribute(){
         return transformTravelers($this->adults, 'adults');
-
     }
 
     /**
@@ -70,6 +69,7 @@ trait WishAttribute
     public function getKidsAttribute($value){
         return $value;
     }
+
 
     /**
      * @return string
