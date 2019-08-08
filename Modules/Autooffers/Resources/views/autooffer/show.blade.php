@@ -152,7 +152,7 @@
     </div>
 </div>
 @if(count($prices) > 0)
-    @for($count = 0; $count < 3; $count++)
+    @for($count = 0; $count < 5; $count++)
         <div class="pagecontainer">
         <div class="row">
         <div class="col-md-12 details-slider">
@@ -298,7 +298,8 @@
                                                                                                                                                     </span>
                                 </div>
                                 <div class="right">
-                                    <a href="/adetails/offer/5c5d4e7ce4b067a302abeefc/0/" class="price-click-area">
+                                    {{-- <a href="/adetails/offer/5c5d4e7ce4b067a302abeefc/0/" class="price-click-area"> --}}
+                                    <a href="{{ route('to-the-offer', $wish->id) }}" class="price-click-area">
 
                                         <div class="offer-price">
                                             <div class="price-all">
