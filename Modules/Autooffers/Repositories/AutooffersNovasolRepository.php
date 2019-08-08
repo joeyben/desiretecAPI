@@ -156,14 +156,14 @@ class AutooffersNovasolRepository extends BaseRepository
      */
     public function storeMany($data, $properties, $wish_id){
 
-        dd(['data' => $data, 'properties' => $properties]);
-
-        foreach ($data->property as $key => $autooffer) {
+        foreach ($properties as $key => $autooffer) {
             $offer = json_decode(json_encode($autooffer), true);
             $hotel = json_decode(json_encode([]), true);
             //$hotel = json_decode(json_encode($this->getFullHotelData($offer['hotelOffer']['hotel']['giata']['hotelId'])), true);
             $this->storeAutooffer($offer, $hotel, $wish_id);
         }
+
+        dd(['data' => $data, 'properties' => $properties]);
     }
 
     /**
