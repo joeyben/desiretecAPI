@@ -93,9 +93,9 @@ class AutooffersNovasolController extends Controller
      * @return mixed
      */
     public function create(Wish $wish){
-        //$offersCounter = Autooffer::where('wish_id', $wish->id)->count();
-        //if($offersCounter == 0){
-        if(!isset($wish->id)){
+        $offersCounter = Autooffer::where('wish_id', $wish->id)->count();
+        if($offersCounter == 0){
+        //if(!isset($wish->id)){
             logger()->info('AufoofferNovasolController.php > create() wurde aufgerufen!');
             $this->autooffers->saveWishData($wish);
             $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($this->autooffers, $wish));
@@ -133,7 +133,23 @@ class AutooffersNovasolController extends Controller
      *
      * @return Response
      */
-    public function show(Wish $wish){
+    public function show($wish_id){
+
+//        $autooffers = Autooffer::join('wishes', 'autooffers.wish_id', '=', 'wishes.id')
+//            ->orderBy('wishes.budget', 'desc')
+//            ->select('autooffers.*')
+//            ->where('autooffers.wish_id', $wish_id)
+//            ->get();
+
+        $autooffers = Autooffer::where('wish_id', $wish_id)->orderBy('totalPrice', 'asc')->paginate(5);
+
+        //dd(json_decode($autooffers[0]->hotel_data)->hotel->address);
+
+        return view('autooffers::autooffer.show', [
+            'autooffers' => $autooffers
+        ]);
+
+
         $country_area = [];
         $prices = [];
         $thumbnails = [];
