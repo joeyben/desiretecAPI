@@ -96,8 +96,6 @@ class AutooffersNovasolController extends Controller
         //$this->autooffers->saveWishData($wish);
         //$this->autooffers->storeMany($response, $wish->id);
 
-
-
         logger()->info('AufoofferNovasolController.php > create() wurde aufgerufen!');
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($this->autooffers, $wish));
@@ -121,10 +119,12 @@ class AutooffersNovasolController extends Controller
         logger()->info('AufoofferNovasolController.php > store() wurde aufgerufen!');
         $this->autooffers->saveWishData($request->all());
         $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($this->autooffers, $request->all()));
+        dd($response);
+
         //$response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response);
 
-        dd(['request' => $request, 'response' => $response]);
+        //dd(['request' => $request, 'response' => $response]);
     }
 
     /**
@@ -142,7 +142,7 @@ class AutooffersNovasolController extends Controller
 
         $autooffers = Autooffer::where('wish_id', $wish_id)->orderBy('totalPrice', 'asc')->paginate(5);
 
-        dd(json_decode($autooffers[0]->hotel_data));
+        //dd(json_decode($autooffers[0]->hotel_data)->hotel->address);
 
         return view('autooffers::autooffer.show', [
             'autooffers' => $autooffers
