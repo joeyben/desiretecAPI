@@ -154,9 +154,9 @@ class AutooffersNovasolRepository extends BaseRepository
      * @param  $data
      * @param string $wish_id
      */
-    public function storeMany($data, $wish_id){
+    public function storeMany($data, $properties, $wish_id){
 
-        dd(['data' => $data, 'properties' => $data->property]);
+        dd(['data' => $data, 'properties' => $properties]);
 
         foreach ($data->property as $key => $autooffer) {
             $offer = json_decode(json_encode($autooffer), true);
