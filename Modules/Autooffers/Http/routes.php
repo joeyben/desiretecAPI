@@ -13,6 +13,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'novasoloffer', 'namespace' => 
 
     Route::get('create/{wish}', 'AutooffersNovasolController@create')->name('create');
     Route::get('list/{wish}', 'AutooffersNovasolController@show')->name('list');
+    Route::get('to-the-offer/{wishid}', 'AutooffersNovasolController@toTheOffer')->name('to-the-offer');
     Route::get('details/{wish}', 'AutooffersNovasolController@details')->name('details');
     Route::post('store', 'AutooffersNovasolController@store')->name('store');
 });

@@ -110,7 +110,7 @@ class AutooffersNovasolController extends Controller
     {
         // todo: die NOVASOL-Daten abspeichern!00
         $this->autooffers->saveWishData($request->all());
-        $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($request->all()));
+        $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($this->autooffers, $request->all()));
         //$response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response);
 
