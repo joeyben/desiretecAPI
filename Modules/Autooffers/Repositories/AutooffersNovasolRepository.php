@@ -156,14 +156,16 @@ class AutooffersNovasolRepository extends BaseRepository
      */
     public function storeMany($data, $properties, $wish_id){
 
+        $wish = Wish::find($wish_id);
+
         foreach ($properties as $key => $autooffer) {
             $offer = json_decode(json_encode($autooffer), true);
-            $hotel = json_decode(json_encode([]), true);
+            $hotel = json_decode(json_encode($wish), true);
             //$hotel = json_decode(json_encode($this->getFullHotelData($offer['hotelOffer']['hotel']['giata']['hotelId'])), true);
             $this->storeAutooffer($offer, $hotel, $wish_id);
         }
 
-        dd(['data' => $data, 'properties' => $properties]);
+        //dd(['data' => $data, 'properties' => $properties]);
     }
 
     /**
@@ -178,23 +180,23 @@ class AutooffersNovasolRepository extends BaseRepository
         try {
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
-            $autooffer->code = $offer['code'];
-            $autooffer->type = $offer['productType'];
-            $autooffer->totalPrice = $offer['totalPrice']['value'];
-            $autooffer->personPrice = $offer['personPrice']['value'];
-            $autooffer->from = $offer['travelDate']['fromDate'];
-            $autooffer->to = $offer['travelDate']['toDate'];
-            $autooffer->tourOperator_code = $offer['tourOperator']['code'];
-            $autooffer->tourOperator_name = $offer['tourOperator']['name'];
-            $autooffer->hotel_code = $hotel['hotel']['giata']['hotelId'];
-            $autooffer->hotel_name = $offer['hotelOffer']['hotel']['name'];
-            $autooffer->hotel_location_name = $hotel['hotel']['location']['name'];
-            $autooffer->hotel_location_lng = $hotel['hotel']['location']['longitude'];
-            $autooffer->hotel_location_lat = $hotel['hotel']['location']['latitude'];
-            $autooffer->hotel_location_region_code = $hotel['hotel']['location']['region']['code'];
-            $autooffer->hotel_location_region_name = $hotel['hotel']['location']['region']['name'];
-            $autooffer->airport_code = $offer['hotelOffer']['hotel']['airport']['code'];
-            $autooffer->airport_name = $offer['hotelOffer']['hotel']['airport']['name'];
+            $autooffer->code = $offer['propertyid'];
+            $autooffer->type = null;
+            $autooffer->totalPrice = $offer['price'];
+            $autooffer->personPrice = null;
+            $autooffer->from = $offer['arrival'];
+            $autooffer->to = $offer['departure'];
+            $autooffer->tourOperator_code = null;
+            $autooffer->tourOperator_name = null;
+            $autooffer->hotel_code = $offer['propertyid'];
+            $autooffer->hotel_name = $hotel->title;
+            $autooffer->hotel_location_name = $offer['location'];
+            $autooffer->hotel_location_lng = $offer['wsg84long'];
+            $autooffer->hotel_location_lat = $offer['wsg84lat'];
+            $autooffer->hotel_location_region_code = $offer['area'];
+            $autooffer->hotel_location_region_name = $offer['location'];
+            $autooffer->airport_code = null;
+            $autooffer->airport_name = $hotel->airport;
             $autooffer->data = json_encode($offer);
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
