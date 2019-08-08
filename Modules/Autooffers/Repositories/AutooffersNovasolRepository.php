@@ -190,11 +190,11 @@ class AutooffersNovasolRepository extends BaseRepository
             $autooffer->tourOperator_name = null;
             $autooffer->hotel_code = $offer['propertyid'];
             $autooffer->hotel_name = null;//$hotel->title;
-            $autooffer->hotel_location_name = $offer['location'];
+            $autooffer->hotel_location_name = null;//$offer['location'];
             $autooffer->hotel_location_lng = $offer['wsg84long'];
             $autooffer->hotel_location_lat = $offer['wsg84lat'];
             $autooffer->hotel_location_region_code = $offer['area'];
-            $autooffer->hotel_location_region_name = $offer['location'];
+            $autooffer->hotel_location_region_name = null;//$offer['location'];
             $autooffer->airport_code = null;
             $autooffer->airport_name = null; //$hotel->airport;
             $autooffer->data = null;//json_encode($offer);
