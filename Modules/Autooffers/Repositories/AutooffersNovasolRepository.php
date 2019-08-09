@@ -159,7 +159,6 @@ class AutooffersNovasolRepository extends BaseRepository
         $wish = Wish::find($wish_id);
 
         foreach ($properties as $key => $autooffer) {
-            die(var_dump($key));
             $offer = json_decode(json_encode($autooffer), true);
             $hotel = json_decode(json_encode($wish), true);
             //$hotel = json_decode(json_encode($this->getFullHotelData($offer['hotelOffer']['hotel']['giata']['hotelId'])), true);
