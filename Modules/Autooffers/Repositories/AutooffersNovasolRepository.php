@@ -159,10 +159,10 @@ class AutooffersNovasolRepository extends BaseRepository
         $wish = Wish::find($wish_id);
 
         foreach ($properties as $key => $autooffer) {
-            $offer = json_decode(json_encode($autooffer), true);
-            $hotel = json_decode(json_encode($wish), true);
+            //$offer = json_decode(json_encode($autooffer), true);
+            //$hotel = json_decode(json_encode($wish), true);
             //$hotel = json_decode(json_encode($this->getFullHotelData($offer['hotelOffer']['hotel']['giata']['hotelId'])), true);
-            $this->storeAutooffer($offer, $hotel, $wish_id);
+            $this->storeAutooffer($autooffer, $wish, $wish_id);
         }
 
         //dd(['data' => $data, 'properties' => $properties]);
@@ -180,28 +180,28 @@ class AutooffersNovasolRepository extends BaseRepository
         try {
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
-            $autooffer->code = $offer['propertyid'];
+            $autooffer->code = $offer->propertyid;
             $autooffer->type = null;
-            $autooffer->totalPrice = $offer['price'];
-            $autooffer->personPrice = null;//json_encode($offer['thumbnail']);
-            $autooffer->from = $offer['arrival'];
-            $autooffer->to = $offer['departure'];
-            $autooffer->tourOperator_code = $offer['quality'];
+            $autooffer->totalPrice = $offer->price;
+            $autooffer->personPrice = $offer->thumbnail;
+            $autooffer->from = $offer->arrival;
+            $autooffer->to = $offer->departure;
+            $autooffer->tourOperator_code = $offer->quality;
             $autooffer->tourOperator_name = null;
-            $autooffer->hotel_code = $offer['propertyid'];
+            $autooffer->hotel_code = $offer->propertyid;
             $autooffer->hotel_name = null;//$hotel->title;
-            $autooffer->hotel_location_name = json_encode($offer['location']);
-            $autooffer->hotel_location_lng = $offer['wsg84long'];
-            $autooffer->hotel_location_lat = $offer['wsg84lat'];
-            $autooffer->hotel_location_region_code = $offer['area'];
-            $autooffer->hotel_location_region_name = json_encode($offer['location']);
+            $autooffer->hotel_location_name = json_encode($offer->location);
+            $autooffer->hotel_location_lng = $offer->wsg84long;
+            $autooffer->hotel_location_lat = $offer->wsg84lat;
+            $autooffer->hotel_location_region_code = $offer->area;
+            $autooffer->hotel_location_region_name = json_encode($offer->location);
             $autooffer->airport_code = null;
             $autooffer->airport_name = null; //$hotel->airport;
             $autooffer->data = json_encode($offer);
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
-            $autooffer->thumbnail = str_replace('/100/', '/600/',json_encode($offer['thumbnail']));
+            $autooffer->thumbnail = str_replace('/100/', '/600/',json_encode($offer->thumbnail));
 
             if($autooffer->save()){
                 logger()->info('autooffer wurde gespeichert!');
