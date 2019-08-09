@@ -183,6 +183,7 @@
           display: block;
           font-size: 25px;
           margin-bottom: 10px;
+          color: #61BA01 !important;
         }
         img{
           width: 25px;
@@ -238,7 +239,7 @@
     }
   }
   .top-panels{
-    height: 350px;
+    height: 370px;
     margin-top: 15px;
     .seller{
       width: calc(50% - 10px);
@@ -944,7 +945,7 @@ ul.checklist {
   width: calc(50% - 40px);
   padding: 0;
   border-top: 1px solid #000;
-  float: left;
+  float: right;
   margin-left: 20px;
   height: 70px;
   .remaining{
@@ -972,7 +973,7 @@ ul.checklist {
       display: table-cell;
       vertical-align: middle;
       .js-price-person{
-        font-size: 25px;
+        font-size: 21px;
         font-weight: 200;
         span{
           padding-right: 7px;
@@ -2595,7 +2596,7 @@ img.offer-tourop-logo {
       text-align: left;
       li{
         width: 150px;
-        text-align: left;
+        text-align: center;
         padding: 0 10px;
         margin-bottom: 10px;
         &.no-border{
@@ -2834,4 +2835,21 @@ img.offer-tourop-logo {
     width: 100%;
     margin: 0px;
   }
+}
+
+.info-pin{
+  background-image: url(https://www.novasol.de/themes/custom/solar_theme/images/icon-info-circle.svg);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  float: right;
+  width: 40px;
+  height: 30px;
+}
+.openDesc{
+  display: block !important;
+  display: block !important;
+  border: 1px solid #909090;
+  padding: 9px;
+  position: absolute;
+  background-color: white;
 }

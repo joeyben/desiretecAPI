@@ -30,6 +30,12 @@
         .seller-image .img{
             border-radius: 0 !important;
         }
+        footer{
+            background: initial !important;
+        }
+      .footer ul li a {
+          color: #FFF !important;
+      }
         @media (max-width: 1280px) {
             .top-container .top-panels {
                 height: 330px !important;
@@ -37,20 +43,6 @@
         }
     </style>
     <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
-    <script type="text/javascript">
-      var map = new ol.Map({
-        target: 'map',
-        layers: [
-          new ol.layer.Tile({
-            source: new ol.source.OSM()
-          })
-        ],
-        view: new ol.View({
-          center: ol.proj.fromLonLat([37.41, 8.82]),
-          zoom: 4
-        })
-      });
-    </script>
 @endsection
 
 @section('page-header')
@@ -198,16 +190,20 @@
                                                  alt="">
                                         @endfor
 
-                                        @for($i =1; $i < (5 - $offer->tourOperator_code); $i++)
-                                            <img src="https://www.novasol.de/themes/custom/solar_theme/images/icon-star--novasol-yellow.svg"
+                                        @for($i =1; $i <= (5 - $offer->tourOperator_code); $i++)
+                                            <img src="https://www.novasol.de/themes/custom/solar_theme/images/icon-star--outline--gray-35.svg"
                                                  style="height: 20px;"
                                                  alt="">
                                         @endfor
+                                        <span id="{{$offer->hotel_code}}" class="info-pin" onclick="open_description('{{$offer->hotel_code}}')"></span>
                                     </div>
-
+                                    <div id="b-{{$offer->hotel_code}}" class="beschreibung" style="display: none">BESCHREIBUNG
+                                        Diese schöne, gemütliche und helle Ferienwohnung befindet sich in der schönen Ortschaft Montanejos bei Castellón.
+                                        Die Wohnung hat eine Kapazität für 6 Personen und verfügt über 3 Schlafzimmer (2 davon mit Ausziehbett für je 2 Personen), 1 Badezimmer und 1 WC. Die Küche ist in das Wohnzimmer mit Essbereich integriert. Nicht nur vom Balkon haben Sie einen fantastischen Blick auf die Berge. Die Einrichtung ist fröhlich und durchdacht. Ihnen steht ein Parkplatz zur Verfügung und 1 Haustier ist erlaubt.
+                                        Die ruhige Wohnung liegt außerhalb von Montanejos und ist mit einer Heizung für die kühleren Monate ausgestattet.</div>
                                     <span class="location launch-map hide-mobile" data-address=",  Avsallar, TR" lat="36.60976" lng="31.77992">
                                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            <span></span>
+                                            <span>{{$offer->hotel_name}}, {{$wish->destination}}</span>
                                             </span>
                                     <div class="offer-touroperator hide-mobile" style="display: none">
                                         <div class="c-hotel-rating__recommendation" data-key="0" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="
@@ -300,15 +296,19 @@
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fa fa-check" aria-hidden="true"></i>
-                                            <span class="text">Direkt am Strand</span>
+                                            <span class="text">Pool</span>
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fa fa-check" aria-hidden="true"></i>
-                                            <span class="text">Strandnah</span>
+                                            <span class="text">Internet</span>
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fa fa-check" aria-hidden="true"></i>
-                                            <span class="text">Kinderfreundlich</span>
+                                            <span class="text">Entfernung zum Wasser: #m </span>
+                                        </div>
+                                        <div class="summary-icon">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                            <span class="text">Spa </span>
                                         </div>
                                     </div>
 
@@ -441,4 +441,80 @@
         </div>
     </footer>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script type="text/javascript">
+      function open_description(id) {
+        //document.getElementById("b-"+id).style.display = "block";
+        document.getElementById("b-"+ id).classList.toggle("openDesc");
+      }
+      var marker = new ol.Feature({
+        geometry: new ol.geom.Point(
+          ol.proj.fromLonLat([{{$autooffers[0]->hotel_location_lng}},{{$autooffers[0]->hotel_location_lat}}])
+        ),  // Cordinates of New York's Town Hall
+      });
+      marker.setStyle(new ol.style.Style({
+        image: new ol.style.Icon(({
+          src: 'https://www.novasol.de/themes/custom/solar_theme/images/house-marker-highlight.svg'
+        }))
+      }));
+      var marker1 = new ol.Feature({
+        geometry: new ol.geom.Point(
+          ol.proj.fromLonLat([{{$autooffers[1]->hotel_location_lng}},{{$autooffers[1]->hotel_location_lat}}])
+        ),  // Cordinates of New York's Town Hall
+      });
+      marker1.setStyle(new ol.style.Style({
+        image: new ol.style.Icon(({
+          src: 'https://www.novasol.de/themes/custom/solar_theme/images/house-marker-highlight.svg'
+        }))
+      }));
+      var marker2 = new ol.Feature({
+        geometry: new ol.geom.Point(
+          ol.proj.fromLonLat([{{$autooffers[2]->hotel_location_lng}},{{$autooffers[2]->hotel_location_lat}}])
+        ),  // Cordinates of New York's Town Hall
+      });
+      marker2.setStyle(new ol.style.Style({
+        image: new ol.style.Icon(({
+          src: 'https://www.novasol.de/themes/custom/solar_theme/images/house-marker-highlight.svg'
+        }))
+      }));
+      var marker3 = new ol.Feature({
+        geometry: new ol.geom.Point(
+          ol.proj.fromLonLat([{{$autooffers[3]->hotel_location_lng}},{{$autooffers[3]->hotel_location_lat}}])
+        ),  // Cordinates of New York's Town Hall
+      });
+      marker3.setStyle(new ol.style.Style({
+        image: new ol.style.Icon(({
+          src: 'https://www.novasol.de/themes/custom/solar_theme/images/house-marker-highlight.svg'
+        }))
+      }));
+      var marker4 = new ol.Feature({
+        geometry: new ol.geom.Point(
+          ol.proj.fromLonLat([{{$autooffers[4]->hotel_location_lng}},{{$autooffers[4]->hotel_location_lat}}])
+        ),  // Cordinates of New York's Town Hall
+      });
+      marker4.setStyle(new ol.style.Style({
+        image: new ol.style.Icon(({
+          src: 'https://www.novasol.de/themes/custom/solar_theme/images/house-marker-highlight.svg'
+        }))
+      }));
+
+      var vectorSource = new ol.source.Vector({
+        features: [marker,marker1,marker2,marker3,marker4]
+      });
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([{{$autooffers[2]->hotel_location_lng}},{{$autooffers[2]->hotel_location_lat}}]),
+          zoom: 5
+        })
+      });
+      var markerVectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+      });
+      map.addLayer(markerVectorLayer);
+    </script>
 @endsection
