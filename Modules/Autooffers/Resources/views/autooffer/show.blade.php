@@ -190,13 +190,11 @@
                             <img src="{{ str_replace('/100/','/600/',$autooffers[$count]->personPrice) }}" style="width: 100%">
                         </div>
                         <div class="offer-block no-border">
-
-
                             <div class="stars hide-mobile">
                                 <h3 class="hide-mobile"></h3>
 
                                 @for ($i = 1; $i <= intval($autooffers[$count]->quality); $i++)
-                                    <i class="fa fa-heart"></i>
+                                    <img src="https://www.novasol.de/themes/custom/solar_theme/images/icon-star--novasol-yellow.svg" style="height: 20px;" alt="">
                                 @endfor
                             </div>
 
