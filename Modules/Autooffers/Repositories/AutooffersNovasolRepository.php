@@ -201,7 +201,7 @@ class AutooffersNovasolRepository extends BaseRepository
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
-            $autooffer->thumbnail = json_encode($offer['thumbnail']);
+            $autooffer->thumbnail = str_replace('/100/', '/600/',json_encode($offer['thumbnail']));
 
             if($autooffer->save()){
                 logger()->info('autooffer wurde gespeichert!');
