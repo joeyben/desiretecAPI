@@ -193,8 +193,10 @@
                                     <div class="stars hide-mobile">
                                         <h3 class="hide-mobile"></h3>
 
-                                        @for ($i = 1; $i <= intval($autooffers[$count]->quality); $i++)
-                                            <img src="https://www.novasol.de/themes/custom/solar_theme/images/icon-star--novasol-yellow.svg" style="height: 20px;" alt="">
+                                        @for ($i = 1; $i <= intval($offer->tourOperator_code); $i++)
+                                            <img src="https://www.novasol.de/themes/custom/solar_theme/images/icon-star--novasol-yellow.svg"
+                                                 style="height: 20px;"
+                                                 alt="">
                                         @endfor
                                     </div>
 
