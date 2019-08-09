@@ -131,7 +131,7 @@
                     </span>
                 @else
                     <span class="img"
-                          style="background-image: url('https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/1565014951novasol.png');">
+                          style="background-image: url('https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/1565014967NOVASOL_Awaze_Center_Black-3.jpg');">
                     </span>
                 @endif
             </div>
