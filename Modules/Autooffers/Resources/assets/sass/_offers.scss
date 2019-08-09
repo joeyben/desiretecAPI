@@ -261,7 +261,7 @@
         }
       }
       .seller-message{
-        padding: 25px 0;
+        //padding: 25px 0;
         text-align: center;
         background: #fff;
         margin: 20px 0;
@@ -2603,9 +2603,10 @@ img.offer-tourop-logo {
         }
         span.top{
           margin-bottom: 0px;
-          display: inline-block;
+          display: block;
           margin-right: 10px;
-          width: 15px;
+          //width: 15px;
+          color: #61BA01;
           vertical-align: middle;
           i{
             font-size: 15px;
@@ -2634,7 +2635,7 @@ img.offer-tourop-logo {
           }
         }
         .seller-message{
-          padding: 20px 5px;
+          //padding: 20px 5px;
           font-size: 12px;
         }
         .seller-name{
@@ -2776,7 +2777,7 @@ img.offer-tourop-logo {
           }
         }
         .seller-message{
-          padding: 20px 5px;
+          //padding: 20px 5px;
           font-size: 12px;
         }
         .seller-name{

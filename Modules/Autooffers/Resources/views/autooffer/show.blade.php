@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ mix('modules/css/offers.css') }}">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="https://www.novasol.de/sites/default/files/css/css_RdqOJMi-95FkFFYtCUoiTVu4aRX71KCrO5kv8_IA5Vw.css?pvlm34" type="text/css">
     <style>
       .map {
         height: 400px;
@@ -23,22 +24,33 @@
       .offer-block .stars i{
           color: #ffdd00 !important;
       }
-
-
-      .site-footer__limiter {
-          margin: 0 auto;
-          max-width: 1240px;
-          padding: 40px 20px;
+      .price{
+          background: initial !important;
       }
-      .site-footer {
-          background: #002738;
-          color: #fff;
-          font-size: 16px;
-          padding-bottom: 60px;
-          position: relative;
-      }
+        .seller-image .img{
+            border-radius: 0 !important;
+        }
+        @media (max-width: 1280px) {
+            .top-container .top-panels {
+                height: 330px !important;
+            }
+        }
     </style>
     <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+    <script type="text/javascript">
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([37.41, 8.82]),
+          zoom: 4
+        })
+      });
+    </script>
 @endsection
 
 @section('page-header')
@@ -132,9 +144,7 @@
                 @endif
             </div>
             <div class="seller-name">
-                <span class="img"
-                      style="background-image: url('/whitelabel/novasol/images/layer/Sabine_Buchungsservice.jpg');">
-                    </span>
+                <img class="img" src="/whitelabel/novasol/images/layer/Sabine_Buchungsservice.jpg" style="width: 113px;border-radius: 27px">
             </div>
             <div class="seller-message">
                 @if (count($autooffers) === 0)
@@ -352,81 +362,82 @@
 
 
 
-<footer class="footer" role="contentinfo">
-    <div class="region region-footer">
-        <div class="site-footer site-footer--desktop">
-            <div class="site-footer__limiter clearfix">
-                <div class="site-footer__brand"> <img alt="Novasol" src="https://www.novasol.de/themes/custom/solar_theme/images/logo_right--white.svg"></div>
-                <div class="site-footer__info">
-                    <div class="site-footer__info-company"> <address class="site-footer__info-company-address">NOVASOL A/S, Virumgårdsvej 27, 2830 Virum - Dänemark</address> <span class="site-footer__info-company-cvr">VAT No. DK17484575</span> <span class="site-footer__info-company-telephone"> <a href="tel://0049(0)40-688715100"> Telefon: 0049 (0)40- 688 71 51 00 </a> </span></div>
-                    <div class="site-footer__info-mail"> <span> <a href="mailto:"> </a> </span></div>
-                    <div class="site-footer__info-links">
-                        <ul class="site-footer__info-links-list">
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/uber-novasol">Über NOVASOL</a></li>
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/faq/novasol_agb_deutsch/datenschutz">Datenschutz</a></li>
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/faq/novasol_agb_deutsch/novasol_nutzungsbedingungen">Nutzungsbedingung</a></li>
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/site/terms/nov/2019/terms-de.pdf">Allgemeine Geschäftsbedingungen</a></li>
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/uber_novasol/impressum/kontakt">Impressum</a></li>
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/cookie-politik">Cookie-Politik</a></li>
-                        </ul>
-                    </div>
-                    <div class="site-footer__info-partners">
-                        <ul class="site-footer__info-partners-list">
-                            <li class="site-footer__info-partners-listitem"> <img src="https://www.novasol.de/sites/default/files/styles/partner_logo/public/2018-04/de_partner_logo_2.png?itok=oy8wzj6u" width="164" height="45" alt="DE partner logos" class="image-style-partner-logo"></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="site-footer__inner-wrap">
-                    <div class="site-footer__payment">
-                        <ul class="site-footer__payment-list">
-                            <li class="site-footer__payment-listitem"> <img class="site-footer__payment-icon" src="https://www.novasol.de/themes/custom/solar_theme/images/payment/280cardline.gif" alt="Zahlungsmöglichkeiten"></li>
-                        </ul>
-                    </div>
-                    <div class="site-footer__trustpilot"></div>
-                </div>
-            </div>
-        </div>
-        <div class="site-footer site-footer--mobile">
-            <div class="site-footer__limiter clearfix">
-                <div class="site-footer__info">
-                    <div class="site-footer__info-company">
-                        <div class="site-footer__brand"> <img alt="Novasol" src="https://www.novasol.de/themes/custom/solar_theme/images/logo_right--white.svg"></div> <address class="site-footer__info-company-address"> <a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/NOVASOL A/S, Virumgårdsvej 27, 2830 Virum - Dänemark"> NOVASOL A/S, NOVASOL A/S, Virumgårdsvej 27, 2830 Virum - Dänemark </a> </address> <span class="site-footer__info-company-cvr">VAT No. DK17484575</span></div>
-                    <div class="site-footer__info-buttons">
-                        <div class="">
-                            <a class="site-footer__info-button site-footer__info-button--faq" href="/faq"> <span>FAQs</span> </a>
-                        </div>
-                        <div class="">
-                            <a class="site-footer__info-button site-footer__info-button--phone" href="tel://0049(0)40-688715100"> <i class="icon"></i><span>0049 (0)40- 688 71 51 00</span> </a> <span class="site-footer__info-openinghours">Mo - Fr 09:00 - 18:00 / Sa 9:00 - 15:00</span></div>
-                        <div class="">
-                            <a class="site-footer__info-button site-footer__info-button--mail" href="mailto:novasol@novasol.de"> <i class="icon"></i><span>novasol@novasol.de</span> </a>
-                        </div>
-                    </div>
-                    <div class="site-footer__info-links">
-                        <ul class="site-footer__info-links-list">
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/uber-novasol">Über NOVASOL</a></li>
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/faq/novasol_agb_deutsch/datenschutz">Datenschutz</a></li>
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/faq/novasol_agb_deutsch/novasol_nutzungsbedingungen">Nutzungsbedingung</a></li>
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/site/terms/nov/2019/terms-de.pdf">Allgemeine Geschäftsbedingungen</a></li>
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/uber_novasol/impressum/kontakt">Impressum</a></li>
-                            <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/cookie-politik">Cookie-Politik</a></li>
-                        </ul>
-                    </div>
-                    <div class="site-footer__info-partners">
-                        <ul class="site-footer__info-partners-list">
-                            <li class="site-footer__info-partners-listitem"> <img src="https://www.novasol.de/sites/default/files/styles/partner_logo/public/2018-04/de_partner_logo_2.png?itok=oy8wzj6u" width="164" height="45" alt="DE partner logos" class="image-style-partner-logo"></li>
-                            <li class="site-footer__info-partners-listitem site-footer__info-partners-listitem--payment-icon"> <img class="site-footer__payment-icon" src="/themes/custom/solar_theme/images/payment/280cardline.gif" alt=""></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="site-footer__trustpilot"></div>
-            </div>
-        </div>
-    </div>
-</footer>
+
 
 
 @endsection
 
 @section("after-scripts")
+    <footer class="footer" role="contentinfo">
+        <div class="region region-footer">
+            <div class="site-footer site-footer--desktop">
+                <div class="site-footer__limiter clearfix">
+                    <div class="site-footer__brand"> <img alt="Novasol" src="https://www.novasol.de/themes/custom/solar_theme/images/logo_right--white.svg"></div>
+                    <div class="site-footer__info">
+                        <div class="site-footer__info-company"> <address class="site-footer__info-company-address">NOVASOL A/S, Virumgårdsvej 27, 2830 Virum - Dänemark</address> <span class="site-footer__info-company-cvr">VAT No. DK17484575</span> <span class="site-footer__info-company-telephone"> <a href="tel://0049(0)40-688715100"> Telefon: 0049 (0)40- 688 71 51 00 </a> </span></div>
+                        <div class="site-footer__info-mail"> <span> <a href="mailto:"> </a> </span></div>
+                        <div class="site-footer__info-links">
+                            <ul class="site-footer__info-links-list">
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/uber-novasol">Über NOVASOL</a></li>
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/faq/novasol_agb_deutsch/datenschutz">Datenschutz</a></li>
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/faq/novasol_agb_deutsch/novasol_nutzungsbedingungen">Nutzungsbedingung</a></li>
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/site/terms/nov/2019/terms-de.pdf">Allgemeine Geschäftsbedingungen</a></li>
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/uber_novasol/impressum/kontakt">Impressum</a></li>
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/cookie-politik">Cookie-Politik</a></li>
+                            </ul>
+                        </div>
+                        <div class="site-footer__info-partners">
+                            <ul class="site-footer__info-partners-list">
+                                <li class="site-footer__info-partners-listitem"> <img src="https://www.novasol.de/sites/default/files/styles/partner_logo/public/2018-04/de_partner_logo_2.png?itok=oy8wzj6u" width="164" height="45" alt="DE partner logos" class="image-style-partner-logo"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="site-footer__inner-wrap">
+                        <div class="site-footer__payment">
+                            <ul class="site-footer__payment-list">
+                                <li class="site-footer__payment-listitem"> <img class="site-footer__payment-icon" src="https://www.novasol.de/themes/custom/solar_theme/images/payment/280cardline.gif" alt="Zahlungsmöglichkeiten"></li>
+                            </ul>
+                        </div>
+                        <div class="site-footer__trustpilot"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="site-footer site-footer--mobile">
+                <div class="site-footer__limiter clearfix">
+                    <div class="site-footer__info">
+                        <div class="site-footer__info-company">
+                            <div class="site-footer__brand"> <img alt="Novasol" src="https://www.novasol.de/themes/custom/solar_theme/images/logo_right--white.svg"></div> <address class="site-footer__info-company-address"> <a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/NOVASOL A/S, Virumgårdsvej 27, 2830 Virum - Dänemark"> NOVASOL A/S, NOVASOL A/S, Virumgårdsvej 27, 2830 Virum - Dänemark </a> </address> <span class="site-footer__info-company-cvr">VAT No. DK17484575</span></div>
+                        <div class="site-footer__info-buttons">
+                            <div class="">
+                                <a class="site-footer__info-button site-footer__info-button--faq" href="/faq"> <span>FAQs</span> </a>
+                            </div>
+                            <div class="">
+                                <a class="site-footer__info-button site-footer__info-button--phone" href="tel://0049(0)40-688715100"> <i class="icon"></i><span>0049 (0)40- 688 71 51 00</span> </a> <span class="site-footer__info-openinghours">Mo - Fr 09:00 - 18:00 / Sa 9:00 - 15:00</span></div>
+                            <div class="">
+                                <a class="site-footer__info-button site-footer__info-button--mail" href="mailto:novasol@novasol.de"> <i class="icon"></i><span>novasol@novasol.de</span> </a>
+                            </div>
+                        </div>
+                        <div class="site-footer__info-links">
+                            <ul class="site-footer__info-links-list">
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/uber-novasol">Über NOVASOL</a></li>
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/faq/novasol_agb_deutsch/datenschutz">Datenschutz</a></li>
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/faq/novasol_agb_deutsch/novasol_nutzungsbedingungen">Nutzungsbedingung</a></li>
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/site/terms/nov/2019/terms-de.pdf">Allgemeine Geschäftsbedingungen</a></li>
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/uber_novasol/impressum/kontakt">Impressum</a></li>
+                                <li class="site-footer__info-links-listitem"> <a href="https://www.novasol.de/cookie-politik">Cookie-Politik</a></li>
+                            </ul>
+                        </div>
+                        <div class="site-footer__info-partners">
+                            <ul class="site-footer__info-partners-list">
+                                <li class="site-footer__info-partners-listitem"> <img src="https://www.novasol.de/sites/default/files/styles/partner_logo/public/2018-04/de_partner_logo_2.png?itok=oy8wzj6u" width="164" height="45" alt="DE partner logos" class="image-style-partner-logo"></li>
+                                <li class="site-footer__info-partners-listitem site-footer__info-partners-listitem--payment-icon"> <img class="site-footer__payment-icon" src="/themes/custom/solar_theme/images/payment/280cardline.gif" alt=""></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="site-footer__trustpilot"></div>
+                </div>
+            </div>
+        </div>
+    </footer>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 @endsection
