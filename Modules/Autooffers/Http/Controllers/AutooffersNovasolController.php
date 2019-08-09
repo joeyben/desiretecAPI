@@ -101,7 +101,6 @@ class AutooffersNovasolController extends Controller
             $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($this->autooffers, $wish));
             $response = simplexml_load_string($response);
             $properties = $this->service->fetchAllProperties($response);
-            die(print_r($properties));
             $this->autooffers->storeMany($response, $properties, $wish->id);
         }
 
