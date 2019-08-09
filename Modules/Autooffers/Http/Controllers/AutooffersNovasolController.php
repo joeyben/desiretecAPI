@@ -6,6 +6,7 @@ use App\Models\Wishes\Wish;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Modules\Autooffers\Entities\Autooffer;
 use Modules\Autooffers\Http\Services\AutooffersNovasolService;
@@ -176,18 +177,32 @@ class AutooffersNovasolController extends Controller
      */
     public function toTheOffer($wishid){
        $autooffer = Autooffer::where('wish_id', $wishid)->first();
-       dd(json_decode($autooffer->hotel_data));
+
+        //https://www.novasol.de/ferienhaeuser/albanien/saranda/ferienhaus-sarande-ksamil-als128?adults=2&children=1&pets=1&from=20190907&to=20190914
+
        if(!is_null($autooffer)){
+           $novasol_area    = DB::table('novasol_area')->select('*')->where('novasol_area_code', $autooffer->hotel_location_region_code)->first();
+           $novasol_country = DB::table('novasol_country')->select('*')->where('id', $novasol_area->novasol_country_id)->first();
+/*
+           dd([
+               'autooffer' => $autooffer,
+               'novasol_area' => $novasol_area,
+               'novasol_country' => $novasol_country,
+               'wish' => $autooffer->wish
+           ]);
+*/
            $url = "https://www.novasol.de/ferienhaeuser/";
-           $url .= str_replace(' ', '-', strtolower($autooffer->destination)).'/';
+           $url .= str_replace(' ', '-', strtolower($novasol_country->name)).'/';
+           $url .= str_replace(' ', '-', strtolower($novasol_area->name)).'/';
+           $url .= str_replace(' ', '-', strtolower($autooffer->hotel_location_name)).'-'.$autooffer->hotel_code.'?';
+           $url .= 'adults='.$autooffer->wish->adults.'&';
+           $url .= 'children='.$autooffer->wish->kids.'&';
+           //$url .= 'pets='.$autooffer->wish->kids.'&';
+           $url .= 'children='.$autooffer->wish->kids.'&';
+           $url .= 'from='. str_replace('-', '', $autooffer->wish->earliest_start).'&';
+           $url .= 'to='. str_replace('-', '', $autooffer->wish->latest_return);
 
-
-           $url .= str_replace(' ', '-', strtolower($autooffer->destination)).'/';
-           $url .= str_replace(' ', '-', strtolower($autooffer->catering)).'/';
-           $url .= '?adults='. str_replace(' Erwachsene', '',$autooffer->adults);
-           $url .= '&children='. $autooffer->kids;
-           $url .= '&from='. str_replace('-', '', $autooffer->earliest_start);
-           $url .= '&to='. str_replace('-', '', $autooffer->latest_return);
+           //dd($url);
 
            // todo: The NOVASOL-ID is mising into the URL
            return Redirect::away($url);
