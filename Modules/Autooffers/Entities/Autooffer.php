@@ -35,6 +35,7 @@ class Autooffer extends Model
         'airport_name',
         'wish_id',
         'user_id',
+        'thumbnail'
     ];
 
     protected static $logOnlyDirty = true;

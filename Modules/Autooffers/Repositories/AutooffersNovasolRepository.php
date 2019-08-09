@@ -183,7 +183,7 @@ class AutooffersNovasolRepository extends BaseRepository
             $autooffer->code = $offer['propertyid'];
             $autooffer->type = null;
             $autooffer->totalPrice = $offer['price'];
-            $autooffer->personPrice = json_encode($offer['thumbnail']);
+            $autooffer->personPrice = null;//json_encode($offer['thumbnail']);
             $autooffer->from = $offer['arrival'];
             $autooffer->to = $offer['departure'];
             $autooffer->tourOperator_code = $offer['quality'];
@@ -197,12 +197,16 @@ class AutooffersNovasolRepository extends BaseRepository
             $autooffer->hotel_location_region_name = json_encode($offer['location']);
             $autooffer->airport_code = null;
             $autooffer->airport_name = null; //$hotel->airport;
-            $autooffer->data = null;//json_encode($offer);
-            $autooffer->hotel_data = null;//json_encode($hotel);
+            $autooffer->data = json_encode($offer);
+            $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
+            $autooffer->thumbnail = json_encode($offer['thumbnail']);
 
-            return $autooffer->save();
+            if($autooffer->save()){
+                logger()->info('autooffer wurde gespeichert!');
+                return true;
+            }
         } catch (\Illuminate\Database\QueryException $e) {
             // something went wrong with the transaction, rollback
             report($e);
