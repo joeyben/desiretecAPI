@@ -178,24 +178,23 @@ class AutooffersNovasolRepository extends BaseRepository
     public function storeAutooffer($offer, $hotel, $wish_id)
     {
         try {
-            die($offer['thumbnail']);
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
             $autooffer->code = $offer['propertyid'];
             $autooffer->type = null;
             $autooffer->totalPrice = $offer['price'];
-            $autooffer->personPrice = serialize($offer['thumbnail']);
+            $autooffer->personPrice = json_encode($offer['thumbnail']);
             $autooffer->from = $offer['arrival'];
             $autooffer->to = $offer['departure'];
             $autooffer->tourOperator_code = $offer['quality'];
             $autooffer->tourOperator_name = null;
             $autooffer->hotel_code = $offer['propertyid'];
             $autooffer->hotel_name = null;//$hotel->title;
-            $autooffer->hotel_location_name = serialize($offer['location']);
+            $autooffer->hotel_location_name = json_encode($offer['location']);
             $autooffer->hotel_location_lng = $offer['wsg84long'];
             $autooffer->hotel_location_lat = $offer['wsg84lat'];
             $autooffer->hotel_location_region_code = $offer['area'];
-            $autooffer->hotel_location_region_name = serialize($offer['location']);
+            $autooffer->hotel_location_region_name = json_encode($offer['location']);
             $autooffer->airport_code = null;
             $autooffer->airport_name = null; //$hotel->airport;
             $autooffer->data = null;//json_encode($offer);
