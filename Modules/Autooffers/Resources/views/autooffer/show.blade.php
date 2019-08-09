@@ -62,8 +62,8 @@
                     Dein Reisewunsch
                 </span>
             <i class="toggle-wish">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-                <i class="fa fa-minus" aria-hidden="true"></i>
+                <i class="fa fa-plus" aria-hidden="true" onclick="open_wish()"></i>
+                <i class="fa fa-minus" aria-hidden="true" onclick="close_wish()"></i>
             </i>
         </div>
         <ul class="wish-list">
@@ -445,6 +445,12 @@
       function open_description(id) {
         //document.getElementById("b-"+id).style.display = "block";
         document.getElementById("b-"+ id).classList.toggle("openDesc");
+      }
+      function open_wish() {
+        document.getElementsByClassName("wish-list")[0].style.display = "block";
+      }
+      function close_wish() {
+        document.getElementsByClassName("wish-list")[0].style.display = "none";
       }
       var marker = new ol.Feature({
         geometry: new ol.geom.Point(
