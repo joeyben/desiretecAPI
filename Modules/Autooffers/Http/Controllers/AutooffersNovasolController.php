@@ -175,10 +175,8 @@ class AutooffersNovasolController extends Controller
     /**
      * Creates the url to novasol and opens it on new tab
      */
-    public function toTheOffer($wishid){
-       $autooffer = Autooffer::where('wish_id', $wishid)->first();
-
-        //https://www.novasol.de/ferienhaeuser/albanien/saranda/ferienhaus-sarande-ksamil-als128?adults=2&children=1&pets=1&from=20190907&to=20190914
+    public function toTheOffer($offer_id){
+       $autooffer = Autooffer::find($offer_id);
 
        if(!is_null($autooffer)){
            $novasol_area    = DB::table('novasol_area')->select('*')->where('novasol_area_code', $autooffer->hotel_location_region_code)->first();
@@ -194,13 +192,23 @@ class AutooffersNovasolController extends Controller
            $url = "https://www.novasol.de/ferienhaeuser/";
            $url .= str_replace(' ', '-', strtolower($novasol_country->name)).'/';
            $url .= str_replace(' ', '-', strtolower($novasol_area->name)).'/';
-           $url .= str_replace(' ', '-', strtolower($autooffer->hotel_location_name)).'-'.$autooffer->hotel_code.'?';
-           $url .= 'adults='.$autooffer->wish->adults.'&';
-           $url .= 'children='.$autooffer->wish->kids.'&';
-           //$url .= 'pets='.$autooffer->wish->kids.'&';
-           $url .= 'children='.$autooffer->wish->kids.'&';
+           $url .= str_replace(' ', '-', 'ferienwohnung-'.strtolower($autooffer->hotel_location_name)).'-'.strtolower($autooffer->hotel_code).'?';
+           $url .= 'agency=2051402&';
+           if($autooffer->wish->adults > 0){
+               $url .= 'adults='.$autooffer->wish->adults.'&';
+           }
+           if($autooffer->wish->kids > 0){
+               $url .= 'children='.$autooffer->wish->kids.'&';
+           }
+           if($autooffer->wish->kids > 0){
+               $url .= 'children='.$autooffer->wish->kids.'&';
+           }
            $url .= 'from='. str_replace('-', '', $autooffer->wish->earliest_start).'&';
            $url .= 'to='. str_replace('-', '', $autooffer->wish->latest_return);
+
+//           https://www.novasol.de/ferienhaeuser/spanien/hinterland/ferienwohnung-córdoba-eac214?adults=2&children=0&from=20190812&to=20190819 => von uns erstellt
+//           https://www.novasol.de/ferienhaeuser/spanien/andalusien/ferienwohnung-cordoba-eac214?adults=2&children=3&from=20190812&to=20190819 => URL bei NOVASOL
+
 
            //dd($url);
 
