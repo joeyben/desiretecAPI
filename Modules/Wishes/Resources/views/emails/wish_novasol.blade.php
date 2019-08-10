@@ -76,7 +76,7 @@
                                                     <tr>
                                                         <td align="left" id="background-area">
                                                             <img  id="background-img"
-                                                                  src="{{ '/whitelabel/novasol/images/wish/email_cover.jpg' }}" />
+                                                                  src="https://desiretec.s3.eu-central-1.amazonaws.com/novasol/a2524136-601e-43f1-8ff6-280fe62e9771.jpg" />
                                                             {{-- src="https://ci3.googleusercontent.com/proxy/TmxcINUrGaEGvEjoIJkFCwL1YezoPK-m52M-4uDp1axn2t_SXFZzNKpgCjtW-mDISrJrRO5drbl3SmBs3MNS997aU5iETtGPmJmemmgD3rVcsA=s0-d-e1-ft#http://35.158.151.101:8080/image/index/5c0f8d81e4b02bc8e2133c88" /> --}}
                                                         </td>
                                                     </tr>

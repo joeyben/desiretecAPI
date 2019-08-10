@@ -54,7 +54,7 @@
                                                                          margin-right:auto;
                                                                          margin-left:auto;
                                                                          float:none"
-                                                                  src="{{ '/whitelabel/novasol/images/wish/email_cover.jpg' }}" />
+                                                                  src="https://desiretec.s3.eu-central-1.amazonaws.com/novasol/a2524136-601e-43f1-8ff6-280fe62e9771.jpg" />
                                                         </td>
                                                     </tr>
                                                     </tbody>
