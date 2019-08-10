@@ -17,7 +17,9 @@ class TokenAuthentication
 
     public function requestLink()
     {
+        logger()->info('TokenAuthentication.php > requestLink > request: '. $this->request->get($this->identifier));
         $user = $this->getUserByIdentifier($this->request->get($this->identifier));
+        logger()->info('TokenAuthentication.php > requestLink > user: '. $user);
 
         $user->storeToken()->sendTokenLink([
             'email'    => $user->email,
