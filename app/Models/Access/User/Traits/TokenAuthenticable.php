@@ -22,6 +22,7 @@ trait TokenAuthenticable
 
     public function sendTokenLink(array $options)
     {
+        dd(['TokenAuthenticable.php: ' => $this]);
         Mail::to($this)->send(new TokenLoginRequested($this, $options));
     }
 
