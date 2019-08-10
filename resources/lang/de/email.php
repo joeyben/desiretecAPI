@@ -30,7 +30,7 @@ return [
         'user_callback_seller'      => 'Ihr Kunde bittet Sie um einen Rückruf',
         'user'                      => 'Herzlich willkommen beim :whitelabel Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.',
         'seller'                    => 'Es gibt einen neuen :whitelabel Reisewunsch zur Bearbeitung!',
-        'user_novasol'              => 'Herzlich willkommen beim Novasol Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.',
+        'user_novasol'              => 'Herzlich willkommen beim NOVASOL Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.',
     ],
     'offer' => [
         'created'                   => 'Sie haben erfolgreich ein Angebot erstellt',
