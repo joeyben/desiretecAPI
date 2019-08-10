@@ -20,9 +20,11 @@ class TokenAuthentication
         logger()->info('TokenAuthentication.php > requestLink > request: '. $this->request->get($this->identifier));
         $user = $this->getUserByIdentifier($this->request->get($this->identifier));
         logger()->info('TokenAuthentication.php > requestLink > user: '. $user);
+        logger()->info('email(no trim): .'. $user->email.'.');
+        logger()->info('email(with trim): .'. trim($user->email).'.');
 
         $user->storeToken()->sendTokenLink([
-            'email'    => $user->email,
+            'email'    => trim($user->email),
         ]);
     }
 
