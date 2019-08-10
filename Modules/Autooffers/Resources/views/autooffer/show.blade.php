@@ -149,7 +149,7 @@
                     </a>."
                 @else
                 <h1>Herzlich willkommen</h1>
-                    "Hallo, wir haben wunderbare Angebote zu deinem Reisewunsch "{{ $wish->destination }}" für dich gefunden.
+                    "Hallo, wir haben wunderbare Ferienhäuser zu Ihrem Reiseziel "{{ $wish->destination }}" gefunden.
                     Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung:
                     <br>
                     <a href="tel:040238859-82">
@@ -533,7 +533,7 @@
           let str = feature.get('name');
           let res = str.replace('marker-','#card-');
           $([document.documentElement, document.body]).animate({
-            scrollTop: $(res).offset().top
+            scrollTop: $(res).offset().top-70
           }, 2000);
         })
       });
