@@ -171,7 +171,7 @@
     </div>
 </div>
     @foreach($autooffers as $offer)
-        <div class="pagecontainer">
+        <div class="pagecontainer" id="card-{{$offer->hotel_code}}">
             <div class="row">
                 <div class="col-md-12 details-slider">
                     <span class="wid">Objekt-Nr: {{ $offer->hotel_code }}</span>
@@ -453,9 +453,10 @@
         document.getElementsByClassName("wish-list")[0].style.display = "none";
       }
       var marker = new ol.Feature({
+        name:'marker-{{$autooffers[0]->hotel_code}}',
         geometry: new ol.geom.Point(
           ol.proj.fromLonLat([{{$autooffers[0]->hotel_location_lng}},{{$autooffers[0]->hotel_location_lat}}])
-        ),  // Cordinates of New York's Town Hall
+        ),
       });
       marker.setStyle(new ol.style.Style({
         image: new ol.style.Icon(({
@@ -463,9 +464,10 @@
         }))
       }));
       var marker1 = new ol.Feature({
+        name:'marker-{{$autooffers[1]->hotel_code}}',
         geometry: new ol.geom.Point(
           ol.proj.fromLonLat([{{$autooffers[1]->hotel_location_lng}},{{$autooffers[1]->hotel_location_lat}}])
-        ),  // Cordinates of New York's Town Hall
+        ),
       });
       marker1.setStyle(new ol.style.Style({
         image: new ol.style.Icon(({
@@ -473,9 +475,10 @@
         }))
       }));
       var marker2 = new ol.Feature({
+        name:'marker-{{$autooffers[2]->hotel_code}}',
         geometry: new ol.geom.Point(
           ol.proj.fromLonLat([{{$autooffers[2]->hotel_location_lng}},{{$autooffers[2]->hotel_location_lat}}])
-        ),  // Cordinates of New York's Town Hall
+        ),
       });
       marker2.setStyle(new ol.style.Style({
         image: new ol.style.Icon(({
@@ -483,9 +486,10 @@
         }))
       }));
       var marker3 = new ol.Feature({
+        name:'marker-{{$autooffers[3]->hotel_code}}',
         geometry: new ol.geom.Point(
           ol.proj.fromLonLat([{{$autooffers[3]->hotel_location_lng}},{{$autooffers[3]->hotel_location_lat}}])
-        ),  // Cordinates of New York's Town Hall
+        ),
       });
       marker3.setStyle(new ol.style.Style({
         image: new ol.style.Icon(({
@@ -493,9 +497,10 @@
         }))
       }));
       var marker4 = new ol.Feature({
+        name:'marker-{{$autooffers[4]->hotel_code}}',
         geometry: new ol.geom.Point(
           ol.proj.fromLonLat([{{$autooffers[4]->hotel_location_lng}},{{$autooffers[4]->hotel_location_lat}}])
-        ),  // Cordinates of New York's Town Hall
+        ),
       });
       marker4.setStyle(new ol.style.Style({
         image: new ol.style.Icon(({
@@ -522,5 +527,15 @@
         source: vectorSource,
       });
       map.addLayer(markerVectorLayer);
+
+      map.on("click", function(e) {
+        map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
+          let str = feature.get('name');
+          let res = str.replace('marker-','#card-');
+          $([document.documentElement, document.body]).animate({
+            scrollTop: $(res).offset().top
+          }, 2000);
+        })
+      });
     </script>
 @endsection
