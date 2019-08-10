@@ -29,8 +29,13 @@ class TokenLoginRequested extends Mailable
      *
      * @return $this
      */
-    public function build()
-    {
+    public function build(){
+
+        logger()->info('TokenLoginRequested > email: '. getCurrentWhiteLabelField('email'));
+        logger()->info('TokenLoginRequested > display_name: '. getCurrentWhiteLabelField('display_name'));
+        logger()->info('TokenLoginRequested > subject: '. Lang::get('email.message.token'));
+        logger()->info('TokenLoginRequested > builded-token: '. $this->buildLink());
+
         return $this->subject(Lang::get('email.message.token'))
             ->from(getCurrentWhiteLabelField('email'), getCurrentWhiteLabelField('display_name') . ' Portal')
             ->view('emails.token.link')->with([
