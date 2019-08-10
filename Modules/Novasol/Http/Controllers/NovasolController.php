@@ -901,6 +901,7 @@ XML;
         $countries = DB::table('novasol_country')->get();
         $arr = [];
         $areasArr = [];
+        $count = 0;
             foreach ($countries as $country) {
                 $url = 'https://safe.novasol.com/api/countries/'. $country->novasol_code . '?salesmarket=280';
                 $opts = [
@@ -916,10 +917,15 @@ XML;
                 // Open the file using the HTTP headers set above
                 $file = file_get_contents($url, false, $context);
 
+
+                $arr[] = $file;
+                $count++;
+
+
                 $areas = simplexml_load_string($file);
                 $areasArr[] = $areas;
 
-                foreach ($areas as $area) {
+                /*foreach ($areas as $area) {
                             foreach ($area->area as $subarea) {
                                 $arr[] = [
                                     'name' => $subarea->name,
@@ -943,15 +949,16 @@ XML;
                                  }
                             }
 
-                        }
+                        }*/
 
             }
 
             dd([
-               'areasArr'  => $areasArr,
-                'arr2save' => $arr
+               //'areasArr'  => $areasArr,
+                'arr2save' => $arr,
+                'count' => $count
             ]);
 
-        DB::table('novasol_area')->insert($arr);
+        //DB::table('novasol_area')->insert($arr);
     }
 }
