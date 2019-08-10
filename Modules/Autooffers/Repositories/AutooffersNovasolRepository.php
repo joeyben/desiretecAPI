@@ -175,7 +175,7 @@ class AutooffersNovasolRepository extends BaseRepository
      *
      * @return mix
      */
-    public function storeAutooffer($offer, $hotel, $wish_id)
+    public function storeAutooffer($offer, $wish, $wish_id)
     {
         try {
             $autooffer = self::MODEL;
@@ -198,10 +198,10 @@ class AutooffersNovasolRepository extends BaseRepository
             $autooffer->airport_code = null;
             $autooffer->airport_name = null; //$hotel->airport;
             $autooffer->data = json_encode($offer);
-            $autooffer->hotel_data = json_encode($hotel);
+            $autooffer->hotel_data = json_encode($wish);
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
-            $autooffer->thumbnail = str_replace('/100/', '/600/',$offer->thumbnail);
+            $autooffer->thumbnail = trim(str_replace('/100/', '/600/',$offer->thumbnail));
 
             if($autooffer->save()){
                 logger()->info('autooffer wurde gespeichert!');

@@ -330,7 +330,7 @@
                                         </div>
                                         <div class="right">
                                             {{-- <a href="/adetails/offer/5c5d4e7ce4b067a302abeefc/0/" class="price-click-area"> --}}
-                                            <a target="_blank" href="{{ route('autooffer.to-the-offer', $wish->id) }}" class="price-click-area">
+                                            <a target="_blank" href="{{ route('autooffer.to-the-offer', $offer->id) }}" class="price-click-area">
 
                                                 <div class="offer-price">
                                                     <div class="price-all">
