@@ -18,12 +18,12 @@
                     ];
                 @endphp
                 @foreach($extra_params as $param_name => $param_value)
-                    {{-- <input type="hidden"
+                    <input type="hidden"
                            id="{{ $param_name }}"
                            placeholder="{{ $param_value }}"
                            value="{{ $param_value }}"
                            name="{{ $param_name }}">
-                    --}}
+                    
                 @endforeach
                 {{----------------------------------------------------------------------------------------------------}}
 
