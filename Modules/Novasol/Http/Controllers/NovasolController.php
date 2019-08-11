@@ -246,7 +246,6 @@ class NovasolController extends Controller
         $countries = DB::table('novasol_country')->get();
         $arr = [];
         $areasArr = [];
-        $count = 0;
             foreach ($countries as $country) {
                 $url = 'https://safe.novasol.com/api/countries/'. $country->novasol_code . '?salesmarket=280';
                 $opts = [
@@ -261,16 +260,8 @@ class NovasolController extends Controller
 
                 // Open the file using the HTTP headers set above
                 $file = file_get_contents($url, false, $context);
-
-
-                $arr[] = $file;
-                $count++;
-
-
                 $areas = simplexml_load_string($file);
                 $areasArr[] = $areas;
-
-
 
                 foreach ($areas as $area) {
                             foreach ($area->area as $subarea) {
@@ -303,7 +294,6 @@ class NovasolController extends Controller
             dd([
                 'areasArr'  => $areasArr,
                 'arr2save' => $arr,
-                'count' => $count,
                 'abcCount' => count($countries)
             ]);
 
