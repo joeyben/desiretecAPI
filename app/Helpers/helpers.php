@@ -409,11 +409,12 @@ if (!function_exists('getCurrentWhiteLabelField')) {
      *
      * @return int
      */
-    function getCurrentWhiteLabelField($field)
-    {
-        $url = str_replace('http://', '', url('/'));
-        $url = str_replace('https://', '', $url);
-        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value($field);
+    function getCurrentWhiteLabelField($field){
+        $url = str_replace(['http://', 'https://'], ['', ''], url('/'));
+        //$url = str_replace('http://', '', url('/'));
+        //$url = str_replace('https://', '', $url);
+
+        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value($field);
 
         return $id;
     }
