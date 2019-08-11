@@ -3,7 +3,7 @@ var dt = window.dt || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://novasol.reisewunschservice.de',
+        baseUrl: 'https://novasol.reise-wunsch.com',
         logoPath: '/whitelabel/novasol/images/layer/logo.png',
         popupPath: '/show',
         popupStore:'/store',
