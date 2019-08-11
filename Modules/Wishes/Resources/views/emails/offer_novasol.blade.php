@@ -54,6 +54,7 @@
                                                                          margin-bottom:0;
                                                                          margin-right:auto;
                                                                          margin-left:auto;
+                                                                         width: 600px;
                                                                          float:none"
                                                                   src="https://desiretec.s3.eu-central-1.amazonaws.com/novasol/a2524136-601e-43f1-8ff6-280fe62e9771.jpg" />
                                                         </td>

@@ -85,6 +85,7 @@
                                                                          margin-bottom:0;
                                                                          margin-right:auto;
                                                                          margin-left:auto;
+                                                                         width: 600px;
                                                                          float:none"
                                                                   src="https://desiretec.s3.eu-central-1.amazonaws.com/novasol/a2524136-601e-43f1-8ff6-280fe62e9771.jpg" />
                                                         </td>
@@ -104,18 +105,21 @@
                                                                 <tr>
                                                                     <td align="left" width="140" colspan="1" align="left" style="padding-left:10px;">
                                                                         <img width="15"
-                                                                             style="margin:0;padding:0;"
+                                                                             style="margin:0;padding:0; display: none;"
                                                                              src="https://ci3.googleusercontent.com/proxy/YxhiOL4JOm10gJ2csqBzTYilyDASZIU_8wmAW7dkkVsvc4kxwSczk0RwSuBaEtIPMP3W0qmSwoBe_AibKPVMDF8ZlJSz-osWVnTAvo_3QUjJsED0QFKul9rUhuhVVlb13MDvug=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/plane-down.png" />
-                                                                        - <i class="fas fa-home"></i>
+                                                                        <i class="fas fa-home"></i>
                                                                     </td>
                                                                     <td align="left" width="140" colspan="1" align="left" style="padding-left:10px;">
                                                                         <img width="15" style="margin:0;padding:0;"  src="https://ci3.googleusercontent.com/proxy/NN0EXnO96ZSYaYlvNQhXFMwLONfOWzSv_aVCgMdfMJRfl7VbFoh2X9hUmLUOlID7Ceou2EPynIX_qkMBtUhRJn4ArlJUBBidfpvwiqvRMXX331-0lV0UnVqrpGpUhsjy8wE=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/calendar.png" />
+                                                                        <i class="fas fa-calendar-alt"></i>
                                                                     </td>
                                                                     <td align="left" width="140" colspan="1" align="left" style="padding-left:10px;">
-                                                                        <img width="15" style="margin:0;padding:0;"  src="https://ci5.googleusercontent.com/proxy/0nKmd4P9ZsdZCEA6PGW3rDP4TY9wrchs9S6kI-aLH3wTt4LmUY-sOj_7fMG6XcFpCUfZAGRMXNTDr3egSVtcY7bpGUYbhdHMZg-tfPmom1EwlbAdK3z7cDCEYsyrrZXi=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/people.png" />
+                                                                        <img width="15" style="margin:0;padding:0;display: none;"  src="https://ci5.googleusercontent.com/proxy/0nKmd4P9ZsdZCEA6PGW3rDP4TY9wrchs9S6kI-aLH3wTt4LmUY-sOj_7fMG6XcFpCUfZAGRMXNTDr3egSVtcY7bpGUYbhdHMZg-tfPmom1EwlbAdK3z7cDCEYsyrrZXi=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/people.png" />
+                                                                        <i class="fas fa-users"></i>
                                                                     </td>
                                                                     <td width="140" align="left" style="padding-left:10px;">
                                                                         <img width="15" src="https://ci6.googleusercontent.com/proxy/ToInio0qfJTQbdrrIVoN87ngpdbJ3wm4Vv9wjtwbpT-N28UXTjrjVKO0e8Xnlx8vAoQqrCpMAc5cMDezCJYKA737BxMmErfq44eRC27ZMHTU6iTx3-mAKvmGaUt0DUfD=s0-d-e1-ft#https://tui-reisewunsch.com/bundles/cskwizzme/kwizzme/images/icons/budget.png" />
+                                                                        <i class="fas fa-euro-sign"></i>
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
