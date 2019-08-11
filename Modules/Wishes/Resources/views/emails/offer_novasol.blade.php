@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>{{ $wish->whitelabel->display_name }}</title>
+    <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
     <style type="text/css">
         tr{
             border-spacing: 0px;
