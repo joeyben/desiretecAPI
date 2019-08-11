@@ -73,7 +73,8 @@
                                 </td>
                             </tr>
                             <tr>
-                    <td colspan="2" align="left" style="color: #888888; width:20px; font-size: 16px; line-height: 24px;">
+                    {{-- <td colspan="2" align="left" style="color: #000; width:20px; font-size: 12px; line-height: 24px;"> --}}
+                    <td colspan="2" align="left">
                         <!-- section text ======-->
 
                         <p style="line-height: 24px; margin-bottom:15px;">
