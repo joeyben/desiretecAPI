@@ -14,7 +14,7 @@
                         'whirlpool'    => 0,
                         'sauna'        => 0,
                         'nr_bathrooms' => 1,
-                        'nr_stars'     => 3,
+                        'category'     => 3,
                     ];
                 @endphp
                 @foreach($extra_params as $param_name => $param_value)
