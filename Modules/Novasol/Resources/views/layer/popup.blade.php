@@ -6,6 +6,26 @@
     <div class="kwp-content kwp-with-expansion">
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
+                {{-- Hidden inputs -----------------}}
+                @php
+                    $extra_params = [
+                        'pool_inside'  => 0,
+                        'pool_outside' => 0,
+                        'whirlpool'    => 0,
+                        'sauna'        => 0,
+                        'nr_bathrooms' => 1,
+                        'nr_stars'     => 3,
+                    ];
+                @endphp
+                @foreach($extra_params as $param_name => $param_value)
+                    <input type="hidden"
+                           id="{{ $param_name }}"
+                           placeholder="{{ $param_value }}"
+                           value="{{ $param_value }}"
+                           name="{{ $param_name }}">
+                @endforeach
+                {{----------------------------------}}
+
                 {{ Form::label('destination', trans('novasol::layer.general.destination'), ['class' => 'control-label required']) }}
                 {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('novasol::layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
@@ -20,7 +40,7 @@
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">{{ trans('novasol::layer.general.travelers') }}</label>
                     <span class="travelers dd-trigger">
-                        <span class="txt">2 Erwachsener</span>
+                        <span class="txt">2 Erwachsene</span>
                          <i class="fal fa-users not-triggered"></i>
                          <i class="fal fa-times triggered"></i>
                     </span>
@@ -263,7 +283,6 @@
               }
               $("#latest_return").val(d+"."+m+"."+y);
             }
-
 
 
             //$(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
