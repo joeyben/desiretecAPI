@@ -68,12 +68,12 @@
         </div>
         <ul class="wish-list">
             <li style="display: none">
-                <span class="top"><i class="fa fa-plane" aria-hidden="true"></i></span>
+                <span class="top"><i class="fas fa-home-lg-alt" aria-hidden="true"></i></span>
                 <span class="bottom" data-toggle="tooltip" data-html="true" data-placement="bottom" data-title="{{ $wish->airport }}">{{ $wish->airport }}</span>
             </li>
 
             <li>
-                <span class="top"><i class="fa fa-plane" aria-hidden="true"></i></span>
+                <span class="top"><i class="fas fa-home-lg-alt" aria-hidden="true"></i></span>
                 <span class="bottom">{{ $wish->destination }}</span>
             </li>
 
@@ -131,7 +131,7 @@
                     </span>
                 @else
                     <span class="img"
-                           style="background-image: url('https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/1565014967NOVASOL_Awaze_Center_Black-3.jpg');">
+                           style="background-image: url('https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/1565454983NOVASOL_Awaze_Center_Black-3.jpg');">
                     </span>
                 @endif
             </div>
@@ -139,7 +139,7 @@
                 <img class="img" src="/whitelabel/novasol/images/layer/Sabine_Buchungsservice.jpg" style="width: 113px;border-radius: 27px">
             </div>
             <div class="seller-message">
-                @if (count($autooffers) === 0)
+                @if (count($autooffers) === 0 || $autooffers === null)
                     "Leider haben wir noch keine Angebote für Deinen Reisewunsch"
                     {{ $wish->destination }}
                     " für dich finden können. Wir erfüllen Dir jedoch gerne unter folgender Nummer Deine Wünsche

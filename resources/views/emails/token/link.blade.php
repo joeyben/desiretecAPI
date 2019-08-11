@@ -15,6 +15,7 @@
                         @lang('email.token', ['token' => $link, 'whitelabel' => $whitelabel])
                     </p>
 
+
                     @include('emails.layouts.footer')
                 </td>
             </tr>
