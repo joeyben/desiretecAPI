@@ -99,7 +99,6 @@ class NovasolWishesController extends Controller
         if (!auth()->user()){
             return redirect()->to('/');
         }
-
         $offers = $wish->offers;
         $avatar = [];
         $agentName = [];
