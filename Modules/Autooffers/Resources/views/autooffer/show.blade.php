@@ -294,27 +294,21 @@
                                             <i class="fa fa-check" aria-hidden="true"></i>
                                             <span class="text"></span>
                                         </div>
-                                        @if($wish->categories[1]->value === 1 || $wish->categories[2]->value === 1)
                                         <div class="summary-icon">
                                             <i class="fa fa-check" aria-hidden="true"></i>
                                             <span class="text">Pool</span>
                                         </div>
-                                        @endif
-                                        @if($wish->categories[4]->value === 1)
                                         <div class="summary-icon">
                                             <i class="fa fa-check" aria-hidden="true"></i>
-                                            <span class="text">Sauna</span>
+                                            <span class="text">Internet</span>
                                         </div>
-                                        @endif
-                                        @if($wish->categories[3]->value === 1)
                                         <div class="summary-icon">
                                             <i class="fa fa-check" aria-hidden="true"></i>
-                                            <span class="text">Whirlpool </span>
+                                            <span class="text">Entfernung zum Wasser: #m </span>
                                         </div>
-                                        @endif
                                         <div class="summary-icon">
                                             <i class="fa fa-check" aria-hidden="true"></i>
-                                            <span class="text">Spa</span>
+                                            <span class="text">Spa </span>
                                         </div>
                                     </div>
 
