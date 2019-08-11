@@ -6,7 +6,7 @@
     <div class="kwp-content kwp-with-expansion">
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
-                {{-- Hidden inputs -----------------}}
+                {{-- Hidden inputs -----------------------------------------------------------------------------------}}
                 @php
                     $extra_params = [
                         'pool_inside'  => 0,
@@ -18,13 +18,14 @@
                     ];
                 @endphp
                 @foreach($extra_params as $param_name => $param_value)
-                    <input type="hidden"
+                    {{-- <input type="hidden"
                            id="{{ $param_name }}"
                            placeholder="{{ $param_value }}"
                            value="{{ $param_value }}"
                            name="{{ $param_name }}">
+                    --}}
                 @endforeach
-                {{----------------------------------}}
+                {{----------------------------------------------------------------------------------------------------}}
 
                 {{ Form::label('destination', trans('novasol::layer.general.destination'), ['class' => 'control-label required']) }}
                 {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('novasol::layer.placeholder.destination'), 'required' => 'required']) }}
