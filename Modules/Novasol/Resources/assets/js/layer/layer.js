@@ -87,8 +87,8 @@ var dt = window.dt || {};
                 var catering = getUrlParams('catering') ? getUrlParams('catering') : '';
                 return catering;
             },
-            'hotel_category': function (form, formData) {
-                var category = getUrlParams('category') ? getUrlParams('category') : '';
+            'category': function (form, formData) {
+                var category = getUrlParams('nr_stars') ? getUrlParams('nr_stars') : '3';
                 return category;
             },
             'destination': function (form, formData) {
@@ -134,6 +134,26 @@ var dt = window.dt || {};
             'airport': function (form, formData) {
                 var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
                 return airport;
+            },
+            'pool_inside': function (form, formData) {
+                var pool_inside = getUrlParams('pool_inside') ? getUrlParams('pool_inside') : '0';
+                return pool_inside;
+            },
+            'pool_outside': function (form, formData) {
+                var pool_outside = getUrlParams('pool_outside') ? getUrlParams('pool_outside') : '0';
+                return pool_outside;
+            },
+            'whirlpool': function (form, formData) {
+                var whirlpool = getUrlParams('whirlpool') ? getUrlParams('whirlpool') : '0';
+                return whirlpool;
+            },
+            'sauna': function (form, formData) {
+                var sauna = getUrlParams('sauna') ? getUrlParams('sauna') : '0';
+                return sauna;
+            },
+            'nr_bathrooms': function (form, formData) {
+                var nr_bathrooms = getUrlParams('bathrooms') ? getUrlParams('bathrooms') : '1';
+                return nr_bathrooms;
             },
             'is_popup_allowed': function (form, formData) {
                 //var step = this.getScope().IbeApi.state.stepNr;
@@ -219,10 +239,8 @@ var dt = window.dt || {};
                 var catering = getUrlParams('catering') ? getUrlParams('catering') : '';
                 return catering;
             },
-            'hotel_category': function (form, formData) {
-                if(!formData)
-                    return '';
-                var category = formData.hasOwnProperty('rating') ? formData['rating'] : '';
+            'category': function (form, formData) {
+                var category = getUrlParams('nr_stars') ? getUrlParams('nr_stars') : '3';
                 return category;
             },
             'destination': function (form, formData) {
@@ -286,6 +304,36 @@ var dt = window.dt || {};
             'airport': function (form, formData) {
                 var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
                 return airport;
+            },
+            'pool_inside': function (form, formData) {
+                if(!formData)
+                    return '';
+                var pool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool indoor") >= 0)) ? '1' : '0';
+                return pool;
+            },
+            'pool_outside': function (form, formData) { //swimming pool outdoor
+                if(!formData)
+                    return '';
+                var pool_inside = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool outdoor") >= 0)) ? '1' : '0';
+                return pool_inside;
+            },
+            'whirlpool': function (form, formData) {//whirlpool
+                if(!formData)
+                    return '';
+                var whirlpool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("whirlpool") >= 0)) ? '1' : '0';
+                return whirlpool;
+            },
+            'sauna': function (form, formData) {
+                if(!formData)
+                    return '';
+                var sauna = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("sauna") >= 0)) ? '1' : '0';
+                return sauna;
+            },
+            'nr_bathrooms': function (form, formData) {
+                if(!formData)
+                    return '';
+                var bathrooms = formData.hasOwnProperty('bathrooms') ? formData['bathrooms'] : '1';
+                return bathrooms;
             },
             'is_popup_allowed': function (form, formData) {
                 //var step = this.getScope().IbeApi.state.stepNr;
