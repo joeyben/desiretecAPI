@@ -73,7 +73,7 @@
             </li>
 
             <li>
-                <span class="top"><i class="fa fa-plane" aria-hidden="true"></i></span>
+                <span class="top"><i class="fas fa-home-lg-alt" aria-hidden="true"></i></span>
                 <span class="bottom">{{ $wish->destination }}</span>
             </li>
 
