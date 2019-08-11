@@ -10,26 +10,18 @@ class TokenAuthentication
     protected $request;
     protected $identifier = 'email';
 
-    public function __construct(Request $request)
-    {
+    public function __construct(Request $request){
         $this->request = $request;
     }
 
-    public function requestLink()
-    {
-        logger()->info('TokenAuthentication.php > requestLink > request: '. $this->request->get($this->identifier));
+    public function requestLink(){
         $user = $this->getUserByIdentifier($this->request->get($this->identifier));
-        logger()->info('TokenAuthentication.php > requestLink > user: '. $user);
-        logger()->info('email(no trim): .'. $user->email.'.');
-        logger()->info('email(with trim): .'. trim($user->email).'.');
-
         $user->storeToken()->sendTokenLink([
-            'email'    => trim($user->email),
+            'email' => trim($user->email),
         ]);
     }
 
-    protected function getUserByIdentifier($value)
-    {
+    protected function getUserByIdentifier($value){
         return User::where($this->identifier, $value)->firstOrFail();
     }
 }
