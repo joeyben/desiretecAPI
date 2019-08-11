@@ -139,7 +139,7 @@
                 <img class="img" src="/whitelabel/novasol/images/layer/Sabine_Buchungsservice.jpg" style="width: 113px;border-radius: 27px">
             </div>
             <div class="seller-message">
-                @if (count($autooffers) === 0)
+                @if (count($autooffers) === 0 || $autooffers === null)
                     "Leider haben wir noch keine Angebote für Deinen Reisewunsch"
                     {{ $wish->destination }}
                     " für dich finden können. Wir erfüllen Dir jedoch gerne unter folgender Nummer Deine Wünsche
