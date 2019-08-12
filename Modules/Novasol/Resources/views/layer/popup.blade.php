@@ -7,19 +7,19 @@
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
                 @php
+
+                    // pool_inside, pool_outside, whirlpool, sauna, bathrooms
                     $extra_params = [
-                        'pool_inside'  => 0,
-                        'pool_outside' => 0,
-                        'whirlpool'    => 0,
-                        'sauna'        => 0,
+                        'indorpool'   => 'N',
+                        'outdoorpool' => 'N',
+                        'spa'         => 'N',
+                        'sauna'       => 'N',
                         'nr_bathrooms' => 1,
                         'category'     => 3,
                     ];
                 @endphp
                 @foreach($extra_params as $param_name => $param_value)
-
                     {{ Form::hidden($param_name,  key_exists($param_name, $request) ? $request[$param_name] : $param_value, ['class' => 'form-control box-size','autocomplete' => "off"]) }}
-
                 @endforeach
 
                 {{ Form::label('destination', trans('novasol::layer.general.destination'), ['class' => 'control-label required']) }}

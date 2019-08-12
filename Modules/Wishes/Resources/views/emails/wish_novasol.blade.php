@@ -153,10 +153,10 @@
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
                                                                         {{ $wish->adults }} Erw.
                                                                         @if($wish->kids > 0)
-                                                                             {{ $wish->kids }} {{ trans('wish.kids') }}
+                                                                             {{ $wish->kids }} Kinder
                                                                         @endif
                                                                         @if($wish->category == 61)
-                                                                            {{ $wish->kids }} {{ trans('wish.pets') }}
+                                                                            {{ $wish->kids }} Haustiere
                                                                         @endif
                                                                     </td>
                                                                     <td style="font-size:10px;padding-left:10px;padding-bottom:5px;" width="140" colspan="1" align="left">
@@ -185,7 +185,7 @@
                                 <td colspan="2">
                                     Hallo Lieber Kunde,<br><br>
                                     Herzlich willkommen bei Ihrem NOVASOL Reisewunschportal.<br>
-                                    Sie haben sich soeben registriert und Ihr Reisewunsch {{ $wish->title}} wurde erfolgreich an uns übermittelt.<br>
+                                    Sie haben sich soeben registriert und Ihr Reisewunsch {{ $wish->destination}} wurde erfolgreich an uns übermittelt.<br>
                                     Wir suchen gerade nach passenden Angeboten für Ihren persönlichen Reisewunsch und informieren Sie in wenigen Minuten per E-Mail darüber.<br>
                                     Anschließend können Sie sich Ihre persönlichen Angebote im NOVASOL Reisewunschportal anschauen.
                                     </td></tr>
