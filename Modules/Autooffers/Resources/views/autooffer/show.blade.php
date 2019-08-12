@@ -184,6 +184,9 @@
         <h1 class="offer-header-text">Meine Angebote</h1>
     </div>
 </div>
+    @php
+    $count = 0;
+    @endphp
     @foreach($autooffers as $offer)
         <div class="pagecontainer" id="card-{{$offer->hotel_code}}">
             <div class="row">
@@ -197,36 +200,39 @@
                                     <div class="slideshow-container">
 
                                         <!-- Full-width images with number and caption text -->
-                                        <div class="mySlides fade">
+                                        <div class="mySlides{{$count}} fade">
                                             <div class="numbertext1">1 / 3</div>
-                                            <img src="$images[0][0]->file" style="width:100%">
+                                            <img src="{{$images[0][0]->file}}" style="width:100%">
                                             <div class="textt">Caption Text</div>
                                         </div>
 
-                                        <div class="mySlides fade">
+                                        <div class="mySlides{{$count}} fade">
                                             <div class="numbertext1">2 / 3</div>
-                                            <img src="$images[0][1]->file" style="width:100%">
+                                            <img src="{{$images[0][1]->file}}" style="width:100%">
                                             <div class="textt">Caption Two</div>
                                         </div>
 
-                                        <div class="mySlides fade">
+                                        <div class="mySlides{{$count}} fade">
                                             <div class="numbertext1">3 / 3</div>
-                                            <img src="$images[0][2]->file" style="width:100%">
+                                            <img src="{{$images[0][2]->file}}" style="width:100%">
                                             <div class="textt">Caption Three</div>
                                         </div>
 
                                         <!-- Next and previous buttons -->
-                                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                                        <a class="prev" onclick="plusSlides{{$count}}(-1)">&#10094;</a>
+                                        <a class="next" onclick="plusSlides{{$count}}(1)">&#10095;</a>
                                     </div>
                                     <br>
 
                                     <!-- The dots/circles -->
                                     <div style="text-align:center">
-                                        <span class="dot" onclick="currentSlide(1)"></span>
-                                        <span class="dot" onclick="currentSlide(2)"></span>
-                                        <span class="dot" onclick="currentSlide(3)"></span>
+                                        <span class="dot{{$count}}" onclick="currentSlide{{$count}}(1)"></span>
+                                        <span class="dot{{$count}}" onclick="currentSlide{{$count}}(2)"></span>
+                                        <span class="dot{{$count}}" onclick="currentSlide{{$count}}(3)"></span>
                                     </div>
+                                    @php
+                                    $count++;
+                                    @endphp
                                 </div>
                                 <div class="offer-block no-border">
                                     <div class="stars hide-mobile">
@@ -581,34 +587,5 @@
           }, 2000);
         })
       });
-
-      var slideIndex = 1;
-      showSlides(slideIndex);
-
-      // Next/previous controls
-      function plusSlides(n) {
-        showSlides(slideIndex += n);
-      }
-
-      // Thumbnail image controls
-      function currentSlide(n) {
-        showSlides(slideIndex = n);
-      }
-
-      function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        var dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";
-        }
-        for (i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
-      }
     </script>
 @endsection
