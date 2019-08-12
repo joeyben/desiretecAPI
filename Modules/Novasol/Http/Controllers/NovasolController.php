@@ -60,8 +60,8 @@ class NovasolController extends Controller
      * @return Response
      */
     public function index(){
-
         $whitelabel = $this->whitelabel->getByName('Novasol');
+
         return view('novasol::index')->with([
             'display_name'  => $whitelabel['display_name'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
@@ -259,6 +259,9 @@ class NovasolController extends Controller
         $arr = [];
         $areasArr = [];
             foreach ($countries as $country) {
+
+                dd($country);
+
                 $url = 'https://safe.novasol.com/api/countries/'. $country->novasol_code . '?salesmarket=280';
                 $opts = [
                         "http" => [
@@ -300,6 +303,15 @@ class NovasolController extends Controller
                                                  'novasol_country_id' => $country->id,
                                                  'novasol_area_code' => $larea['id'],
                                              ];
+
+                                             foreach ($larea->area as $larea1) {
+                                                 $arr[] = [
+                                                     'name' => $larea1->name,
+                                                     'novasol_country_id' => $country->id,
+                                                     'novasol_area_code' => $larea1['id'],
+                                                 ];
+                                             }
+
                                          }
                                      }
 
