@@ -135,9 +135,9 @@ var dt = window.dt || {};
                 var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
                 return airport;
             },
-            'indorpool': function (form, formData) {
-                var indorpool = getUrlParams('indorpool') ? getUrlParams('indorpool') : 'N';
-                return indorpool;
+            'indoorpool': function (form, formData) {
+                var indoorpool = getUrlParams('indoorpool') ? getUrlParams('indoorpool') : 'N';
+                return indoorpool;
             },
             'outdoorpool': function (form, formData) {
                 var outdoorpool = getUrlParams('outdoorpool') ? getUrlParams('outdoorpool') : 'N';
@@ -305,7 +305,7 @@ var dt = window.dt || {};
                 var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
                 return airport;
             },
-            'indorpool': function (form, formData) { // swimming pool indoor
+            'indoorpool': function (form, formData) { // swimming pool indoor
                 if(!formData)
                     return '';
                 var pool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool indoor") >= 0)) ? '1' : '0';
@@ -314,8 +314,8 @@ var dt = window.dt || {};
             'outdoorpool': function (form, formData) { //swimming pool outdoor
                 if(!formData)
                     return '';
-                var indorpool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool outdoor") >= 0)) ? '1' : '0';
-                return indorpool;
+                var indoorpool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool outdoor") >= 0)) ? '1' : '0';
+                return indoorpool;
             },
             'spa': function (form, formData) {//spa
                 if(!formData)

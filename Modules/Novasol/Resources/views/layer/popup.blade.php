@@ -10,7 +10,7 @@
 
                     // pool_inside, pool_outside, whirlpool, sauna, bathrooms
                     $extra_params = [
-                        'indorpool'   => 'N',
+                        'indoorpool'   => 'N',
                         'outdoorpool' => 'N',
                         'spa'         => 'N',
                         'sauna'       => 'N',
