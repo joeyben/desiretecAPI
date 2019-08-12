@@ -165,9 +165,9 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    Hallo Liebe Kundin, lieber Kunde!<br><br>
+                                    Hallo Lieber Kunde,<br><br>
                                     Herzlich willkommen bei Ihrem NOVASOL Reisewunschportal.<br>
-                                    Sie haben sich soeben registriert und Ihr Reisewunsch {{ $wish->title}} ewurde erfolgreich an uns übermittelt.<br>
+                                    Sie haben sich soeben registriert und Ihr Reisewunsch {{ $wish->title}} wurde erfolgreich an uns übermittelt.<br>
                                     Wir suchen gerade nach passenden Angeboten für Ihren persönlichen Reisewunsch und informieren Sie in wenigen Minuten per E-Mail darüber.<br>
                                     Anschließend können Sie sich Ihre persönlichen Angebote im NOVASOL Reisewunschportal anschauen.
                                     </td></tr>
