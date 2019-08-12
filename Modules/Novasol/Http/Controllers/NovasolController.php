@@ -289,8 +289,6 @@ class NovasolController extends Controller
                                     'novasol_area_code' => $subarea['id'],
                                 ];
 
-                                $subarea = simplexml_load_string($subarea);
-
                                  foreach ($subarea->area as $subsubarea){
                                      $arr[] = [
                                          'name' => $subsubarea->name,

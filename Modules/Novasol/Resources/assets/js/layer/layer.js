@@ -12,17 +12,17 @@ var dt = window.dt || {};
 
     dt.popupTemplate = function (variant) {
         var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Traumreise noch nicht gefunden? ',
+            'Traumferienobjektnoch nicht gefunden? ',
         ]);
 
         var texts = {
             'eil-n1': {
-                header: 'Traumreise noch nicht gefunden? ',
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!'
+                header: 'Traumferienobjektnoch nicht gefunden?  ',
+                body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             },
             'eil-mobile': {
                 header: mobileHeader,
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!'
+                body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             }
         };
 
@@ -135,20 +135,20 @@ var dt = window.dt || {};
                 var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
                 return airport;
             },
-            'pool_inside': function (form, formData) {
-                var pool_inside = getUrlParams('pool_inside') ? getUrlParams('pool_inside') : '0';
-                return pool_inside;
+            'indorpool': function (form, formData) {
+                var indorpool = getUrlParams('indorpool') ? getUrlParams('indorpool') : 'N';
+                return indorpool;
             },
-            'pool_outside': function (form, formData) {
-                var pool_outside = getUrlParams('pool_outside') ? getUrlParams('pool_outside') : '0';
-                return pool_outside;
+            'outdoorpool': function (form, formData) {
+                var outdoorpool = getUrlParams('outdoorpool') ? getUrlParams('outdoorpool') : 'N';
+                return outdoorpool;
             },
-            'whirlpool': function (form, formData) {
-                var whirlpool = getUrlParams('whirlpool') ? getUrlParams('whirlpool') : '0';
-                return whirlpool;
+            'spa': function (form, formData) {
+                var spa = getUrlParams('spa') ? getUrlParams('spa') : 'N';
+                return spa;
             },
             'sauna': function (form, formData) {
-                var sauna = getUrlParams('sauna') ? getUrlParams('sauna') : '0';
+                var sauna = getUrlParams('sauna') ? getUrlParams('sauna') : 'N';
                 return sauna;
             },
             'nr_bathrooms': function (form, formData) {
@@ -240,9 +240,7 @@ var dt = window.dt || {};
                 return catering;
             },
             'category': function (form, formData) {
-                if(!formData)
-                    return '';
-                var category = formData.hasOwnProperty('rating') ? formData['rating'] : '3';
+                var category = getUrlParams('nr_stars') ? getUrlParams('nr_stars') : '3';
                 return category;
             },
             'destination': function (form, formData) {
@@ -307,23 +305,23 @@ var dt = window.dt || {};
                 var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
                 return airport;
             },
-            'pool_inside': function (form, formData) {
+            'indorpool': function (form, formData) { // swimming pool indoor
                 if(!formData)
                     return '';
                 var pool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool indoor") >= 0)) ? '1' : '0';
                 return pool;
             },
-            'pool_outside': function (form, formData) { //swimming pool outdoor
+            'outdoorpool': function (form, formData) { //swimming pool outdoor
                 if(!formData)
                     return '';
-                var pool_inside = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool outdoor") >= 0)) ? '1' : '0';
-                return pool_inside;
+                var indorpool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool outdoor") >= 0)) ? '1' : '0';
+                return indorpool;
             },
-            'whirlpool': function (form, formData) {//whirlpool
+            'spa': function (form, formData) {//spa
                 if(!formData)
                     return '';
-                var whirlpool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("whirlpool") >= 0)) ? '1' : '0';
-                return whirlpool;
+                var spa = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("spa") >= 0)) ? '1' : '0';
+                return spa;
             },
             'sauna': function (form, formData) {
                 if(!formData)
