@@ -200,19 +200,19 @@
                                         <div class="mySlides fade">
                                             <div class="numbertext1">1 / 3</div>
                                             <img src="$images[0][0]->file" style="width:100%">
-                                            <div class="text">Caption Text</div>
+                                            <div class="textt">Caption Text</div>
                                         </div>
 
                                         <div class="mySlides fade">
                                             <div class="numbertext1">2 / 3</div>
                                             <img src="$images[0][1]->file" style="width:100%">
-                                            <div class="text">Caption Two</div>
+                                            <div class="textt">Caption Two</div>
                                         </div>
 
                                         <div class="mySlides fade">
                                             <div class="numbertext1">3 / 3</div>
                                             <img src="$images[0][2]->file" style="width:100%">
-                                            <div class="text">Caption Three</div>
+                                            <div class="textt">Caption Three</div>
                                         </div>
 
                                         <!-- Next and previous buttons -->
