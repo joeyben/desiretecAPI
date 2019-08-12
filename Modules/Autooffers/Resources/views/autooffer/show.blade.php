@@ -368,7 +368,26 @@
                                     <div class="clearfix"></div>
 
                                     <div class="offer-facilities">
-                                        <div></div>
+                                        <div class="summary-icon">
+                                            <i class="fal fa-home-lg-alt" aria-hidden="true"></i>
+                                            <span class="text">#</span>
+                                        </div>
+                                        <div class="summary-icon">
+                                            <i class="fal fa-ruler-horizontal" aria-hidden="true"></i>
+                                            <span class="text">#</span>
+                                        </div>
+                                        <div class="summary-icon">
+                                            <i class="fal fa-users" aria-hidden="true"></i>
+                                            <span class="text">#</span>
+                                        </div>
+                                        <div class="summary-icon">
+                                            <i class="fal fa-bed" aria-hidden="true"></i>
+                                            <span class="text">#</span>
+                                        </div>
+                                        <div class="summary-icon">
+                                            <i class="fal fa-shower" aria-hidden="true"></i>
+                                            <span class="text">#</span>
+                                        </div>
                                     </div>
 
                                 </div>

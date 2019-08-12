@@ -1327,11 +1327,15 @@ ul.checklist {
   left: 0;
 }
 .offer-facilities{
-  font-size: 14px;
-  position: absolute;
-  bottom: 0;
-  right: 20px;
+  font-size: 25px;
+  //position: absolute;
+  //bottom: 0;
+  //right: 20px;
   color: #888888;
+  display: inline-flex;
+}
+.offer-facilities .summary-icon{
+  display: grid;
 }
 
 @media (max-width:37.49em) {
