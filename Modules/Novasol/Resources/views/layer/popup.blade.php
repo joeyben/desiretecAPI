@@ -17,11 +17,8 @@
                     ];
                 @endphp
                 @foreach($extra_params as $param_name => $param_value)
-                    <input type="hidden"
-                           id="{{ $param_name }}"
-                           placeholder="{{ $param_value }}"
-                           value="{{ $param_value }}"
-                           name="{{ $param_name }}">
+
+                    {{ Form::hidden($param_name,  key_exists($param_name, $request) ? $request[$param_name] : $param_value, ['class' => 'form-control box-size','autocomplete' => "off"]) }}
 
                 @endforeach
 
