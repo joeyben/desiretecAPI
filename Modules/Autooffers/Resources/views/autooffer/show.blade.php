@@ -200,19 +200,19 @@
                                     <div class="slideshow-container">
 
                                         <!-- Full-width images with number and caption text -->
-                                        <div class="mySlides{{$count}} fade">
+                                        <div class="mySlides{{$count}}">
                                             <div class="numbertext1">1 / 3</div>
                                             <img src="{{$images[0][0]->file}}" style="width:100%">
                                             <div class="textt">Caption Text</div>
                                         </div>
 
-                                        <div class="mySlides{{$count}} fade">
+                                        <div class="mySlides{{$count}}">
                                             <div class="numbertext1">2 / 3</div>
                                             <img src="{{$images[0][1]->file}}" style="width:100%">
                                             <div class="textt">Caption Two</div>
                                         </div>
 
-                                        <div class="mySlides{{$count}} fade">
+                                        <div class="mySlides{{$count}}">
                                             <div class="numbertext1">3 / 3</div>
                                             <img src="{{$images[0][2]->file}}" style="width:100%">
                                             <div class="textt">Caption Three</div>
@@ -615,8 +615,8 @@
         for (i = 0; i < dots.length; i++) {
           dots[i].className = dots[i].className.replace(" active", "");
         }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
+        slides[slideIndex0-1].style.display = "block";
+        dots[slideIndex0-1].className += " active";
       }
 
       var slideIndex1 = 1;
@@ -641,7 +641,7 @@
         for (i = 0; i < slides.length; i++) {
           slides[i].style.display = "none";
         }
-        for (i = 0; i < dots1.length; i++) {
+        for (i = 0; i < dots.length; i++) {
           dots[i].className = dots[i].className.replace(" active", "");
         }
         slides[slideIndex1-1].style.display = "block";
@@ -649,7 +649,7 @@
       }
 
       var slideIndex2 = 1;
-      showSlides(slideIndex2);
+      showSlides2(slideIndex2);
 
       // Next/previous controls
       function plusSlides2(n) {
