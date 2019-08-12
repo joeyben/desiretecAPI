@@ -230,9 +230,7 @@
                                         <span class="dot{{$count}}" onclick="currentSlide{{$count}}(2)"></span>
                                         <span class="dot{{$count}}" onclick="currentSlide{{$count}}(3)"></span>
                                     </div>
-                                    @php
-                                    $count++;
-                                    @endphp
+
                                 </div>
                                 <div class="offer-block no-border">
                                     <div class="stars hide-mobile">
@@ -378,7 +376,7 @@
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fal fa-users" aria-hidden="true"></i>
-                                            <span class="text">#</span>
+                                            <span class="text">{{$capacities[$count]}}</span>
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fal fa-bed" aria-hidden="true"></i>
@@ -389,7 +387,9 @@
                                             <span class="text">#</span>
                                         </div>
                                     </div>
-
+                                    @php
+                                        $count++;
+                                    @endphp
                                 </div>
                                 <div class="price">
                                     <div class="offer-action">
