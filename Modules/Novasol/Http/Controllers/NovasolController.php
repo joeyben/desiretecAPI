@@ -260,8 +260,6 @@ class NovasolController extends Controller
         $areasArr = [];
             foreach ($countries as $country) {
 
-                dd($country);
-
                 $url = 'https://safe.novasol.com/api/countries/'. $country->novasol_code . '?salesmarket=280';
                 $opts = [
                         "http" => [
@@ -279,41 +277,41 @@ class NovasolController extends Controller
                 $areasArr[] = $areas;
 
                 foreach ($areas as $area) {
+                    $arr[] = [
+                        'name' => $area->name,
+                        'novasol_country_id' => $country->id,
+                        'novasol_area_code' => $area['id'],
+                    ];
                             foreach ($area->area as $subarea) {
                                 $arr[] = [
                                     'name' => $subarea->name,
                                     'novasol_country_id' => $country->id,
                                     'novasol_area_code' => $subarea['id'],
                                 ];
+
+                                $subarea = simplexml_load_string($subarea);
+
                                  foreach ($subarea->area as $subsubarea){
                                      $arr[] = [
                                          'name' => $subsubarea->name,
                                          'novasol_country_id' => $country->id,
                                          'novasol_area_code' => $subsubarea['id'],
                                      ];
-                                     foreach ($subsubarea->area as $lastarea) {
-                                         $arr[] = [
-                                             'name' => $lastarea->name,
-                                             'novasol_country_id' => $country->id,
-                                             'novasol_area_code' => $lastarea['id'],
-                                         ];
-                                         foreach ($lastarea->area as $larea) {
+                                        foreach ($subsubarea->area as $lastarea) {
+                                             $arr[] = [
+                                                 'name' => $lastarea->name,
+                                                 'novasol_country_id' => $country->id,
+                                                 'novasol_area_code' => $lastarea['id'],
+                                             ];
+
+                                            foreach ($lastarea->area as $larea) {
                                              $arr[] = [
                                                  'name' => $larea->name,
                                                  'novasol_country_id' => $country->id,
                                                  'novasol_area_code' => $larea['id'],
                                              ];
-
-                                             foreach ($larea->area as $larea1) {
-                                                 $arr[] = [
-                                                     'name' => $larea1->name,
-                                                     'novasol_country_id' => $country->id,
-                                                     'novasol_area_code' => $larea1['id'],
-                                                 ];
-                                             }
-
                                          }
-                                     }
+                                        }
 
                                  }
                             }
