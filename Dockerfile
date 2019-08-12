@@ -62,3 +62,4 @@ RUN apt update && \
 RUN rm -r /var/www/html/docker
 RUN make routes
 RUN make message
+RUN apt-get install nano

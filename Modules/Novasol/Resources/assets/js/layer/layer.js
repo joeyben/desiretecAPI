@@ -240,7 +240,9 @@ var dt = window.dt || {};
                 return catering;
             },
             'category': function (form, formData) {
-                var category = getUrlParams('nr_stars') ? getUrlParams('nr_stars') : '3';
+                if(!formData)
+                    return '';
+                var category = formData.hasOwnProperty('rating') ? formData['rating'] : '3';
                 return category;
             },
             'destination': function (form, formData) {
