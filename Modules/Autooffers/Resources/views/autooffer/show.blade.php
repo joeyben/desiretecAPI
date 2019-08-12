@@ -41,6 +41,20 @@
                 height: 330px !important;
             }
         }
+
+      @media only screen and (max-width: 420px) {
+          .left{
+              display: none;
+          }
+          .right{
+              float: right;
+              width: 100%;
+          }
+          .js-price-person .amount{
+              float: right;
+              padding-left: 10px;
+          }
+      }
     </style>
     <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
 @endsection
@@ -321,12 +335,9 @@
                                 </div>
                                 <div class="price">
                                     <div class="offer-action">
-
                                         <div class="left">
-
-
-                                                                                                                                                                                                    <span class="remaining">
-                                                                                                                                                    </span>
+                                            <span class="remaining">
+                                            </span>
                                         </div>
                                         <div class="right">
                                             {{-- <a href="/adetails/offer/5c5d4e7ce4b067a302abeefc/0/" class="price-click-area"> --}}
@@ -335,7 +346,7 @@
                                                 <div class="offer-price">
                                                     <div class="price-all">
                                                         <div class="js-price-person">
-                                                            <span>{{  number_format($offer->totalPrice, 0, ',', '.') }}€</span>
+                                                            <span class="amount">{{  number_format($offer->totalPrice, 0, ',', '.') }}€</span>
                                                             <span class="type">Gesamtpreis</span>
                                                         </div>
                                                         <!--<div class="js-price-total">
