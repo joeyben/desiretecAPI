@@ -44,15 +44,15 @@
 
       @media only screen and (max-width: 420px) {
           .left{
-              display: none;
+              display: none !important;
           }
           .right{
-              float: right;
-              width: 100%;
+              float: right !important;
+              width: 100% !important;
           }
           .js-price-person .amount{
-              float: right;
-              padding-left: 10px;
+              float: right !important;
+              padding-left: 10px !important;
           }
       }
     </style>

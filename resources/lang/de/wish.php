@@ -35,6 +35,7 @@ return [
         'comment-header'    => 'Nachricht an Agenten',
         'offer_number'      => 'Angebot Nummer',
         'new_offers'        => 'Neue Angebote',
+        'pets'              => 'Haustiere',
         'stage'             => [
             'seller_empty' => 'Der Reisewunsch wurde am <b>:date</b> an Sie<br>
                     übermittelt. Erstellen Sie jetzt ein Angebot.',
