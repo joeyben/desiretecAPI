@@ -138,14 +138,17 @@ class AutooffersNovasolController extends Controller
      */
     public function show(Wish $wish){
         $images = [];
+        $capacities = [];
         $autooffers = Autooffer::where('wish_id', $wish->id)->orderBy('totalPrice', 'asc')->paginate(5);
         foreach ($autooffers as $autooffer){
             $images[] = DB::table('offer_files')->select('file')->where('offer_id', $autooffer->code)->get();
+            $capacities[] = DB::table('offer_files')->select('capacity')->where('offer_id', $autooffer->code)->get();
         }
         return view('autooffers::autooffer.show', [
             'autooffers' => $autooffers,
             'wish' => $wish,
-            'images' =>$images
+            'images' => $images,
+            'capacities' => $capacities
         ]);
     }
 
@@ -244,12 +247,13 @@ class AutooffersNovasolController extends Controller
         $arr = [];
         $product = simplexml_load_string($file);
         $offer_file =  DB::table('offer_files')->select('file')->where('offer_id', $id)->get();
-        if($offer_file === null) {
+        if($offer_file->count() == 0) {
             foreach ($product->pictures as $picture) {
                 foreach ($picture->picture as $pic) {
                     $arr[] = [
                         'offer_id' => $id,
-                        'file' => $pic->domain . $pic->path . $pic->file
+                        'file' => $pic->domain . $pic->path . $pic->file,
+                        'capacity' => $product->information->adultCount
                     ];
                 }
             }
