@@ -62,11 +62,11 @@
                         @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
                         <!--    <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>-->
                         @endif
-                        <a type="button" class="primary-btn" :href="'/wish/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
+                        <a type="button" class="primary-btn" :href="'/novasoloffer/create/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
                         @if($logged_in_user->allow('create-offer'))
                             <!--<a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a> -->
                         @endif
-                        <a :href="'/novasoloffer/create/'+wish.id" class="primary-btn">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a>
+                        <!--a :href="'/novasoloffer/create/'+wish.id" class="primary-btn">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a-->
                     </div>
                 </div>
             </div>
