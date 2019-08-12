@@ -104,9 +104,9 @@ class AutooffersNovasolController extends Controller
             $response = simplexml_load_string($response);
             $properties = $this->service->fetchAllProperties($response);
             $this->autooffers->storeMany($response, $properties, $wish->id);
-            foreach ($offers as $offer){
-                $this->getProduct($offer->code);
-            }
+        }
+        foreach ($offers as $offer){
+            $this->getProduct($offer->code);
         }
 
         return redirect()->to('novasoloffer/list/' . $wish->id);
@@ -246,7 +246,7 @@ class AutooffersNovasolController extends Controller
 
         foreach ($product->pictures as $picture) {
             foreach ($picture->picture as $pic) {
-                $arr = [
+                $arr[] = [
                     'offer_id' => $id,
                     'file' => $pic->domain . $pic->path . $pic->file
                 ];
