@@ -2,6 +2,7 @@
 
 namespace Modules\Autooffers\Http\Controllers;
 
+use App\Models\OfferFiles\OfferFile;
 use App\Models\Wishes\Wish;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -94,8 +95,8 @@ class AutooffersNovasolController extends Controller
      * @return mixed
      */
     public function create(Wish $wish){
-        $offersCounter = Autooffer::where('wish_id', $wish->id)->count();
-        if($offersCounter == 0){
+        $offers = Autooffer::where('wish_id', $wish->id)->get();
+        if($offers->count() == 0){
         //if(!isset($wish->id)){
             logger()->info('AufoofferNovasolController.php > create() wurde aufgerufen!');
             $this->autooffers->saveWishData($wish);
@@ -103,6 +104,9 @@ class AutooffersNovasolController extends Controller
             $response = simplexml_load_string($response);
             $properties = $this->service->fetchAllProperties($response);
             $this->autooffers->storeMany($response, $properties, $wish->id);
+            foreach ($offers as $offer){
+                $this->getProduct($offer->code);
+            }
         }
 
         return redirect()->to('novasoloffer/list/' . $wish->id);
@@ -121,7 +125,6 @@ class AutooffersNovasolController extends Controller
         logger()->info('AufoofferNovasolController.php > store() wurde aufgerufen!');
         $this->autooffers->saveWishData($request->all());
         $response = $this->autooffers->getNovasolData($this->service->prepareParamForNovasolApi($this->autooffers, $request->all()));
-
         //$response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response);
 
@@ -134,11 +137,15 @@ class AutooffersNovasolController extends Controller
      * @return Response
      */
     public function show(Wish $wish){
-
+        $images = [];
         $autooffers = Autooffer::where('wish_id', $wish->id)->orderBy('totalPrice', 'asc')->paginate(5);
+        foreach ($autooffers as $autooffer){
+            $images[] = DB::table('offer_files')->select('file')->where('offer_id', $autooffer->code)->get();
+        }
         return view('autooffers::autooffer.show', [
             'autooffers' => $autooffers,
-            'wish' => $wish
+            'wish' => $wish,
+            'images' =>$images
         ]);
     }
 
@@ -215,5 +222,36 @@ class AutooffersNovasolController extends Controller
            // todo: The NOVASOL-ID is mising into the URL
            return Redirect::away($url);
        }
+    }
+
+    public function getProduct($id)
+    {
+        $url = 'https://safe.novasol.com/api/products/'. $id . '?salesmarket=208&season=2019';
+
+        $opts = [
+            "http" => [
+                "method" => "GET",
+                "header" => "Accept-language: en\r\n" .
+                    "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
+                    "Host: novasol.reise-wunsch.com\r\n"
+            ]
+        ];
+
+        $context = stream_context_create($opts);
+
+        // Open the file using the HTTP headers set above
+        $file = file_get_contents($url, false, $context);
+        $arr = [];
+        $product = simplexml_load_string($file);
+
+        foreach ($product->pictures as $picture) {
+            foreach ($picture->picture as $pic) {
+                $arr = [
+                    'offer_id' => $id,
+                    'file' => $pic->domain . $pic->path . $pic->file
+                ];
+            }
+        }
+        DB::table('offer_files')->insert($arr);
     }
 }
