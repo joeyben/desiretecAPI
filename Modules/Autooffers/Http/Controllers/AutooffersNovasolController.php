@@ -243,15 +243,17 @@ class AutooffersNovasolController extends Controller
         $file = file_get_contents($url, false, $context);
         $arr = [];
         $product = simplexml_load_string($file);
-
-        foreach ($product->pictures as $picture) {
-            foreach ($picture->picture as $pic) {
-                $arr[] = [
-                    'offer_id' => $id,
-                    'file' => $pic->domain . $pic->path . $pic->file
-                ];
+        $offer_file =  DB::table('offer_files')->select('file')->where('offer_id', $id)->get();
+        if($offer_file === null) {
+            foreach ($product->pictures as $picture) {
+                foreach ($picture->picture as $pic) {
+                    $arr[] = [
+                        'offer_id' => $id,
+                        'file' => $pic->domain . $pic->path . $pic->file
+                    ];
+                }
             }
+            DB::table('offer_files')->insert($arr);
         }
-        DB::table('offer_files')->insert($arr);
     }
 }
