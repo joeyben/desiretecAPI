@@ -356,16 +356,16 @@
                                     <div class="offer-facilities">
                                         <div class="summary-icon">
                                             <i class="fal fa-home-lg-alt" aria-hidden="true"></i>
-                                            @if($type[$count][0]->type == '1')
+                                            @if($types[$count][0]->type == '1')
                                             <span class="text">FERIENWOHNUNG</span>
                                             @endif
-                                            @if($type[$count][0]->type == '3')
+                                            @if($types[$count][0]->type == '3')
                                                 <span class="text">DOPPELHAUS</span>
                                             @endif
-                                            @if($type[$count][0]->type == '5')
+                                            @if($types[$count][0]->type == '5')
                                                 <span class="text">REIHENHAUS</span>
                                             @endif
-                                            @if($type[$count][0]->type == '6')
+                                            @if($types[$count][0]->type == '6')
                                                 <span class="text">FERIENHAUS</span>
                                             @endif
                                         </div>
