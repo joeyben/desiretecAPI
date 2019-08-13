@@ -200,24 +200,12 @@
                                     <div class="slideshow-container">
 
                                         <!-- Full-width images with number and caption text -->
+                                        @for($i=1;$i<=7;$i++)
                                         <div class="mySlides{{$count}}">
-                                            <div class="numbertext1">1 / 3</div>
-                                            <img src="{{$images[$count][0]->file}}" style="width:100%">
-                                            <div class="textt">Caption Text</div>
+                                            <div class="numbertext1">{{$i}}/ 7</div>
+                                            <img src="{{$images[$count][$i]->file}}" style="width:100%">
                                         </div>
-
-                                        <div class="mySlides{{$count}}">
-                                            <div class="numbertext1">2 / 3</div>
-                                            <img src="{{$images[$count][1]->file}}" style="width:100%">
-                                            <div class="textt">Caption Two</div>
-                                        </div>
-
-                                        <div class="mySlides{{$count}}">
-                                            <div class="numbertext1">3 / 3</div>
-                                            <img src="{{$images[$count][2]->file}}" style="width:100%">
-                                            <div class="textt">Caption Three</div>
-                                        </div>
-
+                                        @endfor
                                         <!-- Next and previous buttons -->
                                         <a class="prev" onclick="plusSlides{{$count}}(-1)">&#10094;</a>
                                         <a class="next" onclick="plusSlides{{$count}}(1)">&#10095;</a>
@@ -372,7 +360,7 @@
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fal fa-ruler-horizontal" aria-hidden="true"></i>
-                                            <span class="text">#</span>
+                                            <span class="text">{{$sizes[$count][0]->size}} m2</span>
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fal fa-users" aria-hidden="true"></i>
