@@ -362,6 +362,9 @@
                                             @if($type[$count][0]->type == '3')
                                                 <span class="text">DOPPELHAUS</span>
                                             @endif
+                                            @if($type[$count][0]->type == '5')
+                                                <span class="text">REIHENHAUS</span>
+                                            @endif
                                             @if($type[$count][0]->type == '6')
                                                 <span class="text">FERIENHAUS</span>
                                             @endif
