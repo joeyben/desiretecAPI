@@ -380,7 +380,7 @@
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fal fa-bed" aria-hidden="true"></i>
-                                            <span class="text">#</span>
+                                            <span class="text">{{$rooms[$count][0]->room}}</span>
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fal fa-shower" aria-hidden="true"></i>
