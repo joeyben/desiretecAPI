@@ -202,19 +202,19 @@
                                         <!-- Full-width images with number and caption text -->
                                         <div class="mySlides{{$count}}">
                                             <div class="numbertext1">1 / 3</div>
-                                            <img src="{{$images[0][0]->file}}" style="width:100%">
+                                            <img src="{{$images[$count][0]->file}}" style="width:100%">
                                             <div class="textt">Caption Text</div>
                                         </div>
 
                                         <div class="mySlides{{$count}}">
                                             <div class="numbertext1">2 / 3</div>
-                                            <img src="{{$images[0][1]->file}}" style="width:100%">
+                                            <img src="{{$images[$count][1]->file}}" style="width:100%">
                                             <div class="textt">Caption Two</div>
                                         </div>
 
                                         <div class="mySlides{{$count}}">
                                             <div class="numbertext1">3 / 3</div>
-                                            <img src="{{$images[0][2]->file}}" style="width:100%">
+                                            <img src="{{$images[$count][2]->file}}" style="width:100%">
                                             <div class="textt">Caption Three</div>
                                         </div>
 
@@ -376,7 +376,7 @@
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fal fa-users" aria-hidden="true"></i>
-                                            <span class="text">{{$capacities[$count]}}</span>
+                                            <span class="text">{{$capacities[$count][0]->capacity}}</span>
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fal fa-bed" aria-hidden="true"></i>

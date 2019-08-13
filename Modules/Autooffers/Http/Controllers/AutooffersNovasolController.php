@@ -105,6 +105,7 @@ class AutooffersNovasolController extends Controller
             $properties = $this->service->fetchAllProperties($response);
             $this->autooffers->storeMany($response, $properties, $wish->id);
         }
+        $offers = Autooffer::where('wish_id', $wish->id)->get();
         foreach ($offers as $offer){
             $this->getProduct($offer->code);
         }
