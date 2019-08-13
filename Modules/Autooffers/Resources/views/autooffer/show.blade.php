@@ -203,7 +203,7 @@
                                         @for($i=1;$i<=7;$i++)
                                         <div class="mySlides{{$count}}">
                                             <div class="numbertext1">{{$i}}/ 7</div>
-                                            <img src="{{$images[$count][$i]->file}}" style="width:100%">
+                                            <img src="{{str_replace('/pic/','/pic/600/',$images[$count][$i]->file)}}" style="width:100%">
                                         </div>
                                         @endfor
                                         <!-- Next and previous buttons -->
@@ -356,7 +356,15 @@
                                     <div class="offer-facilities">
                                         <div class="summary-icon">
                                             <i class="fal fa-home-lg-alt" aria-hidden="true"></i>
-                                            <span class="text">#</span>
+                                            @if($type[$count][0]->type == '1')
+                                            <span class="text">FERIENWOHNUNG</span>
+                                            @endif
+                                            @if($type[$count][0]->type == '3')
+                                                <span class="text">DOPPELHAUS</span>
+                                            @endif
+                                            @if($type[$count][0]->type == '6')
+                                                <span class="text">FERIENHAUS</span>
+                                            @endif
                                         </div>
                                         <div class="summary-icon">
                                             <i class="fal fa-ruler-horizontal" aria-hidden="true"></i>

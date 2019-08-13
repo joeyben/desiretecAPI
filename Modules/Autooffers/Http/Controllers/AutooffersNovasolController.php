@@ -142,12 +142,14 @@ class AutooffersNovasolController extends Controller
         $capacities = [];
         $rooms = [];
         $sizes = [];
+        $types = [];
         $autooffers = Autooffer::where('wish_id', $wish->id)->orderBy('totalPrice', 'asc')->paginate(5);
         foreach ($autooffers as $autooffer){
             $images[] = DB::table('offer_files')->select('file')->where('offer_id', $autooffer->code)->get();
             $capacities[] = DB::table('offer_files')->select('capacity')->where('offer_id', $autooffer->code)->get();
             $rooms[] = DB::table('offer_files')->select('room')->where('offer_id', $autooffer->code)->get();
             $sizes[] = DB::table('offer_files')->select('size')->where('offer_id', $autooffer->code)->get();
+            $types[] = DB::table('offer_files')->select('type')->where('offer_id', $autooffer->code)->get();
         }
         return view('autooffers::autooffer.show', [
             'autooffers' => $autooffers,
@@ -155,7 +157,8 @@ class AutooffersNovasolController extends Controller
             'images' => $images,
             'capacities' => $capacities,
             'rooms' => $rooms,
-            'sizes' => $sizes
+            'sizes' => $sizes,
+            'types' => $types
         ]);
     }
 
@@ -262,7 +265,8 @@ class AutooffersNovasolController extends Controller
                         'file' => $pic->domain . $pic->path . $pic->file,
                         'capacity' => $product->information->adultCount,
                         'room' => $product->buildings->building->room->count(),
-                        'size' => $product->features->feature[0]->unit['size']
+                        'size' => $product->features->feature[0]->unit['size'],
+                        'type' => $product->features->feature[0]->subgroup
                     ];
                 }
             }
