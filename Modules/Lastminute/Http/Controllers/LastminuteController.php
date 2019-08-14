@@ -12,6 +12,8 @@ use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Lastminute\Http\Requests\StoreWishRequest;
+use SoapClient;
+use SoapHeader;
 
 class LastminuteController extends Controller
 {
@@ -190,27 +192,39 @@ class LastminuteController extends Controller
         return $duration;
     }
 
-    public function testAPI(Request $request)
+    public function testAPI()
     {
-        $url = 'https://staging-auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
-        $data = array(
-            'username' => 'MKT_315150_DE',
-            'password' => '!9kj7g6f5d4s3A1',
-            'client_id' => 'gateway',
-            'grant_type' => 'password'
-        );
+        $soapClient = new SoapClient("https://staging-auth.ws.traveltainment.eu/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token");
 
+        // Prepare SoapHeader parameters
+        $sh_param = array(
+            'username'    =>    'MKT_315150_DE',
+            'password'    =>    '!9kj7g6f5d4s3A1',
+            'client_id'   =>    'gateway',
+            'grant_type'  =>    'password'
+        );
+        $headers = new SoapHeader('https://staging-auth.ws.traveltainment.eu/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token', 'UserCredentials', $sh_param);
+
+        // Prepare Soap Client
+        $soapClient->__setSoapHeaders(array($headers));
+    }
+    public function getHotels(Request $request)
+    {
+        $url = 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=MAD';
+        $access_token = $this->testAPI();
         // use key 'http' even if you send the request to https://...
         $options = array(
             'http' => array(
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data)
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n".
+                    "Authorization: Bearer ". $access_token ."\r\n",
+                'method'  => 'GET',
             )
         );
         $context  = stream_context_create($options);
         $result = file_get_contents($url, false, $context);
-        if ($result === FALSE) { var_dump('ERROR'); }
-        var_dump($result);
+        $contents = utf8_encode($result);
+        $results = json_decode($contents);
+
+        dd($results);
     }
 }
