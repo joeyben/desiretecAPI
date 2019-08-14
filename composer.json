@@ -58,8 +58,7 @@
         "torann/geoip": "^1.0",
         "tymon/jwt-auth": "dev-develop",
         "unisharp/laravel-filemanager": "~1.8",
-        "yajra/laravel-datatables-oracle": "~8.0",
-      "ext-soap": "*"
+        "yajra/laravel-datatables-oracle": "~8.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.0",
