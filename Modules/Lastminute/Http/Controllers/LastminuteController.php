@@ -189,4 +189,28 @@ class LastminuteController extends Controller
 
         return $duration;
     }
+
+    public function testAPI(Request $request)
+    {
+        $url = 'https://staging-auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
+        $data = array(
+            'username' => 'MKT_315150_DE',
+            'password' => '!9kj7g6f5d4s3A1',
+            'client_id' => 'gateway',
+            'grant_type' => 'password'
+        );
+
+        // use key 'http' even if you send the request to https://...
+        $options = array(
+            'http' => array(
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+        $context  = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        if ($result === FALSE) { var_dump('ERROR'); }
+        var_dump($result);
+    }
 }
