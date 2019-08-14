@@ -63,4 +63,4 @@ RUN rm -r /var/www/html/docker
 RUN make routes
 RUN make message
 RUN apt-get install nano
-RUN apt-get install php-soap
+RUN docker-php-ext-install soap
