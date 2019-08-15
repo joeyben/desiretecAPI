@@ -12,7 +12,7 @@ services:
       volumes:
         - /var/www/desiretec-mvp-stage/storage:/var/www/html/storage
       environment:
-        - VIRTUAL_HOST=mvp.desiretec.com,novasol.wunsch-service.de,trendtours.reise-wunsch.com,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com
+        - VIRTUAL_HOST=mvp.desiretec.com,novasol.wunsch-service.de,trendtours.reise-wunsch.com,example.reise-wunsch.com,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com
       networks:
         nginx-proxy-wildcard:
           ipv4_address: 178.30.0.3
