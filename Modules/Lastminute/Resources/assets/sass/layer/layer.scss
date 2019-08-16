@@ -242,7 +242,7 @@ $master-blue: #70CBF4;
 
   button[type=submit] {
     border-radius: 3px;
-    background: $mastercolor;
+    background: #DF007A;
 
     text-align: center;
 
@@ -532,6 +532,7 @@ ul.kwp-form-errors {
 .kwp-logo {
   display: block;
   height: 50px;
+  background-size: contain;
   background: transparent url(../../images/layer/logo.png) no-repeat left top;
 }
 
@@ -696,7 +697,7 @@ p.kwp-info {
   }
   &.eil-at-body{
     button[type=submit]{
-      background: #cc0066;
+      background: #DF007A;
       border: solid 1px #cc0066;
       color: #fff;
       text-shadow: initial;
@@ -1249,8 +1250,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid #092A59;
-          background-color: #092A59;
+          border: 1px solid #DF007A;
+          background-color: #DF007A;
           background-image: url(../../svg/check-white.svg);
         }
       }

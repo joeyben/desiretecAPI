@@ -5,6 +5,7 @@ var exitIntent = window.exitIntent || {};
 
     dt.defaultConfig = {
         baseUrl: 'http://lastminute.com',
+        logoPath: '/whitelabel/lastminute/images/layer/logo.png',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/lastminute/css/layer/whitelabel.css'
@@ -54,6 +55,7 @@ var exitIntent = window.exitIntent || {};
             '<div class="kwp-header kwp-variant-' + variant + '">' +
             '<div class="kwp-close-button kwp-close"></div>' +
             '<div class="kwp-overlay"></div>' +
+            '<div class="kwp-logo"></div>' +
             '<div class="kwp-header-content">' +
             '<!--h1>' +
             texts[variant].header + ' <br/>' +

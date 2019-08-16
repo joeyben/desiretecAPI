@@ -1,7 +1,7 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
-    Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
+    Wir helfen Ihnen gerne, Ihre persönlichen Traumferien zu finden. Probieren Sie es jetzt aus!
 </div>
 {{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
@@ -9,13 +9,13 @@
     <div class="kwp-content kwp-with-expansion">
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
-                {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
+                {{ Form::label('destination', trans('lastminute::layer.general.destination'), ['class' => 'control-label required']) }}
                 {{ Form::text('destination', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.destination'), 'required' => 'required']) }}
                 <i class="master-icon--location-fill"></i>
             </div>
 
             <div class="kwp-col-4">
-                {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
+                {{ Form::label('airport', trans('lastminute::layer.general.airport'), ['class' => 'control-label required']) }}
                 {{ Form::text('airport', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.airport'), 'required' => 'required']) }}
                 <i class="master-icon--aircraft-up"></i>
             </div>
@@ -25,7 +25,7 @@
 
             <div class="kwp-col-4 duration-col main-col">
                 <div class="kwp-form-group duration-group">
-                    <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
+                    <label for="duration-time" class="required">{{ trans('lastminute::layer.general.duration') }}</label>
                     <span class="duration-time dd-trigger">
                         <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
                         <i class="master-icon--calendar-month not-triggered"></i>
@@ -33,7 +33,7 @@
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
-                            {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
+                            {{ Form::label('earliest_start', trans('lastminute::layer.general.earliest_start'), ['class' => 'control-label required']) }}
                             {{ Form::text('earliest_start', null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
@@ -44,7 +44,7 @@
                             <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-4">
-                            {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
+                            {{ Form::label('latest_return', trans('lastminute::layer.general.latest_return'), ['class' => 'control-label required']) }}
                             {{ Form::text('latest_return', null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
@@ -54,7 +54,7 @@
                             <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-12">
-                            {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
+                            {{ Form::label('duration', trans('lastminute::layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('duration', array_merge(['' => trans('lastminute::layer.general.duration_empty')], $duration_arr), ['class' => 'form-control box-size']) }}
                             </div>
@@ -71,7 +71,7 @@
 
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
-                    <label for="travelers" class="required">{{ trans('whitelabel.ayer.general.pax') }}</label>
+                    <label for="travelers" class="required">{{ trans('lastminute::layer.general.pax') }}</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
                          <i class="master-icon--user-family not-triggered"></i>
@@ -137,7 +137,6 @@
                     </span>
                         <div class="budget-more">
                             <div class="kwp-col-12">
-                                {{ Form::label('budget', trans('lastminute::layer.general.budget'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
                                     {{ Form::select('budget', $budget_arr , ['class' => 'form-control box-size', 'required' => 'required', 'id' => 'budget']) }}
                                 </div>
