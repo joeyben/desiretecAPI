@@ -18,6 +18,7 @@ Route::group(['domain' => $domain], function () {
         Route::get('wish/{wish}/{token}', 'LastminuteWishesController@details')->name('wish.details');
         Route::get('getwish/{wish}', 'LastminuteWishesController@getWish')->name('getWish');
         Route::get('wishlist/{token}', 'LastminuteWishesController@validateTokenList');
+        Route::get('wishlist', 'LastminuteWishesController@wishList')->name('list');
         Route::get('testAPI', 'LastminuteController@testAPI');
     });
 });

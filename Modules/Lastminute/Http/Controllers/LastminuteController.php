@@ -6,14 +6,17 @@ use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Access\User\UserRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Lastminute\Http\Requests\StoreWishRequest;
+use OAuth;
 use SoapClient;
 use SoapHeader;
+use Stevenmaguire\OAuth2\Client\Provider\Keycloak;
 
 class LastminuteController extends Controller
 {
@@ -21,6 +24,7 @@ class LastminuteController extends Controller
     protected $kids = [];
     protected $catering = [];
     protected $duration = [];
+    protected $budget = [];
 
     private $whitelabelId;
 
@@ -43,6 +47,7 @@ class LastminuteController extends Controller
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
+        $this->budget = $categories->getChildrenFromSlug('slug','prices');
         $this->whitelabelId = \Config::get('lastminute.id');
     }
 
@@ -79,6 +84,7 @@ class LastminuteController extends Controller
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
+            'budget_arr'   => $this->budget,
             'request' => $request->all()
         ])->render();
 
@@ -105,6 +111,7 @@ class LastminuteController extends Controller
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
+                'budget_arr'   => $this->budget,
                 'request' => $request->all()
             ])->render();
 
@@ -194,19 +201,27 @@ class LastminuteController extends Controller
 
     public function testAPI()
     {
-        $soapClient = new SoapClient("https://staging-auth.ws.traveltainment.eu/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token");
-
-        // Prepare SoapHeader parameters
-        $sh_param = array(
-            'username'    =>    'MKT_315150_DE',
-            'password'    =>    '!9kj7g6f5d4s3A1',
-            'client_id'   =>    'gateway',
-            'grant_type'  =>    'password'
+        $curl = curl_init();
+        $auth_data = array(
+            'username'  => 'MKT_315150_DE',
+            'password' 	=> '!9kj7g6f5d4s3A1',
+            'client_id' => 'gateway',
+            'grant_type'=> 'password'
         );
-        $headers = new SoapHeader('https://staging-auth.ws.traveltainment.eu/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token', 'UserCredentials', $sh_param);
 
-        // Prepare Soap Client
-        $soapClient->__setSoapHeaders(array($headers));
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $auth_data);
+        curl_setopt($curl, CURLOPT_URL, 'https://staging-auth.ws.traveltainment.eu:443/SystemUser-BasicAccessLevel/protocol/openid-connect/token');
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/x-www-form-urlencoded',
+        ));
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+        $result = curl_exec($curl);
+        if(!$result){die("Connection Failure");}
+        curl_close($curl);
+        echo $result;
     }
     public function getHotels(Request $request)
     {

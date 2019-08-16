@@ -55,9 +55,9 @@ var exitIntent = window.exitIntent || {};
             '<div class="kwp-close-button kwp-close"></div>' +
             '<div class="kwp-overlay"></div>' +
             '<div class="kwp-header-content">' +
-            '<h1>' +
+            '<!--h1>' +
             texts[variant].header + ' <br/>' +
-            '</h1>' +
+            '</h1-->' +
             '<p>' +
             texts[variant].body +
             '</p>' +

@@ -12,5 +12,6 @@ return [
     |
     */
 
-    'currency'        => '€',
+    'currency'            => '€',
+    'lastminute_currency' => 'CHF'
 ];

@@ -48,7 +48,7 @@
                             <li><i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
                             <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
                             <li><i class="icon_group"></i><span class="value">@{{ wish.adults }} @{{ wish.kids }} @{{ wish.categories }} @{{ wish.categories ? 'Haustier(e)' : ''  }}</span></li>
-                            <li><i class="fal fa-usd-circle"></i><span class="value">@{{ wish.budget }}€</span></li>
+                            <li><i class="fal fa-usd-circle"></i><span class="value">@{{ wish.budget }}CHF</span></li>
                             <li>{{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("DD.MM.YYYY") }}</span></li>
                         </ul>
                     </div>
@@ -58,7 +58,7 @@
                                 @{{ wish.offers }}
                             </span>
                         </div>
-                        <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
+                        <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.lastminute_currency') }}</div>
                         @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
                         <!--    <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>-->
                         @endif

@@ -379,7 +379,7 @@ $master-blue: #70CBF4;
         border: 1px solid #b9b9b9;
         border-bottom: none;
       }
-      .travelers{
+      .travelers {
         background-color: #f3f0ec;
         z-index: 4;
         position: relative;
@@ -399,7 +399,7 @@ $master-blue: #70CBF4;
     }
     .kwp-form-group{
       position: relative;
-      .pax-more{
+      .pax-more,.budget-more{
         border: 1px solid #b9b9b9;
         z-index: 3;
         display: none;
@@ -464,6 +464,7 @@ $master-blue: #70CBF4;
 
   .bootstrap-select {
     > .dropdown-toggle{
+      height: 20px;
       box-shadow: none;
       border: none;
       background: transparent;
@@ -565,15 +566,15 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/eill-image.jpg) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/visual_ipad_smile_TUI_auto.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/eill-image.jpg) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
-    background-image: url(../../images/layer/visual_2_smile_TUI.jpg);
+    background-image: url(../../images/layer/eill-image.jpg);
 
     .kwp-header-content {
       p {
@@ -801,6 +802,7 @@ p.kwp-info {
     display: none;
   }
   .bootstrap-select>.dropdown-toggle{
+    height: 20px;
     box-shadow: none;
     border: none;
     padding: 2px 0;
@@ -1335,7 +1337,7 @@ p.kwp-info {
     }*/
     /***** Fix layer on Mobile ******/
     .kwp{
-      .duration-time, .travelers{
+      .duration-time, .travelers, .travelerss{
         height: 25px;
         line-height: 1.5em;
         background-color: transparent;
@@ -1425,7 +1427,7 @@ p.kwp-info {
       .catering{
         position: relative;
         .dropdown{
-          margin-top: 20px;
+          margin-top: 10px;
         }
         .kwp-custom-select{
           margin-top: 20px;
@@ -1569,7 +1571,7 @@ and (max-device-width : 320px) {
       .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
         font-size: 14px;
       }
-      .duration-time, .travelers{
+      .duration-time, .travelers, .travelerss{
         font-size: 14px;
       }
       button[type=submit]{
@@ -1596,4 +1598,36 @@ and (max-device-width : 320px) {
 
 
 
+}
+
+.budget {
+  &.open {
+    background: transparent;
+
+    .pax-group {
+      border: 1px solid #b9b9b9;
+      border-bottom: none;
+    }
+
+    .travelerss {
+      background-color: #f3f0ec;
+      z-index: 4;
+      position: relative;
+      border: none;
+    }
+
+    .budget-more {
+      display: block !important;
+    }
+
+    .travelerss {
+      i.triggered {
+        display: block;
+      }
+
+      i.not-triggered {
+        display: none;
+      }
+    }
+  }
 }

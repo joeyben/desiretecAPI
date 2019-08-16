@@ -119,14 +119,37 @@
             </div>
         </div>
         <div class="kwp-row">
-            <div class="kwp-col-3 rangeslider-wrapper">
+            <!--div class="kwp-col-3 rangeslider-wrapper">
                 <div class="kwp-form-group ">
                     {{ Form::label('budget', trans('lastminute::layer.general.budget'), ['class' => 'control-label required']) }}
                     {{ Form::number('budget', old('budget'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.budget'), 'required' => 'required']) }}
                 </div>
                 <span class="text">&nbsp;</span>
                 <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
-            </div>
+            </div-->
+                <div class="kwp-col-3 pax-col main-col budget">
+                    <div class="kwp-form-group pax-group">
+                        <label for="budget" class="required">{{ trans('lastminute::layer.general.budget') }}</label>
+                        <span class="travelerss dd-trigger">
+                        <span class="txt">150 CHF</span>
+                         <i class="master-icon--user-family not-triggered"></i>
+                         <i class="master-icon--close triggered"></i>
+                    </span>
+                        <div class="budget-more">
+                            <div class="kwp-col-12">
+                                {{ Form::label('budget', trans('lastminute::layer.general.budget'), ['class' => 'control-label required']) }}
+                                <div class="kwp-custom-select">
+                                    {{ Form::select('budget', $budget_arr , ['class' => 'form-control box-size', 'required' => 'required', 'id' => 'budget']) }}
+                                </div>
+                                <i class="master-icon--user-family"></i>
+                            </div>
+                            <hr>
+                            <div class="kwp-col-12 button">
+                                <a href="#">OK</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             <div class="kwp-col-3 white-col stars">
                 <div class="kwp-form-group">
@@ -153,13 +176,13 @@
 
         </div>
 
-        <div class="kwp-row">
+        <!--div class="kwp-row">
             <div class="kwp-col-12 description">
                 {{ Form::label('description', trans('lastminute::layer.general.description'), ['class' => 'control-label required']) }}
                 {{ Form::textarea('description', null,['class' => 'form-control', 'placeholder' => trans('lastminute::layer.placeholder.description')]) }}
                 <i class="master-icon--calendar-month"></i>
             </div>
-        </div>
+        </div-->
 
         <div class="kwp-row">
             <div class="kwp-col-4 email-col">
@@ -224,6 +247,14 @@
                 var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
                 $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
                 return false;
+            });
+
+            $(".budget-more .button a").click(function(e) {
+              e.preventDefault();
+              $(this).parents('.budget').removeClass('open');
+              var pax = $("select[name='budget']").val();
+              $(".pax-col.budget .txt").text(pax+" CHF");
+              return false;
             });
 
             $('#budgetRange').rangeslider({
