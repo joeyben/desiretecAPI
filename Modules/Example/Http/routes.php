@@ -14,7 +14,7 @@ Route::group(['domain' => $domain], function () {
         Route::get('/', 'ExampleController@index');
         Route::get('show', 'ExampleController@show');
         Route::get('store', 'ExampleController@store')->name('store');
-        Route::get('wish/{wish}', 'ExampleWishesController@view')->name('wish.view');
+//        Route::get('wish/{wish}', 'ExampleWishesController@view')->name('wish.view');
         Route::get('wish/{wish}/{token}', 'ExampleWishesController@details')->name('wish.details');
         Route::get('getwish/{wish}', 'ExampleWishesController@getWish')->name('getWish');
         Route::get('wishlist/{token}', 'ExampleWishesController@validateTokenList');
