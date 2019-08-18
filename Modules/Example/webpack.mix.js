@@ -32,12 +32,17 @@ mix.scripts(
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/example/js/layer/layer-locale.js')
     .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/example/css/layer/layer.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/example/css/layer/layer_mobile.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/example/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/example/css/example.css')
     .styles([
         base_url + '/public/whitelabel/example/css/datepicker.css',
         base_url + '/public/whitelabel/example/css/layer/layer.css',
     ], __dirname + '/../../public/whitelabel/example/css/layer/whitelabel.css')
+    .styles([
+        base_url + '/public/whitelabel/trendtours/css/datepicker.css',
+        base_url + '/public/whitelabel/trendtours/css/layer/layer_mobile.css',
+    ], __dirname + '/../../public/whitelabel/trendtours/css/layer/whitelabel_mobile.css')
     .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/example/images/')
     .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/example/svg/');
 if (mix.inProduction()) {
