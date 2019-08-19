@@ -25,6 +25,7 @@ class LastminuteController extends Controller
     protected $catering = [];
     protected $duration = [];
     protected $budget = [];
+    protected $ages = [];
 
     private $whitelabelId;
 
@@ -47,7 +48,8 @@ class LastminuteController extends Controller
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
-        $this->budget = $categories->getChildrenFromSlug('slug','prices');
+        $this->budget = $categories->getChildrenFromSlug('slug', 'prices');
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->whitelabelId = \Config::get('lastminute.id');
     }
 
@@ -85,9 +87,9 @@ class LastminuteController extends Controller
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
             'budget_arr'   => $this->budget,
+            'ages_arr'     => $this->ages,
             'request' => $request->all()
         ])->render();
-
         return response()->json(['success' => true, 'html'=>$html]);
     }
 
@@ -112,6 +114,7 @@ class LastminuteController extends Controller
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
                 'budget_arr'   => $this->budget,
+                'ages_arr'   => $this->ages,
                 'request' => $request->all()
             ])->render();
 
@@ -180,7 +183,6 @@ class LastminuteController extends Controller
             $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'),
              $this->whitelabelId
         );
-
         return $new_wish;
     }
 

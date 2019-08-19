@@ -35,6 +35,7 @@ class LastminuteWishesController extends Controller
     protected $kids = [];
     protected $duration = [];
     protected $budget = [];
+    protected $ages = [];
     protected $categories;
     protected $category = [
         '1'  => 1,
@@ -78,7 +79,8 @@ class LastminuteWishesController extends Controller
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
-        $this->budget = $categories->getChildrenFromSlug('slug','prices');
+        $this->budget = $categories->getChildrenFromSlug('slug', 'prices');
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->categories = $categories;
     }
 
@@ -122,6 +124,7 @@ class LastminuteWishesController extends Controller
             'duration_arr' => $this->duration,
             'adults_arr'   => $this->adults,
             'budget_arr'   => $this->budget,
+            'ages_arr'     => $this->ages,
             'is_owner'            => $isOwner
         ]);
 
