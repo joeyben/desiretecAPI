@@ -96,22 +96,23 @@
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
                                     <label class="main-label">Alter (Hinreise)</label>
+                                    <input name="ages" type="hidden">
                                     <div id="age_1" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
                                         <div class="kwp-custom-select" style="display: none">
-                                            {{ Form::select('ages', $ages_arr, ['class' => 'form-control box-size']) }}
+                                            {{ Form::select('ages1', $ages_arr, ['class' => 'form-control box-size']) }}
                                         </div>
                                     </div>
                                     <div id="age_2" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
                                         <div class="kwp-custom-select" style="display: none">
-                                            {{ Form::select('ages', $ages_arr, ['class' => 'form-control box-size']) }}
+                                            {{ Form::select('ages2', $ages_arr, ['class' => 'form-control box-size']) }}
                                         </div>
                                     </div>
                                     <div id="age_3" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
                                         <div class="kwp-custom-select" style="display: none">
-                                            {{ Form::select('ages', $ages_arr, ['class' => 'form-control box-size']) }}
+                                            {{ Form::select('ages3', $ages_arr, ['class' => 'form-control box-size']) }}
                                         </div>
                                     </div>
 

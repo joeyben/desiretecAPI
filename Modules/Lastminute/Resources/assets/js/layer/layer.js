@@ -1230,7 +1230,8 @@ var exitIntent = window.exitIntent || {};
                     if (i <= val) {
                         $(age + i).find('.kwp-custom-select').show();
                     } else {
-                        $(age + i).val('').find('.kwp-custom-select').hide();
+                        $(age + i +' select').val('').find('.kwp-custom-select').hide();
+                        $(age + i).find('.kwp-custom-select').hide();
                     }
 
                     if(i == val){
@@ -1239,7 +1240,15 @@ var exitIntent = window.exitIntent || {};
                         $(age + i).closest('.kwp-col-3').removeClass('last');
                     }
                 }
-
+                $( "select[name='ages1']" ).change(function() {
+                        $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                    });
+                $( "select[name='ages2']" ).change(function() {
+                        $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                    });
+                $( "select[name='ages3']" ).change(function() {
+                        $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                    });
             }
             $(children).on('change keydown blur', update);
             update();
