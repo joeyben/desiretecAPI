@@ -193,8 +193,8 @@ class LastminuteController extends Controller
      */
     private function getFullDuration($duration)
     {
-        for ($i = 1; $i < 29; ++$i) {
-            $night = 1 === $i ? 'Nacht' : 'Nächte';
+        for ($i = 1; $i < 23; ++$i) {
+            $night = 1 === $i ? 'Tag' : 'Tage';
             $duration[$i] = $i . ' ' . $night;
         }
 
