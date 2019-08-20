@@ -1183,17 +1183,26 @@ var exitIntent = window.exitIntent || {};
     };
 
     $(document).ready(function (e) {
-        if(isMobile()) {
-            dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('popup.css', 'popup_mobile.css');
+        var $event = e;
+        if(deviceDetector.device === "phone") {
+            dt.PopupManager.teaser = true;
+            dt.PopupManager.teaserText = "Wir möchten Sie gerne beraten!";
+            dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
+            $(".dt-modal .kwp-close").on('touchend',function () {
+                dt.PopupManager.closePopup(e);
+            });
         }
         dt.PopupManager.init();
-        dt.Tracking.init('example_exitwindow','UA-105970361-1');
-
-        if(isMobile() && dt.PopupManager.decoder){
+        dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
+        dt.triggerButton($event);
+        if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
             dt.scrollUpDetect();
             dt.PopupManager.isMobile = true;
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
             textareaAutosize();
+            $(".dt-modal .teaser").find('i').on('click touchend',function () {
+                dt.hideTeaser($event);
+            });
             if(getUrlParams('autoShow')){
                 dt.showMobileLayer();
                 shown = true;

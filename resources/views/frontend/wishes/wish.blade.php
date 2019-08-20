@@ -10,8 +10,10 @@
                     <h3>Hallo {{ $wish->owner->first_name }} {{ $wish->owner->last_name }},</h3>
                 @elseif ($logged_in_user->hasRole('User') && $wish->owner->first_name)
                     <h3>Hallo lieber Kunde,</h3>
+                @elseif ($logged_in_user->hasRole('Seller'))
+                    <h3>Hallo {{ $logged_in_user->agents->where('status','Active')->first()->name }},</h3>
                 @else
-                    <h3>Hallo {{ $offer->agent->name }},</h3>
+                    <h3>Hallo,</h3>
                 @endif
 
                 @if ($logged_in_user->hasRole('Seller') && $logged_in_user->allow('create-offer'))
