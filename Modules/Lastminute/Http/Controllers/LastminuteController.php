@@ -213,7 +213,8 @@ class LastminuteController extends Controller
 
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $auth_data);
-        curl_setopt($curl, CURLOPT_URL, 'https://staging-auth.ws.traveltainment.eu:443/SystemUser-BasicAccessLevel/protocol/openid-connect/token');
+        // curl_setopt($curl, CURLOPT_URL, 'https://staging-auth.ws.traveltainment.eu:443/SystemUser-BasicAccessLevel/protocol/openid-connect/token');
+        curl_setopt($curl, CURLOPT_URL, 'https://de-staging-ttxml.traveltainment.eu/TTXml-1.8/DispatcherWS/SystemUser-BasicAccessLevel/protocol/openid-connect/token');
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/x-www-form-urlencoded',
         ));
