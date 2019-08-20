@@ -1186,7 +1186,7 @@ var exitIntent = window.exitIntent || {};
 
     $(document).ready(function (e) {
         if(isMobile()) {
-            dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('popup.css', 'popup_mobile.css');
+            dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
         }
         dt.PopupManager.init();
         dt.Tracking.init('lastminute_exitwindow','UA-105970361-1');
