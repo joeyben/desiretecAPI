@@ -12,11 +12,11 @@
                     </p>
 
                     <p style="line-height: 24px; margin-bottom:20px;">
-                        @lang('email.token', ['token' => $link, 'whitelabel' => $whitelabel])
+                        @lang('email.token_new', ['token' => $link, 'whitelabel' => $whitelabel])
                     </p>
 
-
-                    @include('emails.layouts.footer')
+                    @include($footer)
+                    {{-- OLD: @include('emails.layouts.footer') --}}
                 </td>
             </tr>
         </table>
