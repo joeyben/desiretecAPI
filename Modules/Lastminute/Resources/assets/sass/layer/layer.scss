@@ -1652,3 +1652,19 @@ and (max-device-width : 320px) {
 .kwp-col-12.kids{
   margin-bottom: 5px !important;
 }
+.direktflug input[type="checkbox"]:after{
+  height: 16px !important;
+  width: 16px !important;
+}
+.direktflug{
+  position: absolute;
+  display: inline-flex;
+}
+.travelerss .caret{
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+.fas{
+  color:#ecec3c;
+}

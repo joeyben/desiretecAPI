@@ -1261,9 +1261,10 @@ var exitIntent = window.exitIntent || {};
 
             if (!val) {
                 val = 0;
-            }
+            }else {
 
-            highlight(parseInt(val));
+                highlight(parseInt(val));
+            }
         }
 
         function setValue(val) {
@@ -1272,28 +1273,30 @@ var exitIntent = window.exitIntent || {};
         }
 
         function setText(cnt){
-            var sonnen = cnt === 1 ? "Sonne" : "Sonnen";
+            var sonnen = cnt === 1 ? "Stern" : "Sterne";
             $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+cnt+" "+sonnen);
         }
 
         function highlight(cnt) {
-            $('.kwp-star-input .kwp-star').each(function () {
+            $('.kwp-star-input .fa-star').each(function () {
                 var val = parseInt($(this).attr('data-val'));
 
                 if (val <= cnt) {
-                    $(this).addClass('kwp-star-full');
+                    $(this).addClass('fas');
+                    $(this).removeClass('fal');
                 } else {
-                    $(this).removeClass('kwp-star-full');
+                    $(this).removeClass('fas');
+                    $(this).addClass('fal');
                 }
             });
             setText(cnt);
         }
 
-        $('.kwp-star-input .kwp-star').hover(function () {
+        $('.kwp-star-input .fa-star').hover(function () {
             highlight(parseInt($(this).attr('data-val')));
         }).click(function () {
             setValue(parseInt($(this).attr('data-val')));
-            var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Sonne" : "Sonnen";
+            var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Stern" : "Sterne";
             $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
         });
 

@@ -18,6 +18,9 @@
                 {{ Form::label('airport', trans('lastminute::layer.general.airport'), ['class' => 'control-label required']) }}
                 {{ Form::text('airport', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.airport'), 'required' => 'required']) }}
                 <i class="master-icon--aircraft-up"></i>
+                <div class="direktflug ">
+                    {{ Form::checkbox('direktflug', null, ['class' => 'form-control box-size']) }}Direktflug
+                </div>
             </div>
 
         </div>
@@ -95,7 +98,7 @@
                             </div>
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
-                                    <label class="main-label">Alter (Hinreise)</label>
+                                    <label class="main-label">Alter der Kinder bei Rückreise</label>
                                     <input name="ages" type="hidden">
                                     <div id="age_1" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
@@ -141,6 +144,7 @@
                     <div class="kwp-form-group pax-group">
                         <label for="budget" class="required">{{ trans('lastminute::layer.general.budget') }}</label>
                         <span class="travelerss dd-trigger">
+                            <span class="caret"></span>
                         <span class="txt">150 CHF</span>
                          <i class="master-icon--user-family not-triggered"></i>
                          <i class="master-icon--close triggered"></i>
@@ -148,7 +152,7 @@
                         <div class="budget-more">
                             <div class="kwp-col-12">
                                 <div class="kwp-custom-select">
-                                    {{ Form::select('budget', $budget_arr , ['class' => 'form-control box-size', 'required' => 'required', 'id' => 'budget']) }}
+                                    {{ Form::select('budget', $budget_arr , null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                                 </div>
                                 <i class="master-icon--user-family"></i>
                             </div>
@@ -165,13 +169,13 @@
                     {{ Form::label('category', trans('lastminute::layer.general.category'), ['class' => 'control-label required']) }}
                     {{ Form::number('category', old('category'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.category')]) }}
 
-                    <span class="text">ab 0 Sonnen</span>
+                    <span class="text">ab 3 Sterne</span>
                     <div class="kwp-star-input">
-                        <span class="kwp-star kwp-star-full" data-val="1"></span>
-                        <span class="kwp-star" data-val="2"></span>
-                        <span class="kwp-star" data-val="3"></span>
-                        <span class="kwp-star" data-val="4"></span>
-                        <span class="kwp-star" data-val="5"></span>
+                        <span class="fas fa-star" data-val="1"></span>
+                        <span class="fas fa-star" data-val="2"></span>
+                        <span class="fas fa-star" data-val="3"></span>
+                        <span class="fal fa-star" data-val="4"></span>
+                        <span class="fal fa-star" data-val="5"></span>
                     </div>
                     <script>dt.hotelStars();</script>
                 </div>
