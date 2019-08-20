@@ -1089,93 +1089,66 @@ var exitIntent = window.exitIntent || {};
     dt.PopupManager.closePopup = function(event) {
         event.preventDefault();
 
-        if(isMobile()){
-            var formSent = $('.kwp-content').hasClass('kwp-completed-master');
+        var formSent = $('.kwp-content').hasClass('kwp-completed-master');
 
-            this.modal.addClass('tmp-hidden');
-            if(!formSent) {
-                this.trigger =
-                    $('<span/>', {'class': 'trigger-modal'});
-                $('body').prepend(this.trigger.fadeIn());
-            }
-        }else{
-            this.modal.css('display', 'none');
+        this.modal.addClass('tmp-hidden');
+        if(!formSent) {
+            this.trigger =
+              $('<span/>', {'class': 'trigger-modal'});
+            $('body').prepend(this.trigger);
+            this.trigger.fadeIn();
         }
+
 
         this.shown = false;
         $("body").removeClass('mobile-layer');
         $("body, html").css({'overflow':'auto'});
 
-        dt.Tracking.event('close', this.trackingLabel);
+        //dt.Tracking.event('close', this.trackingLabel);
 
     };
 
 
     dt.scrollUpDetect = function () {
-        var shown = false;
+        dt.PopupManager.layerShown = false;
         $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
-            if(direction === 'down' && parseInt(distance) > 50 && !shown){
-                dt.showMobileLayer();
-                shown = true;
-            }else if (direction === 'down' || direction === 'up' && shown && ($("body .hl-sticky").hasClass('is-sticky'))) {
-                $(".dt-modal").css({'top': (document.documentElement.clientHeight - 85) + "px"});
-            } else if(direction === 'down' || direction === 'up' && shown) {
-                $(".dt-modal").css({'top': (document.documentElement.clientHeight - 100) + "px"});
-            }
-        }, allowPageScroll:"vertical"} );
-
-
-        $( ".dt-modal" ).swipe( {
-            tap:function(e, target) {
-                $(this).addClass('m-open');
-                $("body, html").css({'overflow':'hidden'});
-                ga('dt.send', 'event', 'Mobile Layer', 'Layer shown', 'Tablet');
-            },
-            swipe:function(e, direction, distance, duration, fingerCount, fingerData) {
-                var $event = e;
-                if(direction === "left"){
-                    if($(this).hasClass('m-open'))
-                        return false;
-                    $(this).addClass('swipe-left');
-                    setTimeout(function(e) {
-                        dt.PopupManager.closePopup($event);
-                    },1000);
-                    return false;
-                }else if(direction === "right"){
-                    if($(this).hasClass('m-open'))
-                        return false;
-                    $(this).addClass('swipe-right');
-                    setTimeout(function(e) {
-                        dt.PopupManager.closePopup($event);
-                    },1000);
-                    return false;
+                if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
+                    dt.showTeaser(event);
+                    dt.PopupManager.layerShown = true;
                 }
-            },
-        });
-
-
+            }, allowPageScroll:"vertical"} );
     };
 
     dt.triggerButton = function(e){
-        e && e.preventDefault();
         $("body").on('click tap','.trigger-modal',function () {
             $("body").addClass('mobile-layer');
-            $("body, html").css({'overflow':'hidden'});
-            dt.PopupManager.shown = true;
-            dt.PopupManager.modal.removeClass('tmp-hidden').removeClass('swipe-right').removeClass('swipe-left');
+            if(dt.PopupManager.teaserSwiped){
+                dt.showMobileLayer();
+            }else{
+                dt.PopupManager.shown = true;
+            }
+            dt.PopupManager.modal.removeClass('tmp-hidden');
             $(this).remove();
             ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
         });
+    }
 
-        $( ".kwp-header" ).swipe( {
-            tap:function(e, target) {
-                var $event = e;
-                if($( ".dt-modal" ).hasClass('m-open')){
-                    dt.PopupManager.closePopup($event);
-                }
+    dt.showTeaser = function (e) {
+        $("body").addClass('mobile-layer');
+        $(".dt-modal").addClass('teaser-on').show().find('.teaser').addClass('active').swipe( {
+            tap:function(event, target) {
+                dt.showMobileLayer(event);
+            },
+            swipeLeft:function(event, distance, duration, fingerCount, fingerData, currentDirection) {
+                $(this).addClass('inactive-left');
+                removeLayer(event);
+            },
+            swipeRight:function(event, distance, duration, fingerCount, fingerData, currentDirection) {
+                $(this).addClass('inactive-right');
+                removeLayer(event);
             }
         });
-    }
+    };
 
     dt.showMobileLayer = function (e) {
         dt.PopupManager.show();
@@ -1185,6 +1158,17 @@ var exitIntent = window.exitIntent || {};
     };
 
     $(document).ready(function (e) {
+        $("body").on('click tap','.trigger-modal',function () {
+            $("body").addClass('mobile-layer');
+            if(dt.PopupManager.teaserSwiped){
+                dt.showMobileLayer();
+            }else{
+                dt.PopupManager.shown = true;
+            }
+            dt.PopupManager.modal.removeClass('tmp-hidden');
+            $(this).remove();
+            ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
+        });
         if(isMobile()) {
             dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
         }
@@ -1407,6 +1391,15 @@ var exitIntent = window.exitIntent || {};
 
     function setCookie(cname, cvalue) {
         document.cookie = cname + "=" + cvalue + ";path=/";
+    }
+
+    function removeLayer(e){
+        var $event = e;
+        setTimeout(function(){
+            dt.triggerButton($event);
+            dt.PopupManager.closePopup($event);
+            dt.PopupManager.teaserSwiped = true;
+        }, 500);
     }
 
     function textareaAutosize(){
