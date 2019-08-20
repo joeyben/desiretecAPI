@@ -414,6 +414,7 @@ if (!function_exists('getCurrentWhiteLabelField')) {
         //$url = str_replace('http://', '', url('/'));
         //$url = str_replace('https://', '', $url);
 
+
         $id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value($field);
 
         return $id;
@@ -483,7 +484,7 @@ if (!function_exists('getLanguageLinesCacheKey')) {
     {
         if (isWhiteLabel()) {
             $url = str_replace('http://', '', url('/'));
-            $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+            $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('name');
 
             return $whitelabelName;
         }
@@ -558,3 +559,24 @@ if (!function_exists('footers_by_whitelabel')) {
         return [];
     }
 }
+
+
+
+if (!function_exists('getWhitelabelFooterUrl')) {
+    /**
+     * return url to the whitelabel-footer.
+     *
+     * @return string
+     */
+    function getWhitelabelFooterUrl(){
+        $name = getCurrentWhiteLabelField('name');
+        $footerUrl = '_parts.footer.';
+        if(is_null($name)){
+            return $footerUrl.'default';
+        }
+
+        $name = strtolower($name);
+        return $footerUrl.$name;
+    }
+}
+
