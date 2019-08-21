@@ -8,7 +8,7 @@ $altfont: 'Roboto', sans-serif;
 $zindex: 10000;
 $eil-border-radius: 4px;
 $mastercolor: #ed1c24;
-$secondarycolor: #fd0;
+$secondarycolor: #DF007A;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
 $fontcolor: #303030;
@@ -509,11 +509,11 @@ $fontcolor: #303030;
 
   button[type=submit] {
     border-radius: 4px;
-    background: #FDD22C;
+    background: #DF007A;
 
     text-align: center;
 
-    color:  $fontcolor;
+    color:  white;
     font-size: 22px;
     font-weight: 500;
     line-height: 30px;

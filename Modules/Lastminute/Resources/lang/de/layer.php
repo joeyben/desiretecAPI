@@ -15,7 +15,7 @@ return [
     'general' => [
         'title'            => 'Wish Title',
         'description'      => 'Anmerkungen?',
-        'airport'          => 'Von wo?',
+        'airport'          => 'Abflughafen',
         'destination'      => 'Reiseziel oder Hotel',
         'earliest_start'   => 'Hinreise',
         'latest_return'    => 'Rückreise',
@@ -25,7 +25,7 @@ return [
         'budget'           => 'Preis bis',
         'category'         => 'Hotelkategorie (min.)',
         'catering'         => 'Verpflegung (min.)',
-        'duration'         => 'Reisedauer',
+        'duration'         => 'Reisezeitraum/-dauer',
         'duration_empty'   => 'Beliebig',
         'email'            => 'E-Mail-Adresse',
         'name'             => 'Name',

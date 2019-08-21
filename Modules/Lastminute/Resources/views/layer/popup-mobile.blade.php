@@ -8,8 +8,8 @@
         </script>
         <div class="kwp-row">
             <div class="kwp-col-4">
-                {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::label('destination', trans('lastminute::layer.general.destination'), ['class' => 'control-label required']) }}
+                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.destination'), 'required' => 'required']) }}
                 <i class="fal fa-home"></i>
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
@@ -20,7 +20,7 @@
 
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
-                    <label for="travelers" class="required">Anzahl Personen</label>
+                    <label for="travelers" class="required">Reisende</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
                          <i class="fal fa-users not-triggered"></i>
@@ -28,14 +28,14 @@
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-4">
-                            {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
+                            {{ Form::label('adults', trans('lastminute::layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr, key_exists('adults', $request) ? $request['adults'] : 2, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
                             <i class="fal fa-users"></i>
                         </div>
                         <div class="kwp-col-4" style="position: relative;">
-                            {{ Form::label('kids', trans('layer.general.kids'), ['class' => 'control-label required']) }}
+                            {{ Form::label('kids', trans('lastminute::layer.general.kids'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('kids', $kids_arr, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                             </div>
@@ -57,7 +57,7 @@
 
             <div class="kwp-col-4 duration-col main-col">
                 <div class="kwp-form-group duration-group">
-                    <label for="duration-time" class="required">Wann & Wie lange?</label>
+                    <label for="duration-time" class="required">Reisezeitraum/-dauer</label>
                     <span class="duration-time dd-trigger">
                         <span class="txt">15.11.2018 - 17.06.2019</span>
                         <i class="fal fa-calendar-alt not-triggered"></i>
@@ -65,8 +65,8 @@
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
-                            {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::label('earliest_start', trans('lastminute::layer.general.earliest_start'), ['class' => 'control-label required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -76,8 +76,8 @@
                             <i class="fal fa-calendar-alt"></i>
                         </div>
                         <div class="kwp-col-4">
-                            {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::label('latest_return', trans('lastminute::layer.general.latest_return'), ['class' => 'control-label required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('lstminute::layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -96,8 +96,8 @@
 
             <div class="kwp-col-4 destination">
                 <div class="kwp-form-group ">
-                    {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.budget'), 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
+                    {{ Form::label('budget', trans('lastminute::layer.general.budget'), ['class' => 'control-label required']) }}
+                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.placeholder.budget'), 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
                     <i class="fal fa-euro-sign"></i>
                     @if ($errors->any() && $errors->get('budget'))
                         @foreach ($errors->get('budget') as $error)
@@ -115,7 +115,7 @@
 
                     <div class="kwp-col-4 email-col">
                         {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
-                        {{ Form::text('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
+                        {{ Form::text('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.placeholder.email'), 'required' => 'required']) }}
                         <i class="fal fa-envelope"></i>
                         <div class="kwp-form-email-hint"></div>
                         @if ($errors->any() && $errors->get('email'))
