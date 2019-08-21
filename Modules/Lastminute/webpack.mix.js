@@ -34,6 +34,7 @@ mix.scripts(
     .styles([
         base_url + '/public/whitelabel/lastminute/css/datepicker.css',
         base_url + '/public/whitelabel/lastminute/css/layer/layer.css',
+        base_url + '/public/css/frontend.css',
     ], __dirname + '/../../public/whitelabel/lastminute/css/layer/whitelabel.css')
   .styles([
       base_url + '/public/whitelabel/lastminute/css/datepicker.css',

@@ -3,7 +3,8 @@
 @import "bootstrap-select";
 
 $gutter: 30px;
-$altfont: 'Comfortaa', cursive;
+//$altfont: 'Comfortaa', cursive;
+$altfont: 'Comfortaa';
 $zindex: 10000;
 $eil-border-radius: 4px;
 $mastercolor: #092a5e;
@@ -1667,4 +1668,7 @@ and (max-device-width : 320px) {
 }
 .fas{
   color:#ecec3c;
+}
+#category{
+  display: none !important;
 }

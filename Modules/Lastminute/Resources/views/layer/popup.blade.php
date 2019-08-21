@@ -183,7 +183,7 @@
 
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('lastminute::layer.general.catering'), ['class' => 'control-label required']) }}
-                    {{ Form::select('catering', $catering_arr, '',['class' => 'selectpicker']) }}
+                    {{ Form::select('catering', $catering_arr, '',['class' => '']) }}
                 <i class="master-icon--chevron-down"></i>
             </div>
 
@@ -298,7 +298,7 @@
             });
 
             $(document).ready(function(){
-                $('.selectpicker').selectpicker();
+                //$('.selectpicker').selectpicker();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
