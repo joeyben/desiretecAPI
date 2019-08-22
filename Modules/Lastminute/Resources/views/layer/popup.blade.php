@@ -183,7 +183,7 @@
 
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('lastminute::layer.general.catering'), ['class' => 'control-label required']) }}
-                    {{ Form::select('catering', $catering_arr, '',['class' => '']) }}
+                    {{ Form::select('catering', $catering_arr, '',['class' => 'travelerss']) }}
                 <i class="master-icon--chevron-down"></i>
             </div>
 
