@@ -11,12 +11,22 @@
             <div class="kwp-col-4 destination">
                 {{ Form::label('destination', trans('lastminute::layer.general.destination'), ['class' => 'control-label required']) }}
                 {{ Form::text('destination', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.destination'), 'required' => 'required']) }}
+                @if ($errors->any() && $errors->get('destination'))
+                    @foreach ($errors->get('destination') as $error)
+                        <span class="error-input">{{ $error }}</span>
+                    @endforeach
+                @endif
                 <i class="master-icon--location-fill"></i>
             </div>
 
             <div class="kwp-col-4">
                 {{ Form::label('airport', trans('lastminute::layer.general.airport'), ['class' => 'control-label required']) }}
                 {{ Form::text('airport', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.airport'), 'required' => 'required']) }}
+                @if ($errors->any() && $errors->get('airport'))
+                    @foreach ($errors->get('airport') as $error)
+                        <span class="error-input">{{ $error }}</span>
+                    @endforeach
+                @endif
                 <i class="master-icon--aircraft-up"></i>
                 <div class="direktflug ">
                     {{ Form::checkbox('direktflug', null, ['class' => 'form-control box-size']) }}Direktflug
@@ -60,6 +70,11 @@
                             {{ Form::label('duration', trans('lastminute::layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('duration', array_merge(['' => trans('lastminute::layer.general.duration_empty')], $duration_arr), ['class' => 'form-control box-size']) }}
+                                @if ($errors->any() && $errors->get('duration'))
+                                    @foreach ($errors->get('duration') as $error)
+                                        <span>{{ $error }}</span>
+                                    @endforeach
+                                @endif
                             </div>
                             <i class="master-icon--time"></i>
                         </div>
@@ -85,6 +100,11 @@
                             {{ Form::label('adults', trans('lastminute::layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                @if ($errors->any() && $errors->get('adults'))
+                                    @foreach ($errors->get('adults') as $error)
+                                        <span>{{ $error }}</span>
+                                    @endforeach
+                                @endif
                             </div>
                             <i class="master-icon--user-family"></i>
                         </div>
@@ -93,6 +113,11 @@
                                 {{ Form::label('kids', trans('lastminute::layer.general.kids'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
                                     {{ Form::select('kids', $kids_arr, ['class' => 'form-control box-size']) }}
+                                    @if ($errors->any() && $errors->get('kids'))
+                                        @foreach ($errors->get('kids') as $error)
+                                            <span>{{ $error }}</span>
+                                        @endforeach
+                                    @endif
                                 </div>
                                 <i class="master-icon--baby"></i>
                             </div>
@@ -153,6 +178,11 @@
                             <div class="kwp-col-12">
                                 <div class="kwp-custom-select">
                                     {{ Form::select('budget', $budget_arr , null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                    @if ($errors->any() && $errors->get('budget'))
+                                        @foreach ($errors->get('budget') as $error)
+                                            <span>{{ $error }}</span>
+                                        @endforeach
+                                    @endif
                                 </div>
                                 <i class="master-icon--user-family"></i>
                             </div>
@@ -166,7 +196,7 @@
 
             <div class="kwp-col-3 white-col stars">
                 <div class="kwp-form-group">
-                    {{ Form::label('category', trans('lastminute::layer.general.category'), ['class' => 'control-label required']) }}
+                    {{ Form::label('category', trans('lastminute::layer.general.category'), ['class' => 'control-label']) }}
                     {{ Form::number('category', old('category'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.category')]) }}
 
                     <span class="text">ab 3 Sterne</span>
@@ -182,7 +212,7 @@
             </div>
 
             <div class="kwp-col-3 white-col catering">
-                {{ Form::label('catering', trans('lastminute::layer.general.catering'), ['class' => 'control-label required']) }}
+                {{ Form::label('catering', trans('lastminute::layer.general.catering'), ['class' => 'control-label']) }}
                     {{ Form::select('catering', $catering_arr, '',['class' => 'travelerss']) }}
                 <i class="master-icon--chevron-down"></i>
             </div>
@@ -205,7 +235,7 @@
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
                     @foreach ($errors->get('email') as $error)
-                        <span>{{ $error }}</span>
+                        <span class="error-input">{{ $error }}</span>
                     @endforeach
                 @endif
             </div>
