@@ -25,6 +25,7 @@ return [
         'budget'           => 'Preis bis',
         'category'         => 'Hotelkategorie (min.)',
         'catering'         => 'Verpflegung (min.)',
+        'duration-more'    => 'Reisedauer',
         'duration'         => 'Reisezeitraum/-dauer',
         'duration_empty'   => 'Beliebig',
         'email'            => 'E-Mail-Adresse',

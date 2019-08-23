@@ -1,16 +1,16 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
-    Wir helfen Ihnen gerne, Ihre persönlichen Traumferien zu finden. Probieren Sie es jetzt aus!
+    Wir helfen Ihnen gerne, Ihre persönlichen Traumferien zu finden.<br> Probieren Sie es jetzt aus!
 </div>
-{{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
+{{ Form::open(['route' => 'lastminute.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <div class="kwp-minimal">
     <div class="kwp-content kwp-with-expansion">
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
                 {{ Form::label('destination', trans('lastminute::layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::text('destination', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -21,7 +21,7 @@
 
             <div class="kwp-col-4">
                 {{ Form::label('airport', trans('lastminute::layer.general.airport'), ['class' => 'control-label required']) }}
-                {{ Form::text('airport', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.airport'), 'required' => 'required']) }}
+                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.airport'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('airport'))
                     @foreach ($errors->get('airport') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -29,7 +29,7 @@
                 @endif
                 <i class="master-icon--aircraft-up"></i>
                 <div class="direktflug ">
-                    {{ Form::checkbox('direktflug', null, ['class' => 'form-control box-size']) }}Direktflug
+                    {{ Form::checkbox('direktflug', key_exists('direktflug', $request) ? $request['direktflug'] : null, null,['class' => 'form-control box-size', 'required' => 'required']) }}Direktflug
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
                     <div class="duration-more">
                         <div class="kwp-col-4">
                             {{ Form::label('earliest_start', trans('lastminute::layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span>{{ $error }}</span>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('lastminute::layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span>{{ $error }}</span>
@@ -67,7 +67,7 @@
                             <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-12">
-                            {{ Form::label('duration', trans('lastminute::layer.general.duration'), ['class' => 'control-label required']) }}
+                            {{ Form::label('duration', trans('lastminute::layer.general.duration-more'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('duration', array_merge(['' => trans('lastminute::layer.general.duration_empty')], $duration_arr), ['class' => 'form-control box-size']) }}
                                 @if ($errors->any() && $errors->get('duration'))
@@ -168,13 +168,20 @@
                 <div class="kwp-col-3 pax-col main-col budget">
                     <div class="kwp-form-group pax-group">
                         <label for="budget" class="required">{{ trans('lastminute::layer.general.budget') }}</label>
-                        <span class="travelerss dd-trigger">
+                        <span class="travelerss">
                             <span class="caret"></span>
-                        <span class="txt">150 CHF</span>
+                        <div class="kwp-custom-select">
+                                    {{ Form::select('budget', $budget_arr , null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                            @if ($errors->any() && $errors->get('budget'))
+                                @foreach ($errors->get('budget') as $error)
+                                    <span>{{ $error }}</span>
+                                @endforeach
+                            @endif
+                        </div>
                          <i class="master-icon--user-family not-triggered"></i>
                          <i class="master-icon--close triggered"></i>
-                    </span>
-                        <div class="budget-more">
+                        </span>
+                        <!--div class="budget-more">
                             <div class="kwp-col-12">
                                 <div class="kwp-custom-select">
                                     {{ Form::select('budget', $budget_arr , null, ['class' => 'form-control box-size', 'required' => 'required']) }}
@@ -190,14 +197,14 @@
                             <div class="kwp-col-12 button">
                                 <a href="#">OK</a>
                             </div>
-                        </div>
+                        </div-->
                     </div>
                 </div>
 
             <div class="kwp-col-3 white-col stars">
                 <div class="kwp-form-group">
                     {{ Form::label('category', trans('lastminute::layer.general.category'), ['class' => 'control-label']) }}
-                    {{ Form::number('category', old('category'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.category')]) }}
+                    {{ Form::number('category', 3, ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.category')]) }}
 
                     <span class="text">ab 3 Sterne</span>
                     <div class="kwp-star-input">
@@ -230,7 +237,7 @@
         <div class="kwp-row">
             <div class="kwp-col-4 email-col">
                 {{ Form::label('email', trans('lastminute::layer.general.email'), ['class' => 'control-label']) }}
-                {{ Form::text('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.placeholder.email'), 'required' => 'required']) }}
+                {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.placeholder.email'), 'required' => 'required']) }}
                 <i class="master-icon--mail"></i>
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
@@ -296,7 +303,7 @@
               e.preventDefault();
               $(this).parents('.budget').removeClass('open');
               var pax = $("select[name='budget']").val();
-              $(".pax-col.budget .txt").text(pax+" CHF");
+                $(".pax-col.budget .txt").text(pax + " CHF");
               return false;
             });
 
@@ -447,8 +454,19 @@
         <div class="kwp-row">
             <div class="kwp-col-12 white-col">
                 <div class="kwp-agb ">
-                    {{ Form::checkbox('terms', null, ['class' => 'form-control box-size', 'required' => 'required']) }}
-                    <p>Ich habe die <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.master.com/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    @php
+                        $terms_class = 'dt_terms'
+                    @endphp
+
+                    @if ($errors->any() && $errors->get('terms'))
+                        @php
+                            $terms_class = 'dt_terms hasError'
+                        @endphp
+                    @endif
+
+                    {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
+                    <p>Ich habe die <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.lastminute.ch/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+
                 </div>
             </div>
         </div>

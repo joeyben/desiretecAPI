@@ -1549,10 +1549,10 @@ p.kwp-info {
       margin: 0;
       padding: 0;
       label{
-        color: #4c4c4c;
+        //color: #4c4c4c;
         padding: 0;
         font-size: 14px !important;
-        font-weight: 600;
+        //font-weight: 600;
         margin-bottom: 0px;
       }
     }
@@ -1668,6 +1668,9 @@ and (max-device-width : 320px) {
 }
 .fas{
   color:#ecec3c;
+}
+#budget{
+  border-style: none !important;
 }
 #category{
   display: none !important;
