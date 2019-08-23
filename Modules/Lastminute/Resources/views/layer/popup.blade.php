@@ -10,7 +10,7 @@
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
                 {{ Form::label('destination', trans('lastminute::layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -234,7 +234,7 @@
             </div>
         </div-->
 
-        <div class="kwp-row">
+        <div class="kwp-row" style="margin-top: 10px">
             <div class="kwp-col-4 email-col">
                 {{ Form::label('email', trans('lastminute::layer.general.email'), ['class' => 'control-label']) }}
                 {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.placeholder.email'), 'required' => 'required']) }}
@@ -335,6 +335,8 @@
             });
 
             $(document).ready(function(){
+              var options = $('#duration option' );
+              $( options[ 11 ] ).insertAfter( $( options[ 33 ] ) );
                 //$('.selectpicker').selectpicker();
 
                 dt.startDate = new Pikaday({

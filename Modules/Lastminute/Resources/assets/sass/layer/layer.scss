@@ -938,6 +938,7 @@ p.kwp-info {
 .kwp-star-input {
   text-align: left;
   position: relative;
+  margin-top: 5px;
   .text{
     position: absolute;
     right: 0;
@@ -1427,7 +1428,7 @@ p.kwp-info {
       }
       .stars{
         .text{
-          display: block;
+          display: none;
           margin-top: 5px;
         }
       }
@@ -1685,4 +1686,7 @@ and (max-device-width : 320px) {
   background: #ED1C24;
   padding: 0 10px;
   color: #fff;
+}
+.budget label{
+  padding-top: 0;
 }
