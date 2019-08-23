@@ -1,4 +1,4 @@
-{{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
+{{ Form::open(['route' => 'lastminute.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
