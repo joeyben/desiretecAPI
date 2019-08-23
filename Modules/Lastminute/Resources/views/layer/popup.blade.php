@@ -29,7 +29,7 @@
                 @endif
                 <i class="master-icon--aircraft-up"></i>
                 <div class="direktflug ">
-                    {{ Form::checkbox('direktflug', key_exists('direktflug', $request) ? $request['direktflug'] : null, null,['class' => 'form-control box-size', 'required' => 'required']) }}Direktflug
+                    {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null,['class' => 'form-control box-size', 'required' => 'required']) }}Direktflug
                 </div>
             </div>
 
@@ -99,7 +99,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('adults', trans('lastminute::layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('adults', $adults_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                {{ Form::select('adults', $adults_arr ,key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                                 @if ($errors->any() && $errors->get('adults'))
                                     @foreach ($errors->get('adults') as $error)
                                         <span>{{ $error }}</span>
@@ -112,7 +112,7 @@
                             <div class="kwp-col-12">
                                 {{ Form::label('kids', trans('lastminute::layer.general.kids'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
-                                    {{ Form::select('kids', $kids_arr, ['class' => 'form-control box-size']) }}
+                                    {{ Form::select('kids', $kids_arr,key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                                     @if ($errors->any() && $errors->get('kids'))
                                         @foreach ($errors->get('kids') as $error)
                                             <span>{{ $error }}</span>
@@ -128,19 +128,19 @@
                                     <div id="age_1" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
                                         <div class="kwp-custom-select" style="display: none">
-                                            {{ Form::select('ages1', $ages_arr, ['class' => 'form-control box-size']) }}
+                                            {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size']) }}
                                         </div>
                                     </div>
                                     <div id="age_2" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
                                         <div class="kwp-custom-select" style="display: none">
-                                            {{ Form::select('ages2', $ages_arr, ['class' => 'form-control box-size']) }}
+                                            {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size']) }}
                                         </div>
                                     </div>
                                     <div id="age_3" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
                                         <div class="kwp-custom-select" style="display: none">
-                                            {{ Form::select('ages3', $ages_arr, ['class' => 'form-control box-size']) }}
+                                            {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size']) }}
                                         </div>
                                     </div>
 
@@ -171,7 +171,7 @@
                         <span class="travelerss">
                             <span class="caret"></span>
                         <div class="kwp-custom-select">
-                                    {{ Form::select('budget', $budget_arr , null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                    {{ Form::select('budget', $budget_arr , key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('budget'))
                                 @foreach ($errors->get('budget') as $error)
                                     <span>{{ $error }}</span>
@@ -204,7 +204,7 @@
             <div class="kwp-col-3 white-col stars">
                 <div class="kwp-form-group">
                     {{ Form::label('category', trans('lastminute::layer.general.category'), ['class' => 'control-label']) }}
-                    {{ Form::number('category', 3, ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.category')]) }}
+                    {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.category')]) }}
 
                     <span class="text">ab 3 Sterne</span>
                     <div class="kwp-star-input">
@@ -220,7 +220,7 @@
 
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('lastminute::layer.general.catering'), ['class' => 'control-label']) }}
-                    {{ Form::select('catering', $catering_arr, '',['class' => 'travelerss']) }}
+                    {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelerss']) }}
                 <i class="master-icon--chevron-down"></i>
             </div>
 
@@ -337,6 +337,7 @@
             $(document).ready(function(){
               var options = $('#duration option' );
               $( options[ 11 ] ).insertAfter( $( options[ 33 ] ) );
+
                 //$('.selectpicker').selectpicker();
 
                 dt.startDate = new Pikaday({
