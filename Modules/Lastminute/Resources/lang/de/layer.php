@@ -22,7 +22,7 @@ return [
         'pax'              => 'Reisende',
         'adults'           => 'Erwachsene',
         'kids'             => 'Kinder',
-        'budget'           => 'Preis bis',
+        'budget'           => 'Preis pro Person bis',
         'category'         => 'Hotelkategorie (min.)',
         'catering'         => 'Verpflegung (min.)',
         'duration-more'    => 'Reisedauer',

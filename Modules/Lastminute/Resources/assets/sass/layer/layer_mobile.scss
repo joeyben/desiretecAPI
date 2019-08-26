@@ -1836,5 +1836,8 @@ input[name="direkt_flug"]{
   right: 10px;
 }
 .kwp-header-content h1{
-  color: white;
+  color: white !important;
+}
+.dt_terms.hasError:after{
+  border: 1px solid red !important;
 }
