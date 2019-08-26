@@ -19,6 +19,20 @@
                 @endif
             </div>
 
+            <div class="kwp-col-4">
+                {{ Form::label('airport', trans('lastminute::layer.general.airport'), ['class' => 'control-label required']) }}
+                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.airport'), 'required' => 'required']) }}
+                @if ($errors->any() && $errors->get('airport'))
+                    @foreach ($errors->get('airport') as $error)
+                        <span class="error-input">{{ $error }}</span>
+                    @endforeach
+                @endif
+                <i class="master-icon--aircraft-up"></i>
+                <div class="direktflug ">
+                    {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null,['class' => 'form-control box-size', 'required' => 'required']) }}Direktflug
+                </div>
+            </div>
+
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">Reisende</label>
@@ -41,6 +55,31 @@
                                 {{ Form::select('kids', $kids_arr, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                             </div>
                             <i class="fal fa-child"></i>
+                        </div>
+                        <div class="kwp-col-ages">
+                            <div class="kwp-form-group">
+                                <label class="main-label">Alter der Kinder bei Rückreise</label>
+                                <input name="ages" type="hidden">
+                                <div id="age_1" class="kwp-col-3">
+                                    <i class="master-icon--aircraft-down"></i>
+                                    <div class="kwp-custom-select" style="display: none">
+                                        {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size']) }}
+                                    </div>
+                                </div>
+                                <div id="age_2" class="kwp-col-3">
+                                    <i class="master-icon--aircraft-down"></i>
+                                    <div class="kwp-custom-select" style="display: none">
+                                        {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size']) }}
+                                    </div>
+                                </div>
+                                <div id="age_3" class="kwp-col-3">
+                                    <i class="master-icon--aircraft-down"></i>
+                                    <div class="kwp-custom-select" style="display: none">
+                                        {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size']) }}
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                         <script>dt.childrenAges();</script>
 
@@ -86,6 +125,18 @@
                             @endif
                             <i class="fal fa-calendar-alt"></i>
                         </div>
+                        <div class="kwp-col-4">
+                            {{ Form::label('duration', trans('lastminute::layer.general.duration-more'), ['class' => 'control-label required']) }}
+                            <div class="kwp-custom-select">
+                                {{ Form::select('duration', array_merge(['' => trans('lastminute::layer.general.duration_empty')], $duration_arr),key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                @if ($errors->any() && $errors->get('duration'))
+                                    @foreach ($errors->get('duration') as $error)
+                                        <span>{{ $error }}</span>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <i class="master-icon--time"></i>
+                        </div>
 
                         <hr>
                         <div class="kwp-col-12 button">
@@ -98,11 +149,10 @@
             <div class="kwp-col-4 destination">
                 <div class="kwp-form-group ">
                     {{ Form::label('budget', trans('lastminute::layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('lastminute::layer.placeholder.budget'), 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
-                    <i class="fal fa-euro-sign"></i>
+                    {{ Form::select('budget', $budget_arr , key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                     @if ($errors->any() && $errors->get('budget'))
                         @foreach ($errors->get('budget') as $error)
-                            <span class="error-input">{{ $error }}</span>
+                            <span>{{ $error }}</span>
                         @endforeach
                     @endif
                 </div>

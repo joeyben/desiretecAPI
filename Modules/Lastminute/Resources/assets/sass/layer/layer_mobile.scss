@@ -488,7 +488,7 @@ $fontcolor: #303030;
   textarea,
   select {
     width: 100%;
-    height: 25px;
+    height: 32px;
   }
 
   textarea {
@@ -1776,4 +1776,15 @@ and (max-device-width : 320px) {
 
 
 
+}
+.kwp-col-ages.kwp-show-ages {
+  display: block !important;
+}
+.direktflug input[type="checkbox"]:after{
+  height: 16px !important;
+  width: 16px !important;
+}
+.direktflug{
+  position: absolute;
+  display: inline-flex;
 }
