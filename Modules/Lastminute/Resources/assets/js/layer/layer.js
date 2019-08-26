@@ -12,7 +12,7 @@ var dt = window.dt || {};
 
     dt.popupTemplate = function (variant) {
         var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Traumferienobjektnoch nicht gefunden? ',
+            'Dürfen wir Sie beraten?',
         ]);
 
         var texts = {
@@ -32,9 +32,9 @@ var dt = window.dt || {};
           '<div class="kwp-overlay"></div>' +
           '<div class="kwp-logo"></div>' +
           '<div class="kwp-header-content">' +
-          '<!--h1>' +
+          '<h1>' +
           texts[variant].header + ' <br/>' +
-          '</h1-->' +
+          '</h1>' +
           '<p>' +
           texts[variant].body +
           '</p>' +
