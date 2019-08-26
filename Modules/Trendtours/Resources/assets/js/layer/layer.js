@@ -181,7 +181,7 @@ var dt = window.dt || {};
 
     var TrendtoursTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Trendtours WL',
-        matchesUrl: 'www.trendtours.de/*',
+        matchesUrl: 'www.trendtours-pausee.de/*',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
