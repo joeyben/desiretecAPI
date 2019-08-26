@@ -632,7 +632,7 @@ $fontcolor: #303030;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: $fontcolor;
+            color: white;
           }
         }
         hr{
@@ -1787,4 +1787,7 @@ and (max-device-width : 320px) {
 .direktflug{
   position: absolute;
   display: inline-flex;
+}
+input[name="direkt_flug"]{
+  height: 12px;
 }

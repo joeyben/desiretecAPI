@@ -1241,6 +1241,7 @@ p.kwp-info {
         display: block;
         margin-top: 5px;
         margin-left: 5px;
+        height: 12px;
         &:after{
           content: "";
           display: inline-block;
@@ -1689,4 +1690,7 @@ and (max-device-width : 320px) {
 }
 .budget label{
   padding-top: 0;
+}
+input[name="direkt_flug"]{
+  height: 12px;
 }

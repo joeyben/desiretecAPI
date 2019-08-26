@@ -27,9 +27,9 @@
                         <span class="error-input">{{ $error }}</span>
                     @endforeach
                 @endif
-                <i class="master-icon--aircraft-up"></i>
+                <i class="fal fa-plane"></i>
                 <div class="direktflug ">
-                    {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null,['class' => 'form-control box-size', 'required' => 'required']) }}Direktflug
+                    {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null,['class' => 'form-control box-size', 'required' => 'required']) }} Direktflug
                 </div>
             </div>
 
