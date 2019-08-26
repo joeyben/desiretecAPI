@@ -1439,10 +1439,10 @@ p.kwp-info {
           margin-top: 10px;
         }
         .kwp-custom-select{
-          margin-top: 20px;
-          border:none;
+          //margin-top: 20px;
+          //border:none;
           select{
-            border-color: #D7D2C3;
+            border-color: #737373;
           }
         }
         i{
@@ -1663,7 +1663,7 @@ and (max-device-width : 320px) {
   position: absolute;
   display: inline-flex;
 }
-.travelerss .caret{
+.travelerss .caret, .catering .caret{
   position: absolute;
   top: 50%;
   right: 0;

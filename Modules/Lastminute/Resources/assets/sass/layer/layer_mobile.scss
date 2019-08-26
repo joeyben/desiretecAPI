@@ -726,7 +726,7 @@ $fontcolor: #303030;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: $fontcolor;
+            color: white;
           }
         }
         hr{
@@ -739,7 +739,37 @@ $fontcolor: #303030;
   }
 
 }
+.budget {
+  &.open {
+    background: transparent;
 
+    .pax-group {
+      border: 1px solid #b9b9b9;
+      border-bottom: none;
+    }
+
+    .travelerss {
+      background-color: #f3f0ec;
+      z-index: 4;
+      position: relative;
+      border: none;
+    }
+
+    .budget-more {
+      display: block !important;
+    }
+
+    .travelerss {
+      i.triggered {
+        display: block;
+      }
+
+      i.not-triggered {
+        display: none;
+      }
+    }
+  }
+}
 .kwp.dt-modal-visible  {
 }
 
@@ -1537,7 +1567,7 @@ p.kwp-info {
     }*/
     /***** Fix layer on Mobile ******/
     .kwp{
-      .duration-time, .travelers{
+      .duration-time, .travelers, travelerss{
         height: 35px;
         line-height: 2em;
         background-color: transparent;
@@ -1749,7 +1779,7 @@ and (max-device-width : 320px) {
       .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="number"], input[type="date"]{
         font-size: 16px;
       }
-      .duration-time, .travelers{
+      .duration-time, .travelers, travelerss{
         font-size: 16px;
       }
       button[type=submit]{
@@ -1790,4 +1820,21 @@ and (max-device-width : 320px) {
 }
 input[name="direkt_flug"]{
   height: 12px;
+}
+.fas{
+  color:#ecec3c;
+}
+#catering{
+  background: transparent;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.travelerss .caret, .catering .caret{
+  position: absolute;
+  top: 65%;
+  right: 10px;
+}
+select::-ms-expand {
+  display: none;
 }

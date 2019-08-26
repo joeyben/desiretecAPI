@@ -28,12 +28,12 @@
                     @endforeach
                 @endif
                 <i class="fal fa-plane"></i>
-                <div class="direktflug ">
+                <div class="direktflug " style="margin-top: 5px">
                     {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null,['class' => 'form-control box-size', 'required' => 'required']) }} Direktflug
                 </div>
             </div>
 
-            <div class="kwp-col-4 pax-col main-col">
+            <div class="kwp-col-4 pax-col main-col" style="margin-top: 10px">
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">Reisende</label>
                     <span class="travelers dd-trigger">
@@ -146,17 +146,68 @@
                 </div>
             </div>
 
-            <div class="kwp-col-4 destination">
-                <div class="kwp-form-group ">
-                    {{ Form::label('budget', trans('lastminute::layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::select('budget', $budget_arr , key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
-                    @if ($errors->any() && $errors->get('budget'))
-                        @foreach ($errors->get('budget') as $error)
-                            <span>{{ $error }}</span>
-                        @endforeach
-                    @endif
+            <div class="kwp-col-4 pax-col main-col budget">
+                <div class="kwp-form-group pax-group">
+                    <label for="budget" class="required">{{ trans('lastminute::layer.general.budget') }}</label>
+                    <span class="travelerss">
+                            <span class="caret"></span>
+                        <div class="kwp-custom-select">
+                                    {{ Form::select('budget', $budget_arr , key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                            @if ($errors->any() && $errors->get('budget'))
+                                @foreach ($errors->get('budget') as $error)
+                                    <span>{{ $error }}</span>
+                                @endforeach
+                            @endif
+                        </div>
+                         <i class="master-icon--user-family not-triggered"></i>
+                         <i class="master-icon--close triggered"></i>
+                        </span>
+                <!--div class="budget-more">
+                            <div class="kwp-col-12">
+                                <div class="kwp-custom-select">
+                                    {{ Form::select('budget', $budget_arr , null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                @if ($errors->any() && $errors->get('budget'))
+                    @foreach ($errors->get('budget') as $error)
+                        <span>{{ $error }}</span>
+                                        @endforeach
+                @endif
+                        </div>
+                        <i class="master-icon--user-family"></i>
+                    </div>
+                    <hr>
+                    <div class="kwp-col-12 button">
+                        <a href="#">OK</a>
+                    </div>
+                </div-->
                 </div>
             </div>
+
+            <div class="kwp-col-4 white-col stars">
+                <div class="kwp-form-group">
+                    {{ Form::label('category', trans('lastminute::layer.general.category'), ['class' => 'control-label']) }}
+                    {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.category')]) }}
+
+                    <!--span class="text">ab 3 Sterne</span-->
+                    <div class="kwp-star-input">
+                        <span class="fas fa-star" data-val="1"></span>
+                        <span class="fas fa-star" data-val="2"></span>
+                        <span class="fas fa-star" data-val="3"></span>
+                        <span class="fal fa-star" data-val="4"></span>
+                        <span class="fal fa-star" data-val="5"></span>
+                    </div>
+                    <script>dt.hotelStars();</script>
+                </div>
+            </div>
+
+            <div class="kwp-col-4 white-col catering">
+                {{ Form::label('catering', trans('lastminute::layer.general.catering'), ['class' => 'control-label']) }}
+                <div class="kwp-custom-select">
+                {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelerss']) }}
+                </div>
+                <span class="caret"></span>
+            </div>
+
+
         </div>
         <div class="kwp-row">
             <div class="kwp-col-time">

@@ -220,8 +220,10 @@
 
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('lastminute::layer.general.catering'), ['class' => 'control-label']) }}
-                    {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelerss']) }}
-                <i class="master-icon--chevron-down"></i>
+                <div class="kwp-custom-select">
+                {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelerss']) }}
+                </div>
+                <span class="caret"></span>
             </div>
 
         </div>
