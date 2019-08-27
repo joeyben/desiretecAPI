@@ -26,7 +26,7 @@ var dt = window.dt || {};
             }
         };
 
-        return '' +
+        /*return '' +
             '<div class="kwp-header kwp-variant-' + variant + '">' +
             '<div class="kwp-close-button kwp-close"></div>' +
             '<div class="kwp-overlay"></div>' +
@@ -41,7 +41,7 @@ var dt = window.dt || {};
             '</div>' +
             '<div class="kwp-body '+variant+'-body">' +
             '</div><div style="clear:both;"></div>'
-            ;
+            ;*/
     };
 
 
