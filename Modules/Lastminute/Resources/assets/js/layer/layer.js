@@ -84,19 +84,20 @@ var dt = window.dt || {};
         },
         filterDataDecoders: {
             'catering': function (form, formData) {
-                var catering = getUrlParams('catering') ? getUrlParams('catering') : '';
+                var catering = getUrlParams('board') ? getUrlParams('board') : '';
                 return catering;
             },
             'category': function (form, formData) {
-                var category = getUrlParams('nr_stars') ? getUrlParams('nr_stars') : '3';
+                var category = getUrlParams('stars') ? getUrlParams('stars') : '3';
                 return category;
             },
             'destination': function (form, formData) {
-                var destination = getUrlParams('destination') ? getUrlParams('destination') : '';
+                // var destination = getUrlParams('destination') ? getUrlParams('destination') : '';
+                var destination = $('.tt-input').val();
                 return destination;
             },
             'pax': function (form, formData) {
-                var pax = getUrlParams('pax') ? getUrlParams('pax') : '';
+                var pax = getUrlParams('adult') ? getUrlParams('adult') : 1;
                 return pax;
             },
             'budget': function (form, formData) {
@@ -104,7 +105,7 @@ var dt = window.dt || {};
                 return budget;
             },
             'children': function (form, formData) {
-                var kids = getUrlParams('kids') ? getUrlParams('kids') : '';
+                var kids = getUrlParams('child') ? getUrlParams('child') : '';
                 return kids;
             },
             'age_1': function (form, formData) {
@@ -120,11 +121,11 @@ var dt = window.dt || {};
                 return age3;
             },
             'earliest_start': function (form, formData) {
-                var dateFrom = getUrlParams('from') ? getUrlParams('from') : '';
+                var dateFrom = getUrlParams('ddate') ? getUrlParams('ddate') : '';
                 return dateFrom;
             },
             'latest_return': function (form, formData) {
-                var dateTo = getUrlParams('to') ? getUrlParams('to') : '';
+                var dateTo = getUrlParams('rdate') ? getUrlParams('rdate') : '';
                 return dateTo;
             },
             'duration': function (form, formData) {
@@ -132,28 +133,12 @@ var dt = window.dt || {};
                 return duration;
             },
             'airport': function (form, formData) {
-                var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
+                var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
                 return airport;
             },
-            'indoorpool': function (form, formData) {
-                var indoorpool = getUrlParams('indoorpool') ? getUrlParams('indoorpool') : 'N';
-                return indoorpool;
-            },
-            'outdoorpool': function (form, formData) {
-                var outdoorpool = getUrlParams('outdoorpool') ? getUrlParams('outdoorpool') : 'N';
-                return outdoorpool;
-            },
-            'spa': function (form, formData) {
-                var spa = getUrlParams('spa') ? getUrlParams('spa') : 'N';
-                return spa;
-            },
-            'sauna': function (form, formData) {
-                var sauna = getUrlParams('sauna') ? getUrlParams('sauna') : 'N';
-                return sauna;
-            },
-            'nr_bathrooms': function (form, formData) {
-                var nr_bathrooms = getUrlParams('bathrooms') ? getUrlParams('bathrooms') : '1';
-                return nr_bathrooms;
+            'direkt_flug': function (form, formData) {
+                var direkt_flug = getUrlParams('dfl') ? getUrlParams('dfl') : '';
+                return direkt_flug;
             },
             'is_popup_allowed': function (form, formData) {
                 //var step = this.getScope().IbeApi.state.stepNr;
@@ -201,9 +186,15 @@ var dt = window.dt || {};
         }
     });
 
-    var NovasolTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
-        name: 'Novasol WL',
-        matchesUrl: 'www.novasol.de/*',
+
+
+
+
+
+
+    var LastminuteTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
+        name: 'Lastminute',
+        matchesUrl: 'www.lastminute.ch/*',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
@@ -236,40 +227,29 @@ var dt = window.dt || {};
         },
         filterDataDecoders: {
             'catering': function (form, formData) {
-                var catering = getUrlParams('catering') ? getUrlParams('catering') : '';
+                var catering = getUrlParams('board') ? getUrlParams('board') : '';
                 return catering;
             },
             'category': function (form, formData) {
-                var category = getUrlParams('nr_stars') ? getUrlParams('nr_stars') : '3';
+                var category = getUrlParams('stars') ? getUrlParams('stars') : '3';
                 return category;
             },
             'destination': function (form, formData) {
-                var destination = $(".search-form__destination-item-name").text();
+                // var destination = getUrlParams('destination') ? getUrlParams('destination') : '';
+                var destination = $('.tt-input').val();
                 return destination;
             },
             'pax': function (form, formData) {
-                if(!form)
-                    return '';
-                var pax =  form.hasOwnProperty('adults') ? form['adults'] : '';
+                var pax = getUrlParams('pax') ? getUrlParams('pax') : '';
                 return pax;
             },
             'budget': function (form, formData) {
-                if(!form)
-                    return '';
-                var budget = form.hasOwnProperty('priceMaximum') ? form['priceMaximum'] : '';
+                var budget = getUrlParams('budget') ? getUrlParams('budget') : '';
                 return budget;
             },
-            'kids': function (form, formData) {
-                if(!form)
-                    return '';
-                var kids = form.hasOwnProperty('kids') ? form['kids'] : '';
+            'children': function (form, formData) {
+                var kids = getUrlParams('child') ? getUrlParams('child') : '';
                 return kids;
-            },
-            'pets': function (form, formData) {
-                if(!form)
-                    return '';
-                var pets = form.hasOwnProperty('pets') ? form['pets'] : '';
-                return pets;
             },
             'age_1': function (form, formData) {
                 var age1 = getUrlParams('age1') ? getUrlParams('age1') : '';
@@ -284,56 +264,24 @@ var dt = window.dt || {};
                 return age3;
             },
             'earliest_start': function (form, formData) {
-                if(!formData)
-                    return '';
-                var dateFrom = formData.hasOwnProperty('startDate') ? this.formatDate(formData['startDate']) : '';
+                var dateFrom = getUrlParams('ddate') ? getUrlParams('ddate') : '';
                 return dateFrom;
             },
             'latest_return': function (form, formData) {
-                if(!formData)
-                    return '';
-                var dateTo = formData.hasOwnProperty('endDate') ? this.formatDate(formData['endDate']) : '';
+                var dateTo = getUrlParams('rdate') ? getUrlParams('rdate') : '';
                 return dateTo;
             },
             'duration': function (form, formData) {
-                if(!form)
-                    return '';
-                var duration = form.hasOwnProperty('lengthOfStay') ? parseInt(form['lengthOfStay']) - 1 : '';
+                var duration = getUrlParams('duration') ? getUrlParams('duration') : '';
                 return duration;
             },
             'airport': function (form, formData) {
-                var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
+                var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
                 return airport;
             },
-            'indoorpool': function (form, formData) { // swimming pool indoor
-                if(!formData)
-                    return '';
-                var pool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool indoor") >= 0)) ? '1' : '0';
-                return pool;
-            },
-            'outdoorpool': function (form, formData) { //swimming pool outdoor
-                if(!formData)
-                    return '';
-                var indoorpool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool outdoor") >= 0)) ? '1' : '0';
-                return indoorpool;
-            },
-            'spa': function (form, formData) {//spa
-                if(!formData)
-                    return '';
-                var spa = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("spa") >= 0)) ? '1' : '0';
-                return spa;
-            },
-            'sauna': function (form, formData) {
-                if(!formData)
-                    return '';
-                var sauna = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("sauna") >= 0)) ? '1' : '0';
-                return sauna;
-            },
-            'nr_bathrooms': function (form, formData) {
-                if(!formData)
-                    return '';
-                var bathrooms = formData.hasOwnProperty('bathrooms') ? formData['bathrooms'] : '1';
-                return bathrooms;
+            'direkt_flug': function (form, formData) {
+                var direkt_flug = getUrlParams('dfl') ? getUrlParams('dfl') : '';
+                return direkt_flug;
             },
             'is_popup_allowed': function (form, formData) {
                 //var step = this.getScope().IbeApi.state.stepNr;
@@ -384,7 +332,7 @@ var dt = window.dt || {};
         }
     });
 
-    dt.decoders.push(NovasolTripDataDecoder);
+    dt.decoders.push(LastminuteTripDataDecoder);
     dt.decoders.push(KwizzmeFakeTripDataDecoder);
 
     //dt.decoders.push($.extend({}, MasterIBETripDataDecoder, {
