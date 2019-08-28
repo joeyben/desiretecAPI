@@ -140,7 +140,10 @@ var dt = window.dt || {};
                 var direkt_flug = getUrlParams('dfl') ? getUrlParams('dfl') : '';
                 return direkt_flug;
             },
-
+            'direkt_flug': function (form, formData) {
+                var price = getUrlParams('dfl') ? getUrlParams('dfl') : '';
+                return direkt_flug;
+            },
 
 
 
@@ -244,20 +247,11 @@ var dt = window.dt || {};
                 return destination;
             },
             'pax': function (form, formData) {
-                var pax = getUrlParams('adult') ? getUrlParams('adult') : '';
+                var pax = getUrlParams('pax') ? getUrlParams('pax') : '';
                 return pax;
             },
-            /*'budget': function (form, formData) {
-                var budget = getUrlParams('budget') ? getUrlParams('budget') : '';
-                return budget;
-            },*/
             'budget': function (form, formData) {
-                var budget = '';
-                if(getUrlParams('price')){
-                    budget = getUrlParams('price').split(',')[1];
-                }
-
-                //var price = getUrlParams('price'). ? getUrlParams('price') : '';
+                var budget = getUrlParams('budget') ? getUrlParams('budget') : '';
                 return budget;
             },
             'children': function (form, formData) {
