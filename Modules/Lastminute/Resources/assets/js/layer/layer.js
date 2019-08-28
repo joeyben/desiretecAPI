@@ -30,7 +30,7 @@ var dt = window.dt || {};
           '<div class="kwp-header kwp-variant-' + variant + '">' +
           '<div class="kwp-close-button kwp-close"></div>' +
           '<div class="kwp-overlay"></div>' +
-          '<div class="kwp-logo"></div>' +
+          '<div class="kwp-logo"></div>'+
           '<div class="kwp-header-content">' +
           '<h1>' +
           texts[variant].header + ' <br/>' +
@@ -140,6 +140,10 @@ var dt = window.dt || {};
                 var direkt_flug = getUrlParams('dfl') ? getUrlParams('dfl') : '';
                 return direkt_flug;
             },
+
+
+
+
             'is_popup_allowed': function (form, formData) {
                 //var step = this.getScope().IbeApi.state.stepNr;
                 return true;
@@ -240,11 +244,20 @@ var dt = window.dt || {};
                 return destination;
             },
             'pax': function (form, formData) {
-                var pax = getUrlParams('pax') ? getUrlParams('pax') : '';
+                var pax = getUrlParams('adult') ? getUrlParams('adult') : '';
                 return pax;
             },
-            'budget': function (form, formData) {
+            /*'budget': function (form, formData) {
                 var budget = getUrlParams('budget') ? getUrlParams('budget') : '';
+                return budget;
+            },*/
+            'budget': function (form, formData) {
+                var budget = '';
+                if(getUrlParams('price')){
+                    budget = getUrlParams('price').split(',')[1];
+                }
+
+                //var price = getUrlParams('price'). ? getUrlParams('price') : '';
                 return budget;
             },
             'children': function (form, formData) {
