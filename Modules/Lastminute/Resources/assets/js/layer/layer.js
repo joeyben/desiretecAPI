@@ -59,7 +59,7 @@ var dt = window.dt || {};
                 'AP': 'all-inclusive',
                 'FB': 'Vollpension',
                 'FP': 'Vollpension',
-                'gHB': 'Halbpension',
+                'HB': 'Halbpension',
                 'HP': 'Halbpension',
                 'BB': 'Frühstück',
                 'AO': 'ohne Verpflegung',
@@ -89,47 +89,130 @@ var dt = window.dt || {};
             },
             'category': function (form, formData) {
                 var category = getUrlParams('stars') ? getUrlParams('stars') : '3';
+
+
                 return category;
             },
             'destination': function (form, formData) {
-                // var destination = getUrlParams('destination') ? getUrlParams('destination') : '';
-                var destination = $('.tt-input').val();
-                return destination;
+                var destination = getUrlParams('destination') ? getUrlParams('destination') : '';
+                return $('.tt-input').val();
             },
             'pax': function (form, formData) {
-                var pax = getUrlParams('adult') ? getUrlParams('adult') : 1;
+                var pax = getUrlParams('pax') ? getUrlParams('pax') : '';
                 return pax;
             },
+            'adults': function (form, formData) {
+                var adults = getUrlParams('adult') ? getUrlParams('adult') : '';
+                return adults;
+            },
             'budget': function (form, formData) {
-                var budget = getUrlParams('budget') ? getUrlParams('budget') : '';
+                var budget = '';
+                if(getUrlParams('price')){
+                    budget = getUrlParams('price').split(',')[1];
+                }
                 return budget;
             },
-            'children': function (form, formData) {
+            'kids': function (form, formData) {
+                var child = '';
+                if(getUrlParams('child')){
+                    child = getUrlParams('child').split(',').length;
+                }
+
+                return child;
                 var kids = getUrlParams('child') ? getUrlParams('child') : '';
                 return kids;
             },
-            'age_1': function (form, formData) {
+            'ages1': function (form, formData) {
+                var age_1 = '';
+                if(getUrlParams('child')){
+                    age_1 = getUrlParams('child').split(',')[0];
+                }
+
+                return age_1;
+
                 var age1 = getUrlParams('age1') ? getUrlParams('age1') : '';
                 return age1;
             },
-            'age_2': function (form, formData) {
+            'ages2': function (form, formData) {
+                var age_2 = '';
+                if(getUrlParams('child')){
+                    age_2 = getUrlParams('child').split(',')[1];
+                }
+                return age_2;
+
                 var age2 = getUrlParams('age2') ? getUrlParams('age2') : '';
                 return age2;
             },
-            'age_3': function (form, formData) {
+            'ages3': function (form, formData) {
+                var age_3 = '';
+                if(getUrlParams('child')){
+                    age_3 = getUrlParams('child').split(',')[2];
+                }
+                return age_3;
+
+
                 var age3 = getUrlParams('age3') ? getUrlParams('age3') : '';
                 return age3;
             },
             'earliest_start': function (form, formData) {
-                var dateFrom = getUrlParams('ddate') ? getUrlParams('ddate') : '';
+                var dateFrom = '';
+                if(getUrlParams('ddate')){
+                    var date = getUrlParams('ddate').split('-');
+                    dateFrom = date[2]+'.'+date[1]+'.'+date[0]
+                }
+
+
+                //var dateFrom = getUrlParams('ddate') ? getUrlParams('ddate') : '';
                 return dateFrom;
             },
             'latest_return': function (form, formData) {
-                var dateTo = getUrlParams('rdate') ? getUrlParams('rdate') : '';
+                var dateTo = '';
+                if(getUrlParams('rdate')){
+                    var date = getUrlParams('rdate').split('-');
+                    dateTo = date[2]+'.'+date[1]+'.'+date[0]
+                }
+
+                //var dateTo = getUrlParams('rdate') ? getUrlParams('rdate') : '';
                 return dateTo;
             },
             'duration': function (form, formData) {
-                var duration = getUrlParams('duration') ? getUrlParams('duration') : '';
+                var duration = $("select[name='ttform_dur'] option:selected").text();
+                console.log('duration', duration);
+
+                switch (duration) {
+                    case '1 Woche':
+                        duration = '7-';
+                        break;
+                    case '2 Wochen':
+                        duration = '14-';
+                        break;
+                    case '3 Wochen':
+                        duration = '21-';
+                        break;
+                    case '4 Wochen':
+                        duration = '28-'
+                        break;
+                }
+
+                // check if the selected item end with one of the given options
+                if($.inArray(duration.split(' ')[1], ['Woche', 'Wochen', 'Tag', 'Tagen'])){
+                    duration = duration.split(' ')[0];
+                }
+
+                switch (duration) {
+                    case '>22':
+                        duration = '22-';
+                        break;
+                    case '22':
+                        duration = '21';
+                        break;
+                    case 'exakt':
+                        duration = 'exact'
+                        break;
+                }
+
+                console.log('duration after', duration);
+
                 return duration;
             },
             'airport': function (form, formData) {
@@ -140,11 +223,6 @@ var dt = window.dt || {};
                 var direkt_flug = getUrlParams('dfl') ? getUrlParams('dfl') : '';
                 return direkt_flug;
             },
-            'direkt_flug': function (form, formData) {
-                var price = getUrlParams('dfl') ? getUrlParams('dfl') : '';
-                return direkt_flug;
-            },
-
 
 
             'is_popup_allowed': function (form, formData) {
@@ -154,7 +232,7 @@ var dt = window.dt || {};
         },
         getTripData: function () {
             var form = null,
-              formData = null;
+                formData = null;
 
             return this.decodeFilterData(form, formData);
         },
@@ -188,15 +266,13 @@ var dt = window.dt || {};
             }else{
                 return this.getRandomElement([
                     'eil-n1',
+                    'eil-n1',
+                    'eil-n2',
+                    'eil-n5'
                 ]);
             }
         }
     });
-
-
-
-
-
 
 
     var LastminuteTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
@@ -239,47 +315,130 @@ var dt = window.dt || {};
             },
             'category': function (form, formData) {
                 var category = getUrlParams('stars') ? getUrlParams('stars') : '3';
+
+
                 return category;
             },
             'destination': function (form, formData) {
-                // var destination = getUrlParams('destination') ? getUrlParams('destination') : '';
-                var destination = $('.tt-input').val();
-                return destination;
+                var destination = getUrlParams('destination') ? getUrlParams('destination') : '';
+                return $('.tt-input').val();
             },
             'pax': function (form, formData) {
                 var pax = getUrlParams('pax') ? getUrlParams('pax') : '';
                 return pax;
             },
+            'adults': function (form, formData) {
+                var adults = getUrlParams('adult') ? getUrlParams('adult') : '';
+                return adults;
+            },
             'budget': function (form, formData) {
-                var budget = getUrlParams('budget') ? getUrlParams('budget') : '';
+                var budget = '';
+                if(getUrlParams('price')){
+                    budget = getUrlParams('price').split(',')[1];
+                }
                 return budget;
             },
-            'children': function (form, formData) {
+            'kids': function (form, formData) {
+                var child = '';
+                if(getUrlParams('child')){
+                    child = getUrlParams('child').split(',').length;
+                }
+
+                return child;
                 var kids = getUrlParams('child') ? getUrlParams('child') : '';
                 return kids;
             },
-            'age_1': function (form, formData) {
+            'ages1': function (form, formData) {
+                var age_1 = '';
+                if(getUrlParams('child')){
+                    age_1 = getUrlParams('child').split(',')[0];
+                }
+
+                return age_1;
+
                 var age1 = getUrlParams('age1') ? getUrlParams('age1') : '';
                 return age1;
             },
-            'age_2': function (form, formData) {
+            'ages2': function (form, formData) {
+                var age_2 = '';
+                if(getUrlParams('child')){
+                    age_2 = getUrlParams('child').split(',')[1];
+                }
+                return age_2;
+
                 var age2 = getUrlParams('age2') ? getUrlParams('age2') : '';
                 return age2;
             },
-            'age_3': function (form, formData) {
+            'ages3': function (form, formData) {
+                var age_3 = '';
+                if(getUrlParams('child')){
+                    age_3 = getUrlParams('child').split(',')[2];
+                }
+                return age_3;
+
+
                 var age3 = getUrlParams('age3') ? getUrlParams('age3') : '';
                 return age3;
             },
             'earliest_start': function (form, formData) {
-                var dateFrom = getUrlParams('ddate') ? getUrlParams('ddate') : '';
+                var dateFrom = '';
+                if(getUrlParams('ddate')){
+                    var date = getUrlParams('ddate').split('-');
+                    dateFrom = date[2]+'.'+date[1]+'.'+date[0]
+                }
+
+
+                //var dateFrom = getUrlParams('ddate') ? getUrlParams('ddate') : '';
                 return dateFrom;
             },
             'latest_return': function (form, formData) {
-                var dateTo = getUrlParams('rdate') ? getUrlParams('rdate') : '';
+                var dateTo = '';
+                if(getUrlParams('rdate')){
+                    var date = getUrlParams('rdate').split('-');
+                    dateTo = date[2]+'.'+date[1]+'.'+date[0]
+                }
+
+                //var dateTo = getUrlParams('rdate') ? getUrlParams('rdate') : '';
                 return dateTo;
             },
             'duration': function (form, formData) {
-                var duration = getUrlParams('duration') ? getUrlParams('duration') : '';
+                var duration = $("select[name='ttform_dur'] option:selected").text();
+                console.log('duration', duration);
+
+                switch (duration) {
+                    case '1 Woche':
+                        duration = '7-';
+                        break;
+                    case '2 Wochen':
+                        duration = '14-';
+                        break;
+                    case '3 Wochen':
+                        duration = '21-';
+                        break;
+                    case '4 Wochen':
+                        duration = '28-'
+                        break;
+                }
+
+                // check if the selected item end with one of the given options
+                if($.inArray(duration.split(' ')[1], ['Woche', 'Wochen', 'Tag', 'Tagen'])){
+                    duration = duration.split(' ')[0];
+                }
+
+                switch (duration) {
+                    case '>22':
+                        duration = '22-';
+                        break;
+                    case '22':
+                        duration = '21';
+                        break;
+                    case 'exakt':
+                        duration = 'exact'
+                        break;
+                }
+
+                console.log('duration after', duration);
+
                 return duration;
             },
             'airport': function (form, formData) {
@@ -290,6 +449,8 @@ var dt = window.dt || {};
                 var direkt_flug = getUrlParams('dfl') ? getUrlParams('dfl') : '';
                 return direkt_flug;
             },
+
+
             'is_popup_allowed': function (form, formData) {
                 //var step = this.getScope().IbeApi.state.stepNr;
                 return true;
