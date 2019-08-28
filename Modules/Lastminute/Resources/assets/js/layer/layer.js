@@ -500,8 +500,9 @@ var dt = window.dt || {};
         }
     });
 
-    dt.decoders.push(LastminuteTripDataDecoder);
     dt.decoders.push(KwizzmeFakeTripDataDecoder);
+    dt.decoders.push(LastminuteTripDataDecoder);
+
 
     //dt.decoders.push($.extend({}, MasterIBETripDataDecoder, {
     //    name: 'TUI Landingpages',
