@@ -90,11 +90,11 @@ var dt = window.dt || {};
             'category': function (form, formData) {
                 var category = getUrlParams('stars') ? getUrlParams('stars') : '3';
 
-
                 return category;
             },
             'destination': function (form, formData) {
-                var destination = getUrlParams('destination') ? getUrlParams('destination') : '';
+                var destination = getUrlParams('depap') ? getUrlParams('depap') : '';
+                return destination;
                 return $('.tt-input').val();
             },
             'pax': function (form, formData) {
@@ -277,7 +277,7 @@ var dt = window.dt || {};
 
     var LastminuteTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Lastminute',
-        matchesUrl: 'www.lastminute.ch/*',
+        matchesUrl: '*.lastminute.ch/*',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
@@ -316,11 +316,11 @@ var dt = window.dt || {};
             'category': function (form, formData) {
                 var category = getUrlParams('stars') ? getUrlParams('stars') : '3';
 
-
                 return category;
             },
             'destination': function (form, formData) {
-                var destination = getUrlParams('destination') ? getUrlParams('destination') : '';
+                var destination = getUrlParams('depap') ? getUrlParams('depap') : '';
+                return destination;
                 return $('.tt-input').val();
             },
             'pax': function (form, formData) {
