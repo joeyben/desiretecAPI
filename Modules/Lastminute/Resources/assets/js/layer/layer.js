@@ -319,8 +319,8 @@ var dt = window.dt || {};
                 return category;
             },
             'destination': function (form, formData) {
-                var destination = getUrlParams('depap') ? getUrlParams('depap') : '';
-                return destination;
+                //var destination = getUrlParams('depap') ? getUrlParams('depap') : '';
+                //return destination;
                 return $('.tt-input').val();
             },
             'pax': function (form, formData) {
