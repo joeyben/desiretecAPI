@@ -28,15 +28,14 @@
              width="299"
              height="87"
              style="width:3.1145in;height:.9062in"
-             src="https://mail.google.com/mail/u/0?ui=2&ik=5ebf3cc9fc&attid=0.1&permmsgid=msg-f:1642389316342666022&th=16caf061a7805326&view=fimg&sz=s0-l75-ft&attbid=ANGjdJ9GakWddA-Y68_h4RzHzh0wR92xu86Rg7y8gSJiAXtzv8DNOwUr4-e31_ILodpocMwcTKP5jfpqiOv9av4Gk-7-UQz9EStY38mMFHcm2ea9EgZ0uCZ_I88N5fU&disp=emb&realattid=16be057fd624ce8e91">
+             src="https://desiretec.s3.eu-central-1.amazonaws.com/img/uploads/b9751afd-b70b-4cfd-a6ad-347b50c6ff06.jpg">
     </p>
     <p>
         <img border="0"
              width="322"
              height="75"
              style="width:3.3541in;height:.7812in"
-             id="m_-6779029802833691952m_-540781042053636482m_-1907335812593535042Picture_x0020_2"
-             src="https://mail.google.com/mail/u/0?ui=2&amp;ik=5ebf3cc9fc&amp;attid=0.2&amp;permmsgid=msg-f:1642389316342666022&amp;th=16caf061a7805326&amp;view=fimg&amp;sz=s0-l75-ft&amp;attbid=ANGjdJ9m9QhFyV3FX_gwLHWzYpS3BpBGU7vVbk--Gw6RPMly3HEf3_QfWq2yy2zn7hzXZk4_fX8KC_4q3D5-cGuPKptQthhjG8tWfJyai7OUAEnc6HzM8CL7k5-NomA&amp;disp=emb&amp;realattid=16be057fd625b16b22">
+             src="https://desiretec.s3.eu-central-1.amazonaws.com/img/uploads/0c69d68d-040e-41ab-8b5b-496d376820d3.jpg">
     </p>
     <p class="MsoNormal">
     <span lang="DE-CH"

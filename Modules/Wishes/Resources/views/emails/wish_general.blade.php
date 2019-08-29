@@ -211,13 +211,16 @@
                                     </p>
 
                                     <p>
-                                        {{ trans('email.offer.link', ['link' => $wish->whitelabel->domain.'/wish/'.$wish->id]) }}
+                                        Sie können diese unter dem folgenden Link direkt aufrufen:
+                                            <a href="{{ $wish->whitelabel->domain.'/wish/'.$wish->id }}">
+                                                {{ $wish->whitelabel->domain.'/wish/'.$wish->id }}
+                                            </a>
+                                        {{-- trans('email.offer.link', ['link' => $wish->whitelabel->domain.'/wish/'.$wish->id]) --}}
                                     </p>
 
                                     {{ trans('email.offer.footer') }}
                                 </td>
                             </tr>
-
                             <tr>
                                 <td colspan="2">
                                     <hr style="background: #e7e7e7;border: none;height: 1px;width: 100%;margin-top: 30px;">
@@ -228,7 +231,7 @@
                                     <table  style="width:100%;">
                                         <tbody>
                                         <tr>
-                                            @include($footer)
+                                            @include(getWhitelabelFooterUrl())
                                         </tr>
                                         </tbody>
                                     </table>

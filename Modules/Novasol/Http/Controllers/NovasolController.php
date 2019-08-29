@@ -152,24 +152,49 @@ class NovasolController extends Controller
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
         $request->merge(['featured_image' => 'novasol.jpg']);
+
+        $except_arr = [
+            'variant',
+            'first_name',
+            'last_name',
+            'email',
+            'password',
+            'is_term_accept',
+            'name',
+            'terms',
+            'pets',
+            'pool_inside',
+            'pool_outside',
+            'whirlpool',
+            'sauna',
+            'nr_bathrooms',
+            'nr_stars'
+        ];
+
         $new_wish = $wish->create(
-            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms','pets', 'pool_inside', 'pool_outside', 'whirlpool', 'sauna', 'nr_bathrooms', 'nr_stars'),
+            $request->except(implode(', ', $except_arr)),
             $this->whitelabelId
         );
-        $pets = $this->categories->getCategoryIdByParentValue('pets', $request->get('pets'));
-        $pool = $this->categories->getCategoryIdByParentValue('pool', $request->get('pool_inside'));
-        $pool_out = $this->categories->getCategoryIdByParentValue('Pool Outside', $request->get('pool_outside'));
+
+        $pets      = $this->categories->getCategoryIdByParentValue('pets', $request->get('pets'));
+        $pool      = $this->categories->getCategoryIdByParentValue('pool', $request->get('pool_inside'));
+        $pool_out  = $this->categories->getCategoryIdByParentValue('Pool Outside', $request->get('pool_outside'));
         $whirlpool = $this->categories->getCategoryIdByParentValue('Whirlpool', $request->get('whirlpool'));
-        $sauna = $this->categories->getCategoryIdByParentValue('sauna', $request->get('sauna'));
+        $sauna     = $this->categories->getCategoryIdByParentValue('sauna', $request->get('sauna'));
         $bathrooms = $this->categories->getCategoryIdByParentValue('Bathrooms', $request->get('nr_bathrooms'));
 
+
+        $categories = [$pets, $pool, $pool_out, $whirlpool, $sauna, $bathrooms];
+        $wish->storeCategoryWish($categories, $new_wish);
+
+        /*
         $wish->storeCategoryWish($pets, $new_wish);
         $wish->storeCategoryWish($pool, $new_wish);
         $wish->storeCategoryWish($pool_out, $new_wish);
         $wish->storeCategoryWish($whirlpool, $new_wish);
         $wish->storeCategoryWish($sauna, $new_wish);
         $wish->storeCategoryWish($bathrooms, $new_wish);
-
+        */
         return $new_wish;
     }
 

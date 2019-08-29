@@ -38,8 +38,7 @@ class TokenLoginRequested extends Mailable
             ->from(getCurrentWhiteLabelField('email'), getCurrentWhiteLabelField('display_name') . ' Portal')
             ->view('emails.token.link')->with([
                 'link'       => $this->buildLink(),
-                'whitelabel' => getCurrentWhiteLabelField('display_name'),
-                'footer'     => getWhitelabelFooterUrl()
+                'whitelabel' => getCurrentWhiteLabelField('display_name')
             ]);
     }
 

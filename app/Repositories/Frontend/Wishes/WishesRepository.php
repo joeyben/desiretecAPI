@@ -320,6 +320,12 @@ class WishesRepository extends BaseRepository
      */
     public function storeCategoryWish($category, \Modules\Wishes\Entities\Wish $wish)
     {
-        $wish->attachCategory($category);
+        if(is_array($category)){
+            foreach ($category as $cat){
+                $wish->attachCategory($cat);
+            }
+        }else{
+            $wish->attachCategory($category);
+        }
     }
 }

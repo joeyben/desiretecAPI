@@ -86,7 +86,6 @@ class AutooffersNovasolController extends Controller
     public function details(Wish $wish)
     {
         return view('autooffers::autooffer.details');
-
     }
 
     /**
@@ -195,20 +194,14 @@ class AutooffersNovasolController extends Controller
     /**
      * Creates the url to novasol and opens it on new tab
      */
-    public function toTheOffer($offer_id){
+    public function toTheOffer($offer_id)
+    {
+
        $autooffer = Autooffer::find($offer_id);
 
        if(!is_null($autooffer)){
            $novasol_area    = DB::table('novasol_area')->select('*')->where('novasol_area_code', $autooffer->hotel_location_region_code)->first();
            $novasol_country = DB::table('novasol_country')->select('*')->where('id', $novasol_area->novasol_country_id)->first();
-/*
-           dd([
-               'autooffer' => $autooffer,
-               'novasol_area' => $novasol_area,
-               'novasol_country' => $novasol_country,
-               'wish' => $autooffer->wish
-           ]);
-*/
            $url = "https://www.novasol.de/ferienhaeuser/";
            $url .= str_replace(' ', '-', strtolower($novasol_country->name)).'/';
            $url .= str_replace(' ', '-', strtolower($novasol_area->name)).'/';

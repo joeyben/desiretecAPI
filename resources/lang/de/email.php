@@ -37,7 +37,7 @@ return [
         'created_user'   => 'Es gibt ein neues Angebot für Ihren :whitelabel Reisewunsch!',
         'header'         => 'Hallo lieber :whitelabel Kunde!',
         'body'           => 'Herzlichen Glückwunsch! Wir haben neue passende :whitelabel Angebote für Ihren Reisewunsch gefunden.',
-        'link'           => 'Sie können diese unter dem folgenden Link direkt aufrufen <a href=":link">:link</a>',
+        'link'           => "Sie können diese unter dem folgenden Link direkt aufrufen <a href=':link'>:link</a>",
         'footer'         => 'Wir hoffen, dass Ihnen die Angebote zusagen. Bei Fragen stehen Ihnen unsere Reiseberater jederzeit zur Verfügung.',
         'novasol_created_user'      => [
             'subject'=> 'Wir haben Ihre Traumferien gefunden – NOVASOL Reisewunschportal',
