@@ -335,7 +335,7 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #00509F url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: $mastercolor url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -639,7 +639,7 @@ $master-blue: #70CBF4;
           margin-bottom: 0;
           height: auto;
           a{
-            background: #00509F;
+            background: $mastercolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -701,7 +701,7 @@ $master-blue: #70CBF4;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #00509F;
+              color: $mastercolor;
               padding: 0;
               margin: 20px 0;
               font-size: 20px !important;
@@ -733,7 +733,7 @@ $master-blue: #70CBF4;
           display: block;
           margin-bottom: 0;
           a{
-            background: #00509F;
+            background: $mastercolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -1108,7 +1108,7 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .filter-option-inner-inner{
-      color: #00509F;
+      color: $mastercolor;
       font-size: 18px;
     }
   }
@@ -1335,7 +1335,7 @@ p.kwp-info {
   }
   .kwp-header{
     /*background: linear-gradient(179deg, #fce136 0, #e4cd34 100%);*/
-    background: linear-gradient(179deg, #00509F 0, #00509F 100%);
+    background: linear-gradient(179deg, $mastercolor 0, $mastercolor 100%);
     min-height: 40px;
     height: 40px;
     position: relative;
@@ -1354,7 +1354,7 @@ p.kwp-info {
       right: 15px;
       top: 40px;
       font-size: 20px;
-      color: #00509F;
+      color: $mastercolor;
     }
   }
   .kwp-content-extra{
@@ -1465,8 +1465,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid #00509F;
-          background-color: #00509F;
+          border: 1px solid $mastercolor;
+          background-color: $mastercolor;
           background-image: url(../../svg/check-white.svg);
         }
       }
