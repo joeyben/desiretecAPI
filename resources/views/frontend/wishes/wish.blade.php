@@ -6,7 +6,7 @@
     <div class="img-background">
         <div class="container">
             <div class="col-md-8 bg-left-content">
-                @if ($logged_in_user->hasRole('User') && $wish->owner->first_name !== "Muster")
+                @if ($logged_in_user->hasRole('User') && $wish->owner->last_name !== trans('user.default.last_name'))
                     <h3>Hallo {{ $wish->owner->first_name }} {{ $wish->owner->last_name }},</h3>
                 @elseif ($logged_in_user->hasRole('User') && $wish->owner->first_name)
                     <h3>Hallo lieber Kunde,</h3>
@@ -21,14 +21,17 @@
                     <a href="{{route('frontend.offers.create', $wish->id)}}" class="primary-btn">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
                 @elseif (count($wish->offers) > 0)
                     <p class="header-p">{!! trans('wish.view.stage.user_offer',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
-                    <button class="primary-btn" onclick="scrollToAnchor('angebote')">Angebot ansehen</button>
-                @elseif (count($wish->messages) > 0)
+                    <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('angebote')">{{ trans_choice('wish.details.view-offers-button', count($wish->offers), ['count' => count($wish->offers)]) }}</button>
+                @elseif (count($wish->messages) > 0 && $wish->messages[count($wish->messages)-1]->user_id !== Auth::user()->id)
                     <p class="header-p">{!! trans('wish.view.stage.user_message',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
-                    <button class="primary-btn" onclick="scrollToAnchor('messages')">Nachricht ansehen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('messages')">{{ trans('wish.details.view-messages-button') }}</button>
                 @else
+                    @php
+                        $actionButtonsSet = true;
+                    @endphp
                     <p class="header-p">{!! trans('wish.view.stage.user_empty',['date' => \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
-                    <button class="primary-btn" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn" data-toggle="modal" data-target="#myModal2">Rückrufbitte einstellen</button>
+                    <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                    <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
                 @endif
             </div>
         </div>
@@ -79,10 +82,10 @@
             </div>
         </div>
 
-        @elseif ($logged_in_user->hasRole('User'))
+    @elseif ($logged_in_user->hasRole('User'))
         <div class="bg-bottom">
             <div class="container">
-                <h4>Zuständiges Reisebüro</h4>
+                <h4>{{ trans('wish.details.seller_title') }}</h4>
                 <div class="col-md-3">
                     <p>
                         {{ $wish->group->users[0]->name }}</p>
@@ -91,18 +94,23 @@
                         {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
                     </p>
                 </div>
-                @if(count($wish->group->users[0]->agents))
+                @if(count($wish->offers) > 0 || count($wish->sellerMessages) > 0)
                     <div class="col-md-3 c-info">
                         <i class="fas fa-user"></i>
-                        <span>{{ $wish->group->users[0]->agents[0]->name }}</span>
+                        <span>{{ $wish->group->users[0]->currentAgent[0]->name }}</span>
                     </div>
                     <div class="col-md-3 c-info c-tel">
                         <i class="fas fa-phone"></i>
-                        <a href="tel:{{ $wish->group->users[0]->agents[0]->telephone }}">{{ $wish->group->users[0]->agents[0]->telephone }}</a>
+                        <a href="tel:{{ $wish->group->users[0]->currentAgent[0]->telephone }}">{{ $wish->group->users[0]->currentAgent[0]->telephone }}</a>
                     </div>
                     <div class="col-md-3 c-info">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->agents[0]->email }}</a>
+                        <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->currentAgent[0]->email }}</a>
+                    </div>
+                @else
+                    <div class="col-md-3 c-info">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->email }}</a>
                     </div>
                 @endif
             </div>
@@ -114,7 +122,7 @@
             </div>
         </div>
 
-        @endif
+    @endif
 </section>
 
 @if (count($wish->offers) > 0 && $logged_in_user->hasRole('Seller') && count($wish->contacts) === 0)
@@ -132,7 +140,7 @@
                 <h4>
                     {{ trans('wish.view.new_offers') }}
                 </h4>
-                <p class="sa2-p1">Du hast {{ count($wish->offers) }} Angebote</b>
+                <p class="sa2-p1">{{ trans_choice('wish.view.offers_title_count', count($wish->offers), ['count' => count($wish->offers)]) }}
                     @if ($logged_in_user->hasRole('Seller'))
                         erstellt
                     @else
@@ -156,59 +164,43 @@
                         <span class="agent-name">{{ $offer->agent->name }}</span>
                     </span>
                     <b>{{ $offer->title }}</b><br>
-                    {{ $offer->description }}
+                    {!! nl2br(e($offer->description)) !!}
                     @if ($offer->link)
                         <br><br>
                         <b>Hier geht es zu unserer Angebotsseite:</b> <a href="{{ $offer->link }}" target="_blank">{{ $offer->link }}</a>
                     @endif
                 </p>
-                @if (!$offer->offerFiles && $logged_in_user->hasRole('User'))
-                <div class="sa2-buttons">
-                    <button class="primary-btn" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn" data-toggle="modal" data-target="#myModal2">Rückrufbitte einstellen</button>
-                </div>
-                @endif
             </div>
         </div>
     </section>
     @if (count($offer->offerFiles) > 0)
-    <section class="section-angebote-download">
-        <div class="container">
-            <div class="col-md-12">
-                <hr class="sad-hr">
-            </div>
-            <div class="col-md-12 sa-2">
-                @foreach($offer->offerFiles as $key => $file)
-                    <div class="col-md-4">
-                        @if (strpos($file->file, '.pdf') !== false)
-                            <i class="fal fa-file-pdf"></i>
-                        @else
-                            <i class="fal fa-file-image"></i>
-                        @endif
-
-                        <a href="{{ Storage::disk('s3')->url($offer_url . $file->file) }}" target="_blank">{{ trans('wish.view.offer_number') }} {{ $key+1 }}</a>
-                    </div>
-                @endforeach
-            </div>
-            @if ($logged_in_user->hasRole('User'))
-            <div class="col-md-12">
-                <hr class="sad-hr">
-            </div>
-            @endif
-        </div>
-
-        @if ($logged_in_user->hasRole('User'))
-        <div class="container">
-            <div class="col-md-12 sa-2">
-                <div class="sa-buttons">
-                    <button class="primary-btn" data-toggle="modal" data-target="#contact_modal">Reisebüro kontaktieren</button>
-                    <button class="secondary-btn" data-toggle="modal" data-target="#myModal2">Rückrufbitte einstellen</button>
+        <section class="section-angebote-download">
+            <div class="container">
+                <div class="col-md-12">
+                    <hr class="sad-hr">
                 </div>
+                <div class="col-md-12 sa-2">
+                    @foreach($offer->offerFiles as $key => $file)
+                        <div class="col-md-4">
+                            @if (strpos($file->file, '.pdf') !== false)
+                                <i class="fal fa-file-pdf"></i>
+                            @else
+                                <i class="fal fa-file-image"></i>
+                            @endif
+
+                            <a href="{{ Storage::disk('s3')->url($offer_url . $file->file) }}" target="_blank">{{ trans('wish.view.offer_number') }} {{ $key+1 }}</a>
+                        </div>
+                    @endforeach
+                </div>
+                @if ($logged_in_user->hasRole('User') && count($wish->offers) < ($key - 1))
+                    <div class="col-md-12">
+                        <hr class="sad-hr">
+                    </div>
+                @endif
             </div>
-        </div>
-        @endif
-    </section>
-  @endif
+
+        </section>
+    @endif
 
     <div class="container">
         <div class="col-md-12">
@@ -217,6 +209,22 @@
     </div>
 
 @endforeach
+
+@if (count($wish->offers) > 0 && $logged_in_user->hasRole('User'))
+    <div class="container">
+        <div class="col-md-12 sa-2">
+            <div class="sa-buttons">
+                <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-12">
+            <hr class="sad-hr">
+        </div>
+    </div>
+@endif
 
 @if (count($wish->offers) === 0 && $logged_in_user->hasRole('Seller') && count($wish->contacts) === 0)
     <div class="container">
@@ -232,10 +240,26 @@
             <h4>
                 Neue Nachrichten <span class="glyphicon glyphicon-bell"></span>
             </h4>
-        <chat-messages :wishid="{{ $wish->id }}" :userid="{{ Auth::user()->id }}" :groupid="{{ $wish->group_id }}"></chat-messages>
-
+            <chat-messages :wishid="{{ $wish->id }}" :userid="{{ Auth::user()->id }}" :groupid="{{ $wish->group_id }}"></chat-messages>
         </div>
 </section>
+
+@if ($logged_in_user->hasRole('User') && count($wish->offers) == 0 && !$actionButtonsSet)
+    <div class="container">
+        <div class="col-md-12">
+            <hr class="sad-hr">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="col-md-12 sa-2">
+            <div class="sa-buttons">
+                <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal" data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
+                <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#callback">{{ trans('wish.details.callback-button') }}</button>
+            </div>
+        </div>
+    </div>
+@endif
 
 <div class="container">
     <div class="col-md-12">
