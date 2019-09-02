@@ -52,5 +52,5 @@
         <i class="fal fa-utensils"></i>
         <input class="data-content" value="{{ $categories->getCategoryByParentValue('catering', $wish->catering) }}">
     </div>
-    <button class="secondary-btn">Daten andern</button>
+    <!--<button class="secondary-btn">Daten andern</button>-->
 </div>
