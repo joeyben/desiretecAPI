@@ -77,7 +77,7 @@ class CreatedWishNotificationForSeller extends Notification
 
         return (new MailMessage())
             ->from($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Portal')
-            ->subject(trans('email.wish.seller'))
+            ->subject(trans('email.wish.seller', ['whitelabel' => $this->wish->whitelabel->name]))
             ->view('wishes::emails.wish_seller', ['wish' => $this->wish, 'token' => $userToken->token->token, 'user' => $notifiable]);
     }
 }
