@@ -7,7 +7,8 @@ $gutter: 30px;
 $altfont: 'Helvetica', 'Arial', sans-serif;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #00509F;
+$actioncolor: #F96500;
+$mastercolor: #6897B1;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
 
@@ -18,6 +19,20 @@ $master-blue: #70CBF4;
 // Dropdown menus
 // --------------------------------------------------
 .dt-modal {
+
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #EEEEEE !important;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #EEEEEE !important;
+  }
+
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: #EEEEEE !important;
+  }
+
   .bootstrap-select{
     &.show-tick{
       .dropdown-menu{
@@ -508,11 +523,11 @@ $master-blue: #70CBF4;
 
   button[type=submit] {
     border-radius: 4px;
-    background: #FDD22C;
+    background: $actioncolor;
 
     text-align: center;
 
-    color:  #00509F;
+    color:  #ffffff;
     font-size: 22px;
     font-weight: 500;
     line-height: 30px;
@@ -1424,7 +1439,7 @@ p.kwp-info {
       label{
         font-size: 16px;
         white-space: nowrap;
-        color: #a0a0a0;
+        color: #BBBBBB;
         padding-left: 10px;
         padding-top: 10px;
         font-weight: normal;

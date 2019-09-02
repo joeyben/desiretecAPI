@@ -244,63 +244,7 @@
 
 <section class="section-contact">
     <div class="container">
-        @if ($logged_in_user->hasRole('Seller'))
-            <div class="col-md-12 s2-first">
-                <h4>Reisewunsch Angaben</h4>
-                <p>Dies sind die Angaben zum Reisewunsch.</p>
-                <p><b>Kundennachricht:</b><br>
-                    {{ $wish->description }}
-                </p>
-            </div>
-        @else
-            <div class="col-md-12 s2-first">
-                <h4>Dein Reisewunsch</h4>
-                <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
-                <p><b>Deine Nachricht:</b><br>
-                    {{ $wish->description }}
-                </p>
-            </div>
-        @endif
-
-
-        <div class="col-md-12 s2-second">
-
-            <div class="col-md-3">
-                <i class="fal fa-plane-departure"></i>
-                <input class="data-content" value="{{ $wish->airport }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-calendar-alt"></i>
-                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.Y') }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-usd-circle"></i>
-                <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-star"></i>
-                <input class="data-content" value="{{ $wish->category }} Sterne">
-            </div>
-
-            <div class="col-md-3">
-                <i class="fal fa-plane-arrival"></i>
-                <input class="data-content" value="{{ $wish->destination }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-users"></i>
-                <input class="data-content" value="{{ $wish->adults }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-stopwatch"></i>
-                <input class="data-content" value="{{ $wish->duration }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-utensils"></i>
-                <input class="data-content" value="{{ $categories->getCategoryByParentValue('catering', $wish->catering) }}">
-            </div>
-            <button class="secondary-btn">Daten andern</button>
-        </div>
-
+        @include('frontend.wishes.partial.wish-user-details')
     </div>
 
 </section>
@@ -314,61 +258,17 @@
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion1" href="#content">
                             <div class="col-md-12 s2-first">
-                                <h4>Dein Reisewunsch</h4>
-                                <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
+                                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
+                                <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
                             </div>
-                            <span class="glyphicon glyphicon-plus"></span></a>
-                        <span class="glyphicon glyphicon-minus"></span></a>
+                            <i class="fal fa-plus"></i>
+                            <i class="fal fa-minus"></i>
                     </h4>
                 </div>
 
                 <div id="content" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <div class="col-md-12 s2-first">
-                            <p><b>Deine Nachricht:</b><br>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec purus libero, tempor eget mi vel,
-                                pellentesque sodales dui. Nam pharetra neque et nibh vehicula, ut rutrum orci varius.
-                                In quis sapien non turpis fermentum venenatis quis sed felis. Sed commodo scelerisque metus, consequat tempor turpis consectetur nec. Nullam a fermentum dolor.
-                            </p>
-                        </div>
-                        <div class="col-md-12 s2-second">
-                            <div class="col-md-3">
-                                <i class="fal fa-plane-departure"></i>
-                                <input class="data-content" value="{{ $wish->airport }}">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-calendar-alt"></i>
-                                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }}">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-usd-circle"></i>
-                                <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-star"></i>
-                                <input class="data-content" value="{{ $wish->category }} Sterne">
-                            </div>
-
-                            <div class="col-md-3">
-                                <i class="fal fa-plane-arrival"></i>
-                                <input class="data-content" value="{{ $wish->destination }}">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-users"></i>
-                                <input class="data-content" value="{{ $wish->adults }}">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-stopwatch"></i>
-                                <input class="data-content" value="{{ $wish->duration }}">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-utensils"></i>
-                                <input class="data-content" value="{{ $categories->getCategoryByParentValue('catering', $wish->catering) }}">
-                            </div>
-                            <button class="secondary-btn">Daten andern</button>
-                        </div>
-
-
+                        @include('frontend.wishes.partial.wish-user-details')
                     </div>
                 </div>
             </div>
@@ -432,23 +332,7 @@
 
                     </div>
 
-                    <div class="col-md-4 modal-body-right">
-                        <img src="/img/frontend/profile-picture/travel-agency.jpg" alt="">
-                        <h4>{{ $wish->group->users[0]->name }}</h4>
-                        <p>{{ $wish->group->users[0]->address }}<br>
-                            {{ $wish->group->users[0]->zip_code }} {{ $wish->group->users[0]->city }}
-                        </p>
-                        <div class="modal-contact">
-                            <div class="mc-tel">
-                                <span class="glyphicon glyphicon-earphone"></span>
-                                <a href="tel:08971459535">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->telephone }}@endif</a>
-                            </div>
-                            <div class="mc-mail">
-                                <span class="glyphicon glyphicon-envelope"></span>
-                                <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
-                            </div>
-                        </div>
-                    </div>
+                    @include('frontend.wishes.partial.modal-right-panel')
 
                     <div class="col-md-12 modal-body-bottom">
                         <textarea name="message" id="modal-textarea" class="form-control" placeholder="Worum geht es? Deine Nachricht an uns."></textarea>
