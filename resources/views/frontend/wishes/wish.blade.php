@@ -310,11 +310,11 @@
                     <div class="col-md-8 modal-body-left">
 
                         <div class="group">
-                            <input type="text" class="form-control name" name="first_name" id="first_name" required>
+                            <input type="text" class="form-control name" name="first_name" id="first_name" value="{{ $wish->owner->first_name }}" required>
                             <label>Name</label>
                         </div>
                         <div class="group">
-                            <input type="text" class="form-control nachname" name="last_name" id="last_name" required>
+                            <input type="text" class="form-control nachname" name="last_name" id="last_name" value="{{ $wish->owner->last_name }}" required>
                             <label>Nachname</label>
                         </div>
                         <div class="group">
@@ -322,11 +322,11 @@
                             <label>E-Mail-Adresse</label>
                         </div>
                         <div class="group">
-                            <input type="text" class="form-control tel" name="telephone" id="telephone" >
+                            <input type="text" class="form-control tel not-required" name="telephone" id="telephone" value="">
                             <label>Telefon-Nr.(optional)</label>
                         </div>
                         <div class="group">
-                            <input type="text" class="form-control betreff" name="subject" id="subject" >
+                            <input type="text" class="form-control betreff" name="subject" id="subject" required autocomplete="off">
                             <label>Betreff</label>
                         </div>
 
@@ -376,11 +376,11 @@
                     <div class="col-md-8 modal-body-left">
 
                         <div class="group">
-                            <input type="text" class="form-control name" name="first_name" id="first_name_" required>
+                            <input type="text" class="form-control name" name="first_name" id="first_name_" value="{{ $wish->owner->first_name }}" required>
                             <label>Vorname</label>
                         </div>
                         <div class="group">
-                            <input type="text" class="form-control nachname" name="last_name" id="first_name_" required>
+                            <input type="text" class="form-control nachname" name="last_name" id="last_name_" value="{{ $wish->owner->last_name }}" required>
                             <label>Nachname</label>
                         </div>
                         <div class="group">

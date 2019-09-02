@@ -1070,17 +1070,16 @@ var exitIntent = window.exitIntent || {};
 
     dt.initCallbacks = dt.initCallbacks || [];
     dt.initCallbacks.push(function (popup) {
-			  exitIntent.init();
-			  document.addEventListener('exit-intent', function (e) {
+        exitIntent.init();
+        document.addEventListener('exitintent', function (e) {
             if(!exitIntent.checkCookie()) {
                 popup.show();
-
                 // set cookies
-                exitIntent.cookieManager.create("exit_intent", "true", exitIntent.cookieExp, exitIntent.sessionOnly);
+                exitIntent.cookieManager.create("exitintent", "yes", exitIntent.cookieExp, exitIntent.sessionOnly);
                 var exitIntentNumber = exitIntent.cookieManager.get("exit_intent_number") ? Number(exitIntent.cookieManager.get("exit_intent_number")) + 1 : 1;
                 exitIntent.cookieManager.create("exit_intent_number", exitIntentNumber, exitIntent.cookieExp, exitIntent.sessionOnly);
             }
-       }, false);
+        }, false);
     });
 
 
@@ -1155,24 +1154,19 @@ var exitIntent = window.exitIntent || {};
     };
 
     dt.triggerButton = function(e){
-        e && e.preventDefault();
         $("body").on('click tap','.trigger-modal',function () {
             $("body").addClass('mobile-layer');
-            $("body, html").css({'overflow':'hidden'});
-            dt.PopupManager.shown = true;
-            dt.PopupManager.modal.removeClass('tmp-hidden').removeClass('swipe-right').removeClass('swipe-left');
+            if(dt.PopupManager.teaserSwiped){
+                dt.showMobileLayer();
+            }else{
+                dt.PopupManager.shown = true;
+            }
+            dt.PopupManager.modal.removeClass('tmp-hidden');
             $(this).remove();
             ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
         });
 
-        $( ".kwp-header" ).swipe( {
-            tap:function(e, target) {
-                var $event = e;
-                if($( ".dt-modal" ).hasClass('m-open')){
-                    dt.PopupManager.closePopup($event);
-                }
-            }
-        });
+
     }
 
     dt.showMobileLayer = function (e) {

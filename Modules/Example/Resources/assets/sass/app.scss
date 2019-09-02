@@ -32,6 +32,9 @@
     right: 0;
     text-align: center;
     a{
+      @media screen and (max-width: $break-small) {
+        font-size: 18px;
+      }
       font-size: 26px;
       text-transform: uppercase;
       padding: 10px 50px;
