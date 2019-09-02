@@ -354,8 +354,8 @@ if (!function_exists('isWhiteLabel')) {
      */
     function isWhiteLabel()
     {
-        $url = str_replace('http://', '', url('/'));
-        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
+        $url = str_replace(['http://', 'https://'], ['',''], url('/'));
+        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('id');
 
         return null !== $id;
     }

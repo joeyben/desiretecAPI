@@ -78,7 +78,7 @@ class MessageCreated extends Notification
     public function toMail()
     {
         $confirmation_url = route($this->getRoute(), [$this->wish_id, $this->token]);
-        $subject = trans('email.message.created-' . $this->type);
+        $subject = trans('email.message.created-' . $this->type, ['whitelabel' => $this->wl_name]);
         $view = 'emails.messages.created-' . $this->type;
 
         return (new MailMessage())

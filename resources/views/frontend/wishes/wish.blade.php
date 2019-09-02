@@ -233,7 +233,8 @@
                 Neue Nachrichten <span class="glyphicon glyphicon-bell"></span>
             </h4>
         <chat-messages :wishid="{{ $wish->id }}" :userid="{{ Auth::user()->id }}" :groupid="{{ $wish->group_id }}"></chat-messages>
-    </div>
+
+        </div>
 </section>
 
 <div class="container">
@@ -300,8 +301,8 @@
             {{ Form::open(['route' => 'frontend.contact.store', 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'contact-seller']) }}
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Kontakt zum zuständigen Reisebüro</h4>
-                <p>Schreibe dem zuständigen Reisebüro eine Nachricht oder nutze den <a href="#">Rückruf-Service</a></p>
+                <h4 class="modal-title">{{ trans('wish.contact.title') }}</h4>
+                <p>{!! trans('wish.contact.text') !!}</p>
             </div>
 
             <div class="modal-body">
