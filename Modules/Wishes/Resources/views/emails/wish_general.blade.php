@@ -202,22 +202,7 @@
                                     Anschließend können Sie sich Ihre persönlichen Angebote im NOVASOL Reisewunschportal anschauen.
                                     </td>
                                 <td colspan="2">
-                                    <p>
-                                        {{ trans('email.offer.header', ['whitelabel' => ucfirst($wish->whitelabel->display_name)]) }}
-                                    </p>
-
-                                    <p>
-                                        {{ trans('email.offer.body', ['whitelabel' => ucfirst($wish->whitelabel->display_name)]) }}
-                                    </p>
-
-                                    <p>
-                                        Sie können diese unter dem folgenden Link direkt aufrufen:
-                                            <a href="{{ $wish->whitelabel->domain.'/wish/'.$wish->id }}">
-                                                {{ $wish->whitelabel->domain.'/wish/'.$wish->id }}
-                                            </a>
-                                        {{-- trans('email.offer.link', ['link' => $wish->whitelabel->domain.'/wish/'.$wish->id]) --}}
-                                    </p>
-
+                                    {!!  trans('email.offer.body', ['whitelabel' => ucfirst($wish->whitelabel->display_name), 'link' => $wish->whitelabel->domain.'/wish/'.$wish->id]) !!}
                                     {{ trans('email.offer.footer') }}
                                 </td>
                             </tr>
