@@ -118,39 +118,16 @@
                 </div>
             </div>
         </div>
+        <div class="kwp-col-3 pax-col main-col">
+        </div>
+
         <div class="kwp-row">
-            <div class="kwp-col-3 rangeslider-wrapper">
-                <div class="kwp-form-group ">
-                    {{ Form::label('budget', trans('overland::layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', old('budget'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('overland::layer.placeholder.budget'), 'required' => 'required']) }}
-                </div>
-                <span class="text">&nbsp;</span>
-                <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
-            </div>
-
-            <div class="kwp-col-3 white-col stars">
-                <div class="kwp-form-group">
-                    {{ Form::label('category', trans('overland::layer.general.category'), ['class' => 'control-label required']) }}
-                    {{ Form::number('category', old('category'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('overland::layer.placeholder.category')]) }}
-
-                    <span class="text">ab 0 Sonnen</span>
-                    <div class="kwp-star-input">
-                        <span class="kwp-star kwp-star-full" data-val="1"></span>
-                        <span class="kwp-star" data-val="2"></span>
-                        <span class="kwp-star" data-val="3"></span>
-                        <span class="kwp-star" data-val="4"></span>
-                        <span class="kwp-star" data-val="5"></span>
-                    </div>
-                    <script>dt.hotelStars();</script>
+            <div class="kwp-col-4">
+                <div class="kwp-form-group category-col">
+                    {{ Form::label('klasse', trans('overland::layer.general.klasse'), ['class' => 'control-label required']) }}
+                    {{ Form::select('category', $class_arr, ['class' => 'form-control box-size']) }}
                 </div>
             </div>
-
-            <div class="kwp-col-3 white-col catering">
-                {{ Form::label('catering', trans('overland::layer.general.catering'), ['class' => 'control-label required']) }}
-                    {{ Form::select('catering', $catering_arr, '',['class' => 'selectpicker']) }}
-                <i class="master-icon--chevron-down"></i>
-            </div>
-
         </div>
 
         <div class="kwp-row">

@@ -34,6 +34,7 @@ class OverlandWishesController extends Controller
     protected $adults = [];
     protected $kids = [];
     protected $duration = [];
+    protected $class = [];
     protected $categories;
     protected $category = [
         '1'  => 1,
@@ -77,6 +78,7 @@ class OverlandWishesController extends Controller
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
+        $this->class = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'class'));
         $this->categories = $categories;
     }
 
@@ -119,6 +121,7 @@ class OverlandWishesController extends Controller
             'kids_arr'     => $this->kids,
             'duration_arr' => $this->duration,
             'adults_arr'   => $this->adults,
+            'class_arr'    => $this->class,
             'is_owner'            => $isOwner
         ]);
 
