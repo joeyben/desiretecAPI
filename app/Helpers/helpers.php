@@ -568,11 +568,28 @@ if (!function_exists('getWhitelabelFooterUrl')) {
     function getWhitelabelFooterUrl(){
         $name = getCurrentWhiteLabelField('name');
         $footerUrl = '_parts.footer.';
-        if(is_null($name)){
+        if(is_null($name) and !is_file($footerUrl.strtolower($name))){
             return $footerUrl.'default';
         }
 
         return $footerUrl.strtolower($name);
     }
 }
+
+
+
+if (!function_exists('getApiByWhitelabel')) {
+    /**
+     * return url(blade-format = with dot as seperator) to the whitelabel-footer.
+     *
+     * @return string
+     */
+    function getApiByWhitelabel(){
+        $name = getCurrentWhiteLabelField('name');
+
+
+    }
+}
+
+
 
