@@ -35,8 +35,12 @@ return [
     'offer'   => [
         'created'        => 'Sie haben erfolgreich ein Angebot erstellt',
         'created_user'   => 'Es gibt ein neues Angebot für Ihren :whitelabel Reisewunsch!',
-        'header'         => 'Hallo lieber :whitelabel Kunde!',
-        'body'           => 'Herzlichen Glückwunsch! Wir haben neue passende :whitelabel Angebote für Ihren Reisewunsch gefunden.',
+        'header'         => 'Hallo!',
+        'body'           => "<p>Hallo! </p>
+                            <p>Herzlich willkommen bei Ihrem :whitelabel Reisewunschportal. </p>
+                            <p>Sie haben sich soeben registriert und Ihr Reisewunsch <a href=\':link\'>:link</a> wurde erfolgreich an uns übermittelt.</p>
+                            <p>Wir suchen gerade nach passenden Angeboten für Ihren persönlichen Reisewunsch und informieren Sie in wenigen Minuten per E-Mail darüber.</p>
+                            <p>Anschließend können Sie sich Ihre persönlichen Angebote im :whitelabel Reisewunschportal anschauen.</p>",
         'link'           => "Sie können diese unter dem folgenden Link direkt aufrufen <a href=':link'>:link</a>",
         'footer'         => 'Wir hoffen, dass Ihnen die Angebote zusagen. Bei Fragen stehen Ihnen unsere Reiseberater jederzeit zur Verfügung.',
         'novasol_created_user'      => [
