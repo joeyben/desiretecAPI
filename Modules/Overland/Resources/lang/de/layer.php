@@ -29,6 +29,7 @@ return [
         'email'            => 'Ihre E-Mail-Adresse',
         'name'             => 'Name',
         'terms'            => 'Name',
+        'klasse'           => 'Klasse',
     ],
     'placeholder' => [
         'title'            => 'Wish Title',
@@ -45,5 +46,6 @@ return [
         'duration'         => 'Bitte auswählen',
         'email'            => 'max.mustermann@urlaub.de',
         'name'             => 'Name',
+        'klasse'           => 'Klasse',
     ],
 ];

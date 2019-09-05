@@ -6,7 +6,7 @@ $gutter: 30px;
 $altfont: 'Comfortaa', cursive;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #092a5e;
+$mastercolor: #fdcd0b;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
 
@@ -354,7 +354,7 @@ $master-blue: #70CBF4;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: #fdcd0b;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -444,7 +444,7 @@ $master-blue: #70CBF4;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: #fdcd0b;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -565,11 +565,11 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/header_overland.jpg) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/visual_ipad_smile_TUI_auto.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/header_overland.jpg) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
@@ -1247,8 +1247,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid #092A59;
-          background-color: #092A59;
+          border: 1px solid $mastercolor;
+          background-color: $mastercolor;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1341,7 +1341,7 @@ p.kwp-info {
         background-color: transparent;
         font-weight: 500;
         border-bottom: 1px solid $mastergrey;
-        color: $mastercolor;
+        color: #17212b;
         border-radius: 0;
         padding: 0 10px;
         font-size: 14px;
@@ -1384,7 +1384,7 @@ p.kwp-info {
           margin-bottom: 0px;
           padding: 3px 0;
           font-size: 14px;
-          color: $mastercolor;
+          color: #17212b;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1451,7 +1451,7 @@ p.kwp-info {
         ~ .rangeslider--horizontal{
           background: #D40E14;
           .rangeslider__handle{
-            border-color: #D40E14;
+            border-color: $mastercolor;
           }
         }
         .dd-trigger{
@@ -1478,7 +1478,7 @@ p.kwp-info {
       border-radius: 0;
       padding: 0 10px;
       font-size: 14px;
-      color: $mastercolor;
+      color: #17212b;
     }
     .kwp-custom-select{
       #catering{
@@ -1596,4 +1596,11 @@ and (max-device-width : 320px) {
 
 
 
+}
+
+.category-col select{
+  border: none !important;
+}
+.category-col{
+  border-bottom: 1px solid #737373;
 }
