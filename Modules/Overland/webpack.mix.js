@@ -18,6 +18,7 @@ mix.scripts(
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
         base_url + '/resources/assets/js/layer/exitintent-new.js',
+        base_url + '/resources/assets/js/layer/touchswipe.js',
         base_url + '/node_modules/js-cookie/src/js.cookie.js',
         base_url + '/resources/assets/js/layer/base.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',
@@ -26,18 +27,24 @@ mix.scripts(
     ], __dirname + '/../../public/whitelabel/overland/js/layer/layer.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
+        base_url + '/resources/assets/js/layer/touchswipe.js',
         base_url + '/node_modules/js-cookie/src/js.cookie.js',
         base_url + '/resources/assets/js/layer/base.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/overland/js/layer/layer-locale.js')
     .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/overland/css/layer/layer.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/overland/css/layer/layer_mobile.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/overland/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/overland/css/overland.css')
     .styles([
         base_url + '/public/whitelabel/overland/css/datepicker.css',
         base_url + '/public/whitelabel/overland/css/layer/layer.css',
     ], __dirname + '/../../public/whitelabel/overland/css/layer/whitelabel.css')
+  .styles([
+      base_url + '/public/whitelabel/overland/css/datepicker.css',
+      base_url + '/public/whitelabel/overland/css/layer/layer_mobile.css',
+  ], __dirname + '/../../public/whitelabel/overland/css/layer/whitelabel_mobile.css')
     .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/overland/images/')
     .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/overland/svg/');
 if (mix.inProduction()) {
