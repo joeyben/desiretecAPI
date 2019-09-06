@@ -37,6 +37,7 @@ RUN cd /myapp/Modules/Reiseexperten && yarn install --ignore-engines && npm run 
 RUN cd /myapp/Modules/Lastminute && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Overland && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Example && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Dolphin && yarn install --ignore-engines && npm run production
 
 
 FROM horrorhorst/laravel-base:latest
