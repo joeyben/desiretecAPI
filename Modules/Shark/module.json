@@ -1,0 +1,16 @@
+{
+    "name": "Shark",
+    "alias": "shark",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Shark\\Providers\\SharkServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
