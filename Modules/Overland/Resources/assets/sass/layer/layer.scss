@@ -1604,3 +1604,22 @@ and (max-device-width : 320px) {
 .category-col{
   border-bottom: 1px solid #737373;
 }
+.duration-col{
+  width: calc(40% - 10px);
+  margin-right: 12px !important;
+}
+.pax-col,.class-col{
+  width: calc(30% - 10px);
+}
+.pax-col{
+  margin-right: 12px;
+}
+.error-input,.email-col span{
+  display: block;
+  background: #ED1C24;
+  padding: 0 10px;
+  color: #fff;
+}
+.dt_terms.hasError:after{
+  border: 1px solid red !important;
+}
