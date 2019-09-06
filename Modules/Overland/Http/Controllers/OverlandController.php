@@ -19,6 +19,7 @@ class OverlandController extends Controller
     protected $kids = [];
     protected $catering = [];
     protected $duration = [];
+    protected $class = [];
 
     private $whitelabelId;
 
@@ -41,6 +42,7 @@ class OverlandController extends Controller
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
+        $this->class = $categories->getChildrenFromSlug('slug', 'class');
         $this->whitelabelId = \Config::get('overland.id');
     }
 
@@ -77,6 +79,7 @@ class OverlandController extends Controller
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
+            'class_arr'    => $this->class,
             'request' => $request->all()
         ])->render();
 
@@ -103,6 +106,7 @@ class OverlandController extends Controller
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
+                'class_arr'    => $this->class,
                 'request' => $request->all()
             ])->render();
 

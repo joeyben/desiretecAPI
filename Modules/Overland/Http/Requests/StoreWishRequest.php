@@ -71,7 +71,8 @@ class StoreWishRequest extends FormRequest
             'earliest_start'  => 'required',
             'latest_return'   => 'required',
             'adults'          => 'required',
-            'email'           => 'required|email'
+            'email'           => 'required|email',
+            'terms'           => 'required',
         ];
     }
 

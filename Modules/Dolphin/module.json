@@ -1,0 +1,16 @@
+{
+    "name": "Dolphin",
+    "alias": "dolphin",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Dolphin\\Providers\\DolphinServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

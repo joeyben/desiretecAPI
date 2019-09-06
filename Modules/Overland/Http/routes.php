@@ -1,8 +1,8 @@
 <?php
 $domain_env = array(
-    'local_url' => 'traveloverland.com',
-    'development_url' => 'traveloverland.reise-wunsch.com',
-    'production_url' => 'traveloverland.reisewunschservice.de',
+    'local_url' => 'overland.com',
+    'development_url' => 'overland.reise-wunsch.com',
+    'production_url' => 'overland.reisewunschservice.de',
 );
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
@@ -10,7 +10,7 @@ $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 Route::group(['domain' => $domain], function () {
     setCurrentWhiteLabelId(\Config::get('overland.id'));
     setTranslationLoaderModel(\Config::get('overland.language_lines_model'));
-    Route::group(['middleware' => 'web', 'namespace' => 'Modules\Overland\Http\Controllers', 'as' => 'traveloverland.'], function () {
+    Route::group(['middleware' => 'web', 'namespace' => 'Modules\Overland\Http\Controllers', 'as' => 'overland.'], function () {
         Route::get('/', 'OverlandController@index');
         Route::get('show', 'OverlandController@show');
         Route::get('store', 'OverlandController@store')->name('store');
