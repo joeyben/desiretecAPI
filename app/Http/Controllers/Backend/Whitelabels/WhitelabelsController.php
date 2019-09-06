@@ -10,6 +10,8 @@ use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Distributions\DistributionsRepository;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use Illuminate\Routing\ResponseFactory;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 /**
  * Class WhitelabelsController.
@@ -81,6 +83,18 @@ class WhitelabelsController extends Controller
         }
 
         return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
+    }
+
+    public function compile()
+    {
+
+        $whitelabelName = ucfirst(access()->user()->whitelabels[0]->name);
+        $process = new Process("cd ../Modules/$whitelabelName && npm install && npm run dev");
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+        echo $process->getOutput();
     }
 
     /**

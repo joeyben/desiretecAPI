@@ -239,6 +239,15 @@
                         </li>
                     @endif
 
+                    @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.whitelabels.compile') }}" class="nav-link">
+                                <i class="icon-atom2"></i>
+                                <span>{{ __('labels.compile') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
                     @if($module->has('Users')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
                         @permission('view-access-management')
                             @permission('view-seller-management')
