@@ -568,7 +568,7 @@ if (!function_exists('getWhitelabelFooterUrl')) {
     function getWhitelabelFooterUrl(){
         $name = getCurrentWhiteLabelField('name');
         $footerUrl = '_parts.footer.';
-        if(is_null($name) and !file_exists($footerUrl.strtolower($name))){
+        if(is_null($name) or !file_exists($footerUrl.strtolower($name))){
             return $footerUrl.'default';
         }
 
