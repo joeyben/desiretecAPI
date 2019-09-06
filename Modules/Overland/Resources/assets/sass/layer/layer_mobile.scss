@@ -1,20 +1,300 @@
 @import "utils";
 @import "rangeslider";
 @import "bootstrap-select";
+@import "../variables";
 
 $gutter: 30px;
-$altfont: 'Comfortaa', cursive;
+$altfont: 'Roboto', sans-serif;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #fdcd0b;
+$mastercolor: #ed1c24;
+$secondarycolor: #fd0;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
+$fontcolor: #303030;
+/* dropdown */
+
+
+//
+// Dropdown menus
+// --------------------------------------------------
+.dt-modal {
+  .bootstrap-select{
+    &.show-tick{
+      .dropdown-menu{
+        .selected{
+          span.check-mark{
+            background-image: url(../../svg/check.svg);
+            background-size: 20px;
+            background-position: right;
+            height: 20px;
+            width: 20px;
+            background-repeat: no-repeat;
+            top: 2px;
+            right: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  // Dropdown arrow/caret
+  .caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: $caret-width-base solid;
+    border-right: $caret-width-base solid transparent;
+    border-left: $caret-width-base solid transparent;
+  }
+
+  // The dropdown wrapper (div)
+  .dropdown {
+    position: relative;
+  }
+
+  // Prevent the focus on the dropdown toggle when closing dropdowns
+  .dropdown-toggle:focus {
+    outline: 0;
+  }
+
+  // The dropdown menu (ul)
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: $zindex-dropdown;
+    display: none; // none by default, but block on "open" of the menu
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0; // override default ul
+    list-style: none;
+    font-size: $font-size-base;
+    background-color: $dropdown-bg;
+    border: 1px solid $dropdown-fallback-border; // IE8 fallback
+    border: 1px solid $dropdown-border;
+    border-radius: $border-radius-base;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    background-clip: padding-box;
+
+    .selected {
+      background: #dedede;
+      color: #fff;
+      border: none !important;
+    }
+
+    // Aligns the dropdown menu to right
+    //
+    // Deprecated as of 3.1.0 in favor of `.dropdown-menu-[dir]`
+    &.pull-right {
+      right: 0;
+      left: auto;
+    }
+
+    // Links within the dropdown menu
+    > li > a {
+      display: block;
+      padding: 3px 20px;
+      clear: both;
+      font-weight: normal;
+      line-height: $line-height-base;
+      color: $dropdown-link-color;
+      white-space: nowrap; // prevent links from randomly breaking onto new lines
+    }
+  }
+
+  // Hover/Focus state
+  .dropdown-menu > li > a {
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: $dropdown-link-hover-color;
+      background-color: $dropdown-link-hover-bg;
+    }
+  }
+
+  // Active state
+  .dropdown-menu > .active > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $dropdown-link-active-color;
+      text-decoration: none;
+      outline: 0;
+      background-color: $dropdown-link-active-bg;
+    }
+  }
+
+  // Disabled state
+  //
+  // Gray out text and ensure the hover/focus state remains gray
+
+  .dropdown-menu > .disabled > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $dropdown-link-disabled-color;
+    }
+  }
+
+  // Nuke hover/focus effects
+  .dropdown-menu > .disabled > a {
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      background-color: transparent;
+      background-image: none; // Remove CSS gradient
+      cursor: not-allowed;
+    }
+  }
+
+  // Open state for the dropdown
+  .open {
+    // Show the menu
+    > .dropdown-menu {
+      display: block;
+    }
+
+    // Remove the outline when :focus is triggered
+    > a {
+      outline: 0;
+    }
+  }
+
+  // Menu positioning
+  //
+  // Add extra class to `.dropdown-menu` to flip the alignment of the dropdown
+  // menu with the parent.
+  .dropdown-menu-right {
+    left: auto; // Reset the default from `.dropdown-menu`
+    right: 0;
+  }
+
+  // With v3, we enabled auto-flipping if you have a dropdown within a right
+  // aligned nav component. To enable the undoing of that, we provide an override
+  // to restore the default dropdown menu alignment.
+  //
+  // This is only for left-aligning a dropdown menu within a `.navbar-right` or
+  // `.pull-right` nav component.
+  .dropdown-menu-left {
+    left: 0;
+    right: auto;
+  }
+
+  // Dropdown section headers
+  .dropdown-header {
+    display: block;
+    padding: 3px 20px;
+    font-size: $font-size-small;
+    line-height: $line-height-base;
+    color: $dropdown-header-color;
+  }
+
+  // Backdrop to catch body clicks on mobile, etc.
+  .dropdown-backdrop {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: ($zindex-dropdown - 10);
+  }
+
+  // Right aligned dropdowns
+  .pull-right > .dropdown-menu {
+    right: 0;
+    left: auto;
+  }
+
+  // Allow for dropdowns to go bottom up (aka, dropup-menu)
+  //
+  // Just add .dropup after the standard .dropdown class and you're set, bro.
+  // TODO: abstract this so that the navbar fixed styles are not placed here?
+
+  .dropup,
+  .navbar-fixed-bottom .dropdown {
+    // Reverse the caret
+    .caret {
+      border-top: 0;
+      border-bottom: $caret-width-base solid;
+      content: "";
+    }
+
+    // Different positioning for bottom up menu
+    .dropdown-menu {
+      top: auto;
+      bottom: 100%;
+      margin-bottom: 1px;
+    }
+  }
+}
+
+// Component alignment
+//
+// Reiterate per navbar.less and the modified component alignment there.
+
+@media (min-width: $grid-float-breakpoint) {
+  .navbar-right {
+    .dropdown-menu {
+      right: 0; left: auto;
+    }
+    // Necessary for overrides of the default right aligned menu.
+    // Will remove come v4 in all likelihood.
+    .dropdown-menu-left {
+      left: 0; right: auto;
+    }
+  }
+}
+
+
 
 @include make-columns(12, $gutter - 5px, 'kwp-');
 
 
 .rangeslider__fill{
   background-color: $mastercolor;
+}
+
+/**** Datepicker ****/
+.ui-datepicker {
+  z-index: 100001 !important;
+}
+.datepicker-dropdown .day, .datepicker-dropdown .month, .datepicker-dropdown .year {
+  background-color: #fff;
+  border-bottom: 1px solid #f3f0ec;
+  border-radius: 0;
+  color: $mastercolor;
+  font-weight: 300;
+  height: 40px;
+}
+.datepicker table tr td, .datepicker table tr th {
+  border: medium none;
+  border-radius: 4px;
+  height: 30px;
+  text-align: center;
+  width: 30px;
+  font-weight: normal;
+}
+.datepicker-dropdown .day.active, .datepicker-dropdown .day.active.active:hover, .datepicker-dropdown .day.active:hover,.datepicker-dropdown .day.active.active:hover:hover, .datepicker-dropdown .month.active, .datepicker-dropdown .month.active.active:hover, .datepicker-dropdown .month.active:hover, .datepicker-dropdown .month.active.active:hover:hover, .datepicker-dropdown .year.active, .datepicker-dropdown .year.active.active:hover, .datepicker-dropdown .year.active:hover, .datepicker-dropdown .year.active.active:hover:hover {
+  background-color: $mastercolor;
+  border-color: transparent;
+  color: #fff;
+  text-shadow: none;
+}
+.datepicker .datepicker-switch{
+  color: $mastercolor;
+  font-weight: 700;
+}
+
+.kwp-col-time {
+  @extend .kwp-col-12;
+
+  .kwp-show-ages & {
+    @extend .kwp-col-8;
+  }
 }
 
 .kwp-col-ages {
@@ -41,11 +321,11 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #092a5e url(../../images/layer/guy_2.png) no-repeat bottom / 100%;
+  background: $secondarycolor url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
-  color: #fff;
+  color: $fontcolor;
   box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.1);
   /*transition: all 0.5s ease;
    -webkit-transition: all 0.5s ease;
@@ -94,33 +374,16 @@ $master-blue: #70CBF4;
   top: 0;
   z-index: $zindex;
 
-  font-size: 14px;
+  font-size: 15px;
   line-height: 19px;
-  font-family: $altfont;
-
-  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #dedede !important;
-    opacity: 1; /* Firefox */
-  }
-
-  :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #dedede !important;
-  }
-
-  ::-ms-input-placeholder { /* Microsoft Edge */
-    color: #dedede !important;
-  }
-
-  textarea:focus, input:focus{
-    outline: none !important;
-    box-shadow: none;
+  *:focus {
+    outline: none;
   }
   .teaser{
     height: 90px !important;
     top: -110px;
-    background-color: rgba(9,42,94,0.8);
-    background-image: url(../../images/layer/guy_2.png);
-    width: 55%;
+    background-color: rgba(255, 221, 0, 0.8);
+    width: 95%;
     padding: 0 0px;
     margin: auto;
     background-size: 100px;
@@ -149,17 +412,19 @@ $master-blue: #70CBF4;
     h1{
       font-size: 24px;
       margin: 10px;
-      padding-left: 90px;
-      text-align: left;
+      text-align: center;
       padding-top: 20px;
-      color: white;
+      color: $fontcolor;
+      line-height: 1.5em;
     }
     i{
       position: absolute;
-      color: #fff;
+      color: $fontcolor;
       right: 0px;
       top: 7px;
-      font-size: 40px;
+      font-size: 30px;
+      width: 30px;
+      height: 30px;
     }
   }
   &.tmp-hidden{
@@ -205,12 +470,14 @@ $master-blue: #70CBF4;
 
 .kwp {
   background: #fff;
+  /*border: 1px solid #efefef;*/
   width: 760px;
-  margin: 25px auto 0 auto;
+  margin: 100px auto 50px auto;
 
-  font-family: $altfont;
-  border-radius: 0;
-  box-shadow: 0 0 4px 0px rgba(0,0,0,0.15);
+  border-radius: $eil-border-radius;
+
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+
   transition: transform 0.1s ease-out, opacity 0.15s ease-out;
   position: relative;
 
@@ -241,22 +508,24 @@ $master-blue: #70CBF4;
   }
 
   button[type=submit] {
-    border-radius: 3px;
-    background: $mastercolor;
+    border-radius: 4px;
+    background: #FDD22C;
 
     text-align: center;
 
-    font-family: $altfont;
-    color:  #fff;
-    font-size: 18px;
-    font-weight: 700;
+    color:  $fontcolor;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 30px;
 
     display: block;
     width: 100%;
     border: none;
-    padding: 15px;
-    margin-top: 5px;
-    &:active {
+    padding: 20px;
+
+    &:active, &:hover {
+      background: #FFB800;
+      color: #fff;
     }
     &.error-button{
       background: #D40E14;
@@ -266,7 +535,7 @@ $master-blue: #70CBF4;
   /* TUI INPUT STYLES FOR WL */
 
 
-  input[type="text"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"], input[type="tel"], textarea {
+  input[type="text"], input[type="number"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"], input[type="tel"], textarea {
     -webkit-transition: border-color .3s ease;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
@@ -280,15 +549,14 @@ $master-blue: #70CBF4;
     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
     -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
     box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
-    padding-left: 10px;
+    padding-left: 7px;
     outline: none;
     border: 1px solid #aaa;
-    color: $mastercolor;
-    font-size: 14px;
-    font-family: $altfont;
+    color: $fontcolor;
+    font-size: 12px;
   }
 
-  input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus {
+  input[type="text"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="number"]:focus,input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus {
     -webkit-transition: border-color .3s ease;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
@@ -339,7 +607,7 @@ $master-blue: #70CBF4;
         position: absolute;
         top: 100%;
         background: #f3f0ec;
-        padding: 5px 10px 30px;
+        padding: 5px 10px 20px;
         left: -1px;
         border-top: none;
         width: calc(100% + 2px);
@@ -353,20 +621,24 @@ $master-blue: #70CBF4;
         }
         .button{
           background: transparent;
+          display: block;
+          margin-bottom: 0;
+          height: auto;
           a{
-            background: #fdcd0b;
+            background: $secondarycolor;
             width: 100%;
-            padding: 10px;
+            padding: 20px;
             font-size: 18px;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: #fff;
+            color: $fontcolor;
           }
         }
         hr{
           border-top: 1px solid #b9b9b9;
           margin-top: 10px;
+          margin-bottom: 20px;
         }
       }
     }
@@ -406,7 +678,7 @@ $master-blue: #70CBF4;
         position: absolute;
         top: 100%;
         background: #f3f0ec;
-        padding: 5px 10px 30px;
+        padding: 5px 10px 20px;
         left: -1px;
         border-top: none;
         width: calc(100% + 2px);
@@ -415,16 +687,16 @@ $master-blue: #70CBF4;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #092a5e;
+              color: $secondarycolor;
               padding: 0;
               margin: 20px 0;
-              font-size: 15px !important;
+              font-size: 20px !important;
             }
             .kwp-col-3{
               background-color: #fff;
               padding: 0;
               width: 30%;
-              margin-right: 12px;
+              margin-right: 15px;
               &:last-child{
                 margin-right: 0px;
               }
@@ -443,41 +715,29 @@ $master-blue: #70CBF4;
         }
         .button{
           background: transparent;
+          height: auto;
+          display: block;
+          margin-bottom: 0;
           a{
-            background: #fdcd0b;
+            background: $secondarycolor;
             width: 100%;
-            padding: 10px;
+            padding: 20px;
             font-size: 18px;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: #fff;
+            color: $fontcolor;
           }
         }
         hr{
           border-top: 1px solid #b9b9b9;
           margin-top: 10px;
+          margin-bottom: 20px;
         }
       }
     }
   }
 
-  .bootstrap-select {
-    > .dropdown-toggle{
-      box-shadow: none;
-      border: none;
-      background: transparent;
-      &:focus{
-        background: transparent;
-        padding: 2px 10px;
-      }
-      &:hover{
-        background: transparent !important;
-        padding: 2px 10px;
-        border: none !important;
-      }
-    }
-  }
 }
 
 .kwp.dt-modal-visible  {
@@ -511,12 +771,10 @@ ul.kwp-form-errors {
   margin: 2px 0 0 0;
   font-size: 11px;
   color: #DB8021;
-  font-family: $altfont;
 }
 
 .kwp-form-email-hint {
   font-size: 14px;
-  font-family: $altfont;
   color: #64C3D7;
   display: none;
   cursor: pointer;
@@ -529,9 +787,9 @@ ul.kwp-form-errors {
 }
 
 .kwp-logo {
-  display: block;
+  display: none;
   height: 50px;
-  background: transparent url(../../images/layer/none.png) no-repeat left top;
+  background: transparent url(../../images/layer/logo.png) no-repeat left top;
 }
 
 
@@ -556,7 +814,6 @@ ul.kwp-form-errors {
 
   p {
     margin: 10px 0 0 0;
-    font-family: $altfont;
     color: #818181;
     font-size: 17px;
     font-weight: 400;
@@ -565,13 +822,33 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/header_overland.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/visual_2_smile_TUI.jpg) no-repeat center center;
   min-height: 40px;
-  background-size: cover;
-  &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/header_overland.jpg) no-repeat center center;
-    background-size: cover;
+  &.kwp-variant-eil-at{
+    .kwp-header-content {
+      p {
+        width: 430px;
+        color: #555;
+      }
+    }
   }
+  &.kwp-variant-eil-d-agent1a,
+  &.kwp-variant-eil-d-agent1b,
+  &.kwp-variant-eil-d-agent1c,
+  &.kwp-variant-eil-d-agent2a,
+  &.kwp-variant-eil-d-agent2b,
+  &.kwp-variant-eil-d-agent2c,
+  &.kwp-variant-eil-n4 {
+    background-image: url(../../images/layer/visual_2_smile_TUI.jpg);
+
+    .kwp-header-content {
+      p {
+        width: 430px;
+        color: #555;
+      }
+    }
+  }
+
   &.kwp-variant-eil-d-beach2 {
     background-image: url(../../images/layer/visual_2_smile_TUI.jpg);
 
@@ -646,6 +923,13 @@ ul.kwp-form-errors {
   }
 }
 .kwp-footer {
+  background: #fff;
+  padding: $gutter;
+  z-index: 99999999;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
   &.kwp-with-expansion {
     border-top: solid 2px #FCE237;
     padding-top: 40px;
@@ -686,6 +970,7 @@ p.kwp-info {
   position: relative;
   min-height: 150px;
   background: #f2f2f2;
+  border-radius: 0 0 $eil-border-radius $eil-border-radius;
   height: calc(100% - 40px);
   form, .kwp-minimal{
     height: 100%;
@@ -699,13 +984,11 @@ p.kwp-info {
       border: solid 1px #cc0066;
       color: #fff;
       text-shadow: initial;
-      font-family: 'Foco W02 Light',sans-serif;
       &:hover{
         background: #f39;
       }
     }
     input[type="text"]{
-      font-family: 'Foco W02 Light',sans-serif;
       border-radius: 4px !important;
       &:focus,&:hover{
         border-color: #cc0066;
@@ -757,18 +1040,22 @@ p.kwp-info {
 .kwp-agb {
   padding-top: 4px;
   font-size: 12px;
-  font-family: $altfont;
 
   input {
     vertical-align: middle;
     float: left;
+    &.hasError{
+      &:after{
+        border: 2px solid #DB2128 !important;
+      }
+    }
   }
   p{
     padding-left: 40px;
-    font-size: 12px;
+    font-size: 18px;
     line-height: 1.3em;
     a {
-      color: $master-blue !important;
+      color: #70CBF4 !important;
       text-decoration: none;
     }
   }
@@ -791,13 +1078,14 @@ p.kwp-info {
   z-index: 1;
   opacity:1;
 }
+
 .destination{
   .kwp-custom-select {
     border: none;
     box-shadow: none;
     background: transparent;
   }
-  .master-icon--aircraft-down, .master-icon--location-fill{
+  .tui-icon--aircraft-down, .tui-icon--location-fill{
     display: none;
   }
   .bootstrap-select>.dropdown-toggle{
@@ -805,35 +1093,23 @@ p.kwp-info {
     border: none;
     padding: 2px 0;
     background-color: transparent;
-    .caret{
-      border-color: #092a5e !important;
-      border-right: 6px solid transparent !important;
-      border-left: 6px solid transparent !important;
-      border-bottom: none !important;
-      border-top: 6px dashed #092a5e !important;
-      display: none;
-    }
     .filter-option-inner-inner{
-      color: #092a5e;
-      font-size: 14px;
-      font-weight: 500;
+      color: $secondarycolor;
+      font-size: 18px;
     }
   }
   .open .btn-default.dropdown-toggle{
     background-color: transparent;
-    outline: 0;
   }
   .bootstrap-select{
     div.dropdown-menu {
       max-height: 300px !important;
-      .inner {
-        &.open{
-          overflow-y: initial !important;
-        }
-      }
+      width: calc(100% + 20px);
+      left: -10px;
     }
   }
 }
+
 .kwp-custom-select {
   background: linear-gradient(to bottom,#f4f4f4 0%,#c6c6c6 100%);
   box-shadow: 0 1px 0 0 rgba(255,255,255,0.5) inset;
@@ -844,7 +1120,6 @@ p.kwp-info {
 
   &:after {
     content: ' ';
-    background: url(http://master.com/typo3conf/ext/xskeleton/Resources/Public/Images/Master/sprite.png) no-repeat -369px -3490px transparent;
     position: absolute;
     top: 0;
     right: 0;
@@ -862,7 +1137,6 @@ p.kwp-info {
     width: 100%;
     height: 25px;
 
-    font-family: $altfont;
     font-size: 12px;
 
     appearance: none;
@@ -939,18 +1213,18 @@ p.kwp-info {
 }
 
 .kwp-star {
-  width: 25px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   vertical-align: top;
   display:inline-block;
 
   &:after {
     content: ' ';
-    width: 20px;
-    height: 20px;
-    background: transparent url(../../svg/sun-master-grey.svg) no-repeat 0px center;
-    background-size: 20px;
+    width: 30px;
+    height: 40px;
+    background: transparent url(../../svg/sun.svg) no-repeat 0px center;
+    background-size: 30px;
     display:inline-block;
   }
 }
@@ -960,8 +1234,7 @@ p.kwp-info {
 }
 
 .kwp-star-full:after, .kwp-body.eil-at-body .kwp-star-full:after{
-  background: transparent url(../../svg/sun-master.svg) no-repeat 0px center;
-  background-size: 20px;
+  background: transparent url(../../svg/sun-fill.svg) no-repeat 0px center;
 }
 
 
@@ -1024,7 +1297,17 @@ p.kwp-info {
   line-height: normal;
 }
 
-
+@media only screen and (min-device-width: 600px) and (max-device-width: 1024px),
+(max-device-width: 599px),
+(min-device-width: 834px) and (max-device-width: 1112px)  and (-webkit-min-device-pixel-ratio: 2),
+(min-device-width: 1112px) and (max-device-width: 1112px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2),
+(min-device-width: 1366px) and (max-device-width: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2),
+(min-device-width: 1366px) and (max-device-width: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2),
+(max-device-width: 1280px) and (orientation: landscape),
+(max-device-width: 1280px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2),
+(min-device-width: 1024px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2),
+(min-device-width: 1024px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2),
+(min-device-width: 800px) and (max-device-width: 1280px) and (-webkit-min-device-pixel-ratio: 2){
   .dt-modal-agb{
     top:0 !important;
     .kwp{
@@ -1033,96 +1316,31 @@ p.kwp-info {
     }
   }
   .kwp{
-    width: 600px;
-    height: auto;
+    width: 100%;
+    height: 100vh;
   }
   .kwp-header{
     /*background: linear-gradient(179deg, #fce136 0, #e4cd34 100%);*/
+    background: linear-gradient(179deg, $secondarycolor 0, $secondarycolor 100%);
     min-height: 40px;
-    height: 200px;
+    height: 40px;
     position: relative;
     width: 100%;
     z-index: 11111;
     padding: 0;
   }
   .kwp-col-4, .kwp-col-2{
-    width: calc(50% - 10px);
+    width: 100%;
     background: #fff;
     margin-bottom: 20px;
     padding: 0;
     position: relative;
-    &.grey{
-      background: #dedede;
-    }
     i{
       position: absolute;
-      right: 10px;
-      top: 25px;
-      font-size: 16px;
-      color: #092a5e;
-    }
-    .text-hidden{
-      padding: 5px 0;
-      display: block;
-    }
-  }
-
-  .kwp-col-12{
-    background: #fff;
-    margin-bottom: 20px;
-    padding: 0;
-    position: relative;
-    &.button{
-      background: transparent;
-    }
-    i{
-      position: absolute;
-      right: 10px;
-      top: 25px;
-      font-size: 16px;
-      color: #092a5e;
-    }
-  }
-  .description{
-    margin: 20px 0;
-    background: transparent;
-    label{
-      background: #fff;
-      margin: 0;
-      font-size: 14px;
-      white-space: nowrap;
-      color: #a0a0a0;
-      padding-left: 10px;
-      padding-top: 5px;
-      font-weight: normal;
-      margin: 0;
-    }
-    i{
-      top:10px;
-    }
-  }
-  .kwp-row{
-    &.email-auto{
-      margin-top: 15px;
-    }
-    .kwp-col-4{
-      &:first-child{
-        margin-right: 20px;
-      }
-    }
-    .kwp-col-3{
-      width: calc(33.33% - 15px);
-      margin-right: 20px;
-      &:last-child{
-        margin-right: 0;
-      }
-      i{
-        position: absolute;
-        right: 10px;
-        top: 30px;
-        font-size: 16px;
-        color: #092a5e;
-      }
+      right: 15px;
+      top: 40px;
+      font-size: 20px;
+      color: $fontcolor;
     }
   }
   .kwp-content-extra{
@@ -1136,7 +1354,7 @@ p.kwp-info {
   }
   .kwp-header-content p{
     width: auto;
-    display: none;
+    opacity:0;
     font-size: 14px;
     font-weight: bold;
     color: #fff;
@@ -1150,8 +1368,10 @@ p.kwp-info {
     padding-left: 15px;
     height: 40px;
   }
+  .mobile-layer {
     .dt-modal{
       top: 0 !important;
+      background: rgba(255, 255, 255, 0.01);
       opacity: 1;
       transition: all 0.2s ease;
       -webkit-transition: all 0.2s ease;
@@ -1177,23 +1397,15 @@ p.kwp-info {
       }
       &.m-open{
         top:0 !important;
-        background: rgba(0,30,70,0.65);
+        background: rgba(9, 42, 94, 0.85);
         transition: all 0.2s ease;
         -webkit-transition: all 0.2s ease;
         -moz-transition: all 0.2s ease;
-        overflow: scroll;
         .kwp-header{
-          box-shadow: 0px -30px 35px rgba(255,255,255,0.6) inset;
           h1{
             margin: 0px;
-            padding: 5px 0;
-            color: #092A5E;
-            position: absolute;
-            bottom: 0px;
-            font-size: 26px;
             text-align: center;
-            width: 100%;
-            font-weight: 500;
+            padding: 5px 0;
           }
         }
 
@@ -1204,26 +1416,18 @@ p.kwp-info {
       transition: opacity 0.1s ease, -webkit-transform 0.5s ease;
       transition: transform 0.5s ease, opacity 0.1s ease;
       transition: transform 0.5s ease, opacity 0.1s ease, -webkit-transform 0.5s ease;
-      height: auto;
+      height: 100%;
       position: relative;
-      margin: 25px auto 0;
-
-      .kwp-middle{
-        background: #E2F3FE;
-        padding: 5px 20px;
-        border-bottom: 1px solid $master-blue;
-        font-size: 16px;
-      }
-
+      margin: 0;
       .kwp-form-errors{
         display: none;
       }
       label{
-        font-size: 14px;
+        font-size: 16px;
         white-space: nowrap;
         color: #a0a0a0;
         padding-left: 10px;
-        padding-top: 5px;
+        padding-top: 10px;
         font-weight: normal;
         margin: 0;
       }
@@ -1234,12 +1438,12 @@ p.kwp-info {
         &:after{
           content: "";
           display: inline-block;
-          height: 20px;
-          width: 20px;
+          height: 25px;
+          width: 25px;
           border: 1px solid #737373;
           border-radius: 2px;
           background-color: #fff;
-          background-size: 20px;
+          background-size: 25px;
           background-position: center center;
           margin-left: -5px;
           margin-top: -5px;
@@ -1247,8 +1451,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid $mastercolor;
-          background-color: $mastercolor;
+          border: 1px solid $secondarycolor;
+          background-color: $secondarycolor;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1257,11 +1461,11 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#092a5e;
+        color:$fontcolor;
         padding: 8px 0;
         font-weight: bold;
-        font-family: $altfont;
         text-align: center;
+        line-height: 1.7em;
       }
     }
     .kwp-body{
@@ -1271,7 +1475,7 @@ p.kwp-info {
       .kwp-close{
         display: block;
       }
-      .kwp-completed-master{
+      .kwp-completed-tui{
         h1{
           margin-top: 0;
           i{
@@ -1286,23 +1490,21 @@ p.kwp-info {
       }
     }
     .kwp-content{
+      overflow: scroll;
+      -webkit-overflow-scrolling: touch;
       z-index: 11111111;
+      height: calc(100% - 90px);
     }
     .kwp-header-content{
       margin-top: 0px;
-      font-family: $altfont;
       font-weight: bold;
-      position: absolute;
-      bottom: 0;
-      text-align: center;
-      width: 100%;
     }
     .kwp-close{
       width: 25px;
       height: 25px;
-      background: transparent url(../../svg/times_dark.svg) no-repeat center center;
-      top: 10px;
-      right: 10px;
+      background: transparent url(../../svg/times.svg) no-repeat center center;
+      top: 7px;
+      right: 5px;
       z-index: 2;
     }
     .dt-modal-agb .kwp-close, .kwp-close.dark {
@@ -1319,7 +1521,7 @@ p.kwp-info {
       height: 49px;
     }
     .kwp-custom-select select, .kwp-custom-select{
-      height: 25px;
+      height: 35px;
       -webkit-appearance:initial;
       -moz-appearance: initial;
       padding-left: 10px;
@@ -1336,25 +1538,24 @@ p.kwp-info {
     /***** Fix layer on Mobile ******/
     .kwp{
       .duration-time, .travelers{
-        height: 25px;
-        line-height: 1.5em;
+        height: 35px;
+        line-height: 2em;
         background-color: transparent;
         font-weight: 500;
-        border-bottom: 1px solid $mastergrey;
-        color: #17212b;
+        border-bottom: 1px solid $secondarycolor;
+        color: $fontcolor;
         border-radius: 0;
         padding: 0 10px;
-        font-size: 14px;
+        font-size: 18px;
         display: block;
         width: 100%;
-        margin: 0px auto 0;
-        font-family: "TUITypeLight",sans-serif;
         position:relative;
+        margin: 0;
         i{
           position: absolute;
-          right: 10px;
+          right: 15px;
           top: 0;
-          font-size: 16px;
+          font-size: 20px;
           &.triggered{
             display: none;
           }
@@ -1365,16 +1566,14 @@ p.kwp-info {
       }
       .rangeslider-wrapper{
         background: transparent;
-        margin: 0 20px 0 0;
-        padding: 0;
+        margin: 0 0 20px;
         .kwp-form-group{
           label{
             margin-bottom: 0px;
-            font-size: 14px !important;
+            font-size: 20px !important;
             color: #4c4c4c;
             font-weight: 600;
             padding-left: 0;
-            padding-top: 0;
           }
         }
         input[type="text"]{
@@ -1382,9 +1581,9 @@ p.kwp-info {
         }
         .text{
           margin-bottom: 0px;
-          padding: 3px 0;
-          font-size: 14px;
-          color: #17212b;
+          padding: 10px 0;
+          font-size: 20px;
+          color: $mastercolor;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1416,30 +1615,16 @@ p.kwp-info {
           }
         }
       }
-      .stars{
-        .text{
-          display: block;
-          margin-top: 5px;
-        }
+
+      .error-input{
+        display: block;
+        background: $mastercolor;
+        padding: 0 10px;
+        color: #fff;
       }
-      .catering{
-        position: relative;
-        .dropdown{
-          margin-top: 20px;
-        }
-        .kwp-custom-select{
-          margin-top: 20px;
-          border:none;
-          select{
-            border-color: #D7D2C3;
-          }
-        }
-        i{
-          top: 45px;
-        }
-      }
+
       .haserrors{
-        .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
+        .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="number"], input[type="date"]{
           border-color: #D40E14;
         }
 
@@ -1451,7 +1636,7 @@ p.kwp-info {
         ~ .rangeslider--horizontal{
           background: #D40E14;
           .rangeslider__handle{
-            border-color: $mastercolor;
+            border-color: #D40E14;
           }
         }
         .dd-trigger{
@@ -1466,26 +1651,29 @@ p.kwp-info {
 
       }
     }
-    .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after,.kwp input[type="text"], .kwp input[type="date"]{
-      height: 25px;
+    .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after,.kwp input[type="text"],.kwp input[type="number"], .kwp input[type="date"]{
+      height: 35px;
       border: none;
       line-height: 1.5em;
       box-shadow: none;
       background: none;
       background-color: transparent;
       font-weight: 500;
-      border-bottom: 1px solid $mastergrey;
+      border-bottom: 1px solid $secondarycolor;
       border-radius: 0;
       padding: 0 10px;
-      font-size: 14px;
-      color: #17212b;
+      font-size: 18px;
+      color: $fontcolor;
     }
     .kwp-custom-select{
       #catering{
         padding: 0;
       }
+      .hidden{
+        display: none;
+      }
     }
-    .kwp textarea{
+    .kwp textarea, .kwp input[type="email"]{
       resize: none;
       background: #fff;
       border: none;
@@ -1493,12 +1681,12 @@ p.kwp-info {
       box-shadow: none;
       border-radius: 0;
       box-sizing: padding-box;
-      height: 50px;
+      height: auto;
       border-bottom-color: #b9b9b9 !important;
     }
     .kwp input[type="email"]{
       width: 100%;
-      height: 25px;
+      height: 35px;
       background: #f2f2f2 !important;
     }
     .kwp textarea:hover, .kwp input[type="email"]:hover, .kwp textarea:focus, .kwp input[type="email"]:focus{
@@ -1506,6 +1694,7 @@ p.kwp-info {
     }
     .kwp-custom-select:after{
       background: none;
+      border: none;
     }
     .kwp-content-extra, .kwp-btn-expand{
       display: none;
@@ -1537,54 +1726,45 @@ p.kwp-info {
     }
     .white-col{
       background: transparent !important;
-      margin: 0;
-      padding: 0;
+      margin: 20px 0;
       label{
         color: #4c4c4c;
         padding: 0;
-        font-size: 14px !important;
+        font-size: 20px !important;
         font-weight: 600;
-        margin-bottom: 0px;
+        margin-bottom: 10px;
       }
     }
     .email-col{
       margin: 5px 0;
     }
-  
-  .rangeslider--horizontal{
-    height: 10px;
-    .rangeslider__handle{
-      width: 15px;
-      height: 15px;
-      top: -3px;
-    }
   }
-
+}
 
 
 @media only screen
 and (max-device-width : 320px) {
   .mobile-layer {
     .kwp{
-      .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
-        font-size: 14px;
+      .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="number"], input[type="date"]{
+        font-size: 16px;
       }
       .duration-time, .travelers{
-        font-size: 14px;
+        font-size: 16px;
       }
       button[type=submit]{
-        font-size: 18px;
+        font-size: 20px;
       }
       .kwp-star{
         width: 30px;
       }
       .white-col{
         label{
-          font-size: 14px;
+          font-size: 16px;
         }
       }
       label{
-        font-size: 14px;
+        font-size: 16px;
       }
     }
     .teaser{
@@ -1598,28 +1778,13 @@ and (max-device-width : 320px) {
 
 }
 
-.category-col select{
-  border: none !important;
+.description textarea{
+  height: 120px !important;
 }
-.category-col{
-  border-bottom: 1px solid #737373;
+select[name="category"]{
+  border: none;
+  padding-left: 5px;
 }
-.duration-col{
-  width: calc(40% - 10px);
-  margin-right: 12px !important;
-}
-.pax-col,.class-col{
-  width: calc(30% - 10px);
-}
-.pax-col{
-  margin-right: 12px;
-}
-.error-input,.email-col span{
-  display: block;
-  background: #ED1C24;
-  padding: 0 10px;
-  color: #fff;
-}
-.dt_terms.hasError:after{
-  border: 1px solid red !important;
+.destination{
+  border-bottom: 1px solid #ffdd00;
 }
