@@ -1,0 +1,16 @@
+{
+    "name": "Rules",
+    "alias": "rules",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Rules\\Providers\\RulesServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
