@@ -1,6 +1,6 @@
 <template>
     <!-- Large modal -->
-    <div id="modal_large_group" class="modal fade" tabindex="-1">
+    <div id="modal_large_rule" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-steel">
@@ -20,73 +20,65 @@
                                     <fieldset>
                                         <legend class="font-weight-semibold text-uppercase font-size-sm">
                                             <i class="icon-collaboration mr-2"></i>
-                                            Group details
+                                            Rule details
                                             <a class="float-right text-default" data-toggle="collapse" data-target="#demo1">
                                                 <i class="icon-circle-down2"></i>
                                             </a>
                                         </legend>
                                         <div class="collapse show" id="demo1">
-                                            <div class="form-group row" v-if="group.id !== 0">
+                                            <div class="form-group row" v-if="rule.id !== 0">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.id') }}</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control disabled" disabled readonly id='id' name='id' :placeholder="trans('modals.id')" :value="group.id"/>
+                                                    <input type="text" class="form-control disabled" disabled readonly id='id' name='id' :placeholder="trans('modals.id')" :value="rule.id"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('id')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.name') }} <span class="text-danger"> *</span></label>
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.type') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('name') ? 'is-invalid': ''" id='name' name='name' :placeholder="trans('modals.name')" @input="updateGroup"  :value="group.name"/>
+                                                    <el-radio-group :value="rule.type"  id='type' name='type' @input="updateRuleType" size="medium" style="width: 100%;">
+                                                        <el-radio-button label="manuel"></el-radio-button>
+                                                        <el-radio-button label="auto"></el-radio-button>
+                                                        <el-radio-button label="mix"></el-radio-button>
+                                                    </el-radio-group>
                                                     <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('name')"></strong>
+                                                        <strong v-text="errors.get('type')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.display_name') }} <span class="text-danger"> *</span></label>
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.budget') }}</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('display_name') ? 'is-invalid': ''" id='display_name' name='display_name' :placeholder="trans('modals.display_name')" @input="updateGroup"  :value="group.display_name"/>
+                                                    <input type="text" class="form-control" :class="errors.has('budget') ? 'is-invalid': ''" id='budget' name='budget' :placeholder="trans('modals.budget')" @input="updateRule"  :value="rule.budget"/>
                                                     <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('display_name')"></strong>
+                                                        <strong v-text="errors.get('budget')"></strong>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.destination') }}</label>
+                                                <div class="col-lg-9">
+                                                    <el-tag :key="tag" v-for="tag in rule.destination" closable :disable-transitions="false" @close="handleClose(tag)">
+                                                        {{tag}}
+                                                    </el-tag>
+                                                    <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="mini" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
+                                                    </el-input>
+                                                    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ {{ trans('modals.destination') }}</el-button>
+                                                    <br>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.owner') }}</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control"  id='owner' disabled readonly :placeholder="trans('modals.owner')"  :value="group.owner"/>
+                                                    <input type="text" class="form-control"  id='user' disabled readonly :placeholder="trans('modals.owner')"  :value="getRule('user', 'full_name')"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.whitelabel') }}</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control"  id='whitelabel' disabled readonly :placeholder="trans('modals.whitelabel')"  :value="getGroup('whitelabel', 'display_name')"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.users') }} <span class="text-danger"> *</span></label>
-                                                <div class="col-lg-9">
-                                                    <el-transfer style="width: 100%;"
-                                                                 @input="inputUsers"
-                                                                 filterable
-                                                                 :titles="['Source', 'Target']"
-                                                                 :value="group.users"
-                                                                 :data="generateUsers()">
-                                                    </el-transfer>
-                                                    <div class="help-block text-danger" v-if="errors.has('users')">
-                                                        <strong v-text="errors.get('users')"></strong>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.description') }}</label>
-                                                <div class="col-lg-9">
-                                                    <textarea class="form-control" :class="errors.has('description') ? 'is-invalid': ''" rows="5" id='description' name='description' :placeholder="trans('modals.description')" @input="updateGroup"  :value="group.description"></textarea>
-                                                    <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('description')"></strong>
-                                                    </div>
+                                                    <input type="text" class="form-control"  id='whitelabel' disabled readonly :placeholder="trans('modals.whitelabel')"  :value="getRule('whitelabel', 'display_name')"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -94,18 +86,7 @@
                                                 <div class="col-lg-9">
                                                     <el-switch
                                                             @input="updateStatus"
-                                                            :value="group.status"
-                                                            active-color="#13ce66"
-                                                            inactive-color="#ff4949">
-                                                    </el-switch>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.current') }} </label>
-                                                <div class="col-lg-9">
-                                                    <el-switch
-                                                            @input="updateCurrent"
-                                                            :value="group.current"
+                                                            :value="rule.status"
                                                             active-color="#13ce66"
                                                             inactive-color="#ff4949">
                                                     </el-switch>
@@ -125,7 +106,7 @@
 
                     <div class="tab-pane fade" id="highlighted-justified-tab2" v-if="can_logs">
                         <div class="modal-body">
-                            <vue-table :options="group.logs"></vue-table>
+                            <vue-table :options="rule.logs"></vue-table>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.close') }}</button>
@@ -137,6 +118,23 @@
     </div>
     <!-- /large modal -->
 </template>
+<style>
+    .el-tag + .el-tag {
+        margin-left: 10px !important;
+    }
+    .button-new-tag {
+        margin-left: 10px !important;
+        height: 32px !important;
+        line-height: 30px !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    .input-new-tag {
+        width: 90px !important;
+        margin-left: 10px !important;
+        vertical-align: bottom !important;
+    }
+</style>
 <script>
   import Vuex from 'vuex'
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
@@ -144,13 +142,15 @@
   import DateComponent from './DateComponent'
   import toastr from 'toastr'
   export default {
-    name: 'EditGroupComponent',
+    name: 'EditRuleComponent',
     components: { VueTable, DateComponent },
     data () {
       return {
         // eslint-disable-next-line
         errors: new Errors(),
-        close: false
+        close: false,
+        inputVisible: false,
+        inputValue: ''
       }
     },
     mounted () {
@@ -158,21 +158,21 @@
     },
     watch: {
       '$route.params.id' () {
-        this.EditGroup(parseInt(this.$route.params.id))
+        this.EditRule(parseInt(this.$route.params.id))
       }
     },
     computed: {
       ...Vuex.mapGetters({
-        group: 'group',
+        rule: 'rule',
         user: 'currentUser'
       }),
       can_logs () {
-        return !this.deleted && this.hasPermissionTo('logs-group')
+        return !this.deleted && this.hasPermissionTo('logs-rule')
       }
     },
     methods: {
       ...Vuex.mapActions({
-        addGroup: 'addGroup'
+        addRule: 'addRule'
       }),
       hasPermissionTo (permission) {
         return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
@@ -182,8 +182,8 @@
       },
       generateUsers () {
         let data = []
-        if (this.group.hasOwnProperty('usersList')) {
-          this.group['usersList'].forEach((user, index) => {
+        if (this.rule.hasOwnProperty('usersList')) {
+          this.rule['usersList'].forEach((user, index) => {
             data.push({
               label: user['name'],
               key: user['id']
@@ -194,57 +194,79 @@
         return data
       },
       inputUsers (value) {
-        this.$store.commit('updateGroup', {name: 'users', value: value})
+        this.$store.commit('updateRule', {name: 'users', value: value})
       },
-      getGroup (key, value) {
-        return (this.group.hasOwnProperty(key)) ? this.group[key][value] : ''
+      showInput () {
+        this.inputVisible = true
+        this.$nextTick(_ => {
+          this.$refs.saveTagInput.$refs.input.focus()
+        })
       },
-      updateGroup (e) {
+      handleInputConfirm () {
+        let inputValue = this.inputValue
+        if (inputValue) {
+          this.$store.commit('updateRuleDestination', {name: 'description', value: inputValue})
+        }
+        this.inputVisible = false
+        this.inputValue = ''
+      },
+      handleClose (tag) {
+        this.$store.commit('updateTemplateRemoveTags', tag)
+      },
+      getRule (key, value) {
+        return (this.rule.hasOwnProperty(key)) ? this.rule[key][value] : ''
+      },
+      updateRule (e) {
         if (e.target.value !== null) {
-          this.$store.commit('updateGroup', {name: e.target.name, value: e.target.value})
+          this.$store.commit('updateRule', {name: e.target.name, value: e.target.value})
+        }
+      },
+      updateRuleType (value) {
+        if (value !== null) {
+          this.$store.commit('updateRule', {name: 'type', value: value})
         }
       },
       updateStatus (value) {
-        this.$store.commit('updateGroup', {name: 'status', value: value})
+        this.$store.commit('updateRule', {name: 'status', value: value})
       },
       updateCurrent (value) {
-        this.$store.commit('updateGroup', {name: 'current', value: value})
+        this.$store.commit('updateRule', {name: 'current', value: value})
       },
       loadModal () {
         let id = parseInt(this.$route.params.id)
-        $('#modal_large_group').on('hidden.bs.modal', () => {
+        $('#modal_large_rule').on('hidden.bs.modal', () => {
           this.$router.push({name: 'root'})
         })
 
         if (id === 0) {
-          this.CreateGroup(parseInt(this.$route.params.whitelabel_id))
+          this.CreateRule(parseInt(this.$route.params.whitelabel_id))
         } else {
-          this.EditGroup(id)
+          this.EditRule(id)
         }
       },
-      CreateGroup (whitelabelId) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.get(window.laroute.route('admin.groups.create', {whitelabelId: whitelabelId}))
-          .then(this.onLoadGroupSuccess)
+      CreateRule (whitelabelId) {
+        this.$store.dispatch('block', {element: 'rulesComponent', load: true})
+        this.$http.get(window.laroute.route('admin.rules.create', {whitelabelId: whitelabelId}))
+          .then(this.onLoadRuleSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'rulesComponent', load: false})
           })
       },
-      EditGroup (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.get(window.laroute.route('admin.groups.edit', {id: id}))
-          .then(this.onLoadGroupSuccess)
+      EditRule (id) {
+        this.$store.dispatch('block', {element: 'rulesComponent', load: true})
+        this.$http.get(window.laroute.route('admin.rules.edit', {id: id}))
+          .then(this.onLoadRuleSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'rulesComponent', load: false})
           })
       },
-      onLoadGroupSuccess (response) {
+      onLoadRuleSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.addGroup(response.data.group)
-          if (!($('#modal_large_group').data('bs.modal') || {}).isShown) {
-            $('#modal_large_group').modal('show')
+          this.addRule(response.data.rule)
+          if (!($('#modal_large_rule').data('bs.modal') || {}).isShown) {
+            $('#modal_large_rule').modal('show')
           }
         } else {
           toastr.error(response.data.message)
@@ -259,30 +281,30 @@
         }
       },
       onSubmitStore () {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.put(window.laroute.route('admin.groups.store'), this.group)
+        this.$store.dispatch('block', {element: 'rulesComponent', load: true})
+        this.$http.put(window.laroute.route('admin.rules.store'), this.rule)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'rulesComponent', load: false})
           })
       },
       onSubmitUpdate (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.put(window.laroute.route('admin.groups.update', {id: id}), this.group)
+        this.$store.dispatch('block', {element: 'rulesComponent', load: true})
+        this.$http.put(window.laroute.route('admin.rules.update', {id: id}), this.rule)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'rulesComponent', load: false})
           })
       },
       onSubmitSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
           if (this.close) {
-            $('#modal_large_group').modal('hide')
+            $('#modal_large_rule').modal('hide')
             this.$router.push({name: 'root'})
           } else {
-            this.$router.push({name: 'root.edit', params: {id: response.data.group.id}})
+            this.$router.push({name: 'root.edit', params: {id: response.data.rule.id}})
           }
           this.$message({
             message: response.data.message,

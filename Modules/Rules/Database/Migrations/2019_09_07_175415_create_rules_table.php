@@ -17,7 +17,8 @@ class CreateRulesTable extends Migration
             $table->increments('id');
             $table->enum('type', ['manuel', 'auto', 'mix'])->default('manuel');
             $table->integer('budget')->unsigned()->nullable();
-            $table->text('destinations')->nullable();
+            $table->text('destination')->nullable();
+            $table->boolean('status')->default(false);
 
             $table->integer('user_id')->unsigned();
             $table->integer('whitelabel_id')->unsigned();

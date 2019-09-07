@@ -2,7 +2,7 @@ import * as actions from './actions'
 import * as getters from './getters'
 
 const state = {
-  group: {},
+  rule: {},
   users: {},
   checked: [],
   whitelabels: {}
@@ -19,14 +19,20 @@ const mutations = {
   ADD_CHECKED (state, checked) {
     state.checked = checked
   },
-  ADD_GROUP (state, group) {
-    state.group = group
+  ADD_RULE (state, rule) {
+    state.rule = rule
   },
   ADD_WHITELABELS (state, whitelabels) {
     state.whitelabels = whitelabels
   },
-  updateGroup (state, obj) {
-    state.group[obj.name] = obj.value
+  updateRuleDestination (state, obj) {
+    let index = state.rule['destination'].indexOf(obj.value)
+    if (index === -1) {
+      state.rule['destination'].push(obj.value)
+    }
+  },
+  updateRule (state, obj) {
+    state.rule[obj.name] = obj.value
   }
 }
 

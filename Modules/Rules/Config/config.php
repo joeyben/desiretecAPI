@@ -1,5 +1,14 @@
 <?php
 
 return [
-    'name' => 'Rules'
+    'name' => 'Rules',
+
+    'permissions' => [
+        'View Rule',
+        'Create Rule',
+        'Read Rule',
+        'Update Rule',
+        'Delete Rule',
+        'Logs Rule',
+    ]
 ];

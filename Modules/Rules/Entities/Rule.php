@@ -4,8 +4,10 @@ namespace Modules\Rules\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Whitelabels\Entities\Whitelabel;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Foundation\Auth\User;
 
 class Rule extends Model
 {
@@ -20,6 +22,10 @@ class Rule extends Model
     ];
 
     protected static $logOnlyDirty = true;
+
+    protected $casts = [
+        'status'   => 'boolean'
+    ];
 
     /**
      * Searchable rules.
@@ -44,4 +50,25 @@ class Rule extends Model
             'whitelabels' => ['rules.whitelabel_id', 'whitelabels.id'],
         ]
     ];
+
+    /**
+     * Wishes belongsTo with User.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Wishes belongsTo with Whitelabel.
+     */
+    public function whitelabel()
+    {
+        return $this->belongsTo(Whitelabel::class);
+    }
+
+    public function getDestinationAttribute($value)
+    {
+        return json_decode($value);
+    }
 }

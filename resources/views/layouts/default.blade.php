@@ -261,6 +261,15 @@
                         @endauth
                     @endif
 
+                    @if($module->has('Rules')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.rules') }}" class="nav-link">
+                                <i class="icon-cube4"></i>
+                                <span>{{ __('menus.rules_management') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
                     @if(Auth::guard('web')->user()->hasRole('Administrator'))
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-power3"></i> <span>Maintenance</span></a>

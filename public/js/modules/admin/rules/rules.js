@@ -4125,7 +4125,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var LOAD_LANGUAGES = exports.LOAD_LANGUAGES = 'LOAD_LANGUAGES';
-var ADD_GROUP = exports.ADD_GROUP = 'ADD_GROUP';
+var ADD_RULE = exports.ADD_RULE = 'ADD_RULE';
 var ADD_CHECKED = exports.ADD_CHECKED = 'ADD_CHECKED';
 var ADD_CHECKED_ID = exports.ADD_CHECKED_ID = 'ADD_CHECKED_ID';
 var REMOVE_CHECKED_ID = exports.REMOVE_CHECKED_ID = 'REMOVE_CHECKED_ID';
@@ -23082,7 +23082,7 @@ var getters = _interopRequireWildcard(_getters);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var state = {
-  group: {},
+  rule: {},
   users: {},
   checked: [],
   whitelabels: {}
@@ -23101,14 +23101,20 @@ var mutations = {
   ADD_CHECKED: function ADD_CHECKED(state, checked) {
     state.checked = checked;
   },
-  ADD_GROUP: function ADD_GROUP(state, group) {
-    state.group = group;
+  ADD_RULE: function ADD_RULE(state, rule) {
+    state.rule = rule;
   },
   ADD_WHITELABELS: function ADD_WHITELABELS(state, whitelabels) {
     state.whitelabels = whitelabels;
   },
-  updateGroup: function updateGroup(state, obj) {
-    state.group[obj.name] = obj.value;
+  updateRuleDestination: function updateRuleDestination(state, obj) {
+    var index = state.rule['destination'].indexOf(obj.value);
+    if (index === -1) {
+      state.rule['destination'].push(obj.value);
+    }
+  },
+  updateRule: function updateRule(state, obj) {
+    state.rule[obj.name] = obj.value;
   }
 };
 
@@ -23129,7 +23135,7 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addChecked = exports.removeCheckedId = exports.addCheckedId = exports.addGroup = undefined;
+exports.addChecked = exports.removeCheckedId = exports.addCheckedId = exports.addRule = undefined;
 
 var _mutationTypes = __webpack_require__(54);
 
@@ -23137,8 +23143,8 @@ var types = _interopRequireWildcard(_mutationTypes);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var addGroup = exports.addGroup = function addGroup(store, group) {
-  store.commit(types.ADD_GROUP, group);
+var addRule = exports.addRule = function addRule(store, rule) {
+  store.commit(types.ADD_RULE, rule);
 };
 
 var addCheckedId = exports.addCheckedId = function addCheckedId(store, id) {
@@ -23163,8 +23169,8 @@ var addChecked = exports.addChecked = function addChecked(store, checked) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var group = exports.group = function group(state) {
-  return state.group;
+var rule = exports.rule = function rule(state) {
+  return state.rule;
 };
 var checked = exports.checked = function checked(state) {
   return state.checked;
@@ -84690,6 +84696,10 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(428)
+}
 var normalizeComponent = __webpack_require__(210)
 /* script */
 var __vue_script__ = __webpack_require__(339)
@@ -84698,7 +84708,7 @@ var __vue_template__ = __webpack_require__(352)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -97078,8 +97088,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
 
 var _vuex = __webpack_require__(87);
 
@@ -97102,13 +97110,15 @@ var _toastr2 = _interopRequireDefault(_toastr);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  name: 'EditGroupComponent',
+  name: 'EditRuleComponent',
   components: { VueTable: _Table2.default, DateComponent: _DateComponent2.default },
   data: function data() {
     return {
       // eslint-disable-next-line
       errors: new _errors.Errors(),
-      close: false
+      close: false,
+      inputVisible: false,
+      inputValue: ''
     };
   },
   mounted: function mounted() {
@@ -97117,19 +97127,19 @@ exports.default = {
 
   watch: {
     '$route.params.id': function $routeParamsId() {
-      this.EditGroup(parseInt(this.$route.params.id));
+      this.EditRule(parseInt(this.$route.params.id));
     }
   },
   computed: _extends({}, _vuex2.default.mapGetters({
-    group: 'group',
+    rule: 'rule',
     user: 'currentUser'
   }), {
     can_logs: function can_logs() {
-      return !this.deleted && this.hasPermissionTo('logs-group');
+      return !this.deleted && this.hasPermissionTo('logs-rule');
     }
   }),
   methods: _extends({}, _vuex2.default.mapActions({
-    addGroup: 'addGroup'
+    addRule: 'addRule'
   }), {
     hasPermissionTo: function hasPermissionTo(permission) {
       return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
@@ -97139,8 +97149,8 @@ exports.default = {
     },
     generateUsers: function generateUsers() {
       var data = [];
-      if (this.group.hasOwnProperty('usersList')) {
-        this.group['usersList'].forEach(function (user, index) {
+      if (this.rule.hasOwnProperty('usersList')) {
+        this.rule['usersList'].forEach(function (user, index) {
           data.push({
             label: user['name'],
             key: user['id']
@@ -97151,57 +97161,81 @@ exports.default = {
       return data;
     },
     inputUsers: function inputUsers(value) {
-      this.$store.commit('updateGroup', { name: 'users', value: value });
+      this.$store.commit('updateRule', { name: 'users', value: value });
     },
-    getGroup: function getGroup(key, value) {
-      return this.group.hasOwnProperty(key) ? this.group[key][value] : '';
+    showInput: function showInput() {
+      var _this = this;
+
+      this.inputVisible = true;
+      this.$nextTick(function (_) {
+        _this.$refs.saveTagInput.$refs.input.focus();
+      });
     },
-    updateGroup: function updateGroup(e) {
+    handleInputConfirm: function handleInputConfirm() {
+      var inputValue = this.inputValue;
+      if (inputValue) {
+        this.$store.commit('updateRuleDestination', { name: 'description', value: inputValue });
+      }
+      this.inputVisible = false;
+      this.inputValue = '';
+    },
+    handleClose: function handleClose(tag) {
+      this.$store.commit('updateTemplateRemoveTags', tag);
+    },
+    getRule: function getRule(key, value) {
+      return this.rule.hasOwnProperty(key) ? this.rule[key][value] : '';
+    },
+    updateRule: function updateRule(e) {
       if (e.target.value !== null) {
-        this.$store.commit('updateGroup', { name: e.target.name, value: e.target.value });
+        this.$store.commit('updateRule', { name: e.target.name, value: e.target.value });
+      }
+    },
+    updateRuleType: function updateRuleType(value) {
+      if (value !== null) {
+        this.$store.commit('updateRule', { name: 'type', value: value });
       }
     },
     updateStatus: function updateStatus(value) {
-      this.$store.commit('updateGroup', { name: 'status', value: value });
+      this.$store.commit('updateRule', { name: 'status', value: value });
     },
     updateCurrent: function updateCurrent(value) {
-      this.$store.commit('updateGroup', { name: 'current', value: value });
+      this.$store.commit('updateRule', { name: 'current', value: value });
     },
     loadModal: function loadModal() {
-      var _this = this;
+      var _this2 = this;
 
       var id = parseInt(this.$route.params.id);
-      $('#modal_large_group').on('hidden.bs.modal', function () {
-        _this.$router.push({ name: 'root' });
+      $('#modal_large_rule').on('hidden.bs.modal', function () {
+        _this2.$router.push({ name: 'root' });
       });
 
       if (id === 0) {
-        this.CreateGroup(parseInt(this.$route.params.whitelabel_id));
+        this.CreateRule(parseInt(this.$route.params.whitelabel_id));
       } else {
-        this.EditGroup(id);
+        this.EditRule(id);
       }
     },
-    CreateGroup: function CreateGroup(whitelabelId) {
-      var _this2 = this;
-
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.get(window.laroute.route('admin.groups.create', { whitelabelId: whitelabelId })).then(this.onLoadGroupSuccess).catch(this.onFailed).then(function () {
-        _this2.$store.dispatch('block', { element: 'groupsComponent', load: false });
-      });
-    },
-    EditGroup: function EditGroup(id) {
+    CreateRule: function CreateRule(whitelabelId) {
       var _this3 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.get(window.laroute.route('admin.groups.edit', { id: id })).then(this.onLoadGroupSuccess).catch(this.onFailed).then(function () {
-        _this3.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$store.dispatch('block', { element: 'rulesComponent', load: true });
+      this.$http.get(window.laroute.route('admin.rules.create', { whitelabelId: whitelabelId })).then(this.onLoadRuleSuccess).catch(this.onFailed).then(function () {
+        _this3.$store.dispatch('block', { element: 'rulesComponent', load: false });
       });
     },
-    onLoadGroupSuccess: function onLoadGroupSuccess(response) {
+    EditRule: function EditRule(id) {
+      var _this4 = this;
+
+      this.$store.dispatch('block', { element: 'rulesComponent', load: true });
+      this.$http.get(window.laroute.route('admin.rules.edit', { id: id })).then(this.onLoadRuleSuccess).catch(this.onFailed).then(function () {
+        _this4.$store.dispatch('block', { element: 'rulesComponent', load: false });
+      });
+    },
+    onLoadRuleSuccess: function onLoadRuleSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.addGroup(response.data.group);
-        if (!($('#modal_large_group').data('bs.modal') || {}).isShown) {
-          $('#modal_large_group').modal('show');
+        this.addRule(response.data.rule);
+        if (!($('#modal_large_rule').data('bs.modal') || {}).isShown) {
+          $('#modal_large_rule').modal('show');
         }
       } else {
         _toastr2.default.error(response.data.message);
@@ -97216,28 +97250,28 @@ exports.default = {
       }
     },
     onSubmitStore: function onSubmitStore() {
-      var _this4 = this;
+      var _this5 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.put(window.laroute.route('admin.groups.store'), this.group).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
-        _this4.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$store.dispatch('block', { element: 'rulesComponent', load: true });
+      this.$http.put(window.laroute.route('admin.rules.store'), this.rule).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+        _this5.$store.dispatch('block', { element: 'rulesComponent', load: false });
       });
     },
     onSubmitUpdate: function onSubmitUpdate(id) {
-      var _this5 = this;
+      var _this6 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.put(window.laroute.route('admin.groups.update', { id: id }), this.group).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
-        _this5.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$store.dispatch('block', { element: 'rulesComponent', load: true });
+      this.$http.put(window.laroute.route('admin.rules.update', { id: id }), this.rule).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+        _this6.$store.dispatch('block', { element: 'rulesComponent', load: false });
       });
     },
     onSubmitSuccess: function onSubmitSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
         if (this.close) {
-          $('#modal_large_group').modal('hide');
+          $('#modal_large_rule').modal('hide');
           this.$router.push({ name: 'root' });
         } else {
-          this.$router.push({ name: 'root.edit', params: { id: response.data.group.id } });
+          this.$router.push({ name: 'root.edit', params: { id: response.data.rule.id } });
         }
         this.$message({
           message: response.data.message,
@@ -109098,7 +109132,7 @@ var render = function() {
     "div",
     {
       staticClass: "modal fade",
-      attrs: { id: "modal_large_group", tabindex: "-1" }
+      attrs: { id: "modal_large_rule", tabindex: "-1" }
     },
     [
       _c("div", { staticClass: "modal-dialog modal-lg" }, [
@@ -109157,7 +109191,7 @@ var render = function() {
                               attrs: { id: "demo1" }
                             },
                             [
-                              _vm.group.id !== 0
+                              _vm.rule.id !== 0
                                 ? _c("div", { staticClass: "form-group row" }, [
                                     _c(
                                       "label",
@@ -109182,7 +109216,7 @@ var render = function() {
                                           name: "id",
                                           placeholder: _vm.trans("modals.id")
                                         },
-                                        domProps: { value: _vm.group.id }
+                                        domProps: { value: _vm.rule.id }
                                       }),
                                       _vm._v(" "),
                                       _c(
@@ -109209,7 +109243,7 @@ var render = function() {
                                   [
                                     _vm._v(
                                       " " +
-                                        _vm._s(_vm.trans("modals.name")) +
+                                        _vm._s(_vm.trans("modals.type")) +
                                         " "
                                     ),
                                     _c("span", { staticClass: "text-danger" }, [
@@ -109218,20 +109252,81 @@ var render = function() {
                                   ]
                                 ),
                                 _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "col-lg-9" },
+                                  [
+                                    _c(
+                                      "el-radio-group",
+                                      {
+                                        staticStyle: { width: "100%" },
+                                        attrs: {
+                                          value: _vm.rule.type,
+                                          id: "type",
+                                          name: "type",
+                                          size: "medium"
+                                        },
+                                        on: { input: _vm.updateRuleType }
+                                      },
+                                      [
+                                        _c("el-radio-button", {
+                                          attrs: { label: "manuel" }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("el-radio-button", {
+                                          attrs: { label: "auto" }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("el-radio-button", {
+                                          attrs: { label: "mix" }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "invalid-feedback" },
+                                      [
+                                        _c("strong", {
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              _vm.errors.get("type")
+                                            )
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group row" }, [
+                                _c(
+                                  "label",
+                                  { staticClass: "col-lg-3 col-form-label" },
+                                  [
+                                    _vm._v(
+                                      " " + _vm._s(_vm.trans("modals.budget"))
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
                                 _c("div", { staticClass: "col-lg-9" }, [
                                   _c("input", {
                                     staticClass: "form-control",
-                                    class: _vm.errors.has("name")
+                                    class: _vm.errors.has("budget")
                                       ? "is-invalid"
                                       : "",
                                     attrs: {
                                       type: "text",
-                                      id: "name",
-                                      name: "name",
-                                      placeholder: _vm.trans("modals.name")
+                                      id: "budget",
+                                      name: "budget",
+                                      placeholder: _vm.trans("modals.budget")
                                     },
-                                    domProps: { value: _vm.group.name },
-                                    on: { input: _vm.updateGroup }
+                                    domProps: { value: _vm.rule.budget },
+                                    on: { input: _vm.updateRule }
                                   }),
                                   _vm._v(" "),
                                   _c(
@@ -109241,7 +109336,7 @@ var render = function() {
                                       _c("strong", {
                                         domProps: {
                                           textContent: _vm._s(
-                                            _vm.errors.get("name")
+                                            _vm.errors.get("budget")
                                           )
                                         }
                                       })
@@ -109257,49 +109352,96 @@ var render = function() {
                                   [
                                     _vm._v(
                                       " " +
-                                        _vm._s(
-                                          _vm.trans("modals.display_name")
-                                        ) +
-                                        " "
-                                    ),
-                                    _c("span", { staticClass: "text-danger" }, [
-                                      _vm._v(" *")
-                                    ])
+                                        _vm._s(_vm.trans("modals.destination"))
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    class: _vm.errors.has("display_name")
-                                      ? "is-invalid"
-                                      : "",
-                                    attrs: {
-                                      type: "text",
-                                      id: "display_name",
-                                      name: "display_name",
-                                      placeholder: _vm.trans(
-                                        "modals.display_name"
-                                      )
-                                    },
-                                    domProps: { value: _vm.group.display_name },
-                                    on: { input: _vm.updateGroup }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "invalid-feedback" },
-                                    [
-                                      _c("strong", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.errors.get("display_name")
+                                _c(
+                                  "div",
+                                  { staticClass: "col-lg-9" },
+                                  [
+                                    _vm._l(_vm.rule.destination, function(tag) {
+                                      return _c(
+                                        "el-tag",
+                                        {
+                                          key: tag,
+                                          attrs: {
+                                            closable: "",
+                                            "disable-transitions": false
+                                          },
+                                          on: {
+                                            close: function($event) {
+                                              return _vm.handleClose(tag)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                    " +
+                                              _vm._s(tag) +
+                                              "\n                                                "
                                           )
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ])
+                                        ]
+                                      )
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.inputVisible
+                                      ? _c("el-input", {
+                                          ref: "saveTagInput",
+                                          staticClass: "input-new-tag",
+                                          attrs: { size: "mini" },
+                                          on: { blur: _vm.handleInputConfirm },
+                                          nativeOn: {
+                                            keyup: function($event) {
+                                              if (
+                                                !$event.type.indexOf("key") &&
+                                                _vm._k(
+                                                  $event.keyCode,
+                                                  "enter",
+                                                  13,
+                                                  $event.key,
+                                                  "Enter"
+                                                )
+                                              ) {
+                                                return null
+                                              }
+                                              return _vm.handleInputConfirm(
+                                                $event
+                                              )
+                                            }
+                                          },
+                                          model: {
+                                            value: _vm.inputValue,
+                                            callback: function($$v) {
+                                              _vm.inputValue = $$v
+                                            },
+                                            expression: "inputValue"
+                                          }
+                                        })
+                                      : _c(
+                                          "el-button",
+                                          {
+                                            staticClass: "button-new-tag",
+                                            attrs: { size: "small" },
+                                            on: { click: _vm.showInput }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "+ " +
+                                                _vm._s(
+                                                  _vm.trans(
+                                                    "modals.destination"
+                                                  )
+                                                )
+                                            )
+                                          ]
+                                        ),
+                                    _vm._v(" "),
+                                    _c("br")
+                                  ],
+                                  2
+                                )
                               ]),
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group row" }, [
@@ -109318,12 +109460,14 @@ var render = function() {
                                     staticClass: "form-control",
                                     attrs: {
                                       type: "text",
-                                      id: "owner",
+                                      id: "user",
                                       disabled: "",
                                       readonly: "",
                                       placeholder: _vm.trans("modals.owner")
                                     },
-                                    domProps: { value: _vm.group.owner }
+                                    domProps: {
+                                      value: _vm.getRule("user", "full_name")
+                                    }
                                   })
                                 ])
                               ]),
@@ -109353,112 +109497,12 @@ var render = function() {
                                       )
                                     },
                                     domProps: {
-                                      value: _vm.getGroup(
+                                      value: _vm.getRule(
                                         "whitelabel",
                                         "display_name"
                                       )
                                     }
                                   })
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      "  " +
-                                        _vm._s(_vm.trans("modals.users")) +
-                                        " "
-                                    ),
-                                    _c("span", { staticClass: "text-danger" }, [
-                                      _vm._v(" *")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "col-lg-9" },
-                                  [
-                                    _c("el-transfer", {
-                                      staticStyle: { width: "100%" },
-                                      attrs: {
-                                        filterable: "",
-                                        titles: ["Source", "Target"],
-                                        value: _vm.group.users,
-                                        data: _vm.generateUsers()
-                                      },
-                                      on: { input: _vm.inputUsers }
-                                    }),
-                                    _vm._v(" "),
-                                    _vm.errors.has("users")
-                                      ? _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "help-block text-danger"
-                                          },
-                                          [
-                                            _c("strong", {
-                                              domProps: {
-                                                textContent: _vm._s(
-                                                  _vm.errors.get("users")
-                                                )
-                                              }
-                                            })
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ],
-                                  1
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      "  " +
-                                        _vm._s(_vm.trans("modals.description"))
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("textarea", {
-                                    staticClass: "form-control",
-                                    class: _vm.errors.has("description")
-                                      ? "is-invalid"
-                                      : "",
-                                    attrs: {
-                                      rows: "5",
-                                      id: "description",
-                                      name: "description",
-                                      placeholder: _vm.trans(
-                                        "modals.description"
-                                      )
-                                    },
-                                    domProps: { value: _vm.group.description },
-                                    on: { input: _vm.updateGroup }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "invalid-feedback" },
-                                    [
-                                      _c("strong", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.errors.get("description")
-                                          )
-                                        }
-                                      })
-                                    ]
-                                  )
                                 ])
                               ]),
                               _vm._v(" "),
@@ -109481,41 +109525,11 @@ var render = function() {
                                   [
                                     _c("el-switch", {
                                       attrs: {
-                                        value: _vm.group.status,
+                                        value: _vm.rule.status,
                                         "active-color": "#13ce66",
                                         "inactive-color": "#ff4949"
                                       },
                                       on: { input: _vm.updateStatus }
-                                    })
-                                  ],
-                                  1
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      "  " +
-                                        _vm._s(_vm.trans("modals.current")) +
-                                        " "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "col-lg-9" },
-                                  [
-                                    _c("el-switch", {
-                                      attrs: {
-                                        value: _vm.group.current,
-                                        "active-color": "#13ce66",
-                                        "inactive-color": "#ff4949"
-                                      },
-                                      on: { input: _vm.updateCurrent }
                                     })
                                   ],
                                   1
@@ -109598,7 +109612,7 @@ var render = function() {
                     _c(
                       "div",
                       { staticClass: "modal-body" },
-                      [_c("vue-table", { attrs: { options: _vm.group.logs } })],
+                      [_c("vue-table", { attrs: { options: _vm.rule.logs } })],
                       1
                     ),
                     _vm._v(" "),
@@ -109680,7 +109694,7 @@ var staticRenderFns = [
       [
         _c("i", { staticClass: "icon-collaboration mr-2" }),
         _vm._v(
-          "\n                                        Group details\n                                        "
+          "\n                                        Rule details\n                                        "
         ),
         _c(
           "a",
@@ -115126,31 +115140,32 @@ exports.default = [{
   sortField: 'id',
   visible: true
 }, {
+  name: 'type',
+  title: window.Lang.get('tables.type'),
+  sortField: 'type',
+  visible: true
+}, {
+  name: 'budget',
+  title: window.Lang.get('tables.budget'),
+  sortField: 'budget',
+  visible: true
+}, {
+  name: 'destination',
+  title: window.Lang.get('tables.destination'),
+  sortField: 'destination',
+  visible: true
+}, {
   name: '__component:custom-status',
   title: window.Lang.get('tables.status'),
   sortField: 'status',
   visible: true
 }, {
-  name: '__component:custom-link-by-name',
-  title: window.Lang.get('tables.name'),
-  sortField: 'title',
-  visible: true
-}, {
-  name: 'display_name',
-  title: window.Lang.get('tables.display_name'),
-  sortField: 'display_name',
-  visible: true
-}, {
-  name: 'owner.full_name',
+  name: 'user.full_name',
   title: window.Lang.get('tables.owner'),
-  visible: false
+  visible: true
 }, {
   name: 'whitelabel.display_name',
   title: window.Lang.get('tables.whitelabel'),
-  visible: true
-}, {
-  name: '__component:custom-users',
-  title: window.Lang.get('tables.users'),
   visible: true
 }, {
   name: 'updated_at',
@@ -116869,6 +116884,46 @@ exports.default = {
     }
   }
 };
+
+/***/ }),
+/* 428 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(429);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(358)("ade5e2d6", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-efc91cac\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./EditRuleComponent.vue", function() {
+     var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-efc91cac\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./EditRuleComponent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 429 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(181)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.el-tag + .el-tag {\n    margin-left: 10px !important;\n}\n.button-new-tag {\n    margin-left: 10px !important;\n    height: 32px !important;\n    line-height: 30px !important;\n    padding-top: 0 !important;\n    padding-bottom: 0 !important;\n}\n.input-new-tag {\n    width: 90px !important;\n    margin-left: 10px !important;\n    vertical-align: bottom !important;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

@@ -92,7 +92,12 @@ class RulesController extends Controller
                 new OrderBy($sort[0], $sort[1]),
                 new Where('rules.whitelabel_id', $request->get('whitelabel')),
                 new WhereBetween('rules.created_at', $request->get('start'), $request->get('end')),
-                new Filter($request->get('filter'))
+                new Filter($request->get('filter')),
+                new EagerLoad(['user' => function ($query) {
+                    $query->select('id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'));
+                }, 'whitelabel'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }]),
             ])->paginate($perPage);
 
             $result['success'] = true;
@@ -135,20 +140,75 @@ class RulesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @return Response
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function edit()
+    public function edit(int $id)
     {
-        return view('rules::edit');
+        try {
+            $rule = $this->rules->withCriteria([
+                new EagerLoad(['user' => function ($query) {
+                    $query->select('id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'));
+                }, 'whitelabel'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }])
+            ])->find($id);
+
+            $result['rule'] = [
+                'id'          => $rule->id,
+                'type'        => $rule->type,
+                'budget'      => $rule->budget,
+                'destination' => $rule->destination,
+                'status'      => $rule->status,
+                'user'        => $rule->user,
+                'whitelabel'  => $rule->whitelabel,
+            ];
+
+            $result['rule']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-rule') ? $this->activities->byModel($rule) : [];
+
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request)
+    public function update(Request $request, int $id)
     {
+        try {
+            $rule = $this->rules->update(
+                $id,
+                $request->only(
+                    'type',
+                    'budget'
+                )
+            );
+
+            $result['rule'] = $rule;
+            $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Rule']);
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**
