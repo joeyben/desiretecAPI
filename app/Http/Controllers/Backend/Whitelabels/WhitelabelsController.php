@@ -89,7 +89,9 @@ class WhitelabelsController extends Controller
     {
 
         $whitelabelName = ucfirst(access()->user()->whitelabels[0]->name);
-        echo shell_exec("cd ../Modules/$whitelabelName && npm install && npm run dev");
+        shell_exec("cd ../Modules/$whitelabelName");
+        shell_exec("sudo npm install");
+        shell_exec("sudo npm run dev");
 
     }
 
