@@ -89,7 +89,7 @@ class WhitelabelsController extends Controller
     {
 
         $whitelabelName = ucfirst(access()->user()->whitelabels[0]->name);
-        $process = new Process("cd ../Modules/$whitelabelName && npm install && npm run dev");
+        $process = new Process("cd ../Modules/$whitelabelName && sudo npm install && sudo npm run dev");
         $process->run();
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
