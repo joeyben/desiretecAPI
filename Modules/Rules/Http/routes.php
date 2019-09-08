@@ -14,4 +14,3 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'na
     Route::put('rules/{id}/restore', 'RulesController@restore')->name('admin.rules.restore')->where('id', '[0-9]+');
     Route::get('rules/export', 'RulesController@export')->name('admin.rules.export');
 });
-

@@ -13,21 +13,20 @@ class UpdateRuleRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->request->get('type') === 'mix') {
+        if ('mix' === $this->request->get('type')) {
             $rule = [
-                'id' => 'required|int',
-                'type' => 'in:manuel,auto,mix',
-                'budget' => 'required|int',
+                'id'            => 'required|int',
+                'type'          => 'in:manuel,auto,mix',
+                'budget'        => 'required|int',
                 'whitelabel_id' => 'required|int',
             ];
         } else {
             $rule = [
-                'id' => 'required|int',
-                'type' => 'in:manuel,auto,mix',
+                'id'            => 'required|int',
+                'type'          => 'in:manuel,auto,mix',
                 'whitelabel_id' => 'required|int',
             ];
         }
-
 
         return $rule;
     }

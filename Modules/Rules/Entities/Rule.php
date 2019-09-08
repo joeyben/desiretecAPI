@@ -4,14 +4,16 @@ namespace Modules\Rules\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Illuminate\Foundation\Auth\User;
 
 class Rule extends Model
 {
-    use SoftDeletes, SearchableTrait, LogsActivity;
+    use SoftDeletes;
+    use SearchableTrait;
+    use LogsActivity;
 
     protected $guarded = [];
 

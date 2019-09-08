@@ -13,19 +13,18 @@ class StoreRuleRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->request->get('type') === 'mix') {
+        if ('mix' === $this->request->get('type')) {
             $rule = [
-                'type' => 'in:manuel,auto,mix',
-                'budget' => 'required|int',
+                'type'          => 'in:manuel,auto,mix',
+                'budget'        => 'required|int',
                 'whitelabel_id' => 'required|int',
             ];
         } else {
             $rule = [
-                'type' => 'in:manuel,auto,mix',
+                'type'          => 'in:manuel,auto,mix',
                 'whitelabel_id' => 'required|int',
             ];
         }
-
 
         return $rule;
     }

@@ -27,7 +27,6 @@ use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class RulesController extends Controller
 {
-
     /**
      * @var \Illuminate\Routing\ResponseFactory
      */
@@ -77,6 +76,7 @@ class RulesController extends Controller
     {
         return view('rules::index');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -163,8 +163,7 @@ class RulesController extends Controller
     public function store(StoreRuleRequest $request)
     {
         try {
-
-            if ($request->get('type') === 'mix') {
+            if ('mix' === $request->get('type')) {
                 $result['rule'] = $this->rules->create(
                     array_merge(
                         $request->only('type', 'budget', 'whitelabel_id'),
@@ -198,6 +197,7 @@ class RulesController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -227,7 +227,7 @@ class RulesController extends Controller
                 'id'             => $rule->id,
                 'type'           => $rule->type,
                 'budget'         => $rule->budget,
-                'destination'    => is_null($rule->destination) ? [] : $rule->destination,
+                'destination'    => null === $rule->destination ? [] : $rule->destination,
                 'status'         => $rule->status,
                 'user'           => $rule->user,
                 'whitelabel'     => $rule->whitelabel,
@@ -258,7 +258,7 @@ class RulesController extends Controller
     public function update(UpdateRuleRequest $request, int $id)
     {
         try {
-            if ($request->get('type') === 'mix') {
+            if ('mix' === $request->get('type')) {
                 $rule = $this->rules->update(
                     $id,
                     array_merge(
@@ -339,7 +339,6 @@ class RulesController extends Controller
 
     /**
      * @param int $id
-     *
      *
      * @return \Illuminate\Http\JsonResponse
      */
