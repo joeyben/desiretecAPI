@@ -67,3 +67,4 @@ RUN make routes
 RUN make message
 RUN apt-get install nano
 RUN docker-php-ext-install soap
+RUN chown www-data:www-data /var/www/html/
