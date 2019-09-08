@@ -267,7 +267,11 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $images = glob(base_path($source . '/*'));
 
         foreach ($images as $image) {
-            copy($image, base_path($destination  . '/' . basename($image)));
+            if (is_dir($image)) {
+                recurse_copy($image, base_path($destination  . '/' . basename($image)));
+            } else {
+                copy($image, base_path($destination  . '/' . basename($image)));
+            }
         }
     }
 
