@@ -109262,7 +109262,6 @@ var render = function() {
                                         staticStyle: { width: "100%" },
                                         attrs: {
                                           value: _vm.rule.type,
-                                          id: "type",
                                           name: "type",
                                           size: "medium"
                                         },
@@ -109284,165 +109283,191 @@ var render = function() {
                                       1
                                     ),
                                     _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "invalid-feedback" },
-                                      [
-                                        _c("strong", {
-                                          domProps: {
-                                            textContent: _vm._s(
-                                              _vm.errors.get("type")
-                                            )
-                                          }
-                                        })
-                                      ]
-                                    )
+                                    _vm.errors.has("type")
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "help-block text-danger"
+                                          },
+                                          [
+                                            _c("strong", {
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  _vm.errors.get("type")
+                                                )
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e()
                                   ],
                                   1
                                 )
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      " " + _vm._s(_vm.trans("modals.budget"))
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    class: _vm.errors.has("budget")
-                                      ? "is-invalid"
-                                      : "",
-                                    attrs: {
-                                      type: "text",
-                                      id: "budget",
-                                      name: "budget",
-                                      placeholder: _vm.trans("modals.budget")
-                                    },
-                                    domProps: { value: _vm.rule.budget },
-                                    on: { input: _vm.updateRule }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "invalid-feedback" },
-                                    [
-                                      _c("strong", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.errors.get("budget")
-                                          )
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(_vm.trans("modals.destination"))
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "col-lg-9" },
-                                  [
-                                    _vm._l(_vm.rule.destination, function(tag) {
-                                      return _c(
-                                        "el-tag",
-                                        {
-                                          key: tag,
-                                          attrs: {
-                                            closable: "",
-                                            "disable-transitions": false
-                                          },
-                                          on: {
-                                            close: function($event) {
-                                              return _vm.handleClose(tag)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(tag) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    }),
+                              _vm.rule.type === "mix"
+                                ? _c("div", { staticClass: "form-group row" }, [
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "col-lg-3 col-form-label"
+                                      },
+                                      [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(_vm.trans("modals.budget"))
+                                        )
+                                      ]
+                                    ),
                                     _vm._v(" "),
-                                    _vm.inputVisible
-                                      ? _c("el-input", {
-                                          ref: "saveTagInput",
-                                          staticClass: "input-new-tag",
-                                          attrs: { size: "mini" },
-                                          on: { blur: _vm.handleInputConfirm },
-                                          nativeOn: {
-                                            keyup: function($event) {
-                                              if (
-                                                !$event.type.indexOf("key") &&
-                                                _vm._k(
-                                                  $event.keyCode,
-                                                  "enter",
-                                                  13,
-                                                  $event.key,
-                                                  "Enter"
-                                                )
-                                              ) {
-                                                return null
-                                              }
-                                              return _vm.handleInputConfirm(
-                                                $event
+                                    _c("div", { staticClass: "col-lg-9" }, [
+                                      _c("input", {
+                                        staticClass: "form-control",
+                                        class: _vm.errors.has("budget")
+                                          ? "is-invalid"
+                                          : "",
+                                        attrs: {
+                                          type: "number",
+                                          min: "0",
+                                          step: "1",
+                                          id: "budget",
+                                          name: "budget",
+                                          placeholder: _vm.trans(
+                                            "modals.budget"
+                                          )
+                                        },
+                                        domProps: { value: _vm.rule.budget },
+                                        on: { input: _vm.updateRule }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "invalid-feedback" },
+                                        [
+                                          _c("strong", {
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.errors.get("budget")
                                               )
                                             }
-                                          },
-                                          model: {
-                                            value: _vm.inputValue,
-                                            callback: function($$v) {
-                                              _vm.inputValue = $$v
-                                            },
-                                            expression: "inputValue"
-                                          }
-                                        })
-                                      : _c(
-                                          "el-button",
-                                          {
-                                            staticClass: "button-new-tag",
-                                            attrs: { size: "small" },
-                                            on: { click: _vm.showInput }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "+ " +
-                                                _vm._s(
-                                                  _vm.trans(
-                                                    "modals.destination"
-                                                  )
-                                                )
+                                          })
+                                        ]
+                                      )
+                                    ])
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.rule.type === "mix"
+                                ? _c("div", { staticClass: "form-group row" }, [
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "col-lg-3 col-form-label"
+                                      },
+                                      [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(
+                                              _vm.trans("modals.destination")
                                             )
-                                          ]
-                                        ),
+                                        )
+                                      ]
+                                    ),
                                     _vm._v(" "),
-                                    _c("br")
-                                  ],
-                                  2
-                                )
-                              ]),
+                                    _c(
+                                      "div",
+                                      { staticClass: "col-lg-9" },
+                                      [
+                                        _vm._l(_vm.rule.destination, function(
+                                          tag
+                                        ) {
+                                          return _c(
+                                            "el-tag",
+                                            {
+                                              key: tag,
+                                              attrs: {
+                                                closable: "",
+                                                "disable-transitions": false
+                                              },
+                                              on: {
+                                                close: function($event) {
+                                                  return _vm.handleClose(tag)
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                                    " +
+                                                  _vm._s(tag) +
+                                                  "\n                                                "
+                                              )
+                                            ]
+                                          )
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.inputVisible
+                                          ? _c("el-input", {
+                                              ref: "saveTagInput",
+                                              staticClass: "input-new-tag",
+                                              attrs: { size: "mini" },
+                                              on: {
+                                                blur: _vm.handleInputConfirm
+                                              },
+                                              nativeOn: {
+                                                keyup: function($event) {
+                                                  if (
+                                                    !$event.type.indexOf(
+                                                      "key"
+                                                    ) &&
+                                                    _vm._k(
+                                                      $event.keyCode,
+                                                      "enter",
+                                                      13,
+                                                      $event.key,
+                                                      "Enter"
+                                                    )
+                                                  ) {
+                                                    return null
+                                                  }
+                                                  return _vm.handleInputConfirm(
+                                                    $event
+                                                  )
+                                                }
+                                              },
+                                              model: {
+                                                value: _vm.inputValue,
+                                                callback: function($$v) {
+                                                  _vm.inputValue = $$v
+                                                },
+                                                expression: "inputValue"
+                                              }
+                                            })
+                                          : _c(
+                                              "el-button",
+                                              {
+                                                staticClass: "button-new-tag",
+                                                attrs: { size: "small" },
+                                                on: { click: _vm.showInput }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "+ " +
+                                                    _vm._s(
+                                                      _vm.trans(
+                                                        "modals.destination"
+                                                      )
+                                                    )
+                                                )
+                                              ]
+                                            ),
+                                        _vm._v(" "),
+                                        _c("br")
+                                      ],
+                                      2
+                                    )
+                                  ])
+                                : _vm._e(),
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group row" }, [
                                 _c(

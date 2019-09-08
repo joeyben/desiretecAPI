@@ -19,6 +19,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\Rules\Http\Requests\CreateRuleRequest;
+use Modules\Rules\Http\Requests\StoreRuleRequest;
+use Modules\Rules\Http\Requests\UpdateRuleRequest;
 use Modules\Rules\Repositories\Contracts\RulesRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
@@ -98,6 +101,7 @@ class RulesController extends Controller
                 }, 'whitelabel'  => function ($query) {
                     $query->select('id', 'display_name');
                 }]),
+                new ByWhitelabel('rules')
             ])->paginate($perPage);
 
             $result['success'] = true;
@@ -113,20 +117,83 @@ class RulesController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return Response
+     *
+     * @param \Modules\Rules\Http\Requests\CreateRuleRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function create(CreateRuleRequest $request)
     {
-        return view('rules::create');
+        try {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((null === $whitelabel) && $request->has('whitelabelId')) {
+                $whitelabel = $this->whitelabels->find($request->get('whitelabelId'));
+            }
+
+            $result['rule'] = [
+                'id'                               => 0,
+                'type'                             => 'manuel',
+                'budget'                           => null,
+                'destination'                      => [],
+                'status'                           => true,
+                'user'                             => ['full_name' => $this->auth->guard('web')->user()->first_name . ' ' . $this->auth->guard('web')->user()->last_name],
+                'whitelabel'                       => $whitelabel,
+                'whitelabel_id'                    => $whitelabel->id,
+            ];
+
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
+     *
+     * @param \Modules\Rules\Http\Requests\StoreRuleRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(StoreRuleRequest $request)
     {
+        try {
+
+            if ($request->get('type') === 'mix') {
+                $result['rule'] = $this->rules->create(
+                    array_merge(
+                        $request->only('type', 'budget', 'whitelabel_id'),
+                        ['destination' => json_encode($request->get('destination')), 'user_id' => $this->auth->guard('web')->user()->id]
+                    )
+                );
+            } else {
+                $result['rule'] = $this->rules->create(
+                    array_merge(
+                        $request->only('type', 'whitelabel_id'),
+                        ['budget' => null, 'destination' => null, 'user_id' => $this->auth->guard('web')->user()->id]
+                    )
+                );
+            }
+
+            if ($request->has('status') && $request->get('status')) {
+                $this->rules->updateStatus($result['rule'], $request->only('status'), $request->get('whitelabel_id'));
+            }
+
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Rule']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -157,13 +224,14 @@ class RulesController extends Controller
             ])->find($id);
 
             $result['rule'] = [
-                'id'          => $rule->id,
-                'type'        => $rule->type,
-                'budget'      => $rule->budget,
-                'destination' => $rule->destination,
-                'status'      => $rule->status,
-                'user'        => $rule->user,
-                'whitelabel'  => $rule->whitelabel,
+                'id'             => $rule->id,
+                'type'           => $rule->type,
+                'budget'         => $rule->budget,
+                'destination'    => is_null($rule->destination) ? [] : $rule->destination,
+                'status'         => $rule->status,
+                'user'           => $rule->user,
+                'whitelabel'     => $rule->whitelabel,
+                'whitelabel_id'  => $rule->whitelabel_id,
             ];
 
             $result['rule']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-rule') ? $this->activities->byModel($rule) : [];
@@ -182,21 +250,35 @@ class RulesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param \Modules\Rules\Http\Requests\UpdateRuleRequest $request
+     * @param int                                            $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id)
+    public function update(UpdateRuleRequest $request, int $id)
     {
         try {
-            $rule = $this->rules->update(
-                $id,
-                $request->only(
-                    'type',
-                    'budget'
-                )
-            );
+            if ($request->get('type') === 'mix') {
+                $rule = $this->rules->update(
+                    $id,
+                    array_merge(
+                        $request->only('type', 'budget'),
+                        ['destination' => json_encode($request->get('destination'))]
+                    )
+                );
+            } else {
+                $rule = $this->rules->update(
+                    $id,
+                    array_merge(
+                        $request->only('type'),
+                        ['budget' => null, 'destination' => null]
+                    )
+                );
+            }
+
+            if ($request->has('status') && $request->get('status')) {
+                $this->rules->updateStatus($rule, $request->only('status'), $request->get('whitelabel_id'));
+            }
 
             $result['rule'] = $rule;
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Rule']);

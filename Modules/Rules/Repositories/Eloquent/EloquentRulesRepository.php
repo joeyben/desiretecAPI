@@ -22,4 +22,14 @@ class EloquentRulesRepository extends RepositoryAbstract implements RulesReposit
     {
         return Rule::class;
     }
+
+    public function updateStatus($rule, array $status, int $whitelabelId)
+    {
+        Rule::where('status', true)->where('whitelabel_id', $whitelabelId)
+            ->update(['status' => false]);
+
+        $rule->update($status);
+
+        return $rule;
+    }
 }

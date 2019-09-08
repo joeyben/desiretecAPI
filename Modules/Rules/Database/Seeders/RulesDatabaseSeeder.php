@@ -37,7 +37,7 @@ class RulesDatabaseSeeder extends Seeder
                 'budget'            => 3000,
                 'destination'       => json_encode(['Malediven', 'Paris']),
                 'user_id'           => 1,
-                'whitelabel_id'     => 7,
+                'whitelabel_id'     => 16,
                 'created_at'        => $faker->dateTimeThisMonth(),
                 'updated_at'        => DB::raw('now()'),
             ]);

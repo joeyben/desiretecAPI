@@ -38,26 +38,26 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.type') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <el-radio-group :value="rule.type"  id='type' name='type' @input="updateRuleType" size="medium" style="width: 100%;">
+                                                    <el-radio-group :value="rule.type" name="type" @input="updateRuleType" size="medium" style="width: 100%;">
                                                         <el-radio-button label="manuel"></el-radio-button>
                                                         <el-radio-button label="auto"></el-radio-button>
                                                         <el-radio-button label="mix"></el-radio-button>
                                                     </el-radio-group>
-                                                    <div class="invalid-feedback">
+                                                    <div class="help-block text-danger" v-if="errors.has('type')">
                                                         <strong v-text="errors.get('type')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+                                            <div class="form-group row" v-if="rule.type === 'mix'">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.budget') }}</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('budget') ? 'is-invalid': ''" id='budget' name='budget' :placeholder="trans('modals.budget')" @input="updateRule"  :value="rule.budget"/>
+                                                    <input type="number" min="0" step="1" class="form-control" :class="errors.has('budget') ? 'is-invalid': ''" id='budget' name='budget' :placeholder="trans('modals.budget')" @input="updateRule"  :value="rule.budget"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('budget')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+                                            <div class="form-group row" v-if="rule.type === 'mix'">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.destination') }}</label>
                                                 <div class="col-lg-9">
                                                     <el-tag :key="tag" v-for="tag in rule.destination" closable :disable-transitions="false" @close="handleClose(tag)">
