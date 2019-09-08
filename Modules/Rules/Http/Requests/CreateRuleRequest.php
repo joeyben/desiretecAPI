@@ -14,7 +14,6 @@ class CreateRuleRequest extends FormRequest
     public function rules()
     {
         return [
-            'whitelabelId' => 'required|int'
         ];
     }
 
