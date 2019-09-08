@@ -239,7 +239,7 @@
                         </li>
                     @endif
 
-                    @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                    @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole('Administrator'))
                         <li class="nav-item">
                             <a href="{{ route('admin.whitelabels.compile') }}" class="nav-link">
                                 <i class="icon-atom2"></i>
