@@ -8,8 +8,6 @@
             <div class="dropdown-menu dropdown-menu-left">
                 <router-link class="dropdown-item" :to="{name: 'root.edit', params: { id: 0 }}" v-if="hasPermissionTo('create-group') && !hasRole('Administrator')"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
                 <a href="javascript:;" class="dropdown-item" v-on:click="dialogFormVisible = true" v-if="hasRole('Administrator')"><i class="icon-plus3"></i>  {{ trans('button.create') }}</a>
-                <a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item"><i class="icon-file-text3"></i> Export Selected</a>
-                <a :href="urlExport" class="dropdown-item"><i class="icon-file-text3"></i> Export All</a>
             </div>
         </h5>
         <div class="header-elements">

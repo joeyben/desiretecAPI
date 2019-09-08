@@ -114903,8 +114903,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
 
 var _vuex = __webpack_require__(7);
 
@@ -115088,33 +115086,7 @@ var render = function() {
                     _vm._v("  " + _vm._s(_vm.trans("button.create")))
                   ]
                 )
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "dropdown-item",
-                attrs: { href: "javascript:;" },
-                on: {
-                  click: function($event) {
-                    return _vm.onExportSelected()
-                  }
-                }
-              },
-              [
-                _c("i", { staticClass: "icon-file-text3" }),
-                _vm._v(" Export Selected")
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "dropdown-item", attrs: { href: _vm.urlExport } },
-              [
-                _c("i", { staticClass: "icon-file-text3" }),
-                _vm._v(" Export All")
-              ]
-            )
+              : _vm._e()
           ],
           1
         )

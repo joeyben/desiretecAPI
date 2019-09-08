@@ -51,6 +51,7 @@ return [
     'status'                        => 'Status',
     'destination'                   => 'Destination',
     'airport'                       => 'Airport',
+    'type'                          => 'Type',
     'earliest_start'                => 'Earliest start',
     'latest_return'                 => 'Latest return',
     'text'                          => 'Text',
