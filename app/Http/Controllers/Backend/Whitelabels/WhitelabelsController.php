@@ -95,10 +95,10 @@ class WhitelabelsController extends Controller
         $last_line = exec($command, $output, $return_var);
 
         if ($return_var === 0) {
-            echo "succeeded";
+            var_dump($output);
         } else {
             // fail or other exceptions
-            throw new \Exception(implode("\n", $output));
+            var_dump($output);
         }
     }
 
