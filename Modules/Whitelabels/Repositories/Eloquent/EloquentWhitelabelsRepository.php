@@ -15,6 +15,7 @@ use Intervention\Image\ImageManager;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Illuminate\Filesystem\Filesystem;
 
 /**
  * Class EloquentPostsRepository.
@@ -62,6 +63,10 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             mkdir(base_path("Modules/$name/Resources/assets/svg"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/assets/js/layer"), 0777, true);
         }
+
+        //$file = new Filesystem();
+        //$file->copyDirectory(base_path('Modules/Master/node_modules'), base_path("Modules/$name/node_modules"));
+
 
         $this->copyImage(
             'Modules/Master/Resources/assets/images/layer',
