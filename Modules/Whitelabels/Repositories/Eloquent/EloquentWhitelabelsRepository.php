@@ -60,7 +60,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             mkdir(base_path("Modules/$name/Resources/assets/sass/wish"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/assets/images/layer"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/assets/svg"), 0777, true);
-            mkdir(base_path("Modules/$name/node_modules"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/assets/js/layer"), 0777, true);
         }
 
@@ -69,14 +68,9 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             "Modules/$name/Resources/assets/images/layer"
         );
 
-        $this->copyFiles(
+        $this->copyImageSvg(
             'Modules/Master/Resources/assets/svg',
             "Modules/$name/Resources/assets/svg"
-        );
-
-        $this->copyFiles(
-            'Modules/Master/node_modules',
-            "Modules/$name/node_modules"
         );
 
         $this->generateFile(
@@ -254,7 +248,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         }
     }
 
-    public function copyFiles(string $source, string $destination)
+    public function copyImageSvg(string $source, string $destination)
     {
         if (!file_exists(base_path($source))) {
             throw new FileNotFoundException($source);
@@ -267,11 +261,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $images = glob(base_path($source . '/*'));
 
         foreach ($images as $image) {
-            if (is_dir($image)) {
-                recurse_copy($image, base_path($destination  . '/' . basename($image)));
-            } else {
-                copy($image, base_path($destination  . '/' . basename($image)));
-            }
+            copy($image, base_path($destination  . '/' . basename($image)));
         }
     }
 
