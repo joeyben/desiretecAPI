@@ -63,10 +63,9 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             mkdir(base_path("Modules/$name/Resources/assets/svg"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/assets/js/layer"), 0777, true);
         }
-        mkdir(base_path("Modules/$name/node_modules"), 0777, true);
 
-        $file = new Filesystem();
-        $file->copyDirectory(base_path('Modules/Master/node_modules'), base_path("Modules/$name/node_modules"));
+        //$file = new Filesystem();
+        //$file->copyDirectory(base_path('Modules/Master/node_modules'), base_path("Modules/$name/node_modules"));
 
 
         $this->copyImage(
