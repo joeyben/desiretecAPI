@@ -68,9 +68,14 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             "Modules/$name/Resources/assets/images/layer"
         );
 
-        $this->copyImageSvg(
+        $this->copyFiles(
             'Modules/Master/Resources/assets/svg',
             "Modules/$name/Resources/assets/svg"
+        );
+
+        $this->copyFiles(
+            'Modules/Master/node_modules',
+            "Modules/$name/node_modules"
         );
 
         $this->generateFile(
@@ -248,7 +253,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         }
     }
 
-    public function copyImageSvg(string $source, string $destination)
+    public function copyFiles(string $source, string $destination)
     {
         if (!file_exists(base_path($source))) {
             throw new FileNotFoundException($source);
