@@ -78,7 +78,7 @@ class OverlandWishesController extends Controller
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
-        $this->class = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'class'));
+        $this->class = $categories->getChildrenFromSlug('slug', 'class');
         $this->categories = $categories;
     }
 
@@ -163,7 +163,7 @@ class OverlandWishesController extends Controller
     public function getWish(Wish $wish)
     {
         return response()->json($wish->only(
-            ['destination', 'earliest_start', 'latest_return', 'duration', 'adults', 'kids', 'budget']
+            ['destination', 'earliest_start', 'latest_return', 'description', 'adults', 'kids', 'category']
         ));
     }
 
