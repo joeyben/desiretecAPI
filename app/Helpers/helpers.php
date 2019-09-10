@@ -567,8 +567,10 @@ if (!function_exists('getWhitelabelFooterUrl')) {
      */
     function getWhitelabelFooterUrl(){
         $name = getCurrentWhiteLabelField('name');
+        $fullFooterPath = resource_path("views/_parts/footer/".strtolower($name).".blade.php");
         $footerUrl = '_parts.footer.';
-        if(is_null($name) or !file_exists($footerUrl.strtolower($name))){
+
+        if(is_null($name) or !file_exists($fullFooterPath)){
             return $footerUrl.'default';
         }
 
