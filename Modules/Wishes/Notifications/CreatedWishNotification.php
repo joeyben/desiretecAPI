@@ -64,8 +64,8 @@ class CreatedWishNotification extends Notification
             ->from($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Portal')
             ->replyTo($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Portal')
             ->subject(trans('email.wish.user', ['whitelabel' => $this->wish->whitelabel->display_name]))
-            ->view('wishes::emails.wish_general', ['wish' => $this->wish, 'token' => $this->wish->token]);
-        //->view('wishes::emails.wish', ['wish' => $this->wish, 'token' => $this->wish->token]);
+            //->view('wishes::emails.wish_general', ['wish' => $this->wish, 'token' => $this->wish->token]);
+            ->view('wishes::emails.wish', ['wish' => $this->wish, 'token' => $this->wish->token]);
 
 
 

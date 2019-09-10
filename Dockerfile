@@ -68,4 +68,5 @@ RUN make message
 RUN apt-get install nano
 RUN docker-php-ext-install soap
 RUN chown -R www-data:www-data /var/www
-#RUN chown -R www-data:www-data /var/www/html/node_modules/
+RUN npm install
+RUN chown -R www-data:www-data /var/www/html/node_modules/

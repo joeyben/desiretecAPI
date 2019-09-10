@@ -1300,13 +1300,13 @@ p.kwp-info {
     .kwp-close{
       width: 25px;
       height: 25px;
-      background: transparent url(../../svg/times_dark.svg) no-repeat center center;
+      background: transparent url(../../svg/times_light.svg) no-repeat center center;
       top: 10px;
       right: 10px;
       z-index: 2;
     }
     .dt-modal-agb .kwp-close, .kwp-close.dark {
-      background: transparent url(../../svg/times_dark.svg) no-repeat center center;
+      background: transparent url(../../svg/times_light.svg) no-repeat center center;
     }
     .dt-modal-agb .kwp-close{
       width: 50px;
@@ -1600,6 +1600,8 @@ and (max-device-width : 320px) {
 
 .category-col select{
   border: none !important;
+  padding-top: 0;
+  background: white;
 }
 .category-col{
   border-bottom: 1px solid #737373;
@@ -1622,4 +1624,7 @@ and (max-device-width : 320px) {
 }
 .dt_terms.hasError:after{
   border: 1px solid red !important;
+}
+.description textarea{
+  color: black;
 }
