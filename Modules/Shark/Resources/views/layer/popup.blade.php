@@ -71,7 +71,7 @@
 
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
-                    <label for="travelers" class="required">{{ trans('whitelabel.ayer.general.pax') }}</label>
+                    <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
                          <i class="master-icon--user-family not-triggered"></i>
