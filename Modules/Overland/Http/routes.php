@@ -17,6 +17,7 @@ Route::group(['domain' => $domain], function () {
         Route::get('wish/{wish}', 'OverlandWishesController@view')->name('wish.view');
         Route::get('wish/{wish}/{token}', 'OverlandWishesController@details')->name('wish.details');
         Route::get('getwish/{wish}', 'OverlandWishesController@getWish')->name('getWish');
+        Route::get('wishlist', 'OverlandWishesController@wishList')->name('list');
         Route::get('wishlist/{token}', 'OverlandWishesController@validateTokenList');
     });
 });
