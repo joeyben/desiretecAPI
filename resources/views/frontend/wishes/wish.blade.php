@@ -381,7 +381,7 @@
     </div>
 </div>
 
-<div id="myModal2" class="modal wish-modal-1 fade" role="dialog">
+<div id="callback" class="modal wish-modal-1 fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
