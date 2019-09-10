@@ -573,7 +573,6 @@ if (!function_exists('getWhitelabelFooterUrl')) {
         if(is_null($name) or !file_exists($fullFooterPath)){
             return $footerUrl.'default';
         }
-
         return $footerUrl.strtolower($name);
     }
 }
