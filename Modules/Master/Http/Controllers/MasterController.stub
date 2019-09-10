@@ -109,7 +109,11 @@ class $MODULE$Controller extends Controller
             return response()->json(['success' => true, 'html'=>$html]);
         }
 
-        $newUser = $this->createUserFromLayer($request, $user);
+        $newUser = $user->createUserFromLayer(
+            $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'),
+            $this->whitelabelId
+        );
+
         $wish = $this->createWishFromLayer($request, $wish);
         $html = view('$MODULESMAL$::layer.created')->with([
             'token' => $newUser->token->token,
