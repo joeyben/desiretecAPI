@@ -1,3 +1,8 @@
+@php
+    $contactInactivClass = count($wish->contacts) ? "" : "";
+    $callbackInactivClass = count($wish->callbacks) ? "" : "";
+    $actionButtonsSet = false;
+@endphp
 @extends('frontend.layouts.app')
 
 @section('content')
