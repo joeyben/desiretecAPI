@@ -191,7 +191,8 @@ class WishesController extends Controller
 
         $wish = $this->wish->getForDataTable()
             ->when($status, function ($wish, $status) {
-                return $wish->where(config('module.wishes.table') . '.status', $status);
+                return $wish->where(config('module.wishes.table') . '.status', $status)
+                    ->where('whitelabel_id', intval(getCurrentWhiteLabelId()));
             })
             ->paginate(10);
 
