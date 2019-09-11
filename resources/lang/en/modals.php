@@ -90,4 +90,5 @@ return [
     'current'                       => 'Current',
     'dashboard'                     => 'Dashboard',
     'image'                         => 'Image',
+    'type'                          => 'Type',
 ];
