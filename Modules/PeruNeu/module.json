@@ -1,0 +1,16 @@
+{
+    "name": "PeruNeu",
+    "alias": "peruneu",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\PeruNeu\\Providers\\PeruNeuServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
