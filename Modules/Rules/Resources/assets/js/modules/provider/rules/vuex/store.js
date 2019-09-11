@@ -25,6 +25,9 @@ const mutations = {
   ADD_WHITELABELS (state, whitelabels) {
     state.whitelabels = whitelabels
   },
+  updateRuleRemoveDestination (state, destination) {
+    state.rule['destination'].splice(state.rule['destination'].indexOf(destination), 1)
+  },
   updateRuleDestination (state, obj) {
     let index = state.rule['destination'].indexOf(obj.value)
     if (index === -1) {

@@ -63,7 +63,7 @@
                                                     <el-tag :key="tag" v-for="tag in rule.destination" closable :disable-transitions="false" @close="handleClose(tag)">
                                                         {{tag}}
                                                     </el-tag>
-                                                    <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="mini" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
+                                                    <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="mini" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm" @focus="onFocus">
                                                     </el-input>
                                                     <el-button v-else class="button-new-tag" size="small" @click="showInput">+ {{ trans('modals.destination') }}</el-button>
                                                     <br>
@@ -149,6 +149,7 @@
         // eslint-disable-next-line
         errors: new Errors(),
         close: false,
+        focus: false,
         inputVisible: false,
         inputValue: ''
       }
@@ -202,7 +203,11 @@
           this.$refs.saveTagInput.$refs.input.focus()
         })
       },
+      onFocus () {
+        this.focus = true
+      },
       handleInputConfirm () {
+        this.focus = false
         let inputValue = this.inputValue
         if (inputValue) {
           this.$store.commit('updateRuleDestination', {name: 'description', value: inputValue})
@@ -211,7 +216,7 @@
         this.inputValue = ''
       },
       handleClose (tag) {
-        this.$store.commit('updateTemplateRemoveTags', tag)
+        this.$store.commit('updateRuleRemoveDestination', tag)
       },
       getRule (key, value) {
         return (this.rule.hasOwnProperty(key)) ? this.rule[key][value] : ''
@@ -273,6 +278,11 @@
         }
       },
       onSubmit (e) {
+        if (this.focus) {
+          this.handleInputConfirm()
+          return false
+        }
+
         let id = parseInt(this.$route.params.id)
         if (id === 0) {
           this.onSubmitStore()
