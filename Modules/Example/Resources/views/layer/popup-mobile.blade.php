@@ -1,6 +1,5 @@
 {{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
-
 <div class="kwp-minimal">
     <div class="kwp-content kwp-with-expansion">
         <script>
