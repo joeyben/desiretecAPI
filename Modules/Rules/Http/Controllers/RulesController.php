@@ -257,13 +257,15 @@ class RulesController extends Controller
      */
     public function update(UpdateRuleRequest $request, int $id)
     {
+        $destination = 0 === \count($request->get('destination')) ? null : $request->get('destination');
+
         try {
             if ('mix' === $request->get('type')) {
                 $rule = $this->rules->update(
                     $id,
                     array_merge(
                         $request->only('type', 'budget'),
-                        ['destination' => json_encode($request->get('destination'))]
+                        ['destination' => json_encode($destination)]
                     )
                 );
             } else {

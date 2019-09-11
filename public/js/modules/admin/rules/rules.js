@@ -41590,6 +41590,9 @@ var mutations = {
   ADD_WHITELABELS: function ADD_WHITELABELS(state, whitelabels) {
     state.whitelabels = whitelabels;
   },
+  updateRuleRemoveDestination: function updateRuleRemoveDestination(state, destination) {
+    state.rule['destination'].splice(state.rule['destination'].indexOf(destination), 1);
+  },
   updateRuleDestination: function updateRuleDestination(state, obj) {
     var index = state.rule['destination'].indexOf(obj.value);
     if (index === -1) {
@@ -115692,6 +115695,7 @@ exports.default = {
       // eslint-disable-next-line
       errors: new _errors.Errors(),
       close: false,
+      focus: false,
       inputVisible: false,
       inputValue: ''
     };
@@ -115746,7 +115750,11 @@ exports.default = {
         _this.$refs.saveTagInput.$refs.input.focus();
       });
     },
+    onFocus: function onFocus() {
+      this.focus = true;
+    },
     handleInputConfirm: function handleInputConfirm() {
+      this.focus = false;
       var inputValue = this.inputValue;
       if (inputValue) {
         this.$store.commit('updateRuleDestination', { name: 'description', value: inputValue });
@@ -115755,7 +115763,7 @@ exports.default = {
       this.inputValue = '';
     },
     handleClose: function handleClose(tag) {
-      this.$store.commit('updateTemplateRemoveTags', tag);
+      this.$store.commit('updateRuleRemoveDestination', tag);
     },
     getRule: function getRule(key, value) {
       return this.rule.hasOwnProperty(key) ? this.rule[key][value] : '';
@@ -115817,6 +115825,11 @@ exports.default = {
       }
     },
     onSubmit: function onSubmit(e) {
+      if (this.focus) {
+        this.handleInputConfirm();
+        return false;
+      }
+
       var id = parseInt(this.$route.params.id);
       if (id === 0) {
         this.onSubmitStore();
@@ -116592,7 +116605,8 @@ var render = function() {
                                               staticClass: "input-new-tag",
                                               attrs: { size: "mini" },
                                               on: {
-                                                blur: _vm.handleInputConfirm
+                                                blur: _vm.handleInputConfirm,
+                                                focus: _vm.onFocus
                                               },
                                               nativeOn: {
                                                 keyup: function($event) {
