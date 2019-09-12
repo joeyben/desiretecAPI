@@ -6,6 +6,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'offer', 'namespace' => 'Module
     Route::get('list/{wish}', 'AutooffersController@show')->name('list');
     Route::get('details/{wish}', 'AutooffersController@details')->name('details');
     Route::post('store', 'AutooffersController@store')->name('store');
+    Route::get('setting', 'AutooffersSettingController@index')->name('setting');
 });
 
 Route::group(['middleware' => 'web', 'prefix' => 'novasoloffer', 'namespace' => 'Modules\Autooffers\Http\Controllers', 'as' => 'autooffer.'], function () {
