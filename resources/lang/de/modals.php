@@ -94,4 +94,6 @@ return [
     'manuel'                        => 'Manuell',
     'auto'                          => 'Auto',
     'mix'                           => 'Mix',
+    'whitelabels_distribution'      => 'Distribution',
+    'whitelabels_image'             => 'Hintergrundbild',
 ];
