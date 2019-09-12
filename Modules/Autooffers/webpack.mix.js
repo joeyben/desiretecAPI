@@ -20,9 +20,7 @@ mix.webpackConfig({
     },
 });
 
-mix.js(__dirname + '/Resources/assets/js/modules/provider/autooffers/autooffers.js', 'js/modules/admin/autooffers/autooffers.js')
-    .js(__dirname + '/Resources/assets/js/app.js', 'js/autooffers.js')
-    .sass(__dirname + '/Resources/assets/sass/app.scss', __dirname + '/../../public/modules/css/offers.css');
+mix.js(__dirname + '/Resources/assets/js/modules/provider/autooffers/autooffers.js', 'js/modules/admin/autooffers/autooffers.js');
 
 if (mix.inProduction()) {
     mix.version();
