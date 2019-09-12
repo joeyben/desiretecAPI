@@ -91,4 +91,7 @@ return [
     'dashboard'                     => 'Dashboard',
     'image'                         => 'Image',
     'type'                          => 'Type',
+    'manuel'                        => 'Manuel',
+    'auto'                          => 'Auto',
+    'mix'                           => 'Mix',
 ];

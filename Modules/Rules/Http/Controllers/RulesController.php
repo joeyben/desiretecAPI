@@ -277,9 +277,14 @@ class RulesController extends Controller
                     )
                 );
             }
-
-            if ($request->has('status') && $request->get('status')) {
+            
+            if ($request->has('status') && $request->get('status') && ($rule->status !== $request->get('status'))) {
                 $this->rules->updateStatus($rule, $request->only('status'), $request->get('whitelabel_id'));
+            } else {
+                $rule = $this->rules->update(
+                    $id,
+                    $request->only('status')
+                );
             }
 
             $result['rule'] = $rule;
