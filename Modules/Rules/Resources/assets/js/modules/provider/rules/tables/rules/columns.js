@@ -11,6 +11,7 @@ export default [
   {
     name: 'type',
     title: window.Lang.get('tables.type'),
+    callback: 'translation',
     sortField: 'type',
     visible: true
   },

@@ -39,9 +39,9 @@
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.type') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
                                                     <el-radio-group :value="rule.type" name="type" @input="updateRuleType" size="medium" style="width: 100%;">
-                                                        <el-radio-button label="manuel"></el-radio-button>
-                                                        <el-radio-button label="auto"></el-radio-button>
-                                                        <el-radio-button label="mix"></el-radio-button>
+                                                        <el-radio-button label="manuel">{{ trans('modals.manuel') }}</el-radio-button>
+                                                        <el-radio-button label="auto">{{ trans('modals.auto') }}</el-radio-button>
+                                                        <el-radio-button label="mix"> {{ trans('modals.mix') }}</el-radio-button>
                                                     </el-radio-group>
                                                     <div class="help-block text-danger" v-if="errors.has('type')">
                                                         <strong v-text="errors.get('type')"></strong>
@@ -191,7 +191,7 @@
             })
           })
         }
-  
+
         return data
       },
       inputUsers (value) {
