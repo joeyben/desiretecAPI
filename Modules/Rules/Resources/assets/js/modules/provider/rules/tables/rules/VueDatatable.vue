@@ -228,6 +228,9 @@ import CssConfig from './CssConfig.js'
         })
         return data.join(', ')
       },
+      translation (type) {
+        return this.trans('modals.' + type)
+      },
       formatNumber (value) {
         return accounting.formatMoney(value, '€ ', 0, '.', '.')
       },
