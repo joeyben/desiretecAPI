@@ -532,6 +532,11 @@ ul.kwp-form-errors {
   display: block;
   height: 50px;
   background: transparent url(../../images/layer/logo.png) no-repeat left top;
+  /*******/
+  position: absolute;
+  width: 100%;
+  left: 0;
+  background-size: 120px;
 }
 
 
@@ -1596,4 +1601,7 @@ and (max-device-width : 320px) {
 
 
 
+}
+.catering .dropdown-toggle{
+  height: 25px;
 }
