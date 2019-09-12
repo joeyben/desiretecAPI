@@ -354,8 +354,9 @@ if (!function_exists('isWhiteLabel')) {
      */
     function isWhiteLabel()
     {
-        $url = str_replace(['http://', 'https://'], ['',''], url('/'));
-        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('id');
+        //$url = str_replace(['http://', 'https://'], ['',''], url('/'));
+        //$id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('id');
+        $id = getCurrentWhiteLabelField('id');
 
         return null !== $id;
     }
@@ -381,9 +382,10 @@ if (!function_exists('getCurrentWhiteLabelId')) {
      */
     function getCurrentWhiteLabelId()
     {
-        $url = str_replace(['http://', 'https://'], ['',''], url('/'));
-        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('id');
-        return $id;
+        //$url = str_replace(['http://', 'https://'], ['',''], url('/'));
+        //$id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('id');
+        return getCurrentWhiteLabelField('id');
+        //return $id;
     }
 }
 
@@ -395,8 +397,9 @@ if (!function_exists('getCurrentWhiteLabelName')) {
      */
     function getCurrentWhiteLabelName()
     {
-        $url = str_replace('http://', '', url('/'));
-        $name = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+        //$url = str_replace('http://', '', url('/'));
+        //$name = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+        $name = getCurrentWhiteLabelField('name');
 
         return strtolower($name);
     }
@@ -411,6 +414,7 @@ if (!function_exists('getCurrentWhiteLabelField')) {
      */
     function getCurrentWhiteLabelField($field){
         $url = str_replace(['http://', 'https://'], ['', ''], url('/'));
+        $url = explode(':', $url)[0]; // cut the port
         //$url = str_replace('http://', '', url('/'));
         //$url = str_replace('https://', '', $url);
 
@@ -462,8 +466,9 @@ if (!function_exists('getLanguageLinesTable')) {
     function getLanguageLinesTable()
     {
         if (isWhiteLabel()) {
-            $url = str_replace('http://', '', url('/'));
-            $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+           // $url = str_replace('http://', '', url('/'));
+           // $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+            $whitelabelName = getCurrentWhiteLabelField('name');
 
             return \Config::get(mb_strtolower($whitelabelName) . '.language_lines_table');
         }
@@ -481,8 +486,9 @@ if (!function_exists('getLanguageLinesCacheKey')) {
     function getLanguageLinesCacheKey()
     {
         if (isWhiteLabel()) {
-            $url = str_replace('http://', '', url('/'));
-            $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('name');
+            //$url = str_replace('http://', '', url('/'));
+            //$whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('name');
+            $whitelabelName = getCurrentWhiteLabelField('name');
 
             return $whitelabelName;
         }
@@ -545,9 +551,9 @@ if (!function_exists('footers_by_whitelabel')) {
      */
     function footers_by_whitelabel()
     {
-        $url = str_replace('http://', '', url('/'));
-        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
-
+        //$url = str_replace('http://', '', url('/'));
+        //$id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
+        $id = getCurrentWhiteLabelField('id');
         if(!is_null($id)) {
             $footers = \Modules\Footers\Entities\Footer::where('whitelabel_id', $id)->orderBy('position', 'ASC')->get();
             return $footers;
