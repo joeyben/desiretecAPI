@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Reiseexperten',
-    'id'   => 75,
+    'id'   => 82,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_reiseexperten',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
