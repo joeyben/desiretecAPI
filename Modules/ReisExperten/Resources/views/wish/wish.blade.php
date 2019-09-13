@@ -343,7 +343,7 @@
                 @endswitch
             </div>
             @if ($logged_in_user->hasRole('User'))
-            <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
+            <!--button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button-->
             @endif
         </div>
 
