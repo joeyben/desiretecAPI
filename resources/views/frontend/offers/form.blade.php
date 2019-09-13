@@ -45,6 +45,7 @@
                           <input type="file" name="file[]" class="upload up" id="up" onchange="" multiple/>
                       </span><!-- btn-orange -->
                     </div><!-- btn -->
+                    <p class="info_upload">*Nur PGN und PDF Dateien</p>
                 </div><!-- group -->
             </div>
         @endif
