@@ -702,30 +702,28 @@ var dt = window.dt || {};
         }
 
         function setText(cnt){
-            var sonnen = cnt === 1 ? "Stern" : "Sterne";
+            var sonnen = cnt === 1 ? "Sonne" : "Sonnen";
             $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+cnt+" "+sonnen);
         }
 
         function highlight(cnt) {
-            $('.kwp-star-input .fa-star').each(function () {
+            $('.kwp-star-input .kwp-star').each(function () {
                 var val = parseInt($(this).attr('data-val'));
 
                 if (val <= cnt) {
-                    $(this).addClass('fas');
-                    $(this).removeClass('fal');
+                    $(this).addClass('kwp-star-full');
                 } else {
-                    $(this).removeClass('fas');
-                    $(this).addClass('fal');
+                    $(this).removeClass('kwp-star-full');
                 }
             });
             setText(cnt);
         }
 
-        $('.kwp-star-input .fa-star').hover(function () {
+        $('.kwp-star-input .kwp-star').hover(function () {
             highlight(parseInt($(this).attr('data-val')));
         }).click(function () {
             setValue(parseInt($(this).attr('data-val')));
-            var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Stern" : "Sterne";
+            var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Sonne" : "Sonnen";
             $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
         });
 
