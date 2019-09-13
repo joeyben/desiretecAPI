@@ -91,4 +91,9 @@ return [
     'dashboard'                     => 'Dashboard',
     'image'                         => 'Bild',
     'type'                          => 'Type',
+    'manuel'                        => 'Manuell',
+    'auto'                          => 'Auto',
+    'mix'                           => 'Mix',
+    'whitelabels_distribution'      => 'Distribution',
+    'whitelabels_image'             => 'Hintergrundbild',
 ];
