@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Example',
-    'id'   => 91,
+    'id'   => 34,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_example',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
