@@ -291,8 +291,8 @@
         <div class="col-md-12 s2-second">
 
             <div class="col-md-3">
-                <i class="fal fa-minus"></i>
-                <input class="data-content">
+                <i class="fal fa-plane-departure"></i>
+                <input class="data-content" value="{{ $wish->airport }}">
             </div>
             <div class="col-md-3">
                 <i class="fal fa-calendar-alt"></i>
