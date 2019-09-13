@@ -9,6 +9,8 @@ $eil-border-radius: 4px;
 $mastercolor: #092a5e;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
+$fontcolor: #303030;
+
 
 @include make-columns(12, $gutter - 5px, 'kwp-');
 
@@ -41,7 +43,7 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: $secondarycolor url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: #092a5e url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
