@@ -268,7 +268,7 @@ ul {
   top: 0;
   background-color: $black;
   // TODO: Uncomment when implement data
-  // background-image: url(../);
+  background-image: url(https://images.unsplash.com/photo-1499232217236-f8a184148559?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80);
   background-repeat: no-repeat;
   background-position: center;
   -webkit-background-size: cover;
@@ -366,7 +366,7 @@ ul {
 // .main-offer-section
 .main-offer-section {
   padding: 80px 0;
-  margin-bottom: 400px;
+  margin-bottom: 200px;
   width: 80%;
   background-color: $steel;
   color: $white;
@@ -405,7 +405,7 @@ ul {
     .icon-background {
       width: 60px;
       height: 60px;
-      background-color: $black;
+      background-color: #ffffff;
       border-radius: 50%;
       position: relative;
     }

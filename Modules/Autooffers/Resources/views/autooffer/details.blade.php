@@ -143,7 +143,7 @@
                             </ul>
 
                             <div class="reviews">
-                                <h4><span>2.128</span> Bewertingen</h4>
+                                <h4><span>2.128</span> Bewertungen</h4>
 
                                 <ul>
                                     <li class="review">
@@ -389,7 +389,7 @@
                                 <div class="icon-background">
                                     <i class="fas fa-users" aria-hidden="true"></i>
                                 </div>
-                                <h5>{{ $wish->adults }} Etwachsene</h5>
+                                <h5>{{ $wish->adults }} Erwachsene</h5>
                             </li>
                             <li>
                                 <div class="icon-background">
@@ -419,7 +419,7 @@
                                 <div class="icon-background">
                                     <i class="fa fa-clock" aria-hidden="true"></i>
                                 </div>
-                                <h5>{{ $wish->duration }} Tage</h5>
+                                <h5>{{ $wish->duration }}</h5>
                             </li>
                             <li>
                                 <div class="icon-background">
@@ -430,7 +430,7 @@
                         </ul>
 
                         <a class="btn btn-secondary">
-                            <h5>Neuen Reisewunsch</h5>
+                            <h5>Neuer Reisewunsch</h5>
                         </a>
 
                     </div>

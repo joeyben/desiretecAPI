@@ -14,8 +14,8 @@
 
             <section class="about-section">
                 <div class="shell">
-                    <h1>Herzlich Willkommen</h1>
-                    <h3>Hallo, wir haben wunderbare Ferienhäuser zu Ihrem Reiseziel "{{ $wish->destination }}" gefunden. Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <a href="tel:040238859-82">
+                    <h1>Herzlich willkommen</h1>
+                    <h3>Hallo, wir haben wunderbare Angebote zu Ihrem Reiseziel "{{ $wish->destination }}" gefunden. Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <a href="tel:040238859-82">
                             040 23 88 59-82
                         </a>.</h3>
                     <a class="btn btn-primary" onclick="scrollToAnchor('listed-offers-section')">Angebote ansehen</a>
@@ -31,10 +31,10 @@
                             <div class="agency-info">
                                 <div class="avatar avatar-circle size-1"></div>
                                 <div class="text">
-                                    <h3>Zuständiges Reiseburo</h3>
-                                    <h4>Reiseburo Sannenklar</h4>
-                                    <h4>Musterstrabe 7</h4>
-                                    <h4>12345 Wusterhausen</h4>
+                                    <h3>Zuständiges Reisebüro</h3>
+                                    <h4>Reisebüro desiretec</h4>
+                                    <h4>Auf dem Sande 1</h4>
+                                    <h4>20457 Hamburg</h4>
                                 </div>
                             </div>
 
@@ -69,7 +69,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-users" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->adults }} Etwachsene</h4>
+                                    <h4>{{ $wish->adults }} Erwachsene</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
@@ -99,7 +99,7 @@
                                     <div class="icon-background">
                                         <i class="fa fa-clock" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->duration }} Tage</h4>
+                                    <h4>{{ $wish->duration }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
@@ -112,7 +112,7 @@
                         </div>
                     </div>
 
-                    <div class="map"></div>
+                    <!--<div class="map"></div>-->
 
                     <a class="btn btn-secondary" onclick="showMenu()">Reisewunsch ansehen</a>
                 </div>
@@ -131,7 +131,7 @@
                         @foreach($offers as $offer)
                             <li class="offer box-shadow">
                             <div class="left-side">
-                                <div class="label">Unserr Tip</div>
+                                <div class="label">Unser Tipp</div>
                                 <div class="slick-slider">
                                     <!-- TODO: Add images and style them -->
                                     @if (is_array($offer['hotel_data']['data']['Bildfile']))
@@ -160,7 +160,7 @@
 
                                 <div class="fulfill">
                                     <progress value="{{ $offer['data']['hotelOffer']['hotel']['rating']['recommendation'] }}" max="100"></progress>
-                                    <h4> <span>{{ $offer['data']['hotelOffer']['hotel']['rating']['recommendation'] }}%</span> des Reisewnsches erfullt</h4>
+                                    <h4> <span>{{ $offer['data']['hotelOffer']['hotel']['rating']['recommendation'] }}%</span> Weiterempfehlung</h4>
                                 </div>
 
                                 <div class="recommandations">
@@ -215,7 +215,7 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <!-- sllick slider -->
-    <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.min.js"></script>
 
 
     <script type="application/javascript">
