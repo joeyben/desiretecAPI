@@ -188,7 +188,6 @@ class WishesController extends Controller
         );
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
-
         $wish = $this->wish->getForDataTable()
             ->when($status, function ($wish, $status) {
                 return $wish->where(config('module.wishes.table') . '.status', $status)

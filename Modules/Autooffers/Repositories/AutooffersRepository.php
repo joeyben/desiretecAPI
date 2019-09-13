@@ -127,7 +127,6 @@ class AutooffersRepository extends BaseRepository
                 ]
             ]
         );
-
         return json_decode($response->getBody());
     }
 
@@ -141,13 +140,13 @@ class AutooffersRepository extends BaseRepository
         $this->setMinBudget(0);
         $this->setMaxBudget(0);
         $this->setAdults($wish->adults);
-        $this->setAirport('TXL');
+        $this->setAirport('HAM');
         $this->setCategory($wish->category);
         $this->setCatering('XX,AO,BB,HB,HBP,FB,FBP,AI,AIP,AIU,AIR');
         $this->setFrom(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start)->format('dmy'));
         $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
         $this->setPeriod($wish->duration);
-        $this->setRegion('133');
+        $this->setRegion('724');
         $this->setTourOperatorList(['BIG,XBIG,5VF,X5VF,FTI,XFTI,FLYD,ADAC,AIR,AIRM,XAIR,ATID,ALD,ALL,XALL,AME,ANEX,ATK,BAVA,BU,BYE,CBM,COR,DER,XDER,XECC,ECC,FALK,FER,FUV,FIT,FOR,FOX,XBU,GRUB,HHT,TREX,IHOM,ITS,ITS-XITS,ITSX,ITT,JAHN-XJAH,JAHN,JANA,XJAH,JT,XLMX,LMXI,LMX,MLA,HERM,MED,MWR,MON,XNER,NEC,NER,XNEC,OGE,XOGE,OLI,PHX,SLRD,SLR,SNOW,TOC,TOR,AIR,TVR,XTOC,TISC,TJAX,XPOD,TUID,XTUI,VTO,WIN,XALD,XANE,XPUR']);
 
         return true;
@@ -161,8 +160,9 @@ class AutooffersRepository extends BaseRepository
     {
         foreach ($data->offerList as $key => $autooffer) {
             $offer = json_decode(json_encode($autooffer), true);
-            $hotel = json_decode(json_encode([]), true);
-            //$hotel = json_decode(json_encode($this->getFullHotelData($offer['hotelOffer']['hotel']['giata']['hotelId'])), true);
+            //$hotel = json_decode(json_encode([]), true);
+            dd($offer['hotelOffer']['hotel']['giata']['hotelId']);
+            $hotel = json_decode(json_encode($this->getFullHotelData($offer['hotelOffer']['hotel']['giata']['hotelId'])), true);
             $this->storeAutooffer($offer, $hotel, $wish_id);
         }
     }
@@ -200,17 +200,16 @@ class AutooffersRepository extends BaseRepository
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
-
             return $autooffer->save();
         } catch (\Illuminate\Database\QueryException $e) {
             // something went wrong with the transaction, rollback
             report($e);
-
+            dd($e);
             return false;
         } catch (\Exception $e) {
             // something went wrong elsewhere, handle gracefully
             report($e);
-
+            dd($e);
             return false;
         }
     }
