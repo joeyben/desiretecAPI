@@ -1603,3 +1603,12 @@ and (max-device-width : 320px) {
 
 
 }
+.error-input{
+  display: block;
+  background: #ED1C24;
+  padding: 0 10px;
+  color: #fff;
+}
+.dt_terms.hasError:after{
+  border: 1px solid red !important;
+}
