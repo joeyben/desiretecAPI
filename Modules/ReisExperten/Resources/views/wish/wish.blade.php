@@ -319,8 +319,28 @@
                 <input class="data-content" value="{{ $wish->kids }}">
             </div>
             <div class="col-md-3">
-                <i class="fal fa-dog"></i>
-                <input class="data-content" value="{{ trans('layer.pets.-') }}">
+                <i class="fal fa-star"></i>
+                <input class="data-content" value="{{ $wish->category }}">
+            </div>
+            <div class="col-md-3">
+                <i class="fal fa-utensils"></i>
+                @switch ($wish->catering)
+                    @case(1)
+                    <input class="data-content" value="Ohne Verpflegung">
+                    @break
+                    @case(2)
+                    <input class="data-content" value="Frühstück">
+                    @break
+                    @case(3)
+                    <input class="data-content" value="Halbpension">
+                    @break
+                    @case(4)
+                    <input class="data-content" value="Vollpension">
+                    @break
+                    @case(5)
+                    <input class="data-content" value="all inclusive">
+                    @break
+                @endswitch
             </div>
             @if ($logged_in_user->hasRole('User'))
             <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
