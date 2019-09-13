@@ -38,6 +38,9 @@
 @import "pages/wish";
 @import "pages/agents";
 
+@import "wish/list";
+@import "wish/details";
+
 // Plugins
 @import "../plugin/toastr/toastr.scss";
 @import "../plugin/sweetalert/sweetalert.scss";

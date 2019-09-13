@@ -82,7 +82,7 @@ class AutooffersRepository extends BaseRepository
                         'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
                         'adults'               => $this->adults,
                         'children'             => $this->kids,
-                        'navigation'           => '1,3',
+                        'navigation'           => '1,50',
                         'departureAirportList' => $this->airport,
                         'regionList'           => $this->region,
                         //'locationList' => $this->location,
@@ -116,9 +116,9 @@ class AutooffersRepository extends BaseRepository
      *
      * @return bool
      */
-    public function getFullHotelData($hotelId)
+    public function getFullHotelData($hotelId, $tOperator)
     {
-        $client = new Client();
+        /*$client = new Client();
         $response = $client->get(
             $this->url . '/hotels/' . $hotelId,
             [
@@ -126,8 +126,18 @@ class AutooffersRepository extends BaseRepository
                     'auth' => $this->auth
                 ]
             ]
-        );
-        return json_decode($response->getBody());
+        );*/
+        $username = "203339";
+        $password = "605e5129";
+        $remote_url = 'https://xml.giatamedia.com/?show=text,geo,pic800,hn,vn,ln,lk,katid,kn,hk,sn,sn,zi,ln,lc&sc=hotel&vc='.$tOperator.'&gid='.$hotelId;
+
+        $opts = array('http'=>array('method'=>"GET",
+            'header' => "Authorization: Basic ". base64_encode("$username:$password")));
+
+        $context = stream_context_create($opts);
+        $file = file_get_contents($remote_url, false, $context);
+        $xml = simplexml_load_string($file, 'SimpleXMLElement', LIBXML_NOCDATA);
+        return json_decode(json_encode($xml), true);
     }
 
     /**
@@ -140,17 +150,19 @@ class AutooffersRepository extends BaseRepository
         $this->setMinBudget(0);
         $this->setMaxBudget(0);
         $this->setAdults($wish->adults);
-        $this->setAirport('HAM');
+        $this->setAirport(getRegionCode($wish->airport, 0));
         $this->setCategory($wish->category);
         $this->setCatering('XX,AO,BB,HB,HBP,FB,FBP,AI,AIP,AIU,AIR');
         $this->setFrom(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start)->format('dmy'));
         $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
         $this->setPeriod($wish->duration);
-        $this->setRegion('724');
+        $this->setRegion(getRegionCode($wish->destination, 1));
         $this->setTourOperatorList(['BIG,XBIG,5VF,X5VF,FTI,XFTI,FLYD,ADAC,AIR,AIRM,XAIR,ATID,ALD,ALL,XALL,AME,ANEX,ATK,BAVA,BU,BYE,CBM,COR,DER,XDER,XECC,ECC,FALK,FER,FUV,FIT,FOR,FOX,XBU,GRUB,HHT,TREX,IHOM,ITS,ITS-XITS,ITSX,ITT,JAHN-XJAH,JAHN,JANA,XJAH,JT,XLMX,LMXI,LMX,MLA,HERM,MED,MWR,MON,XNER,NEC,NER,XNEC,OGE,XOGE,OLI,PHX,SLRD,SLR,SNOW,TOC,TOR,AIR,TVR,XTOC,TISC,TJAX,XPOD,TUID,XTUI,VTO,WIN,XALD,XANE,XPUR']);
 
         return true;
     }
+
+
 
     /**
      * @param  $data
@@ -158,13 +170,33 @@ class AutooffersRepository extends BaseRepository
      */
     public function storeMany($data, $wish_id)
     {
+        $count = 0;
         foreach ($data->offerList as $key => $autooffer) {
+            if ($count >= 3) {
+                break;
+            }
             $offer = json_decode(json_encode($autooffer), true);
-            //$hotel = json_decode(json_encode([]), true);
-            dd($offer['hotelOffer']['hotel']['giata']['hotelId']);
-            $hotel = json_decode(json_encode($this->getFullHotelData($offer['hotelOffer']['hotel']['giata']['hotelId'])), true);
+            if ($this->checkValidity($offer, $wish_id) > 0) {
+                continue;
+            }
+            $hotelId = $offer['hotelOffer']['hotel']['giata']['hotelId'];
+            $tOperator = $offer['tourOperator']['code'];
+            $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
             $this->storeAutooffer($offer, $hotel, $wish_id);
+            $count++;
         }
+    }
+
+    /**
+     * @param  $data
+     * @param string $wish_id
+     *
+     * @return boolean
+     */
+    public function checkValidity($data, $wish_id)
+    {
+        $autooffer = Autooffer::where('wish_id',$wish_id)->where('hotel_code', $data['hotelOffer']['hotel']['giata']['hotelId'])->count();
+        return $autooffer;
     }
 
     /**
@@ -187,15 +219,15 @@ class AutooffersRepository extends BaseRepository
             $autooffer->to = $offer['travelDate']['toDate'];
             $autooffer->tourOperator_code = $offer['tourOperator']['code'];
             $autooffer->tourOperator_name = $offer['tourOperator']['name'];
-            $autooffer->hotel_code = $hotel['hotel']['giata']['hotelId'];
+            $autooffer->hotel_code = $offer['hotelOffer']['hotel']['giata']['hotelId'];
             $autooffer->hotel_name = $offer['hotelOffer']['hotel']['name'];
-            $autooffer->hotel_location_name = $hotel['hotel']['location']['name'];
-            $autooffer->hotel_location_lng = $hotel['hotel']['location']['longitude'];
-            $autooffer->hotel_location_lat = $hotel['hotel']['location']['latitude'];
-            $autooffer->hotel_location_region_code = $hotel['hotel']['location']['region']['code'];
-            $autooffer->hotel_location_region_name = $hotel['hotel']['location']['region']['name'];
-            $autooffer->airport_code = $offer['hotelOffer']['hotel']['airport']['code'];
-            $autooffer->airport_name = $offer['hotelOffer']['hotel']['airport']['name'];
+            $autooffer->hotel_location_name =  $offer['hotelOffer']['hotel']['location']['name'];
+            $autooffer->hotel_location_lng =  0;
+            $autooffer->hotel_location_lat =  0;
+            $autooffer->hotel_location_region_code =  $offer['hotelOffer']['hotel']['location']['region']['code'];
+            $autooffer->hotel_location_region_name =  $offer['hotelOffer']['hotel']['location']['region']['name'];
+            $autooffer->airport_code =  $offer['hotelOffer']['hotel']['airport']['code'];
+            $autooffer->airport_name =  $offer['hotelOffer']['hotel']['airport']['name'];
             $autooffer->data = json_encode($offer);
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
