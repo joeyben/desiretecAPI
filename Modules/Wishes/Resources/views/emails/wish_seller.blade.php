@@ -25,17 +25,7 @@
                         </p>
 
                         {{-- @include('emails.layouts.footer') --}}
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <table  style="width:100%;">
-                            <tbody>
-                            <tr>
-                                @include(getWhitelabelFooterUrl())
-                            </tr>
-                            </tbody>
-                        </table>
+                        @include(getWhitelabelFooterUrl())
                     </td>
                 </tr>
             </table>
