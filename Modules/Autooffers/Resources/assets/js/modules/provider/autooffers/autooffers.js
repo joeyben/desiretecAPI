@@ -40,16 +40,7 @@ if ($autooffersComponent) {
     routes: [{
       path: '/',
       name: 'root',
-      component: require('./components/AutooffersComponent.vue'),
-      children: [{
-        path: '/edit/:id(\\d+)',
-        name: 'root.edit',
-        component: require('./components/EditAutooffersComponent.vue')
-      }, {
-        path: '/create/:id(\\d+)/:whitelabel_id(\\d+)',
-        name: 'root.create',
-        component: require('./components/EditAutooffersComponent.vue')
-      }]
+      component: require('./components/AutooffersComponent.vue')
     }]
   })
   new Vue({
