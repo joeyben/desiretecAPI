@@ -94,6 +94,9 @@ return [
     'manuel'                        => 'Manuell',
     'auto'                          => 'Auto',
     'mix'                           => 'Mix',
+    'display_offer'                 => 'Angezeigte Angebote',
+    'recommendation'                => 'Empfehlung',
+    'rating'                        => 'Bewertung',
     'whitelabels_distribution'      => 'Distribution',
     'whitelabels_image'             => 'Hintergrundbild',
 ];
