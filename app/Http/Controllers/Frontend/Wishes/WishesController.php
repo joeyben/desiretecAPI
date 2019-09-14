@@ -330,7 +330,11 @@ class WishesController extends Controller
         $offer = 0;
         switch ($rules['type']) {
             case 'mix':
-                if($wish->budget >= $rules['budget'] && !in_array($wish->destination, $rules['destination'])){
+                $destinations = is_array($rules['destination']) ? $rules['destination'] : [];
+                if($wish->budget >= $rules['budget'] &&
+                    $wish->description &&
+                    (!in_array($wish->destination, $destinations))
+                ){
                     $offer = 0;
                 }else{
                     $offer = 1;

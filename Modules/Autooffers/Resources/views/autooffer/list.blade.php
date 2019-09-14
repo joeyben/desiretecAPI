@@ -122,7 +122,7 @@
             <section class="listed-offers-section" id="listed-offers-section">
                 <div class="shell">
                     <div class="vertical-line"></div>
-                    <h1>Mein Angebote</h1>
+                    <h1>Meine Angebote</h1>
 
                     <ul class="offers">
                         @php

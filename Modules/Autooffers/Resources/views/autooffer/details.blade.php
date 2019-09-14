@@ -347,7 +347,7 @@
                             </div>
                             <div class="phone wrapper">
                                 <i class="fas fa-phone"></i>
-                                <h5>089 - 714 595 35</h5>
+                                <h5>040 23 88 59-82</h5>
                             </div>
                             <div class="email wrapper">
                                 <i class="far fa-envelope"></i>
