@@ -15,7 +15,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\TransferStats;
 use Modules\Autooffers\Entities\Autooffer;
-use Underscore\Parse;
 
 /**
  * Class EloquentPostsRepository.
@@ -248,7 +247,7 @@ class AutooffersRepository extends BaseRepository
     {
         $kidsCount = $this->kids ? \count(explode(',', $this->kids)) : 0;
 
-        return intval($this->adults) + $kidsCount;
+        return (int) ($this->adults) + $kidsCount;
     }
 
     // Getters & Setters
@@ -322,7 +321,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setAdults($adults)
     {
-        $this->adults = intval($adults);
+        $this->adults = (int) $adults;
     }
 
     /**
@@ -330,7 +329,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setKids($kids)
     {
-        $this->kids = intval($kids);
+        $this->kids = (int) $kids;
     }
 
     /**
@@ -338,7 +337,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setPeriod($period)
     {
-        $this->period = intval($period);
+        $this->period = (int) $period;
     }
 
     /**

@@ -2,13 +2,6 @@
 
 namespace Modules\Autooffers\Http\Controllers;
 
-use App\Repositories\Criteria\ByWhitelabel;
-use App\Repositories\Criteria\EagerLoad;
-use App\Repositories\Criteria\Filter;
-use App\Repositories\Criteria\OrderBy;
-use App\Repositories\Criteria\Where;
-use App\Repositories\Criteria\WhereBetween;
-use App\Repositories\Criteria\WithTrashed;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -16,18 +9,14 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Excel;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Autooffers\Repositories\Contracts\AutooffersRepository;
-use Modules\Groups\Entities\Group;
-use Modules\Groups\Repositories\Contracts\GroupsRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class AutooffersSettingController extends Controller
 {
-
     /**
      * @var \Illuminate\Routing\ResponseFactory
      */
@@ -75,6 +64,7 @@ class AutooffersSettingController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -87,22 +77,22 @@ class AutooffersSettingController extends Controller
         try {
             $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
 
-            if ((null === $whitelabel) && $request->has('whitelabelId') && ((int)$request->get('whitelabelId') !== 0)) {
+            if ((null === $whitelabel) && $request->has('whitelabelId') && (0 !== (int) $request->get('whitelabelId'))) {
                 $whitelabel = $this->whitelabels->find($request->get('whitelabelId'));
             } else {
                 $whitelabel = $this->whitelabels->first();
             }
             $autooffer = $this->autooffers->findWhere('whitelabel_id', $whitelabel->id)->first();
 
-            if (is_null($autooffer)) {
+            if (null === $autooffer) {
                 $autooffer = $this->autooffers->firstOrNew([
-                    'id' => 0,
-                    'display_offer' => 3,
+                    'id'             => 0,
+                    'display_offer'  => 3,
                     'recommendation' => 50,
-                    'rating' => 5,
-                    'status' => false,
-                    'user_id' => $this->auth->guard('web')->user()->id,
-                    'whitelabel_id' => $whitelabel->id,
+                    'rating'         => 5,
+                    'status'         => false,
+                    'user_id'        => $this->auth->guard('web')->user()->id,
+                    'whitelabel_id'  => $whitelabel->id,
                 ]);
             }
 
@@ -120,7 +110,9 @@ class AutooffersSettingController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -147,6 +139,7 @@ class AutooffersSettingController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -156,6 +149,7 @@ class AutooffersSettingController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return Response
      */
     public function edit()
@@ -196,6 +190,7 @@ class AutooffersSettingController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()

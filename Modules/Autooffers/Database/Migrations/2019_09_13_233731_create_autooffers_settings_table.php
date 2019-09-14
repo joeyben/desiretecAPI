@@ -1,15 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateAutooffersSettingsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -17,7 +15,7 @@ class CreateAutooffersSettingsTable extends Migration
             $table->increments('id');
             $table->unsignedSmallInteger('display_offer');
             $table->unsignedSmallInteger('recommendation');
-            $table->decimal('rating', 3,2);
+            $table->decimal('rating', 3, 2);
 
             $table->boolean('status')->default();
             $table->integer('user_id')->unsigned();
@@ -35,8 +33,6 @@ class CreateAutooffersSettingsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

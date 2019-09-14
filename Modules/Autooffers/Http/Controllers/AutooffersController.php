@@ -72,8 +72,6 @@ class AutooffersController extends Controller
      */
     public function details(Wish $wish)
     {
-
-
         return view('autooffers::autooffer.details');
     }
 
