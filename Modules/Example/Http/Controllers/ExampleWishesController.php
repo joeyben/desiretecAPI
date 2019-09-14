@@ -65,6 +65,7 @@ class ExampleWishesController extends Controller
      */
     protected $whitelabel;
 
+
     /**
      * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
      * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
