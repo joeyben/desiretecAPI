@@ -82,7 +82,7 @@ class AutooffersRepository extends BaseRepository
                         'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
                         'adults'               => $this->adults,
                         'children'             => $this->kids,
-                        'navigation'           => '1,50',
+                        'navigation'           => '1,100',
                         'departureAirportList' => $this->airport,
                         'regionList'           => $this->region,
                         //'locationList' => $this->location,
@@ -167,16 +167,24 @@ class AutooffersRepository extends BaseRepository
     /**
      * @param  $data
      * @param string $wish_id
+     * @param array $rules
      */
-    public function storeMany($data, $wish_id)
+    public function storeMany($data, $wish_id, $rules)
     {
+        $rulesArray = [
+            'displayOffer' => is_array($rules) ? $rules['display_offer'] : 3,
+            'recommendation' => is_array($rules) ? $rules['recommendation'] : 80,
+            'rating' => is_array($rules) ? $rules['rating'] : 8
+        ];
+
+
         $count = 0;
         foreach ($data->offerList as $key => $autooffer) {
-            if ($count >= 3) {
+            if ($count >= $rulesArray['displayOffer']) {
                 break;
             }
             $offer = json_decode(json_encode($autooffer), true);
-            if ($this->checkValidity($offer, $wish_id) > 0) {
+            if (!$this->checkValidity($offer, $wish_id, $rulesArray)) {
                 continue;
             }
             $hotelId = $offer['hotelOffer']['hotel']['giata']['hotelId'];
@@ -190,13 +198,18 @@ class AutooffersRepository extends BaseRepository
     /**
      * @param  $data
      * @param string $wish_id
+     * @param array $rulesArray
      *
      * @return boolean
      */
-    public function checkValidity($data, $wish_id)
+    public function checkValidity($data, $wish_id, $rulesArray)
     {
         $autooffer = Autooffer::where('wish_id',$wish_id)->where('hotel_code', $data['hotelOffer']['hotel']['giata']['hotelId'])->count();
-        return $autooffer;
+        $rating = intval($data['hotelOffer']['hotel']['rating']['overall']);
+        $recommendation = intval($data['hotelOffer']['hotel']['rating']['recommendation']);
+        $rules_ratings = (intval(str_replace('.', '', $rulesArray['rating']))/ 10);
+        //dd($rating > $rules_ratings);
+        return $rating > $rules_ratings && $autooffer === 0 && $recommendation > $rulesArray['recommendation'];
     }
 
     /**

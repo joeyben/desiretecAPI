@@ -626,3 +626,35 @@ if (!function_exists('getRegionCode')) {
     }
 }
 
+if (!function_exists('getCateringFromCode')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getCateringFromCode($code)
+    {
+        $category = "";
+        switch ($code) {
+            case '1':
+                $category = "Ohne Verpflegung";
+                break;
+            case '2':
+                $category = "Frühstück";
+                break;
+            case '3':
+                $category = "Halbpension";
+                break;
+            case '4':
+                $category = "Vollpension";
+                break;
+            case '5':
+                $category = "Ohne Verpflegung";
+                break;
+            default:
+                $category = "all inclusive";
+        }
+        return $category;
+    }
+}
+

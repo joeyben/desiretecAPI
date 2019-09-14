@@ -32,4 +32,12 @@ class EloquentAutooffersRepository extends RepositoryAbstract implements Autooff
 
         return $rule;
     }
+
+    public function getSettingsForWhitelabel(int $whitelabelId)
+    {
+        $rule = AutooffersSetting::where('status', true)->where('whitelabel_id', $whitelabelId)
+            ->first()->toArray();
+
+        return $rule;
+    }
 }
