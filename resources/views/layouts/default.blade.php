@@ -269,6 +269,14 @@
                             </a>
                         </li>
                     @endif
+                    @if($module->has('Autooffers')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('autooffer.setting') }}" class="nav-link">
+                                <i class="icon-wrench3"></i>
+                                <span>{{ __('menus.autooffers_management') }}</span>
+                            </a>
+                        </li>
+                    @endif
 
                     @if(Auth::guard('web')->user()->hasRole('Administrator'))
                     <li class="nav-item nav-item-submenu">
