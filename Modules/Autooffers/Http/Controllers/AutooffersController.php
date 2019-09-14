@@ -74,7 +74,8 @@ class AutooffersController extends Controller
     {
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
         $offer =  $offers[$index];
-        return view('autooffers::autooffer.details', compact('wish', 'offer'));
+        $body_class = 'autooffer_list';
+        return view('autooffers::autooffer.details', compact('wish', 'offer', 'body_class'));
     }
 
     /**
