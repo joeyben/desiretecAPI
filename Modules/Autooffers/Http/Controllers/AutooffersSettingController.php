@@ -2,12 +2,77 @@
 
 namespace Modules\Autooffers\Http\Controllers;
 
+use App\Repositories\Criteria\ByWhitelabel;
+use App\Repositories\Criteria\EagerLoad;
+use App\Repositories\Criteria\Filter;
+use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\Where;
+use App\Repositories\Criteria\WhereBetween;
+use App\Repositories\Criteria\WithTrashed;
+use App\Services\Flag\Src\Flag;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Routing\ResponseFactory;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Translation\Translator;
+use Maatwebsite\Excel\Excel;
+use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\Autooffers\Repositories\Contracts\AutooffersRepository;
+use Modules\Groups\Entities\Group;
+use Modules\Groups\Repositories\Contracts\GroupsRepository;
+use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class AutooffersSettingController extends Controller
 {
+
+    /**
+     * @var \Illuminate\Routing\ResponseFactory
+     */
+    private $response;
+    /**
+     * @var \Illuminate\Auth\AuthManager
+     */
+    private $auth;
+    /**
+     * @var \Illuminate\Translation\Translator
+     */
+    private $lang;
+    /**
+     * @var \Illuminate\Support\Carbon
+     */
+    private $carbon;
+    /**
+     * @var \Modules\Activities\Repositories\Contracts\ActivitiesRepository
+     */
+    private $activities;
+    /**
+     * @var \Maatwebsite\Excel\Excel
+     */
+    private $excel;
+    /**
+     * @var \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository
+     */
+    private $whitelabels;
+    /**
+     * @var \Modules\Autooffers\Repositories\Contracts\AutooffersRepository
+     */
+    private $autooffers;
+
+    public function __construct(AutooffersRepository $autooffers, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, Excel $excel)
+    {
+        $this->response = $response;
+        $this->auth = $auth;
+        $this->lang = $lang;
+        $this->carbon = $carbon;
+        $this->activities = $activities;
+        $this->excel = $excel;
+        $this->whitelabels = $whitelabels;
+        $this->autooffers = $autooffers;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
@@ -17,13 +82,40 @@ class AutooffersSettingController extends Controller
         return view('autooffers::index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
+    public function view(Request $request)
     {
-        return view('autooffers::create');
+        try {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((null === $whitelabel) && $request->has('whitelabelId') && ((int)$request->get('whitelabelId') !== 0)) {
+                $whitelabel = $this->whitelabels->find($request->get('whitelabelId'));
+            } else {
+                $whitelabel = $this->whitelabels->first();
+            }
+            $autooffer = $this->autooffers->findWhere('whitelabel_id', $whitelabel->id)->first();
+
+            if (is_null($autooffer)) {
+                $autooffer = $this->autooffers->firstOrNew([
+                    'id' => 0,
+                    'display_offer' => 3,
+                    'recommendation' => 50,
+                    'rating' => 5,
+                    'status' => false,
+                    'user_id' => $this->auth->guard('web')->user()->id,
+                    'whitelabel_id' => $whitelabel->id,
+                ]);
+            }
+
+            $result['autooffer'] = $autooffer;
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -33,6 +125,24 @@ class AutooffersSettingController extends Controller
      */
     public function store(Request $request)
     {
+        try {
+            $result['autooffer'] = $this->autooffers->create(
+                array_merge(
+                    $request->only('display_offer', 'recommendation', 'rating', 'status', 'whitelabel_id'),
+                    ['user_id' => $this->auth->guard('web')->user()->id]
+                )
+            );
+
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Rule']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -55,11 +165,33 @@ class AutooffersSettingController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
+     *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request)
+    public function update(Request $request, int $id)
     {
+        try {
+            $result['autooffer'] = $this->autooffers->update(
+                $id,
+                array_merge(
+                    $request->only('display_offer', 'recommendation', 'rating', 'status'),
+                    ['user_id' => $this->auth->guard('web')->user()->id]
+                )
+            );
+
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Rule']);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**

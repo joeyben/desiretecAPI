@@ -23,7 +23,7 @@ export const loadLanguages = function (store) {
       console.log('error', response)
       return
     }
-
+    debugger
     store.commit('LOAD_LANGUAGES', response.languages)
   }, error => {
     console.log('LOAD_LANGUAGES not answer', error)

@@ -16,5 +16,11 @@ export default {
       (response) => success(response.data),
       (response) => error(response)
     )
+  },
+  loadAutoSetting (whitelabelId, success, error) {
+    return window.axios.get(window.laroute.route('admin.autooffers.view', {whitelabelId: whitelabelId})).then(
+      (response) => success(response.data),
+      (response) => error(response)
+    )
   }
 }

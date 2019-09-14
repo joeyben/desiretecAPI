@@ -94,4 +94,7 @@ return [
     'manuel'                        => 'Manuell',
     'auto'                          => 'Auto',
     'mix'                           => 'Mix',
+    'display_offer'                 => 'angezeigte Angebote',
+    'recommendation'                => 'Empfehlung',
+    'rating'                        => 'Bewertung',
 ];

@@ -2,9 +2,9 @@ import * as actions from './actions'
 import * as getters from './getters'
 
 const state = {
-  group: {},
   users: {},
   checked: [],
+  autooffer: {},
   whitelabels: {}
 }
 
@@ -19,14 +19,17 @@ const mutations = {
   ADD_CHECKED (state, checked) {
     state.checked = checked
   },
-  ADD_GROUP (state, group) {
-    state.group = group
+  ADD_AUTOOFFER (state, autooffer) {
+    state.autooffer = autooffer
   },
   ADD_WHITELABELS (state, whitelabels) {
     state.whitelabels = whitelabels
   },
-  updateGroup (state, obj) {
-    state.group[obj.name] = obj.value
+  LOAD_AUTOSETTING (state, autooffer) {
+    state.autooffer = autooffer
+  },
+  updateAutooffer (state, obj) {
+    state.autooffer[obj.name] = obj.value
   }
 }
 
