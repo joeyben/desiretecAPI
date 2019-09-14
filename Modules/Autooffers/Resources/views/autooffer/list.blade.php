@@ -93,7 +93,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-bed" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->catering }}</h4>
+                                    <h4>{{ getCateringFromCode($wish->catering) }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">

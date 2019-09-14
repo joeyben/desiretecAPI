@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Autooffers\Repositories\AutooffersRepository;
+use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 
 class AutooffersController extends Controller
 {
@@ -48,11 +49,18 @@ class AutooffersController extends Controller
     private $autooffers;
 
     /**
-     * @param \Modules\Autooffers\Repositories\AutooffersRepository $autooffers
+     * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
      */
-    public function __construct(AutooffersRepository $autooffers)
+    private $rules;
+
+    /**
+     * @param \Modules\Autooffers\Repositories\AutooffersRepository $autooffers
+     * @param \Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository $rules
+     */
+    public function __construct(AutooffersRepository $autooffers, EloquentAutooffersRepository $rules)
     {
         $this->autooffers = $autooffers;
+        $this->rules = $rules;
     }
 
     /**
@@ -85,11 +93,11 @@ class AutooffersController extends Controller
      */
     public function create(Wish $wish)
     {
-
+        $rules = $this->rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
         //dd(getRegionCode($wish->airport, 0));
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
-        $this->autooffers->storeMany($response, $wish->id);
+        $this->autooffers->storeMany($response, $wish->id, $rules);
 
         return redirect()->to('offer/list/' . $wish->id);
     }
