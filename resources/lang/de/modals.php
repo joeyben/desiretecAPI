@@ -97,4 +97,6 @@ return [
     'display_offer'                 => 'angezeigte Angebote',
     'recommendation'                => 'Empfehlung',
     'rating'                        => 'Bewertung',
+    'whitelabels_distribution'      => 'Distribution',
+    'whitelabels_image'             => 'Hintergrundbild',
 ];

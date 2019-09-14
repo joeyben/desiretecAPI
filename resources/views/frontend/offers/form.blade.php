@@ -46,6 +46,7 @@
                       </span><!-- btn-orange -->
                     </div><!-- btn -->
                 </div><!-- group -->
+                <p class="info_upload">*Nur PNG und PDF Dateien</p>
             </div>
         @endif
     </div><!--form control-->

@@ -1,17 +1,17 @@
 @import "utils";
 @import "rangeslider";
 @import "bootstrap-select";
-@import "variables";
+@import "../variables";
 
 $gutter: 30px;
-$altfont: 'Helvetica', 'Arial', sans-serif;
+$altfont: 'Roboto', sans-serif;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$actioncolor: #F96500;
-$mastercolor: #6897B1;
+$mastercolor: #092a5e;
+$secondarycolor: #092a5e;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
-
+$fontcolor: #303030;
 /* dropdown */
 
 
@@ -19,20 +19,6 @@ $master-blue: #70CBF4;
 // Dropdown menus
 // --------------------------------------------------
 .dt-modal {
-
-  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #EEEEEE !important;
-    opacity: 1; /* Firefox */
-  }
-
-  :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #EEEEEE !important;
-  }
-
-  ::-ms-input-placeholder { /* Microsoft Edge */
-    color: #EEEEEE !important;
-  }
-
   .bootstrap-select{
     &.show-tick{
       .dropdown-menu{
@@ -335,11 +321,11 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: $mastercolor url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: $secondarycolor url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
-  color: #fff;
+  color: $fontcolor;
   box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.1);
   /*transition: all 0.5s ease;
    -webkit-transition: all 0.5s ease;
@@ -396,7 +382,7 @@ $master-blue: #70CBF4;
   .teaser{
     height: 90px !important;
     top: -110px;
-    background-color: rgba(9,42,94,0.8);
+    background-color: rgba(255, 221, 0, 0.8);
     width: 95%;
     padding: 0 0px;
     margin: auto;
@@ -428,12 +414,12 @@ $master-blue: #70CBF4;
       margin: 10px;
       text-align: center;
       padding-top: 20px;
-      color: white;
+      color: $fontcolor;
       line-height: 1.5em;
     }
     i{
       position: absolute;
-      color: #fff;
+      color: $fontcolor;
       right: 0px;
       top: 7px;
       font-size: 30px;
@@ -502,7 +488,7 @@ $master-blue: #70CBF4;
   textarea,
   select {
     width: 100%;
-    height: 25px;
+    height: 32px;
   }
 
   textarea {
@@ -523,11 +509,11 @@ $master-blue: #70CBF4;
 
   button[type=submit] {
     border-radius: 4px;
-    background: $actioncolor;
+    background: #092a5e;
 
     text-align: center;
 
-    color:  #ffffff;
+    color:  white;
     font-size: 22px;
     font-weight: 500;
     line-height: 30px;
@@ -549,7 +535,7 @@ $master-blue: #70CBF4;
   /* TUI INPUT STYLES FOR WL */
 
 
-  input[type="text"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"], input[type="tel"], textarea {
+  input[type="text"], input[type="number"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"], input[type="tel"], textarea {
     -webkit-transition: border-color .3s ease;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
@@ -566,11 +552,11 @@ $master-blue: #70CBF4;
     padding-left: 7px;
     outline: none;
     border: 1px solid #aaa;
-    color: $mastercolor;
+    color: $fontcolor;
     font-size: 12px;
   }
 
-  input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus {
+  input[type="text"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="number"]:focus,input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus {
     -webkit-transition: border-color .3s ease;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
@@ -639,14 +625,14 @@ $master-blue: #70CBF4;
           margin-bottom: 0;
           height: auto;
           a{
-            background: $mastercolor;
+            background: $secondarycolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: #fff;
+            color: white;
           }
         }
         hr{
@@ -701,7 +687,7 @@ $master-blue: #70CBF4;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: $mastercolor;
+              color: $secondarycolor;
               padding: 0;
               margin: 20px 0;
               font-size: 20px !important;
@@ -733,14 +719,14 @@ $master-blue: #70CBF4;
           display: block;
           margin-bottom: 0;
           a{
-            background: $mastercolor;
+            background: $secondarycolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: #fff;
+            color: white;
           }
         }
         hr{
@@ -753,7 +739,37 @@ $master-blue: #70CBF4;
   }
 
 }
+.budget {
+  &.open {
+    background: transparent;
 
+    .pax-group {
+      border: 1px solid #b9b9b9;
+      border-bottom: none;
+    }
+
+    .travelerss {
+      background-color: #f3f0ec;
+      z-index: 4;
+      position: relative;
+      border: none;
+    }
+
+    .budget-more {
+      display: block !important;
+    }
+
+    .travelerss {
+      i.triggered {
+        display: block;
+      }
+
+      i.not-triggered {
+        display: none;
+      }
+    }
+  }
+}
 .kwp.dt-modal-visible  {
 }
 
@@ -801,7 +817,7 @@ ul.kwp-form-errors {
 }
 
 .kwp-logo {
-  display: block;
+  display: none;
   height: 50px;
   background: transparent url(../../images/layer/logo.png) no-repeat left top;
 }
@@ -994,27 +1010,27 @@ p.kwp-info {
   }
   &.eil-at-body{
     button[type=submit]{
-      background: #cc0066;
-      border: solid 1px #cc0066;
+      background: #092a5e;
+      border: solid 1px #092a5e;
       color: #fff;
       text-shadow: initial;
       &:hover{
-        background: #f39;
+        background: #092a5e;
       }
     }
     input[type="text"]{
       border-radius: 4px !important;
       &:focus,&:hover{
-        border-color: #cc0066;
+        border-color: #092a5e;
       }
     }
     textarea{
       &:focus,&:hover{
-        border-color: #cc0066;
+        border-color: #092a5e;
       }
     }
     .kwp-spinner{
-      border-color: #cc0066;
+      border-color: #092a5e;
       border-right-color: transparent;
     }
     .kwp-star {
@@ -1108,7 +1124,7 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .filter-option-inner-inner{
-      color: $mastercolor;
+      color: $secondarycolor;
       font-size: 18px;
     }
   }
@@ -1248,7 +1264,7 @@ p.kwp-info {
 }
 
 .kwp-star-full:after, .kwp-body.eil-at-body .kwp-star-full:after{
-  background: transparent url(../../svg/sun-fill.svg) no-repeat 0px center;
+  background: transparent url(../../svg/sun-master.svg) no-repeat 0px center;
 }
 
 
@@ -1335,7 +1351,7 @@ p.kwp-info {
   }
   .kwp-header{
     /*background: linear-gradient(179deg, #fce136 0, #e4cd34 100%);*/
-    background: linear-gradient(179deg, $mastercolor 0, $mastercolor 100%);
+    background: linear-gradient(179deg, $secondarycolor 0, $secondarycolor 100%);
     min-height: 40px;
     height: 40px;
     position: relative;
@@ -1354,7 +1370,7 @@ p.kwp-info {
       right: 15px;
       top: 40px;
       font-size: 20px;
-      color: $mastercolor;
+      color: $fontcolor;
     }
   }
   .kwp-content-extra{
@@ -1439,7 +1455,7 @@ p.kwp-info {
       label{
         font-size: 16px;
         white-space: nowrap;
-        color: #BBBBBB;
+        color: #a0a0a0;
         padding-left: 10px;
         padding-top: 10px;
         font-weight: normal;
@@ -1465,8 +1481,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid $mastercolor;
-          background-color: $mastercolor;
+          border: 1px solid $secondarycolor;
+          background-color: $secondarycolor;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1475,7 +1491,7 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#fff;
+        color:$fontcolor;
         padding: 8px 0;
         font-weight: bold;
         text-align: center;
@@ -1551,13 +1567,13 @@ p.kwp-info {
     }*/
     /***** Fix layer on Mobile ******/
     .kwp{
-      .duration-time, .travelers{
+      .duration-time, .travelers, travelerss{
         height: 35px;
         line-height: 2em;
         background-color: transparent;
         font-weight: 500;
-        border-bottom: 1px solid $mastercolor;
-        color: $mastercolor;
+        border-bottom: 1px solid $secondarycolor;
+        color: $fontcolor;
         border-radius: 0;
         padding: 0 10px;
         font-size: 18px;
@@ -1632,13 +1648,13 @@ p.kwp-info {
 
       .error-input{
         display: block;
-        background: #EC6708;
+        background: $mastercolor;
         padding: 0 10px;
         color: #fff;
       }
 
       .haserrors{
-        .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
+        .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="number"], input[type="date"]{
           border-color: #D40E14;
         }
 
@@ -1665,7 +1681,7 @@ p.kwp-info {
 
       }
     }
-    .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after,.kwp input[type="text"], .kwp input[type="date"]{
+    .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after,.kwp input[type="text"],.kwp input[type="number"], .kwp input[type="date"]{
       height: 35px;
       border: none;
       line-height: 1.5em;
@@ -1673,15 +1689,18 @@ p.kwp-info {
       background: none;
       background-color: transparent;
       font-weight: 500;
-      border-bottom: 1px solid $mastercolor;
+      border-bottom: 1px solid $secondarycolor;
       border-radius: 0;
       padding: 0 10px;
       font-size: 18px;
-      color: $mastercolor;
+      color: $fontcolor;
     }
     .kwp-custom-select{
       #catering{
         padding: 0;
+      }
+      .hidden{
+        display: none;
       }
     }
     .kwp textarea, .kwp input[type="email"]{
@@ -1757,10 +1776,10 @@ p.kwp-info {
 and (max-device-width : 320px) {
   .mobile-layer {
     .kwp{
-      .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
+      .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="number"], input[type="date"]{
         font-size: 16px;
       }
-      .duration-time, .travelers{
+      .duration-time, .travelers, travelerss{
         font-size: 16px;
       }
       button[type=submit]{
@@ -1787,4 +1806,41 @@ and (max-device-width : 320px) {
 
 
 
+}
+.kwp-col-ages.kwp-show-ages {
+  display: block !important;
+}
+.direktflug input[type="checkbox"]:after{
+  height: 16px !important;
+  width: 16px !important;
+}
+.direktflug{
+  position: absolute;
+  display: inline-flex;
+}
+input[name="direkt_flug"]{
+  height: 12px;
+}
+.fas{
+  color:#ecec3c;
+}
+#catering{
+  background: transparent;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.travelerss .caret, .catering .caret{
+  position: absolute;
+  top: 65%;
+  right: 10px;
+}
+.kwp-header-content h1{
+  color: white !important;
+}
+.dt_terms.hasError:after{
+  border: 1px solid red !important;
+}
+.description textarea{
+  height: 90px !important;
 }

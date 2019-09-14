@@ -599,4 +599,30 @@ if (!function_exists('getApiByWhitelabel')) {
 }
 
 
+if (!function_exists('getKeywordText')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getKeywordText($value)
+    {
+        return \App\Models\KeywordList::where('code', $value)->first()->name;
+
+    }
+}
+
+
+if (!function_exists('getRegionCode')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getRegionCode($value, $type)
+    {
+        return str_replace('region.', '',\App\Models\Regions::where('regionName', 'like' ,'%'.$value.'%')->where('type',$type)->first()->regionCode);
+
+    }
+}
 

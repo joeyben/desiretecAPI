@@ -163,12 +163,8 @@
                     </a>."
                 @else
                 <h1>Herzlich willkommen</h1>
-                    "Hallo, wir haben wunderbare Ferienhäuser zu Ihrem Reiseziel "{{ $wish->destination }}" gefunden.
-                    Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung:
-                    <br>
-                    <a href="tel:040238859-82">
-                        040 23 88 59-82
-                    </a>."
+                    "Wir haben wunderbare Ferienhäuser zu Ihrem Reiseziel "{{ $wish->destination }}" gefunden.
+                    Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <a href="tel:040238859-82">040 23 88 59-82</a>."
                 @endif
             </div>
         </div>

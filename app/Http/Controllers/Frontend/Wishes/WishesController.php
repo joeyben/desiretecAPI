@@ -14,6 +14,7 @@ use App\Repositories\Frontend\Wishes\WishesRepository;
 use Auth;
 use Illuminate\Http\Request;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
+use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 use Torann\GeoIP\Facades\GeoIP;
 
 /**
@@ -62,12 +63,19 @@ class WishesController extends Controller
     protected $categories;
 
     /**
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
+     * @var \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository
      */
-    public function __construct(WishesRepository $wish, CategoriesRepository $categories)
+    private $rules;
+
+    /**
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
+     * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository $rules
+     */
+    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules)
     {
         $this->wish = $wish;
         $this->categories = $categories;
+        $this->rules = $rules;
     }
 
     /**
@@ -98,6 +106,13 @@ class WishesController extends Controller
      */
     public function show(Wish $wish, ManageWishesRequest $request)
     {
+
+        $wishTye = $this->manageRules($wish);
+
+        if($wishTye > 0){
+            return redirect()->route('autooffer.create',[$wish->id]);
+        }
+
         $offers = $wish->offers;
         $avatar = [];
         $agentName = [];
@@ -106,6 +121,7 @@ class WishesController extends Controller
             array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
+
 
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
@@ -188,7 +204,6 @@ class WishesController extends Controller
         );
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
-
         $wish = $this->wish->getForDataTable()
             ->when($status, function ($wish, $status) {
                 return $wish->where(config('module.wishes.table') . '.status', $status)
@@ -305,4 +320,35 @@ class WishesController extends Controller
         return redirect()->to('/');
     }
 
+    // To do: Define Auto and Manuel offer in const
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     * @return string
+     */
+    public function manageRules($wish){
+        $rules = $this->rules->getRuleForWhitelabel(intval(getCurrentWhiteLabelId()));
+        $offer = 0;
+        switch ($rules['type']) {
+            case 'mix':
+                $destinations = is_array($rules['destination']) ? $rules['destination'] : [];
+                if($wish->budget >= $rules['budget'] &&
+                    $wish->description &&
+                    (!in_array($wish->destination, $destinations))
+                ){
+                    $offer = 0;
+                }else{
+                    $offer = 1;
+                }
+                break;
+            case 'auto':
+                $offer = 1;
+                break;
+            case 'manuel':
+                $offer = 0;
+                break;
+            default:
+                $offer = 0;
+        }
+        return $offer;
+    }
 }

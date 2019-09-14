@@ -85,7 +85,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-3 col-form-label"> &nbsp; {{ trans('validation.attributes.backend.whitelabels.associated_distribution') }}</label>
+                                            <label class="col-lg-3 col-form-label"> &nbsp; {{ trans('modals.whitelabels_distribution') }}</label>
                                             <div class="col-lg-9">
                                                 <el-select :value="whitelabel.distribution_id" :placeholder="trans('labels.group')" size="small" style="width: 100%;" @input="inputDistribution">
                                                     <el-option
@@ -113,7 +113,7 @@
                                             </div>
                                         </div>
 
-                                        <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('validation.attributes.backend.whitelabels.image') }}</legend>
+                                        <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('modals.whitelabels_image') }}</legend>
                                         <div class="form-group">
                                             <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'background'}" :fileList="whitelabel.background" :tip="trans('messages.background')" :limit="1" listType="picture-card"></upload-attachments>
                                             <div class="help-block text-danger" v-if="errors.has('background')">

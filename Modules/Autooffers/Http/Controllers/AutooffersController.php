@@ -67,12 +67,15 @@ class AutooffersController extends Controller
 
     /**
      * @param \App\Models\Wishes\Wish $wish
-     *
+     * @param string $index
      * @return mixed
      */
-    public function details(Wish $wish)
+    public function details(Wish $wish, $index)
     {
-        return view('autooffers::autooffer.details');
+        $offers = $this->autooffers->getOffersDataFromId($wish->id);
+        $offer =  $offers[$index];
+        $body_class = 'autooffer_list';
+        return view('autooffers::autooffer.details', compact('wish', 'offer', 'body_class'));
     }
 
     /**
@@ -82,6 +85,8 @@ class AutooffersController extends Controller
      */
     public function create(Wish $wish)
     {
+
+        //dd(getRegionCode($wish->airport, 0));
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response, $wish->id);
@@ -111,8 +116,9 @@ class AutooffersController extends Controller
     public function show(Wish $wish)
     {
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
-
-        return view('autooffers::autooffer.show', compact('wish', 'offers'));
+        //dd($offers[0]);
+        $body_class = 'autooffer_list';
+        return view('autooffers::autooffer.list', compact('wish', 'offers', 'body_class'));
     }
 
     /**

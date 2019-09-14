@@ -51,4 +51,10 @@ return [
                     übermittelt. Es gibt eine neue Nachricht für Sie.',
         ]
     ],
+
+    'contact'        => [
+        'text'       => 'Schreiben Sie Ihrem Reiseberater eine Nachricht oder nutzen Sie den Rückruf-Service.'
+    ],
 ];
+
+
