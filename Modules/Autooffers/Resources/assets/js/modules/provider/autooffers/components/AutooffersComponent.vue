@@ -158,7 +158,6 @@
       },
       onSubmitSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          debugger
           this.addAutooffer(response.data.autooffer)
           this.$message({
             message: response.data.message,
