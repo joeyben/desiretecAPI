@@ -1,5 +1,32 @@
 @import "variables";
-
+body{
+  &.landing{
+    padding-top: 0px;
+    #app{
+      .main-container{
+        margin: 0;
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+  &.wish{
+    #app {
+      .main-container {
+        margin: 0;
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+  &.wishlist {
+    #app {
+      .main-container {
+        margin-top: 0;
+      }
+    }
+  }
+}
 // Slider
 
 .slider{
@@ -39,35 +66,6 @@
       text-transform: uppercase;
       padding: 10px 50px;
       line-height: 1.5em;
-    }
-  }
-}
-
-body{
-  &.landing{
-    padding-top: 0px;
-    #app{
-      .main-container{
-        margin: 0;
-        width: 100%;
-        padding: 0;
-      }
-    }
-  }
-  &.wish{
-    #app {
-      .main-container {
-        margin: 0;
-        width: 100%;
-        padding: 0;
-      }
-    }
-  }
-  &.wishlist {
-    #app {
-      .main-container {
-        margin-top: 0;
-      }
     }
   }
 }

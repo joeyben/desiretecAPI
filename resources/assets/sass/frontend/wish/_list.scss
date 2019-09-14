@@ -213,10 +213,12 @@ ul {
 #app .main-container {
   margin-top: 0;
 }
-.container {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+.autooffer_list {
+  .container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 }
 .navbar {
   margin-bottom: 0;
