@@ -213,4 +213,5 @@ return [
     'sellers_management'    => 'Sellers Management',
     'list_of_wishes'        => 'List wishes',
     'rules_management'      => 'Lead Management',
+    'regions_management'    => 'Regions Management',
 ];
