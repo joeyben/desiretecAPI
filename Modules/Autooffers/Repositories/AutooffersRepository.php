@@ -77,7 +77,7 @@ class AutooffersRepository extends BaseRepository
                 [
                     'query' => [
                         'auth'                 => $this->auth,
-                        'sortBy'               => 'quality',
+                        'sortBy'               => 'price',
                         'productSubType'       => 'all',
                         'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
                         'adults'               => $this->adults,
@@ -86,12 +86,12 @@ class AutooffersRepository extends BaseRepository
                         'departureAirportList' => $this->airport,
                         'regionList'           => $this->region,
                         //'locationList' => $this->location,
-                        'minPricePerPerson' => (int) ($this->minBudget / $this->getPersonsCount()),
+                        //'minPricePerPerson' => (int) ($this->minBudget / $this->getPersonsCount()),
                         'maxPricePerPerson' => (int) ($this->maxBudget / $this->getPersonsCount()),
                         'minCategory'       => $this->category,
                         //'minBoardType' => $this->catering,
                         'rating[source]'   => 'holidaycheck',
-                        'sortDir'          => 'down',
+                        'sortDir'          => 'up',
                         'tourOperatorList' => $this->tourOperatorList,
                     ],
                     'on_stats' => function (TransferStats $stats) use (&$url) {
@@ -148,7 +148,7 @@ class AutooffersRepository extends BaseRepository
     public function saveWishData(Wish $wish)
     {
         $this->setMinBudget(0);
-        $this->setMaxBudget(0);
+        $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setAirport(getRegionCode($wish->airport, 0));
         $this->setCategory($wish->category);

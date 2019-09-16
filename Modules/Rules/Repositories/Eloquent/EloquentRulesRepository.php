@@ -36,8 +36,8 @@ class EloquentRulesRepository extends RepositoryAbstract implements RulesReposit
     public function getRuleForWhitelabel(int $whitelabelId)
     {
         $rule = Rule::where('status', true)->where('whitelabel_id', $whitelabelId)
-            ->first()->toArray();
+            ->first();
 
-        return $rule;
+        return $rule ? $rule->toArray() : null;
     }
 }

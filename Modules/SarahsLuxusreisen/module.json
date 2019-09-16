@@ -1,0 +1,16 @@
+{
+    "name": "SarahsLuxusreisen",
+    "alias": "sarahsluxusreisen",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\SarahsLuxusreisen\\Providers\\SarahsLuxusreisenServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

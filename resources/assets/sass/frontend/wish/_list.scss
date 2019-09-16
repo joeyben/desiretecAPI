@@ -661,7 +661,7 @@ ul {
     position: relative;
     .slider-item {
       height: 500px;
-      border-radius: 5px;
+      border-radius: 5px 0 0 5px;
       background-color: $black;
       background-image: url(../img-dummy/wave.jpg);
       background-repeat: no-repeat;

@@ -287,6 +287,7 @@
                             <h4>Reisedaten</h4>
 
                             <ul>
+                                @if (count($offer['data']['flightOffer']['flight']['outboundLegList']) > 0)
                                 <li>
                                     <div class="hour-location">
                                         <h4>{{ $offer['data']['flightOffer']['flight']['outboundLegList'][0]['departureTime'] }}</h4>
@@ -330,6 +331,7 @@
                                         <h5>{{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}</h5>
                                     </div>
                                 </li>
+                                @endif
                             </ul>
 
                             <div class="airline">
