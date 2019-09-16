@@ -607,8 +607,8 @@ if (!function_exists('getKeywordText')) {
      */
     function getKeywordText($value)
     {
-        return \App\Models\KeywordList::where('code', $value)->first()->name;
-
+        $keywords = \App\Models\KeywordList::where('code', $value)->first();
+        return $keywords ? $keywords->name : "";
     }
 }
 
