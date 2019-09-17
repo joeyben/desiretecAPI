@@ -20,95 +20,55 @@
                                     <fieldset>
                                         <legend class="font-weight-semibold text-uppercase font-size-sm">
                                             <i class="icon-collaboration mr-2"></i>
-                                            Group details
+                                            Region details
                                             <a class="float-right text-default" data-toggle="collapse" data-target="#demo1">
                                                 <i class="icon-circle-down2"></i>
                                             </a>
                                         </legend>
                                         <div class="collapse show" id="demo1">
-                                            <div class="form-group row" v-if="group.id !== 0">
+                                            <div class="form-group row" v-if="region.id !== 0">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.id') }}</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control disabled" disabled readonly id='id' name='id' :placeholder="trans('modals.id')" :value="group.id"/>
+                                                    <input type="text" class="form-control disabled" disabled readonly id='id' name='id' :placeholder="trans('modals.id')" :value="region.id"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('id')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.name') }} <span class="text-danger"> *</span></label>
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.region_code') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('name') ? 'is-invalid': ''" id='name' name='name' :placeholder="trans('modals.name')" @input="updateGroup"  :value="group.name"/>
+                                                    <input type="text" class="form-control" :class="errors.has('region_code') ? 'is-invalid': ''" id='region_code' name='region_code' :placeholder="trans('modals.region_code')" @input="updateRegion"  :value="region.region_code"/>
                                                     <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('name')"></strong>
+                                                        <strong v-text="errors.get('region_code')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.display_name') }} <span class="text-danger"> *</span></label>
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.region_name') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('display_name') ? 'is-invalid': ''" id='display_name' name='display_name' :placeholder="trans('modals.display_name')" @input="updateGroup"  :value="group.display_name"/>
+                                                    <input type="text" class="form-control" :class="errors.has('region_name') ? 'is-invalid': ''" id='region_name' name='region_name' :placeholder="trans('modals.region_name')" @input="updateRegion"  :value="region.region_name"/>
                                                     <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('display_name')"></strong>
+                                                        <strong v-text="errors.get('region_name')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.owner') }}</label>
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.country_code') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control"  id='owner' disabled readonly :placeholder="trans('modals.owner')"  :value="group.owner"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.whitelabel') }}</label>
-                                                <div class="col-lg-9">
-                                                    <input type="text" class="form-control"  id='whitelabel' disabled readonly :placeholder="trans('modals.whitelabel')"  :value="getGroup('whitelabel', 'display_name')"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.users') }} <span class="text-danger"> *</span></label>
-                                                <div class="col-lg-9">
-                                                    <el-transfer style="width: 100%;"
-                                                                 @input="inputUsers"
-                                                                 filterable
-                                                                 :titles="['Source', 'Target']"
-                                                                 :value="group.users"
-                                                                 :data="generateUsers()">
-                                                    </el-transfer>
-                                                    <div class="help-block text-danger" v-if="errors.has('users')">
-                                                        <strong v-text="errors.get('users')"></strong>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.description') }}</label>
-                                                <div class="col-lg-9">
-                                                    <textarea class="form-control" :class="errors.has('description') ? 'is-invalid': ''" rows="5" id='description' name='description' :placeholder="trans('modals.description')" @input="updateGroup"  :value="group.description"></textarea>
+                                                    <input type="text" class="form-control" :class="errors.has('country_code') ? 'is-invalid': ''" id='country_code' name='country_code' :placeholder="trans('modals.country_code')" @input="updateRegion"  :value="region.country_code"/>
                                                     <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('description')"></strong>
+                                                        <strong v-text="errors.get('country_code')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.status') }} </label>
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.type') }}</label>
                                                 <div class="col-lg-9">
-                                                    <el-switch
-                                                            @input="updateStatus"
-                                                            :value="group.status"
-                                                            active-color="#13ce66"
-                                                            inactive-color="#ff4949">
-                                                    </el-switch>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.current') }} </label>
-                                                <div class="col-lg-9">
-                                                    <el-switch
-                                                            @input="updateCurrent"
-                                                            :value="group.current"
-                                                            active-color="#13ce66"
-                                                            inactive-color="#ff4949">
-                                                    </el-switch>
+                                                    <input type="number" step="1" class="form-control" :class="errors.has('type') ? 'is-invalid': ''" id='type' name='type' :placeholder="trans('modals.type')" @input="updateRegion"  :value="region.type"/>
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('type')"></strong>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -125,7 +85,7 @@
 
                     <div class="tab-pane fade" id="highlighted-justified-tab2" v-if="can_logs">
                         <div class="modal-body">
-                            <vue-table :options="group.logs"></vue-table>
+                            <vue-table :options="region.logs"></vue-table>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.close') }}</button>
@@ -144,7 +104,7 @@
   import DateComponent from './DateComponent'
   import toastr from 'toastr'
   export default {
-    name: 'EditGroupComponent',
+    name: 'EditRegionComponent',
     components: { VueTable, DateComponent },
     data () {
       return {
@@ -158,12 +118,12 @@
     },
     watch: {
       '$route.params.id' () {
-        this.EditGroup(parseInt(this.$route.params.id))
+        this.EditRegion(parseInt(this.$route.params.id))
       }
     },
     computed: {
       ...Vuex.mapGetters({
-        group: 'group',
+        region: 'region',
         user: 'currentUser'
       }),
       can_logs () {
@@ -172,7 +132,7 @@
     },
     methods: {
       ...Vuex.mapActions({
-        addGroup: 'addGroup'
+        addRegion: 'addRegion'
       }),
       hasPermissionTo (permission) {
         return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
@@ -182,8 +142,8 @@
       },
       generateUsers () {
         let data = []
-        if (this.group.hasOwnProperty('usersList')) {
-          this.group['usersList'].forEach((user, index) => {
+        if (this.region.hasOwnProperty('usersList')) {
+          this.region['usersList'].forEach((user, index) => {
             data.push({
               label: user['name'],
               key: user['id']
@@ -194,21 +154,21 @@
         return data
       },
       inputUsers (value) {
-        this.$store.commit('updateGroup', {name: 'users', value: value})
+        this.$store.commit('updateRegion', {name: 'users', value: value})
       },
-      getGroup (key, value) {
-        return (this.group.hasOwnProperty(key)) ? this.group[key][value] : ''
+      getRegion (key, value) {
+        return (this.region.hasOwnProperty(key)) ? this.region[key][value] : ''
       },
-      updateGroup (e) {
+      updateRegion (e) {
         if (e.target.value !== null) {
-          this.$store.commit('updateGroup', {name: e.target.name, value: e.target.value})
+          this.$store.commit('updateRegion', {name: e.target.name, value: e.target.value})
         }
       },
       updateStatus (value) {
-        this.$store.commit('updateGroup', {name: 'status', value: value})
+        this.$store.commit('updateRegion', {name: 'status', value: value})
       },
       updateCurrent (value) {
-        this.$store.commit('updateGroup', {name: 'current', value: value})
+        this.$store.commit('updateRegion', {name: 'current', value: value})
       },
       loadModal () {
         let id = parseInt(this.$route.params.id)
@@ -217,32 +177,32 @@
         })
 
         if (id === 0) {
-          this.CreateGroup(parseInt(this.$route.params.whitelabel_id))
+          this.CreateRegion()
         } else {
-          this.EditGroup(id)
+          this.EditRegion(id)
         }
       },
-      CreateGroup (whitelabelId) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.get(window.laroute.route('admin.groups.create', {whitelabelId: whitelabelId}))
-          .then(this.onLoadGroupSuccess)
+      CreateRegion () {
+        this.$store.dispatch('block', {element: 'regionsComponent', load: true})
+        this.$http.get(window.laroute.route('admin.regions.create'))
+          .then(this.onLoadRegionSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'regionsComponent', load: false})
           })
       },
-      EditGroup (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.get(window.laroute.route('admin.groups.edit', {id: id}))
-          .then(this.onLoadGroupSuccess)
+      EditRegion (id) {
+        this.$store.dispatch('block', {element: 'regionsComponent', load: true})
+        this.$http.get(window.laroute.route('admin.regions.edit', {id: id}))
+          .then(this.onLoadRegionSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'regionsComponent', load: false})
           })
       },
-      onLoadGroupSuccess (response) {
+      onLoadRegionSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.addGroup(response.data.group)
+          this.addRegion(response.data.region)
           if (!($('#modal_large_group').data('bs.modal') || {}).isShown) {
             $('#modal_large_group').modal('show')
           }
@@ -259,21 +219,21 @@
         }
       },
       onSubmitStore () {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.put(window.laroute.route('admin.groups.store'), this.group)
+        this.$store.dispatch('block', {element: 'regionsComponent', load: true})
+        this.$http.put(window.laroute.route('admin.regions.store'), this.region)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'regionsComponent', load: false})
           })
       },
       onSubmitUpdate (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.put(window.laroute.route('admin.groups.update', {id: id}), this.group)
+        this.$store.dispatch('block', {element: 'regionsComponent', load: true})
+        this.$http.put(window.laroute.route('admin.regions.update', {id: id}), this.region)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'regionsComponent', load: false})
           })
       },
       onSubmitSuccess (response) {
@@ -282,7 +242,7 @@
             $('#modal_large_group').modal('hide')
             this.$router.push({name: 'root'})
           } else {
-            this.$router.push({name: 'root.edit', params: {id: response.data.group.id}})
+            this.$router.push({name: 'root.edit', params: {id: response.data.region.id}})
           }
           this.$message({
             message: response.data.message,

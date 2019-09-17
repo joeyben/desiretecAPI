@@ -99,4 +99,7 @@ return [
     'rating'                        => 'Rating',
     'whitelabels_distribution'      => 'Distribution',
     'whitelabels_image'             => 'Background image',
+    'region_code'                   => 'Region code',
+    'region_name'                   => 'Region Name',
+    'country_code'                  => 'Country Code',
 ];

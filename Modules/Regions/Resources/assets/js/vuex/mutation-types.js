@@ -1,5 +1,5 @@
 export const LOAD_LANGUAGES = 'LOAD_LANGUAGES'
-export const ADD_GROUP = 'ADD_GROUP'
+export const ADD_REGION = 'ADD_REGION'
 export const ADD_CHECKED = 'ADD_CHECKED'
 export const ADD_CHECKED_ID = 'ADD_CHECKED_ID'
 export const REMOVE_CHECKED_ID = 'REMOVE_CHECKED_ID'

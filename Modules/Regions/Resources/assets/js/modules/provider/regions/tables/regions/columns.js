@@ -9,36 +9,27 @@ export default [
     visible: true
   },
   {
-    name: '__component:custom-status',
-    title: window.Lang.get('tables.status'),
-    sortField: 'status',
-    visible: true
-  },
-  {
     name: '__component:custom-link-by-name',
     title: window.Lang.get('tables.name'),
     sortField: 'title',
     visible: true
   },
   {
-    name: 'display_name',
-    title: window.Lang.get('tables.display_name'),
-    sortField: 'display_name',
+    name: 'region_code',
+    title: window.Lang.get('tables.region_code'),
+    sortField: 'region_code',
     visible: true
   },
   {
-    name: 'owner.full_name',
-    title: window.Lang.get('tables.owner'),
-    visible: false
-  },
-  {
-    name: 'whitelabel.display_name',
-    title: window.Lang.get('tables.whitelabel'),
+    name: 'country_code',
+    title: window.Lang.get('tables.country_code'),
+    sortField: 'country_code',
     visible: true
   },
   {
-    name: '__component:custom-users',
-    title: window.Lang.get('tables.users'),
+    name: 'type',
+    title: window.Lang.get('tables.type'),
+    sortField: 'type',
     visible: true
   },
   {

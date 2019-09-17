@@ -4019,5 +4019,3072 @@ class RegionsDatabaseSeeder extends Seeder
                     'type' => 1,
                 ),
         ));
+
+        DB::table('Regions')->insert(array (
+            0 =>
+                array (
+                    'id' => 2741,
+                    'region_code' => 'region.932',
+                    'region_name' => 'Westthailand (Hua Hin - Cha Am)',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            1 =>
+                array (
+                    'id' => 2742,
+                    'region_code' => 'region.934',
+                    'region_name' => 'Khao Lak & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            2 =>
+                array (
+                    'id' => 2743,
+                    'region_code' => 'region.935',
+                    'region_name' => 'Madrid & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            3 =>
+                array (
+                    'id' => 2744,
+                    'region_code' => 'region.936',
+                    'region_name' => 'Republik Niger',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            4 =>
+                array (
+                    'id' => 2745,
+                    'region_code' => 'region.940',
+                    'region_name' => 'Cote d´Azur',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            5 =>
+                array (
+                    'id' => 2746,
+                    'region_code' => 'region.944',
+                    'region_name' => 'Nordirland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            6 =>
+                array (
+                    'id' => 2747,
+                    'region_code' => 'region.947',
+                    'region_name' => 'Friaul',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            7 =>
+                array (
+                    'id' => 2748,
+                    'region_code' => 'region.948',
+                    'region_name' => 'Ruanda',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            8 =>
+                array (
+                    'id' => 2749,
+                    'region_code' => 'region.953',
+                    'region_name' => 'Guam',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            9 =>
+                array (
+                    'id' => 2750,
+                    'region_code' => 'region.959',
+                    'region_name' => 'Montserrat',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            10 =>
+                array (
+                    'id' => 2751,
+                    'region_code' => 'region.960',
+                    'region_name' => 'Kappadokien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            11 =>
+                array (
+                    'id' => 2752,
+                    'region_code' => 'region.960',
+                    'region_name' => 'Kappadokien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            12 =>
+                array (
+                    'id' => 2753,
+                    'region_code' => 'region.973',
+                    'region_name' => 'Indien - Tamil Nadu',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            13 =>
+                array (
+                    'id' => 2754,
+                    'region_code' => 'region.986',
+                    'region_name' => 'Indien - Maharashtra - Mumbai',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            14 =>
+                array (
+                    'id' => 2755,
+                    'region_code' => 'region.991',
+                    'region_name' => 'Indien - New Delhi',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            15 =>
+                array (
+                    'id' => 2756,
+                    'region_code' => 'region.992',
+                    'region_name' => 'Indien - Goa',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            16 =>
+                array (
+                    'id' => 2757,
+                    'region_code' => 'region.995',
+                    'region_name' => 'Indonesien - Molukken',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            17 =>
+                array (
+                    'id' => 2758,
+                    'region_code' => 'region.996',
+                    'region_name' => 'Palau',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            18 =>
+                array (
+                    'id' => 2759,
+                    'region_code' => 'region.997',
+                    'region_name' => 'Mauretanien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            19 =>
+                array (
+                    'id' => 2760,
+                    'region_code' => 'region.1001',
+                    'region_name' => 'Tirol',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            20 =>
+                array (
+                    'id' => 2761,
+                    'region_code' => 'region.1007',
+                    'region_name' => 'Insel Elba',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            21 =>
+                array (
+                    'id' => 2762,
+                    'region_code' => 'region.1009',
+                    'region_name' => 'Nordkorea',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            22 =>
+                array (
+                    'id' => 2763,
+                    'region_code' => 'region.1012',
+                    'region_name' => 'Sierra Leone',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            23 =>
+                array (
+                    'id' => 2764,
+                    'region_code' => 'region.1013',
+                    'region_name' => 'Aruba',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            24 =>
+                array (
+                    'id' => 2765,
+                    'region_code' => 'region.1022',
+                    'region_name' => 'Tschad',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            25 =>
+                array (
+                    'id' => 2766,
+                    'region_code' => 'region.1023',
+                    'region_name' => 'Togo',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            26 =>
+                array (
+                    'id' => 2767,
+                    'region_code' => 'region.1024',
+                    'region_name' => 'Gabun',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            27 =>
+                array (
+                    'id' => 2768,
+                    'region_code' => 'region.1027',
+                    'region_name' => 'Jalisco',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            28 =>
+                array (
+                    'id' => 2769,
+                    'region_code' => 'region.1027',
+                    'region_name' => 'Pazifikküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            29 =>
+                array (
+                    'id' => 2770,
+                    'region_code' => 'region.1027',
+                    'region_name' => 'Puerto Vallarta & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            30 =>
+                array (
+                    'id' => 2771,
+                    'region_code' => 'region.1027,region.100168',
+                    'region_name' => 'Baja California',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            31 =>
+                array (
+                    'id' => 2772,
+                    'region_code' => 'region.1028',
+                    'region_name' => 'Assuan - Luxor - Libysche Wüste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            32 =>
+                array (
+                    'id' => 2773,
+                    'region_code' => 'region.1030',
+                    'region_name' => 'Alexandria - Marsa Matruh - El Alamein',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            33 =>
+                array (
+                    'id' => 2775,
+                    'region_code' => 'region.1032',
+                    'region_name' => 'Marsa Alam - Quseir - Port Ghalib',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            34 =>
+                array (
+                    'id' => 2776,
+                    'region_code' => 'region.1036',
+                    'region_name' => 'Amalfiküste - Golf von Neapel',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            35 =>
+                array (
+                    'id' => 2777,
+                    'region_code' => 'region.1037',
+                    'region_name' => 'Burkina Faso',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            36 =>
+                array (
+                    'id' => 2778,
+                    'region_code' => 'region.1038',
+                    'region_name' => 'Tunesien Inland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            37 =>
+                array (
+                    'id' => 2779,
+                    'region_code' => 'region.1045',
+                    'region_name' => 'Umbrien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            38 =>
+                array (
+                    'id' => 2780,
+                    'region_code' => 'region.1051',
+                    'region_name' => 'Serbien & Kosovo',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            39 =>
+                array (
+                    'id' => 2781,
+                    'region_code' => 'region.1052,region.100397',
+                    'region_name' => 'Montenegro',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            40 =>
+                array (
+                    'id' => 2782,
+                    'region_code' => 'region.1053',
+                    'region_name' => 'Angola',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            41 =>
+                array (
+                    'id' => 2783,
+                    'region_code' => 'region.1054',
+                    'region_name' => 'Demokratischen Republik Kongo',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            42 =>
+                array (
+                    'id' => 2784,
+                    'region_code' => 'region.1055',
+                    'region_name' => 'Republik Kongo',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            43 =>
+                array (
+                    'id' => 2785,
+                    'region_code' => 'region.1056',
+                    'region_name' => 'Republik Liberia',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            44 =>
+                array (
+                    'id' => 2786,
+                    'region_code' => 'region.1064',
+                    'region_name' => 'Zentralafrikanische Republik',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            45 =>
+                array (
+                    'id' => 2787,
+                    'region_code' => 'region.1075',
+                    'region_name' => 'Nunavut',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            46 =>
+                array (
+                    'id' => 2788,
+                    'region_code' => 'region.1078',
+                    'region_name' => 'Indonesien - Timor',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            47 =>
+                array (
+                    'id' => 2789,
+                    'region_code' => 'region.1079',
+                    'region_name' => 'Indonesien - Java',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            48 =>
+                array (
+                    'id' => 2790,
+                    'region_code' => 'region.1080',
+                    'region_name' => 'Indonesien - Borneo',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            49 =>
+                array (
+                    'id' => 2791,
+                    'region_code' => 'region.1081',
+                    'region_name' => 'Indonesien - Neuguinea',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            50 =>
+                array (
+                    'id' => 2792,
+                    'region_code' => 'region.1082',
+                    'region_name' => 'Irak',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            51 =>
+                array (
+                    'id' => 2793,
+                    'region_code' => 'region.1083,region.1084',
+                    'region_name' => 'Bali & Lombok',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            52 =>
+                array (
+                    'id' => 2794,
+                    'region_code' => 'region.1085',
+                    'region_name' => 'Indonesien - Sumbawa',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            53 =>
+                array (
+                    'id' => 2795,
+                    'region_code' => 'region.1086',
+                    'region_name' => 'Indonesien - Flores',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            54 =>
+                array (
+                    'id' => 2796,
+                    'region_code' => 'region.1087',
+                    'region_name' => 'Indonesien - Riau Kepulauan',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            55 =>
+                array (
+                    'id' => 2797,
+                    'region_code' => 'region.1093',
+                    'region_name' => 'American Samoa',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            56 =>
+                array (
+                    'id' => 2798,
+                    'region_code' => 'region.1095',
+                    'region_name' => 'Osttimor',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            57 =>
+                array (
+                    'id' => 2799,
+                    'region_code' => 'region.1096',
+                    'region_name' => 'Wallis & Futuna ',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            58 =>
+                array (
+                    'id' => 2800,
+                    'region_code' => 'region.1099',
+                    'region_name' => 'Capri',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            59 =>
+                array (
+                    'id' => 2801,
+                    'region_code' => 'region.1100',
+                    'region_name' => 'Südafrika - Südküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            60 =>
+                array (
+                    'id' => 2802,
+                    'region_code' => 'region.1101',
+                    'region_name' => 'Äquatorial Guinea',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            61 =>
+                array (
+                    'id' => 2803,
+                    'region_code' => 'region.1108',
+                    'region_name' => 'Istrien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            62 =>
+                array (
+                    'id' => 2804,
+                    'region_code' => 'region.1110',
+                    'region_name' => 'Marianen Inseln',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            63 =>
+                array (
+                    'id' => 2805,
+                    'region_code' => 'region.1119',
+                    'region_name' => 'Koh Samui',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            64 =>
+                array (
+                    'id' => 2806,
+                    'region_code' => 'region.1133',
+                    'region_name' => 'Aquitanien - Perigord',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            65 =>
+                array (
+                    'id' => 2807,
+                    'region_code' => 'region.1164',
+                    'region_name' => 'Brasilien - Rio de Janeiro & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            66 =>
+                array (
+                    'id' => 2808,
+                    'region_code' => 'region.1168',
+                    'region_name' => 'China - Osten',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            67 =>
+                array (
+                    'id' => 2809,
+                    'region_code' => 'region.1169',
+                    'region_name' => 'China - Ostküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            68 =>
+                array (
+                    'id' => 2810,
+                    'region_code' => 'region.1170',
+                    'region_name' => 'China - Südküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            69 =>
+                array (
+                    'id' => 2811,
+                    'region_code' => 'region.1171',
+                    'region_name' => 'China - Tibet',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            70 =>
+                array (
+                    'id' => 2812,
+                    'region_code' => 'region.1172',
+                    'region_name' => 'China - Zentralchina',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            71 =>
+                array (
+                    'id' => 2813,
+                    'region_code' => 'region.1179',
+                    'region_name' => 'China - Süden',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            72 =>
+                array (
+                    'id' => 2814,
+                    'region_code' => 'region.1180',
+                    'region_name' => 'China - Insel Hainan',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            73 =>
+                array (
+                    'id' => 2815,
+                    'region_code' => 'region.1182',
+                    'region_name' => 'Tadschikistan',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            74 =>
+                array (
+                    'id' => 2816,
+                    'region_code' => 'region.1185',
+                    'region_name' => 'Russland Ostseeküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            75 =>
+                array (
+                    'id' => 2817,
+                    'region_code' => 'region.1186',
+                    'region_name' => 'Russland Moskau & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            76 =>
+                array (
+                    'id' => 2818,
+                    'region_code' => 'region.1196',
+                    'region_name' => 'Färöer Inseln',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            77 =>
+                array (
+                    'id' => 2819,
+                    'region_code' => 'region.100000',
+                    'region_name' => 'Balearen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            78 =>
+                array (
+                    'id' => 2820,
+                    'region_code' => 'region.100002',
+                    'region_name' => 'Griechische Inseln',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            79 =>
+                array (
+                    'id' => 2821,
+                    'region_code' => 'region.100007',
+                    'region_name' => 'Italien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            80 =>
+                array (
+                    'id' => 2822,
+                    'region_code' => 'region.100008',
+                    'region_name' => 'Tunesien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            81 =>
+                array (
+                    'id' => 2823,
+                    'region_code' => 'region.100009',
+                    'region_name' => 'Osteuropa',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            82 =>
+                array (
+                    'id' => 2824,
+                    'region_code' => 'region.100010',
+                    'region_name' => 'Großbritannien & Irland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            83 =>
+                array (
+                    'id' => 2825,
+                    'region_code' => 'region.100012',
+                    'region_name' => 'Benelux',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            84 =>
+                array (
+                    'id' => 2826,
+                    'region_code' => 'region.100015',
+                    'region_name' => 'Afrika',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            85 =>
+                array (
+                    'id' => 2827,
+                    'region_code' => 'region.100016',
+                    'region_name' => 'Indischer Ozean',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            86 =>
+                array (
+                    'id' => 2828,
+                    'region_code' => 'region.100017',
+                    'region_name' => 'Karibik',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            87 =>
+                array (
+                    'id' => 2829,
+                    'region_code' => 'region.100018',
+                    'region_name' => 'Mittelamerika',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            88 =>
+                array (
+                    'id' => 2830,
+                    'region_code' => 'region.100019',
+                    'region_name' => 'Südamerika',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            89 =>
+                array (
+                    'id' => 2831,
+                    'region_code' => 'region.100020',
+                    'region_name' => 'Asien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            90 =>
+                array (
+                    'id' => 2832,
+                    'region_code' => 'region.100021',
+                    'region_name' => 'Australien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            91 =>
+                array (
+                    'id' => 2833,
+                    'region_code' => 'region.100022',
+                    'region_name' => 'Südsee',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            92 =>
+                array (
+                    'id' => 2834,
+                    'region_code' => 'region.100023',
+                    'region_name' => 'Kvarner Bucht & Adriatische Küste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            93 =>
+                array (
+                    'id' => 2835,
+                    'region_code' => 'region.100023,region.1109',
+                    'region_name' => 'Inland  (Zagreb)',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            94 =>
+                array (
+                    'id' => 2836,
+                    'region_code' => 'region.100025',
+                    'region_name' => 'Atlantikküste weitere Angebote Frankreich',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            95 =>
+                array (
+                    'id' => 2837,
+                    'region_code' => 'region.100025',
+                    'region_name' => 'Asturien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            96 =>
+                array (
+                    'id' => 2838,
+                    'region_code' => 'region.100025',
+                    'region_name' => 'Atlantikküste weitere Angebote Spanien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            97 =>
+                array (
+                    'id' => 2839,
+                    'region_code' => 'region.100025',
+                    'region_name' => 'Baskenland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            98 =>
+                array (
+                    'id' => 2840,
+                    'region_code' => 'region.100025',
+                    'region_name' => 'Galicien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            99 =>
+                array (
+                    'id' => 2841,
+                    'region_code' => 'region.100025',
+                    'region_name' => 'Kantabrien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            100 =>
+                array (
+                    'id' => 2842,
+                    'region_code' => 'region.100026',
+                    'region_name' => 'Kastilien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            101 =>
+                array (
+                    'id' => 2843,
+                    'region_code' => 'region.100027',
+                    'region_name' => 'Barcelona & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            102 =>
+                array (
+                    'id' => 2844,
+                    'region_code' => 'region.100028',
+                    'region_name' => 'La Rioja',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            103 =>
+                array (
+                    'id' => 2845,
+                    'region_code' => 'region.100028',
+                    'region_name' => 'Navarra',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            104 =>
+                array (
+                    'id' => 2846,
+                    'region_code' => 'region.100029',
+                    'region_name' => 'Aostatal',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            105 =>
+                array (
+                    'id' => 2847,
+                    'region_code' => 'region.100029',
+                    'region_name' => 'Piemont',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            106 =>
+                array (
+                    'id' => 2848,
+                    'region_code' => 'region.100030',
+                    'region_name' => 'Ötztal',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            107 =>
+                array (
+                    'id' => 2849,
+                    'region_code' => 'region.100030',
+                    'region_name' => 'Stubaital',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            108 =>
+                array (
+                    'id' => 2850,
+                    'region_code' => 'region.100030,region.100032',
+                    'region_name' => 'Südtirol - Dolomiten - Alpen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            109 =>
+                array (
+                    'id' => 2851,
+                    'region_code' => 'region.100031',
+                    'region_name' => 'Toskana',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            110 =>
+                array (
+                    'id' => 2852,
+                    'region_code' => 'region.100033',
+                    'region_name' => 'Kampanien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            111 =>
+                array (
+                    'id' => 2853,
+                    'region_code' => 'region.100034',
+                    'region_name' => 'Abruzzen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            112 =>
+                array (
+                    'id' => 2854,
+                    'region_code' => 'region.100035',
+                    'region_name' => 'Malta',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            113 =>
+                array (
+                    'id' => 2855,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Amorgos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            114 =>
+                array (
+                    'id' => 2856,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Andros',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            115 =>
+                array (
+                    'id' => 2857,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Folegandros',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            116 =>
+                array (
+                    'id' => 2858,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Ios',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            117 =>
+                array (
+                    'id' => 2859,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Kea',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            118 =>
+                array (
+                    'id' => 2860,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Kimolos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            119 =>
+                array (
+                    'id' => 2861,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Kykladen Inseln',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            120 =>
+                array (
+                    'id' => 2862,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Kythnos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            121 =>
+                array (
+                    'id' => 2863,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Milos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            122 =>
+                array (
+                    'id' => 2864,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Naxos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            123 =>
+                array (
+                    'id' => 2865,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Paros',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            124 =>
+                array (
+                    'id' => 2866,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Santorini',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            125 =>
+                array (
+                    'id' => 2867,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Serifos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            126 =>
+                array (
+                    'id' => 2868,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Sifnos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            127 =>
+                array (
+                    'id' => 2869,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Syros',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            128 =>
+                array (
+                    'id' => 2870,
+                    'region_code' => 'region.100036',
+                    'region_name' => 'Tinos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            129 =>
+                array (
+                    'id' => 2871,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Astypalea',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            130 =>
+                array (
+                    'id' => 2872,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Chalki',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            131 =>
+                array (
+                    'id' => 2873,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Kalymnos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            132 =>
+                array (
+                    'id' => 2874,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Karpathos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            133 =>
+                array (
+                    'id' => 2875,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Leros',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            134 =>
+                array (
+                    'id' => 2876,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Lipsi',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            135 =>
+                array (
+                    'id' => 2877,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Megisti',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            136 =>
+                array (
+                    'id' => 2878,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Nisyros',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            137 =>
+                array (
+                    'id' => 2879,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Patmos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            138 =>
+                array (
+                    'id' => 2880,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Symi',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            139 =>
+                array (
+                    'id' => 2881,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Telendos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            140 =>
+                array (
+                    'id' => 2882,
+                    'region_code' => 'region.100037',
+                    'region_name' => 'Tilos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            141 =>
+                array (
+                    'id' => 2883,
+                    'region_code' => 'region.100038',
+                    'region_name' => 'Alonissos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            142 =>
+                array (
+                    'id' => 2884,
+                    'region_code' => 'region.100038',
+                    'region_name' => 'Skopelos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            143 =>
+                array (
+                    'id' => 2885,
+                    'region_code' => 'region.100038',
+                    'region_name' => 'Skyros',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            144 =>
+                array (
+                    'id' => 2886,
+                    'region_code' => 'region.100039',
+                    'region_name' => 'Samos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            145 =>
+                array (
+                    'id' => 2887,
+                    'region_code' => 'region.100040',
+                    'region_name' => 'Chios',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            146 =>
+                array (
+                    'id' => 2888,
+                    'region_code' => 'region.100040',
+                    'region_name' => 'Fourni',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            147 =>
+                array (
+                    'id' => 2889,
+                    'region_code' => 'region.100040',
+                    'region_name' => 'Ikaria',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            148 =>
+                array (
+                    'id' => 2890,
+                    'region_code' => 'region.100040',
+                    'region_name' => 'Limnos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            149 =>
+                array (
+                    'id' => 2891,
+                    'region_code' => 'region.100040',
+                    'region_name' => 'Samothraki',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            150 =>
+                array (
+                    'id' => 2892,
+                    'region_code' => 'region.100041',
+                    'region_name' => 'Saronischer Golf',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            151 =>
+                array (
+                    'id' => 2893,
+                    'region_code' => 'region.100041',
+                    'region_name' => 'Ägina',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            152 =>
+                array (
+                    'id' => 2894,
+                    'region_code' => 'region.100041',
+                    'region_name' => 'Hydra',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            153 =>
+                array (
+                    'id' => 2895,
+                    'region_code' => 'region.100041',
+                    'region_name' => 'Poros',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            154 =>
+                array (
+                    'id' => 2896,
+                    'region_code' => 'region.100041',
+                    'region_name' => 'Spetses',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            155 =>
+                array (
+                    'id' => 2897,
+                    'region_code' => 'region.100042',
+                    'region_name' => 'Ithaka',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            156 =>
+                array (
+                    'id' => 2898,
+                    'region_code' => 'region.100042',
+                    'region_name' => 'Kefalonia',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            157 =>
+                array (
+                    'id' => 2899,
+                    'region_code' => 'region.100042',
+                    'region_name' => 'Kythira',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            158 =>
+                array (
+                    'id' => 2900,
+                    'region_code' => 'region.100042',
+                    'region_name' => 'Lefkada (Lefkas)',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            159 =>
+                array (
+                    'id' => 2901,
+                    'region_code' => 'region.100042',
+                    'region_name' => 'Paxos & Andipaxos',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            160 =>
+                array (
+                    'id' => 2902,
+                    'region_code' => 'region.100043',
+                    'region_name' => 'Mittelgriechenland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            161 =>
+                array (
+                    'id' => 2903,
+                    'region_code' => 'region.100043',
+                    'region_name' => 'Parnass Gebirge',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            162 =>
+                array (
+                    'id' => 2904,
+                    'region_code' => 'region.100044,region.100045',
+                    'region_name' => 'Costa Verde - Porto',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            163 =>
+                array (
+                    'id' => 2905,
+                    'region_code' => 'region.100046',
+                    'region_name' => 'Costa de Prata',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            164 =>
+                array (
+                    'id' => 2906,
+                    'region_code' => 'region.100049',
+                    'region_name' => 'Bodrum',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            165 =>
+                array (
+                    'id' => 2907,
+                    'region_code' => 'region.100049,region.144',
+                    'region_name' => 'Türkische Ägäis & Halbinsel Bodrum',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            166 =>
+                array (
+                    'id' => 2908,
+                    'region_code' => 'region.100050',
+                    'region_name' => 'Ceuta & Melilla',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            167 =>
+                array (
+                    'id' => 2909,
+                    'region_code' => 'region.100051',
+                    'region_name' => 'Atlantikküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            168 =>
+                array (
+                    'id' => 2910,
+                    'region_code' => 'region.100052',
+                    'region_name' => 'Marokko Mittelmeerküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            169 =>
+                array (
+                    'id' => 2911,
+                    'region_code' => 'region.100053',
+                    'region_name' => 'Marokko Inland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            170 =>
+                array (
+                    'id' => 2912,
+                    'region_code' => 'region.100054',
+                    'region_name' => 'Marrakesch',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            171 =>
+                array (
+                    'id' => 2913,
+                    'region_code' => 'region.100055',
+                    'region_name' => 'Oase Tozeur',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            172 =>
+                array (
+                    'id' => 2914,
+                    'region_code' => 'region.100056',
+                    'region_name' => 'Kairo - Gizeh - Memphis',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            173 =>
+                array (
+                    'id' => 2915,
+                    'region_code' => 'region.100057',
+                    'region_name' => 'Jura',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            174 =>
+                array (
+                    'id' => 2916,
+                    'region_code' => 'region.100058',
+                    'region_name' => 'Mittelland weitere Angebote',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            175 =>
+                array (
+                    'id' => 2917,
+                    'region_code' => 'region.100059,region.100060',
+                    'region_name' => 'Genfer See & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            176 =>
+                array (
+                    'id' => 2918,
+                    'region_code' => 'region.100061',
+                    'region_name' => 'Zürich & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            177 =>
+                array (
+                    'id' => 2921,
+                    'region_code' => 'region.100063',
+                    'region_name' => 'Ostseeinseln',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            178 =>
+                array (
+                    'id' => 2922,
+                    'region_code' => 'region.100063,region.100062',
+                    'region_name' => 'Ostseeküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            179 =>
+                array (
+                    'id' => 2924,
+                    'region_code' => 'region.100065',
+                    'region_name' => 'Insel Sylt',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            180 =>
+                array (
+                    'id' => 2925,
+                    'region_code' => 'region.100065',
+                    'region_name' => 'Nordseeinseln',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            181 =>
+                array (
+                    'id' => 2926,
+                    'region_code' => 'region.100065,region.100064',
+                    'region_name' => 'Nordseeküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            182 =>
+                array (
+                    'id' => 2927,
+                    'region_code' => 'region.100066',
+                    'region_name' => 'Lüneburger Heide',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            183 =>
+                array (
+                    'id' => 2928,
+                    'region_code' => 'region.100067',
+                    'region_name' => 'Sächsische Schweiz & Erzgebirge',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            184 =>
+                array (
+                    'id' => 2929,
+                    'region_code' => 'region.100068',
+                    'region_name' => 'Bayerischer & Oberpfälzer Wald',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            185 =>
+                array (
+                    'id' => 2930,
+                    'region_code' => 'region.100069',
+                    'region_name' => 'Franken',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            186 =>
+                array (
+                    'id' => 2932,
+                    'region_code' => 'region.100069',
+                    'region_name' => 'Frankenwald & Fichtelgebirge',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            187 =>
+                array (
+                    'id' => 2933,
+                    'region_code' => 'region.100070',
+                    'region_name' => 'Allgäu',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            188 =>
+                array (
+                    'id' => 2934,
+                    'region_code' => 'region.100070',
+                    'region_name' => 'Bayerisch-Schwaben',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            189 =>
+                array (
+                    'id' => 2935,
+                    'region_code' => 'region.100070',
+                    'region_name' => 'Allgäu',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            190 =>
+                array (
+                    'id' => 2936,
+                    'region_code' => 'region.100071',
+                    'region_name' => 'Oberpfalz',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            191 =>
+                array (
+                    'id' => 2938,
+                    'region_code' => 'region.100071',
+                    'region_name' => 'Schwarzwald',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            192 =>
+                array (
+                    'id' => 2939,
+                    'region_code' => 'region.100072',
+                    'region_name' => 'Bodensee & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            193 =>
+                array (
+                    'id' => 2940,
+                    'region_code' => 'region.100072',
+                    'region_name' => 'Bodensee & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            194 =>
+                array (
+                    'id' => 2942,
+                    'region_code' => 'region.100073',
+                    'region_name' => 'Rhein-Main Region',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            195 =>
+                array (
+                    'id' => 2943,
+                    'region_code' => 'region.100074',
+                    'region_name' => 'Mosel-Saar Region',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            196 =>
+                array (
+                    'id' => 2944,
+                    'region_code' => 'region.100074,region.625',
+                    'region_name' => 'Rheinland-Pfalz',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            197 =>
+                array (
+                    'id' => 2945,
+                    'region_code' => 'region.100075',
+                    'region_name' => 'Eifel - Taunus - Hunsrück',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            198 =>
+                array (
+                    'id' => 2948,
+                    'region_code' => 'region.100076',
+                    'region_name' => 'Sauerland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            199 =>
+                array (
+                    'id' => 2949,
+                    'region_code' => 'region.100077',
+                    'region_name' => 'Emsland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            200 =>
+                array (
+                    'id' => 2950,
+                    'region_code' => 'region.100078',
+                    'region_name' => 'Mecklenburg-Vorpommern & Seenplatte',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            201 =>
+                array (
+                    'id' => 2952,
+                    'region_code' => 'region.100079',
+                    'region_name' => 'Insel Usedom',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            202 =>
+                array (
+                    'id' => 2954,
+                    'region_code' => 'region.100080',
+                    'region_name' => 'Insel Rügen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            203 =>
+                array (
+                    'id' => 2956,
+                    'region_code' => 'region.100081',
+                    'region_name' => 'Harz',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            204 =>
+                array (
+                    'id' => 2958,
+                    'region_code' => 'region.100082',
+                    'region_name' => 'Bremen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            205 =>
+                array (
+                    'id' => 2959,
+                    'region_code' => 'region.100082',
+                    'region_name' => 'Hamburg',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            206 =>
+                array (
+                    'id' => 2961,
+                    'region_code' => 'region.100084',
+                    'region_name' => 'Köln & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            207 =>
+                array (
+                    'id' => 2962,
+                    'region_code' => 'region.100085',
+                    'region_name' => 'München & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            208 =>
+                array (
+                    'id' => 2963,
+                    'region_code' => 'region.100088',
+                    'region_name' => 'Nordtirol',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            209 =>
+                array (
+                    'id' => 2964,
+                    'region_code' => 'region.100088',
+                    'region_name' => 'Olympia Region Seefeld',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            210 =>
+                array (
+                    'id' => 2965,
+                    'region_code' => 'region.100089',
+                    'region_name' => 'Tirol Ost',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            211 =>
+                array (
+                    'id' => 2966,
+                    'region_code' => 'region.100089',
+                    'region_name' => 'Zillertal',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            212 =>
+                array (
+                    'id' => 2967,
+                    'region_code' => 'region.100091',
+                    'region_name' => 'Polnische Ostseeküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            213 =>
+                array (
+                    'id' => 2968,
+                    'region_code' => 'region.100096',
+                    'region_name' => 'Paris & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            214 =>
+                array (
+                    'id' => 2969,
+                    'region_code' => 'region.100099',
+                    'region_name' => 'Champagne Ardenne',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            215 =>
+                array (
+                    'id' => 2970,
+                    'region_code' => 'region.100099',
+                    'region_name' => 'Picardie',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            216 =>
+                array (
+                    'id' => 2971,
+                    'region_code' => 'region.100100,region.175',
+                    'region_name' => 'Belgien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            217 =>
+                array (
+                    'id' => 2972,
+                    'region_code' => 'region.100110',
+                    'region_name' => 'Guernsey & St.Anne',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            218 =>
+                array (
+                    'id' => 2973,
+                    'region_code' => 'region.100110',
+                    'region_name' => 'Jersey',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            219 =>
+                array (
+                    'id' => 2974,
+                    'region_code' => 'region.100137',
+                    'region_name' => 'Sonnenstrand',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            220 =>
+                array (
+                    'id' => 2975,
+                    'region_code' => 'region.100138',
+                    'region_name' => 'Goldstrand',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            221 =>
+                array (
+                    'id' => 2976,
+                    'region_code' => 'region.100139',
+                    'region_name' => 'Sofia & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            222 =>
+                array (
+                    'id' => 2977,
+                    'region_code' => 'region.100141',
+                    'region_name' => 'Tschechische Republik - Prag & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            223 =>
+                array (
+                    'id' => 2978,
+                    'region_code' => 'region.100142',
+                    'region_name' => 'Russland St.Petersburg & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            224 =>
+                array (
+                    'id' => 2979,
+                    'region_code' => 'region.100144',
+                    'region_name' => 'Ungarn - Balaton (Plattensee)',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            225 =>
+                array (
+                    'id' => 2980,
+                    'region_code' => 'region.100145',
+                    'region_name' => 'Ungarn - Budapest & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            226 =>
+                array (
+                    'id' => 2981,
+                    'region_code' => 'region.100145,region.234',
+                    'region_name' => 'Ungarn',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            227 =>
+                array (
+                    'id' => 2982,
+                    'region_code' => 'region.100151',
+                    'region_name' => 'Polen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            228 =>
+                array (
+                    'id' => 2983,
+                    'region_code' => 'region.100152',
+                    'region_name' => 'Slowenien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            229 =>
+                array (
+                    'id' => 2984,
+                    'region_code' => 'region.100153',
+                    'region_name' => 'Mexiko Stadt & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            230 =>
+                array (
+                    'id' => 2985,
+                    'region_code' => 'region.100160',
+                    'region_name' => 'Bonaire',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            231 =>
+                array (
+                    'id' => 2986,
+                    'region_code' => 'region.100160',
+                    'region_name' => 'Curacao',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            232 =>
+                array (
+                    'id' => 2987,
+                    'region_code' => 'region.100160',
+                    'region_name' => 'Saba',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            233 =>
+                array (
+                    'id' => 2988,
+                    'region_code' => 'region.100160',
+                    'region_name' => 'Sint Eustatius',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            234 =>
+                array (
+                    'id' => 2989,
+                    'region_code' => 'region.100160',
+                    'region_name' => 'Sint Maarten',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            235 =>
+                array (
+                    'id' => 2990,
+                    'region_code' => 'region.100162',
+                    'region_name' => 'Antigua',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            236 =>
+                array (
+                    'id' => 2991,
+                    'region_code' => 'region.100162',
+                    'region_name' => 'Antigua & Barbuda',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            237 =>
+                array (
+                    'id' => 2992,
+                    'region_code' => 'region.100164',
+                    'region_name' => 'Amerikanische Jungferninseln',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            238 =>
+                array (
+                    'id' => 2993,
+                    'region_code' => 'region.100164',
+                    'region_name' => 'Britische Jungferninseln',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            239 =>
+                array (
+                    'id' => 2994,
+                    'region_code' => 'region.100165',
+                    'region_name' => 'Kuba - Havanna & Varadero & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            240 =>
+                array (
+                    'id' => 2995,
+                    'region_code' => 'region.100166',
+                    'region_name' => 'Kuba - Holguin & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            241 =>
+                array (
+                    'id' => 2996,
+                    'region_code' => 'region.100170',
+                    'region_name' => 'Skandinavien & Island',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            242 =>
+                array (
+                    'id' => 2997,
+                    'region_code' => 'region.100171',
+                    'region_name' => 'Inseln im Golf von Thailand (Koh Chang & weitere)',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            243 =>
+                array (
+                    'id' => 2998,
+                    'region_code' => 'region.100172',
+                    'region_name' => 'Paraguay',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            244 =>
+                array (
+                    'id' => 2999,
+                    'region_code' => 'region.100172',
+                    'region_name' => 'Uruguay',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            245 =>
+                array (
+                    'id' => 3000,
+                    'region_code' => 'region.100173',
+                    'region_name' => 'Französisch Guyana',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            246 =>
+                array (
+                    'id' => 3001,
+                    'region_code' => 'region.100173',
+                    'region_name' => 'Suriname',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            247 =>
+                array (
+                    'id' => 3002,
+                    'region_code' => 'region.100181',
+                    'region_name' => 'Nordinsel',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            248 =>
+                array (
+                    'id' => 3003,
+                    'region_code' => 'region.100182',
+                    'region_name' => 'Südinsel',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            249 =>
+                array (
+                    'id' => 3004,
+                    'region_code' => 'region.100187',
+                    'region_name' => 'Turkmenistan',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            250 =>
+                array (
+                    'id' => 3005,
+                    'region_code' => 'region.100188',
+                    'region_name' => 'Israel - Tel Aviv & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            251 =>
+                array (
+                    'id' => 3006,
+                    'region_code' => 'region.100189',
+                    'region_name' => 'Israel - Jerusalem & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            252 =>
+                array (
+                    'id' => 3007,
+                    'region_code' => 'region.100190',
+                    'region_name' => 'Israel - Totes Meer & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            253 =>
+                array (
+                    'id' => 3008,
+                    'region_code' => 'region.100191',
+                    'region_name' => 'Israel - Eilat',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            254 =>
+                array (
+                    'id' => 3009,
+                    'region_code' => 'region.100192',
+                    'region_name' => 'Jordanien - Amman',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            255 =>
+                array (
+                    'id' => 3010,
+                    'region_code' => 'region.100194',
+                    'region_name' => 'Jordanien - Totes Meer & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            256 =>
+                array (
+                    'id' => 3011,
+                    'region_code' => 'region.100196',
+                    'region_name' => 'Südafrika - Kapstadt  & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            257 =>
+                array (
+                    'id' => 3012,
+                    'region_code' => 'region.100197',
+                    'region_name' => 'Südafrika - Johannesburg  & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            258 =>
+                array (
+                    'id' => 3013,
+                    'region_code' => 'region.100198',
+                    'region_name' => 'China - Shanghai',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            259 =>
+                array (
+                    'id' => 3014,
+                    'region_code' => 'region.100199',
+                    'region_name' => 'China - Peking',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            260 =>
+                array (
+                    'id' => 3015,
+                    'region_code' => 'region.100201',
+                    'region_name' => 'Sao Tome & Principe',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            261 =>
+                array (
+                    'id' => 3016,
+                    'region_code' => 'region.100205',
+                    'region_name' => 'Westsahara',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            262 =>
+                array (
+                    'id' => 3017,
+                    'region_code' => 'region.100209',
+                    'region_name' => 'Salomoninseln',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            263 =>
+                array (
+                    'id' => 3018,
+                    'region_code' => 'region.100212',
+                    'region_name' => 'Haiti',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            264 =>
+                array (
+                    'id' => 3019,
+                    'region_code' => 'region.100213',
+                    'region_name' => 'Saint Barthelemy',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            265 =>
+                array (
+                    'id' => 3020,
+                    'region_code' => 'region.100215',
+                    'region_name' => 'Miami - Fort Lauderdale',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            266 =>
+                array (
+                    'id' => 3021,
+                    'region_code' => 'region.100216',
+                    'region_name' => 'Westküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            267 =>
+                array (
+                    'id' => 3022,
+                    'region_code' => 'region.100218',
+                    'region_name' => 'Mexiko',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            268 =>
+                array (
+                    'id' => 3023,
+                    'region_code' => 'region.100219',
+                    'region_name' => 'Chiemsee & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            269 =>
+                array (
+                    'id' => 3024,
+                    'region_code' => 'region.100220',
+                    'region_name' => 'Thailand',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            270 =>
+                array (
+                    'id' => 3030,
+                    'region_code' => 'region.100238',
+                    'region_name' => 'weitere Angebote Spanisches Festland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            271 =>
+                array (
+                    'id' => 3031,
+                    'region_code' => 'region.100239,region.100251',
+                    'region_name' => 'weitere Angebote Mexiko',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            272 =>
+                array (
+                    'id' => 3038,
+                    'region_code' => 'region.100245,region.1002',
+                    'region_name' => 'Orlando & Ostküste',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            273 =>
+                array (
+                    'id' => 3039,
+                    'region_code' => 'region.100246',
+                    'region_name' => 'Kultur Reisen Ägypten',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            274 =>
+                array (
+                    'id' => 3040,
+                    'region_code' => 'region.100246',
+                    'region_name' => 'Rundreise Kairo & Baden',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            275 =>
+                array (
+                    'id' => 3046,
+                    'region_code' => 'region.100253',
+                    'region_name' => 'Disneyland Paris & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            276 =>
+                array (
+                    'id' => 3048,
+                    'region_code' => 'region.100259',
+                    'region_name' => 'New Jersey',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            277 =>
+                array (
+                    'id' => 3049,
+                    'region_code' => 'region.100259',
+                    'region_name' => 'New York',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            278 =>
+                array (
+                    'id' => 3050,
+                    'region_code' => 'region.100260',
+                    'region_name' => 'V.A. Emirate - Ajman',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            279 =>
+                array (
+                    'id' => 3051,
+                    'region_code' => 'region.100260',
+                    'region_name' => 'V.A. Emirate - Sharjah',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            280 =>
+                array (
+                    'id' => 3059,
+                    'region_code' => 'region.100290',
+                    'region_name' => 'Tschechische Republik - Böhmen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            281 =>
+                array (
+                    'id' => 3060,
+                    'region_code' => 'region.100291',
+                    'region_name' => 'Tschechische Republik - Altvatergebirge',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            282 =>
+                array (
+                    'id' => 3061,
+                    'region_code' => 'region.100292',
+                    'region_name' => 'Tschechische Republik - Erzgebirge',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            283 =>
+                array (
+                    'id' => 3062,
+                    'region_code' => 'region.100293',
+                    'region_name' => 'Tschechische Republik - Isergebirge',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            284 =>
+                array (
+                    'id' => 3067,
+                    'region_code' => 'region.100300',
+                    'region_name' => 'weitere Angebote Griechenland Festland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            285 =>
+                array (
+                    'id' => 3075,
+                    'region_code' => 'region.100315,region.100224',
+                    'region_name' => 'weitere Angebote Tunesien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            286 =>
+                array (
+                    'id' => 3082,
+                    'region_code' => 'region.100331',
+                    'region_name' => 'weiter Angebote Österreich',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            287 =>
+                array (
+                    'id' => 3083,
+                    'region_code' => 'region.100340,region.581',
+                    'region_name' => 'Libyen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            288 =>
+                array (
+                    'id' => 3084,
+                    'region_code' => 'region.100341',
+                    'region_name' => 'spezielle Hotelangebote',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            289 =>
+                array (
+                    'id' => 3088,
+                    'region_code' => 'region.100354,region.746',
+                    'region_name' => 'Mauritius',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            290 =>
+                array (
+                    'id' => 3090,
+                    'region_code' => 'region.100359,region.1004',
+                    'region_name' => 'weitere Angebote Bulgarien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            291 =>
+                array (
+                    'id' => 3094,
+                    'region_code' => 'region.100388',
+                    'region_name' => 'Marokko',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            292 =>
+                array (
+                    'id' => 3095,
+                    'region_code' => 'region.100390',
+                    'region_name' => 'Kiribati',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            293 =>
+                array (
+                    'id' => 3096,
+                    'region_code' => 'region.100390',
+                    'region_name' => 'Nauru',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            294 =>
+                array (
+                    'id' => 3097,
+                    'region_code' => 'region.100390',
+                    'region_name' => 'Niue',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            295 =>
+                array (
+                    'id' => 3104,
+                    'region_code' => 'region.100406,region.1003',
+                    'region_name' => 'weiter Angebote Schweiz',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            296 =>
+                array (
+                    'id' => 3106,
+                    'region_code' => 'region.100002,region.745,region.56,region.100043',
+                    'region_name' => 'Griechenland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            297 =>
+                array (
+                    'id' => 3107,
+                    'region_code' => 'region.100006,region.100005,region.100003,region.100004',
+                    'region_name' => 'Deutschland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            298 =>
+                array (
+                    'id' => 3108,
+                    'region_code' => 'region.100010,region.100114,region.100404,region.100255,region.100111,region.100113,region.100112',
+                    'region_name' => 'England',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            299 =>
+                array (
+                    'id' => 3109,
+                    'region_code' => 'region.100047,region.100048,region.652,region.326',
+                    'region_name' => 'Lissabon - Setubal & Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            300 =>
+                array (
+                    'id' => 3110,
+                    'region_code' => 'region.100068,region.615,region.100219',
+                    'region_name' => 'Bayern',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            301 =>
+                array (
+                    'id' => 3111,
+                    'region_code' => 'region.100070,region.615,region.100219',
+                    'region_name' => 'Oberbayern',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            302 =>
+                array (
+                    'id' => 3112,
+                    'region_code' => 'region.100077,region.100066,region.624',
+                    'region_name' => 'Niedersachsen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            303 =>
+                array (
+                    'id' => 3113,
+                    'region_code' => 'region.100082,region.619,region.100085,region.100084',
+                    'region_name' => 'Deutsche Städte',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            304 =>
+                array (
+                    'id' => 3115,
+                    'region_code' => 'region.100087,region.660,region.846,region.100107,region.100108,region.100169,region.687,region.100338,region.840,region.847,region.100109,region.848,region.695',
+                    'region_name' => 'Dänemark',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            305 =>
+                array (
+                    'id' => 3116,
+                    'region_code' => 'region.100101,region.100102,region.100373,region.100106,region.100288,region.100104,region.100103,region.100105,region.893,region.202',
+                    'region_name' => 'Niederlande',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            306 =>
+                array (
+                    'id' => 3117,
+                    'region_code' => 'region.100115,region.100256,region.204,region.1050',
+                    'region_name' => 'Irland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            307 =>
+                array (
+                    'id' => 3118,
+                    'region_code' => 'region.100121,region.761,region.100120,region.760,region.100119,region.758,region.100117,region.100118',
+                    'region_name' => 'Finnland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            308 =>
+                array (
+                    'id' => 3119,
+                    'region_code' => 'region.100129,region.100126,region.100123,region.100372,region.100127,region.774,region.100298,region.100122,region.100125,region.100124,region.100128,region.773',
+                    'region_name' => 'Schweden',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            309 =>
+                array (
+                    'id' => 3120,
+                    'region_code' => 'region.100134,region.100284,region.100132,region.790,region.100130,region.100133,region.100403,region.789,region.100131',
+                    'region_name' => 'Norwegen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            310 =>
+                array (
+                    'id' => 3121,
+                    'region_code' => 'region.100136,region.100386,region.1113,region.657,region.114',
+                    'region_name' => 'Rumänien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            311 =>
+                array (
+                    'id' => 3122,
+                    'region_code' => 'region.100150,region.100283,region.100398',
+                    'region_name' => 'weitere Angebote Kanada',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            312 =>
+                array (
+                    'id' => 3123,
+                    'region_code' => 'region.100158,region.100159,region.100396,region.100157,region.16',
+                    'region_name' => 'Costa Rica',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            313 =>
+                array (
+                    'id' => 3124,
+                    'region_code' => 'region.100185,region.100186,region.100330,region.100184,region.100183,region.348',
+                    'region_name' => 'Japan',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            314 =>
+                array (
+                    'id' => 3125,
+                    'region_code' => 'region.100191,region.100189,region.100394,region.100188,region.100190,region.74',
+                    'region_name' => 'Israel',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            315 =>
+                array (
+                    'id' => 3126,
+                    'region_code' => 'region.100192,region.100193,region.100343,region.100194,region.87',
+                    'region_name' => 'Jordanien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            316 =>
+                array (
+                    'id' => 3127,
+                    'region_code' => 'region.100217,region.1026,region.100167',
+                    'region_name' => 'Cancun - Riviera Maya - Yucatan',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            317 =>
+                array (
+                    'id' => 3128,
+                    'region_code' => 'region.100217,region.1026,region.100167',
+                    'region_name' => 'Golf von Mexiko',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            318 =>
+                array (
+                    'id' => 3129,
+                    'region_code' => 'region.100242,region.1151,region.1152,region.100',
+                    'region_name' => 'Malediven',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            319 =>
+                array (
+                    'id' => 3130,
+                    'region_code' => 'region.100258,region.100304,region.100280,region.100245,region.100215,region.100313,region.340,region.100216',
+                    'region_name' => 'USA - Florida',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            320 =>
+                array (
+                    'id' => 3131,
+                    'region_code' => 'region.100258,region.100304,region.100280,region.100313,region.340',
+                    'region_name' => 'Florida',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            321 =>
+                array (
+                    'id' => 3133,
+                    'region_code' => 'region.100267,region.100272,region.100274,region.100277',
+                    'region_name' => 'Roulettes',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            322 =>
+                array (
+                    'id' => 3134,
+                    'region_code' => 'region.100271,region.913,region.100374,region.585',
+                    'region_name' => 'Ukraine',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            323 =>
+                array (
+                    'id' => 3135,
+                    'region_code' => 'region.100291,region.100290,region.100292,region.100269,region.100293,region.100141,region.100328,region.232',
+                    'region_name' => 'Tschechische Republik',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            324 =>
+                array (
+                    'id' => 3140,
+                    'region_code' => 'region.100328,region.100374,region.100397,region.100386,region.100254,region.100300,region.100348,region.100255,region.100256,region.100323,region.100312,region.100354,region.100405,region.100257,region.100299,region.100306,region.100398,region.100356,reg',
+                    'region_name' => 'Rund & Kombireisen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            325 =>
+                array (
+                    'id' => 3144,
+                    'region_code' => 'region.100350,region.100334,region.100254',
+                    'region_name' => 'weitere Angebote Frankreich',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            326 =>
+                array (
+                    'id' => 3145,
+                    'region_code' => 'region.100352,region.100181,region.100308,region.100182,region.1130',
+                    'region_name' => 'Neuseeland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            327 =>
+                array (
+                    'id' => 3146,
+                    'region_code' => 'region.100352,region.100308,region.1130',
+                    'region_name' => 'weitere Angebote Neuseeland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            328 =>
+                array (
+                    'id' => 3147,
+                    'region_code' => 'region.100357,region.100200,region.100317,region.318,region.100202',
+                    'region_name' => 'Namibia',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            329 =>
+                array (
+                    'id' => 3148,
+                    'region_code' => 'region.100395,region.335,region.806,region.100155,region.100154',
+                    'region_name' => 'Panama',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            330 =>
+                array (
+                    'id' => 3149,
+                    'region_code' => 'region.100408,region.100411,region.100409,region.100410,region.100369,region.100361,region.100365,region.100370,region.100363,region.100367,region.100368,region.100364,region.100362,region.100307,region.100325',
+                    'region_name' => 'Deutschland Specials',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            331 =>
+                array (
+                    'id' => 3150,
+                    'region_code' => 'region.1034,region.1040,region.81',
+                    'region_name' => 'Kalabrien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            332 =>
+                array (
+                    'id' => 3151,
+                    'region_code' => 'region.1059,region.1062,region.1061',
+                    'region_name' => 'St.Helena - Ascension - Tristan da Cunha',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            333 =>
+                array (
+                    'id' => 3152,
+                    'region_code' => 'region.1065,region.100377,region.1173,region.1102,region.454',
+                    'region_name' => 'Argentinien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            334 =>
+                array (
+                    'id' => 3153,
+                    'region_code' => 'region.1080,region.1086,region.1079,region.995,region.1081,region.1095,region.1087,region.100344,region.910,region.912,region.1085,region.1078,region.72',
+                    'region_name' => 'Indonesien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            335 =>
+                array (
+                    'id' => 3154,
+                    'region_code' => 'region.1164,region.100333,region.12',
+                    'region_name' => 'Brasilien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            336 =>
+                array (
+                    'id' => 3155,
+                    'region_code' => 'region.1180,region.100289,region.1168,region.1169,region.100199,region.100263,region.100198,region.1179,region.1170,region.1171,region.179,region.1172',
+                    'region_name' => 'China',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            337 =>
+                array (
+                    'id' => 3156,
+                    'region_code' => 'region.119,region.100000,region.851',
+                    'region_name' => 'Spanien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            338 =>
+                array (
+                    'id' => 3157,
+                    'region_code' => 'region.1192,region.100143,region.1188,region.1191,region.1190,region.222,region.1189,region.1187',
+                    'region_name' => 'Russische Föderation',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            339 =>
+                array (
+                    'id' => 3158,
+                    'region_code' => 'region.296,region.100257,region.100392',
+                    'region_name' => 'Island',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            340 =>
+                array (
+                    'id' => 3159,
+                    'region_code' => 'region.314,region.100208,region.100207,region.100206',
+                    'region_name' => 'Fidschi',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            341 =>
+                array (
+                    'id' => 3160,
+                    'region_code' => 'region.315,region.588,region.100210',
+                    'region_name' => 'Französisch Polynesien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            342 =>
+                array (
+                    'id' => 3161,
+                    'region_code' => 'region.411,region.100301,region.100324',
+                    'region_name' => 'Alaska',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            343 =>
+                array (
+                    'id' => 3162,
+                    'region_code' => 'region.434,region.100366,region.100029',
+                    'region_name' => 'Lombardei - Aostatal - Piemont',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            344 =>
+                array (
+                    'id' => 3163,
+                    'region_code' => 'region.452,region.100378,region.100382',
+                    'region_name' => 'Chile',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            345 =>
+                array (
+                    'id' => 3164,
+                    'region_code' => 'region.604,region.160,region.100235,region.100279',
+                    'region_name' => 'Dubai',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            346 =>
+                array (
+                    'id' => 3165,
+                    'region_code' => 'region.607,region.100260,region.608,region.609,region.160,region.100235,region.100279,region.100260,region.604',
+                    'region_name' => 'V.A. Emirate',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            347 =>
+                array (
+                    'id' => 3166,
+                    'region_code' => 'region.613,region.100376,region.100351',
+                    'region_name' => 'weitere Angebote Australien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            348 =>
+                array (
+                    'id' => 3167,
+                    'region_code' => 'region.638,region.100305,region.640',
+                    'region_name' => 'Kenia - Inland',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            349 =>
+                array (
+                    'id' => 3168,
+                    'region_code' => 'region.638,region.100305,region.640,region.269',
+                    'region_name' => 'Kenia',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            350 =>
+                array (
+                    'id' => 3169,
+                    'region_code' => 'region.641,region.643,region.100379',
+                    'region_name' => 'Tansania',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            351 =>
+                array (
+                    'id' => 3170,
+                    'region_code' => 'region.647,region.100197,region.100196,region.100311,region.644,region.645,region.100302,region.1100,region.297,region.646',
+                    'region_name' => 'Südafrika',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            352 =>
+                array (
+                    'id' => 3171,
+                    'region_code' => 'region.659,region.100226,region.698,region.821,region.946,region.1108,region.1109,region.100336,region.90',
+                    'region_name' => 'Kroatien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            353 =>
+                array (
+                    'id' => 3172,
+                    'region_code' => 'region.662,region.675,region.667,region.669,region.668,region.100399,region.671,region.672,region.677',
+                    'region_name' => 'Malaysia',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            354 =>
+                array (
+                    'id' => 3173,
+                    'region_code' => 'region.676,region.18,region.19,region.20',
+                    'region_name' => 'Dominikanische Republik',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            355 =>
+                array (
+                    'id' => 3174,
+                    'region_code' => 'region.698,region.821,region.946',
+                    'region_name' => 'Krk & Norddalmatische Inseln',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            356 =>
+                array (
+                    'id' => 3175,
+                    'region_code' => 'region.722,region.837,region.481',
+                    'region_name' => 'Slowakei',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            357 =>
+                array (
+                    'id' => 3176,
+                    'region_code' => 'region.752,region.940,region.574',
+                    'region_name' => 'Südostfrankreich',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            358 =>
+                array (
+                    'id' => 3177,
+                    'region_code' => 'region.812,region.100332,region.161',
+                    'region_name' => 'Venezuela',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            359 =>
+                array (
+                    'id' => 3178,
+                    'region_code' => 'region.86,region.100241,region.100347',
+                    'region_name' => 'Jamaika',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            360 =>
+                array (
+                    'id' => 3179,
+                    'region_code' => 'region.875,region.100174,region.1077',
+                    'region_name' => 'Bangladesh',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            361 =>
+                array (
+                    'id' => 3180,
+                    'region_code' => 'region.92,region.1126,region.1129,region.1128,region.1127,region.100211',
+                    'region_name' => 'Kuba',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            362 =>
+                array (
+                    'id' => 3181,
+                    'region_code' => 'region.991,region.992,region.882,region.986,region.100323,region.973,region.317',
+                    'region_name' => 'Indien',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            363 =>
+                array (
+                    'id' => 3182,
+                    'region_code' => 'region.100509',
+                    'region_name' => 'China - Hong Kong & Macau',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            364 =>
+                array (
+                    'id' => 3183,
+                    'region_code' => 'region.100014',
+                    'region_name' => 'Naher Osten - Vorderer Orient',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            365 =>
+                array (
+                    'id' => 3184,
+                    'region_code' => 'region.100069',
+                    'region_name' => 'Frankenwald & Fichtelgebirge',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            366 =>
+                array (
+                    'id' => 3185,
+                    'region_code' => 'region.637',
+                    'region_name' => 'Zypern Nord',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            367 =>
+                array (
+                    'id' => 3186,
+                    'region_code' => 'region.149',
+                    'region_name' => 'Side & Alanya',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            368 =>
+                array (
+                    'id' => 3187,
+                    'region_code' => 'region.149',
+                    'region_name' => 'Antalya & Belek',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            369 =>
+                array (
+                    'id' => 3188,
+                    'region_code' => 'region.100051',
+                    'region_name' => 'Atlantikküste: Agadir - Safi - Tiznit',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            370 =>
+                array (
+                    'id' => 3189,
+                    'region_code' => 'region.100085',
+                    'region_name' => 'München',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            371 =>
+                array (
+                    'id' => 3190,
+                    'region_code' => 'region.144',
+                    'region_name' => 'Ayvalik & Cesme & Izmir',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            372 =>
+                array (
+                    'id' => 3191,
+                    'region_code' => 'region.100084',
+                    'region_name' => 'Düsseldorf und Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            373 =>
+                array (
+                    'id' => 3193,
+                    'region_code' => 'region.100514',
+                    'region_name' => 'St. Martin',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            374 =>
+                array (
+                    'id' => 3194,
+                    'region_code' => 'region.88',
+                    'region_name' => 'Kap Verden weitere Angebote',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            375 =>
+                array (
+                    'id' => 3195,
+                    'region_code' => 'region.316',
+                    'region_name' => 'Philippinen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            376 =>
+                array (
+                    'id' => 3196,
+                    'region_code' => 'region.574',
+                    'region_name' => 'Franz. Alpen',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            377 =>
+                array (
+                    'id' => 3197,
+                    'region_code' => 'region.491',
+                    'region_name' => 'Vorarlberg',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            378 =>
+                array (
+                    'id' => 3198,
+                    'region_code' => 'region.100447',
+                    'region_name' => 'Sylt',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            379 =>
+                array (
+                    'id' => 3199,
+                    'region_code' => 'region.494',
+                    'region_name' => 'Steiermark',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            380 =>
+                array (
+                    'id' => 3200,
+                    'region_code' => 'region.250',
+                    'region_name' => 'Zentralschweiz',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            381 =>
+                array (
+                    'id' => 3201,
+                    'region_code' => 'region.100072',
+                    'region_name' => 'Bodensee und Umgebung',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+            382 =>
+                array (
+                    'id' => 3202,
+                    'region_code' => 'region.100068',
+                    'region_name' => 'Bayerischer Wald und Oberpfälzer Wald',
+                    'country_code' => '',
+                    'type' => 1,
+                ),
+        ));
     }
 }

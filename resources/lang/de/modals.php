@@ -99,4 +99,7 @@ return [
     'rating'                        => 'Bewertung',
     'whitelabels_distribution'      => 'Distribution',
     'whitelabels_image'             => 'Hintergrundbild',
+    'region_code'                   => 'Postleitzahl',
+    'region_name'                   => 'Name der Region',
+    'country_code'                  => 'Landesvorwahl',
 ];

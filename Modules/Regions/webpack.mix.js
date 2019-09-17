@@ -20,7 +20,7 @@ mix.webpackConfig({
   },
 });
 
-mix.js(__dirname + '/Resources/assets/js/modules/provider/groups/groups.js', 'js/modules/admin/groups/groups.js');
+mix.js(__dirname + '/Resources/assets/js/modules/provider/regions/regions.js', 'js/modules/admin/regions/regions.js');
 
 if (mix.inProduction()) {
   mix.version();

@@ -1,7 +1,7 @@
 import * as types from '../../../../vuex/mutation-types'
 
-export const addGroup = function (store, group) {
-  store.commit(types.ADD_GROUP, group)
+export const addRegion = function (store, region) {
+  store.commit(types.ADD_REGION, region)
 }
 
 export const addCheckedId = function (store, id) {

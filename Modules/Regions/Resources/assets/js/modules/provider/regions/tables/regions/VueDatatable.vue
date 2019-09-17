@@ -30,7 +30,7 @@ import CssConfig from './CssConfig.js'
     },
     data () {
       return {
-        apiUrl: window.laroute.route('admin.groups.view'),
+        apiUrl: window.laroute.route('admin.regions.view'),
         fields: config.fields,
         sortOrder: config.sortOrder,
         appendParams: config.moreParams,
@@ -216,10 +216,10 @@ import CssConfig from './CssConfig.js'
         this.addChecked(data)
       },
       onLoading () {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
+        this.$store.dispatch('block', {element: 'regionsComponent', load: true})
       },
       onLoaded () {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+        this.$store.dispatch('block', {element: 'regionsComponent', load: false})
       },
       boardsCallBack (boards) {
         let data = []
@@ -282,32 +282,32 @@ import CssConfig from './CssConfig.js'
         })
       },
       onDelete (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.delete(window.laroute.route('admin.groups.destroy', {id: id}))
+        this.$store.dispatch('block', {element: 'regionsComponent', load: true})
+        this.$http.delete(window.laroute.route('admin.regions.destroy', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'regionsComponent', load: false})
           })
       },
       onForceDelete (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
+        this.$store.dispatch('block', {element: 'regionsComponent', load: true})
         // eslint-disable-next-line
-        this.$http.delete(laroute.route('admin.groups.forceDelete', {id: id}))
+        this.$http.delete(laroute.route('admin.regions.forceDelete', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'regionsComponent', load: false})
           })
       },
       onRestore (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
+        this.$store.dispatch('block', {element: 'regionsComponent', load: true})
         // eslint-disable-next-line
-        this.$http.put(window.laroute.route('admin.groups.restore', {id: id}))
+        this.$http.put(window.laroute.route('admin.regions.restore', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'regionsComponent', load: false})
           })
       },
       onDeleteSuccess (response) {

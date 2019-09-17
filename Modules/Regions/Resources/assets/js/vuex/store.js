@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as actions from './actions'
 import * as getters from './getters'
-import groups from '../modules/provider/groups/vuex/store'
+import regions from '../modules/provider/regions/vuex/store'
 
 Vue.use(Vuex)
 
@@ -28,7 +28,7 @@ export default new Vuex.Store({
   state,
   mutations,
   modules: {
-    groups
+    regions
   },
   strict: debug
 })

@@ -92,4 +92,7 @@ return [
     'booking_status'                => 'Booking status',
     'empty_table'                   => 'No data accessable in the table',
     'locale'                        => 'Locale',
+    'region_code'                   => 'Region code',
+    'region_name'                   => 'Region Name',
+    'country_code'                  => 'Country Code',
 ];

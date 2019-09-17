@@ -33,27 +33,27 @@ Vue.filter('str_limit', function (string, value) {
   return string.length <= parseInt(value) ? string : string.substring(0, value) + ' ...'
 })
 
-let $groupsComponent = document.querySelector('#groupsComponent')
+let $regionsComponent = document.querySelector('#regionsComponent')
 
-if ($groupsComponent) {
+if ($regionsComponent) {
   const router = new VueRouter({
     routes: [{
       path: '/',
       name: 'root',
-      component: require('./components/GroupsComponent.vue'),
+      component: require('./components/RegionsComponent.vue'),
       children: [{
         path: '/edit/:id(\\d+)',
         name: 'root.edit',
-        component: require('./components/EditGroupComponent.vue')
+        component: require('./components/EditRegionComponent.vue')
       }, {
-        path: '/create/:id(\\d+)/:whitelabel_id(\\d+)',
+        path: '/create/:id(\\d+)',
         name: 'root.create',
-        component: require('./components/EditGroupComponent.vue')
+        component: require('./components/EditRegionComponent.vue')
       }]
     }]
   })
   new Vue({
-    el: '#groupsComponent',
+    el: '#regionsComponent',
     router,
     store,
     components: { },
