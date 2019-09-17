@@ -2,11 +2,8 @@
 
 namespace Modules\Regions\Http\Controllers;
 
-use App\Repositories\Criteria\ByWhitelabel;
-use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
-use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WithTrashed;
 use App\Services\Flag\Src\Flag;
@@ -16,7 +13,6 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Regions\Http\Requests\StoreRegionRequest;
@@ -65,8 +61,10 @@ class RegionsController extends Controller
         $this->activities = $activities;
         $this->whitelabels = $whitelabels;
     }
+
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -116,11 +114,11 @@ class RegionsController extends Controller
     {
         try {
             $result['region'] = [
-                'id' => 0,
-                'region_code' => '',
-                'region_name' => '',
+                'id'           => 0,
+                'region_code'  => '',
+                'region_name'  => '',
                 'country_code' => '',
-                'type' => 0,
+                'type'         => 0,
             ];
 
             $result['success'] = true;
@@ -163,6 +161,7 @@ class RegionsController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -183,11 +182,11 @@ class RegionsController extends Controller
             $region = $this->regions->find($id);
 
             $result['region'] = [
-                'id' => $region->id,
-                'region_code' => $region->region_code,
-                'region_name' => $region->region_name,
+                'id'           => $region->id,
+                'region_code'  => $region->region_code,
+                'region_name'  => $region->region_name,
                 'country_code' => $region->country_code,
-                'type' => $region->type,
+                'type'         => $region->type,
             ];
 
             $result['region']['logs'] = $this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE) ? $this->activities->byModel($region) : [];

@@ -14,4 +14,3 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'na
     Route::put('regions/{id}/restore', 'RegionsController@restore')->name('admin.regions.restore')->where('id', '[0-9]+');
     Route::get('regions/export', 'RegionsController@export')->name('admin.regions.export');
 });
-

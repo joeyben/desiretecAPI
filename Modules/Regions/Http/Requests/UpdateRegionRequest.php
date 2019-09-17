@@ -14,10 +14,10 @@ class UpdateRegionRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'            => 'required|int',
-            'type'            => 'required|int',
-            'region_code'        => 'required|string',
-            'region_name'        => 'required|string',
+            'id'                  => 'required|int',
+            'type'                => 'required|int',
+            'region_code'         => 'required|string',
+            'region_name'         => 'required|string',
             'country_code'        => 'required|string',
         ];
     }

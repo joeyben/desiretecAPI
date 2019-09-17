@@ -14,9 +14,9 @@ class StoreRegionRequest extends FormRequest
     public function rules()
     {
         return [
-            'type'            => 'required|int',
-            'region_code'        => 'required|string',
-            'region_name'        => 'required|string',
+            'type'                => 'required|int',
+            'region_code'         => 'required|string',
+            'region_name'         => 'required|string',
             'country_code'        => 'required|string',
         ];
     }
