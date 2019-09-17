@@ -93,4 +93,7 @@ return [
     'empty_table'                   => 'Keine Daten in der Tabelle verfügbar',
     'locale'                        => 'Lokal',
     'key'                           => 'Key',
+    'region_code'                   => 'Postleitzahl',
+    'region_name'                   => 'Name der Region',
+    'country_code'                  => 'Landesvorwahl',
 ];

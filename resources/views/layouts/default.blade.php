@@ -269,6 +269,14 @@
                             </a>
                         </li>
                     @endif
+                    @if($module->has('Rules')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.regions') }}" class="nav-link">
+                                <i class="icon-cube4"></i>
+                                <span>{{ __('menus.regions_management') }}</span>
+                            </a>
+                        </li>
+                    @endif
                     @if($module->has('Autooffers')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('autooffer.setting') }}" class="nav-link">
