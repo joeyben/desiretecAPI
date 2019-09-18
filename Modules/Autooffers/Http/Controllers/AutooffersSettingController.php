@@ -90,6 +90,9 @@ class AutooffersSettingController extends Controller
                     'display_offer'  => 3,
                     'recommendation' => 50,
                     'rating'         => 5,
+                    'price'          => 'asc',
+                    'price_loop'     => 20,
+                    'hotel_loop'     => 3,
                     'status'         => false,
                     'user_id'        => $this->auth->guard('web')->user()->id,
                     'whitelabel_id'  => $whitelabel->id,
@@ -120,7 +123,7 @@ class AutooffersSettingController extends Controller
         try {
             $result['autooffer'] = $this->autooffers->create(
                 array_merge(
-                    $request->only('display_offer', 'recommendation', 'rating', 'status', 'whitelabel_id'),
+                    $request->only('display_offer', 'recommendation', 'rating', 'price', 'price_loop', 'hotel_loop', 'status', 'whitelabel_id'),
                     ['user_id' => $this->auth->guard('web')->user()->id]
                 )
             );
@@ -171,7 +174,7 @@ class AutooffersSettingController extends Controller
             $result['autooffer'] = $this->autooffers->update(
                 $id,
                 array_merge(
-                    $request->only('display_offer', 'recommendation', 'rating', 'status'),
+                    $request->only('display_offer', 'recommendation', 'rating', 'price', 'price_loop', 'hotel_loop', 'status'),
                     ['user_id' => $this->auth->guard('web')->user()->id]
                 )
             );
