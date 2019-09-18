@@ -61,6 +61,30 @@
                     </div>
 
                     <div class="form-group row">
+                        <label class="col-form-label col-lg-2">{{ trans('modals.price') }}</label>
+                        <div class="col-lg-10">
+                            <el-radio-group :value="autooffer.price" name="type" @input="updateAutoofferPrice" size="medium" style="width: 100%;">
+                                <el-radio-button label="asc">{{ trans('modals.asc') }}</el-radio-button>
+                                <el-radio-button label="desc">{{ trans('modals.desc') }}</el-radio-button>
+                            </el-radio-group>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">{{ trans('modals.price_loop') }}</label>
+                        <div class="col-lg-10">
+                            <el-slider :value="autooffer.price_loop"  :max="100" :step="1" show-input @input="updateAutoofferPriceLoop"></el-slider>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">{{ trans('modals.hotel_loop') }}</label>
+                        <div class="col-lg-10">
+                            <el-slider :value="autooffer.hotel_loop"  :max="5" :step="1" show-stops show-input @input="updateAutoofferHotelLoop"></el-slider>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label class="col-form-label col-lg-2">{{ trans('modals.status') }}</label>
                         <div class="col-lg-10">
                             <el-switch
@@ -124,6 +148,15 @@
       },
       updateAutoofferRating (value) {
         this.$store.commit('updateAutooffer', {name: 'rating', value: value})
+      },
+      updateAutoofferPrice (value) {
+        this.$store.commit('updateAutooffer', {name: 'price', value: value})
+      },
+      updateAutoofferPriceLoop (value) {
+        this.$store.commit('updateAutooffer', {name: 'price_loop', value: value})
+      },
+      updateAutoofferHotelLoop (value) {
+        this.$store.commit('updateAutooffer', {name: 'hotel_loop', value: value})
       },
       updateAutoofferRecommendation (value) {
         this.$store.commit('updateAutooffer', {name: 'recommendation', value: value})
