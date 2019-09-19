@@ -32,7 +32,9 @@ RUN cd /myapp && yarn install --ignore-engines && npm i && npm run production
 RUN cd /myapp/Modules/Autooffers && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Trendtours && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Novasol && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Master && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/SarahsLuxusreisen && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Strand && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Adventure && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Reiseexperten && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Lastminute && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Overland && yarn install --ignore-engines && npm run production

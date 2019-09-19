@@ -26321,7 +26321,7 @@ var _CustomUsers2 = _interopRequireDefault(_CustomUsers);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  perPage: 10,
+  perPage: 100,
   fields: _columns2.default,
   sortOrder: _sort2.default,
   moreParams: {},

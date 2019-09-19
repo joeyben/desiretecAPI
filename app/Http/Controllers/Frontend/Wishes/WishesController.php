@@ -335,7 +335,6 @@ class WishesController extends Controller
                 $description_notset = !$wish->description || $wish->description === "";
                 $destination_exists = empty($destinations) || in_array($wish->destination, $destinations);
 
-                //var_dump($destination_exists );exit();
                 if ($budget_lower && $description_notset && $destination_exists) {
                     $offer = 1;
                 } else {
