@@ -131,7 +131,9 @@
                         @foreach($offers as $offer)
                             <li class="offer box-shadow">
                             <div class="left-side">
-                                <div class="label">Unser Tipp</div>
+                                @if ($count === 1)
+                                    <div class="label">Unser Tipp</div>
+                                @endif
                                 <div class="slick-slider">
                                     <!-- TODO: Add images and style them -->
                                     @if (is_array($offer['hotel_data']['data']['Bildfile']))
@@ -183,7 +185,7 @@
                                     </ul>
 
                                     <div class="travel-info">
-                                        <h4>{{ $offer['data']['travelDate']['duration'] }} Tage, {{ $offer['data']['serviceOffer']['description'] }}</h4>
+                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['serviceOffer']['description'] }}">{{ $offer['data']['travelDate']['duration'] }} Tage, {{ str_limit($offer['data']['serviceOffer']['description'], 20, "...") }}</h4>
                                     </div>
                                 </div>
 
@@ -219,6 +221,10 @@
 
 
     <script type="application/javascript">
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
         function scrollToAnchor(id) {
             $('html, body').animate({

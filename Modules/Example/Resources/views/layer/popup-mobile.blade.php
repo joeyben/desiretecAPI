@@ -123,9 +123,35 @@
                 </div>
             </div>
 
-
+            <div class="kwp-col-4 rangeslider-wrapper">
+                <div class="kwp-form-group ">
+                    {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
+                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.budget'), 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
+                    <i class="fal fa-euro-sign"></i>
+                    <span class="text">&nbsp;</span>
+                    <input type="range" min="100" max="10000" value="50"  id="budgetRange">
+                    @if ($errors->any() && $errors->get('budget'))
+                        @foreach ($errors->get('budget') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
         </div>
-
+        <div class="kwp-row">
+            <div class="kwp-col-4 destination">
+                <div class="kwp-form-group ">
+                    {{ Form::label('catering', trans('layer.general.catering'), ['class' => 'control-label required']) }}
+                    {{ Form::select('catering', $catering_arr, '',['class' => 'selectpicker']) }}
+                    <i class="tui-icon--chevron-down"></i>
+                    @if ($errors->any() && $errors->get('catering'))
+                        @foreach ($errors->get('catering') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
         <div class="kwp-row">
             <div class="kwp-col-time">
                 <div class="kwp-row">
@@ -172,6 +198,34 @@
 
     <div class="kwp-footer">
         <script>
+
+            $('#budgetRange').rangeslider({
+                // Callback function
+                polyfill: false,
+                onInit: function() {
+                    $('.rangeslider__handle').on('mousedown touchstart mousemove touchmove', function(e) {
+                        e.preventDefault();
+                    })
+                },
+                fillClass: 'rangeslider__fill',
+                onSlide: function(position, value) {
+                    if($(".rangeslider-wrapper .haserrors").length)
+                        $(".rangeslider-wrapper .haserrors").removeClass('haserrors');
+
+                    if(value === 10000){
+                        $(".rangeslider-wrapper .text").text("beliebig");
+                        $("#budget").val("beliebig");
+                    }else if(value === 100){
+                        $(".rangeslider-wrapper .text").html("&nbsp;");
+                        $("#budget").val("");
+                    }else{
+                        $(".rangeslider-wrapper .text").text("bis "+value+" €");
+                        $("#budget").val(""+value);
+                    }
+                    check_button();
+                },
+            });
+
             $('.kwp-btn-expand').click(function(e) {
                 e.preventDefault();
                 $(this).toggleClass('kwp-open');
