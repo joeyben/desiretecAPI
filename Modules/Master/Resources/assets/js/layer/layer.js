@@ -51,21 +51,21 @@ var exitIntent = window.exitIntent || {};
         };
 
         return '' +
-            '<div class="kwp-header kwp-variant-' + variant + '">' +
-            '<div class="kwp-close-button kwp-close"></div>' +
-            '<div class="kwp-overlay"></div>' +
-            '<div class="kwp-header-content">' +
-            '<h1>' +
-            texts[variant].header + ' <br/>' +
-            '</h1>' +
-            '<p>' +
-            texts[variant].body +
-            '</p>' +
-            '</div>' +
-            '</div>' +
-            '<div class="kwp-body '+variant+'-body">' +
-            '</div><div style="clear:both;"></div>'
-            ;
+          '<div class="kwp-header kwp-variant-' + variant + '">' +
+          '<div class="kwp-close-button kwp-close"></div>' +
+          '<div class="kwp-overlay"></div>' +
+          '<div class="kwp-header-content">' +
+          '<h1>' +
+          texts[variant].header + ' <br/>' +
+          '</h1>' +
+          '<p>' +
+          texts[variant].body +
+          '</p>' +
+          '</div>' +
+          '</div>' +
+          '<div class="kwp-body '+variant+'-body">' +
+          '</div><div style="clear:both;"></div>'
+          ;
     };
 
 
@@ -165,7 +165,17 @@ var exitIntent = window.exitIntent || {};
             }
         },
         getVariant: function () {
-            return 'eil-mobile';
+            if(isMobile()){
+                return 'eil-mobile';
+            }else if(getUrlParams('utm_source') && getUrlParams('utm_source') == 'social'){
+                return this.getRandomElement([
+                    'eil-n1-social'
+                ]);
+            }else{
+                return this.getRandomElement([
+                    'eil-n1',
+                ]);
+            }
         },
         getRandomElement: function (arr) {
             return arr[Math.floor(Math.random() * arr.length)];
@@ -175,7 +185,7 @@ var exitIntent = window.exitIntent || {};
         },
         getTrackingLabel: function (tripData, variant) {
             var destId = null,
-                destName = tripData.destination;
+              destName = tripData.destination;
 
             switch (destName) {
                 case 'Kapverdische Inseln':
@@ -459,8 +469,8 @@ var exitIntent = window.exitIntent || {};
         filterDataDecoders: {
             'catering': function (form, formData) {
                 var lowestBoardWeigth = 100,
-                    lowestBoard = null,
-                    boardTypes = formData.boardTypes
+                  lowestBoard = null,
+                  boardTypes = formData.boardTypes
                 ;
 
                 if (!boardTypes || !boardTypes.length) {
@@ -469,7 +479,7 @@ var exitIntent = window.exitIntent || {};
 
                 for (var i = 0; i < boardTypes.length; ++i) {
                     var board = boardTypes[i],
-                        weight = this.dictionaries.cateringWeight[board]
+                      weight = this.dictionaries.cateringWeight[board]
                     ;
 
                     if (!weight) {
@@ -600,7 +610,7 @@ var exitIntent = window.exitIntent || {};
         },
         getCountryId: function () {
             var destination = this.getScope().filters.state.destination,
-                countryId;
+              countryId;
 
             if (!destination) {
                 return null;
@@ -669,7 +679,7 @@ var exitIntent = window.exitIntent || {};
         },
         getTripData: function () {
             var form = $(this.filterFormSelector),
-                formData = this.getScope().filters.state;
+              formData = this.getScope().filters.state;
 
             return this.decodeFilterData(form, formData);
         },
@@ -693,7 +703,7 @@ var exitIntent = window.exitIntent || {};
         },
         getTrackingLabel: function (tripData, variant) {
             var destId = null,
-                destName = tripData.destination;
+              destName = tripData.destination;
 
             switch (destName) {
                 case 'Kapverdische Inseln':
@@ -1017,7 +1027,7 @@ var exitIntent = window.exitIntent || {};
         },
         getTripData: function () {
             var form = null,
-                formData = null;
+              formData = null;
 
             return this.decodeFilterData(form, formData);
         },
@@ -1070,8 +1080,8 @@ var exitIntent = window.exitIntent || {};
 
     dt.initCallbacks = dt.initCallbacks || [];
     dt.initCallbacks.push(function (popup) {
-			  exitIntent.init();
-			  document.addEventListener('exit-intent', function (e) {
+        exitIntent.init();
+        document.addEventListener('exit-intent', function (e) {
             if(!exitIntent.checkCookie()) {
                 popup.show();
 
@@ -1080,7 +1090,7 @@ var exitIntent = window.exitIntent || {};
                 var exitIntentNumber = exitIntent.cookieManager.get("exit_intent_number") ? Number(exitIntent.cookieManager.get("exit_intent_number")) + 1 : 1;
                 exitIntent.cookieManager.create("exit_intent_number", exitIntentNumber, exitIntent.cookieExp, exitIntent.sessionOnly);
             }
-       }, false);
+        }, false);
     });
 
 
@@ -1093,7 +1103,7 @@ var exitIntent = window.exitIntent || {};
             this.modal.addClass('tmp-hidden');
             if(!formSent) {
                 this.trigger =
-                    $('<span/>', {'class': 'trigger-modal'});
+                  $('<span/>', {'class': 'trigger-modal'});
                 $('body').prepend(this.trigger.fadeIn());
             }
         }else{
@@ -1112,15 +1122,15 @@ var exitIntent = window.exitIntent || {};
     dt.scrollUpDetect = function () {
         var shown = false;
         $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
-            if(direction === 'down' && parseInt(distance) > 50 && !shown){
-                dt.showMobileLayer();
-                shown = true;
-            }else if (direction === 'down' || direction === 'up' && shown && ($("body .hl-sticky").hasClass('is-sticky'))) {
-                $(".dt-modal").css({'top': (document.documentElement.clientHeight - 85) + "px"});
-            } else if(direction === 'down' || direction === 'up' && shown) {
-                $(".dt-modal").css({'top': (document.documentElement.clientHeight - 100) + "px"});
-            }
-        }, allowPageScroll:"vertical"} );
+                if(direction === 'down' && parseInt(distance) > 50 && !shown){
+                    dt.showMobileLayer();
+                    shown = true;
+                }else if (direction === 'down' || direction === 'up' && shown && ($("body .hl-sticky").hasClass('is-sticky'))) {
+                    $(".dt-modal").css({'top': (document.documentElement.clientHeight - 85) + "px"});
+                } else if(direction === 'down' || direction === 'up' && shown) {
+                    $(".dt-modal").css({'top': (document.documentElement.clientHeight - 100) + "px"});
+                }
+            }, allowPageScroll:"vertical"} );
 
 
         $( ".dt-modal" ).swipe( {
@@ -1398,18 +1408,18 @@ var exitIntent = window.exitIntent || {};
 
     function textareaAutosize(){
         $(document)
-            .one('focus.textarea', '.kwp textarea', function(){
-                var savedValue = this.value;
-                this.value = '';
-                this.baseScrollHeight = this.scrollHeight;
-                this.value = savedValue;
-            })
-            .on('input.textarea', '.kwp textarea', function(){
-                var minRows = this.getAttribute('data-min-rows')|0,
-                    rows;
-                this.rows = minRows;
-                rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 16);
-                this.rows = minRows + rows;
-            });
+          .one('focus.textarea', '.kwp textarea', function(){
+              var savedValue = this.value;
+              this.value = '';
+              this.baseScrollHeight = this.scrollHeight;
+              this.value = savedValue;
+          })
+          .on('input.textarea', '.kwp textarea', function(){
+              var minRows = this.getAttribute('data-min-rows')|0,
+                rows;
+              this.rows = minRows;
+              rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 16);
+              this.rows = minRows + rows;
+          });
     }
 })(jQuery);
