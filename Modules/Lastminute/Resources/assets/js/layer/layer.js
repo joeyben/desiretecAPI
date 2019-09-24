@@ -213,7 +213,12 @@ var dt = window.dt || {};
 
                 console.log('duration after', duration);
 
-                return duration;
+                if($.isNumeric){
+                    return duration - 1;
+                }else{
+                    return duration;
+                }
+
             },
             'airport': function (form, formData) {
                 var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
