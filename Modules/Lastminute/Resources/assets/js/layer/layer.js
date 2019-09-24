@@ -213,7 +213,7 @@ var dt = window.dt || {};
 
                 console.log('duration after', duration);
 
-                if($.isNumeric){
+                if($.isNumeric(duration) == true){
                     return duration - 1;
                 }else{
                     return duration;
