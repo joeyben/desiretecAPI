@@ -88,6 +88,7 @@ $master-blue: #70CBF4;
   background: rgba(255, 255, 255, 0.7);
   position: fixed;
   display: block;
+  overflow: scroll;
 
   width: 100%;
   height: 100%;
@@ -1550,7 +1551,7 @@ p.kwp-info {
     .email-col{
       margin: 5px 0;
     }
-  
+
   .rangeslider--horizontal{
     height: 10px;
     .rangeslider__handle{
