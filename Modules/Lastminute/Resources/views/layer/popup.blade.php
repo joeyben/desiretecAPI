@@ -1,5 +1,14 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
+<style type="text/css">
+    @media only screen and (max-width: 600px) {
+        body {
+            background-color: lightblue;
+        }
+    }
+</style>
+
+
 <div class="kwp-middle">
     Wir helfen Ihnen gerne, Ihre persönlichen Traumferien zu finden.<br> Probieren Sie es jetzt aus!
 </div>
@@ -336,9 +345,12 @@
                 },
             });
 
+
+
             $(document).ready(function(){
               var options = $('#duration option' );
               $( options[ 11 ] ).insertAfter( $( options[ 33 ] ) );
+                dt.childrenAges();
 
                 //$('.selectpicker').selectpicker();
 
@@ -346,6 +358,7 @@
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',
                     defaultDate: '01.01.2019',
+                    firstDay: 1,
                     minDate: new Date(),
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
@@ -374,6 +387,7 @@
                     field: document.getElementById('latest_return'),
                     format: 'dd.mm.YYYY',
                     defaultDate: '01.01.2019',
+                    firstDay: 1,
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
                         // but we will just return 'D/M/YYYY' for simplicity
