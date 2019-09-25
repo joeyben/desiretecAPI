@@ -126,7 +126,7 @@
             <div class="kwp-col-4 rangeslider-wrapper">
                     <div class="kwp-form-group ">
                           {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                          {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('reisexperten::layer.placeholder.budget'), 'required' => 'required']) }}
+                          {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('$MODULESMAL$::layer.placeholder.budget'), 'required' => 'required']) }}
                     </div>
                           <span class="text">&nbsp;</span>
                           <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
@@ -135,7 +135,7 @@
             <div class="kwp-col-4 white-col stars">
                     <div class="kwp-form-group">
                              {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
-                             {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('reisexperten::layer.placeholder.category')]) }}
+                             {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('$MODULESMAL$::layer.placeholder.category')]) }}
 
                               <span class="text">ab 0 Sonnen</span>
                               <div class="kwp-star-input">
@@ -164,7 +164,7 @@
 
                     <div class="kwp-col-4 description">
                         {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
-                        {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('reisexperten::layer.placeholder.description')]) }}
+                        {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('$MODULESMAL$::layer.placeholder.description')]) }}
                         <i class="master-icon--calendar-month"></i>
                     </div>
 
