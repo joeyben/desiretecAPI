@@ -8,9 +8,9 @@
     </div>
 @else
     <div class="col-md-12 s2-first">
-        <h4>Dein Reisewunsch</h4>
-        <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
-        <p><b>Deine Nachricht:</b><br>
+        <!--h4>Dein Reisewunsch</h4-->
+        <!--p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p-->
+        <p><b>Ihre Nachricht:</b><br>
             {{ $wish->description }}
         </p>
     </div>
@@ -43,6 +43,10 @@
     <div class="col-md-3">
         <i class="fal fa-users"></i>
         <input class="data-content" value="{{ $wish->adults }}">
+    </div>
+    <div class="col-md-3">
+        <i class="fal fa-user"></i>
+        <input class="data-content" value="{{ $wish->kids }}">
     </div>
     <div class="col-md-3">
         <i class="fal fa-stopwatch"></i>
