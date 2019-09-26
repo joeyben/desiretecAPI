@@ -214,7 +214,7 @@ var dt = window.dt || {};
                 console.log('duration after', duration);
 
                 if($.isNumeric(duration) == true){
-                    console.log('duration is a numeric', duration);
+                    console.log('duration is a numeric', duration - 1);
                     return duration - 1;
                 }else{
                     console.log('duration is NOT a numeric', duration);
