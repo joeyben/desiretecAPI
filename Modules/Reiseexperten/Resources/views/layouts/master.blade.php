@@ -27,7 +27,7 @@
 
         var kwz = document.createElement('script');
         kwz.type = 'text/javascript'; kwz.async = true;
-        kwz.src = '/whitelabel/reiseexperten/js/layer/layer-locale.js';
+        kwz.src = '/whitelabel/reiseexperten/js/layer/layer.js';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(kwz, s);
 
@@ -39,10 +39,19 @@
         }
 
         function showLayer(){
-            dt.PopupManager.show();
-            if(isMobile()){
-                $("body").addClass('mobile-layer');
-            }
+
+             if($(".dt-modal").hasClass("teaser-on")){
+                        return false;
+             }
+             dt.PopupManager.show();
+
+             if(isMobile()){
+                 $("body").addClass('mobile-layer');
+                 $(".dt-modal").addClass('m-open');
+
+                 dt.PopupManager.isMobile = true;
+                 dt.PopupManager.layerShown = true;
+             }
         }
     </script>
 @endsection
