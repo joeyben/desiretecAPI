@@ -9,6 +9,8 @@ $eil-border-radius: 4px;
 $mastercolor: #092a5e;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
+$fontcolor: #303030;
+
 
 @include make-columns(12, $gutter - 5px, 'kwp-');
 
@@ -41,11 +43,11 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #092a5e url(../../images/layer/guy_2.png) no-repeat bottom / 100%;
+  background: #092a5e url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
-  color: #fff;
+  color: $fontcolor;
   box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.1);
   /*transition: all 0.5s ease;
    -webkit-transition: all 0.5s ease;
@@ -88,7 +90,7 @@ $master-blue: #70CBF4;
   background: rgba(255, 255, 255, 0.7);
   position: fixed;
   display: block;
-
+  overflow-y: scroll;
   width: 100%;
   height: 100%;
   top: 0;
@@ -467,6 +469,7 @@ $master-blue: #70CBF4;
       box-shadow: none;
       border: none;
       background: transparent;
+      height: 25px;
       &:focus{
         background: transparent;
         padding: 2px 10px;
@@ -531,7 +534,7 @@ ul.kwp-form-errors {
 .kwp-logo {
   display: block;
   height: 50px;
-  background: transparent url(https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/1568034687logo%20Reiseexperten.png) no-repeat left top;
+  background: transparent url(../../images/layer/logo.png) no-repeat left top;
   /*******/
   position: absolute;
   width: 100%;
@@ -570,24 +573,21 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/basis_eil_31.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/header.png) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/basis_eil_31.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/header.png) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
-    background-image: url(../../images/layer/basis_eil_31.jpg);
-
+    background-image: url(../../images/layer/header.png);
     .kwp-header-content {
       p {
         text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
         color: #333;
       }
-
       h1 {
-
       }
     }
   }
@@ -1555,7 +1555,7 @@ p.kwp-info {
     .email-col{
       margin: 5px 0;
     }
-  
+
   .rangeslider--horizontal{
     height: 10px;
     .rangeslider__handle{
@@ -1602,6 +1602,12 @@ and (max-device-width : 320px) {
 
 
 }
-.catering .dropdown-toggle{
-  height: 25px;
+.error-input{
+  display: block;
+  background: #ED1C24 !important;
+  padding: 0 10px;
+  color: #fff;
+}
+.dt_terms.hasError:after{
+  border: 1px solid red !important;
 }
