@@ -16,7 +16,6 @@ mix.scripts(
         __dirname + '/Resources/assets/js/app.js'
     ], __dirname + '/../../public/whitelabel/example/js/example.js')
     .scripts([
-        base_url + '/resources/assets/js/layer/exitintent.js',
         base_url + '/resources/assets/js/layer/exitintent-new.js',
         base_url + '/node_modules/js-cookie/src/js.cookie.js',
         base_url + '/resources/assets/js/layer/base.js',
@@ -27,7 +26,7 @@ mix.scripts(
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/example/js/layer/layer.js')
     .scripts([
-        base_url + '/resources/assets/js/layer/exitintent.js',
+        base_url + '/resources/assets/js/layer/exitintent-new.js',
         base_url + '/node_modules/js-cookie/src/js.cookie.js',
         base_url + '/resources/assets/js/layer/base.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',

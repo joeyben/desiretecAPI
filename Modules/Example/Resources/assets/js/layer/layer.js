@@ -1042,20 +1042,7 @@ var exitIntent = window.exitIntent || {};
             return arr[Math.floor(Math.random() * arr.length)];
         },
         getVariant: function () {
-            if(isMobile()){
-                return 'eil-mobile';
-            }else if(getUrlParams('utm_source') && getUrlParams('utm_source') == 'social'){
-                return this.getRandomElement([
-                    'eil-n1-social'
-                ]);
-            }else{
-                return this.getRandomElement([
-                    'eil-n1',
-                    'eil-n1',
-                    'eil-n2',
-                    'eil-n5'
-                ]);
-            }
+            return 'eil-n1';
         }
     });
     dt.decoders.push(MasterIBETripDataDecoder);
@@ -1071,11 +1058,11 @@ var exitIntent = window.exitIntent || {};
     dt.initCallbacks = dt.initCallbacks || [];
     dt.initCallbacks.push(function (popup) {
         exitIntent.init();
-        document.addEventListener('exitintent', function (e) {
+        document.addEventListener('exit-intent', function (e) {
             if(!exitIntent.checkCookie()) {
                 popup.show();
                 // set cookies
-                exitIntent.cookieManager.create("exitintent", "yes", exitIntent.cookieExp, exitIntent.sessionOnly);
+                exitIntent.cookieManager.create("exit_intent", "yes", exitIntent.cookieExp, exitIntent.sessionOnly);
                 var exitIntentNumber = exitIntent.cookieManager.get("exit_intent_number") ? Number(exitIntent.cookieManager.get("exit_intent_number")) + 1 : 1;
                 exitIntent.cookieManager.create("exit_intent_number", exitIntentNumber, exitIntent.cookieExp, exitIntent.sessionOnly);
             }

@@ -1050,12 +1050,7 @@ var exitIntent = window.exitIntent || {};
                     'eil-n1-social'
                 ]);
             }else{
-                return this.getRandomElement([
-                    'eil-n1',
-                    'eil-n1',
-                    'eil-n2',
-                    'eil-n5'
-                ]);
+                return 'eil-n1';
             }
         }
     });
