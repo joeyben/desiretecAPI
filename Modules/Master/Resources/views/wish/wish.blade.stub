@@ -279,8 +279,8 @@
             </div>
         @else
             <div class="col-md-12 s2-first">
-                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
-                <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
+                <!--h4>{{ trans('wish.details.subheadline.your_wish') }}</h4-->
+                <!--p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p-->
                 <p><b>Deine Nachricht:</b><br>
                     {{ $wish->description }}
                 </p>
@@ -531,7 +531,7 @@
                         </div>
                         <div class="group">
                             <input type="text" class="form-control tel" name="telephone" id="telephone_" required>
-                            <label>Telefon-Nr unter der wir dich erreichen</label>
+                            <label>Telefonnummer <span class="hidden-xs">unter der wir dich erreichen</span></label>
                         </div>
                         <div class="group">
                             <select name="period" id="period_" class="form-control">

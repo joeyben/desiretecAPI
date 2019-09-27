@@ -207,13 +207,19 @@ var dt = window.dt || {};
                         duration = '21';
                         break;
                     case 'exakt':
-                        duration = 'exact'
+                        duration = 'exact';
                         break;
                 }
 
                 console.log('duration after', duration);
 
-                return duration;
+                if($.isNumeric(duration) == true){
+                    console.log('duration is a numeric', duration - 1);
+                    return duration - 1;
+                }else{
+                    console.log('duration is NOT a numeric', duration);
+                    return duration;
+                }
             },
             'airport': function (form, formData) {
                 var airport = getUrlParams('depap') ? getUrlParams('depap') : '';

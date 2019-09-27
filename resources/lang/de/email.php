@@ -38,7 +38,7 @@ return [
         'header'         => 'Hallo!',
         'body'           => "<p>Hallo! </p>
                             <p>Herzlich willkommen bei Ihrem :whitelabel Reisewunschportal. </p>
-                            <p>Sie haben sich soeben registriert und Ihr Reisewunsch <a href=\':link\'>:link</a> wurde erfolgreich an uns übermittelt.</p>
+                            <p>Sie haben sich soeben registriert und Ihr Reisewunsch <a href=':link'>:link</a> wurde erfolgreich an uns übermittelt.</p>
                             <p>Wir suchen gerade nach passenden Angeboten für Ihren persönlichen Reisewunsch und informieren Sie in wenigen Minuten per E-Mail darüber.</p>
                             <p>Anschließend können Sie sich Ihre persönlichen Angebote im :whitelabel Reisewunschportal anschauen.</p>",
         'link'           => "Sie können diese unter dem folgenden Link direkt aufrufen <a href=':link'>:link</a>",

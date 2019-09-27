@@ -533,7 +533,7 @@
                         </div>
                         <div class="group">
                             <input type="text" class="form-control tel" name="telephone" id="telephone_" required>
-                            <label>Telefon-Nr unter der wir dich erreichen</label>
+                            <label>Telefonnummer <span class="hidden-xs">unter der wir dich erreichen</span></label>
                         </div>
                         <div class="group">
                             <select name="period" id="period_" class="form-control">

@@ -106,11 +106,16 @@ class ReiseexpertenController extends Controller
                 'request' => $request->all()
             ])->render();
 
-            return response()->json(['success' => true, 'html'=>$html]);
+            //return response()->json(['success' => true, 'html'=>$html]);
         }
 
-        $newUser = $this->createUserFromLayer($request, $user);
+        $newUser = $user->createUserFromLayer(
+            $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'),
+            $this->whitelabelId
+        );
+
         $wish = $this->createWishFromLayer($request, $wish);
+
         $html = view('reiseexperten::layer.created')->with([
             'token' => $newUser->token->token,
             'id'    => $wish->id
@@ -128,7 +133,6 @@ class ReiseexpertenController extends Controller
             $this->kids[$i] = $i;
         }
     }
-
 
     /**
      * Create new user from Layer.
@@ -168,12 +172,12 @@ class ReiseexpertenController extends Controller
     {
         $request->merge(['featured_image' => 'bg.jpg']);
 
-        $new_wish = $wish->create(
+        return $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'),
              $this->whitelabelId
         );
 
-        return $new_wish;
+        //return $new_wish;
     }
 
     /**

@@ -102,4 +102,9 @@ return [
     'region_code'                   => 'Region code',
     'region_name'                   => 'Region Name',
     'country_code'                  => 'Country Code',
+    'price_loop'                    => 'Price Loop',
+    'hotel_loop'                    => 'Hotel Loop',
+    'price'                         => 'Price',
+    'asc'                           => 'Asc',
+    'desc'                          => 'Desc',
 ];
