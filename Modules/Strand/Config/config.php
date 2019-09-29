@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Strand',
-    'id'   => 129,
+    'id'   => 149,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_strand',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,

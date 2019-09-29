@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/individualreisen",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Individualreisen\\Providers\\IndividualreisenServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Individualreisen\\": ""
+        }
+    }
+}
