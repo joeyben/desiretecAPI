@@ -35,6 +35,7 @@ class TraveloverlandWishesController extends Controller
     protected $kids = [];
     protected $duration = [];
     protected $categories;
+    protected $class = [];
     protected $category = [
         '1'  => 1,
         '2'  => 2,
@@ -76,6 +77,7 @@ class TraveloverlandWishesController extends Controller
         $this->whitelabelId = \Config::get('traveloverland.id');
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
+        $this->class = $categories->getChildrenFromSlug('slug', 'class');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->categories = $categories;
     }
@@ -119,6 +121,7 @@ class TraveloverlandWishesController extends Controller
             'kids_arr'     => $this->kids,
             'duration_arr' => $this->duration,
             'adults_arr'   => $this->adults,
+            'class_arr'    => $this->class,
             'is_owner'            => $isOwner
         ]);
 
