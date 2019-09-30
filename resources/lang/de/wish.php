@@ -49,7 +49,8 @@ return [
                     übermittelt. Es gibt ein Angebot für Sie.',
             'user_message' => 'Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>
                     übermittelt. Es gibt eine neue Nachricht für Sie.',
-        ]
+        ],
+        'any_price' => 'beliebig',
     ],
 
     'contact'        => [

@@ -255,7 +255,6 @@
             $(document).ready(function(){
                 $('.selectpicker').selectpicker();
 
-
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',

@@ -3,7 +3,7 @@ var dt = window.dt || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://reiseexperten.com',
+        baseUrl: 'https://*.reiseexperten.com',
         logoPath: '/whitelabel/reiseexperten/images/layer/logo.png',
         popupPath: '/show',
         popupStore:'/store',
@@ -51,7 +51,7 @@ var dt = window.dt || {};
 
     /**** Mobile Decoder ****/
         var MasterIBETripDataDecoderMobile = $.extend({}, dt.AbstractTripDataDecoder, {
-            name: 'TUI Rundreisen Mobile',
+            name: 'Reiseexperten Rundreisen Mobile',
             matchesUrl: 'm.reiseexperten.com/(buchen)',
             dictionaries: {
                 'catering': {
@@ -404,7 +404,7 @@ var dt = window.dt || {};
 
                 return r[1];
             },
-            name: 'TUI IBE',
+            name: 'Reiseexperten IBE',
             matchesUrl: 'www.reiseexperten.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
             filterFormSelector: '#ibeContainer',
             dictionaries: {
@@ -1043,7 +1043,7 @@ var dt = window.dt || {};
         dt.decoders.push(KwizzmeFakeTripDataDecoder);
 
     //dt.decoders.push($.extend({}, MasterIBETripDataDecoder, {
-    //    name: 'TUI Landingpages',
+    //    name: 'Reiseexperten Landingpages',
     //    matchesUrl: 'reiseexperten.com/pauschalreisen',
     //    filterFormSelector: '.simpleSearch'
     //}));
