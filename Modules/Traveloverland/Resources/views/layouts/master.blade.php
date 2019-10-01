@@ -5,7 +5,7 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/traveloverland/css/overland.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/traveloverland/css/traveloverland.css') }}">
 @endsection
 
 @section('logo')
@@ -15,7 +15,17 @@
 @endsection
 
 @section('before-scripts')
-    <script src="{{ mix('whitelabel/traveloverland/js/overland.js') }}"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105970361-11"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-105970361-11');
+    </script>
+
+    <script src="{{ mix('whitelabel/traveloverland/js/traveloverland.js') }}"></script>
 @endsection
 
 @section('after-scripts')
