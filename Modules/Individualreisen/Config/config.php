@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Individualreisen',
-    'id'   => 46,
+    'id'   => 150,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_individualreisen',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,

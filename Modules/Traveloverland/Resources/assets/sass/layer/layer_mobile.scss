@@ -7,8 +7,8 @@ $gutter: 30px;
 $altfont: 'Roboto', sans-serif;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #092a5e;
-$secondarycolor: #092a5e;
+$mastercolor: #ed1c24;
+$secondarycolor: #fd0;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
 $fontcolor: #303030;
@@ -488,7 +488,7 @@ $fontcolor: #303030;
   textarea,
   select {
     width: 100%;
-    height: 32px;
+    height: 25px;
   }
 
   textarea {
@@ -509,11 +509,11 @@ $fontcolor: #303030;
 
   button[type=submit] {
     border-radius: 4px;
-    background: #092a5e;
+    background: #FDD22C;
 
     text-align: center;
 
-    color:  white;
+    color:  $fontcolor;
     font-size: 22px;
     font-weight: 500;
     line-height: 30px;
@@ -632,7 +632,7 @@ $fontcolor: #303030;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: white;
+            color: $fontcolor;
           }
         }
         hr{
@@ -726,7 +726,7 @@ $fontcolor: #303030;
             display: block;
             border-radius: 3px;
             text-align: center;
-            color: white;
+            color: $fontcolor;
           }
         }
         hr{
@@ -739,37 +739,7 @@ $fontcolor: #303030;
   }
 
 }
-.budget {
-  &.open {
-    background: transparent;
 
-    .pax-group {
-      border: 1px solid #b9b9b9;
-      border-bottom: none;
-    }
-
-    .travelerss {
-      background-color: #f3f0ec;
-      z-index: 4;
-      position: relative;
-      border: none;
-    }
-
-    .budget-more {
-      display: block !important;
-    }
-
-    .travelerss {
-      i.triggered {
-        display: block;
-      }
-
-      i.not-triggered {
-        display: none;
-      }
-    }
-  }
-}
 .kwp.dt-modal-visible  {
 }
 
@@ -1010,27 +980,27 @@ p.kwp-info {
   }
   &.eil-at-body{
     button[type=submit]{
-      background: #092a5e;
-      border: solid 1px #092a5e;
+      background: #cc0066;
+      border: solid 1px #cc0066;
       color: #fff;
       text-shadow: initial;
       &:hover{
-        background: #092a5e;
+        background: #f39;
       }
     }
     input[type="text"]{
       border-radius: 4px !important;
       &:focus,&:hover{
-        border-color: #092a5e;
+        border-color: #cc0066;
       }
     }
     textarea{
       &:focus,&:hover{
-        border-color: #092a5e;
+        border-color: #cc0066;
       }
     }
     .kwp-spinner{
-      border-color: #092a5e;
+      border-color: #cc0066;
       border-right-color: transparent;
     }
     .kwp-star {
@@ -1264,7 +1234,7 @@ p.kwp-info {
 }
 
 .kwp-star-full:after, .kwp-body.eil-at-body .kwp-star-full:after{
-  background: transparent url(../../svg/sun-master.svg) no-repeat 0px center;
+  background: transparent url(../../svg/sun-fill.svg) no-repeat 0px center;
 }
 
 
@@ -1567,7 +1537,7 @@ p.kwp-info {
     }*/
     /***** Fix layer on Mobile ******/
     .kwp{
-      .duration-time, .travelers, travelerss{
+      .duration-time, .travelers{
         height: 35px;
         line-height: 2em;
         background-color: transparent;
@@ -1648,7 +1618,7 @@ p.kwp-info {
 
       .error-input{
         display: block;
-        background: #ED1C24 !important;
+        background: $mastercolor;
         padding: 0 10px;
         color: #fff;
       }
@@ -1779,7 +1749,7 @@ and (max-device-width : 320px) {
       .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="number"], input[type="date"]{
         font-size: 16px;
       }
-      .duration-time, .travelers, travelerss{
+      .duration-time, .travelers{
         font-size: 16px;
       }
       button[type=submit]{
@@ -1807,40 +1777,15 @@ and (max-device-width : 320px) {
 
 
 }
-.kwp-col-ages.kwp-show-ages {
-  display: block !important;
-}
-.direktflug input[type="checkbox"]:after{
-  height: 16px !important;
-  width: 16px !important;
-}
-.direktflug{
-  position: absolute;
-  display: inline-flex;
-}
-input[name="direkt_flug"]{
-  height: 12px;
-}
-.fas{
-  color:#ecec3c;
-}
-#catering{
-  background: transparent;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-}
-.travelerss .caret, .catering .caret{
-  position: absolute;
-  top: 65%;
-  right: 10px;
-}
-.kwp-header-content h1{
-  color: white !important;
-}
-.dt_terms.hasError:after{
-  border: 1px solid red !important;
-}
+
 .description textarea{
-  height: 90px !important;
+  height: 120px !important;
+  color: black;
+}
+select[name="category"]{
+  border: none;
+  padding-left: 5px;
+}
+.destination{
+  border-bottom: 1px solid #ffdd00;
 }
