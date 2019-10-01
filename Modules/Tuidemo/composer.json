@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/tuidemo",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Tuidemo\\Providers\\TuidemoServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Tuidemo\\": ""
+        }
+    }
+}

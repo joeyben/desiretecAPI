@@ -5,7 +5,7 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/traveloverland/css/traveloverland.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/traveloverland/css/overland.css') }}">
 @endsection
 
 @section('logo')
@@ -15,7 +15,7 @@
 @endsection
 
 @section('before-scripts')
-    <script src="{{ asset('whitelabel/traveloverland/js/traveloverland.js') }}"></script>
+    <script src="{{ mix('whitelabel/traveloverland/js/overland.js') }}"></script>
 @endsection
 
 @section('after-scripts')
@@ -27,7 +27,7 @@
 
         var kwz = document.createElement('script');
         kwz.type = 'text/javascript'; kwz.async = true;
-        kwz.src = '/whitelabel/traveloverland/js/layer/layer.js';
+        kwz.src = '/whitelabel/overland/js/layer/layer.js';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(kwz, s);
 
@@ -39,19 +39,10 @@
         }
 
         function showLayer(){
-
-             if($(".dt-modal").hasClass("teaser-on")){
-                        return false;
-             }
-             dt.PopupManager.show();
-
-             if(isMobile()){
-                 $("body").addClass('mobile-layer');
-                 $(".dt-modal").addClass('m-open');
-
-                 dt.PopupManager.isMobile = true;
-                 dt.PopupManager.layerShown = true;
-             }
+            dt.PopupManager.show();
+            if(isMobile()){
+                $("body").addClass('mobile-layer');
+            }
         }
     </script>
 @endsection

@@ -31,16 +31,13 @@ RUN npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
 RUN cd /myapp && yarn install --ignore-engines && npm i && npm run production
 #RUN cd /myapp/Modules/Autooffers && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Trendtours && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Novasol && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/SarahsLuxusreisen && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Strand && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Adventure && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Reiseexperten && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Lastminute && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Overland && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Example && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/ReisExperten && yarn install --ignore-engines && npm run production
-
+RUN cd /myapp/Modules/Traveloverland && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Demomanuell && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Individualreisen && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Tuidemo && yarn install --ignore-engines && npm run production
 
 FROM horrorhorst/laravel-base:latest
 
