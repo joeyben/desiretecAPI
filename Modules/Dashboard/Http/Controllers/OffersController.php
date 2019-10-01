@@ -455,7 +455,7 @@ public function clickRate(Request $request)
             $url = explode('.', $_SERVER['HTTP_HOST']);
 
             if ($url[0] !== 'mvp') {
-                $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                $whitelabelId = config($url[0] . '.id');
             }
         } else {
             $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -487,7 +487,7 @@ public function openRate(Request $request)
             $url = explode('.', $_SERVER['HTTP_HOST']);
 
             if ($url[0] !== 'mvp') {
-                $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                $whitelabelId = config($url[0] . '.id');
             }
         } else {
             $whitelabel = $this->whitelabels->find($whitelabelId);
