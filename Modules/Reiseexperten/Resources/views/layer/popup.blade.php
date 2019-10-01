@@ -395,7 +395,7 @@
                   @endphp
                 @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                     <p>Ich habe die <a href="https://novasol.reise-wunsch.com/pdfs/tnb_REISEEXPERTEN.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.reiseexperten.com/datenschutzerkl-rung-8470" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                     <p>Ich habe die <a href="https://reiseexperten.reise-wunsch.com/pdfs/tnb_REISEEXPERTEN.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.reiseexperten.com/datenschutzerkl-rung-8470" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                 </div>
             </div>
         </div>
