@@ -101,13 +101,17 @@ class OffersController extends Controller
 
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if ($url[0] !== 'mvp') {
+                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter($viewId);
-
             $optParams = [
                 'dimensions' => 'ga:yearMonth',
                 'filters' => $filter['filterd'],
@@ -135,6 +139,11 @@ class OffersController extends Controller
 
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if ($url[0] !== 'mvp') {
+                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
@@ -170,6 +179,11 @@ class OffersController extends Controller
 
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if ($url[0] !== 'mvp') {
+                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
@@ -205,6 +219,11 @@ class OffersController extends Controller
 
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if ($url[0] !== 'mvp') {
+                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
@@ -240,6 +259,11 @@ class OffersController extends Controller
 
             if (is_null($whitelabelId)) {
                 $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if ($url[0] !== 'mvp') {
+                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
@@ -279,6 +303,11 @@ public function shareperMonth(Request $request)
 
         if (is_null($whitelabelId)) {
             $whitelabel = $this->whitelabels->first();
+            $url = explode('.', $_SERVER['HTTP_HOST']);
+
+            if ($url[0] !== 'mvp') {
+                $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+            }
         } else {
             $whitelabel = $this->whitelabels->find($whitelabelId);
         }
@@ -320,6 +349,11 @@ public function responseMonth(Request $request)
 
         if (is_null($whitelabelId)) {
             $whitelabel = $this->whitelabels->first();
+            $url = explode('.', $_SERVER['HTTP_HOST']);
+
+            if ($url[0] !== 'mvp') {
+                $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+            }
         } else {
             $whitelabel = $this->whitelabels->find($whitelabelId);
         }
@@ -367,6 +401,11 @@ public function responsemMonth(Request $request)
 
         if (is_null($whitelabelId)) {
             $whitelabel = $this->whitelabels->first();
+            $url = explode('.', $_SERVER['HTTP_HOST']);
+
+            if ($url[0] !== 'mvp') {
+                $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+            }
         } else {
             $whitelabel = $this->whitelabels->find($whitelabelId);
         }
@@ -413,6 +452,11 @@ public function clickRate(Request $request)
 
         if (is_null($whitelabelId)) {
             $whitelabel = $this->whitelabels->first();
+            $url = explode('.', $_SERVER['HTTP_HOST']);
+
+            if ($url[0] !== 'mvp') {
+                $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+            }
         } else {
             $whitelabel = $this->whitelabels->find($whitelabelId);
         }
@@ -440,6 +484,11 @@ public function openRate(Request $request)
 
         if (is_null($whitelabelId)) {
             $whitelabel = $this->whitelabels->first();
+            $url = explode('.', $_SERVER['HTTP_HOST']);
+
+            if ($url[0] !== 'mvp') {
+                $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+            }
         } else {
             $whitelabel = $this->whitelabels->find($whitelabelId);
         }
@@ -485,6 +534,18 @@ public function getFilter(string $viewid)
         $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
         $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
         break;
+
+        case '202969111':
+            $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
+            $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
+            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
+            break;
+
+        case '202937081':
+            $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
+            $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
+            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
+            break;
 
         case '159641355':
         $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
