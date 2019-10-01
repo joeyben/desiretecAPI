@@ -10,7 +10,7 @@ $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 Route::group(['domain' => $domain], function () {
     setCurrentWhiteLabelId(\Config::get('traveloverland.id'));
     setTranslationLoaderModel(\Config::get('traveloverland.language_lines_model'));
-    Route::group(['middleware' => 'web', 'namespace' => 'Modules\Overland\Http\Controllers', 'as' => 'traveloverland.'], function () {
+    Route::group(['middleware' => 'web', 'namespace' => 'Modules\Traveloverland\Http\Controllers', 'as' => 'traveloverland.'], function () {
         Route::get('/', 'TraveloverlandController@index');
         Route::get('show', 'TraveloverlandController@show');
         Route::get('store', 'TraveloverlandController@store')->name('store');

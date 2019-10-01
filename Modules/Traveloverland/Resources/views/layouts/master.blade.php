@@ -27,7 +27,7 @@
 
         var kwz = document.createElement('script');
         kwz.type = 'text/javascript'; kwz.async = true;
-        kwz.src = '/whitelabel/overland/js/layer/layer.js';
+        kwz.src = '/whitelabel/traveloverland/js/layer/layer.js';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(kwz, s);
 

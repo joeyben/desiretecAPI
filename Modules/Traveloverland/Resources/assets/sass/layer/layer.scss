@@ -41,7 +41,7 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #092a5e url(../../images/layer/guy_2.png) no-repeat bottom / 100%;
+  background: #092a5e url(../../images/layer/pensil.png) no-repeat bottom / 100%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -549,7 +549,7 @@ ul.kwp-form-errors {
 
   h1 {
     margin: 15px 0 0 0;
-    color:  #20355a;
+    color:  #fff;
     font-size: 36px;
     font-weight: 700;
   }
@@ -582,7 +582,7 @@ ul.kwp-form-errors {
       }
 
       h1 {
-
+        color: #fff;
       }
     }
   }
@@ -1479,6 +1479,9 @@ p.kwp-info {
       padding: 0 10px;
       font-size: 14px;
       color: #17212b;
+    }
+    .kwp .duration-more input[type="text"]{
+      padding: 0 5px !important;
     }
     .kwp-custom-select{
       #catering{

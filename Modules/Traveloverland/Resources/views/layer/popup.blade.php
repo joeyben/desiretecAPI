@@ -15,8 +15,8 @@
     <div class="kwp-content kwp-with-expansion">
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
-                {{ Form::label('destination', trans('traveloverland::layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('overland::layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
+                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -26,8 +26,8 @@
             </div>
 
             <div class="kwp-col-4">
-                {{ Form::label('airport', trans('traveloverland::layer.general.airport'), ['class' => 'control-label required']) }}
-                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('overland::layer.placeholder.airport'), 'required' => 'required']) }}
+                {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
+                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.airport'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('airport'))
                     @foreach ($errors->get('airport') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -41,7 +41,7 @@
 
             <div class="kwp-col-4 duration-col main-col">
                 <div class="kwp-form-group duration-group">
-                    <label for="duration-time" class="required">{{ trans('traveloverland::layer.general.duration') }}</label>
+                    <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
                     <span class="duration-time dd-trigger">
                         <span class="txt">15.11.2018 - 17.06.2019</span>
                         <i class="master-icon--calendar-month not-triggered"></i>
@@ -49,8 +49,8 @@
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
-                            {{ Form::label('earliest_start', trans('traveloverland::layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('traveloverland::layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span>{{ $error }}</span>
@@ -60,8 +60,8 @@
                             <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-4">
-                            {{ Form::label('latest_return', trans('traveloverland::layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('traveloverland::layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span>{{ $error }}</span>
@@ -79,15 +79,15 @@
 
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
-                    <label for="travelers" class="required">{{ trans('traveloverland::layer.general.pax') }}</label>
+                    <label for="travelers" class="required">{{ trans('layer.general.pax') }}</label>
                     <span class="travelers dd-trigger">
-                        <span class="txt">2 Erwachsener</span>
+                        <span class="txt">1 Erwachsener</span>
                          <i class="master-icon--user-family not-triggered"></i>
                          <i class="master-icon--close triggered"></i>
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-12">
-                            {{ Form::label('adults', trans('traveloverland::layer.general.adults'), ['class' => 'control-label required']) }}
+                            {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr, key_exists('adults', $request) ? $request['adults'] : null , ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
@@ -100,7 +100,7 @@
                         </div>
                         <div class="kwp-col-12 kids" style="position: relative;">
                             <div class="kwp-col-12">
-                                {{ Form::label('kids', trans('traveloverland::layer.general.kids'), ['class' => 'control-label required']) }}
+                                {{ Form::label('kids', trans('layer.general.kids'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
                                     {{ Form::select('kids', $kids_arr_new, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                                 </div>
@@ -137,7 +137,7 @@
             </div>
             <div class="kwp-col-4 class-col">
                 <div class="kwp-form-group category-col">
-                    {{ Form::label('klasse', trans('traveloverland::layer.general.klasse'), ['class' => 'control-label required']) }}
+                    {{ Form::label('klasse', trans('layer.general.klasse'), ['class' => 'control-label required']) }}
                     {{ Form::select('category', $class_arr, key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size']) }}
                 </div>
             </div>
@@ -147,16 +147,16 @@
 
         <div class="kwp-row">
             <div class="kwp-col-12 description">
-                {{ Form::label('description', trans('traveloverland::layer.general.description'), ['class' => 'control-label required']) }}
-                {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('traveloverland::layer.placeholder.description')]) }}
+                {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
+                {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
                 <i class="master-icon--calendar-month"></i>
             </div>
         </div>
 
         <div class="kwp-row">
             <div class="kwp-col-4 email-col">
-                {{ Form::label('email', trans('traveloverland::layer.general.email'), ['class' => 'control-label']) }}
-                {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('traveloverland::layer.placeholder.email'), 'required' => 'required']) }}
+                {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
+                {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
                 <i class="master-icon--mail"></i>
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
@@ -265,8 +265,8 @@
                         previousMonth: 'Vormonat',
                         nextMonth: 'Nächsten Monat',
                         months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+                        weekdays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag','Sonntag'],
+                        weekdaysShort: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
                     },
                     onSelect: function() {
                         dt.endDate.setDate(this.getDate()+1);
@@ -292,8 +292,8 @@
                         previousMonth: 'Vormonat',
                         nextMonth: 'Nächsten Monat',
                         months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+                        weekdays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag','Sonntag'],
+                        weekdaysShort: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
                     }
                 });
 
@@ -376,7 +376,7 @@
                     @endif
 
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                    <p>Ich habe die <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.master.com/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    <p>Ich habe die <a href="https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/pdf/tnb_traveloverland.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.travel-overland.de/service/kleingedruckte/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                 </div>
             </div>
         </div>
