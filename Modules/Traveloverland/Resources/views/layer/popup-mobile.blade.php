@@ -8,8 +8,8 @@
         </script>
         <div class="kwp-row">
             <div class="kwp-col-4">
-                {{ Form::label('destination', trans('traveloverland::layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('traveloverland::layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
+                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
                 <i class="fal fa-home"></i>
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
@@ -19,8 +19,8 @@
             </div>
 
             <div class="kwp-col-4">
-                {{ Form::label('airport', trans('traveloverland::layer.general.airport'), ['class' => 'control-label required']) }}
-                {{ Form::text('airport', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('traveloverland::layer.placeholder.airport'), 'required' => 'required']) }}
+                {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
+                {{ Form::text('airport', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.airport'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('airport'))
                     @foreach ($errors->get('airport') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -39,14 +39,14 @@
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-4">
-                            {{ Form::label('adults', trans('traveloverland::layer.general.adults'), ['class' => 'control-label required']) }}
+                            {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr, key_exists('adults', $request) ? $request['adults'] : 2, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
                             <i class="fal fa-users"></i>
                         </div>
                         <div class="kwp-col-4" style="position: relative;">
-                                {{ Form::label('kids', trans('traveloverland::layer.general.kids'), ['class' => 'control-label required']) }}
+                                {{ Form::label('kids', trans('layer.general.kids'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
                                     {{ Form::select('kids', $kids_arr, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                                 </div>
@@ -75,8 +75,8 @@
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
-                            {{ Form::label('earliest_start', trans('traveloverland::layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('traveloverland::layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -86,8 +86,8 @@
                             <i class="fal fa-calendar-alt"></i>
                         </div>
                         <div class="kwp-col-4">
-                            {{ Form::label('latest_return', trans('traveloverland::layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('traveloverland::layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -106,14 +106,14 @@
 
             <div class="kwp-col-4 destination">
                 <div class="kwp-form-group ">
-                    {{ Form::label('klasse', trans('traveloverland::layer.general.klasse'), ['class' => 'control-label required']) }}
+                    {{ Form::label('klasse', trans('layer.general.klasse'), ['class' => 'control-label required']) }}
                     {{ Form::select('category', $class_arr, ['class' => 'form-control box-size']) }}
                 </div>
             </div>
 
             <div class="kwp-col-4 description">
-                {{ Form::label('description', trans('traveloverland::layer.general.description'), ['class' => 'control-label required']) }}
-                {{ Form::textarea('description', null,['class' => 'form-control', 'placeholder' => trans('traveloverland::layer.placeholder.description')]) }}
+                {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
+                {{ Form::textarea('description', null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
             </div>
 
         </div>
@@ -122,8 +122,8 @@
                 <div class="kwp-row">
 
                     <div class="kwp-col-4 email-col">
-                        {{ Form::label('email', trans('traveloverland::layer.general.email'), ['class' => 'control-label']) }}
-                        {{ Form::text('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('traveloverland::layer.placeholder.email'), 'required' => 'required']) }}
+                        {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
+                        {{ Form::text('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
                         <i class="fal fa-envelope"></i>
                         <div class="kwp-form-email-hint"></div>
                         @if ($errors->any() && $errors->get('email'))
@@ -220,8 +220,8 @@
                         previousMonth: 'Vormonat',
                         nextMonth: 'Nächsten Monat',
                         months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+                        weekdays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag','Sonntag'],
+                        weekdaysShort: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
                     },
                     onSelect: function() {
                         dt.endDate.setDate(this.getDate()+1);
@@ -250,8 +250,8 @@
                         previousMonth: 'Vormonat',
                         nextMonth: 'Nächsten Monat',
                         months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+                        weekdays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag','Sonntag'],
+                        weekdaysShort: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
                     }
                 });
 

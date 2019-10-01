@@ -14,7 +14,7 @@ mix.scripts(
         base_url + "node_modules/jquery/dist/jquery.min.js",
         base_url + '/resources/assets/js/layer/datepicker.js',
         __dirname + '/Resources/assets/js/app.js'
-    ], __dirname + '/../../public/whitelabel/overland/js/traveloverland.js')
+    ], __dirname + '/../../public/whitelabel/traveloverland/js/traveloverland.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
         base_url + '/resources/assets/js/layer/exitintent-new.js',
