@@ -3,7 +3,7 @@
 @import "bootstrap-select";
 
 $gutter: 30px;
-$altfont: 'Comfortaa', cursive;
+$altfont: 'Comfortaa' !important;
 $zindex: 10000;
 $eil-border-radius: 4px;
 $mastercolor: #fdcd0b;
@@ -1558,7 +1558,7 @@ p.kwp-info {
     .email-col{
       margin: 5px 0;
     }
-  
+
   .rangeslider--horizontal{
     height: 10px;
     .rangeslider__handle{
