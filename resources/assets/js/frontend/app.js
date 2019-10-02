@@ -61,10 +61,10 @@ const app = new Vue({
 
         formatPrice(value) {
             if(value == null){
-                return "- "
+                return "- ";
             }
 
-            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         },
     }
 });
