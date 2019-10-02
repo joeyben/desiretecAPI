@@ -138,7 +138,7 @@ class WishesRepository extends BaseRepository
             $input['group_id'] = $this->getGroup();
             $input['title'] = '-';
             $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
-            $input['latest_return'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
+            $input['latest_return'] = $input['latest_return'] ? \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']) : '0000-00-00';
             $input['adults'] = intval($input['adults']);
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
