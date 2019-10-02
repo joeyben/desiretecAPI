@@ -3,6 +3,7 @@ var dt = window.dt || {};
 (function ($) {
 
     dt.defaultConfig = {
+        baseUrl: 'https://trendtours-pause.reisewunschservice.de',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/trendtours/css/layer/whitelabel.css'
@@ -49,7 +50,7 @@ var dt = window.dt || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: '',
+        matchesUrl: 'www.trendtours-pause.de/*',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
@@ -181,7 +182,7 @@ var dt = window.dt || {};
 
     var TrendtoursTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Trendtours WL',
-        matchesUrl: 'www.trendtours-pausee.de/*',
+        matchesUrl: 'www.trendtours-pause.de/*',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
