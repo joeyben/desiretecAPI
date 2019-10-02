@@ -15,7 +15,17 @@
 @endsection
 
 @section('before-scripts')
-    <script src="{{ asset('whitelabel/traveloverland/js/traveloverland.js') }}"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105970361-11"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-105970361-11');
+    </script>
+
+    <script src="{{ mix('whitelabel/traveloverland/js/traveloverland.js') }}"></script>
 @endsection
 
 @section('after-scripts')
@@ -39,19 +49,10 @@
         }
 
         function showLayer(){
-
-             if($(".dt-modal").hasClass("teaser-on")){
-                        return false;
-             }
-             dt.PopupManager.show();
-
-             if(isMobile()){
-                 $("body").addClass('mobile-layer');
-                 $(".dt-modal").addClass('m-open');
-
-                 dt.PopupManager.isMobile = true;
-                 dt.PopupManager.layerShown = true;
-             }
+            dt.PopupManager.show();
+            if(isMobile()){
+                $("body").addClass('mobile-layer');
+            }
         }
     </script>
 @endsection

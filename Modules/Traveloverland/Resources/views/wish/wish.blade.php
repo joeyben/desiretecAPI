@@ -279,9 +279,9 @@
             </div>
         @else
             <div class="col-md-12 s2-first">
-                <!--h4>{{ trans('wish.details.subheadline.your_wish') }}</h4-->
-                <!--p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p-->
-                <p><b>Deine Nachricht:</b><br>
+                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
+                <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
+                <p><b>Ihre Nachricht:</b><br>
                     {{ $wish->description }}
                 </p>
             </div>
@@ -291,24 +291,33 @@
         <div class="col-md-12 s2-second">
 
             <div class="col-md-3">
-                <i class="fal fa-minus"></i>
-                <input class="data-content">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-calendar-alt"></i>
-                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.Y') }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-stopwatch"></i>
-                <input class="data-content" value="{{ $wish->duration }}">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-usd-circle"></i>
-                <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
+                <i class="fal fa-plane-departure"></i>
+                <input class="data-content" value="{{ $wish->airport }}">
             </div>
             <div class="col-md-3">
                 <i class="fal fa-plane-arrival"></i>
                 <input class="data-content" value="{{ $wish->destination }}">
+            </div>
+            <div class="col-md-3">
+                <i class="fal fa-calendar-alt"></i>
+                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} @if ($wish->latest_return !== "0000-00-00") - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }} @endif">
+            </div>
+            <div class="col-md-3">
+                <i class="fal fa-star"></i>
+                @switch($wish->category)
+                    @case(1)
+                <input class="data-content" value="Economy">
+                    @break
+                    @case(2)
+                    <input class="data-content" value="Premium Economy">
+                    @break
+                    @case(3)
+                    <input class="data-content" value="Business">
+                    @break
+                    @case(4)
+                    <input class="data-content" value="First">
+                    @break
+                @endswitch
             </div>
             <div class="col-md-3">
                 <i class="fal fa-users"></i>
@@ -318,11 +327,7 @@
                 <i class="fal fa-child"></i>
                 <input class="data-content" value="{{ $wish->kids }}">
             </div>
-            <div class="col-md-3">
-                <i class="fal fa-dog"></i>
-                <input class="data-content" value="{{ trans('layer.pets.-') }}">
-            </div>
-            @if ($logged_in_user->hasRole('User'))
+            @if ($logged_in_user->hasRole('User') && false)
             <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
             @endif
         </div>
@@ -341,7 +346,7 @@
                         <a data-toggle="collapse" data-parent="#accordion1" href="#content">
                             <div class="col-md-12 s2-first">
                                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
-                                <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
+                                <p>{{ trans('wish.details.angaben') }}</p>
                             </div>
                             <span class="glyphicon glyphicon-plus"></span></a>
                         <span class="glyphicon glyphicon-minus"></span></a>
@@ -352,27 +357,21 @@
                     <div class="panel-body">
                         <div class="col-md-12 s2-first">
                             <p><b>{{ trans('wish.details.subheadline.your_message') }}</b><br>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec purus libero, tempor eget mi vel,
-                                pellentesque sodales dui. Nam pharetra neque et nibh vehicula, ut rutrum orci varius.
-                                In quis sapien non turpis fermentum venenatis quis sed felis. Sed commodo scelerisque metus, consequat tempor turpis consectetur nec. Nullam a fermentum dolor.
+
                             </p>
                         </div>
                         <div class="col-md-12 s2-second">
                             <div class="col-md-3">
                                 <i class="fal fa-minus"></i>
-                                <input class="data-content" >
+                                <input class="data-content" value="{{$wish->airport}}">
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-calendar-alt"></i>
-                                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }}">
+                                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} @if ($wish->latest_return !== "0000-00-00") - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }} @endif">
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-stopwatch"></i>
                                 <input class="data-content" value="{{ $wish->duration }}">
-                            </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-usd-circle"></i>
-                                <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
                             </div>
 
                             <div class="col-md-3">
@@ -387,11 +386,7 @@
                                 <i class="fal fa-star"></i>
                                 <input class="data-content" value="{{ $wish->kids }} Sterne">
                             </div>
-                            <div class="col-md-3">
-                                <i class="fal fa-dog"></i>
-                                <input class="data-content" value="{{ trans('layer.pets.-') }}">
-                            </div>
-                            @if ($logged_in_user->hasRole('User') && $is_owner)
+                            @if ($logged_in_user->hasRole('User') && $is_owner && false)
                                 <button class="secondary-btn{{ $callbackInactivClass }}">Daten andern</button>
                             @endif
                         </div>
@@ -531,7 +526,7 @@
                         </div>
                         <div class="group">
                             <input type="text" class="form-control tel" name="telephone" id="telephone_" required>
-                            <label>Telefonnummer <span class="hidden-xs">unter der wir dich erreichen</span></label>
+                            <label>Telefon-Nr unter der wir dich erreichen</label>
                         </div>
                         <div class="group">
                             <select name="period" id="period_" class="form-control">
@@ -579,7 +574,7 @@
     </div>
 </div>
 
-@if (false && $logged_in_user->hasRole('User') && $is_owner)
+@if ($logged_in_user->hasRole('User') && $is_owner)
     <div id="edit-wish" class="modal wish-modal-1 fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
@@ -603,7 +598,7 @@
 
                         <div class="col-md-12 modal-body-left">
                             <div class="row row-no-padding">
-                                <div class="group col-md-6">
+                                <div class="group col-md-6 test-edit">
                                     <input class="form-control" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }}">
                                     <label>Von</label>
                                 </div>
@@ -614,28 +609,22 @@
                             </div>
                             <div class="row row-no-padding">
                                 <div class="group col-md-6">
-                                    {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), $wish->durationval, ['class' => 'form-control']) }}
-                                </div>
-                                <div class="group col-md-6">
-                                    <input class="form-control" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
-                                    <label>Budget</label>
-                                </div>
-                            </div>
-                            <div class="row row-no-padding">
-                                <div class="group col-md-6">
                                     {{ Form::text('destination',  $wish->destination  ? $wish->destination  : null, ['class' => 'form-control','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
                                     <label>Destination</label>
                                 </div>
                                 <div class="group col-md-6">
                                     {{ Form::select('adults', $adults_arr, $wish->adults ? $wish->adults : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                    <label>Adults</label>
                                 </div>
                             </div>
                             <div class="row row-no-padding">
                                 <div class="group col-md-6">
                                     {{ Form::select('kids', $kids_arr, $wish->kids ? $wish->kids : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                    <label>Kids</label>
                                 </div>
                                 <div class="group col-md-6">
-                                    {{ Form::select('pets', $pets_arr, $wish->pets ? $wish->pets : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                    {{ Form::select('category', $class_arr, $wish->category ? $wish->category : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                    <label>Klasse</label>
                                 </div>
                             </div>
 

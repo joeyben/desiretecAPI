@@ -6,11 +6,9 @@ $gutter: 30px;
 $altfont: 'Comfortaa', cursive;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #092a5e;
+$mastercolor: #fdcd0b;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
-$fontcolor: #303030;
-
 
 @include make-columns(12, $gutter - 5px, 'kwp-');
 
@@ -43,11 +41,11 @@ $fontcolor: #303030;
   height: 75px;
   position: fixed;
   display: none;
-  background: #092a5e url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: #fdcd0b url(../../images/layer/pensil.png) no-repeat center / 70%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
-  color: $fontcolor;
+  color: #fff;
   box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.1);
   /*transition: all 0.5s ease;
    -webkit-transition: all 0.5s ease;
@@ -90,7 +88,7 @@ $fontcolor: #303030;
   background: rgba(255, 255, 255, 0.7);
   position: fixed;
   display: block;
-  overflow-y: scroll;
+
   width: 100%;
   height: 100%;
   top: 0;
@@ -356,7 +354,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: #fdcd0b;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -446,7 +444,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: #fdcd0b;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -469,7 +467,6 @@ $fontcolor: #303030;
       box-shadow: none;
       border: none;
       background: transparent;
-      height: 25px;
       &:focus{
         background: transparent;
         padding: 2px 10px;
@@ -533,13 +530,13 @@ ul.kwp-form-errors {
 
 .kwp-logo {
   display: block;
-  height: 130px;
+  height: 50px;
+  width: 50px;
   background: transparent url(../../images/layer/logo.png) no-repeat left top;
-  /*******/
+  background-size: contain;
   position: absolute;
-  width: 100%;
-  left: 0;
-  background-size: 120px;
+  top: 10px;
+  left: 10px;
 }
 
 
@@ -557,7 +554,7 @@ ul.kwp-form-errors {
 
   h1 {
     margin: 15px 0 0 0;
-    color:  #20355a;
+    color:  #fff;
     font-size: 36px;
     font-weight: 700;
   }
@@ -573,15 +570,15 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/header.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/header_overland.jpg) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/header.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/header_overland.jpg) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
-    background-image: url(../../images/layer/header.jpg);
+    background-image: url(../../images/layer/visual_2_smile_TUI.jpg);
 
     .kwp-header-content {
       p {
@@ -590,7 +587,7 @@ ul.kwp-form-errors {
       }
 
       h1 {
-
+        color: #fff;
       }
     }
   }
@@ -1195,7 +1192,7 @@ p.kwp-info {
           h1{
             margin: 0px;
             padding: 5px 0;
-            color: #092A5E;
+            color: #fff;
             position: absolute;
             bottom: 0px;
             font-size: 26px;
@@ -1217,9 +1214,8 @@ p.kwp-info {
       margin: 25px auto 0;
 
       .kwp-middle{
-        background: #E2F3FE;
+        background: #fff;
         padding: 5px 20px;
-        border-bottom: 1px solid $master-blue;
         font-size: 16px;
       }
 
@@ -1255,8 +1251,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid #092A59;
-          background-color: #092A59;
+          border: 1px solid $mastercolor;
+          background-color: $mastercolor;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1265,11 +1261,12 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#092a5e;
+        color:#fff;
         padding: 8px 0;
         font-weight: bold;
         font-family: $altfont;
         text-align: center;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
       }
     }
     .kwp-body{
@@ -1308,13 +1305,13 @@ p.kwp-info {
     .kwp-close{
       width: 25px;
       height: 25px;
-      background: transparent url(../../svg/times_dark.svg) no-repeat center center;
+      background: transparent url(../../svg/times_light.svg) no-repeat center center;
       top: 10px;
       right: 10px;
       z-index: 2;
     }
     .dt-modal-agb .kwp-close, .kwp-close.dark {
-      background: transparent url(../../svg/times_dark.svg) no-repeat center center;
+      background: transparent url(../../svg/times_light.svg) no-repeat center center;
     }
     .dt-modal-agb .kwp-close{
       width: 50px;
@@ -1349,7 +1346,7 @@ p.kwp-info {
         background-color: transparent;
         font-weight: 500;
         border-bottom: 1px solid $mastergrey;
-        color: $mastercolor;
+        color: #17212b;
         border-radius: 0;
         padding: 0 10px;
         font-size: 14px;
@@ -1392,7 +1389,7 @@ p.kwp-info {
           margin-bottom: 0px;
           padding: 3px 0;
           font-size: 14px;
-          color: $mastercolor;
+          color: #17212b;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1459,7 +1456,7 @@ p.kwp-info {
         ~ .rangeslider--horizontal{
           background: #D40E14;
           .rangeslider__handle{
-            border-color: #D40E14;
+            border-color: $mastercolor;
           }
         }
         .dd-trigger{
@@ -1486,7 +1483,10 @@ p.kwp-info {
       border-radius: 0;
       padding: 0 10px;
       font-size: 14px;
-      color: $mastercolor;
+      color: #17212b;
+    }
+    .kwp .duration-more input[type="text"]{
+      padding: 0 5px !important;
     }
     .kwp-custom-select{
       #catering{
@@ -1558,7 +1558,7 @@ p.kwp-info {
     .email-col{
       margin: 5px 0;
     }
-
+  
   .rangeslider--horizontal{
     height: 10px;
     .rangeslider__handle{
@@ -1605,12 +1605,34 @@ and (max-device-width : 320px) {
 
 
 }
-.error-input{
+
+.category-col select{
+  border: none !important;
+  padding-top: 0;
+  background: white;
+}
+.category-col{
+  border-bottom: 1px solid #737373;
+}
+.duration-col{
+  width: calc(40% - 10px);
+  margin-right: 12px !important;
+}
+.pax-col,.class-col{
+  width: calc(30% - 10px);
+}
+.pax-col{
+  margin-right: 12px;
+}
+.error-input,.email-col span{
   display: block;
-  background: #ED1C24 !important;
+  background: #ED1C24;
   padding: 0 10px;
   color: #fff;
 }
 .dt_terms.hasError:after{
   border: 1px solid red !important;
+}
+.description textarea{
+  color: black;
 }

@@ -14,8 +14,10 @@ Route::group(['domain' => $domain], function () {
         Route::get('/', 'TraveloverlandController@index');
         Route::get('show', 'TraveloverlandController@show');
         Route::get('store', 'TraveloverlandController@store')->name('store');
+        Route::get('wish/{wish}', 'TraveloverlandWishesController@view')->name('wish.view');
         Route::get('wish/{wish}/{token}', 'TraveloverlandWishesController@details')->name('wish.details');
         Route::get('getwish/{wish}', 'TraveloverlandWishesController@getWish')->name('getWish');
+        Route::get('wishlist', 'TraveloverlandWishesController@wishList')->name('list');
         Route::get('wishlist/{token}', 'TraveloverlandWishesController@validateTokenList');
     });
 });

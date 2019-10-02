@@ -1,5 +1,38 @@
 @import "variables";
+body{
+  font-family: 'Roboto', sans-serif;
+}
 
+p,a,h1,h2,h3,h4,button,input,textarea{
+  font-family: 'Roboto', sans-serif !important;
+}
+.primary-btn{
+  background: $mastercolor;
+  border: 1px solid $mastercolor;
+  padding: 5px 20px;
+  min-width: 220px;
+}
+.secondary-btn{
+  border: 1px solid $mastercolor;
+  color: $mastercolor;
+  min-width: 220px;
+  padding: 5px 20px;
+}
+
+.confirm-popup {
+  .popup-body {
+    .primary-btn {
+      border: 1px solid $mastercolor;
+      background-color: $mastercolor;
+      width: 100%;
+    }
+    .secondary-btn {
+      border: 1px solid $mastercolor;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+}
 body{
   &.landing{
     padding-top: 0px;
@@ -29,6 +62,16 @@ body{
   }
 }
 
+// Logo Fix
+.navbar-default{
+  a.logo{
+    .navbar-brand{
+      padding: 0
+    ;
+    }
+  }
+}
+
 // Slider
 
 .slider{
@@ -39,6 +82,9 @@ body{
   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
+  @media screen and (max-width: $break-small) {
+    background-position: 40% center;
+  }
   .welcome{
     position: absolute;
     top: 50px;
@@ -56,27 +102,63 @@ body{
   }
   .layer-action{
     position: absolute;
-    bottom: 250px;
+    bottom: 300px;
     left: 0;
     right: 0;
     text-align: center;
+    @media screen and (max-width: $break-small) {
+      bottom: 350px;
+    }
     a{
       font-size: 26px;
       text-transform: uppercase;
       padding: 10px 50px;
       line-height: 1.5em;
+      background-color: $brand-primary;
+      border-color: transparent;
+      @media (max-width: $break-small){
+        font-size: 20px;
+      }
     }
   }
 }
-.wish-modal-1 .modal-body-left input[value=""]~label {
+
+// Whitelabel Footer
+.footer{
+  padding: 30px 0;
+  @media screen and (max-width: $break-small) {
+    padding-top: 0;
+  }
+  ul{
+    list-style: none;
+    text-align: center !important;
+    li{
+      margin-right: 20px;
+      float: none;
+      display: inline-block;
+      @media screen and (max-width: $break-small) {
+        width: 100%;
+      }
+      a{
+        color: #000000;
+      }
+    }
+  }
+}
+
+.primary-btn{
+  background: #fdcd0b !important;
+  border: 1px solid #fdcd0b !important;
+}
+.secondary-btn{
+  border: 1px solid #fdcd0b !important;
+  color: #fdcd0b !important;
+}
+.wish-modal-1 .modal-body-left label{
+  left: 20px !important;
   top: 5px !important;
   font-size: 10px !important;
-  color: #bbb !important;
 }
-.footer ul li{
-  display: inline-block;
-  padding:0 10px 0 10px;
-}
-.footer ul{
-  text-align: center;
+.wish-modal-1 .modal-body-left select{
+  padding-top: 18px;
 }

@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Traveloverland',
-    'id'   => 149,
+    'id'   => 147,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_traveloverland',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,

@@ -113,11 +113,7 @@ class TraveloverlandController extends Controller
             return response()->json(['success' => true, 'html'=>$html]);
         }
 
-        $newUser = $user->createUserFromLayer(
-            $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'),
-            $this->whitelabelId
-        );
-
+        $newUser = $this->createUserFromLayer($request, $user);
         $wish = $this->createWishFromLayer($request, $wish);
         $html = view('traveloverland::layer.created')->with([
             'token' => $newUser->token->token,
