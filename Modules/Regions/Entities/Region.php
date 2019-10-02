@@ -18,9 +18,9 @@ class Region extends Model
     protected $guarded = [];
 
     protected static $logAttributes = [
-        'region_code',
-        'region_name',
-        'country_code',
+        'regionCode',
+        'regionName',
+        'countryCode',
         'type'
     ];
 
