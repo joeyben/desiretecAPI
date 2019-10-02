@@ -10,9 +10,6 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "cross-env": "^5.1.4",
-        "laravel-mix": "^2.1",
-        "laravel-mix-merge-manifest": "^0.1.1",
         "accounting": "^0.4.1",
         "axios": "^0.18",
         "babel-eslint": "^8.2.3",
@@ -20,6 +17,7 @@
         "babel-plugin-transform-runtime": "^6.23.0",
         "babel-polyfill": "^6.26.0",
         "babel-preset-stage-2": "^6.24.1",
+        "cross-env": "^5.1.4",
         "es6-promise": "^4.2.4",
         "eslint": "^4.19.1",
         "eslint-config-standard": "^10.2.1",
@@ -31,12 +29,15 @@
         "eslint-plugin-standard": "^3.0.1",
         "jquery": "^3.2",
         "lang.js": "^1.1.12",
+        "laravel-mix": "^2.1",
+        "laravel-mix-merge-manifest": "^0.1.1",
         "lodash": "^4.17.10",
         "scroll-to": "0.0.2",
         "toastr": "^2.1.4",
         "vue": "^2.5.16",
         "vue-events": "^3.1.0",
         "vue-router": "^2.7.0",
+        "vue-template-compiler": "^2.6.10",
         "vuetable-2": "^1.7.5",
         "vuex": "^2.4.0",
         "webpack-shell-plugin": "^0.5.0"

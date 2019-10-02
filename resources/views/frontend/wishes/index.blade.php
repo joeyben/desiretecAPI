@@ -117,7 +117,6 @@
                     {data: 'whitelabel_name', name: '{{config('module.wishes.table')}}.whitelabel_name', searchable: false},
                     {data: 'offer_count', name: 'count' , searchable: false, sortable: false},
                     {data: 'status', name: '{{config('module.wishes.table')}}.status', searchable: false},
-                    {data: 'add_offer', name: 'add_offer', searchable: false, sortable: false}
                 ],
                 order: [[3, "asc"]],
                 searchDelay: 500,

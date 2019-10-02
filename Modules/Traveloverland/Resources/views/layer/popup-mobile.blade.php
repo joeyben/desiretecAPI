@@ -87,7 +87,7 @@
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return')]) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -194,7 +194,7 @@
                 $(this).parents('.pax-col').removeClass('open');
                 var pax = $("#adults").val();
                 var children_count = parseInt($("#kids").val());
-                var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind(er)" : ", "+children_count+" Kind(er)")  : "" ;
+                var children = children_count > 0 ? (children_count == 1 ? " "+children_count+" Kind(er)" : " "+children_count+" Kind(er)")  : "" ;
                 var pets = $("#pets").val() !== "0" ? ", "+$( "#pets option:selected" ).text() : "";
                 var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
                 $(".travelers .txt").text(pax+" "+erwachsene+""+children+ ""+pets);

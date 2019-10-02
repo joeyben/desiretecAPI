@@ -21,7 +21,7 @@ class CreateWishesTable extends Migration
             $table->string('destination', 191);
             $table->date('earliest_start');
             $table->date('latest_return');
-            $table->integer('budget')->unsigned();
+            $table->integer('budget')->unsigned()->default(0);
             $table->integer('adults')->unsigned();
             $table->integer('kids')->unsigned();
             $table->integer('category')->unsigned();

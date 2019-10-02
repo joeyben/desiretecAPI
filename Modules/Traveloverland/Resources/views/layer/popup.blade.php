@@ -61,7 +61,7 @@
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return')]) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span>{{ $error }}</span>

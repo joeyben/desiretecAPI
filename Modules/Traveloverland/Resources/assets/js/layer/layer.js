@@ -17,7 +17,7 @@ var dt = window.dt || {};
 
         var texts = {
             'eil-n1': {
-                header: 'Traumferienobjektnoch nicht gefunden?  ',
+                header: 'Dürfen wir Sie beraten?',
                 body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             },
             'eil-mobile': {

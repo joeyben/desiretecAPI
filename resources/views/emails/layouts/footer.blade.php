@@ -9,12 +9,6 @@
             font-size: 12px;
             color: #000;
             width:100%;">
-   {!! trans('email.footer.line1') !!} <br>
-    {!! trans('email.footer.line2') !!} <br><br>
-    {!! trans('email.footer.line3') !!} <br>
-    {!! trans('email.footer.line4') !!} <br>
-    {!! trans('email.footer.line5') !!} <br>
-    {!! trans('email.footer.line6') !!} <br>
-    {!! trans('email.footer.line7') !!}
+    {!! trans('email.footer') !!} <br>
 
 </p>
