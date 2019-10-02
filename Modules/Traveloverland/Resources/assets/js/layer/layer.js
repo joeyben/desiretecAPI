@@ -274,7 +274,7 @@ var dt = window.dt || {};
 
     var LastminuteTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Overland',
-        matchesUrl: 'travel-overland.de/*',
+        matchesUrl: '',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
