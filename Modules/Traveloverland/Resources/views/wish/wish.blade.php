@@ -281,7 +281,7 @@
             <div class="col-md-12 s2-first">
                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
                 <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
-                <p><b>Deine Nachricht:</b><br>
+                <p><b>Ihre Nachricht:</b><br>
                     {{ $wish->description }}
                 </p>
             </div>
@@ -327,7 +327,7 @@
                 <i class="fal fa-child"></i>
                 <input class="data-content" value="{{ $wish->kids }}">
             </div>
-            @if ($logged_in_user->hasRole('User'))
+            @if ($logged_in_user->hasRole('User') && false)
             <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
             @endif
         </div>
@@ -346,7 +346,7 @@
                         <a data-toggle="collapse" data-parent="#accordion1" href="#content">
                             <div class="col-md-12 s2-first">
                                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
-                                <p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p>
+                                <p>{{ trans('wish.details.angaben') }}</p>
                             </div>
                             <span class="glyphicon glyphicon-plus"></span></a>
                         <span class="glyphicon glyphicon-minus"></span></a>

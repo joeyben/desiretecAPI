@@ -352,7 +352,7 @@
                     <div class="panel-body">
                         <div class="col-md-12 s2-first">
                             <p><b>{{ trans('wish.details.subheadline.your_message') }}</b><br>
-                                
+
                             </p>
                         </div>
                         <div class="col-md-12 s2-second">
