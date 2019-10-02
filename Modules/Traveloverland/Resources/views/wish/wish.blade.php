@@ -300,7 +300,7 @@
             </div>
             <div class="col-md-3">
                 <i class="fal fa-calendar-alt"></i>
-                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.Y') }}">
+                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} @if ($wish->latest_return !== "0000-00-00") - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }} @endif">
             </div>
             <div class="col-md-3">
                 <i class="fal fa-star"></i>
@@ -367,7 +367,7 @@
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-calendar-alt"></i>
-                                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }}">
+                                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} @if ($wish->latest_return !== "0000-00-00") - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }} @endif">
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-stopwatch"></i>
