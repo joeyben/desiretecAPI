@@ -51,7 +51,7 @@
   }
 }
 
-/******/
+/***Custom CSS***/
 .about-section h3{
   font-weight: normal !important;
 }
@@ -61,3 +61,35 @@
     background-color: #df007a !important;
   }
 }
+@media (max-width:37.49em) {
+  .shell{
+    padding: 25px !important;
+    display: flex !important;
+    flex-direction: column;
+    main{
+      order: 2;
+    }
+    aside{
+      order: 1;
+    }
+    main, aside{
+      width: 100% !important;
+    }
+  }
+  .gallery-section .btn{
+    font-size: 12px;
+  }
+  .location-section, .navigation{
+    display: none;
+  }
+  .reviews-section{
+    padding-left: 20px !important;
+  }
+  .equipment-section .icons{
+    padding-left: 0 !important;
+  }
+  main .sections-wrapper{
+    padding-right: 0 !important;
+  }
+}
+/***End Custom CSS***/
