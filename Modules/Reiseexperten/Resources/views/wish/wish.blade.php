@@ -352,7 +352,9 @@
                     <div class="panel-body">
                         <div class="col-md-12 s2-first">
                             <p><b>{{ trans('wish.details.subheadline.your_message') }}</b><br>
-
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec purus libero, tempor eget mi vel,
+                                pellentesque sodales dui. Nam pharetra neque et nibh vehicula, ut rutrum orci varius.
+                                In quis sapien non turpis fermentum venenatis quis sed felis. Sed commodo scelerisque metus, consequat tempor turpis consectetur nec. Nullam a fermentum dolor.
                             </p>
                         </div>
                         <div class="col-md-12 s2-second">
