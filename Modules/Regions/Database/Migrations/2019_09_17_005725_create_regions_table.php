@@ -13,9 +13,9 @@ class CreateRegionsTable extends Migration
     {
         Schema::create('Regions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('region_code', 10);
-            $table->string('region_name');
-            $table->string('country_code');
+            $table->string('regionCode', 10);
+            $table->string('regionName');
+            $table->string('countryCode');
             $table->smallInteger('type');
 
             $table->softDeletes();
