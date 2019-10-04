@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Demoreiserebellen',
-    'id'   => 50,
+    'id'   => 159,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_demoreiserebellen',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
