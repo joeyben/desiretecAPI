@@ -137,12 +137,23 @@ class AgentsRepository extends BaseRepository
      */
     public function uploadImage($input)
     {
-        $avatar = $input['avatar'];
+        $input = '';
 
         if (isset($input['avatar']) && !empty($input['avatar'])) {
+            $avatar = $input['avatar'];
+
             $fileName = time() . $avatar->getClientOriginalName();
 
             $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()), 'public');
+
+            $input = array_merge($input, ['avatar' => $fileName]);
+
+            return $input;
+        }else{
+
+            $fileName = 'avatar_default';
+
+            $this->storage->put($this->upload_path . $fileName, file_get_contents('https://desiretec.s3.eu-central-1.amazonaws.com/img/agent/1570145950wAvatarCallCenter2.png'), 'public');
 
             $input = array_merge($input, ['avatar' => $fileName]);
 

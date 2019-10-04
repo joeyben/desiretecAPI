@@ -8,6 +8,8 @@ use App\Http\Requests\Frontend\Agents\UpdateAgentsRequest;
 use App\Models\Agents\Agent;
 use App\Repositories\Frontend\Agents\AgentsRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class AgentsController.
@@ -29,12 +31,19 @@ class AgentsController extends Controller
      */
     protected $agent;
 
+    protected $upload_path;
+
+    protected $storage;
+
+
     /**
      * @param \App\Repositories\Frontend\Agents\AgentsRepository $agent
      */
     public function __construct(AgentsRepository $agent)
     {
         $this->agent = $agent;
+        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'agent' . \DIRECTORY_SEPARATOR;
+        $this->storage = Storage::disk('s3');
     }
 
     /**
@@ -104,6 +113,17 @@ class AgentsController extends Controller
         ]);
     }
 
+    public function editAgent($id)
+    {
+        $agent = DB::table('agents')->where('id', $id)->first();
+
+        return view('frontend.agents.edit')->with([
+            'agent'               => $agent,
+            'status'              => $this->status,
+            'body_class'          => $this::BODY_CLASS,
+        ]);
+    }
+
     /**
      * @param \App\Models\Agents\Agent                               $agent
      * @param \App\Http\Requests\Frontend\Agents\UpdateAgentsRequest $request
@@ -118,6 +138,18 @@ class AgentsController extends Controller
 
         return redirect()
             ->route('admin.agents.index')
+            ->with('flash_success', trans('alerts.frontend.agents.updated'));
+    }
+
+    public function updateAgent($id , Request $request)
+    {
+        //$agent = DB::table('agents')->where('id', $id)->first();
+        DB::table('agents')
+            ->where('id', $id)
+            ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone, 'avatar' => $this->uploadImage($request->avatar)]);
+
+        return redirect()
+            ->route('frontend.agents.index')
             ->with('flash_success', trans('alerts.frontend.agents.updated'));
     }
 
@@ -142,4 +174,37 @@ class AgentsController extends Controller
 
         return redirect()->back();
     }
+
+    public function delete($id)
+    {
+        DB::table('agents')->where('id', '=', $id)->delete();
+        return redirect()
+            ->route('frontend.agents.index')
+            ->with('flash_success', trans('alerts.frontend.agents.deleted'));
+    }
+
+    public function uploadImage($input)
+    {
+        if (isset($input) && !empty($input)) {
+            $avatar = $input;
+
+            $fileName = time() . $avatar->getClientOriginalName();
+
+            $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()), 'public');
+
+            $input =  $fileName;
+
+            return $input;
+        }else{
+
+            $fileName = 'avatar_default';
+
+            $this->storage->put($this->upload_path . $fileName, file_get_contents('https://desiretec.s3.eu-central-1.amazonaws.com/img/agent/1570145950wAvatarCallCenter2.png'), 'public');
+
+            $input = $fileName;
+
+            return $input;
+        }
+    }
+
 }
