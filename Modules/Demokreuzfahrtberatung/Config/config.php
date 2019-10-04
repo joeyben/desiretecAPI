@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Demokreuzfahrtberatung',
-    'id'   => 49,
+    'id'   => 158,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_demokreuzfahrtberatung',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
