@@ -24,10 +24,10 @@
 
                         </p>
 
-                        {{-- @include('emails.layouts.footer') --}}
-                        @include(getWhitelabelFooterUrl())
-                    </td>
-                </tr>
-            </table>
-    </div>
+                        @include('emails.layouts.footer')
+                        {{-- @include(getWhitelabelFooterUrl()) --}}
+</td>
+</tr>
+</table>
+</div>
 @endsection
