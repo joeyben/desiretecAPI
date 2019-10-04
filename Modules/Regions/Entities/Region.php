@@ -41,9 +41,9 @@ class Region extends Model
          */
         'columns' => [
             'Regions.id'                                => 10,
-            'Regions.region_code'                       => 10,
-            'Regions.region_name'                       => 10,
-            'Regions.country_code'                      => 10,
+            'Regions.regionCode'                        => 10,
+            'Regions.regionName'                        => 10,
+            'Regions.countryCode'                       => 10,
         ]
     ];
 }

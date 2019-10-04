@@ -1154,7 +1154,7 @@ var dt = window.dt || {};
                });
            }
            dt.PopupManager.init();
-           dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
+           dt.Tracking.init('trendtours_exitwindow','UA-105970361-10');
            dt.triggerButton(e);
            if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
                dt.scrollUpDetect();
