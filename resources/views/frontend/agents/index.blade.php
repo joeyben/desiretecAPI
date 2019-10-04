@@ -47,6 +47,7 @@
                     <th>{{ trans('labels.frontend.agents.table.name') }}</th>
                     <th>{{ trans('labels.frontend.agents.table.status') }}</th>
                     <th>{{ trans('labels.frontend.agents.table.created_at') }}</th>
+                    <th>{{ trans('labels.frontend.agents.table.actions') }}</th>
                 </tr>
                 </thead>
             </table>
@@ -85,7 +86,8 @@
                 {data: 'id', name: '{{config('module.agents.table')}}.name'},
                 {data: 'name', name: '{{config('module.agents.table')}}.display_name'},
                 {data: 'status', name: '{{config('module.agents.table')}}.status'},
-                {data: 'created_at', name: '{{config('module.agents.table')}}.created_at'}
+                {data: 'created_at', name: '{{config('module.agents.table')}}.created_at'},
+                {data: 'actions', name: '{{config('module.agents.table')}}.actions'},
             ],
             order: [[4, "asc"]],
             searchDelay: 500,
@@ -124,7 +126,6 @@
             }
         });
     });
-
 
 </script>
 
