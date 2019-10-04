@@ -510,11 +510,11 @@ var dt = window.dt || {};
     dt.initCallbacks = dt.initCallbacks || [];
     dt.initCallbacks.push(function (popup) {
         exitIntent.init();
-        document.addEventListener('exitintent', function (e) {
+        document.addEventListener('exit-intent', function (e) {
             if(!exitIntent.checkCookie()) {
                 popup.show();
                 // set cookies
-                exitIntent.cookieManager.create("exitintent", "yes", exitIntent.cookieExp, exitIntent.sessionOnly);
+                exitIntent.cookieManager.create("exit_intent", "yes", exitIntent.cookieExp, exitIntent.sessionOnly);
                 var exitIntentNumber = exitIntent.cookieManager.get("exit_intent_number") ? Number(exitIntent.cookieManager.get("exit_intent_number")) + 1 : 1;
                 exitIntent.cookieManager.create("exit_intent_number", exitIntentNumber, exitIntent.cookieExp, exitIntent.sessionOnly);
             }
