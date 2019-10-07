@@ -434,8 +434,6 @@ var dt = window.dt || {};
                         break;
                 }
 
-                console.log('duration after', duration);
-
                 return duration;
             },
             'airport': function (form, formData) {
