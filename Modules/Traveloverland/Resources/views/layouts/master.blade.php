@@ -52,6 +52,7 @@
             dt.PopupManager.show();
             if(isMobile()){
                 $("body").addClass('mobile-layer');
+                dt.PopupManager.layerShown = true;
             }
         }
     </script>
