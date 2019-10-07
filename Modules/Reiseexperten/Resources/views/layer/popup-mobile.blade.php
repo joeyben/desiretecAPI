@@ -124,37 +124,37 @@
             </div>
 
             <div class="kwp-col-4 rangeslider-wrapper">
-                    <div class="kwp-form-group ">
-                          {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                          {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('reiseexperten::layer.placeholder.budget'), 'required' => 'required']) }}
-                    </div>
-                          <span class="text">&nbsp;</span>
-                          <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
+                <div class="kwp-form-group ">
+                    {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
+                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('reiseexperten::layer.placeholder.budget'), 'required' => 'required']) }}
+                </div>
+                <span class="text">&nbsp;</span>
+                <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
             </div>
 
             <div class="kwp-col-4 white-col stars">
-                    <div class="kwp-form-group">
-                             {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
-                             {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('reiseexperten::layer.placeholder.category')]) }}
+                <div class="kwp-form-group">
+                    {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
+                    {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('reiseexperten::layer.placeholder.category')]) }}
 
-                              <span class="text">ab 0 Sonnen</span>
-                              <div class="kwp-star-input">
-                                    <span class="kwp-star kwp-star-full" data-val="1"></span>
-                                    <span class="kwp-star" data-val="2"></span>
-                                    <span class="kwp-star" data-val="3"></span>
-                                    <span class="kwp-star" data-val="4"></span>
-                                    <span class="kwp-star" data-val="5"></span>
-                              </div>
-                               <script>dt.hotelStars();</script>
+                    <span class="text">ab 0 Sonnen</span>
+                    <div class="kwp-star-input">
+                        <span class="kwp-star kwp-star-full" data-val="1"></span>
+                        <span class="kwp-star" data-val="2"></span>
+                        <span class="kwp-star" data-val="3"></span>
+                        <span class="kwp-star" data-val="4"></span>
+                        <span class="kwp-star" data-val="5"></span>
                     </div>
+                    <script>dt.hotelStars();</script>
+                </div>
             </div>
 
             <div class="kwp-col-4 white-col catering">
-                    {{ Form::label('catering', trans('layer.general.catering'), ['class' => 'control-label']) }}
-                    <div class="kwp-custom-select">
-                       {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelerss']) }}
-                    </div>
-                 <span class="caret"></span>
+                {{ Form::label('catering', trans('layer.general.catering'), ['class' => 'control-label']) }}
+                <div class="kwp-custom-select">
+                    {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelerss']) }}
+                </div>
+                <span class="caret"></span>
             </div>
         </div>
 
@@ -239,43 +239,43 @@
             });
 
             $(".pax-more .button a").click(function(e) {
-                    e.preventDefault();
-                    $(this).parents('.pax-col').removeClass('open');
-                    var pax = $("#adults").val();
-                    var children_count = parseInt($("#kids").val());
-                    var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
+                e.preventDefault();
+                $(this).parents('.pax-col').removeClass('open');
+                var pax = $("#adults").val();
+                var children_count = parseInt($("#kids").val());
+                var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
 
-                    var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
-                    $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
-                    return false;
-             });
+                var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
+                $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
+                return false;
+            });
 
             $('#budgetRange').rangeslider({
-                        // Callback function
-                        polyfill: false,
-                        onInit: function() {
-                          $('.rangeslider__handle').on('mousedown touchstart mousemove touchmove', function(e) {
-                            e.preventDefault();
-                          })
-                        },
-                        fillClass: 'rangeslider__fill',
-                        onSlide: function(position, value) {
-                          if($(".rangeslider-wrapper .haserrors").length)
-                            $(".rangeslider-wrapper .haserrors").removeClass('haserrors');
+                // Callback function
+                polyfill: false,
+                onInit: function() {
+                    $('.rangeslider__handle').on('mousedown touchstart mousemove touchmove', function(e) {
+                        e.preventDefault();
+                    })
+                },
+                fillClass: 'rangeslider__fill',
+                onSlide: function(position, value) {
+                    if($(".rangeslider-wrapper .haserrors").length)
+                        $(".rangeslider-wrapper .haserrors").removeClass('haserrors');
 
-                          if(value === 10000){
-                            $(".rangeslider-wrapper .text").text("beliebig");
-                            $("#budget").val("beliebig");
-                          }else if(value === 100){
-                            $(".rangeslider-wrapper .text").html("&nbsp;");
-                            $("#budget").val("");
-                          }else{
-                            $(".rangeslider-wrapper .text").text("bis "+value+" €");
-                            $("#budget").val(""+value);
-                          }
-                          check_button();
-                        },
-              });
+                    if(value === 10000){
+                        $(".rangeslider-wrapper .text").text("beliebig");
+                        $("#budget").val("beliebig");
+                    }else if(value === 100){
+                        $(".rangeslider-wrapper .text").html("&nbsp;");
+                        $("#budget").val("");
+                    }else{
+                        $(".rangeslider-wrapper .text").text("bis "+value+" €");
+                        $("#budget").val(""+value);
+                    }
+                    check_button();
+                },
+            });
 
 
             $(document).ready(function(){
@@ -373,13 +373,13 @@
 
                 var range = parseInt($("#budget").val().replace('.',''));
                 if(range)
-                  $('input[type="range"]').val(range).change();
+                    $('input[type="range"]').val(range).change();
 
-               var pax = $("#adults").val();
-               var children_count = parseInt($("#kids").val());
-               var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
-               var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
-               $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
+                var pax = $("#adults").val();
+                var children_count = parseInt($("#kids").val());
+                var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
+                var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
+                $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
 
                 if($(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').addClass('error-button');
