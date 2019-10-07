@@ -664,10 +664,7 @@ var dt = window.dt || {};
                     return 'eil-mobile';
                 }else{
                     return this.getRandomElement([
-                        'eil-n1',
-                        'eil-n1',
-                        'eil-n2',
-                        'eil-n5'
+                        'eil-n1'
                     ]);
                 }
             },
@@ -1029,10 +1026,7 @@ var dt = window.dt || {};
                         ]);
                     }else{
                         return this.getRandomElement([
-                            'eil-n1',
-                            'eil-n1',
-                            'eil-n2',
-                            'eil-n5'
+                            'eil-n1'
                         ]);
                     }
                 }
