@@ -33,7 +33,7 @@
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">Anzahl Personen</label>
                     <span class="travelers dd-trigger">
-                        <span class="txt">2 Erwachsener</span>
+                        <span class="txt">1 Erwachsener</span>
                          <i class="fal fa-users not-triggered"></i>
                          <i class="fal fa-times triggered"></i>
                     </span>
@@ -146,7 +146,7 @@
                     <div class="kwp-col-4 white-col">
                         <div class="kwp-agb">
                             {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                            <p>Ich habe die <a href="https://www.novasol.de/faq/novasol_agb_deutsch/novasol_nutzungsbedingungen" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.novasol.de/faq/novasol_agb_deutsch/datenschutz" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                            <p>Ich habe die <a href="https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/pdf/tnb_traveloverland.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.travel-overland.de/service/kleingedruckte/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                         </div>
                     </div>
 
@@ -294,7 +294,7 @@
                 validateDuration();
                 var pax = $("#adults").val();
                 var children_count = parseInt($("#kids").val());
-                var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
+                var children = children_count > 0 ? (children_count == 1 ? " "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
                 var pets = $("#pets").val() !== "0" ? ", "+$( "#pets option:selected" ).text() : "";
                 var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
                 $(".travelers .txt").text(pax+" "+erwachsene+" "+children+ ""+pets);
