@@ -12,9 +12,9 @@
                 {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
                 {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('reiseexperten::layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
-                        @foreach ($errors->get('destination') as $error)
-                            <span class="error-input">{{ $error }}</span>
-                        @endforeach
+                    @foreach ($errors->get('destination') as $error)
+                        <span class="error-input">{{ $error }}</span>
+                    @endforeach
                 @endif
                 <i class="master-icon--location-fill"></i>
             </div>
@@ -23,9 +23,9 @@
                 {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
                 {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('reiseexperten::layer.placeholder.airport'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('airport'))
-                          @foreach ($errors->get('airport') as $error)
-                                <span class="error-input">{{ $error }}</span>
-                          @endforeach
+                    @foreach ($errors->get('airport') as $error)
+                        <span class="error-input">{{ $error }}</span>
+                    @endforeach
                 @endif
                 <i class="master-icon--aircraft-up"></i>
             </div>
@@ -157,7 +157,7 @@
 
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('reiseexperten::layer.general.catering'), ['class' => 'control-label required']) }}
-                    {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'selectpicker']) }}
+                {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'selectpicker']) }}
                 <i class="master-icon--chevron-down"></i>
             </div>
 
@@ -178,9 +178,9 @@
                 <i class="master-icon--mail"></i>
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
-                           @foreach ($errors->get('email') as $error)
-                                  <span class="error-input">{{ $error }}</span>
-                           @endforeach
+                    @foreach ($errors->get('email') as $error)
+                        <span class="error-input">{{ $error }}</span>
+                    @endforeach
                 @endif
             </div>
             <div class="kwp-col-4 white-col">
@@ -284,8 +284,8 @@
                         previousMonth: 'Vormonat',
                         nextMonth: 'Nächsten Monat',
                         months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag','Sonntag'],
-                        weekdaysShort: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
+                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
                     },
                     onSelect: function() {
                         dt.endDate.setDate(this.getDate()+1);
@@ -312,8 +312,8 @@
                         previousMonth: 'Vormonat',
                         nextMonth: 'Nächsten Monat',
                         months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag','Sonntag'],
-                        weekdaysShort: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
+                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
                     }
                 });
 
@@ -385,20 +385,21 @@
         <div class="kwp-row">
             <div class="kwp-col-12 white-col">
                 <div class="kwp-agb ">
-                @php
-                   $terms_class = 'dt_terms'
-                @endphp
+                    @php
+                        $terms_class = 'dt_terms'
+                    @endphp
 
-                @if ($errors->any() && $errors->get('terms'))
-                  @php
-                  $terms_class = 'dt_terms hasError'
-                  @endphp
-                @endif
+                    @if ($errors->any() && $errors->get('terms'))
+                        @php
+                            $terms_class = 'dt_terms hasError'
+                        @endphp
+                    @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                     <p>Ich habe die <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="#" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    <p>Ich habe die <a href="https://reiseexperten.reise-wunsch.com/pdfs/tnb_REISEEXPERTEN.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.reiseexperten.com/datenschutzerkl-rung-8470" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 {{ Form::close() }}
+
