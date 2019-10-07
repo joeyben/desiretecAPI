@@ -366,25 +366,37 @@
                                 <input class="data-content" value="{{$wish->airport}}">
                             </div>
                             <div class="col-md-3">
+                                <i class="fal fa-plane-arrival"></i>
+                                <input class="data-content" value="{{ $wish->destination }}">
+                            </div>
+                            <div class="col-md-3">
                                 <i class="fal fa-calendar-alt"></i>
                                 <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} @if ($wish->latest_return !== "0000-00-00") - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }} @endif">
                             </div>
                             <div class="col-md-3">
-                                <i class="fal fa-stopwatch"></i>
-                                <input class="data-content" value="{{ $wish->duration }}">
-                            </div>
-
-                            <div class="col-md-3">
-                                <i class="fal fa-plane-arrival"></i>
-                                <input class="data-content" value="{{ $wish->destination }}">
+                                <i class="fal fa-star"></i>
+                                @switch($wish->category)
+                                    @case(1)
+                                    <input class="data-content" value="Economy">
+                                    @break
+                                    @case(2)
+                                    <input class="data-content" value="Premium Economy">
+                                    @break
+                                    @case(3)
+                                    <input class="data-content" value="Business">
+                                    @break
+                                    @case(4)
+                                    <input class="data-content" value="First">
+                                    @break
+                                @endswitch
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-users"></i>
                                 <input class="data-content" value="{{ $wish->adults }}">
                             </div>
                             <div class="col-md-3">
-                                <i class="fal fa-star"></i>
-                                <input class="data-content" value="{{ $wish->kids }} Sterne">
+                                <i class="fal fa-child"></i>
+                                <input class="data-content" value="{{ $wish->kids }}">
                             </div>
                             @if ($logged_in_user->hasRole('User') && $is_owner && false)
                                 <button class="secondary-btn{{ $callbackInactivClass }}">Daten andern</button>
