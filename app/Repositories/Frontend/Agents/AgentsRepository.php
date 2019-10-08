@@ -137,7 +137,9 @@ class AgentsRepository extends BaseRepository
      */
     public function uploadImage($input)
     {
-        $input = '';
+        if(!is_array($input)) {
+            $input = [];
+        }
 
         if (isset($input['avatar']) && !empty($input['avatar'])) {
             $avatar = $input['avatar'];
