@@ -5,6 +5,10 @@
 @endphp
 @extends('frontend.layouts.app')
 
+@section('title')
+    {{ ucfirst(getCurrentWhiteLabelName()) }} {{ trans('wish.details.tab_title') }}
+@endsection
+
 @section('content')
 <section class="section-top">
 
