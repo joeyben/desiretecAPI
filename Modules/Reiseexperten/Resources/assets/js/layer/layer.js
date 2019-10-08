@@ -657,10 +657,7 @@ var dt = window.dt || {};
                 return arr[Math.floor(Math.random() * arr.length)];
             },
             getVariant: function () {
-                var regex = new RegExp("airtours.de");
-                if(regex.test(String(window.location))) {
-                    return 'eil-at';
-                }else if(isMobile()){
+                if(isMobile()){
                     return 'eil-mobile';
                 }else{
                     return this.getRandomElement([
@@ -1020,10 +1017,6 @@ var dt = window.dt || {};
                 getVariant: function () {
                     if(isMobile()){
                         return 'eil-mobile';
-                    }else if(getUrlParams('utm_source') && getUrlParams('utm_source') == 'social'){
-                        return this.getRandomElement([
-                            'eil-n1-social'
-                        ]);
                     }else{
                         return this.getRandomElement([
                             'eil-n1'
