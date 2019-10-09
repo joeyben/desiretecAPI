@@ -2,7 +2,7 @@
 
 return [
     'name' => 'FN',
-    'id'   => 51,
+    'id'   => 161,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_fn',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
