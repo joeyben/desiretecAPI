@@ -12,9 +12,17 @@
 
 //Route::group(['domain' => 'localhost'], function () {
     Route::get('/', 'FrontendController@index')->name('index');
+    Route::get('/get-all-destinations', 'FrontendController@getAllDestinations');
+    Route::get('/get-all-airports', 'FrontendController@getAllAirports');
     Route::get('macros', 'FrontendController@macros')->name('macros');
 //Route::post('/get/states', 'FrontendController@getStates')->name('get.states');
 //Route::post('/get/cities', 'FrontendController@getCities')->name('get.cities');
+
+
+
+Route::get('/test', function(){
+    return 'test';
+});
 
     /*
      * These frontend controllers require the user to be logged in

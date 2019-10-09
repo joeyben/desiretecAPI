@@ -10,7 +10,7 @@
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
                 {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('reiseexperten::layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size destination','autocomplete' => "off", 'placeholder' => trans('reiseexperten::layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -21,7 +21,7 @@
 
             <div class="kwp-col-4">
                 {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
-                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('reiseexperten::layer.placeholder.airport'), 'required' => 'required']) }}
+                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size airport','autocomplete' => "off", 'placeholder' => trans('reiseexperten::layer.placeholder.airport'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('airport'))
                     @foreach ($errors->get('airport') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -263,8 +263,12 @@
                 },
             });
 
+
+            var allDestinations = [];
             $(document).ready(function(){
                 $('.selectpicker').selectpicker();
+
+                autocomplete();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -380,6 +384,36 @@
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
             }
+
+            /**
+             * Autocomplete
+             */
+            var autocomplete = function(){
+                /* Destinations */
+                $.get('get-all-destinations', function(data){
+                    $("#destination").typeahead({
+                        autoSelect: true,
+                        minLength: 3,
+                        delay: 200,
+                        source: data
+                    });
+                });
+                /* END Destinations */
+
+                /* Airports */
+                $.get('get-all-airports', function(data){
+                    $("#airport").typeahead({
+                        autoSelect: true,
+                        minLength: 3,
+                        delay: 200,
+                        source: data
+                    });
+                });
+                /* END Airports */
+
+            }
+
+
         </script>
 
         <div class="kwp-row">
