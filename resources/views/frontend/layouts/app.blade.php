@@ -41,15 +41,7 @@
 
     @yield('after-styles')
         <style type="text/css">
-            .primary-btn {
-                background: {{ $wish->whitelabel->whitelabelColor }} !important;
 
-
-                @if($wish->whitelabel->whitelabelColor == 'Reiseexperten')
-                    background: #8FD5F7 !important;
-                    border: 1px solid #8FD5F7 !important;
-                @endif
-             }
         </style>
         <!-- Scripts -->
         <script>
