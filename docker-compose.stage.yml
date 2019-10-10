@@ -15,7 +15,7 @@ services:
         - VIRTUAL_HOST=mvp.desiretec.com,novasol.wunsch-service.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com,trendtours.reise-wunsch.com
         - APP_NAME="desiretec MVP"
         - APP_ENV=production
-        - APP_KEY=base64:33NHYEIdCmq8RqAMQYLXCYGUCbKJkOAi5FZNuTvullc=
+        - APP_KEY=${APP_KEY_STAGE}
         - APP_DEBUG=false
         - APP_LOG=daily
         - LOG_CHANNEL=daily
