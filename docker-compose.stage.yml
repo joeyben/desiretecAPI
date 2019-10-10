@@ -5,6 +5,8 @@ services:
       build:
         context: .
         dockerfile: Dockerfile
+        args:
+          - APP_KEY=${APP_KEY_STAGE}
       depends_on:
         - mariadb
         - redis
