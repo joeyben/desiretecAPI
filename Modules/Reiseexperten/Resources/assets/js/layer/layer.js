@@ -405,7 +405,8 @@ var dt = window.dt || {};
                 return r[1];
             },
             name: 'Reiseexperten IBE',
-            matchesUrl: 'www.reiseexperten.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
+            //matchesUrl: 'www.reiseexperten.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
+            matchesUrl: '',
             filterFormSelector: '#ibeContainer',
             dictionaries: {
                 'catering': {
