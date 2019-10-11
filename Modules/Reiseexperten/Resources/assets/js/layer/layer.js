@@ -405,7 +405,7 @@ var dt = window.dt || {};
                 return r[1];
             },
             name: 'Reiseexperten IBE',
-            matchesUrl: '',
+            matchesUrl: '', 
             filterFormSelector: '#ibeContainer',
             dictionaries: {
                 'catering': {
