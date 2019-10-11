@@ -439,140 +439,56 @@ var dt = window.dt || {};
             },
             filterDataDecoders: {
                 'catering': function (form, formData) {
-                    var lowestBoardWeigth = 100,
-                        lowestBoard = null,
-                        boardTypes = formData.boardTypes
-                    ;
-
-                    if (!boardTypes || !boardTypes.length) {
-                        return null;
-                    }
-
-                    for (var i = 0; i < boardTypes.length; ++i) {
-                        var board = boardTypes[i],
-                            weight = this.dictionaries.cateringWeight[board]
-                        ;
-
-                        if (!weight) {
-                            continue;
-                        }
-
-                        if (weight < lowestBoardWeigth) {
-                            lowestBoard = board;
-                            lowestBoardWeigth = weight;
-                        }
-                    }
-                    return this.dictionaryTransformValue(this.dictionaries.catering, lowestBoard);
+                    var catering = getUrlParams('catering') ? getUrlParams('catering') : '';
+                    return catering;
                 },
                 'hotel_category': function (form, formData) {
-                    return formData.category;
+                    var category = getUrlParams('category') ? getUrlParams('category') : '';
+                    return category;
                 },
                 'destination': function (form, formData) {
-                    var dest = null;
-
-                    if (utag_data.destination_country_searched && this.getScope().IbeApi.state.stepNr == 4) {
-                        dest = utag_data.destination_country_searched;
-
-                        if (dest === 'Vereinigte Arabische Emirate') {
-                            dest = decodeURIComponent(utag_data.destination_city_searched);
-                        }
-
-                        if(dest === 'Thailand') {
-                            dest = decodeURIComponent(utag_data.search_destination);
-
-                            if(dest == 'undefined') {
-                                dest = 'Thailand';
-                            }
-                        }
-
-                    } else if (formData.destination) {
-                        dest = formData.destination.name;
-                    }
-
-                    if (dest && dest.trim() == 'Portugal') {
-                        return 'Algarve';
-                    }
-
-                    return dest;
+                    var destination = getUrlParams('destination') ? getUrlParams('destination') : '';
+                    return destination;
                 },
                 'pax': function (form, formData) {
-                    var adults = 0;
-                    $.each(formData.travellers,function(key,value){
-                        adults += parseInt(value.adults);
-                    });
-                    return adults;
+                    var pax = getUrlParams('pax') ? getUrlParams('pax') : '';
+                    return pax;
                 },
                 'budget': function (form, formData) {
-                    return formData.maxPrice;
+                    var budget = getUrlParams('budget') ? getUrlParams('budget') : '';
+                    return budget;
                 },
                 'children': function (form, formData) {
-                    var childs = 0;
-                    $.each(formData.travellers,function(key,value){
-                        childs += parseInt(value.children.length);
-                    });
-                    childs = childs > 3 ? 3 : childs;
-                    return childs;
+                    var kids = getUrlParams('kids') ? getUrlParams('kids') : '';
+                    return kids;
                 },
                 'age_1': function (form, formData) {
-                    var ages = [];
-                    $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
-
-                        $.each(value.children,function(key_,children){
-                            ages.push(children);
-                        });
-
-                    });
-                    return ages.length > 0 ? ages[0] : 0;
+                    var age1 = getUrlParams('age1') ? getUrlParams('age1') : '';
+                    return age1;
                 },
                 'age_2': function (form, formData) {
-                    var ages = [];
-                    $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
-
-                        $.each(value.children,function(key_,children){
-                            ages.push(children);
-                        });
-
-                    });
-                    return ages.length > 1 ? ages[1] : 0;
+                    var age2 = getUrlParams('age2') ? getUrlParams('age2') : '';
+                    return age2;
                 },
                 'age_3': function (form, formData) {
-                    var ages = [];
-                    $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
-
-                        $.each(value.children,function(key_,children){
-                            ages.push(children);
-                        });
-
-                    });
-                    return ages.length > 2 ? ages[2] : 0;
+                    var age3 = getUrlParams('age3') ? getUrlParams('age3') : '';
+                    return age3;
                 },
                 'earliest_start': function (form, formData) {
-                    return this.formatDate(formData.startDate);
+                    var dateFrom = getUrlParams('from') ? getUrlParams('from') : '';
+                    return dateFrom;
                 },
                 'latest_return': function (form, formData) {
-                    return this.formatDate(formData.endDate);
+                    var dateTo = getUrlParams('to') ? getUrlParams('to') : '';
+                    return dateTo;
                 },
                 'duration': function (form, formData) {
-                    if (formData.duration.trim() === 'default') {
-                        return null;
-                    }
-
-                    return formData.duration;
-                },
-                'extra': function (form, formData) {
-                    return formData.environmentAttributes.concat(formData.familyAttributes).concat(formData.sportAttributes).join(',');
-                },
-                'room_type': function (form, formData) {
-                    return formData.roomTypes.join(',');
-                },
-                'cities': function (form, formData) {
-                    return formData.cities.join(',');
+                    var duration = getUrlParams('duration') ? getUrlParams('duration') : '';
+                    return duration;
                 },
                 'airport': function (form, formData) {
-                    var self = this;
-                    return formData.departureAirports.map(function (airport) {
-                        return self.getAirportName(airport);
-                    }).join(', ');
+                    var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
+                    return airport;
                 },
                 'is_popup_allowed': function (form, formData) {
                     //var step = this.getScope().IbeApi.state.stepNr;
@@ -580,20 +496,7 @@ var dt = window.dt || {};
                 }
             },
             getCountryId: function () {
-                var destination = this.getScope().filters.state.destination,
-                    countryId;
-
-                if (!destination) {
-                    return null;
-                }
-
-                if (destination.regionId) {
-                    countryId = this.getCountryIdFromRegionId(destination.regionId);
-                } else {
-                    countryId = destination.countryId || this.getScope().IbeApi.state.data.country.countryId;
-                }
-
-                return countryId;
+                return "";
             },
             formatDate: function (d) {
                 if (!d) {
@@ -610,11 +513,8 @@ var dt = window.dt || {};
                 return pad(d.getDate(), 2) + '.' + pad(d.getMonth() + 1) + '.' + d.getFullYear();
             },
             getScope: function () {
-                if (!this.scope) {
-                    this.scope = angular.element(this.filterFormSelector).scope();
-                }
 
-                return this.scope;
+                return null;
             },
             getAirportName: function (code) {
                 if (!this.airports) {
@@ -649,8 +549,8 @@ var dt = window.dt || {};
                 return this.regions[code];
             },
             getTripData: function () {
-                var form = $(this.filterFormSelector),
-                    formData = this.getScope().filters.state;
+                var form = null,
+                    formData = null;
 
                 return this.decodeFilterData(form, formData);
             },
