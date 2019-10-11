@@ -289,10 +289,9 @@
 
 
         <div class="col-md-12 s2-second">
-
             <div class="col-md-3">
-                <i class="fal fa-minus"></i>
-                <input class="data-content">
+                <i class="fal fa-plane-arrival"></i>
+                <input class="data-content" value="{{ $wish->destination }}">
             </div>
             <div class="col-md-3">
                 <i class="fal fa-calendar-alt"></i>
@@ -303,14 +302,6 @@
                 <input class="data-content" value="{{ $wish->duration }}">
             </div>
             <div class="col-md-3">
-                <i class="fal fa-usd-circle"></i>
-                <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
-            </div>
-            <div class="col-md-3">
-                <i class="fal fa-plane-arrival"></i>
-                <input class="data-content" value="{{ $wish->destination }}">
-            </div>
-            <div class="col-md-3">
                 <i class="fal fa-users"></i>
                 <input class="data-content" value="{{ $wish->adults }}">
             </div>
@@ -319,11 +310,11 @@
                 <input class="data-content" value="{{ $wish->kids }}">
             </div>
             <div class="col-md-3">
-                <i class="fal fa-dog"></i>
-                <input class="data-content" value="{{ trans('layer.pets.-') }}">
+                <i class="fal fa-home-alt"></i>
+                <input class="data-content" value="{{ $class_arr[$wish->category] }}">
             </div>
             @if ($logged_in_user->hasRole('User'))
-            <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button>
+            <!--button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal" data-target="#edit-wish">Daten andern</button-->
             @endif
         </div>
 
@@ -359,8 +350,8 @@
                         </div>
                         <div class="col-md-12 s2-second">
                             <div class="col-md-3">
-                                <i class="fal fa-minus"></i>
-                                <input class="data-content" >
+                                <i class="fal fa-plane-arrival"></i>
+                                <input class="data-content" value="{{ $wish->destination }}">
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-calendar-alt"></i>
@@ -371,15 +362,6 @@
                                 <input class="data-content" value="{{ $wish->duration }}">
                             </div>
                             <div class="col-md-3">
-                                <i class="fal fa-usd-circle"></i>
-                                <input class="data-content" value="{{  number_format($wish->budget, 0, ',', '.') }}€">
-                            </div>
-
-                            <div class="col-md-3">
-                                <i class="fal fa-plane-arrival"></i>
-                                <input class="data-content" value="{{ $wish->destination }}">
-                            </div>
-                            <div class="col-md-3">
                                 <i class="fal fa-users"></i>
                                 <input class="data-content" value="{{ $wish->adults }}">
                             </div>
@@ -388,8 +370,8 @@
                                 <input class="data-content" value="{{ $wish->kids }} Sterne">
                             </div>
                             <div class="col-md-3">
-                                <i class="fal fa-dog"></i>
-                                <input class="data-content" value="{{ trans('layer.pets.-') }}">
+                                <i class="fal fa-home-alt"></i>
+                                <input class="data-content" value="{{ $wish->category }}">
                             </div>
                             @if ($logged_in_user->hasRole('User') && $is_owner)
                                 <button class="secondary-btn{{ $callbackInactivClass }}">Daten andern</button>

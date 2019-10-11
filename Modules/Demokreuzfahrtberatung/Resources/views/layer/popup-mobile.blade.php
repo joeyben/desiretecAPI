@@ -17,17 +17,6 @@
                 @endif
             </div>
 
-            <div class="kwp-col-4">
-                {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
-                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.airport'), 'required' => 'required']) }}
-                <i class="fal fa-home"></i>
-                @if ($errors->any() && $errors->get('airport'))
-                    @foreach ($errors->get('airport') as $error)
-                        <span class="error-input">{{ $error }}</span>
-                    @endforeach
-                @endif
-            </div>
-
             <div class="kwp-col-4 duration-col main-col">
                 <div class="kwp-form-group duration-group">
                     <label for="duration-time" class="required">Wann & wie lange?</label>
@@ -78,7 +67,7 @@
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">Wer reist mit?</label>
                     <span class="travelers dd-trigger">
-                        <span class="txt">2 Erwachsener</span>
+                        <span class="txt">1 Erwachsener</span>
                          <i class="fal fa-users not-triggered"></i>
                          <i class="fal fa-times triggered"></i>
                     </span>
@@ -100,15 +89,25 @@
                             </div>
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
-                                    <label class="main-label">Alter (Hinreise)</label>
-                                    <div class="kwp-col-3">
-                                        <i class="fal fa-plane-arrival"></i>
+                                    <label class="main-label">Alter der Kinder bei Rückreise</label>
+                                    <input name="ages" type="hidden">
+                                    <div id="age_1" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
-                                        <i class="fal fa-plane-arrival"></i>
+                                    <div id="age_2" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
-                                        <i class="fal fa-plane-arrival"></i>
+                                    <div id="age_3" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
 
                                 </div>
@@ -123,38 +122,11 @@
                 </div>
             </div>
 
-            <div class="kwp-col-4 rangeslider-wrapper">
-                    <div class="kwp-form-group ">
-                          {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                          {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('demokreuzfahrtberatung::layer.placeholder.budget'), 'required' => 'required']) }}
-                    </div>
-                          <span class="text">&nbsp;</span>
-                          <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
-            </div>
-
-            <div class="kwp-col-4 white-col stars">
-                    <div class="kwp-form-group">
-                             {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
-                             {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('demokreuzfahrtberatung::layer.placeholder.category')]) }}
-
-                              <span class="text">ab 0 Sonnen</span>
-                              <div class="kwp-star-input">
-                                    <span class="kwp-star kwp-star-full" data-val="1"></span>
-                                    <span class="kwp-star" data-val="2"></span>
-                                    <span class="kwp-star" data-val="3"></span>
-                                    <span class="kwp-star" data-val="4"></span>
-                                    <span class="kwp-star" data-val="5"></span>
-                              </div>
-                               <script>dt.hotelStars();</script>
-                    </div>
-            </div>
-
-            <div class="kwp-col-4 white-col catering">
-                    {{ Form::label('catering', trans('layer.general.catering'), ['class' => 'control-label']) }}
-                    <div class="kwp-custom-select">
-                       {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelerss']) }}
-                    </div>
-                 <span class="caret"></span>
+            <div class="kwp-col-4 destination">
+                {{ Form::label('klasse', trans('demokreuzfahrtberatung::layer.general.klasse'), ['class' => 'control-label required']) }}
+                <div class="kwp-custom-select">
+                    {{ Form::select('category', $class_arr, key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size']) }}
+                </div>
             </div>
         </div>
 

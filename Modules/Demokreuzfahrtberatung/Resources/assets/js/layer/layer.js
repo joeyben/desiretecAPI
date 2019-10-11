@@ -21,32 +21,32 @@ var exitIntent = window.exitIntent || {};
 
         var texts = {
             'eil-n1-social': {
-                header: 'Dürfen wir Dich beraten?',
-                body: 'Unsere besten Reiseberater helfen Dir gerne, Deine persönliche Traumreise zu finden. Probiere es einfach aus! Natürlich kostenlos und unverbindlich.'
+                header: 'Lieber Webseiten-Besucher',
+                body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-n1': {
-                header: 'Dürfen wir Sie beraten?',
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
+                header: 'Lieber Webseiten-Besucher',
+                body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-n2': {
-                header: 'Dürfen wir Sie beraten?',
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
+                header: 'Lieber Webseiten-Besucher',
+                body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-n3': {
-                header: 'Dürfen wir Ihnen helfen?',
-                body: 'Einer unserer erfahrenen Reiseberater hilft Ihnen gerne, die für Sie passende Reise zu finden. Probieren Sie es einfach kostenlos und unverbindlich aus!'
+                header: 'Lieber Webseiten-Besucher',
+                body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-n4': {
-                header: 'Dürfen wir Ihnen helfen?',
-                body: 'Einer unserer erfahrenen Reiseberater hilft Ihnen gerne, die für Sie passende Reise zu finden. Probieren Sie es einfach kostenlos und unverbindlich aus!'
+                header: 'Lieber Webseiten-Besucher',
+                body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-n5': {
-                header: 'Dürfen wir Sie beraten?',
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
+                header: 'Lieber Webseiten-Besucher',
+                body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-mobile': {
                 header: mobileHeader,
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden!'
+                body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             }
         };
 
@@ -54,6 +54,7 @@ var exitIntent = window.exitIntent || {};
             '<div class="kwp-header kwp-variant-' + variant + '">' +
             '<div class="kwp-close-button kwp-close"></div>' +
             '<div class="kwp-overlay"></div>' +
+            '<div class="kwp-logo"></div>' +
             '<div class="kwp-header-content">' +
             '<h1>' +
             texts[variant].header + ' <br/>' +
@@ -1213,40 +1214,48 @@ var exitIntent = window.exitIntent || {};
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 85)+"px"});
         });
 
-        dt.childrenAges = function () {
-            (function ($, children, age) {
-                function update() {
-                    var val = $(children).val();
+    dt.childrenAges = function () {
+        (function ($, children, age) {
+            function update() {
+                var val = $(children).val();
 
-                    if (val) {
-                        $('.kwp-content').addClass('kwp-show-ages');
-                    } else {
-                        $('.kwp-content').removeClass('kwp-show-ages');
-                    }
-
-                    var i;
-
-                    for (i = 1; i <= 3; ++i) {
-
-                        if (i <= val) {
-                            $(age + i).closest('.kwp-custom-select').show();
-                        } else {
-                            $(age + i).val('').closest('.kwp-custom-select').hide();
-                        }
-
-                        if(i == val){
-                            $(age + i).closest('.kwp-col-3').addClass('last');
-                        }else{
-                            $(age + i).closest('.kwp-col-3').removeClass('last');
-                        }
-                    }
-
+                if (val>0) {
+                    $('.kwp-col-ages').addClass('kwp-show-ages');
+                } else {
+                    $('.kwp-col-ages').removeClass('kwp-show-ages');
                 }
 
-                $(children).on('change keydown blur', update);
-                update();
-            })(jQuery, '#children', '#age_');
-        };
+                var i;
+
+                for (i = 1; i <= 3; ++i) {
+
+                    if (i <= val) {
+                        $(age + i).find('.kwp-custom-select').show();
+                    } else {
+                        $(age + i +' select').val('').find('.kwp-custom-select').hide();
+                        $(age + i).find('.kwp-custom-select').hide();
+                    }
+
+                    if(i == val){
+                        $(age + i).closest('.kwp-col-3').addClass('last');
+                    }else{
+                        $(age + i).closest('.kwp-col-3').removeClass('last');
+                    }
+                }
+                $( "select[name='ages1']" ).change(function() {
+                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                });
+                $( "select[name='ages2']" ).change(function() {
+                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                });
+                $( "select[name='ages3']" ).change(function() {
+                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                });
+            }
+            $(children).on('change keydown blur', update);
+            update();
+        })(jQuery, '#kids', '#age_');
+    };
 
         dt.hotelStars = function () {
             function restoreValue() {

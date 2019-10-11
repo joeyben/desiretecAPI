@@ -1,7 +1,7 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
-    Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
+    Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. <br>Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.
 </div>
 {{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
@@ -18,20 +18,6 @@
                 @endif
                 <i class="master-icon--location-fill"></i>
             </div>
-
-            <div class="kwp-col-4">
-                {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
-                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('demokreuzfahrtberatung::layer.placeholder.airport'), 'required' => 'required']) }}
-                @if ($errors->any() && $errors->get('airport'))
-                          @foreach ($errors->get('airport') as $error)
-                                <span class="error-input">{{ $error }}</span>
-                          @endforeach
-                @endif
-                <i class="master-icon--aircraft-up"></i>
-            </div>
-
-        </div>
-        <div class="kwp-row">
 
             <div class="kwp-col-4 duration-col main-col">
                 <div class="kwp-form-group duration-group">
@@ -79,11 +65,14 @@
                 </div>
             </div>
 
+        </div>
+        <div class="kwp-row">
+
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                     <span class="travelers dd-trigger">
-                        <span class="txt">2 Erwachsener</span>
+                        <span class="txt">1 Erwachsener</span>
                          <i class="master-icon--user-family not-triggered"></i>
                          <i class="master-icon--close triggered"></i>
                     </span>
@@ -105,15 +94,25 @@
                             </div>
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
-                                    <label class="main-label">Alter (Hinreise)</label>
-                                    <div class="kwp-col-3">
+                                    <label class="main-label">Alter der Kinder bei Rückreise</label>
+                                    <input name="ages" type="hidden">
+                                    <div id="age_1" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
+                                    <div id="age_2" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
+                                    <div id="age_3" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
 
                                 </div>
@@ -127,40 +126,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="kwp-row">
-            <div class="kwp-col-3 rangeslider-wrapper">
-                <div class="kwp-form-group ">
-                    {{ Form::label('budget', trans('demokreuzfahrtberatung::layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('demokreuzfahrtberatung::layer.placeholder.budget'), 'required' => 'required']) }}
-                </div>
-                <span class="text">&nbsp;</span>
-                <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
-            </div>
-
-            <div class="kwp-col-3 white-col stars">
-                <div class="kwp-form-group">
-                    {{ Form::label('category', trans('demokreuzfahrtberatung::layer.general.category'), ['class' => 'control-label required']) }}
-                    {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('demokreuzfahrtberatung::layer.placeholder.category')]) }}
-
-                    <span class="text">ab 0 Sonnen</span>
-                    <div class="kwp-star-input">
-                        <span class="kwp-star kwp-star-full" data-val="1"></span>
-                        <span class="kwp-star" data-val="2"></span>
-                        <span class="kwp-star" data-val="3"></span>
-                        <span class="kwp-star" data-val="4"></span>
-                        <span class="kwp-star" data-val="5"></span>
-                    </div>
-                    <script>dt.hotelStars();</script>
+            <div class="kwp-col-4 destination">
+                    {{ Form::label('klasse', trans('demokreuzfahrtberatung::layer.general.klasse'), ['class' => 'control-label required']) }}
+                <div class="kwp-custom-select">
+                    {{ Form::select('category', $class_arr, key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size']) }}
                 </div>
             </div>
-
-            <div class="kwp-col-3 white-col catering">
-                {{ Form::label('catering', trans('demokreuzfahrtberatung::layer.general.catering'), ['class' => 'control-label required']) }}
-                    {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'selectpicker']) }}
-                <i class="master-icon--chevron-down"></i>
-            </div>
-
         </div>
 
         <div class="kwp-row">
@@ -380,6 +351,7 @@
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
             }
+
         </script>
 
         <div class="kwp-row">
