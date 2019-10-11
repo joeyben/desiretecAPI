@@ -15,8 +15,10 @@ Route::group(['domain' => $domain], function () {
         Route::get('show', 'DemokreuzfahrtberatungController@show');
         Route::get('store', 'DemokreuzfahrtberatungController@store')->name('store');
         Route::get('wish/{wish}/{token}', 'DemokreuzfahrtberatungWishesController@details')->name('wish.details');
+        Route::get('wish/{wish}', 'DemokreuzfahrtberatungWishesController@view')->name('wish.view');
         Route::get('getwish/{wish}', 'DemokreuzfahrtberatungWishesController@getWish')->name('getWish');
         Route::get('wishlist/{token}', 'DemokreuzfahrtberatungWishesController@validateTokenList');
+        Route::get('wishlist', 'DemokreuzfahrtberatungWishesController@wishList')->name('list');
     });
 });
 

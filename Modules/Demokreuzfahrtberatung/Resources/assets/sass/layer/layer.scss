@@ -28,6 +28,10 @@ $fontcolor: #303030;
   }
 }
 
+.kwp-col-ages.kwp-show-ages{
+  display: block;
+}
+
 .kwp-close-button {
   cursor: pointer;
   width: 39px;
@@ -533,13 +537,13 @@ ul.kwp-form-errors {
 
 .kwp-logo {
   display: block;
-  height: 50px;
-  background: transparent url(https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/1568034687logo%20Reiseexperten.png) no-repeat left top;
+  height: 65px;
+  background: transparent url(../../images/layer/Logo-kreuzfahrtberaung-signet-quadrat.png) no-repeat left top;
   /*******/
   position: absolute;
   width: 100%;
   left: 0;
-  background-size: 120px;
+  background-size: 70px;
 }
 
 
@@ -573,15 +577,15 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/kreuzfahrtberatung-bora-bora-startseite.jpg) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/kreuzfahrtberatung-bora-bora-startseite.jpg) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
-    background-image: url(../../images/layer/visual_ipad_smile_TUI.jpg);
+    background-image: url(../../images/layer/kreuzfahrtberatung-bora-bora-startseite.jpg);
 
     .kwp-header-content {
       p {
@@ -1221,6 +1225,7 @@ p.kwp-info {
         padding: 5px 20px;
         border-bottom: 1px solid $master-blue;
         font-size: 16px;
+        line-height: 25px;
       }
 
       .kwp-form-errors{
@@ -1265,7 +1270,7 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#092a5e;
+        color:#fff;
         padding: 8px 0;
         font-weight: bold;
         font-family: $altfont;

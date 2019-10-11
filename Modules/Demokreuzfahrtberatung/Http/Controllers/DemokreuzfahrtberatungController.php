@@ -18,7 +18,10 @@ class DemokreuzfahrtberatungController extends Controller
     protected $adults = [];
     protected $kids = [];
     protected $catering = [];
+    protected $class = [];
     protected $duration = [];
+    protected $ages = [];
+
 
     private $whitelabelId;
 
@@ -40,7 +43,9 @@ class DemokreuzfahrtberatungController extends Controller
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
+        $this->class = $categories->getChildrenFromSlug('slug', 'cabintype');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->whitelabelId = \Config::get('demokreuzfahrtberatung.id');
     }
 
@@ -77,6 +82,8 @@ class DemokreuzfahrtberatungController extends Controller
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
+            'class_arr'    => $this->class,
+            'ages_arr'     => $this->ages,
             'request' => $request->all()
         ])->render();
 
@@ -103,6 +110,8 @@ class DemokreuzfahrtberatungController extends Controller
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
+                'ages_arr'     => $this->ages,
+                'class_arr'    => $this->class,
                 'request' => $request->all()
             ])->render();
 
@@ -172,7 +181,7 @@ class DemokreuzfahrtberatungController extends Controller
         $request->merge(['featured_image' => 'bg.jpg']);
 
         $new_wish = $wish->create(
-            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'),
+            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms','airport','budget','ages1','ages2','ages3'),
              $this->whitelabelId
         );
 

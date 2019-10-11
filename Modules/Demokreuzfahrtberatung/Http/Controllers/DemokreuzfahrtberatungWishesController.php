@@ -34,6 +34,8 @@ class DemokreuzfahrtberatungWishesController extends Controller
     protected $adults = [];
     protected $kids = [];
     protected $duration = [];
+    protected $ages = [];
+    protected $class = [];
     protected $categories;
     protected $category = [
         '1'  => 1,
@@ -76,6 +78,8 @@ class DemokreuzfahrtberatungWishesController extends Controller
         $this->whitelabelId = \Config::get('demokreuzfahrtberatung.id');
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
+        $this->class = $categories->getChildrenFromSlug('slug', 'cabintype');
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->categories = $categories;
     }
@@ -119,6 +123,8 @@ class DemokreuzfahrtberatungWishesController extends Controller
             'kids_arr'     => $this->kids,
             'duration_arr' => $this->duration,
             'adults_arr'   => $this->adults,
+            'class_arr'    => $this->class,
+            'ages_arr'     => $this->ages,
             'is_owner'            => $isOwner
         ]);
 
@@ -160,7 +166,7 @@ class DemokreuzfahrtberatungWishesController extends Controller
     public function getWish(Wish $wish)
     {
         return response()->json($wish->only(
-            ['destination', 'earliest_start', 'latest_return', 'duration', 'adults', 'kids', 'budget']
+            ['destination', 'earliest_start', 'latest_return', 'duration', 'adults', 'kids', 'category']
         ));
     }
 
