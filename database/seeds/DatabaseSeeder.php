@@ -33,5 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LanguagesDatabaseSeeder::class);
 
         Model::reguard();
+        $this->call(TTRegionsTableSeeder::class);
     }
 }

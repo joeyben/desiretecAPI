@@ -47,7 +47,7 @@ class AutooffersController extends Controller
      * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
      */
     private $autooffers;
-
+    private $TTautooffers;
     /**
      * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
      */
@@ -55,11 +55,13 @@ class AutooffersController extends Controller
 
     /**
      * @param \Modules\Autooffers\Repositories\AutooffersRepository $autooffers
+     * @param \Modules\Autooffers\Repositories\AutooffersTTRepository $autooffers
      * @param \Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository $rules
      */
-    public function __construct(AutooffersRepository $autooffers, EloquentAutooffersRepository $rules)
+    public function __construct(AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers, EloquentAutooffersRepository $rules)
     {
         $this->autooffers = $autooffers;
+        $this->TTautooffers = $TTautooffers;
         $this->rules = $rules;
     }
 
@@ -96,8 +98,9 @@ class AutooffersController extends Controller
         $rules = $this->rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
         //dd(getRegionCode($wish->airport, 0));
         $this->autooffers->saveWishData($wish);
-        $response = $this->autooffers->getTrafficsData();
-        $this->autooffers->storeMany($response, $wish->id, $rules);
+        //$response = $this->autooffers->getTrafficsData();
+        $response = $this->TTautooffers->getTTData();
+        $this->TTautooffers->storeMany($response, $wish->id, $rules);
 
         return redirect()->to('offer/list/' . $wish->id);
     }

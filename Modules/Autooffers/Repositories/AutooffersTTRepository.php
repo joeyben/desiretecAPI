@@ -69,6 +69,10 @@ class AutooffersTTRepository extends BaseRepository
 
     protected $giataIds;
 
+    protected $data;
+
+    protected $offers;
+
     protected $tourOperatorList = '';
 
     public function model()
@@ -102,49 +106,49 @@ class AutooffersTTRepository extends BaseRepository
         $curl = curl_init();
 
         $xmlreq='{
- "PackageOffersRQ": {
-  "RQ_Metadata": {
-   "Language": "de-DE"
-  },
-"CurrencyCode": '.$this->currency.',
-  "Travellers": {
-   "Traveller": [{
-    "Age": 35
-    }]
-  },
-  "OfferFilters": {
-   "DateAndTimeFilter": {
-    "OutboundFlightDateAndTimeFilter": {
-     "FlightEvent": "Departure",
-     "DateRange": {
-      "MinDate": "2019-12-05",
-	  "MinDate": "2019-12-25"
-     }
-    }
-},
-   "TravelDurationFilter": {
-    "MinDuration": 7
-   },
-   "AirportFilter": {
-    "DepartureAirportFilter": {
-     "AirportCodes": ["ZRH"]
-} },
-   "AccomFilter": {
-    "AccomSelectors": {
-     "RegionIDs": [674]
-    }
-   },
-   "AccomPropertiesFilter": {
-    "HotelAttributes": [],
-    "HotelCategoryFilter": {
-    }
-   }
-  },
-  "Options": {
-	"NumberOfResults": 10,
-   "ResultOffset": 0
-  }
-} }';
+         "PackageOffersRQ": {
+          "RQ_Metadata": {
+           "Language": "de-DE"
+          },
+        "CurrencyCode": '.$this->currency.',
+          "Travellers": {
+           "Traveller": [{
+            "Age": 35
+            }]
+          },
+          "OfferFilters": {
+           "DateAndTimeFilter": {
+            "OutboundFlightDateAndTimeFilter": {
+             "FlightEvent": "Departure",
+             "DateRange": {
+              "MinDate": "2019-12-05",
+              "MinDate": "2019-12-25"
+             }
+            }
+        },
+           "TravelDurationFilter": {
+            "MinDuration": 7
+           },
+           "AirportFilter": {
+            "DepartureAirportFilter": {
+             "AirportCodes": ["ZRH"]
+        } },
+           "AccomFilter": {
+            "AccomSelectors": {
+             "RegionIDs": [674]
+            }
+           },
+           "AccomPropertiesFilter": {
+            "HotelAttributes": [],
+            "HotelCategoryFilter": {
+            }
+           }
+          },
+          "Options": {
+            "NumberOfResults": 10,
+           "ResultOffset": 0
+          }
+        } }';
 
         $authorization = "Authorization: Bearer ".$this->token;
 
@@ -160,7 +164,48 @@ class AutooffersTTRepository extends BaseRepository
         if(!$result){die("Connection Failure");}
         curl_close($curl);
 
+        $this->data = json_decode($result, true)["PackageOffersRS"];
+        $this->offers = $this->data["Offers"]["Offer"];
+        $this->setGiataIds();
         return $result;
+    }
+
+    /**
+     * @param  $data
+     * @param string $wish_id
+     * @param array $rules
+     */
+    public function storeMany($wish_id, $rules)
+    {
+
+        foreach ($this->offers as $key => $offer) {
+
+            $hotelId = $offer["OfferServices"]['Package']['Accommodation']['HotelRef']["HotelID"];
+            $tOperator = $offer["TourOperator"]['TourOperatorCode'];
+            $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
+            $this->storeAutooffer($offer, $hotel, $wish_id);
+        }
+    }
+
+    /**
+     * @param string $hotelId
+     *
+     * @return bool
+     */
+    public function getFullHotelData($hotelId, $tOperator)
+    {
+
+        $username = "203339";
+        $password = "605e5129";
+        $remote_url = 'https://xml.giatamedia.com/?show=text,geo,pic800,hn,vn,ln,lk,katid,kn,hk,sn,sn,zi,ln,lc&sc=hotel&vc='.$tOperator.'&gid='.$hotelId;
+
+        $opts = array('http'=>array('method'=>"GET",
+            'header' => "Authorization: Basic ". base64_encode("$username:$password")));
+
+        $context = stream_context_create($opts);
+        $file = file_get_contents($remote_url, false, $context);
+        $xml = simplexml_load_string($file, 'SimpleXMLElement', LIBXML_NOCDATA);
+        return json_decode(json_encode($xml), true);
     }
 
     /**
@@ -210,23 +255,23 @@ class AutooffersTTRepository extends BaseRepository
         try {
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
-            $autooffer->code = $offer['code'];
-            $autooffer->type = $offer['productType'];
-            $autooffer->totalPrice = $offer['totalPrice']['value'];
-            $autooffer->personPrice = $offer['personPrice']['value'];
-            $autooffer->from = $offer['travelDate']['fromDate'];
-            $autooffer->to = $offer['travelDate']['toDate'];
-            $autooffer->tourOperator_code = $offer['tourOperator']['code'];
-            $autooffer->tourOperator_name = $offer['tourOperator']['name'];
-            $autooffer->hotel_code = $offer['hotelOffer']['hotel']['giata']['hotelId'];
-            $autooffer->hotel_name = $offer['hotelOffer']['hotel']['name'];
-            $autooffer->hotel_location_name =  $offer['hotelOffer']['hotel']['location']['name'];
+            $autooffer->code = $offer["OfferID"];
+            $autooffer->type = $offer["TravelType"];
+            $autooffer->totalPrice = $offer["PriceInfo"]["Price"]["value"];
+            $autooffer->personPrice = $offer["PriceInfo"]["Price"]["value"];
+            $autooffer->from = $offer["TravelDateInfo"]["DepartureDate"];
+            $autooffer->to = $offer['TravelDateInfo']['ReturnDate'];
+            $autooffer->tourOperator_code = $offer['TourOperator']['TourOperatorCode'];
+            $autooffer->tourOperator_name = $offer['TourOperator']['TourOperatorName'];
+            $autooffer->hotel_code = $offer["OfferServices"]['Package']['Accommodation']['HotelRef']["HotelID"];
+            $autooffer->hotel_name = $offer["OfferServices"]['Package']['Accommodation']['HotelRef']["HotelID"];
+            $autooffer->hotel_location_name =  "";
             $autooffer->hotel_location_lng =  0;
             $autooffer->hotel_location_lat =  0;
-            $autooffer->hotel_location_region_code =  $offer['hotelOffer']['hotel']['location']['region']['code'];
-            $autooffer->hotel_location_region_name =  $offer['hotelOffer']['hotel']['location']['region']['name'];
-            $autooffer->airport_code =  $offer['hotelOffer']['hotel']['airport']['code'];
-            $autooffer->airport_name =  $offer['hotelOffer']['hotel']['airport']['name'];
+            $autooffer->hotel_location_region_code =  "";
+            $autooffer->hotel_location_region_name =  "";
+            $autooffer->airport_code =  $offer["Flight"]["OutboundFlight"]["FlightArrival"]["ArrivalAirportRef"]["AirportCode"];
+            $autooffer->airport_name =  "";
             $autooffer->data = json_encode($offer);
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
@@ -470,8 +515,12 @@ class AutooffersTTRepository extends BaseRepository
     /**
      * @param mixed $giataIds
      */
-    public function setGiataIds($giataIds)
+    public function setGiataIds()
     {
-        $this->giataIds = $giataIds;
+        $giata = [];
+        foreach ($this->data["HotelDictionary"]["Hotel"] as $hotel){
+            $giata[$hotel["HotelCodes"]["HotelIffCode"]] = $hotel["HotelCodes"]["HotelGiataID"];
+        }
+        $this->giataIds = $giata;
     }
 }

@@ -51,7 +51,7 @@ var dt = window.dt || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: 'lastminute.reise-wunsch.com',
+        matchesUrl: 'lastminute',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {

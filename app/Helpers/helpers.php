@@ -626,6 +626,32 @@ if (!function_exists('getRegionCode')) {
     }
 }
 
+if (!function_exists('getTTRegionCode')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getTTRegionCode($value)
+    {
+        return \App\Models\TTRegions::where('ort', 'like' ,'%'.$value.'%')->first()->topRegion;
+
+    }
+}
+
+if (!function_exists('getTTRegions')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getTTRegions($value)
+    {
+        return \App\Models\TTRegions::where('ort', 'like' ,'%'.$value.'%')->select('topRegionName')->get();
+
+    }
+}
+
 if (!function_exists('getCateringFromCode')) {
     /**
      * return language lines table name.
