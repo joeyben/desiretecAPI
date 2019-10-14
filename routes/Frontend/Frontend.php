@@ -12,6 +12,7 @@
 
 //Route::group(['domain' => 'localhost'], function () {
     Route::get('/', 'FrontendController@index')->name('index');
+    Route::get('/getTTRegions', 'RegionsController@getTTRegions');
     Route::get('/get-all-destinations', 'FrontendController@getAllDestinations');
     Route::get('/get-all-airports', 'FrontendController@getAllAirports');
     Route::get('macros', 'FrontendController@macros')->name('macros');

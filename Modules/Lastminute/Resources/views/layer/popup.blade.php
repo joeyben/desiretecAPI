@@ -19,7 +19,7 @@
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
                 {{ Form::label('destination', trans('lastminute::layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size destination','autocomplete' => "off", 'placeholder' => trans('lastminute::layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -348,6 +348,7 @@
 
 
             $(document).ready(function(){
+                autocomplete();
               var options = $('#duration option' );
               $( options[ 11 ] ).insertAfter( $( options[ 33 ] ) );
                 dt.childrenAges();
@@ -469,6 +470,35 @@
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
             }
+
+            /**
+             * Autocomplete
+             */
+            var autocomplete = function(){
+                /* Destinations */
+                $.get('getTTRegions', function(data){
+                    $("#destination").typeahead({
+                        autoSelect: true,
+                        minLength: 3,
+                        delay: 200,
+                        source: data
+                    });
+                });
+                /* END Destinations */
+
+                /* Airports */
+                $.get('get-all-airports', function(data){
+                    $("#airport").typeahead({
+                        autoSelect: true,
+                        minLength: 3,
+                        delay: 200,
+                        source: data
+                    });
+                });
+                /* END Airports */
+
+            }
+
         </script>
 
         <div class="kwp-row">

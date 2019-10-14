@@ -10,7 +10,7 @@
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
                 {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('demokreuzfahrtberatung::layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                         @foreach ($errors->get('destination') as $error)
                             <span class="error-input">{{ $error }}</span>
@@ -30,7 +30,7 @@
                     <div class="duration-more">
                         <div class="kwp-col-4">
                             {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('demokreuzfahrtberatung::layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('demokreuzfahrtberatung::layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -52,7 +52,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('demokreuzfahrtberatung::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
                             <i class="master-icon--time"></i>
                         </div>
@@ -78,7 +78,7 @@
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-12">
-                            {{ Form::label('adults', trans('demokreuzfahrtberatung::layer.general.adults'), ['class' => 'control-label required']) }}
+                            {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr , key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="kwp-col-12 kids" style="position: relative;">
                             <div class="kwp-col-12">
-                                {{ Form::label('kids', trans('demokreuzfahrtberatung::layer.general.kids'), ['class' => 'control-label required']) }}
+                                {{ Form::label('kids', trans('layer.general.kids'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
                                     {{ Form::select('kids', $kids_arr, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                                 </div>
@@ -127,7 +127,7 @@
                 </div>
             </div>
             <div class="kwp-col-4 destination">
-                    {{ Form::label('klasse', trans('demokreuzfahrtberatung::layer.general.klasse'), ['class' => 'control-label required']) }}
+                    {{ Form::label('klasse', trans('layer.general.klasse'), ['class' => 'control-label required']) }}
                 <div class="kwp-custom-select">
                     {{ Form::select('category', $class_arr, key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size']) }}
                 </div>
@@ -136,16 +136,16 @@
 
         <div class="kwp-row">
             <div class="kwp-col-12 description">
-                {{ Form::label('description', trans('demokreuzfahrtberatung::layer.general.description'), ['class' => 'control-label required']) }}
-                {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('demokreuzfahrtberatung::layer.placeholder.description')]) }}
+                {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
+                {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
                 <i class="master-icon--calendar-month"></i>
             </div>
         </div>
 
         <div class="kwp-row">
             <div class="kwp-col-4 email-col">
-                {{ Form::label('email', trans('demokreuzfahrtberatung::layer.general.email'), ['class' => 'control-label']) }}
-                {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('demokreuzfahrtberatung::layer.placeholder.email'), 'required' => 'required']) }}
+                {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
+                {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
                 <i class="master-icon--mail"></i>
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))

@@ -1,6 +1,6 @@
 <?php
 $domain_env = array(
-    'local_url' => 'lastminute.local',
+    'local_url' => 'lastminute.com',
     'development_url' => 'lastminute.reise-wunsch.com',
     'production_url' => 'lastminute.reisewunschservice.de',
 );
