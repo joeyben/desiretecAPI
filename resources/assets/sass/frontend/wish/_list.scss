@@ -722,6 +722,13 @@ ul {
     .rating {
       margin-left: 20px;
     }
+    h3{
+      width: 75%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      line-height: 1em;
+    }
     i {
       padding: 10px 4px;
     }

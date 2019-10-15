@@ -190,17 +190,6 @@
                                 </div>
 
                                 <div class="price">
-                                    <div class="info-icons">
-                                        <div class="info">
-                                            <i class="fal fa-users"></i><div class="info-detail"><div class="up">Familie</div><div class="down"><ul><li>Babybett</li></ul></div></div>
-                                        </div>
-                                        <div class="info">
-                                            <i class="fal fa-concierge-bell"></i></i><div class="info-detail" style="top: -270%;background: white;width: 180px;"><div class="up" style="width: 180px">Hotel Specials</div><div class="down" style="width: 180px"><ul><li>Kostenloses WLAN</li><li>Pool</li></ul></div></div>
-                                        </div>
-                                        <div class="info">
-                                            <i class="fal fa-umbrella-beach"></i><div class="info-detail" style="width: 120px;"><div class="up">Familie</div><div class="down"><ul><li>Sandstrand</li></ul></div></div>
-                                        </div>
-                                    </div>
                                     <h3>{{ number_format($offer['data']['totalPrice']['value'], 0, ',', '.') }} <span>&#8364;</span></h3>
                                     <a class="btn btn-primary" href="{{ route('autooffer.details', [$wish->id, $count]) }}">
                                         <i class="fas fa-chevron-right"></i>

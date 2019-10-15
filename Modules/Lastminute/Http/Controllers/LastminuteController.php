@@ -2,10 +2,12 @@
 
 namespace Modules\Lastminute\Http\Controllers;
 
+use App\Jobs\callTTApi;
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Access\User\UserRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -128,6 +130,8 @@ class LastminuteController extends Controller
             'id'    => $wish->id
         ])->render();
 
+        $wishJob = (new callTTApi(1))->delay(Carbon::now()->addSeconds(3));
+        dispatch($wishJob);
         return response()->json(['success' => true, 'html'=>$html]);
     }
 
