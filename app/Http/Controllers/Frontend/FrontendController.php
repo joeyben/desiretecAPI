@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\callTTApi;
 use Illuminate\Http\Request;
 use App\Models\Regions;
 use App\Models\Settings\Setting;
 use App\Repositories\Frontend\Pages\PagesRepository;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
-
+use Carbon\Carbon;
 
 
 /**
@@ -33,6 +34,10 @@ class FrontendController extends Controller
      */
     public function index()
     {
+        $wishJob = (new callTTApi(219))->delay(Carbon::now()->addSeconds(3));
+        dispatch($wishJob);
+        dd('wish removed');
+
         $settingData = Setting::first();
         $google_analytics = $settingData->google_analytics;
         $body_class = $this::BODY_CLASS;

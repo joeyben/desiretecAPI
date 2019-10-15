@@ -69,6 +69,10 @@ class AutooffersTTRepository extends BaseRepository
 
     protected $giataIds;
 
+    protected $reviews;
+
+    protected $hotelAttributes;
+
     protected $data;
 
     protected $offers;
@@ -167,6 +171,8 @@ class AutooffersTTRepository extends BaseRepository
         $this->data = json_decode($result, true)["PackageOffersRS"];
         $this->offers = $this->data["Offers"]["Offer"];
         $this->setGiataIds();
+        $this->setReviews();
+        $this->setHotelAttributes();
         return $result;
     }
 
@@ -195,9 +201,10 @@ class AutooffersTTRepository extends BaseRepository
     public function getFullHotelData($hotelId, $tOperator)
     {
 
+        $giata_id = $this->giataIds[$hotelId];
         $username = "203339";
         $password = "605e5129";
-        $remote_url = 'https://xml.giatamedia.com/?show=text,geo,pic800,hn,vn,ln,lk,katid,kn,hk,sn,sn,zi,ln,lc&sc=hotel&vc='.$tOperator.'&gid='.$hotelId;
+        $remote_url = 'https://xml.giatamedia.com/?show=text,geo,pic800,hn,vn,ln,lk,katid,kn,hk,sn,sn,zi,ln,lc&sc=hotel&vc='.$tOperator.'&gid='.$giata_id;
 
         $opts = array('http'=>array('method'=>"GET",
             'header' => "Authorization: Basic ". base64_encode("$username:$password")));
@@ -208,15 +215,6 @@ class AutooffersTTRepository extends BaseRepository
         return json_decode(json_encode($xml), true);
     }
 
-    /**
-     * @param string $hotelId
-     *
-     * @return bool
-     */
-    public function transformData($data)
-    {
-
-    }
 
     /**
      * @param \App\Models\Wishes\Wish $wish
@@ -234,7 +232,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->setFrom(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start)->format('dmy'));
         $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
         $this->setPeriod($wish->duration);
-        $this->setRegion(getRegionCode($wish->destination, 1));
+        $this->setRegion(getTTRegionCode($wish->destination, 1));
         $this->setTourOperatorList(['BIG,XBIG,5VF,X5VF,FTI,XFTI,FLYD,ADAC,AIR,AIRM,XAIR,ATID,ALD,ALL,XALL,AME,ANEX,ATK,BAVA,BU,BYE,CBM,COR,DER,XDER,XECC,ECC,FALK,FER,FUV,FIT,FOR,FOX,XBU,GRUB,HHT,TREX,IHOM,ITS,ITS-XITS,ITSX,ITT,JAHN-XJAH,JAHN,JANA,XJAH,JT,XLMX,LMXI,LMX,MLA,HERM,MED,MWR,MON,XNER,NEC,NER,XNEC,OGE,XOGE,OLI,PHX,SLRD,SLR,SNOW,TOC,TOR,AIR,TVR,XTOC,TISC,TJAX,XPOD,TUID,XTUI,VTO,WIN,XALD,XANE,XPUR']);
 
         return true;
@@ -270,9 +268,9 @@ class AutooffersTTRepository extends BaseRepository
             $autooffer->hotel_location_lat =  0;
             $autooffer->hotel_location_region_code =  "";
             $autooffer->hotel_location_region_name =  "";
-            $autooffer->airport_code =  $offer["Flight"]["OutboundFlight"]["FlightArrival"]["ArrivalAirportRef"]["AirportCode"];
+            $autooffer->airport_code =  $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["FlightArrival"]["ArrivalAirportRef"]["AirportCode"];
             $autooffer->airport_name =  "";
-            $autooffer->data = json_encode($offer);
+            $autooffer->data = json_encode($this->deserializeData($offer));
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
@@ -288,6 +286,67 @@ class AutooffersTTRepository extends BaseRepository
             dd($e);
             return false;
         }
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return array
+     */
+    public function deserializeData($offer)
+    {
+        $data  = [
+            'from' => $offer["TravelDateInfo"]["DepartureDate"],
+            'to' => $offer["TravelDateInfo"]["ReturnDate"],
+            'duration' => $offer["TravelDateInfo"]["TripDuration"],
+            'tourOperator' => [
+                "code" => $offer["TourOperator"]["TourOperatorCode"],
+                "name" => $offer["TourOperator"]["TourOperatorName"],
+                "image" => $offer["TourOperator"]["TourOperatorImage"]
+            ],
+            'price' => [
+                "value" => $offer["PriceInfo"]["Price"]["value"],
+                "currency" => $offer["PriceInfo"]["Price"]["CurrencyCode"]
+            ],
+            'offerFeatures' => $offer["OfferProperties"]["OfferFeatures"],
+            'hotel_reviews' => $this->reviews[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
+            'hotel_attributes' => $this->hotelAttributes[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
+            'room' => $offer["OfferServices"]["Package"]["Accommodation"]["Room"]["RoomName"],
+            'flight' => [
+                'in' => [
+                    'departure' => [
+                        'airport' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["FlightDeparture"]["DepartureAirportRef"]["AirportCode"],
+                        'date' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["FlightDeparture"]["DepartureDate"],
+                        'time' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["FlightDeparture"]["DepartureTime"],
+                    ],
+                    'arrival' => [
+                        'airport' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["FlightArrival"]["ArrivalAirportRef"]["AirportCode"],
+                        'date' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["FlightArrival"]["ArrivalDate"],
+                        'time' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["FlightArrival"]["ArrivalTime"],
+                    ],
+                    'duration' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["FlightDuration"],
+                    'stops' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["NumberOfStops"],
+                    'class' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["CabinClass"]["value"],
+                ],
+                'out' => [
+                    'departure' => [
+                        'airport' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["FlightDeparture"]["DepartureAirportRef"]["AirportCode"],
+                        'date' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["FlightDeparture"]["DepartureDate"],
+                        'time' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["FlightDeparture"]["DepartureTime"],
+                    ],
+                    'arrival' => [
+                        'airport' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["FlightArrival"]["ArrivalAirportRef"]["AirportCode"],
+                        'date' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["FlightArrival"]["ArrivalDate"],
+                        'time' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["FlightArrival"]["ArrivalTime"],
+                    ],
+                    'duration' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["FlightDuration"],
+                    'stops' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["NumberOfStops"],
+                    'class' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["CabinClass"]["value"],
+                ],
+            ],
+        ];
+
+        return $data;
     }
 
     /**
@@ -522,5 +581,33 @@ class AutooffersTTRepository extends BaseRepository
             $giata[$hotel["HotelCodes"]["HotelIffCode"]] = $hotel["HotelCodes"]["HotelGiataID"];
         }
         $this->giataIds = $giata;
+    }
+
+    /**
+     * @param mixed $giataIds
+     */
+    public function setReviews()
+    {
+        $reviews = [];
+        foreach ($this->data["HotelDictionary"]["Hotel"] as $hotel){
+            $reviews[$hotel["HotelCodes"]["HotelIffCode"]] = [
+                'count' => $hotel["HotelReview"]["RatingsCount"],
+                'overall' => $hotel["HotelReview"]["MeanRatingOverall"],
+                'recommendation' => $hotel["HotelReview"]["MeanRecommendationRate"],
+            ];
+        }
+        $this->reviews = $reviews;
+    }
+
+    /**
+     * @param mixed $giataIds
+     */
+    public function setHotelAttributes()
+    {
+        $hotelAttributes = [];
+        foreach ($this->data["HotelDictionary"]["Hotel"] as $hotel){
+            $hotelAttributes[$hotel["HotelCodes"]["HotelIffCode"]] = $hotel["HotelAttributes"];
+        }
+        $this->hotelAttributes = $hotelAttributes;
     }
 }

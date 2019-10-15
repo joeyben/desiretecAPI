@@ -63,12 +63,12 @@
                         <h2>Ausstattung</h2>
 
                         <ul class="icons">
-                            @foreach($offer['data']['hotelOffer']['hotel']['keywordList'] as $keyword)
+                            @foreach($offer['data']['hotel_attributes'] as $keyword)
                                 <li>
                                     <div class="icon background-image">
                                         <span class="{{ $keyword }}"></span>
                                     </div>
-                                    <h5>{{ getKeywordText($keyword) }}</h5>
+                                    <h5>{{ $keyword }}</h5>
                                 </li>
                             @endforeach
                         </ul>
@@ -266,16 +266,16 @@
 
                             <div class="recommandations">
                                 <div class="average">
-                                    <h2><?= number_format(intval($offer['data']['hotelOffer']['hotel']['rating']['overall']) / 10, 1 , ',', '.') ?></h2>
+                                    <h2>{{ $offer['data']['hotel_reviews']['overall'] }}</h2>
                                 </div>
                                 <div class="text">
-                                    <h6>{{ $offer['data']['hotelOffer']['hotel']['rating']['count'] }} Bewertungen</h6>
+                                    <h6>{{ $offer['data']['hotel_reviews']['count'] }} Bewertungen</h6>
                                     <h6>Ausgezeichnet</h6>
                                 </div>
                             </div>
 
                             <div class="price">
-                                <h2>{{ number_format($offer['data']['personPrice']['value'], 0, ',', '.') }} <span>&#8364;</span> p.P.</h2>
+                                <h2>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>&#8364;</span> p.P.</h2>
                             </div>
 
                             <a class="btn btn-primary">
@@ -287,17 +287,17 @@
                             <h4>Reisedaten</h4>
 
                             <ul>
-                                @if (count($offer['data']['flightOffer']['flight']['outboundLegList']) > 0)
                                 <li>
                                     <div class="hour-location">
-                                        <h4>{{ $offer['data']['flightOffer']['flight']['outboundLegList'][0]['departureTime'] }}</h4>
-                                        <h5>{{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}</h5>
+                                        <h4>{{ $offer['data']['flight']['in']['departure']['time'] }}</h4>
+                                        <h5>{{ $offer['data']['flight']['in']['departure']['airport'] }}</h5>
                                     </div>
                                     <div class="duration">
                                         @php
-                                            $outTime = explode(':', $offer['data']['flightOffer']['flight']['outboundLegList'][0]['estimatedElapsedTime']);
+                                            $hours = floor($offer['data']['flight']['in']['duration'] / 60);
+                                            $min = $offer['data']['flight']['in']['duration'] - ($hours * 60);
                                         @endphp
-                                        <h6>{{ $outTime[0] }} Std. {{ $outTime[1] }} Min.</h6>
+                                        <h6>{{ $hours }} Std. {{ $min }} Min.</h6>
                                         <div class="wrapper">
                                             <div class="horizontal-line"></div>
                                             <i class="fas fa-plane"></i>
@@ -305,21 +305,22 @@
                                         <h6>Direct</h6>
                                     </div>
                                     <div class="hour-location">
-                                        <h4>{{ $offer['data']['flightOffer']['flight']['outboundLegList'][0]['arrivalTime'] }}</h4>
-                                        <h5>{{ $offer['data']['flightOffer']['flight']['arrivalAirport']['code'] }}</h5>
+                                        <h4>{{ $offer['data']['flight']['in']['arrival']['time'] }}</h4>
+                                        <h5>{{ $offer['data']['flight']['in']['arrival']['airport'] }}</h5>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="hour-location">
-                                        <h4>{{ $offer['data']['flightOffer']['flight']['inboundLegList'][0]['departureTime'] }}</h4>
-                                        <h5>{{ $offer['data']['flightOffer']['flight']['arrivalAirport']['code'] }}</h5>
+                                        <h4>{{ $offer['data']['flight']['out']['departure']['time'] }}</h4>
+                                        <h5>{{ $offer['data']['flight']['out']['departure']['airport'] }}</h5>
                                     </div>
                                     <div class="duration">
                                         @php
-                                            $inTime = explode(':', $offer['data']['flightOffer']['flight']['inboundLegList'][0]['estimatedElapsedTime']);
+                                            $hours = floor($offer['data']['flight']['out']['duration'] / 60);
+                                            $min = $offer['data']['flight']['out']['duration'] - ($hours * 60);
                                         @endphp
 
-                                        <h6>{{ $inTime[0] }} Std. {{ $inTime[1] }} Min.</h6>
+                                        <h6>{{ $hours }} Std. {{ $min }} Min.</h6>
                                         <div class="wrapper">
                                             <div class="horizontal-line"></div>
                                             <i class="fas fa-plane"></i>
@@ -327,15 +328,14 @@
                                         <h6>Direct</h6>
                                     </div>
                                     <div class="hour-location">
-                                        <h4>{{ $offer['data']['flightOffer']['flight']['inboundLegList'][0]['arrivalTime'] }}</h4>
-                                        <h5>{{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}</h5>
+                                        <h4>{{ $offer['data']['flight']['out']['arrival']['time'] }}</h4>
+                                        <h5>{{ $offer['data']['flight']['out']['arrival']['airport'] }}</h5>
                                     </div>
                                 </li>
-                                @endif
                             </ul>
 
                             <div class="airline">
-                                <div class="avatar avatar-circle size-2" style="background-image: url({{ $offer['data']['tourOperator']['logo'] }});"></div>
+                                <div class="avatar avatar-circle size-2" style="background-image: url({{ $offer['data']['tourOperator']['image'] }});"></div>
                                 <h6>{{ $offer['data']['tourOperator']['name'] }}</h6>
                             </div>
                         </div>

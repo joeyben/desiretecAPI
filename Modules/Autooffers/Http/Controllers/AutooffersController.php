@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Autooffers\Repositories\AutooffersRepository;
+use Modules\Autooffers\Repositories\AutooffersTTRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 
 class AutooffersController extends Controller
@@ -93,14 +94,32 @@ class AutooffersController extends Controller
      *
      * @return mixed
      */
+    public function createTT(Wish $wish)
+    {
+        $rules = $this->rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
+        //dd(getRegionCode($wish->airport, 0));
+        $this->TTautooffers->saveWishData($wish);
+        //$response = $this->autooffers->getTrafficsData();
+        $this->TTautooffers->getToken();
+        $response = $this->TTautooffers->getTTData();
+        $this->TTautooffers->storeMany($wish->id, $rules);
+
+        return redirect()->to('offer/list/' . $wish->id);
+    }
+
+
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     *
+     * @return mixed
+     */
     public function create(Wish $wish)
     {
         $rules = $this->rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
         //dd(getRegionCode($wish->airport, 0));
         $this->autooffers->saveWishData($wish);
-        //$response = $this->autooffers->getTrafficsData();
-        $response = $this->TTautooffers->getTTData();
-        $this->TTautooffers->storeMany($response, $wish->id, $rules);
+        $response = $this->autooffers->getTrafficsData();
+        $this->autooffers->storeMany($response, $wish->id, $rules);
 
         return redirect()->to('offer/list/' . $wish->id);
     }
@@ -129,6 +148,7 @@ class AutooffersController extends Controller
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
         //dd($offers[0]);
         $body_class = 'autooffer_list';
+        //dd($offers);
         return view('autooffers::autooffer.list', compact('wish', 'offers', 'body_class'));
     }
 
