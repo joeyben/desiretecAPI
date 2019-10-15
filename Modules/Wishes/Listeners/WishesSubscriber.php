@@ -54,8 +54,12 @@ class WishesSubscriber
 
         $users = Group::find($wish->group_id)->users()->get();
         Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));
-        Notification::send($users, new CreatedWishNotificationForSeller($wish));
+        //Notification::send($users, new CreatedWishNotificationForSeller($wish));
         //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish))->delay(now()->addMinutes(10)));
+
+        if($wish->whitelabel->isAutooffer()){
+            Auth::guard('web')->user()->notify((new AutoOfferNotification($wish)));
+        }
 
         $admins = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->where('users.id', '!=', Auth::guard('web')->user()->id)->get();
 

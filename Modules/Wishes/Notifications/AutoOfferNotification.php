@@ -53,12 +53,13 @@ class AutoOfferNotification extends Notification
     {
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
-        if ('Novasol' === $this->wish->whitelabel->name) {
+
+        /**if ('Novasol' === $this->wish->whitelabel->name) {
             return (new MailMessage())
             ->from($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Portal')
             ->subject(trans('email.offer.novasol_created_user.subject'))
             ->view('wishes::emails.offer_novasol', ['wish' => $this->wish, 'token' => $this->wish->token]);
-        }
+        }*/
 
     }
 }

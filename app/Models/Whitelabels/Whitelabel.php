@@ -7,6 +7,7 @@ use App\Models\ModelTrait;
 use App\Models\Whitelabels\Traits\Attribute\WhitelabelAttribute;
 use App\Models\Whitelabels\Traits\Relationship\WhitelabelRelationship;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Rules\Entities\Rule;
 
 /**
  * Class Whitelabel.
@@ -50,5 +51,22 @@ class Whitelabel extends BaseModel
     {
         parent::__construct($attributes);
         $this->table = config('module.whitelabels.table');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function rules(){
+        return $this->hasMany(Rule::class);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutooffer(){
+        if($this->rules->where('status', 1)->where('type', 'auto')->count() > 0){
+            return true;
+        }
+        return false;
     }
 }
