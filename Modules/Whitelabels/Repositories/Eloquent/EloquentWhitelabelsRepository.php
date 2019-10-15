@@ -180,7 +180,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
         $this->generateFile(
             base_path('Modules/Master/Resources/views/wish/details.blade.stub'),
-            base_path("Modules/$name/Resources/views/wish/details.blade.php"),
+            base_path("Modules/$name/Resources/views/wish/details_tt.blade.php"),
             ['$MODULESMAL$'],
             [mb_strtolower($name)]
         );

@@ -147,9 +147,9 @@
                             </div>
                             <div class="right-side">
                                 <div class="title">
-                                    <h3>{{ $offer['hotel_data']['data']['Hotelname'] }}</h3>
+                                    <h3>{{ $offer['data']['hotelOffer']['hotel']['name'] }}</h3>
                                     <div class="rating">
-                                        @for ($i = 0; $i < intval($offer['hotel_data']['data']['Hotelkategorie']); $i++)
+                                        @for ($i = 0; $i < intval($offer['data']['hotelOffer']['hotel']['category']); $i++)
                                             <i class="fas fa-heart"></i>
                                         @endfor
                                     </div>
@@ -161,15 +161,15 @@
                                 </div>
 
                                 <div class="fulfill">
-                                    <progress value="{{ $offer['data']['hotel_reviews']['recommendation'] }}" max="100"></progress>
-                                    <h4> <span>{{ $offer['data']['hotel_reviews']['recommendation'] }}%</span> Weiterempfehlung</h4>
+                                    <progress value="{{ $offer['data']['hotelOffer']['hotel']['rating']['recommendation'] }}" max="100"></progress>
+                                    <h4> <span>{{ $offer['data']['hotelOffer']['hotel']['rating']['recommendation'] }}%</span> Weiterempfehlung</h4>
                                 </div>
 
                                 <div class="recommandations">
-                                    <div class="average">{{ $offer['data']['hotel_reviews']['overall'] }}</div>
+                                    <div class="average"><?= number_format(intval($offer['data']['hotelOffer']['hotel']['rating']['overall']) / 10, 1 , ',', '.') ?></div>
                                     <div class="text">
                                         <h4 class="dark-grey-2">Empfehlenswert</h4>
-                                        <h4>{{ $offer['data']['hotel_reviews']['count'] }} Bewertungen</h4>
+                                        <h4>{{ $offer['data']['hotelOffer']['hotel']['rating']['count'] }} Bewertungen</h4>
                                     </div>
                                 </div>
 
@@ -179,29 +179,18 @@
                                         @for ($i = 0; $i < 3; $i++)
                                         <li>
                                             <i class="fas fa-check"></i>
-                                            <h4 class="dark-grey">{{ $offer['data']['hotel_attributes'][$i] }}</h4>
+                                            <h4 class="dark-grey">{{ getKeywordText($offer['data']['hotelOffer']['hotel']['keywordList'][$i]) }}</h4>
                                         </li>
                                         @endfor
                                     </ul>
 
                                     <div class="travel-info">
-                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['offerFeatures'] }}">{{ $offer['data']['duration'] }} Tage, {{ str_limit($offer['data']['offerFeatures'], 20, "...") }}</h4>
+                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['serviceOffer']['description'] }}">{{ $offer['data']['travelDate']['duration'] }} Tage, {{ str_limit($offer['data']['serviceOffer']['description'], 20, "...") }}</h4>
                                     </div>
                                 </div>
 
                                 <div class="price">
-                                    <div class="info-icons">
-                                        <div class="info">
-                                            <i class="fal fa-users"></i><div class="info-detail"><div class="up">Familie</div><div class="down"><ul><li>Babybett</li></ul></div></div>
-                                        </div>
-                                        <div class="info">
-                                            <i class="fal fa-concierge-bell"></i></i><div class="info-detail" style="top: -270%;background: white;width: 180px;"><div class="up" style="width: 180px">Hotel Specials</div><div class="down" style="width: 180px"><ul><li>Kostenloses WLAN</li><li>Pool</li></ul></div></div>
-                                        </div>
-                                        <div class="info">
-                                            <i class="fal fa-umbrella-beach"></i><div class="info-detail" style="width: 120px;"><div class="up">Familie</div><div class="down"><ul><li>Sandstrand</li></ul></div></div>
-                                        </div>
-                                    </div>
-                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>&#8364;</span></h3>
+                                    <h3>{{ number_format($offer['data']['totalPrice']['value'], 0, ',', '.') }} <span>&#8364;</span></h3>
                                     <a class="btn btn-primary" href="{{ route('autooffer.details', [$wish->id, $count]) }}">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
