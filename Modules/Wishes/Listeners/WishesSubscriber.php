@@ -58,9 +58,10 @@ class WishesSubscriber
 
         if($wish->whitelabel->isAutooffer()){
             //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish)));
-        }else{
-            Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));
         }
+
+        Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));
+
 
         $admins = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->where('users.id', '!=', Auth::guard('web')->user()->id)->get();
 

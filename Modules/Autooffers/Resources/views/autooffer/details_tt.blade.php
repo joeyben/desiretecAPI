@@ -8,7 +8,7 @@
 
                 <section class="gallery-section">
                     <div class="shell">
-                        <h2>Playa</h2>
+                        <h2>{{ $offer['hotel_data']['data']['Hotelname'] }}</h2>
 
                         <div class="wrapper">
                             <div class="col-1">
@@ -275,7 +275,7 @@
                             </div>
 
                             <div class="price">
-                                <h2>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>&#8364;</span> p.P.</h2>
+                                <h2>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span> p.P.</h2>
                             </div>
 
                             <a class="btn btn-primary">
@@ -409,7 +409,7 @@
                                 <div class="icon-background">
                                     <i class="fas fa-credit-card" aria-hidden="true"></i>
                                 </div>
-                                <h5>{{ $wish->budget }}€</h5>
+                                <h5>{{ $wish->budget }}CHF</h5>
                             </li>
                             <li>
                                 <div class="icon-background">

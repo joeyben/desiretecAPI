@@ -83,7 +83,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-credit-card" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->budget }}€</h4>
+                                    <h4>{{ $wish->budget }}CHF</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
@@ -199,7 +199,7 @@
                                             <i class="fal fa-umbrella-beach"></i><div class="info-detail" style="width: 120px;"><div class="up">Familie</div><div class="down"><ul><li>Sandstrand</li></ul></div></div>
                                         </div>
                                     </div>
-                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>&#8364;</span></h3>
+                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span></h3>
                                     <a class="btn btn-primary" href="{{ route('autooffer.ttdetails', [$wish->id, $count]) }}">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>

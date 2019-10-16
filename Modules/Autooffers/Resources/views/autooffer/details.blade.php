@@ -8,7 +8,7 @@
 
                 <section class="gallery-section">
                     <div class="shell">
-                        <h2>Playa</h2>
+                        <h2>{{ $offer['hotel_data']['data']['Hotelname'] }}</h2>
 
                         <div class="wrapper">
                             <div class="col-1">
