@@ -10,7 +10,7 @@
                         </p>
 
                         <p style="line-height: 24px; margin-bottom:20px;">
-                            <a href="{{  }}">Zu den Angebote</a>
+                            <a href="{{ $url }}">Zu den Angebote</a>
 
                         </p>
 

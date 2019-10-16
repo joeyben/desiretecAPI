@@ -35,7 +35,7 @@ class AutooffersTTRepository extends BaseRepository
 
     private $oauthUrl = 'https://staging-auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
 
-    private $url = 'http://de-staging-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/PackageSearch/packageOffers';
+    private $url = 'http://de-staging-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/PackageSearch/bestPackageOfferForHotel';
 
     private $currency = 'CHF';
 
@@ -108,38 +108,55 @@ class AutooffersTTRepository extends BaseRepository
     public function getTTData()
     {
         $curl = curl_init();
+        $travellers = "";
+
+        for($i = 0; $i < $this->adults;$i++){
+            $travellers .= '"Traveller": [{
+                    "Age": 35
+                }]';
+            if($i+1 < $this->adults){
+                $travellers.= ',';
+            }
+        }
+
+        for($i = 0; $i < $this->kids;$i++){
+            $travellers .= '"Traveller": [{
+                    "Age": 12
+                }]';
+            if($i+1 < $this->kids){
+                $travellers.= ',';
+            }
+        }
 
         $xmlreq='{
-         "PackageOffersRQ": {
+         "BestPackageOfferForHotelRQ": {
           "RQ_Metadata": {
            "Language": "de-DE"
           },
         "CurrencyCode": "'.$this->currency.'",
           "Travellers": {
-           "Traveller": [{
-            "Age": 35
-            }]
+           '.$travellers.'
           },
           "OfferFilters": {
            "DateAndTimeFilter": {
             "OutboundFlightDateAndTimeFilter": {
              "FlightEvent": "Departure",
              "DateRange": {
-              "MinDate": "2019-12-05",
-              "MinDate": "2019-12-25"
+              "MinDate": "'.$this->from.'",
+              "MinDate": "'.$this->to.'"
              }
             }
         },
            "TravelDurationFilter": {
-            "MinDuration": 7
+            "MinDuration": '.intval($this->period).'
            },
            "AirportFilter": {
             "DepartureAirportFilter": {
-             "AirportCodes": ["ZRH"]
+             "AirportCodes": ["'.$this->airport.'"]
         } },
            "AccomFilter": {
             "AccomSelectors": {
-             "RegionIDs": [674]
+             "RegionIDs": ['.$this->getRegion().']
             }
            },
            "AccomPropertiesFilter": {
@@ -150,7 +167,8 @@ class AutooffersTTRepository extends BaseRepository
           },
           "Options": {
             "NumberOfResults": 50,
-            "ResultOffset": 0
+            "ResultOffset": 0,
+            "Sorting": ["MeanRecommendationRateDesc"]
           }
         } }';
 
@@ -168,7 +186,7 @@ class AutooffersTTRepository extends BaseRepository
         if(!$result){die("Connection Failure");}
         curl_close($curl);
 
-        $this->data = json_decode($result, true)["PackageOffersRS"];
+        $this->data = json_decode($result, true)["BestPackageOfferForHotelRS"];
         $this->offers = $this->data["Offers"]["Offer"];
         $this->setGiataIds();
         $this->setReviews();
@@ -184,6 +202,7 @@ class AutooffersTTRepository extends BaseRepository
     public function storeMany($wish_id, $rules)
     {
 
+        $count = 0;
         foreach ($this->offers as $key => $offer) {
 
             $hotelId = $offer["OfferServices"]['Package']['Accommodation']['HotelRef']["HotelID"];
@@ -192,10 +211,14 @@ class AutooffersTTRepository extends BaseRepository
             }
             $tOperator = $offer["TourOperator"]['TourOperatorCode'];
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
-            if(!key_exists('Bildfile', $hotel['data'])){
+            if (!key_exists('data', $hotel) || !key_exists('Bildfile', $hotel['data'])) {
                 continue;
             }
             $this->storeAutooffer($offer, $hotel, $wish_id);
+            $count++;
+            if ($count >= 3) {
+                break;
+            }
         }
     }
 
@@ -232,14 +255,14 @@ class AutooffersTTRepository extends BaseRepository
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
-        $this->setAirport(explode('-',$wish->airport)[1]);
+        $this->setKids($wish->kids);
+        $this->setAirport(trim(explode('-',$wish->airport)[1]));
         $this->setCategory($wish->category);
         $this->setCatering('XX,AO,BB,HB,HBP,FB,FBP,AI,AIP,AIU,AIR');
-        $this->setFrom(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start)->format('dmy'));
-        $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
+        $this->setFrom($wish->earliest_start);
+        $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
         $this->setRegion(getTTRegionCode($wish->destination, 1));
-        $this->setTourOperatorList(['BIG,XBIG,5VF,X5VF,FTI,XFTI,FLYD,ADAC,AIR,AIRM,XAIR,ATID,ALD,ALL,XALL,AME,ANEX,ATK,BAVA,BU,BYE,CBM,COR,DER,XDER,XECC,ECC,FALK,FER,FUV,FIT,FOR,FOX,XBU,GRUB,HHT,TREX,IHOM,ITS,ITS-XITS,ITSX,ITT,JAHN-XJAH,JAHN,JANA,XJAH,JT,XLMX,LMXI,LMX,MLA,HERM,MED,MWR,MON,XNER,NEC,NER,XNEC,OGE,XOGE,OLI,PHX,SLRD,SLR,SNOW,TOC,TOR,AIR,TVR,XTOC,TISC,TJAX,XPOD,TUID,XTUI,VTO,WIN,XALD,XANE,XPUR']);
 
         return true;
     }
