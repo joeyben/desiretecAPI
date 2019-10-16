@@ -57,7 +57,7 @@ class WishesSubscriber
         //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish))->delay(now()->addMinutes(10)));
 
         if($wish->whitelabel->isAutooffer()){
-            Auth::guard('web')->user()->notify((new AutoOfferNotification($wish)));
+            //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish)));
         }else{
             Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));
         }

@@ -26,7 +26,7 @@
                 <div class="shell" id="main-offer-section-shell">
                     <h2>Auf einen Blick</h2>
 
-                    <div class="main-offer">
+                    <div class="main-offer" style="padding-bottom: 0">
                         <div class="offer-info">
                             <div class="agency-info">
                                 <div class="avatar avatar-circle size-1"></div>
@@ -40,10 +40,6 @@
 
                             <div class="agency-contact-info">
                                 <ul>
-                                    <li class="name">
-                                        <i class="fal fa-user-circle"></i>
-                                        <h4>Name Ansprechpartner</h4>
-                                    </li>
                                     <li class="phone">
                                         <!-- <i class="fal fa-phone-alt"></i> -->
                                         <i class="fas fa-phone"></i>
@@ -204,7 +200,7 @@
                                         </div>
                                     </div>
                                     <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>&#8364;</span></h3>
-                                    <a class="btn btn-primary" href="{{ route('autooffer.details_tt', [$wish->id, $count]) }}">
+                                    <a class="btn btn-primary" href="{{ route('autooffer.ttdetails', [$wish->id, $count]) }}">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>
