@@ -91,6 +91,19 @@ class AutooffersController extends Controller
 
     /**
      * @param \App\Models\Wishes\Wish $wish
+     * @param string $index
+     * @return mixed
+     */
+    public function ttdetails(Wish $wish, $index)
+    {
+        $offers = $this->autooffers->getOffersDataFromId($wish->id);
+        $offer =  $offers[$index];
+        $body_class = 'autooffer_list';
+        return view('autooffers::autooffer.details_tt', compact('wish', 'offer', 'body_class'));
+    }
+
+    /**
+     * @param \App\Models\Wishes\Wish $wish
      *
      * @return mixed
      */
@@ -150,6 +163,20 @@ class AutooffersController extends Controller
         $body_class = 'autooffer_list';
         //dd($offers);
         return view('autooffers::autooffer.list', compact('wish', 'offers', 'body_class'));
+    }
+
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     *
+     * @return Response
+     */
+    public function showtt(Wish $wish)
+    {
+        $offers = $this->autooffers->getOffersDataFromId($wish->id);
+        //dd($offers[0]);
+        $body_class = 'autooffer_list';
+        //dd($offers);
+        return view('autooffers::autooffer.list_tt', compact('wish', 'offers', 'body_class'));
     }
 
     /**

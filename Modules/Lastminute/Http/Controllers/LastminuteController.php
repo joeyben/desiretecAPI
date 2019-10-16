@@ -3,6 +3,7 @@
 namespace Modules\Lastminute\Http\Controllers;
 
 use App\Jobs\callTTApi;
+use App\Jobs\sendAutoOffersMail;
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Access\User\UserRepository;
@@ -125,13 +126,21 @@ class LastminuteController extends Controller
 
         $newUser = $this->createUserFromLayer($request, $user);
         $wish = $this->createWishFromLayer($request, $wish);
+
+        $wishJob = (new callTTApi($wish->id))->delay(Carbon::now()->addSeconds(3));
+        dispatch($wishJob);
+
+        $details = [
+            "email" => $newUser->email
+        ];
+        dispatch(new sendAutoOffersMail($details, $wish->id));
+
         $html = view('lastminute::layer.created')->with([
             'token' => $newUser->token->token,
             'id'    => $wish->id
         ])->render();
 
-        $wishJob = (new callTTApi(1))->delay(Carbon::now()->addSeconds(3));
-        dispatch($wishJob);
+
         return response()->json(['success' => true, 'html'=>$html]);
     }
 

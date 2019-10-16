@@ -35,7 +35,7 @@ class callTTApi implements ShouldQueue
      */
     public function handle(EloquentAutooffersRepository $rules, AutooffersTTRepository $TTautooffers)
     {
-        $wish = Wish::find($this->wishId);
+        $wish = Wish::where('id',$this->wishId)->first();
         $_rules = $rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
         $TTautooffers->saveWishData($wish);
         $TTautooffers->getToken();
