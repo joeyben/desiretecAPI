@@ -114,7 +114,7 @@ class AutooffersTTRepository extends BaseRepository
           "RQ_Metadata": {
            "Language": "de-DE"
           },
-        "CurrencyCode": '.$this->currency.',
+        "CurrencyCode": "'.$this->currency.'",
           "Travellers": {
            "Traveller": [{
             "Age": 35
@@ -149,8 +149,8 @@ class AutooffersTTRepository extends BaseRepository
            }
           },
           "Options": {
-            "NumberOfResults": 10,
-           "ResultOffset": 0
+            "NumberOfResults": 50,
+            "ResultOffset": 0
           }
         } }';
 
@@ -187,8 +187,14 @@ class AutooffersTTRepository extends BaseRepository
         foreach ($this->offers as $key => $offer) {
 
             $hotelId = $offer["OfferServices"]['Package']['Accommodation']['HotelRef']["HotelID"];
+            if (!$this->checkValidity($hotelId, $wish_id) || !key_exists("TravelType", $offer)) {
+                continue;
+            }
             $tOperator = $offer["TourOperator"]['TourOperatorCode'];
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
+            if(!key_exists('Bildfile', $hotel['data'])){
+                continue;
+            }
             $this->storeAutooffer($offer, $hotel, $wish_id);
         }
     }
@@ -226,7 +232,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
-        $this->setAirport(getRegionCode($wish->airport, 0));
+        $this->setAirport(explode('-',$wish->airport)[1]);
         $this->setCategory($wish->category);
         $this->setCatering('XX,AO,BB,HB,HBP,FB,FBP,AI,AIP,AIU,AIR');
         $this->setFrom(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start)->format('dmy'));
@@ -239,6 +245,18 @@ class AutooffersTTRepository extends BaseRepository
     }
 
 
+    /**
+     * @param  $data
+     * @param string $wish_id
+     * @param array $rulesArray
+     *
+     * @return boolean
+     */
+    public function checkValidity($hotelId, $wish_id)
+    {
+        $autooffer = Autooffer::where('wish_id',$wish_id)->where('hotel_code', $hotelId)->count();
+        return $autooffer === 0 ;
+    }
 
 
     /**
@@ -254,7 +272,7 @@ class AutooffersTTRepository extends BaseRepository
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
             $autooffer->code = $offer["OfferID"];
-            $autooffer->type = $offer["TravelType"];
+            $autooffer->type = key_exists("TravelType", $offer) ? $offer["TravelType"] : "NM";
             $autooffer->totalPrice = $offer["PriceInfo"]["Price"]["value"];
             $autooffer->personPrice = $offer["PriceInfo"]["Price"]["value"];
             $autooffer->from = $offer["TravelDateInfo"]["DepartureDate"];

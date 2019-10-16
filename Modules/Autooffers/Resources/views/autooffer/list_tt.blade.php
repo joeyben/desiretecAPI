@@ -136,11 +136,11 @@
                                 @endif
                                 <div class="slick-slider">
                                     <!-- TODO: Add images and style them -->
-                                    @if (is_array($offer['hotel_data']['data']['Bildfile']))
+                                    @if (key_exists('Bildfile', $offer['hotel_data']['data']) and is_array($offer['hotel_data']['data']['Bildfile']))
                                         @foreach($offer['hotel_data']['data']['Bildfile'] as $image)
                                             <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $image) !!})"></div>
                                         @endforeach
-                                    @else
+                                    @elseif (key_exists('Bildfile', $offer['hotel_data']['data']))
                                         <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $offer['hotel_data']['data']['Bildfile']) !!})"></div>
                                     @endif
                                 </div>
@@ -149,9 +149,11 @@
                                 <div class="title">
                                     <h3>{{ $offer['hotel_data']['data']['Hotelname'] }}</h3>
                                     <div class="rating">
-                                        @for ($i = 0; $i < intval($offer['hotel_data']['data']['Hotelkategorie']); $i++)
-                                            <i class="fas fa-heart"></i>
-                                        @endfor
+                                        @if (key_exists('Hotelkategorie', $offer['hotel_data']['data']))
+                                            @for ($i = 0; $i < intval($offer['hotel_data']['data']['Hotelkategorie']); $i++)
+                                                <i class="fas fa-heart"></i>
+                                            @endfor
+                                        @endif
                                     </div>
                                 </div>
 
@@ -202,7 +204,7 @@
                                         </div>
                                     </div>
                                     <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>&#8364;</span></h3>
-                                    <a class="btn btn-primary" href="{{ route('autooffer.details', [$wish->id, $count]) }}">
+                                    <a class="btn btn-primary" href="{{ route('autooffer.details_tt', [$wish->id, $count]) }}">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>
