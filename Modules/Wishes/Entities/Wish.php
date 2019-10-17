@@ -37,6 +37,7 @@ class Wish extends Model
         'group_id',
         'updated_by',
         'whitelabel_id',
+        'extra_params'
     ];
 
     protected static $logOnlyDirty = true;
@@ -133,5 +134,7 @@ class Wish extends Model
 
         $this->categories()->attach($category);
     }
+
+
 
 }
