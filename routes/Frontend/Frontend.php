@@ -97,7 +97,7 @@ Route::get('/test', function(){
             Route::get('agent/profile', 'AgentsController@profile')->name('profile');
             Route::get('agents/create', 'AgentsController@create')->name('create');
             Route::post('agents/store', 'AgentsController@store')->name('store');
-            Route::get('agents/update/{id}', 'AgentsController@updateAgent')->name('update');
+            Route::post('agents/update/{id}', 'AgentsController@updateAgent')->name('update');
             Route::post('agents/edit', 'AgentsController@edit')->name('edit');
             Route::get('agents/edit/{id}', 'AgentsController@editAgent')->name('edit');
             Route::post('agents/destroy', 'AgentsController@destroy')->name('destroy');

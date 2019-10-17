@@ -39,7 +39,7 @@
 
     <div class="box-body">
         <div class="table-responsive data-table-wrapper">
-            <table id="agents-table" class="table table-condensed table-hover table-bordered">
+            <table id="agents-table" class="table table-condensed table-hover table-bordered" style="width: 100%;">
                 <thead class="transparent-bg">
                 <tr>
                     <th>{{ trans('labels.frontend.agents.table.avatar') }}</th>
