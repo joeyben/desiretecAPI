@@ -129,7 +129,7 @@
                           {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('tuidemo::layer.placeholder.budget'), 'required' => 'required']) }}
                     </div>
                           <span class="text">&nbsp;</span>
-                          <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
+                          <input type="range" min="100" max="10000" value="50"  step="100" id="budgetRange">
             </div>
 
             <div class="kwp-col-4 white-col stars">

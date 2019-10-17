@@ -135,7 +135,7 @@
                     {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('tuidemo::layer.placeholder.budget'), 'required' => 'required']) }}
                 </div>
                 <span class="text">&nbsp;</span>
-                <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
+                <input type="range" min="100" max="10000" value="50"  step="100" id="budgetRange">
             </div>
 
             <div class="kwp-col-3 white-col stars">
@@ -265,6 +265,7 @@
 
             $(document).ready(function(){
                 $('.selectpicker').selectpicker();
+                autocomplete();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -379,6 +380,34 @@
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
+            }
+
+            /**
+             * Autocomplete
+             */
+            var autocomplete = function(){
+                /* Destinations */
+                $.get('get-all-destinations', function(data){
+                    $("#destination").typeahead({
+                        autoSelect: true,
+                        minLength: 3,
+                        delay: 200,
+                        source: data
+                    });
+                });
+                /* END Destinations */
+
+                /* Airports */
+                $.get('get-all-airports', function(data){
+                    $("#airport").typeahead({
+                        autoSelect: true,
+                        minLength: 3,
+                        delay: 200,
+                        source: data
+                    });
+                });
+                /* END Airports */
+
             }
         </script>
 
