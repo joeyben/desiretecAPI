@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    {{ Form::open(['route' => ['frontend.agents.update',$agent->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'get', 'id' => 'create-permission', 'files' => true]) }}
+    {{ Form::open(['route' => ['frontend.agents.update',$agent->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'POST', 'id' => 'create-permission', 'files' => true]) }}
 
         <div class="modal-header">
             <h5 class="modal-title">Edit Customer</h5>
