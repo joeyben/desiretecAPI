@@ -59,6 +59,9 @@ class WishesSubscriber
         if($wish->whitelabel->isAutooffer()){
             //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish)));
         }
+        if(!$wish->whitelabel->isAutooffer()){
+            Notification::send($users, new CreatedWishNotificationForSeller($wish));
+        }
 
         Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));
 
