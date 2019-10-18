@@ -21,28 +21,28 @@ var exitIntent = window.exitIntent || {};
 
         var texts = {
             'eil-n1-social': {
-                header: 'Dürfen wir Dich beraten?',
-                body: 'Unsere besten Reiseberater helfen Dir gerne, Deine persönliche Traumreise zu finden. Probiere es einfach aus! Natürlich kostenlos und unverbindlich.'
+                header: 'Dürfen wir dich beraten?',
+                body: 'Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!'
             },
             'eil-n1': {
-                header: 'Dürfen wir Sie beraten?',
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
+                header: 'Dürfen wir dich beraten?',
+                body: 'Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!'
             },
             'eil-n2': {
-                header: 'Dürfen wir Sie beraten?',
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
+                header: 'Dürfen wir dich beraten?',
+                body: 'Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!'
             },
             'eil-n3': {
-                header: 'Dürfen wir Ihnen helfen?',
-                body: 'Einer unserer erfahrenen Reiseberater hilft Ihnen gerne, die für Sie passende Reise zu finden. Probieren Sie es einfach kostenlos und unverbindlich aus!'
+                header: 'Dürfen wir dich beraten?',
+                body: 'Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!'
             },
             'eil-n4': {
-                header: 'Dürfen wir Ihnen helfen?',
-                body: 'Einer unserer erfahrenen Reiseberater hilft Ihnen gerne, die für Sie passende Reise zu finden. Probieren Sie es einfach kostenlos und unverbindlich aus!'
+                header: 'Dürfen wir dich beraten?',
+                body: 'Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!'
             },
             'eil-n5': {
-                header: 'Dürfen wir Sie beraten?',
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
+                header: 'Dürfen wir dich beraten?',
+                body: 'Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!'
             },
             'eil-mobile': {
                 header: mobileHeader,

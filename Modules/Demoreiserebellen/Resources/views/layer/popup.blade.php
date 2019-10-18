@@ -1,7 +1,7 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
-    Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
+    Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!
 </div>
 {{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
