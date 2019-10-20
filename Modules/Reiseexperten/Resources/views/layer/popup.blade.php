@@ -105,17 +105,26 @@
                             </div>
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
-                                    <label class="main-label">Alter (Hinreise)</label>
-                                    <div class="kwp-col-3">
+                                    <label class="main-label">Alter der Kinder bei Rückreise</label>
+                                    <input name="ages" type="hidden">
+                                    <div id="age_1" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
+                                    <div id="age_2" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
+                                    <div id="age_3" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
