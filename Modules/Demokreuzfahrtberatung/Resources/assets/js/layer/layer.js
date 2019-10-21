@@ -57,7 +57,7 @@ var exitIntent = window.exitIntent || {};
             '<div class="kwp-logo"></div>' +
             '<div class="kwp-header-content">' +
             '<h1>' +
-            texts[variant].header + ' <br/>' +
+            texts[variant].header +
             '</h1>' +
             '<p>' +
             texts[variant].body +
