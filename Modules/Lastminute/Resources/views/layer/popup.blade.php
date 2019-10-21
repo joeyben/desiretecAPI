@@ -475,7 +475,7 @@
              * Autocomplete
              */
             var autocomplete = function(){
-                /* Destinations */
+
                 $.get('getTTRegions', function(data){
                     $("#destination").typeahead({
                         autoSelect: true,
@@ -484,6 +484,7 @@
                         source: data
                     });
                 });
+
                 /* END Destinations */
 
                 /* Airports */
