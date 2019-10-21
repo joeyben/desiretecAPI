@@ -21,9 +21,9 @@ class RegionsController extends Controller
      */
     public function getTTRegions(){
         $destinations = [];
-        TTRegions::select('ort')->chunk(200, function($regions) use(&$destinations){
+        TTRegions::select(['ort','land'])->chunk(200, function($regions) use(&$destinations){
             foreach ($regions as $region){
-                $destinations[] = $region->ort;
+                $destinations[] = $region->land .' - '.$region->ort;
             }
         });
         return $destinations;
