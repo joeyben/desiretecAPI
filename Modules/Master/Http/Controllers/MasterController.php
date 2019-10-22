@@ -56,6 +56,7 @@ class MasterController extends Controller
         return view('master::index')->with([
             'display_name'  => $whitelabel['display_name'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
+            'logo'          => $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['url'],
             'body_class'    => $this::BODY_CLASS,
         ]);
     }
@@ -68,11 +69,15 @@ class MasterController extends Controller
      */
     public function show(Request $request)
     {
-        $html = view('master::layer.popup')->with([
+        $input = $request->only('variant');
+        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+
+        $html = view('master::'.$layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
+            'request' => $request->all()
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -89,13 +94,16 @@ class MasterController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $input = $request->all();
         if ($request->failed()) {
-            $html = view('master::layer.popup')->with([
+            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+            $html = view('master::'.$layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
+                'request' => $request->all()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -121,11 +129,12 @@ class MasterController extends Controller
         }
     }
 
+
     /**
      * Create new user from Layer.
      *
      * @param UserRepository   $user
-     * @param StoreWishRequest $request
+     * @param \Modules\Reiseexperten\Http\Requests\StoreWishRequest $request
      *
      * @return UserRepository $user
      */
@@ -137,6 +146,7 @@ class MasterController extends Controller
 
             return $new_user;
         }
+        $input['whitelabel_name'] = $this->whitelabel->getById(intval($this->whitelabelId))['display_name'];
 
         $new_user = $user->create($input);
         $new_user->storeToken();
@@ -156,7 +166,12 @@ class MasterController extends Controller
      */
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
-        $new_wish = $wish->create($request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'));
+        $request->merge(['featured_image' => 'novasol.jpg']);
+
+        $new_wish = $wish->create(
+            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'),
+            $this->whitelabelId
+        );
 
         return $new_wish;
     }

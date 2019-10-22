@@ -183,6 +183,7 @@
           display: block;
           font-size: 25px;
           margin-bottom: 10px;
+          color: #61BA01 !important;
         }
         img{
           width: 25px;
@@ -238,7 +239,7 @@
     }
   }
   .top-panels{
-    height: 350px;
+    height: 385px;
     margin-top: 15px;
     .seller{
       width: calc(50% - 10px);
@@ -252,7 +253,7 @@
         text-align: center;
         .img{
           width: 75px;
-          height: 75px;
+          height: 90px;
           display: block;
           margin: auto;
           border-radius: 50%;
@@ -261,7 +262,7 @@
         }
       }
       .seller-message{
-        padding: 25px 0;
+        //padding: 25px 0;
         text-align: center;
         background: #fff;
         margin: 20px 0;
@@ -944,7 +945,7 @@ ul.checklist {
   width: calc(50% - 40px);
   padding: 0;
   border-top: 1px solid #000;
-  float: left;
+  float: right;
   margin-left: 20px;
   height: 70px;
   .remaining{
@@ -972,7 +973,7 @@ ul.checklist {
       display: table-cell;
       vertical-align: middle;
       .js-price-person{
-        font-size: 25px;
+        font-size: 21px;
         font-weight: 200;
         span{
           padding-right: 7px;
@@ -1326,11 +1327,18 @@ ul.checklist {
   left: 0;
 }
 .offer-facilities{
-  font-size: 14px;
-  position: absolute;
-  bottom: 0;
-  right: 20px;
+  font-size: 25px;
+  //position: absolute;
+  //bottom: 0;
+  //right: 20px;
   color: #888888;
+  display: inline-flex;
+  margin-top: 25px;
+  text-align: center;
+}
+.offer-facilities .summary-icon{
+  display: grid;
+  padding: 15px;
 }
 
 @media (max-width:37.49em) {
@@ -2595,7 +2603,7 @@ img.offer-tourop-logo {
       text-align: left;
       li{
         width: 150px;
-        text-align: left;
+        text-align: center;
         padding: 0 10px;
         margin-bottom: 10px;
         &.no-border{
@@ -2603,9 +2611,10 @@ img.offer-tourop-logo {
         }
         span.top{
           margin-bottom: 0px;
-          display: inline-block;
+          display: block;
           margin-right: 10px;
-          width: 15px;
+          //width: 15px;
+          color: #61BA01;
           vertical-align: middle;
           i{
             font-size: 15px;
@@ -2630,11 +2639,11 @@ img.offer-tourop-logo {
         .seller-image{
           .img{
             width: 50px;
-            height: 50px;
+            height: 60px;
           }
         }
         .seller-message{
-          padding: 20px 5px;
+          //padding: 20px 5px;
           font-size: 12px;
         }
         .seller-name{
@@ -2772,11 +2781,11 @@ img.offer-tourop-logo {
         .seller-image{
           .img{
             width: 50px;
-            height: 50px;
+             height: 60px;
           }
         }
         .seller-message{
-          padding: 20px 5px;
+          //padding: 20px 5px;
           font-size: 12px;
         }
         .seller-name{
@@ -2833,4 +2842,117 @@ img.offer-tourop-logo {
     width: 100%;
     margin: 0px;
   }
+}
+
+.info-pin{
+  background-image: url(https://www.novasol.de/themes/custom/solar_theme/images/icon-info-circle.svg);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  float: right;
+  width: 40px;
+  height: 30px;
+}
+.openDesc{
+  display: block !important;
+  display: block !important;
+  border: 1px solid #909090;
+  padding: 9px;
+  position: absolute;
+  background-color: white;
+}
+
+/*****Slider CSS*****/
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides0,mySlides1,mySlides2,mySlides3,mySlides4 {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.textt {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext1 {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot0,.dot1,.dot2,.dot3,.dot4 {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot0:hover,.dot1:hover,.dot2:hover,.dot3:hover,.dot4:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
 }

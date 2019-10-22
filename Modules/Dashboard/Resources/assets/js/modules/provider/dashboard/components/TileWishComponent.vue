@@ -1,6 +1,6 @@
 <template>
     <!-- Large modal -->
-    <div class="card card-body bg-indigo-400 has-bg-image">
+    <div v-if="basis" class="card card-body bg-indigo-400 has-bg-image">
         <div class="media">
             <div class="media-body">
                 <h3 class="mb-0" v-text="wishCount"></h3>
@@ -23,6 +23,7 @@
     data () {
       return {
         // eslint-disable-next-line
+        basis: 1,
         errors: new Errors(),
         wishCount: 0
       }
@@ -30,6 +31,7 @@
     mounted () {
       this.loadWish()
       this.$events.$on('whitelabel-set', whitelabelId => this.loadWish(whitelabelId))
+      this.$events.$on('basis-set', basis => this.loadBasis(basis))
     },
     watch: {
     },
@@ -50,8 +52,18 @@
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
       },
+      loadBasis: function () {
+        if (this.basis === 1) {
+          this.basis = 0
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.basis, id: 1})
+        } else {
+          this.basis = 1
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.basis, id: 1})
+        }
+      },
       onLoadDashboardWishSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.basis = response.data.basis
           this.wishCount = response.data.wishCount
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })

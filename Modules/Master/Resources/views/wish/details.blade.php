@@ -44,7 +44,7 @@
                         </li>
                         <li>
                             <span class="label">{{ trans('wish.view.kids') }}</span>
-                            <span class="text">{{ $wish->kids }}</span>
+                            <span class="text">{{ $wish->kids_extended }}</span>
                         </li>
                         <li>
                             <span class="label">{{ trans('wish.view.budget') }}</span>

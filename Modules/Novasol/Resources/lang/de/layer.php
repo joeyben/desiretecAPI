@@ -26,9 +26,12 @@ return [
         'catering'         => 'Verpflegung (mind.)',
         'duration'         => 'Reisedauer',
         'duration_empty'   => 'Beliebig',
+        'duration_time'    => 'Wann & Wie lange?',
         'email'            => 'Ihre E-Mail-Adresse',
         'name'             => 'Name',
         'terms'            => 'Name',
+        'pets'             => 'Haustiere',
+        'travelers'        => 'Anzahl Personen'
     ],
     'placeholder' => [
         'title'            => 'Wish Title',
@@ -40,6 +43,7 @@ return [
         'adults'           => 'Erwachsene',
         'kids'             => 'Kinder',
         'budget'           => 'Gesamtpreis',
+        'budget_example'   => 'z.b.: :budget',
         'category'         => 'Hotelkategorie',
         'catering'         => 'Verpflegung (mind.)',
         'duration'         => 'Bitte auswählen',

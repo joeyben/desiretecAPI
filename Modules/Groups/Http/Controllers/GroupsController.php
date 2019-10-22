@@ -28,6 +28,7 @@ use Modules\Groups\Exports\GroupExport;
 use Modules\Groups\Http\Requests\StoreGroupRequest;
 use Modules\Groups\Http\Requests\UpdateGroupRequest;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
+use Modules\Whitelabels\Entities\Whitelabel;
 
 class GroupsController extends Controller
 {
@@ -145,7 +146,11 @@ class GroupsController extends Controller
     public function create(Request $request)
     {
         try {
+
             $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            //$whitelabel = Whitelabel::find($request->get('whitelabelId'));
+
 
             if ((null === $whitelabel) && $request->has('whitelabelId')) {
                 $whitelabel = $this->whitelabels->find($request->get('whitelabelId'));

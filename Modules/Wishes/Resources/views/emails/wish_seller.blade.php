@@ -25,8 +25,9 @@
                         </p>
 
                         @include('emails.layouts.footer')
-                    </td>
-                </tr>
-            </table>
-    </div>
+                        {{-- @include(getWhitelabelFooterUrl()) --}}
+</td>
+</tr>
+</table>
+</div>
 @endsection

@@ -54,8 +54,8 @@ class CreatedWishNotificationForSeller extends Notification
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
-            if(session('newsletter')) {
-                NewsletterFacade::subscribe($this->wish->owner->email,
+            if (session()->has('newsletter')) {
+                NewsletterFacade::subscribePending($this->wish->owner->email,
                     [
                         'FNAME' => $this->wish->owner->first_name === 'Muster' ? '-' : $this->wish->owner->first_name,
                         'LNAME' => $this->wish->owner->last_name === 'Name' ? '-' : $this->wish->owner->last_name,
@@ -67,6 +67,7 @@ class CreatedWishNotificationForSeller extends Notification
                         'TEXT' => is_null($this->wish->description) ? '-' : $this->wish->description,
                         'BUDGET' => is_null($this->wish->budget) ? '-' : $this->wish->budget,
                     ]);
+                session()->forget('newsletter');
             }
             return (new MailMessage())
                 ->from('trendtours@reisewunschservice.de', $this->wish->whitelabel->display_name . ' Portal')
@@ -76,7 +77,7 @@ class CreatedWishNotificationForSeller extends Notification
 
         return (new MailMessage())
             ->from($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Portal')
-            ->subject(trans('email.wish.seller'))
+            ->subject(trans('email.wish.seller', ['whitelabel' => $this->wish->whitelabel->name]))
             ->view('wishes::emails.wish_seller', ['wish' => $this->wish, 'token' => $userToken->token->token, 'user' => $notifiable]);
     }
 }

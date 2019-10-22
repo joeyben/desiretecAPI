@@ -51,6 +51,7 @@ return [
     'status'                        => 'Status',
     'destination'                   => 'Destination',
     'airport'                       => 'Airport',
+    'type'                          => 'Type',
     'earliest_start'                => 'Earliest start',
     'latest_return'                 => 'Latest return',
     'text'                          => 'Text',
@@ -90,4 +91,8 @@ return [
     'from'                          => 'From',
     'booking_status'                => 'Booking status',
     'empty_table'                   => 'No data accessable in the table',
+    'locale'                        => 'Locale',
+    'region_code'                   => 'Region code',
+    'region_name'                   => 'Region Name',
+    'country_code'                  => 'Country Code',
 ];

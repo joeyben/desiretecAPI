@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Modules\Languages\Database\Seeders\LanguagesDatabaseSeeder;
 
 /**
  * Class DatabaseSeeder.
@@ -29,7 +30,9 @@ class DatabaseSeeder extends Seeder
         $this->call(\Modules\Wishes\Database\Seeders\WishesDatabaseSeeder::class);
         $this->call(\Modules\Dashboard\Database\Seeders\DashboardDatabaseSeeder::class);
         $this->call(CategoriesTableSeeder::class);
+        $this->call(LanguagesDatabaseSeeder::class);
 
         Model::reguard();
+        $this->call(TTRegionsTableSeeder::class);
     }
 }

@@ -198,13 +198,15 @@
                         </a>
                     </li>
                     @endif
+                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('provider.languages') }}" class="nav-link">
+                                <i class="icon-flag3"></i>
+                                <span>{{ __('menus.languages') }}</span>
+                            </a>
+                        </li>
+                    @endif
 
-                    <li class="nav-item">
-                        <a href="{{ route('provider.languages') }}" class="nav-link">
-                            <i class="icon-flag3"></i>
-                            <span>{{ __('menus.languages') }}</span>
-                        </a>
-                    </li>
 
                     <li class="nav-item">
                         <a href="{{ route('provider.language-lines') }}" class="nav-link">
@@ -229,6 +231,21 @@
                                 <span>{{ __('labels.backend.whitelabels.table.display_name') }}</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.footers') }}" class="nav-link">
+                                <i class="icon-atom2"></i>
+                                <span>{{ __('labels.footers') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole('Administrator'))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.whitelabels.compile') }}" class="nav-link">
+                                <i class="icon-atom2"></i>
+                                <span>{{ __('labels.compile') }}</span>
+                            </a>
+                        </li>
                     @endif
 
                     @if($module->has('Users')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
@@ -242,6 +259,31 @@
                                 </li>
                             @endauth
                         @endauth
+                    @endif
+
+                    @if($module->has('Rules')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.rules') }}" class="nav-link">
+                                <i class="icon-cube4"></i>
+                                <span>{{ __('menus.rules_management') }}</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if($module->has('Rules')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.regions') }}" class="nav-link">
+                                <i class="icon-cube4"></i>
+                                <span>{{ __('menus.regions_management') }}</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if($module->has('Autooffers')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('autooffer.setting') }}" class="nav-link">
+                                <i class="icon-wrench3"></i>
+                                <span>{{ __('menus.autooffers_management') }}</span>
+                            </a>
+                        </li>
                     @endif
 
                     @if(Auth::guard('web')->user()->hasRole('Administrator'))
@@ -259,6 +301,12 @@
                                 <a href="{{ route('admin.components') }}" class="nav-link">
                                     <i class="icon-cube4"></i>
                                     <span>Components Mgnt</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.backups') }}" class="nav-link">
+                                    <i class="icon-file-text"></i>
+                                    <span>Backups Mgnt</span>
                                 </a>
                             </li>
                         </ul>

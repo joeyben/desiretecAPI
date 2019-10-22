@@ -49,6 +49,10 @@ if ($languageLinesComponent) {
         path: '/create/:id(\\d+)/:whitelabel_id(\\d+)',
         name: 'root.create',
         component: require('./components/EditLanguageLinesComponent.vue')
+      }, {
+        path: '/export',
+        name: 'root.export',
+        component: require('./components/ExportLanguageLinesComponent.vue')
       }]
     }]
   })

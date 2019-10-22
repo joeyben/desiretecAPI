@@ -9,6 +9,7 @@ use App\Exceptions\GeneralException;
 use App\Models\Access\User\User;
 use App\Models\Access\User\UserToken;
 use App\Models\Groups\Group;
+use App\Models\Whitelabels\Whitelabel;
 use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
 use Auth;
@@ -37,6 +38,8 @@ class WishesRepository extends BaseRepository
      * @var \Illuminate\Support\Facades\Storage
      */
     protected $storage;
+
+    protected $whitelabel_id = null;
 
     public function __construct()
     {
@@ -101,11 +104,13 @@ class WishesRepository extends BaseRepository
     {
         $group = Group::where('whitelabel_id', $whitelabel_id)
             ->oldest('lastwish')
+            ->where('status', 1)
             ->first();
 
         if (!$group) {
             $group = Group::where('whitelabel_id', $whitelabel_id)
                 ->orderby('id', 'ASC')
+                ->where('status', 1)
                 ->first();
         }
 
@@ -124,6 +129,8 @@ class WishesRepository extends BaseRepository
      */
     public function create(array $input, $whitelabelId)
     {
+        $this->whitelabel_id = $whitelabelId;
+
         $wish = DB::transaction(function () use ($input, $whitelabelId) {
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
             $input['created_by'] = access()->user()->id;
@@ -131,7 +138,7 @@ class WishesRepository extends BaseRepository
             $input['group_id'] = $this->getGroup();
             $input['title'] = '-';
             $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
-            $input['latest_return'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
+            $input['latest_return'] = $input['latest_return'] ? \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']) : '0000-00-00';
             $input['adults'] = intval($input['adults']);
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
@@ -235,12 +242,16 @@ class WishesRepository extends BaseRepository
 
     public function getGroup()
     {
+        if (!$this->whitelabel_id) {
+            return null;
+        }
+
         $distribution = $this->getDistribution();
 
         if ($distribution === $this::ROUND_ROBIN) {
-            return $this->getLowestWishesGroup(access()->user()->whitelabels[0]->id);
+            return $this->getLowestWishesGroup($this->whitelabel_id);
         } elseif ($distribution === $this::REGIONAL) {
-            return $this->getLowestWishesGroup(access()->user()->whitelabels[0]->id);
+            return $this->getLowestWishesGroup($this->whitelabel_id);
         }
     }
 
@@ -264,7 +275,9 @@ class WishesRepository extends BaseRepository
 
     public function getDistribution()
     {
-        return access()->user()->whitelabels[0]->distribution->name;
+        $whitelabel = Whitelabel::find((int) $this->whitelabel_id);
+
+        return $whitelabel->distribution->name;
     }
 
     /**
@@ -307,6 +320,12 @@ class WishesRepository extends BaseRepository
      */
     public function storeCategoryWish($category, \Modules\Wishes\Entities\Wish $wish)
     {
-        $wish->attachCategory($category);
+        if(is_array($category)){
+            foreach ($category as $cat){
+                $wish->attachCategory($cat);
+            }
+        }else{
+            $wish->attachCategory($category);
+        }
     }
 }

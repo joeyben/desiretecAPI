@@ -34,6 +34,8 @@ class OfferCreated extends Notification
      */
     protected $wl_name;
 
+    protected $wl_id;
+
     /**
      * UserContactedSeller constructor.
      *
@@ -47,6 +49,7 @@ class OfferCreated extends Notification
         $this->token = $token;
         $this->offer = $offer;
         $this->wl_name = \App\Models\Whitelabels\Whitelabel::find($offer->wish->whitelabel->id)->name;
+        $this->wl_id = \App\Models\Whitelabels\Whitelabel::find($offer->wish->whitelabel->id)->id;
     }
 
     /**
@@ -79,7 +82,9 @@ class OfferCreated extends Notification
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,
-                    'offer'            => $this->offer
+                    'offer'            => $this->offer,
+                    'offer_type'       => 'manual',
+                    'whitelabel'       => $this->wl_id
                 ]);
     }
 

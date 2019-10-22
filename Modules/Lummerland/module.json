@@ -1,0 +1,16 @@
+{
+    "name": "Lummerland",
+    "alias": "lummerland",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Lummerland\\Providers\\LummerlandServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

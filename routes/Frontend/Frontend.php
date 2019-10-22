@@ -12,9 +12,18 @@
 
 //Route::group(['domain' => 'localhost'], function () {
     Route::get('/', 'FrontendController@index')->name('index');
+    Route::get('/getTTRegions', 'RegionsController@getTTRegions');
+    Route::get('/get-all-destinations', 'FrontendController@getAllDestinations');
+    Route::get('/get-all-airports', 'FrontendController@getAllAirports');
     Route::get('macros', 'FrontendController@macros')->name('macros');
 //Route::post('/get/states', 'FrontendController@getStates')->name('get.states');
 //Route::post('/get/cities', 'FrontendController@getCities')->name('get.cities');
+
+
+
+Route::get('/test', function(){
+    return 'test';
+});
 
     /*
      * These frontend controllers require the user to be logged in
@@ -88,8 +97,11 @@
             Route::get('agent/profile', 'AgentsController@profile')->name('profile');
             Route::get('agents/create', 'AgentsController@create')->name('create');
             Route::post('agents/store', 'AgentsController@store')->name('store');
+            Route::post('agents/update/{id}', 'AgentsController@updateAgent')->name('update');
             Route::post('agents/edit', 'AgentsController@edit')->name('edit');
+            Route::get('agents/edit/{id}', 'AgentsController@editAgent')->name('edit');
             Route::post('agents/destroy', 'AgentsController@destroy')->name('destroy');
+            Route::get('agents/delete/{id}', 'AgentsController@delete')->name('delete');
             Route::get('agents/status/{id}', 'AgentsController@status')->name('status');
         });
 

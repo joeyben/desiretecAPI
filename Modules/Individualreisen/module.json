@@ -1,0 +1,16 @@
+{
+    "name": "Individualreisen",
+    "alias": "individualreisen",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Individualreisen\\Providers\\IndividualreisenServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

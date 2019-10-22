@@ -1,0 +1,172 @@
+@import "variables";
+
+#app{
+  .landing &{
+    padding-top: 20px;
+  }
+  .main-container{
+    margin: 0;
+    width: 100%;
+    padding: 0;
+  }
+}
+
+// Slider
+
+.slider{
+  width: 100%;
+  height:700px;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  .welcome{
+    position: absolute;
+    top: 50px;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    strong{
+      display: block;
+      font-size: 35px;
+      line-height: 70px;
+      font-weight: 400;
+    }
+  }
+  .layer-action{
+    position: absolute;
+    bottom: 250px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    a{
+      font-size: 26px;
+      text-transform: uppercase;
+      padding: 10px 50px;
+      line-height: 1.5em;
+    }
+  }
+}
+
+/***Custom CSS***/
+.about-section h3{
+  font-weight: normal !important;
+}
+.action {
+  text-align: center;
+  .btn {
+    background-color: #df007a !important;
+  }
+}
+.price .btn-primary{
+    background-color: #DF007A !important;
+}
+.slick-slider .btn-primary{
+  background-color:  #777777 !important;
+}
+.fas.fa-heart{
+  color: #DF007A !important;
+}
+.fa.fa-chevron-left, .fa.fa-chevron-right{
+  color: white !important;
+}
+.offers .recommandations .average{
+  border-color: #777777 !important;
+}
+.fas.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt{
+  color: #777777 !important;
+}
+progress::-webkit-progress-value{
+  background: #DF007A !important;
+}
+@media (max-width:37.49em) {
+  .shell{
+    padding: 25px !important;
+    display: flex !important;
+    flex-direction: column;
+    main{
+      order: 2;
+    }
+    aside{
+      order: 1;
+    }
+    main, aside{
+      width: 100% !important;
+    }
+  }
+  .gallery-section .btn{
+    font-size: 12px;
+  }
+  .location-section, .navigation{
+    display: none;
+  }
+  .reviews-section{
+    padding-left: 20px !important;
+  }
+  .equipment-section .icons{
+    padding-left: 0 !important;
+  }
+  main .sections-wrapper{
+    padding-right: 0 !important;
+  }
+}
+/*****ICONS CUSTOM********/
+.price{
+  position: relative;
+}
+.info-icons{
+  position: absolute;
+  left: 0;
+  display: inline-flex;
+  .info{
+    padding: 0px 20px 0px 20px;
+    i{
+      padding: 7px ;
+    }
+  }
+}
+.info:hover i {
+  background-color: #df007a;
+  color: white !important;
+}
+.price .info i{
+  color: #777777;
+}
+.price .info:hover .info-detail{
+  display: block;
+}
+.info-detail{
+  position: absolute;
+  top: -200%;
+  width: 100px;
+  background-color: white;
+  display: none;
+  ul {
+    list-style: none;
+  }
+
+  ul li:before {
+    content: '✓';
+    font-size: 18px !important;
+    color: green !important;
+    font-weight: bold !important;
+  }
+  .up{
+    background-color: #DF007A;
+    border-radius: 5px 5px 0px 0px;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #DF007A;
+  }
+  .down{
+    border-radius: 0px 0px 5px 5px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #DF007A;
+  }
+}
+/***End Custom CSS***/

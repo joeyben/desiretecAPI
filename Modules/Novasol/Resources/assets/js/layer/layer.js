@@ -3,7 +3,7 @@ var dt = window.dt || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://novasol.reisewunschservice.de',
+        baseUrl: 'https://novasol.reise-wunsch.com',
         logoPath: '/whitelabel/novasol/images/layer/logo.png',
         popupPath: '/show',
         popupStore:'/store',
@@ -11,19 +11,18 @@ var dt = window.dt || {};
     };
 
     dt.popupTemplate = function (variant) {
-
         var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Wir möchten Sie gerne beraten!',
+            'Traumferienobjektnoch nicht gefunden? ',
         ]);
 
         var texts = {
             'eil-n1': {
-                header: 'Wir möchten Sie gerne beraten!',
-                body: 'Teilen Sie uns jetzt Ihre Reisewünsche mit und Sie erhalten innerhalb kürzester Zeit Ihre persönlichen Ferienhausangebote.'
+                header: 'Traumferienobjektnoch nicht gefunden?  ',
+                body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             },
             'eil-mobile': {
                 header: mobileHeader,
-                body: 'Teilen Sie uns jetzt Ihre Reisewünsche mit und Sie erhalten innerhalb kürzester Zeit Ihre persönlichen Ferienhausangebote.'
+                body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             }
         };
 
@@ -88,8 +87,8 @@ var dt = window.dt || {};
                 var catering = getUrlParams('catering') ? getUrlParams('catering') : '';
                 return catering;
             },
-            'hotel_category': function (form, formData) {
-                var category = getUrlParams('category') ? getUrlParams('category') : '';
+            'category': function (form, formData) {
+                var category = getUrlParams('nr_stars') ? getUrlParams('nr_stars') : '3';
                 return category;
             },
             'destination': function (form, formData) {
@@ -135,6 +134,26 @@ var dt = window.dt || {};
             'airport': function (form, formData) {
                 var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
                 return airport;
+            },
+            'indoorpool': function (form, formData) {
+                var indoorpool = getUrlParams('indoorpool') ? getUrlParams('indoorpool') : 'N';
+                return indoorpool;
+            },
+            'outdoorpool': function (form, formData) {
+                var outdoorpool = getUrlParams('outdoorpool') ? getUrlParams('outdoorpool') : 'N';
+                return outdoorpool;
+            },
+            'spa': function (form, formData) {
+                var spa = getUrlParams('spa') ? getUrlParams('spa') : 'N';
+                return spa;
+            },
+            'sauna': function (form, formData) {
+                var sauna = getUrlParams('sauna') ? getUrlParams('sauna') : 'N';
+                return sauna;
+            },
+            'nr_bathrooms': function (form, formData) {
+                var nr_bathrooms = getUrlParams('bathrooms') ? getUrlParams('bathrooms') : '1';
+                return nr_bathrooms;
             },
             'is_popup_allowed': function (form, formData) {
                 //var step = this.getScope().IbeApi.state.stepNr;
@@ -220,10 +239,8 @@ var dt = window.dt || {};
                 var catering = getUrlParams('catering') ? getUrlParams('catering') : '';
                 return catering;
             },
-            'hotel_category': function (form, formData) {
-                if(!formData)
-                    return '';
-                var category = formData.hasOwnProperty('rating') ? formData['rating'] : '';
+            'category': function (form, formData) {
+                var category = getUrlParams('nr_stars') ? getUrlParams('nr_stars') : '3';
                 return category;
             },
             'destination': function (form, formData) {
@@ -287,6 +304,36 @@ var dt = window.dt || {};
             'airport': function (form, formData) {
                 var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
                 return airport;
+            },
+            'indoorpool': function (form, formData) { // swimming pool indoor
+                if(!formData)
+                    return '';
+                var pool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool indoor") >= 0)) ? '1' : '0';
+                return pool;
+            },
+            'outdoorpool': function (form, formData) { //swimming pool outdoor
+                if(!formData)
+                    return '';
+                var indoorpool = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("swimming pool outdoor") >= 0)) ? '1' : '0';
+                return indoorpool;
+            },
+            'spa': function (form, formData) {//spa
+                if(!formData)
+                    return '';
+                var spa = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("spa") >= 0)) ? '1' : '0';
+                return spa;
+            },
+            'sauna': function (form, formData) {
+                if(!formData)
+                    return '';
+                var sauna = (formData.hasOwnProperty('facilities') && (formData['facilities'].indexOf("sauna") >= 0)) ? '1' : '0';
+                return sauna;
+            },
+            'nr_bathrooms': function (form, formData) {
+                if(!formData)
+                    return '';
+                var bathrooms = formData.hasOwnProperty('bathrooms') ? formData['bathrooms'] : '1';
+                return bathrooms;
             },
             'is_popup_allowed': function (form, formData) {
                 //var step = this.getScope().IbeApi.state.stepNr;

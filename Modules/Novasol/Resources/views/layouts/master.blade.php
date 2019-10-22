@@ -19,8 +19,7 @@
 @endsection
 
 @section('before-scripts')
-
-    <script src="{{ mix('whitelabel/novasol/js/novasol.js') }}"></script>
+    <script src="{{ mix('whitelabel/novasol/js/layer/layer.js') }}"></script>
 @endsection
 
 @section('after-scripts')
@@ -58,5 +57,7 @@
                 dt.PopupManager.layerShown = true;
             }
         }
+
+
     </script>
 @endsection

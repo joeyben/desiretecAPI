@@ -35,6 +35,7 @@ return [
         'comment-header'    => 'Nachricht an Agenten',
         'offer_number'      => 'Angebot Nummer',
         'new_offers'        => 'Neue Angebote',
+        'pets'              => 'Haustiere',
         'stage'             => [
             'seller_empty' => 'Der Reisewunsch wurde am <b>:date</b> an Sie<br>
                     übermittelt. Erstellen Sie jetzt ein Angebot.',
@@ -48,6 +49,13 @@ return [
                     übermittelt. Es gibt ein Angebot für Sie.',
             'user_message' => 'Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>
                     übermittelt. Es gibt eine neue Nachricht für Sie.',
-        ]
+        ],
+        'any_price' => 'beliebig',
+    ],
+
+    'contact'        => [
+        'text'       => 'Schreiben Sie Ihrem Reiseberater eine Nachricht oder nutzen Sie den Rückruf-Service.'
     ],
 ];
+
+

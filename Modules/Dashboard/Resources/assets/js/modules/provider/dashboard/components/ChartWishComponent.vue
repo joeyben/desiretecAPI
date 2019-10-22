@@ -1,6 +1,6 @@
 <template>
     <!-- Large modal -->
-    <div id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
+    <div v-if="wunsch" id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
         <highcharts class="chart" :options="chartOptions" :updateArgs="updateArgs"></highcharts>
     </div>
     <!-- /large modal -->
@@ -18,6 +18,7 @@
     data () {
       return {
         // eslint-disable-next-line
+        wunsch: 1,
         errors: new Errors(),
         data: [],
         updateArgs: [true, true, {duration: 1000}],
@@ -43,8 +44,7 @@
             line: {
               dataLabels: {
                 enabled: true
-              },
-              enableMouseTracking: false
+              }
             }
           },
 
@@ -74,6 +74,7 @@
     mounted () {
       this.loadWishByMonth()
       this.$events.$on('whitelabel-set', whitelabelId => this.loadWishByMonth(whitelabelId))
+      this.$events.$on('wunsch-set', wunsch => this.loadWunsch(wunsch))
     },
     updated () {
     },
@@ -96,8 +97,18 @@
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
       },
+      loadWunsch: function () {
+        if (this.wunsch === 1) {
+          this.wunsch = 0
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.wunsch, id: 2})
+        } else {
+          this.wunsch = 1
+          this.$http.put(window.laroute.route('admin.event.save'), {shown: this.wunsch, id: 2})
+        }
+      },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.wunsch = response.data.wunsch
           this.chartOptions.series[0].data = response.data.data
           this.data = response.data
         } else {

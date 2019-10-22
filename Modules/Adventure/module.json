@@ -1,0 +1,16 @@
+{
+    "name": "Adventure",
+    "alias": "adventure",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Adventure\\Providers\\AdventureServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

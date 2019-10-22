@@ -20,7 +20,7 @@
 
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
-                    <label for="travelers" class="required">Wer reist mit?</label>
+                    <label for="travelers" class="required">Anzahl Personen</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
                          <i class="fal fa-users not-triggered"></i>
@@ -67,7 +67,7 @@
                 <div class="kwp-form-group duration-group">
                     <label for="duration-time" class="required">Wann & Wie lange?</label>
                     <span class="duration-time dd-trigger">
-                        <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
+                        <span class="txt">15.11.2018 - 17.06.2019</span>
                         <i class="fal fa-calendar-alt not-triggered"></i>
                         <i class="fal fa-times triggered"></i>
                     </span>
@@ -93,19 +93,7 @@
                             @endif
                             <i class="fal fa-calendar-alt"></i>
                         </div>
-                        <div class="kwp-col-4">
-                            {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
-                            <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
-                            </div>
-                            <i class="fal fa-alarm-clock"></i>
-                            @if ($errors->any() && $errors->get('duration'))
-                                @foreach ($errors->get('duration') as $error)
-                                    <span class="error-input">{{ $error }}</span>
-                                @endforeach
-                            @endif
-                        </div>
-                        <div class="clearfix"></div>
+
                         <hr>
                         <div class="kwp-col-12 button">
                             <a href="#">OK</a>
@@ -197,7 +185,7 @@
                 var back = $("#latest_return").val();
                 var duration = $("#duration option:selected").text();
 
-                $(".duration-time .txt").text(from+" - "+back+", "+duration);
+                $(".duration-time .txt").text(from+" - "+back);
                 return false;
             });
 
@@ -296,7 +284,7 @@
                     }
                     $("#latest_return").val(d+"."+m+"."+y);
                 }
-                $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
+                $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val());
                 var $start_date = $("#earliest_start").val().split('.');
                 var $end_date = $("#latest_return").val().split('.');
 
@@ -337,7 +325,7 @@
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
             }
-            
+
             function validateDuration() {
                 var days_diff = (dt.endDate.getDate() - dt.startDate.getDate()) / 60000 / 60 / 24;
                 var $element = $('#duration > option');

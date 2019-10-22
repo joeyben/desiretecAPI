@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Schema;
 use Modules\Attachments\Traits\AttachableTrait;
 use Modules\Languages\Entities\Language;
+use Modules\Wishes\Entities\Wish;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -16,7 +17,7 @@ class Whitelabel extends Model
 {
     use SoftDeletes, SearchableTrait, LogsActivity, AttachableTrait;
 
-    protected $fillable = ['name', 'display_name', 'status', 'domain', 'email', 'created_by', 'distribution_id', 'ga_view_id', 'state'];
+    protected $fillable = ['name', 'display_name', 'status', 'domain', 'ga_view_id', 'email', 'created_by', 'distribution_id', 'ga_view_id', 'state'];
 
     protected static $logAttributes = [
         'name',
@@ -105,7 +106,7 @@ class Whitelabel extends Model
      */
     public function languages()
     {
-        return $this->hasMany(Language::class);
+        return $this->belongsToMany(Language::class);
     }
 
     /**

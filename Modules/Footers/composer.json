@@ -1,0 +1,26 @@
+{
+    "name": "nwidart/footers",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Footers\\Providers\\FootersServiceProvider",
+                "Modules\\Footers\\Providers\\RepositoryServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Footers\\": ""
+        }
+    }
+}

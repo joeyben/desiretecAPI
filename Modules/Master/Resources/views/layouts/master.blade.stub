@@ -5,7 +5,7 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/master/css/master.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/$MODULESMAL$/css/$MODULESMAL$.css') }}">
 @endsection
 
 @section('logo')
@@ -15,10 +15,11 @@
 @endsection
 
 @section('before-scripts')
-    <script src="{{ mix('whitelabel/master/js/master.js') }}"></script>
+    <script src="{{ mix('whitelabel/$MODULESMAL$/js/$MODULESMAL$.js') }}"></script>
 @endsection
 
 @section('after-scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 
     <script type="application/javascript">
         window.dt = {
@@ -27,7 +28,7 @@
 
         var kwz = document.createElement('script');
         kwz.type = 'text/javascript'; kwz.async = true;
-        kwz.src = '/whitelabel/master/js/layer/layer-locale.js';
+        kwz.src = '/whitelabel/$MODULESMAL$/js/layer/layer.js';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(kwz, s);
 
@@ -39,10 +40,19 @@
         }
 
         function showLayer(){
-            dt.PopupManager.show();
-            if(isMobile()){
-                $("body").addClass('mobile-layer');
-            }
+
+             if($(".dt-modal").hasClass("teaser-on")){
+                        return false;
+             }
+             dt.PopupManager.show();
+
+             if(isMobile()){
+                 $("body").addClass('mobile-layer');
+                 $(".dt-modal").addClass('m-open');
+
+                 dt.PopupManager.isMobile = true;
+                 dt.PopupManager.layerShown = true;
+             }
         }
     </script>
 @endsection

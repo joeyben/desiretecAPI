@@ -58,3 +58,10 @@ Modules/Master/node_modules/
 /Modules/Trendtours/node_modules/
 Modules/Trendtours/node_modules/
 /Modules/Novasol/node_modules/
+/Modules/Backups/node_modules/
+/Modules/Footers/node_modules/
+/Modules/Lastminute/node_modules/
+/Modules/Rules/node_modules/
+/Modules/Autooffers/node_modules/
+/Modules/Regions/node_modules/
+/public/js/modules/admin/languagelines/*.js

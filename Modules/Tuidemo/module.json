@@ -1,0 +1,16 @@
+{
+    "name": "Tuidemo",
+    "alias": "tuidemo",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Tuidemo\\Providers\\TuidemoServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

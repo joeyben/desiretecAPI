@@ -29,11 +29,17 @@ class TokenLoginRequested extends Mailable
      *
      * @return $this
      */
-    public function build()
-    {
-        return $this->subject(Lang::get('email.message.token'))->from(getCurrentWhiteLabelField('email'), getCurrentWhiteLabelField('display_name') . ' Portal')->view('emails.token.link')->with([
-            'link' => $this->buildLink(),
+    public function build(){
+        $subject = trans('email.message.token_new', [
+            'whitelabel' => getCurrentWhiteLabelField('display_name')
         ]);
+
+        return $this->subject($subject)
+            ->from(getCurrentWhiteLabelField('email'), getCurrentWhiteLabelField('display_name') . ' Portal')
+            ->view('emails.token.link')->with([
+                'link'       => $this->buildLink(),
+                'whitelabel' => getCurrentWhiteLabelField('display_name')
+            ]);
     }
 
     protected function buildLink()

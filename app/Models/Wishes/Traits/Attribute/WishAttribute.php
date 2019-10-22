@@ -13,8 +13,8 @@ trait WishAttribute
     public function getActionButtonsAttribute()
     {
         return '<div class="btn-group action-btn">' .
-                $this->getEditButtonAttribute('edit-wish', 'admin.wishes.edit') .
-                $this->getDeleteButtonAttribute('delete-wish', 'admin.wishes.destroy') .
+                    $this->getEditButtonAttribute('edit-wish', 'admin.wishes.edit') .
+                    $this->getDeleteButtonAttribute('delete-wish', 'admin.wishes.destroy') .
                 '</div>';
     }
 
@@ -50,17 +50,34 @@ trait WishAttribute
     /**
      * @return string
      */
-    public function getAdultsAttribute($value)
-    {
-        return transformTravelers($value, 'adults');
+    public function getAdultsAttribute($value){
+        return $value;
     }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getAdultsExtendedAttribute(){
+        return transformTravelers($this->adults, 'adults');
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getKidsAttribute($value){
+        return $value;
+    }
+
 
     /**
      * @return string
      */
-    public function getKidsAttribute($value)
-    {
-        return transformTravelers($value, 'kids');
+    public function getKidsExtendedAttribute(){
+        return transformTravelers($this->kids, 'kids');
     }
+
+
 
 }

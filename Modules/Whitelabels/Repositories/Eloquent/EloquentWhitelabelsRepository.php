@@ -11,8 +11,11 @@ namespace Modules\Whitelabels\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManager;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Illuminate\Filesystem\Filesystem;
 
 /**
  * Class EloquentPostsRepository.
@@ -26,6 +29,8 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function generateFiles(int $id, string $name)
     {
+        $smallName = mb_strtolower($name);
+
         $this->generateFile(
             base_path('Modules/Master/Http/Controllers/MasterController.stub'),
             base_path("Modules/$name/Http/Controllers/{$name}Controller.php"),
@@ -36,8 +41,8 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $this->generateFile(
             base_path('Modules/Master/Http/Controllers/MasterWishesController.stub'),
             base_path("Modules/$name/Http/Controllers/{$name}WishesController.php"),
-            ['$MODULE$'],
-            [$name]
+            ['$MODULE$', '$MODULESMAL$'],
+            [$name, mb_strtolower($name)]
         );
 
         $this->generateFile(
@@ -53,11 +58,39 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             mkdir(base_path("Modules/$name/Resources/lang/de"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/lang/en"), 0777, true);
             mkdir(base_path("Modules/$name/Resources/assets/sass/layer"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/assets/sass/wish"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/assets/images/layer"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/assets/svg"), 0777, true);
+            mkdir(base_path("Modules/$name/Resources/assets/js/layer"), 0777, true);
         }
+
+        //$file = new Filesystem();
+        //$file->copyDirectory(base_path('Modules/Master/node_modules'), base_path("Modules/$name/node_modules"));
+
+
+        $this->copyImage(
+            'Modules/Master/Resources/assets/images/layer',
+            "Modules/$name/Resources/assets/images/layer"
+        );
+
+        $this->copyImageSvg(
+            'Modules/Master/Resources/assets/svg',
+            "Modules/$name/Resources/assets/svg"
+        );
 
         $this->generateFile(
             base_path('Modules/Master/Resources/assets/sass/layer/_bootstrap-select.scss'),
             base_path("Modules/$name/Resources/assets/sass/layer/_bootstrap-select.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/wish/details.scss'),
+            base_path("Modules/$name/Resources/assets/sass/wish/details.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/_variables.scss'),
+            base_path("Modules/$name/Resources/assets/sass/_variables.scss")
         );
 
         $this->generateFile(
@@ -78,6 +111,16 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $this->generateFile(
             base_path('Modules/Master/Resources/assets/sass/layer/layer.scss'),
             base_path("Modules/$name/Resources/assets/sass/layer/layer.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/_variables.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/_variables.scss")
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/sass/layer/layer_mobile.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/layer_mobile.scss")
         );
 
         $this->generateFile(
@@ -103,6 +146,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         );
 
         $this->generateFile(
+            base_path('Modules/Master/webpack.mix.stub'),
+            base_path("Modules/$name/webpack.mix.js"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
+        );
+
+        $this->generateFile(
             base_path('Modules/Master/Resources/views/layer/popup.blade.stub'),
             base_path("Modules/$name/Resources/views/layer/popup.blade.php"),
             ['$MODULESMAL$'],
@@ -110,13 +160,50 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         );
 
         $this->generateFile(
+            base_path('Modules/Master/Resources/views/layer/popup-mobile.blade.stub'),
+            base_path("Modules/$name/Resources/views/layer/popup-mobile.blade.php"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
+        );
+
+        $this->generateFile(
             base_path('Modules/Master/Resources/views/layouts/master.blade.stub'),
-            base_path("Modules/$name/Resources/views/layouts/master.blade.php")
+            base_path("Modules/$name/Resources/views/layouts/master.blade.php"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/views/layouts/footer.blade.stub'),
+            base_path("Modules/$name/Resources/views/layouts/footer.blade.php")
         );
 
         $this->generateFile(
             base_path('Modules/Master/Resources/views/wish/details.blade.stub'),
-            base_path("Modules/$name/Resources/views/wish/details.blade.php")
+            base_path("Modules/$name/Resources/views/wish/details_tt.blade.php"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/views/wish/wish.blade.stub'),
+            base_path("Modules/$name/Resources/views/wish/wish.blade.php"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/views/wish/index.blade.stub'),
+            base_path("Modules/$name/Resources/views/wish/index.blade.php"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
+        );
+
+        $this->generateFile(
+            base_path('Modules/Master/Resources/assets/js/layer/layer.stub'),
+            base_path("Modules/$name/Resources/assets/js/layer/layer.js"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
         );
 
         $this->generateFile(
@@ -133,12 +220,14 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             [
                 '$MODULE$',
                 '$ID$',
-                '$TABLE$'
+                '$TABLE$',
+                '$MODULESMAL$'
             ],
             [
                 $name,
                 $id,
-                $whitelabelLangTable
+                $whitelabelLangTable,
+                mb_strtolower($name)
             ]
         );
 
@@ -162,11 +251,47 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         file_put_contents($destination, $file);
     }
 
+    public function copyImage(string $source, string $destination)
+    {
+        if (!file_exists(base_path($source))) {
+            throw new FileNotFoundException($source);
+        }
+
+        if (!file_exists(base_path($destination))) {
+            throw new FileNotFoundException($source);
+        }
+
+        $manager = new ImageManager();
+        $images = glob(base_path($source . '/*'));
+
+        foreach ($images as $image) {
+            $manager->make($image)
+                ->save(base_path($destination  . '/' . pathinfo($image, PATHINFO_BASENAME)));
+        }
+    }
+
+    public function copyImageSvg(string $source, string $destination)
+    {
+        if (!file_exists(base_path($source))) {
+            throw new FileNotFoundException($source);
+        }
+
+        if (!file_exists(base_path($destination))) {
+            throw new FileNotFoundException($source);
+        }
+
+        $images = glob(base_path($source . '/*'));
+
+        foreach ($images as $image) {
+            copy($image, base_path($destination  . '/' . basename($image)));
+        }
+    }
+
     public function copyLanguage(string $table, string $locale)
     {
         $languageLines = DB::table('language_lines')
             ->select('locale', 'description', 'group', 'key', 'text')
-            ->where('locale', 'en')
+            ->where('locale', $locale)
             ->get()
             ->map(function ($languageLine) use ($locale) {
                 return [

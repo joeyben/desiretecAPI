@@ -35,7 +35,7 @@
         <div class="col col-lg-12">
             <div class="filter">
                 <div class="count">
-                    <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', intval($count)) }}</span>
+                    <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', $count ) }}</span>
                 </div>
                 <div class="filter-action">
                     <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
@@ -53,7 +53,7 @@
             <div class="list wishlist" v-cloak>
                 <div class="list-element" v-for="wish in data">
                     <div class="image">
-                        <a href="#" class="img" :style="{ 'background-image' : 'url({{ Storage::disk('s3')->url('img/wish/') }}' + wish.featured_image + ')' }">
+                        <a href="#" class="img" :style="{ 'background-image' : 'url(https://www.matthewwilliams-ellis.com/wp-content/uploads/2014/02/Italy-panoramic-landscape-photography-showing-Isola-Bella-Beach-in-Taormina-Sicily-Italy-panoramic-landscape-photography-by-landscape-photographer-Matthew-Williams-Ellis.jpg)' }">
                             <span class="caption"></span>
                         </a>
                     </div>
@@ -78,10 +78,11 @@
                         <!--    <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>-->
                         @endif
                         <a type="button" class="primary-btn" :href="'/wish/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
-                        @if($logged_in_user->allow('create-offer'))
-                            <!--<a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a> -->
+                        @if($logged_in_user->allow('create-offer') and false)
+                            <a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
                         @endif
-                        <a :href="'/offer/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a>
+                    <!--<a :href="'/offer/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a>-->
+
                     </div>
                 </div>
             </div>
@@ -116,7 +117,6 @@
                     {data: 'whitelabel_name', name: '{{config('module.wishes.table')}}.whitelabel_name', searchable: false},
                     {data: 'offer_count', name: 'count' , searchable: false, sortable: false},
                     {data: 'status', name: '{{config('module.wishes.table')}}.status', searchable: false},
-                    {data: 'add_offer', name: 'add_offer', searchable: false, sortable: false}
                 ],
                 order: [[3, "asc"]],
                 searchDelay: 500,

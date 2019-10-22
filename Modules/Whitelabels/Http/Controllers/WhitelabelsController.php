@@ -257,6 +257,8 @@ class WhitelabelsController extends Controller
                 )
             );
 
+
+
             foreach ($request->get('background') as $item) {
                 $this->attachments->update(
                     $item['uid'],
@@ -280,6 +282,9 @@ class WhitelabelsController extends Controller
 
             ini_set('max_execution_time', 500);
             $this->artisan->call('module:make', ['name' => [$result['whitelabel']->name], '--force' => true]);
+            $this->artisan->call('cache:clear');
+            $this->artisan->call('config:clear');
+            $this->artisan->call('view:clear');
             $this->whitelabels->generateFiles($result['whitelabel']->id, $result['whitelabel']->name);
             $this->artisan->call('module:migrate', ['module' => $result['whitelabel']->name, '--force' => true]);
             $whitelabelLangTable = 'language_lines_' . mb_strtolower($result['whitelabel']->name);
@@ -292,6 +297,8 @@ class WhitelabelsController extends Controller
 
                 $this->whitelabels->copyLanguage($whitelabelLangTable, $locale);
             }
+            $whitelabelName = $result['whitelabel']->name;
+            $output = shell_exec("cd ../Modules/$whitelabelName && npm install && npm run development");
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
             $result['language'] = $language;
@@ -338,6 +345,7 @@ class WhitelabelsController extends Controller
                 'id'                           => $whitelabel->id,
                 'name'                         => $whitelabel->name,
                 'display_name'                 => $whitelabel->display_name,
+                'ga_view_id'                   => $whitelabel->ga_view_id,
                 'status'                       => $whitelabel->status,
                 'domain'                       => $whitelabel->domain,
                 'email'                        => $whitelabel->email,
@@ -392,9 +400,9 @@ class WhitelabelsController extends Controller
                 return null === $item;
             });
 
-            $result['whitelabel']['background'][] = $background->first();
-            $result['whitelabel']['logo'][] = $logo->first();
-            $result['whitelabel']['favicon'][] = $favicon->first();
+            $result['whitelabel']['background'] = !is_null($background->first()) ? [$background->first()] : [];
+            $result['whitelabel']['logo'] = !is_null($logo->first()) ? [$logo->first()] : [];
+            $result['whitelabel']['favicon'] = !is_null($favicon->first()) ? [$favicon->first()] : [];
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -451,7 +459,7 @@ class WhitelabelsController extends Controller
             $result['whitelabel'] = $this->whitelabels->update(
                 $id,
                 array_merge(
-                    $request->only('display_name', 'status', 'distribution_id', 'email'),
+                    $request->only('display_name', 'ga_view_id', 'status', 'distribution_id', 'email'),
                     ['state' => 2]
                 )
             );

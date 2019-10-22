@@ -18,7 +18,7 @@
                 <div class="form-group">
                     @include("frontend.offers.form")
                     <div class="edit-form-btn">
-                    {{ link_to_route('frontend.offers.index', trans('buttons.general.cancel'), [], ['class' => 'secondary-btn']) }}
+                    {{ link_to_route('frontend.offers.index', trans('buttons.general.cancel'), [], ['class' => 'secondary-btn small-btn']) }}
                     {{ Form::submit(trans('buttons.general.crud.create'), ['class' => 'primary-btn']) }}
                     <div class="clearfix"></div>
                 </div>

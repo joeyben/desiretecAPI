@@ -5,6 +5,8 @@ services:
       build:
         context: .
         dockerfile: Dockerfile
+        args:
+          - APP_KEY=${APP_KEY_STAGE}
       depends_on:
         - mariadb
         - redis
@@ -13,11 +15,48 @@ services:
         - /var/www/desiretec-mvp-stage/storage:/var/www/html/storage
       environment:
         - VIRTUAL_HOST=mvp.desiretec.com,novasol.wunsch-service.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com,trendtours.reise-wunsch.com
-        - LETSENCRYPT_HOST=mvp.desiretec.com,novasol.wunsch-service.de,*.reise-wunsch.com,trendtours.reise-wunsch.com
-        - LETSENCRYPT_EMAIL=info@desiretec.com
+        - APP_NAME="desiretec MVP"
+        - APP_ENV=production
+        - APP_KEY=${APP_KEY_STAGE}
+        - APP_DEBUG=false
+        - APP_LOG=daily
+        - LOG_CHANNEL=daily
+        - APP_URL=https://mvp.desiretec.com
+        - TIMEZONE=Europe/Berlin
+        - APP_JS_ENV=development
+        - DB_CONNECTION=mysql
+        - DB_HOST=mariadb
+        - DB_PORT=3306
+        - DB_DATABASE=default
+        - DB_USERNAME=default
+        - DB_PASSWORD=fx7YXHVY!qX$$xz6fEYZx&@WC
+        - ENABLE_REGISTRATION=true
+        - REQUIRES_APPROVAL=false
+        - BROADCAST_DRIVER=redis
+        - CACHE_DRIVER=file
+        - SESSION_DRIVER=file
+        - QUEUE_DRIVER=sync
+        - MAIL_DRIVER=ses
+        - MAIL_HOST=smtp.gmail.com
+        - MAIL_PORT=465
+        - MAIL_USERNAME=mvpdesiretec@gmail.com
+        - MAIL_PASSWORD=%jh=6aB7
+        - MAIL_ENCRYPTION=ssl
+        - JWT_SECRET=rqAPDdMPxyESuhElGlmPFzGAQB57A2cx
+        - JWT_TTL=44640
+        - JWT_REFRESH_TTL=null
+        - AWS_KEY=AKIAJ7MNWL257JAF3UWQ
+        - AWS_SECRET=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
+        - AWS_REGION=eu-central-1
+        - AWS_BUCKET=desiretec
+        - MAILCHIMP_APIKEY=dad542a4ce3fccff2cca9cf50903ce19-us7
+        - MAILCHIMP_LIST_ID=512d1a4c34
+        - REDIS_HOST=redis
+        - REDIS_PASSWORD=null
+        - REDIS_PORT=6379
       networks:
-        - frontend
-        - backend
+        nginx-proxy-wildcard:
+          ipv4_address: 178.30.0.3
     mariadb:
       image: mariadb:latest
       environment:
@@ -28,31 +67,30 @@ services:
       ports:
         - "127.0.0.1:3300:3306"
       networks:
-        - backend
+        nginx-proxy-wildcard:
+          ipv4_address: 178.30.0.4
+
     redis:
       image: redis:latest
       networks:
-        - backend
+        nginx-proxy-wildcard:
+          ipv4_address: 178.30.0.5
+
     laravel-echo-server:
       build:
         context: ./laravel-echo-server
       volumes:
-        - ./laravel-echo-server/laravel-echo-server.json:/app/laravel-echo-server.json:ro
-        - reverseproxy_certs:/app/mvp_certs/:ro
+        - /etc/letsencrypt:/app/mvp_certs:ro
       ports:
         - 6001:6001
       links:
         - redis
       networks:
-        - frontend
-        - backend
+        nginx-proxy-wildcard:
+          ipv4_address: 178.30.0.6
+
 
 networks:
-    frontend:
-      external:
-        name: reverseproxy_http_proxy
-    backend:
-
-volumes:
-    reverseproxy_certs:
-      external: true
+  nginx-proxy-wildcard:
+    external:
+      name: nginx-proxy-wildcard

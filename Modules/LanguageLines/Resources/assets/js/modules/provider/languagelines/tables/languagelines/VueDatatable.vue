@@ -55,6 +55,9 @@ import CssConfig from './CssConfig.js'
       this.$events.$on('range-date-set', (start, end) => this.doRangeDate(start, end))
       this.$events.$on('whitelabel-set', (id) => this.doWhitelabel(id))
       this.$events.$on('locale-set', (locale) => this.doLocale(locale))
+      this.$events.$on('clone-set', (from, to) => this.doClone(from, to))
+      this.$events.$on('import-set', (file) => this.doImport(file))
+      this.$events.$on('cache-clear-set', () => this.doCacheClear())
     },
     render (h) {
       return h(
@@ -102,6 +105,35 @@ import CssConfig from './CssConfig.js'
       doLocale (locale) {
         this.appendParams.locale = locale
         Vue.nextTick(() => this.$refs.vuetable.refresh())
+      },
+      doClone (from, to) {
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
+        this.$http.put(window.laroute.route('provider.language-lines.clone'), {from: from, to: to})
+          .then(this.onCloneSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
+          })
+      },
+      doImport (file) {
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
+        let formData = new FormData()
+        formData.append('file', file)
+        this.$http.post(window.laroute.route('provider.language-lines.import'), formData, {headers: {'Content-Type': 'multipart/form-data'}})
+          .then(this.onCloneSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
+          })
+      },
+      doCacheClear () {
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
+        this.$http.get(window.laroute.route('provider.language-lines.cacheClear'))
+          .then(this.onCacheSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
+          })
       },
       onFilterReset () {
         delete this.appendParams.filter
@@ -222,10 +254,10 @@ import CssConfig from './CssConfig.js'
         this.addChecked(data)
       },
       onLoading () {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
       },
       onLoaded () {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
       },
       boardsCallBack (boards) {
         let data = []
@@ -288,32 +320,32 @@ import CssConfig from './CssConfig.js'
         })
       },
       onDelete (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.delete(window.laroute.route('provider.groups.destroy', {id: id}))
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
+        this.$http.delete(window.laroute.route('provider.language-lines.destroy', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
           })
       },
       onForceDelete (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
         // eslint-disable-next-line
-        this.$http.delete(laroute.route('provider.groups.forceDelete', {id: id}))
+        this.$http.delete(laroute.route('provider.language-lines.forceDelete', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
           })
       },
       onRestore (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
         // eslint-disable-next-line
-        this.$http.put(window.laroute.route('provider.groups.restore', {id: id}))
+        this.$http.put(window.laroute.route('provider.language-lines.restore', {id: id}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
           })
       },
       onDeleteSuccess (response) {
@@ -323,6 +355,27 @@ import CssConfig from './CssConfig.js'
             message: response.data.message
           })
           Vue.nextTick(() => this.$refs.vuetable.refresh())
+        } else {
+          toastr.error(response.message)
+        }
+      },
+      onCloneSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.$message({
+            type: 'success',
+            message: response.data.message
+          })
+          Vue.nextTick(() => this.$refs.vuetable.refresh())
+        } else {
+          toastr.error(response.message)
+        }
+      },
+      onCacheSuccess (response) {
+        if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.$message({
+            type: 'success',
+            message: response.data.message
+          })
         } else {
           toastr.error(response.message)
         }

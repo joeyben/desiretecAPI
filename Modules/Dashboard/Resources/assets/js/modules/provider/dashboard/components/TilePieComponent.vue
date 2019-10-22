@@ -1,106 +1,134 @@
 <template>
     <!-- Large modal -->
-    <div id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
+    <div v-if="browser" id="chart-component"  style="height: 200px;min-width: 310px;max-width: 573px;max-height: 200px;">
         <highcharts class="chart" :options="chartOptions" :updateArgs="updateArgs"></highcharts>
     </div>
     <!-- /large modal -->
 </template>
 <script>
-  import Vuex from 'vuex'
-  import {Chart} from 'highcharts-vue'
-  import Highcharts from 'highcharts'
-  import exportingInit from 'highcharts/modules/exporting'
-  import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
-  exportingInit(Highcharts)
-  export default {
-    name: 'TilePieComponent',
-    components: { highcharts: Chart },
-    data () {
-      return {
-        // eslint-disable-next-line
+import Vuex from 'vuex'
+import {Chart} from 'highcharts-vue'
+import Highcharts from 'highcharts'
+import exportingInit from 'highcharts/modules/exporting'
+import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
+
+exportingInit(Highcharts)
+export default {
+  name: 'TilePieComponent',
+  components: { highcharts: Chart },
+  data () {
+    return {
+      created: '',
+      whitelabelId: null,
+      browser: 1,
+      // eslint-disable-next-line
         errors: new Errors(),
-        updateArgs: [true, true, {duration: 1000}],
-        chartOptions: {
-          chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-          },
-          title: {
-            text: 'Browser market shares in January, 2018'
-          },
-          tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-          },
-          plotOptions: {
-            pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              dataLabels: {
-                enabled: false
-              },
-              showInLegend: true
+      data: [],
+      updateArgs: [true, true, {duration: 1000}],
+      chartOptions: {
+        chart: {
+          type: 'pie'
+        },
+        title: {
+          text: this.trans('dashboard.monthly_desktop_browser_share')
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          line: {
+            dataLabels: {
+              enabled: true
             }
           },
-          series: [{
-            name: 'Brands',
-            colorByPoint: true,
-            data: [{
-              name: 'Chrome',
-              y: 61.41,
-              sliced: true,
-              selected: true
-            }, {
-              name: 'Internet Explorer',
-              y: 11.84
-            }, {
-              name: 'Firefox',
-              y: 10.85
-            }, {
-              name: 'Edge',
-              y: 4.67
-            }, {
-              name: 'Safari',
-              y: 4.18
-            }, {
-              name: 'Other',
-              y: 7.05
-            }]
-          }],
-
-          responsive: {
-            rules: [{
-              condition: {
-                maxWidth: 573,
-                maxHeight: 200
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
               },
-              chartOptions: {
-                legend: {
-                  align: 'center',
-                  verticalAlign: 'bottom',
-                  layout: 'horizontal'
-                }
-              }
-            }]
+              connectorColor: 'silver'
+            }
           }
+        },
+        series: [{
+          name: this.trans('dashboard.browsers'),
+          colorByPoint: true,
+          data: []
+        }],
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 573,
+              maxHeight: 200
+            },
+            chartOptions: {
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+              }
+            }
+          }]
         }
       }
+    }
+  },
+  mounted () {
+    this.loadOfferByMonth()
+    this.$events.$on('whitelabel-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
+    this.$events.$on('range-date-set', (whitelabelId, start, end) => this.loadOfferByMonth(whitelabelId, start, end))
+    this.$events.$on('browser-set', browser => this.loadBrowser(browser))
+  },
+  updated () {
+  },
+  watch: {
+  },
+  computed: {
+    ...Vuex.mapGetters({
+    })
+  },
+  methods: {
+    ...Vuex.mapActions({
+    }),
+    loadOfferByMonth: function (whitelabelId = null, start = '', end = '') {
+      let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
+      let paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end
+      this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
+      this.$http.get(window.laroute.route('admin.dashboard.events.browserperMonth') + params + paramsdate)
+        .then(this.onLoadDashboardSellerSuccess)
+        .catch(this.onFailed)
+        .then(() => {
+          this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
+        })
     },
-    mounted () {
+    loadBrowser: function () {
+      if (this.browser === 1) {
+        this.browser = 0
+      } else {
+        this.browser = 1
+      }
     },
-    updated () {
-      debugger
-    },
-    watch: {
-    },
-    computed: {
-      ...Vuex.mapGetters({
+    generateData (items) {
+      let data = []
+      items.forEach((item, index) => {
+        data.push([item[0], item[1]])
       })
+
+      return data
     },
-    methods: {
-      ...Vuex.mapActions({
-      })
+    onLoadDashboardSellerSuccess (response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.browser = response.data.browser
+        this.chartOptions.series[0].data = this.generateData(response.data.ga)
+        this.data = response.data
+      } else {
+        this.$notify.error({ title: 'Failed', message: response.data.message })
+      }
     }
   }
+}
 </script>

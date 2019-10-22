@@ -4,7 +4,6 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
 require('../bootstrap');
 
 /**
@@ -40,7 +39,7 @@ const app = new Vue({
     },
     mounted() {
         this.fetchWishes();
-        
+
     },
 
     methods: {
@@ -61,7 +60,11 @@ const app = new Vue({
         },
 
         formatPrice(value) {
-            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            if(value == null){
+                return "- ";
+            }
+
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         },
     }
 });
@@ -111,7 +114,7 @@ $(document).on('submit', 'form.contact_form', function (event) {
 $('.antworten-btn').click(function(){
     $('#antworten').slideDown()
     if($(this).hasClass('sendAntworten')){
-        
+
     }
     $(this).addClass('sendAntworten');
 })

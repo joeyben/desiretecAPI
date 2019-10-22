@@ -1,0 +1,17 @@
+{
+    "name": "Footers",
+    "alias": "footers",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Footers\\Providers\\FootersServiceProvider",
+        "Modules\\Footers\\Providers\\RepositoryServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

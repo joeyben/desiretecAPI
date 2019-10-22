@@ -40,7 +40,9 @@
         <link media="all" type="text/css" rel="stylesheet" href="{{ asset('fontawsome/css/all.css') }}">
 
     @yield('after-styles')
+        <style type="text/css">
 
+        </style>
         <!-- Scripts -->
         <script>
             window.Laravel = <?php echo json_encode([

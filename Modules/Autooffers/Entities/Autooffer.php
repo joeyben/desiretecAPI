@@ -11,7 +11,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Autooffer extends Model
 {
-    use SoftDeletes, SearchableTrait, LogsActivity;
+    use SoftDeletes;
+    use SearchableTrait;
+    use LogsActivity;
 
     protected $guarded = [];
 
@@ -35,6 +37,7 @@ class Autooffer extends Model
         'airport_name',
         'wish_id',
         'user_id',
+        'thumbnail'
     ];
 
     protected static $logOnlyDirty = true;

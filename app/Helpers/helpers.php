@@ -354,8 +354,9 @@ if (!function_exists('isWhiteLabel')) {
      */
     function isWhiteLabel()
     {
-        $url = str_replace('http://', '', url('/'));
-        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
+        //$url = str_replace(['http://', 'https://'], ['',''], url('/'));
+        //$id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('id');
+        $id = getCurrentWhiteLabelField('id');
 
         return null !== $id;
     }
@@ -381,9 +382,10 @@ if (!function_exists('getCurrentWhiteLabelId')) {
      */
     function getCurrentWhiteLabelId()
     {
-        $url = str_replace('http://', '', url('/'));
-        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
-        return $id;
+        //$url = str_replace(['http://', 'https://'], ['',''], url('/'));
+        //$id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('id');
+        return getCurrentWhiteLabelField('id');
+        //return $id;
     }
 }
 
@@ -395,8 +397,9 @@ if (!function_exists('getCurrentWhiteLabelName')) {
      */
     function getCurrentWhiteLabelName()
     {
-        $url = str_replace('http://', '', url('/'));
-        $name = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+        //$url = str_replace('http://', '', url('/'));
+        //$name = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+        $name = getCurrentWhiteLabelField('name');
 
         return strtolower($name);
     }
@@ -409,13 +412,14 @@ if (!function_exists('getCurrentWhiteLabelField')) {
      *
      * @return int
      */
-    function getCurrentWhiteLabelField($field)
-    {
-        $url = str_replace('http://', '', url('/'));
-        $url = str_replace('https://', '', $url);
-        $id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value($field);
+    function getCurrentWhiteLabelField($field){
+        $url = str_replace(['http://', 'https://'], ['', ''], url('/'));
+        $url = explode(':', $url)[0]; // cut the port
+        //$url = str_replace('http://', '', url('/'));
+        //$url = str_replace('https://', '', $url);
 
-        return $id;
+        return \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value($field);
+
     }
 }
 
@@ -427,8 +431,8 @@ if (!function_exists('getWhiteLabelLogo')) {
      *
      * @return string
      */
-    function getWhiteLabelLogoUrl($type = 'logo')
-    {
+    function getWhiteLabelLogoUrl($type = 'logo'){
+
         $attachment = \Modules\Attachments\Entities\Attachment::select([
             config('module.attachments.table') . '.basename',
             config('module.attachments.table') . '.type',
@@ -462,8 +466,9 @@ if (!function_exists('getLanguageLinesTable')) {
     function getLanguageLinesTable()
     {
         if (isWhiteLabel()) {
-            $url = str_replace('http://', '', url('/'));
-            $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+           // $url = str_replace('http://', '', url('/'));
+           // $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+            $whitelabelName = getCurrentWhiteLabelField('name');
 
             return \Config::get(mb_strtolower($whitelabelName) . '.language_lines_table');
         }
@@ -481,8 +486,9 @@ if (!function_exists('getLanguageLinesCacheKey')) {
     function getLanguageLinesCacheKey()
     {
         if (isWhiteLabel()) {
-            $url = str_replace('http://', '', url('/'));
-            $whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
+            //$url = str_replace('http://', '', url('/'));
+            //$whitelabelName = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('name');
+            $whitelabelName = getCurrentWhiteLabelField('name');
 
             return $whitelabelName;
         }
@@ -536,3 +542,145 @@ if (!function_exists('getWhitelabelLocales')) {
         return null;
     }
 }
+
+if (!function_exists('footers_by_whitelabel')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function footers_by_whitelabel()
+    {
+        //$url = str_replace('http://', '', url('/'));
+        //$id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
+        $id = getCurrentWhiteLabelField('id');
+        if(!is_null($id)) {
+            $footers = \Modules\Footers\Entities\Footer::where('whitelabel_id', $id)->orderBy('position', 'ASC')->get();
+            return $footers;
+        }
+
+        return [];
+    }
+}
+
+
+
+if (!function_exists('getWhitelabelFooterUrl')) {
+    /**
+     * return url(blade-format = with dot as seperator) to the whitelabel-footer.
+     *
+     * @return string
+     */
+    function getWhitelabelFooterUrl(){
+        $name = getCurrentWhiteLabelField('name');
+        $fullFooterPath = resource_path("views/_parts/footer/".strtolower($name).".blade.php");
+        $footerUrl = '_parts.footer.';
+
+        if(is_null($name) or !file_exists($fullFooterPath)){
+            return $footerUrl.'default';
+        }
+        return $footerUrl.strtolower($name);
+    }
+}
+
+
+
+if (!function_exists('getApiByWhitelabel')) {
+    /**
+     * return url(blade-format = with dot as seperator) to the whitelabel-footer.
+     *
+     * @return string
+     */
+    function getApiByWhitelabel(){
+        $name = getCurrentWhiteLabelField('name');
+
+
+    }
+}
+
+
+if (!function_exists('getKeywordText')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getKeywordText($value)
+    {
+        $keywords = \App\Models\KeywordList::where('code', $value)->first();
+        return $keywords ? $keywords->name : "";
+    }
+}
+
+
+if (!function_exists('getRegionCode')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getRegionCode($value, $type)
+    {
+        return str_replace('region.', '',\App\Models\Regions::where('regionName', 'like' ,'%'.$value.'%')->where('type',$type)->first()->regionCode);
+
+    }
+}
+
+if (!function_exists('getTTRegionCode')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getTTRegionCode($value)
+    {
+        return \App\Models\TTRegions::where('ort', 'like' ,'%'.$value.'%')->first()->topRegion;
+
+    }
+}
+
+if (!function_exists('getTTRegions')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getTTRegions($value)
+    {
+        return \App\Models\TTRegions::where('ort', 'like' ,'%'.$value.'%')->select('topRegionName')->get();
+
+    }
+}
+
+if (!function_exists('getCateringFromCode')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getCateringFromCode($code)
+    {
+        $category = "";
+        switch ($code) {
+            case '1':
+                $category = "Ohne Verpflegung";
+                break;
+            case '2':
+                $category = "Frühstück";
+                break;
+            case '3':
+                $category = "Halbpension";
+                break;
+            case '4':
+                $category = "Vollpension";
+                break;
+            case '5':
+                $category = "Ohne Verpflegung";
+                break;
+            default:
+                $category = "all inclusive";
+        }
+        return $category;
+    }
+}
+

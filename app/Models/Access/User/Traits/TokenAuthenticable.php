@@ -20,8 +20,7 @@ trait TokenAuthenticable
         return $this;
     }
 
-    public function sendTokenLink(array $options)
-    {
+    public function sendTokenLink(array $options){
         Mail::to($this)->send(new TokenLoginRequested($this, $options));
     }
 

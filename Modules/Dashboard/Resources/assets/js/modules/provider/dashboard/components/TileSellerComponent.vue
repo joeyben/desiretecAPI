@@ -1,6 +1,6 @@
 <template>
     <!-- Large modal -->
-    <div class="card card-body bg-primary has-bg-image">
+    <div v-if="basis" class="card card-body bg-primary has-bg-image">
         <div class="media">
             <div class="media-body">
                 <h3 class="mb-0" v-text="sellerCount.active + '/' + sellerCount.all"></h3>
@@ -23,6 +23,7 @@
     data () {
       return {
         // eslint-disable-next-line
+        basis:1,
         errors: new Errors(),
         sellerCount: {all: 0, active: 0}
       }
@@ -30,6 +31,7 @@
     mounted () {
       this.loadSeller()
       this.$events.$on('whitelabel-set', whitelabelId => this.loadSeller(whitelabelId))
+      this.$events.$on('basis-set', basis => this.loadBasis(basis))
     },
     watch: {
     },
@@ -50,8 +52,16 @@
             this.$store.dispatch('block', {element: 'dashboardComponent', load: false})
           })
       },
+      loadBasis: function () {
+        if (this.basis === 1) {
+          this.basis = 0
+        } else {
+          this.basis = 1
+        }
+      },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
+          this.basis = response.data.basis
           this.sellerCount = response.data.sellerCount
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
