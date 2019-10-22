@@ -21,27 +21,27 @@ var exitIntent = window.exitIntent || {};
 
         var texts = {
             'eil-n1-social': {
-                header: 'Lieber Webseiten-Besucher',
+                header: 'Lieber Kreuzfahrt-Interessent',
                 body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-n1': {
-                header: 'Lieber Webseiten-Besucher',
+                header: 'Lieber Kreuzfahrt-Interessent',
                 body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-n2': {
-                header: 'Lieber Webseiten-Besucher',
+                header: 'Lieber Kreuzfahrt-Interessent',
                 body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-n3': {
-                header: 'Lieber Webseiten-Besucher',
+                header: 'Lieber Kreuzfahrt-Interessent ',
                 body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-n4': {
-                header: 'Lieber Webseiten-Besucher',
+                header: 'Lieber Kreuzfahrt-Interessent',
                 body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-n5': {
-                header: 'Lieber Webseiten-Besucher',
+                header: 'Lieber Kreuzfahrt-Interessent',
                 body: 'Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.'
             },
             'eil-mobile': {

@@ -1,7 +1,7 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
-    Bevor Sie diese Seite verlassen, möchte ich Ihnen noch meinen persönlichen Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate Sie kostenfrei zu allen Reedereien & Routen weltweit. Probieren Sie es doch einfach mal aus.
+    Bevor Sie diese Seite verlassen, möchte ich Ihnen noch meinen <span style="text-decoration: underline">persönlichen</span> Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate Sie kostenfrei zu allen Reedereien & Routen weltweit. Probieren Sie es doch einfach mal aus.
     <br>
     Ihr Kreuzfahrtberater – Heiko Wiltfang
 </div>
