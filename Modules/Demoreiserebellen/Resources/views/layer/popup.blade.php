@@ -264,6 +264,7 @@
             });
 
             $(document).ready(function(){
+                autocomplete();
                 $('.selectpicker').selectpicker();
 
                 dt.startDate = new Pikaday({
@@ -379,6 +380,34 @@
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
+            }
+
+            /**
+             * Autocomplete
+             */
+            var autocomplete = function(){
+              /* Destinations */
+              $.get('get-all-destinations', function(data){
+                $("#destination").typeahead({
+                  autoSelect: true,
+                  minLength: 3,
+                  delay: 200,
+                  source: data
+                });
+              });
+              /* END Destinations */
+
+              /* Airports */
+              $.get('get-all-airports', function(data){
+                $("#airport").typeahead({
+                  autoSelect: true,
+                  minLength: 3,
+                  delay: 200,
+                  source: data
+                });
+              });
+              /* END Airports */
+
             }
         </script>
 

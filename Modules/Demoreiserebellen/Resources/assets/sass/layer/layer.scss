@@ -356,7 +356,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: $mastercolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -446,7 +446,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: $mastercolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -821,7 +821,7 @@ p.kwp-info {
       display: none;
     }
     .filter-option-inner-inner{
-      color: #092a5e;
+      color: #1f5daa;
       font-size: 14px;
       font-weight: 500;
     }
@@ -1216,6 +1216,7 @@ p.kwp-info {
       margin: 25px auto 0;
 
       .kwp-middle{
+        display: none;
         background: #E2F3FE;
         padding: 5px 20px;
         border-bottom: 1px solid $master-blue;
@@ -1355,7 +1356,7 @@ p.kwp-info {
         display: block;
         width: 100%;
         margin: 0px auto 0;
-        font-family: "TUITypeLight",sans-serif;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif;
         position:relative;
         i{
           position: absolute;
@@ -1615,4 +1616,13 @@ and (max-device-width : 320px) {
 }
 .kwp-header h1{
   display: none;
+}
+.kwp-completed-master h1{
+  font-size: 17px;
+}
+.bootstrap-select .dropdown-toggle .filter-option-inner-inner{
+  font-size: 14px;
+  font-weight: 500;
+  font-family: $altfont;
+  color: $mastercolor;
 }
