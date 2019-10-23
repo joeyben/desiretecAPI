@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Kreuzfahrtberatung',
-    'id'   => 158,
+    'id'   => 59,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_kreuzfahrtberatung',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
