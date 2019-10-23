@@ -9,6 +9,30 @@
     <div class="kwp-content kwp-with-expansion">
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
+                @php
+                $extraParamInputs = [
+                     ['title' => 'lage',                    'name' => 'locationAttributes', 'id' => 'locationAttributes',  'defaultValue' => ''],
+                     ['title' => 'ausstattung-und-service', 'name' => 'facilityAttributes', 'id' => 'facilityAttributes',  'defaultValue' => ''],
+                     ['title' => 'reisethemen',             'name' => 'travelAttributes',   'id' => 'travelAttributes',    'defaultValue' => ''],
+                     ['title' => 'zwischenstopps',          'name' => 'maxStopOver',        'id' => 'maxStopOver',         'defaultValue' => 'K/A'],
+                     ['title' => 'ort',                     'name' => 'cities',             'id' => 'cities',              'defaultValue' => ''],
+                     ['title' => 'gaestebewertungen',       'name' => 'ratings',            'id' => 'ratings',             'defaultValue' => ''],
+                     ['title' => 'weiterempfehlung',        'name' => 'recommendationRate', 'id' => 'recommendationRate',  'defaultValue' => ''],
+                     ['title' => 'gesamtpreis',             'name' => 'minPrice',           'id' => 'minPrice',            'defaultValue' => ''],
+                     ['title' => 'zimmertyp',               'name' => 'roomType',           'id' => 'roomType',            'defaultValue' => ''],
+                     ['title' => 'angebote',                'name' => 'earlyBird',          'id' => 'earlyBird',           'defaultValue' => ''],
+                     ['title' => 'familie',                 'name' => 'familyAttributes',   'id' => 'familyAttributes',    'defaultValue' => ''],
+                     ['title' => 'wellness',                'name' => 'wellnessAttributes', 'id' => 'wellnessAttributes',  'defaultValue' => ''],
+                     ['title' => 'sport',                   'name' => 'sportAttributes',    'id' => 'sportAttributes',     'defaultValue' => ''],
+                     ['title' => 'fluggesellschaften',      'name' => 'airlines',           'id' => 'airlines',            'defaultValue' => ''],
+                     ['title' => 'hotelmarke',              'name' => 'hotelChains',        'id' => 'hotelChains',         'defaultValue' => ''],
+                     ['title' => 'veranstalter',            'name' => 'operators',          'id' => 'operators',           'defaultValue' => ''],
+                ];
+                @endphp
+                @foreach($extraParamInputs as $extraParam)
+                    {{ Form::hidden($extraParam['name'], key_exists($extraParam['name'], $request) ? $request[$extraParam['name']] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'title' => $extraParam['title']]) }}
+                @endforeach
+
                 {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
                 {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('tuidemo::layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))

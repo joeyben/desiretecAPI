@@ -411,6 +411,21 @@ var exitIntent = window.exitIntent || {};
             }
 
             return variant;
+        },
+        getExtraVariable: function(extraVar, attrName, splitChar){
+            splitChar = (splitChar === undefined) ? ';' : splitChar;
+            var attributesArr = [];
+            if(extraVar != ''){
+                var attributes = extraVar.split(splitChar);
+                $.each(attributes, function(i, e){
+                    var item = attrName+'_'+e;
+                    attributesArr.push($('label[for='+item+']').attr('title'));
+                });
+            }
+            if(attributesArr.length == 0){
+                return '';
+            }
+            return attributesArr.join(', ');
         }
     });
 
@@ -593,6 +608,88 @@ var exitIntent = window.exitIntent || {};
                     return self.getAirportName(airport);
                 }).join(', ');
             },
+            /* Extra Variabels ****************************************************************************************/
+            /* Lage */
+            'locationAttributes': function (form, formData) {
+                var locationAttributes = getUrlParams('locationAttributes') ? getUrlParams('locationAttributes') : '';
+                return this.getExtraVariable(locationAttributes, 'locationAttributes');
+            },
+            /* Ausstattung und Service */
+            'facilityAttributes': function (form, formData) {
+                var facilityAttributes = getUrlParams('facilityAttributes') ? getUrlParams('facilityAttributes') : '';
+                return this.getExtraVariable(facilityAttributes, 'facilityAttributes');
+            },
+            /* Reisethemen */
+            'travelAttributes': function (form, formData) {
+                var travelAttributes = getUrlParams('travelAttributes') ? getUrlParams('travelAttributes') : '';
+                return this.getExtraVariable(travelAttributes, 'travelAttributes');
+            },
+            /* Reisethemen */
+            'zwischenstopps': function (form, formData) {
+                var maxStopOver = getUrlParams('maxStopOver') ? getUrlParams('maxStopOver') : '';
+                return this.getExtraVariable(maxStopOver, 'maxStopOver');
+            },
+            /* Orte */
+            'cities': function (form, formData) {
+                var cities = getUrlParams('cities') ? getUrlParams('cities') : '';
+                return this.getExtraVariable(cities, 'cities');
+            },
+            /* Gästebewertungen */
+            'ratings': function (form, formData) {
+                var ratings = getUrlParams('ratings') ? getUrlParams('ratings') : '';
+                return this.getExtraVariable(ratings, 'ratings');
+            },
+            /* Weiterempfehlung */
+            'recommendationRate': function (form, formData) {
+                var recommendationRate = getUrlParams('recommendationRate') ? getUrlParams('recommendationRate') : '';
+                return this.getExtraVariable(recommendationRate, 'recommendationRate');
+            },
+            /* Gesamtpreis */
+            'minPrice': function (form, formData) {
+                var minPrice = getUrlParams('minPrice') ? getUrlParams('minPrice') : '';
+                return this.getExtraVariable(minPrice, 'minPrice');
+            },
+            /* Zimmertyp */
+            'roomType': function (form, formData) {
+                var roomType = getUrlParams('roomType') ? getUrlParams('roomType') : '';
+                return this.getExtraVariable(roomType, 'roomType');
+            },
+            /* Angebote */
+            'earlyBird': function (form, formData) {
+                var earlyBird = getUrlParams('earlyBird') ? getUrlParams('earlyBird') : '';
+                return this.getExtraVariable(earlyBird, 'earlyBird');
+            },
+            /* Angebote */
+            'Familie': function (form, formData) {
+                var familyAttributes = getUrlParams('familyAttributes') ? getUrlParams('familyAttributes') : '';
+                return this.getExtraVariable(familyAttributes, 'familyAttributes');
+            },
+            /* Angebote */
+            'Wellness': function (form, formData) {
+                var wellnessAttributes = getUrlParams('wellnessAttributes') ? getUrlParams('wellnessAttributes') : '';
+                return this.getExtraVariable(wellnessAttributes, 'wellnessAttributes');
+            },
+            /* Angebote */
+            'Sport': function (form, formData) {
+                var sportAttributes = getUrlParams('sportAttributes') ? getUrlParams('sportAttributes') : '';
+                return this.getExtraVariable(sportAttributes, 'sportAttributes');
+            },
+            /* Angebote */
+            'Fluggesellschaften': function (form, formData) {
+                var airlines = getUrlParams('airlines') ? getUrlParams('airlines') : '';
+                return this.getExtraVariable(airlines, 'airlines');
+            },
+            /* Angebote */
+            'Hotelmarke': function (form, formData) {
+                var hotelChains = getUrlParams('hotelChains') ? getUrlParams('hotelChains') : '';
+                return this.getExtraVariable(hotelChains, 'hotelChains');
+            },
+            /* Angebote */
+            'Veranstalter': function (form, formData) {
+                var operators = getUrlParams('operators') ? getUrlParams('operators') : '';
+                return this.getExtraVariable(operators, 'operators');
+            },
+            /* END Extra Variabels ************************************************************************************/
             'is_popup_allowed': function (form, formData) {
                 //var step = this.getScope().IbeApi.state.stepNr;
                 return true;
@@ -920,6 +1017,21 @@ var exitIntent = window.exitIntent || {};
             }
 
             return variant;
+        },
+        getExtraVariable: function(extraVar, attrName, splitChar){
+            splitChar = (splitChar === undefined) ? ';' : splitChar;
+            var attributesArr = [];
+            if(extraVar != ''){
+                var attributes = extraVar.split(splitChar);
+                $.each(attributes, function(i, e){
+                    var item = attrName+'_'+e;
+                    attributesArr.push($('label[for='+item+']').attr('title'));
+                });
+            }
+            if(attributesArr.length == 0){
+                return '';
+            }
+            return attributesArr.join(', ');
         }
     });
 
@@ -1010,6 +1122,88 @@ var exitIntent = window.exitIntent || {};
                 var airport = getUrlParams('airport') ? getUrlParams('airport') : '';
                 return airport;
             },
+            /* Extra Variabels ****************************************************************************************/
+            /* Lage */
+            'locationAttributes': function (form, formData) {
+                var locationAttributes = getUrlParams('locationAttributes') ? getUrlParams('locationAttributes') : '';
+                return this.getExtraVariable(locationAttributes, 'locationAttributes');
+            },
+            /* Ausstattung und Service */
+            'facilityAttributes': function (form, formData) {
+                var facilityAttributes = getUrlParams('facilityAttributes') ? getUrlParams('facilityAttributes') : '';
+                return this.getExtraVariable(facilityAttributes, 'facilityAttributes');
+            },
+            /* Reisethemen */
+            'travelAttributes': function (form, formData) {
+                var travelAttributes = getUrlParams('travelAttributes') ? getUrlParams('travelAttributes') : '';
+                return this.getExtraVariable(travelAttributes, 'travelAttributes');
+            },
+            /* Reisethemen */
+            'zwischenstopps': function (form, formData) {
+                var maxStopOver = getUrlParams('maxStopOver') ? getUrlParams('maxStopOver') : '';
+                return this.getExtraVariable(maxStopOver, 'maxStopOver');
+            },
+            /* Orte */
+            'cities': function (form, formData) {
+                var cities = getUrlParams('cities') ? getUrlParams('cities') : '';
+                return this.getExtraVariable(cities, 'cities');
+            },
+            /* Gästebewertungen */
+            'ratings': function (form, formData) {
+                var ratings = getUrlParams('ratings') ? getUrlParams('ratings') : '';
+                return this.getExtraVariable(ratings, 'ratings');
+            },
+            /* Weiterempfehlung */
+            'recommendationRate': function (form, formData) {
+                var recommendationRate = getUrlParams('recommendationRate') ? getUrlParams('recommendationRate') : '';
+                return this.getExtraVariable(recommendationRate, 'recommendationRate');
+            },
+            /* Gesamtpreis */
+            'minPrice': function (form, formData) {
+                var minPrice = getUrlParams('minPrice') ? getUrlParams('minPrice') : '';
+                return this.getExtraVariable(minPrice, 'minPrice');
+            },
+            /* Zimmertyp */
+            'roomType': function (form, formData) {
+                var roomType = getUrlParams('roomType') ? getUrlParams('roomType') : '';
+                return this.getExtraVariable(roomType, 'roomType');
+            },
+            /* Angebote */
+            'earlyBird': function (form, formData) {
+                var earlyBird = getUrlParams('earlyBird') ? getUrlParams('earlyBird') : '';
+                return this.getExtraVariable(earlyBird, 'earlyBird');
+            },
+            /* Angebote */
+            'Familie': function (form, formData) {
+                var familyAttributes = getUrlParams('familyAttributes') ? getUrlParams('familyAttributes') : '';
+                return this.getExtraVariable(familyAttributes, 'familyAttributes');
+            },
+            /* Angebote */
+            'Wellness': function (form, formData) {
+                var wellnessAttributes = getUrlParams('wellnessAttributes') ? getUrlParams('wellnessAttributes') : '';
+                return this.getExtraVariable(wellnessAttributes, 'wellnessAttributes');
+            },
+            /* Angebote */
+            'Sport': function (form, formData) {
+                var sportAttributes = getUrlParams('sportAttributes') ? getUrlParams('sportAttributes') : '';
+                return this.getExtraVariable(sportAttributes, 'sportAttributes');
+            },
+            /* Angebote */
+            'Fluggesellschaften': function (form, formData) {
+                var airlines = getUrlParams('airlines') ? getUrlParams('airlines') : '';
+                return this.getExtraVariable(airlines, 'airlines');
+            },
+            /* Angebote */
+            'Hotelmarke': function (form, formData) {
+                var hotelChains = getUrlParams('hotelChains') ? getUrlParams('hotelChains') : '';
+                return this.getExtraVariable(hotelChains, 'hotelChains');
+            },
+            /* Angebote */
+            'Veranstalter': function (form, formData) {
+                var operators = getUrlParams('operators') ? getUrlParams('operators') : '';
+                return this.getExtraVariable(operators, 'operators');
+            },
+            /* END Extra Variabels ************************************************************************************/
             'is_popup_allowed': function (form, formData) {
                 //var step = this.getScope().IbeApi.state.stepNr;
                 return true;
