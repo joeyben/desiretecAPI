@@ -577,15 +577,15 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/kreuzfahrtberatung-bora-bora-startseite.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/KFB_Kreis.jpg) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/kreuzfahrtberatung-bora-bora-startseite.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/KFB_Kreis.jpg) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
-    background-image: url(../../images/layer/kreuzfahrtberatung-bora-bora-startseite.jpg);
+    background-image: url(../../images/layer/KFB_Kreis.jpg);
 
     .kwp-header-content {
       p {
@@ -1271,7 +1271,7 @@ p.kwp-info {
         font-size: 20px;
         margin: 0px;
         color:#fff;
-        padding: 8px 0;
+        //padding: 8px 0;
         font-weight: bold;
         font-family: $altfont;
         text-align: center;

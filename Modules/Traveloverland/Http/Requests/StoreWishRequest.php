@@ -86,7 +86,6 @@ class StoreWishRequest extends FormRequest
             'email.required'            => trans('email.required'),
             'email.email'               => trans('layer.email.required'),
             'earliest_start.required'   => trans('earliest_start.required'),
-            'latest_return.required'    => trans('latest_return.required'),
             'adults.required'           => trans('adults.required'),
             'airport.required'          => trans('airport.required'),
             'destination.required'      => trans('destination.required'),

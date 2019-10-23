@@ -193,7 +193,7 @@
                     <div class="kwp-col-4 white-col">
                         <div class="kwp-agb">
                             {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                            <p>Ich habe die <a id="datenschutz" href="https://www.trendtours.de/trendtours/datenschutz" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                            <p>Ich habe die <a id="datenschutz" href="https://www.kurenundwellness.tv/datenschutzerklaerung/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                             <script>$('#agb_link').click(dt.agbModal);</script>
                         </div>
                     </div>

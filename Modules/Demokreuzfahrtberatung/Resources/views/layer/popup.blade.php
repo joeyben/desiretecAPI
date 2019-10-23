@@ -1,7 +1,9 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
-    Bevor Sie gehen, möchte ich Ihnen noch einmal kurz meinen persönlichen Kreuzfahrt-Service vorstellen. <br>Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate unabhängig & fair zu allen Reedereien & Fahrtrouten weltweit. Probieren Sie es einfach aus.
+    Bevor Sie diese Seite verlassen, möchte ich Ihnen noch meinen <span style="text-decoration: underline">persönlichen</span> Kreuzfahrt-Service vorstellen. Ich erstelle für jeden Kunden individuelle Kreuzfahrtangebote und berate Sie kostenfrei zu allen Reedereien & Routen weltweit. Probieren Sie es doch einfach mal aus.
+    <br>
+    Ihr Kreuzfahrtberater – Heiko Wiltfang
 </div>
 {{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
@@ -367,7 +369,7 @@
                   @endphp
                 @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                     <p>Ich habe die <a href="https://demokreuzfahrtberatung.reise-wunsch.com/pdfs/tnb_Kreuzfahrtberatung.pdf" id="agb_link" target="_blank">Geschäftsbedingungen</a> und <a id="datenschutz" href="https://www.kreuzfahrtberatung.de/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                     <p>Ich habe die <a href="https://demokreuzfahrtberatung.reise-wunsch.com/pdfs/tnb_Kreuzfahrtberatung.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.kreuzfahrtberatung.de/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                 </div>
             </div>
         </div>
