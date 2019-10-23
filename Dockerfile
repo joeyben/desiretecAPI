@@ -15,7 +15,7 @@ RUN composer install \
     --prefer-dist
 
 
-FROM node:latest as frontend
+FROM node:lts-stretch as frontend
 
 LABEL maintainer="desiretec"
 

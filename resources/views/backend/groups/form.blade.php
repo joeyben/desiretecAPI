@@ -56,6 +56,6 @@
 @section("after-scripts")
     <script type="text/javascript">
 
-        
+
     </script>
 @endsection

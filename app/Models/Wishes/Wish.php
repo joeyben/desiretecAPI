@@ -7,6 +7,8 @@ use App\Models\ModelTrait;
 use App\Models\Wishes\Traits\Attribute\WishAttribute;
 use App\Models\Wishes\Traits\Relationship\WishRelationship;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use mysql_xdevapi\Collection;
 
 class Wish extends BaseModel
 {
@@ -36,7 +38,10 @@ class Wish extends BaseModel
         'whitelabel_id',
         'group_id',
         'current',
-        'quality'
+        'quality',
+        'ages',
+        'direkt_flug',
+        'extra_params'
     ];
 
     protected $dates = [
@@ -55,5 +60,21 @@ class Wish extends BaseModel
     {
         parent::__construct($attributes);
         $this->table = config('module.wishes.table');
+    }
+
+    /**
+     * Returns the extra_parameters as a clean array
+     *
+     * @return array
+     */
+    public function getExtraParametersAsArray() {
+        $toReturn = [];
+        if(!is_null($this->extra_params)){
+            $extra_params = json_decode($this->extra_params, true);
+            foreach ($extra_params as $key => $extra_param){
+                $toReturn[$key] = explode(', ', $extra_param);
+            }
+        }
+        return $toReturn;
     }
 }

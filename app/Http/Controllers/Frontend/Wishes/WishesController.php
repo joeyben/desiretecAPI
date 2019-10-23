@@ -106,7 +106,6 @@ class WishesController extends Controller
      */
     public function show(Wish $wish, ManageWishesRequest $request)
     {
-
         $wishTye = $this->manageRules($wish);
 
         if($wishTye > 0){
@@ -121,7 +120,6 @@ class WishesController extends Controller
             array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
-
 
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
