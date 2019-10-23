@@ -19,8 +19,8 @@ services:
     volumes:
       - /home/ubuntu/desiretech/storage:/var/www/html/storage
     environment:
-      - VIRTUAL_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,novasol.reisewunschservice.de,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com
-      - LETSENCRYPT_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,novasol.reisewunschservice.de
+      - VIRTUAL_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,novasol.reisewunschservice.de,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com,kreuzfahrtberatung.reisewunschservice.de
+      - LETSENCRYPT_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,novasol.reisewunschservice.de,kreuzfahrtberatung.reisewunschservice.de
       - LETSENCRYPT_EMAIL=info@desiretec.com
     networks:
       - frontend
