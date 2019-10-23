@@ -247,7 +247,6 @@
 
             $(document).ready(function(){
                 //$('.selectpicker').selectpicker();
-                autocomplete();
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',
@@ -327,9 +326,6 @@
                     $("#latest_return").val(d+"."+m+"."+y);
                 }
 
-                var range = parseInt($("#budget").val().replace('.',''));
-                if(range)
-                    $('input[type="range"]').val(range).change();
 
                 $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
                 var pax = $("#adults").val();
@@ -405,6 +401,11 @@
 
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
                     <p>Ich habe die <a href="https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/pdf/tnb_traveloverland.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.travel-overland.de/service/kleingedruckte/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    @if ($errors->any() && $errors->get('terms'))
+                        @foreach ($errors->get('terms') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
