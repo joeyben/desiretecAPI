@@ -45,6 +45,7 @@ RUN cd /myapp/Modules/TestHafermann && yarn install --ignore-engines && npm run 
 RUN cd /myapp/Modules/TestAuto && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Testkurenundwellness && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Demoatw && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Testmanuell && yarn install --ignore-engines && npm run production
 
 FROM horrorhorst/laravel-base:latest
 
