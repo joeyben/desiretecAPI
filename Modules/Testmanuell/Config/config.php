@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Testmanuell',
-    'id'   => 56,
+    'id'   => 167,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_testmanuell',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
