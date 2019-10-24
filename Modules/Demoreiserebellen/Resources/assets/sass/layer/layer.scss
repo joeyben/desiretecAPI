@@ -3,10 +3,10 @@
 @import "bootstrap-select";
 
 $gutter: 30px;
-$altfont: 'Comfortaa', cursive;
+$altfont: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #092a5e;
+$mastercolor: #1f5daa;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
 $fontcolor: #303030;
@@ -356,7 +356,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: $mastercolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -446,7 +446,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: $mastercolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -573,15 +573,15 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/desiretec_RR_exit-intent-visual_text.jpg) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/desiretec_RR_exit-intent-visual_text.jpg) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
-    background-image: url(../../images/layer/visual_ipad_smile_TUI.jpg);
+    background-image: url(../../images/layer/desiretec_RR_exit-intent-visual_text.jpg);
 
     .kwp-header-content {
       p {
@@ -590,7 +590,6 @@ ul.kwp-form-errors {
       }
 
       h1 {
-
       }
     }
   }
@@ -822,7 +821,7 @@ p.kwp-info {
       display: none;
     }
     .filter-option-inner-inner{
-      color: #092a5e;
+      color: #1f5daa;
       font-size: 14px;
       font-weight: 500;
     }
@@ -1217,6 +1216,7 @@ p.kwp-info {
       margin: 25px auto 0;
 
       .kwp-middle{
+        display: none;
         background: #E2F3FE;
         padding: 5px 20px;
         border-bottom: 1px solid $master-blue;
@@ -1356,7 +1356,7 @@ p.kwp-info {
         display: block;
         width: 100%;
         margin: 0px auto 0;
-        font-family: "TUITypeLight",sans-serif;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif;
         position:relative;
         i{
           position: absolute;
@@ -1613,4 +1613,16 @@ and (max-device-width : 320px) {
 }
 .dt_terms.hasError:after{
   border: 1px solid red !important;
+}
+.kwp-header h1{
+  display: none;
+}
+.kwp-completed-master h1{
+  font-size: 17px;
+}
+.bootstrap-select .dropdown-toggle .filter-option-inner-inner{
+  font-size: 14px;
+  font-weight: 500;
+  font-family: $altfont;
+  color: $mastercolor;
 }

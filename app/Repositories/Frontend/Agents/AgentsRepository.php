@@ -64,6 +64,7 @@ class AgentsRepository extends BaseRepository
      */
     public function create(array $input)
     {
+
         DB::transaction(function () use ($input) {
             $input = $this->uploadImage($input);
             $input['user_id'] = access()->user()->id;

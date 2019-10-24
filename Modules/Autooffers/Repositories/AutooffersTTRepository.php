@@ -252,6 +252,7 @@ class AutooffersTTRepository extends BaseRepository
      */
     public function saveWishData(Wish $wish)
     {
+        $destination = explode('-', $wish->destination);
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
@@ -262,7 +263,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->setFrom($wish->earliest_start);
         $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
-        $this->setRegion(getTTRegionCode($wish->destination, 1));
+        $this->setRegion(getTTRegionCode(trim($destination[1]), 1));
 
         return true;
     }

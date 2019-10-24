@@ -183,7 +183,7 @@ class WishesController extends Controller
             'status'     => $this->status,
             'category'   => $this->category,
             'catering'   => $this->catering,
-            'count'      => $this->wish->getForDataTable()->count(),
+            'count'      => ($this->wish->getForDataTable()->count() - 1),
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }

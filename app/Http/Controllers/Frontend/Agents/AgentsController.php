@@ -143,10 +143,11 @@ class AgentsController extends Controller
 
     public function updateAgent($id , Request $request)
     {
-        //$agent = DB::table('agents')->where('id', $id)->first();
+        $avatar = ['avatar' => $this->uploadImage(['avatar' => $request->avatar])]['avatar']['avatar'];
+
         DB::table('agents')
             ->where('id', $id)
-            ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone, 'avatar' => $this->uploadImage($request->avatar)]);
+            ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone, 'avatar' => $avatar]);
 
         return redirect()
             ->route('frontend.agents.index')
@@ -183,25 +184,27 @@ class AgentsController extends Controller
             ->with('flash_success', trans('alerts.frontend.agents.deleted'));
     }
 
-    public function uploadImage($input)
-    {
-        if (isset($input) && !empty($input)) {
-            $avatar = $input;
+    public function uploadImage( $input){
+
+        if(!is_array($input)) {
+            $input = [];
+        }
+
+        if (isset($input['avatar']) && !empty($input['avatar'])) {
+            $avatar = $input['avatar'];
 
             $fileName = time() . $avatar->getClientOriginalName();
 
             $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()), 'public');
 
-            $input =  $fileName;
-
+            $input = array_merge($input, ['avatar' => $fileName]);
             return $input;
         }else{
-
             $fileName = 'avatar_default';
 
             $this->storage->put($this->upload_path . $fileName, file_get_contents('https://desiretec.s3.eu-central-1.amazonaws.com/img/agent/1570145950wAvatarCallCenter2.png'), 'public');
 
-            $input = $fileName;
+            $input = array_merge($input, ['avatar' => $fileName]);
 
             return $input;
         }

@@ -1,7 +1,7 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
-    Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
+    Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!
 </div>
 {{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
@@ -264,6 +264,7 @@
             });
 
             $(document).ready(function(){
+                autocomplete();
                 $('.selectpicker').selectpicker();
 
                 dt.startDate = new Pikaday({
@@ -379,6 +380,34 @@
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
+            }
+
+            /**
+             * Autocomplete
+             */
+            var autocomplete = function(){
+              /* Destinations */
+              $.get('get-all-destinations', function(data){
+                $("#destination").typeahead({
+                  autoSelect: true,
+                  minLength: 3,
+                  delay: 200,
+                  source: data
+                });
+              });
+              /* END Destinations */
+
+              /* Airports */
+              $.get('get-all-airports', function(data){
+                $("#airport").typeahead({
+                  autoSelect: true,
+                  minLength: 3,
+                  delay: 200,
+                  source: data
+                });
+              });
+              /* END Airports */
+
             }
         </script>
 

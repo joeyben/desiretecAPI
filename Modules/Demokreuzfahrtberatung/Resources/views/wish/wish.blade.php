@@ -281,7 +281,7 @@
             <div class="col-md-12 s2-first">
                 <!--h4>{{ trans('wish.details.subheadline.your_wish') }}</h4-->
                 <!--p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p-->
-                <p><b>Deine Nachricht:</b><br>
+                <p><b>Ihre Nachricht:</b><br>
                     {{ $wish->description }}
                 </p>
             </div>

@@ -19,7 +19,7 @@ class ReiseexpertenController extends Controller
     protected $kids = [];
     protected $catering = [];
     protected $duration = [];
-
+    protected $ages = [];
     private $whitelabelId;
 
     const BODY_CLASS = 'landing';
@@ -42,6 +42,8 @@ class ReiseexpertenController extends Controller
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->whitelabelId = \Config::get('reiseexperten.id');
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
+
     }
 
     /**
@@ -77,7 +79,8 @@ class ReiseexpertenController extends Controller
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
-            'request' => $request->all()
+            'request' => $request->all(),
+            'ages_arr'     => $this->ages,
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -103,7 +106,8 @@ class ReiseexpertenController extends Controller
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
-                'request' => $request->all()
+                'request' => $request->all(),
+                'ages_arr'     => $this->ages,
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -172,7 +176,7 @@ class ReiseexpertenController extends Controller
         $request->merge(['featured_image' => 'bg.jpg']);
 
         $new_wish = $wish->create(
-            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'),
+            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3'),
              $this->whitelabelId
         );
 

@@ -1,0 +1,16 @@
+{
+    "name": "Demoatw",
+    "alias": "demoatw",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Demoatw\\Providers\\DemoatwServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

@@ -1,18 +1,30 @@
 <div class="form-group">
     <div class="col-lg-12">
-        {{ Form::text('name', null, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.first_name'), 'required' => 'required']) }}
+        @if(!empty($agent->name))
+        {{ Form::text('name', $agent->name, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.first_name'), 'required' => 'required']) }}
+        @else
+         {{ Form::text('name', null, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.first_name'), 'required' => 'required']) }}
+        @endif
     </div>
 </div>
 
 <div class="form-group">
     <div class="col-lg-12">
-        {{ Form::email('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.email_placeholder'), 'required' => 'required']) }}
+        @if(!empty($agent->email))
+        {{ Form::email('email', $agent->email, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.email_placeholder'), 'required' => 'required']) }}
+        @else
+         {{ Form::email('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.email_placeholder'), 'required' => 'required']) }}
+        @endif
     </div>
 </div>
 
 <div class="form-group">
     <div class="col-lg-12">
+        @if(!empty($agent->telephone))
+        {{ Form::text('telephone', $agent->telephone, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.tel_placeholder'), 'required' => 'required']) }}
+        @else
         {{ Form::text('telephone', null, ['class' => 'form-control box-size', 'placeholder' => trans('seller.agent.tel_placeholder'), 'required' => 'required']) }}
+        @endif
     </div>
 </div>
 
