@@ -130,11 +130,7 @@ class WishesRepository extends BaseRepository
     public function create(array $input, $whitelabelId){
         $this->whitelabel_id = $whitelabelId;
 
-       // dd([$input['extraParams'], json_encode($input['extraParams'])]);
-
         $wish = DB::transaction(function () use ($input, $whitelabelId) {
-
-            //dd($input);
 
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
             $input['created_by'] = access()->user()->id;
@@ -144,7 +140,7 @@ class WishesRepository extends BaseRepository
             $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
             $input['latest_return'] = $input['latest_return'] ? \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']) : '0000-00-00';
             $input['adults'] = intval($input['adults']);
-            $input['extra_params'] = json_encode($input['extraParams']);
+            $input['extra_params'] = isset($input['extraParams']) ? json_encode($input['extraParams']) : [];
 
             //if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
             if ($wish = Wish::create($input)) {

@@ -302,6 +302,7 @@
               format: 'dd.mm.YYYY',
               defaultDate: '01.01.2019',
               minDate: new Date(),
+                firstDay: 1,
               toString: function(date, format) {
                 // you should do formatting based on the passed format,
                 // but we will just return 'D/M/YYYY' for simplicity
@@ -329,6 +330,7 @@
               field: document.getElementById('latest_return'),
               format: 'dd.mm.YYYY',
               defaultDate: '01.01.2019',
+                firstDay: 1,
               toString: function(date, format) {
                 // you should do formatting based on the passed format,
                 // but we will just return 'D/M/YYYY' for simplicity
