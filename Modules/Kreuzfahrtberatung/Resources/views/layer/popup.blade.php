@@ -209,32 +209,7 @@
                 return false;
             });
 
-            $('#budgetRange').rangeslider({
-                // Callback function
-                polyfill: false,
-                onInit: function() {
-                    $('.rangeslider__handle').on('mousedown touchstart mousemove touchmove', function(e) {
-                        e.preventDefault();
-                    })
-                },
-                fillClass: 'rangeslider__fill',
-                onSlide: function(position, value) {
-                    if($(".rangeslider-wrapper .haserrors").length)
-                        $(".rangeslider-wrapper .haserrors").removeClass('haserrors');
 
-                    if(value === 10000){
-                        $(".rangeslider-wrapper .text").text("beliebig");
-                        $("#budget").val("beliebig");
-                    }else if(value === 100){
-                        $(".rangeslider-wrapper .text").html("&nbsp;");
-                        $("#budget").val("");
-                    }else{
-                        $(".rangeslider-wrapper .text").text("bis "+value+" €");
-                        $("#budget").val(""+value);
-                    }
-                    check_button();
-                },
-            });
 
             $(document).ready(function(){
                 $('.selectpicker').selectpicker();
@@ -243,7 +218,7 @@
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',
                     defaultDate: '01.01.2019',
-                    firstDay: 1,
+                    firstDay: 0,
                     minDate: new Date(),
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
@@ -272,7 +247,7 @@
                     field: document.getElementById('latest_return'),
                     format: 'dd.mm.YYYY',
                     defaultDate: '01.01.2019',
-                    firstDay: 1,
+                    firstDay: 0,
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
                         // but we will just return 'D/M/YYYY' for simplicity
@@ -320,9 +295,6 @@
                     $("#latest_return").val(d+"."+m+"."+y);
                 }
 
-                var range = parseInt($("#budget").val().replace('.',''));
-                if(range)
-                    $('input[type="range"]').val(range).change();
 
                 $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
                 var pax = $("#adults").val();

@@ -6,7 +6,7 @@ window.exitIntent = {
 	cookieExp: 0,
 	sessionOnly: true,
 	inactivitySeconds: 5,
-	showPerSessionNumber: 5,
+	showPerSessionNumber: 1,
 
 	// Object for handling cookies, taken from QuirksMode
 	// http://www.quirksmode.org/js/cookies.html
@@ -48,7 +48,7 @@ window.exitIntent = {
 
 	// Handle exit intent cookie
 	checkCookie: function () {
-		return this.cookieManager.get("exit_intent") == "true" && this.cookieManager.get("exit_intent_number") >= exitIntent.showPerSessionNumber;
+		return this.cookieManager.get("exit_intent") == "yes" && parseInt(this.cookieManager.get("exit_intent_number")) >= exitIntent.showPerSessionNumber;
 	},
 
 	createEvent: function (type, bubbles, cancelable) {
@@ -163,7 +163,7 @@ window.exitIntent = {
 		// Once the DOM has fully loaded
 		this.domReady(function () {
 			// Delete existing cookies
-			if (exitIntent.sessionOnly) {
+			if (false && exitIntent.sessionOnly) {
 				exitIntent.cookieManager.erase("exit_intent");
 				exitIntent.cookieManager.erase("exit_intent_number");
 			}

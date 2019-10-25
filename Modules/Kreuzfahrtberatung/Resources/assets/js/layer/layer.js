@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'http://kreuzfahrtberatung.com',
+        baseUrl: 'https://kreuzfahrtberatung.reisewunschservice.de',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/kreuzfahrtberatung/css/layer/whitelabel.css'
