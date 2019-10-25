@@ -163,7 +163,7 @@ window.exitIntent = {
 		// Once the DOM has fully loaded
 		this.domReady(function () {
 			// Delete existing cookies
-			if (exitIntent.sessionOnly) {
+			if (false && exitIntent.sessionOnly) {
 				exitIntent.cookieManager.erase("exit_intent");
 				exitIntent.cookieManager.erase("exit_intent_number");
 			}
