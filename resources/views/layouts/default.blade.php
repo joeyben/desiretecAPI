@@ -207,13 +207,14 @@
                         </li>
                     @endif
 
-
+                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
                     <li class="nav-item">
                         <a href="{{ route('provider.language-lines') }}" class="nav-link">
                             <i class="icon-flag3"></i>
                             <span>{{ __('menus.languages_lines') }}</span>
                         </a>
                     </li>
+                    @endif
 
                     @if($module->has('Wishes')  && Auth::guard('web')->user()->hasPermission('read-wish'))
                     <li class="nav-item">
@@ -239,7 +240,7 @@
                         </li>
                     @endif
 
-                    @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole('Administrator'))
+                    @if(false && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole('Administrator'))
                         <li class="nav-item">
                             <a href="{{ route('admin.whitelabels.compile') }}" class="nav-link">
                                 <i class="icon-atom2"></i>
