@@ -1841,6 +1841,11 @@ input[name="direkt_flug"]{
 .dt_terms.hasError:after{
   border: 1px solid red !important;
 }
-.description textarea{
-  height: 90px !important;
+.description{
+  label{
+    white-space: initial;
+  }
+  textarea{
+    height: 90px !important;
+  }
 }
