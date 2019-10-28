@@ -266,6 +266,8 @@ a.primary-btn, input.primary-btn{
     justify-content: center;
     @media screen and (max-width: $break-small) {
       background-position: center;
+      height: auto;
+      padding: 20px 0;
     }
     .bg-left-content{
       display: flex;
