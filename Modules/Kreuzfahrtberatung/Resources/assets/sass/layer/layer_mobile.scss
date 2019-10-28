@@ -1843,7 +1843,7 @@ input[name="direkt_flug"]{
 }
 .description{
   label{
-    white-space: initial;
+    white-space: initial !important;
   }
   textarea{
     height: 90px !important;

@@ -165,8 +165,7 @@
                     <div class="kwp-col-4 white-col">
                         <div class="kwp-agb">
                             {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                            <p>Ich habe die <a id="datenschutz" href="https://www.kreuzfahrtberatung.de/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
-                            <script>$('#agb_link').click(dt.agbModal);</script>
+                            <p>Ich habe die <a href="https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/pdf/tnb_Kreuzfahrtberatung%281%29.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.kreuzfahrtberatung.de/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                         </div>
                     </div>
 

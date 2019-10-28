@@ -372,7 +372,7 @@
                                     <input class="data-content" value="{{ $wish->category }}">
                                 </div>
                                 @if ($logged_in_user->hasRole('User') && $is_owner)
-                                    <button class="secondary-btn{{ $callbackInactivClass }}">Daten andern</button>
+                                    <!--<button class="secondary-btn{{ $callbackInactivClass }}">Daten andern</button>-->
                                 @endif
                             </div>
 
@@ -511,7 +511,7 @@
                         </div>
                         <div class="group">
                             <input type="text" class="form-control tel" name="telephone" id="telephone_" required>
-                            <label>Telefonnummer <span class="hidden-xs">unter der wir Ihnen erreichen</span></label>
+                            <label>Telefonnummer <span class="hidden-xs">unter der wir Sie erreichen</span></label>
                         </div>
                         <div class="group">
                             <select name="period" id="period_" class="form-control">
@@ -624,7 +624,7 @@
 
                                 </div>
                                 <div class="group col-md-6">
-                                    <button type="submit" class="primary-btn wm-2-btn full">{{ trans('wish.edit.save') }}</button>
+                                    <!--<button type="submit" class="primary-btn wm-2-btn full">{{ trans('wish.edit.save') }}</button>-->
                                 </div>
 
                             </div>
