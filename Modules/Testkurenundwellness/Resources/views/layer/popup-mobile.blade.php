@@ -38,8 +38,8 @@
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
-                            {{ Form::label('earliest_start', trans('testkurenundwellness::layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('testkurenundwellness::layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -49,8 +49,8 @@
                             <i class="tui-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-4">
-                            {{ Form::label('latest_return', trans('testkurenundwellness::layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('testkurenundwellness::layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -59,9 +59,9 @@
                             <i class="tui-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-12">
-                            {{ Form::label('duration', trans('testkurenundwellness::layer.general.duration'), ['class' => 'control-label required']) }}
+                            {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('testkurenundwellness::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
                             <i class="tui-icon--time"></i>
                         </div>
@@ -84,7 +84,7 @@
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-12">
-                            {{ Form::label('adults', trans('testkurenundwellness::layer.general.adults'), ['class' => 'control-label required']) }}
+                            {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="kwp-col-12 kids" style="position: relative;">
                             <div class="kwp-col-12">
-                                {{ Form::label('kids', trans('testkurenundwellness::layer.general.kids'), ['class' => 'control-label required']) }}
+                                {{ Form::label('kids', trans('layer.general.kids'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
                                     {{ Form::select('kids', $kids_arr, ['class' => 'form-control box-size']) }}
                                 </div>
@@ -126,7 +126,7 @@
             <div class="kwp-col-4 rangeslider-wrapper">
                     <div class="kwp-form-group ">
                           {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                          {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('testkurenundwellness::layer.placeholder.budget'), 'required' => 'required']) }}
+                          {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.budget'), 'required' => 'required']) }}
                     </div>
                           <span class="text">&nbsp;</span>
                           <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
@@ -135,7 +135,7 @@
             <div class="kwp-col-4 white-col stars">
                     <div class="kwp-form-group">
                              {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
-                             {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('testkurenundwellness::layer.placeholder.category')]) }}
+                             {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.category')]) }}
 
                               <span class="text">ab 0 Sonnen</span>
                               <div class="kwp-star-input">
@@ -164,7 +164,7 @@
 
                     <div class="kwp-col-4 description">
                         {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
-                        {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('testkurenundwellness::layer.placeholder.description')]) }}
+                        {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
                         <i class="master-icon--calendar-month"></i>
                     </div>
 

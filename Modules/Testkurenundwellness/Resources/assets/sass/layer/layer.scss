@@ -3,7 +3,7 @@
 @import "bootstrap-select";
 
 $gutter: 30px;
-$altfont: 'Comfortaa', cursive;
+$altfont: Verdana, Arial, Helvetica, sans-serif;
 $zindex: 10000;
 $eil-border-radius: 4px;
 $mastercolor: #092a5e;
@@ -244,13 +244,13 @@ $fontcolor: #303030;
 
   button[type=submit] {
     border-radius: 3px;
-    background: $mastercolor;
+    background: #94B803;
 
     text-align: center;
 
     font-family: $altfont;
     color:  #fff;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
 
     display: block;
@@ -356,7 +356,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: #94B803;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -446,7 +446,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: #94B803;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -534,12 +534,12 @@ ul.kwp-form-errors {
 .kwp-logo {
   display: block;
   height: 50px;
-  background: transparent url(https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/1568034687logo%20Reiseexperten.png) no-repeat left top;
+  background: transparent url(../../images/layer/Kurenlogo_unten.png) no-repeat left top;
   /*******/
   position: absolute;
   width: 100%;
   left: 0;
-  background-size: 120px;
+  background-size: 90px;
 }
 
 
@@ -573,15 +573,15 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/kurenundwellness.jpg) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/kurenundwellness.jpg) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
-    background-image: url(../../images/layer/visual_ipad_smile_TUI.jpg);
+    background-image: url(../../images/layer/kurenundwellness.jpg);
 
     .kwp-header-content {
       p {
@@ -1195,7 +1195,7 @@ p.kwp-info {
           h1{
             margin: 0px;
             padding: 5px 0;
-            color: #092A5E;
+            color: #94B803;
             position: absolute;
             bottom: 0px;
             font-size: 26px;
@@ -1217,9 +1217,9 @@ p.kwp-info {
       margin: 25px auto 0;
 
       .kwp-middle{
-        background: #E2F3FE;
+        background: #94b80354;
         padding: 5px 20px;
-        border-bottom: 1px solid $master-blue;
+        border-bottom: 1px solid #94B803;
         font-size: 16px;
       }
 
@@ -1265,7 +1265,7 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#092a5e;
+        color:#007238;
         padding: 8px 0;
         font-weight: bold;
         font-family: $altfont;
@@ -1301,7 +1301,7 @@ p.kwp-info {
       font-family: $altfont;
       font-weight: bold;
       position: absolute;
-      bottom: 0;
+      top: 45px;
       text-align: center;
       width: 100%;
     }
