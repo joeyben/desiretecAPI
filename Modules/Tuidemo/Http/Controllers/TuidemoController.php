@@ -170,9 +170,27 @@ class TuidemoController extends Controller
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
         $request->merge(['featured_image' => 'bg.jpg']);
+        // TODO: Change to only not except. (Exmpl: only('destination', etc
 
         $new_wish = $wish->create(
-            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'),
+            $request->except('variant', 'first_name', 'last_name', 'email',
+                'password', 'is_term_accept', 'name', 'terms',
+                'locationAttributes',
+  'facilityAttributes',
+  'travelAttributes',
+  'maxStopOver',
+  'cities',
+  'ratings',
+  'recommendationRate',
+  'minPrice',
+  'roomType',
+  'earlyBird',
+  'familyAttributes',
+  'wellnessAttributes',
+  'sportAttributes',
+  'airlines',
+  'hotelChains',
+  'operators'),
              $this->whitelabelId
         );
 
