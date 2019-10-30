@@ -15,15 +15,17 @@ class Group extends Model
 
     protected $guarded = [];
 
+    protected static $logOnlyDirty = true;
+
     protected static $logAttributes = [
         'name',
         'display_name',
         'description',
         'status',
-        'current'
+        'current',
+        'deactivate_at',
+        'deactivate_until',
     ];
-
-    protected static $logOnlyDirty = true;
 
     protected $casts = [
         'status'   => 'boolean',

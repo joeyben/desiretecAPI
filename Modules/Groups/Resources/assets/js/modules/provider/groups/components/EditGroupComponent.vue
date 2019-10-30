@@ -98,19 +98,11 @@
                                                             active-color="#13ce66"
                                                             inactive-color="#ff4949">
                                                     </el-switch>
+                                                    <span class="help-block ml-4" v-text="trans('modals.inactive_until') + ' ' + deactivate_until" v-if="group.deactivate_until !== null && !group.status">
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.current') }} </label>
-                                                <div class="col-lg-9">
-                                                    <el-switch
-                                                            @input="updateCurrent"
-                                                            :value="group.current"
-                                                            active-color="#13ce66"
-                                                            inactive-color="#ff4949">
-                                                    </el-switch>
-                                                </div>
-                                            </div>
+                                            <date-component :errors="errors" :start="group.deactivate_at" :end="group.deactivate_until" v-if="group.status"></date-component>
                                         </div>
 
                                     </fieldset>
@@ -139,10 +131,12 @@
 </template>
 <script>
   import Vuex from 'vuex'
+  import moment from 'moment'
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   import VueTable from '../../../../../../../../../resources/assets/js/utils/Table.vue'
   import DateComponent from './DateComponent'
   import toastr from 'toastr'
+  moment.locale(window.i18.lang)
   export default {
     name: 'EditGroupComponent',
     components: { VueTable, DateComponent },
@@ -168,6 +162,9 @@
       }),
       can_logs () {
         return !this.deleted && this.hasPermissionTo('logs-group')
+      },
+      deactivate_until () {
+        return moment(this.group.deactivate_until, moment.ISO_8601).format('DD.MM.YYYY')
       }
     },
     methods: {
@@ -282,6 +279,7 @@
             $('#modal_large_group').modal('hide')
             this.$router.push({name: 'root'})
           } else {
+            this.$store.commit('updateGroup', {name: 'status', value: response.data.group.status})
             this.$router.push({name: 'root.edit', params: {id: response.data.group.id}})
           }
           this.$message({
