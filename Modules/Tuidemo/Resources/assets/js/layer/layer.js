@@ -1250,6 +1250,21 @@ var exitIntent = window.exitIntent || {};
                     'eil-n5'
                 ]);
             }
+        },
+        getExtraVariable: function(extraVar, attrName, splitChar){
+            splitChar = (splitChar === undefined) ? ';' : splitChar;
+            var attributesArr = [];
+            if(extraVar != ''){
+                var attributes = extraVar.split(splitChar);
+                $.each(attributes, function(i, e){
+                    var item = attrName+'_'+e;
+                    attributesArr.push($('label[for='+item+']').attr('title'));
+                });
+            }
+            if(attributesArr.length == 0){
+                return '';
+            }
+            return attributesArr.join(', ');
         }
     });
     dt.decoders.push(MasterIBETripDataDecoder);
