@@ -1,14 +1,21 @@
 <template>
     <div class="form-group row">
-        <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.'  + field) }} <span class="text-danger"> *</span></label>
+        <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.deactivation_duration') }} <span class="text-danger"> *</span></label>
         <div class="col-lg-9">
-            <el-date-picker :start-placeholder="trans('modals.' + field)" :end-placeholder="trans('modals.' + field)" filterable size="small" style="width: 100%;" format="dd.MM.yyyy" @input="updateRoomRange"
-                            :picker-options="pickerOptions"
-                            range-separator="-"
-                            :value="date">
+            <el-date-picker
+                    filterable
+                    :start-placeholder="trans('modals.from')"
+                    :end-placeholder="trans('modals.until')"
+                    :picker-options="pickerOptions"
+                    format="dd.MM.yyyy"
+                    style="width: 100%;"
+                    @input="updateActivateAt"
+                    :value="range"
+                    type="daterange"
+                    range-separator="-">
             </el-date-picker>
-            <div class="help-block text-danger" v-if="errors.has(field)">
-                <strong v-text="errors.get(field)"></strong>
+            <div class="help-block text-danger" v-if="errors.has('deactivate_at')">
+                <strong v-text="errors.get('deactivate_at')"></strong>
             </div>
         </div>
     </div>
@@ -26,13 +33,9 @@
         type: Object,
         required: true
       },
-      date: {
-        type: String,
-        required: true
+      start: {
       },
-      field: {
-        type: String,
-        required: true
+      end: {
       }
     },
     data () {
@@ -53,14 +56,28 @@
     },
     computed: {
       ...Vuex.mapGetters({
-      })
+      }),
+      range () {
+        return this.start === null ? null : [this.start_date, this.end_date]
+      },
+      start_date () {
+        return this.start === null ? new Date() : this.start
+      },
+      end_date () {
+        return this.end === null ? new Date() : this.end
+      }
     },
     methods: {
       ...Vuex.mapActions({
       }),
-      updateRoomRange (e) {
-        if (e === null) return false
-        this.$store.commit('updateWish', {name: this.field, value: moment(e, moment.ISO_8601).format('YYYY-MM-DD')})
+      updateActivateAt (e) {
+        if (e === null) {
+          this.$store.commit('updateGroup', {name: 'deactivate_at', value: null})
+          this.$store.commit('updateGroup', {name: 'deactivate_until', value: null})
+        } else {
+          this.$store.commit('updateGroup', {name: 'deactivate_at', value: moment(e[0], moment.ISO_8601).format('YYYY-MM-DD')})
+          this.$store.commit('updateGroup', {name: 'deactivate_until', value: moment(e[1], moment.ISO_8601).format('YYYY-MM-DD')})
+        }
       }
     }
   }
