@@ -13,10 +13,7 @@ var exitIntent = window.exitIntent || {};
     dt.popupTemplate = function (variant) {
 
         var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Jetzt Ihre Reise wünschen und Angebot erhalten!',
-            'Dürfen wir Sie beraten?',
-            'Hier klicken und persönliches Angebot erhalten',
-            'Nicht das Passende gefunden?'
+            'Dürfen wir Sie beraten?'
         ]);
 
         var texts = {
