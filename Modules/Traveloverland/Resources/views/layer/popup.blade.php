@@ -377,12 +377,6 @@
 
                 /* Airports */
                 $.get('get-all-airports', function(data){
-                    // $("#airport").typeahead({
-                        // autoSelect: true,
-                        // minLength: 3,
-                        // delay: 200,
-                        // source: data
-                    // });
                     $("#airport").tagsinput({
                         typeahead: {
                             autoSelect: true,
@@ -394,12 +388,11 @@
                     });
                     $("#airport").on('itemAdded', function(event) {
                         setTimeout(function(){
-                            $(">input[type=text]",".bootstrap-tagsinput").val("");
+                            $("input[type=text]",".bootstrap-tagsinput").val("");
                         }, 1);
                     });
                 });
                 /* END Airports */
-
             }
         </script>
 
