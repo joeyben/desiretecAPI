@@ -168,6 +168,8 @@ class GroupsController extends Controller
                 'logs'                             => [],
                 'whitelabel'                       => $whitelabel,
                 'whitelabel_id'                    => $whitelabel->id,
+                'deactivate_at'                      => null,
+                'deactivate_until'                   => null,
             ];
             $users = $whitelabel->users()->get();
 
@@ -202,13 +204,21 @@ class GroupsController extends Controller
 
             $result['group'] = $this->groups->create(
                 array_merge(
-                    $request->only('name', 'display_name', 'description', 'status'),
+                    $request->only('name', 'display_name', 'description', 'status', 'deactivate_at', 'deactivate_until'),
                     ['whitelabel_id' => $whitelabel->id, 'created_by' => $this->auth->guard('web')->user()->id, 'updated_by' => $this->auth->guard('web')->user()->id]
                 )
             );
 
             if ($request->has('current') && $request->get('current')) {
                 $this->groups->updateCurrent($result['group'], $request->only('current'), $whitelabel->id);
+            }
+
+            if ($request->has('deactivate_at') && $request->get('deactivate_at')) {
+                $day = $this->carbon->parse($request->get('deactivate_at'))->diffInDays(Carbon::now()->startOfDay());
+
+                if ($day <= 0) {
+                    $this->groups->update($result['group']->id, ['status' => false]);
+                }
             }
 
             $this->groups->sync($result['group']->id, 'users', $request->get('users'));
@@ -265,7 +275,9 @@ class GroupsController extends Controller
                 'users'                => $group->users->pluck('id'),
                 'description'          => $group->description,
                 'status'               => $group->status,
-                'current'              => $group->current
+                'current'              => $group->current,
+                'deactivate_at'          => $group->deactivate_at,
+                'deactivate_until'       => $group->deactivate_until
             ];
             $result['group']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-group') ? $this->activities->byModel($group) : [];
             $users = $this->whitelabels->find($group->whitelabel_id)->users()->get();
@@ -307,17 +319,32 @@ class GroupsController extends Controller
                     'name',
                     'display_name',
                     'description',
-                    'status'
+                    'deactivate_at',
+                    'deactivate_until'
                 )
             );
+
+            if ($request->has('status') && !$request->get('status') && $group->status) {
+                $this->groups->update($group->id, ['deactivate_at' => null, 'deactivate_until' => null]);
+            }
+
+            $this->groups->update($group->id, ['status' => $request->get('status')]);
 
             if ($request->has('current') && $request->get('current')) {
                 $this->groups->updateCurrent($group, $request->only('current'), $whitelabel->id);
             }
 
+            if ($request->has('deactivate_at') && $request->get('deactivate_at')) {
+                $day = Carbon::parse($request->get('deactivate_at'))->diffInDays(Carbon::now()->startOfDay());
+
+                if ($day <= 0) {
+                    $this->groups->update($group->id, ['status' => false]);
+                }
+            }
+
             $this->groups->sync($group->id, 'users', $request->get('users'));
 
-            $result['group'] = $group;
+            $result['group'] = $group->fresh();
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Group']);
             $result['success'] = true;
             $result['status'] = 200;
