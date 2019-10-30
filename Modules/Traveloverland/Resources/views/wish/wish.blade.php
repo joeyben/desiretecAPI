@@ -300,24 +300,11 @@
             </div>
             <div class="col-md-3">
                 <i class="fal fa-calendar-alt"></i>
-                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.Y') }} @if ($wish->latest_return !== "0000-00-00") - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }} @endif">
+                <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->earliest_start)->format('d.m.y') }} @if ($wish->latest_return !== "0000-00-00") - {{ \Carbon\Carbon::parse($wish->latest_return)->format('d.m.y') }} @endif">
             </div>
             <div class="col-md-3">
                 <i class="fal fa-star"></i>
-                @switch($wish->category)
-                    @case(1)
-                <input class="data-content" value="Economy">
-                    @break
-                    @case(2)
-                    <input class="data-content" value="Premium Economy">
-                    @break
-                    @case(3)
-                    <input class="data-content" value="Business">
-                    @break
-                    @case(4)
-                    <input class="data-content" value="First">
-                    @break
-                @endswitch
+                <input class="data-content" value="{{ $class_arr[$wish->category] }}">
             </div>
             <div class="col-md-3">
                 <i class="fal fa-users"></i>
@@ -375,20 +362,7 @@
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-star"></i>
-                                @switch($wish->category)
-                                    @case(1)
-                                    <input class="data-content" value="Economy">
-                                    @break
-                                    @case(2)
-                                    <input class="data-content" value="Premium Economy">
-                                    @break
-                                    @case(3)
-                                    <input class="data-content" value="Business">
-                                    @break
-                                    @case(4)
-                                    <input class="data-content" value="First">
-                                    @break
-                                @endswitch
+                                <input class="data-content" value="{{ $class_arr[$wish->category] }}">
                             </div>
                             <div class="col-md-3">
                                 <i class="fal fa-users"></i>
