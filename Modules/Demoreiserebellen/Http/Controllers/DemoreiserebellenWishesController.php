@@ -8,7 +8,11 @@ use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
+use Modules\Autooffers\Repositories\AutooffersRepository;
+use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 
 /**
@@ -65,11 +69,15 @@ class DemoreiserebellenWishesController extends Controller
      */
     protected $whitelabel;
 
+    private $autooffers;
+
+    private $rules;
+
     /**
      * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
      * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
      */
-    public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories)
+    public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories, AutooffersRepository $autooffers,EloquentAutooffersRepository $rules)
     {
         $this->wish = $wish;
         $this->whitelabel = $whitelabel;
@@ -78,6 +86,32 @@ class DemoreiserebellenWishesController extends Controller
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->categories = $categories;
+        $this->autooffers = $autooffers;
+        $this->rules = $rules;
+    }
+
+    public function create(Wish $wish)
+    {
+        $rules = $this->rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
+        $this->autooffers->saveWishData($wish);
+        $response = $this->autooffers->getTrafficsData();
+        $this->autooffers->storeMany($response, $wish->id, $rules);
+
+        return redirect()->to('offerwl/list/' . $wish->id);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+        $this->autooffers->saveWishData($request->all());
+        $response = $this->autooffers->getTrafficsData();
+        $this->autooffers->storeMany($response);
     }
 
     /**
@@ -91,6 +125,13 @@ class DemoreiserebellenWishesController extends Controller
         $this->wish->validateToken($token);
 
         return redirect()->to('/wish/' . $wish->id);
+    }
+
+    public function list(Wish $wish)
+    {
+        $offers = $this->autooffers->getOffersDataFromId($wish->id);
+        $body_class = 'autooffer_list';
+        return view('demoreiserebellen::list', compact('wish', 'offers', 'body_class'));
     }
 
     /**
