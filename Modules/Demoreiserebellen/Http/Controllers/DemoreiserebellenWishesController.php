@@ -93,7 +93,6 @@ class DemoreiserebellenWishesController extends Controller
     public function create(Wish $wish)
     {
         $rules = $this->rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
-        //dd(getRegionCode($wish->airport, 0));
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response, $wish->id, $rules);
@@ -131,9 +130,7 @@ class DemoreiserebellenWishesController extends Controller
     public function list(Wish $wish)
     {
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
-        //dd($offers[0]);
         $body_class = 'autooffer_list';
-        //dd($offers);
         return view('demoreiserebellen::list', compact('wish', 'offers', 'body_class'));
     }
 
