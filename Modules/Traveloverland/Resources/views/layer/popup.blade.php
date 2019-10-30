@@ -27,7 +27,7 @@
 
             <div class="kwp-col-4">
                 {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
-                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.airport'), 'required' => 'required']) }}
+                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "on", 'placeholder' => trans('layer.placeholder.airport'), 'required' => 'required', 'data-role' => 'tagsinput']) }}
                 @if ($errors->any() && $errors->get('airport'))
                     @foreach ($errors->get('airport') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -247,6 +247,7 @@
 
             $(document).ready(function(){
                 //$('.selectpicker').selectpicker();
+                autocomplete();
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',
@@ -376,11 +377,25 @@
 
                 /* Airports */
                 $.get('get-all-airports', function(data){
-                    $("#airport").typeahead({
-                        autoSelect: true,
-                        minLength: 3,
-                        delay: 200,
-                        source: data
+                    // $("#airport").typeahead({
+                        // autoSelect: true,
+                        // minLength: 3,
+                        // delay: 200,
+                        // source: data
+                    // });
+                    $("#airport").tagsinput({
+                        typeahead: {
+                            autoSelect: true,
+                            minLength: 3,
+                            delay: 200,
+                            source: data
+                        },
+                        freeInput: true
+                    });
+                    $("#airport").on('itemAdded', function(event) {
+                        setTimeout(function(){
+                            $(">input[type=text]",".bootstrap-tagsinput").val("");
+                        }, 1);
                     });
                 });
                 /* END Airports */
