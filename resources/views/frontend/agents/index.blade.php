@@ -45,7 +45,6 @@
                     <th>{{ trans('labels.frontend.agents.table.avatar') }}</th>
                     <th>{{ trans('labels.frontend.agents.table.id') }}</th>
                     <th>{{ trans('labels.frontend.agents.table.name') }}</th>
-                    <th>{{ trans('labels.frontend.agents.table.status') }}</th>
                     <th>{{ trans('labels.frontend.agents.table.created_at') }}</th>
                     <th>{{ trans('labels.frontend.agents.table.actions') }}</th>
                 </tr>
@@ -85,11 +84,10 @@
                 {data: 'avatar', name: '{{config('module.agents.table')}}.avatar'},
                 {data: 'id', name: '{{config('module.agents.table')}}.name'},
                 {data: 'name', name: '{{config('module.agents.table')}}.display_name'},
-                {data: 'status', name: '{{config('module.agents.table')}}.status'},
                 {data: 'created_at', name: '{{config('module.agents.table')}}.created_at'},
                 {data: 'actions', name: '{{config('module.agents.table')}}.actions'},
             ],
-            order: [[4, "asc"]],
+            //order: [[4, "asc"]],
             searchDelay: 500,
             dom: 'lBfrtip',
             buttons: {
@@ -102,8 +100,8 @@
                 "paginate": {
                     "first":      "Erster",
                     "last":       "Letzter",
-                    "next":       "Nächster",
-                    "previous":   "Vorherige"
+                    "next":       "{{ trans('labels.nav.next') }}",
+                    "previous":   "{{ trans('labels.nav.prev') }}"
                 },
             }
         });
