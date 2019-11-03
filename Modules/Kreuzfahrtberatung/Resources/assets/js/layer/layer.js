@@ -1081,77 +1081,65 @@ var exitIntent = window.exitIntent || {};
         });
 
 
-        dt.PopupManager.closePopup = function(event) {
-            event.preventDefault();
+    dt.PopupManager.closePopup = function(event) {
+        event.preventDefault();
 
-            if(isMobile()){
-                var formSent = $('.kwp-content').hasClass('kwp-completed-master');
+        var formSent = $('.kwp-content').hasClass('kwp-completed-master');
 
-                this.modal.addClass('tmp-hidden');
-                if(!formSent) {
-                    this.trigger =
-                        $('<span/>', {'class': 'trigger-modal'});
-                    $('body').prepend(this.trigger.fadeIn());
-                }
-            }else{
-                this.modal.css('display', 'none');
-            }
-
-            this.shown = false;
-            $("body").removeClass('mobile-layer');
-            $("body, html").css({'overflow':'auto'});
-
-            dt.Tracking.event('close', this.trackingLabel);
-
-        };
+        this.modal.addClass('tmp-hidden');
+        if(!formSent) {
+            this.trigger =
+                $('<span/>', {'class': 'trigger-modal'});
+            $('body').prepend(this.trigger);
+            this.trigger.fadeIn();
+        }
 
 
-        dt.scrollUpDetect = function () {
-            var shown = false;
-            $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
-                if(direction === 'down' && parseInt(distance) > 50 && !shown){
-                    dt.showMobileLayer();
-                    shown = true;
-                }else if (direction === 'down' || direction === 'up' && shown && ($("body .hl-sticky").hasClass('is-sticky'))) {
-                    $(".dt-modal").css({'top': (document.documentElement.clientHeight - 85) + "px"});
-                } else if(direction === 'down' || direction === 'up' && shown) {
-                    $(".dt-modal").css({'top': (document.documentElement.clientHeight - 100) + "px"});
+        this.shown = false;
+        $("body").removeClass('mobile-layer');
+        $("body, html").css({'overflow':'auto'});
+
+        //dt.Tracking.event('close', this.trackingLabel);
+
+    };
+
+
+
+    dt.scrollUpDetect = function (e) {
+        dt.PopupManager.layerShown = false;
+        $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
+                if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
+                    dt.showTeaser(event);
+                    dt.PopupManager.layerShown = true;
                 }
             }, allowPageScroll:"vertical"} );
+    };
 
 
-            $( ".dt-modal" ).swipe( {
-                tap:function(e, target) {
-                    $(this).addClass('m-open');
-                    $("body, html").css({'overflow':'hidden'});
-                    ga('dt.send', 'event', 'Mobile Layer', 'Layer shown', 'Tablet');
-                },
-                swipe:function(e, direction, distance, duration, fingerCount, fingerData) {
-                    var $event = e;
-                    if(direction === "left"){
-                        if($(this).hasClass('m-open'))
-                            return false;
-                        $(this).addClass('swipe-left');
-                        setTimeout(function(e) {
-                            dt.PopupManager.closePopup($event);
-                        },1000);
-                        return false;
-                    }else if(direction === "right"){
-                        if($(this).hasClass('m-open'))
-                            return false;
-                        $(this).addClass('swipe-right');
-                        setTimeout(function(e) {
-                            dt.PopupManager.closePopup($event);
-                        },1000);
-                        return false;
-                    }
-                },
-            });
+    dt.showTeaser = function (e) {
+        $("body").addClass('mobile-layer');
+        $(".dt-modal").addClass('teaser-on').show().find('.teaser').addClass('active').swipe( {
+            tap:function(event, target) {
+                dt.showMobileLayer(event);
+            },
+            swipeLeft:function(event, distance, duration, fingerCount, fingerData, currentDirection) {
+                $(this).addClass('inactive-left');
+                removeLayer(event);
+            },
+            swipeRight:function(event, distance, duration, fingerCount, fingerData, currentDirection) {
+                $(this).addClass('inactive-right');
+                removeLayer(event);
+            }
+        });
+    };
+
+    dt.hideTeaser = function (e) {
+        $("body").removeClass('mobile-layer');
+        $(".dt-modal").remove();
+    };
 
 
-        };
-
-        dt.triggerButton = function(e){
+    dt.triggerButton = function(e){
             $("body").on('click tap','.trigger-modal',function () {
                 $("body").addClass('mobile-layer');
                 if(dt.PopupManager.teaserSwiped){
@@ -1167,18 +1155,21 @@ var exitIntent = window.exitIntent || {};
 
         }
 
-        dt.showMobileLayer = function (e) {
-            dt.PopupManager.show();
-            $("body").addClass('mobile-layer');
-            //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
-            ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Tablet');
-        };
+    dt.showMobileLayer = function (e) {
+        $(".dt-modal").removeClass('teaser-on').find('.teaser').remove();
+        $( ".dt-modal" ).addClass('m-open');
+        dt.PopupManager.show();
+        $("body, html").css({'overflow':'hidden'});
+        //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
+        ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
+    };
 
-        $(document).ready(function (e) {
+
+    $(document).ready(function (e) {
             var $event = e;
             if(deviceDetector.device === "phone") {
                 dt.PopupManager.teaser = true;
-                dt.PopupManager.teaserText = "Wir möchten Sie gerne beraten!";
+                dt.PopupManager.teaserText = "Dürfen wie Sie beraten?";
                 dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
                 $(".dt-modal .kwp-close").on('touchend',function () {
                     dt.PopupManager.closePopup(e);
@@ -1405,7 +1396,17 @@ var exitIntent = window.exitIntent || {};
             document.cookie = cname + "=" + cvalue + ";path=/";
         }
 
-        function textareaAutosize(){
+    function removeLayer(e){
+        var $event = e;
+        setTimeout(function(){
+            dt.triggerButton($event);
+            dt.PopupManager.closePopup($event);
+            dt.PopupManager.teaserSwiped = true;
+        }, 500);
+    }
+
+
+    function textareaAutosize(){
             $(document)
                 .one('focus.textarea', '.kwp textarea', function(){
                     var savedValue = this.value;
