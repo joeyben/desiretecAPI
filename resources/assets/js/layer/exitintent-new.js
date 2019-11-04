@@ -6,7 +6,7 @@ window.exitIntent = {
 	cookieExp: 0,
 	sessionOnly: true,
 	inactivitySeconds: 5,
-	showPerSessionNumber: 5,
+	showPerSessionNumber: 1,
 
 	// Object for handling cookies, taken from QuirksMode
 	// http://www.quirksmode.org/js/cookies.html
@@ -75,7 +75,7 @@ window.exitIntent = {
 		clearTimeout(timeoutID);
 
 		// timeoutID = setTimeout(this.goInactive, this.inactivitySeconds * 1000);
-		exitIntent.startTimer();
+		//exitIntent.startTimer();
 	},
 
 	startTimer: function () {
