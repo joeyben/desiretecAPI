@@ -1,5 +1,8 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    {{ ucfirst(getCurrentWhiteLabelName()) }} {{ trans('wish.list.tab_title') }}
+@endsection
 
 @section('content')
     <div class="box box-info" style="display: none;">
