@@ -23,6 +23,7 @@ variables:
 
 build:
   stage: build
+  image: docker:19.03
   script:
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
     - docker build --build-arg APP_KEY=${APP_KEY_PROD} --cache-from ${CONTAINER_IMAGE_LATEST} -f .docker/laravel/Dockerfile -t ${CONTAINER_IMAGE} -t ${CONTAINER_IMAGE_LATEST} .
