@@ -38,6 +38,7 @@ public/access.log
 public/error.log
 
 /Modules/Tui/node_modules/
+/Modules/Tuidemo/node_modules/
 /Modules/Wishes/node_modules/
 /Modules/Activities/node_modules/
 /Modules/Groups/node_modules/
