@@ -1,4 +1,4 @@
-FROM composer:latest as vendor
+FROM horrorhorst/composer-prestissimo:latest as vendor
 
 LABEL maintainer="desiretec"
 
