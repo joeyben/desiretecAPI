@@ -207,6 +207,15 @@
                         </li>
                     @endif
 
+                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                    <li class="nav-item">
+                        <a href="{{ route('provider.email.signature', app()->getLocale()) }}" class="nav-link">
+                            <i class="icon-envelope"></i>
+                            <span>{{ __('menus.email_signature') }}</span>
+                        </a>
+                    </li>
+                    @endif
+
                     @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
                     <li class="nav-item">
                         <a href="{{ route('provider.language-lines') }}" class="nav-link">

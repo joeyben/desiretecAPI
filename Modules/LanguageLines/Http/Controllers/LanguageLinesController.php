@@ -32,6 +32,7 @@ use Modules\LanguageLines\Http\Requests\CloneLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\CopyLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\StoreLanguageLineRequest;
 use Modules\LanguageLines\Http\Requests\UpdateLanguageLineRequest;
+use Modules\LanguageLines\Http\Requests\EmailSignatureStore;
 use Modules\LanguageLines\Notifications\CloneLanguageLinesNotification;
 use Modules\LanguageLines\Notifications\CopyLanguageLinesNotification;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
@@ -489,5 +490,64 @@ class LanguageLinesController extends Controller
         }
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+
+    /**
+     * Fetch already existing Signature or Create new Signature
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function signature(string $lang)
+    {
+        try {
+            $result['data']['text'] = $this->languageline->firstOrCreate([
+                'locale' => $lang,
+                'key' =>    'email_signature',
+                'group' => 'email'
+            ])->text;
+
+            $result['data']['language'] = $lang;
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        // return $this->response->json($result['data'], $result['status'], [], JSON_NUMERIC_CHECK); config()->get('locale')
+        return view('languagelines::email-signature', compact('result'));
+    }
+
+    /**
+     * Edit already existing Signature or Create new Signature
+     *
+     * @param EmailSignatureStore $request
+     *
+     * @return Response
+     */
+    public function signatureStore(EmailSignatureStore $request)
+    {
+        try {
+            $languageline = $this->languageline->update(
+                $this->languageline->firstOrCreate([
+                'locale' => $request->get('language'),
+                'key' =>    'email_signature',
+                'group' => 'email'])->id,
+                ['text'=>$request->get('emailSignatureEditor')]
+            );
+
+            $result['success'] = true;
+            $result['status'] = 200;
+
+            return redirect(route('provider.email.signature', $request->language))->with('success', trans('email.signature.stored'));
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
     }
 }
