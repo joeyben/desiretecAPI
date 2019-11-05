@@ -10,19 +10,19 @@ return [
             'id'          => Flag::PACKAGE,
             'name'        => 'Package',
             'description' => 'Current default layer',
-            'url'         => 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
+            'url'         => 'https://desiretec.s3.eu-central-1.amazonaws.com/img/uploads/Layer/default_picture_layer.png',
         ],
         1 => [
             'id'          => Flag::FLIGHT,
             'name'        => 'Flight',
             'description' => 'like travel overland',
-            'url'         => 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
+            'url'         => 'https://desiretec.s3.eu-central-1.amazonaws.com/img/uploads/Layer/default_picture_layer.png',
         ],
         2 => [
             'id'          => Flag::CRUISE,
             'name'        => 'Cruise',
             'description' => 'like Kreuzfahrtberater',
-            'url'         => 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
+            'url'         => 'https://desiretec.s3.eu-central-1.amazonaws.com/img/uploads/Layer/default_picture_layer.png',
         ]
     ]
 ];
