@@ -258,8 +258,6 @@ class WhitelabelsController extends Controller
                 )
             );
 
-
-
             foreach ($request->get('background') as $item) {
                 $this->attachments->update(
                     $item['uid'],
@@ -421,9 +419,9 @@ class WhitelabelsController extends Controller
                 return null === $item;
             });
 
-            $result['whitelabel']['background'] = !is_null($background->first()) ? [$background->first()] : [];
-            $result['whitelabel']['logo'] = !is_null($logo->first()) ? [$logo->first()] : [];
-            $result['whitelabel']['favicon'] = !is_null($favicon->first()) ? [$favicon->first()] : [];
+            $result['whitelabel']['background'] = null !== $background->first() ? [$background->first()] : [];
+            $result['whitelabel']['logo'] = null !== $logo->first() ? [$logo->first()] : [];
+            $result['whitelabel']['favicon'] = null !== $favicon->first() ? [$favicon->first()] : [];
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {

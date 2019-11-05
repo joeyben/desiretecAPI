@@ -12,7 +12,6 @@ use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class LayersController extends Controller
 {
-
     /**
      * @var \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository
      */
@@ -35,6 +34,7 @@ class LayersController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -44,6 +44,7 @@ class LayersController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
@@ -53,7 +54,9 @@ class LayersController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -63,6 +66,7 @@ class LayersController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -72,6 +76,7 @@ class LayersController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return Response
      */
     public function edit()
@@ -81,7 +86,9 @@ class LayersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function update(Request $request)
@@ -89,7 +96,7 @@ class LayersController extends Controller
         try {
             $whitelabel = $this->whitelabels->current();
 
-            if (is_null($whitelabel) && $request->has('whitelabel_id')) {
+            if (null === $whitelabel && $request->has('whitelabel_id')) {
                 $whitelabel = $this->whitelabels->find($request->get('whitelabel_id'));
             }
 
@@ -112,6 +119,7 @@ class LayersController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()

@@ -13,9 +13,9 @@
     </div>
 @stop
 @section('vue-js')
-    <?php $config = Config::get('whitelabels.layers') ?>
+    <?php $config = Config::get('whitelabels.layers'); ?>
     <script>
-      var layers = <?php echo json_encode($config) ?>;
+      var layers = <?php echo json_encode($config); ?>;
     </script>
     <script src="{{ asset('js/modules/admin/whitelabels/whitelabels.js') }}"></script>
 @stop
