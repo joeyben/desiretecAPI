@@ -1,3 +1,7 @@
+html, body{
+  overflow: auto;
+}
+
 #app{
   .landing &{
     padding-top: 20px;

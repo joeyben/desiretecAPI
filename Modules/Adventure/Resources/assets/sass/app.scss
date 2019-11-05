@@ -1,5 +1,9 @@
 @import "variables";
 
+html, body{
+  overflow: auto;
+}
+
 body{
   &.landing{
     padding-top: 0px;
@@ -65,7 +69,7 @@ body{
       text-transform: uppercase;
       padding: 15px 35px;
       line-height: 1.5em;
-      letter-spacing: 0.42px;
+      letter-spacing: 0.42px; 
     }
   }
 }
