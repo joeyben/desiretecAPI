@@ -240,6 +240,15 @@
                         </li>
                     @endif
 
+                    @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.whitelabels.layers') }}" class="nav-link">
+                                <i class="icon-menu7"></i>
+                                <span>{{ __('Layer Management') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
                     @if(false && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole('Administrator'))
                         <li class="nav-item">
                             <a href="{{ route('admin.whitelabels.compile') }}" class="nav-link">

@@ -6,7 +6,7 @@
     <arg value="p"/>
 
     <file>app</file>
-    <file>Modules</file>
+    <file>Modules/Whitelabels</file>
     <file>tests</file>
     <file>resources/lang/en</file>
 
