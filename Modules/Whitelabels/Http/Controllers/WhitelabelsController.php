@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Notifications\ChannelManager;
@@ -313,14 +314,34 @@ class WhitelabelsController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-    /**
-     * Show the specified resource.
-     *
-     * @return Response
-     */
-    public function show()
+    public function current(): JsonResponse
     {
-        return view('whitelabels::show');
+        try {
+            $result['whitelabel'] = $this->whitelabels->current();
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        try {
+            $result['whitelabel'] = $this->whitelabels->find($id);
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**

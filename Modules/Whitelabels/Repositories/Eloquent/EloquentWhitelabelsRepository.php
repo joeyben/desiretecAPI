@@ -10,6 +10,7 @@
 namespace Modules\Whitelabels\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManager;
 use Modules\Whitelabels\Entities\Whitelabel;
@@ -305,5 +306,10 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             ->toArray();
 
         return DB::table($table)->insert($languageLines);
+    }
+
+    public function current()
+    {
+        return Auth::guard('web')->user()->whitelabels()->first();
     }
 }

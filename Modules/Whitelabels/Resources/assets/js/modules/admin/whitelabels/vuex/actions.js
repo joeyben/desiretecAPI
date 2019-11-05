@@ -33,3 +33,29 @@ export const loadWhitelabels = function (store) {
     console.log('LOGIN_USER not answer', error)
   })
 }
+
+export const loadCurrentWhitelabel = function (store) {
+  api.loadCurrentWhitelabel(response => {
+    if (!response) {
+      console.log('error', response)
+      return
+    }
+
+    store.commit(types.ADD_WHITELABEL, response.whitelabel)
+  }, error => {
+    console.log('LOGIN_USER not answer', error)
+  })
+}
+
+export const loadWhitelabel = function (store, id) {
+  api.loadWhitelabel(id, response => {
+    if (!response) {
+      console.log('error', response)
+      return
+    }
+
+    store.commit(types.ADD_WHITELABEL, response.whitelabel)
+  }, error => {
+    console.log('LOGIN_USER not answer', error)
+  })
+}
