@@ -1,5 +1,9 @@
 @import "variables";
 
+html, body{
+  overflow: auto;
+}
+
 #app{
   .landing &{
     padding-top: 20px;
@@ -43,10 +47,11 @@
     right: 0;
     text-align: center;
     a{
-      font-size: 26px;
+      font-size: 24px;
       text-transform: uppercase;
-      padding: 10px 50px;
+      padding: 15px 35px;
       line-height: 1.5em;
+      letter-spacing: 0.42px;
     }
   }
 }
