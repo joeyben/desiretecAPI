@@ -36,7 +36,6 @@ FROM horrorhorst/laravel-base:latest
 
 LABEL maintainer="desiretec"
 
-RUN docker-php-ext-install zip
 
 COPY . /var/www/html
 COPY --from=vendor /app/vendor/ /var/www/html/vendor/
@@ -54,8 +53,7 @@ RUN composer dump-autoload
 
 USER root
 
-RUN apt update && \
-    apt install -y mysql-client && curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt install -y nodejs && apt install -y npm
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt install -y nodejs && apt install -y npm
 RUN rm -r /var/www/html/docker
 RUN make routes
 RUN make message
