@@ -19,28 +19,28 @@ services:
 
 
 
-build:
-  stage: build
-  script:
-    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
-    - docker build --build-arg APP_KEY=${APP_KEY_PROD} --cache-from ${CONTAINER_IMAGE_LATEST} -f .docker/laravel/Dockerfile -t ${CONTAINER_IMAGE} -t ${CONTAINER_IMAGE_LATEST} .
-    - docker push ${CONTAINER_IMAGE}
-  only:
-    - master
-  variables:
-    CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}
-    CONTAINER_IMAGE_LATEST: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}:latest
+#build:
+#  stage: build
+#  script:
+#    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
+#    - docker build --build-arg APP_KEY=${APP_KEY_PROD} --cache-from ${CONTAINER_IMAGE_LATEST} -f .docker/laravel/Dockerfile -t ${CONTAINER_IMAGE} -t ${CONTAINER_IMAGE_LATEST} .
+#   - docker push ${CONTAINER_IMAGE}
+#  only:
+#    - master
+#  variables:
+#    CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}
+#    CONTAINER_IMAGE_LATEST: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}:latest
 
-deploy_pre_prod:
-  stage: deploy_pre_prod
-  image: pstauffer/curl
-  script:
-    - RESP=$(curl -X POST ${SERVICE_WEBHOOK)
-    - if echo $RESP | grep -q ‘err’; then exit 1; fi
-  only:
-    - master
-  variables:
-    SERVICE_HOOK: ${PRE_PRODUCTION_SERVICE_HOOK}
+#deploy_pre_prod:
+#  stage: deploy_pre_prod
+#  image: pstauffer/curl
+# script:
+#    - RESP=$(curl -X POST ${SERVICE_WEBHOOK)
+#    - if echo $RESP | grep -q ‘err’; then exit 1; fi
+#  only:
+#    - master
+#  variables:
+#    SERVICE_HOOK: ${PRE_PRODUCTION_SERVICE_HOOK}
 
 build-master:
   stage: deploy_prod
@@ -59,7 +59,7 @@ build-master:
     - rm -rf $DOCKER_CERT_PATH
   only:
     - master
-  when: manual
+ # when: manual
   variables:
     DOCKER_TLS_VERIFY: "1"
     DOCKER_HOST: "tcp://mvpprod.desiretec.com:2376"
