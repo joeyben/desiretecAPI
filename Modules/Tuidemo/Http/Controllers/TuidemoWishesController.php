@@ -34,6 +34,7 @@ class TuidemoWishesController extends Controller
     protected $adults = [];
     protected $kids = [];
     protected $duration = [];
+    protected $ages = [];
     protected $categories;
     protected $category = [
         '1'  => 1,
@@ -76,6 +77,7 @@ class TuidemoWishesController extends Controller
         $this->whitelabelId = \Config::get('tuidemo.id');
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->categories = $categories;
     }
@@ -119,6 +121,7 @@ class TuidemoWishesController extends Controller
             'kids_arr'     => $this->kids,
             'duration_arr' => $this->duration,
             'adults_arr'   => $this->adults,
+            'ages_arr'     => $this->ages,
             'is_owner'            => $isOwner
         ]);
 

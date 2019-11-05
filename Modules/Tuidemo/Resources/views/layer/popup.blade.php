@@ -40,7 +40,7 @@
                             <span class="error-input">{{ $error }}</span>
                         @endforeach
                 @endif
-                <i class="master-icon--location-fill"></i>
+                <i class="fas fa-map-marker-alt"></i>
             </div>
 
             <div class="kwp-col-4">
@@ -51,7 +51,7 @@
                                 <span class="error-input">{{ $error }}</span>
                           @endforeach
                 @endif
-                <i class="master-icon--aircraft-up"></i>
+                <i class="fas fa-plane-departure"></i>
             </div>
 
         </div>
@@ -62,7 +62,7 @@
                     <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
                     <span class="duration-time dd-trigger">
                         <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
-                        <i class="master-icon--calendar-month not-triggered"></i>
+                        <i class="fas fa-calendar-alt"></i>
                         <i class="master-icon--close triggered"></i>
                     </span>
                     <div class="duration-more">
@@ -108,7 +108,7 @@
                     <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
-                         <i class="master-icon--user-family not-triggered"></i>
+                         <i class="fas fa-users"></i>
                          <i class="master-icon--close triggered"></i>
                     </span>
                     <div class="pax-more">
@@ -129,15 +129,25 @@
                             </div>
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
-                                    <label class="main-label">Alter (Hinreise)</label>
-                                    <div class="kwp-col-3">
+                                    <label class="main-label">Alter der Kinder bei Rückreise</label>
+                                    <input name="ages" type="hidden">
+                                    <div id="age_1" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
+                                    <div id="age_2" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
+                                    <div id="age_3" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
 
                                 </div>
@@ -165,7 +175,7 @@
             <div class="kwp-col-3 white-col stars">
                 <div class="kwp-form-group">
                     {{ Form::label('category', trans('tuidemo::layer.general.category'), ['class' => 'control-label required']) }}
-                    {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('tuidemo::layer.placeholder.category')]) }}
+                    {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 0, ['class' => 'form-control box-size hidden', 'placeholder' => trans('tuidemo::layer.placeholder.category')]) }}
 
                     <span class="text">ab 0 Sonnen</span>
                     <div class="kwp-star-input">
