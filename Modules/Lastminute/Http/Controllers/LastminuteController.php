@@ -131,7 +131,8 @@ class LastminuteController extends Controller
         dispatch($wishJob);
 
         $details = [
-            "email" => $newUser->email
+            "email" => $newUser->email,
+            "type"  => 0
         ];
         dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
 

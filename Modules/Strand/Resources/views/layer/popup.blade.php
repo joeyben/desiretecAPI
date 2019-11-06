@@ -254,7 +254,7 @@
             });
 
             $(document).ready(function(){
-                $('.selectpicker').selectpicker();
+                //$('.selectpicker').selectpicker();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),

@@ -18,9 +18,11 @@ class SendAutoOfferEMail extends Mailable
      * @return void
      */
     protected $wishId;
-    public function __construct($wishId)
+    protected $type;
+    public function __construct($wishId, $type)
     {
         $this->wishId = $wishId;
+        $this->type = $type;
     }
 
     /**

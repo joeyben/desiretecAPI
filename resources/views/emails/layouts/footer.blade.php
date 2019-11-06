@@ -9,6 +9,5 @@
             font-size: 12px;
             color: #000;
             width:100%;">
-    {!! trans('email.footer') !!} <br>
 
 </p>

@@ -35,7 +35,7 @@ class AutooffersTTRepository extends BaseRepository
 
     private $oauthUrl = 'https://staging-auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
 
-    private $url = 'http://de-staging-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/PackageSearch/bestPackageOfferForHotel';
+    private $url = 'http://de-staging-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/PackageSearch/packageOffers';
 
     private $currency = 'CHF';
 
@@ -129,7 +129,7 @@ class AutooffersTTRepository extends BaseRepository
         }
 
         $xmlreq='{
-         "BestPackageOfferForHotelRQ": {
+         "PackageOffersRQ": {
           "RQ_Metadata": {
            "Language": "de-DE"
           },
@@ -161,16 +161,26 @@ class AutooffersTTRepository extends BaseRepository
            },
            "AccomPropertiesFilter": {
             "HotelAttributes": [],
+            "BoardTypes": ['.$this->catering.'],
             "HotelCategoryFilter": {
+                "HotelCategoryRange": {
+                    "MinCategory": '.intval($this->category).'
+                }
+            },
+            "HotelReview": {
+                "MinRatingsCount": 10,
+                "MinMeanRatingOverall": 4,
+                "MinMeanRecommendationRate": 4
             }
            }
           },
           "Options": {
             "NumberOfResults": 50,
             "ResultOffset": 0,
-            "Sorting": ["MeanRecommendationRateDesc"]
+            "Sorting": ["PriceAsc"]
           }
         } }';
+
 
         $authorization = "Authorization: Bearer ".$this->token;
 
@@ -186,7 +196,7 @@ class AutooffersTTRepository extends BaseRepository
         if(!$result){die("Connection Failure");}
         curl_close($curl);
 
-        $this->data = json_decode($result, true)["BestPackageOfferForHotelRS"];
+        $this->data = json_decode($result, true)["PackageOffersRS"];
         $this->offers = $this->data["Offers"]["Offer"];
         $this->setGiataIds();
         $this->setReviews();
@@ -259,7 +269,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->setKids($wish->kids);
         $this->setAirport(trim(explode('-',$wish->airport)[1]));
         $this->setCategory($wish->category);
-        $this->setCatering('XX,AO,BB,HB,HBP,FB,FBP,AI,AIP,AIU,AIR');
+        $this->setCatering($wish->catering);
         $this->setFrom($wish->earliest_start);
         $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
@@ -530,6 +540,9 @@ class AutooffersTTRepository extends BaseRepository
      */
     public function setCategory($category)
     {
+        if ($category < 3) {
+            $category = 3;
+        }
         $this->category = $category;
     }
 
@@ -546,7 +559,28 @@ class AutooffersTTRepository extends BaseRepository
      */
     public function setCatering($catering)
     {
-        $this->catering = $catering;
+
+        switch ($catering) {
+            case 1:
+                $this->catering = '"NoBoard"';
+                break;
+            case 2:
+                $this->catering = '"Breakfast","BreakfastEconomy","BreakfastSuperior"';
+                break;
+            case 3:
+                $this->catering = '"HalfBoard","HalfBoardEconomy","HalfBoardSuperior"';
+                break;
+            case 4:
+                $this->catering = '"FullBoard","FullBoardEconomy","FullBoardSuperior"';
+                break;
+            case 5:
+                $this->catering = '"AllInclusive","AllInclusiveEconomy","AllInclusiveSuperior"';
+                break;
+            default:
+                $this->catering = '"NoBoard"';
+                break;
+        }
+
     }
 
     /**

@@ -2,10 +2,13 @@
 
 namespace Modules\Example\Http\Controllers;
 
+use App\Jobs\callTrafficsApi;
+use App\Jobs\sendAutoOffersMail;
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Access\User\UserRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -116,6 +119,14 @@ class ExampleController extends Controller
             'id'    => $wish->id
         ])->render();
 
+        $wishJob = (new callTrafficsApi($wish->id))->delay(Carbon::now()->addSeconds(3));
+        dispatch($wishJob);
+
+        $details = [
+            "email" => $newUser->email,
+            "type"  => 1
+        ];
+        dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
         return response()->json(['success' => true, 'html'=>$html]);
     }
 
