@@ -94,7 +94,7 @@ var dt = window.dt || {};
             },
             'destination': function (form, formData) {
                 var destination = getUrlParams('depap') ? getUrlParams('depap') : '';
-                return destination;
+                //return destination;
                 return $('.tt-input').val();
             },
             'pax': function (form, formData) {
