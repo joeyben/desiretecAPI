@@ -32,7 +32,7 @@ use Modules\LanguageLines\Http\Requests\CloneLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\CopyLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\StoreLanguageLineRequest;
 use Modules\LanguageLines\Http\Requests\UpdateLanguageLineRequest;
-use Modules\LanguageLines\Http\Requests\EmailSignatureStore;
+use Modules\LanguageLines\Http\Requests\EmailSignatureStoreRequest;
 use Modules\LanguageLines\Notifications\CloneLanguageLinesNotification;
 use Modules\LanguageLines\Notifications\CopyLanguageLinesNotification;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
@@ -525,19 +525,20 @@ class LanguageLinesController extends Controller
     /**
      * Edit already existing Signature or Create new Signature
      *
-     * @param EmailSignatureStore $request
+     * @param EmailSignatureStoreRequest $request
      *
      * @return Response
      */
-    public function signatureStore(EmailSignatureStore $request)
+    public function signatureStore(EmailSignatureStoreRequest $request)
     {
         try {
+            dd($request->all());
             $languageline = $this->languageline->update(
                 $this->languageline->firstOrCreate([
                 'locale' => $request->get('language'),
                 'key' =>    'email_signature',
                 'group' => 'email'])->id,
-                ['text'=>$request->get('emailSignatureEditor')]
+                ['text'=>$request->get('email_signature_editor')]
             );
 
             $result['success'] = true;

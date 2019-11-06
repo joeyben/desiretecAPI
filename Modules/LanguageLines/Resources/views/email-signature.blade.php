@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group row"> 
-                        {{ Form::textarea('emailSignatureEditor', $result['data']['text'], ['id' => 'emailSignatureEditor', 'name' => 'emailSignatureEditor', 'class' => 'form-control']) }}
+                        {{ Form::textarea('email_signature_editor', $result['data']['text'], ['id' => 'emailSignatureEditor', 'name' => 'email_signature_editor', 'class' => 'form-control']) }}
                     </div>                
                 </div>
                 <div class="card-footer text-right">

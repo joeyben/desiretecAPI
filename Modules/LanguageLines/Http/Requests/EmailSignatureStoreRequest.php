@@ -4,7 +4,7 @@ namespace Modules\LanguageLines\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmailSignatureStore extends FormRequest
+class EmailSignatureStoreRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,7 +15,7 @@ class EmailSignatureStore extends FormRequest
     {
         return [
             'language'              => 'required|string|min:2|max:2',
-            'emailSignatureEditor'  => 'required|string'
+            'email_signature_editor'  => 'required|string'
         ];
     }
 
