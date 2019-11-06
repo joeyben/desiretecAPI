@@ -174,9 +174,32 @@ class TuidemoController extends Controller
      */
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
-        $request->merge(['featured_image' => 'bg.jpg']);
-        // TODO: Change to only not except. (Exmpl: only('destination', etc
 
+        $input = $request->all();
+        // TODO: Change to only not except. (Exmpl: only('destination', etc
+        $extra = [
+            'locationAttributes' => isset($input['locationAttributes']) ? $input['locationAttributes'] : '',
+            'facilityAttributes'=> isset($input['facilityAttributes']) ? $input['facilityAttributes'] : '',
+            'travelAttributes'=> isset($input['travelAttributes']) ? $input['travelAttributes'] : '',
+            'maxStopOver'=> isset($input['maxStopOver']) ? $input['maxStopOver'] : '',
+            'cities'=> isset($input['cities']) ? $input['cities'] : '',
+            'ratings'=> isset($input['ratings']) ? $input['ratings'] : '',
+            'recommendationRate'=> isset($input['recommendationRate']) ? $input['recommendationRate'] : '',
+            'minPrice'=> isset($input['minPrice']) ? $input['minPrice'] : '',
+            'roomType'=> isset($input['roomType']) ? $input['roomType'] : '',
+            'earlyBird'=> isset($input['earlyBird']) ? $input['earlyBird'] : '',
+            'familyAttributes'=> isset($input['familyAttributes']) ? $input['familyAttributes'] : '',
+            'wellnessAttributes'=> isset($input['wellnessAttributes']) ? $input['wellnessAttributes'] : '',
+            'sportAttributes'=> isset($input['sportAttributes']) ? $input['sportAttributes'] : '',
+            'airlines'=> isset($input['airlines']) ? $input['airlines'] : '',
+            'hotelChains' => isset($input['hotelChains']) ? $input['hotelChains'] : '',
+            'operators' => isset($input['operators']) ? $input['operators'] : ''
+        ];
+
+        $request->merge([
+            'featured_image' => 'bg.jpg',
+            'extra_params' => json_encode($extra)
+        ]);
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email',
                 'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3',
