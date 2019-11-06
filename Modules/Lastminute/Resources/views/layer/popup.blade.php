@@ -100,7 +100,7 @@
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">{{ trans('lastminute::layer.general.pax') }}</label>
                     <span class="travelers dd-trigger">
-                        <span class="txt">2 Erwachsener</span>
+                        <span class="txt">2 Erwachsene</span>
                          <i class="master-icon--user-family not-triggered"></i>
                          <i class="master-icon--close triggered"></i>
                     </span>
