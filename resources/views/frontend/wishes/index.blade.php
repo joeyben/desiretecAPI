@@ -40,7 +40,7 @@
                 <div class="count">
                     <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', $count ) }}</span>
                 </div>
-                <!-- <div class="filter-action">
+                <div class="filter-action">
                     <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
                         <option value="">{{ trans('menus.list.status.all') }}</option>
                         @foreach ($status as $st)
@@ -49,7 +49,7 @@
                             </option>
                         @endforeach
                     </select>
-                </div> -->
+                </div>
             </div>
             <hr>
             <div class="skeleton" v-if="loading"></div>

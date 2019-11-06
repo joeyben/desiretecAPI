@@ -30,8 +30,6 @@
 
 @section('after-scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-    <link href="{{ asset('whitelabel/traveloverland/js/bootstrap-tagsinput.js') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" />
 
     <script type="application/javascript">
         window.dt = {
@@ -58,6 +56,5 @@
                 dt.PopupManager.layerShown = true;
             }
         }
-        if(self.itemsArray.length > 0) $('.tt-input').attr('placeholder','');
     </script>
 @endsection
