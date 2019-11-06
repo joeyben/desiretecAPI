@@ -80,5 +80,8 @@ return [
         'line5'         => 'Phone +49 (0) 40 238859 - 82 | novasol@novasol.de – an Awaze Company',
         'line6'         => 'Handelsregister Amtsgericht Hamburg, HRB 95067 | Geschäftsführer: Jan Haapanen',
         'line7'         => 'www.novasol.de | www.dansommer.de | www.cuendet.de',
+    ],
+    'signature' => [
+        'stored'     => 'Sie haben die E-Mail-Signatur erfolgreich gespeichert'
     ]
 ];

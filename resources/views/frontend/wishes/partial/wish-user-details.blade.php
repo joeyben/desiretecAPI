@@ -45,7 +45,7 @@
         <input class="data-content" value="{{ $wish->adults }}">
     </div>
     <div class="col-md-3">
-        <i class="fal fa-child"></i>
+        <i class="fal fa-user"></i>
         <input class="data-content" value="{{ $wish->kids }}">
     </div>
     <div class="col-md-3">

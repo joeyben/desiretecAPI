@@ -382,7 +382,6 @@
                     });
                 });
                 /* END Airports */
-
             }
         </script>
 
