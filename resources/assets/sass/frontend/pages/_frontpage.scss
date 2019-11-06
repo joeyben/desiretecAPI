@@ -1,3 +1,9 @@
+@import "../variables";
+
+html, body{
+  overflow: auto;
+}
+
 .landing {
   #app {
     .main-container {
@@ -24,6 +30,7 @@
     text-align: center;
     font-size: 18px;
     font-weight: 400;
+    text-shadow: $shadow-deep-contrast;
     strong{
       display: block;
       font-size: 35px;
@@ -38,9 +45,13 @@
     right: 0;
     text-align: center;
     a{
-      font-size: 20px;
+      // font-size: 20px;
+      // padding: 5px 50px;
+      font-size: 24px;
       text-transform: uppercase;
-      padding: 5px 50px;
+      padding: 15px 35px;
+      line-height: 1.5em;
+      letter-spacing: 0.42px;
     }
   }
 }

@@ -216,4 +216,6 @@ return [
     'rules_management' => 'Lead Management',
     'autooffers_management' => 'Offer Management',
     'regions_management' => 'Regions Management',
+
+    'email_signature' => 'E-Mail Signatur',
 ];

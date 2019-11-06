@@ -17,4 +17,7 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'provider', 
     Route::put('language-lines/copy', 'LanguageLinesController@copy')->name('provider.language-lines.copy');
     Route::put('language-lines/clone', 'LanguageLinesController@clone')->name('provider.language-lines.clone');
     Route::get('language-lines/cacheClear', 'LanguageLinesController@cacheClear')->name('provider.language-lines.cacheClear');
+
+    Route::get('languages/email/signature/{lang}', 'LanguageLinesController@signature')->name('provider.email.signature');
+    Route::post('languages/email/signature/store', 'LanguageLinesController@signatureStore')->name('provider.email.signature.store');
 });

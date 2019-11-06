@@ -37,7 +37,7 @@
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">Reisende</label>
                     <span class="travelers dd-trigger">
-                        <span class="txt">2 Erwachsener</span>
+                        <span class="txt">2 Erwachsene</span>
                          <i class="fal fa-users not-triggered"></i>
                          <i class="fal fa-times triggered"></i>
                     </span>
@@ -185,7 +185,7 @@
             <div class="kwp-col-4 white-col stars">
                 <div class="kwp-form-group">
                     {{ Form::label('category', trans('lastminute::layer.general.category'), ['class' => 'control-label']) }}
-                    {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.category')]) }}
+                    {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 0, ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.category')]) }}
 
                     <!--span class="text">ab 3 Sterne</span-->
                     <div class="kwp-star-input">

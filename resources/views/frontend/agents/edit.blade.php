@@ -8,7 +8,7 @@
     {{ Form::open(['route' => ['frontend.agents.update',$agent->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'POST', 'id' => 'create-permission', 'files' => true]) }}
 
         <div class="modal-header">
-            <h5 class="modal-title">Edit Customer</h5>
+            <h5 class="modal-title">{{ trans('labels.agents.edit_headline') }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -18,8 +18,8 @@
             @include("frontend.agents.form")
         </div>
         <div class="modal-footer">
-            {{ link_to_route('frontend.agents.index', 'Cancel', [], ['class' => 'btn btn-danger btn-md']) }}
-            {{ Form::submit('Edit', ['class' => 'btn btn-primary btn-md']) }}
+            {{ link_to_route('frontend.agents.index', trans('labels.agents.cancel'), [], ['class' => 'btn btn-danger btn-md']) }}
+            {{ Form::submit(trans('labels.agents.save'), ['class' => 'btn btn-primary btn-md']) }}
         </div>
     {{ Form::close() }}   
     

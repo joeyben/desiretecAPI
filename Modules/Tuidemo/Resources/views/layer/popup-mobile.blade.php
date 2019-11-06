@@ -34,7 +34,7 @@
 
                 {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
                 {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
-                <i class="fal fa-globe-europe"></i>
+                <i class="fal fa-map-marker-alt"></i>
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -45,7 +45,7 @@
             <div class="kwp-col-4">
                 {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
                 {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.airport'), 'required' => 'required']) }}
-                <i class="fal fa-home"></i>
+                <i class="fal fa-plane-departure"></i>
                 @if ($errors->any() && $errors->get('airport'))
                     @foreach ($errors->get('airport') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -125,15 +125,25 @@
                             </div>
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
-                                    <label class="main-label">Alter (Hinreise)</label>
-                                    <div class="kwp-col-3">
-                                        <i class="fal fa-plane-arrival"></i>
+                                    <label class="main-label">Alter der Kinder</label>
+                                    <input name="ages" type="hidden">
+                                    <div id="age_1" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
-                                        <i class="fal fa-plane-arrival"></i>
+                                    <div id="age_2" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
-                                        <i class="fal fa-plane-arrival"></i>
+                                    <div id="age_3" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
 
                                 </div>

@@ -1615,13 +1615,14 @@ and (max-device-width : 320px) {
   border-bottom: 1px solid #737373;
 }
 .duration-col{
-  width: calc(40% - 10px);
+  width: calc(38.5% - 10px);
   margin-right: 12px !important;
 }
-.pax-col,.class-col{
-  width: calc(30% - 10px);
+.class-col{
+  width: calc(29% - 10px);
 }
 .pax-col{
+  width: calc(33.5% - 10px);
   margin-right: 12px;
 }
 .error-input,.email-col span{

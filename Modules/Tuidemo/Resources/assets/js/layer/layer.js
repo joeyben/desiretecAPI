@@ -54,6 +54,7 @@ var exitIntent = window.exitIntent || {};
             '<div class="kwp-header kwp-variant-' + variant + '">' +
             '<div class="kwp-close-button kwp-close"></div>' +
             '<div class="kwp-overlay"></div>' +
+            '<div class="kwp-logo"></div>' +
             '<div class="kwp-header-content">' +
             '<h1>' +
             texts[variant].header + ' <br/>' +
@@ -1317,50 +1318,15 @@ var exitIntent = window.exitIntent || {};
         };
 
 
-        dt.scrollUpDetect = function () {
-            var shown = false;
+        dt.scrollUpDetect = function (e) {
+            dt.PopupManager.layerShown = false;
             $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
-                if(direction === 'down' && parseInt(distance) > 50 && !shown){
-                    dt.showMobileLayer();
-                    shown = true;
-                }else if (direction === 'down' || direction === 'up' && shown && ($("body .hl-sticky").hasClass('is-sticky'))) {
-                    $(".dt-modal").css({'top': (document.documentElement.clientHeight - 85) + "px"});
-                } else if(direction === 'down' || direction === 'up' && shown) {
-                    $(".dt-modal").css({'top': (document.documentElement.clientHeight - 100) + "px"});
-                }
-            }, allowPageScroll:"vertical"} );
-
-
-            $( ".dt-modal" ).swipe( {
-                tap:function(e, target) {
-                    $(this).addClass('m-open');
-                    $("body, html").css({'overflow':'hidden'});
-                    ga('dt.send', 'event', 'Mobile Layer', 'Layer shown', 'Tablet');
-                },
-                swipe:function(e, direction, distance, duration, fingerCount, fingerData) {
-                    var $event = e;
-                    if(direction === "left"){
-                        if($(this).hasClass('m-open'))
-                            return false;
-                        $(this).addClass('swipe-left');
-                        setTimeout(function(e) {
-                            dt.PopupManager.closePopup($event);
-                        },1000);
-                        return false;
-                    }else if(direction === "right"){
-                        if($(this).hasClass('m-open'))
-                            return false;
-                        $(this).addClass('swipe-right');
-                        setTimeout(function(e) {
-                            dt.PopupManager.closePopup($event);
-                        },1000);
-                        return false;
+                    if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
+                        dt.PopupManager.layerShown = true;
                     }
-                },
-            });
-
-
+                }, allowPageScroll:"vertical"} );
         };
+
 
         dt.triggerButton = function(e){
             $("body").on('click tap','.trigger-modal',function () {
@@ -1374,9 +1340,7 @@ var exitIntent = window.exitIntent || {};
                 $(this).remove();
                 ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
             });
-
-
-        }
+        };
 
         dt.showMobileLayer = function (e) {
             dt.PopupManager.show();
@@ -1422,40 +1386,48 @@ var exitIntent = window.exitIntent || {};
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 85)+"px"});
         });
 
-        dt.childrenAges = function () {
-            (function ($, children, age) {
-                function update() {
-                    var val = $(children).val();
+    dt.childrenAges = function () {
+        (function ($, children, age) {
+            function update() {
+                var val = $(children).val();
 
-                    if (val) {
-                        $('.kwp-content').addClass('kwp-show-ages');
-                    } else {
-                        $('.kwp-content').removeClass('kwp-show-ages');
-                    }
-
-                    var i;
-
-                    for (i = 1; i <= 3; ++i) {
-
-                        if (i <= val) {
-                            $(age + i).closest('.kwp-custom-select').show();
-                        } else {
-                            $(age + i).val('').closest('.kwp-custom-select').hide();
-                        }
-
-                        if(i == val){
-                            $(age + i).closest('.kwp-col-3').addClass('last');
-                        }else{
-                            $(age + i).closest('.kwp-col-3').removeClass('last');
-                        }
-                    }
-
+                if (val>0) {
+                    $('.kwp-col-ages').addClass('kwp-show-ages');
+                } else {
+                    $('.kwp-col-ages').removeClass('kwp-show-ages');
                 }
 
-                $(children).on('change keydown blur', update);
-                update();
-            })(jQuery, '#children', '#age_');
-        };
+                var i;
+
+                for (i = 1; i <= 3; ++i) {
+
+                    if (i <= val) {
+                        $(age + i).find('.kwp-custom-select').show();
+                    } else {
+                        $(age + i +' select').val('').find('.kwp-custom-select').hide();
+                        $(age + i).find('.kwp-custom-select').hide();
+                    }
+
+                    if(i == val){
+                        $(age + i).closest('.kwp-col-3').addClass('last');
+                    }else{
+                        $(age + i).closest('.kwp-col-3').removeClass('last');
+                    }
+                }
+                $( "select[name='ages1']" ).change(function() {
+                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                });
+                $( "select[name='ages2']" ).change(function() {
+                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                });
+                $( "select[name='ages3']" ).change(function() {
+                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                });
+            }
+            $(children).on('change keydown blur', update);
+            update();
+        })(jQuery, '#kids', '#age_');
+    };
 
         dt.hotelStars = function () {
             function restoreValue() {
