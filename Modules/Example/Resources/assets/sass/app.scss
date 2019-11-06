@@ -1,4 +1,9 @@
 @import "variables";
+
+html, body{
+  overflow: auto;
+}
+
 body{
   &.landing{
     padding-top: 0px;
@@ -62,10 +67,11 @@ body{
       @media screen and (max-width: $break-small) {
         font-size: 18px;
       }
-      font-size: 26px;
+      font-size: 24px;
       text-transform: uppercase;
-      padding: 10px 50px;
+      padding: 15px 35px;
       line-height: 1.5em;
+      letter-spacing: 0.42px;
     }
   }
 }
