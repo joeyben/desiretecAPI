@@ -517,8 +517,7 @@ class LanguageLinesController extends Controller
             $result['message'] = $e->getMessage();
             $result['status'] = 500;
         }
-
-        // return $this->response->json($result['data'], $result['status'], [], JSON_NUMERIC_CHECK); config()->get('locale')
+        
         return view('languagelines::email-signature', compact('result'));
     }
 
