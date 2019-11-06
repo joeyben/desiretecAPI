@@ -58,3 +58,12 @@
     </div>
     <!--<button class="secondary-btn">Daten andern</button>-->
 </div>
+@if ($logged_in_user->hasRole('Seller'))
+<div class="col-md-12 s2-second">
+    <b>Weitere vom Kunden ausgewählte Parameter: </b>
+
+    @foreach($extra as $key => $params)
+        {{ $params }}
+    @endforeach
+</div>
+@endif

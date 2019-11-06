@@ -121,6 +121,7 @@ class WishesController extends Controller
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
 
+
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
@@ -128,6 +129,7 @@ class WishesController extends Controller
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
             'categories'         => $this->categories,
+            'extra'              => json_decode($wish->extra_params, true)
         ]);
     }
 
