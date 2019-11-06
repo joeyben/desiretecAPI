@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="i18" content="{{ App::getLocale() }}">
     <title> @yield('title') - {{ config('app.name', 'Laravel') }} </title>
@@ -245,6 +245,15 @@
                             <a href="{{ route('admin.footers') }}" class="nav-link">
                                 <i class="icon-atom2"></i>
                                 <span>{{ __('labels.footers') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.whitelabels.layers') }}" class="nav-link">
+                                <i class="icon-menu7"></i>
+                                <span>{{ __('Layer Management') }}</span>
                             </a>
                         </li>
                     @endif

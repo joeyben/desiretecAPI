@@ -44,4 +44,10 @@ class Flag implements FlagInterface
     const SELLER_ROLE = 'Seller';
 
     const UPLOADS = 'uploads';
+
+    const PACKAGE = 1;
+
+    const FLIGHT = 2;
+
+    const CRUISE = 3;
 }
