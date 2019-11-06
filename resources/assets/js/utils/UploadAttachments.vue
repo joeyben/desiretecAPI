@@ -94,7 +94,7 @@
         },
         beforeAvatarUpload (file) {
           let isJPG = (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/png' || file.type === 'image/svg')
-          let isLt2M = file.size / 1024 / 1024 < 1000
+          let isLt2M = file.size / 1024 / 1024 < 1
 
           if (!isJPG) {
             this.$message({
@@ -105,7 +105,7 @@
           }
           if (!isLt2M) {
             this.$message({
-              message: 'Avatar picture size can not exceed 100MB!',
+              message: 'Avatar picture size can not exceed 1MB!',
               showClose: true,
               type: 'error'
             })
