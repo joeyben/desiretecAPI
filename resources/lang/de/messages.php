@@ -48,7 +48,7 @@ return [
     'sign_up'                    => 'Registrieren',
     'terms'                      => 'Geschäftsbedingungen zustimmen',
     'whitelabel_user'            => 'Erstelle Whitelabel User',
-    'background'                 => 'The background image must be --- x --- pixels in PNG/JPG/JPEG format. Maximum file size is ---KB.',
-    'logo'                       => 'The logo must be --- x --- pixels in PNG/JPG/JPEG/SVG format. Maximum file size is ---KB.',
-    'favicon'                    => 'The favicon must be --- x --- pixels in PNG/ICON format. Maximum file size is ---KB.',
+    'background'                 => 'The background image must be 1200 x 600 pixels in PNG/JPG/JPEG format. Maximum file size is 1MB.',
+    'logo'                       => 'The logo must be PNG/JPG/JPEG/SVG format. Maximum file size is 1MB.',
+    'favicon'                    => 'The favicon must be PNG/ICON format. Maximum file size is 1MB.',
 ];
