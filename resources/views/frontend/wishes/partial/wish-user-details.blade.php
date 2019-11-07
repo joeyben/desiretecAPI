@@ -63,7 +63,13 @@
     <b>Weitere vom Kunden ausgewählte Parameter: </b>
 
     @foreach($extra as $key => $params)
-        {{ $params }}
+        @if ($params and $key > 1)
+            ,
+        @endif
+
+        @if ($params)
+            {{ $params }}
+        @endif
     @endforeach
 </div>
 @endif
