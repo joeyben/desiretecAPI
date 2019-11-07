@@ -43,6 +43,10 @@ class AgentsTableController extends Controller
                 return $agents->display_name;
             })
 
+            ->addColumn('status', function ($agents) {
+                return $agents->status;
+            })
+
             ->addColumn('actions', function ($agents) {
                 return '<a href="' . route("frontend.agents.edit",$agents->id) . '">' . trans('labels.agents.edit') . '</a> / ' . '<a href="' . route("frontend.agents.delete",$agents->id) . '">' . trans('labels.agents.delete') . '</a>';
 
@@ -50,6 +54,7 @@ class AgentsTableController extends Controller
             ->addColumn('created_at', function ($agents) {
                 return $agents->created_at->toFormattedDateString() . ' ' . $agents->created_at->toTimeString();
             })
-            ->rawColumns(['avatar','actions'])->make(true);
+
+            ->rawColumns(['avatar','actions','status'])->make(true);
     }
 }

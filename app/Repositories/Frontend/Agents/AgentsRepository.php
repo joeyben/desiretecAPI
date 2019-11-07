@@ -68,7 +68,7 @@ class AgentsRepository extends BaseRepository
         DB::transaction(function () use ($input) {
             $input = $this->uploadImage($input);
             $input['user_id'] = access()->user()->id;
-            $input['status'] = 'Aktiv';
+            $input['status'] = 'Active';
 
             if ($agent = Agent::create($input)) {
                 event(new AgentCreated($agent));
