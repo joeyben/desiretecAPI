@@ -37,9 +37,9 @@ deploy_pre_prod:
   stage: deploy_pre_prod
   image: pstauffer/curl
   script:
-    - RESP=$(curl -X POST ${SERVICE_WEBHOOK}
+    - RESP=$(curl -X POST ${SERVICE_WEBHOOK})
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
-    - RESP=$(curl -X POST ${ECHO_SERVICE_WEBHOOK}
+    - RESP=$(curl -X POST ${ECHO_SERVICE_WEBHOOK})
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
   only:
     - master
