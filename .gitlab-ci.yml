@@ -67,7 +67,7 @@ build-master:
     - rm -rf $DOCKER_CERT_PATH
   only:
     - master
- # when: manual
+  when: manual
   variables:
     DOCKER_TLS_VERIFY: "1"
     DOCKER_HOST: "tcp://mvpprod.desiretec.com:2376"
