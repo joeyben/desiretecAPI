@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Tuidemo',
-    'id'   => 48,
+    'id'   => 157,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_tuidemo',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
