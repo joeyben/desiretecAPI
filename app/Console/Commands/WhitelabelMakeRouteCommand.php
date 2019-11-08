@@ -73,7 +73,7 @@ class WhitelabelMakeRouteCommand extends Command
                 '$MODULESMAL$',
             ],
             [
-                $domain,
+                'https://' . $domain,
                 $module,
                 mb_strtolower($module)
             ],

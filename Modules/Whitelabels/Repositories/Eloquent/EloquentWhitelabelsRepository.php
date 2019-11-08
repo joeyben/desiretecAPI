@@ -13,6 +13,7 @@ use App\Repositories\RepositoryAbstract;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
@@ -44,7 +45,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 $name,
                 $id,
                 $whitelabelLangTable,
-                mb_strtolower($subDomain)
+                'https://' . mb_strtolower($subDomain)
             ]
         );
     }
@@ -386,15 +387,16 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function getSubDomain(string $domain)
     {
-        $parts = explode('.', $domain);
+        $parts = explode('.', str_replace("https://", "", $domain));
 
         return isset($parts[2]) ?  str_slug($parts[0]) : '';
     }
 
     public function getDomain(string $domain)
     {
+        $domain = str_replace("https://", "", $domain);
         $parts = explode('.', $domain);
 
-        return  isset($parts[1]) &&  isset($parts[2]) ? str_slug($parts[1] . '.' . $parts[2]) : $domain;
+        return  isset($parts[1]) &&  isset($parts[2]) ? '.' . str_slug($parts[1]) . '.' . str_slug($parts[2]) : $domain;
     }
 }

@@ -18,6 +18,9 @@
                         <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.domain') }} <span class="text-danger"> *</span></label>
                         <div class="col-lg-9">
                             <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <span class="input-group-text">https://</span>
+                                </span>
                                 <input type="text" class="form-control" :class="errors.has('sub_domain') ? 'is-invalid': ''" id='sub_domain' name='sub_domain' :placeholder="trans('modals.domain')" @input="updateWhitelabel"  :value="whitelabel.sub_domain"/>
                                 <span class="input-group-append">
                                     <span class="input-group-text">{{ whitelabel.main_domain }}</span>

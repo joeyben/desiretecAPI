@@ -234,7 +234,7 @@
                     </li>
                     @endif
 
-                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('provider.whitelabels') }}" class="nav-link">
                                 <i class="icon-atom2"></i>
@@ -248,7 +248,6 @@
                             <a href="{{ route('admin.whitelabels') }}" class="nav-link">
                                 <i class="icon-atom2"></i>
                                 <span>{{ __('labels.backend.whitelabels.table.display_name') }}</span>
-                                <span class="badge bg-teal-800 align-self-center ml-auto">Admin only</span>
                             </a>
                         </li>
                         <li class="nav-item">
