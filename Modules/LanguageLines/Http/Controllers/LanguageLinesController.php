@@ -531,7 +531,6 @@ class LanguageLinesController extends Controller
     public function signatureStore(EmailSignatureStoreRequest $request)
     {
         try {
-            dd($request->all());
             $languageline = $this->languageline->update(
                 $this->languageline->firstOrCreate([
                 'locale' => $request->get('language'),

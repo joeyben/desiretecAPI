@@ -9,6 +9,6 @@
             font-size: 12px;
             color: #000;
             width:100%;">
-    {!! Lang::get('email.email_signature') !!} <br>
+    {!! trans('email.footer') !!} <br>
 
 </p>
