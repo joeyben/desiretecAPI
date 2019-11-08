@@ -37,9 +37,9 @@ FROM horrorhorst/laravel-base:latest
 LABEL maintainer="desiretec"
 
 
-COPY . /var/www/html
-COPY --from=vendor /app/vendor/ /var/www/html/vendor/
-COPY --from=frontend /myapp/public /var/www/html/public
+COPY --chown=www-data:www-data . /var/www/html
+COPY --chown=www-data:www-data --from=vendor /app/vendor/ /var/www/html/vendor/
+COPY --chown=www-data:www-data --from=frontend /myapp/public /var/www/html/public
 COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 RUN mv /var/www/html/docker/php/laravel.ini /usr/local/etc/php/conf.d
@@ -59,6 +59,5 @@ RUN make routes
 RUN make message
 RUN apt-get install nano
 RUN docker-php-ext-install soap
-RUN chown -R www-data:www-data /var/www
 RUN npm install
 RUN chown -R www-data:www-data /var/www/html/node_modules/
