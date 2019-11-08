@@ -61,7 +61,6 @@ class LayersController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
     }
 
     /**
