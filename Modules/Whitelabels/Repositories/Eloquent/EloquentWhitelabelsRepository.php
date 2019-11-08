@@ -28,6 +28,27 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         return Whitelabel::class;
     }
 
+    public function updateRoute(int $id, string $name, string $subDomain)
+    {
+        $whitelabelLangTable = 'language_lines_' . mb_strtolower($name);
+        $this->generateFile(
+            base_path('Modules/Master/Config/config.stub'),
+            base_path("Modules/$name/Config/config.php"),
+            [
+                '$MODULE$',
+                '$ID$',
+                '$TABLE$',
+                '$MODULESMAL$'
+            ],
+            [
+                $name,
+                $id,
+                $whitelabelLangTable,
+                mb_strtolower($subDomain)
+            ]
+        );
+    }
+
     public function generateFiles(int $id, string $name)
     {
         $smallName = mb_strtolower($name);
@@ -309,6 +330,71 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function current()
     {
-        return Auth::guard('web')->user()->whitelabels()->first();
+        $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
+
+        if (null !== $whitelabel) {
+            return $this->resolveModel()->find($whitelabel->id);
+        }
+
+        return $whitelabel;
+    }
+
+    public function getBackgroundImage($whitelabel)
+    {
+        return $whitelabel->attachments->map(function ($attachment) {
+            if (('whitelabels/background') === $attachment->type) {
+                return [
+                    'uid'  => $attachment->id,
+                    'name' => $attachment->name . '.' . $attachment->extension,
+                    'url'  => $attachment->url
+                ];
+            }
+        })->reject(function ($item) {
+            return null === $item;
+        });
+    }
+
+    public function getLogo($whitelabel)
+    {
+        return $whitelabel->attachments->map(function ($attachment) {
+            if (('whitelabels/logo') === $attachment->type) {
+                return [
+                    'uid'  => $attachment->id,
+                    'name' => $attachment->name . '.' . $attachment->extension,
+                    'url'  => $attachment->url
+                ];
+            }
+        })->reject(function ($item) {
+            return null === $item;
+        });
+    }
+
+    public function getFavicon($whitelabel)
+    {
+        return $whitelabel->attachments->map(function ($attachment) {
+            if (('whitelabels/favicon') === $attachment->type) {
+                return [
+                    'uid'  => $attachment->id,
+                    'name' => $attachment->name . '.' . $attachment->extension,
+                    'url'  => $attachment->url
+                ];
+            }
+        })->reject(function ($item) {
+            return null === $item;
+        });
+    }
+
+    public function getSubDomain(string $domain)
+    {
+        $parts = explode('.', $domain);
+
+        return isset($parts[2]) ?  str_slug($parts[0]) : '';
+    }
+
+    public function getDomain(string $domain)
+    {
+        $parts = explode('.', $domain);
+
+        return  isset($parts[1]) &&  isset($parts[2]) ? str_slug($parts[1] . '.' . $parts[2]) : $domain;
     }
 }
