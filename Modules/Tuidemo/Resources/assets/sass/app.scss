@@ -41,21 +41,21 @@ body{
   min-width: 220px;
 }
 a.primary-btn, .primary-btn, a.btn-primary, .btn-primary, input.primary-btn{
-  background: $mastercolor;
-  border: 1px solid $mastercolor;
+  background: $brand-primary;
+  border: 1px solid $brand-primary;
   transition: all .3s ease-out;
   &:hover, &:active, &:focus, &:visited{
-    background: $secondarycolor;
-    border: 1px solid $secondarycolor;
+    background: $brand-secondary;
+    border: 1px solid $brand-secondary;
   }
 }
 a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
-  color: $mastercolor;
-  border: 1px solid $mastercolor;
+  color: $brand-primary;
+  border: 1px solid $brand-primary;
   transition: all .3s ease-out;
   &:hover, &:active, &:focus, &:visited{
-    color: $secondarycolor;
-    border: 1px solid $secondarycolor;
+    color: $brand-secondary;
+    border: 1px solid $brand-secondary;
   }
 }
 

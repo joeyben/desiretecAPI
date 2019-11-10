@@ -246,7 +246,7 @@ $gutter: 30px;
     border: none;
     padding: 15px;
     margin-top: 5px;
-    transition: border-color .3s ease;
+    transition: background-color .3s ease;
     &:hover, &:active {
       background: $brand-secondary;
     }
@@ -1327,7 +1327,7 @@ p.kwp-info {
       padding-left: 10px;
     }
     .kwp-footer{
-      padding: 20px 10px 30px;
+      padding: 20px 30px 10px;
       .kwp-col-4{
         margin-bottom: 0;
       }

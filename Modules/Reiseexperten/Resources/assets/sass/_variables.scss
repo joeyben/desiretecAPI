@@ -24,7 +24,7 @@ $master-primary:        #092a5e;
 $master-secondary:      #70CBF4;
 
 $brand-primary:         #006594 !default;
-$brand-secondary:       $brand-primary !default;
+$brand-secondary:       darken($brand-primary, 15%) !default;
 $brand-success:         #5cb85c !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;

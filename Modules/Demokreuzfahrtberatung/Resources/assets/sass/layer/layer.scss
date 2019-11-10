@@ -249,7 +249,7 @@ $gutter: 30px;
     border: none;
     padding: 15px;
     margin-top: 5px;
-    transition: border-color .3s ease;
+    transition: background-color .3s ease;
     &:hover, &:active {
       background: $brand-secondary;
     }

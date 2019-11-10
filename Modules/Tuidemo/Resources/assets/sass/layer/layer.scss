@@ -1,6 +1,7 @@
 @import "utils";
 @import "rangeslider";
 @import "bootstrap-select";
+@import "../variables";
 
 $gutter: 30px;
 $altfont: 'Comfortaa', cursive;
@@ -771,8 +772,13 @@ p.kwp-info {
     font-size: 12px;
     line-height: 1.3em;
     a {
-      color: $master-blue !important;
+      color: $brand-primary !important;
       text-decoration: none;
+    }
+    #agb_link, #datenschutz{
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
   label {
@@ -1213,7 +1219,7 @@ p.kwp-info {
       .kwp-middle{
         background: #E2F3FE;
         padding: 5px 20px;
-        border-bottom: 1px solid $master-blue;
+        border-bottom: 1px solid $mastercolor;
         font-size: 16px;
       }
 
