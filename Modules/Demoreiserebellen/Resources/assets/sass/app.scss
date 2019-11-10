@@ -1,9 +1,10 @@
 @import "variables";
 
+// Html, body, main-containers
+
 html, body{
   overflow: auto;
 }
-
 body{
   &.landing{
     padding-top: 0px;
@@ -31,6 +32,39 @@ body{
       }
     }
   }
+}
+
+// Buttons
+
+.primary-btn, .secondary-btn{
+  padding: 5px 20px;
+  min-width: 220px;
+}
+a.primary-btn, .primary-btn, a.btn-primary, .btn-primary, input.primary-btn{
+  background: $brand-primary;
+  border: 1px solid $brand-primary;
+  transition: all .3s ease-out;
+  &:hover, &:active, &:focus, &:visited{
+    background: $brand-secondary;
+    border: 1px solid $brand-secondary;
+  }
+}
+a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
+  color: $brand-primary;
+  border: 1px solid $brand-primary;
+  transition: all .3s ease-out;
+  &:hover, &:active, &:focus, &:visited{
+    color: $brand-secondary;
+    border: 1px solid $brand-secondary;
+  }
+}
+
+// Wish modal
+
+.wish-modal-1 .modal-body-left input[value=""]~label {
+  top: 5px !important;
+  font-size: 10px !important;
+  color: #bbb !important;
 }
 
 // Slider
@@ -61,7 +95,7 @@ body{
   }
   .layer-action{
     position: absolute;
-    bottom: 250px;
+    bottom: 200px;
     left: 0;
     right: 0;
     text-align: center;
@@ -74,30 +108,31 @@ body{
     }
   }
 }
-.wish-modal-1 .modal-body-left input[value=""]~label {
-  top: 5px !important;
-  font-size: 10px !important;
-  color: #bbb !important;
-}
-.footer ul li{
-  display: inline-block;
-  padding:0 10px 0 10px;
-}
-.footer ul{
-  text-align: center;
+
+// Footer
+
+.footer{
+  background-color: $brand-grey-dark;
+  color: #fff;
+  font-size: 14px;
+  padding: 20px 0 10px;
+  ul{
+    text-align: center;
+    li{
+      display: inline-block;
+      padding:0 10px 0 10px;
+      a{
+        color: #fff;
+      }
+    }
+  }
+  .uk-text-center{
+    text-align: center;
+  }
 }
 
-.uk-text-center{
-  text-align: center;
-}
-.footer li a{
-  color: white;
-}
-.footer{
-  background-color: rgba(51,54,57,1);
-  color: rgba(255,255,255,1);
-  font-size: 14px;
-}
+// Headings
+
 .offer-info h4{
   margin-bottom: 0 !important;
 }
