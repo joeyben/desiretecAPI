@@ -152,7 +152,6 @@ class TuidemoWishesController extends Controller
      */
     public function wishList(ManageWishesRequest $request)
     {
-        //var_dump($request->ip());
         return view('tuidemo::wish.index')->with([
             'status'     => $this->status,
             'count'      => $this->wish->getForDataTable()->get()->count(),

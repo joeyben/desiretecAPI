@@ -603,9 +603,6 @@ var exitIntent = window.exitIntent || {};
             'room_type': function (form, formData) {
                 return formData.roomTypes.join(',');
             },
-            'cities': function (form, formData) {
-                return formData.cities.join(',');
-            },
             'airport': function (form, formData) {
                 var self = this;
                 return formData.departureAirports.map(function (airport) {
@@ -1143,7 +1140,7 @@ var exitIntent = window.exitIntent || {};
                 return this.getExtraVariable(travelAttributes, 'travelAttributes');
             },
             /* Reisethemen */
-            'zwischenstopps': function (form, formData) {
+            'maxStopOver': function (form, formData) {
                 var maxStopOver = getUrlParams('maxStopOver') ? getUrlParams('maxStopOver') : '';
                 return this.getExtraVariable(maxStopOver, 'maxStopOver');
             },
@@ -1178,12 +1175,12 @@ var exitIntent = window.exitIntent || {};
                 return this.getExtraVariable(earlyBird, 'earlyBird');
             },
             /* Angebote */
-            'familie': function (form, formData) {
+            'familyAttributes': function (form, formData) {
                 var familyAttributes = getUrlParams('familyAttributes') ? getUrlParams('familyAttributes') : '';
                 return this.getExtraVariable(familyAttributes, 'familyAttributes');
             },
             /* Angebote */
-            'wellness': function (form, formData) {
+            'wellnessAttributes': function (form, formData) {
                 var wellnessAttributes = getUrlParams('wellnessAttributes') ? getUrlParams('wellnessAttributes') : '';
                 return this.getExtraVariable(wellnessAttributes, 'wellnessAttributes');
             },
@@ -1193,17 +1190,17 @@ var exitIntent = window.exitIntent || {};
                 return this.getExtraVariable(sportAttributes, 'sportAttributes');
             },
             /* Angebote */
-            'fluggesellschaften': function (form, formData) {
+            'airlines': function (form, formData) {
                 var airlines = getUrlParams('airlines') ? getUrlParams('airlines') : '';
                 return this.getExtraVariable(airlines, 'airlines');
             },
             /* Angebote */
-            'hotelmarke': function (form, formData) {
+            'hotelChains': function (form, formData) {
                 var hotelChains = getUrlParams('hotelChains') ? getUrlParams('hotelChains') : '';
                 return this.getExtraVariable(hotelChains, 'hotelChains');
             },
             /* Angebote */
-            'veranstalter': function (form, formData) {
+            'operators': function (form, formData) {
                 var operators = getUrlParams('operators') ? getUrlParams('operators') : '';
                 return this.getExtraVariable(operators, 'operators');
             },

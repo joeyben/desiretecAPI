@@ -93,7 +93,6 @@ class WishesRepository extends BaseRepository
         } elseif (access()->user()->hasRole('Seller')) {
             $query->whereIn(config('module.wishes.table') . '.group_id', access()->user()->groups->pluck('id')->toArray());
         }
-
         return $query;
     }
 
