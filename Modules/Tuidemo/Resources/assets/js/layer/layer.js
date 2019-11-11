@@ -441,7 +441,7 @@ var exitIntent = window.exitIntent || {};
             return r[1];
         },
         name: 'TUI IBE',
-        matchesUrl: 'www.tuidemo.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
+        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {
@@ -595,7 +595,10 @@ var exitIntent = window.exitIntent || {};
                 return formData.duration;
             },
             'extra': function (form, formData) {
-                return formData.environmentAttributes.concat(formData.familyAttributes).concat(formData.sportAttributes).join(',');
+                if("environmentAttributes" in formData)
+                    return formData.environmentAttributes.concat(formData.familyAttributes).concat(formData.sportAttributes).join(',');
+                else
+                    return '';
             },
             'room_type': function (form, formData) {
                 return formData.roomTypes.join(',');
@@ -626,7 +629,7 @@ var exitIntent = window.exitIntent || {};
                 return this.getExtraVariable(travelAttributes, 'travelAttributes');
             },
             /* Reisethemen */
-            'zwischenstopps': function (form, formData) {
+            'maxStopOver': function (form, formData) {
                 var maxStopOver = getUrlParams('maxStopOver') ? getUrlParams('maxStopOver') : '';
                 return this.getExtraVariable(maxStopOver, 'maxStopOver');
             },
@@ -661,32 +664,32 @@ var exitIntent = window.exitIntent || {};
                 return this.getExtraVariable(earlyBird, 'earlyBird');
             },
             /* Angebote */
-            'Familie': function (form, formData) {
+            'familyAttributes': function (form, formData) {
                 var familyAttributes = getUrlParams('familyAttributes') ? getUrlParams('familyAttributes') : '';
                 return this.getExtraVariable(familyAttributes, 'familyAttributes');
             },
             /* Angebote */
-            'Wellness': function (form, formData) {
+            'wellnessAttributes': function (form, formData) {
                 var wellnessAttributes = getUrlParams('wellnessAttributes') ? getUrlParams('wellnessAttributes') : '';
                 return this.getExtraVariable(wellnessAttributes, 'wellnessAttributes');
             },
             /* Angebote */
-            'Sport': function (form, formData) {
+            'sportAttributes': function (form, formData) {
                 var sportAttributes = getUrlParams('sportAttributes') ? getUrlParams('sportAttributes') : '';
                 return this.getExtraVariable(sportAttributes, 'sportAttributes');
             },
             /* Angebote */
-            'Fluggesellschaften': function (form, formData) {
+            'airlines': function (form, formData) {
                 var airlines = getUrlParams('airlines') ? getUrlParams('airlines') : '';
                 return this.getExtraVariable(airlines, 'airlines');
             },
             /* Angebote */
-            'Hotelmarke': function (form, formData) {
+            'hotelChains': function (form, formData) {
                 var hotelChains = getUrlParams('hotelChains') ? getUrlParams('hotelChains') : '';
                 return this.getExtraVariable(hotelChains, 'hotelChains');
             },
             /* Angebote */
-            'Veranstalter': function (form, formData) {
+            'operators': function (form, formData) {
                 var operators = getUrlParams('operators') ? getUrlParams('operators') : '';
                 return this.getExtraVariable(operators, 'operators');
             },
@@ -1039,7 +1042,7 @@ var exitIntent = window.exitIntent || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: '',
+        matchesUrl: 'https://tuidemo.reise-wunsch.com',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
@@ -1175,32 +1178,32 @@ var exitIntent = window.exitIntent || {};
                 return this.getExtraVariable(earlyBird, 'earlyBird');
             },
             /* Angebote */
-            'Familie': function (form, formData) {
+            'familie': function (form, formData) {
                 var familyAttributes = getUrlParams('familyAttributes') ? getUrlParams('familyAttributes') : '';
                 return this.getExtraVariable(familyAttributes, 'familyAttributes');
             },
             /* Angebote */
-            'Wellness': function (form, formData) {
+            'wellness': function (form, formData) {
                 var wellnessAttributes = getUrlParams('wellnessAttributes') ? getUrlParams('wellnessAttributes') : '';
                 return this.getExtraVariable(wellnessAttributes, 'wellnessAttributes');
             },
             /* Angebote */
-            'Sport': function (form, formData) {
+            'sport': function (form, formData) {
                 var sportAttributes = getUrlParams('sportAttributes') ? getUrlParams('sportAttributes') : '';
                 return this.getExtraVariable(sportAttributes, 'sportAttributes');
             },
             /* Angebote */
-            'Fluggesellschaften': function (form, formData) {
+            'fluggesellschaften': function (form, formData) {
                 var airlines = getUrlParams('airlines') ? getUrlParams('airlines') : '';
                 return this.getExtraVariable(airlines, 'airlines');
             },
             /* Angebote */
-            'Hotelmarke': function (form, formData) {
+            'hotelmarke': function (form, formData) {
                 var hotelChains = getUrlParams('hotelChains') ? getUrlParams('hotelChains') : '';
                 return this.getExtraVariable(hotelChains, 'hotelChains');
             },
             /* Angebote */
-            'Veranstalter': function (form, formData) {
+            'veranstalter': function (form, formData) {
                 var operators = getUrlParams('operators') ? getUrlParams('operators') : '';
                 return this.getExtraVariable(operators, 'operators');
             },
