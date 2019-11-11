@@ -177,19 +177,11 @@ class WishesController extends Controller
      */
     public function wishList(ManageWishesRequest $request)
     {
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
         return view('frontend.wishes.index')->with([
             'status'     => $this->status,
             'category'   => $this->category,
             'catering'   => $this->catering,
-<<<<<<< Updated upstream
-            'count'      => $this->wish->getForDataTable()->get()->count(),
-=======
             'count'      => $this->wish->getForDataTable()->get()->where('whitelabel_id', getCurrentWhiteLabelId())->count(),
->>>>>>> Stashed changes
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }
