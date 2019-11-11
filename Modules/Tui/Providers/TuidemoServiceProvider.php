@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Tui\Providers;
+namespace Modules\Tuidemo\Providers;
 
-use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Factory;
 
-class TuiServiceProvider extends ServiceProvider
+class TuidemoServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -16,6 +16,8 @@ class TuiServiceProvider extends ServiceProvider
 
     /**
      * Boot the application events.
+     *
+     * @return void
      */
     public function boot()
     {
@@ -28,63 +30,73 @@ class TuiServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
+     *
+     * @return void
      */
     public function register()
     {
+        //
     }
 
     /**
      * Register config.
+     *
+     * @return void
      */
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__ . '/../Config/config.php' => config_path('tui.php'),
+            __DIR__.'/../Config/config.php' => config_path('tuidemo.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php',
-            'tui'
+            __DIR__.'/../Config/config.php', 'tuidemo'
         );
     }
 
     /**
      * Register views.
+     *
+     * @return void
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/tui');
+        $viewPath = resource_path('views/modules/tuidemo');
 
-        $sourcePath = __DIR__ . '/../Resources/views';
+        $sourcePath = __DIR__.'/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
-        ], 'views');
+        ],'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/tui';
-        }, \Config::get('view.paths')), [$sourcePath]), 'tui');
+            return $path . '/modules/tuidemo';
+        }, \Config::get('view.paths')), [$sourcePath]), 'tuidemo');
     }
 
     /**
      * Register translations.
+     *
+     * @return void
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/tui');
+        $langPath = resource_path('lang/modules/tuidemo');
 
         if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'tui');
+            $this->loadTranslationsFrom($langPath, 'tuidemo');
         } else {
-            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'tui');
+            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'tuidemo');
         }
     }
 
     /**
      * Register an additional directory of factories.
+     * 
+     * @return void
      */
     public function registerFactories()
     {
-        if (!app()->environment('production')) {
+        if (! app()->environment('production')) {
             app(Factory::class)->load(__DIR__ . '/../Database/factories');
         }
     }

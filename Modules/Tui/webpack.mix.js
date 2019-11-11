@@ -5,36 +5,51 @@ var base_url = '../../';
 
 mix.setPublicPath('../../public').mergeManifest();
 
+mix.options({
+    processCssUrls: false
+});
+
 mix.scripts(
     [
         base_url + "node_modules/jquery/dist/jquery.min.js",
         base_url + '/resources/assets/js/layer/datepicker.js',
         __dirname + '/Resources/assets/js/app.js'
-    ], __dirname + '/../../public/whitelabel/tui/js/tui.js')
+    ], __dirname + '/../../public/whitelabel/tuidemo/js/tuidemo.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
+        base_url + '/resources/assets/js/layer/exitintent-new.js',
         base_url + '/node_modules/js-cookie/src/js.cookie.js',
+        base_url + '/node_modules/bootstrap-select/js/bootstrap-select.js',
         base_url + '/resources/assets/js/layer/base.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',
         base_url + '/resources/assets/js/layer/datepicker.js',
+        base_url + '/resources/assets/js/layer/devicedetector.min.js',
+        base_url + '/resources/assets/js/layer/touchswipe.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
-    ], __dirname + '/../../public/whitelabel/tui/js/layer/layer.js')
+    ], __dirname + '/../../public/whitelabel/tuidemo/js/layer/layer.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
         base_url + '/node_modules/js-cookie/src/js.cookie.js',
         base_url + '/resources/assets/js/layer/base.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',
+        base_url + '/resources/assets/js/layer/touchswipe.js',
+        base_url + '/resources/assets/js/layer/devicedetector.min.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
-    ], __dirname + '/../../public/whitelabel/tui/js/layer/layer-locale.js')
-    .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/tui/css/layer/layer.css')
-    .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/tui/css/datepicker.css')
-    .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/tui/css/tui.css')
+    ], __dirname + '/../../public/whitelabel/tuidemo/js/layer/layer-locale.js')
+    .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/tuidemo/css/layer/layer.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/tuidemo/css/layer/layer_mobile.css')
+    .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/tuidemo/css/datepicker.css')
+    .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/tuidemo/css/tuidemo.css')
     .styles([
-        base_url + '/public/whitelabel/tui/css/datepicker.css',
-        base_url + '/public/whitelabel/tui/css/layer/layer.css',
-    ], __dirname + '/../../public/whitelabel/tui/css/layer/whitelabel.css')
-    .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/tui/images/')
-    .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/tui/svg/');
+        base_url + '/public/whitelabel/tuidemo/css/datepicker.css',
+        base_url + '/public/whitelabel/tuidemo/css/layer/layer.css',
+    ], __dirname + '/../../public/whitelabel/tuidemo/css/layer/whitelabel.css')
+    .styles([
+        base_url + '/public/whitelabel/tuidemo/css/datepicker.css',
+        base_url + '/public/whitelabel/tuidemo/css/layer/layer_mobile.css',
+    ], __dirname + '/../../public/whitelabel/tuidemo/css/layer/whitelabel_mobile.css')
+    .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/tuidemo/images/')
+    .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/tuidemo/svg/');
 if (mix.inProduction()) {
     mix.version();
 }
