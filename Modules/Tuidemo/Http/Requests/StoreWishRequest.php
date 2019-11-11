@@ -5,6 +5,7 @@ namespace Modules\Tuidemo\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -66,12 +67,12 @@ class StoreWishRequest extends FormRequest
     public function rules()
     {
         return [
-            'airport'         => 'required',
+            'airport'         => ['required', Rule::notIn(['beliebig','Beliebig'])],
             'destination'     => 'required',
             'earliest_start'  => 'required',
             'latest_return'   => 'required',
             'adults'          => 'required',
-            'terms'          => 'required',
+            'terms'           => 'required',
             'email'           => 'required|email'
         ];
     }
@@ -90,6 +91,7 @@ class StoreWishRequest extends FormRequest
            'latest_return.required'    => trans('latest_return.required'),
            'adults.required'           => trans('adults.required'),
            'airport.required'          => trans('airport.required'),
+           'airport.not_in'            => trans('airport.beliebig'),
            'destination.required'      => trans('destination.required'),
         ];
     }
