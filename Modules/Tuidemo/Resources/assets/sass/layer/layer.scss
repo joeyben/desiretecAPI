@@ -1,12 +1,14 @@
 @import "utils";
 @import "rangeslider";
 @import "bootstrap-select";
+@import "../variables";
 
 $gutter: 30px;
 $altfont: 'Comfortaa', cursive;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #092a5e;
+$mastercolor: #08295E;
+$secondarycolor: #001e46;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
 $fontcolor: #303030;
@@ -47,7 +49,7 @@ $fontcolor: #303030;
   height: 75px;
   position: fixed;
   display: none;
-  background: #092a5e url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: $mastercolor url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -269,7 +271,7 @@ $fontcolor: #303030;
   /* TUI INPUT STYLES FOR WL */
 
 
-  input[type="text"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"], input[type="tel"], textarea {
+  input[type="text"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"],input[type="tel"], textarea {
     -webkit-transition: border-color .3s ease;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
@@ -288,14 +290,10 @@ $fontcolor: #303030;
     border: 1px solid #aaa;
     color: $mastercolor;
     font-size: 14px;
-  }
-
-  input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus {
-    -webkit-transition: border-color .3s ease;
-    -moz-transition: border-color .3s ease;
-    -o-transition: border-color .3s ease;
-    transition: border-color .3s ease;
-    border-color: #ffe336;
+    &:focus{
+      transition: border-color .3s ease;
+      border-color: $mastercolor;
+    }
   }
 
   input[type="radio"],
@@ -356,7 +354,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: $mastercolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -417,7 +415,7 @@ $fontcolor: #303030;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #092a5e;
+              color: $mastercolor;
               padding: 0;
               margin: 20px 0;
               font-size: 15px !important;
@@ -446,7 +444,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: $mastercolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -491,7 +489,7 @@ $fontcolor: #303030;
   h1 {
     font-size: 26px;
     margin: 15px 0;
-    color: #20355a;
+    color: $mastercolor;
   }
 
   p {
@@ -557,7 +555,7 @@ ul.kwp-form-errors {
 
   h1 {
     margin: 15px 0 0 0;
-    color:  #20355a;
+    color:  $mastercolor;
     font-size: 36px;
     font-weight: 700;
   }
@@ -774,8 +772,13 @@ p.kwp-info {
     font-size: 12px;
     line-height: 1.3em;
     a {
-      color: $master-blue !important;
+      color: $brand-primary !important;
       text-decoration: none;
+    }
+    #agb_link, #datenschutz{
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
   label {
@@ -812,15 +815,15 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .caret{
-      border-color: #092a5e !important;
+      border-color: $mastercolor !important;
       border-right: 6px solid transparent !important;
       border-left: 6px solid transparent !important;
       border-bottom: none !important;
-      border-top: 6px dashed #092a5e !important;
+      border-top: 6px dashed $mastercolor !important;
       display: none;
     }
     .filter-option-inner-inner{
-      color: #092a5e;
+      color: $mastercolor;
       font-size: 14px;
       font-weight: 500;
     }
@@ -903,7 +906,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid #fce237;
+  border: 10px solid $mastercolor;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1064,7 +1067,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $mastercolor;
     }
     .text-hidden{
       padding: 5px 0;
@@ -1085,7 +1088,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $mastercolor;
     }
   }
   .description{
@@ -1126,7 +1129,7 @@ p.kwp-info {
         right: 10px;
         top: 30px;
         font-size: 16px;
-        color: #092a5e;
+        color: $mastercolor;
       }
     }
   }
@@ -1192,7 +1195,7 @@ p.kwp-info {
           h1{
             margin: 0px;
             padding: 5px 0;
-            color: #092A5E;
+            color: $mastercolor;
             position: absolute;
             bottom: 0px;
             font-size: 26px;
@@ -1216,7 +1219,7 @@ p.kwp-info {
       .kwp-middle{
         background: #E2F3FE;
         padding: 5px 20px;
-        border-bottom: 1px solid $master-blue;
+        border-bottom: 1px solid $mastercolor;
         font-size: 16px;
       }
 
@@ -1262,7 +1265,7 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#092a5e;
+        color:$mastercolor;
         padding: 8px 0;
         font-weight: bold;
         text-align: center;
@@ -1483,6 +1486,7 @@ p.kwp-info {
       font-size: 14px;
       color: $mastercolor;
     }
+
     .kwp-custom-select{
       #catering{
         padding: 0;

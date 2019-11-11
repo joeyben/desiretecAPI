@@ -111,4 +111,5 @@ return [
     'inactive_until'                => 'Deaktiviert bis',
     'from'                          => 'Ab',
     'until'                         => 'Bis',
+    'primary_color'                 => 'Primärfarbe',
 ];

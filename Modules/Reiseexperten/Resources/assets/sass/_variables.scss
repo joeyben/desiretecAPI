@@ -17,10 +17,14 @@ $gray:                   lighten(#000, 33.5%) !default; // #555
 $gray-light:             lighten(#000, 60%) !default;   // #999
 $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 
-$mastercolor:           #ed1c24;
-$secondarycolor:        #fd0;
-$orange:                #ed1c24;
-$brand-primary:         #ed1c24 !default;
+$master-grey-dark:      #303030;
+$master-grey-light:     #b9b9b9;
+
+$master-primary:        #092a5e;
+$master-secondary:      #70CBF4;
+
+$brand-primary:         #006594 !default;
+$brand-secondary:       darken($brand-primary, 15%) !default;
 $brand-success:         #5cb85c !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
@@ -53,6 +57,8 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
+
+$font-family-master:      "Comfortaa", cursive;
 
 $font-size-base:          14px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px
@@ -189,7 +195,7 @@ $input-border:                   #ccc !default;
 //** `<input>` border radius
 $input-border-radius:            $border-radius-base !default;
 //** Border color for inputs on focus
-$input-border-focus:             #66afe9 !default;
+$input-border-focus:             $master-primary !default;
 
 //** Placeholder text color
 $input-color-placeholder:        $gray-light !default;

@@ -492,7 +492,7 @@ var dt = window.dt || {};
         var $event = e;
         if(deviceDetector.device === "phone") {
             dt.PopupManager.teaser = true;
-            dt.PopupManager.teaserText = "Wir möchten Sie gerne beraten!";
+            dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
             dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
             $(".dt-modal .kwp-close").on('touchend',function () {
                 dt.PopupManager.closePopup(e);

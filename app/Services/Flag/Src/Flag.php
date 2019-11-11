@@ -50,4 +50,6 @@ class Flag implements FlagInterface
     const FLIGHT = 2;
 
     const CRUISE = 3;
+
+    const COLOR = '#f96500';
 }

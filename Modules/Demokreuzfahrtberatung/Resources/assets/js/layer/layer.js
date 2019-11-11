@@ -1108,50 +1108,13 @@ var exitIntent = window.exitIntent || {};
 
         };
 
-
-        dt.scrollUpDetect = function () {
-            var shown = false;
+        dt.scrollUpDetect = function (e) {
+            dt.PopupManager.layerShown = false;
             $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
-                if(direction === 'down' && parseInt(distance) > 50 && !shown){
-                    dt.showMobileLayer();
-                    shown = true;
-                }else if (direction === 'down' || direction === 'up' && shown && ($("body .hl-sticky").hasClass('is-sticky'))) {
-                    $(".dt-modal").css({'top': (document.documentElement.clientHeight - 85) + "px"});
-                } else if(direction === 'down' || direction === 'up' && shown) {
-                    $(".dt-modal").css({'top': (document.documentElement.clientHeight - 100) + "px"});
-                }
-            }, allowPageScroll:"vertical"} );
-
-
-            $( ".dt-modal" ).swipe( {
-                tap:function(e, target) {
-                    $(this).addClass('m-open');
-                    $("body, html").css({'overflow':'hidden'});
-                    ga('dt.send', 'event', 'Mobile Layer', 'Layer shown', 'Tablet');
-                },
-                swipe:function(e, direction, distance, duration, fingerCount, fingerData) {
-                    var $event = e;
-                    if(direction === "left"){
-                        if($(this).hasClass('m-open'))
-                            return false;
-                        $(this).addClass('swipe-left');
-                        setTimeout(function(e) {
-                            dt.PopupManager.closePopup($event);
-                        },1000);
-                        return false;
-                    }else if(direction === "right"){
-                        if($(this).hasClass('m-open'))
-                            return false;
-                        $(this).addClass('swipe-right');
-                        setTimeout(function(e) {
-                            dt.PopupManager.closePopup($event);
-                        },1000);
-                        return false;
+                    if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
+                        dt.PopupManager.layerShown = true;
                     }
-                },
-            });
-
-
+                }, allowPageScroll:"vertical"} );
         };
 
         dt.triggerButton = function(e){
@@ -1166,9 +1129,7 @@ var exitIntent = window.exitIntent || {};
                 $(this).remove();
                 ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
             });
-
-
-        }
+        };
 
         dt.showMobileLayer = function (e) {
             dt.PopupManager.show();
@@ -1181,7 +1142,7 @@ var exitIntent = window.exitIntent || {};
             var $event = e;
             if(deviceDetector.device === "phone") {
                 dt.PopupManager.teaser = true;
-                dt.PopupManager.teaserText = "Wir möchten Sie gerne beraten!";
+                dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
                 dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
                 $(".dt-modal .kwp-close").on('touchend',function () {
                     dt.PopupManager.closePopup(e);
