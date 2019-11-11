@@ -180,12 +180,12 @@ class WishesController extends Controller
      */
     public function wishList(ManageWishesRequest $request)
     {
-        //var_dump($request->ip());
+
         return view('frontend.wishes.index')->with([
             'status'     => $this->status,
             'category'   => $this->category,
             'catering'   => $this->catering,
-            'count'      => ($this->wish->getForDataTable()->count() - 1),
+            'count'      => $this->wish->getForDataTable()->get()->count(),
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }

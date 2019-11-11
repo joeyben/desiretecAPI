@@ -168,9 +168,9 @@ class AutooffersTTRepository extends BaseRepository
                 }
             },
             "HotelReview": {
-                "MinRatingsCount": 10,
-                "MinMeanRatingOverall": 4,
-                "MinMeanRecommendationRate": 4
+                "MinRatingsCount": 1,
+                "MinMeanRatingOverall": 2,
+                "MinMeanRecommendationRate": 2
             }
            }
           },
@@ -363,7 +363,6 @@ class AutooffersTTRepository extends BaseRepository
             'offerFeatures' => $offer["OfferProperties"]["OfferFeatures"],
             'hotel_reviews' => $this->reviews[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
             'hotel_attributes' => $this->hotelAttributes[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
-            'boardType' => $this->hotelAttributes[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["BoardType"]],
             'room' => $offer["OfferServices"]["Package"]["Accommodation"]["Room"]["RoomName"],
             'flight' => [
                 'in' => [

@@ -149,7 +149,6 @@ class ReiseexpertenWishesController extends Controller
      */
     public function wishList(ManageWishesRequest $request)
     {
-        //var_dump($request->ip());
         return view('reiseexperten::wish.index')->with([
             'status'     => $this->status,
             'count'      => $this->wish->getForDataTable()->count(),
