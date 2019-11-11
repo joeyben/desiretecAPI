@@ -348,23 +348,23 @@
 
                         <div class="group">
                             <input type="text" class="form-control name" name="first_name" id="first_name" value="{{ $wish->owner->first_name }}" required>
-                            <label>Name</label>
+                            <label>@lang('modals.callback.first_name')</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control nachname" name="last_name" id="last_name" value="{{ $wish->owner->last_name }}" required>
-                            <label>Nachname</label>
+                            <label>@lang('modals.callback.last_name')</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control email" name="email" id="email" required value="{{ $wish->owner->email }}">
-                            <label>E-Mail-Adresse</label>
+                            <label>@lang('modals.callback.email')</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control tel not-required" name="telephone" id="telephone" value="">
-                            <label>Telefon-Nr.(optional)</label>
+                            <label>@lang('modals.callback.tel_opt')</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control betreff" name="subject" id="subject" required autocomplete="off">
-                            <label>Betreff</label>
+                            <label>@lang('modals.callback.subject')</label>
                         </div>
 
                     </div>
@@ -372,7 +372,7 @@
                     @include('frontend.wishes.partial.modal-right-panel')
 
                     <div class="col-md-12 modal-body-bottom">
-                        <textarea name="message" id="modal-textarea" class="form-control" placeholder="Worum geht es? Deine Nachricht an uns."></textarea>
+                        <textarea name="message" id="modal-textarea" class="form-control" placeholder="@lang('modals.callback.message')"></textarea>
                     </div>
 
                 </div>
@@ -401,9 +401,9 @@
             {{ Form::open(['route' => 'frontend.contact.storecallback', 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'callback-seller']) }}
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Rückrufbitte zum zuständigen Reisebüro einstellen</h4>
-                <p>Stelle einfach und bequem eine Rückrufbitte ein und das<br>
-                    zuständige Reisebüro wird sich als bald bei dir melden
+                <h4 class="modal-title">@lang('modals.callback.title')</h4>
+                <p>@lang('modals.callback.sub_title1')<br>
+                    @lang('modals.callback.sub_title2')
                 </p>
             </div>
 
@@ -414,22 +414,22 @@
 
                         <div class="group">
                             <input type="text" class="form-control name" name="first_name" id="first_name_" value="{{ $wish->owner->first_name }}" required>
-                            <label>Vorname</label>
+                            <label>@lang('modals.callback.first_name')</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control nachname" name="last_name" id="last_name_" value="{{ $wish->owner->last_name }}" required>
-                            <label>Nachname</label>
+                            <label>@lang('modals.callback.last_name')</label>
                         </div>
                         <div class="group">
                             <input type="text" class="form-control tel" name="telephone" id="telephone_" required>
-                            <label>Telefonnummer <span class="hidden-xs">unter der wir dich erreichen</span></label>
+                            <label>@lang('modals.callback.tel')</label>
                         </div>
                         <div class="group">
                             <select name="period" id="period_" class="form-control">
-                                <option value="">Wähle einen Zeitraum</option>
-                                <option value="vormittags" id="">vormittags</option>
-                                <option value="nachmittags" id="">nachmittags</option>
-                                <option value="abends" id="">abends</option>
+                                <option value="">@lang('modals.callback.duration')</option>
+                                <option value="vormittags" id="">@lang('modals.callback.mornings')</option>
+                                <option value="nachmittags" id="">@lang('modals.callback.afternoons')</option>
+                                <option value="abends" id="">@lang('modals.callback.evenings')</option>
                             </select>
                         </div>
 
@@ -438,7 +438,7 @@
                         <input type="hidden" name="message" value="no data" />
                         <input type="hidden" name="email" value="no data" />
 
-                        <button type="submit" class="primary-btn wm-2-btn">Nachricht absenden</button>
+                        <button type="submit" class="primary-btn wm-2-btn">@lang('modals.callback.send')</button>
                     </div>
 
                     <div class="col-md-4 modal-body-right">

@@ -32,6 +32,8 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     public function updateRoute(int $id, string $name, string $subDomain)
     {
         $whitelabelLangTable = 'language_lines_' . mb_strtolower($name);
+        $subDomain =  'https://' . mb_strtolower($subDomain);
+
         $this->generateFile(
             base_path('Modules/Master/Config/config.stub'),
             base_path("Modules/$name/Config/config.php"),
@@ -45,7 +47,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 $name,
                 $id,
                 $whitelabelLangTable,
-                'https://' . mb_strtolower($subDomain)
+                $subDomain
             ]
         );
     }
@@ -397,6 +399,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $domain = str_replace("https://", "", $domain);
         $parts = explode('.', $domain);
 
-        return  isset($parts[1]) &&  isset($parts[2]) ? '.' . str_slug($parts[1]) . '.' . str_slug($parts[2]) : $domain;
+        return  isset($parts[2]) ? '.' . str_slug($parts[1]) . '.' . str_slug($parts[2]) : $domain;
     }
 }

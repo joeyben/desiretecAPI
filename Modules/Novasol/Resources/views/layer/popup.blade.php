@@ -202,6 +202,7 @@
               field: document.getElementById('earliest_start'),
               format: 'dd.mm.YYYY',
               defaultDate: '01.01.2019',
+              firstDay: 1,
               minDate: new Date(),
               toString: function(date, format) {
                 // you should do formatting based on the passed format,
@@ -215,8 +216,8 @@
                 previousMonth: 'Vormonat',
                 nextMonth: 'Nächsten Monat',
                 months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                weekdays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
-                weekdaysShort: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
+                weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
               },
               onSelect: function() {
                 dt.endDate.setDate(this.getDate()+1);
@@ -230,6 +231,7 @@
               field: document.getElementById('latest_return'),
               format: 'dd.mm.YYYY',
               defaultDate: '01.01.2019',
+              firstDay: 1,
               toString: function(date, format) {
                 // you should do formatting based on the passed format,
                 // but we will just return 'D/M/YYYY' for simplicity
@@ -245,8 +247,8 @@
                 previousMonth: 'Vormonat',
                 nextMonth: 'Nächsten Monat',
                 months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                weekdays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
-                weekdaysShort: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
+                weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
               }
             });
 

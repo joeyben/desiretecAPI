@@ -12,6 +12,7 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Str;
 use Illuminate\Translation\Translator;
 use Modules\Attachments\Repositories\Contracts\AttachmentsRepository;
+use Modules\Whitelabels\Http\Requests\SaveWhitelabelByExecutiveRequest;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class WhitelabelsController extends Controller
@@ -122,15 +123,8 @@ class WhitelabelsController extends Controller
     {
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int                                                      $id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function save(Request $request, int $id)
+
+    public function save(SaveWhitelabelByExecutiveRequest $request, int $id)
     {
 
         try {
@@ -139,8 +133,8 @@ class WhitelabelsController extends Controller
                 $request->only('display_name', 'color')
             );
 
-            $subDomain = str_slug($request->get('sub_domain'));
-            $domain = str_slug($request->get('sub_domain')) . '.' . $request->get('main_domain');
+            $subDomain = str_slug(str_replace('.', '', $request->get('sub_domain')));
+            $domain = Flag::HTTPS . $subDomain . $request->get('main_domain');
 
 
             if ($result['whitelabel']->domain !== $this->str->lower($domain)) {
