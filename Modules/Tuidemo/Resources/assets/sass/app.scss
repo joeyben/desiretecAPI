@@ -1,9 +1,10 @@
 @import "variables";
 
+// Html, body, main-containers
+
 html, body{
   overflow: auto;
 }
-
 body{
   &.landing{
     padding-top: 0px;
@@ -29,6 +30,49 @@ body{
       .main-container {
         margin-top: 0;
       }
+    }
+  }
+}
+
+// Buttons
+
+.primary-btn, .secondary-btn{
+  padding: 5px 20px;
+  min-width: 220px;
+}
+a.primary-btn, .primary-btn, a.btn-primary, .btn-primary, input.primary-btn{
+  background: $brand-primary;
+  border: 1px solid $brand-primary;
+  transition: all .3s ease-out;
+  &:hover, &:active, &:focus, &:visited{
+    background: $brand-secondary;
+    border: 1px solid $brand-secondary;
+  }
+}
+a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
+  color: $brand-primary;
+  border: 1px solid $brand-primary;
+  transition: all .3s ease-out;
+  &:hover, &:active, &:focus, &:visited{
+    color: $brand-secondary;
+    border: 1px solid $brand-secondary;
+  }
+}
+
+// Confirm popup
+
+.confirm-popup {
+  .popup-body {
+    .primary-btn {
+      border: 1px solid $mastercolor;
+      background-color: $mastercolor;
+      width: 100%;
+    }
+    .secondary-btn {
+      border: 1px solid $mastercolor;
+      color: $mastercolor;
+      width: 100%;
+      margin-bottom: 10px;
     }
   }
 }
@@ -60,10 +104,13 @@ body{
   }
   .layer-action{
     position: absolute;
-    bottom: 250px;
+    bottom: 130px;
     left: 0;
     right: 0;
     text-align: center;
+    @media (max-width: $screen-md) {
+      bottom: 190px;
+    }
     a{
       font-size: 24px;
       text-transform: uppercase;
@@ -78,31 +125,15 @@ body{
   font-size: 10px !important;
   color: #bbb !important;
 }
-.footer ul li{
-  display: inline-block;
-  padding:0 10px 0 10px;
-}
-.footer ul{
-  text-align: center;
-}
-.primary-btn{
-  background: #08295E !important;
-  border: 1px solid #08295E !important;
-}
-.secondary-btn{
-  border: 1px solid #08295E !important;
-  color: #08295E !important;
-}
-.btn-primary{
-  background-color: #08295E !important;
-}
+
+// Footer
 
 .footer{
   padding-top: 20px;
   color: #4c4c4c;
   .container{
     @media (max-width: $screen-sm) {
-      padding-left: 0;
+      padding: 0;
     }
   }
   .certificates{
@@ -139,9 +170,9 @@ body{
       background-color: #70cbf4;
       color: #fff;
       @media (max-width: $screen-sm) {
-        margin-left: -20px;
-        margin-right: -20px;
+        margin-right: 0px;
         margin-bottom: 30px;
+        width: 120%;
       }
       strong{
         margin-bottom: 10px;
@@ -152,7 +183,7 @@ body{
       p{
         font-size: 13px;
         color: #fff;
-        font-family: tuitypelight,Helvetica Neue,Helvetica,Arial,sans-serif;
+        font-family: $font-family-brand;
       }
       img{
         height: 35px;
@@ -173,16 +204,16 @@ body{
         margin-right: 15px;
       }
       .fa-facebook-square{
-        color: #176599;
+        color: $color-facebook;
       }
       .fa-twitter-square{
-        color: #41acea;
+        color: $color-twitter;
       }
       .fa-instagram{
-        color: #855b44;
+        color: $color-instagram;
       }
       .fa-pinterest{
-        color: #e60023;
+        color: $color-pinterest;
       }
     }
   }
@@ -190,16 +221,21 @@ body{
     padding: 15px 0;
     font-size: 13px;
     font-weight: bold;
-    font-family: tuitypelight,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-family: $font-family-brand;
     ul{
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
+      text-align: center;
       @media (max-width: $screen-sm) {
         justify-content: center;
       }
       a{
-        color: #4c4c4c;
+        color: $brand-grey;
+      }
+      li{
+        display: inline-block;
+        padding: 0 10px 0 10px;
       }
       li.copyright{
         display: block;
@@ -207,4 +243,3 @@ body{
     }
   }
 }
-

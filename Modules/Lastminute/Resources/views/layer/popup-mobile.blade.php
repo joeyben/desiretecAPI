@@ -29,7 +29,8 @@
                 @endif
                 <i class="fal fa-plane"></i>
                 <div class="direktflug " style="margin-top: 5px">
-                    {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null,['class' => 'form-control box-size', 'required' => 'required']) }} Direktflug
+                    {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null,['class' => 'form-control box-size', 'required' => 'required']) }}
+                    <span>Direktflug</span>
                 </div>
             </div>
 

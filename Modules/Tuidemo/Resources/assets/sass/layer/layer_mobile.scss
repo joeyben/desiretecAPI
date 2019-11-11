@@ -7,8 +7,8 @@ $gutter: 30px;
 $altfont: 'Roboto', sans-serif;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #092a5e;
-$secondarycolor: #092a5e;
+$mastercolor: #08295E;
+$secondarycolor: #001e46;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
 $fontcolor: #303030;
@@ -509,7 +509,7 @@ $fontcolor: #303030;
 
   button[type=submit] {
     border-radius: 4px;
-    background: #092a5e;
+    background: $mastercolor;
 
     text-align: center;
 
@@ -524,7 +524,7 @@ $fontcolor: #303030;
     padding: 20px;
 
     &:active, &:hover {
-      background: #FFB800;
+      background: $secondarycolor;
       color: #fff;
     }
     &.error-button{
@@ -561,7 +561,7 @@ $fontcolor: #303030;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
     transition: border-color .3s ease;
-    border-color: #ffe336;
+    border-color: $mastercolor;
   }
 
   input[type="radio"],
@@ -1010,27 +1010,27 @@ p.kwp-info {
   }
   &.eil-at-body{
     button[type=submit]{
-      background: #092a5e;
-      border: solid 1px #092a5e;
+      background: $mastercolor;
+      border: solid 1px $mastercolor;
       color: #fff;
       text-shadow: initial;
       &:hover{
-        background: #092a5e;
+        background: $secondarycolor;
       }
     }
     input[type="text"]{
       border-radius: 4px !important;
       &:focus,&:hover{
-        border-color: #092a5e;
+        border-color: $secondarycolor;
       }
     }
     textarea{
       &:focus,&:hover{
-        border-color: #092a5e;
+        border-color: $mastercolor;
       }
     }
     .kwp-spinner{
-      border-color: #092a5e;
+      border-color: $mastercolor;
       border-right-color: transparent;
     }
     .kwp-star {
@@ -1085,7 +1085,7 @@ p.kwp-info {
     font-size: 18px;
     line-height: 1.3em;
     a {
-      color: #70CBF4 !important;
+      color: $brand-primary !important;
       text-decoration: none;
     }
   }
@@ -1202,7 +1202,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid #fce237;
+  border: 10px solid $mastercolor;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1454,7 +1454,6 @@ p.kwp-info {
       }
       label{
         font-size: 16px;
-        white-space: nowrap;
         color: #a0a0a0;
         padding-left: 10px;
         padding-top: 10px;
@@ -1601,7 +1600,7 @@ p.kwp-info {
           label{
             margin-bottom: 0px;
             font-size: 20px !important;
-            color: #4c4c4c;
+            color: $brand-grey;
             font-weight: 600;
             padding-left: 0;
           }
@@ -1720,7 +1719,7 @@ p.kwp-info {
       background: #f2f2f2 !important;
     }
     .kwp textarea:hover, .kwp input[type="email"]:hover, .kwp textarea:focus, .kwp input[type="email"]:focus{
-      border-color: #219ed9;
+      border-color: $mastercolor;
     }
     .kwp-custom-select:after{
       background: none;
@@ -1822,7 +1821,7 @@ input[name="direkt_flug"]{
   height: 12px;
 }
 .fas{
-  color:#ecec3c;
+  color:$mastercolor;
 }
 #catering{
   background: transparent;
