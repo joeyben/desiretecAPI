@@ -98453,15 +98453,15 @@ var render = function() {
                     _c("span", { staticClass: "input-group-text" }, [
                       _vm._v(_vm._s(_vm.whitelabel.main_domain))
                     ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "invalid-feedback" }, [
+                    _c("strong", {
+                      domProps: {
+                        textContent: _vm._s(_vm.errors.get("sub_domain"))
+                      }
+                    })
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "invalid-feedback" }, [
-                  _c("strong", {
-                    domProps: {
-                      textContent: _vm._s(_vm.errors.get("sub_domain"))
-                    }
-                  })
                 ])
               ])
             ]),
@@ -98481,7 +98481,7 @@ var render = function() {
                     on: { input: _vm.updateWhitelabelColor }
                   }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "invalid-feedback" }, [
+                  _c("div", { staticClass: "help-block text-danger" }, [
                     _c("strong", {
                       domProps: { textContent: _vm._s(_vm.errors.get("color")) }
                     })

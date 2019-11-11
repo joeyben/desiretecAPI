@@ -66,6 +66,7 @@ class WhitelabelMakeRouteCommand extends Command
 
     private function route($domain, $module)
     {
+        $domain = 'https://' . $domain;
         $template = str_replace(
             [
                 '$DOMAIN$',
@@ -73,7 +74,7 @@ class WhitelabelMakeRouteCommand extends Command
                 '$MODULESMAL$',
             ],
             [
-                'https://' . $domain,
+                $domain,
                 $module,
                 mb_strtolower($module)
             ],
