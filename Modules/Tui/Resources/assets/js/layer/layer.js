@@ -4,10 +4,10 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'http://tuidemo.com',
+        baseUrl: 'http://tui.com',
         popupPath: '/show',
         popupStore:'/store',
-        cssPath: '/whitelabel/tuidemo/css/layer/whitelabel.css'
+        cssPath: '/whitelabel/tui/css/layer/whitelabel.css'
     };
 
     dt.popupTemplate = function (variant) {
@@ -73,7 +73,7 @@ var exitIntent = window.exitIntent || {};
     /**** Mobile Decoder ****/
     var MasterIBETripDataDecoderMobile = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'TUI Rundreisen Mobile',
-        matchesUrl: 'm.tuidemo.com/(buchen)',
+        matchesUrl: 'm.tui.com/(buchen)',
         dictionaries: {
             'catering': {
                 'AI': 'all-inclusive',
@@ -1039,7 +1039,7 @@ var exitIntent = window.exitIntent || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: 'https://tuidemo.reise-wunsch.com',
+        matchesUrl: 'https://tui.reise-wunsch.com',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
@@ -1274,7 +1274,7 @@ var exitIntent = window.exitIntent || {};
 
     //dt.decoders.push($.extend({}, MasterIBETripDataDecoder, {
     //    name: 'TUI Landingpages',
-    //    matchesUrl: 'tuidemo.com/pauschalreisen',
+    //    matchesUrl: 'tui.com/pauschalreisen',
     //    filterFormSelector: '.simpleSearch'
     //}));
 

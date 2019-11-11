@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Tuidemo\Providers;
+namespace Modules\Tui\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
-class TuidemoServiceProvider extends ServiceProvider
+class TuiServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -46,10 +46,10 @@ class TuidemoServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('tuidemo.php'),
+            __DIR__.'/../Config/config.php' => config_path('tui.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'tuidemo'
+            __DIR__.'/../Config/config.php', 'tui'
         );
     }
 
@@ -60,7 +60,7 @@ class TuidemoServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/tuidemo');
+        $viewPath = resource_path('views/modules/tui');
 
         $sourcePath = __DIR__.'/../Resources/views';
 
@@ -69,8 +69,8 @@ class TuidemoServiceProvider extends ServiceProvider
         ],'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/tuidemo';
-        }, \Config::get('view.paths')), [$sourcePath]), 'tuidemo');
+            return $path . '/modules/tui';
+        }, \Config::get('view.paths')), [$sourcePath]), 'tui');
     }
 
     /**
@@ -80,12 +80,12 @@ class TuidemoServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/tuidemo');
+        $langPath = resource_path('lang/modules/tui');
 
         if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'tuidemo');
+            $this->loadTranslationsFrom($langPath, 'tui');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'tuidemo');
+            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'tui');
         }
     }
 

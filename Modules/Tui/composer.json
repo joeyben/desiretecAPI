@@ -1,5 +1,5 @@
 {
-    "name": "nwidart/tuidemo",
+    "name": "nwidart/tui",
     "description": "",
     "authors": [
         {
@@ -10,7 +10,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\Tuidemo\\Providers\\TuidemoServiceProvider"
+                "Modules\\Tui\\Providers\\TuiServiceProvider"
             ],
             "aliases": {
                 
@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Tuidemo\\": ""
+            "Modules\\Tui\\": ""
         }
     }
 }

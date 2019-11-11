@@ -9,7 +9,7 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/tuidemo/css/tuidemo.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/tui/css/tui.css') }}">
 @endsection
 
 @section('content')

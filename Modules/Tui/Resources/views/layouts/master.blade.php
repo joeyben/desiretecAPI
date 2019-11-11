@@ -5,7 +5,7 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/tuidemo/css/tuidemo.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/tui/css/tui.css') }}">
 @endsection
 
 @section('logo')
@@ -15,7 +15,7 @@
 @endsection
 
 @section('before-scripts')
-    <script src="{{ mix('whitelabel/tuidemo/js/tuidemo.js') }}"></script>
+    <script src="{{ mix('whitelabel/tui/js/tui.js') }}"></script>
 @endsection
 
 @section('after-scripts')
@@ -27,7 +27,7 @@
 
         var kwz = document.createElement('script');
         kwz.type = 'text/javascript'; kwz.async = true;
-        kwz.src = '/whitelabel/tuidemo/js/layer/layer.js';
+        kwz.src = '/whitelabel/tui/js/layer/layer.js';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(kwz, s);
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Tuidemo\Http\Controllers;
+namespace Modules\Tui\Http\Controllers;
 
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
@@ -11,9 +11,9 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
-use Modules\Tuidemo\Http\Requests\StoreWishRequest;
+use Modules\Tui\Http\Requests\StoreWishRequest;
 
-class TuidemoController extends Controller
+class TuiController extends Controller
 {
     protected $adults = [];
     protected $kids = [];
@@ -44,7 +44,7 @@ class TuidemoController extends Controller
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
-        $this->whitelabelId = \Config::get('tuidemo.id');
+        $this->whitelabelId = \Config::get('tui.id');
     }
 
     /**
@@ -54,9 +54,9 @@ class TuidemoController extends Controller
      */
     public function index()
     {
-        $whitelabel = $this->whitelabel->getByName('Tuidemo');
+        $whitelabel = $this->whitelabel->getByName('Tui');
 
-        return view('tuidemo::index')->with([
+        return view('tui::index')->with([
             'display_name'  => $whitelabel['display_name'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
             'logo'          => $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['url'],
@@ -75,7 +75,7 @@ class TuidemoController extends Controller
         $input = $request->only('variant');
         $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
 
-        $html = view('tuidemo::'.$layer)->with([
+        $html = view('tui::'.$layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -101,7 +101,7 @@ class TuidemoController extends Controller
         $input = $request->all();
         if ($request->failed()) {
             $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
-            $html = view('tuidemo::'.$layer)->with([
+            $html = view('tui::'.$layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
@@ -120,7 +120,7 @@ class TuidemoController extends Controller
         );
 
         $wish = $this->createWishFromLayer($request, $wish);
-        $html = view('tuidemo::layer.created')->with([
+        $html = view('tui::layer.created')->with([
             'token' => $newUser->token->token,
             'id'    => $wish->id
         ])->render();
