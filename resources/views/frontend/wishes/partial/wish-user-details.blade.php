@@ -62,14 +62,18 @@
 <div class="col-md-12 s2-second">
     <b>Weitere vom Kunden ausgewählte Parameter: </b>
 
+    <?php $count = 0; ?>
     @foreach($extra as $key => $params)
-        @if ($params and $key > 1)
-            ,
+
+        @if ($params && $count > 0)
+           ,
         @endif
 
         @if ($params)
             {{ $params }}
+            <?php $count++; ?>
         @endif
+
     @endforeach
 </div>
 @endif
