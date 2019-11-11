@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\Agents\Events\AgentCreatedBySellerEvent;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
 use Modules\Users\Http\Requests\StoreSellerRequest;
 use Modules\Users\Http\Requests\UpdateSellerRequest;
@@ -313,6 +314,8 @@ class SellersController
             $this->users->sync($result['user']->id, 'groups', $request->get('groups'));
             $this->users->sync($result['user']->id, 'whitelabels', [$whitelabel->id]);
             $this->users->sync($result['user']->id, 'roles', [Role::where('name', Flag::SELLER_ROLE)->first()->id]);
+
+            event(new AgentCreatedBySellerEvent($result['user']));
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Seller']);
             $result['success'] = true;
