@@ -1,21 +1,57 @@
+<link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
+
 <div class="kwp-middle">
     Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
 </div>
-{{ Form::open(['route' => 'tui.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
+{{ Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <div class="kwp-minimal">
     <div class="kwp-content kwp-with-expansion">
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
-                {{ Form::label('destination', trans('tui::layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('tui::layer.placeholder.destination'), 'required' => 'required']) }}
-                <i class="tui-icon--location-fill"></i>
+                @php
+                $extraParamInputs = [
+                     ['title' => 'lage',                    'name' => 'locationAttributes', 'id' => 'locationAttributes',  'defaultValue' => ''],
+                     ['title' => 'ausstattung-und-service', 'name' => 'facilityAttributes', 'id' => 'facilityAttributes',  'defaultValue' => ''],
+                     ['title' => 'reisethemen',             'name' => 'travelAttributes',   'id' => 'travelAttributes',    'defaultValue' => ''],
+                     ['title' => 'zwischenstopps',          'name' => 'maxStopOver',        'id' => 'maxStopOver',         'defaultValue' => 'K/A'],
+                     ['title' => 'ort',                     'name' => 'cities',             'id' => 'cities',              'defaultValue' => ''],
+                     ['title' => 'gaestebewertungen',       'name' => 'ratings',            'id' => 'ratings',             'defaultValue' => ''],
+                     ['title' => 'weiterempfehlung',        'name' => 'recommendationRate', 'id' => 'recommendationRate',  'defaultValue' => ''],
+                     ['title' => 'gesamtpreis',             'name' => 'minPrice',           'id' => 'minPrice',            'defaultValue' => ''],
+                     ['title' => 'zimmertyp',               'name' => 'roomType',           'id' => 'roomType',            'defaultValue' => ''],
+                     ['title' => 'angebote',                'name' => 'earlyBird',          'id' => 'earlyBird',           'defaultValue' => ''],
+                     ['title' => 'familie',                 'name' => 'familyAttributes',   'id' => 'familyAttributes',    'defaultValue' => ''],
+                     ['title' => 'wellness',                'name' => 'wellnessAttributes', 'id' => 'wellnessAttributes',  'defaultValue' => ''],
+                     ['title' => 'sport',                   'name' => 'sportAttributes',    'id' => 'sportAttributes',     'defaultValue' => ''],
+                     ['title' => 'fluggesellschaften',      'name' => 'airlines',           'id' => 'airlines',            'defaultValue' => ''],
+                     ['title' => 'hotelmarke',              'name' => 'hotelChains',        'id' => 'hotelChains',         'defaultValue' => ''],
+                     ['title' => 'veranstalter',            'name' => 'operators',          'id' => 'operators',           'defaultValue' => ''],
+                ];
+                @endphp
+                @foreach($extraParamInputs as $extraParam)
+                    {{ Form::hidden($extraParam['name'], key_exists($extraParam['name'], $request) ? $request[$extraParam['name']] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'title' => $extraParam['title']]) }}
+                @endforeach
+
+                {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
+                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('tuidemo::layer.placeholder.destination'), 'required' => 'required']) }}
+                @if ($errors->any() && $errors->get('destination'))
+                        @foreach ($errors->get('destination') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                        @endforeach
+                @endif
+                <i class="fas fa-map-marker-alt"></i>
             </div>
 
             <div class="kwp-col-4">
-                {{ Form::label('airport', trans('tui::layer.general.airport'), ['class' => 'control-label required']) }}
-                {{ Form::text('airport', null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('tui::layer.placeholder.airport'), 'required' => 'required']) }}
-                <i class="tui-icon--aircraft-up"></i>
+                {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
+                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('tuidemo::layer.placeholder.airport'), 'required' => 'required']) }}
+                @if ($errors->any() && $errors->get('airport'))
+                          @foreach ($errors->get('airport') as $error)
+                                <span class="error-input">{{ $error }}</span>
+                          @endforeach
+                @endif
+                <i class="fas fa-plane-departure"></i>
             </div>
 
         </div>
@@ -23,40 +59,40 @@
 
             <div class="kwp-col-4 duration-col main-col">
                 <div class="kwp-form-group duration-group">
-                    <label for="duration-time" class="required">Wann & wie lange?</label>
+                    <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
                     <span class="duration-time dd-trigger">
                         <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
-                        <i class="tui-icon--calendar-month not-triggered"></i>
-                        <i class="tui-icon--close triggered"></i>
+                        <i class="fas fa-calendar-alt"></i>
+                        <i class="master-icon--close triggered"></i>
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
-                            {{ Form::label('earliest_start', trans('tui::layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', null, ['class' => 'form-control box-size', 'placeholder' => trans('tui::layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('tuidemo::layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
-                                    <span>{{ $error }}</span>
+                                    <span class="error-input">{{ $error }}</span>
                                 @endforeach
 
                             @endif
-                            <i class="tui-icon--calendar-month"></i>
+                            <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-4">
-                            {{ Form::label('latest_return', trans('tui::layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', null, ['class' => 'form-control box-size', 'placeholder' => trans('tui::layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('tuidemo::layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
-                                    <span>{{ $error }}</span>
+                                    <span class="error-input">{{ $error }}</span>
                                 @endforeach
                             @endif
-                            <i class="tui-icon--calendar-month"></i>
+                            <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-12">
-                            {{ Form::label('duration', trans('tui::layer.general.duration'), ['class' => 'control-label required']) }}
+                            {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('tui::layer.general.duration_empty')], $duration_arr), ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['' => trans('tuidemo::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
-                            <i class="tui-icon--time"></i>
+                            <i class="master-icon--time"></i>
                         </div>
                         <div class="clearfix"></div>
                         <hr>
@@ -69,39 +105,49 @@
 
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
-                    <label for="travelers" class="required">Wer reist mit?</label>
+                    <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
-                         <i class="tui-icon--user-family not-triggered"></i>
-                         <i class="tui-icon--close triggered"></i>
+                         <i class="fas fa-users"></i>
+                         <i class="master-icon--close triggered"></i>
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-12">
-                            {{ Form::label('adults', trans('tui::layer.general.adults'), ['class' => 'control-label required']) }}
+                            {{ Form::label('adults', trans('tuidemo::layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('adults', $adults_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                {{ Form::select('adults', $adults_arr , key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
-                            <i class="tui-icon--user-family"></i>
+                            <i class="master-icon--user-family"></i>
                         </div>
                         <div class="kwp-col-12 kids" style="position: relative;">
                             <div class="kwp-col-12">
-                                {{ Form::label('kids', trans('tui::layer.general.kids'), ['class' => 'control-label required']) }}
+                                {{ Form::label('kids', trans('tuidemo::layer.general.kids'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
-                                    {{ Form::select('kids', $kids_arr, ['class' => 'form-control box-size']) }}
+                                    {{ Form::select('kids', $kids_arr, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                                 </div>
-                                <i class="tui-icon--baby"></i>
+                                <i class="master-icon--baby"></i>
                             </div>
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
-                                    <label class="main-label">Alter (Hinreise)</label>
-                                    <div class="kwp-col-3">
-                                        <i class="tui-icon--aircraft-down"></i>
+                                    <label class="main-label">Alter der Kinder bei Rückreise</label>
+                                    <input name="ages" type="hidden">
+                                    <div id="age_1" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
-                                        <i class="tui-icon--aircraft-down"></i>
+                                    <div id="age_2" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
-                                    <div class="kwp-col-3">
-                                        <i class="tui-icon--aircraft-down"></i>
+                                    <div id="age_3" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size']) }}
+                                        </div>
                                     </div>
 
                                 </div>
@@ -119,17 +165,17 @@
         <div class="kwp-row">
             <div class="kwp-col-3 rangeslider-wrapper">
                 <div class="kwp-form-group ">
-                    {{ Form::label('budget', trans('tui::layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', old('budget'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('tui::layer.placeholder.budget'), 'required' => 'required']) }}
+                    {{ Form::label('budget', trans('tuidemo::layer.general.budget'), ['class' => 'control-label required']) }}
+                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('tuidemo::layer.placeholder.budget'), 'required' => 'required']) }}
                 </div>
                 <span class="text">&nbsp;</span>
-                <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
+                <input type="range" min="100" max="10000" value="50"  step="100" id="budgetRange">
             </div>
 
             <div class="kwp-col-3 white-col stars">
                 <div class="kwp-form-group">
-                    {{ Form::label('category', trans('tui::layer.general.category'), ['class' => 'control-label required']) }}
-                    {{ Form::number('category', old('category'), ['class' => 'form-control box-size hidden', 'placeholder' => trans('tui::layer.placeholder.category')]) }}
+                    {{ Form::label('category', trans('tuidemo::layer.general.category'), ['class' => 'control-label required']) }}
+                    {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 0, ['class' => 'form-control box-size hidden', 'placeholder' => trans('tuidemo::layer.placeholder.category')]) }}
 
                     <span class="text">ab 0 Sonnen</span>
                     <div class="kwp-star-input">
@@ -144,31 +190,31 @@
             </div>
 
             <div class="kwp-col-3 white-col catering">
-                {{ Form::label('catering', trans('tui::layer.general.catering'), ['class' => 'control-label required']) }}
-                    {{ Form::select('catering', $catering_arr, '',['class' => 'selectpicker']) }}
-                <i class="tui-icon--chevron-down"></i>
+                {{ Form::label('catering', trans('tuidemo::layer.general.catering'), ['class' => 'control-label required']) }}
+                    {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'selectpicker']) }}
+                <i class="master-icon--chevron-down"></i>
             </div>
 
         </div>
 
         <div class="kwp-row">
             <div class="kwp-col-12 description">
-                {{ Form::label('description', trans('tui::layer.general.description'), ['class' => 'control-label required']) }}
-                {{ Form::textarea('description', null,['class' => 'form-control', 'placeholder' => trans('tui::layer.placeholder.description')]) }}
-                <i class="tui-icon--calendar-month"></i>
+                {{ Form::label('description', trans('tuidemo::layer.general.description'), ['class' => 'control-label required']) }}
+                {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('tuidemo::layer.placeholder.description')]) }}
+                <i class="master-icon--calendar-month"></i>
             </div>
         </div>
 
         <div class="kwp-row">
             <div class="kwp-col-4 email-col">
-                {{ Form::label('email', trans('tui::layer.general.email'), ['class' => 'control-label']) }}
-                {{ Form::text('email', null, ['class' => 'form-control box-size', 'placeholder' => trans('tui::layer.placeholder.email'), 'required' => 'required']) }}
-                <i class="tui-icon--mail"></i>
+                {{ Form::label('email', trans('tuidemo::layer.general.email'), ['class' => 'control-label']) }}
+                {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('tuidemo::layer.placeholder.email'), 'required' => 'required']) }}
+                <i class="master-icon--mail"></i>
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
-                    @foreach ($errors->get('email') as $error)
-                        <span>{{ $error }}</span>
-                    @endforeach
+                           @foreach ($errors->get('email') as $error)
+                                  <span class="error-input">{{ $error }}</span>
+                           @endforeach
                 @endif
             </div>
             <div class="kwp-col-4 white-col">
@@ -258,6 +304,7 @@
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',
                     defaultDate: '01.01.2019',
+                    firstDay: 1,
                     minDate: new Date(),
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
@@ -286,6 +333,7 @@
                     field: document.getElementById('latest_return'),
                     format: 'dd.mm.YYYY',
                     defaultDate: '01.01.2019',
+                    firstDay: 1,
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
                         // but we will just return 'D/M/YYYY' for simplicity
@@ -366,13 +414,23 @@
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
             }
+
         </script>
 
         <div class="kwp-row">
             <div class="kwp-col-12 white-col">
                 <div class="kwp-agb ">
-                    {{ Form::checkbox('terms', null, ['class' => 'form-control box-size', 'required' => 'required']) }}
-                    <p>Ich habe die <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.tui.com/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                @php
+                   $terms_class = 'dt_terms'
+                @endphp
+
+                @if ($errors->any() && $errors->get('terms'))
+                  @php
+                  $terms_class = 'dt_terms hasError'
+                  @endphp
+                @endif
+                    {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
+                     <p>Ich habe die <a href="https://tuidemo.reise-wunsch.com/pdfs/tnb_tui.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.tui.com/datenschutz-hinweis/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                 </div>
             </div>
         </div>

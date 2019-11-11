@@ -38,6 +38,7 @@ RUN cd /myapp/Modules/Traveloverland && yarn install --ignore-engines && npm run
 RUN cd /myapp/Modules/Demomanuell && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Individualreisen && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Tuidemo && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Tui && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Demokreuzfahrtberatung && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Demoreiserebellen && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/FN && yarn install --ignore-engines && npm run production

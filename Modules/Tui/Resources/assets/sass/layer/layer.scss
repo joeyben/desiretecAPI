@@ -1,20 +1,24 @@
 @import "utils";
 @import "rangeslider";
 @import "bootstrap-select";
+@import "../variables";
 
 $gutter: 30px;
 $altfont: 'Comfortaa', cursive;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$tuicolor: #092a5e;
-$tuigrey: #737373;
-$tui-blue: #70CBF4;
+$mastercolor: #08295E;
+$secondarycolor: #001e46;
+$mastergrey: #737373;
+$master-blue: #70CBF4;
+$fontcolor: #303030;
+
 
 @include make-columns(12, $gutter - 5px, 'kwp-');
 
 
 .rangeslider__fill{
-  background-color: $tuicolor;
+  background-color: $mastercolor;
 }
 
 .kwp-col-ages {
@@ -24,6 +28,10 @@ $tui-blue: #70CBF4;
   .kwp-show-ages & {
     display: block;
   }
+}
+
+.kwp-col-ages.kwp-show-ages{
+  display: block;
 }
 
 .kwp-close-button {
@@ -41,11 +49,11 @@ $tui-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #092a5e url(../../images/layer/tuiGuy_2.png) no-repeat bottom / 100%;
+  background: $mastercolor url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
-  color: #fff;
+  color: $fontcolor;
   box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.1);
   /*transition: all 0.5s ease;
    -webkit-transition: all 0.5s ease;
@@ -88,7 +96,7 @@ $tui-blue: #70CBF4;
   background: rgba(255, 255, 255, 0.7);
   position: fixed;
   display: block;
-
+  overflow-y: scroll;
   width: 100%;
   height: 100%;
   top: 0;
@@ -96,7 +104,20 @@ $tui-blue: #70CBF4;
 
   font-size: 14px;
   line-height: 19px;
-  font-family: $altfont;
+
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #dedede !important;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #dedede !important;
+  }
+
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: #dedede !important;
+  }
+
   textarea:focus, input:focus{
     outline: none !important;
     box-shadow: none;
@@ -105,7 +126,7 @@ $tui-blue: #70CBF4;
     height: 90px !important;
     top: -110px;
     background-color: rgba(9,42,94,0.8);
-    background-image: url(../../images/layer/tuiGuy_2.png);
+    background-image: url(../../images/layer/guy_2.png);
     width: 55%;
     padding: 0 0px;
     margin: auto;
@@ -194,7 +215,6 @@ $tui-blue: #70CBF4;
   width: 760px;
   margin: 25px auto 0 auto;
 
-  font-family: $altfont;
   border-radius: 0;
   box-shadow: 0 0 4px 0px rgba(0,0,0,0.15);
   transition: transform 0.1s ease-out, opacity 0.15s ease-out;
@@ -228,11 +248,10 @@ $tui-blue: #70CBF4;
 
   button[type=submit] {
     border-radius: 3px;
-    background: $tuicolor;
+    background: $mastercolor;
 
     text-align: center;
 
-    font-family: $altfont;
     color:  #fff;
     font-size: 18px;
     font-weight: 700;
@@ -252,7 +271,7 @@ $tui-blue: #70CBF4;
   /* TUI INPUT STYLES FOR WL */
 
 
-  input[type="text"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"], input[type="tel"], textarea {
+  input[type="text"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"],input[type="tel"], textarea {
     -webkit-transition: border-color .3s ease;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
@@ -269,17 +288,12 @@ $tui-blue: #70CBF4;
     padding-left: 10px;
     outline: none;
     border: 1px solid #aaa;
-    color: $tuicolor;
+    color: $mastercolor;
     font-size: 14px;
-    font-family: $altfont;
-  }
-
-  input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus {
-    -webkit-transition: border-color .3s ease;
-    -moz-transition: border-color .3s ease;
-    -o-transition: border-color .3s ease;
-    transition: border-color .3s ease;
-    border-color: #ffe336;
+    &:focus{
+      transition: border-color .3s ease;
+      border-color: $mastercolor;
+    }
   }
 
   input[type="radio"],
@@ -340,7 +354,7 @@ $tui-blue: #70CBF4;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: $mastercolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -401,7 +415,7 @@ $tui-blue: #70CBF4;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #092a5e;
+              color: $mastercolor;
               padding: 0;
               margin: 20px 0;
               font-size: 15px !important;
@@ -430,7 +444,7 @@ $tui-blue: #70CBF4;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
+            background: $mastercolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -453,6 +467,8 @@ $tui-blue: #70CBF4;
       box-shadow: none;
       border: none;
       background: transparent;
+      height: 25px;
+      color: $mastercolor;
       &:focus{
         background: transparent;
         padding: 2px 10px;
@@ -473,7 +489,7 @@ $tui-blue: #70CBF4;
   h1 {
     font-size: 26px;
     margin: 15px 0;
-    color: #20355a;
+    color: $mastercolor;
   }
 
   p {
@@ -497,12 +513,10 @@ ul.kwp-form-errors {
   margin: 2px 0 0 0;
   font-size: 11px;
   color: #DB8021;
-  font-family: $altfont;
 }
 
 .kwp-form-email-hint {
   font-size: 14px;
-  font-family: $altfont;
   color: #64C3D7;
   display: none;
   cursor: pointer;
@@ -518,6 +532,12 @@ ul.kwp-form-errors {
   display: block;
   height: 50px;
   background: transparent url(../../images/layer/logo.png) no-repeat left top;
+  /*******/
+  position: absolute;
+  width: 100%;
+  left: 20px;
+  top: 20px;
+  background-size: 95px;
 }
 
 
@@ -535,14 +555,13 @@ ul.kwp-form-errors {
 
   h1 {
     margin: 15px 0 0 0;
-    color:  #20355a;
+    color:  $mastercolor;
     font-size: 36px;
     font-weight: 700;
   }
 
   p {
     margin: 10px 0 0 0;
-    font-family: $altfont;
     color: #818181;
     font-size: 17px;
     font-weight: 400;
@@ -555,11 +574,11 @@ ul.kwp-form-errors {
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/visual_ipad_smile_TUI_auto.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
-    background-image: url(../../images/layer/visual_2_smile_TUI.jpg);
+    background-image: url(../../images/layer/visual_ipad_smile_TUI.jpg);
 
     .kwp-header-content {
       p {
@@ -743,7 +762,6 @@ p.kwp-info {
 .kwp-agb {
   padding-top: 4px;
   font-size: 12px;
-  font-family: $altfont;
 
   input {
     vertical-align: middle;
@@ -754,8 +772,13 @@ p.kwp-info {
     font-size: 12px;
     line-height: 1.3em;
     a {
-      color: $tui-blue !important;
+      color: $brand-primary !important;
       text-decoration: none;
+    }
+    #agb_link, #datenschutz{
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
   label {
@@ -783,7 +806,7 @@ p.kwp-info {
     box-shadow: none;
     background: transparent;
   }
-  .tui-icon--aircraft-down, .tui-icon--location-fill{
+  .master-icon--aircraft-down, .master-icon--location-fill{
     display: none;
   }
   .bootstrap-select>.dropdown-toggle{
@@ -792,14 +815,15 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .caret{
-      border-color: #092a5e !important;
+      border-color: $mastercolor !important;
       border-right: 6px solid transparent !important;
       border-left: 6px solid transparent !important;
       border-bottom: none !important;
-      border-top: 6px dashed #092a5e !important;
+      border-top: 6px dashed $mastercolor !important;
+      display: none;
     }
     .filter-option-inner-inner{
-      color: #092a5e;
+      color: $mastercolor;
       font-size: 14px;
       font-weight: 500;
     }
@@ -829,7 +853,7 @@ p.kwp-info {
 
   &:after {
     content: ' ';
-    background: url(http://tui.com/typo3conf/ext/xskeleton/Resources/Public/Images/Tui/sprite.png) no-repeat -369px -3490px transparent;
+    background: url(http://master.com/typo3conf/ext/xskeleton/Resources/Public/Images/Master/sprite.png) no-repeat -369px -3490px transparent;
     position: absolute;
     top: 0;
     right: 0;
@@ -847,7 +871,6 @@ p.kwp-info {
     width: 100%;
     height: 25px;
 
-    font-family: $altfont;
     font-size: 12px;
 
     appearance: none;
@@ -883,7 +906,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid #fce237;
+  border: 10px solid $mastercolor;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -934,7 +957,7 @@ p.kwp-info {
     content: ' ';
     width: 20px;
     height: 20px;
-    background: transparent url(../../svg/sun-tui-grey.svg) no-repeat 0px center;
+    background: transparent url(../../svg/sun-master-grey.svg) no-repeat 0px center;
     background-size: 20px;
     display:inline-block;
   }
@@ -945,7 +968,7 @@ p.kwp-info {
 }
 
 .kwp-star-full:after, .kwp-body.eil-at-body .kwp-star-full:after{
-  background: transparent url(../../svg/sun-tui.svg) no-repeat 0px center;
+  background: transparent url(../../svg/sun-master.svg) no-repeat 0px center;
   background-size: 20px;
 }
 
@@ -1044,7 +1067,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $mastercolor;
     }
     .text-hidden{
       padding: 5px 0;
@@ -1065,7 +1088,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $mastercolor;
     }
   }
   .description{
@@ -1083,7 +1106,7 @@ p.kwp-info {
       margin: 0;
     }
     i{
-      top:0;
+      top:10px;
     }
   }
   .kwp-row{
@@ -1106,7 +1129,7 @@ p.kwp-info {
         right: 10px;
         top: 30px;
         font-size: 16px;
-        color: #092a5e;
+        color: $mastercolor;
       }
     }
   }
@@ -1172,7 +1195,7 @@ p.kwp-info {
           h1{
             margin: 0px;
             padding: 5px 0;
-            color: #092A5E;
+            color: $mastercolor;
             position: absolute;
             bottom: 0px;
             font-size: 26px;
@@ -1196,7 +1219,7 @@ p.kwp-info {
       .kwp-middle{
         background: #E2F3FE;
         padding: 5px 20px;
-        border-bottom: 1px solid $tui-blue;
+        border-bottom: 1px solid $mastercolor;
         font-size: 16px;
       }
 
@@ -1242,10 +1265,9 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#092a5e;
+        color:$mastercolor;
         padding: 8px 0;
         font-weight: bold;
-        font-family: $altfont;
         text-align: center;
       }
     }
@@ -1256,7 +1278,7 @@ p.kwp-info {
       .kwp-close{
         display: block;
       }
-      .kwp-completed-tui{
+      .kwp-completed-master{
         h1{
           margin-top: 0;
           i{
@@ -1275,7 +1297,6 @@ p.kwp-info {
     }
     .kwp-header-content{
       margin-top: 0px;
-      font-family: $altfont;
       font-weight: bold;
       position: absolute;
       bottom: 0;
@@ -1325,8 +1346,8 @@ p.kwp-info {
         line-height: 1.5em;
         background-color: transparent;
         font-weight: 500;
-        border-bottom: 1px solid $tuigrey;
-        color: $tuicolor;
+        border-bottom: 1px solid $mastergrey;
+        color: $mastercolor;
         border-radius: 0;
         padding: 0 10px;
         font-size: 14px;
@@ -1369,7 +1390,7 @@ p.kwp-info {
           margin-bottom: 0px;
           padding: 3px 0;
           font-size: 14px;
-          color: $tuicolor;
+          color: $mastercolor;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1390,7 +1411,7 @@ p.kwp-info {
             height: 25px;
             background: #fff;
             cursor: pointer;
-            border: 2px solid $tuicolor;
+            border: 2px solid $mastercolor;
             border-radius: 50%;
           }
           &::-moz-range-thumb {
@@ -1459,12 +1480,13 @@ p.kwp-info {
       background: none;
       background-color: transparent;
       font-weight: 500;
-      border-bottom: 1px solid $tuigrey;
+      border-bottom: 1px solid $mastergrey;
       border-radius: 0;
       padding: 0 10px;
       font-size: 14px;
-      color: $tuicolor;
+      color: $mastercolor;
     }
+
     .kwp-custom-select{
       #catering{
         padding: 0;
@@ -1581,4 +1603,13 @@ and (max-device-width : 320px) {
 
 
 
+}
+.error-input{
+  display: block;
+  background: #ED1C24 !important;
+  padding: 0 10px;
+  color: #fff;
+}
+.dt_terms.hasError:after{
+  border: 1px solid red !important;
 }

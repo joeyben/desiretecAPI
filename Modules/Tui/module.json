@@ -1,12 +1,12 @@
 {
-    "name": "Tui",
-    "alias": "tui",
+    "name": "Tuidemo",
+    "alias": "tuidemo",
     "description": "",
     "keywords": [],
     "active": 1,
     "order": 0,
     "providers": [
-        "Modules\\Tui\\Providers\\TuiServiceProvider"
+        "Modules\\Tuidemo\\Providers\\TuidemoServiceProvider"
     ],
     "aliases": {},
     "files": [
