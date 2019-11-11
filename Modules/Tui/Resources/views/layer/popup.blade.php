@@ -258,6 +258,7 @@
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',
                     defaultDate: '01.01.2019',
+                    firstDay: 1,
                     minDate: new Date(),
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
@@ -286,6 +287,7 @@
                     field: document.getElementById('latest_return'),
                     format: 'dd.mm.YYYY',
                     defaultDate: '01.01.2019',
+                    firstDay: 1,
                     toString: function(date, format) {
                         // you should do formatting based on the passed format,
                         // but we will just return 'D/M/YYYY' for simplicity
