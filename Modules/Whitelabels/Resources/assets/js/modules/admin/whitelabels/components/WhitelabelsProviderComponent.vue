@@ -25,9 +25,9 @@
                                 <span class="input-group-append">
                                     <span class="input-group-text">{{ whitelabel.main_domain }}</span>
                                 </span>
-                            </div>
-                            <div class="invalid-feedback">
-                                <strong v-text="errors.get('sub_domain')"></strong>
+                                <div class="invalid-feedback">
+                                    <strong v-text="errors.get('sub_domain')"></strong>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                         <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.primary_color') }} <span class="text-danger"> *</span></label>
                         <div class="col-lg-9">
                             <el-color-picker :value="whitelabel.color" @input="updateWhitelabelColor"></el-color-picker>
-                            <div class="invalid-feedback">
+                            <div class="help-block text-danger">
                                 <strong v-text="errors.get('color')"></strong>
                             </div>
                         </div>
