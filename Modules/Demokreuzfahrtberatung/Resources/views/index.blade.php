@@ -8,7 +8,7 @@
         </div>
 
         <div class="layer-action">
-            <a href="javascript:showLayer();" class="btn btn-primary btn-md">{{ trans('navs.frontend.create_wish') }}</a>
+            <a href="javascript:showLayer();" class="btn btn-secondary btn-md">{{ trans('navs.frontend.create_wish') }}</a>
         </div>
     </div>
 @endsection

@@ -1,22 +1,13 @@
 @import "utils";
 @import "rangeslider";
 @import "bootstrap-select";
+@import "../variables";
 
 $gutter: 30px;
-$altfont: Verdana, Arial, Helvetica, sans-serif;
-$zindex: 10000;
-$eil-border-radius: 4px;
-$mastercolor: #092a5e;
-$mastergrey: #737373;
-$master-blue: #70CBF4;
-$fontcolor: #303030;
-
-
 @include make-columns(12, $gutter - 5px, 'kwp-');
 
-
 .rangeslider__fill{
-  background-color: $mastercolor;
+  background-color: $master-primary;
 }
 
 .kwp-col-ages {
@@ -43,11 +34,11 @@ $fontcolor: #303030;
   height: 75px;
   position: fixed;
   display: none;
-  background: #092a5e url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: $brand-primary url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
-  color: $fontcolor;
+  color: $master-grey-dark;
   box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.1);
   /*transition: all 0.5s ease;
    -webkit-transition: all 0.5s ease;
@@ -94,11 +85,11 @@ $fontcolor: #303030;
   width: 100%;
   height: 100%;
   top: 0;
-  z-index: $zindex;
+  z-index: $zindex-modal;
 
   font-size: 14px;
   line-height: 19px;
-  font-family: $altfont;
+  font-family: $font-family-master;
 
   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #dedede !important;
@@ -206,11 +197,11 @@ $fontcolor: #303030;
 }
 
 .kwp {
-  background: #fff;
+  background: $body-bg;
   width: 760px;
   margin: 25px auto 0 auto;
 
-  font-family: $altfont;
+  font-family: $font-family-master;
   border-radius: 0;
   box-shadow: 0 0 4px 0px rgba(0,0,0,0.15);
   transition: transform 0.1s ease-out, opacity 0.15s ease-out;
@@ -244,21 +235,20 @@ $fontcolor: #303030;
 
   button[type=submit] {
     border-radius: 3px;
-    background: #94B803;
-
+    background: $btn-primary-bg;
     text-align: center;
-
-    font-family: $altfont;
-    color:  #fff;
+    font-family: $font-family-master;
+    color: $btn-primary-color;
     font-size: 16px;
     font-weight: 700;
-
     display: block;
     width: 100%;
     border: none;
     padding: 15px;
     margin-top: 5px;
-    &:active {
+    transition: background-color .3s ease;
+    &:hover, &:active {
+      background: $brand-secondary;
     }
     &.error-button{
       background: #D40E14;
@@ -285,22 +275,29 @@ $fontcolor: #303030;
     padding-left: 10px;
     outline: none;
     border: 1px solid #aaa;
-    color: $mastercolor;
+    color: $master-primary;
     font-size: 14px;
-    font-family: $altfont;
+    font-family: $font-family-master;
   }
 
-  input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus {
+  input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus, .form-control:focus {
     -webkit-transition: border-color .3s ease;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
     transition: border-color .3s ease;
-    border-color: #ffe336;
+    border-color: $master-primary !important;
   }
 
   input[type="radio"],
   input[type="checkbox"] {
     margin: 0;
+  }
+
+  input:-internal-autofill-selected{
+    color: $master-primary !important;
+    background: $body-bg !important;
+    font-family: $font-family-master !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px $body-bg !important;
   }
 
   form a {
@@ -356,7 +353,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #94B803;
+            background: $brand-primary;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -446,7 +443,7 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #94B803;
+            background: $brand-primary;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -490,7 +487,7 @@ $fontcolor: #303030;
   h1 {
     font-size: 26px;
     margin: 15px 0;
-    color: #20355a;
+    color: $master-primary;
   }
 
   p {
@@ -514,12 +511,12 @@ ul.kwp-form-errors {
   margin: 2px 0 0 0;
   font-size: 11px;
   color: #DB8021;
-  font-family: $altfont;
+  font-family: $font-family-master;
 }
 
 .kwp-form-email-hint {
   font-size: 14px;
-  font-family: $altfont;
+  font-family: $font-family-master;
   color: #64C3D7;
   display: none;
   cursor: pointer;
@@ -557,14 +554,14 @@ ul.kwp-form-errors {
 
   h1 {
     margin: 15px 0 0 0;
-    color:  #20355a;
+    color:  $brand-primary;
     font-size: 36px;
     font-weight: 700;
   }
 
   p {
     margin: 10px 0 0 0;
-    font-family: $altfont;
+    font-family: $font-family-master;
     color: #818181;
     font-size: 17px;
     font-weight: 400;
@@ -588,14 +585,11 @@ ul.kwp-form-errors {
         text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
         color: #333;
       }
-
       h1 {
-
       }
     }
   }
 }
-
 
 .kwp-minimal {
   .kwp-footer.kwp-with-expansion {
@@ -616,11 +610,6 @@ ul.kwp-form-errors {
     padding-right: 5px;
   }
 }
-
-.kwp-header {
-  padding: $gutter;
-}
-
 
 .kwp-content-extra {
   overflow: hidden;
@@ -655,7 +644,7 @@ ul.kwp-form-errors {
 }
 .kwp-footer {
   &.kwp-with-expansion {
-    border-top: solid 2px #FCE237;
+    border-top: solid 2px $master-primary;
     padding-top: 40px;
   }
 }
@@ -765,7 +754,7 @@ p.kwp-info {
 .kwp-agb {
   padding-top: 4px;
   font-size: 12px;
-  font-family: $altfont;
+  font-family: $font-family-master;
 
   input {
     vertical-align: middle;
@@ -776,8 +765,13 @@ p.kwp-info {
     font-size: 12px;
     line-height: 1.3em;
     a {
-      color: $master-blue !important;
+      color: $brand-primary !important;
       text-decoration: none;
+    }
+    #agb_link, #datenschutz{
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
   label {
@@ -814,15 +808,15 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .caret{
-      border-color: #092a5e !important;
+      border-color: $master-primary !important;
       border-right: 6px solid transparent !important;
       border-left: 6px solid transparent !important;
       border-bottom: none !important;
-      border-top: 6px dashed #092a5e !important;
+      border-top: 6px dashed $master-primary !important;
       display: none;
     }
     .filter-option-inner-inner{
-      color: #092a5e;
+      color: $master-primary;
       font-size: 14px;
       font-weight: 500;
     }
@@ -870,7 +864,7 @@ p.kwp-info {
     width: 100%;
     height: 25px;
 
-    font-family: $altfont;
+    font-family: $font-family-master;
     font-size: 12px;
 
     appearance: none;
@@ -906,7 +900,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid #fce237;
+  border: 10px solid $brand-primary;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1067,7 +1061,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $master-primary;
     }
     .text-hidden{
       padding: 5px 0;
@@ -1088,7 +1082,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $master-primary;
     }
   }
   .description{
@@ -1129,7 +1123,7 @@ p.kwp-info {
         right: 10px;
         top: 30px;
         font-size: 16px;
-        color: #092a5e;
+        color: $master-primary;
       }
     }
   }
@@ -1195,7 +1189,7 @@ p.kwp-info {
           h1{
             margin: 0px;
             padding: 5px 0;
-            color: #94B803;
+            color: $brand-primary;
             position: absolute;
             bottom: 0px;
             font-size: 26px;
@@ -1218,8 +1212,8 @@ p.kwp-info {
 
       .kwp-middle{
         background: #94b80354;
-        padding: 5px 20px;
-        border-bottom: 1px solid #94B803;
+        padding: 10px 20px;
+        border-bottom: 1px solid $master-grey-light;
         font-size: 16px;
       }
 
@@ -1255,8 +1249,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid #092A59;
-          background-color: #092A59;
+          border: 1px solid $brand-primary;
+          background-color: $brand-primary;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1265,10 +1259,10 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#007238;
+        color: $brand-primary;
         padding: 8px 0;
         font-weight: bold;
-        font-family: $altfont;
+        font-family: $font-family-master;
         text-align: center;
       }
     }
@@ -1288,8 +1282,11 @@ p.kwp-info {
             margin-bottom: 15px;
             font-size: 50px;
             margin-right: 10px;
-            color: #AAD700;
+            color: $master-primary;
           }
+        }
+        a{
+          color: $brand-primary;
         }
       }
     }
@@ -1298,7 +1295,7 @@ p.kwp-info {
     }
     .kwp-header-content{
       margin-top: 0px;
-      font-family: $altfont;
+      font-family: $font-family-master;
       font-weight: bold;
       position: absolute;
       top: 45px;
@@ -1308,13 +1305,13 @@ p.kwp-info {
     .kwp-close{
       width: 25px;
       height: 25px;
-      background: transparent url(../../svg/times_dark.svg) no-repeat center center;
+      background: transparent url(../../svg/times_light.svg) no-repeat center center;
       top: 10px;
       right: 10px;
       z-index: 2;
     }
     .dt-modal-agb .kwp-close, .kwp-close.dark {
-      background: transparent url(../../svg/times_dark.svg) no-repeat center center;
+      background: transparent url(../../svg/times_light.svg) no-repeat center center;
     }
     .dt-modal-agb .kwp-close{
       width: 50px;
@@ -1333,7 +1330,7 @@ p.kwp-info {
       padding-left: 10px;
     }
     .kwp-footer{
-      padding: 10px 30px;
+      padding: 20px 30px 10px;
       .kwp-col-4{
         margin-bottom: 0;
       }
@@ -1348,8 +1345,8 @@ p.kwp-info {
         line-height: 1.5em;
         background-color: transparent;
         font-weight: 500;
-        border-bottom: 1px solid $mastergrey;
-        color: $mastercolor;
+        border-bottom: 1px solid $master-grey-light;
+        color: $master-primary;
         border-radius: 0;
         padding: 0 10px;
         font-size: 14px;
@@ -1370,6 +1367,9 @@ p.kwp-info {
             display: block;
           }
         }
+      }
+      .duration-time{
+        padding-right: 0;
       }
       .rangeslider-wrapper{
         background: transparent;
@@ -1392,7 +1392,7 @@ p.kwp-info {
           margin-bottom: 0px;
           padding: 3px 0;
           font-size: 14px;
-          color: $mastercolor;
+          color: $master-primary;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1413,7 +1413,7 @@ p.kwp-info {
             height: 25px;
             background: #fff;
             cursor: pointer;
-            border: 2px solid $mastercolor;
+            border: 2px solid $master-primary;
             border-radius: 50%;
           }
           &::-moz-range-thumb {
@@ -1482,11 +1482,11 @@ p.kwp-info {
       background: none;
       background-color: transparent;
       font-weight: 500;
-      border-bottom: 1px solid $mastergrey;
+      border-bottom: 1px solid $master-grey-light;
       border-radius: 0;
       padding: 0 10px;
       font-size: 14px;
-      color: $mastercolor;
+      color: $master-primary;
     }
     .kwp-custom-select{
       #catering{
@@ -1510,7 +1510,7 @@ p.kwp-info {
       background: #f2f2f2 !important;
     }
     .kwp textarea:hover, .kwp input[type="email"]:hover, .kwp textarea:focus, .kwp input[type="email"]:focus{
-      border-color: #219ed9;
+      border-color: $master-primary;
     }
     .kwp-custom-select:after{
       background: none;
@@ -1540,6 +1540,9 @@ p.kwp-info {
       margin-left: -150px;
       margin-top: 0;
     }
+    .kwp-col-ages.kwp-show-ages{
+      display: block;
+    }
     .kwp-with-expansion .kwp-form-errors{
       position: absolute;
     }
@@ -1558,7 +1561,7 @@ p.kwp-info {
     .email-col{
       margin: 5px 0;
     }
-  
+
   .rangeslider--horizontal{
     height: 10px;
     .rangeslider__handle{
@@ -1574,7 +1577,7 @@ p.kwp-info {
 and (max-device-width : 320px) {
   .mobile-layer {
     .kwp{
-      .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
+      .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"], textarea{
         font-size: 14px;
       }
       .duration-time, .travelers{

@@ -155,7 +155,7 @@ class TuidemoWishesController extends Controller
         //var_dump($request->ip());
         return view('tuidemo::wish.index')->with([
             'status'     => $this->status,
-            'count'      => $this->wish->getForDataTable()->count(),
+            'count'      => $this->wish->getForDataTable()->get()->count(),
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }

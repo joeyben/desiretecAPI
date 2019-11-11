@@ -1,3 +1,5 @@
+@import "variables";
+
 //navbar style
 .main-nav{
   background-color: white !important;
@@ -71,7 +73,7 @@
       >a{
         &:focus,&:hover{
           background-color: transparent;
-          color: #f96500;
+          color: $masterblue;
         }
       }
     }
