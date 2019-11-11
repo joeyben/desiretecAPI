@@ -1,4 +1,4 @@
-FROM composer:latest as vendor
+FROM horrorhorst/composer-prestissimo:latest as vendor
 
 LABEL maintainer="desiretec"
 
@@ -10,7 +10,6 @@ COPY database database
 RUN composer install \
     --ignore-platform-reqs \
     --no-interaction \
-    --no-plugins \
     --no-scripts \
     --prefer-dist
 
@@ -28,7 +27,7 @@ COPY package-lock.json package.json webpack.mix.js webpack.config.js yarn.lock /
 WORKDIR /myapp
 RUN npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
       npm config set "//npm.fontawesome.com/:_authToken" 872992B4-8894-4152-95B3-FAA83ECC14D4
-RUN cd /myapp && yarn install --ignore-engines && npm run production
+RUN cd /myapp && yarn install --ignore-engines && npm i && npm run production
 #RUN cd /myapp/Modules/Autooffers && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Trendtours && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Kreuzfahrtberatung && yarn install --ignore-engines && npm run production
@@ -37,11 +36,10 @@ FROM horrorhorst/laravel-base:latest
 
 LABEL maintainer="desiretec"
 
-RUN docker-php-ext-install zip
 
-COPY . /var/www/html
-COPY --from=vendor /app/vendor/ /var/www/html/vendor/
-COPY --from=frontend /myapp/public /var/www/html/public
+COPY --chown=www-data:www-data . /var/www/html
+COPY --chown=www-data:www-data --from=vendor /app/vendor/ /var/www/html/vendor/
+COPY --chown=www-data:www-data --from=frontend /myapp/public /var/www/html/public
 COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 RUN mv /var/www/html/docker/php/laravel.ini /usr/local/etc/php/conf.d
@@ -55,14 +53,11 @@ RUN composer dump-autoload
 
 USER root
 
-RUN apt update && \
-    apt install -y mysql-client && curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt install -y nodejs && apt install -y npm
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt install -y nodejs && apt install -y npm
 RUN rm -r /var/www/html/docker
 RUN make routes
 RUN make message
-RUN make test
 RUN apt-get install nano
 RUN docker-php-ext-install soap
-RUN chown -R www-data:www-data /var/www
 RUN npm install
 RUN chown -R www-data:www-data /var/www/html/node_modules/
