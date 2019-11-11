@@ -10,12 +10,14 @@
 namespace Modules\Whitelabels\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
-use Illuminate\Filesystem\Filesystem;
 
 /**
  * Class EloquentPostsRepository.
@@ -25,6 +27,29 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     public function model()
     {
         return Whitelabel::class;
+    }
+
+    public function updateRoute(int $id, string $name, string $subDomain)
+    {
+        $whitelabelLangTable = 'language_lines_' . mb_strtolower($name);
+        $subDomain =  'https://' . mb_strtolower($subDomain);
+
+        $this->generateFile(
+            base_path('Modules/Master/Config/config.stub'),
+            base_path("Modules/$name/Config/config.php"),
+            [
+                '$MODULE$',
+                '$ID$',
+                '$TABLE$',
+                '$MODULESMAL$'
+            ],
+            [
+                $name,
+                $id,
+                $whitelabelLangTable,
+                $subDomain
+            ]
+        );
     }
 
     public function generateFiles(int $id, string $name)
@@ -66,7 +91,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
         //$file = new Filesystem();
         //$file->copyDirectory(base_path('Modules/Master/node_modules'), base_path("Modules/$name/node_modules"));
-
 
         $this->copyImage(
             'Modules/Master/Resources/assets/images/layer',
@@ -266,7 +290,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
         foreach ($images as $image) {
             $manager->make($image)
-                ->save(base_path($destination  . '/' . pathinfo($image, PATHINFO_BASENAME)));
+                ->save(base_path($destination . '/' . pathinfo($image, PATHINFO_BASENAME)));
         }
     }
 
@@ -283,7 +307,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $images = glob(base_path($source . '/*'));
 
         foreach ($images as $image) {
-            copy($image, base_path($destination  . '/' . basename($image)));
+            copy($image, base_path($destination . '/' . basename($image)));
         }
     }
 
@@ -305,5 +329,76 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             ->toArray();
 
         return DB::table($table)->insert($languageLines);
+    }
+
+    public function current()
+    {
+        $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
+
+        if (null !== $whitelabel) {
+            return $this->resolveModel()->find($whitelabel->id);
+        }
+
+        return $whitelabel;
+    }
+
+    public function getBackgroundImage($whitelabel)
+    {
+        return $whitelabel->attachments->map(function ($attachment) {
+            if (('whitelabels/background') === $attachment->type) {
+                return [
+                    'uid'  => $attachment->id,
+                    'name' => $attachment->name . '.' . $attachment->extension,
+                    'url'  => $attachment->url
+                ];
+            }
+        })->reject(function ($item) {
+            return null === $item;
+        });
+    }
+
+    public function getLogo($whitelabel)
+    {
+        return $whitelabel->attachments->map(function ($attachment) {
+            if (('whitelabels/logo') === $attachment->type) {
+                return [
+                    'uid'  => $attachment->id,
+                    'name' => $attachment->name . '.' . $attachment->extension,
+                    'url'  => $attachment->url
+                ];
+            }
+        })->reject(function ($item) {
+            return null === $item;
+        });
+    }
+
+    public function getFavicon($whitelabel)
+    {
+        return $whitelabel->attachments->map(function ($attachment) {
+            if (('whitelabels/favicon') === $attachment->type) {
+                return [
+                    'uid'  => $attachment->id,
+                    'name' => $attachment->name . '.' . $attachment->extension,
+                    'url'  => $attachment->url
+                ];
+            }
+        })->reject(function ($item) {
+            return null === $item;
+        });
+    }
+
+    public function getSubDomain(string $domain)
+    {
+        $parts = explode('.', str_replace("https://", "", $domain));
+
+        return isset($parts[2]) ?  str_slug($parts[0]) : '';
+    }
+
+    public function getDomain(string $domain)
+    {
+        $domain = str_replace("https://", "", $domain);
+        $parts = explode('.', $domain);
+
+        return  isset($parts[2]) ? '.' . str_slug($parts[1]) . '.' . str_slug($parts[2]) : $domain;
     }
 }

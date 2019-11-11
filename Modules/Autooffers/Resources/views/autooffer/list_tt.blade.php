@@ -177,13 +177,14 @@
                                         @for ($i = 0; $i < 3; $i++)
                                         <li>
                                             <i class="fas fa-check"></i>
-                                            <h4 class="dark-grey">{{ $offer['data']['hotel_attributes'][$i] }}</h4>
+                                            <h4 class="dark-grey">{{ trans('hotel.offer.attributes.'.$offer['data']['hotel_attributes'][$i]) }}</h4>
                                         </li>
                                         @endfor
                                     </ul>
 
                                     <div class="travel-info">
                                         <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['offerFeatures'] }}">{{ $offer['data']['duration'] }} Tage, {{ str_limit($offer['data']['offerFeatures'], 20, "...") }}</h4>
+                                        <h4>{{ $offer['data']['boardType'] }}</h4>
                                     </div>
                                 </div>
 

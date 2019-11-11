@@ -24,7 +24,11 @@ const mutations = {
     state.group = group
   },
   ADD_WHITELABEL (state, whitelabel) {
-    state.whitelabel = whitelabel
+    if (whitelabel === null) {
+      state.whitelabel = {}
+    } else {
+      state.whitelabel = whitelabel
+    }
   },
   ADD_WHITELABELS (state, whitelabels) {
     state.whitelabels = whitelabels

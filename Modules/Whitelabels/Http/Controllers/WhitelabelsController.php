@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Notifications\ChannelManager;
@@ -257,8 +258,6 @@ class WhitelabelsController extends Controller
                 )
             );
 
-
-
             foreach ($request->get('background') as $item) {
                 $this->attachments->update(
                     $item['uid'],
@@ -313,14 +312,47 @@ class WhitelabelsController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-    /**
-     * Show the specified resource.
-     *
-     * @return Response
-     */
-    public function show()
+    public function current(): JsonResponse
     {
-        return view('whitelabels::show');
+        try {
+            $result['whitelabel'] = $this->whitelabels->current();
+
+            $background = $this->whitelabels->getBackgroundImage($result['whitelabel']);
+
+            $logo = $this->whitelabels->getLogo($result['whitelabel']);
+
+            $favicon = $this->whitelabels->getFavicon($result['whitelabel']);
+
+            $result['whitelabel']['background'] = null !== $background->first() ? [$background->first()] : [];
+            $result['whitelabel']['logo'] = null !== $logo->first() ? [$logo->first()] : [];
+            $result['whitelabel']['favicon'] = null !== $favicon->first() ? [$favicon->first()] : [];
+            $result['whitelabel']['sub_domain'] = $this->whitelabels->getSubDomain($result['whitelabel']->domain);
+            $result['whitelabel']['main_domain'] = $this->whitelabels->getDomain($result['whitelabel']->domain);
+
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        try {
+            $result['whitelabel'] = $this->whitelabels->find($id);
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -364,45 +396,15 @@ class WhitelabelsController extends Controller
                 ];
             });
 
-            $background = $whitelabel->attachments->map(function ($attachment) {
-                if (('whitelabels/background') === $attachment->type) {
-                    return [
-                        'uid'  => $attachment->id,
-                        'name' => $attachment->name . '.' . $attachment->extension,
-                        'url'  => $attachment->url
-                    ];
-                }
-            })->reject(function ($item) {
-                return null === $item;
-            });
+            $background = $this->whitelabels->getBackgroundImage($whitelabel);
 
-            $logo = $whitelabel->attachments->map(function ($attachment) {
-                if (('whitelabels/logo') === $attachment->type) {
-                    return [
-                        'uid'  => $attachment->id,
-                        'name' => $attachment->name . '.' . $attachment->extension,
-                        'url'  => $attachment->url
-                    ];
-                }
-            })->reject(function ($item) {
-                return null === $item;
-            });
+            $logo = $this->whitelabels->getLogo($whitelabel);
 
-            $favicon = $whitelabel->attachments->map(function ($attachment) {
-                if (('whitelabels/favicon') === $attachment->type) {
-                    return [
-                        'uid'  => $attachment->id,
-                        'name' => $attachment->name . '.' . $attachment->extension,
-                        'url'  => $attachment->url
-                    ];
-                }
-            })->reject(function ($item) {
-                return null === $item;
-            });
+            $favicon = $this->whitelabels->getFavicon($whitelabel);
 
-            $result['whitelabel']['background'] = !is_null($background->first()) ? [$background->first()] : [];
-            $result['whitelabel']['logo'] = !is_null($logo->first()) ? [$logo->first()] : [];
-            $result['whitelabel']['favicon'] = !is_null($favicon->first()) ? [$favicon->first()] : [];
+            $result['whitelabel']['background'] = null !== $background->first() ? [$background->first()] : [];
+            $result['whitelabel']['logo'] = null !== $logo->first() ? [$logo->first()] : [];
+            $result['whitelabel']['favicon'] = null !== $favicon->first() ? [$favicon->first()] : [];
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -467,7 +469,8 @@ class WhitelabelsController extends Controller
             if ($result['whitelabel']->domain !== $this->str->lower($request->get('domain'))) {
                 ini_set('max_execution_time', 300);
                 $result['whitelabel'] = $this->whitelabels->update($id, $request->only('domain'));
-                $this->artisan->call('whitelabel:make-route', ['domain' => $result['whitelabel']->domain, 'module' => $result['whitelabel']->name]);
+                $this->whitelabels->updateRoute($id, $result['whitelabel']->name, $this->whitelabels->getSubDomain($result['whitelabel']->domain));
+                $this->artisan->call('whitelabel:make-route', ['domain' => $this->whitelabels->getSubDomain($result['whitelabel']->domain), 'module' => $result['whitelabel']->name]);
             }
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
@@ -499,7 +502,8 @@ class WhitelabelsController extends Controller
             );
 
             ini_set('max_execution_time', 300);
-            $this->artisan->call('whitelabel:make-route', ['domain' => $result['whitelabel']->domain, 'module' => $result['whitelabel']->name]);
+            $this->whitelabels->updateRoute($id, $result['whitelabel']->name, $this->whitelabels->getSubDomain($result['whitelabel']->domain));
+            $this->artisan->call('whitelabel:make-route', ['domain' => $this->whitelabels->getSubDomain($result['whitelabel']->domain), 'module' => $result['whitelabel']->name]);
             $users = $this->roles->findWhereFirst('name', Flag::ADMINISTRATOR_ROLE)->users()->get();
             $this->notification->send($users, new CreateWhitelabelNotification($result['whitelabel'], 'Step 2'));
 

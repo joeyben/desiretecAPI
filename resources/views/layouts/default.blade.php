@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="i18" content="{{ App::getLocale() }}">
     <title> @yield('title') - {{ config('app.name', 'Laravel') }} </title>
@@ -207,6 +207,18 @@
                         </li>
                     @endif
 
+<<<<<<< HEAD
+=======
+                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                    <li class="nav-item">
+                        <a href="{{ route('provider.email.signature', app()->getLocale()) }}" class="nav-link">
+                            <i class="icon-envelope"></i>
+                            <span>{{ __('menus.email_signature') }}</span>
+                        </a>
+                    </li>
+                    @endif
+
+>>>>>>> origin/development
                     @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
                     <li class="nav-item">
                         <a href="{{ route('provider.language-lines') }}" class="nav-link">
@@ -225,6 +237,15 @@
                     </li>
                     @endif
 
+                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('provider.whitelabels') }}" class="nav-link">
+                                <i class="icon-atom2"></i>
+                                <span>{{ __('labels.backend.whitelabels.table.display_name') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
                     @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('admin.whitelabels') }}" class="nav-link">
@@ -240,6 +261,18 @@
                         </li>
                     @endif
 
+<<<<<<< HEAD
+=======
+                    @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.whitelabels.layers') }}" class="nav-link">
+                                <i class="icon-menu7"></i>
+                                <span>{{ __('Layer Management') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
+>>>>>>> origin/development
                     @if(false && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole('Administrator'))
                         <li class="nav-item">
                             <a href="{{ route('admin.whitelabels.compile') }}" class="nav-link">

@@ -15,9 +15,12 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Whitelabel extends Model
 {
-    use SoftDeletes, SearchableTrait, LogsActivity, AttachableTrait;
+    use SoftDeletes;
+    use SearchableTrait;
+    use LogsActivity;
+    use AttachableTrait;
 
-    protected $fillable = ['name', 'display_name', 'status', 'domain', 'ga_view_id', 'email', 'created_by', 'distribution_id', 'ga_view_id', 'state'];
+    protected $fillable = ['name', 'display_name', 'status', 'domain', 'ga_view_id', 'email', 'created_by', 'distribution_id', 'ga_view_id', 'state', 'layer', 'color'];
 
     protected static $logAttributes = [
         'name',
@@ -54,7 +57,7 @@ class Whitelabel extends Model
             'whitelabels.name'                       => 10,
             'whitelabels.display_name'               => 10,
             'whitelabels.domain'                     => 10,
-            'whitelabels.email'                     => 10,
+            'whitelabels.email'                      => 10,
             'users.first_name'                       => 10,
             'users.last_name'                        => 10,
             'users.email'                            => 10,

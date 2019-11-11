@@ -29,7 +29,8 @@
                 @endif
                 <i class="fal fa-plane"></i>
                 <div class="direktflug " style="margin-top: 5px">
-                    {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null,['class' => 'form-control box-size', 'required' => 'required']) }} Direktflug
+                    {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null,['class' => 'form-control box-size', 'required' => 'required']) }}
+                    <span>Direktflug</span>
                 </div>
             </div>
 
@@ -37,7 +38,7 @@
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">Reisende</label>
                     <span class="travelers dd-trigger">
-                        <span class="txt">2 Erwachsener</span>
+                        <span class="txt">2 Erwachsene</span>
                          <i class="fal fa-users not-triggered"></i>
                          <i class="fal fa-times triggered"></i>
                     </span>
@@ -185,7 +186,7 @@
             <div class="kwp-col-4 white-col stars">
                 <div class="kwp-form-group">
                     {{ Form::label('category', trans('lastminute::layer.general.category'), ['class' => 'control-label']) }}
-                    {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.category')]) }}
+                    {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 0, ['class' => 'form-control box-size hidden', 'placeholder' => trans('lastminute::layer.placeholder.category')]) }}
 
                     <!--span class="text">ab 3 Sterne</span-->
                     <div class="kwp-star-input">
@@ -240,7 +241,7 @@
                     <div class="kwp-col-4 white-col">
                         <div class="kwp-agb">
                             {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                            <p>Ich habe die <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.lastminute.ch/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                            <p>Ich habe die <a href="https://lastminute.reise-wunsch.com/pdfs/tnb_Lastminute.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.lastminute.ch/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                         </div>
                     </div>
 
@@ -302,6 +303,7 @@
               format: 'dd.mm.YYYY',
               defaultDate: '01.01.2019',
               minDate: new Date(),
+                firstDay: 1,
               toString: function(date, format) {
                 // you should do formatting based on the passed format,
                 // but we will just return 'D/M/YYYY' for simplicity
@@ -329,6 +331,7 @@
               field: document.getElementById('latest_return'),
               format: 'dd.mm.YYYY',
               defaultDate: '01.01.2019',
+                firstDay: 1,
               toString: function(date, format) {
                 // you should do formatting based on the passed format,
                 // but we will just return 'D/M/YYYY' for simplicity

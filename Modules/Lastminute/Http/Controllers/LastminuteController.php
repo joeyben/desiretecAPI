@@ -131,9 +131,10 @@ class LastminuteController extends Controller
         dispatch($wishJob);
 
         $details = [
-            "email" => $newUser->email
+            "email" => $newUser->email,
+            "type"  => 0
         ];
-        dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(600)));
+        dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
 
         $html = view('lastminute::layer.created')->with([
             'token' => $newUser->token->token,

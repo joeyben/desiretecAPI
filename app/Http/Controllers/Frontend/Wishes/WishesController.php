@@ -106,7 +106,6 @@ class WishesController extends Controller
      */
     public function show(Wish $wish, ManageWishesRequest $request)
     {
-
         $wishTye = $this->manageRules($wish);
 
         if($wishTye > 0){
@@ -130,6 +129,7 @@ class WishesController extends Controller
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
             'categories'         => $this->categories,
+            'extra'              => json_decode($wish->extra_params, true)
         ]);
     }
 
@@ -180,12 +180,12 @@ class WishesController extends Controller
      */
     public function wishList(ManageWishesRequest $request)
     {
-        //var_dump($request->ip());
+
         return view('frontend.wishes.index')->with([
             'status'     => $this->status,
             'category'   => $this->category,
             'catering'   => $this->catering,
-            'count'      => ($this->wish->getForDataTable()->count() - 1),
+            'count'      => $this->wish->getForDataTable()->get()->count(),
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }

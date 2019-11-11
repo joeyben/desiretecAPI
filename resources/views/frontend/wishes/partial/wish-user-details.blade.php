@@ -45,7 +45,7 @@
         <input class="data-content" value="{{ $wish->adults }}">
     </div>
     <div class="col-md-3">
-        <i class="fal fa-user"></i>
+        <i class="fal fa-child"></i>
         <input class="data-content" value="{{ $wish->kids }}">
     </div>
     <div class="col-md-3">
@@ -58,3 +58,22 @@
     </div>
     <!--<button class="secondary-btn">Daten andern</button>-->
 </div>
+@if ($logged_in_user->hasRole('Seller') and $extra)
+<div class="col-md-12 s2-second">
+    <b>Weitere vom Kunden ausgewählte Parameter: </b>
+
+    <?php $count = 0; ?>
+    @foreach($extra as $key => $params)
+
+        @if ($params && $count > 0)
+           ,
+        @endif
+
+        @if ($params)
+            {{ $params }}
+            <?php $count++; ?>
+        @endif
+
+    @endforeach
+</div>
+@endif

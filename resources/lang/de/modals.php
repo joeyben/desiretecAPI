@@ -107,4 +107,9 @@ return [
     'price'                         => 'Price',
     'asc'                           => 'Asc',
     'desc'                          => 'Desc',
+    'deactivation_duration'         => 'Dauer der Deaktivierung',
+    'inactive_until'                => 'Deaktiviert bis',
+    'from'                          => 'Ab',
+    'until'                         => 'Bis',
+    'primary_color'                 => 'Primärfarbe',
 ];

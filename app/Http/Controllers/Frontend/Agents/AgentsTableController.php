@@ -46,15 +46,15 @@ class AgentsTableController extends Controller
             ->addColumn('status', function ($agents) {
                 return $agents->status;
             })
-            ->addColumn('actions', function ($agents) {
-                //return '<a href="{{ route("frontend.agents.edit") }}" class="editor_edit">Edit</a> / <a href="{{ route("frontend.agents.delete",$agents->id) }}" class="editor_remove">Delete</a>';
 
-                return '<a href="' . route("frontend.agents.edit",$agents->id) . '">Edit</a> / ' . '<a href="' . route("frontend.agents.delete",$agents->id) . '">Delete</a>';
+            ->addColumn('actions', function ($agents) {
+                return '<a href="' . route("frontend.agents.edit",$agents->id) . '">' . trans('labels.agents.edit') . '</a> / ' . '<a href="' . route("frontend.agents.delete",$agents->id) . '">' . trans('labels.agents.delete') . '</a>';
 
             })
             ->addColumn('created_at', function ($agents) {
                 return $agents->created_at->toFormattedDateString() . ' ' . $agents->created_at->toTimeString();
             })
-            ->rawColumns(['avatar','actions'])->make(true);
+
+            ->rawColumns(['avatar','actions','status'])->make(true);
     }
 }

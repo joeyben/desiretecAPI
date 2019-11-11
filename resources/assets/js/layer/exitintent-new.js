@@ -75,7 +75,7 @@ window.exitIntent = {
 		clearTimeout(timeoutID);
 
 		// timeoutID = setTimeout(this.goInactive, this.inactivitySeconds * 1000);
-		exitIntent.startTimer();
+		//exitIntent.startTimer();
 	},
 
 	startTimer: function () {

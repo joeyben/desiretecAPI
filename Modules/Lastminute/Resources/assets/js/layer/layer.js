@@ -94,7 +94,7 @@ var dt = window.dt || {};
             },
             'destination': function (form, formData) {
                 var destination = getUrlParams('depap') ? getUrlParams('depap') : '';
-                return destination;
+                //return destination;
                 return $('.tt-input').val();
             },
             'pax': function (form, formData) {
@@ -177,7 +177,6 @@ var dt = window.dt || {};
             },
             'duration': function (form, formData) {
                 var duration = $("select[name='ttform_dur'] option:selected").text();
-                console.log('duration', duration);
 
                 switch (duration) {
                     case '1 Woche':
@@ -210,8 +209,6 @@ var dt = window.dt || {};
                         duration = 'exact';
                         break;
                 }
-
-                console.log('duration after', duration);
 
                 if($.isNumeric(duration) == true){
                     console.log('duration is a numeric', duration - 1);
@@ -406,7 +403,6 @@ var dt = window.dt || {};
             },
             'duration': function (form, formData) {
                 var duration = $("select[name='ttform_dur'] option:selected").text();
-                console.log('duration', duration);
 
                 switch (duration) {
                     case '1 Woche':
@@ -440,7 +436,6 @@ var dt = window.dt || {};
                         break;
                 }
 
-                console.log('duration after', duration);
 
                 return duration;
             },

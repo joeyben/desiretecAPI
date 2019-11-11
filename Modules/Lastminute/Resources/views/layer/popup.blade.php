@@ -38,7 +38,8 @@
                 @endif
                 <i class="master-icon--aircraft-up"></i>
                 <div class="direktflug ">
-                    {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null,['class' => 'form-control box-size', 'required' => 'required']) }} Direktflug
+                    {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null,['class' => 'form-control box-size', 'required' => 'required']) }}
+                    <span>Direktflug</span>
                 </div>
             </div>
 
@@ -100,7 +101,7 @@
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">{{ trans('lastminute::layer.general.pax') }}</label>
                     <span class="travelers dd-trigger">
-                        <span class="txt">2 Erwachsener</span>
+                        <span class="txt">2 Erwachsene</span>
                          <i class="master-icon--user-family not-triggered"></i>
                          <i class="master-icon--close triggered"></i>
                     </span>
@@ -230,7 +231,7 @@
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('lastminute::layer.general.catering'), ['class' => 'control-label']) }}
                 <div class="kwp-custom-select">
-                {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelerss']) }}
+                {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelers']) }}
                 </div>
                 <span class="caret"></span>
             </div>
@@ -465,6 +466,7 @@
                     check_button();
                 });
             });
+
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
@@ -474,7 +476,7 @@
             /**
              * Autocomplete
              */
-            var autocomplete = function(){
+            function autocomplete(){
 
                 $.get('getTTRegions', function(data){
                     $("#destination").typeahead({
@@ -516,7 +518,7 @@
                     @endif
 
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                    <p>Ich habe die <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.lastminute.ch/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    <p>Ich habe die <a href="https://lastminute.reise-wunsch.com/pdfs/tnb_Lastminute.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.lastminute.ch/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
 
                 </div>
             </div>

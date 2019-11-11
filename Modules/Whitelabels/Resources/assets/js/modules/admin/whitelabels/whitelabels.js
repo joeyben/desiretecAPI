@@ -34,6 +34,50 @@ Vue.filter('str_limit', function (string, value) {
 })
 
 let $whitelabelsComponent = document.querySelector('#whitelabelsComponent')
+let $layersComponent = document.querySelector('#layersComponent')
+let $whitelabelsProviderComponent = document.querySelector('#whitelabelsProviderComponent')
+
+if ($whitelabelsProviderComponent) {
+  const router = new VueRouter({
+    routes: [{
+      path: '/',
+      name: 'root',
+      component: require('./components/WhitelabelsProviderComponent.vue')
+    }]
+  })
+
+  new Vue({
+    el: '#whitelabelsProviderComponent',
+    router,
+    store,
+    components: { },
+    mounted () {
+    },
+    methods: {
+    }
+  })
+}
+
+if ($layersComponent) {
+  const router = new VueRouter({
+    routes: [{
+      path: '/',
+      name: 'root',
+      component: require('./components/LayersComponent.vue')
+    }]
+  })
+
+  new Vue({
+    el: '#layersComponent',
+    router,
+    store,
+    components: { },
+    mounted () {
+    },
+    methods: {
+    }
+  })
+}
 
 if ($whitelabelsComponent) {
   const router = new VueRouter({

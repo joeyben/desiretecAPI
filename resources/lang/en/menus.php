@@ -214,4 +214,6 @@ return [
     'list_of_wishes'        => 'List wishes',
     'rules_management'      => 'Lead Management',
     'regions_management'    => 'Regions Management',
+
+    'email_signature'       => 'E-mail Signature',
 ];

@@ -1,14 +1,70 @@
 @import "variables";
 
-#app{
-  .landing &{
-    padding-top: 20px;
+// Html, body, main-containers
+
+html, body{
+  overflow: auto;
+}
+body{
+  &.landing{
+    padding-top: 0px;
+    #app{
+      .main-container{
+        margin: 0;
+        width: 100%;
+        padding: 0;
+      }
+    }
   }
-  .main-container{
-    margin: 0;
-    width: 100%;
-    padding: 0;
+  &.wish{
+    #app {
+      .main-container {
+        margin: 0;
+        width: 100%;
+        padding: 0;
+      }
+    }
   }
+  &.wishlist {
+    #app {
+      .main-container {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+// Buttons
+
+.primary-btn, .secondary-btn{
+  padding: 5px 20px;
+  min-width: 220px;
+}
+a.primary-btn, .primary-btn, a.btn-primary, .btn-primary, input.primary-btn{
+  background: $brand-primary;
+  border: 1px solid $brand-primary;
+  transition: all .3s ease-out;
+  &:hover, &:active, &:focus, &:visited{
+    background: $brand-secondary;
+    border: 1px solid $brand-secondary;
+  }
+}
+a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
+  color: $brand-primary;
+  border: 1px solid $brand-primary;
+  transition: all .3s ease-out;
+  &:hover, &:active, &:focus, &:visited{
+    color: $brand-secondary;
+    border: 1px solid $brand-secondary;
+  }
+}
+
+// Wish modal
+
+.wish-modal-1 .modal-body-left input[value=""]~label {
+  top: 5px !important;
+  font-size: 10px !important;
+  color: #bbb !important;
 }
 
 // Slider
@@ -38,15 +94,36 @@
   }
   .layer-action{
     position: absolute;
-    bottom: 250px;
+    bottom: 240px;
     left: 0;
     right: 0;
     text-align: center;
     a{
-      font-size: 26px;
+      font-size: 24px;
       text-transform: uppercase;
-      padding: 10px 50px;
+      padding: 15px 35px;
       line-height: 1.5em;
+      letter-spacing: 0.42px;
+    }
+  }
+}
+//AutoOffer section
+.offers{
+  .label{
+    color: #df007a;
+  }
+}
+.btn-primary,.btn-primary:hover{
+  background-color: #df007a;
+}
+// Footer
+
+.footer{
+  ul{
+    text-align: center;
+    li{
+      display: inline-block;
+      padding:0 10px 0 10px;
     }
   }
 }

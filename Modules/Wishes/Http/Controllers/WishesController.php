@@ -112,7 +112,11 @@ class WishesController extends Controller
                 new WhereBetween('wishes.created_at', $request->get('start'), $request->get('end')),
                 new Filter($request->get('filter')),
                 new EagerLoad(['owner' => function ($query) {
+<<<<<<< HEAD
                     $select = $this->auth->guard('web')->user()->hasRole('Administrator') || $this->auth->guard('web')->user()->hasRole('Executive') ? 'CONCAT(first_name, " ", last_name, " ( ", email, " ) ") AS full_name' : 'CONCAT(first_name, " ", last_name) AS full_name';
+=======
+                    $select = $this->auth->guard('web')->user()->hasRole('Administrator') || $this->auth->guard('web')->user()->hasRole('Executive')  ? 'CONCAT(first_name, " ", last_name, " ( ", email, " ) ") AS full_name' : 'CONCAT(first_name, " ", last_name) AS full_name';
+>>>>>>> origin/development
                     $query->select('id', DB::raw($select));
                 }, 'group'  => function ($query) {
                     $query->select('id', 'display_name');

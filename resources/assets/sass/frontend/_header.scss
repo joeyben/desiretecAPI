@@ -1,7 +1,9 @@
+@import "variables";
+
 //navbar style
 .main-nav{
   background-color: white !important;
-  @include box-shadow(0 0px  2px  1px  rgba(0,0,0,0.1));
+  @include box-shadow(0px, 0px,  2px,  1px,  rgba(0,0,0,0.1));
 }
 .navbar-right{
   a,a:hover,a:focus{
@@ -71,7 +73,7 @@
       >a{
         &:focus,&:hover{
           background-color: transparent;
-          color: #f96500;
+          color: $masterblue;
         }
       }
     }
