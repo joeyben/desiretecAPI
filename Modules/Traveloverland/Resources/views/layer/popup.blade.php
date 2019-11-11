@@ -211,10 +211,10 @@
                 $(this).parents('.pax-col').removeClass('open');
                 var pax = $("#adults").val();
                 var children_count = parseInt($("#kids").val());
-                var children = children_count > 0 ? (children_count == 1 ? " "+children_count+" Kind" : " "+children_count+" Kinder")  : "" ;
+                var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
 
                 var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
-                $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
+                $(".travelers .txt").text(pax+" "+erwachsene+children);
                 return false;
             });
 
