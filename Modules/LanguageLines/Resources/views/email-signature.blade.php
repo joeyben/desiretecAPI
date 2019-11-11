@@ -55,26 +55,29 @@
     </script> -->
     <script src="https://cdn.ckeditor.com/4.13.0/full-all/ckeditor.js"></script>
     <script>
+        CKEDITOR.plugins.addExternal( 'lineheight', "{!! asset('js/lineheight/plugin.js') !!}" );
         CKEDITOR.replace('emailSignatureEditor', {
             height: 400,
             baseFloatZIndex: 10005,
             width: '100%',
             height: '15em',
-            removeButtons: 'Anchor,ShowBlocks,CreateDiv',
+            removeButtons: 'Anchor,ShowBlocks,CreateDiv,Flash,PageBreak,Iframe',
             removePlugins: 'elementspath',
+            extraPlugins: 'lineheight',
             toolbarGroups: [
                 { name: 'styles' },
+                { name: 'editing', groups: ['lineheight'] },
+                { name: 'insert', groups: [ 'Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar'] },
+                '/',
                 { name: 'colors' },
                 { name: 'clipboard' },
-                { name: 'editing' },
                 { name: 'links' },
                 { name: 'basicstyles' },
                 { name: 'tools' },
-                { name: 'paragraph', groups: ['list','blocks'] }
+                { name: 'paragraph', groups: ['list','blocks'] },
             ]
         });
         $("#emailSignatureForm").submit( function(eventObj) {
-            console.log('asd');
             $("<input />").attr("type", "hidden")
             .attr("name", "language")
             .attr("value", "{!! $result['data']['language'] !!}")
