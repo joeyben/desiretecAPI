@@ -119,3 +119,14 @@ a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
     }
   }
 }
+
+// Overwrite WLs general styles
+
+body{
+  color: black;
+  font-weight: normal;
+  h1{
+    font-weight: normal;
+    border-bottom: none;
+  }
+}

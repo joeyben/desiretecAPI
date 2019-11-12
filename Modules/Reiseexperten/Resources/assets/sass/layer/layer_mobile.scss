@@ -564,7 +564,7 @@ $gutter: 30px;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
     transition: border-color .3s ease;
-    border-color: #ffe336;
+    border-color: $master-primary;
   }
 
   input[type="radio"],
@@ -575,7 +575,7 @@ $gutter: 30px;
   input:-internal-autofill-selected{
     color: $master-primary !important;
     background: $body-bg !important;
-    font-family: $font-family-master !important;
+    font-family: $font-family-brand !important;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px $body-bg !important;
   }
 
@@ -1538,6 +1538,7 @@ p.kwp-info {
       -webkit-overflow-scrolling: touch;
       z-index: 11111111;
       height: calc(100% - 90px);
+      width: 100%;
     }
     .kwp-header-content{
       margin-top: 0px;

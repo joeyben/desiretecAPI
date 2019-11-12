@@ -89,7 +89,7 @@ $gutter: 30px;
 
   font-size: 14px;
   line-height: 19px;
-  font-family: $font-family-master;
+  font-family: $font-family-brand;
 
   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #dedede !important;
@@ -201,7 +201,7 @@ $gutter: 30px;
   width: 760px;
   margin: 25px auto 0 auto;
 
-  font-family: $font-family-master;
+  font-family: $font-family-brand;
   border-radius: 0;
   box-shadow: 0 0 4px 0px rgba(0,0,0,0.15);
   transition: transform 0.1s ease-out, opacity 0.15s ease-out;
@@ -237,7 +237,7 @@ $gutter: 30px;
     border-radius: 3px;
     background: $btn-primary-bg;
     text-align: center;
-    font-family: $font-family-master;
+    font-family: $font-family-brand;
     color: $btn-primary-color;
     font-size: 18px;
     font-weight: 700;
@@ -277,7 +277,7 @@ $gutter: 30px;
     border: 1px solid #aaa;
     color: $master-primary;
     font-size: 14px;
-    font-family: $font-family-master;
+    font-family: $font-family-brand;
   }
 
   input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus, .form-control:focus {
@@ -296,7 +296,7 @@ $gutter: 30px;
   input:-internal-autofill-selected{
     color: $master-primary !important;
     background: $body-bg !important;
-    font-family: $font-family-master !important;
+    font-family: $font-family-brand !important;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px $body-bg !important;
   }
 
@@ -511,12 +511,12 @@ ul.kwp-form-errors {
   margin: 2px 0 0 0;
   font-size: 11px;
   color: #DB8021;
-  font-family: $font-family-master;
+  font-family: $font-family-brand;
 }
 
 .kwp-form-email-hint {
   font-size: 14px;
-  font-family: $font-family-master;
+  font-family: $font-family-brand;
   color: #64C3D7;
   display: none;
   cursor: pointer;
@@ -536,6 +536,7 @@ ul.kwp-form-errors {
   position: absolute;
   width: 100%;
   left: 0;
+  top: 0;
   background-size: 120px;
 }
 
@@ -561,7 +562,7 @@ ul.kwp-form-errors {
 
   p {
     margin: 10px 0 0 0;
-    font-family: $font-family-master;
+    font-family: $font-family-brand;
     color: #818181;
     font-size: 17px;
     font-weight: 400;
@@ -754,7 +755,7 @@ p.kwp-info {
 .kwp-agb {
   padding-top: 4px;
   font-size: 12px;
-  font-family: $font-family-master;
+  font-family: $font-family-brand;
 
   input {
     vertical-align: middle;
@@ -864,7 +865,7 @@ p.kwp-info {
     width: 100%;
     height: 25px;
 
-    font-family: $font-family-master;
+    font-family: $font-family-brand;
     font-size: 12px;
 
     appearance: none;
@@ -1260,10 +1261,11 @@ p.kwp-info {
         font-size: 20px;
         margin: 0px;
         color:$master-primary;
-        padding: 8px 0;
+        padding: 25px 0;
         font-weight: bold;
-        font-family: $font-family-master;
+        font-family: $font-family-brand;
         text-align: center;
+        width: 100%;
       }
     }
     .kwp-body{
@@ -1292,7 +1294,7 @@ p.kwp-info {
     }
     .kwp-header-content{
       margin-top: 0px;
-      font-family: $font-family-master;
+      font-family: $font-family-brand;
       font-weight: bold;
       position: absolute;
       bottom: 0;
