@@ -61,7 +61,6 @@ RUN apt update && \
 RUN rm -r /var/www/html/docker
 RUN make routes
 RUN make message
-RUN make test
 RUN apt-get install nano
 RUN docker-php-ext-install soap
 RUN chown -R www-data:www-data /var/www
