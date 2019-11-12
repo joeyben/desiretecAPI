@@ -112,4 +112,5 @@ return [
     'from'                          => 'Ab',
     'until'                         => 'Bis',
     'primary_color'                 => 'Primärfarbe',
+    'alert_email'                   => 'Benachrichtigungs-E-Mail',
 ];

@@ -108,6 +108,18 @@
                                                     </el-select>
                                                 </div>
                                             </div>
+                                            <div class="form-group row" v-if="alertEmail">
+                                                <label class="col-lg-3 col-form-label">&nbsp;</label>
+                                                <div class="col-lg-9">
+                                                    <el-switch
+                                                            @input="updateAlert"
+                                                            :value="wish.alert_email"
+                                                            active-color="#13ce66"
+                                                            inactive-color="#ff4949"
+                                                            :active-text="trans('modals.alert_email')">
+                                                    </el-switch>
+                                                </div>
+                                            </div>
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.category') }}</label>
                                                 <div class="col-lg-9">
@@ -203,6 +215,7 @@
       return {
         // eslint-disable-next-line
         errors: new Errors(),
+        alertEmail: false,
         close: false
       }
     },
@@ -231,6 +244,7 @@
         return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
       },
       inputGroup (value) {
+        this.alertEmail = true
         this.$store.commit('updateWish', {name: 'group_id', value: value})
       },
       getWish (key, value) {
@@ -258,6 +272,9 @@
       },
       updateStatus (value) {
         this.$store.commit('updateWish', {name: 'status', value: value})
+      },
+      updateAlert (value) {
+        this.$store.commit('updateWish', {name: 'alert_email', value: value})
       },
       loadModal () {
         let id = parseInt(this.$route.params.id)

@@ -15,7 +15,8 @@ class UpdateWishRequest extends FormRequest
     {
         return [
             'id'                       => 'required|int|min:1',
-            'status'                   => 'required|boolean'
+            'status'                   => 'required|boolean',
+            'alert_email'              => 'required|boolean'
         ];
     }
 
