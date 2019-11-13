@@ -1315,7 +1315,6 @@ var exitIntent = window.exitIntent || {};
 
         };
 
-
         dt.scrollUpDetect = function (e) {
             dt.PopupManager.layerShown = false;
             $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
@@ -1325,7 +1324,6 @@ var exitIntent = window.exitIntent || {};
                 }
             }, allowPageScroll:"vertical"} );
         };
-
 
         dt.triggerButton = function(e){
             $("body").on('click tap','.trigger-modal',function () {
@@ -1366,7 +1364,7 @@ var exitIntent = window.exitIntent || {};
                 }
             });
         };
-    
+
         dt.hideTeaser = function (e) {
             $("body").removeClass('mobile-layer');
             $(".dt-modal").remove();

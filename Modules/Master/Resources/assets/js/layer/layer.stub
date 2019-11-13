@@ -1127,41 +1127,38 @@ var exitIntent = window.exitIntent || {};
                     $(this).remove();
                     ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
                 });
-
-
-            }
-
-            dt.showTeaser = function (e) {
-                $("body").addClass('mobile-layer');
-                $(".dt-modal").addClass('teaser-on').show().find('.teaser').addClass('active').swipe( {
-                    tap:function(event, target) {
-                        dt.showMobileLayer(event);
-                    },
-                    swipeLeft:function(event, distance, duration, fingerCount, fingerData, currentDirection) {
-                        $(this).addClass('inactive-left');
-                        removeLayer(event);
-                    },
-                    swipeRight:function(event, distance, duration, fingerCount, fingerData, currentDirection) {
-                        $(this).addClass('inactive-right');
-                        removeLayer(event);
-                    }
-                });
             };
 
-            dt.hideTeaser = function (e) {
-                $("body").removeClass('mobile-layer');
-                $(".dt-modal").remove();
-            };
+        dt.showMobileLayer = function (e) {
+            $(".dt-modal").removeClass('teaser-on').find('.teaser').remove();
+            $( ".dt-modal" ).addClass('m-open');
+            dt.PopupManager.show();
+            $("body, html").css({'overflow':'hidden'});
+            //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
+            ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
+        };
 
-            dt.showMobileLayer = function (e) {
-                    $(".dt-modal").removeClass('teaser-on').find('.teaser').remove();
-                    $( ".dt-modal" ).addClass('m-open');
-                    dt.PopupManager.show();
-                    $("body, html").css({'overflow':'hidden'});
-                    //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
-                    ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
-                };
+        dt.showTeaser = function (e) {
+            $("body").addClass('mobile-layer');
+            $(".dt-modal").addClass('teaser-on').show().find('.teaser').addClass('active').swipe( {
+                tap:function(event, target) {
+                    dt.showMobileLayer(event);
+                },
+                swipeLeft:function(event, distance, duration, fingerCount, fingerData, currentDirection) {
+                    $(this).addClass('inactive-left');
+                    removeLayer(event);
+                },
+                swipeRight:function(event, distance, duration, fingerCount, fingerData, currentDirection) {
+                    $(this).addClass('inactive-right');
+                    removeLayer(event);
+                }
+            });
+        };
 
+        dt.hideTeaser = function (e) {
+            $("body").removeClass('mobile-layer');
+            $(".dt-modal").remove();
+        };
 
         $(document).ready(function (e) {
             var $event = e;
