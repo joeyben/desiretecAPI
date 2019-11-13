@@ -13,10 +13,7 @@ var exitIntent = window.exitIntent || {};
     dt.popupTemplate = function (variant) {
 
         var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Jetzt Ihre Reise wünschen und Angebot erhalten!',
             'Dürfen wir Sie beraten?',
-            'Hier klicken und persönliches Angebot erhalten',
-            'Nicht das Passende gefunden?'
         ]);
 
         var texts = {
@@ -1170,7 +1167,7 @@ var exitIntent = window.exitIntent || {};
             var $event = e;
             if(deviceDetector.device === "phone") {
                 dt.PopupManager.teaser = true;
-                dt.PopupManager.teaserText = "Wir möchten Sie gerne beraten!";
+                dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
                 dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
                 $(".dt-modal .kwp-close").on('touchend',function () {
                     dt.PopupManager.closePopup(e);
