@@ -31,11 +31,11 @@ class AutooffersTTRepository extends BaseRepository
 
     private $username = 'mkt_315150_de';
 
-    private $password = '_Herostrasse12';
+    private $password = 'Herostrasse_12';
 
-    private $oauthUrl = 'https://staging-auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
+    private $oauthUrl = 'https://auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
 
-    private $url = 'http://de-staging-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/PackageSearch/packageOffers';
+    private $url = 'http://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/PackageSearch/packageOffers';
 
     private $currency = 'CHF';
 
@@ -72,6 +72,8 @@ class AutooffersTTRepository extends BaseRepository
     protected $reviews;
 
     protected $hotelAttributes;
+
+    protected $geos;
 
     protected $data;
 
@@ -200,6 +202,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->offers = $this->data["Offers"]["Offer"];
         $this->setGiataIds();
         $this->setReviews();
+        $this->setHotelGeo();
         $this->setHotelAttributes();
         return $result;
     }
@@ -363,6 +366,8 @@ class AutooffersTTRepository extends BaseRepository
             'offerFeatures' => $offer["OfferProperties"]["OfferFeatures"],
             'hotel_reviews' => $this->reviews[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
             'hotel_attributes' => $this->hotelAttributes[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
+            'hotel_geo'=> $this->geos[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
+            'boardType'=> $offer["OfferServices"]["Package"]["Accommodation"]["BoardType"],
             'room' => $offer["OfferServices"]["Package"]["Accommodation"]["Room"]["RoomName"],
             'flight' => [
                 'in' => [
@@ -675,6 +680,21 @@ class AutooffersTTRepository extends BaseRepository
         $this->reviews = $reviews;
     }
 
+
+    /**
+     * @param mixed $giataIds
+     */
+    public function setHotelGeo()
+    {
+        $geos = [];
+        foreach ($this->data["HotelDictionary"]["Hotel"] as $hotel){
+            $geos[$hotel["HotelCodes"]["HotelIffCode"]] = [
+                'longitude' => $hotel["HotelGeoPoint"]["Longitude"],
+                'latitude' => $hotel["HotelGeoPoint"]["Latitude"],
+            ];
+        }
+        $this->geos = $geos;
+    }
     /**
      * @param mixed $giataIds
      */
