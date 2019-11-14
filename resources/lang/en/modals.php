@@ -112,4 +112,5 @@ return [
     'from'                          => 'From',
     'until'                         => 'Until',
     'primary_color'                 => 'Primary color',
+    'alert_email'                   => 'Alert Email',
 ];

@@ -198,6 +198,29 @@
                         </a>
                     </li>
                     @endif
+
+                    @if($module->has('Wishes')  && Auth::guard('web')->user()->hasPermission('read-wish'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.wishes') }}" class="nav-link">
+                            <i class="icon-heart5"></i>
+                            <span>{{ __('menus.wishes_management') }}</span>
+                        </a>
+                    </li>
+                    @endif
+
+                    @if($module->has('Users')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        @permission('view-access-management')
+                            @permission('view-seller-management')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.sellers') }}" class="nav-link">
+                                        <i class="icon-users4"></i>
+                                        <span>{{ __('menus.sellers_management') }}</span>
+                                    </a>
+                                </li>
+                            @endauth
+                        @endauth
+                    @endif
+
                     @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('provider.languages') }}" class="nav-link">
@@ -207,32 +230,11 @@
                         </li>
                     @endif
 
-<<<<<<< HEAD
-=======
-                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
-                    <li class="nav-item">
-                        <a href="{{ route('provider.email.signature', app()->getLocale()) }}" class="nav-link">
-                            <i class="icon-envelope"></i>
-                            <span>{{ __('menus.email_signature') }}</span>
-                        </a>
-                    </li>
-                    @endif
-
->>>>>>> origin/development
                     @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
                     <li class="nav-item">
                         <a href="{{ route('provider.language-lines') }}" class="nav-link">
                             <i class="icon-flag3"></i>
                             <span>{{ __('menus.languages_lines') }}</span>
-                        </a>
-                    </li>
-                    @endif
-
-                    @if($module->has('Wishes')  && Auth::guard('web')->user()->hasPermission('read-wish'))
-                    <li class="nav-item">
-                        <a href="{{ route('admin.wishes') }}" class="nav-link">
-                            <i class="icon-heart5"></i>
-                            <span>{{ __('menus.wishes_management') }}</span>
                         </a>
                     </li>
                     @endif
@@ -253,26 +255,35 @@
                                 <span>{{ __('labels.backend.whitelabels.table.display_name') }}</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.footers') }}" class="nav-link">
-                                <i class="icon-atom2"></i>
-                                <span>{{ __('labels.footers') }}</span>
-                            </a>
-                        </li>
                     @endif
 
-<<<<<<< HEAD
-=======
                     @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('admin.whitelabels.layers') }}" class="nav-link">
-                                <i class="icon-menu7"></i>
+                                <i class="icon-menu2"></i>
                                 <span>{{ __('Layer Management') }}</span>
                             </a>
                         </li>
                     @endif
 
->>>>>>> origin/development
+                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                    <li class="nav-item">
+                        <a href="{{ route('provider.email.signature', app()->getLocale()) }}" class="nav-link">
+                            <i class="icon-mention"></i>
+                            <span>{{ __('menus.email_signature') }}</span>
+                        </a>
+                    </li>
+                    @endif
+
+                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.footers') }}" class="nav-link">
+                                <i class="icon-move-down"></i>
+                                <span>{{ __('labels.footers') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
                     @if(false && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole('Administrator'))
                         <li class="nav-item">
                             <a href="{{ route('admin.whitelabels.compile') }}" class="nav-link">
@@ -280,19 +291,6 @@
                                 <span>{{ __('labels.compile') }}</span>
                             </a>
                         </li>
-                    @endif
-
-                    @if($module->has('Users')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
-                        @permission('view-access-management')
-                            @permission('view-seller-management')
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.sellers') }}" class="nav-link">
-                                        <i class="icon-collaboration"></i>
-                                        <span>{{ __('menus.sellers_management') }}</span>
-                                    </a>
-                                </li>
-                            @endauth
-                        @endauth
                     @endif
 
                     @if($module->has('Rules')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
@@ -303,6 +301,7 @@
                             </a>
                         </li>
                     @endif
+                    
                     @if($module->has('Rules')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('admin.regions') }}" class="nav-link">
@@ -314,7 +313,7 @@
                     @if($module->has('Autooffers')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('autooffer.setting') }}" class="nav-link">
-                                <i class="icon-wrench3"></i>
+                                <i class="icon-stack-picture"></i>
                                 <span>{{ __('menus.autooffers_management') }}</span>
                             </a>
                         </li>
