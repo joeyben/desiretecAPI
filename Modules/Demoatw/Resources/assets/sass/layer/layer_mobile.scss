@@ -4,11 +4,16 @@
 @import "../variables";
 
 $gutter: 30px;
-@include make-columns(12, $gutter - 5px, 'kwp-');
+$altfont: 'Roboto', sans-serif;
+$zindex: 10000;
+$eil-border-radius: 4px;
+$mastercolor: #092a5e;
+$secondarycolor: #092a5e;
+$mastergrey: #737373;
+$master-blue: #70CBF4;
+$fontcolor: #303030;
+/* dropdown */
 
-.rangeslider__fill{
-  background-color: $master-primary;
-}
 
 //
 // Dropdown menus
@@ -246,6 +251,12 @@ $gutter: 30px;
 
 
 
+@include make-columns(12, $gutter - 5px, 'kwp-');
+
+
+.rangeslider__fill{
+  background-color: $mastercolor;
+}
 
 /**** Datepicker ****/
 .ui-datepicker {
@@ -255,7 +266,7 @@ $gutter: 30px;
   background-color: #fff;
   border-bottom: 1px solid #f3f0ec;
   border-radius: 0;
-  color: $master-primary;
+  color: $mastercolor;
   font-weight: 300;
   height: 40px;
 }
@@ -268,13 +279,13 @@ $gutter: 30px;
   font-weight: normal;
 }
 .datepicker-dropdown .day.active, .datepicker-dropdown .day.active.active:hover, .datepicker-dropdown .day.active:hover,.datepicker-dropdown .day.active.active:hover:hover, .datepicker-dropdown .month.active, .datepicker-dropdown .month.active.active:hover, .datepicker-dropdown .month.active:hover, .datepicker-dropdown .month.active.active:hover:hover, .datepicker-dropdown .year.active, .datepicker-dropdown .year.active.active:hover, .datepicker-dropdown .year.active:hover, .datepicker-dropdown .year.active.active:hover:hover {
-  background-color: $brand-primary;
+  background-color: $mastercolor;
   border-color: transparent;
   color: #fff;
   text-shadow: none;
 }
 .datepicker .datepicker-switch{
-  color: $master-primary;
+  color: $mastercolor;
   font-weight: 700;
 }
 
@@ -310,11 +321,11 @@ $gutter: 30px;
   height: 75px;
   position: fixed;
   display: none;
-  background: $brand-primary url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: $secondarycolor url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
-  color: $master-grey-dark;
+  color: $fontcolor;
   box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.1);
   /*transition: all 0.5s ease;
    -webkit-transition: all 0.5s ease;
@@ -361,24 +372,10 @@ $gutter: 30px;
   width: 100%;
   height: 100%;
   top: 0;
-  z-index: $zindex-modal;
+  z-index: $zindex;
 
   font-size: 15px;
   line-height: 19px;
-
-  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #dedede !important;
-    opacity: 1; /* Firefox */
-  }
-
-  :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #dedede !important;
-  }
-
-  ::-ms-input-placeholder { /* Microsoft Edge */
-    color: #dedede !important;
-  }
-
   *:focus {
     outline: none;
   }
@@ -417,12 +414,12 @@ $gutter: 30px;
       margin: 10px;
       text-align: center;
       padding-top: 20px;
-      color: $master-grey-dark;
+      color: $fontcolor;
       line-height: 1.5em;
     }
     i{
       position: absolute;
-      color: $master-grey-dark;
+      color: $fontcolor;
       right: 0px;
       top: 7px;
       font-size: 30px;
@@ -477,7 +474,7 @@ $gutter: 30px;
   width: 760px;
   margin: 100px auto 50px auto;
 
-  border-radius: $border-radius-base;
+  border-radius: $eil-border-radius;
 
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 
@@ -512,7 +509,7 @@ $gutter: 30px;
 
   button[type=submit] {
     border-radius: 4px;
-    background: $brand-primary;
+    background: #092a5e;
 
     text-align: center;
 
@@ -527,7 +524,7 @@ $gutter: 30px;
     padding: 20px;
 
     &:active, &:hover {
-      background: $brand-secondary;
+      background: #FFB800;
       color: #fff;
     }
     &.error-button{
@@ -555,7 +552,7 @@ $gutter: 30px;
     padding-left: 7px;
     outline: none;
     border: 1px solid #aaa;
-    color: $master-grey-dark;
+    color: $fontcolor;
     font-size: 12px;
   }
 
@@ -564,19 +561,12 @@ $gutter: 30px;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
     transition: border-color .3s ease;
-    border-color: $master-primary;
+    border-color: #ffe336;
   }
 
   input[type="radio"],
   input[type="checkbox"] {
     margin: 0;
-  }
-
-  input:-internal-autofill-selected{
-    color: $master-primary !important;
-    background: $body-bg !important;
-    font-family: $font-family-brand !important;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px $body-bg !important;
   }
 
   form a {
@@ -635,7 +625,7 @@ $gutter: 30px;
           margin-bottom: 0;
           height: auto;
           a{
-            background: $brand-primary;
+            background: $secondarycolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -697,13 +687,13 @@ $gutter: 30px;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: $brand-primary;
+              color: $secondarycolor;
               padding: 0;
               margin: 20px 0;
               font-size: 20px !important;
             }
             .kwp-col-3{
-              background-color: $body-bg;
+              background-color: #fff;
               padding: 0;
               width: 30%;
               margin-right: 15px;
@@ -729,7 +719,7 @@ $gutter: 30px;
           display: block;
           margin-bottom: 0;
           a{
-            background: $brand-primary;
+            background: $secondarycolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -917,7 +907,7 @@ ul.kwp-form-errors {
 
   .kwp-agb {
     font-size: 10px;
-    padding-top: 10px;
+    padding-top: 0;
   }
 
   .kwp-tooltip-icon {
@@ -971,7 +961,7 @@ ul.kwp-form-errors {
   width: 100%;
 
   &.kwp-with-expansion {
-    border-top: solid 2px $brand-primary;
+    border-top: solid 2px #FCE237;
     padding-top: 40px;
   }
 }
@@ -1010,7 +1000,7 @@ p.kwp-info {
   position: relative;
   min-height: 150px;
   background: #f2f2f2;
-  border-radius: 0 0 $border-radius-base $border-radius-base;
+  border-radius: 0 0 $eil-border-radius $eil-border-radius;
   height: calc(100% - 40px);
   form, .kwp-minimal{
     height: 100%;
@@ -1095,13 +1085,8 @@ p.kwp-info {
     font-size: 18px;
     line-height: 1.3em;
     a {
-      color: $brand-primary !important;
+      color: #70CBF4 !important;
       text-decoration: none;
-    }
-    #agb_link, #datenschutz{
-      &:hover {
-        text-decoration: none;
-      }
     }
   }
   label {
@@ -1139,7 +1124,7 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .filter-option-inner-inner{
-      color: $master-primary;
+      color: $secondarycolor;
       font-size: 18px;
     }
   }
@@ -1217,7 +1202,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid $brand-primary;
+  border: 10px solid #fce237;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1366,7 +1351,7 @@ p.kwp-info {
   }
   .kwp-header{
     /*background: linear-gradient(179deg, #fce136 0, #e4cd34 100%);*/
-    background: linear-gradient(179deg, $brand-primary 0, $brand-primary 100%);
+    background: linear-gradient(179deg, $secondarycolor 0, $secondarycolor 100%);
     min-height: 40px;
     height: 40px;
     position: relative;
@@ -1385,7 +1370,7 @@ p.kwp-info {
       right: 15px;
       top: 40px;
       font-size: 20px;
-      color: $master-grey-dark;
+      color: $fontcolor;
     }
   }
   .kwp-content-extra{
@@ -1495,8 +1480,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid $brand-primary;
-          background-color: $brand-primary;
+          border: 1px solid $secondarycolor;
+          background-color: $secondarycolor;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1505,7 +1490,7 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:$master-grey-dark;
+        color:$fontcolor;
         padding: 8px 0;
         font-weight: bold;
         text-align: center;
@@ -1538,7 +1523,6 @@ p.kwp-info {
       -webkit-overflow-scrolling: touch;
       z-index: 11111111;
       height: calc(100% - 90px);
-      width: 100%;
     }
     .kwp-header-content{
       margin-top: 0px;
@@ -1553,7 +1537,7 @@ p.kwp-info {
       z-index: 2;
     }
     .dt-modal-agb .kwp-close, .kwp-close.dark {
-      background: transparent url(../../svg/times_light.svg) no-repeat center center;
+      background: transparent url(../../svg/times_dark.svg) no-repeat center center;
     }
     .dt-modal-agb .kwp-close{
       width: 50px;
@@ -1587,8 +1571,8 @@ p.kwp-info {
         line-height: 2em;
         background-color: transparent;
         font-weight: 500;
-        border-bottom: 1px solid $master-primary;
-        color: $master-grey-dark;
+        border-bottom: 1px solid $secondarycolor;
+        color: $fontcolor;
         border-radius: 0;
         padding: 0 10px;
         font-size: 18px;
@@ -1628,7 +1612,7 @@ p.kwp-info {
           margin-bottom: 0px;
           padding: 10px 0;
           font-size: 20px;
-          color: $master-primary;
+          color: $mastercolor;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1649,7 +1633,7 @@ p.kwp-info {
             height: 25px;
             background: #fff;
             cursor: pointer;
-            border: 2px solid $master-primary;
+            border: 2px solid $mastercolor;
             border-radius: 50%;
           }
           &::-moz-range-thumb {
@@ -1704,11 +1688,11 @@ p.kwp-info {
       background: none;
       background-color: transparent;
       font-weight: 500;
-      border-bottom: 1px solid $master-primary;
+      border-bottom: 1px solid $secondarycolor;
       border-radius: 0;
       padding: 0 10px;
       font-size: 18px;
-      color: $master-grey-dark;
+      color: $fontcolor;
     }
     .kwp-custom-select{
       #catering{
@@ -1728,7 +1712,6 @@ p.kwp-info {
       box-sizing: padding-box;
       height: auto;
       border-bottom-color: #b9b9b9 !important;
-      font-size: 18px;
     }
     .kwp input[type="email"]{
       width: 100%;

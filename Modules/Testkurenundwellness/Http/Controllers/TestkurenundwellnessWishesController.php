@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Testmanuell\Http\Controllers;
+namespace Modules\Testkurenundwellness\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Route;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 
 /**
- * Class TestmanuellWishesController.
+ * Class TestkurenundwellnessWishesController.
  */
-class TestmanuellWishesController extends Controller
+class TestkurenundwellnessWishesController extends Controller
 {
     const BODY_CLASS = 'wish';
     const BODY_CLASS_LIST = 'wishlist';
@@ -73,7 +73,7 @@ class TestmanuellWishesController extends Controller
     {
         $this->wish = $wish;
         $this->whitelabel = $whitelabel;
-        $this->whitelabelId = \Config::get('testmanuell.id');
+        $this->whitelabelId = \Config::get('testkurenundwellness.id');
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
@@ -110,7 +110,7 @@ class TestmanuellWishesController extends Controller
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
 
-        return view('testmanuell::wish.wish')->with([
+        return view('testkurenundwellness::wish.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
             'agent_name'         => $agentName,
@@ -134,8 +134,8 @@ class TestmanuellWishesController extends Controller
     {
 
         if ($this->wish->validateToken($token)) {
-            if (Route::has('testmanuell.list')) {
-                return redirect()->route('testmanuell.list');
+            if (Route::has('testkurenundwellness.list')) {
+                return redirect()->route('testkurenundwellness.list');
             }
         }
 
@@ -150,7 +150,7 @@ class TestmanuellWishesController extends Controller
     public function wishList(ManageWishesRequest $request)
     {
         //var_dump($request->ip());
-        return view('testmanuell::wish.index')->with([
+        return view('testkurenundwellness::wish.index')->with([
             'status'     => $this->status,
             'count'      => $this->wish->getForDataTable()->get()->where('whitelabel_id', getCurrentWhiteLabelId())->count(),
             'body_class' => $this::BODY_CLASS_LIST,

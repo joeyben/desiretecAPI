@@ -24,7 +24,7 @@ $master-primary:        #092a5e;
 $master-secondary:      #70CBF4;
 
 $brand-primary:         #006594 !default;
-$brand-secondary:       darken($brand-primary, 15%) !default;
+$brand-secondary:       darken($brand-primary, 5%) !default;
 $brand-success:         #5cb85c !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
@@ -58,7 +58,7 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
-$font-family-master:      "Comfortaa", cursive;
+$font-family-brand:      "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 $font-size-base:          14px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px

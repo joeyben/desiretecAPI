@@ -158,7 +158,7 @@ class LastminuteWishesController extends Controller
         //var_dump($request->ip());
         return view('lastminute::wish.index')->with([
             'status'     => $this->status,
-            'count'      => $this->wish->getForDataTable()->count(),
+            'count'      => $this->wish->getForDataTable()->get()->where('whitelabel_id', getCurrentWhiteLabelId())->count(),
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }

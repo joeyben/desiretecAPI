@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Testmanuell\Http\Controllers;
+namespace Modules\Demokreuzfahrtberatung\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Route;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 
 /**
- * Class TestmanuellWishesController.
+ * Class DemokreuzfahrtberatungWishesController.
  */
-class TestmanuellWishesController extends Controller
+class DemokreuzfahrtberatungWishesController extends Controller
 {
     const BODY_CLASS = 'wish';
     const BODY_CLASS_LIST = 'wishlist';
@@ -34,6 +34,8 @@ class TestmanuellWishesController extends Controller
     protected $adults = [];
     protected $kids = [];
     protected $duration = [];
+    protected $ages = [];
+    protected $class = [];
     protected $categories;
     protected $category = [
         '1'  => 1,
@@ -73,9 +75,11 @@ class TestmanuellWishesController extends Controller
     {
         $this->wish = $wish;
         $this->whitelabel = $whitelabel;
-        $this->whitelabelId = \Config::get('testmanuell.id');
+        $this->whitelabelId = \Config::get('demokreuzfahrtberatung.id');
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
+        $this->class = $categories->getChildrenFromSlug('slug', 'cabintype');
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->categories = $categories;
     }
@@ -110,7 +114,7 @@ class TestmanuellWishesController extends Controller
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
 
-        return view('testmanuell::wish.wish')->with([
+        return view('demokreuzfahrtberatung::wish.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
             'agent_name'         => $agentName,
@@ -119,6 +123,8 @@ class TestmanuellWishesController extends Controller
             'kids_arr'     => $this->kids,
             'duration_arr' => $this->duration,
             'adults_arr'   => $this->adults,
+            'class_arr'    => $this->class,
+            'ages_arr'     => $this->ages,
             'is_owner'            => $isOwner
         ]);
 
@@ -134,8 +140,8 @@ class TestmanuellWishesController extends Controller
     {
 
         if ($this->wish->validateToken($token)) {
-            if (Route::has('testmanuell.list')) {
-                return redirect()->route('testmanuell.list');
+            if (Route::has('demokreuzfahrtberatung.list')) {
+                return redirect()->route('demokreuzfahrtberatung.list');
             }
         }
 
@@ -150,7 +156,7 @@ class TestmanuellWishesController extends Controller
     public function wishList(ManageWishesRequest $request)
     {
         //var_dump($request->ip());
-        return view('testmanuell::wish.index')->with([
+        return view('demokreuzfahrtberatung::wish.index')->with([
             'status'     => $this->status,
             'count'      => $this->wish->getForDataTable()->get()->where('whitelabel_id', getCurrentWhiteLabelId())->count(),
             'body_class' => $this::BODY_CLASS_LIST,
@@ -160,7 +166,7 @@ class TestmanuellWishesController extends Controller
     public function getWish(Wish $wish)
     {
         return response()->json($wish->only(
-            ['destination', 'earliest_start', 'latest_return', 'duration', 'adults', 'kids', 'budget']
+            ['destination', 'earliest_start', 'latest_return', 'duration', 'adults', 'kids', 'category']
         ));
     }
 
