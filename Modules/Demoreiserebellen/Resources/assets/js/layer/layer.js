@@ -13,10 +13,7 @@ var exitIntent = window.exitIntent || {};
     dt.popupTemplate = function (variant) {
 
         var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Jetzt Ihre Reise wünschen und Angebot erhalten!',
             'Dürfen wir Sie beraten?',
-            'Hier klicken und persönliches Angebot erhalten',
-            'Nicht das Passende gefunden?'
         ]);
 
         var texts = {
@@ -1093,8 +1090,8 @@ var exitIntent = window.exitIntent || {};
                 if(!formSent) {
                     this.trigger =
                         $('<span/>', {'class': 'trigger-modal'});
-                    $('body').prepend(this.trigger.fadeIn());
-                }
+                    $('body').prepend(this.trigger);
+                    this.trigger.fadeIn();                }
             }else{
                 this.modal.css('display', 'none');
             }
@@ -1104,14 +1101,13 @@ var exitIntent = window.exitIntent || {};
             $("body, html").css({'overflow':'auto'});
 
             dt.Tracking.event('close', this.trackingLabel);
-
         };
-
 
         dt.scrollUpDetect = function (e) {
             dt.PopupManager.layerShown = false;
             $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
                 if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
+                    dt.showTeaser(event);
                     dt.PopupManager.layerShown = true;
                 }
             }, allowPageScroll:"vertical"} );
@@ -1129,15 +1125,37 @@ var exitIntent = window.exitIntent || {};
                 $(this).remove();
                 ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
             });
-
-
-        }
+        };
 
         dt.showMobileLayer = function (e) {
+            $(".dt-modal").removeClass('teaser-on').find('.teaser').remove();
+            $( ".dt-modal" ).addClass('m-open');
             dt.PopupManager.show();
-            $("body").addClass('mobile-layer');
+            $("body, html").css({'overflow':'hidden'});
             //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
-            ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Tablet');
+            ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
+        };
+
+        dt.showTeaser = function (e) {
+            $("body").addClass('mobile-layer');
+            $(".dt-modal").addClass('teaser-on').show().find('.teaser').addClass('active').swipe( {
+                tap:function(event, target) {
+                    dt.showMobileLayer(event);
+                },
+                swipeLeft:function(event, distance, duration, fingerCount, fingerData, currentDirection) {
+                    $(this).addClass('inactive-left');
+                    removeLayer(event);
+                },
+                swipeRight:function(event, distance, duration, fingerCount, fingerData, currentDirection) {
+                    $(this).addClass('inactive-right');
+                    removeLayer(event);
+                }
+            });
+        };
+
+        dt.hideTeaser = function (e) {
+            $("body").removeClass('mobile-layer');
+            $(".dt-modal").remove();
         };
 
         $(document).ready(function (e) {
