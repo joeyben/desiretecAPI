@@ -108,7 +108,7 @@
                         </div>
                     </div>
 
-                    <!--<div class="map"></div>-->
+                    <div id="top-map" class="map"></div>
 
                     <a class="btn btn-secondary" onclick="showMenu()">Reisewunsch ansehen</a>
                 </div>
@@ -123,9 +123,20 @@
                     <ul class="offers">
                         @php
                             $count = 0;
+                            $locations = [];
                         @endphp
-                        @foreach($offers as $offer)
-                            <li class="offer box-shadow">
+                        @foreach($offers as $key => $offer)
+                            @php
+                                $hotelData = [
+                                    'title' => $offer['hotel_data']['data']['Hotelname'],
+                                    'stars' => intval($offer['hotel_data']['data']['Hotelkategorie']),
+                                    'text' => $offer['data']['boardType'],
+                                    'longitude' => $offer['data']['hotel_geo']['longitude'],
+                                    'latitude' => $offer['data']['hotel_geo']['latitude']
+                                ];
+                                $locations[] = $hotelData;
+                            @endphp
+                            <li class="offer box-shadow" id="hotel-{{ $key }}">
                             <div class="left-side">
                                 @if ($count === 1)
                                     <div class="label">Unser Tipp</div>
@@ -226,6 +237,8 @@
     <!-- jquery -->
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE60OtWg7HL-wqOpGHcRGAD6HpYzAh6t4"></script>
+
     <!-- sllick slider -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.min.js"></script>
 
@@ -263,4 +276,77 @@
         });
 
     </script>
+
+    <script>
+        var locations = JSON.parse('{!! json_encode($locations) !!}');
+        var center = new google.maps.LatLng(locations[0].longitude, locations[0].latitude);
+
+        function initialize() {
+            var bounds = new google.maps.LatLngBounds();
+            var mapOptions = {
+                zoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: center,
+                mapTypeControl: false
+            };
+
+            map = new google.maps.Map(document.getElementById('top-map'), mapOptions);
+
+
+            for(var i = 0; i < locations.length; i++){
+                addMarker(locations[i], map, bounds, i)
+            }
+            map.fitBounds(bounds);
+        }
+
+        function addMarker(location, map, bounds, key) {
+            var stars = "";
+            for(var i = 0; i< location.stars; i++){
+                stars += '<i class="fas fa-heart"></i>';
+            }
+            var contentString = '<div>'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<div id="bodyContent">'+
+                '<p><b>'+location.title+'</b> '+stars+'<br>'+location.text.substring(0, 75)+'</p>'+
+                '</div>'+
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 200,
+                disableAutoPan: true
+            });
+
+            var marker = new google.maps.LatLng(location.latitude, location.longitude);
+
+            var markerObj = new google.maps.Marker({
+                map: map,
+                position: marker,
+                key: key
+            });
+
+            markerObj.addListener('click', function(e) {
+                scrollToHotel(this.key)
+            });
+
+            markerObj.addListener('mouseover', function() {
+                infowindow.open(map, markerObj);
+            });
+
+            markerObj.addListener('mouseout', function() {
+                infowindow.close();
+            });
+
+            bounds.extend(marker);
+        }
+        function scrollToHotel(key) {
+            var offset = $('#hotel-'+key).offset().top;
+            $('html, body').animate({
+                scrollTop: offset - 100
+            }, 750);
+        }
+        initialize();
+    </script>
+
 @endsection

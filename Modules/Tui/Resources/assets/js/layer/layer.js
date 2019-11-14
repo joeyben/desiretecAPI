@@ -4,10 +4,10 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'http://tuidemo.com',
+        baseUrl: 'https://tui.reisewunschservice.de',
         popupPath: '/show',
         popupStore:'/store',
-        cssPath: '/whitelabel/tuidemo/css/layer/whitelabel.css'
+        cssPath: '/whitelabel/tui/css/layer/whitelabel.css'
     };
 
     dt.popupTemplate = function (variant) {
@@ -1039,7 +1039,7 @@ var exitIntent = window.exitIntent || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: 'https://tuidemo.reise-wunsch.com',
+        matchesUrl: 'https://tui.reisewunschservice.de',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
