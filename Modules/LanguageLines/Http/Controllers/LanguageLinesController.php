@@ -339,7 +339,7 @@ class LanguageLinesController extends Controller
      */
     public function copy(CopyLanguageLinesRequest $request)
     {
-        $collection = new Collection();
+
         $count = [];
 
         try {
@@ -354,6 +354,7 @@ class LanguageLinesController extends Controller
 
                 if (Schema::hasTable($table)) {
                     $persistedTranslations = $this->database->table($table)->get();
+                    $collection = new Collection();
 
                     foreach ($translations as $translation) {
                         $translationToCreate = $persistedTranslations->filter(function ($item) use ($translation) {
