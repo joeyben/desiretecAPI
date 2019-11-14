@@ -445,14 +445,14 @@ var exitIntent = window.exitIntent || {};
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {
-                'AI': 'all-inclusive',
-                'AP': 'all-inclusive',
-                'FB': 'Vollpension',
-                'FP': 'Vollpension',
-                'HB': 'Halbpension',
-                'HP': 'Halbpension',
-                'BB': 'Frühstück',
-                'AO': 'ohne Verpflegung',
+                'AI': '5',
+                'AP': '5',
+                'FB': '4',
+                'FP': '4',
+                'HB': '3',
+                'HP': '3',
+                'BB': '2',
+                'AO': '1',
                 'XX': null
             },
             'cateringWeight': {
@@ -499,7 +499,7 @@ var exitIntent = window.exitIntent || {};
                 }
                 return this.dictionaryTransformValue(this.dictionaries.catering, lowestBoard);
             },
-            'hotel_category': function (form, formData) {
+            'category': function (form, formData) {
                 return formData.category;
             },
             'destination': function (form, formData) {
@@ -530,7 +530,7 @@ var exitIntent = window.exitIntent || {};
 
                 return dest;
             },
-            'pax': function (form, formData) {
+            'adults': function (form, formData) {
                 var adults = 0;
                 $.each(formData.travellers,function(key,value){
                     adults += parseInt(value.adults);
@@ -540,7 +540,7 @@ var exitIntent = window.exitIntent || {};
             'budget': function (form, formData) {
                 return formData.maxPrice;
             },
-            'children': function (form, formData) {
+            'kids': function (form, formData) {
                 var childs = 0;
                 $.each(formData.travellers,function(key,value){
                     childs += parseInt(value.children.length);
