@@ -18,6 +18,7 @@ use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
@@ -28,6 +29,7 @@ use Modules\Wishes\Entities\Wish;
 use Modules\Wishes\Exports\WishExport;
 use Modules\Wishes\Http\Requests\StoreWishRequest;
 use Modules\Wishes\Http\Requests\UpdateWishRequest;
+use Modules\Wishes\Notifications\CreatedWishNotificationForSeller;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
 
 class WishesController extends Controller
@@ -61,11 +63,16 @@ class WishesController extends Controller
      * @var \App\Repositories\Backend\Groups\GroupsRepository
      */
     private $groups;
+    /**
+     * @var \Illuminate\Notifications\ChannelManager
+     */
+    private $notification;
 
     /**
      * WishesController constructor.
      *
      * @param \Modules\Wishes\Repositories\Contracts\WishesRepository         $wishes
+     * @param \Illuminate\Notifications\ChannelManager                        $notification
      * @param \Illuminate\Routing\ResponseFactory                             $response
      * @param \Illuminate\Auth\AuthManager                                    $auth
      * @param \Illuminate\Translation\Translator                              $lang
@@ -73,7 +80,7 @@ class WishesController extends Controller
      * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository $activities
      * @param \App\Repositories\Backend\Groups\GroupsRepository               $groups
      */
-    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, GroupsRepository $groups)
+    public function __construct(WishesRepository $wishes, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, GroupsRepository $groups)
     {
         $this->wishes = $wishes;
         $this->response = $response;
@@ -82,6 +89,7 @@ class WishesController extends Controller
         $this->carbon = $carbon;
         $this->activities = $activities;
         $this->groups = $groups;
+        $this->notification = $notification;
     }
 
     /**
@@ -231,6 +239,7 @@ class WishesController extends Controller
             $result['wish']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-wish') ? $this->activities->byModel($result['wish']) : [];
             $groups = Group::where('whitelabel_id', $result['wish']->whitelabel_id)->get();
 
+            $result['wish']['alert_email'] = false;
             $result['wish']['groups'] = $groups->map(function ($whitelabel) {
                 return [
                     'id'   => $whitelabel->id,
@@ -260,6 +269,7 @@ class WishesController extends Controller
     public function update(UpdateWishRequest $request, int $id)
     {
         try {
+            $originalWish = $this->wishes->find($id);
             $wish = $this->wishes->withCriteria([
                 new ByWhitelabel()
             ])->update(
@@ -269,6 +279,11 @@ class WishesController extends Controller
                     'group_id'
                 )
             );
+
+            if ($request->get('alert_email') && ($originalWish->group_id !== $wish->group_id)) {
+                $sellers = $this->groups->find($wish->group_id)->users()->get();
+                $this->notification->send($sellers, new CreatedWishNotificationForSeller($wish));
+            }
 
             $result['wish'] = $wish;
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => $this->lang->get('labels.wish')]);
