@@ -217,6 +217,10 @@ $gutter: 30px;
     height: 25px;
   }
 
+  input[type=number]{
+    display: none;
+  }
+
   textarea {
     height: 60px;
     padding: 5px;
