@@ -765,6 +765,7 @@ p.kwp-info {
     padding-left: 40px;
     font-size: 12px;
     line-height: 1.3em;
+    color: #000;
     a {
       color: $brand-primary !important;
       text-decoration: none;
@@ -1213,6 +1214,7 @@ p.kwp-info {
 
       .kwp-middle{
         background: #E2F3FE;
+        color: #000;
         padding: 10px 20px;
         border-bottom: 1px solid $master-grey-light;
         font-size: 16px;
@@ -1266,6 +1268,7 @@ p.kwp-info {
         font-family: $font-family-brand;
         text-align: center;
         width: 100%;
+        border: none;
       }
     }
     .kwp-body{
@@ -1424,6 +1427,7 @@ p.kwp-info {
         .text{
           display: block;
           margin-top: 5px;
+          color: $master-primary;
         }
       }
       .catering{
@@ -1597,6 +1601,8 @@ and (max-device-width : 320px) {
     .teaser{
       h1{
         font-size: 20px;
+        text-align: center;
+        border: none;
       }
     }
   }
