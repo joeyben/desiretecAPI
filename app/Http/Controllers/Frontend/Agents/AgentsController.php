@@ -178,7 +178,23 @@ class AgentsController extends Controller
 
     public function delete($id)
     {
+        /**** Delete Agent and Assign offers/messages to another agent ****/
         DB::table('agents')->where('id', '=', $id)->delete();
+        $whitelabel_group = DB::table('groups')->where('whitelabel_id', getCurrentWhiteLabelId())->first();
+        if ($whitelabel_group) {
+            $user_group = DB::table('group_user')->where('group_id', $whitelabel_group->id)->first();
+        }
+        if ($user_group){
+            $first_agent = DB::table('agents')->where([['user_id', $user_group->user_id], ['status','Active']])->first();
+        }
+        if ($first_agent){
+            DB::table('offers')->where('agent_id', '=', $id)->update(['agent_id' => $first_agent->id]);
+            DB::table('message')->where('agent_id', '=', $id)->update(['agent_id' => $first_agent->id]);
+        }else{
+            DB::table('offers')->where('agent_id', '=', $id)->delete();
+            DB::table('message')->where('agent_id', '=', $id)->delete();
+        }
+
         return redirect()
             ->route('frontend.agents.index')
             ->with('flash_success', trans('alerts.frontend.agents.deleted'));
