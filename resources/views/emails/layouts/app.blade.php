@@ -27,9 +27,9 @@
                                 <td style="color: #7f7f7f;text-align: center;">
                                     <a href='{{ route('frontend.index') }}'>
                                         @if(isWhiteLabel())
-                                            <img width="120" class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
+                                            <img width="200" class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
                                         @else
-                                            <img width="120" class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
+                                            <img width="200" class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
                                         @endif
                                     <hr style="background: #e7e7e7;border: none;height: 1px;margin-top: 30px;">
                                 </td>
