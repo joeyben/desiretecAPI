@@ -3,6 +3,7 @@ $domain_env = array(
     'local_url' => 'lastminute.com',
     'development_url' => 'lastminute.reise-wunsch.com',
     'production_url' => 'lastminute.reisewunschservice.de',
+    'preproduction_url' => 'lastminute.preprod.reisewunschservice.de',
 );
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];

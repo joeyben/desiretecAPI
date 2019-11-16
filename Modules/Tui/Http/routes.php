@@ -3,6 +3,7 @@ $domain_env = array(
     'local_url' => 'tui.com',
     'development_url' => 'tui.reise-wunsch.com',
     'production_url' => 'tui.reisewunschservice.de',
+    'preproduction_url' => 'tui.preprod.reisewunschservice.de',
 );
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];

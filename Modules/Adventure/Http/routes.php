@@ -3,6 +3,7 @@ $domain_env = array(
     'local_url' => 'adventure.com',
     'development_url' => 'adventure.reise-wunsch.com',
     'production_url' => 'adventure.reisewunschservice.de',
+    'preproduction_url' => 'adventure.preprod.reisewunschservice.de',
 );
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
