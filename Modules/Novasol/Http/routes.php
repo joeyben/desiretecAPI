@@ -4,6 +4,7 @@ $domain_env = array(
     'local_url' => 'novasol.org',
     'development_url' => 'novasol.reise-wunsch.com',
     'production_url' => 'novasol.reisewunschservice.de',
+    'preproduction_url' => 'novasol.preprod.reisewunschservice.de'
 );
 
 $domain = $domain_env[\Config::get('app.js_env'). '_url'];
