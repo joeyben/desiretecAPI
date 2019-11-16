@@ -3,6 +3,7 @@ $domain_env = array(
     'local_url' => 'kreuzfahrtberatung.com',
     'development_url' => 'kreuzfahrtberatung.reise-wunsch.com',
     'production_url' => 'kreuzfahrtberatung.reisewunschservice.de',
+    'preproduction_url' => 'kreuzfahrtberatung.preprod.reisewunschservice.de'
 );
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];

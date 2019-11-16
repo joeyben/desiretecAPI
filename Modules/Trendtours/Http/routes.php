@@ -4,6 +4,7 @@ $domain_env = array(
     'local_url' => 'trend.com',
     'development_url' => 'trendtours.reise-wunsch.com',
     'production_url' => 'trendtours.reisewunschservice.de',
+    'preproduction_url' => 'trendtours.preprod.reisewunschservice.de'
 );
 
 $domain = $domain_env[\Config::get('app.js_env'). '_url'];
