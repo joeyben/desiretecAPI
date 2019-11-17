@@ -548,7 +548,7 @@ var exitIntent = window.exitIntent || {};
                 childs = childs > 3 ? 3 : childs;
                 return childs;
             },
-            'age_1': function (form, formData) {
+            'ages1': function (form, formData) {
                 var ages = [];
                 $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
 
@@ -559,7 +559,7 @@ var exitIntent = window.exitIntent || {};
                 });
                 return ages.length > 0 ? ages[0] : 0;
             },
-            'age_2': function (form, formData) {
+            'ages2': function (form, formData) {
                 var ages = [];
                 $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
 
@@ -570,7 +570,7 @@ var exitIntent = window.exitIntent || {};
                 });
                 return ages.length > 1 ? ages[1] : 0;
             },
-            'age_3': function (form, formData) {
+            'ages3': function (form, formData) {
                 var ages = [];
                 $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
 
