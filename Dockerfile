@@ -70,8 +70,7 @@ RUN composer dump-autoload
 
 USER root
 
-RUN apt update && \
-    apt install -y mysql-client && curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt install -y nodejs && apt install -y npm
+RUN apt update && curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt install -y nodejs && apt install -y npm
 RUN rm -r /var/www/html/docker
 RUN make routes
 RUN make message

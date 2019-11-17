@@ -564,7 +564,7 @@ $gutter: 30px;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
     transition: border-color .3s ease;
-    border-color: #ffe336;
+    border-color: $master-primary;
   }
 
   input[type="radio"],
@@ -575,7 +575,7 @@ $gutter: 30px;
   input:-internal-autofill-selected{
     color: $master-primary !important;
     background: $body-bg !important;
-    font-family: $font-family-master !important;
+    font-family: $font-family-brand !important;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px $body-bg !important;
   }
 
@@ -1094,6 +1094,7 @@ p.kwp-info {
     padding-left: 40px;
     font-size: 18px;
     line-height: 1.3em;
+    color: #000;
     a {
       color: $brand-primary !important;
       text-decoration: none;
@@ -1510,6 +1511,7 @@ p.kwp-info {
         font-weight: bold;
         text-align: center;
         line-height: 1.7em;
+        border: none;
       }
     }
     .kwp-body{
@@ -1538,6 +1540,7 @@ p.kwp-info {
       -webkit-overflow-scrolling: touch;
       z-index: 11111111;
       height: calc(100% - 90px);
+      width: 100%;
     }
     .kwp-header-content{
       margin-top: 0px;
@@ -1552,7 +1555,7 @@ p.kwp-info {
       z-index: 2;
     }
     .dt-modal-agb .kwp-close, .kwp-close.dark {
-      background: transparent url(../../svg/times_dark.svg) no-repeat center center;
+      background: transparent url(../../svg/times_light.svg) no-repeat center center;
     }
     .dt-modal-agb .kwp-close{
       width: 50px;
@@ -1815,6 +1818,8 @@ and (max-device-width : 320px) {
     .teaser{
       h1{
         font-size: 20px;
+        text-align: center;
+        border: none;
       }
     }
   }

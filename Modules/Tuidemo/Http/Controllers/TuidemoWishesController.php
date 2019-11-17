@@ -154,7 +154,7 @@ class TuidemoWishesController extends Controller
     {
         return view('tuidemo::wish.index')->with([
             'status'     => $this->status,
-            'count'      => $this->wish->getForDataTable()->get()->count(),
+            'count'      => $this->wish->getForDataTable()->get()->where('whitelabel_id', getCurrentWhiteLabelId())->count(),
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }
