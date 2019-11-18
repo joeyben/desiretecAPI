@@ -1084,18 +1084,14 @@ var exitIntent = window.exitIntent || {};
         dt.PopupManager.closePopup = function(event) {
             event.preventDefault();
 
-            if(isMobile()){
-                var formSent = $('.kwp-content').hasClass('kwp-completed-master');
+            var formSent = $('.kwp-content').hasClass('kwp-completed-master');
 
-                this.modal.addClass('tmp-hidden');
-                if(!formSent) {
-                    this.trigger =
-                        $('<span/>', {'class': 'trigger-modal'});
-                    $('body').prepend(this.trigger);
-                    this.trigger.fadeIn();
-                }
-            }else{
-                this.modal.css('display', 'none');
+            this.modal.addClass('tmp-hidden');
+            if(!formSent) {
+                this.trigger =
+                    $('<span/>', {'class': 'trigger-modal'});
+                $('body').prepend(this.trigger);
+                this.trigger.fadeIn();
             }
 
             this.shown = false;
@@ -1383,6 +1379,15 @@ var exitIntent = window.exitIntent || {};
 
         function setCookie(cname, cvalue) {
             document.cookie = cname + "=" + cvalue + ";path=/";
+        }
+
+        function removeLayer(e){
+            var $event = e;
+            setTimeout(function(){
+                dt.triggerButton($event);
+                dt.PopupManager.closePopup($event);
+                dt.PopupManager.teaserSwiped = true;
+            }, 500);
         }
 
         function textareaAutosize(){
