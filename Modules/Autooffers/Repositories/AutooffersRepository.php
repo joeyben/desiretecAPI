@@ -147,6 +147,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function saveWishData(Wish $wish)
     {
+
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);

@@ -21,11 +21,22 @@ class RegionsController extends Controller
      */
     public function getTTRegions(){
         $destinations = [];
-        TTRegions::select(['ort','land'])->chunk(200, function($regions) use(&$destinations){
+        TTRegions::select(['land'])->chunk(200, function($regions) use(&$destinations){
             foreach ($regions as $region){
-                $destinations[] = $region->land .' - '.$region->ort;
+                if(!in_array($region->land, $destinations)){
+                    $destinations[] = $region->land;
+                }
             }
         });
+
+        TTRegions::select(['topRegionName'])->chunk(200, function($regions) use(&$destinations){
+            foreach ($regions as $region){
+                if(!in_array($region->topRegionName, $destinations)){
+                    $destinations[] = $region->topRegionName;
+                }
+            }
+        });
+
         return $destinations;
     }
 

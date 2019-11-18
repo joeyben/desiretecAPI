@@ -21,6 +21,8 @@ mix.scripts(
         base_url + '/node_modules/js-cookie/src/js.cookie.js',
         base_url + '/node_modules/bootstrap-select/js/bootstrap-select.js',
         base_url + '/resources/assets/js/layer/base.js',
+        base_url + '/node_modules/bootstrap/dist/js/bootstrap.js',
+        base_url + '/node_modules/bootstrap-select/js/bootstrap-select.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',
         base_url + '/resources/assets/js/layer/datepicker.js',
         base_url + '/resources/assets/js/layer/devicedetector.min.js',

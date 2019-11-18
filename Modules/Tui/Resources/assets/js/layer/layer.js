@@ -73,7 +73,7 @@ var exitIntent = window.exitIntent || {};
     /**** Mobile Decoder ****/
     var MasterIBETripDataDecoderMobile = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'TUI Rundreisen Mobile',
-        matchesUrl: 'm.tuidemo.com/(buchen)',
+        matchesUrl: 'm.tui.com/(buchen)',
         dictionaries: {
             'catering': {
                 'AI': 'all-inclusive',
@@ -445,14 +445,14 @@ var exitIntent = window.exitIntent || {};
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {
-                'AI': 'all-inclusive',
-                'AP': 'all-inclusive',
-                'FB': 'Vollpension',
-                'FP': 'Vollpension',
-                'HB': 'Halbpension',
-                'HP': 'Halbpension',
-                'BB': 'Frühstück',
-                'AO': 'ohne Verpflegung',
+                'AI': '5',
+                'AP': '5',
+                'FB': '4',
+                'FP': '4',
+                'HB': '3',
+                'HP': '3',
+                'BB': '2',
+                'AO': '1',
                 'XX': null
             },
             'cateringWeight': {
@@ -499,7 +499,7 @@ var exitIntent = window.exitIntent || {};
                 }
                 return this.dictionaryTransformValue(this.dictionaries.catering, lowestBoard);
             },
-            'hotel_category': function (form, formData) {
+            'category': function (form, formData) {
                 return formData.category;
             },
             'destination': function (form, formData) {
@@ -530,7 +530,7 @@ var exitIntent = window.exitIntent || {};
 
                 return dest;
             },
-            'pax': function (form, formData) {
+            'adults': function (form, formData) {
                 var adults = 0;
                 $.each(formData.travellers,function(key,value){
                     adults += parseInt(value.adults);
@@ -540,7 +540,7 @@ var exitIntent = window.exitIntent || {};
             'budget': function (form, formData) {
                 return formData.maxPrice;
             },
-            'children': function (form, formData) {
+            'kids': function (form, formData) {
                 var childs = 0;
                 $.each(formData.travellers,function(key,value){
                     childs += parseInt(value.children.length);
@@ -548,7 +548,7 @@ var exitIntent = window.exitIntent || {};
                 childs = childs > 3 ? 3 : childs;
                 return childs;
             },
-            'age_1': function (form, formData) {
+            'ages1': function (form, formData) {
                 var ages = [];
                 $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
 
@@ -559,7 +559,7 @@ var exitIntent = window.exitIntent || {};
                 });
                 return ages.length > 0 ? ages[0] : 0;
             },
-            'age_2': function (form, formData) {
+            'ages2': function (form, formData) {
                 var ages = [];
                 $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
 
@@ -570,7 +570,7 @@ var exitIntent = window.exitIntent || {};
                 });
                 return ages.length > 1 ? ages[1] : 0;
             },
-            'age_3': function (form, formData) {
+            'ages3': function (form, formData) {
                 var ages = [];
                 $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
 
@@ -1274,7 +1274,7 @@ var exitIntent = window.exitIntent || {};
 
     //dt.decoders.push($.extend({}, MasterIBETripDataDecoder, {
     //    name: 'TUI Landingpages',
-    //    matchesUrl: 'tuidemo.com/pauschalreisen',
+    //    matchesUrl: 'tui.com/pauschalreisen',
     //    filterFormSelector: '.simpleSearch'
     //}));
 

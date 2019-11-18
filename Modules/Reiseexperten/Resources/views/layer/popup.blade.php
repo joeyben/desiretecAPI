@@ -275,7 +275,7 @@
 
             var allDestinations = [];
             $(document).ready(function(){
-                $('.selectpicker').selectpicker();
+                //$('.selectpicker').selectpicker();
 
                 autocomplete();
 
