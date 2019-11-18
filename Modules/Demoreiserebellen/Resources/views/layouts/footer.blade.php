@@ -1,12 +1,12 @@
 <div class="footer">
     <div class="container">
         <div class="col-md-12">
-            <ul>
-                <li>
+            <ul class="list-inline">
+                <li class="list-inline-item">
                     © Copyright 2019 |
                 </li>
                  @foreach (footers_by_whitelabel() as $footer)
-                     <li>
+                     <li class="list-inline-item">
                         <a href="{{ $footer->url }}" target="_blank">{{ $footer->name }}</a>
                     </li>
                 @endforeach
