@@ -183,7 +183,6 @@ class AutooffersTTRepository extends BaseRepository
           }
         } }';
 
-
         $authorization = "Authorization: Bearer ".$this->token;
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization ));
@@ -265,7 +264,6 @@ class AutooffersTTRepository extends BaseRepository
      */
     public function saveWishData(Wish $wish)
     {
-        $destination = explode('-', $wish->destination);
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
@@ -276,7 +274,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->setFrom($wish->earliest_start);
         $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
-        $this->setRegion(getTTRegionCode(trim($destination[1]), 1));
+        $this->setRegion(getTTRegionCode($wish->destination, 1));
 
         return true;
     }
@@ -607,9 +605,18 @@ class AutooffersTTRepository extends BaseRepository
     /**
      * @param mixed $region
      */
-    public function setRegion($region)
+    public function setRegion($regions)
     {
-        $this->region = $region;
+        $count = 0;
+        $regions_str = "";
+        foreach ($regions as $region) {
+            if ($count > 0 ) {
+                $regions_str .= ",";
+            }
+            $regions_str .= $region;
+            $count++;
+        }
+        $this->region = $regions_str;
     }
 
     /**
