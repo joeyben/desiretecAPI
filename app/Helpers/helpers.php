@@ -634,15 +634,14 @@ if (!function_exists('getTTRegionCode')) {
      */
     function getTTRegionCode($value)
     {
-        $land = \App\Models\TTRegions::where('land', '=' ,$value)->get()->map->only(['topRegion'])->toArray();
+        $land = \App\Models\TTRegions::where('land', '=' ,$value)->pluck('topRegion')->all();
         $results = array_unique($land, SORT_REGULAR);
 
         if(empty($results)) {
-            $region = \App\Models\TTRegions::where('topRegionName', '=', $value)->get()->map->only(['topRegion'])->toArray();
+            $region = \App\Models\TTRegions::where('topRegionName', '=', $value)->pluck('topRegion')->all();
             $results = array_unique($region, SORT_REGULAR);
         }
         return $results;
-
     }
 }
 

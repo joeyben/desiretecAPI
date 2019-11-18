@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Lastminute',
-    'id'   => 33,
+    'id'   => 87,
     'locale' => 'de',
     'language_lines_table' => 'language_lines_lastminute',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
