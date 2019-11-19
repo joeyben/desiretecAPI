@@ -430,6 +430,36 @@ var exitIntent = window.exitIntent || {};
         }
     });
 
+    var TuiHMTripDataDecoder = $.extend({}, kwizzme.AbstractTripDataDecoder, {
+        name: 'TUI Honeymoon',
+        matchesUrl: 'www.tui.com/pauschalreisen(/[a-z-]+)*/flitterwochen',
+        filterFormSelector: 'body',
+        filterDataDecoders: {},
+        getTripData: function () {
+            return {
+                is_popup_allowed: true
+            };
+        },
+        getRandomElement: function (arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        },
+        getVariant: function () {
+            if(deviceDetector.device === "phone"){
+                return 'eil-mobile';
+            }else if(deviceDetector.device === "tablet"){
+                return this.getRandomElement([
+                    'eil-tablet'
+                ]);
+            }else{
+                return this.getRandomElement([
+                    'eil-n1'
+                ]);
+            }
+        }
+    });
+
+
+
     var MasterIBETripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         decodeDate: function (raw) {
             var r = /\w+\.\s+(\d+\.\d+.\d+)/.exec(raw);
@@ -441,7 +471,7 @@ var exitIntent = window.exitIntent || {};
             return r[1];
         },
         name: 'TUI IBE',
-        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
+        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|tuicom-itest.tui-interactive.com/*|tuicom-preprod.tui-interactive.com/*',
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {
@@ -1271,6 +1301,8 @@ var exitIntent = window.exitIntent || {};
     dt.decoders.push(MasterIBETripDataDecoder);
     dt.decoders.push(MasterIBETripDataDecoderMobile);
     dt.decoders.push(KwizzmeFakeTripDataDecoder);
+    dt.decoders.push(TuiHMTripDataDecoder);
+
 
     //dt.decoders.push($.extend({}, MasterIBETripDataDecoder, {
     //    name: 'TUI Landingpages',
