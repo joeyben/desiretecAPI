@@ -694,6 +694,7 @@ $gutter: 30px;
           .kwp-col-ages{
             background: transparent;
             .main-label{
+              color: $master-primary;
               padding: 0;
               margin: 20px 0;
               font-size: 20px !important;
@@ -1210,7 +1211,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid $master-primary;
+  border: 10px solid #fff;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;

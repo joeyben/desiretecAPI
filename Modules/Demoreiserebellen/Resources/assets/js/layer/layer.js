@@ -1415,11 +1415,11 @@ var exitIntent = window.exitIntent || {};
                 btnPrimaryCss
             ).mouseover(function () {
                 $(this).css(
-                btnPrimaryHoverCss
+                    btnPrimaryHoverCss
                 );
             }).mouseout(function () {
                 $(this).css(
-                btnPrimaryCss
+                    btnPrimaryCss
                 );
             });
 
@@ -1451,13 +1451,15 @@ var exitIntent = window.exitIntent || {};
                 'color': brandColor,
             });
 
-            // $("<style>.kwp-spinner { border: 10px solid " + brandColor + "; }</style>")
-            //     .appendTo(document.documentElement);
-
             var layerHeader = $('.mobile-layer .kwp-header');
             layerHeader.css({
                 'background': brandColor,
             });
+
+            var successHref = $('.kwp-completed-master a');
+            $("<style>.kwp-completed-master a { color: " + brandColor + "; }</style>")
+                .appendTo(document.documentElement);
+
         }
 
     })(jQuery);

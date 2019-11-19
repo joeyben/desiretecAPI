@@ -35,16 +35,40 @@ body{
 }
 
 // Buttons
-// color styles defined in app.js
 
 .primary-btn, .secondary-btn{
   padding: 5px 20px;
   min-width: 220px;
 }
-a.primary-btn, .primary-btn, a.btn-primary, .btn-primary, input.primary-btn,
-a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
-  transition: all .3s ease-out;
-}
+
+// color styles defined in app.js
+
+// a.primary-btn, .primary-btn, a.btn-primary, .btn-primary, input.primary-btn{
+//   background: $brand-primary;
+//   border: 1px solid $brand-primary;
+//   transition: all .3s ease-out;
+//   &:visited{
+//     background: $brand-primary;
+//     border: 1px solid $brand-primary;
+//   }
+//   &:hover, &:active{
+//     background: $brand-secondary;
+//     border: 1px solid $brand-secondary;
+//   }
+// }
+// a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
+//   color: $brand-primary;
+//   border: 1px solid $brand-primary;
+//   transition: all .3s ease-out;
+//   &:visited{
+//     color: $brand-primary;
+//     border: 1px solid $brand-primary;
+//   }
+//   &:hover, &:active{
+//     color: $brand-secondary;
+//     border: 1px solid $brand-secondary;
+//   }
+// }
 
 // Wish modal
 

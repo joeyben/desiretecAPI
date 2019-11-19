@@ -5,9 +5,6 @@
 @endsection
 
 @section('after-styles')
-    <script type="text/javascript">
-        var brandColor = {!! json_encode($color) !!};
-    </script>
     <link rel="stylesheet" href="{{ asset('whitelabel/demoreiserebellen/css/demoreiserebellen.css') }}">
 @endsection
 
@@ -18,6 +15,9 @@
 @endsection
 
 @section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
     <script src="{{ mix('whitelabel/demoreiserebellen/js/demoreiserebellen.js') }}"></script>
 @endsection
 
