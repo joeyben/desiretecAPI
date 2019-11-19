@@ -5,6 +5,9 @@
 @endsection
 
 @section('after-styles')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
     <link rel="stylesheet" href="{{ asset('whitelabel/lastminute/css/lastminute.css') }}">
 @endsection
 

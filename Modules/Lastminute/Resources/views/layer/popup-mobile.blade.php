@@ -439,6 +439,9 @@
               $element.removeAttr('selected').parent().val('');
             }
           }
+
+          dt.applyBrandColor();
+
         </script>
 
         <div class="kwp-row">
