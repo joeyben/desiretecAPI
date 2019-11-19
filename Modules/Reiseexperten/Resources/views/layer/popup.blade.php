@@ -421,6 +421,7 @@
 
             }
 
+            dt.applyBrandColor();
 
         </script>
 
