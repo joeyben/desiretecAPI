@@ -444,6 +444,9 @@
               /* END Airports */
 
             }
+
+            dt.applyBrandColor();
+
         </script>
 
         <div class="kwp-row">

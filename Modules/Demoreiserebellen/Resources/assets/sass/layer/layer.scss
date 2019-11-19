@@ -34,7 +34,7 @@ $gutter: 30px;
   height: 75px;
   position: fixed;
   display: none;
-  background: $brand-primary url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -353,7 +353,6 @@ $gutter: 30px;
         .button{
           background: transparent;
           a{
-            background: $brand-primary;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -414,7 +413,7 @@ $gutter: 30px;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #092a5e;
+              color: $master-primary;
               padding: 0;
               margin: 20px 0;
               font-size: 15px !important;
@@ -443,7 +442,6 @@ $gutter: 30px;
         .button{
           background: transparent;
           a{
-            background: $brand-primary;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -766,7 +764,6 @@ p.kwp-info {
     font-size: 12px;
     line-height: 1.3em;
     a {
-      color: $brand-primary !important;
       text-decoration: none;
     }
     #agb_link, #datenschutz{
@@ -901,7 +898,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid $brand-primary;
+  border: 10px solid $master-primary;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1250,8 +1247,6 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid $brand-primary;
-          background-color: $brand-primary;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1428,7 +1423,7 @@ p.kwp-info {
       .catering{
         position: relative;
         .dropdown{
-          margin-top: 20px;
+          margin-top: 15px;
         }
         .kwp-custom-select{
           margin-top: 20px;
