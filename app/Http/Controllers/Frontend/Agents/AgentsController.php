@@ -143,11 +143,7 @@ class AgentsController extends Controller
 
     public function updateAgent($id , Request $request)
     {
-        $avatar = ['avatar' => $this->uploadImage(['avatar' => $request->avatar])]['avatar']['avatar'];
-
-        DB::table('agents')
-            ->where('id', $id)
-            ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone, 'avatar' => $avatar]);
+        $this->agent->doUpdate($id, $request);
 
         return redirect()
             ->route('frontend.agents.index')
