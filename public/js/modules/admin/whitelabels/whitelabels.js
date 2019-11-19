@@ -99192,7 +99192,9 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("filter-bar"),
+      _vm.whitelabel.id
+        ? _c("filter-bar", { attrs: { defaultWhitelabel: _vm.whitelabel.id } })
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "div",
