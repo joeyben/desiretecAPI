@@ -53,6 +53,7 @@ class WhitelabelsRepository extends BaseRepository
                 config('module.whitelabels.table') . '.ga_view_id',
                 config('module.whitelabels.table') . '.created_by',
                 config('module.whitelabels.table') . '.created_at',
+                config('module.whitelabels.table') . '.color',
             ]);
 
         $dataTableQuery->when(access()->user()->hasRole('Executive') && !access()->user()->hasRole('Administrator'), function ($q) {
@@ -157,6 +158,7 @@ class WhitelabelsRepository extends BaseRepository
                 config('module.whitelabels.table') . '.display_name',
                 config('module.whitelabels.table') . '.status',
                 config('module.whitelabels.table') . '.bg_image',
+                config('module.whitelabels.table') . '.color',
             ])
             ->where('name', $name)
             ->first()->toArray();
@@ -177,6 +179,7 @@ class WhitelabelsRepository extends BaseRepository
                 config('module.whitelabels.table') . '.display_name',
                 config('module.whitelabels.table') . '.status',
                 config('module.whitelabels.table') . '.bg_image',
+                config('module.whitelabels.table') . '.color',
             ])
             ->where('id', $id)
             ->first()->toArray();
