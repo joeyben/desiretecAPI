@@ -331,60 +331,72 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         return DB::table($table)->insert($languageLines);
     }
 
-    public function current()
+    public function current(bool $first = true)
     {
         $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
 
         if (null !== $whitelabel) {
             return $this->resolveModel()->find($whitelabel->id);
+        } else if ($first) {
+            return $this->resolveModel()->first();
         }
-
-        return $whitelabel;
     }
 
     public function getBackgroundImage($whitelabel)
     {
-        return $whitelabel->attachments->map(function ($attachment) {
-            if (('whitelabels/background') === $attachment->type) {
-                return [
-                    'uid'  => $attachment->id,
-                    'name' => $attachment->name . '.' . $attachment->extension,
-                    'url'  => $attachment->url
-                ];
-            }
-        })->reject(function ($item) {
-            return null === $item;
-        });
+        if (!is_null($whitelabel)) {
+            return $whitelabel->attachments->map(function ($attachment) {
+                if (('whitelabels/background') === $attachment->type) {
+                    return [
+                        'uid'  => $attachment->id,
+                        'name' => $attachment->name . '.' . $attachment->extension,
+                        'url'  => $attachment->url
+                    ];
+                }
+            })->reject(function ($item) {
+                return null === $item;
+            });
+        }
+
+        return null;
     }
 
     public function getLogo($whitelabel)
     {
-        return $whitelabel->attachments->map(function ($attachment) {
-            if (('whitelabels/logo') === $attachment->type) {
-                return [
-                    'uid'  => $attachment->id,
-                    'name' => $attachment->name . '.' . $attachment->extension,
-                    'url'  => $attachment->url
-                ];
-            }
-        })->reject(function ($item) {
-            return null === $item;
-        });
+        if (!is_null($whitelabel)) {
+            return $whitelabel->attachments->map(function ($attachment) {
+                if (('whitelabels/logo') === $attachment->type) {
+                    return [
+                        'uid'  => $attachment->id,
+                        'name' => $attachment->name . '.' . $attachment->extension,
+                        'url'  => $attachment->url
+                    ];
+                }
+            })->reject(function ($item) {
+                return null === $item;
+            });
+        }
+
+        return null;
     }
 
     public function getFavicon($whitelabel)
     {
-        return $whitelabel->attachments->map(function ($attachment) {
-            if (('whitelabels/favicon') === $attachment->type) {
-                return [
-                    'uid'  => $attachment->id,
-                    'name' => $attachment->name . '.' . $attachment->extension,
-                    'url'  => $attachment->url
-                ];
-            }
-        })->reject(function ($item) {
-            return null === $item;
-        });
+        if (!is_null($whitelabel)) {
+            return $whitelabel->attachments->map(function ($attachment) {
+                if (('whitelabels/favicon') === $attachment->type) {
+                    return [
+                        'uid'  => $attachment->id,
+                        'name' => $attachment->name . '.' . $attachment->extension,
+                        'url'  => $attachment->url
+                    ];
+                }
+            })->reject(function ($item) {
+                return null === $item;
+            });
+        }
+
+        return null;
     }
 
     public function getSubDomain(string $domain)
@@ -400,5 +412,24 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $parts = explode('.', $domain);
 
         return  isset($parts[2]) ? '.' . str_slug($parts[1]) . '.' . str_slug($parts[2]) : $domain;
+    }
+
+    public function getVisual($whitelabel)
+    {
+        if (!is_null($whitelabel)) {
+            return $whitelabel->attachments->map(function ($attachment) {
+                if (('whitelabels/visual') === $attachment->type) {
+                    return [
+                        'uid'  => $attachment->id,
+                        'name' => $attachment->name . '.' . $attachment->extension,
+                        'url'  => $attachment->url
+                    ];
+                }
+            })->reject(function ($item) {
+                return null === $item;
+            });
+        }
+
+        return null;
     }
 }

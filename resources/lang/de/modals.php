@@ -113,4 +113,10 @@ return [
     'until'                         => 'Bis',
     'primary_color'                 => 'Primärfarbe',
     'alert_email'                   => 'Benachrichtigungs-E-Mail',
+    'headline'                      => 'Überschrift',
+    'subheadline'                   => 'Unterüberschrift',
+    'headline_success'              => 'Erfolg Überschrift',
+    'subheadline_success'           => 'Erfolg Unterüberschrift',
+    'visual'                        => 'Visual',
+    'message_success'               => 'Nachricht Erfolg',
 ];

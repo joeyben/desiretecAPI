@@ -323,11 +323,16 @@ class WhitelabelsController extends Controller
 
             $favicon = $this->whitelabels->getFavicon($result['whitelabel']);
 
-            $result['whitelabel']['background'] = null !== $background->first() ? [$background->first()] : [];
-            $result['whitelabel']['logo'] = null !== $logo->first() ? [$logo->first()] : [];
-            $result['whitelabel']['favicon'] = null !== $favicon->first() ? [$favicon->first()] : [];
-            $result['whitelabel']['sub_domain'] = $this->whitelabels->getSubDomain($result['whitelabel']->domain);
-            $result['whitelabel']['main_domain'] = $this->whitelabels->getDomain($result['whitelabel']->domain);
+            $visual = $this->whitelabels->getVisual($result['whitelabel']);
+
+            $domain = null !== $result['whitelabel'] ? $result['whitelabel']->domain : '';
+
+            $result['whitelabel']['background'] = null !== $background ? [$background->first()] : [];
+            $result['whitelabel']['logo'] = null !== $logo ? [$logo->first()] : [];
+            $result['whitelabel']['favicon'] = null !== $favicon ? [$favicon->first()] : [];
+            $result['whitelabel']['visual'] = null !== $visual ? [$visual->first()] : [];
+            $result['whitelabel']['sub_domain'] = $this->whitelabels->getSubDomain($domain);
+            $result['whitelabel']['main_domain'] = $this->whitelabels->getDomain($domain);
 
             $result['success'] = true;
             $result['status'] = 200;
@@ -344,6 +349,20 @@ class WhitelabelsController extends Controller
     {
         try {
             $result['whitelabel'] = $this->whitelabels->find($id);
+
+            $background = $this->whitelabels->getBackgroundImage($result['whitelabel']);
+
+            $logo = $this->whitelabels->getLogo($result['whitelabel']);
+
+            $favicon = $this->whitelabels->getFavicon($result['whitelabel']);
+
+            $visual = $this->whitelabels->getVisual($result['whitelabel']);
+
+            $result['whitelabel']['background'] = null !== $background ? [$background->first()] : [];
+            $result['whitelabel']['logo'] = null !== $logo ? [$logo->first()] : [];
+            $result['whitelabel']['favicon'] = null !== $favicon ? [$favicon->first()] : [];
+            $result['whitelabel']['visual'] = null !== $visual ? [$visual->first()] : [];
+
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {

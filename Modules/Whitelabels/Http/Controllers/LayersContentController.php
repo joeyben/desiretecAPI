@@ -10,7 +10,7 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
-class LayersController extends Controller
+class LayersContentController extends Controller
 {
     /**
      * @var \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository
@@ -31,20 +31,17 @@ class LayersController extends Controller
         $this->lang = $lang;
         $this->response = $response;
     }
-
     /**
      * Display a listing of the resource.
-     *
      * @return Response
      */
     public function index()
     {
-        return view('whitelabels::layers');
+        return view('whitelabels::content');
     }
 
     /**
      * Show the form for creating a new resource.
-     *
      * @return Response
      */
     public function create()
@@ -54,9 +51,7 @@ class LayersController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     *
+     * @param  Request $request
      * @return Response
      */
     public function store(Request $request)
@@ -65,7 +60,6 @@ class LayersController extends Controller
 
     /**
      * Show the specified resource.
-     *
      * @return Response
      */
     public function show()
@@ -75,7 +69,6 @@ class LayersController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @return Response
      */
     public function edit()
@@ -83,28 +76,18 @@ class LayersController extends Controller
         return view('whitelabels::edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+
     public function update(Request $request)
     {
         try {
-            $whitelabel = $this->whitelabels->current(false);
-
-            if (null === $whitelabel && $request->has('whitelabel_id')) {
-                $whitelabel = $this->whitelabels->find($request->get('whitelabel_id'));
-            }
-
             $result['whitelabel'] = $this->whitelabels->update(
-                $whitelabel->id,
-                $request->only('layer')
+                $request->get('id'),
+                $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success')
             );
 
-            $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Layer']);
+            file_put_contents(public_path('whitelabels-config.son'), json_encode($this->whitelabels->all()));
+
+            $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Content']);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -118,7 +101,6 @@ class LayersController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
      * @return Response
      */
     public function destroy()
