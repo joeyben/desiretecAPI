@@ -343,9 +343,10 @@
 
                 validateDuration();
 
-                var range = parseInt($("#budget").val().replace('.',''));
-                if(range)
-                  $('input[type="range"]').val(range).change();
+                if($("#budget").length) {
+                    var range = parseInt($("#budget").val().replace('.',''));
+                    $('input[type="range"]').val(range).change();
+                }
 
                var pax = $("#adults").val();
                var children_count = parseInt($("#kids").val());
@@ -390,6 +391,9 @@
                     $element.removeAttr('selected').parent().val('');
                 }
             }
+
+            dt.applyBrandColor();
+
         </script>
 
         <div class="kwp-row">
