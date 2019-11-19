@@ -9,6 +9,7 @@ use App\Exceptions\GeneralException;
 use App\Models\Agents\Agent;
 use App\Repositories\BaseRepository;
 use Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -193,6 +194,20 @@ class AgentsRepository extends BaseRepository
             DB::table('message')->where('agent_id', '=', $id)->delete();
         }
         DB::table('agents')->where('id', '=', $id)->delete();
+    }
+
+    public function doUpdate($id, Request $request){
+        if (array_key_exists('avatar',$request->all())) {
+            $avatar = ['avatar' => $this->uploadImage(['avatar' => $request->avatar])]['avatar']['avatar'];
+
+            DB::table('agents')
+                ->where('id', $id)
+                ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone, 'avatar' => $avatar]);
+        }else{
+            DB::table('agents')
+                ->where('id', $id)
+                ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone]);
+        }
     }
 
     public function updateStatus($active_id)
