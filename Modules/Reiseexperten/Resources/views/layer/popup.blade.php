@@ -166,7 +166,7 @@
 
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('reiseexperten::layer.general.catering'), ['class' => 'control-label required']) }}
-                {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'selectpicker']) }}
+                {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'dt-selectpicker']) }}
                 <i class="master-icon--chevron-down"></i>
             </div>
 
@@ -275,7 +275,6 @@
 
             var allDestinations = [];
             $(document).ready(function(){
-                //$('.selectpicker').selectpicker();
 
                 autocomplete();
 

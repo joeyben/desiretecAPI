@@ -361,7 +361,7 @@ class AutooffersTTRepository extends BaseRepository
                 "value" => $offer["PriceInfo"]["Price"]["value"],
                 "currency" => $offer["PriceInfo"]["Price"]["CurrencyCode"]
             ],
-            'offerFeatures' => $offer["OfferProperties"]["OfferFeatures"],
+            'offerFeatures' =>   array_key_exists('OfferFeatures', $offer["OfferProperties"]) ? $offer["OfferProperties"]['OfferFeatures'] : [],
             'hotel_reviews' => $this->reviews[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
             'hotel_attributes' => $this->hotelAttributes[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
             'hotel_geo'=> $this->geos[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
