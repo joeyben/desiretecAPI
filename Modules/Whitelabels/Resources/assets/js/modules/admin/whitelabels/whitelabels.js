@@ -35,6 +35,7 @@ Vue.filter('str_limit', function (string, value) {
 
 let $whitelabelsComponent = document.querySelector('#whitelabelsComponent')
 let $layersComponent = document.querySelector('#layersComponent')
+let $contentComponent = document.querySelector('#contentComponent')
 let $whitelabelsProviderComponent = document.querySelector('#whitelabelsProviderComponent')
 
 if ($whitelabelsProviderComponent) {
@@ -69,6 +70,27 @@ if ($layersComponent) {
 
   new Vue({
     el: '#layersComponent',
+    router,
+    store,
+    components: { },
+    mounted () {
+    },
+    methods: {
+    }
+  })
+}
+
+if ($contentComponent) {
+  const router = new VueRouter({
+    routes: [{
+      path: '/',
+      name: 'root',
+      component: require('./components/ContentComponent.vue')
+    }]
+  })
+
+  new Vue({
+    el: '#contentComponent',
     router,
     store,
     components: { },

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <filter-bar></filter-bar>
+        <filter-bar :defaultWhitelabel="whitelabel.id" v-if="whitelabel.id"></filter-bar>
         <div class="row">
             <el-col v-for="(layer, index) in layers" :key="layer.id"  class="col-xl-4 col-sm-6">
                 <el-card :body-style="{ padding: '0px' }" shadow="hover">
