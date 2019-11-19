@@ -47,6 +47,7 @@
     <div class="col-md-3">
         <i class="fal fa-child"></i>
         <input class="data-content" value="{{ $wish->kids }}" style="width: 30%">
+        @if($wish->ages)
         <div>(
             <?php $count = 0; ?>
             @foreach( explode("/", $wish->ages) as $age)
@@ -60,6 +61,7 @@
                 @endif
             @endforeach
         )</div>
+        @endif
     </div>
     <div class="col-md-3">
         <i class="fal fa-stopwatch"></i>
