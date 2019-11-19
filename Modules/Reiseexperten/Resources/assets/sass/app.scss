@@ -138,3 +138,13 @@ body{
     border-bottom: none;
   }
 }
+
+// Logo Fix
+.navbar-default{
+  a.logo{
+    .navbar-brand{
+      padding: 0;
+      height: 50px !important;
+    }
+  }
+}

@@ -763,7 +763,8 @@ p.kwp-info {
   }
   p{
     padding-left: 40px;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 500;
     line-height: 1.3em;
     color: #000;
     a {
@@ -1218,6 +1219,7 @@ p.kwp-info {
         padding: 10px 20px;
         border-bottom: 1px solid $master-grey-light;
         font-size: 16px;
+        font-weight: 500;
       }
 
       .kwp-form-errors{
@@ -1279,8 +1281,13 @@ p.kwp-info {
         display: block;
       }
       .kwp-completed-master{
+        color: #000;
         h1{
           margin-top: 0;
+          border: none;
+          color: #000;
+          display: block;
+          margin-bottom: 20px;
           i{
             display: block;
             text-align: center;
@@ -1289,6 +1296,14 @@ p.kwp-info {
             margin-right: 10px;
             color: $master-primary;
           }
+        }
+        p{
+          color: #000;
+          font-weight: 500;
+          margin-bottom: 20px;
+        }
+        a{
+          color: $brand-primary;
         }
       }
     }
@@ -1428,6 +1443,7 @@ p.kwp-info {
           display: block;
           margin-top: 5px;
           color: $master-primary;
+          font-weight: 500;
         }
       }
       .catering{
@@ -1618,4 +1634,15 @@ and (max-device-width : 320px) {
 }
 .dt_terms.hasError:after{
   border: 1px solid red !important;
+}
+
+
+// Bootstrap fixes
+
+.dt-modal{
+  select.selectpicker{
+    display: block !important;
+    margin-top: 15px;
+    color: #000;
+  }
 }

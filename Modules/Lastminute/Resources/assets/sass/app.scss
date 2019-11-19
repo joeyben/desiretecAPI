@@ -139,7 +139,7 @@ a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
         position: absolute;
         right: 0;
         &:before{
-          content: "\00a9";
+          content: "\00a9   " attr(data-copyyear);
           margin-right: 6px;
         }
       }

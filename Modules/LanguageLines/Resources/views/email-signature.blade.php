@@ -64,6 +64,7 @@
             removeButtons: 'Anchor,ShowBlocks,CreateDiv,Flash,PageBreak,Iframe',
             removePlugins: 'elementspath',
             extraPlugins: 'lineheight',
+            enterMode: CKEDITOR.ENTER_BR,
             toolbarGroups: [
                 { name: 'styles' },
                 { name: 'editing', groups: ['lineheight'] },

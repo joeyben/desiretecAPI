@@ -165,8 +165,7 @@
                     <div class="kwp-col-4 white-col">
                         <div class="kwp-agb">
                             {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                            <p>Ich habe die <a id="datenschutz" href="https://www.kreuzfahrtberatung.de/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
-                            <script>$('#agb_link').click(dt.agbModal);</script>
+                            <p>Ich habe die <a href="https://demokreuzfahrtberatung.reise-wunsch.com/pdfs/tnb_Kreuzfahrtberatung.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.kreuzfahrtberatung.de/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                         </div>
                     </div>
 
@@ -343,9 +342,10 @@
 
                 validateDuration();
 
-                var range = parseInt($("#budget").val().replace('.',''));
-                if(range)
-                  $('input[type="range"]').val(range).change();
+                if($("#budget").length) {
+                    var range = parseInt($("#budget").val().replace('.',''));
+                    $('input[type="range"]').val(range).change();
+                }
 
                var pax = $("#adults").val();
                var children_count = parseInt($("#kids").val());
@@ -390,6 +390,9 @@
                     $element.removeAttr('selected').parent().val('');
                 }
             }
+
+            dt.applyBrandColor();
+
         </script>
 
         <div class="kwp-row">

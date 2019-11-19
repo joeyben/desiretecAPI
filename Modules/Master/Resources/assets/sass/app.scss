@@ -85,3 +85,13 @@ body{
 .footer ul{
   text-align: center;
 }
+
+// Logo Fix
+.navbar-default{
+  a.logo{
+    .navbar-brand{
+      padding: 0;
+      height: 50px !important;
+    }
+  }
+}
