@@ -25,6 +25,10 @@
       gtag('config', 'UA-105970361-11');
     </script>
 
+    <script type="application/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+
     <script src="{{ mix('whitelabel/traveloverland/js/traveloverland.js') }}"></script>
 @endsection
 

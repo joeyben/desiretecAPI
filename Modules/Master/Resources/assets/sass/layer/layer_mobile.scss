@@ -7,12 +7,6 @@ $gutter: 30px;
 $altfont: 'Roboto', sans-serif;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #092a5e;
-$secondarycolor: #092a5e;
-$mastergrey: #737373;
-$master-blue: #70CBF4;
-$fontcolor: #303030;
-/* dropdown */
 
 
 //
@@ -255,7 +249,7 @@ $fontcolor: #303030;
 
 
 .rangeslider__fill{
-  background-color: $mastercolor;
+  background-color: $master-primary;
 }
 
 /**** Datepicker ****/
@@ -266,7 +260,7 @@ $fontcolor: #303030;
   background-color: #fff;
   border-bottom: 1px solid #f3f0ec;
   border-radius: 0;
-  color: $mastercolor;
+  color: $master-primary;
   font-weight: 300;
   height: 40px;
 }
@@ -279,13 +273,13 @@ $fontcolor: #303030;
   font-weight: normal;
 }
 .datepicker-dropdown .day.active, .datepicker-dropdown .day.active.active:hover, .datepicker-dropdown .day.active:hover,.datepicker-dropdown .day.active.active:hover:hover, .datepicker-dropdown .month.active, .datepicker-dropdown .month.active.active:hover, .datepicker-dropdown .month.active:hover, .datepicker-dropdown .month.active.active:hover:hover, .datepicker-dropdown .year.active, .datepicker-dropdown .year.active.active:hover, .datepicker-dropdown .year.active:hover, .datepicker-dropdown .year.active.active:hover:hover {
-  background-color: $mastercolor;
+  background-color: $master-primary;
   border-color: transparent;
   color: #fff;
   text-shadow: none;
 }
 .datepicker .datepicker-switch{
-  color: $mastercolor;
+  color: $master-primary;
   font-weight: 700;
 }
 
@@ -321,11 +315,11 @@ $fontcolor: #303030;
   height: 75px;
   position: fixed;
   display: none;
-  background: $secondarycolor url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
-  color: $fontcolor;
+  color: $master-grey-dark;
   box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.1);
   /*transition: all 0.5s ease;
    -webkit-transition: all 0.5s ease;
@@ -552,7 +546,7 @@ $fontcolor: #303030;
     padding-left: 7px;
     outline: none;
     border: 1px solid #aaa;
-    color: $fontcolor;
+    color: $master-grey-dark;
     font-size: 12px;
   }
 
@@ -625,7 +619,6 @@ $fontcolor: #303030;
           margin-bottom: 0;
           height: auto;
           a{
-            background: $secondarycolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -687,7 +680,7 @@ $fontcolor: #303030;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: $secondarycolor;
+              color: $master-primary;
               padding: 0;
               margin: 20px 0;
               font-size: 20px !important;
@@ -719,7 +712,6 @@ $fontcolor: #303030;
           display: block;
           margin-bottom: 0;
           a{
-            background: $secondarycolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -1124,7 +1116,7 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .filter-option-inner-inner{
-      color: $secondarycolor;
+      color: $master-primary;
       font-size: 18px;
     }
   }
@@ -1350,8 +1342,6 @@ p.kwp-info {
     height: 100vh;
   }
   .kwp-header{
-    /*background: linear-gradient(179deg, #fce136 0, #e4cd34 100%);*/
-    background: linear-gradient(179deg, $secondarycolor 0, $secondarycolor 100%);
     min-height: 40px;
     height: 40px;
     position: relative;
@@ -1370,7 +1360,7 @@ p.kwp-info {
       right: 15px;
       top: 40px;
       font-size: 20px;
-      color: $fontcolor;
+      color: $master-grey-dark;
     }
   }
   .kwp-content-extra{
@@ -1481,8 +1471,6 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid $secondarycolor;
-          background-color: $secondarycolor;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1491,7 +1479,7 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:$fontcolor;
+        color:$master-grey-dark;
         padding: 8px 0;
         font-weight: bold;
         text-align: center;
@@ -1572,8 +1560,8 @@ p.kwp-info {
         line-height: 2em;
         background-color: transparent;
         font-weight: 500;
-        border-bottom: 1px solid $secondarycolor;
-        color: $fontcolor;
+        border-bottom: 1px solid $master-primary;
+        color: $master-grey-dark;
         border-radius: 0;
         padding: 0 10px;
         font-size: 18px;
@@ -1613,7 +1601,7 @@ p.kwp-info {
           margin-bottom: 0px;
           padding: 10px 0;
           font-size: 20px;
-          color: $mastercolor;
+          color: $master-primary;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1634,7 +1622,7 @@ p.kwp-info {
             height: 25px;
             background: #fff;
             cursor: pointer;
-            border: 2px solid $mastercolor;
+            border: 2px solid $master-primary;
             border-radius: 50%;
           }
           &::-moz-range-thumb {
@@ -1689,11 +1677,11 @@ p.kwp-info {
       background: none;
       background-color: transparent;
       font-weight: 500;
-      border-bottom: 1px solid $secondarycolor;
+      border-bottom: 1px solid $master-primary;
       border-radius: 0;
       padding: 0 10px;
       font-size: 18px;
-      color: $fontcolor;
+      color: $master-grey-dark;
     }
     .kwp-custom-select{
       #catering{

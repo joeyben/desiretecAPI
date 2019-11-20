@@ -15,13 +15,15 @@
 @endsection
 
 @section('before-scripts')
+    <script type="application/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+
     <script src="{{ mix('whitelabel/reiseexperten/js/reiseexperten.js') }}"></script>
 @endsection
 
 @section('after-scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-
-
 
     <script type="application/javascript">
         window.dt = {

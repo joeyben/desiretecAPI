@@ -152,12 +152,12 @@ body{
 }
 
 .primary-btn{
-  background: #fdcd0b !important;
-  border: 1px solid #fdcd0b !important;
+  background: $brand-primary !important;
+  border: 1px solid $brand-primary !important;
 }
 .secondary-btn{
-  border: 1px solid #fdcd0b !important;
-  color: #fdcd0b !important;
+  border: 1px solid $brand-primary !important;
+  color: $brand-primary !important;
 }
 .wish-modal-1 .modal-body-left label{
   left: 20px !important;

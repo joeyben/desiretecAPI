@@ -7,8 +7,6 @@ $gutter: 30px;
 $altfont: 'Roboto', sans-serif;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #ed1c24;
-$secondarycolor: #fd0;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
 $fontcolor: #303030;
@@ -321,7 +319,7 @@ $fontcolor: #303030;
   height: 75px;
   position: fixed;
   display: none;
-  background: $secondarycolor url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -561,7 +559,7 @@ $fontcolor: #303030;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
     transition: border-color .3s ease;
-    border-color: #ffe336;
+    border-color: $mastercolor;
   }
 
   input[type="radio"],
@@ -625,7 +623,6 @@ $fontcolor: #303030;
           margin-bottom: 0;
           height: auto;
           a{
-            background: $secondarycolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -687,7 +684,7 @@ $fontcolor: #303030;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: $secondarycolor;
+              color: $mastercolor;
               padding: 0;
               margin: 20px 0;
               font-size: 20px !important;
@@ -719,7 +716,6 @@ $fontcolor: #303030;
           display: block;
           margin-bottom: 0;
           a{
-            background: $secondarycolor;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -1055,7 +1051,6 @@ p.kwp-info {
     font-size: 18px;
     line-height: 1.3em;
     a {
-      color: #70CBF4 !important;
       text-decoration: none;
     }
   }
@@ -1094,7 +1089,7 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .filter-option-inner-inner{
-      color: $secondarycolor;
+      color: $mastercolor;
       font-size: 18px;
     }
   }
@@ -1172,7 +1167,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid #fce237;
+  border: 10px solid #fff;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1320,8 +1315,6 @@ p.kwp-info {
     height: 100vh;
   }
   .kwp-header{
-    /*background: linear-gradient(179deg, #fce136 0, #e4cd34 100%);*/
-    background: linear-gradient(179deg, $secondarycolor 0, $secondarycolor 100%);
     min-height: 40px;
     height: 40px;
     position: relative;
@@ -1451,8 +1444,6 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid $secondarycolor;
-          background-color: $secondarycolor;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1542,7 +1533,7 @@ p.kwp-info {
         line-height: 2em;
         background-color: transparent;
         font-weight: 500;
-        border-bottom: 1px solid $secondarycolor;
+        border-bottom: 1px solid $mastercolor;
         color: $fontcolor;
         border-radius: 0;
         padding: 0 10px;
@@ -1659,7 +1650,7 @@ p.kwp-info {
       background: none;
       background-color: transparent;
       font-weight: 500;
-      border-bottom: 1px solid $secondarycolor;
+      border-bottom: 1px solid $mastercolor;
       border-radius: 0;
       padding: 0 10px;
       font-size: 18px;
@@ -1787,5 +1778,5 @@ select[name="category"]{
   padding-left: 5px;
 }
 .destination{
-  border-bottom: 1px solid #ffdd00;
+  border-bottom: 1px solid $mastercolor;
 }

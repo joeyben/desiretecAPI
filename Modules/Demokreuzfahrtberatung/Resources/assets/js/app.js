@@ -1,29 +1,27 @@
-
 // Colors
 
 // brandColor is assigned in master.blade
 var brandColorDarker = brandColor;
-var whiteColor = '#fff';
 
 // Buttons styles
 
 var btnPrimaryCss = {
   'background': brandColor,
   'border': '1px solid ' + brandColor,
-  'color': whiteColor,
+  'color': '#fff',
 };
 var btnPrimaryHoverCss = {
   'background': brandColorDarker,
   'border': '1px solid ' + brandColorDarker,
-  'color': whiteColor,
+  'color': '#fff',
 };
 var btnSecondaryCss = {
-  'background': whiteColor,
+  'background': '#fff',
   'border': '1px solid ' + brandColor,
   'color': brandColor,
 };
 var btnSecondaryHoverCss = {
-  'background': whiteColor,
+  'background': '#fff',
   'border': '1px solid ' + brandColorDarker,
   'color': brandColorDarker,
 };

@@ -1,12 +1,12 @@
 @import "utils";
 @import "rangeslider";
 @import "bootstrap-select";
+@import "../variables";
 
 $gutter: 30px;
 $altfont: 'Comfortaa' !important;
 $zindex: 10000;
 $eil-border-radius: 4px;
-$mastercolor: #fdcd0b;
 $mastergrey: #737373;
 $master-blue: #70CBF4;
 
@@ -41,7 +41,7 @@ $master-blue: #70CBF4;
   height: 75px;
   position: fixed;
   display: none;
-  background: #fdcd0b url(../../images/layer/pensil.png) no-repeat center / 70%;
+  background: url(../../images/layer/pensil.png) no-repeat center / 70%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -242,7 +242,6 @@ $master-blue: #70CBF4;
 
   button[type=submit] {
     border-radius: 3px;
-    background: $mastercolor;
 
     text-align: center;
 
@@ -293,7 +292,7 @@ $master-blue: #70CBF4;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
     transition: border-color .3s ease;
-    border-color: #ffe336;
+    border-color: $mastercolor;
   }
 
   input[type="radio"],
@@ -354,7 +353,6 @@ $master-blue: #70CBF4;
         .button{
           background: transparent;
           a{
-            background: #fdcd0b;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -444,7 +442,6 @@ $master-blue: #70CBF4;
         .button{
           background: transparent;
           a{
-            background: #fdcd0b;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -773,7 +770,6 @@ p.kwp-info {
     font-size: 12px;
     line-height: 1.3em;
     a {
-      color: $master-blue !important;
       text-decoration: none;
     }
   }
@@ -903,7 +899,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid #fce237;
+  border: 10px solid #fff;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1251,8 +1247,6 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid $mastercolor;
-          background-color: $mastercolor;
           background-image: url(../../svg/check-white.svg);
         }
       }

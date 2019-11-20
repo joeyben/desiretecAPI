@@ -15,6 +15,9 @@
 @endsection
 
 @section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
     <script src="{{ mix('whitelabel/lastminute/js/lastminute.js') }}"></script>
 @endsection
 
