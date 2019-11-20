@@ -1102,6 +1102,9 @@ var exitIntent = window.exitIntent || {};
                 $('<span/>', {'class': 'trigger-modal'});
             $('body').prepend(this.trigger);
             this.trigger.fadeIn();
+            this.trigger.css({
+                'background-color': brandColor,
+            });
         }
 
         this.shown = false;
@@ -1408,4 +1411,58 @@ var exitIntent = window.exitIntent || {};
               this.rows = minRows + rows;
           });
     }
+
+    dt.applyBrandColor = function () {
+
+        var layerButtons = $('.kwp button[type=submit], .kwp .pax-col .kwp-form-group .pax-more .button a');
+        layerButtons.css(
+            btnPrimaryCss
+        ).mouseover(function () {
+            $(this).css(btnPrimaryHoverCss
+            );
+        }).mouseout(function () {
+            $(this).css(
+            btnPrimaryCss
+            );
+        });
+
+        var paxMore = $('.kwp .pax-col .kwp-form-group .pax-more .button a');
+        paxMore.css({
+            'background': brandColor,
+        });
+
+        var durationMore = $('.kwp .duration-col .kwp-form-group .duration-more .button a');
+        durationMore.css({
+            'background': brandColor,
+        });
+
+        var footerLinks = $('.kwp-agb p a');
+        footerLinks.css({
+            'color': brandColor,
+        });
+
+        var checkboxEl = $('.kwp input[type="checkbox"]:checked:after');
+        $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
+
+        var datepicker = $('.datepicker-dropdown .day.active, .datepicker-dropdown .day.active.active:hover, .datepicker-dropdown .day.active:hover,.datepicker-dropdown .day.active.active:hover:hover, .datepicker-dropdown .month.active, .datepicker-dropdown .month.active.active:hover, .datepicker-dropdown .month.active:hover, .datepicker-dropdown .month.active.active:hover:hover, .datepicker-dropdown .year.active, .datepicker-dropdown .year.active.active:hover, .datepicker-dropdown .year.active:hover, .datepicker-dropdown .year.active.active:hover:hover');
+        datepicker.css({
+            'background': brandColor,
+        });
+
+        var footerHref = $('.kwp-agb p a');
+        footerHref.css({
+            'color': brandColor,
+        });
+
+        var layerHeader = $('.mobile-layer .kwp-header');
+        layerHeader.css({
+            'background': brandColor,
+        });
+
+        var successHref = $('.kwp-completed-master a');
+        $("<style>.kwp-completed-master a { color: " + brandColor + "; }</style>")
+            .appendTo(document.documentElement);
+
+    }
+
 })(jQuery);

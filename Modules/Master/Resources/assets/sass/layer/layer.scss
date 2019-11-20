@@ -1,22 +1,22 @@
 @import "utils";
 @import "rangeslider";
 @import "bootstrap-select";
+@import "../variables";
 
 $gutter: 30px;
 $altfont: 'Comfortaa', cursive;
 $zindex: 10000;
-$eil-border-radius: 4px;
-$mastercolor: #092a5e;
-$mastergrey: #737373;
+$eil-border-radius: 4px;: #092a5e;
+$master-grey-light: #737373;
 $master-blue: #70CBF4;
-$fontcolor: #303030;
+$master-grey-dark: #303030;
 
 
 @include make-columns(12, $gutter - 5px, 'kwp-');
 
 
 .rangeslider__fill{
-  background-color: $mastercolor;
+  background-color: $master-primary;
 }
 
 .kwp-col-ages {
@@ -43,11 +43,11 @@ $fontcolor: #303030;
   height: 75px;
   position: fixed;
   display: none;
-  background: #092a5e url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
-  color: $fontcolor;
+  color: $master-grey-dark;
   box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.1);
   /*transition: all 0.5s ease;
    -webkit-transition: all 0.5s ease;
@@ -244,7 +244,6 @@ $fontcolor: #303030;
 
   button[type=submit] {
     border-radius: 3px;
-    background: $mastercolor;
 
     text-align: center;
 
@@ -258,8 +257,6 @@ $fontcolor: #303030;
     border: none;
     padding: 15px;
     margin-top: 5px;
-    &:active {
-    }
     &.error-button{
       background: #D40E14;
     }
@@ -285,7 +282,7 @@ $fontcolor: #303030;
     padding-left: 10px;
     outline: none;
     border: 1px solid #aaa;
-    color: $mastercolor;
+    color: $master-primary;
     font-size: 14px;
     font-family: $altfont;
   }
@@ -356,7 +353,6 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -417,7 +413,7 @@ $fontcolor: #303030;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #092a5e;
+              color: $master-primary;
               padding: 0;
               margin: 20px 0;
               font-size: 15px !important;
@@ -446,7 +442,6 @@ $fontcolor: #303030;
         .button{
           background: transparent;
           a{
-            background: #092a5e;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -776,7 +771,6 @@ p.kwp-info {
     font-size: 12px;
     line-height: 1.3em;
     a {
-      color: $master-blue !important;
       text-decoration: none;
     }
   }
@@ -814,15 +808,15 @@ p.kwp-info {
     padding: 2px 0;
     background-color: transparent;
     .caret{
-      border-color: #092a5e !important;
+      border-color: $master-primary !important;
       border-right: 6px solid transparent !important;
       border-left: 6px solid transparent !important;
       border-bottom: none !important;
-      border-top: 6px dashed #092a5e !important;
+      border-top: 6px dashed $master-primary !important;
       display: none;
     }
     .filter-option-inner-inner{
-      color: #092a5e;
+      color: $master-primary;
       font-size: 14px;
       font-weight: 500;
     }
@@ -1067,7 +1061,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $master-primary;
     }
     .text-hidden{
       padding: 5px 0;
@@ -1088,7 +1082,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $master-primary;
     }
   }
   .description{
@@ -1129,7 +1123,7 @@ p.kwp-info {
         right: 10px;
         top: 30px;
         font-size: 16px;
-        color: #092a5e;
+        color: $master-primary;
       }
     }
   }
@@ -1195,7 +1189,7 @@ p.kwp-info {
           h1{
             margin: 0px;
             padding: 5px 0;
-            color: #092A5E;
+            color: $master-primary;
             position: absolute;
             bottom: 0px;
             font-size: 26px;
@@ -1219,7 +1213,7 @@ p.kwp-info {
       .kwp-middle{
         background: #E2F3FE;
         padding: 5px 20px;
-        border-bottom: 1px solid $master-blue;
+        border-bottom: 1px solid $master-grey-dark;
         font-size: 16px;
       }
 
@@ -1255,8 +1249,6 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid #092A59;
-          background-color: #092A59;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1265,7 +1257,7 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#092a5e;
+        color:$master-primary;
         padding: 8px 0;
         font-weight: bold;
         font-family: $altfont;
@@ -1348,8 +1340,8 @@ p.kwp-info {
         line-height: 1.5em;
         background-color: transparent;
         font-weight: 500;
-        border-bottom: 1px solid $mastergrey;
-        color: $mastercolor;
+        border-bottom: 1px solid $master-grey-light;
+        color: $master-primary;
         border-radius: 0;
         padding: 0 10px;
         font-size: 14px;
@@ -1392,7 +1384,7 @@ p.kwp-info {
           margin-bottom: 0px;
           padding: 3px 0;
           font-size: 14px;
-          color: $mastercolor;
+          color: $master-primary;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1413,7 +1405,7 @@ p.kwp-info {
             height: 25px;
             background: #fff;
             cursor: pointer;
-            border: 2px solid $mastercolor;
+            border: 2px solid $master-primary;
             border-radius: 50%;
           }
           &::-moz-range-thumb {
@@ -1482,11 +1474,11 @@ p.kwp-info {
       background: none;
       background-color: transparent;
       font-weight: 500;
-      border-bottom: 1px solid $mastergrey;
+      border-bottom: 1px solid $master-grey-light;
       border-radius: 0;
       padding: 0 10px;
       font-size: 14px;
-      color: $mastercolor;
+      color: $master-primary;
     }
     .kwp-custom-select{
       #catering{

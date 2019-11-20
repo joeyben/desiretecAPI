@@ -369,6 +369,9 @@
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
             }
+
+            dt.applyBrandColor();
+
         </script>
 
         <div class="kwp-row">
