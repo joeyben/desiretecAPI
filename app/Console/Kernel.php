@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CheckGroup;
 use App\Console\Commands\InstallAppCommand;
 use App\Console\Commands\WhitelabelMakeRouteCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -22,8 +23,21 @@ class Kernel extends ConsoleKernel
         WhitelabelMakeRouteCommand::class,
         ImportLanguageFilesCommand::class,
         CopyLanguageCommand::class,
-        ExportLanguageLinesCommand::class
+        ExportLanguageLinesCommand::class,
+        CheckGroup::class
     ];
+
+    /**
+     * Define the application's command schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @return void
+     */
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('whitelabel:check-group')
+            ->everyMinute();
+    }
 
     /**
      * Define the application's command schedule.
