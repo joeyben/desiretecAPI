@@ -106,7 +106,8 @@ class FootersController extends Controller
                 new Filter($request->get('filter')),
                 new EagerLoad(['whitelabel'  => function ($query) {
                     $query->select('id', 'display_name');
-                }])
+                }]),
+                new ByWhitelabel('footers')
             ])->paginate($perPage);
 
             $result['success'] = true;
@@ -126,6 +127,10 @@ class FootersController extends Controller
      */
     public function create()
     {
+        $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+        $whitelabelId = (null === $whitelabel) ? null : $whitelabel->id;
+
         try {
             $result['footer'] = [
                 'id'                               => 0,
@@ -133,7 +138,7 @@ class FootersController extends Controller
                 'url'                              => '',
                 'position'                         => 1,
                 'whitelabel'                       => null,
-                'whitelabel_id'                    => null,
+                'whitelabel_id'                    => $whitelabelId,
             ];
 
             $result['footer']['logs'] = [];

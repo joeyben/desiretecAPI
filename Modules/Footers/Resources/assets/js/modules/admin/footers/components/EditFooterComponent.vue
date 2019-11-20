@@ -64,7 +64,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
+                                        <div class="form-group row" v-if="is_admin">
                                             <label class="col-lg-3 col-form-label"> &nbsp; {{ trans('modals.whitelabel') }}<span class="text-danger"> *</span></label>
                                             <div class="col-lg-9">
                                                 <el-select :value="footer.whitelabel_id" :placeholder="trans('labels.whitelabel')" size="small" style="width: 100%;" @input="inputWhitelabel" :class="errors.has('whitelabel_id') ? 'is-invalid': ''">
@@ -136,6 +136,9 @@
       }),
       can_logs () {
         return !this.deleted && this.hasPermissionTo('logs-footer')
+      },
+      is_admin () {
+        return this.hasRole('Administrator')
       }
     },
     methods: {

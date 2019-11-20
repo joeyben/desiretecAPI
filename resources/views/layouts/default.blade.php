@@ -285,7 +285,7 @@
                     </li>
                     @endif
 
-                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('admin.footers') }}" class="nav-link">
                                 <i class="icon-move-down"></i>

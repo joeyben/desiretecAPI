@@ -119,4 +119,5 @@ return [
     'subheadline_success'           => 'Success sub headline',
     'visual'                        => 'Visual',
     'message_success'               => 'Message success',
+    'position'                      => 'Position',
 ];

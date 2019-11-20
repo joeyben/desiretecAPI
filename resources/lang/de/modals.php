@@ -119,4 +119,5 @@ return [
     'subheadline_success'           => 'Erfolg Unterüberschrift',
     'visual'                        => 'Visual',
     'message_success'               => 'Nachricht Erfolg',
+    'position'                      => 'Reihenfolge',
 ];
