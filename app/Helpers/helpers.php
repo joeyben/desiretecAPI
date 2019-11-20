@@ -418,8 +418,8 @@ if (!function_exists('getCurrentWhiteLabelField')) {
         //$url = str_replace('http://', '', url('/'));
         //$url = str_replace('https://', '', $url);
 
-        return \App\Models\Whitelabels\Whitelabel::Where('domain', '=' , 'https//'.$url)
-            ->orWhere('domain', '=' , 'http//'.$url)->value($field);
+        return \App\Models\Whitelabels\Whitelabel::Where('domain', '=' , 'https://'.$url)
+            ->orWhere('domain', '=' , 'http://'.$url)->value($field);
 
     }
 }
