@@ -667,12 +667,13 @@
 @endsection
 
 @section('before-scripts')
-
+    <script type="text/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
     <script src="{{ mix('whitelabel/demokreuzfahrtberatung/js/demokreuzfahrtberatung.js') }}"></script>
 @endsection
 
 @section('after-scripts')
-
     <script type="application/javascript">
         function scrollToAnchor(id) {
             $('html, body').animate({
