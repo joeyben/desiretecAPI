@@ -130,14 +130,24 @@ $(primaryButtons, secondaryButtons).ready(function(){
 
     // Buttons styles
     var btnPrimaryCss = {
-    'background': brandColor,
-    'border': '1px solid ' + brandColor,
-    'color': '#fff',
+        'background': brandColor,
+        'border': '1px solid ' + brandColor,
+        'color': '#fff',
     };
     var btnPrimaryHoverCss = {
-    'background': brandColorDarker,
-    'border': '1px solid ' + brandColorDarker,
-    'color': '#fff',
+        'background': brandColorDarker,
+        'border': '1px solid ' + brandColorDarker,
+        'color': '#fff',
+    };
+    var btnSecondaryCss = {
+        'background': '#fff',
+        'border': '1px solid ' + brandColor,
+        'color': brandColor,
+    };
+    var btnSecondaryHoverCss = {
+        'background': '#fff',
+        'border': '1px solid ' + brandColorDarker,
+        'color': brandColorDarker,
     };
 
     // Apply Buttons styles
