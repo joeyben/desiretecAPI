@@ -119,3 +119,42 @@ $('.antworten-btn').click(function(){
     $(this).addClass('sendAntworten');
 })
 
+
+var primaryButtons = $('a.primary-btn, .primary-btn, a.btn-primary, .btn-primary, input.primary-btn');
+var secondaryButtons = $('a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary');
+
+$(primaryButtons, secondaryButtons).ready(function(){
+
+    // Brand colors
+    var brandColorDarker = brandColor;
+
+    // Buttons styles
+    var btnPrimaryCss = {
+    'background': brandColor,
+    'border': '1px solid ' + brandColor,
+    'color': '#fff',
+    };
+    var btnPrimaryHoverCss = {
+    'background': brandColorDarker,
+    'border': '1px solid ' + brandColorDarker,
+    'color': '#fff',
+    };
+
+    // Apply Buttons styles
+    primaryButtons
+        .css(btnPrimaryCss)
+        .mouseover(function () {
+            $(this).css(btnPrimaryHoverCss);
+        }).mouseout(function () {
+            $(this).css(btnPrimaryCss);
+        });
+
+    secondaryButtons
+        .css(btnSecondaryCss)
+        .mouseover(function () {
+            $(this).css(btnSecondaryHoverCss);
+        }).mouseout(function () {
+            $(this).css(btnSecondaryCss);
+    });
+});
+
