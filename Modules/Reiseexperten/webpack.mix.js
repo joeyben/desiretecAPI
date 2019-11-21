@@ -13,19 +13,19 @@ mix.scripts(
     [
         base_url + "node_modules/jquery/dist/jquery.min.js",
         base_url + '/resources/assets/js/layer/datepicker.js',
-        __dirname + '/Resources/assets/js/app.js'
+        __dirname + '/Resources/assets/js/app.js',
     ], __dirname + '/../../public/whitelabel/reiseexperten/js/reiseexperten.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
         base_url + '/resources/assets/js/layer/exitintent-new.js',
         base_url + '/node_modules/js-cookie/src/js.cookie.js',
         base_url + '/resources/assets/js/layer/base.js',
-        base_url + '/node_modules/bootstrap/dist/js/bootstrap.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',
         base_url + '/resources/assets/js/layer/datepicker.js',
         base_url + '/resources/assets/js/layer/devicedetector.min.js',
         base_url + '/resources/assets/js/layer/touchswipe.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
+        __dirname + '/Resources/assets/js/app.js',
     ], __dirname + '/../../public/whitelabel/reiseexperten/js/layer/layer.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
@@ -35,6 +35,7 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/touchswipe.js',
         base_url + '/resources/assets/js/layer/devicedetector.min.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
+        __dirname + '/Resources/assets/js/app.js',
     ], __dirname + '/../../public/whitelabel/reiseexperten/js/layer/layer-locale.js')
     .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/reiseexperten/css/layer/layer.css')
     .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/reiseexperten/css/layer/layer_mobile.css')

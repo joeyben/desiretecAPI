@@ -1279,10 +1279,10 @@ var dt = window.dt || {};
             });
     }
 
+
     dt.applyBrandColor = function () {
 
         // Style variables
-
         // brandColor is passed through blade
         var brandColorDarker = brandColor;
 
@@ -1308,8 +1308,7 @@ var dt = window.dt || {};
         };
 
         // Apply styles
-
-        var layerButtons = $('.btn-primary, .kwp .pax-col .kwp-form-group .pax-more .button a');
+        var layerButtons = $('.primary-btn, .kwp .pax-col .kwp-form-group .pax-more .button a');
         layerButtons
             .css(btnPrimaryCss)
             .mouseover(function () {
