@@ -848,19 +848,43 @@ var dt = window.dt || {};
           });
     }
 
+
     dt.applyBrandColor = function () {
 
-        var layerButtons = $('.kwp button[type=submit], .kwp .pax-col .kwp-form-group .pax-more .button a');
-        layerButtons.css(
-            btnPrimaryCss
-        ).mouseover(function () {
-            $(this).css(btnPrimaryHoverCss
-            );
-        }).mouseout(function () {
-            $(this).css(
-            btnPrimaryCss
-            );
-        });
+        // Style variables
+        // brandColor is passed through blade
+        var brandColorDarker = brandColor;
+
+        var btnPrimaryCss = {
+            'background': brandColor,
+            'border': '1px solid ' + brandColor,
+            'color': '#fff',
+        };
+        var btnPrimaryHoverCss = {
+            'background': brandColorDarker,
+            'border': '1px solid ' + brandColorDarker,
+            'color': '#fff',
+        };
+        var btnSecondaryCss = {
+            'background': '#fff',
+            'border': '1px solid ' + brandColor,
+            'color': brandColor,
+        };
+        var btnSecondaryHoverCss = {
+            'background': '#fff',
+            'border': '1px solid ' + brandColorDarker,
+            'color': brandColorDarker,
+        };
+
+        // Apply styles
+        var layerButtons = $('.primary-btn, .kwp .pax-col .kwp-form-group .pax-more .button a');
+        layerButtons
+            .css(btnPrimaryCss)
+            .mouseover(function () {
+                $(this).css(btnPrimaryHoverCss);
+            }).mouseout(function () {
+                $(this).css(btnPrimaryCss);
+            });
 
         var paxMore = $('.kwp .pax-col .kwp-form-group .pax-more .button a');
         paxMore.css({
