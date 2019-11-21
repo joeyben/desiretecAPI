@@ -96,11 +96,15 @@
         <hr>
        <chat-messages :wishid="{{ $wish->id }}" :userid="{{ Auth::user()->id }}" :groupid="{{ $wish->group_id }}"></chat-messages>
     </div>
+
+
+
+
 @endsection
 
-@section('before-scripts')
-    <script type="text/javascript">
-        var brandColor = {!! json_encode($color) !!};
+@section('after-scripts')
+
+    <script>
+
     </script>
-    <script src="{{ mix('whitelabel/demokreuzfahrtberatung/js/demokreuzfahrtberatung.js') }}"></script>
 @endsection
