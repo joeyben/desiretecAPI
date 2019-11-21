@@ -1,11 +1,5 @@
 @import "variables";
 
-// Reset default
-
-*:focus {
-  outline: none !important;
-}
-
 // Html, body, main-containers
 
 html, body{
@@ -47,48 +41,34 @@ body{
   min-width: 220px;
 }
 
-// Styles for login, register, forgotten password
-// TODO: Import them throug elsewhere
+// color styles defined in app.js
 
-a.primary-btn, .primary-btn, a.btn-primary, .btn-primary, input.primary-btn{
-  background: $brand-primary;
-  border: 1px solid $brand-primary;
-  transition: all .3s ease-out;
-  &:hover, &:active, &:focus{
-    background: $brand-secondary;
-    border: 1px solid $brand-secondary;
-  }
-  &:visited{
-    background: $brand-primary;
-    border: 1px solid $brand-primary;
-  }
-}
-a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
-  color: $brand-primary;
-  border: 1px solid $brand-primary;
-  transition: all .3s ease-out;
-  &:hover, &:active, &:focus{
-    color: $brand-secondary;
-    border: 1px solid $brand-secondary;
-  }
-  &:visited{
-    color: $brand-primary;
-    border: 1px solid $brand-primary;
-  }
-}
-.form-control:focus{
-  border-bottom: 1px solid $brand-primary;
-}
-a{
-  color: $brand-primary;
-  &:hover{
-    color: $brand-secondary;
-  }
-}
-input:-internal-autofill-selected{
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px #f8f8f8 !important;
-}
-
+// a.primary-btn, .primary-btn, a.btn-primary, .btn-primary, input.primary-btn{
+//   background: $brand-primary;
+//   border: 1px solid $brand-primary;
+//   transition: all .3s ease-out;
+//   &:visited{
+//     background: $brand-primary;
+//     border: 1px solid $brand-primary;
+//   }
+//   &:hover, &:active{
+//     background: $brand-secondary;
+//     border: 1px solid $brand-secondary;
+//   }
+// }
+// a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
+//   color: $brand-primary;
+//   border: 1px solid $brand-primary;
+//   transition: all .3s ease-out;
+//   &:visited{
+//     color: $brand-primary;
+//     border: 1px solid $brand-primary;
+//   }
+//   &:hover, &:active{
+//     color: $brand-secondary;
+//     border: 1px solid $brand-secondary;
+//   }
+// }
 
 // Wish modal
 
@@ -158,7 +138,6 @@ input:-internal-autofill-selected{
 }
 
 // Logo Fix
-
 .navbar-default{
   a.logo{
     .navbar-brand{
