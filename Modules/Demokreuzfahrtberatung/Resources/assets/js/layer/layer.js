@@ -1445,7 +1445,7 @@ var exitIntent = window.exitIntent || {};
             };
 
             // Apply styles
-            var layerButtons = $('.btn-primary, .kwp .pax-col .kwp-form-group .pax-more .button a');
+            var layerButtons = $('.primary-btn, .kwp .pax-col .kwp-form-group .pax-more .button a');
             layerButtons
                 .css(btnPrimaryCss)
                 .mouseover(function () {
