@@ -36,7 +36,6 @@
             {{ Html::style(mix('whitelabel/'.getCurrentWhiteLabelName().'/css/'.getCurrentWhiteLabelName().'.css')) }}
         @endif
 
-        {{ Html::style(mix('css/frontend-custom.css')) }}
         <link media="all" type="text/css" rel="stylesheet" href="{{ asset('fontawsome/css/all.css') }}">
 
     @yield('after-styles')
