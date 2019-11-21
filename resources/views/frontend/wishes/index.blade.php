@@ -4,6 +4,19 @@
     {{ ucfirst(getCurrentWhiteLabelName()) }} {{ trans('wish.list.tab_title') }}
 @endsection
 
+@section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+    </script>
+@endsection
+
+@section('after-scripts')
+    <script type="text/javascript">
+        var cssPrimaryBtn = '.primary-btn { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
+        $('head').append('<style>' + cssPrimaryBtn + '</style>');
+    </script>
+@endsection
+
 @section('content')
     <div class="box box-info" style="display: none;">
         <div class="box-header with-border">
