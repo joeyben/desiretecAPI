@@ -15,6 +15,15 @@
 @endsection
 
 @section('before-scripts')
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105970361-13"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-105970361-13');
+    </script>
     <script src="{{ mix('whitelabel/tuidemo/js/tuidemo.js') }}"></script>
 @endsection
 
