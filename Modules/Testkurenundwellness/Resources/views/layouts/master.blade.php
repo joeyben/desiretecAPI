@@ -15,10 +15,13 @@
 @endsection
 
 @section('before-scripts')
-    <script type="text/javascript">
-        var brandColor = {!! json_encode($color) !!};
-    </script>
     <script src="{{ mix('whitelabel/testkurenundwellness/js/testkurenundwellness.js') }}"></script>
+
+    <script type="application/javascript">
+        var brandColor = {!! json_encode($color) !!};
+        var cssPrimaryBtn = '.primary-btn, .btn-primary { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
+        $('head').append('<style>' + cssPrimaryBtn + '</style>');
+    </script>
 @endsection
 
 @section('after-scripts')
