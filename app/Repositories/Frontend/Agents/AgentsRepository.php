@@ -9,7 +9,8 @@ use App\Exceptions\GeneralException;
 use App\Models\Agents\Agent;
 use App\Repositories\BaseRepository;
 use Auth;
-use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -174,6 +175,39 @@ class AgentsRepository extends BaseRepository
         $fileName = $model->file;
 
         return $this->storage->delete($this->upload_path . $fileName);
+    }
+
+    public function deleteAgent($id)
+    {
+        $whitelabel_group = DB::table('groups')->where('whitelabel_id', getCurrentWhiteLabelId())->first();
+        if ($whitelabel_group) {
+            $user_group = DB::table('group_user')->where('group_id', $whitelabel_group->id)->first();
+        }
+        if ($user_group){
+            $first_agent = DB::table('agents')->where([['user_id', $user_group->user_id], ['status','Active'], ['id','!=',$id]])->first();
+        }
+        if ($first_agent){
+            DB::table('offers')->where('agent_id', '=', $id)->update(['agent_id' => $first_agent->id]);
+            DB::table('message')->where('agent_id', '=', $id)->update(['agent_id' => $first_agent->id]);
+        }else{
+            DB::table('offers')->where('agent_id', '=', $id)->delete();
+            DB::table('message')->where('agent_id', '=', $id)->delete();
+        }
+        DB::table('agents')->where('id', '=', $id)->delete();
+    }
+
+    public function doUpdate($id, Request $request){
+        if (array_key_exists('avatar',$request->all())) {
+            $avatar = ['avatar' => $this->uploadImage(['avatar' => $request->avatar])]['avatar']['avatar'];
+
+            DB::table('agents')
+                ->where('id', $id)
+                ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone, 'avatar' => $avatar]);
+        }else{
+            DB::table('agents')
+                ->where('id', $id)
+                ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone]);
+        }
     }
 
     public function updateStatus($active_id)

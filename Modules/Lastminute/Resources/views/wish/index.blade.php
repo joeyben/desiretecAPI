@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="{{ asset('whitelabel/lastminute/css/lastminute.css') }}">
 @endsection
 
+@section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+    <script src="{{ mix('whitelabel/lastminute/js/lastminute.js') }}"></script>
+@endsection
+
 @section('content')
 
     <!-- Wish lis Box -->
@@ -21,7 +28,7 @@
                 <div class="count">
                     <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', intval($count)) }}</span>
                 </div>
-                <!-- <div class="filter-action">
+                {{-- <div class="filter-action">
                     <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
                         <option value="">{{ trans('menus.list.status.all') }}</option>
                         @foreach ($status as $st)
@@ -30,7 +37,7 @@
                             </option>
                         @endforeach
                     </select>
-                </div> -->
+                </div> --}}
             </div>
             <hr>
             <div class="skeleton" v-if="loading"></div>
@@ -66,7 +73,7 @@
                         @if($logged_in_user->allow('create-offer'))
                             <!--<a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a> -->
                         @endif
-                        <a :href="'/offer/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('labels.frontend.wishes.goto') }}</a>
+                        <a :href="'offer/ttlist/'+wish.id" class="btn btn-flat btn-primary">{{ trans('labels.frontend.wishes.goto') }}</a>
                     </div>
                 </div>
             </div>

@@ -103,12 +103,12 @@ $(function(){
     /**
      * Bind all bootstrap tooltips
      */
-    $("[data-toggle=\"tooltip\"]").tooltip();
+    // $("[data-toggle=\"tooltip\"]").tooltip();
 
     /**
      * Bind all bootstrap popovers
      */
-    $("[data-toggle=\"popover\"]").popover();
+    // $("[data-toggle=\"popover\"]").popover();
 
     /**
      * This closes the popover when its clicked away from

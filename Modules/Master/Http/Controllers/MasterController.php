@@ -55,6 +55,7 @@ class MasterController extends Controller
 
         return view('master::index')->with([
             'display_name'  => $whitelabel['display_name'],
+            'color'         => $whitelabel['color'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
             'logo'          => $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['url'],
             'body_class'    => $this::BODY_CLASS,

@@ -34,7 +34,7 @@ $gutter: 30px;
   height: 75px;
   position: fixed;
   display: none;
-  background: $brand-primary url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -217,6 +217,10 @@ $gutter: 30px;
     height: 25px;
   }
 
+  input[type=number]{
+    display: none;
+  }
+
   textarea {
     height: 60px;
     padding: 5px;
@@ -235,10 +239,9 @@ $gutter: 30px;
 
   button[type=submit] {
     border-radius: 3px;
-    background: $btn-primary-bg;
     text-align: center;
     font-family: $font-family-master;
-    color: $btn-primary-color;
+    color: #fff;
     font-size: 16px;
     font-weight: 700;
     display: block;
@@ -247,9 +250,6 @@ $gutter: 30px;
     padding: 15px;
     margin-top: 5px;
     transition: background-color .3s ease;
-    &:hover, &:active {
-      background: $brand-secondary;
-    }
     &.error-button{
       background: #D40E14;
     }
@@ -353,7 +353,6 @@ $gutter: 30px;
         .button{
           background: transparent;
           a{
-            background: $brand-primary;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -414,7 +413,7 @@ $gutter: 30px;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #092a5e;
+              color: $master-primary;
               padding: 0;
               margin: 20px 0;
               font-size: 15px !important;
@@ -443,7 +442,6 @@ $gutter: 30px;
         .button{
           background: transparent;
           a{
-            background: $brand-primary;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -554,7 +552,6 @@ ul.kwp-form-errors {
 
   h1 {
     margin: 15px 0 0 0;
-    color:  $brand-primary;
     font-size: 36px;
     font-weight: 700;
   }
@@ -765,7 +762,6 @@ p.kwp-info {
     font-size: 12px;
     line-height: 1.3em;
     a {
-      color: $brand-primary !important;
       text-decoration: none;
     }
     #agb_link, #datenschutz{
@@ -900,7 +896,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid $brand-primary;
+  border: 10px solid #fff;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1189,7 +1185,6 @@ p.kwp-info {
           h1{
             margin: 0px;
             padding: 5px 0;
-            color: $brand-primary;
             position: absolute;
             bottom: 0px;
             font-size: 26px;
@@ -1249,8 +1244,6 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid $brand-primary;
-          background-color: $brand-primary;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1259,7 +1252,6 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color: $brand-primary;
         padding: 8px 0;
         font-weight: bold;
         font-family: $font-family-master;
@@ -1276,6 +1268,7 @@ p.kwp-info {
       .kwp-completed-master{
         h1{
           margin-top: 0;
+          line-height: 1.5em;
           i{
             display: block;
             text-align: center;
@@ -1284,9 +1277,6 @@ p.kwp-info {
             margin-right: 10px;
             color: $master-primary;
           }
-        }
-        a{
-          color: $brand-primary;
         }
       }
     }

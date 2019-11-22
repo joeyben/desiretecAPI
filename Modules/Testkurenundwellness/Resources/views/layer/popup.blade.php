@@ -184,7 +184,7 @@
                 @endif
             </div>
             <div class="kwp-col-4 white-col">
-                <button id="submit-button" type="submit">Reisewunsch abschicken</button>
+                <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
             </div>
 
 
@@ -383,32 +383,35 @@
             }
 
              /**
-                         * Autocomplete
-                         */
-                        var autocomplete = function(){
-                            /* Destinations */
-                            $.get('get-all-destinations', function(data){
-                                $("#destination").typeahead({
-                                    autoSelect: true,
-                                    minLength: 3,
-                                    delay: 200,
-                                    source: data
-                                });
-                            });
-                            /* END Destinations */
+                 * Autocomplete
+                 */
+                var autocomplete = function(){
+                    /* Destinations */
+                    $.get('get-all-destinations', function(data){
+                        $("#destination").typeahead({
+                            autoSelect: true,
+                            minLength: 3,
+                            delay: 200,
+                            source: data
+                        });
+                    });
+                    /* END Destinations */
 
-                            /* Airports */
-                            /*$.get('get-all-airports', function(data){
-                                $("#airport").typeahead({
-                                    autoSelect: true,
-                                    minLength: 3,
-                                    delay: 200,
-                                    source: data
-                                });
-                            });*/
-                            /* END Airports */
+                    /* Airports */
+                    /*$.get('get-all-airports', function(data){
+                        $("#airport").typeahead({
+                            autoSelect: true,
+                            minLength: 3,
+                            delay: 200,
+                            source: data
+                        });
+                    });*/
+                    /* END Airports */
 
-                        }
+            }
+
+            dt.applyBrandColor();
+
         </script>
 
         <div class="kwp-row">

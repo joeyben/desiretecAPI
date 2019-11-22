@@ -9,6 +9,7 @@ $domain_env = array(
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
 
+
 Route::group(['domain' => $domain], function () {
     setCurrentWhiteLabelId(\Config::get('lastminute.id'));
     setTranslationLoaderModel(\Config::get('lastminute.language_lines_model'));

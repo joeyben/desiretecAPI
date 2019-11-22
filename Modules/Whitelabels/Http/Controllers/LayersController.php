@@ -93,7 +93,7 @@ class LayersController extends Controller
     public function update(Request $request)
     {
         try {
-            $whitelabel = $this->whitelabels->current();
+            $whitelabel = $this->whitelabels->current(false);
 
             if (null === $whitelabel && $request->has('whitelabel_id')) {
                 $whitelabel = $this->whitelabels->find($request->get('whitelabel_id'));

@@ -4,6 +4,19 @@
     {{ ucfirst(getCurrentWhiteLabelName()) }} {{ trans('wish.list.tab_title') }}
 @endsection
 
+@section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+    </script>
+@endsection
+
+@section('after-scripts')
+    <script type="text/javascript">
+        var cssPrimaryBtn = '.primary-btn { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
+        $('head').append('<style>' + cssPrimaryBtn + '</style>');
+    </script>
+@endsection
+
 @section('content')
     <div class="box box-info" style="display: none;">
         <div class="box-header with-border">
@@ -40,7 +53,7 @@
                 <div class="count">
                     <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', $count ) }}</span>
                 </div>
-                <div class="filter-action">
+                {{-- <div class="filter-action">
                     <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
                         <option value="">{{ trans('menus.list.status.all') }}</option>
                         @foreach ($status as $st)
@@ -49,7 +62,7 @@
                             </option>
                         @endforeach
                     </select>
-                </div>
+                </div> --}}
             </div>
             <hr>
             <div class="skeleton" v-if="loading"></div>

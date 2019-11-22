@@ -1,15 +1,15 @@
 @extends('layouts.default')
 @section('title')
-    Layer Management
+    Layer Version
 @stop
 @section('page-title')
     <i class="icon-arrow-left52 mr-2"></i>
-    <span class="font-weight-semibold">Layer Management</span>
+    <span class="font-weight-semibold">Layer Version</span>
 @stop
 @section('breadcrumb')
     <div class="breadcrumb">
         <a href="{{ url('/') }}" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Dashboard</a>
-        <span class="breadcrumb-item active">Layer Management</span>
+        <span class="breadcrumb-item active">Layer Version</span>
     </div>
 @stop
 @section('vue-js')

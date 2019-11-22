@@ -1,6 +1,5 @@
 @import "utils";
 @import "rangeslider";
-@import "bootstrap-select";
 @import "../variables";
 
 $gutter: 30px;
@@ -14,23 +13,18 @@ $gutter: 30px;
 // Dropdown menus
 // --------------------------------------------------
 .dt-modal {
-  .bootstrap-select{
-    &.show-tick{
-      .dropdown-menu{
-        .selected{
-          span.check-mark{
-            background-image: url(../../svg/check.svg);
-            background-size: 20px;
-            background-position: right;
-            height: 20px;
-            width: 20px;
-            background-repeat: no-repeat;
-            top: 2px;
-            right: 10px;
-          }
-        }
-      }
-    }
+
+  // Custom select
+  .custom-select {
+    margin-top: 15px;
+    color: $master-primary;
+    border: none;
+    -webkit-transition: border-color .3s ease;
+    -moz-transition: border-color .3s ease;
+    -o-transition: border-color .3s ease;
+    transition: border-color .3s ease;
+    border-color: $master-primary;
+    font-weight: 500;
   }
 
   // Dropdown arrow/caret
@@ -268,7 +262,6 @@ $gutter: 30px;
   font-weight: normal;
 }
 .datepicker-dropdown .day.active, .datepicker-dropdown .day.active.active:hover, .datepicker-dropdown .day.active:hover,.datepicker-dropdown .day.active.active:hover:hover, .datepicker-dropdown .month.active, .datepicker-dropdown .month.active.active:hover, .datepicker-dropdown .month.active:hover, .datepicker-dropdown .month.active.active:hover:hover, .datepicker-dropdown .year.active, .datepicker-dropdown .year.active.active:hover, .datepicker-dropdown .year.active:hover, .datepicker-dropdown .year.active.active:hover:hover {
-  background-color: $brand-primary;
   border-color: transparent;
   color: #fff;
   text-shadow: none;
@@ -310,7 +303,7 @@ $gutter: 30px;
   height: 75px;
   position: fixed;
   display: none;
-  background: $brand-primary url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -512,7 +505,6 @@ $gutter: 30px;
 
   button[type=submit] {
     border-radius: 4px;
-    background: $brand-primary;
 
     text-align: center;
 
@@ -526,10 +518,6 @@ $gutter: 30px;
     border: none;
     padding: 20px;
 
-    &:active, &:hover {
-      background: $brand-secondary;
-      color: #fff;
-    }
     &.error-button{
       background: #D40E14;
     }
@@ -635,7 +623,6 @@ $gutter: 30px;
           margin-bottom: 0;
           height: auto;
           a{
-            background: $brand-primary;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -697,7 +684,7 @@ $gutter: 30px;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: $brand-primary;
+              color: $master-primary;
               padding: 0;
               margin: 20px 0;
               font-size: 20px !important;
@@ -729,7 +716,6 @@ $gutter: 30px;
           display: block;
           margin-bottom: 0;
           a{
-            background: $brand-primary;
             width: 100%;
             padding: 20px;
             font-size: 18px;
@@ -971,7 +957,7 @@ ul.kwp-form-errors {
   width: 100%;
 
   &.kwp-with-expansion {
-    border-top: solid 2px $brand-primary;
+    border-top: solid 2px $master-primary;
     padding-top: 40px;
   }
 }
@@ -1094,8 +1080,8 @@ p.kwp-info {
     padding-left: 40px;
     font-size: 18px;
     line-height: 1.3em;
+    color: #000;
     a {
-      color: $brand-primary !important;
       text-decoration: none;
     }
     #agb_link, #datenschutz{
@@ -1217,7 +1203,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid $brand-primary;
+  border: 10px solid #fff;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1365,8 +1351,6 @@ p.kwp-info {
     height: 100vh;
   }
   .kwp-header{
-    /*background: linear-gradient(179deg, #fce136 0, #e4cd34 100%);*/
-    background: linear-gradient(179deg, $brand-primary 0, $brand-primary 100%);
     min-height: 40px;
     height: 40px;
     position: relative;
@@ -1495,8 +1479,6 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid $brand-primary;
-          background-color: $brand-primary;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1510,6 +1492,7 @@ p.kwp-info {
         font-weight: bold;
         text-align: center;
         line-height: 1.7em;
+        border: none;
       }
     }
     .kwp-body{
@@ -1816,6 +1799,8 @@ and (max-device-width : 320px) {
     .teaser{
       h1{
         font-size: 20px;
+        text-align: center;
+        border: none;
       }
     }
   }

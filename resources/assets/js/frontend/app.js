@@ -118,4 +118,3 @@ $('.antworten-btn').click(function(){
     }
     $(this).addClass('sendAntworten');
 })
-

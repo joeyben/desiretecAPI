@@ -405,6 +405,20 @@ if (!function_exists('getCurrentWhiteLabelName')) {
     }
 }
 
+if (!function_exists('getCurrentWhiteLabelColor')) {
+    /**
+     * return current whitelabel Color.
+     *
+     * @return string
+     */
+    function getCurrentWhiteLabelColor()
+    {
+        $color = getCurrentWhiteLabelField('color');
+
+        return $color;
+    }
+}
+
 if (!function_exists('getCurrentWhiteLabelField')) {
     /**
      * return current whitelabel Field.
@@ -418,7 +432,8 @@ if (!function_exists('getCurrentWhiteLabelField')) {
         //$url = str_replace('http://', '', url('/'));
         //$url = str_replace('https://', '', $url);
 
-        return \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value($field);
+        return \App\Models\Whitelabels\Whitelabel::Where('domain', '=' , 'https://'.$url)
+            ->orWhere('domain', '=' , 'http://'.$url)->value($field);
 
     }
 }
@@ -634,8 +649,14 @@ if (!function_exists('getTTRegionCode')) {
      */
     function getTTRegionCode($value)
     {
-        return \App\Models\TTRegions::where('ort', 'like' ,'%'.$value.'%')->first()->topRegion;
+        $land = \App\Models\TTRegions::where('land', '=' ,$value)->pluck('topRegion')->all();
+        $results = array_unique($land, SORT_REGULAR);
 
+        if(empty($results)) {
+            $region = \App\Models\TTRegions::where('topRegionName', '=', $value)->pluck('topRegion')->all();
+            $results = array_unique($region, SORT_REGULAR);
+        }
+        return $results;
     }
 }
 

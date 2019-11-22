@@ -15,6 +15,10 @@
 @endsection
 
 @section('before-scripts')
+    <script type="application/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+
     <script src="{{ mix('whitelabel/master/js/master.js') }}"></script>
 @endsection
 

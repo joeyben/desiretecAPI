@@ -34,7 +34,7 @@ $gutter: 30px;
   height: 75px;
   position: fixed;
   display: none;
-  background: $brand-primary url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -235,24 +235,16 @@ $gutter: 30px;
 
   button[type=submit] {
     border-radius: 3px;
-    background: $brand-primary;
-
     text-align: center;
-
     font-family: $font-family-master;
-    color:  #fff;
     font-size: 18px;
     font-weight: 700;
-
     display: block;
     width: 100%;
     border: none;
     padding: 15px;
     margin-top: 5px;
     transition: background-color .3s ease;
-    &:hover, &:active {
-      background: $brand-secondary;
-    }
     &.error-button{
       background: #D40E14;
     }
@@ -356,7 +348,6 @@ $gutter: 30px;
         .button{
           background: transparent;
           a{
-            background: $brand-primary;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -446,7 +437,6 @@ $gutter: 30px;
         .button{
           background: transparent;
           a{
-            background: $brand-primary;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -771,7 +761,6 @@ p.kwp-info {
     font-size: 12px;
     line-height: 1.3em;
     a {
-      color: $brand-primary !important;
       text-decoration: none;
     }
     #agb_link, #datenschutz{
@@ -906,7 +895,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid $brand-primary;
+  border: 10px solid #fff;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1256,8 +1245,6 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
-          border: 1px solid $brand-primary;
-          background-color: $brand-primary;
           background-image: url(../../svg/check-white.svg);
         }
       }

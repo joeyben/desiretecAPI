@@ -41,11 +41,19 @@
         whitelabel: ''
       }
     },
+    props: {
+      defaultWhitelabel: {
+        default: ''
+      }
+    },
     computed: {
       ...Vuex.mapGetters({
         whitelabels: 'whitelabels',
         user: 'currentUser'
       })
+    },
+    mounted () {
+      this.whitelabel = this.defaultWhitelabel
     },
     methods: {
       ...Vuex.mapActions({

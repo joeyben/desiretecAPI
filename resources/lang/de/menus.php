@@ -25,11 +25,12 @@ return [
             ],
 
             'permissions' => [
-                'all'        => 'Alle Berechtigungen',
-                'create'     => 'Berechtigung erstellen',
-                'edit'       => 'Berechtigung bearbeiten',
-                'management' => 'Management Berechtigungen',
-                'main'       => 'Berechtigungen',
+                'all'                         => 'Alle Berechtigungen',
+                'create'                      => 'Berechtigung erstellen',
+                'edit'                        => 'Berechtigung bearbeiten',
+                'management'                  => 'Management Berechtigungen',
+                'main'                        => 'Berechtigungen',
+                'version_restrictions'        => 'In anderen Versionen verfügbar',
             ],
 
             'users' => [

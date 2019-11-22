@@ -113,4 +113,11 @@ return [
     'until'                         => 'Until',
     'primary_color'                 => 'Primary color',
     'alert_email'                   => 'Alert Email',
+    'headline'                      => 'Headline',
+    'subheadline'                   => 'Sub headline',
+    'headline_success'              => 'Success headline',
+    'subheadline_success'           => 'Success sub headline',
+    'visual'                        => 'Visual',
+    'message_success'               => 'Message success',
+    'position'                      => 'Position',
 ];

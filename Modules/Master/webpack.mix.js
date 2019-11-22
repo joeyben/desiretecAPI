@@ -13,7 +13,7 @@ mix.scripts(
     [
         base_url + "node_modules/jquery/dist/jquery.min.js",
         base_url + '/resources/assets/js/layer/datepicker.js',
-        __dirname + '/Resources/assets/js/app.js'
+        __dirname + '/Resources/assets/js/app.js',
     ], __dirname + '/../../public/whitelabel/master/js/master.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
@@ -23,6 +23,7 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/rangeslider.js',
         base_url + '/resources/assets/js/layer/datepicker.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
+        __dirname + '/Resources/assets/js/app.js',
     ], __dirname + '/../../public/whitelabel/master/js/layer/layer.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
@@ -30,6 +31,7 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/base.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
+        __dirname + '/Resources/assets/js/app.js',
     ], __dirname + '/../../public/whitelabel/master/js/layer/layer-locale.js')
     .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/master/css/layer/layer.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/master/css/datepicker.css')

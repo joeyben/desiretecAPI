@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="{{ asset('whitelabel/$MODULESMAL$/css/$MODULESMAL$.css') }}">
 @endsection
 
+@section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+    <script src="{{ mix('whitelabel/$MODULESMAL$/js/$MODULESMAL$.js') }}"></script>
+@endsection
+
 @section('content')
 
     <!-- Wish lis Box -->
@@ -21,7 +28,7 @@
                 <div class="count">
                     <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', intval($count)) }}</span>
                 </div>
-                <!-- <div class="filter-action">
+                {{-- <div class="filter-action">
                     <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
                         <option value="">{{ trans('menus.list.status.all') }}</option>
                         @foreach ($status as $st)
@@ -30,7 +37,7 @@
                             </option>
                         @endforeach
                     </select>
-                </div> -->
+                </div> --}}
             </div>
             <hr>
             <div class="skeleton" v-if="loading"></div>

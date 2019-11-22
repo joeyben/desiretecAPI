@@ -143,11 +143,7 @@ class AgentsController extends Controller
 
     public function updateAgent($id , Request $request)
     {
-        $avatar = ['avatar' => $this->uploadImage(['avatar' => $request->avatar])]['avatar']['avatar'];
-
-        DB::table('agents')
-            ->where('id', $id)
-            ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone, 'avatar' => $avatar]);
+        $this->agent->doUpdate($id, $request);
 
         return redirect()
             ->route('frontend.agents.index')
@@ -178,7 +174,9 @@ class AgentsController extends Controller
 
     public function delete($id)
     {
-        DB::table('agents')->where('id', '=', $id)->delete();
+        /**** Delete Agent and Assign offers/messages to another agent ****/
+        $this->agent->deleteAgent($id);
+
         return redirect()
             ->route('frontend.agents.index')
             ->with('flash_success', trans('alerts.frontend.agents.deleted'));
@@ -198,6 +196,7 @@ class AgentsController extends Controller
             $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()), 'public');
 
             $input = array_merge($input, ['avatar' => $fileName]);
+
             return $input;
         }else{
             $fileName = 'avatar_default';

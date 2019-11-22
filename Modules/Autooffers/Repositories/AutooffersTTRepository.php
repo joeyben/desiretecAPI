@@ -31,11 +31,11 @@ class AutooffersTTRepository extends BaseRepository
 
     private $username = 'mkt_315150_de';
 
-    private $password = '_Herostrasse12';
+    private $password = 'Herostrasse_12';
 
-    private $oauthUrl = 'https://staging-auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
+    private $oauthUrl = 'https://auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
 
-    private $url = 'http://de-staging-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/PackageSearch/packageOffers';
+    private $url = 'http://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/PackageSearch/packageOffers';
 
     private $currency = 'CHF';
 
@@ -72,6 +72,8 @@ class AutooffersTTRepository extends BaseRepository
     protected $reviews;
 
     protected $hotelAttributes;
+
+    protected $geos;
 
     protected $data;
 
@@ -120,6 +122,9 @@ class AutooffersTTRepository extends BaseRepository
         }
 
         for($i = 0; $i < $this->kids;$i++){
+            if($i === 0){
+                $travellers.= ',';
+            }
             $travellers .= '"Traveller": [{
                     "Age": 12
                 }]';
@@ -127,7 +132,6 @@ class AutooffersTTRepository extends BaseRepository
                 $travellers.= ',';
             }
         }
-
         $xmlreq='{
          "PackageOffersRQ": {
           "RQ_Metadata": {
@@ -148,7 +152,9 @@ class AutooffersTTRepository extends BaseRepository
             }
         },
            "TravelDurationFilter": {
-            "MinDuration": '.intval($this->period).'
+            "DurationKind": "Stay",
+            "MinDuration": '.$this->period.',
+            "MaxDuration": '.$this->period.'
            },
            "AirportFilter": {
             "DepartureAirportFilter": {
@@ -181,7 +187,6 @@ class AutooffersTTRepository extends BaseRepository
           }
         } }';
 
-
         $authorization = "Authorization: Bearer ".$this->token;
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization ));
@@ -197,9 +202,10 @@ class AutooffersTTRepository extends BaseRepository
         curl_close($curl);
 
         $this->data = json_decode($result, true)["PackageOffersRS"];
-        $this->offers = $this->data["Offers"]["Offer"];
+        $this->offers = array_key_exists('Offer', $this->data["Offers"]) ? $this->data["Offers"]["Offer"] : [];
         $this->setGiataIds();
         $this->setReviews();
+        $this->setHotelGeo();
         $this->setHotelAttributes();
         return $result;
     }
@@ -262,7 +268,6 @@ class AutooffersTTRepository extends BaseRepository
      */
     public function saveWishData(Wish $wish)
     {
-        $destination = explode('-', $wish->destination);
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
@@ -273,7 +278,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->setFrom($wish->earliest_start);
         $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
-        $this->setRegion(getTTRegionCode(trim($destination[1]), 1));
+        $this->setRegion(getTTRegionCode($wish->destination, 1));
 
         return true;
     }
@@ -360,9 +365,11 @@ class AutooffersTTRepository extends BaseRepository
                 "value" => $offer["PriceInfo"]["Price"]["value"],
                 "currency" => $offer["PriceInfo"]["Price"]["CurrencyCode"]
             ],
-            'offerFeatures' => $offer["OfferProperties"]["OfferFeatures"],
+            'offerFeatures' =>   array_key_exists('OfferFeatures', $offer["OfferProperties"]) ? $offer["OfferProperties"]['OfferFeatures'] : "",
             'hotel_reviews' => $this->reviews[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
             'hotel_attributes' => $this->hotelAttributes[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
+            'hotel_geo'=> $this->geos[$offer["OfferServices"]["Package"]["Accommodation"]["HotelRef"]["HotelID"]],
+            'boardType'=> $offer["OfferServices"]["Package"]["Accommodation"]["BoardType"],
             'room' => $offer["OfferServices"]["Package"]["Accommodation"]["Room"]["RoomName"],
             'flight' => [
                 'in' => [
@@ -378,7 +385,8 @@ class AutooffersTTRepository extends BaseRepository
                     ],
                     'duration' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["FlightDuration"],
                     'stops' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["NumberOfStops"],
-                    'class' => $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["CabinClass"]["value"],
+                    'class' =>   array_key_exists('CabinClass', $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]) ? $offer["OfferServices"]["Package"]["Flight"]["OutboundFlight"]["CabinClass"]["value"] : "",
+
                 ],
                 'out' => [
                     'departure' => [
@@ -393,7 +401,7 @@ class AutooffersTTRepository extends BaseRepository
                     ],
                     'duration' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["FlightDuration"],
                     'stops' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["NumberOfStops"],
-                    'class' => $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["CabinClass"]["value"],
+                    'class' =>   array_key_exists('CabinClass', $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]) ? $offer["OfferServices"]["Package"]["Flight"]["InboundFlight"]["CabinClass"]["value"] : "",
                 ],
             ],
         ];
@@ -602,9 +610,18 @@ class AutooffersTTRepository extends BaseRepository
     /**
      * @param mixed $region
      */
-    public function setRegion($region)
+    public function setRegion($regions)
     {
-        $this->region = $region;
+        $count = 0;
+        $regions_str = "";
+        foreach ($regions as $region) {
+            if ($count > 0 ) {
+                $regions_str .= ",";
+            }
+            $regions_str .= $region;
+            $count++;
+        }
+        $this->region = $regions_str;
     }
 
     /**
@@ -653,6 +670,10 @@ class AutooffersTTRepository extends BaseRepository
     public function setGiataIds()
     {
         $giata = [];
+        if (!array_key_exists('Hotel', $this->data["HotelDictionary"])) {
+            $this->giataIds = [];
+            return false;
+        }
         foreach ($this->data["HotelDictionary"]["Hotel"] as $hotel){
             $giata[$hotel["HotelCodes"]["HotelIffCode"]] = $hotel["HotelCodes"]["HotelGiataID"];
         }
@@ -665,6 +686,10 @@ class AutooffersTTRepository extends BaseRepository
     public function setReviews()
     {
         $reviews = [];
+        if (!array_key_exists('Hotel', $this->data["HotelDictionary"])) {
+            $this->reviews = [];
+            return false;
+        }
         foreach ($this->data["HotelDictionary"]["Hotel"] as $hotel){
             $reviews[$hotel["HotelCodes"]["HotelIffCode"]] = [
                 'count' => $hotel["HotelReview"]["RatingsCount"],
@@ -675,12 +700,35 @@ class AutooffersTTRepository extends BaseRepository
         $this->reviews = $reviews;
     }
 
+
+    /**
+     * @param mixed $giataIds
+     */
+    public function setHotelGeo()
+    {
+        $geos = [];
+        if (!array_key_exists('Hotel', $this->data["HotelDictionary"])) {
+            $this->geos = [];
+            return false;
+        }
+        foreach ($this->data["HotelDictionary"]["Hotel"] as $hotel){
+            $geos[$hotel["HotelCodes"]["HotelIffCode"]] = [
+                'longitude' => $hotel["HotelGeoPoint"]["Longitude"],
+                'latitude' => $hotel["HotelGeoPoint"]["Latitude"],
+            ];
+        }
+        $this->geos = $geos;
+    }
     /**
      * @param mixed $giataIds
      */
     public function setHotelAttributes()
     {
         $hotelAttributes = [];
+        if (!array_key_exists('Hotel', $this->data["HotelDictionary"])) {
+            $this->hotelAttributes = [];
+            return false;
+        }
         foreach ($this->data["HotelDictionary"]["Hotel"] as $hotel){
             $hotelAttributes[$hotel["HotelCodes"]["HotelIffCode"]] = $hotel["HotelAttributes"];
         }

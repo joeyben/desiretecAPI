@@ -157,7 +157,7 @@
                 @endif
             </div>
             <div class="kwp-col-4 white-col">
-                <button id="submit-button" type="submit">Reisewunsch abschicken</button>
+                <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
             </div>
 
 
@@ -320,9 +320,10 @@
                     $("#latest_return").val(d+"."+m+"."+y);
                 }
 
-                var range = parseInt($("#budget").val().replace('.',''));
-                if(range)
-                    $('input[type="range"]').val(range).change();
+                if ($("#budget").length) {
+                  var range = parseInt($("#budget").val().replace('.', ''));
+                  $('input[type="range"]').val(range).change();
+                }
 
                 $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
                 var pax = $("#adults").val();
@@ -353,6 +354,8 @@
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
             }
+
+            dt.applyBrandColor();
 
         </script>
 

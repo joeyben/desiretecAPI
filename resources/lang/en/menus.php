@@ -25,11 +25,12 @@ return [
             ],
 
             'permissions' => [
-                'all'        => 'All Permissions',
-                'create'     => 'Create Permission',
-                'edit'       => 'Edit Permission',
-                'management' => 'Permission Management',
-                'main'       => 'Permissions',
+                'all'                         => 'All Permissions',
+                'create'                      => 'Create Permission',
+                'edit'                        => 'Edit Permission',
+                'management'                  => 'Permission Management',
+                'main'                        => 'Permissions',
+                'version_restrictions'        => 'Available in other versions',
             ],
 
             'users' => [

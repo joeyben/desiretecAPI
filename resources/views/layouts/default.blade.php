@@ -258,11 +258,21 @@
                     @endif
 
                     @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
-                        <li class="nav-item">
-                            <a href="{{ route('admin.whitelabels.layers') }}" class="nav-link">
-                                <i class="icon-menu2"></i>
-                                <span>{{ __('Layer Management') }}</span>
-                            </a>
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link"><i class="icon-menu2"></i> <span>{{ __('Layer Management') }}</span></a>
+
+                            <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.whitelabels.layers') }}" class="nav-link">
+                                        <span>{{ __('Layer Version') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.whitelabels.content') }}" class="nav-link">
+                                        <span>{{ __('Layer Content') }}</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     @endif
 
@@ -275,7 +285,7 @@
                     </li>
                     @endif
 
-                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('admin.footers') }}" class="nav-link">
                                 <i class="icon-move-down"></i>
@@ -293,9 +303,16 @@
                         </li>
                     @endif
 
-                    @if($module->has('Rules')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                    @if($module->has('Rules')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('admin.rules') }}" class="nav-link">
+                                <i class="icon-cube4"></i>
+                                <span>{{ __('menus.rules_management') }}</span>
+                            </a>
+                        </li>
+                    @elseif($module->has('Rules')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item" data-popup="tooltip" data-html="true" data-trigger="hover" data-original-title="{{ __('menus.backend.access.permissions.version_restrictions') }}">
+                            <a href="{{ route('admin.rules') }}" class="nav-link disabled">
                                 <i class="icon-cube4"></i>
                                 <span>{{ __('menus.rules_management') }}</span>
                             </a>
@@ -310,9 +327,17 @@
                             </a>
                         </li>
                     @endif
-                    @if($module->has('Autooffers')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+
+                    @if($module->has('Rules')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('autooffer.setting') }}" class="nav-link">
+                                <i class="icon-stack-picture"></i>
+                                <span>{{ __('menus.autooffers_management') }}</span>
+                            </a>
+                        </li>
+                    @elseif($module->has('Rules')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item" data-popup="tooltip" data-html="true" data-trigger="hover" data-original-title="{{ __('menus.backend.access.permissions.version_restrictions') }}">
+                            <a href="{{ route('autooffer.setting') }}" class="nav-link disabled">
                                 <i class="icon-stack-picture"></i>
                                 <span>{{ __('menus.autooffers_management') }}</span>
                             </a>

@@ -1,5 +1,11 @@
 @import "variables";
 
+// Reset default
+
+*:focus {
+  outline: none !important;
+}
+
 // Html, body, main-containers
 
 html, body{
@@ -40,31 +46,9 @@ body{
   padding: 5px 20px;
   min-width: 220px;
 }
-a.primary-btn, .primary-btn, a.btn-primary, .btn-primary, input.primary-btn{
-  background: $brand-primary;
-  border: 1px solid $brand-primary;
-  transition: all .3s ease-out;
-  &:visited{
-    background: $brand-primary;
-    border: 1px solid $brand-primary;
-  }
-  &:hover, &:active{
-    background: $brand-secondary;
-    border: 1px solid $brand-secondary;
-  }
-}
-a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
-  color: $brand-primary;
-  border: 1px solid $brand-primary;
-  transition: all .3s ease-out;
-  &:visited{
-    color: $brand-primary;
-    border: 1px solid $brand-primary;
-  }
-  &:hover, &:active{
-    color: $brand-secondary;
-    border: 1px solid $brand-secondary;
-  }
+
+input:-internal-autofill-selected{
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px #f8f8f8 !important;
 }
 
 // Wish modal
@@ -136,5 +120,15 @@ body{
   h1{
     font-weight: normal;
     border-bottom: none;
+  }
+}
+
+// Logo Fix
+.navbar-default{
+  a.logo{
+    .navbar-brand{
+      padding: 0;
+      height: 50px !important;
+    }
   }
 }

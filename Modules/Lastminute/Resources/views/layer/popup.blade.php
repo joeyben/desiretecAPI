@@ -259,7 +259,7 @@
                 @endif
             </div>
             <div class="kwp-col-4 white-col">
-                <button id="submit-button" type="submit">Reisewunsch abschicken</button>
+                <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
             </div>
 
 
@@ -501,6 +501,8 @@
                 /* END Airports */
 
             }
+
+            dt.applyBrandColor();
 
         </script>
 

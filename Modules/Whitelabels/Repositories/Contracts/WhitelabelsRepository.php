@@ -14,7 +14,7 @@ interface WhitelabelsRepository
 
     public function copyLanguage(string $table, string $locale);
 
-    public function current();
+    public function current(bool $first = true);
 
     public function getBackgroundImage($whitelabel);
 
@@ -25,4 +25,6 @@ interface WhitelabelsRepository
     public function getSubDomain(string $domain);
 
     public function getDomain(string $domain);
+
+    public function getVisual($whitelabel);
 }

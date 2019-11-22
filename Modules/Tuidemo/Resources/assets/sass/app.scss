@@ -251,3 +251,13 @@ a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
     }
   }
 }
+
+// Logo Fix
+.navbar-default{
+  a.logo{
+    .navbar-brand{
+      padding: 0;
+      height: 50px !important;
+    }
+  }
+}
