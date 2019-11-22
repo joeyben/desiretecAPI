@@ -117,7 +117,7 @@ return [
     'subheadline'                   => 'Unterüberschrift',
     'headline_success'              => 'Erfolg Überschrift',
     'subheadline_success'           => 'Erfolg Unterüberschrift',
-    'visual'                        => 'Visual',
+    'visual'                        => 'Das Format des Visuals ist 3:1, mindestens 600x200 px.',
     'message_success'               => 'Nachricht Erfolg',
     'position'                      => 'Reihenfolge',
 ];
