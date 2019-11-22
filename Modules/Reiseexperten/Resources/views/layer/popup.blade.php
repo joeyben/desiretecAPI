@@ -1,3 +1,7 @@
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
@@ -421,6 +425,7 @@
 
             }
 
+            var brandColor = {!! json_encode($color) !!};
             dt.applyBrandColor();
 
         </script>
