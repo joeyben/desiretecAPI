@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/kurenundwellness",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Kurenundwellness\\Providers\\KurenundwellnessServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Kurenundwellness\\": ""
+        }
+    }
+}
