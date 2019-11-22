@@ -13,7 +13,7 @@
 @section('after-scripts')
     <script type="application/javascript">
         var cssPrimaryBtn = '.primary-btn, .btn-primary { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
-        var cssSecondaryBtn = '.secondary-btn, .btn-secondary { background: transparent !important; color: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; margin-top: 8px; } ';
+        var cssSecondaryBtn = '.secondary-btn, .btn-secondary { background: transparent !important; color: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
         var cssFormElements = '.form-control:focus { border-bottom: 1px solid ' + brandColor + ' !important; } .form-group a { color: ' + brandColor + ' !important; }';
         $('head').append('<style>' + cssPrimaryBtn + cssSecondaryBtn + cssFormElements + '</style>');
     </script>
