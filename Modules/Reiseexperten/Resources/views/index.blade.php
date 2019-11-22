@@ -1,5 +1,9 @@
 @extends('reiseexperten::layouts.master')
 
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+
 @section('content')
     <div class="slider" style="background-image: url({{ $bg_image }})">
         <div class="welcome">
