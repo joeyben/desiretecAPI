@@ -430,7 +430,7 @@ var exitIntent = window.exitIntent || {};
         }
     });
 
-    var TuiHMTripDataDecoder = $.extend({}, kwizzme.AbstractTripDataDecoder, {
+    var TuiHMTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'TUI Honeymoon',
         matchesUrl: 'www.tui.com/pauschalreisen(/[a-z-]+)*/flitterwochen',
         filterFormSelector: 'body',
