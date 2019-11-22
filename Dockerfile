@@ -15,7 +15,7 @@ RUN composer install \
     --prefer-dist
 
 
-FROM node:latest as frontend
+FROM node:lts-stretch as frontend
 
 LABEL maintainer="desiretec"
 
@@ -29,16 +29,24 @@ WORKDIR /myapp
 RUN npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
       npm config set "//npm.fontawesome.com/:_authToken" 872992B4-8894-4152-95B3-FAA83ECC14D4
 RUN cd /myapp && yarn install --ignore-engines && npm i && npm run production
-RUN cd /myapp/Modules/Autooffers && yarn install --ignore-engines && npm run production
+#RUN cd /myapp/Modules/Autooffers && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Trendtours && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Novasol && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Master && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Strand && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Reiseexperten && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Lastminute && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Overland && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Example && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Dolphin && yarn install --ignore-engines && npm run production
-
+RUN cd /myapp/Modules/Traveloverland && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Demomanuell && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Individualreisen && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Tuidemo && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Tui && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Demokreuzfahrtberatung && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Demoreiserebellen && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/FN && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/TestHafermann && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/TestAuto && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Testkurenundwellness && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Demoatw && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Testmanuell && yarn install --ignore-engines && npm run production
 
 FROM horrorhorst/laravel-base:latest
 
@@ -56,12 +64,13 @@ RUN mv /var/www/html/docker/php/php.ini /usr/local/etc/php/php.ini
 RUN mv /var/www/html/docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 RUN a2enmod rewrite expires
 RUN echo "SetEnvIf x-forwarded-proto https HTTPS=on" >> /etc/apache2/conf-available/docker-php.conf
+ARG APP_KEY
+ENV APP_KEY $APP_KEY
 RUN composer dump-autoload
 
 USER root
 
-RUN apt update && \
-    apt install -y mysql-client && curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt install -y nodejs && apt install -y npm
+RUN apt update && curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt install -y nodejs && apt install -y npm
 RUN rm -r /var/www/html/docker
 RUN make routes
 RUN make message

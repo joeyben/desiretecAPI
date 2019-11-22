@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Autooffers\Repositories\AutooffersRepository;
+use Modules\Autooffers\Repositories\AutooffersTTRepository;
+use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 
 class AutooffersController extends Controller
 {
@@ -46,13 +48,22 @@ class AutooffersController extends Controller
      * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
      */
     private $autooffers;
+    private $TTautooffers;
+    /**
+     * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
+     */
+    private $rules;
 
     /**
      * @param \Modules\Autooffers\Repositories\AutooffersRepository $autooffers
+     * @param \Modules\Autooffers\Repositories\AutooffersTTRepository $autooffers
+     * @param \Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository $rules
      */
-    public function __construct(AutooffersRepository $autooffers)
+    public function __construct(AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers, EloquentAutooffersRepository $rules)
     {
         $this->autooffers = $autooffers;
+        $this->TTautooffers = $TTautooffers;
+        $this->rules = $rules;
     }
 
     /**
@@ -67,15 +78,48 @@ class AutooffersController extends Controller
 
     /**
      * @param \App\Models\Wishes\Wish $wish
+     * @param string $index
+     * @return mixed
+     */
+    public function details(Wish $wish, $index)
+    {
+        $offers = $this->autooffers->getOffersDataFromId($wish->id);
+        $offer =  $offers[$index];
+        $body_class = 'autooffer_list';
+        return view('autooffers::autooffer.details', compact('wish', 'offer', 'body_class'));
+    }
+
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     * @param string $index
+     * @return mixed
+     */
+    public function ttdetails(Wish $wish, $index)
+    {
+        $offers = $this->autooffers->getOffersDataFromId($wish->id);
+        $offer =  $offers[$index];
+        $body_class = 'autooffer_list';
+        return view('autooffers::autooffer.details_tt', compact('wish', 'offer', 'body_class'));
+    }
+
+    /**
+     * @param \App\Models\Wishes\Wish $wish
      *
      * @return mixed
      */
-    public function details(Wish $wish)
+    public function createTT(Wish $wish)
     {
+        $rules = $this->rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
+        //dd(getRegionCode($wish->airport, 0));
+        $this->TTautooffers->saveWishData($wish);
+        //$response = $this->autooffers->getTrafficsData();
+        $this->TTautooffers->getToken();
+        $response = $this->TTautooffers->getTTData();
+        $this->TTautooffers->storeMany($wish->id, $rules);
 
-
-        return view('autooffers::autooffer.details');
+        return redirect()->to('offer/list/' . $wish->id);
     }
+
 
     /**
      * @param \App\Models\Wishes\Wish $wish
@@ -84,9 +128,11 @@ class AutooffersController extends Controller
      */
     public function create(Wish $wish)
     {
+        $rules = $this->rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
+        //dd(getRegionCode($wish->airport, 0));
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
-        $this->autooffers->storeMany($response, $wish->id);
+        $this->autooffers->storeMany($response, $wish->id, $rules);
 
         return redirect()->to('offer/list/' . $wish->id);
     }
@@ -113,8 +159,24 @@ class AutooffersController extends Controller
     public function show(Wish $wish)
     {
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
+        //dd($offers[0]);
+        $body_class = 'autooffer_list';
+        //dd($offers);
+        return view('autooffers::autooffer.list', compact('wish', 'offers', 'body_class'));
+    }
 
-        return view('autooffers::autooffer.show', compact('wish', 'offers'));
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     *
+     * @return Response
+     */
+    public function showtt(Wish $wish)
+    {
+        $offers = $this->autooffers->getOffersDataFromId($wish->id);
+        //dd($offers[0]);
+        $body_class = 'autooffer_list';
+        //dd($offers);
+        return view('autooffers::autooffer.list_tt', compact('wish', 'offers', 'body_class'));
     }
 
     /**
