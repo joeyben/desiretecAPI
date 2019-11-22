@@ -1,8 +1,8 @@
 // Buttons
 
 .primary-btn {
-  background: $orange;
-  border: 1px solid $orange;
+  background: transparent;
+  border: 1px solid transparent;
   color: #fff;
   margin-bottom: 10px;
   padding: 8px 20px;
@@ -25,8 +25,8 @@
 }
 
 .secondary-btn {
-  border: 1px solid $orange;
-  color: $orange;
+  border: 1px solid transparent;
+  color: transparent;
   background: transparent;
   padding: 8px 20px;
   line-height: 1.5em;
