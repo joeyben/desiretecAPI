@@ -36,9 +36,12 @@ body{
 
 // Buttons
 
-.primary-btn, .secondary-btn{
+.primary-btn, .btn-primary, .secondary-btn, .btn-secondary{
   padding: 5px 20px;
   min-width: 220px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #fff;
 }
 
 input:-internal-autofill-selected{
@@ -99,9 +102,7 @@ input:-internal-autofill-selected{
     color: #df007a;
   }
 }
-.btn-primary,.btn-primary:hover{
-  background-color: #df007a;
-}
+
 // Footer
 
 .footer{
@@ -131,15 +132,6 @@ input:-internal-autofill-selected{
 }
 .action {
   text-align: center;
-  .btn {
-    background-color: #df007a !important;
-  }
-}
-.price .btn-primary{
-    background-color: #DF007A !important;
-}
-.slick-slider .btn-primary{
-  background-color:  #df007a !important;
 }
 .fas.fa-heart{
   color: #DF007A !important;
