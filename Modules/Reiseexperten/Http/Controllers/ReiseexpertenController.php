@@ -74,14 +74,16 @@ class ReiseexpertenController extends Controller
     {
         $input = $request->only('variant');
         $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $whitelabel = $this->whitelabel->getByName('Reiseexperten');
 
         $html = view('reiseexperten::'.$layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
-            'request' => $request->all(),
+            'request'   => $request->all(),
             'ages_arr'     => $this->ages,
+            'color'        => $whitelabel['color'],
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
