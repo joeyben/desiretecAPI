@@ -42,9 +42,12 @@ body{
 
 // Buttons
 
-.primary-btn, .secondary-btn{
+.primary-btn, .btn-primary, .secondary-btn, .btn-secondary{
   padding: 5px 20px;
   min-width: 220px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #fff;
 }
 
 input:-internal-autofill-selected{
