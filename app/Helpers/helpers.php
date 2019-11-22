@@ -405,6 +405,20 @@ if (!function_exists('getCurrentWhiteLabelName')) {
     }
 }
 
+if (!function_exists('getCurrentWhiteLabelColor')) {
+    /**
+     * return current whitelabel Color.
+     *
+     * @return string
+     */
+    function getCurrentWhiteLabelColor()
+    {
+        $color = getCurrentWhiteLabelField('color');
+
+        return $color;
+    }
+}
+
 if (!function_exists('getCurrentWhiteLabelField')) {
     /**
      * return current whitelabel Field.

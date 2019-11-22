@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="{{ asset('whitelabel/novasol/css/novasol.css') }}">
 @endsection
 
+@section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+    <script src="{{ mix('whitelabel/novasol/js/novasol.js') }}"></script>
+@endsection
+
 @section('content')
 
     <!-- Wish lis Box -->

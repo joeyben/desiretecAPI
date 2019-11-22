@@ -157,7 +157,7 @@
                 @endif
             </div>
             <div class="kwp-col-4 white-col">
-                <button id="submit-button" type="submit" class="btn-primary">Reisewunsch abschicken</button>
+                <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
             </div>
 
 

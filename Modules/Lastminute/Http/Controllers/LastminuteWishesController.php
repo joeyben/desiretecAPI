@@ -113,6 +113,7 @@ class LastminuteWishesController extends Controller
             array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
+        $whitelabel = $this->whitelabel->getById(getCurrentWhiteLabelId());
 
         return view('lastminute::wish.wish')->with([
             'wish'               => $wish,
@@ -120,12 +121,13 @@ class LastminuteWishesController extends Controller
             'agent_name'         => $agentName,
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
-            'kids_arr'     => $this->kids,
-            'duration_arr' => $this->duration,
-            'adults_arr'   => $this->adults,
-            'budget_arr'   => $this->budget,
-            'ages_arr'     => $this->ages,
-            'is_owner'            => $isOwner
+            'kids_arr'           => $this->kids,
+            'duration_arr'       => $this->duration,
+            'adults_arr'         => $this->adults,
+            'budget_arr'         => $this->budget,
+            'ages_arr'           => $this->ages,
+            'is_owner'           => $isOwner,
+            'color'              => $whitelabel['color'],
         ]);
 
     }
@@ -155,11 +157,13 @@ class LastminuteWishesController extends Controller
      */
     public function wishList(ManageWishesRequest $request)
     {
-        //var_dump($request->ip());
+        $whitelabel = $this->whitelabel->getById(getCurrentWhiteLabelId());
+
         return view('lastminute::wish.index')->with([
             'status'     => $this->status,
             'count'      => $this->wish->getForDataTable()->get()->where('whitelabel_id', getCurrentWhiteLabelId())->count(),
             'body_class' => $this::BODY_CLASS_LIST,
+            'color'      => $whitelabel['color'],
         ]);
     }
 

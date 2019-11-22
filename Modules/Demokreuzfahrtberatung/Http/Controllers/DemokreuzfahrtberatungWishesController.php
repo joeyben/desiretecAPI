@@ -126,7 +126,7 @@ class DemokreuzfahrtberatungWishesController extends Controller
             'class_arr'          => $this->class,
             'ages_arr'           => $this->ages,
             'is_owner'           => $isOwner,
-            'color'              => $whitelabel['color']
+            'color'              => $whitelabel['color'],
         ]);
     }
 
@@ -160,7 +160,7 @@ class DemokreuzfahrtberatungWishesController extends Controller
             'status'     => $this->status,
             'count'      => $this->wish->getForDataTable()->get()->where('whitelabel_id', getCurrentWhiteLabelId())->count(),
             'body_class' => $this::BODY_CLASS_LIST,
-            'color'              => $whitelabel['color']
+            'color'      => $whitelabel['color'],
         ]);
     }
 

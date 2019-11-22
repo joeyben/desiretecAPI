@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="{{ asset('whitelabel/traveloverland/css/traveloverland.css') }}">
 @endsection
 
+@section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+    <script src="{{ mix('whitelabel/traveloverland/js/traveloverland.js') }}"></script>
+@endsection
+
 @section('content')
 
     <!-- Wish lis Box -->
