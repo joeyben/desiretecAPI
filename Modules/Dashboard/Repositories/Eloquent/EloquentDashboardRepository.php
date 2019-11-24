@@ -241,31 +241,33 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
     }
     public function setFilterCategoryPosition($result, string $position,int $id1,int $id2)
     {
-        switch ($position) {
-            case 1:
-                $result['dashboards'][$id1]->y=2;
-                $result['dashboards'][$id2]->y=2;
-                break;
-            case 2:
-                $result['dashboards'][$id1]->y=10;
-                $result['dashboards'][$id2]->y=10;
-                break;
-            case 3:
-                $result['dashboards'][$id1]->y=18;
-                $result['dashboards'][$id2]->y=18;
-                break;
-            case 4:
-                $result['dashboards'][$id1]->y=26;
-                $result['dashboards'][$id2]->y=26;
-                break;
-            case 5:
-                $result['dashboards'][$id1]->y=34;
-                $result['dashboards'][$id2]->y=34;
-                break;
-            case 6:
-                $result['dashboards'][$id1]->y=42;
-                $result['dashboards'][$id2]->y=42;
-                break;
+        if (array_key_exists($id1,$result['dashboards']) && array_key_exists($id2,$result['dashboards'])) {
+            switch ($position) {
+                case 1:
+                    $result['dashboards'][$id1]->y = 2;
+                    $result['dashboards'][$id2]->y = 2;
+                    break;
+                case 2:
+                    $result['dashboards'][$id1]->y = 10;
+                    $result['dashboards'][$id2]->y = 10;
+                    break;
+                case 3:
+                    $result['dashboards'][$id1]->y = 18;
+                    $result['dashboards'][$id2]->y = 18;
+                    break;
+                case 4:
+                    $result['dashboards'][$id1]->y = 26;
+                    $result['dashboards'][$id2]->y = 26;
+                    break;
+                case 5:
+                    $result['dashboards'][$id1]->y = 34;
+                    $result['dashboards'][$id2]->y = 34;
+                    break;
+                case 6:
+                    $result['dashboards'][$id1]->y = 42;
+                    $result['dashboards'][$id2]->y = 42;
+                    break;
+            }
         }
     }
 

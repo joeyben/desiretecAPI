@@ -117,7 +117,7 @@ return [
     'subheadline'                   => 'Sub headline',
     'headline_success'              => 'Success headline',
     'subheadline_success'           => 'Success sub headline',
-    'visual'                        => 'Visual',
+    'visual'                        => 'The format of the visual is 3:1, at least 600x200 px.',
     'message_success'               => 'Message success',
     'position'                      => 'Position',
 ];

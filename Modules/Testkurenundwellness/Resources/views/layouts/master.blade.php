@@ -15,6 +15,16 @@
 @endsection
 
 @section('before-scripts')
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105970361-14"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-105970361-14');
+    </script>
+
     <script type="text/javascript">
         var brandColor = {!! json_encode($color) !!};
     </script>
