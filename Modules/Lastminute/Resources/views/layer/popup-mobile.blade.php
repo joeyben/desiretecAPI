@@ -1,3 +1,7 @@
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+
 {{ Form::open(['route' => 'lastminute.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">

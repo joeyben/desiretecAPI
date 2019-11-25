@@ -84,6 +84,7 @@ class LastminuteController extends Controller
     {
         $input = $request->only('variant');
         $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $whitelabel = $this->whitelabel->getByName('Lastminute');
 
         $html = view('lastminute::'.$layer)->with([
             'adults_arr'   => $this->adults,
@@ -92,7 +93,8 @@ class LastminuteController extends Controller
             'duration_arr' => $this->duration,
             'budget_arr'   => $this->budget,
             'ages_arr'     => $this->ages,
-            'request' => $request->all()
+            'request'      => $request->all(),
+            'color'        => $whitelabel['color'],
         ])->render();
         return response()->json(['success' => true, 'html'=>$html]);
     }
