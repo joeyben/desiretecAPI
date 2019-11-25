@@ -19,6 +19,13 @@
     <script src="{{ mix('whitelabel/demoreiserebellen/js/demoreiserebellen.js') }}"></script>
 @endsection
 
+@section('after-scripts')
+    <script type="text/javascript">
+        var cssPrimaryBtn = '.btn-primary { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; color: #fff !important; } ';
+        $('head').append('<style>' + cssPrimaryBtn + '</style>');
+    </script>
+@endsection
+
 @section('content')
 
     <!-- Wish lis Box -->

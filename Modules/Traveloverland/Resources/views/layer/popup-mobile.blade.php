@@ -1,3 +1,7 @@
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+
 {{ Form::open(['route' => 'traveloverland.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 

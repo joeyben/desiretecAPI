@@ -74,14 +74,16 @@ class DemoreiserebellenController extends Controller
     public function show(Request $request)
     {
         $input = $request->only('variant');
-        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $whitelabel = $this->whitelabel->getByName('Demoreiserebellen');
 
         $html = view('demoreiserebellen::' . $layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
-            'request'      => $request->all()
+            'request'      => $request->all(),
+            'color'        => $whitelabel['color'],
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);

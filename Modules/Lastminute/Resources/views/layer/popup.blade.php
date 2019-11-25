@@ -8,6 +8,9 @@
     }
 </style>
 
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
 
 <div class="kwp-middle">
     Wir helfen Ihnen gerne, Ihre persönlichen Traumferien zu finden.<br> Probieren Sie es jetzt aus!

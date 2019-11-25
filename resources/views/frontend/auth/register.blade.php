@@ -12,9 +12,20 @@
 
 @section('after-scripts')
     <script type="application/javascript">
-        var cssPrimaryBtn = '.primary-btn, .btn-primary { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
-        var cssFormElements = '.form-control:focus { border-bottom: 1px solid ' + brandColor + ' !important; } .form-group a { color: ' + brandColor + ' !important; }';
-        $('head').append('<style>' + cssPrimaryBtn + cssFormElements + '</style>');
+        $(document).ready(function(){
+            $('.btn-primary').css({
+                'background': brandColor,
+                'border': '1px solid ' + brandColor,
+                'color': '#fff',
+            });
+            $("input").focus(function(){
+                $(this).css({'border-color': brandColor});
+            });
+            $("input").blur(function(){
+                $(this).css({'border-color': 'inherit'});
+            });
+            $('.form-group a').css({'color': brandColor});
+        });
     </script>
 @endsection
 

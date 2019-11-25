@@ -74,13 +74,14 @@ class TestkurenundwellnessController extends Controller
         $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
         $whitelabel = $this->whitelabel->getByName('Testkurenundwellness');
 
-        $html = view('testkurenundwellness::' . $layer)->with([
-            'adults_arr'    => $this->adults,
-            'kids_arr'      => $this->kids,
-            'catering_arr'  => $this->catering,
-            'duration_arr'  => $this->duration,
-            'request'       => $request->all(),
-            'color'         => $whitelabel['color'],
+
+        $html = view('testkurenundwellness::'.$layer)->with([
+            'adults_arr'   => $this->adults,
+            'kids_arr'     => $this->kids,
+            'catering_arr' => $this->catering,
+            'duration_arr' => $this->duration,
+            'request'      => $request->all(),
+            'color'        => $whitelabel['color'],
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
