@@ -13,8 +13,7 @@ use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
 abstract class BrowserKitTestCase extends BaseTestCase
 {
     use CreatesApplication;
-    use
-        RefreshDatabase;
+    use RefreshDatabase;
 
     /**
      * @var
