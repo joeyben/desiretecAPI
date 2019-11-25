@@ -79,8 +79,8 @@ class TestkurenundwellnessController extends Controller
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
-            'request' => $request->all(),
-            'color'         => $whitelabel['color'],
+            'request'      => $request->all(),
+            'color'        => $whitelabel['color'],
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);

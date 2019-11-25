@@ -1,3 +1,7 @@
+<script type="text/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+
 {{ Form::open(['route' => 'testkurenundwellness.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <div class="kwp-minimal">
@@ -445,7 +449,6 @@
 
             }
 
-            var brandColor = {!! json_encode($color) !!};
             dt.applyBrandColor();
 
         </script>

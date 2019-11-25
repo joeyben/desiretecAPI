@@ -17,7 +17,7 @@
 
 @section('after-scripts')
     <script type="text/javascript">
-        var cssPrimaryBtn = '.primary-btn { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
+        var cssPrimaryBtn = '.primary-btn { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; color: #fff !important; } ';
         var cssSecondaryBtn = '.secondary-btn { background: transparent !important; color: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
         $('head').append('<style>' + cssPrimaryBtn + cssSecondaryBtn + '</style>');
     </script>
