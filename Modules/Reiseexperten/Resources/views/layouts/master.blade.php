@@ -15,13 +15,10 @@
 @endsection
 
 @section('before-scripts')
-    <script src="{{ mix('whitelabel/reiseexperten/js/reiseexperten.js') }}"></script>
-
     <script type="application/javascript">
         var brandColor = {!! json_encode($color) !!};
-        var cssPrimaryBtn = '.primary-btn, .btn-primary { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
-        $('head').append('<style>' + cssPrimaryBtn + '</style>');
     </script>
+    <script src="{{ mix('whitelabel/reiseexperten/js/reiseexperten.js') }}"></script>
 @endsection
 
 @section('after-scripts')
