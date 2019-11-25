@@ -15,8 +15,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
-use Modules\Wishes\Repositories\Contracts\WishesRepository;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
+use Modules\Wishes\Repositories\Contracts\WishesRepository;
 
 class WishesController extends Controller
 {
@@ -152,7 +152,7 @@ class WishesController extends Controller
                     $result['data'][] = 0;
                 }
             }
-            
+
             $result['wunsch'] = $this->dashboard->getFilterCategory('Wünsche');
             $result['success'] = true;
             $result['status'] = 200;

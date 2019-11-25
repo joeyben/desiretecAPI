@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Frontend\Messages;
 
-use App\Repositories\BaseRepository;
 use App\Models\Messages\Message;
+use App\Repositories\BaseRepository;
 use DB;
 
 /**
@@ -19,7 +19,6 @@ class MessagesRepository extends BaseRepository
     public function createInbound(array $data)
     {
         DB::transaction(function () use ($data) {
-           
             if (Message::create($data)) {
                 return true;
             }
@@ -27,5 +26,4 @@ class MessagesRepository extends BaseRepository
             throw new GeneralException(trans('exceptions.frontend.messages.create_error'));
         });
     }
-    
 }

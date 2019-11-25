@@ -2,8 +2,6 @@
 
 namespace Modules\Demoreiserebellen\Http\Controllers;
 
-use Modules\Demoreiserebellen\Jobs\callTrafficsApi;
-use Modules\Demoreiserebellen\Jobs\sendAutoOffersMail;
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Access\User\UserRepository;
@@ -15,6 +13,8 @@ use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Demoreiserebellen\Http\Requests\StoreWishRequest;
+use Modules\Demoreiserebellen\Jobs\callTrafficsApi;
+use Modules\Demoreiserebellen\Jobs\sendAutoOffersMail;
 
 class DemoreiserebellenController extends Controller
 {
@@ -77,7 +77,7 @@ class DemoreiserebellenController extends Controller
         $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
         $whitelabel = $this->whitelabel->getByName('Demoreiserebellen');
 
-        $html = view('demoreiserebellen::'.$layer)->with([
+        $html = view('demoreiserebellen::' . $layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -102,14 +102,14 @@ class DemoreiserebellenController extends Controller
     {
         $input = $request->all();
         if ($request->failed()) {
-            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
-            $html = view('demoreiserebellen::'.$layer)->with([
+            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+            $html = view('demoreiserebellen::' . $layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
-                'request' => $request->all()
+                'request'      => $request->all()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -130,8 +130,8 @@ class DemoreiserebellenController extends Controller
         dispatch($wishJob);
 
         $details = [
-            "email" => $newUser->email,
-            "type"  => 1
+            'email' => $newUser->email,
+            'type'  => 1
         ];
         dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
 
@@ -164,7 +164,7 @@ class DemoreiserebellenController extends Controller
 
             return $new_user;
         }
-        $input['whitelabel_name'] = $this->whitelabel->getById(intval($this->whitelabelId))['display_name'];
+        $input['whitelabel_name'] = $this->whitelabel->getById((int) ($this->whitelabelId))['display_name'];
 
         $new_user = $user->create($input);
         $new_user->storeToken();

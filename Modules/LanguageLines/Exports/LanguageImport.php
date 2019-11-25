@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Modules\LanguageLines\Exports;
 
 use Illuminate\Support\Collection;
@@ -10,9 +9,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Modules\LanguageLines\Entities\LanguageLines;
 
 /**
- * Class LanguageImport
- *
- * @package \Modules\LanguageLines\Exports
+ * Class LanguageImport.
  */
 class LanguageImport implements ToCollection, WithHeadingRow
 {
@@ -32,11 +29,11 @@ class LanguageImport implements ToCollection, WithHeadingRow
 
             if (!$exist) {
                 LanguageLines::create([
-                    'locale' => $row['lokal'],
-                    'group' => $row['gruppe'],
+                    'locale'      => $row['lokal'],
+                    'group'       => $row['gruppe'],
                     'description' => $row['beschreibung'],
-                    'key' => $row['key'],
-                    'text' => $row['text'],
+                    'key'         => $row['key'],
+                    'text'        => $row['text'],
                 ]);
             }
         }

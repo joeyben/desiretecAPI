@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'peruneu.com',
+
+$domain_env = [
+    'local_url'       => 'peruneu.com',
     'development_url' => 'peruneu.reise-wunsch.com',
-    'production_url' => 'peruneu.reisewunschservice.de',
-);
+    'production_url'  => 'peruneu.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'PeruNeuWishesController@validateTokenList');
     });
 });
-

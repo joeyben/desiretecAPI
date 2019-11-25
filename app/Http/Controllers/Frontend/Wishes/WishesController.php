@@ -15,7 +15,6 @@ use Auth;
 use Illuminate\Http\Request;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
-use Torann\GeoIP\Facades\GeoIP;
 
 /**
  * Class WishesController.
@@ -68,7 +67,7 @@ class WishesController extends Controller
     private $rules;
 
     /**
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository           $wish
      * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository $rules
      */
     public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules)
@@ -105,8 +104,8 @@ class WishesController extends Controller
     {
         $wishTye = $this->manageRules($wish);
 
-        if($wishTye > 0){
-            return redirect()->route('autooffer.create',[$wish->id]);
+        if ($wishTye > 0) {
+            return redirect()->route('autooffer.create', [$wish->id]);
         }
 
         $offers = $wish->offers;
@@ -117,7 +116,6 @@ class WishesController extends Controller
             array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
-
 
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
@@ -130,7 +128,7 @@ class WishesController extends Controller
         ]);
     }
 
-    public function getWish(Wish $wish , ManageWishesRequest $request)
+    public function getWish(Wish $wish, ManageWishesRequest $request)
     {
         return response()->json($wish->id);
     }
@@ -193,17 +191,17 @@ class WishesController extends Controller
      */
     public function getList(ManageWishesRequest $request)
     {
-        $status_arr = array(
+        $status_arr = [
             'Active'       => '1',
             'Inactive'     => '2',
             'Deleted'      => '3',
-        );
+        ];
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
         $wish = $this->wish->getForDataTable()
             ->when($status, function ($wish, $status) {
                 return $wish->where(config('module.wishes.table') . '.status', $status)
-                    ->where('whitelabel_id', intval(getCurrentWhiteLabelId()));
+                    ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
             })
             ->paginate(10);
 
@@ -310,6 +308,7 @@ class WishesController extends Controller
 
         if ($user) {
             Auth::login($user);
+
             return redirect()->to('/wish/' . $wish->id);
         }
 
@@ -317,19 +316,22 @@ class WishesController extends Controller
     }
 
     // To do: Define Auto and Manuel offer in const
+
     /**
      * @param \App\Models\Wishes\Wish $wish
+     *
      * @return string
      */
-    public function manageRules($wish){
-        $rules = $this->rules->getRuleForWhitelabel(intval(getCurrentWhiteLabelId()));
+    public function manageRules($wish)
+    {
+        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelId()));
         $offer = 0;
         switch ($rules['type']) {
             case 'mix':
-                $destinations = is_array($rules['destination']) ? $rules['destination'] : [];
+                $destinations = \is_array($rules['destination']) ? $rules['destination'] : [];
                 $budget_lower = $wish->budget < $rules['budget'];
-                $description_notset = !$wish->description || $wish->description === "";
-                $destination_exists = empty($destinations) || in_array($wish->destination, $destinations);
+                $description_notset = !$wish->description || '' === $wish->description;
+                $destination_exists = empty($destinations) || \in_array($wish->destination, $destinations, true);
 
                 if ($budget_lower && $description_notset && $destination_exists) {
                     $offer = 1;
@@ -346,6 +348,7 @@ class WishesController extends Controller
             default:
                 $offer = 0;
         }
+
         return $offer;
     }
 }

@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'strand.com',
+
+$domain_env = [
+    'local_url'       => 'strand.com',
     'development_url' => 'strand.reise-wunsch.com',
-    'production_url' => 'strand.reisewunschservice.de',
-);
+    'production_url'  => 'strand.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'StrandWishesController@validateTokenList');
     });
 });
-

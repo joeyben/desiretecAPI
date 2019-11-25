@@ -305,7 +305,7 @@ trait UserAccess
             $whitelabel = $whitelabel['id'];
         }
 
-        if (!in_array($whitelabel, $this->getWhitelabels())) {
+        if (!\in_array($whitelabel, $this->getWhitelabels(), true)) {
             $this->whitelabels()->attach($whitelabel);
         }
     }

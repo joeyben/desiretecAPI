@@ -6,11 +6,11 @@ use App\Models\Access\User\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Lang;
 
 class TokenLoginRequested extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $user;
     public $options;
@@ -29,7 +29,8 @@ class TokenLoginRequested extends Mailable
      *
      * @return $this
      */
-    public function build(){
+    public function build()
+    {
         $subject = trans('email.message.token_new', [
             'whitelabel' => getCurrentWhiteLabelField('display_name')
         ]);

@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'tuidemo.com',
+
+$domain_env = [
+    'local_url'       => 'tuidemo.com',
     'development_url' => 'tuidemo.reise-wunsch.com',
-    'production_url' => 'tuidemo.reisewunschservice.de',
-);
+    'production_url'  => 'tuidemo.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'TuidemoWishesController@validateTokenList');
     });
 });
-

@@ -67,7 +67,7 @@ class StoreWishRequest extends FormRequest
     public function rules()
     {
         return [
-            'airport'         => ['required', Rule::notIn(['beliebig','Beliebig'])],
+            'airport'         => ['required', Rule::notIn(['beliebig', 'Beliebig'])],
             'destination'     => 'required',
             'earliest_start'  => 'required',
             'latest_return'   => 'required',

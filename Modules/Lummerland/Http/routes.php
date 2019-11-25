@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'lummerland.com',
+
+$domain_env = [
+    'local_url'       => 'lummerland.com',
     'development_url' => 'lummerland.reise-wunsch.com',
-    'production_url' => 'lummerland.reisewunschservice.de',
-);
+    'production_url'  => 'lummerland.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'LummerlandWishesController@validateTokenList');
     });
 });
-

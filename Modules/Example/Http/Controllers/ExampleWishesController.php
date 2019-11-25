@@ -65,10 +65,9 @@ class ExampleWishesController extends Controller
      */
     protected $whitelabel;
 
-
     /**
      * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
      */
     public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories)
     {
@@ -101,7 +100,6 @@ class ExampleWishesController extends Controller
      */
     public function view(Wish $wish)
     {
-
         $offers = $wish->offers;
         $avatar = [];
         $agentName = [];
@@ -112,19 +110,17 @@ class ExampleWishesController extends Controller
         }
 
         return view('example::wish.wish')->with([
-            'wish'               => $wish,
-            'avatar'             => $avatar,
-            'agent_name'         => $agentName,
-            'body_class'         => $this::BODY_CLASS,
-            'offer_url'          => $this::OFFER_URL,
-            'kids_arr'     => $this->kids,
-            'duration_arr' => $this->duration,
-            'adults_arr'   => $this->adults,
+            'wish'                => $wish,
+            'avatar'              => $avatar,
+            'agent_name'          => $agentName,
+            'body_class'          => $this::BODY_CLASS,
+            'offer_url'           => $this::OFFER_URL,
+            'kids_arr'            => $this->kids,
+            'duration_arr'        => $this->duration,
+            'adults_arr'          => $this->adults,
             'is_owner'            => $isOwner
         ]);
-
     }
-
 
     /**
      * @param string $token
@@ -133,7 +129,6 @@ class ExampleWishesController extends Controller
      */
     public function validateTokenList($token)
     {
-
         if ($this->wish->validateToken($token)) {
             if (Route::has('example.list')) {
                 return redirect()->route('example.list');

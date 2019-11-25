@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'testhafermann.com',
+
+$domain_env = [
+    'local_url'       => 'testhafermann.com',
     'development_url' => 'testhafermann.reise-wunsch.com',
-    'production_url' => 'testhafermann.reisewunschservice.de',
-);
+    'production_url'  => 'testhafermann.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'TestHafermannWishesController@validateTokenList');
     });
 });
-

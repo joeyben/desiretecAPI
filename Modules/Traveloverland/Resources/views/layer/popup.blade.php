@@ -3,13 +3,13 @@
 </script>
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
-<?php $kids_arr_new = array(
-    '0' => "0 Kinder (0-11 Jahre)",
-    '1' => "1 Kind",
-    '2' => "2 Kinder",
-    '3' => "3 Kinder",
-    '4' => "4 Kinder",
-); ?>
+<?php $kids_arr_new = [
+    '0' => '0 Kinder (0-11 Jahre)',
+    '1' => '1 Kind',
+    '2' => '2 Kinder',
+    '3' => '3 Kinder',
+    '4' => '4 Kinder',
+]; ?>
 <div class="kwp-middle">
     Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
 </div>
