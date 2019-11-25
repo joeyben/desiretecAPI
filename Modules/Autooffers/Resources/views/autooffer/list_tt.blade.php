@@ -15,10 +15,19 @@
             <section class="about-section">
                 <div class="shell">
                     <h1>Herzlich willkommen</h1>
-                    <h3>Hallo, wir haben wunderbare Angebote zu Ihrem Reiseziel "{{ $wish->destination }}" gefunden. Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <a href="tel:040238859-82">
+                    <h3>
+                        @if (count($offers) === 0)
+                            Lieber Kunde. Leider haben wir keine passenden Angebote für Ihren Reisewunsch gefunden. Unsere Kollegen aus dem Service Center helfen Ihnen jedoch gerne weiter.
+                        @else
+                            Hallo, wir haben wunderbare Angebote zu Ihrem Reiseziel "{{ $wish->destination }}" gefunden.
+                        @endif
+
+                        Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <a href="tel:040238859-82">
                             040 23 88 59-82
                         </a></h3>
-                    <a class="btn btn-primary" onclick="scrollToAnchor('listed-offers-section')">Angebote ansehen</a>
+                    @if (count($offers) > 0)
+                        <a class="btn btn-primary" onclick="scrollToAnchor('listed-offers-section')">Angebote ansehen</a>
+                    @endif
                 </div>
             </section>
 
@@ -107,29 +116,30 @@
 
                         </div>
                     </div>
-
+                    @if (count($offers) > 0)
                     <div id="top-map" class="map"></div>
-
+                    @endif
                     <a class="btn btn-secondary" onclick="showMenu()">Reisewunsch ansehen</a>
                 </div>
 
             </section>
-
+            @php
+                $count = 0;
+                $locations = [];
+            @endphp
+            @if (count($offers) > 0)
             <section class="listed-offers-section" id="listed-offers-section">
                 <div class="shell">
                     <div class="vertical-line"></div>
                     <h1>Meine Angebote</h1>
 
                     <ul class="offers">
-                        @php
-                            $count = 0;
-                            $locations = [];
-                        @endphp
+
                         @foreach($offers as $key => $offer)
                             @php
                                 $hotelData = [
                                     'title' => $offer['hotel_data']['data']['Hotelname'],
-                                    'stars' => intval($offer['hotel_data']['data']['Hotelkategorie']),
+                                    'stars' => key_exists('Hotelkategorie', $offer['hotel_data']['data']) ? intval($offer['hotel_data']['data']['Hotelkategorie']) : 0 ,
                                     'text' => $offer['data']['boardType'],
                                     'longitude' => $offer['data']['hotel_geo']['longitude'],
                                     'latitude' => $offer['data']['hotel_geo']['latitude']
@@ -227,7 +237,7 @@
                     </ul>
                 </div>
             </section>
-
+            @endif
         </div>
     </main>
 @endsection
