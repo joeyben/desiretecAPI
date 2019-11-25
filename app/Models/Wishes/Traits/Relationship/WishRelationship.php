@@ -86,6 +86,7 @@ trait WishRelationship
     {
         return $this->hasMany(Contact::class, 'wish_id')->where('email', '=', 'no data');
     }
+
     /**
      * @return mixed
      */

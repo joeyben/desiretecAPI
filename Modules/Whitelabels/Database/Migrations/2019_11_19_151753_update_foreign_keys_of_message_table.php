@@ -1,20 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class UpdateForeignKeysOfMessageTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        if (Schema::hasTable('message') && Schema::hasColumn('message', 'agent_id') && Schema::hasColumn('message', 'user_id') && Schema::hasColumn('message', 'wish_id')) 
-        {
+        if (Schema::hasTable('message') && Schema::hasColumn('message', 'agent_id') && Schema::hasColumn('message', 'user_id') && Schema::hasColumn('message', 'wish_id')) {
             // Laravel schema builder can't modify/update/change column foreign keys at the current state only for updating onDelete and onUpdate, that's why had to use raw querries, first need to drop FOREIGN KEY and then recreate the constraint.
             // Schema::table('message', function (Blueprint $table) {
             //     $table->dropForeign('user_id');
@@ -47,8 +44,6 @@ class UpdateForeignKeysOfMessageTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

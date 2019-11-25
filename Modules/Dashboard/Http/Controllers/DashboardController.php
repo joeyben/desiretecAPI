@@ -2,24 +2,22 @@
 
 namespace Modules\Dashboard\Http\Controllers;
 
+use Analytics;
 use App\Repositories\Backend\Access\User\UserRepository;
 use App\Repositories\Frontend\Offers\OffersRepository;
+use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
-use App\Services\Flag\Src\Flag;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
-use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
-use Modules\Wishes\Repositories\Contracts\WishesRepository;
-use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
-use Analytics;
-use Spatie\Analytics\Period;
 use Modules\Dashboard\Exports\DashboardExport;
-use Maatwebsite\Excel\Facades\Excel;
+use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
+use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
+use Modules\Wishes\Repositories\Contracts\WishesRepository;
 
 class DashboardController extends Controller
 {
@@ -73,7 +71,7 @@ class DashboardController extends Controller
      * @param \App\Repositories\Backend\Access\User\UserRepository            $users
      * @param \Illuminate\Support\Carbon                                      $carbon
      */
-    public function __construct(DashboardRepository $dashboard, ActivitiesRepository $activities, ResponseFactory $response, AuthManager $auth, Translator $lang, UserRepository $users, Carbon $carbon, WishesRepository $wishes, OffersRepository $offers,WhitelabelsRepository $whitelabels)
+    public function __construct(DashboardRepository $dashboard, ActivitiesRepository $activities, ResponseFactory $response, AuthManager $auth, Translator $lang, UserRepository $users, Carbon $carbon, WishesRepository $wishes, OffersRepository $offers, WhitelabelsRepository $whitelabels)
     {
         $this->dashboard = $dashboard;
         $this->activities = $activities;
@@ -93,7 +91,7 @@ class DashboardController extends Controller
      * @return Response
      */
     public function index()
-    {   
+    {
         return view('dashboard::index');
     }
 
@@ -129,17 +127,17 @@ class DashboardController extends Controller
             $result['dashboards'] = $this->auth->guard('web')->user()->dashboards()->get();
 
             $result['p_desktop'] = $this->dashboard->getFilterCategoryPosition('LI Desktop');
-            $this->dashboard->setFilterCategoryPosition($result,$result['p_desktop'],1,5);
+            $this->dashboard->setFilterCategoryPosition($result, $result['p_desktop'], 1, 5);
             $result['p_mobile'] = $this->dashboard->getFilterCategoryPosition('LI Mobile');
-            $this->dashboard->setFilterCategoryPosition($result,$result['p_mobile'],2,12);
+            $this->dashboard->setFilterCategoryPosition($result, $result['p_mobile'], 2, 12);
             $result['p_wunsch'] = $this->dashboard->getFilterCategoryPosition('Wünsche');
-            $this->dashboard->setFilterCategoryPosition($result,$result['p_wunsch'],9,11);
+            $this->dashboard->setFilterCategoryPosition($result, $result['p_wunsch'], 9, 11);
             $result['p_browser'] = $this->dashboard->getFilterCategoryPosition('Desktop Browser');
-            $this->dashboard->setFilterCategoryPosition($result,$result['p_browser'],10,13);
+            $this->dashboard->setFilterCategoryPosition($result, $result['p_browser'], 10, 13);
             $result['p_response'] = $this->dashboard->getFilterCategoryPosition('Response Rate');
-            $this->dashboard->setFilterCategoryPosition($result,$result['p_response'],3,4);
+            $this->dashboard->setFilterCategoryPosition($result, $result['p_response'], 3, 4);
             $result['p_email'] = $this->dashboard->getFilterCategoryPosition('E-Mail');
-            $this->dashboard->setFilterCategoryPosition($result,$result['p_email'],14,15);
+            $this->dashboard->setFilterCategoryPosition($result, $result['p_email'], 14, 15);
 
             $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
@@ -148,7 +146,7 @@ class DashboardController extends Controller
             $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
             $result['basis'] = $this->dashboard->getFilterCategory('Basis');
             $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-            
+
             $result['success'] = true;
             $result['status'] = 200;
         } catch (Exception $e) {
@@ -202,6 +200,7 @@ class DashboardController extends Controller
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -213,7 +212,7 @@ class DashboardController extends Controller
 
     public function export(Request $request)
     {
-        return new DashboardExport($this->dashboard,$this->wishes,$this->carbon);
+        return new DashboardExport($this->dashboard, $this->wishes, $this->carbon);
     }
 
     public function exportw(Request $request)
@@ -221,16 +220,16 @@ class DashboardController extends Controller
         try {
             session_start();
             $whitelabelId = $request->get('whitelabelId');
-            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
 
-            if (is_null($whitelabelId)) {
+            if (null === $whitelabelId) {
                 $whitelabel = $this->whitelabels->first();
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
+            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
 
             $_SESSION['viewid'] = $viewId;
             $_SESSION['whitelabel'] = $whitelabelId;
@@ -244,8 +243,8 @@ class DashboardController extends Controller
             $result['message'] = $e->getMessage();
             $result['status'] = Flag::STATUS_CODE_ERROR;
         }
-
     }
+
     /**
      * Google analytics.
      *

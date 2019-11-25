@@ -56,17 +56,20 @@ class Whitelabel extends BaseModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function rules(){
+    public function rules()
+    {
         return $this->hasMany(Rule::class);
     }
 
     /**
      * @return bool
      */
-    public function isAutooffer(){
-        if($this->rules->where('status', 1)->where('type', 'auto')->count() > 0){
+    public function isAutooffer()
+    {
+        if ($this->rules->where('status', 1)->where('type', 'auto')->count() > 0) {
             return true;
         }
+
         return false;
     }
 }

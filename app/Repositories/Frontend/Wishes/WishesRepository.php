@@ -61,7 +61,7 @@ class WishesRepository extends BaseRepository
             ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.wishes.table') . '.created_by')
             ->leftjoin(config('module.whitelabels.table'), config('module.whitelabels.table') . '.id', '=', config('module.wishes.table') . '.whitelabel_id')
             ->leftjoin(config('module.offers.table'), config('module.offers.table') . '.wish_id', '=', config('module.wishes.table') . '.id')
-            ->leftJoin('categories_wish', 'categories_wish.wish_id', '=', config('module.wishes.table') .'.id')
+            ->leftJoin('categories_wish', 'categories_wish.wish_id', '=', config('module.wishes.table') . '.id')
             ->leftJoin('categories', 'categories_wish.category_id', '=', 'categories.id')
             ->select([
                 config('module.wishes.table') . '.id',
@@ -93,6 +93,7 @@ class WishesRepository extends BaseRepository
         } elseif (access()->user()->hasRole('Seller')) {
             $query->whereIn(config('module.wishes.table') . '.group_id', access()->user()->groups->pluck('id')->toArray());
         }
+
         return $query;
     }
 
@@ -121,16 +122,17 @@ class WishesRepository extends BaseRepository
 
     /**
      * @param array $input
-     * @param integer $whitelabelId
+     * @param int   $whitelabelId
+     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return mixed
      */
-    public function create(array $input, $whitelabelId){
+    public function create(array $input, $whitelabelId)
+    {
         $this->whitelabel_id = $whitelabelId;
 
         $wish = DB::transaction(function () use ($input, $whitelabelId) {
-
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
             $input['created_by'] = access()->user()->id;
             $input['whitelabel_id'] = $whitelabelId;
@@ -138,12 +140,13 @@ class WishesRepository extends BaseRepository
             $input['title'] = '-';
             $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
             $input['latest_return'] = $input['latest_return'] ? \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']) : '0000-00-00';
-            $input['adults'] = intval($input['adults']);
-            $input['extra_params'] = isset($input['extra_params']) ? $input['extra_params'] : "";
+            $input['adults'] = (int) ($input['adults']);
+            $input['extra_params'] = isset($input['extra_params']) ? $input['extra_params'] : '';
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
                 event(new WishCreated($wish));
+
                 return $wish;
             }
 
@@ -311,18 +314,16 @@ class WishesRepository extends BaseRepository
     /**
      * Find data by multiple values in one field.
      *
-     * @param       \Modules\Wishes\Entities\Wish $wish
-     * @param       $category
-     *
-     * @return void
+     * @param \Modules\Wishes\Entities\Wish $wish
+     * @param                               $category
      */
     public function storeCategoryWish($category, \Modules\Wishes\Entities\Wish $wish)
     {
-        if(is_array($category)){
-            foreach ($category as $cat){
+        if (\is_array($category)) {
+            foreach ($category as $cat) {
                 $wish->attachCategory($cat);
             }
-        }else{
+        } else {
             $wish->attachCategory($category);
         }
     }

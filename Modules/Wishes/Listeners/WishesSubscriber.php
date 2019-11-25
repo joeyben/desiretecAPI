@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Notification;
 use Modules\Groups\Entities\Group;
 use Modules\Wishes\Entities\Wish;
+use Modules\Wishes\Notifications\AutoOfferNotification;
 use Modules\Wishes\Notifications\CreatedWishNotification;
 use Modules\Wishes\Notifications\CreatedWishNotificationForSeller;
-use Modules\Wishes\Notifications\AutoOfferNotification;
 
 class WishesSubscriber
 {
@@ -56,15 +56,14 @@ class WishesSubscriber
         //Notification::send($users, new CreatedWishNotificationForSeller($wish));
         //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish))->delay(now()->addMinutes(10)));
 
-        if($wish->whitelabel->isAutooffer()){
+        if ($wish->whitelabel->isAutooffer()) {
             //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish)));
         }
-        if(!$wish->whitelabel->isAutooffer()){
+        if (!$wish->whitelabel->isAutooffer()) {
             Notification::send($users, new CreatedWishNotificationForSeller($wish));
         }
 
         Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));
-
 
         $admins = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->where('users.id', '!=', Auth::guard('web')->user()->id)->get();
 

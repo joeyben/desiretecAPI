@@ -59,6 +59,7 @@ class WhitelabelsController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -72,6 +73,7 @@ class WhitelabelsController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
@@ -81,7 +83,9 @@ class WhitelabelsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -90,6 +94,7 @@ class WhitelabelsController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -99,6 +104,7 @@ class WhitelabelsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return Response
      */
     public function edit()
@@ -108,7 +114,9 @@ class WhitelabelsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function update(Request $request)
@@ -117,16 +125,15 @@ class WhitelabelsController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()
     {
     }
 
-
     public function save(SaveWhitelabelByExecutiveRequest $request, int $id)
     {
-
         try {
             $result['whitelabel'] = $this->whitelabels->update(
                 $id,
@@ -135,7 +142,6 @@ class WhitelabelsController extends Controller
 
             $subDomain = str_slug(str_replace('.', '', $request->get('sub_domain')));
             $domain = Flag::HTTPS . $subDomain . $request->get('main_domain');
-
 
             if ($result['whitelabel']->domain !== $this->str->lower($domain)) {
                 $this->whitelabels->updateRoute($id, $result['whitelabel']->name, $subDomain);

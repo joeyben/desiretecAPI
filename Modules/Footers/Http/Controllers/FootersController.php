@@ -16,7 +16,6 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Excel;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
@@ -83,8 +82,10 @@ class FootersController extends Controller
         $this->whitelabels = $whitelabels;
         $this->excel = $excel;
     }
+
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -123,6 +124,7 @@ class FootersController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
@@ -165,7 +167,6 @@ class FootersController extends Controller
     public function store(StoreFooterRequest $request)
     {
         try {
-
             $result['footer'] = $this->footers->create($request->only('name', 'url', 'position', 'whitelabel_id'));
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Footer']);
@@ -182,6 +183,7 @@ class FootersController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -278,7 +280,6 @@ class FootersController extends Controller
 
     /**
      * @param int $id
-     *
      *
      * @return \Illuminate\Http\JsonResponse
      */

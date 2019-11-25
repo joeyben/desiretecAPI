@@ -20,7 +20,6 @@ class CreateAutooffersSettingsTable extends Migration
             $table->unsignedSmallInteger('price_loop')->default(20);
             $table->unsignedSmallInteger('hotel_loop')->default(3);
 
-
             $table->boolean('status')->default();
             $table->integer('user_id')->unsigned();
             $table->integer('whitelabel_id')->unsigned();

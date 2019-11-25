@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'traveloverland.com',
+
+$domain_env = [
+    'local_url'       => 'traveloverland.com',
     'development_url' => 'traveloverland.reise-wunsch.com',
-    'production_url' => 'traveloverland.reisewunschservice.de',
-);
+    'production_url'  => 'traveloverland.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -21,4 +22,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'TraveloverlandWishesController@validateTokenList');
     });
 });
-

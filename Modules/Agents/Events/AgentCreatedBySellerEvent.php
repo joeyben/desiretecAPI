@@ -13,7 +13,6 @@ class AgentCreatedBySellerEvent
      */
     public $seller;
 
-
     public function __construct(User $seller)
     {
         $this->seller = $seller;

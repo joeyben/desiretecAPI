@@ -11,8 +11,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
-use Modules\Groups\Repositories\Contracts\GroupsRepository;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
+use Modules\Groups\Repositories\Contracts\GroupsRepository;
 
 class GroupsController extends Controller
 {

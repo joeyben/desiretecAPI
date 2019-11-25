@@ -75,9 +75,9 @@ class DemoreiserebellenWishesController extends Controller
 
     /**
      * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
      */
-    public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories, AutooffersRepository $autooffers,EloquentAutooffersRepository $rules)
+    public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories, AutooffersRepository $autooffers, EloquentAutooffersRepository $rules)
     {
         $this->wish = $wish;
         $this->whitelabel = $whitelabel;
@@ -92,7 +92,7 @@ class DemoreiserebellenWishesController extends Controller
 
     public function create(Wish $wish)
     {
-        $rules = $this->rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
+        $rules = $this->rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response, $wish->id, $rules);
@@ -131,6 +131,7 @@ class DemoreiserebellenWishesController extends Controller
     {
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
         $body_class = 'autooffer_list';
+
         return view('demoreiserebellen::list', compact('wish', 'offers', 'body_class'));
     }
 
@@ -141,7 +142,6 @@ class DemoreiserebellenWishesController extends Controller
      */
     public function view(Wish $wish)
     {
-
         $offers = $wish->offers;
         $avatar = [];
         $agentName = [];
@@ -164,9 +164,7 @@ class DemoreiserebellenWishesController extends Controller
             'is_owner'           => $isOwner,
             'color'              => $whitelabel['color'],
         ]);
-
     }
-
 
     /**
      * @param string $token
@@ -175,7 +173,6 @@ class DemoreiserebellenWishesController extends Controller
      */
     public function validateTokenList($token)
     {
-
         if ($this->wish->validateToken($token)) {
             if (Route::has('demoreiserebellen.list')) {
                 return redirect()->route('demoreiserebellen.list');

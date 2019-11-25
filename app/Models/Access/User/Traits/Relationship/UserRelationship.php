@@ -70,7 +70,6 @@ trait UserRelationship
         return $this->hasMany(config('access.agent'), 'user_id', 'id')->where('status', '=', 'Active');
     }
 
-
     /**
      * @return mixed
      */

@@ -20,15 +20,24 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class User extends Authenticatable implements JWTSubject
 {
-    use UserScope,
-        UserAccess,
-        Notifiable,
-        SoftDeletes,
-        LogsActivity,
-        UserAttribute,
-        SearchableTrait,
-        UserRelationship,
-        UserSendPasswordReset,
+    use UserScope;
+    use
+        UserAccess;
+    use
+        Notifiable;
+    use
+        SoftDeletes;
+    use
+        LogsActivity;
+    use
+        UserAttribute;
+    use
+        SearchableTrait;
+    use
+        UserRelationship;
+    use
+        UserSendPasswordReset;
+    use
         TokenAuthenticable;
     /**
      * The database table used by the model.

@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'testkurenundwellness.com',
+
+$domain_env = [
+    'local_url'       => 'testkurenundwellness.com',
     'development_url' => 'testkurenundwellness.reise-wunsch.com',
-    'production_url' => 'testkurenundwellness.reisewunschservice.de',
-);
+    'production_url'  => 'testkurenundwellness.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'TestkurenundwellnessWishesController@validateTokenList');
     });
 });
-
