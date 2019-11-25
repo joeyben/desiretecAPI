@@ -438,7 +438,7 @@ var exitIntent = window.exitIntent || {};
             return r[1];
         },
         name: 'TUI IBE',
-        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
+        matchesUrl: 'https://tuidemo.reise-wunsch.com',
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {
@@ -1036,7 +1036,7 @@ var exitIntent = window.exitIntent || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: 'https://tuidemo.reise-wunsch.com',
+        matchesUrl: 'tuidemo.reise-wunsch.com',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
