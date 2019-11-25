@@ -14,10 +14,10 @@ class UpdateFooterRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|int',
-            'name' => 'required|string|min:3|max:255',
-            'url' => 'required|url',
-            'position' => 'required|int|min:1',
+            'id'            => 'required|int',
+            'name'          => 'required|string|min:3|max:255',
+            'url'           => 'required|url',
+            'position'      => 'required|int|min:1',
             'whitelabel_id' => 'required|int|min:1',
         ];
     }

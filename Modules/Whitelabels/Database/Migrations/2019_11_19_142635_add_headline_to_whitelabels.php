@@ -1,21 +1,17 @@
 <?php
 
-use App\Services\Flag\Src\Flag;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddHeadlineToWhitelabels extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         Schema::table('', function (Blueprint $table) {
-
         });
 
         if (Schema::hasTable('whitelabels') && !Schema::hasColumn('whitelabels', 'headline')) {
@@ -30,13 +26,10 @@ class AddHeadlineToWhitelabels extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
         Schema::table('', function (Blueprint $table) {
-
         });
     }
 }

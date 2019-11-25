@@ -57,18 +57,19 @@ class CreatedWishNotificationForSeller extends Notification
             if (session()->has('newsletter')) {
                 NewsletterFacade::subscribePending($this->wish->owner->email,
                     [
-                        'FNAME' => $this->wish->owner->first_name === 'Muster' ? '-' : $this->wish->owner->first_name,
-                        'LNAME' => $this->wish->owner->last_name === 'Name' ? '-' : $this->wish->owner->last_name,
-                        'ZIEL' => $this->wish->destination,
-                        'ANREDE' => is_null($this->wish->title) ? '-' : $this->wish->title,
-                        'START' => $this->wish->airport,
+                        'FNAME'    => 'Muster' === $this->wish->owner->first_name ? '-' : $this->wish->owner->first_name,
+                        'LNAME'    => 'Name' === $this->wish->owner->last_name ? '-' : $this->wish->owner->last_name,
+                        'ZIEL'     => $this->wish->destination,
+                        'ANREDE'   => null === $this->wish->title ? '-' : $this->wish->title,
+                        'START'    => $this->wish->airport,
                         'ZEITRAUM' => $this->wish->earliest_start->format('M Y'),
-                        'PAXE' => $this->wish->adults,
-                        'TEXT' => is_null($this->wish->description) ? '-' : $this->wish->description,
-                        'BUDGET' => is_null($this->wish->budget) ? '-' : $this->wish->budget,
+                        'PAXE'     => $this->wish->adults,
+                        'TEXT'     => null === $this->wish->description ? '-' : $this->wish->description,
+                        'BUDGET'   => null === $this->wish->budget ? '-' : $this->wish->budget,
                     ]);
                 session()->forget('newsletter');
             }
+
             return (new MailMessage())
                 ->from('trendtours@reisewunschservice.de', $this->wish->whitelabel->display_name . ' Portal')
                 ->subject(trans('email.wish.seller_trendtours'))

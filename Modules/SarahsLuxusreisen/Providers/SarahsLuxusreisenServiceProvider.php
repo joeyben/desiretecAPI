@@ -2,8 +2,8 @@
 
 namespace Modules\SarahsLuxusreisen\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
 
 class SarahsLuxusreisenServiceProvider extends ServiceProvider
 {
@@ -16,8 +16,6 @@ class SarahsLuxusreisenServiceProvider extends ServiceProvider
 
     /**
      * Boot the application events.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -30,43 +28,36 @@ class SarahsLuxusreisenServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
-        //
     }
 
     /**
      * Register config.
-     *
-     * @return void
      */
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('sarahsluxusreisen.php'),
+            __DIR__ . '/../Config/config.php' => config_path('sarahsluxusreisen.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'sarahsluxusreisen'
+            __DIR__ . '/../Config/config.php', 'sarahsluxusreisen'
         );
     }
 
     /**
      * Register views.
-     *
-     * @return void
      */
     public function registerViews()
     {
         $viewPath = resource_path('views/modules/sarahsluxusreisen');
 
-        $sourcePath = __DIR__.'/../Resources/views';
+        $sourcePath = __DIR__ . '/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
-        ],'views');
+        ], 'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/sarahsluxusreisen';
@@ -75,8 +66,6 @@ class SarahsLuxusreisenServiceProvider extends ServiceProvider
 
     /**
      * Register translations.
-     *
-     * @return void
      */
     public function registerTranslations()
     {
@@ -85,18 +74,16 @@ class SarahsLuxusreisenServiceProvider extends ServiceProvider
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'sarahsluxusreisen');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'sarahsluxusreisen');
+            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'sarahsluxusreisen');
         }
     }
 
     /**
      * Register an additional directory of factories.
-     * 
-     * @return void
      */
     public function registerFactories()
     {
-        if (! app()->environment('production')) {
+        if (!app()->environment('production')) {
             app(Factory::class)->load(__DIR__ . '/../Database/factories');
         }
     }

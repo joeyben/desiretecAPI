@@ -7,8 +7,6 @@ use App\Models\ModelTrait;
 use App\Models\Wishes\Traits\Attribute\WishAttribute;
 use App\Models\Wishes\Traits\Relationship\WishRelationship;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use mysql_xdevapi\Collection;
 
 class Wish extends BaseModel
 {
@@ -63,18 +61,20 @@ class Wish extends BaseModel
     }
 
     /**
-     * Returns the extra_parameters as a clean array
+     * Returns the extra_parameters as a clean array.
      *
      * @return array
      */
-    public function getExtraParametersAsArray() {
+    public function getExtraParametersAsArray()
+    {
         $toReturn = [];
-        if(!is_null($this->extra_params)){
+        if (null !== $this->extra_params) {
             $extra_params = json_decode($this->extra_params, true);
-            foreach ($extra_params as $key => $extra_param){
+            foreach ($extra_params as $key => $extra_param) {
                 $toReturn[$key] = explode(', ', $extra_param);
             }
         }
+
         return $toReturn;
     }
 }

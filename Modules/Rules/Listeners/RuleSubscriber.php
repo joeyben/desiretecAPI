@@ -5,8 +5,6 @@ namespace Modules\Rules\Listeners;
 use App\Models\Access\Role\Role;
 use Illuminate\Support\Facades\Auth;
 use Modules\Rules\Entities\Rule;
-use Modules\Rules\Notifications\CreatedRuleNotification;
-use Modules\Rules\Notifications\DeletedRuleNotification;
 
 class RuleSubscriber
 {

@@ -9,7 +9,8 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Language extends Model
 {
-    use SearchableTrait, SoftDeletes;
+    use SearchableTrait;
+    use SoftDeletes;
 
     protected $guarded = [];
 

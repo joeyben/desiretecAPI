@@ -10,7 +10,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Footer extends Model
 {
-    use SoftDeletes, SearchableTrait, LogsActivity;
+    use SoftDeletes;
+    use SearchableTrait;
+    use LogsActivity;
 
     protected $guarded = [];
 
@@ -37,10 +39,10 @@ class Footer extends Model
          * @var array
          */
         'columns' => [
-            'footers.id' => 10,
-            'footers.name' => 10,
-            'footers.url' => 10,
-            'footers.position' => 10,
+            'footers.id'               => 10,
+            'footers.name'             => 10,
+            'footers.url'              => 10,
+            'footers.position'         => 10,
             'whitelabels.display_name' => 10,
         ],
         'joins' => [

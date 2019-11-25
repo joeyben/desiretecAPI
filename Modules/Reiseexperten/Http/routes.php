@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'reiseexperten.com',
+
+$domain_env = [
+    'local_url'       => 'reiseexperten.com',
     'development_url' => 'reiseexperten.reise-wunsch.com',
-    'production_url' => 'reiseexperten.reisewunschservice.de',
-);
+    'production_url'  => 'reiseexperten.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'ReiseexpertenWishesController@validateTokenList');
     });
 });
-

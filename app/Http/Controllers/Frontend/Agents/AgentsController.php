@@ -35,7 +35,6 @@ class AgentsController extends Controller
 
     protected $storage;
 
-
     /**
      * @param \App\Repositories\Frontend\Agents\AgentsRepository $agent
      */
@@ -141,7 +140,7 @@ class AgentsController extends Controller
             ->with('flash_success', trans('alerts.frontend.agents.updated'));
     }
 
-    public function updateAgent($id , Request $request)
+    public function updateAgent($id, Request $request)
     {
         $this->agent->doUpdate($id, $request);
 
@@ -182,9 +181,9 @@ class AgentsController extends Controller
             ->with('flash_success', trans('alerts.frontend.agents.deleted'));
     }
 
-    public function uploadImage( $input){
-
-        if(!is_array($input)) {
+    public function uploadImage($input)
+    {
+        if (!\is_array($input)) {
             $input = [];
         }
 
@@ -198,15 +197,13 @@ class AgentsController extends Controller
             $input = array_merge($input, ['avatar' => $fileName]);
 
             return $input;
-        }else{
-            $fileName = 'avatar_default';
-
-            $this->storage->put($this->upload_path . $fileName, file_get_contents('https://desiretec.s3.eu-central-1.amazonaws.com/img/agent/1570145950wAvatarCallCenter2.png'), 'public');
-
-            $input = array_merge($input, ['avatar' => $fileName]);
-
-            return $input;
         }
-    }
+        $fileName = 'avatar_default';
 
+        $this->storage->put($this->upload_path . $fileName, file_get_contents('https://desiretec.s3.eu-central-1.amazonaws.com/img/agent/1570145950wAvatarCallCenter2.png'), 'public');
+
+        $input = array_merge($input, ['avatar' => $fileName]);
+
+        return $input;
+    }
 }

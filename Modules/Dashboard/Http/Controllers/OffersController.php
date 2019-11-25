@@ -3,9 +3,8 @@
 namespace Modules\Dashboard\Http\Controllers;
 
 use App\Repositories\Criteria\ByWhitelabel;
-use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\GroupBy;
-use Illuminate\Support\Facades\DB;
+use App\Repositories\Criteria\Where;
 use App\Services\Flag\Src\Flag;
 use Carbon\Carbon;
 use Illuminate\Auth\AuthManager;
@@ -13,14 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
-use Analytics;
-use Spatie\Analytics\Period;
-use Spatie\Analytics\AnalyticsClientFactory;
-
 
 class OffersController extends Controller
 {
@@ -54,7 +50,6 @@ class OffersController extends Controller
      */
     private $dashboard;
 
-
     /**
      * WishesController constructor.
      *
@@ -86,7 +81,6 @@ class OffersController extends Controller
     {
     }
 
-
     /**
      * @param \Illuminate\Http\Request $request
      *
@@ -96,25 +90,25 @@ class OffersController extends Controller
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
-            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
 
-            if (is_null($whitelabelId)) {
+            if (null === $whitelabelId) {
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (strpos($url[0],'mvp') === false) {
+                if (false === mb_strpos($url[0], 'mvp')) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
+            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter();
             $optParams = [
                 'dimensions' => 'ga:yearMonth',
-                'filters' => $filter['filterd'],
+                'filters'    => $filter['filterd'],
             ];
 
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
@@ -134,26 +128,26 @@ class OffersController extends Controller
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
-            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
 
-            if (is_null($whitelabelId)) {
+            if (null === $whitelabelId) {
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (strpos($url[0],'mvp') === false) {
+                if (false === mb_strpos($url[0], 'mvp')) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
+            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter();
 
             $optParams = [
                 'dimensions' => 'ga:date',
-                'filters' => $filter['filterd'],
+                'filters'    => $filter['filterd'],
             ];
 
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
@@ -169,31 +163,30 @@ class OffersController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-
     public function mobileMonth(Request $request)
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
-            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
 
-            if (is_null($whitelabelId)) {
+            if (null === $whitelabelId) {
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (strpos($url[0],'mvp') === false) {
+                if (false === mb_strpos($url[0], 'mvp')) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
+            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter();
 
             $optParams = [
                 'dimensions' => 'ga:yearMonth',
-                'filters' => $filter['filterm'],
+                'filters'    => $filter['filterm'],
             ];
 
             $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
@@ -214,26 +207,26 @@ class OffersController extends Controller
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
-            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
 
-            if (is_null($whitelabelId)) {
+            if (null === $whitelabelId) {
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (strpos($url[0],'mvp') === false) {
+                if (false === mb_strpos($url[0], 'mvp')) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
+            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter();
 
             $optParams = [
                 'dimensions' => 'ga:date',
-                'filters' => $filter['filterm'],
+                'filters'    => $filter['filterm'],
             ];
 
             $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
@@ -254,283 +247,276 @@ class OffersController extends Controller
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
-            $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-            $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
 
-            if (is_null($whitelabelId)) {
+            if (null === $whitelabelId) {
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (strpos($url[0],'mvp') === false) {
+                if (false === mb_strpos($url[0], 'mvp')) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
+            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter();
 
             $optParams = [
                 'dimensions' => 'ga:browser',
-                'filters' => $filter['filterd'],
+                'filters'    => $filter['filterd'],
             ];
 
             $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
             $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
             $sum = 0;
-            $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
+            $browsers = ['Firefox', 'Chrome', 'Edge', 'Safari', 'Internet Explorer', 'Opera'];
 
             $result['ga'] = $this->dashboard->calculateBrowserData($result, $browsers, $sum);
 
-        $result['success'] = true;
-        $result['status'] = Flag::STATUS_CODE_SUCCESS;
-    } catch (Exception $e) {
-        $result['success'] = false;
-        $result['message'] = $e->getMessage();
-        $result['status'] = Flag::STATUS_CODE_ERROR;
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-    return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-}
+    public function shareperMonth(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
 
-public function shareperMonth(Request $request)
-{
-    try {
-        $whitelabelId = $request->get('whitelabelId');
-        $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-        $endDate = is_null($request->get('end')) ? '' : $request->get('end');
+            if (null === $whitelabelId) {
+                $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
 
-        if (is_null($whitelabelId)) {
-            $whitelabel = $this->whitelabels->first();
-            $url = explode('.', $_SERVER['HTTP_HOST']);
-
-            if (strpos($url[0],'mvp') === false) {
-                $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                if (false === mb_strpos($url[0], 'mvp')) {
+                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                }
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
             }
-        } else {
-            $whitelabel = $this->whitelabels->find($whitelabelId);
-        }
 
-        $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-        $filter = $this->getFilter();
+            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
+            $filter = $this->getFilter();
 
-        $optParams = [
+            $optParams = [
             'dimensions' => 'ga:browser',
-            'filters' => $filter['filters'],
+            'filters'    => $filter['filters'],
         ];
 
-        $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
-        $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
-        $sum = 0;
-        $browsers = ['Firefox','Chrome','Edge','Safari','Internet Explorer','Opera'];
+            $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
+            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+            $sum = 0;
+            $browsers = ['Firefox', 'Chrome', 'Edge', 'Safari', 'Internet Explorer', 'Opera'];
 
-        $result['ga'] = $this->dashboard->calculateBrowserData($result, $browsers, $sum);
+            $result['ga'] = $this->dashboard->calculateBrowserData($result, $browsers, $sum);
 
-    $result['success'] = true;
-    $result['status'] = Flag::STATUS_CODE_SUCCESS;
-} catch (Exception $e) {
-    $result['success'] = false;
-    $result['message'] = $e->getMessage();
-    $result['status'] = Flag::STATUS_CODE_ERROR;
-}
-
-return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-}
-
-
-public function responseMonth(Request $request)
-{
-    try {
-
-        $whitelabelId = $request->get('whitelabelId');
-        $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-        $endDate = is_null($request->get('end')) ? '' : $request->get('end');
-
-        if (is_null($whitelabelId)) {
-            $whitelabel = $this->whitelabels->first();
-            $url = explode('.', $_SERVER['HTTP_HOST']);
-
-            if (strpos($url[0],'mvp') === false) {
-                $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
-            }
-        } else {
-            $whitelabel = $this->whitelabels->find($whitelabelId);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
         }
 
-        $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-        $filter = $this->getFilter();
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
 
-        $optParams = [
+    public function responseMonth(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
+
+            if (null === $whitelabelId) {
+                $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if (false === mb_strpos($url[0], 'mvp')) {
+                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                }
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+
+            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
+            $filter = $this->getFilter();
+
+            $optParams = [
             'dimensions' => 'ga:yearMonth',
-            'filters' => $filter['filterd'],
+            'filters'    => $filter['filterd'],
         ];
 
-        $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
-        $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+            $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
+            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
 
-        $data = $this->wishes->withCriteria([
+            $data = $this->wishes->withCriteria([
             new ByWhitelabel(),
             new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
             new GroupBy('month')
-        ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
+        ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'), DB::raw('DATE(wishes.created_at) as date')])
         ->pluck('wishes_count', 'date');
-        $stack = [];
+            $stack = [];
 
-        $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
+            $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
 
- $result['success'] = true;
- $result['status'] = Flag::STATUS_CODE_SUCCESS;
-} catch (Exception $e) {
-    $result['success'] = false;
-    $result['message'] = $e->getMessage();
-    $result['status'] = Flag::STATUS_CODE_ERROR;
-}
-
-return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-}
-
-
-public function responsemMonth(Request $request)
-{
-    try {
-
-        $whitelabelId = $request->get('whitelabelId');
-        $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-        $endDate = is_null($request->get('end')) ? '' : $request->get('end');
-
-        if (is_null($whitelabelId)) {
-            $whitelabel = $this->whitelabels->first();
-            $url = explode('.', $_SERVER['HTTP_HOST']);
-
-            if (strpos($url[0],'mvp') === false) {
-                $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
-            }
-        } else {
-            $whitelabel = $this->whitelabels->find($whitelabelId);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
         }
 
-        $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-        $filter = $this->getFilter();
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
 
-        $optParams = [
+    public function responsemMonth(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
+
+            if (null === $whitelabelId) {
+                $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if (false === mb_strpos($url[0], 'mvp')) {
+                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                }
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+
+            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
+            $filter = $this->getFilter();
+
+            $optParams = [
             'dimensions' => 'ga:yearMonth',
-            'filters' => $filter['filterm'],
+            'filters'    => $filter['filterm'],
         ];
 
-        $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
-        $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+            $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
+            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
 
-        $data = $this->wishes->withCriteria([
+            $data = $this->wishes->withCriteria([
             new ByWhitelabel(),
             new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
             new GroupBy('month')
-        ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'),DB::raw('DATE(wishes.created_at) as date')])
+        ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'), DB::raw('DATE(wishes.created_at) as date')])
         ->pluck('wishes_count', 'date');
-        $stack = [];
+            $stack = [];
 
-        $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
+            $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
 
- $result['success'] = true;
- $result['status'] = Flag::STATUS_CODE_SUCCESS;
-} catch (Exception $e) {
-    $result['success'] = false;
-    $result['message'] = $e->getMessage();
-    $result['status'] = Flag::STATUS_CODE_ERROR;
-}
-
-return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-}
-
-public function clickRate(Request $request)
-{
-    try {
-
-        $whitelabelId = $request->get('whitelabelId');
-        $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-        $endDate = is_null($request->get('end')) ? '' : $request->get('end');
-
-        if (is_null($whitelabelId)) {
-            $whitelabel = $this->whitelabels->first();
-            $url = explode('.', $_SERVER['HTTP_HOST']);
-
-            if (strpos($url[0],'mvp') === false) {
-                $whitelabelId = config($url[0] . '.id');
-            }
-        } else {
-            $whitelabel = $this->whitelabels->find($whitelabelId);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
         }
 
-        $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-        $result['clickrate'] = $this->dashboard->loadClickRate($whitelabelId);
- $result['success'] = true;
- $result['status'] = Flag::STATUS_CODE_SUCCESS;
-} catch (Exception $e){
-    $result['success'] = false;
-    $result['message'] = $e->getMessage();
-    $result['status'] = Flag::STATUS_CODE_ERROR;
-}
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
 
-return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-}
+    public function clickRate(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
 
-public function openRate(Request $request)
-{
-    try {
+            if (null === $whitelabelId) {
+                $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
 
-        $whitelabelId = $request->get('whitelabelId');
-        $startDate = is_null($request->get('start')) ? '' : $request->get('start');
-        $endDate = is_null($request->get('end')) ? '' : $request->get('end');
-
-        if (is_null($whitelabelId)) {
-            $whitelabel = $this->whitelabels->first();
-            $url = explode('.', $_SERVER['HTTP_HOST']);
-
-            if (strpos($url[0],'mvp') === false) {
-                $whitelabelId = config($url[0] . '.id');
+                if (false === mb_strpos($url[0], 'mvp')) {
+                    $whitelabelId = config($url[0] . '.id');
+                }
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
             }
-        } else {
-            $whitelabel = $this->whitelabels->find($whitelabelId);
+
+            $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
+            $result['clickrate'] = $this->dashboard->loadClickRate($whitelabelId);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
         }
 
-        $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-        $result['openrate'] = $this->dashboard->loadOpenRate($whitelabelId);
- $result['success'] = true;
- $result['status'] = Flag::STATUS_CODE_SUCCESS;
-} catch (Exception $e){
-    $result['success'] = false;
-    $result['message'] = $e->getMessage();
-    $result['status'] = Flag::STATUS_CODE_ERROR;
-}
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
 
-return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-}
+    public function openRate(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
 
-public function save(Request $request)
-{
-    try {
-      $this->dashboard->setFilterCategory($request);
-      $result['success'] = true;
-      $result['status'] = 200;
-  } catch (Exception $e) {
-    $result['success'] = false;
-    $result['message'] = $e->getMessage();
-    $result['status'] = 500;
-}
+            if (null === $whitelabelId) {
+                $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
 
-return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
-}
+                if (false === mb_strpos($url[0], 'mvp')) {
+                    $whitelabelId = config($url[0] . '.id');
+                }
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
 
+            $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
+            $result['openrate'] = $this->dashboard->loadOpenRate($whitelabelId);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
 
-public function getFilter()
-{
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function save(Request $request)
+    {
+        try {
+            $this->dashboard->setFilterCategory($request);
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function getFilter()
+    {
         $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
         $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
         $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
 
+        return ['filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare];
+    }
 
-    return array('filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare);
-}
     /**
      * Show the form for creating a new resource.
      *

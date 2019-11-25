@@ -14,7 +14,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Wish extends Model
 {
-    use SoftDeletes, SearchableTrait, LogsActivity;
+    use SoftDeletes;
+    use SearchableTrait;
+    use LogsActivity;
 
     protected $guarded = [];
 
@@ -134,7 +136,4 @@ class Wish extends Model
 
         $this->categories()->attach($category);
     }
-
-
-
 }
