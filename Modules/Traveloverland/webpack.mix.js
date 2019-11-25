@@ -24,7 +24,6 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/rangeslider.js',
         base_url + '/resources/assets/js/layer/datepicker.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
-        __dirname + '/Resources/assets/js/app.js',
     ], __dirname + '/../../public/whitelabel/traveloverland/js/layer/layer.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
@@ -33,7 +32,6 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/base.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
-        __dirname + '/Resources/assets/js/app.js',
     ], __dirname + '/../../public/whitelabel/traveloverland/js/layer/layer-locale.js')
     .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/traveloverland/css/layer/layer.css')
     .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/traveloverland/css/layer/layer_mobile.css')

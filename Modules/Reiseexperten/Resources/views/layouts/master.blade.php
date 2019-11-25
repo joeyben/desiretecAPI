@@ -18,7 +18,6 @@
     <script type="application/javascript">
         var brandColor = {!! json_encode($color) !!};
     </script>
-
     <script src="{{ mix('whitelabel/reiseexperten/js/reiseexperten.js') }}"></script>
 @endsection
 

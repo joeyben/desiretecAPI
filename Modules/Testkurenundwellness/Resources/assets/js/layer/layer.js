@@ -1476,8 +1476,8 @@ var exitIntent = window.exitIntent || {};
                 'color': brandColor,
             });
 
-            var layerHeader = $('.mobile-layer .kwp-header');
-            layerHeader.css({
+            var mobileLayerHeader = $('.kwp-header.kwp-variant-eil-mobile');
+            mobileLayerHeader.css({
                 'background': brandColor,
             });
 

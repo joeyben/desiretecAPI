@@ -205,7 +205,6 @@ class AutooffersRepository extends BaseRepository
         $rating = (int) ($data['hotelOffer']['hotel']['rating']['overall']);
         $recommendation = (int) ($data['hotelOffer']['hotel']['rating']['recommendation']);
         $rules_ratings = ((int) (str_replace('.', '', $rulesArray['rating'])) / 10);
-        //dd($rating > $rules_ratings);
         return $rating > $rules_ratings && 0 === $autooffer && $recommendation > $rulesArray['recommendation'];
     }
 
@@ -247,13 +246,11 @@ class AutooffersRepository extends BaseRepository
         } catch (\Illuminate\Database\QueryException $e) {
             // something went wrong with the transaction, rollback
             report($e);
-            dd($e);
 
             return false;
         } catch (\Exception $e) {
             // something went wrong elsewhere, handle gracefully
             report($e);
-            dd($e);
 
             return false;
         }

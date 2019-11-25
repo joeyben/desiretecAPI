@@ -12,7 +12,7 @@
 
 @section('after-scripts')
     <script type="text/javascript">
-        var cssPrimaryBtn = '.primary-btn { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
+        var cssPrimaryBtn = '.primary-btn { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; color: #fff !important; } ';
         $('head').append('<style>' + cssPrimaryBtn + '</style>');
     </script>
 @endsection
