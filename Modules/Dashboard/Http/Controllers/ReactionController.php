@@ -17,8 +17,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
-use Modules\Wishes\Repositories\Contracts\WishesRepository;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
+use Modules\Wishes\Repositories\Contracts\WishesRepository;
 
 class ReactionController extends Controller
 {

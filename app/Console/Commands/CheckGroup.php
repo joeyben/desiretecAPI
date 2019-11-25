@@ -27,8 +27,6 @@ class CheckGroup extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -56,7 +54,7 @@ class CheckGroup extends Command
     {
         $selectedGroup = $this->argument('group');
 
-        if(is_numeric($selectedGroup)) {
+        if (is_numeric($selectedGroup)) {
             $groups = Group::where('id', $selectedGroup)->whereDate('deactivate_until', '<', Carbon::now()->endOfDay())->get();
         } else {
             $groups = Group::whereDate('deactivate_until', '<', Carbon::now()->endOfDay())->get();
@@ -66,12 +64,12 @@ class CheckGroup extends Command
             DB::table('groups')
                 ->where('id', $group->id)
                 ->update([
-                    'status' => true,
-                    'deactivate_at' => null,
+                    'status'           => true,
+                    'deactivate_at'    => null,
                     'deactivate_until' => null
                 ]);
 
-            Log::info('Cron Job ( '. CheckGroup::class .' ): active group: '. $group->display_name . ':' . $group->id);
+            Log::info('Cron Job ( ' . self::class . ' ): active group: ' . $group->display_name . ':' . $group->id);
         }
     }
 }

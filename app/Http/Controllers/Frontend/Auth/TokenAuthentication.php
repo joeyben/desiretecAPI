@@ -10,18 +10,21 @@ class TokenAuthentication
     protected $request;
     protected $identifier = 'email';
 
-    public function __construct(Request $request){
+    public function __construct(Request $request)
+    {
         $this->request = $request;
     }
 
-    public function requestLink(){
+    public function requestLink()
+    {
         $user = $this->getUserByIdentifier($this->request->get($this->identifier));
         $user->storeToken()->sendTokenLink([
             'email' => trim($user->email),
         ]);
     }
 
-    protected function getUserByIdentifier($value){
+    protected function getUserByIdentifier($value)
+    {
         return User::where($this->identifier, $value)->firstOrFail();
     }
 }

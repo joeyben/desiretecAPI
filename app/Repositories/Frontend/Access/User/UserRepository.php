@@ -240,7 +240,6 @@ class UserRepository extends BaseRepository
      */
     public function updateProfile($id, $input)
     {
-
         try {
             $user = $this->find($id);
             $user->first_name = $input['first_name'];
@@ -278,6 +277,7 @@ class UserRepository extends BaseRepository
             return $user->save();
         } catch (Exception $e) {
             report($e);
+
             return false;
         }
     }
@@ -367,7 +367,7 @@ class UserRepository extends BaseRepository
     /**
      * Create new user from Layer.
      *
-     * @param array $input
+     * @param array  $input
      * @param string $whitelabelId
      *
      * @return UserRepository $user

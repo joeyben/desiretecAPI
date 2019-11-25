@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'demomanuell.com',
+
+$domain_env = [
+    'local_url'       => 'demomanuell.com',
     'development_url' => 'demomanuell.reise-wunsch.com',
-    'production_url' => 'demomanuell.reisewunschservice.de',
-);
+    'production_url'  => 'demomanuell.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'DemomanuellWishesController@validateTokenList');
     });
 });
-

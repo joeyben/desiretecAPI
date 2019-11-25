@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'demoatw.com',
+
+$domain_env = [
+    'local_url'       => 'demoatw.com',
     'development_url' => 'demoatw.reise-wunsch.com',
-    'production_url' => 'demoatw.reisewunschservice.de',
-);
+    'production_url'  => 'demoatw.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'DemoatwWishesController@validateTokenList');
     });
 });
-

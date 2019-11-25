@@ -358,10 +358,10 @@ class WhitelabelsController extends Controller
 
             $visual = $this->whitelabels->getVisual($result['whitelabel']);
 
-            $result['whitelabel']['background'] = (!is_null($background) && !is_null($background->first())) ? [$background->first()] : [];
-            $result['whitelabel']['logo'] = (!is_null($logo) && !is_null($logo->first())) ? [$logo->first()] : [];
-            $result['whitelabel']['favicon'] = (!is_null($favicon) && !is_null($favicon->first())) ? [$favicon->first()] : [];
-            $result['whitelabel']['visual'] = (!is_null($visual) && !is_null($visual->first())) ? [$visual->first()] : [];
+            $result['whitelabel']['background'] = (null !== $background && null !== $background->first()) ? [$background->first()] : [];
+            $result['whitelabel']['logo'] = (null !== $logo && null !== $logo->first()) ? [$logo->first()] : [];
+            $result['whitelabel']['favicon'] = (null !== $favicon && null !== $favicon->first()) ? [$favicon->first()] : [];
+            $result['whitelabel']['visual'] = (null !== $visual && null !== $visual->first()) ? [$visual->first()] : [];
 
             $result['success'] = true;
             $result['status'] = 200;

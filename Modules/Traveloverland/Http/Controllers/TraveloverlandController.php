@@ -76,7 +76,7 @@ class TraveloverlandController extends Controller
         $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
         $whitelabel = $this->whitelabel->getByName('Traveloverland');
 
-        $html = view('traveloverland::'.$layer)->with([
+        $html = view('traveloverland::' . $layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -102,15 +102,15 @@ class TraveloverlandController extends Controller
     {
         $input = $request->all();
         if ($request->failed()) {
-            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
-            $html = view('traveloverland::'.$layer)->with([
+            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+            $html = view('traveloverland::' . $layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
                 'class_arr'    => $this->class,
-                'request' => $request->all()
+                'request'      => $request->all()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -152,7 +152,7 @@ class TraveloverlandController extends Controller
 
             return $new_user;
         }
-        $input['whitelabel_name'] = $this->whitelabel->getById(intval($this->whitelabelId))['display_name'];
+        $input['whitelabel_name'] = $this->whitelabel->getById((int) ($this->whitelabelId))['display_name'];
 
         $new_user = $user->create($input);
         $new_user->storeToken();

@@ -68,7 +68,7 @@ class TuidemoWishesController extends Controller
 
     /**
      * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
      */
     public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories)
     {
@@ -102,7 +102,6 @@ class TuidemoWishesController extends Controller
      */
     public function view(Wish $wish)
     {
-
         $offers = $wish->offers;
         $avatar = [];
         $agentName = [];
@@ -113,20 +112,18 @@ class TuidemoWishesController extends Controller
         }
 
         return view('tuidemo::wish.wish')->with([
-            'wish'               => $wish,
-            'avatar'             => $avatar,
-            'agent_name'         => $agentName,
-            'body_class'         => $this::BODY_CLASS,
-            'offer_url'          => $this::OFFER_URL,
-            'kids_arr'     => $this->kids,
-            'duration_arr' => $this->duration,
-            'adults_arr'   => $this->adults,
-            'ages_arr'     => $this->ages,
+            'wish'                => $wish,
+            'avatar'              => $avatar,
+            'agent_name'          => $agentName,
+            'body_class'          => $this::BODY_CLASS,
+            'offer_url'           => $this::OFFER_URL,
+            'kids_arr'            => $this->kids,
+            'duration_arr'        => $this->duration,
+            'adults_arr'          => $this->adults,
+            'ages_arr'            => $this->ages,
             'is_owner'            => $isOwner
         ]);
-
     }
-
 
     /**
      * @param string $token
@@ -135,7 +132,6 @@ class TuidemoWishesController extends Controller
      */
     public function validateTokenList($token)
     {
-
         if ($this->wish->validateToken($token)) {
             if (Route::has('tuidemo.list')) {
                 return redirect()->route('tuidemo.list');
