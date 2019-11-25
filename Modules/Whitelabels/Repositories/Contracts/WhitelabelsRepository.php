@@ -2,8 +2,6 @@
 
 namespace Modules\Whitelabels\Repositories\Contracts;
 
-use Modules\Whitelabels\Entities\Whitelabel;
-
 interface WhitelabelsRepository
 {
     public function updateRoute(int $id, string $name, string $subDomain);

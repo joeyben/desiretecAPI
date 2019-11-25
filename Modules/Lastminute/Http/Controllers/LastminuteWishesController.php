@@ -69,7 +69,7 @@ class LastminuteWishesController extends Controller
 
     /**
      * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
      */
     public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories)
     {
@@ -104,7 +104,6 @@ class LastminuteWishesController extends Controller
      */
     public function view(Wish $wish)
     {
-
         $offers = $wish->offers;
         $avatar = [];
         $agentName = [];
@@ -129,9 +128,7 @@ class LastminuteWishesController extends Controller
             'is_owner'           => $isOwner,
             'color'              => $whitelabel['color'],
         ]);
-
     }
-
 
     /**
      * @param string $token
@@ -140,7 +137,6 @@ class LastminuteWishesController extends Controller
      */
     public function validateTokenList($token)
     {
-
         if ($this->wish->validateToken($token)) {
             if (Route::has('lastminute.list')) {
                 return redirect()->route('lastminute.list');

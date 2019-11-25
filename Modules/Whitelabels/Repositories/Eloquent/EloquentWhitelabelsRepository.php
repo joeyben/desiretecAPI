@@ -13,7 +13,6 @@ use App\Repositories\RepositoryAbstract;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
@@ -32,7 +31,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     public function updateRoute(int $id, string $name, string $subDomain)
     {
         $whitelabelLangTable = 'language_lines_' . mb_strtolower($name);
-        $subDomain =  'https://' . mb_strtolower($subDomain);
+        $subDomain = 'https://' . mb_strtolower($subDomain);
 
         $this->generateFile(
             base_path('Modules/Master/Config/config.stub'),
@@ -337,14 +336,14 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
         if (null !== $whitelabel) {
             return $this->resolveModel()->find($whitelabel->id);
-        } else if ($first) {
+        } elseif ($first) {
             return $this->resolveModel()->first();
         }
     }
 
     public function getBackgroundImage($whitelabel)
     {
-        if (!is_null($whitelabel)) {
+        if (null !== $whitelabel) {
             return $whitelabel->attachments->map(function ($attachment) {
                 if (('whitelabels/background') === $attachment->type) {
                     return [
@@ -363,7 +362,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function getLogo($whitelabel)
     {
-        if (!is_null($whitelabel)) {
+        if (null !== $whitelabel) {
             return $whitelabel->attachments->map(function ($attachment) {
                 if (('whitelabels/logo') === $attachment->type) {
                     return [
@@ -382,7 +381,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function getFavicon($whitelabel)
     {
-        if (!is_null($whitelabel)) {
+        if (null !== $whitelabel) {
             return $whitelabel->attachments->map(function ($attachment) {
                 if (('whitelabels/favicon') === $attachment->type) {
                     return [
@@ -401,14 +400,14 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function getSubDomain(string $domain)
     {
-        $parts = explode('.', str_replace("https://", "", $domain));
+        $parts = explode('.', str_replace('https://', '', $domain));
 
-        return isset($parts[2]) ?  str_slug($parts[0]) : '';
+        return isset($parts[2]) ? str_slug($parts[0]) : '';
     }
 
     public function getDomain(string $domain)
     {
-        $domain = str_replace("https://", "", $domain);
+        $domain = str_replace('https://', '', $domain);
         $parts = explode('.', $domain);
 
         return  isset($parts[2]) ? '.' . str_slug($parts[1]) . '.' . str_slug($parts[2]) : $domain;
@@ -416,7 +415,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function getVisual($whitelabel)
     {
-        if (!is_null($whitelabel)) {
+        if (null !== $whitelabel) {
             return $whitelabel->attachments->map(function ($attachment) {
                 if (('whitelabels/visual') === $attachment->type) {
                     return [

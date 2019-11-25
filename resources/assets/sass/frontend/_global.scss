@@ -12,8 +12,8 @@
   min-width: 210px;
   font-family: Comfortaa;
   &:focus, &:hover {
-    background: $darkorange;
-    border: 1px solid $darkorange;
+    background: transparent;
+    border: 1px solid transparent;
     color: #fff;
     text-decoration: none;
   }
@@ -36,8 +36,8 @@
   min-width: 210px;
   font-family: Comfortaa,cursive;
   &:focus, &:hover {
-    border: 1px solid $darkorange;
-    color: $darkorange;
+    border: 1px solid transparent;
+    color: transparent;
     background: transparent;
     text-decoration: none;
   }
@@ -661,6 +661,9 @@ footer{
     }
     input:focus{
       border: 1px solid #999;
+    }
+    input:-internal-autofill-selected{
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px #f8f8f8 !important;
     }
     label{
       color:#999;

@@ -165,7 +165,7 @@ class WhitelabelsRepository extends BaseRepository
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return mixed
      */

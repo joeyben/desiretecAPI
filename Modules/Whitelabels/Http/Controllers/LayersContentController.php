@@ -31,8 +31,10 @@ class LayersContentController extends Controller
         $this->lang = $lang;
         $this->response = $response;
     }
+
     /**
      * Display a listing of the resource.
+     *
      * @return Response
      */
     public function index()
@@ -42,6 +44,7 @@ class LayersContentController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create()
@@ -51,7 +54,9 @@ class LayersContentController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -60,6 +65,7 @@ class LayersContentController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @return Response
      */
     public function show()
@@ -69,13 +75,13 @@ class LayersContentController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return Response
      */
     public function edit()
     {
         return view('whitelabels::edit');
     }
-
 
     public function update(Request $request)
     {
@@ -101,6 +107,7 @@ class LayersContentController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @return Response
      */
     public function destroy()

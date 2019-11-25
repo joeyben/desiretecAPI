@@ -14,7 +14,7 @@ class EmailSignatureStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'language'              => 'required|string|min:2|max:2',
+            'language'                => 'required|string|min:2|max:2',
             'email_signature_editor'  => 'required|string'
         ];
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Regions;
 use App\Models\TTRegions;
 
@@ -12,26 +11,26 @@ use App\Models\TTRegions;
  */
 class RegionsController extends Controller
 {
-
     /**
      * URL: /get-all-destinations
-     * Returns all destinations
+     * Returns all destinations.
      *
      * @return array
      */
-    public function getTTRegions(){
+    public function getTTRegions()
+    {
         $destinations = [];
-        TTRegions::select(['land'])->chunk(200, function($regions) use(&$destinations){
-            foreach ($regions as $region){
-                if(!in_array($region->land, $destinations)){
+        TTRegions::select(['land'])->chunk(200, function ($regions) use (&$destinations) {
+            foreach ($regions as $region) {
+                if (!\in_array($region->land, $destinations, true)) {
                     $destinations[] = $region->land;
                 }
             }
         });
 
-        TTRegions::select(['topRegionName'])->chunk(200, function($regions) use(&$destinations){
-            foreach ($regions as $region){
-                if(!in_array($region->topRegionName, $destinations)){
+        TTRegions::select(['topRegionName'])->chunk(200, function ($regions) use (&$destinations) {
+            foreach ($regions as $region) {
+                if (!\in_array($region->topRegionName, $destinations, true)) {
                     $destinations[] = $region->topRegionName;
                 }
             }
@@ -42,33 +41,37 @@ class RegionsController extends Controller
 
     /**
      * URL: /get-all-destinations
-     * Returns all destinations
+     * Returns all destinations.
      *
      * @return array
      */
-    public function getAllDestinations(){
+    public function getAllDestinations()
+    {
         $destinations = [];
-        Regions::select('regionName')->where('type', 1)->chunk(200, function($regions) use(&$destinations){
-           foreach ($regions as $region){
-               $destinations[] = $region->regionName;
-           }
+        Regions::select('regionName')->where('type', 1)->chunk(200, function ($regions) use (&$destinations) {
+            foreach ($regions as $region) {
+                $destinations[] = $region->regionName;
+            }
         });
+
         return $destinations;
     }
 
     /**
      * URL: /get-all-airports
-     * Returns all airports
+     * Returns all airports.
      *
      * @return array
      */
-    public function getAllAirports(){
+    public function getAllAirports()
+    {
         $airports = [];
-        Regions::select('regionCode', 'regionName')->where('type', 0)->chunk(200, function($regions) use(&$airports){
-            foreach ($regions as $region){
-                $airports[] = $region->regionName . ' - '. $region->regionCode;
+        Regions::select('regionCode', 'regionName')->where('type', 0)->chunk(200, function ($regions) use (&$airports) {
+            foreach ($regions as $region) {
+                $airports[] = $region->regionName . ' - ' . $region->regionCode;
             }
         });
+
         return $airports;
     }
 }

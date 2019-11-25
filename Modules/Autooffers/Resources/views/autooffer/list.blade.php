@@ -166,7 +166,7 @@
                                 </div>
 
                                 <div class="recommandations">
-                                    <div class="average"><?= number_format(intval($offer['data']['hotelOffer']['hotel']['rating']['overall']) / 10, 1 , ',', '.') ?></div>
+                                    <div class="average"><?= number_format((int) ($offer['data']['hotelOffer']['hotel']['rating']['overall']) / 10, 1, ',', '.'); ?></div>
                                     <div class="text">
                                         <h4 class="dark-grey-2">Empfehlenswert</h4>
                                         <h4>{{ $offer['data']['hotelOffer']['hotel']['rating']['count'] }} Bewertungen</h4>

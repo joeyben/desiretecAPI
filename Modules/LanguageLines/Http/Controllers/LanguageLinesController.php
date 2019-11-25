@@ -3,12 +3,9 @@
 namespace Modules\LanguageLines\Http\Controllers;
 
 use App\Models\Access\Role\Role;
-use App\Repositories\Criteria\ByWhitelabel;
-use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
-use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WhereIn;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
@@ -22,7 +19,6 @@ use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Translation\Translator;
@@ -30,9 +26,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use Modules\LanguageLines\Exports\LanguageImport;
 use Modules\LanguageLines\Http\Requests\CloneLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\CopyLanguageLinesRequest;
+use Modules\LanguageLines\Http\Requests\EmailSignatureStoreRequest;
 use Modules\LanguageLines\Http\Requests\StoreLanguageLineRequest;
 use Modules\LanguageLines\Http\Requests\UpdateLanguageLineRequest;
-use Modules\LanguageLines\Http\Requests\EmailSignatureStoreRequest;
 use Modules\LanguageLines\Notifications\CloneLanguageLinesNotification;
 use Modules\LanguageLines\Notifications\CopyLanguageLinesNotification;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
@@ -339,7 +335,6 @@ class LanguageLinesController extends Controller
      */
     public function copy(CopyLanguageLinesRequest $request)
     {
-
         $count = [];
 
         try {
@@ -478,9 +473,9 @@ class LanguageLinesController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new LanguageImport, $request->file('file'));
+        Excel::import(new LanguageImport(), $request->file('file'));
         try {
-            $result['languageline'] =   Excel::import(new LanguageImport, $request->file('file'));
+            $result['languageline'] = Excel::import(new LanguageImport(), $request->file('file'));
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Translation']);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -493,9 +488,8 @@ class LanguageLinesController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-
     /**
-     * Fetch already existing Signature or Create new Signature
+     * Fetch already existing Signature or Create new Signature.
      *
      * @param Request $request
      *
@@ -506,8 +500,8 @@ class LanguageLinesController extends Controller
         try {
             $result['data']['text'] = $this->languageline->firstOrCreate([
                 'locale' => $lang,
-                'key' =>    'email_signature',
-                'group' => 'email'
+                'key'    => 'email_signature',
+                'group'  => 'email'
             ])->text;
 
             $result['data']['language'] = $lang;
@@ -518,12 +512,12 @@ class LanguageLinesController extends Controller
             $result['message'] = $e->getMessage();
             $result['status'] = 500;
         }
-        
+
         return view('languagelines::email-signature', compact('result'));
     }
 
     /**
-     * Edit already existing Signature or Create new Signature
+     * Edit already existing Signature or Create new Signature.
      *
      * @param EmailSignatureStoreRequest $request
      *
@@ -535,9 +529,9 @@ class LanguageLinesController extends Controller
             $languageline = $this->languageline->update(
                 $this->languageline->firstOrCreate([
                 'locale' => $request->get('language'),
-                'key' =>    'email_signature',
-                'group' => 'email'])->id,
-                ['text'=>$request->get('email_signature_editor')]
+                'key'    => 'email_signature',
+                'group'  => 'email'])->id,
+                ['text'=> $request->get('email_signature_editor')]
             );
 
             $result['success'] = true;
