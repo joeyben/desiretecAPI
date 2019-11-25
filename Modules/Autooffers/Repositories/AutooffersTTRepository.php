@@ -152,9 +152,11 @@ class AutooffersTTRepository extends BaseRepository
             }
         },
            "TravelDurationFilter": {
-            "DurationKind": "Stay",
-            "MinDuration": '.$this->period.',
+            "DurationKind": "Trip",
             "MaxDuration": '.$this->period.'
+           },
+           "PriceFilter": {
+            "MaxPrice": '.$this->maxBudget.'
            },
            "AirportFilter": {
             "DepartureAirportFilter": {
@@ -174,9 +176,9 @@ class AutooffersTTRepository extends BaseRepository
                 }
             },
             "HotelReview": {
-                "MinRatingsCount": 1,
-                "MinMeanRatingOverall": 2,
-                "MinMeanRecommendationRate": 2
+                "MinRatingsCount": 10,
+                "MinMeanRatingOverall": 4,
+                "MinMeanRecommendationRate": 4
             }
            }
           },
@@ -567,25 +569,30 @@ class AutooffersTTRepository extends BaseRepository
      */
     public function setCatering($catering)
     {
+        $noboard = '"NoBoard"';
+        $breakfast = '"Breakfast","BreakfastEconomy","BreakfastSuperior"';
+        $halfboard = '"HalfBoard","HalfBoardEconomy","HalfBoardSuperior"';
+        $fullboard = '"FullBoard","FullBoardEconomy","FullBoardSuperior"';
+        $allin     = '"AllInclusive","AllInclusiveEconomy","AllInclusiveSuperior"';
 
         switch ($catering) {
             case 1:
-                $this->catering = '"NoBoard"';
+                $this->catering = $noboard .','. $breakfast .','.$halfboard .','. $fullboard .','. $allin;
                 break;
             case 2:
-                $this->catering = '"Breakfast","BreakfastEconomy","BreakfastSuperior"';
+                $this->catering = $breakfast .','.$halfboard .','. $fullboard .','. $allin;
                 break;
             case 3:
-                $this->catering = '"HalfBoard","HalfBoardEconomy","HalfBoardSuperior"';
+                $this->catering = $halfboard .','. $fullboard .','. $allin;
                 break;
             case 4:
-                $this->catering = '"FullBoard","FullBoardEconomy","FullBoardSuperior"';
+                $this->catering = $fullboard .','. $allin;
                 break;
             case 5:
-                $this->catering = '"AllInclusive","AllInclusiveEconomy","AllInclusiveSuperior"';
+                $this->catering = $allin;
                 break;
             default:
-                $this->catering = '"NoBoard"';
+                $this->catering = $noboard .','. $breakfast .','.$halfboard .','. $fullboard .','. $allin;
                 break;
         }
 

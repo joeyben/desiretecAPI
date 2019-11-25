@@ -103,7 +103,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if ($url[0] !== 'mvp') {
+                if (strpos($url[0],'mvp') === false) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -111,7 +111,7 @@ class OffersController extends Controller
             }
 
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter($viewId);
+            $filter = $this->getFilter();
             $optParams = [
                 'dimensions' => 'ga:yearMonth',
                 'filters' => $filter['filterd'],
@@ -141,7 +141,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if ($url[0] !== 'mvp') {
+                if (strpos($url[0],'mvp') === false) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -149,7 +149,7 @@ class OffersController extends Controller
             }
 
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter($viewId);
+            $filter = $this->getFilter();
 
             $optParams = [
                 'dimensions' => 'ga:date',
@@ -181,7 +181,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if ($url[0] !== 'mvp') {
+                if (strpos($url[0],'mvp') === false) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -189,7 +189,7 @@ class OffersController extends Controller
             }
 
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter($viewId);
+            $filter = $this->getFilter();
 
             $optParams = [
                 'dimensions' => 'ga:yearMonth',
@@ -221,7 +221,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if ($url[0] !== 'mvp') {
+                if (strpos($url[0],'mvp') === false) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -229,7 +229,7 @@ class OffersController extends Controller
             }
 
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter($viewId);
+            $filter = $this->getFilter();
 
             $optParams = [
                 'dimensions' => 'ga:date',
@@ -261,7 +261,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if ($url[0] !== 'mvp') {
+                if (strpos($url[0],'mvp') === false) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -269,7 +269,7 @@ class OffersController extends Controller
             }
 
             $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter($viewId);
+            $filter = $this->getFilter();
 
             $optParams = [
                 'dimensions' => 'ga:browser',
@@ -305,7 +305,7 @@ public function shareperMonth(Request $request)
             $whitelabel = $this->whitelabels->first();
             $url = explode('.', $_SERVER['HTTP_HOST']);
 
-            if ($url[0] !== 'mvp') {
+            if (strpos($url[0],'mvp') === false) {
                 $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
             }
         } else {
@@ -313,7 +313,7 @@ public function shareperMonth(Request $request)
         }
 
         $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-        $filter = $this->getFilter($viewId);
+        $filter = $this->getFilter();
 
         $optParams = [
             'dimensions' => 'ga:browser',
@@ -351,7 +351,7 @@ public function responseMonth(Request $request)
             $whitelabel = $this->whitelabels->first();
             $url = explode('.', $_SERVER['HTTP_HOST']);
 
-            if ($url[0] !== 'mvp') {
+            if (strpos($url[0],'mvp') === false) {
                 $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
             }
         } else {
@@ -359,7 +359,7 @@ public function responseMonth(Request $request)
         }
 
         $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-        $filter = $this->getFilter($viewId);
+        $filter = $this->getFilter();
 
         $optParams = [
             'dimensions' => 'ga:yearMonth',
@@ -403,7 +403,7 @@ public function responsemMonth(Request $request)
             $whitelabel = $this->whitelabels->first();
             $url = explode('.', $_SERVER['HTTP_HOST']);
 
-            if ($url[0] !== 'mvp') {
+            if (strpos($url[0],'mvp') === false) {
                 $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
             }
         } else {
@@ -411,7 +411,7 @@ public function responsemMonth(Request $request)
         }
 
         $viewId = is_null($whitelabel['ga_view_id']) ? '192484069' : $whitelabel['ga_view_id'];
-        $filter = $this->getFilter($viewId);
+        $filter = $this->getFilter();
 
         $optParams = [
             'dimensions' => 'ga:yearMonth',
@@ -454,7 +454,7 @@ public function clickRate(Request $request)
             $whitelabel = $this->whitelabels->first();
             $url = explode('.', $_SERVER['HTTP_HOST']);
 
-            if ($url[0] !== 'mvp') {
+            if (strpos($url[0],'mvp') === false) {
                 $whitelabelId = config($url[0] . '.id');
             }
         } else {
@@ -486,7 +486,7 @@ public function openRate(Request $request)
             $whitelabel = $this->whitelabels->first();
             $url = explode('.', $_SERVER['HTTP_HOST']);
 
-            if ($url[0] !== 'mvp') {
+            if (strpos($url[0],'mvp') === false) {
                 $whitelabelId = config($url[0] . '.id');
             }
         } else {
@@ -522,62 +522,12 @@ return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK)
 }
 
 
-public function getFilter(string $viewid)
+public function getFilter()
 {
-    $filterdesk = '';
-    $filtermobile = '';
-
-    switch($viewid){
-
-        case '192484069':
         $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
         $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
         $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-        break;
 
-        case '202969111':
-            $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-            $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-            break;
-
-        case '202937081':
-            $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-            $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-            break;
-
-        case '159641355':
-        $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-        $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-        $filtershare = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow_3.0';
-        break;
-
-        case '162076862':
-        $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-        $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-        break;
-
-        case '174270531':
-        $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-        $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-        break;
-
-        case '185523513':
-        $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-        $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-        break;
-
-        case '188170994':
-        $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
-        $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
-        $filtershare = 'ga:eventLabel==eil-mobile;ga:eventAction==Submit-Button;ga:eventCategory==tui_exitwindow';
-        break;
-
-    }
 
     return array('filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare);
 }
