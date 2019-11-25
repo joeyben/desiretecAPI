@@ -285,7 +285,8 @@
 
                         <div class="dates">
                             <h4>Reisedaten</h4>
-
+                            <h4>{{ \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $offer['data']['flight']['in']['departure']['date'])->format('d.m.Y') }} bis {{ \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $offer['data']['flight']['out']['arrival']['date'])->format('d.m.Y') }}</h4>
+                            
                             <ul>
                                 <li>
                                     <div class="hour-location">
