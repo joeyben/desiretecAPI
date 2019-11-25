@@ -178,7 +178,7 @@ class AutooffersTTRepository extends BaseRepository
             "HotelReview": {
                 "MinRatingsCount": 10,
                 "MinMeanRatingOverall": 4,
-                "MinMeanRecommendationRate": 4
+                "MinMeanRecommendationRate": 80
             }
            }
           },
