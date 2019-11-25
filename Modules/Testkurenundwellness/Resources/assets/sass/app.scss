@@ -124,3 +124,13 @@ input:-internal-autofill-selected{
     }
   }
 }
+
+// Auth views
+
+.panel-body{
+  .form-group{
+    a{
+      color: transparent;
+    }
+  }
+}
