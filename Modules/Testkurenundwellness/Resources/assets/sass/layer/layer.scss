@@ -554,6 +554,7 @@ ul.kwp-form-errors {
     margin: 15px 0 0 0;
     font-size: 36px;
     font-weight: 700;
+    color: $brand-primary;
   }
 
   p {
@@ -1607,3 +1608,4 @@ and (max-device-width : 320px) {
 .dt_terms.hasError:after{
   border: 1px solid red !important;
 }
+
