@@ -12,7 +12,7 @@
 
                         <p style="line-height: 24px; margin-bottom:20px;">
 
-                            {!! trans('email.wish.created.user.body', ['url' => $url]) !!}
+                            {!! trans('autooffer.email.body', ['url' => $url]) !!}
 
                         </p>
 
