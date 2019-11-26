@@ -55,6 +55,10 @@ class AutooffersTTRepository extends BaseRepository
 
     protected $period;
 
+    protected $minDuration;
+
+    protected $maxDuration;
+
     protected $airport;
 
     protected $destination;
@@ -151,7 +155,8 @@ class AutooffersTTRepository extends BaseRepository
         },
            "TravelDurationFilter": {
             "DurationKind": "Trip",
-            "MaxDuration": ' . $this->period . '
+            "MinDuration": '.$this->minDuration.',
+            "MaxDuration": ' . $this->maxDuration . '
            },
            "PriceFilter": {
             "MaxPrice": ' . $this->maxBudget . '
@@ -176,7 +181,7 @@ class AutooffersTTRepository extends BaseRepository
             "HotelReview": {
                 "MinRatingsCount": 10,
                 "MinMeanRatingOverall": 4,
-                "MinMeanRecommendationRate": 80
+                "MinMeanRecommendationRate": 4
             }
            }
           },
@@ -534,8 +539,61 @@ class AutooffersTTRepository extends BaseRepository
     public function setPeriod($period)
     {
         $this->period = (int) $period;
+        switch ($this->period) {
+            case 7:
+                $this->setMinDuration(7);
+                $this->setMaxDuration(8);
+                break;
+            case 14:
+                $this->setMinDuration(13);
+                $this->setMaxDuration(15);
+                break;
+            case 21:
+                $this->setMinDuration(19);
+                $this->setMaxDuration(22);
+                break;
+            case 28:
+                $this->setMinDuration(26);
+                $this->setMaxDuration(30);
+                break;
+            default:
+                $this->setMinDuration($this->period);
+                $this->setMaxDuration($this->period);
+                break;
+        }
     }
 
+    /**
+     * @return mixed
+     */
+    public function getMinDuration()
+    {
+        return $this->minDuration;
+    }
+
+    /**
+     * @param mixed $minDuration
+     */
+    public function setMinDuration($minDuration): void
+    {
+        $this->minDuration = $minDuration;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMaxDuration()
+    {
+        return $this->maxDuration;
+    }
+
+    /**
+     * @param mixed $minDuration
+     */
+    public function setMaxDuration($maxDuration): void
+    {
+        $this->maxDuration = $maxDuration;
+    }
     /**
      * @param $destination
      */
