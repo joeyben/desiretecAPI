@@ -1,6 +1,5 @@
 @import "utils";
 @import "rangeslider";
-@import "../../../../../../resources/assets/sass/layer/bootstrap-select";
 @import "../variables";
 
 $gutter: 30px;
@@ -17,23 +16,18 @@ $fontcolor: #303030;
 // Dropdown menus
 // --------------------------------------------------
 .dt-modal {
-  .bootstrap-select{
-    &.show-tick{
-      .dropdown-menu{
-        .selected{
-          span.check-mark{
-            background-image: url(../../svg/check.svg);
-            background-size: 20px;
-            background-position: right;
-            height: 20px;
-            width: 20px;
-            background-repeat: no-repeat;
-            top: 2px;
-            right: 10px;
-          }
-        }
-      }
-    }
+
+  // Custom select
+  .custom-select {
+    margin-top: 15px;
+    color: $master-primary;
+    border: none;
+    -webkit-transition: border-color .3s ease;
+    -moz-transition: border-color .3s ease;
+    -o-transition: border-color .3s ease;
+    transition: border-color .3s ease;
+    border-color: $master-primary;
+    font-weight: 500;
   }
 
   // Dropdown arrow/caret
@@ -253,7 +247,7 @@ $fontcolor: #303030;
 
 
 .rangeslider__fill{
-  background-color: $mastercolor;
+  background-color: $master-primary;
 }
 
 /**** Datepicker ****/
@@ -264,7 +258,7 @@ $fontcolor: #303030;
   background-color: #fff;
   border-bottom: 1px solid #f3f0ec;
   border-radius: 0;
-  color: $mastercolor;
+  color: $master-primary;
   font-weight: 300;
   height: 40px;
 }
@@ -277,13 +271,13 @@ $fontcolor: #303030;
   font-weight: normal;
 }
 .datepicker-dropdown .day.active, .datepicker-dropdown .day.active.active:hover, .datepicker-dropdown .day.active:hover,.datepicker-dropdown .day.active.active:hover:hover, .datepicker-dropdown .month.active, .datepicker-dropdown .month.active.active:hover, .datepicker-dropdown .month.active:hover, .datepicker-dropdown .month.active.active:hover:hover, .datepicker-dropdown .year.active, .datepicker-dropdown .year.active.active:hover, .datepicker-dropdown .year.active:hover, .datepicker-dropdown .year.active.active:hover:hover {
-  background-color: $mastercolor;
+  background-color: $master-primary;
   border-color: transparent;
   color: #fff;
   text-shadow: none;
 }
 .datepicker .datepicker-switch{
-  color: $mastercolor;
+  color: $master-primary;
   font-weight: 700;
 }
 
@@ -559,7 +553,7 @@ $fontcolor: #303030;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
     transition: border-color .3s ease;
-    border-color: $mastercolor;
+    border-color: $master-primary;
   }
 
   input[type="radio"],
@@ -684,7 +678,7 @@ $fontcolor: #303030;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: $mastercolor;
+              color: $master-primary;
               padding: 0;
               margin: 20px 0;
               font-size: 20px !important;
@@ -1082,26 +1076,6 @@ p.kwp-info {
   }
   .tui-icon--aircraft-down, .tui-icon--location-fill{
     display: none;
-  }
-  .bootstrap-select>.dropdown-toggle{
-    box-shadow: none;
-    border: none;
-    padding: 2px 0;
-    background-color: transparent;
-    .filter-option-inner-inner{
-      color: $mastercolor;
-      font-size: 18px;
-    }
-  }
-  .open .btn-default.dropdown-toggle{
-    background-color: transparent;
-  }
-  .bootstrap-select{
-    div.dropdown-menu {
-      max-height: 300px !important;
-      width: calc(100% + 20px);
-      left: -10px;
-    }
   }
 }
 
@@ -1533,7 +1507,7 @@ p.kwp-info {
         line-height: 2em;
         background-color: transparent;
         font-weight: 500;
-        border-bottom: 1px solid $mastercolor;
+        border-bottom: 1px solid $master-primary;
         color: $fontcolor;
         border-radius: 0;
         padding: 0 10px;
@@ -1574,7 +1548,7 @@ p.kwp-info {
           margin-bottom: 0px;
           padding: 10px 0;
           font-size: 20px;
-          color: $mastercolor;
+          color: $master-primary;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1595,7 +1569,7 @@ p.kwp-info {
             height: 25px;
             background: #fff;
             cursor: pointer;
-            border: 2px solid $mastercolor;
+            border: 2px solid $master-primary;
             border-radius: 50%;
           }
           &::-moz-range-thumb {
@@ -1609,7 +1583,7 @@ p.kwp-info {
 
       .error-input{
         display: block;
-        background: $mastercolor;
+        background: $master-primary;
         padding: 0 10px;
         color: #fff;
       }
@@ -1650,7 +1624,7 @@ p.kwp-info {
       background: none;
       background-color: transparent;
       font-weight: 500;
-      border-bottom: 1px solid $mastercolor;
+      border-bottom: 1px solid $master-primary;
       border-radius: 0;
       padding: 0 10px;
       font-size: 18px;
@@ -1778,5 +1752,5 @@ select[name="category"]{
   padding-left: 5px;
 }
 .destination{
-  border-bottom: 1px solid $mastercolor;
+  border-bottom: 1px solid $master-primary;
 }

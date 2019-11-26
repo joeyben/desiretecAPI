@@ -14,12 +14,12 @@ p,a,h1,h2,h3,h4,button,input,textarea{
 .confirm-popup {
   .popup-body {
     .primary-btn {
-      border: 1px solid $mastercolor;
-      background-color: $mastercolor;
+      border: 1px solid $master-primary;
+      background-color: $master-primary;
       width: 100%;
     }
     .secondary-btn {
-      border: 1px solid $mastercolor;
+      border: 1px solid $master-primary;
       width: 100%;
       margin-bottom: 10px;
     }
