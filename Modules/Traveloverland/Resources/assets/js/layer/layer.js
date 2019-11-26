@@ -914,7 +914,7 @@ var dt = window.dt || {};
             'color': brandColor,
         });
 
-        var layerHeader = $('.kwp-header.kwp-variant-eil-mobile');
+        var layerHeader = $('.mobile-layer .kwp-header');
         layerHeader.css({
             'background': brandColor,
         });
