@@ -23,8 +23,8 @@ class GroupsDatabaseSeeder extends Seeder
                     'name'         => str_slug($value),
                     'display_name' => $value,
                     'status'       => 1,
-                    'created_at'   => DB::raw('now()'),
-                    'updated_at'   => DB::raw('now()')
+                    'created_at'   => now(),
+                    'updated_at'   => now()
                 ]);
             }
         }
@@ -37,8 +37,8 @@ class GroupsDatabaseSeeder extends Seeder
             'updated_by'        => $faker->numberBetween(1, 3),
             'whitelabel_id'     => 1,
             'current'           => 1,
-            'created_at'        => DB::raw('now()'),
-            'updated_at'        => DB::raw('now()'),
+            'created_at'        => now(),
+            'updated_at'        => now(),
         ]);
 
         $user = Group::find($id);
@@ -54,8 +54,8 @@ class GroupsDatabaseSeeder extends Seeder
                 'created_by'        => $faker->numberBetween(1, 3),
                 'updated_by'        => $faker->numberBetween(1, 3),
                 'whitelabel_id'     => $faker->numberBetween(1, 5),
-                'created_at'        => DB::raw('now()'),
-                'updated_at'        => DB::raw('now()'),
+                'created_at'        => now(),
+                'updated_at'        => now(),
             ]);
             $user = Group::find($id);
             $user->users()->sync([$faker->numberBetween(6, 7)]);

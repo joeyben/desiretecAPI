@@ -12,7 +12,7 @@ class AddExtraParamsToWishesTable extends Migration
     public function up()
     {
         Schema::table('wishes', function (Blueprint $table) {
-            $table->text('extra_params');
+            $table->text('extra_params')->nullable();
         });
     }
 

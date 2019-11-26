@@ -23,8 +23,8 @@ class RulesDatabaseSeeder extends Seeder
                     'name'         => str_slug($value),
                     'display_name' => $value,
                     'status'       => 1,
-                    'created_at'   => DB::raw('now()'),
-                    'updated_at'   => DB::raw('now()')
+                    'created_at'   => now(),
+                    'updated_at'   => now()
                 ]);
             }
         }
@@ -37,7 +37,7 @@ class RulesDatabaseSeeder extends Seeder
                 'user_id'           => 1,
                 'whitelabel_id'     => 16,
                 'created_at'        => $faker->dateTimeThisMonth(),
-                'updated_at'        => DB::raw('now()'),
+                'updated_at'        => now(),
             ]);
         }
     }
