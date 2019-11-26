@@ -30,7 +30,6 @@ class TuidemoController extends Controller
     protected $whitelabel;
     protected $attachements;
 
-    //-------------test----------------comment---------------------//
     /* @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
      * @param \Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository $attachements
      * @param WhitelabelsRepository $whitelabel
