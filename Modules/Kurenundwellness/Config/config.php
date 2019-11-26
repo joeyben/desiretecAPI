@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'name' => 'Kurenundwellness',
-    'id'   => 61,
-    'locale' => 'de',
-    'language_lines_table' => 'language_lines_kurenundwellness',
+    'name'                 => 'Testkurenundwellness',
+    'id'                   => 164,
+    'locale'               => 'de',
+    'language_lines_table' => 'language_lines_testkurenundwellness',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
-    'local_url' => 'kurenundwellness.com',
-    'development_url' => 'kurenundwellness.reise-wunsch.com',
-    'production_url' => 'kurenundwellness.reisewunschservice.de',
+    'local_url'            => 'testkurenundwellness.com',
+    'development_url'      => 'testkurenundwellness.reise-wunsch.com',
+    'production_url'       => 'testkurenundwellness.reisewunschservice.de',
 ];

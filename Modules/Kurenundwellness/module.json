@@ -1,12 +1,12 @@
 {
-    "name": "Kurenundwellness",
-    "alias": "kurenundwellness",
+    "name": "Testkurenundwellness",
+    "alias": "testkurenundwellness",
     "description": "",
     "keywords": [],
     "active": 1,
     "order": 0,
     "providers": [
-        "Modules\\Kurenundwellness\\Providers\\KurenundwellnessServiceProvider"
+        "Modules\\Testkurenundwellness\\Providers\\TestkurenundwellnessServiceProvider"
     ],
     "aliases": {},
     "files": [

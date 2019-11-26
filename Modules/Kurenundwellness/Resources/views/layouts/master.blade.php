@@ -5,7 +5,7 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/kurenundwellness/css/kurenundwellness.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/testkurenundwellness/css/testkurenundwellness.css') }}">
 @endsection
 
 @section('logo')
@@ -28,7 +28,7 @@
     <script type="text/javascript">
         var brandColor = {!! json_encode($color) !!};
     </script>
-    <script src="{{ mix('whitelabel/kurenundwellness/js/kurenundwellness.js') }}"></script>
+    <script src="{{ mix('whitelabel/testkurenundwellness/js/testkurenundwellness.js') }}"></script>
 @endsection
 
 @section('after-scripts')
@@ -42,7 +42,7 @@
 
         var kwz = document.createElement('script');
         kwz.type = 'text/javascript'; kwz.async = true;
-        kwz.src = '/whitelabel/kurenundwellness/js/layer/layer.js';
+        kwz.src = '/whitelabel/testkurenundwellness/js/layer/layer.js';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(kwz, s);
 

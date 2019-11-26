@@ -4,10 +4,10 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://kurenundwellness.reisewunschservice.de',
+        baseUrl: 'http://testkurenundwellness.com',
         popupPath: '/show',
         popupStore:'/store',
-        cssPath: '/whitelabel/kurenundwellness/css/layer/whitelabel.css'
+        cssPath: '/whitelabel/testkurenundwellness/css/layer/whitelabel.css'
     };
 
     dt.popupTemplate = function (variant) {
@@ -53,7 +53,7 @@ var exitIntent = window.exitIntent || {};
             '<div class="kwp-overlay"></div>' +
             '<div class="kwp-logo"></div>' +
             '<div class="kwp-header-content">' +
-            '<h1 style="color: ' + brandColor +'">' +
+            '<h1>' +
             texts[variant].header + ' <br/>' +
             '</h1>' +
             '<p>' +
@@ -66,6 +66,352 @@ var exitIntent = window.exitIntent || {};
             ;
     };
 
+
+    /**** Mobile Decoder ****/
+    var MasterIBETripDataDecoderMobile = $.extend({}, dt.AbstractTripDataDecoder, {
+        name: 'TUI Rundreisen Mobile',
+        matchesUrl: 'm.testkurenundwellness.com/(buchen)',
+        dictionaries: {
+            'catering': {
+                'AI': 'all-inclusive',
+                'AP': 'all-inclusive',
+                'FB': 'Vollpension',
+                'FP': 'Vollpension',
+                'HB': 'Halbpension',
+                'HP': 'Halbpension',
+                'BB': 'Frühstück',
+                'AO': 'ohne Verpflegung',
+                'XX': null
+            },
+            'cateringWeight': {
+                'AI': 5,
+                'AP': 5,
+                'FB': 4,
+                'FP': 4,
+                'HB': 3,
+                'HP': 3,
+                'BB': 2,
+                'AO': 1,
+                'XX': null
+            },
+            'allowedDestinations': {
+                1340: 'Seychellen',
+                1196: 'Malediven',
+                1333: 'Kapverdische Inseln'
+            }
+        },
+        filterFormSelector: '#search-form',
+        filterDataDecoders: {
+            'catering': function (form, formData) {
+                return '';
+            },
+            'hotel_category': function (form, formData) {
+                return '';
+            },
+            'destination': function (form, formData) {
+                return $(".search-criteria-list li:eq( 0 ) strong").attr('title');
+            },
+            'pax': function (form, formData) {
+                var pax = $(".search-criteria-list li:eq( 4 ) strong").attr('title').split(',');
+                return parseInt(pax[0].replace(' Erwachsene',''));
+            },
+            'budget': function (form, formData) {
+                return '';
+            },
+            'children': function (form, formData) {
+                var pax = $(".search-criteria-list li:eq( 4 ) strong").attr('title').split(',')
+                return parseInt(pax[1].replace(' Kinder',''));
+            },
+            'age_1': function (form, formData) {
+                return '';
+            },
+            'age_2': function (form, formData) {
+                return '';
+            },
+            'age_3': function (form, formData) {
+                return '';
+            },
+            'earliest_start': function (form, formData) {
+                var latest_return = $(".search-criteria-list li:eq( 3 )").text().split(' - ')
+                return $.trim(latest_return[0]);
+            },
+            'latest_return': function (form, formData) {
+                var latest_return = $(".search-criteria-list li:eq( 3 )").text().split(' - ')
+                return $.trim(latest_return[1]);
+            },
+            'duration': function (form, formData) {
+                var duration = $(".search-criteria-list li:eq( 2 ) strong").attr('title');
+                duration = duration.replace(' Wochen', '-');
+                duration = duration.replace(' Tage', '');
+                return duration;
+            },
+            'extra': function (form, formData) {
+                return '';
+            },
+            'room_type': function (form, formData) {
+                return '';
+            },
+            'cities': function (form, formData) {
+                return '';
+            },
+            'airport': function (form, formData) {
+                return $(".search-criteria-list li:eq( 1 ) strong").attr('title');
+            },
+            'is_popup_allowed': function (form, formData) {
+                //var step = this.getScope().IbeApi.state.stepNr;
+                return true;
+            }
+        },
+        getVariant: function () {
+            return 'eil-mobile';
+        },
+        getRandomElement: function (arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        },
+        getTripData: function () {
+            return this.decodeFilterData();
+        },
+        getTrackingLabel: function (tripData, variant) {
+            var destId = null,
+                destName = tripData.destination;
+
+            switch (destName) {
+                case 'Kapverdische Inseln':
+                case 'Kap Verde - Sal':
+                case 'Kap Verde - Boavista':
+                case 'Kap Verde Boavista':
+                case 'Kap Verde':
+                    destId = 'kap';
+                    break;
+                case 'Malediven':
+                    destId = 'mal';
+                    break;
+                case 'Seychellen':
+                    destId = 'sey';
+                    break;
+                case 'Mauritius & Reunion':
+                case 'Mauritius':
+                case 'La Réunion':
+                case 'Reunion':
+                    destId = 'mau';
+                    break;
+                case 'Mexiko':
+                case 'Mexiko: Yucatan / Cancun':
+                case 'Mexiko: Pazifikküste':
+                    destId = 'mex';
+                    break;
+                case 'Portugal':
+                case 'Algarve':
+                    destId = 'alg';
+                    break;
+                case 'Abu Dhabi':
+                case 'Ras Al-Khaimah':
+                case 'Fujairah':
+                case 'Ajman':
+                case 'Umm Al Quwain':
+                case 'Oman':
+                case 'Dubai':
+                    destId = 'dub';
+                    break;
+                case 'Dominikanische Republik':
+                case 'Dom. Republik - Osten (Punta Cana)':
+                case 'Dom. Republik - Norden (Puerto Plata & Samana)':
+                case 'Dom. Republik - Süden (Santo Domingo)':
+                    destId = 'dom';
+                    break;
+                case 'Insel Phuket':
+                case 'Bangkok & Umgebung':
+                case 'Insel Ko Samui':
+                case 'Westthailand (Hua Hin, Cha Am, River Kwai)':
+                case 'Südostthailand (Pattaya, Jomtien)':
+                case 'Krabi & Umgebung':
+                case 'Khao Lak & Umgebung':
+                case 'Nordthailand (Chiang Mai, Chiang Rai, Sukhothai)':
+                case 'Inseln im Golf von Thailand (Koh Chang, Koh Phangan)':
+                case 'Inseln in der Andaman See (Koh Pee Pee, Koh Lanta)':
+                case 'Nordostthailand (Issan)':
+                    destId = 'tha';
+                    break;
+                case 'USA':
+                case 'usa':
+                case 'Usa':
+                case 'Kalifornien':
+                case 'New York':
+                case 'Florida Ostküste':
+                case 'Arizona':
+                case 'Florida Orlando':
+                case 'Illinois':
+                case 'New England':
+                case 'Texas':
+                case 'Nevada':
+                case 'Ohio':
+                case 'Utah':
+                case 'Louisiana & Mississippi':
+                case 'Georgia':
+                case 'Colorado':
+                case 'Hawaii - Insel Oahu':
+                case 'Florida Westküste':
+                case 'Missouri':
+                case 'North Carolina':
+                case 'Washington':
+                case 'Hawaii - Insel Maui':
+                case 'Washington D.C. & Maryland':
+                case 'Minnesota':
+                case 'Oregon':
+                case 'Hawaii - Insel Big Island':
+                case 'South Carolina':
+                case 'Hawaii - Insel Kauai':
+                case 'Florida Südspitze':
+                case 'Montana':
+                case 'New Mexico':
+                case 'Wyoming':
+                case 'New Jersey':
+                case 'Alaska':
+                case 'Idaho':
+                case 'Virginia':
+                case 'Pennsylvania':
+                case 'South Dakota':
+                case 'Alabama':
+                case 'Indiana & Kentucky':
+                case 'Massachusetts':
+                case 'Tennessee':
+                case 'Michigan':
+                case 'Kansas & Nebraska':
+                case 'Oklahoma':
+                case 'Arkansas':
+                case 'Hawaii - Insel Molokai':
+                case 'North Dakota':
+                case 'Hawaii - Insel Lanai':
+                    destId = 'usa';
+                    break;
+                case 'Kuba':
+                case 'Kuba - Varadero & Havanna':
+                case 'Kuba (Holguin)':
+                    destId = 'kub';
+                    break;
+                case 'Sri Lanka':
+                    destId = 'sri';
+                    break;
+                case 'Jamaika':
+                    destId = 'jam';
+                    break;
+                case 'Curacao & Aruba & Bonaire':
+                    destId = 'cur';
+                    break;
+                case 'Barbados':
+                    destId = 'bar';
+                    break;
+                case 'Bahamas':
+                    destId = 'bah';
+                    break;
+                case 'St.Lucia':
+                    destId = 'stl';
+                    break;
+                case 'Antigua & Barbuda':
+                    destId = 'ant';
+                    break;
+                case 'Tobago':
+                    destId = 'tob';
+                    break;
+                case 'Turks & Caicos Inseln':
+                    destId = 'tur';
+                    break;
+                case 'Grenada':
+                    destId = 'gre';
+                    break;
+                case 'Puerto Rico':
+                    destId = 'pue';
+                    break;
+                case 'Guadeloupe':
+                    destId = 'gua';
+                    break;
+                case 'Martinique':
+                    destId = 'mar';
+                    break;
+                case 'St. Marteen (nl.) & St.Eustatius & Saba':
+                    destId = 'stmnl';
+                    break;
+                case 'St. Martin (frz.)':
+                    destId = 'stmfr';
+                    break;
+                case 'Virgin Islands & Anguilla':
+                    destId = 'vir';
+                    break;
+                case 'Anguilla':
+                    destId = 'ang';
+                    break;
+                case 'St.Kitts & Nevis':
+                    destId = 'stk';
+                    break;
+                case 'Bermuda':
+                    destId = 'ber';
+                    break;
+                case 'Cayman Inseln':
+                    destId = 'cay';
+                    break;
+                case 'Harbour Island':
+                    destId = 'har';
+                    break;
+                case 'Indonesien':
+                case 'Indonesien: Bali':
+                case 'Indonesien: Java':
+                case 'Indonesien: Sunda-Inseln':
+                case 'Indonesien: Nordosten':
+                case 'Indonesien: Sumatra':
+                case 'Indonesien: Insel Bintan':
+                    destId = 'ind';
+                    break;
+                case 'Kapstadt & Umgebung':
+                case 'Johannesburg & Umgebung':
+                case 'Eastern Cape':
+                case 'Krüger Park':
+                case 'Durban & Umgebung':
+                    destId = 'saf';
+                    break;
+                case 'Namibia':
+                    destId = 'nam';
+                    break;
+                case 'Tansania - Sansibar':
+                case 'Tansania':
+                case 'Zanzibar':
+                    destId = 'tan';
+                    break;
+                case 'Kenia - Nairobi':
+                case 'Kenia - Südküste':
+                case 'Kenia - Nordküste':
+                    destId = 'ken';
+                    break;
+                case 'Nordwesten':
+                    destId = 'nor';
+                    break;
+                case 'Simbabwe':
+                    destId = 'sim';
+                    break;
+                case 'Mozambique':
+                    destId = 'moz';
+                    break;
+                case 'Sambia':
+                    destId = 'sam';
+                    break;
+                case 'Botswana':
+                    destId = 'not';
+                    break;
+                case 'Swasiland':
+                    destId = 'swa';
+                    break;
+                case 'Afrika':
+                    destId = 'afr';
+                    break;
+            }
+
+            if (destId) {
+                return variant + '-' + destId;
+            }
+
+            return variant;
+        }
+    });
+
     var MasterIBETripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         decodeDate: function (raw) {
             var r = /\w+\.\s+(\d+\.\d+.\d+)/.exec(raw);
@@ -77,7 +423,7 @@ var exitIntent = window.exitIntent || {};
             return r[1];
         },
         name: 'TUI IBE',
-        matchesUrl: 'www.kurenundwellness.tv/*',
+        matchesUrl: 'www.testkurenundwellness.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {
@@ -711,11 +1057,12 @@ var exitIntent = window.exitIntent || {};
         }
     });
     dt.decoders.push(MasterIBETripDataDecoder);
+    dt.decoders.push(MasterIBETripDataDecoderMobile);
     dt.decoders.push(KwizzmeFakeTripDataDecoder);
 
     //dt.decoders.push($.extend({}, MasterIBETripDataDecoder, {
     //    name: 'TUI Landingpages',
-    //    matchesUrl: 'kurenundwellness.com/pauschalreisen',
+    //    matchesUrl: 'testkurenundwellness.com/pauschalreisen',
     //    filterFormSelector: '.simpleSearch'
     //}));
 
@@ -1129,13 +1476,17 @@ var exitIntent = window.exitIntent || {};
                 'color': brandColor,
             });
 
-            var layerHeader = $('.mobile-layer .kwp-header');
-            layerHeader.css({
+            var mobileLayerHeader = $('.kwp-header.kwp-variant-eil-mobile');
+            mobileLayerHeader.css({
                 'background': brandColor,
             });
 
             var successHref = $('.kwp-completed-master a');
             $("<style>.kwp-completed-master a { color: " + brandColor + "; }</style>")
+                .appendTo(document.documentElement);
+
+            var layerHeader = $('.kwp-header.kwp-variant-eil-n1 h1');
+            $("<style>.kwp-header.kwp-variant-eil-n1 h1 { color: " + brandColor + " !important; }</style>")
                 .appendTo(document.documentElement);
 
         }

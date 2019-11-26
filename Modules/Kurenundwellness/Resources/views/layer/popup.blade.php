@@ -1,3 +1,7 @@
+<script type="text/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
@@ -157,7 +161,7 @@
 
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('layer.general.catering'), ['class' => 'control-label required']) }}
-                    {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'selectpicker']) }}
+                {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'custom-select']) }}
                 <i class="master-icon--chevron-down"></i>
             </div>
 
@@ -427,7 +431,7 @@
                   @endphp
                 @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                     <p>Ich habe die <a href="https://kurenundwellness.reise-wunsch.com/pdfs/tnb_kurenundwellness.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.kurenundwellness.tv/datenschutzerklaerung/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                     <p>Ich habe die <a href="https://testkurenundwellness.reise-wunsch.com/pdfs/tnb_kurenundwellness.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.kurenundwellness.tv/datenschutzerklaerung/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                 </div>
             </div>
         </div>

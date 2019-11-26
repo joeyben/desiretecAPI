@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'http://tuidemo.com',
+        baseUrl: 'https://tuidemo.reise-wunsch.com',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/tuidemo/css/layer/whitelabel.css'
@@ -70,7 +70,7 @@ var exitIntent = window.exitIntent || {};
     /**** Mobile Decoder ****/
     var MasterIBETripDataDecoderMobile = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'TUI Rundreisen Mobile',
-        matchesUrl: 'm.tuidemo.com/(buchen)',
+        matchesUrl: 'm.tui.com/(buchen)',
         dictionaries: {
             'catering': {
                 'AI': 'all-inclusive',

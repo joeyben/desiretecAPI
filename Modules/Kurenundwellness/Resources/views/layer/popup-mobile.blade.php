@@ -1,4 +1,8 @@
-{{ Form::open(['route' => 'kurenundwellness.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
+<script type="text/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+
+{{ Form::open(['route' => 'testkurenundwellness.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <div class="kwp-minimal">
     <div class="kwp-content kwp-with-expansion">
@@ -193,7 +197,7 @@
                     <div class="kwp-col-4 white-col">
                         <div class="kwp-agb">
                             {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                            <p>Ich habe die <a href="https://kurenundwellness.reise-wunsch.com/pdfs/tnb_kurenundwellness.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.kurenundwellness.tv/datenschutzerklaerung/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                            <p>Ich habe die <a href="https://testkurenundwellness.reise-wunsch.com/pdfs/tnb_kurenundwellness.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.kurenundwellness.tv/datenschutzerklaerung/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                         </div>
                     </div>
                 </div>

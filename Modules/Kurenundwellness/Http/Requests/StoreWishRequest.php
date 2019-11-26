@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Kurenundwellness\Http\Requests;
+namespace Modules\Testkurenundwellness\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -71,7 +71,7 @@ class StoreWishRequest extends FormRequest
             'earliest_start'  => 'required',
             'latest_return'   => 'required',
             'adults'          => 'required',
-            'terms'          => 'required',
+            'terms'           => 'required',
             'email'           => 'required|email'
         ];
     }
