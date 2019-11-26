@@ -137,7 +137,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         );
 
         $this->generateFile(
-            base_path('Modules/Master/Resources/assets/sass/layer/_variables.scss'),
+            base_path('Modules/Master/Resources/assets/sass/_variables.scss'),
             base_path("Modules/$name/Resources/assets/sass/layer/_variables.scss")
         );
 
