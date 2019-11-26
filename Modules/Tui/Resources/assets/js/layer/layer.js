@@ -432,7 +432,7 @@ var exitIntent = window.exitIntent || {};
 
     var TuiHMTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'TUI Honeymoon',
-        matchesUrl: 'www.tui.com/pauschalreisen(/[a-z-]+)*/flitterwochen',
+        matchesUrl: 'www.tui.com/pauschalreisen(/[a-z-]+)*/flitterwochen|tuicom-itest.tui-interactive.com/pauschalreisen(/[a-z-]+)*/flitterwochen|tuicom-preprod.tui-interactive.com/pauschalreisen(/[a-z-]+)*/flitterwochen',
         filterFormSelector: 'body',
         filterDataDecoders: {},
         getTripData: function () {
