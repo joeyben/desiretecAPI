@@ -1485,10 +1485,6 @@ var exitIntent = window.exitIntent || {};
             $("<style>.kwp-completed-master a { color: " + brandColor + "; }</style>")
                 .appendTo(document.documentElement);
 
-            var layerHeader = $('.kwp-header.kwp-variant-eil-n1 h1');
-            $("<style>.kwp-header.kwp-variant-eil-n1 h1 { color: " + brandColor + " !important; }</style>")
-                .appendTo(document.documentElement);
-
         }
 
     })(jQuery);
