@@ -75,7 +75,7 @@ class DemokreuzfahrtberatungController extends Controller
     public function show(Request $request)
     {
         $input = $request->only('variant');
-        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
         $whitelabel = $this->whitelabel->getByName('Demokreuzfahrtberatung');
 
         $html = view('demokreuzfahrtberatung::' . $layer)->with([
@@ -87,7 +87,6 @@ class DemokreuzfahrtberatungController extends Controller
             'ages_arr'     => $this->ages,
             'request'      => $request->all(),
             'color'        => $whitelabel['color'],
-
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);

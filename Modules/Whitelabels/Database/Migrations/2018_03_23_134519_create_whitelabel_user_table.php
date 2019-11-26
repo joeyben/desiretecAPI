@@ -26,13 +26,13 @@ class CreateWhitelabelUserTable extends Migration
      */
     public function down()
     {
-        if(app()->environment() !== 'testing') {
+        if ('testing' !== app()->environment()) {
             DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         }
 
         Schema::dropIfExists('whitelabel_user');
 
-        if(app()->environment() !== 'testing') {
+        if ('testing' !== app()->environment()) {
             DB::statement('SET FOREIGN_KEY_CHECKS = 1');
         }
     }

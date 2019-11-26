@@ -63,7 +63,6 @@ abstract class BrowserKitTestCase extends BaseTestCase
         /*
          * Create class properties to be used in tests
          */
-        dd(User::all()->toArray());
         $this->admin = User::find(1);
         $this->executive = User::find(2);
         $this->user = User::find(3);

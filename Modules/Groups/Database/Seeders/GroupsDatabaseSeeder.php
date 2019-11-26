@@ -41,10 +41,10 @@ class GroupsDatabaseSeeder extends Seeder
             'updated_at'        => now(),
         ]);
 
-        $user = Group::find($id);
-        $user->users()->sync([6]);
+        $group = Group::find($id);
+        $group->users()->sync([2]);
 
-        for ($i = 1; $i <= 100; ++$i) {
+        for ($i = 1; $i <= 10; ++$i) {
             $name = $faker->name;
 
             $id = DB::table('groups')->insertGetId([
@@ -57,8 +57,8 @@ class GroupsDatabaseSeeder extends Seeder
                 'created_at'        => now(),
                 'updated_at'        => now(),
             ]);
-            $user = Group::find($id);
-            $user->users()->sync([$faker->numberBetween(6, 7)]);
+            $group = Group::find($id);
+            $group->users()->sync([2]);
         }
     }
 }

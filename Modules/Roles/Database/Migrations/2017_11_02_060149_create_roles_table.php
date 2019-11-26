@@ -30,13 +30,13 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        if(app()->environment() !== 'testing') {
+        if ('testing' !== app()->environment()) {
             DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         }
 
         Schema::dropIfExists('roles');
 
-        if(app()->environment() !== 'testing') {
+        if ('testing' !== app()->environment()) {
             DB::statement('SET FOREIGN_KEY_CHECKS = 1');
         }
     }

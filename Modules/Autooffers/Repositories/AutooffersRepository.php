@@ -205,6 +205,7 @@ class AutooffersRepository extends BaseRepository
         $rating = (int) ($data['hotelOffer']['hotel']['rating']['overall']);
         $recommendation = (int) ($data['hotelOffer']['hotel']['rating']['recommendation']);
         $rules_ratings = ((int) (str_replace('.', '', $rulesArray['rating'])) / 10);
+
         return $rating > $rules_ratings && 0 === $autooffer && $recommendation > $rulesArray['recommendation'];
     }
 

@@ -21,7 +21,7 @@ class UpdateForeignKeysOfMessageTable extends Migration
             //     $table->foreign('wish_id')->references('id')->on('wishes')->onDelete('cascade')->change();
             //     $table->foreign('agent_id')->references('id')->on('agents')->onDelete('cascade')->change();
             // });
-            if(app()->environment() !== 'testing') {
+            if ('testing' !== app()->environment()) {
                 \DB::statement('alter table message drop FOREIGN KEY message_user_id_foreign;');
                 \DB::statement('alter table message add constraint message_user_id_foreign
                            foreign key (user_id)
@@ -49,7 +49,7 @@ class UpdateForeignKeysOfMessageTable extends Migration
      */
     public function down()
     {
-        if(app()->environment() !== 'testing') {
+        if ('testing' !== app()->environment()) {
             \DB::statement('alter table message drop FOREIGN KEY message_user_id_foreign;');
             \DB::statement('alter table message add constraint message_user_id_foreign
                        foreign key (user_id)

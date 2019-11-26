@@ -23,7 +23,6 @@ class UserTableSeeder extends Seeder
         $this->disableForeignKeys();
         $this->truncate(config('access.users_table'));
 
-        //Add the master administrator, user id of 1
         $users = [
             [
                 'first_name'        => 'Admin',
@@ -42,6 +41,19 @@ class UserTableSeeder extends Seeder
                 'first_name'        => 'Executive',
                 'last_name'         => 'DD',
                 'email'             => 'goldoni.fouotsa+executive@desiretec.com',
+                'password'          => bcrypt('1234'),
+                'confirmation_code' => md5(uniqid(mt_rand(), true)),
+                'confirmed'         => true,
+                'created_by'        => 1,
+                'updated_by'        => null,
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+                'deleted_at'        => null,
+            ],
+            [
+                'first_name'        => 'Seller',
+                'last_name'         => 'DD',
+                'email'             => 'goldoni.fouotsa+seller@desiretec.com',
                 'password'          => bcrypt('1234'),
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
                 'confirmed'         => true,

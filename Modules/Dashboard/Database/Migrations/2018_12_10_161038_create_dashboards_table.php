@@ -40,14 +40,14 @@ class CreateDashboardsTable extends Migration
      */
     public function down()
     {
-        if(app()->environment() !== 'testing') {
+        if ('testing' !== app()->environment()) {
             DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         }
 
         Schema::dropIfExists('dashboards');
         Schema::dropIfExists('dashboard_user');
 
-        if(app()->environment() !== 'testing') {
+        if ('testing' !== app()->environment()) {
             DB::statement('SET FOREIGN_KEY_CHECKS = 1');
         }
     }
