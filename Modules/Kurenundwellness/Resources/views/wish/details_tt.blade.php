@@ -1,4 +1,4 @@
-@extends('testkurenundwellness::layouts.master')
+@extends('kurenundwellness::layouts.master')
 
 @section('content')
     <!-- Wish lis Box -->

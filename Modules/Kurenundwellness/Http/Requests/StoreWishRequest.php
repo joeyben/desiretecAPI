@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Testkurenundwellness\Http\Requests;
+namespace Modules\Kurenundwellness\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;

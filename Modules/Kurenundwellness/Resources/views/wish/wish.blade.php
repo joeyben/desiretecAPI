@@ -13,8 +13,8 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/testkurenundwellness/css/wish/details.css') }}">
-    <link rel="stylesheet" href="{{ asset('whitelabel/testkurenundwellness/css/testkurenundwellness.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/kurenundwellness/css/wish/details.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/kurenundwellness/css/kurenundwellness.css') }}">
 @endsection
 
 
@@ -414,7 +414,7 @@
 
 {{-- @include('frontend.wishes.partials.faq') --}}
 @section('footer')
-    @include('testkurenundwellness::layouts.footer')
+    @include('kurenundwellness::layouts.footer')
 @endsection
 
 <!-- Modal -->
@@ -673,7 +673,7 @@
 
 @section('before-scripts')
 
-    <script src="{{ mix('whitelabel/testkurenundwellness/js/testkurenundwellness.js') }}"></script>
+    <script src="{{ mix('whitelabel/kurenundwellness/js/kurenundwellness.js') }}"></script>
 @endsection
 
 @section('after-scripts')

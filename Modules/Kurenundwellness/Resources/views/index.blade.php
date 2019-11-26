@@ -1,4 +1,4 @@
-@extends('testkurenundwellness::layouts.master')
+@extends('kurenundwellness::layouts.master')
 
 @section('content')
     <div class="slider" style="background-image: url({{ $bg_image }})">
@@ -14,5 +14,5 @@
 @endsection
 
 @section('footer')
-    @include('testkurenundwellness::layouts.footer')
+    @include('kurenundwellness::layouts.footer')
 @endsection

@@ -9,7 +9,7 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/testkurenundwellness/css/testkurenundwellness.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/kurenundwellness/css/kurenundwellness.css') }}">
 @endsection
 
 @section('content')

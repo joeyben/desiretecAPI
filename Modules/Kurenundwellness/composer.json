@@ -1,5 +1,5 @@
 {
-    "name": "nwidart/testkurenundwellness",
+    "name": "nwidart/kurenundwellness",
     "description": "",
     "authors": [
         {
@@ -10,7 +10,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\Testkurenundwellness\\Providers\\TestkurenundwellnessServiceProvider"
+                "Modules\\Kurenundwellness\\Providers\\KurenundwellnessServiceProvider"
             ],
             "aliases": {
                 
@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Testkurenundwellness\\": ""
+            "Modules\\Kurenundwellness\\": ""
         }
     }
 }

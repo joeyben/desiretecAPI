@@ -4,15 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLanguageLinesTestkurenundwellnessTable extends Migration
+class CreateLanguageLinesKurenundwellnessTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        if (!Schema::hasTable('language_lines_testkurenundwellness')) {
-            Schema::create('language_lines_testkurenundwellness', function (Blueprint $table) {
+        if (!Schema::hasTable('language_lines_kurenundwellness')) {
+            Schema::create('language_lines_kurenundwellness', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('locale');
                 $table->string('description')->nullable();
@@ -30,8 +30,8 @@ class CreateLanguageLinesTestkurenundwellnessTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('language_lines_testkurenundwellness')) {
-            Schema::drop('language_lines_testkurenundwellness');
+        if (Schema::hasTable('language_lines_kurenundwellness')) {
+            Schema::drop('language_lines_kurenundwellness');
         }
     }
 }
