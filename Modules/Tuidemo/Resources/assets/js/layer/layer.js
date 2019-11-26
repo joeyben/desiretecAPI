@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'http://tuidemo.com',
+        baseUrl: 'https://tuidemo.reise-wunsch.com',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/tuidemo/css/layer/whitelabel.css'
@@ -70,7 +70,7 @@ var exitIntent = window.exitIntent || {};
     /**** Mobile Decoder ****/
     var MasterIBETripDataDecoderMobile = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'TUI Rundreisen Mobile',
-        matchesUrl: 'm.tuidemo.com/(buchen)',
+        matchesUrl: 'm.tui.com/(buchen)',
         dictionaries: {
             'catering': {
                 'AI': 'all-inclusive',
@@ -438,7 +438,7 @@ var exitIntent = window.exitIntent || {};
             return r[1];
         },
         name: 'TUI IBE',
-        matchesUrl: 'https://tuidemo.reise-wunsch.com',
+        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|tuicom-itest.tui-interactive.com/*|tuicom-preprod.tui-interactive.com/*',
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {
