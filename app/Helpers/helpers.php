@@ -5,6 +5,8 @@ use App\Models\Notification\Notification;
 use App\Models\Settings\Setting;
 use Carbon\Carbon as Carbon;
 use Modules\Languages\Entities\Language;
+use Illuminate\Support\Facades\Log;
+use App\Services\Flag\Src\Flag;
 
 /**
  * Henerate UUID.
@@ -705,5 +707,42 @@ if (!function_exists('getCateringFromCode')) {
         }
 
         return $category;
+    }
+}
+
+if (!function_exists('json_response')) {
+    /**
+     * return response JSON with added status
+     *
+     * @param array $result
+     *
+     * @return RESPONSE JSON
+     */
+    function json_response($result)
+    {
+        $result['success'] = true;
+        $result['status'] = Flag::STATUS_CODE_SUCCESS;
+
+        return response()->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+}
+
+if (!function_exists('json_response_error')) {
+    /**
+     * return response Error JSON with added status
+     *
+     * @param Exception $error
+     *
+     * @return RESPONSE JSON
+     */
+    function json_response_error($error)
+    {
+        $result['success'] = false;
+        $result['status'] = $error->getStatusCode();
+        $result['message'] = $error->getMessage();
+
+        Log::error($error);
+
+        return response()->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 }
