@@ -46,6 +46,7 @@ class TuidemoController extends Controller
         $this->whitelabelId = \Config::get('tuidemo.id');
     }
 
+    //------------------test--------------1111111111111------------//
     /**
      * Display a listing of the resource.
      *
