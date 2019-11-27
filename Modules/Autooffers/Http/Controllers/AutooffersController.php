@@ -61,7 +61,7 @@ class AutooffersController extends Controller
     private $rules;
 
     /**
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository                     $wish
      * @param \Modules\Autooffers\Repositories\AutooffersRepository                  $autooffers
      * @param \Modules\Autooffers\Repositories\AutooffersTTRepository                $autooffers
      * @param \Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository $rules

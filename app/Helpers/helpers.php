@@ -746,3 +746,24 @@ if (!function_exists('json_response_error')) {
         return response()->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 }
+
+if (!function_exists('live_preview_url')) {
+    /**
+     * return response Error JSON with added status.
+     *
+     * @param Exception $error
+     *
+     * @return RESPONSE JSON
+     */
+    function live_preview_url()
+    {
+        $link = 'javascript:;';
+        $whitelabel = \Illuminate\Support\Facades\Auth::guard('web')->user()->whitelabels()->first();
+
+        if (null !== $whitelabel) {
+            $link = $whitelabel->domain;
+        }
+
+        return $link;
+    }
+}

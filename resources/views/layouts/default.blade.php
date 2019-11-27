@@ -60,7 +60,9 @@
                 </a>
             </li>
         </ul>
-
+        @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+            <a href="{{ live_preview_url() }}" target="_blank" class="btn bg-orange-800 text-uppercase font-size-sm line-height-sm font-weight-semibold py-2 px-3 ml-sm-4 shadow  d-block d-sm-inline-block">Live Preview <i class="icon-circle-right2 ml-2"></i></a>
+        @endif
         <ul class="navbar-nav ml-auto" id="notificationsComponent">
             <notifications-component></notifications-component>
 
