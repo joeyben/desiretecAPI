@@ -74,7 +74,6 @@ class TraveloverlandController extends Controller
     {
         $input = $request->only('variant');
         $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
-        $whitelabel = $this->whitelabel->getByName('Traveloverland');
 
         $html = view('traveloverland::' . $layer)->with([
             'adults_arr'   => $this->adults,
@@ -82,8 +81,7 @@ class TraveloverlandController extends Controller
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
             'class_arr'    => $this->class,
-            'request'      => $request->all(),
-            'color'        => $whitelabel['color'],
+            'request'      => $request->all()
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);

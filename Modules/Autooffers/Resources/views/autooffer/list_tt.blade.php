@@ -40,10 +40,10 @@
                             <div class="agency-info">
                                 <div class="avatar avatar-circle size-1"></div>
                                 <div class="text">
-                                    <h3>Zuständiges Reisebüro</h3>
-                                    <h4>Reisebüro desiretec</h4>
-                                    <h4>Auf dem Sande 1</h4>
-                                    <h4>20457 Hamburg</h4>
+                                    <h3>{{ trans('autooffer.contact.company_contact_person') }}</h3>
+                                    <h4>{{ trans('autooffer.contact.company_name') }}</h4>
+                                    <h4>{{ trans('autooffer.contact.company_addr') }}</h4>
+                                    <h4>{{ trans('autooffer.contact.company_postal_addr') }}</h4>
                                 </div>
                             </div>
 
@@ -51,12 +51,16 @@
                                 <ul>
                                     <li class="phone">
                                         <!-- <i class="fal fa-phone-alt"></i> -->
-                                        <i class="fas fa-phone"></i>
-                                        <h4>089 - 714 595 35</h4>
+                                        <div class="icon-background">
+                                            <i class="fas fa-phone" aria-hidden="true"></i>
+                                        </div>
+                                        <h4>{{ trans('autooffer.contact.company_telephone') }}</h4>
                                     </li>
                                     <li class="name">
-                                        <i class="fal fa-envelope"></i>
-                                        <h4>main@reisebuero.de</h4>
+                                        <div class="icon-background">
+                                            <i class="fal fa-envelope" aria-hidden="true"></i>
+                                        </div>
+                                        <h4>{{ trans('autooffer.contact.company_email') }}</h4>
                                     </li>
                                 </ul>
                             </div>

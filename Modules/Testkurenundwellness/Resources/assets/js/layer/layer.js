@@ -53,7 +53,7 @@ var exitIntent = window.exitIntent || {};
             '<div class="kwp-overlay"></div>' +
             '<div class="kwp-logo"></div>' +
             '<div class="kwp-header-content">' +
-            '<h1 style="color: ' + brandColor +'">' +
+            '<h1>' +
             texts[variant].header + ' <br/>' +
             '</h1>' +
             '<p>' +
@@ -1483,6 +1483,10 @@ var exitIntent = window.exitIntent || {};
 
             var successHref = $('.kwp-completed-master a');
             $("<style>.kwp-completed-master a { color: " + brandColor + "; }</style>")
+                .appendTo(document.documentElement);
+
+            var layerHeader = $('.kwp-header.kwp-variant-eil-n1 h1');
+            $("<style>.kwp-header.kwp-variant-eil-n1 h1 { color: " + brandColor + " !important; }</style>")
                 .appendTo(document.documentElement);
 
         }
