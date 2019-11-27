@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -33,8 +34,12 @@ class CreateCategoriesWishTable extends Migration
      */
     public function down()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        if(app()->environment() !== 'testing') {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        }
         Schema::dropIfExists('categories_wish');
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        if(app()->environment() !== 'testing') {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        }
     }
 }

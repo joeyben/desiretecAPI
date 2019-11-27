@@ -17,7 +17,9 @@ class AccessTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->disableForeignKeys();
+        if(app()->environment() !== 'testing') {
+            $this->disableForeignKeys();
+        }
 
         $this->call(UserTableSeeder::class);
         $this->call(RoleTableSeeder::class);
@@ -26,6 +28,8 @@ class AccessTableSeeder extends Seeder
         $this->call(PermissionRoleSeeder::class);
         $this->call(PermissionUserSeeder::class);
 
-        $this->enableForeignKeys();
+        if(app()->environment() !== 'testing') {
+            $this->enableForeignKeys();
+        }
     }
 }

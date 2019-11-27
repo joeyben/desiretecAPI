@@ -155,7 +155,7 @@ class AutooffersTTRepository extends BaseRepository
         },
            "TravelDurationFilter": {
             "DurationKind": "Trip",
-            "MinDuration": '.$this->minDuration.',
+            "MinDuration": ' . $this->minDuration . ',
             "MaxDuration": ' . $this->maxDuration . '
            },
            "PriceFilter": {
@@ -228,12 +228,12 @@ class AutooffersTTRepository extends BaseRepository
         $count = 0;
         foreach ($this->offers as $key => $offer) {
             $hotelId = $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'];
-            if (!$this->checkValidity($hotelId, $wish_id) || !array_key_exists('TravelType', $offer)) {
+            if (!$this->checkValidity($hotelId, $wish_id) || !\array_key_exists('TravelType', $offer)) {
                 continue;
             }
             $tOperator = $offer['TourOperator']['TourOperatorCode'];
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
-            if (!array_key_exists('data', $hotel) || !array_key_exists('Bildfile', $hotel['data'])) {
+            if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
                 continue;
             }
             $this->storeAutooffer($offer, $hotel, $wish_id);
@@ -315,7 +315,7 @@ class AutooffersTTRepository extends BaseRepository
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
             $autooffer->code = $offer['OfferID'];
-            $autooffer->type = array_key_exists('TravelType', $offer) ? $offer['TravelType'] : 'NM';
+            $autooffer->type = \array_key_exists('TravelType', $offer) ? $offer['TravelType'] : 'NM';
             $autooffer->totalPrice = $offer['PriceInfo']['Price']['value'];
             $autooffer->personPrice = $offer['PriceInfo']['Price']['value'];
             $autooffer->from = $offer['TravelDateInfo']['DepartureDate'];
@@ -594,6 +594,7 @@ class AutooffersTTRepository extends BaseRepository
     {
         $this->maxDuration = $maxDuration;
     }
+
     /**
      * @param $destination
      */

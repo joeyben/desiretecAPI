@@ -3,10 +3,10 @@
 use App\Helpers\uuid;
 use App\Models\Notification\Notification;
 use App\Models\Settings\Setting;
-use Carbon\Carbon as Carbon;
-use Modules\Languages\Entities\Language;
-use Illuminate\Support\Facades\Log;
 use App\Services\Flag\Src\Flag;
+use Carbon\Carbon as Carbon;
+use Illuminate\Support\Facades\Log;
+use Modules\Languages\Entities\Language;
 
 /**
  * Henerate UUID.
@@ -712,7 +712,7 @@ if (!function_exists('getCateringFromCode')) {
 
 if (!function_exists('json_response')) {
     /**
-     * return response JSON with added status
+     * return response JSON with added status.
      *
      * @param array $result
      *
@@ -729,7 +729,7 @@ if (!function_exists('json_response')) {
 
 if (!function_exists('json_response_error')) {
     /**
-     * return response Error JSON with added status
+     * return response Error JSON with added status.
      *
      * @param Exception $error
      *

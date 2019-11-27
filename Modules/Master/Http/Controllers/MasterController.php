@@ -71,7 +71,7 @@ class MasterController extends Controller
     public function show(Request $request)
     {
         $input = $request->only('variant');
-        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
         $whitelabel = $this->whitelabel->getByName('master');
 
         $html = view('master::' . $layer)->with([

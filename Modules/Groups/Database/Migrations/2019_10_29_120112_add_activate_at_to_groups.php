@@ -25,8 +25,7 @@ class AddActivateAtToGroups extends Migration
     public function down()
     {
         Schema::table('groups', function (Blueprint $table) {
-            $table->dropColumn(['deactivate_at']);
-            $table->dropColumn(['deactivate_until']);
+            $table->dropColumn(['deactivate_at', 'deactivate_until']);
         });
     }
 }

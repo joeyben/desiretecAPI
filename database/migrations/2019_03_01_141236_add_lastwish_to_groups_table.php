@@ -14,7 +14,7 @@ class AddLastwishToGroupsTable extends Migration
     public function up()
     {
         Schema::table('groups', function (Blueprint $table) {
-            $table->timestamp('lastwish');
+            $table->timestamp('lastwish')->nullable();
         });
     }
 

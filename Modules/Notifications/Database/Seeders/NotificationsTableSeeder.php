@@ -23,8 +23,8 @@ class NotificationsTableSeeder extends Seeder
                     'name'         => str_slug($value),
                     'display_name' => $value,
                     'status'       => 1,
-                    'created_at'   => DB::raw('now()'),
-                    'updated_at'   => DB::raw('now()')
+                    'created_at'   => now(),
+                    'updated_at'   => now()
                 ]);
             }
         }
@@ -32,8 +32,8 @@ class NotificationsTableSeeder extends Seeder
             DB::table('notifications')->insertGetId([
                 'message'    => $faker->sentence(),
                 'user_id'    => $faker->numberBetween(1, 3),
-                'created_at' => DB::raw('now()'),
-                'updated_at' => DB::raw('now()'),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }
