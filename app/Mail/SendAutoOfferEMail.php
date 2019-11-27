@@ -33,7 +33,7 @@ class SendAutoOfferEMail extends Mailable
     {
         $wish = Wish::where('id', $this->wishId)->first();
 
-        return $this->view('wishes::emails.autooffer')->with([
+        return $this->subject(trans('autooffer.email.subject'))->view('wishes::emails.autooffer')->with([
             'url'         => $wish->whitelabel->domain . '/offer/ttlist/' . $this->wishId
         ]);
     }
