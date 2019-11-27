@@ -237,7 +237,9 @@ class TuidemoController extends Controller
 
         return $duration;
     }
-    public function getPDF(){
+
+    public function getPDF()
+    {
         return view('tuidemo::layer.pdf');
     }
 }
