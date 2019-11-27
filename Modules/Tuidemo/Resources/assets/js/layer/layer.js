@@ -1265,6 +1265,9 @@ var exitIntent = window.exitIntent || {};
             return attributesArr.join(', ');
         }
     });
+
+
+
     dt.decoders.push(MasterIBETripDataDecoder);
     dt.decoders.push(MasterIBETripDataDecoderMobile);
     dt.decoders.push(KwizzmeFakeTripDataDecoder);
