@@ -18,5 +18,6 @@ Route::group(['domain' => $domain], function () {
         Route::get('wish/{wish}/{token}', 'TestkurenundwellnessWishesController@details')->name('wish.details');
         Route::get('getwish/{wish}', 'TestkurenundwellnessWishesController@getWish')->name('getWish');
         Route::get('wishlist/{token}', 'TestkurenundwellnessWishesController@validateTokenList');
+        Route::get('tnb', 'TestkurenundwellnessController@getPDF');
     });
 });

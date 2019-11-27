@@ -510,12 +510,12 @@ ul.kwp-form-errors {
 .kwp-logo {
   display: block;
   height: 50px;
-  background: transparent url(../../images/layer/Kurenlogo_unten.png) no-repeat left top;
   /*******/
   position: absolute;
-  width: 100%;
-  left: 0;
-  background-size: 90px;
+  width: 30%;
+  left: 20px;
+  top: 10px;
+  background-size: contain !important;
 }
 
 

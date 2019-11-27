@@ -196,4 +196,9 @@ class TestkurenundwellnessController extends Controller
 
         return $duration;
     }
+
+    public function getPDF()
+    {
+        return view('testkurenundwellness::layer.pdf');
+    }
 }
