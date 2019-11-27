@@ -46,7 +46,7 @@ class LoginController extends Controller
             return route('frontend.wishes.list');
         }
 
-        return route('frontend.user.dashboard');
+        return route('frontend.index');
     }
 
     /**

@@ -90,7 +90,7 @@ trait UserAttribute
      */
     public function isActive()
     {
-        return 1 === $this->status;
+        return 1 === (int) $this->status;
     }
 
     /**
@@ -98,7 +98,7 @@ trait UserAttribute
      */
     public function isConfirmed()
     {
-        return 1 === $this->confirmed;
+        return 1 === (int) $this->confirmed;
     }
 
     /**
