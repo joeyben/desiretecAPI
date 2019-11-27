@@ -1,4 +1,7 @@
 @extends('frontend.layouts.app')
+@section('title')
+    {{ getCurrentWhiteLabelName() }}
+@endsection
 @section('before-scripts')
     <style>
         body, html {height: 100%;}
