@@ -17,11 +17,13 @@ class SendAutoOfferEMail extends Mailable
      */
     protected $wishId;
     protected $type;
+    protected $token;
 
-    public function __construct($wishId, $type)
+    public function __construct($wishId, $type, $token)
     {
         $this->wishId = $wishId;
         $this->type = $type;
+        $this->token = $token;
     }
 
     /**
@@ -34,7 +36,7 @@ class SendAutoOfferEMail extends Mailable
         $wish = Wish::where('id', $this->wishId)->first();
 
         return $this->subject(trans('autooffer.email.subject'))->view('wishes::emails.autooffer')->with([
-            'url'         => $wish->whitelabel->domain . '/offer/ttlist/' . $this->wishId
+            'url'         => $wish->whitelabel->domain . '/offer/ttlist/' . $this->wishId . '/' . $this->token
         ]);
     }
 }
