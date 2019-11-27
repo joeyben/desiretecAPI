@@ -18,5 +18,6 @@ Route::group(['domain' => $domain], function () {
         Route::get('wish/{wish}/{token}', 'TuidemoWishesController@details')->name('wish.details');
         Route::get('getwish/{wish}', 'TuidemoWishesController@getWish')->name('getWish');
         Route::get('wishlist/{token}', 'TuidemoWishesController@validateTokenList');
+        Route::get('tnb', 'TuidemoController@getPDF');
     });
 });
