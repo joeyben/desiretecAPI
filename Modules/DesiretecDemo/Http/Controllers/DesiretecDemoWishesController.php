@@ -67,7 +67,7 @@ class DesiretecDemoWishesController extends Controller
 
     /**
      * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
      */
     public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories)
     {
@@ -100,7 +100,6 @@ class DesiretecDemoWishesController extends Controller
      */
     public function view(Wish $wish)
     {
-
         $offers = $wish->offers;
         $avatar = [];
         $agentName = [];
@@ -123,9 +122,7 @@ class DesiretecDemoWishesController extends Controller
             'is_owner'           => $isOwner,
             'color'              => $whitelabel['color'],
         ]);
-
     }
-
 
     /**
      * @param string $token
@@ -134,7 +131,6 @@ class DesiretecDemoWishesController extends Controller
      */
     public function validateTokenList($token)
     {
-
         if ($this->wish->validateToken($token)) {
             if (Route::has('desiretecdemo.list')) {
                 return redirect()->route('desiretecdemo.list');
