@@ -131,6 +131,7 @@ class LastminuteController extends Controller
 
         $details = [
             'email' => $newUser->email,
+            'token' => $newUser->token->token,
             'type'  => 0
         ];
         dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
