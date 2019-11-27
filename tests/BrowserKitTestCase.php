@@ -33,6 +33,11 @@ abstract class BrowserKitTestCase extends BaseTestCase
     /**
      * @var
      */
+    protected $seller;
+
+    /**
+     * @var
+     */
     protected $user;
 
     /**
@@ -65,7 +70,8 @@ abstract class BrowserKitTestCase extends BaseTestCase
          */
         $this->admin = User::find(1);
         $this->executive = User::find(2);
-        $this->user = User::find(3);
+        $this->seller = User::find(3);
+        $this->user = User::find(4);
         $this->adminRole = Role::find(1);
         $this->executiveRole = Role::find(2);
         $this->userRole = Role::find(3);

@@ -27,7 +27,7 @@ class UserTableSeeder extends Seeder
             [
                 'first_name'        => 'Admin',
                 'last_name'         => 'DD',
-                'email'             => 'goldoni.fouotsa+admin@desiretec.com',
+                'email'             => 'admin@desiretec.com',
                 'password'          => bcrypt('1234'),
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
                 'confirmed'         => true,

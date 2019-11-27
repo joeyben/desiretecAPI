@@ -31,8 +31,9 @@
 
 @section('content')
 
-    <div class="row">
 
+    <div class="row">
+        @include('includes.alert')
         <div class="col-md-8 col-md-offset-2">
 
             <div class="panel panel-default">
