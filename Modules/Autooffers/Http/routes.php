@@ -4,7 +4,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'offer', 'namespace' => 'Module
     Route::get('/', 'AutooffersController@index');
     Route::get('create/{wish}', 'AutooffersController@create')->name('create');
     Route::get('list/{wish}', 'AutooffersController@show')->name('list');
-    Route::get('ttlist/{wish}', 'AutooffersController@showtt')->name('ttlist');
+    Route::get('ttlist/{wish}/{token}', 'AutooffersController@showtt')->name('ttlist');
     Route::get('details/{wish}/{index}', 'AutooffersController@details')->name('details');
     Route::get('ttdetails/{wish}/{index}', 'AutooffersController@ttdetails')->name('ttdetails');
     Route::post('store', 'AutooffersController@store')->name('store');

@@ -3,6 +3,7 @@
 namespace Modules\Autooffers\Http\Controllers;
 
 use App\Models\Wishes\Wish;
+use App\Repositories\Frontend\Wishes\WishesRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -12,6 +13,11 @@ use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 
 class AutooffersController extends Controller
 {
+    /**
+     * @var WishesRepository
+     */
+    protected $wish;
+
     const BODY_CLASS = 'wish';
     /**
      * Wish Status.
@@ -55,12 +61,14 @@ class AutooffersController extends Controller
     private $rules;
 
     /**
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
      * @param \Modules\Autooffers\Repositories\AutooffersRepository                  $autooffers
      * @param \Modules\Autooffers\Repositories\AutooffersTTRepository                $autooffers
      * @param \Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository $rules
      */
-    public function __construct(AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers, EloquentAutooffersRepository $rules)
+    public function __construct(WishesRepository $wish, AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers, EloquentAutooffersRepository $rules)
     {
+        $this->wish = $wish;
         $this->autooffers = $autooffers;
         $this->TTautooffers = $TTautooffers;
         $this->rules = $rules;
@@ -173,8 +181,12 @@ class AutooffersController extends Controller
      *
      * @return Response
      */
-    public function showtt(Wish $wish)
+    public function showtt(Wish $wish, string $token)
     {
+        if (!$this->wish->validateToken($token)) {
+            return redirect()->to('/');
+        }
+
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
         //dd($offers[0]);
         $body_class = 'autooffer_list';
