@@ -471,7 +471,7 @@ var exitIntent = window.exitIntent || {};
             return r[1];
         },
         name: 'TUI IBE',
-        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|tuicom-itest.tui-interactive.com/*|tuicom-preprod.tui-interactive.com/*',
+        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|tuicom-itest.tui-interactive.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|tuicom-preprod.tui-interactive.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen',
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {
