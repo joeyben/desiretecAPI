@@ -1,7 +1,3 @@
-<script type="application/javascript">
-    var brandColor = {!! json_encode($color) !!};
-</script>
-
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
@@ -197,7 +193,7 @@
                 @endif
             </div>
             <div class="kwp-col-4 white-col">
-                <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
+                <button id="submit-button" type="submit">Reisewunsch abschicken</button>
             </div>
 
 
@@ -281,6 +277,7 @@
             $(document).ready(function(){
 
                 autocomplete();
+
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -402,26 +399,44 @@
              */
             var autocomplete = function(){
                 /* Destinations */
-                $.get('get-all-destinations', function(data){
-                    $("#destination").typeahead({
-                        autoSelect: true,
+                $('#destination').tagsinput({
+                    maxTags: 3,
+                    maxChars: 20,
+                    allowDuplicates: false,
+                    typeahead: {
+                        autoSelect: false,
                         minLength: 3,
-                        delay: 200,
-                        source: data
-                    });
+                        highlight: true,
+                        source: function(query) {
+                            return $.get('get-all-destinations', {query: query});
+                        }
+                    }
                 });
                 /* END Destinations */
 
                 /* Airports */
-                $.get('get-all-airports', function(data){
-                    $("#airport").typeahead({
-                        autoSelect: true,
+                $('#airport').tagsinput({
+                    maxTags: 3,
+                    maxChars: 20,
+                    allowDuplicates: false,
+                    typeahead: {
+                        autoSelect: false,
                         minLength: 3,
-                        delay: 200,
-                        source: data
-                    });
+                        highlight: true,
+                        source: function(query) {
+                            return $.get('get-all-airports', {query: query});
+                        }
+                    }
                 });
                 /* END Airports */
+
+
+                $("#destination, #airport").on('itemAdded', function(event) {
+                    setTimeout(function(){
+                        $("input[type=text]",".bootstrap-tagsinput").val("");
+                    }, 1);
+                });
+
 
             }
 
@@ -454,4 +469,6 @@
     </div>
 </div>
 {{ Form::close() }}
+
+
 

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Regions;
 use App\Models\Settings\Setting;
 use App\Repositories\Frontend\Pages\PagesRepository;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
+
 
 /**
  * Class FrontendController.
@@ -30,6 +32,10 @@ class FrontendController extends Controller
      */
     public function index()
     {
+
+
+
+
         $settingData = Setting::first();
         $google_analytics = $settingData->google_analytics;
         $body_class = $this::BODY_CLASS;
@@ -49,39 +55,46 @@ class FrontendController extends Controller
             ->withpage($result);
     }
 
+
     /**
      * URL: /get-all-destinations
-     * Returns all destinations.
+     * Returns all destinations
      *
      * @return array
      */
-    public function getAllDestinations()
-    {
+    public function getAllDestinations(Request $request){
+        $query = $request->get('query');
         $destinations = [];
-        Regions::select('regionName')->where('type', 1)->chunk(200, function ($regions) use (&$destinations) {
-            foreach ($regions as $region) {
-                $destinations[] = $region->regionName;
-            }
-        });
-
+        Regions::select('regionName')
+            ->where('type', '1')
+            ->where('regionName', 'like', $query.'%')
+            ->groupBy('regionName')
+            ->chunk(200, function($regions) use(&$destinations){
+                foreach ($regions as $region){
+                    $destinations[] = $region->regionName;
+                }
+            });
         return $destinations;
     }
 
     /**
      * URL: /get-all-airports
-     * Returns all airports.
+     * Returns all airports
      *
      * @return array
      */
-    public function getAllAirports()
-    {
+    public function getAllAirports(Request $request){
+        $query = $request->get('query');
         $airports = [];
-        Regions::select('regionCode', 'regionName')->where('type', 0)->chunk(200, function ($regions) use (&$airports) {
-            foreach ($regions as $region) {
-                $airports[] = $region->regionName . ' - ' . $region->regionCode;
+        Regions::select('regionCode', 'regionName')
+            ->where('type', 0)
+            ->where('regionName', 'like', $query.'%')
+            ->groupBy('regionName')
+            ->chunk(200, function($regions) use(&$airports){
+            foreach ($regions as $region){
+                $airports[] = $region->regionName . ' - '. $region->regionCode;
             }
         });
-
         return $airports;
     }
 }
