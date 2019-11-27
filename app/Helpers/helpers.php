@@ -748,13 +748,7 @@ if (!function_exists('json_response_error')) {
 }
 
 if (!function_exists('live_preview_url')) {
-    /**
-     * return response Error JSON with added status.
-     *
-     * @param Exception $error
-     *
-     * @return RESPONSE JSON
-     */
+
     function live_preview_url()
     {
         $link = 'javascript:;';
