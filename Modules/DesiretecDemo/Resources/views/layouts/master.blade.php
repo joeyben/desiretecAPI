@@ -1,5 +1,4 @@
 @extends('frontend.layouts.app')
-@extends('frontend.includes.nav')
 
 @section('title')
     {!! $display_name !!}
