@@ -181,11 +181,22 @@ class AutooffersController extends Controller
      *
      * @return Response
      */
-    public function showtt(Wish $wish, string $token)
+    public function showttredirect(Wish $wish, string $token)
     {
         if (!$this->wish->validateToken($token)) {
             return redirect()->to('/');
         }
+
+        return redirect()->to('/offer/ttlist/' . $wish->id);
+    }
+
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     *
+     * @return Response
+     */
+    public function showtt(Wish $wish)
+    {
 
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
         //dd($offers[0]);
