@@ -74,7 +74,7 @@ input:-internal-autofill-selected{
   height:700px;
   position: relative;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
   .welcome{
@@ -139,4 +139,9 @@ input:-internal-autofill-selected{
       color: transparent;
     }
   }
+}
+.layer-top a{
+  margin-right: 10px !important;
+  margin-top: 5px !important;
+  padding: 5px !important;
 }
