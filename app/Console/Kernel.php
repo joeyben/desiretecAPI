@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('whitelabel:check-group')
-            ->everyMinute();
+            ->dailyAt('01:00');
     }
 
     /**
