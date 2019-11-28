@@ -1,4 +1,5 @@
 @extends('frontend.layouts.app')
+@extends('frontend.includes.nav')
 
 @section('title')
     {!! $display_name !!}
@@ -6,6 +7,12 @@
 
 @section('after-styles')
     <link rel="stylesheet" href="{{ asset('whitelabel/desiretecdemo/css/desiretecdemo.css') }}">
+@endsection
+
+@section('demo')
+    <li class="layer-top">
+        <a href="javascript:showLayer();" class="btn btn-primary btn-md">persönliche Beratung</a>
+    </li>
 @endsection
 
 @section('logo')
