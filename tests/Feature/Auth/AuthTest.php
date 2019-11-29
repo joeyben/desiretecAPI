@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Events\Frontend\Auth\UserLoggedIn;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Lang;
@@ -19,7 +18,6 @@ class AuthTest extends BrowserKitTestCase
         $this->visit('/login/token')
             ->see(Lang::get('label.tokenlogin.email'))
             ->see(Lang::get('button.tokenlogin.send'));
-
     }
 
     /** @test */
@@ -31,7 +29,6 @@ class AuthTest extends BrowserKitTestCase
              ->seePageIs('/login/token')
              ->see(Lang::get('validation.exists', ['attribute' => Lang::get('validation.attributes.email')]));
     }
-
 
     /** @test */
     public function users_can_login_token()
@@ -48,7 +45,7 @@ class AuthTest extends BrowserKitTestCase
 
         $this->assertLoggedOut();
 
-        $this->visit('/login/token/' . $this->user->token->token . '?' . http_build_query(['email' => trim($this->user->email),]))
+        $this->visit('/login/token/' . $this->user->token->token . '?' . http_build_query(['email' => trim($this->user->email)]))
                     ->seePageIs('/');
 
         $this->assertLoggedIn();
