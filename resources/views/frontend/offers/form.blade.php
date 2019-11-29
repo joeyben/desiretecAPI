@@ -59,6 +59,31 @@
 
 @section("after-scripts")
     <script type="text/javascript">
+        $(document).ready(function(){
+            console.log('form');
+            var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+
+            $('.primary-btn').css({
+                'background': brandColor,
+                'border': '1px solid ' + brandColor,
+                'color': '#fff',
+            });
+            $('.secondary-btn').css({
+                'background': '#fff',
+                'border': '1px solid ' + brandColor,
+                'color': brandColor,
+            });
+            $("input").focus(function(){
+                $(this).css({'border-color': brandColor});
+            });
+            $("input").blur(function(){
+                $(this).css({'border-color': 'inherit'});
+            });
+            $('.fileUpload').css({
+                'padding': '7px 20px',
+            });
+        });
+
         $(document).on('change','.up', function(){
             var names = [];
             var length = $(this).get(0).files.length;
@@ -74,6 +99,5 @@
                 $(this).closest('.form-group').find('.form-control').attr("value",names);
             }
         });
-        
     </script>
 @endsection
