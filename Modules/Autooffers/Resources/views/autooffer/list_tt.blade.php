@@ -275,8 +275,12 @@
             $('.about-section h3 a').css({'color': brandColor});
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
             $('.fas.fa-heart, .fas.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
-            $('.offers .recommandations .average').css({'border': '2px solid ' + brandColor});
+            $('.offers .recommandations .average').css({'border-color': brandColor});
             $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
+
+            if($('.offers .info-icons').length === 0) {
+                $('.offers .highlights').css({'padding-bottom': '15px'});
+            }
         });
 
         $(function () {
