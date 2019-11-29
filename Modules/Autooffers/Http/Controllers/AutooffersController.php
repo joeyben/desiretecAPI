@@ -197,7 +197,6 @@ class AutooffersController extends Controller
      */
     public function showtt(Wish $wish)
     {
-
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
         //dd($offers[0]);
         $body_class = 'autooffer_list';
