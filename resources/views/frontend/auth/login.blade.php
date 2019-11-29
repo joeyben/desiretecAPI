@@ -17,6 +17,8 @@
                 'background': brandColor,
                 'border': '1px solid ' + brandColor,
                 'color': '#fff',
+                'padding': '10px 20px',
+                'min-width': 'auto'
             });
             $("input").focus(function(){
                 $(this).css({'border-color': brandColor});
