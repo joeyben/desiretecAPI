@@ -1,7 +1,8 @@
+@if (isset($color))
 <script type="application/javascript">
     var brandColor = {!! json_encode($color) !!};
 </script>
-
+@endisset
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">

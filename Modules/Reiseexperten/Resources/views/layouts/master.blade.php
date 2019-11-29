@@ -16,8 +16,10 @@
 @endsection
 
 @section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
     <script src="{{ asset('whitelabel/reiseexperten/js/reiseexperten.js') }}"></script>
-
 @endsection
 
 @section('after-scripts')

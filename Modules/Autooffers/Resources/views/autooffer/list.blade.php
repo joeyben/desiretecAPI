@@ -136,11 +136,11 @@
                                 @endif
                                 <div class="slick-slider">
                                     <!-- TODO: Add images and style them -->
-                                    @if (is_array($offer['hotel_data']['data']['Bildfile']))
+                                    @if (isset($offer['hotel_data']['data']['Bildfile']) and is_array($offer['hotel_data']['data']['Bildfile']))
                                         @foreach($offer['hotel_data']['data']['Bildfile'] as $image)
                                             <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $image) !!})"></div>
                                         @endforeach
-                                    @else
+                                    @elseif (isset($offer['hotel_data']['data']['Bildfile']))
                                         <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $offer['hotel_data']['data']['Bildfile']) !!})"></div>
                                     @endif
                                 </div>

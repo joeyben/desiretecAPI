@@ -1,5 +1,8 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    {{ ucfirst(getCurrentWhiteLabelName()) }} {{ trans('autooffer.list.tab_title') }}
+@endsection
 
 @section("after-styles")
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.css" />
@@ -14,19 +17,17 @@
 
             <section class="about-section">
                 <div class="shell">
-                    <h1>Herzlich willkommen</h1>
+                    <h1>{{ trans('autooffer.message.welcome') }}</h1>
                     <h3>
                         @if (count($offers) === 0)
-                            Lieber Kunde. Leider haben wir keine passenden Angebote für Ihren Reisewunsch gefunden. Unsere Kollegen aus dem Service Center helfen Ihnen jedoch gerne weiter.
+                            {{ trans('autooffer.message.no_offers') }}
                         @else
-                            Hallo, wir haben wunderbare Angebote zu Ihrem Reiseziel "{{ $wish->destination }}" gefunden.
+                            {{ trans('autooffer.message.offers', ['destination' => $wish->destination]) }}
                         @endif
-
-                        Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <a href="tel:040238859-82">
-                            040 23 88 59-82
-                        </a></h3>
+                            {{ trans('autooffer.message.callback') }}
+                        </h3>
                     @if (count($offers) > 0)
-                        <a class="btn btn-primary" onclick="scrollToAnchor('listed-offers-section')">Angebote ansehen</a>
+                        <a class="btn btn-primary" onclick="scrollToAnchor('listed-offers-section')">{{ trans('autooffer.offers.goto_button') }}</a>
                     @endif
                 </div>
             </section>
@@ -226,7 +227,7 @@
                                         </div>
                                     </div>
                                     <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span></h3>
-                                    <a class="btn btn-primary" href="{{ route('autooffer.ttdetails', [$wish->id, $count]) }}">
+                                    <a class="btn btn-primary" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rgid=10019&rid=620&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&child=5,7&dur=13,15&price=0,{{ $wish->budget }}&board={{ $wish->catering }}&aid=168400">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>
