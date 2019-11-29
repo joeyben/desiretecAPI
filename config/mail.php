@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM', 'noreply@desiretec.com'),
-        'name'    => env('MAIL_FROM_NAME', 'Reisewunschportal'),
+        'name'    => env('MAIL_FROM_NAME', 'Reisewunsch'),
     ],
 
     /*

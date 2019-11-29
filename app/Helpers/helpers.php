@@ -766,7 +766,6 @@ if (!function_exists('json_response_error')) {
 }
 
 if (!function_exists('live_preview_url')) {
-
     function live_preview_url()
     {
         $link = 'javascript:;';
