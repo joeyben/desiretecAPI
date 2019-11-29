@@ -259,6 +259,26 @@
 
     <script type="application/javascript">
 
+        $(document).ready(function(){
+            var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+
+            $('.btn-primary').css({
+                'background': brandColor,
+                'border': '1px solid ' + brandColor,
+                'color': '#fff',
+            });
+            $('.btn-secondary').css({
+                'background': '#fff',
+                'border': '1px solid ' + brandColor,
+                'color': brandColor,
+            });
+            $('.about-section h3 a').css({'color': brandColor});
+            $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
+            $('.fas.fa-heart, .fas.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
+            $('.offers .recommandations .average').css({'border': '2px solid ' + brandColor});
+            $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
+        });
+
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
@@ -271,7 +291,7 @@
 
         function showMenu() {
             $('#offer-highlights').detach().appendTo('#main-offer-section-shell');
-            $('#offer-highlights').css('height', '180px');
+            $('#offer-highlights').css('height', '210px');
             $('#offer-highlights').toggle();
 
             // TODO: Fix animation
@@ -285,8 +305,8 @@
             infinite: true,
             speed: 300,
             slidesToShow: 1,
-            prevArrow: '<div class="btn btn-primary arrow-left"><i class="fa fa-chevron-left"></i></div>',
-            nextArrow: '<div class="btn btn-primary arrow-right"><i class="fa fa-chevron-right"></i></div>'
+            prevArrow: '<div class="btn btn-secondary arrow-left"><i class="fa fa-chevron-left"></i></div>',
+            nextArrow: '<div class="btn btn-secondary arrow-right"><i class="fa fa-chevron-right"></i></div>'
         });
 
     </script>
@@ -362,5 +382,4 @@
         }
         initialize();
     </script>
-
 @endsection

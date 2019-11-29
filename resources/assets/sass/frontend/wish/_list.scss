@@ -1,5 +1,4 @@
 // generic styles
-// TODO: Move generic styles in another file
 h1 {
   font-size: 80px;
   line-height: 90px;
@@ -36,21 +35,6 @@ i {
 }
 ul {
   list-style: none;
-}
-@media (max-width: 1600px) {
-  h1 {
-    font-size: 50px;
-    line-height: 55px;
-  }
-}
-@media (max-width: 800px) {
-  h1 {
-    font-size: 40px;
-    line-height: 45px;
-  }
-  section {
-    width: 100%;
-  }
 }
 
 .avatar {
@@ -251,15 +235,6 @@ ul {
     padding: 0;
   }
 }
-@media (max-width: 1024px) {
-  .main {
-    margin-top: 60px;
-    >.shell {
-      padding: 0 30px;
-    }
-  }
-}
-
 
 // .wave-image
 .wave-image {
@@ -278,14 +253,9 @@ ul {
   -o-background-size: cover;
   background-size: cover;
 }
-@media (max-width: 1200px) {
-  .wave-image {
-    display: none;
-  }
-}
 
 
-// .abobut-section
+// .about-section
 .about-section {
   display: flex;
   padding: 100px 0;
@@ -310,58 +280,7 @@ ul {
     padding: 25px 0;
     font-size: 25px;
     letter-spacing: 0.7px;
-  }
-}
-@media (max-width: 1600px) {
-  .about-section {
-    padding: 80px 0;
-    .shell {
-      padding-left: 120px;
-    }
-    h1 {
-      width: auto;
-      margin-bottom: 30px;
-    }
-    h3 {
-      width: auto;
-    }
-    .btn {
-      padding: 20px 0;
-      font-size: 20px;
-      letter-spacing: 0.7px;
-    }
-  }
-}
-@media (max-width: 1200px) {
-  .about-section {
-    .shell {
-      padding: 0;
-      margin: 0 auto;
-      width: 80%;
-    }
-    h1 {
-      padding-left: 55px;
-    }
-    h3 {
-      padding-left: 55px;
-    }
-    .btn {
-      text-transform: uppercase;
-    }
-  }
-}
-@media (max-width: 800px) {
-  .about-section {
-    .shell {
-      width: 100%;
-    }
-    h3 {
-      font-size: 25px;
-      line-height: 30px;
-    }
-    .btn {
-      font-size: 16px;
-    }
+    color: #fff;
   }
 }
 
@@ -383,12 +302,12 @@ ul {
     background: black;
     border-radius: 5px;
     margin-bottom: 0px;
-    margin-top: 150px;
+    margin-top: 50px;
   }
   .btn {
     display: none;
     width: 100%;
-    padding: 20px 0;
+    padding: 10px 0;
     font-size: 16px;
     letter-spacing: 0.7px;
     background-color: $white;
@@ -422,10 +341,6 @@ ul {
       right: 0;
       margin: auto;
       text-align: center;
-      @media (max-width: 1500px) {
-        font-size: 17px;
-        top: 8px;
-      }
     }
     h4 {
       margin-left: 20px;
@@ -451,9 +366,11 @@ ul {
   }
   .agency-info {
     display: flex;
+    align-items: center;
     .avatar {
-      width: 150px;
       height: 150px;
+      width: 150px;
+      min-width: 150px;
       margin-top: -25px;
     }
     .text {
@@ -462,11 +379,14 @@ ul {
     h3 {
       font-size: 25px;
     }
+    h4 {
+      margin-bottom: 10px;
+    }
   }
   .agency-contact-info {
     margin-left: 130px;
     li {
-      margin-bottom: 30px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
     }
@@ -482,106 +402,6 @@ ul {
 }
 
 
-@media (max-width: 1500px) {
-  .main-offer-section {
-    margin: 0 auto;
-    margin-bottom: 150px;
-    width: 60%;
-    .btn {
-      display: block;
-    }
-    .map {
-      height: 250px;
-      margin-bottom: 30px;
-    }
-    .offer-highlights {
-      display: none;
-      height: 0;
-      transition : all .4s linear;
-      padding-top: 40px;
-      width: 100%;
-      .icon-background {
-        width: 35px;
-        height: 35px;
-      }
-    }
-  }
-}
-@media (max-width: 1200px) {
-  .main-offer-section {
-    width: 80%;
-  }
-  .main-offer {
-    padding: 25px 0;
-    .agency-info {
-      .avatar {
-        width: 80px;
-        height: 80px;
-        margin-top: -15px;
-        margin-bottom: -15px;
-      }
-      .text {
-        margin-left: 20px;
-      }
-      h3 {
-        display: none;
-      }
-      h4 {
-        font-size: 16px;
-        line-height: 18px;
-      }
-    }
-    .agency-contact-info {
-      margin-left: 28px;
-      margin-top: 30px;
-      h4 {
-        font-size: 16px;
-        line-height: 18px;
-        margin-bottom: 15px;
-      }
-    }
-  }
-}
-@media (max-width: 1024px) {
-  .main-offer-section {
-    padding: 30px 0;
-    margin: 0 auto;
-    margin-bottom: 70px;
-    .shell {
-      padding: 0 30px;
-    }
-    h2 {
-      padding-left: 25px;
-      font-size: 30px;
-      line-height: 35px;
-    }
-    .offer-highlights {
-      margin-bottom: 40px;
-      .icon-background {
-        width: 25px;
-        height: 25px;
-      }
-      h4 {
-        font-size: 16px;
-        margin-left: 5px;
-      }
-    }
-  }
-}
-@media (max-width: 800px) {
-  .main-offer-section {
-    width: 100%;
-  }
-}
-@media (max-width: 680px) {
-  .main-offer-section {
-    .offer-highlights{
-      width: 100%;
-    }
-  }
-}
-
-
 // .listed-offers-section
 .listed-offers-section {
   margin-bottom: 400px;
@@ -590,47 +410,6 @@ ul {
   }
   h1 {
     margin-bottom: 60px;
-  }
-}
-@media (max-width: 1500px) {
-  .listed-offers-section {
-    margin: 0 auto;
-    margin-bottom: 150px;
-    width: 60%;
-    .shell {
-      padding: 0 100px;
-    }
-  }
-}
-@media (max-width: 1200px) {
-  .listed-offers-section {
-    width: 80%;
-  }
-}
-@media (max-width: 1024px) {
-  .listed-offers-section {
-    .shell {
-      padding: 0;
-    }
-    .vertical-line {
-      width: 4px;
-      height: 30px;
-      border-radius: 5px;
-      background-color: $orange;
-      display: inline-block;
-    }
-    h1 {
-      margin-bottom: 30px;
-      margin-left: 10px;
-      font-size: 30px;
-      line-height: 30px;
-      display: inline-block;
-    }
-  }
-}
-@media (max-width: 800px) {
-  .listed-offers-section {
-    width: 100%;
   }
 }
 
@@ -674,18 +453,14 @@ ul {
       -o-background-size: cover;
       background-size: cover;
     }
-    .btn-primary {
+    .btn-secondary {
+      min-width: auto;
       padding: 15px 20px;
       position: absolute;
       top: 42%;
-      background-color: #fff;
-      color: $orange;
       cursor: pointer;
       transition: all 0.3s;
       -webkit-transition: all 0.3s;
-      &:hover {
-        color: $darkorange;
-      }
     }
     i {
       font-size: 28px;
@@ -722,14 +497,12 @@ ul {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 5px;
-    .rating {
-      margin-left: 20px;
-    }
     h3{
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
       line-height: 1em;
+      margin-right: 20px;
     }
     i {
       padding: 10px 4px;
@@ -739,7 +512,7 @@ ul {
     margin-bottom: 30px;
     h5 {
       display: inline-block;
-      margin-left: 15px;
+      margin-left: 5px;
     }
   }
   .fulfill {
@@ -808,79 +581,11 @@ ul {
     align-items: center;
     .btn {
       padding: 15px 20px;
+      min-width: auto;
     }
     i {
       font-size: 28px;
       color: $white;
-    }
-  }
-}
-@media (max-width: 1500px) {
-  .offers {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    >li {
-      width: 100%;
-      flex-wrap: wrap;
-      .left-side {
-        width: 100%;
-      }
-      .right-side {
-        width: 100%;
-      }
-    }
-  }
-}
-@media (max-width: 1024px) {
-  .offers {
-    .label {
-      font-size: 16px;
-    }
-    h2, h3 {
-      font-size: 30px;
-    }
-    h4, h5 {
-      font-size: 16px;
-    }
-    .slick-slider {
-      .slider-item {
-        height: 280px;
-      }
-      .btn-primary {
-        padding: 10px 15px;
-      }
-      i {
-        font-size: 18px;
-      }
-      .arrow-left {
-        left: 25px;
-      }
-      .arrow-right {
-        right: 25px;
-      }
-    }
-    .fulfill {
-      h4 {
-        margin-left: 0;
-      }
-      progress {
-        width: 100%;
-      }
-    }
-    .price {
-      .btn {
-        padding: 10px 15px;
-      }
-      i {
-        font-size: 24px;
-      }
-    }
-    .recommandations {
-      .average {
-        padding: 2px 4px 0;
-        border: 2px solid #f96500;
-      }
     }
   }
 }

@@ -148,26 +148,9 @@ input:-internal-autofill-selected{
 .action {
   text-align: center;
 }
-.fas.fa-heart{
-  color: #DF007A !important;
-}
-.fa.fa-chevron-left, .fa.fa-chevron-right{
-  color: white !important;
-}
-.offers .recommandations .average{
-  border-color: #777777 !important;
-}
-.fas.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt{
-  color: #777777 !important;
-}
-progress::-webkit-progress-value{
-  background: #DF007A !important;
-}
+
 @media (max-width:37.49em) {
   .shell{
-    padding: 25px !important;
-    display: flex !important;
-    flex-direction: column;
     main{
       order: 2;
     }
