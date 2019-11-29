@@ -51,4 +51,5 @@ return [
     'background'                 => 'The background image must be 1200 x 600 pixels in PNG/JPG/JPEG format. Maximum file size is 1MB.',
     'logo'                       => 'The logo must be PNG/JPG/JPEG/SVG format. Maximum file size is 1MB.',
     'favicon'                    => 'The favicon must be PNG/ICON format. Maximum file size is 1MB.',
+    'token_send'                 => 'We\'ve sent you a login link!',
 ];
