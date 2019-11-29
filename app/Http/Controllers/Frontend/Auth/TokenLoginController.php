@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Access\User\UserToken;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class TokenLoginController extends Controller
 {
@@ -24,7 +25,7 @@ class TokenLoginController extends Controller
 
         $auth->requestLink();
 
-        return redirect()->to($this->redirectOnRequested)->with('success', 'We\'ve sent you a login link!');
+        return redirect()->to($this->redirectOnRequested)->with('success', Lang::get('messages.token_send'));
     }
 
     public function validateToken(Request $request, UserToken $token)
