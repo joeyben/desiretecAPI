@@ -92,7 +92,7 @@ class FrontendController extends Controller
             ->groupBy('regionName')
             ->chunk(200, function($regions) use(&$airports){
             foreach ($regions as $region){
-                $airports[] = $region->regionName . ' - '. $region->regionCode;
+                $airports[] = $region->regionName;
             }
         });
         return $airports;
