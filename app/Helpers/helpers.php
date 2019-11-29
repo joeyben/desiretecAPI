@@ -426,6 +426,24 @@ if (!function_exists('getCurrentWhiteLabelColor')) {
     }
 }
 
+if (!function_exists('getCurrentWhiteLabelEmail')) {
+    /**
+     * return current whitelabel Email.
+     *
+     * @return string
+     */
+    function getCurrentWhiteLabelEmail()
+    {
+        if (!isWhiteLabel()) {
+            return "noreply@desiretec.com";
+        }
+
+        $email = getCurrentWhiteLabelField('email');
+
+        return $email;
+    }
+}
+
 if (!function_exists('getCurrentWhiteLabelField')) {
     /**
      * return current whitelabel Field.
