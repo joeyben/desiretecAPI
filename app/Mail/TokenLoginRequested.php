@@ -34,12 +34,22 @@ class TokenLoginRequested extends Mailable
         $subject = trans('email.message.token_new', [
             'whitelabel' => getCurrentWhiteLabelField('display_name')
         ]);
+        $formAddress = getCurrentWhiteLabelField('email');
+        $formName = getCurrentWhiteLabelField('display_name');
+
+        if (null === $formAddress) {
+            $formAddress = config('mail.from.address');
+        }
+
+        if (null === $formName) {
+            $formName = config('mail.from.name');
+        }
 
         return $this->subject($subject)
-            ->from(getCurrentWhiteLabelField('email'), getCurrentWhiteLabelField('display_name') . ' Portal')
+            ->from($formAddress, $formName . ' Portal')
             ->view('emails.token.link')->with([
                 'link'       => $this->buildLink(),
-                'whitelabel' => getCurrentWhiteLabelField('display_name')
+                'whitelabel' => $formName
             ]);
     }
 
