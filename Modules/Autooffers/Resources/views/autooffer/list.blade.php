@@ -112,7 +112,9 @@
                         </div>
                     </div>
 
-                    <!--<div class="map"></div>-->
+                    @if (count($offers) > 0)
+                        <div id="top-map" class="map"></div>
+                    @endif
 
                     <a class="btn btn-secondary" onclick="showMenu()">Reisewunsch ansehen</a>
                 </div>
@@ -127,8 +129,19 @@
                     <ul class="offers">
                         @php
                             $count = 0;
+                            $locations = [];
                         @endphp
                         @foreach($offers as $offer)
+                            @php
+                                $hotelData = [
+                                    'title' => $offer['hotel_data']['data']['Hotelname'],
+                                    'stars' => intval($offer['data']['hotelOffer']['hotel']['category']) ,
+                                    'text' => $offer['data']['boardType'],
+                                    'longitude' => $offer['data']['hotel_geo']['longitude'],
+                                    'latitude' => $offer['data']['hotel_geo']['latitude']
+                                ];
+                                $locations[] = $hotelData;
+                            @endphp
                             <li class="offer box-shadow">
                             <div class="left-side">
                                 @if ($count === 1)
@@ -276,5 +289,77 @@
             nextArrow: '<div class="btn btn-secondary arrow-right"><i class="fa fa-chevron-right"></i></div>'
         });
 
+    </script>
+
+    <script>
+        var locations = JSON.parse('{!! json_encode($locations) !!}');
+        var center = new google.maps.LatLng(locations[0].longitude, locations[0].latitude);
+
+        function initialize() {
+            var bounds = new google.maps.LatLngBounds();
+            var mapOptions = {
+                zoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: center,
+                mapTypeControl: false
+            };
+
+            map = new google.maps.Map(document.getElementById('top-map'), mapOptions);
+
+
+            for(var i = 0; i < locations.length; i++){
+                addMarker(locations[i], map, bounds, i)
+            }
+            map.fitBounds(bounds);
+        }
+
+        function addMarker(location, map, bounds, key) {
+            var stars = "";
+            for(var i = 0; i< location.stars; i++){
+                stars += '<i class="fas fa-heart"></i>';
+            }
+            var contentString = '<div>'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<div id="bodyContent">'+
+                '<p><b>'+location.title+'</b> '+stars+'<br>'+location.text.substring(0, 75)+'</p>'+
+                '</div>'+
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 200,
+                disableAutoPan: true
+            });
+
+            var marker = new google.maps.LatLng(location.latitude, location.longitude);
+
+            var markerObj = new google.maps.Marker({
+                map: map,
+                position: marker,
+                key: key
+            });
+
+            markerObj.addListener('click', function(e) {
+                scrollToHotel(this.key)
+            });
+
+            markerObj.addListener('mouseover', function() {
+                infowindow.open(map, markerObj);
+            });
+
+            markerObj.addListener('mouseout', function() {
+                infowindow.close();
+            });
+
+            bounds.extend(marker);
+        }
+        function scrollToHotel(key) {
+            var offset = $('#hotel-'+key).offset().top;
+            $('html, body').animate({
+                scrollTop: offset - 100
+            }, 750);
+        }
+        initialize();
     </script>
 @endsection
