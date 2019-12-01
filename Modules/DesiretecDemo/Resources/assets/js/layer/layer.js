@@ -1089,22 +1089,19 @@ var exitIntent = window.exitIntent || {};
         this.modal.addClass('tmp-hidden');
         if(!formSent) {
             this.trigger =
-              $('<span/>', {'class': 'trigger-modal'});
+                $('<span/>', {'class': 'trigger-modal'});
             $('body').prepend(this.trigger);
             this.trigger.fadeIn();
-            this.trigger.css({
-                'background-color': brandColor,
-            });
         }
+
 
         this.shown = false;
         $("body").removeClass('mobile-layer');
         $("body, html").css({'overflow':'auto'});
 
-        dt.Tracking.event('close', this.trackingLabel);
+        //dt.Tracking.event('close', this.trackingLabel);
 
     };
-
 
     dt.scrollUpDetect = function (e) {
         dt.PopupManager.layerShown = false;
@@ -1128,7 +1125,7 @@ var exitIntent = window.exitIntent || {};
             $(this).remove();
             ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
         });
-    }
+    };
 
     dt.showMobileLayer = function (e) {
         $(".dt-modal").removeClass('teaser-on').find('.teaser').remove();
@@ -1172,7 +1169,7 @@ var exitIntent = window.exitIntent || {};
             });
         }
         dt.PopupManager.init();
-        dt.Tracking.init('trendtours_exitwindow','UA-105970361-14');
+        dt.Tracking.init('trendtours_exitwindow','UA-105970361-13');
         dt.triggerButton($event);
         if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
             dt.scrollUpDetect();
