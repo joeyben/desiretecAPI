@@ -111,7 +111,10 @@ input:-internal-autofill-selected{
 .layer-top{
   a{
     background: #f96500;
-    color: #fff;
+    color: #fff !important;
+    &:hover{
+      color: #f96500 !important;
+    }
   }
 }
 
