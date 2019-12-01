@@ -112,7 +112,6 @@
                         </div>
                     </div>
 
-                    <!--<div class="map"></div>-->
 
                     <a class="btn btn-secondary" onclick="showMenu()">Reisewunsch ansehen</a>
                 </div>
@@ -127,6 +126,7 @@
                     <ul class="offers">
                         @php
                             $count = 0;
+                            $locations = [];
                         @endphp
                         @foreach($offers as $offer)
                             <li class="offer box-shadow">
@@ -277,4 +277,6 @@
         });
 
     </script>
+
+
 @endsection

@@ -277,7 +277,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
-        $this->setAirport(trim(explode('-', $wish->airport)[1]));
+        $this->setAirport(getRegionCode($wish->airport, 0));
         $this->setCategory($wish->category);
         $this->setCatering($wish->catering);
         $this->setFrom($wish->earliest_start);

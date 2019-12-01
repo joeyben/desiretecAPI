@@ -15,7 +15,7 @@
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
                 {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('desiretecdemo::layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "new-password", 'placeholder' => trans('desiretecdemo::layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                         @foreach ($errors->get('destination') as $error)
                             <span class="error-input">{{ $error }}</span>
@@ -26,7 +26,7 @@
 
             <div class="kwp-col-4">
                 {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
-                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('desiretecdemo::layer.placeholder.airport'), 'required' => 'required']) }}
+                {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "new-password", 'placeholder' => trans('desiretecdemo::layer.placeholder.airport'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('airport'))
                           @foreach ($errors->get('airport') as $error)
                                 <span class="error-input">{{ $error }}</span>
@@ -71,7 +71,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('desiretecdemo::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['0' => trans('desiretecdemo::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
                             <i class="master-icon--time"></i>
                         </div>
@@ -435,11 +435,6 @@
                 @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
                      <p>Ich habe die <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="#" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
-                     @if ($errors->any() && $errors->get('terms'))
-                                             @foreach ($errors->get('terms') as $error)
-                                                 <span class="error-input">{{ $error }}</span>
-                                             @endforeach
-                                         @endif
                 </div>
             </div>
         </div>
