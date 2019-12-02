@@ -435,6 +435,10 @@ ul {
     display: flex;
     &:nth-child(even) {
       flex-direction: row-reverse;
+
+      .slider-item {
+        border-radius: 5px;
+      }
     }
   }
   .left-side {
@@ -457,8 +461,7 @@ ul {
     .slider-item {
       height: 500px;
       border-radius: 5px 0 0 5px;
-      background-color: $black;
-      background-image: url(../img-dummy/wave.jpg);
+      background-color: transparent;
       background-repeat: no-repeat;
       background-position: center;
       -webkit-background-size: cover;
@@ -470,7 +473,7 @@ ul {
       min-width: auto;
       padding: 15px 20px;
       position: absolute;
-      top: 42%;
+      top: 44%;
       background-color: #fff;
       cursor: pointer;
       transition: all 0.3s;
