@@ -310,8 +310,8 @@
             infinite: true,
             speed: 300,
             slidesToShow: 1,
-            prevArrow: '<div class="btn btn-secondary arrow-left"><i class="fa fa-chevron-left"></i></div>',
-            nextArrow: '<div class="btn btn-secondary arrow-right"><i class="fa fa-chevron-right"></i></div>'
+            prevArrow: '<div class="btn arrow-left"><i class="fa fa-chevron-left"></i></div>',
+            nextArrow: '<div class="btn arrow-right"><i class="fa fa-chevron-right"></i></div>'
         });
 
     </script>
