@@ -13,10 +13,7 @@ var exitIntent = window.exitIntent || {};
     dt.popupTemplate = function (variant) {
 
         var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Jetzt Ihre Reise wünschen und Angebot erhalten!',
             'Dürfen wir Sie beraten?',
-            'Hier klicken und persönliches Angebot erhalten',
-            'Nicht das Passende gefunden?'
         ]);
 
         var texts = {
@@ -1401,7 +1398,7 @@ var exitIntent = window.exitIntent || {};
                 }
             });
         };
-    
+
         dt.hideTeaser = function (e) {
             $("body").removeClass('mobile-layer');
             $(".dt-modal").remove();
@@ -1418,7 +1415,7 @@ var exitIntent = window.exitIntent || {};
                 });
             }
             dt.PopupManager.init();
-            dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
+            dt.Tracking.init('tui_exitwindow','UA-105970361-13');
             dt.triggerButton($event);
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
                 dt.scrollUpDetect();
