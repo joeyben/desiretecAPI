@@ -1322,33 +1322,31 @@ var exitIntent = window.exitIntent || {};
         });
 
 
-        dt.PopupManager.closePopup = function(event) {
-            event.preventDefault();
+    dt.PopupManager.closePopup = function(event) {
+        event.preventDefault();
 
-            if(isMobile()){
-                var formSent = $('.kwp-content').hasClass('kwp-completed-master');
+        var formSent = $('.kwp-content').hasClass('kwp-completed-master');
 
-                this.modal.addClass('tmp-hidden');
-                if(!formSent) {
-                    this.trigger =
-                        $('<span/>', {'class': 'trigger-modal'});
-                    $('body').prepend(this.trigger);
-                    this.trigger.fadeIn();
-                }
-            }else{
-                this.modal.css('display', 'none');
-            }
-
-            this.shown = false;
-            $("body").removeClass('mobile-layer');
-            $("body, html").css({'overflow':'auto'});
-
-            dt.Tracking.event('close', this.trackingLabel);
-
-        };
+        this.modal.addClass('tmp-hidden');
+        if(!formSent) {
+            this.trigger =
+                $('<span/>', {'class': 'trigger-modal'});
+            $('body').prepend(this.trigger);
+            this.trigger.fadeIn();
+        }
 
 
-        dt.scrollUpDetect = function (e) {
+        this.shown = false;
+        $("body").removeClass('mobile-layer');
+        $("body, html").css({'overflow':'auto'});
+
+        dt.Tracking.event('close', this.trackingLabel);
+
+    };
+
+
+
+    dt.scrollUpDetect = function (e) {
             dt.PopupManager.layerShown = false;
             $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
                 if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
