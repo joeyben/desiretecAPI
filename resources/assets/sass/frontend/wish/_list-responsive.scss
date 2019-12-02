@@ -219,9 +219,10 @@
     .offer-highlights {
       margin-bottom: 40px;
       .icon-background {
-        height: 25px;
-        min-width: 25px;
-        width: 25px;
+        height: 30px;
+        width: 30px;
+        min-width: 30px;
+        min-height: 30px;
       }
       h4 {
         font-size: 16px;
@@ -299,6 +300,9 @@
       font-size: 16px;
     }
     .slick-slider {
+      .slider-item {
+        height: 460px;
+      }
       .btn {
         padding: 10px 15px;
       }
@@ -343,7 +347,7 @@
     }
     .slick-slider {
       .slider-item {
-        height: 530px;
+        height: 500px;
       }
     }
     .highlights {
