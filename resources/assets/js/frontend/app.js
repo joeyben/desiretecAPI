@@ -39,7 +39,6 @@ const app = new Vue({
     },
     mounted() {
         this.fetchWishes();
-
     },
 
     methods: {
@@ -56,6 +55,18 @@ const app = new Vue({
             )
             .catch(error => {
                     console.log(error);
+            });
+        },
+
+        changeStatus() {
+            axios.post('/wishes/changeWishStatus')
+                .then(response => {
+                    this.$nextTick(function () {
+                        this.loading = false;
+                    });
+                })
+            .catch(error => {
+                console.log(error);
             });
         },
 

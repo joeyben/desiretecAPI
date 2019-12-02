@@ -28,9 +28,9 @@ class WishesController extends Controller
      * Wish Status.
      */
     protected $status = [
-        'Active'       => 'Active',
-        'Inactive'     => 'Inactive',
-        'Deleted'      => 'Deleted',
+        'new'               => 'new',
+        'offer_created'     => 'offer_created',
+        'completed'         => 'completed',
     ];
 
     /**
@@ -192,18 +192,23 @@ class WishesController extends Controller
     public function getList(ManageWishesRequest $request)
     {
         $status_arr = [
-            'Active'       => '1',
-            'Inactive'     => '2',
-            'Deleted'      => '3',
+            'new'               => '1',
+            'offer_created'     => '2',
+            'completed'         => '3',
         ];
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+
         $wish = $this->wish->getForDataTable()
             ->when($status, function ($wish, $status) {
                 return $wish->where(config('module.wishes.table') . '.status', $status)
                     ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
             })
             ->paginate(10);
+
+        foreach($wish as $singleWist) {
+            $singleWist['status'] = array_search ($singleWist['status'], $status_arr) ? array_search ($singleWist['status'], $status_arr) : 'new';
+        }
 
         $response = [
             'pagination' => [
@@ -350,5 +355,43 @@ class WishesController extends Controller
         }
 
         return $offer;
+    }
+
+    /**
+     * @param \App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest $request
+     *
+     * @return mixed
+     */
+    public function changeWishStatus(ChangeWishesStatusRequest $request)
+    {
+        dd($request->all());
+        $status_arr = [
+            'new'               => '1',
+            'offer_created'     => '2',
+            'completed'         => '3',
+        ];
+
+        $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+
+        $wish = $this->wish->getForDataTable()
+            ->when($status, function ($wish, $status) {
+                return $wish->where(config('module.wishes.table') . '.status', $status)
+                    ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
+            })
+            ->paginate(10);
+
+        $response = [
+            'pagination' => [
+                'total'        => $wish->total(),
+                'per_page'     => $wish->perPage(),
+                'current_page' => $wish->currentPage(),
+                'last_page'    => $wish->lastPage(),
+                'from'         => $wish->firstItem(),
+                'to'           => $wish->lastItem()
+            ],
+            'data' => $wish
+        ];
+        dd($wish);
+        return response()->json($response);
     }
 }
