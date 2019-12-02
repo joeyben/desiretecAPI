@@ -1442,7 +1442,7 @@ p.kwp-info {
       box-shadow: none;
       border-radius: 0;
       box-sizing: padding-box;
-      height: 50px;
+      height: 50px !important;
       border-bottom-color: #b9b9b9 !important;
     }
     .kwp input[type="email"]{
@@ -1574,4 +1574,19 @@ and (max-device-width : 320px) {
       font-weight: 600;
     }
   }
+}
+
+.dt-modal {
+  .bootstrap-tagsinput {
+    padding: 0;
+    border: none!important;
+    box-shadow: none!important;
+    min-width: 100%;
+  }
+}
+.bootstrap-tagsinput .tag {
+  color: #46799b!important;
+  background: #e0eaf1!important;
+  font-size: 11px;
+  font-weight: 600;
 }
