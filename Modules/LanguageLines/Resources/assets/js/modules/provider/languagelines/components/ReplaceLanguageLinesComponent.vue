@@ -123,8 +123,6 @@
           if (this.close) {
             $('#modal_large_languagelines').modal('hide')
             this.$router.push({name: 'root'})
-          } else {
-            this.$router.push({name: 'root.export'})
           }
 
           this.$message({
