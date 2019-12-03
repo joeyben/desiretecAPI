@@ -95,6 +95,7 @@ class AutooffersRepository extends BaseRepository
                     ],
                     'on_stats' => function (TransferStats $stats) use (&$url) {
                         $url = $stats->getEffectiveUri();
+                        dd($url);
                     }
                 ]
             );
@@ -171,8 +172,8 @@ class AutooffersRepository extends BaseRepository
     {
         $rulesArray = [
             'displayOffer'   => \is_array($rules) ? $rules['display_offer'] : 3,
-            'recommendation' => \is_array($rules) ? $rules['recommendation'] : 80,
-            'rating'         => \is_array($rules) ? $rules['rating'] : 8
+            'recommendation' => \is_array($rules) ? $rules['recommendation'] : 70,
+            'rating'         => \is_array($rules) ? $rules['rating'] : 7
         ];
 
         $count = 0;
