@@ -28,7 +28,7 @@ const app = new Vue({
 
     data: {
         data: {},
-        status:'new',
+        status:'',
         pagination: {
             'current_page': 1
         },
@@ -66,10 +66,8 @@ const app = new Vue({
                 status: this.status,
                 id: this.data[0].id,
             }).then(response => {
-                    this.$nextTick(function () {
-                        this.loading = false;
-                    });
-                })
+                this.$route.router.go({ path: '/wishlist' });
+            })
             .catch(error => {
                 console.log(error);
             });
