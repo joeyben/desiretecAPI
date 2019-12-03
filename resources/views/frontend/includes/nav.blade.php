@@ -27,6 +27,7 @@
         <div class="collapse navbar-collapse" id="frontend-navbar-collapse">
 
             <ul class="nav navbar-nav navbar-right">
+                @yield('demo')
                 @if (config('locale.status') && count(config('locale.languages')) > 1 && false)
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

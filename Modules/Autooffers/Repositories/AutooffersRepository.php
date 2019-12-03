@@ -15,7 +15,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\TransferStats;
 use Modules\Autooffers\Entities\Autooffer;
-use Underscore\Parse;
 
 /**
  * Class EloquentPostsRepository.
@@ -96,6 +95,7 @@ class AutooffersRepository extends BaseRepository
                     ],
                     'on_stats' => function (TransferStats $stats) use (&$url) {
                         $url = $stats->getEffectiveUri();
+                        dd($url);
                     }
                 ]
             );
@@ -127,16 +127,17 @@ class AutooffersRepository extends BaseRepository
                 ]
             ]
         );*/
-        $username = "203339";
-        $password = "605e5129";
-        $remote_url = 'https://xml.giatamedia.com/?show=text,geo,pic800,hn,vn,ln,lk,katid,kn,hk,sn,sn,zi,ln,lc&sc=hotel&vc='.$tOperator.'&gid='.$hotelId;
+        $username = '203339';
+        $password = '605e5129';
+        $remote_url = 'https://xml.giatamedia.com/?show=text,geo,pic800,hn,vn,ln,lk,katid,kn,hk,sn,sn,zi,ln,lc&sc=hotel&vc=' . $tOperator . '&gid=' . $hotelId;
 
-        $opts = array('http'=>array('method'=>"GET",
-            'header' => "Authorization: Basic ". base64_encode("$username:$password")));
+        $opts = ['http'=> ['method'=> 'GET',
+            'header'               => 'Authorization: Basic ' . base64_encode("$username:$password")]];
 
         $context = stream_context_create($opts);
         $file = file_get_contents($remote_url, false, $context);
         $xml = simplexml_load_string($file, 'SimpleXMLElement', LIBXML_NOCDATA);
+
         return json_decode(json_encode($xml), true);
     }
 
@@ -162,21 +163,18 @@ class AutooffersRepository extends BaseRepository
         return true;
     }
 
-
-
     /**
      * @param  $data
      * @param string $wish_id
-     * @param array $rules
+     * @param array  $rules
      */
     public function storeMany($data, $wish_id, $rules)
     {
         $rulesArray = [
-            'displayOffer' => is_array($rules) ? $rules['display_offer'] : 3,
-            'recommendation' => is_array($rules) ? $rules['recommendation'] : 80,
-            'rating' => is_array($rules) ? $rules['rating'] : 8
+            'displayOffer'   => \is_array($rules) ? $rules['display_offer'] : 3,
+            'recommendation' => \is_array($rules) ? $rules['recommendation'] : 70,
+            'rating'         => \is_array($rules) ? $rules['rating'] : 7
         ];
-
 
         $count = 0;
         foreach ($data->offerList as $key => $autooffer) {
@@ -191,25 +189,25 @@ class AutooffersRepository extends BaseRepository
             $tOperator = $offer['tourOperator']['code'];
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
             $this->storeAutooffer($offer, $hotel, $wish_id);
-            $count++;
+            ++$count;
         }
     }
 
     /**
      * @param  $data
      * @param string $wish_id
-     * @param array $rulesArray
+     * @param array  $rulesArray
      *
-     * @return boolean
+     * @return bool
      */
     public function checkValidity($data, $wish_id, $rulesArray)
     {
-        $autooffer = Autooffer::where('wish_id',$wish_id)->where('hotel_code', $data['hotelOffer']['hotel']['giata']['hotelId'])->count();
-        $rating = intval($data['hotelOffer']['hotel']['rating']['overall']);
-        $recommendation = intval($data['hotelOffer']['hotel']['rating']['recommendation']);
-        $rules_ratings = (intval(str_replace('.', '', $rulesArray['rating']))/ 10);
-        //dd($rating > $rules_ratings);
-        return $rating > $rules_ratings && $autooffer === 0 && $recommendation > $rulesArray['recommendation'];
+        $autooffer = Autooffer::where('wish_id', $wish_id)->where('hotel_code', $data['hotelOffer']['hotel']['giata']['hotelId'])->count();
+        $rating = (int) ($data['hotelOffer']['hotel']['rating']['overall']);
+        $recommendation = (int) ($data['hotelOffer']['hotel']['rating']['recommendation']);
+        $rules_ratings = ((int) (str_replace('.', '', $rulesArray['rating'])) / 10);
+
+        return $rating > $rules_ratings && 0 === $autooffer && $recommendation > $rulesArray['recommendation'];
     }
 
     /**
@@ -234,27 +232,28 @@ class AutooffersRepository extends BaseRepository
             $autooffer->tourOperator_name = $offer['tourOperator']['name'];
             $autooffer->hotel_code = $offer['hotelOffer']['hotel']['giata']['hotelId'];
             $autooffer->hotel_name = $offer['hotelOffer']['hotel']['name'];
-            $autooffer->hotel_location_name =  $offer['hotelOffer']['hotel']['location']['name'];
-            $autooffer->hotel_location_lng =  0;
-            $autooffer->hotel_location_lat =  0;
-            $autooffer->hotel_location_region_code =  $offer['hotelOffer']['hotel']['location']['region']['code'];
-            $autooffer->hotel_location_region_name =  $offer['hotelOffer']['hotel']['location']['region']['name'];
-            $autooffer->airport_code =  $offer['hotelOffer']['hotel']['airport']['code'];
-            $autooffer->airport_name =  $offer['hotelOffer']['hotel']['airport']['name'];
+            $autooffer->hotel_location_name = $offer['hotelOffer']['hotel']['location']['name'];
+            $autooffer->hotel_location_lng = 0;
+            $autooffer->hotel_location_lat = 0;
+            $autooffer->hotel_location_region_code = $offer['hotelOffer']['hotel']['location']['region']['code'];
+            $autooffer->hotel_location_region_name = $offer['hotelOffer']['hotel']['location']['region']['name'];
+            $autooffer->airport_code = $offer['hotelOffer']['hotel']['airport']['code'];
+            $autooffer->airport_name = $offer['hotelOffer']['hotel']['airport']['name'];
             $autooffer->data = json_encode($offer);
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
+
             return $autooffer->save();
         } catch (\Illuminate\Database\QueryException $e) {
             // something went wrong with the transaction, rollback
             report($e);
-            dd($e);
+
             return false;
         } catch (\Exception $e) {
             // something went wrong elsewhere, handle gracefully
             report($e);
-            dd($e);
+
             return false;
         }
     }
@@ -292,7 +291,7 @@ class AutooffersRepository extends BaseRepository
     {
         $kidsCount = $this->kids ? \count(explode(',', $this->kids)) : 0;
 
-        return intval($this->adults) + $kidsCount;
+        return (int) ($this->adults) + $kidsCount;
     }
 
     // Getters & Setters
@@ -366,7 +365,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setAdults($adults)
     {
-        $this->adults = intval($adults);
+        $this->adults = (int) $adults;
     }
 
     /**
@@ -374,7 +373,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setKids($kids)
     {
-        $this->kids = intval($kids);
+        $this->kids = (int) $kids;
     }
 
     /**
@@ -382,7 +381,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setPeriod($period)
     {
-        $this->period = intval($period);
+        $this->period = (int) $period;
     }
 
     /**

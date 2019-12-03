@@ -1,0 +1,157 @@
+@import "variables";
+
+// Reset default
+
+*:focus {
+  outline: none !important;
+}
+
+// Html, body, main-containers
+
+html, body{
+  overflow: auto;
+}
+body{
+  &.landing{
+    padding-top: 0px;
+    #app{
+      .main-container{
+        margin: 0;
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+  &.wish{
+    #app {
+      .main-container {
+        margin: 0;
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+  &.wishlist {
+    #app {
+      .main-container {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+// Buttons
+
+.primary-btn, .btn-primary, .secondary-btn, .btn-secondary{
+  padding: 5px 20px;
+  min-width: 220px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: transparent;
+  &:focus, &:hover, &:visited {
+    background: transparent;
+    border: 1px solid transparent;
+    color: transparent;
+  }
+}
+
+input:-internal-autofill-selected{
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px #f8f8f8 !important;
+}
+
+// Wish modal
+
+.wish-modal-1 .modal-body-left input[value=""]~label {
+  top: 5px !important;
+  font-size: 10px !important;
+  color: #bbb !important;
+}
+
+// Slider
+
+.slider{
+  width: 100%;
+  height:700px;
+  position: relative;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  .welcome{
+    position: absolute;
+    top: 50px;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    strong{
+      display: block;
+      font-size: 35px;
+      line-height: 70px;
+      font-weight: 400;
+    }
+  }
+  .layer-action{
+    position: absolute;
+    bottom: 270px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    a{
+      font-size: 24px;
+      text-transform: uppercase;
+      padding: 15px 35px;
+      line-height: 1.5em;
+      letter-spacing: 0.42px;
+    }
+  }
+}
+//Button
+.layer-top{
+  a{
+    background: #f96500;
+    color: #fff !important;
+    &:hover{
+      color: #f96500 !important;
+    }
+  }
+}
+
+// Footer
+
+.footer{
+  ul{
+    text-align: center;
+    li{
+      display: inline-block;
+      padding:0 10px 0 10px;
+    }
+  }
+}
+
+// Logo Fix
+
+.navbar-default{
+  a.logo{
+    .navbar-brand{
+      padding: 0;
+      height: 50px !important;
+    }
+  }
+}
+
+// Auth views
+
+.panel-body{
+  .form-group{
+    a{
+      color: transparent;
+    }
+  }
+}
+.layer-top a{
+  margin-right: 10px !important;
+  margin-top: 5px !important;
+  padding: 5px !important;
+}

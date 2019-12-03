@@ -438,7 +438,7 @@ var exitIntent = window.exitIntent || {};
             return r[1];
         },
         name: 'TUI IBE',
-        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
+        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|tuicom-itest.tui-interactive.com/*|tuicom-preprod.tui-interactive.com/*',
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {
@@ -1265,6 +1265,9 @@ var exitIntent = window.exitIntent || {};
             return attributesArr.join(', ');
         }
     });
+
+
+
     dt.decoders.push(MasterIBETripDataDecoder);
     dt.decoders.push(MasterIBETripDataDecoderMobile);
     dt.decoders.push(KwizzmeFakeTripDataDecoder);
@@ -1378,7 +1381,7 @@ var exitIntent = window.exitIntent || {};
                 });
             }
             dt.PopupManager.init();
-            dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
+            dt.Tracking.init('trendtours_exitwindow','UA-105970361-13');
             dt.triggerButton($event);
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
                 dt.scrollUpDetect();

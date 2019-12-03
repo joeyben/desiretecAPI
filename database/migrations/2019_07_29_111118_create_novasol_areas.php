@@ -31,6 +31,6 @@ class CreateNovasolAreas extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('novasol_area');
     }
 }

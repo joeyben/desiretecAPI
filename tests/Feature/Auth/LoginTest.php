@@ -3,7 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use App\Events\Frontend\Auth\UserLoggedIn;
-use App\Models\Access\User\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Tests\BrowserKitTestCase;
@@ -28,19 +27,19 @@ class LoginTest extends BrowserKitTestCase
              ->type('', 'password')
              ->press('Login')
              ->seePageIs('/login')
-             ->see('The email field is required.')
-             ->see('The password field is required.');
+             ->see('E-Mail-Adresse muss ausgefüllt sein.')
+             ->see('Passwort muss ausgefüllt sein.');
     }
 
     /** @test */
     public function login_fails_when_password_is_incorrect()
     {
         $this->visit('/login')
-            ->type('admin@admin.com', 'email')
+            ->type('admin@desiretec.com', 'email')
             ->type('invalidpass', 'password')
             ->press('Login')
             ->seePageIs('/login')
-            ->see('These credentials do not match our records.');
+            ->see('Diese Kombination aus Zugangsdaten wurde nicht in unserer Datenbank gefunden.');
     }
 
     /** @test */
@@ -51,42 +50,7 @@ class LoginTest extends BrowserKitTestCase
             ->type('wrongpassword', 'password')
             ->press('Login')
             ->seePageIs('/login')
-            ->see('These credentials do not match our records.');
-    }
-
-    /** @test */
-    public function unconfirmed_users_can_not_logIn()
-    {
-        Auth::logout();
-
-        config(['access.users.requires_approval' => false]);
-
-        // Create default user to test with
-        $unconfirmed = factory(User::class)->states('unconfirmed')->create();
-        $unconfirmed->attachRole(3); //User
-
-        $this->visit('/login')
-             ->type($unconfirmed->email, 'email')
-             ->type('secret', 'password')
-             ->press('Login')
-             ->seePageIs('/login')
-             ->see('Your account is not confirmed.');
-    }
-
-    /** @test **/
-    public function inactive_users_can_not_login()
-    {
-        Auth::logout();
-        // Create default user to test with
-        $inactive = factory(User::class)->states('confirmed', 'inactive')->create();
-        $inactive->attachRole(3); //User
-
-        $this->visit('/login')
-             ->type($inactive->email, 'email')
-             ->type('secret', 'password')
-             ->press('Login')
-             ->seePageIs('/login')
-             ->see('Your account has been deactivated.');
+            ->see('Diese Kombination aus Zugangsdaten wurde nicht in unserer Datenbank gefunden.');
     }
 
     /** @test */
@@ -102,8 +66,33 @@ class LoginTest extends BrowserKitTestCase
                     ->type($this->user->email, 'email')
                     ->type('1234', 'password')
                     ->press('Login')
-                    ->see($this->user->name)
-                    ->seePageIs('/dashboard');
+                    ->see($this->user->full_name)
+                    ->seePageIs('/');
+
+        $this->assertLoggedIn();
+
+        Auth::logout();
+
+        //Seller Test
+        $this->visit('/login')
+                    ->type($this->seller->email, 'email')
+                    ->type('1234', 'password')
+                    ->press('Login')
+                    ->see($this->user->full_name)
+                    ->seePageIs('/wishlist');
+
+        $this->assertLoggedIn();
+
+        Auth::logout();
+
+        //Executive Test
+        $this->visit('/login')
+                    ->type($this->executive->email, 'email')
+                    ->type('1234', 'password')
+                    ->press('Login')
+                    ->seePageIs('/admin/dashboard')
+                    ->see($this->executive->email)
+                    ->see('Dashboard');
 
         $this->assertLoggedIn();
 
@@ -115,8 +104,8 @@ class LoginTest extends BrowserKitTestCase
                     ->type('1234', 'password')
                     ->press('Login')
                     ->seePageIs('/admin/dashboard')
-                    ->see($this->admin->first_name)
-                    ->see('Access Management');
+                    ->see($this->admin->email)
+                    ->see('Dashboard');
 
         $this->assertLoggedIn();
 

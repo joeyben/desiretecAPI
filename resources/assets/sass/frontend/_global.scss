@@ -1,8 +1,8 @@
 // Buttons
 
 .primary-btn {
-  background: $orange;
-  border: 1px solid $orange;
+  background: transparent;
+  border: 1px solid transparent;
   color: #fff;
   margin-bottom: 10px;
   padding: 8px 20px;
@@ -12,8 +12,8 @@
   min-width: 210px;
   font-family: Comfortaa;
   &:focus, &:hover {
-    background: $darkorange;
-    border: 1px solid $darkorange;
+    background: transparent;
+    border: 1px solid transparent;
     color: #fff;
     text-decoration: none;
   }
@@ -25,8 +25,8 @@
 }
 
 .secondary-btn {
-  border: 1px solid $orange;
-  color: $orange;
+  border: 1px solid transparent;
+  color: transparent;
   background: transparent;
   padding: 8px 20px;
   line-height: 1.5em;
@@ -36,8 +36,8 @@
   min-width: 210px;
   font-family: Comfortaa,cursive;
   &:focus, &:hover {
-    border: 1px solid $darkorange;
-    color: $darkorange;
+    border: 1px solid transparent;
+    color: transparent;
     background: transparent;
     text-decoration: none;
   }
@@ -662,6 +662,9 @@ footer{
     input:focus{
       border: 1px solid #999;
     }
+    input:-internal-autofill-selected{
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px #f8f8f8 !important;
+    }
     label{
       color:#999;
       font-size:14px;
@@ -1014,3 +1017,49 @@ footer{
   background: linear-gradient(to bottom, rgb(61, 145, 175) 0%, rgb(84, 112, 121) 61%, rgb(82, 82, 81) 100%);
 }
 .dt-status{ display: none }
+
+
+
+
+/* Pop-up Tags */
+.bootstrap-tagsinput {
+  border: none !important;
+  box-shadow: none !important;
+  max-width: 100%;
+  outline: none;
+  -webkit-box-shadow: none;
+  color: #17212b;
+}
+.bootstrap-tagsinput input {
+  max-width: 100%;
+  width: 270px !important;
+}
+.bootstrap-tagsinput .tag {
+  color: #46799b !important;
+  background: #e0eaf1 !important;
+}
+.bootstrap-tagsinput .tag [data-role="remove"] {
+  margin-left: 8px !important;
+  cursor: pointer;
+}
+.bootstrap-tagsinput .tag [data-role="remove"]:after {
+  content: "x";
+  padding: 0px 0px !important;
+  color:  #667a8e !important
+}
+.bootstrap-tagsinput .tag [data-role="remove"]:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.bootstrap-tagsinput .tag [data-role="remove"]:hover:active {
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.label{
+  padding: 5px 7px;
+}
+/* *************/
+
+
+
+
+
+

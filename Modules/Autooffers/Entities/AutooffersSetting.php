@@ -49,9 +49,9 @@ class AutooffersSetting extends Model
             'autooffers_settings.display_offer'              => 10,
             'autooffers_settings.recommendation'             => 10,
             'autooffers_settings.rating'                     => 10,
-            'autooffers_settings.price'                     => 10,
-            'autooffers_settings.price_loop'                => 10,
-            'autooffers_settings.hotel_loop'                => 10,
+            'autooffers_settings.price'                      => 10,
+            'autooffers_settings.price_loop'                 => 10,
+            'autooffers_settings.hotel_loop'                 => 10,
         ],
         'joins' => [
             'users'       => ['autooffers_settings.user_id', 'users.id'],

@@ -13,10 +13,8 @@ use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\TransferStats;
-use Modules\Autooffers\Entities\Autooffer;
-use Underscore\Parse;
 use Illuminate\Support\Facades\DB;
+use Modules\Autooffers\Entities\Autooffer;
 
 /**
  * Class EloquentPostsRepository.
@@ -69,8 +67,8 @@ class AutooffersNovasolRepository extends BaseRepository
         return Autooffer::class;
     }
 
-    public function getNovasolData(array $params = []){
-
+    public function getNovasolData(array $params = [])
+    {
         try {
             $this->novasolapi .= 'available?';
             $lastItem = end($params);
@@ -78,31 +76,30 @@ class AutooffersNovasolRepository extends BaseRepository
             logger()->info(print_r($params, true));
 
             foreach ($params as $key => $value) {
-                  $this->novasolapi .= $key.'='.$value;
+                $this->novasolapi .= $key . '=' . $value;
 
-                  if($value != $lastItem){
+                if ($value !== $lastItem) {
                     $this->novasolapi .= '&';
-                  }
+                }
             }
 
-                $opts = [
-                    "http" => [
-                        "method" => "GET",
-                        "header" => "Accept-language: en\r\n" .
+            $opts = [
+                    'http' => [
+                        'method' => 'GET',
+                        'header' => "Accept-language: en\r\n" .
                         "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
                         "Host: novasol.reise-wunsch.com\r\n"
                     ]
                 ];
 
-                $context = stream_context_create($opts);
+            $context = stream_context_create($opts);
 
-                $this->novasolapi = str_replace(['&amp;'], ['&'], $this->novasolapi);
+            $this->novasolapi = str_replace(['&amp;'], ['&'], $this->novasolapi);
 
-                logger()->info('novasol-api-url: '. $this->novasolapi);
+            logger()->info('novasol-api-url: ' . $this->novasolapi);
 
-                // Open the file using the HTTP headers set above
-                return file_get_contents($this->novasolapi, false, $context);
-
+            // Open the file using the HTTP headers set above
+            return file_get_contents($this->novasolapi, false, $context);
         } catch (RequestException $e) {
             return $e->getResponse();
         }
@@ -154,8 +151,8 @@ class AutooffersNovasolRepository extends BaseRepository
      * @param  $data
      * @param string $wish_id
      */
-    public function storeMany($data, $properties, $wish_id){
-
+    public function storeMany($data, $properties, $wish_id)
+    {
         $wish = Wish::find($wish_id);
 
         foreach ($properties as $key => $autooffer) {
@@ -201,10 +198,11 @@ class AutooffersNovasolRepository extends BaseRepository
             $autooffer->hotel_data = json_encode($wish);
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
-            $autooffer->thumbnail = trim(str_replace('/100/', '/600/',$offer->thumbnail));
+            $autooffer->thumbnail = trim(str_replace('/100/', '/600/', $offer->thumbnail));
 
-            if($autooffer->save()){
+            if ($autooffer->save()) {
                 logger()->info('autooffer wurde gespeichert!');
+
                 return true;
             }
         } catch (\Illuminate\Database\QueryException $e) {
@@ -253,7 +251,7 @@ class AutooffersNovasolRepository extends BaseRepository
     {
         $kidsCount = $this->kids ? \count(explode(',', $this->kids)) : 0;
 
-        return intval($this->adults) + $kidsCount;
+        return (int) ($this->adults) + $kidsCount;
     }
 
     // Getters & Setters
@@ -327,7 +325,7 @@ class AutooffersNovasolRepository extends BaseRepository
      */
     public function setAdults($adults)
     {
-        $this->adults = intval($adults);
+        $this->adults = (int) $adults;
     }
 
     /**
@@ -335,7 +333,7 @@ class AutooffersNovasolRepository extends BaseRepository
      */
     public function setKids($kids)
     {
-        $this->kids = intval($kids);
+        $this->kids = (int) $kids;
     }
 
     /**
@@ -343,7 +341,7 @@ class AutooffersNovasolRepository extends BaseRepository
      */
     public function setPeriod($period)
     {
-        $this->period = intval($period);
+        $this->period = (int) $period;
     }
 
     /**
@@ -450,17 +448,18 @@ class AutooffersNovasolRepository extends BaseRepository
         $this->giataIds = $giataIds;
     }
 
-    public function to_country_code($land){
+    public function to_country_code($land)
+    {
 //        logger()->info("to_country_code() was called with: $land");
 //        logger()->info("lang-type: ". gettype($land));
 
-         $code = DB::table('novasol_country')
+        $code = DB::table('novasol_country')
             ->select('novasol_code')
             ->where('name', '=', $land)
             ->get()->first();
 
-         if ($code === null){
-             $codes = DB::table('novasol_area')
+        if (null === $code) {
+            $codes = DB::table('novasol_area')
                  ->join('novasol_country', 'novasol_area.novasol_country_id', '=', 'novasol_country.id')
                  ->select(['novasol_code', 'novasol_area.novasol_area_code'])
                  ->where('novasol_area.name', '=', $land)
@@ -473,29 +472,28 @@ class AutooffersNovasolRepository extends BaseRepository
 //                        ->get()
 //                        ->first();
 
-             $novasol_code      = null;
-             $novasol_area_code = null;
-             if(!is_null($codes)){
-                 $novasol_code      = $codes->novasol_code;
-                 $novasol_area_code = $codes->novasol_area_code;
-             }
+            $novasol_code = null;
+            $novasol_area_code = null;
+            if (null !== $codes) {
+                $novasol_code = $codes->novasol_code;
+                $novasol_area_code = $codes->novasol_area_code;
+            }
 
-             return [$novasol_code, $novasol_area_code];
-             //return [$code->novasol_code,$area->novasol_area_code];
-         }else{
-             return  [$code->novasol_code,''];
-         }
+            return [$novasol_code, $novasol_area_code];
+            //return [$code->novasol_code,$area->novasol_area_code];
+        }
 
+        return  [$code->novasol_code, ''];
     }
 
     public function getProduct($id)
     {
-        $url = 'https://safe.novasol.com/api/products/'. $id . '?salesmarket=208&season=2019';
+        $url = 'https://safe.novasol.com/api/products/' . $id . '?salesmarket=208&season=2019';
 
         $opts = [
-                "http" => [
-                    "method" => "GET",
-                    "header" => "Accept-language: en\r\n" .
+                'http' => [
+                    'method' => 'GET',
+                    'header' => "Accept-language: en\r\n" .
                     "Key: WEvoSrIfHvZtVhlyKIWYfP5WjGcPVB\r\n" .
                     "Host: novasol.reise-wunsch.com\r\n"
                 ]

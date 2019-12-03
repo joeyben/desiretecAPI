@@ -3,6 +3,7 @@
 namespace Modules\Autooffers\Http\Controllers;
 
 use App\Models\Wishes\Wish;
+use App\Repositories\Frontend\Wishes\WishesRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -12,6 +13,11 @@ use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 
 class AutooffersController extends Controller
 {
+    /**
+     * @var WishesRepository
+     */
+    protected $wish;
+
     const BODY_CLASS = 'wish';
     /**
      * Wish Status.
@@ -55,12 +61,14 @@ class AutooffersController extends Controller
     private $rules;
 
     /**
-     * @param \Modules\Autooffers\Repositories\AutooffersRepository $autooffers
-     * @param \Modules\Autooffers\Repositories\AutooffersTTRepository $autooffers
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository                     $wish
+     * @param \Modules\Autooffers\Repositories\AutooffersRepository                  $autooffers
+     * @param \Modules\Autooffers\Repositories\AutooffersTTRepository                $autooffers
      * @param \Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository $rules
      */
-    public function __construct(AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers, EloquentAutooffersRepository $rules)
+    public function __construct(WishesRepository $wish, AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers, EloquentAutooffersRepository $rules)
     {
+        $this->wish = $wish;
         $this->autooffers = $autooffers;
         $this->TTautooffers = $TTautooffers;
         $this->rules = $rules;
@@ -78,27 +86,31 @@ class AutooffersController extends Controller
 
     /**
      * @param \App\Models\Wishes\Wish $wish
-     * @param string $index
+     * @param string                  $index
+     *
      * @return mixed
      */
     public function details(Wish $wish, $index)
     {
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
-        $offer =  $offers[$index];
+        $offer = $offers[$index];
         $body_class = 'autooffer_list';
+
         return view('autooffers::autooffer.details', compact('wish', 'offer', 'body_class'));
     }
 
     /**
      * @param \App\Models\Wishes\Wish $wish
-     * @param string $index
+     * @param string                  $index
+     *
      * @return mixed
      */
     public function ttdetails(Wish $wish, $index)
     {
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
-        $offer =  $offers[$index];
+        $offer = $offers[$index];
         $body_class = 'autooffer_list';
+
         return view('autooffers::autooffer.details_tt', compact('wish', 'offer', 'body_class'));
     }
 
@@ -109,7 +121,7 @@ class AutooffersController extends Controller
      */
     public function createTT(Wish $wish)
     {
-        $rules = $this->rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
+        $rules = $this->rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
         //dd(getRegionCode($wish->airport, 0));
         $this->TTautooffers->saveWishData($wish);
         //$response = $this->autooffers->getTrafficsData();
@@ -120,7 +132,6 @@ class AutooffersController extends Controller
         return redirect()->to('offer/list/' . $wish->id);
     }
 
-
     /**
      * @param \App\Models\Wishes\Wish $wish
      *
@@ -128,7 +139,7 @@ class AutooffersController extends Controller
      */
     public function create(Wish $wish)
     {
-        $rules = $this->rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
+        $rules = $this->rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
         //dd(getRegionCode($wish->airport, 0));
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
@@ -163,6 +174,20 @@ class AutooffersController extends Controller
         $body_class = 'autooffer_list';
         //dd($offers);
         return view('autooffers::autooffer.list', compact('wish', 'offers', 'body_class'));
+    }
+
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     *
+     * @return Response
+     */
+    public function showttredirect(Wish $wish, string $token)
+    {
+        if (!$this->wish->validateToken($token)) {
+            return redirect()->to('/');
+        }
+
+        return redirect()->to('/offer/ttlist/' . $wish->id);
     }
 
     /**

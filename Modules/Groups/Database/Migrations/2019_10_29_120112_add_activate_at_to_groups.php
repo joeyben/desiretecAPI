@@ -1,15 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddActivateAtToGroups extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -23,14 +21,11 @@ class AddActivateAtToGroups extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
         Schema::table('groups', function (Blueprint $table) {
-            $table->dropColumn(['deactivate_at']);
-            $table->dropColumn(['deactivate_until']);
+            $table->dropColumn(['deactivate_at', 'deactivate_until']);
         });
     }
 }

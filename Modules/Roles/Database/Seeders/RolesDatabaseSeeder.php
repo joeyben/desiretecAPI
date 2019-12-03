@@ -23,8 +23,8 @@ class RolesDatabaseSeeder extends Seeder
                     'name'         => str_slug($value),
                     'display_name' => $value,
                     'status'       => 1,
-                    'created_at'   => DB::raw('now()'),
-                    'updated_at'   => DB::raw('now()')
+                    'created_at'   => now(),
+                    'updated_at'   => now()
                 ]);
             }
         }

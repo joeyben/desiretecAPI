@@ -36,9 +36,17 @@ body{
 
 // Buttons
 
-.primary-btn, .secondary-btn{
+.primary-btn, .btn-primary, .secondary-btn, .btn-secondary{
   padding: 5px 20px;
   min-width: 220px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: transparent;
+  &:focus, &:hover, &:visited {
+    background: transparent;
+    border: 1px solid transparent;
+    color: transparent;
+  }
 }
 
 input:-internal-autofill-selected{
@@ -99,9 +107,7 @@ input:-internal-autofill-selected{
     color: #df007a;
   }
 }
-.btn-primary,.btn-primary:hover{
-  background-color: #df007a;
-}
+
 // Footer
 
 .footer{
@@ -125,42 +131,26 @@ input:-internal-autofill-selected{
   }
 }
 
+// Auth views
+
+.panel-body{
+  .form-group{
+    a{
+      color: transparent;
+    }
+  }
+}
+
 /***Custom CSS***/
 .about-section h3{
   font-weight: normal !important;
 }
 .action {
   text-align: center;
-  .btn {
-    background-color: #df007a !important;
-  }
 }
-.price .btn-primary{
-    background-color: #DF007A !important;
-}
-.slick-slider .btn-primary{
-  background-color:  #df007a !important;
-}
-.fas.fa-heart{
-  color: #DF007A !important;
-}
-.fa.fa-chevron-left, .fa.fa-chevron-right{
-  color: white !important;
-}
-.offers .recommandations .average{
-  border-color: #777777 !important;
-}
-.fas.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt{
-  color: #777777 !important;
-}
-progress::-webkit-progress-value{
-  background: #DF007A !important;
-}
+
 @media (max-width:37.49em) {
   .shell{
-    padding: 25px !important;
-    display: flex !important;
-    flex-direction: column;
     main{
       order: 2;
     }

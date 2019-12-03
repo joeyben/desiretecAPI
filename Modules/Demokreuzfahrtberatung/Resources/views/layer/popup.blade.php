@@ -1,3 +1,7 @@
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
@@ -237,6 +241,7 @@
             });
 
             $(document).ready(function(){
+                autocomplete()
                 $('.selectpicker').selectpicker();
 
                 dt.startDate = new Pikaday({
@@ -353,6 +358,52 @@
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
+            }
+
+            /**
+             * Autocomplete
+             */
+            var autocomplete = function(){
+              /* Destinations */
+              $('#destination').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                  autoSelect: false,
+                  minLength: 3,
+                  highlight: true,
+                  source: function(query) {
+                    return $.get('get-all-destinations', {query: query});
+                  }
+                }
+              });
+              /* END Destinations */
+
+              /* Airports */
+              $('#airport').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                  autoSelect: false,
+                  minLength: 3,
+                  highlight: true,
+                  source: function(query) {
+                    return $.get('get-all-airports', {query: query});
+                  }
+                }
+              });
+              /* END Airports */
+
+
+              $("#destination, #airport").on('itemAdded', function(event) {
+                setTimeout(function(){
+                  $("input[type=text]",".bootstrap-tagsinput").val("");
+                }, 1);
+              });
+
+
             }
 
             dt.applyBrandColor();

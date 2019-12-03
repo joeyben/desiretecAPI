@@ -3,23 +3,23 @@
 namespace App\Jobs;
 
 use App\Models\Wishes\Wish;
-use App\Repositories\Frontend\Wishes\WishesRepository;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Modules\Autooffers\Repositories\AutooffersTTRepository;
+use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 
 class callTTApi implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
     protected $wishId;
 
@@ -30,13 +30,11 @@ class callTTApi implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle(EloquentAutooffersRepository $rules, AutooffersTTRepository $TTautooffers)
     {
-        $wish = Wish::where('id',$this->wishId)->first();
-        $_rules = $rules->getSettingsForWhitelabel(intval(getCurrentWhiteLabelId()));
+        $wish = Wish::where('id', $this->wishId)->first();
+        $_rules = $rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
         $TTautooffers->saveWishData($wish);
         $TTautooffers->getToken();
         $response = $TTautooffers->getTTData();

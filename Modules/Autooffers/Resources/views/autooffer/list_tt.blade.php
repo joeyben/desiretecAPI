@@ -1,5 +1,8 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    {{ ucfirst(getCurrentWhiteLabelName()) }} {{ trans('autooffer.list.tab_title') }}
+@endsection
 
 @section("after-styles")
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.css" />
@@ -14,11 +17,18 @@
 
             <section class="about-section">
                 <div class="shell">
-                    <h1>Herzlich willkommen</h1>
-                    <h3>Hallo, wir haben wunderbare Angebote zu Ihrem Reiseziel "{{ $wish->destination }}" gefunden. Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <a href="tel:040238859-82">
-                            040 23 88 59-82
-                        </a></h3>
-                    <a class="btn btn-primary" onclick="scrollToAnchor('listed-offers-section')">Angebote ansehen</a>
+                    <h1>{{ trans('autooffer.message.welcome') }}</h1>
+                    <h3>
+                        @if (count($offers) === 0)
+                            {{ trans('autooffer.message.no_offers') }}
+                        @else
+                            {{ trans('autooffer.message.offers', ['destination' => $wish->destination]) }}
+                        @endif
+                            {{ trans('autooffer.message.callback') }}
+                        </h3>
+                    @if (count($offers) > 0)
+                        <a class="btn btn-primary" onclick="scrollToAnchor('listed-offers-section')">{{ trans('autooffer.offers.goto_button') }}</a>
+                    @endif
                 </div>
             </section>
 
@@ -31,10 +41,10 @@
                             <div class="agency-info">
                                 <div class="avatar avatar-circle size-1"></div>
                                 <div class="text">
-                                    <h3>Zuständiges Reisebüro</h3>
-                                    <h4>Reisebüro desiretec</h4>
-                                    <h4>Auf dem Sande 1</h4>
-                                    <h4>20457 Hamburg</h4>
+                                    <h3>{{ trans('autooffer.contact.company_contact_person') }}</h3>
+                                    <h4>{{ trans('autooffer.contact.company_name') }}</h4>
+                                    <h4>{{ trans('autooffer.contact.company_addr') }}</h4>
+                                    <h4>{{ trans('autooffer.contact.company_postal_addr') }}</h4>
                                 </div>
                             </div>
 
@@ -42,12 +52,16 @@
                                 <ul>
                                     <li class="phone">
                                         <!-- <i class="fal fa-phone-alt"></i> -->
-                                        <i class="fas fa-phone"></i>
-                                        <h4>089 - 714 595 35</h4>
+                                        <div class="icon-background">
+                                            <i class="fas fa-phone" aria-hidden="true"></i>
+                                        </div>
+                                        <h4>{{ trans('autooffer.contact.company_telephone') }}</h4>
                                     </li>
                                     <li class="name">
-                                        <i class="fal fa-envelope"></i>
-                                        <h4>main@reisebuero.de</h4>
+                                        <div class="icon-background">
+                                            <i class="fal fa-envelope" aria-hidden="true"></i>
+                                        </div>
+                                        <h4>{{ trans('autooffer.contact.company_email') }}</h4>
                                     </li>
                                 </ul>
                             </div>
@@ -107,29 +121,30 @@
 
                         </div>
                     </div>
-
+                    @if (count($offers) > 0)
                     <div id="top-map" class="map"></div>
-
+                    @endif
                     <a class="btn btn-secondary" onclick="showMenu()">Reisewunsch ansehen</a>
                 </div>
 
             </section>
-
+            @php
+                $count = 0;
+                $locations = [];
+            @endphp
+            @if (count($offers) > 0)
             <section class="listed-offers-section" id="listed-offers-section">
                 <div class="shell">
                     <div class="vertical-line"></div>
                     <h1>Meine Angebote</h1>
 
                     <ul class="offers">
-                        @php
-                            $count = 0;
-                            $locations = [];
-                        @endphp
+
                         @foreach($offers as $key => $offer)
                             @php
                                 $hotelData = [
                                     'title' => $offer['hotel_data']['data']['Hotelname'],
-                                    'stars' => intval($offer['hotel_data']['data']['Hotelkategorie']),
+                                    'stars' => key_exists('Hotelkategorie', $offer['hotel_data']['data']) ? intval($offer['hotel_data']['data']['Hotelkategorie']) : 0 ,
                                     'text' => $offer['data']['boardType'],
                                     'longitude' => $offer['data']['hotel_geo']['longitude'],
                                     'latitude' => $offer['data']['hotel_geo']['latitude']
@@ -212,7 +227,7 @@
                                         </div>
                                     </div>
                                     <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span></h3>
-                                    <a class="btn btn-primary" href="{{ route('autooffer.ttdetails', [$wish->id, $count]) }}">
+                                    <a class="btn btn-primary" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rgid=10019&rid=620&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&child=5,7&dur=13,15&price=0,{{ $wish->budget }}&board={{ $wish->catering }}&aid=168400">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>
@@ -227,7 +242,7 @@
                     </ul>
                 </div>
             </section>
-
+            @endif
         </div>
     </main>
 @endsection
@@ -245,6 +260,30 @@
 
     <script type="application/javascript">
 
+        $(document).ready(function(){
+            var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+
+            $('.btn-primary').css({
+                'background': brandColor,
+                'border': '1px solid ' + brandColor,
+                'color': '#fff',
+            });
+            $('.btn-secondary').css({
+                'background': '#fff',
+                'border': '1px solid ' + brandColor,
+                'color': brandColor,
+            });
+            $('.about-section h3 a').css({'color': brandColor});
+            $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
+            $('.fas.fa-heart, .fas.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
+            $('.offers .recommandations .average').css({'border-color': brandColor});
+            $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
+
+            if($('.offers .info-icons').length === 0) {
+                $('.offers .highlights').css({'padding-bottom': '15px'});
+            }
+        });
+
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
@@ -257,7 +296,7 @@
 
         function showMenu() {
             $('#offer-highlights').detach().appendTo('#main-offer-section-shell');
-            $('#offer-highlights').css('height', '180px');
+            $('#offer-highlights').css('height', '210px');
             $('#offer-highlights').toggle();
 
             // TODO: Fix animation
@@ -271,8 +310,8 @@
             infinite: true,
             speed: 300,
             slidesToShow: 1,
-            prevArrow: '<div class="btn btn-primary arrow-left"><i class="fa fa-chevron-left"></i></div>',
-            nextArrow: '<div class="btn btn-primary arrow-right"><i class="fa fa-chevron-right"></i></div>'
+            prevArrow: '<div class="btn arrow-left"><i class="fa fa-chevron-left"></i></div>',
+            nextArrow: '<div class="btn arrow-right"><i class="fa fa-chevron-right"></i></div>'
         });
 
     </script>
@@ -348,5 +387,4 @@
         }
         initialize();
     </script>
-
 @endsection

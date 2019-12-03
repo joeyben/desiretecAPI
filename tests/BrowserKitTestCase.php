@@ -4,7 +4,6 @@ namespace Tests;
 
 use App\Models\Access\Role\Role;
 use App\Models\Access\User\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,8 +11,7 @@ use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
 
 abstract class BrowserKitTestCase extends BaseTestCase
 {
-    use CreatesApplication,
-        RefreshDatabase;
+    use CreatesApplication;
 
     /**
      * @var
@@ -29,6 +27,11 @@ abstract class BrowserKitTestCase extends BaseTestCase
      * @var
      */
     protected $executive;
+
+    /**
+     * @var
+     */
+    protected $seller;
 
     /**
      * @var
@@ -65,7 +68,8 @@ abstract class BrowserKitTestCase extends BaseTestCase
          */
         $this->admin = User::find(1);
         $this->executive = User::find(2);
-        $this->user = User::find(3);
+        $this->seller = User::find(3);
+        $this->user = User::find(4);
         $this->adminRole = Role::find(1);
         $this->executiveRole = Role::find(2);
         $this->userRole = Role::find(3);

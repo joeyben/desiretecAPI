@@ -30,7 +30,8 @@
         @else
             {{ Html::style(mix('css/frontend.css')) }}
         @endif
-        {!! Html::style('js/select2/select2.css') !!}
+        {{-- {!! Html::style('js/select2/select2.min.css') !!} --}}
+
 
         @if(isWhiteLabel())
             {{ Html::style(mix('whitelabel/'.getCurrentWhiteLabelName().'/css/'.getCurrentWhiteLabelName().'.css')) }}
@@ -79,7 +80,8 @@
         @yield('after-scripts')
         {{ Html::script('js/jquerysession.js') }}
         {{ Html::script('js/frontend/frontend.js') }}
-        {!! Html::script('js/select2/select2.js') !!}
+       {{--  {!! Html::script('js/select2/select2.min.js') !!} --}}
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.js"></script>
 
         <script type="text/javascript">
             if("{{Route::currentRouteName()}}" !== "frontend.user.account")

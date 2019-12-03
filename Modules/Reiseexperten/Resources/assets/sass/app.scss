@@ -42,9 +42,17 @@ body{
 
 // Buttons
 
-.primary-btn, .secondary-btn{
+.primary-btn, .btn-primary, .secondary-btn, .btn-secondary{
   padding: 5px 20px;
   min-width: 220px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: transparent;
+  &:focus, &:hover, &:visited {
+    background: transparent;
+    border: 1px solid transparent;
+    color: transparent;
+  }
 }
 
 input:-internal-autofill-selected{
@@ -124,11 +132,22 @@ body{
 }
 
 // Logo Fix
+
 .navbar-default{
   a.logo{
     .navbar-brand{
       padding: 0;
       height: 50px !important;
+    }
+  }
+}
+
+// Auth views
+
+.panel-body{
+  .form-group{
+    a{
+      color: transparent;
     }
   }
 }

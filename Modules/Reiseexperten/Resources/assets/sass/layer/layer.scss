@@ -1203,9 +1203,10 @@ p.kwp-info {
     .kwp-header{
       h1{
         font-size: 20px;
+        line-height: 30px;
         margin: 0px;
         color:$master-primary;
-        padding: 25px 0;
+        padding: 35px 0;
         font-weight: bold;
         font-family: $font-family-brand;
         text-align: center;
@@ -1584,5 +1585,15 @@ and (max-device-width : 320px) {
     color: $master-primary;
     border: none;
     border-bottom: 1px solid $master-grey-light;
+    font-weight: normal;
+  }
+}
+
+.dt-modal {
+  .bootstrap-tagsinput {
+    padding: 0;
+    input {
+      min-width: 100%;
+    }
   }
 }

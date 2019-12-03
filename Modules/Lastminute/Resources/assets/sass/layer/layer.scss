@@ -1,6 +1,5 @@
 @import "utils";
 @import "rangeslider";
-@import "bootstrap-select";
 @import "../variables";
 
 $gutter: 30px;
@@ -456,24 +455,6 @@ $gutter: 30px;
       }
     }
   }
-
-  .bootstrap-select {
-    > .dropdown-toggle{
-      box-shadow: none;
-      border: none;
-      background: transparent;
-      height: 25px;
-      &:focus{
-        background: transparent;
-        padding: 2px 10px;
-      }
-      &:hover{
-        background: transparent !important;
-        padding: 2px 10px;
-        border: none !important;
-      }
-    }
-  }
 }
 
 .kwp.dt-modal-visible  {
@@ -795,38 +776,9 @@ p.kwp-info {
   .master-icon--aircraft-down, .master-icon--location-fill{
     display: none;
   }
-  .bootstrap-select>.dropdown-toggle{
-    box-shadow: none;
-    border: none;
-    padding: 2px 0;
-    background-color: transparent;
-    .caret{
-      border-color: $master-primary !important;
-      border-right: 6px solid transparent !important;
-      border-left: 6px solid transparent !important;
-      border-bottom: none !important;
-      border-top: 6px dashed $master-primary !important;
-      display: none;
-    }
-    .filter-option-inner-inner{
-      color: $master-primary;
-      font-size: 14px;
-      font-weight: 500;
-    }
-  }
   .open .btn-default.dropdown-toggle{
     background-color: transparent;
     outline: 0;
-  }
-  .bootstrap-select{
-    div.dropdown-menu {
-      max-height: 300px !important;
-      .inner {
-        &.open{
-          overflow-y: initial !important;
-        }
-      }
-    }
   }
 }
 .kwp-custom-select {
@@ -1476,9 +1428,6 @@ p.kwp-info {
     }
     .kwp-custom-select{
       margin-top: 5px;
-      #catering{
-        padding: 0;
-      }
     }
     .kwp textarea{
       resize: none;
@@ -1687,4 +1636,43 @@ input[name="direkt_flug"]{
 }
 .kwp-header-content{
   display: none;
+}
+
+
+//
+// Dropdown menus
+// --------------------------------------------------
+.dt-modal{
+
+  // Custom select
+  .custom-select{
+    margin-top: 5px;
+    padding-left: 5px;
+    color: $master-primary;
+    border: none;
+    border-bottom: 1px solid $master-grey-light;
+  }
+}
+
+.catering{
+  label{
+    padding-left: 5px;
+  }
+  select{
+    padding-left: 5px;
+  }
+}
+.dt-modal {
+  .bootstrap-tagsinput {
+    padding: 0;
+    border: none!important;
+    box-shadow: none!important;
+    min-width: 100%;
+  }
+}
+.bootstrap-tagsinput .tag {
+  color: #46799b!important;
+  background: #e0eaf1!important;
+  font-size: 11px;
+  font-weight: 600;
 }

@@ -11,7 +11,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Group extends Model
 {
-    use SoftDeletes, SearchableTrait, LogsActivity;
+    use SoftDeletes;
+    use SearchableTrait;
+    use LogsActivity;
 
     protected $guarded = [];
 

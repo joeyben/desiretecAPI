@@ -12,10 +12,23 @@
 
 @section('after-scripts')
     <script type="application/javascript">
-        var cssPrimaryBtn = '.primary-btn, .btn-primary { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
-        var cssSecondaryBtn = '.secondary-btn, .btn-secondary { background: transparent !important; color: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; margin-top: 8px; } ';
-        var cssFormElements = '.form-control:focus { border-bottom: 1px solid ' + brandColor + ' !important; } .form-group a { color: ' + brandColor + ' !important; }';
-        $('head').append('<style>' + cssPrimaryBtn + cssSecondaryBtn + cssFormElements + '</style>');
+        $(document).ready(function(){
+            $('.primary-btn').css({
+                'background': brandColor,
+                'border': '1px solid ' + brandColor,
+                'color': '#fff',
+            });
+            $('.secondary-btn').css({
+                'border': '1px solid ' + brandColor,
+                'color': brandColor,
+            });
+            $("input").focus(function(){
+                $(this).css({'border-color': brandColor});
+            });
+            $("input").blur(function(){
+                $(this).css({'border-color': 'inherit'});
+            });
+        });
     </script>
 @endsection
 
@@ -43,16 +56,6 @@
                             </div>
                         </div>
 
-                        <!--<div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>-->
-
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn primary-btn mb-0">
@@ -61,9 +64,6 @@
                                 <a href="{{route('frontend.auth.login')}}" class="btn secondary-btn">
                                     {{ trans('account.login.seller') }}
                                 </a>
-
-
-                                <!--<a href="{{ url('/login') }}" class="btn btn-link">Login with password instead</a>-->
                             </div>
                         </div>
                     </form>

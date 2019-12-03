@@ -65,7 +65,6 @@ class AgentsRepository extends BaseRepository
      */
     public function create(array $input)
     {
-
         DB::transaction(function () use ($input) {
             $input = $this->uploadImage($input);
             $input['user_id'] = access()->user()->id;
@@ -139,7 +138,7 @@ class AgentsRepository extends BaseRepository
      */
     public function uploadImage($input)
     {
-        if(!is_array($input)) {
+        if (!\is_array($input)) {
             $input = [];
         }
 
@@ -153,16 +152,15 @@ class AgentsRepository extends BaseRepository
             $input = array_merge($input, ['avatar' => $fileName]);
 
             return $input;
-        }else{
-
-            $fileName = 'avatar_default';
-
-            $this->storage->put($this->upload_path . $fileName, file_get_contents('https://desiretec.s3.eu-central-1.amazonaws.com/img/agent/1570145950wAvatarCallCenter2.png'), 'public');
-
-            $input = array_merge($input, ['avatar' => $fileName]);
-
-            return $input;
         }
+
+        $fileName = 'avatar_default';
+
+        $this->storage->put($this->upload_path . $fileName, file_get_contents('https://desiretec.s3.eu-central-1.amazonaws.com/img/agent/1570145950wAvatarCallCenter2.png'), 'public');
+
+        $input = array_merge($input, ['avatar' => $fileName]);
+
+        return $input;
     }
 
     /**
@@ -183,27 +181,28 @@ class AgentsRepository extends BaseRepository
         if ($whitelabel_group) {
             $user_group = DB::table('group_user')->where('group_id', $whitelabel_group->id)->first();
         }
-        if ($user_group){
-            $first_agent = DB::table('agents')->where([['user_id', $user_group->user_id], ['status','Active'], ['id','!=',$id]])->first();
+        if ($user_group) {
+            $first_agent = DB::table('agents')->where([['user_id', $user_group->user_id], ['status', 'Active'], ['id', '!=', $id]])->first();
         }
-        if ($first_agent){
+        if ($first_agent) {
             DB::table('offers')->where('agent_id', '=', $id)->update(['agent_id' => $first_agent->id]);
             DB::table('message')->where('agent_id', '=', $id)->update(['agent_id' => $first_agent->id]);
-        }else{
+        } else {
             DB::table('offers')->where('agent_id', '=', $id)->delete();
             DB::table('message')->where('agent_id', '=', $id)->delete();
         }
         DB::table('agents')->where('id', '=', $id)->delete();
     }
 
-    public function doUpdate($id, Request $request){
-        if (array_key_exists('avatar',$request->all())) {
+    public function doUpdate($id, Request $request)
+    {
+        if (\array_key_exists('avatar', $request->all())) {
             $avatar = ['avatar' => $this->uploadImage(['avatar' => $request->avatar])]['avatar']['avatar'];
 
             DB::table('agents')
                 ->where('id', $id)
                 ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone, 'avatar' => $avatar]);
-        }else{
+        } else {
             DB::table('agents')
                 ->where('id', $id)
                 ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone]);

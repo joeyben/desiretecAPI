@@ -1,6 +1,5 @@
 @import "utils";
 @import "rangeslider";
-@import "bootstrap-select";
 @import "../variables";
 
 $gutter: 30px;
@@ -14,23 +13,18 @@ $gutter: 30px;
 // Dropdown menus
 // --------------------------------------------------
 .dt-modal {
-  .bootstrap-select{
-    &.show-tick{
-      .dropdown-menu{
-        .selected{
-          span.check-mark{
-            background-image: url(../../svg/check.svg);
-            background-size: 20px;
-            background-position: right;
-            height: 20px;
-            width: 20px;
-            background-repeat: no-repeat;
-            top: 2px;
-            right: 10px;
-          }
-        }
-      }
-    }
+
+  // Custom select
+  .custom-select {
+    margin-top: 15px;
+    color: $master-primary;
+    border: none;
+    -webkit-transition: border-color .3s ease;
+    -moz-transition: border-color .3s ease;
+    -o-transition: border-color .3s ease;
+    transition: border-color .3s ease;
+    border-color: $master-primary;
+    font-weight: 500;
   }
 
   // Dropdown arrow/caret
@@ -1849,4 +1843,19 @@ input[name="direkt_flug"]{
 }
 .description textarea{
   height: 90px !important;
+}
+
+.dt-modal {
+  .bootstrap-tagsinput {
+    padding: 0;
+    border: none!important;
+    box-shadow: none!important;
+    min-width: 100%;
+  }
+}
+.bootstrap-tagsinput .tag {
+  color: #46799b!important;
+  background: #e0eaf1!important;
+  font-size: 11px;
+  font-weight: 600;
 }

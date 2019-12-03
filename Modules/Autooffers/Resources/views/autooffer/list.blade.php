@@ -112,7 +112,6 @@
                         </div>
                     </div>
 
-                    <!--<div class="map"></div>-->
 
                     <a class="btn btn-secondary" onclick="showMenu()">Reisewunsch ansehen</a>
                 </div>
@@ -127,6 +126,7 @@
                     <ul class="offers">
                         @php
                             $count = 0;
+                            $locations = [];
                         @endphp
                         @foreach($offers as $offer)
                             <li class="offer box-shadow">
@@ -136,11 +136,11 @@
                                 @endif
                                 <div class="slick-slider">
                                     <!-- TODO: Add images and style them -->
-                                    @if (is_array($offer['hotel_data']['data']['Bildfile']))
+                                    @if (isset($offer['hotel_data']['data']['Bildfile']) and is_array($offer['hotel_data']['data']['Bildfile']))
                                         @foreach($offer['hotel_data']['data']['Bildfile'] as $image)
                                             <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $image) !!})"></div>
                                         @endforeach
-                                    @else
+                                    @elseif (isset($offer['hotel_data']['data']['Bildfile']))
                                         <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $offer['hotel_data']['data']['Bildfile']) !!})"></div>
                                     @endif
                                 </div>
@@ -166,7 +166,7 @@
                                 </div>
 
                                 <div class="recommandations">
-                                    <div class="average"><?= number_format(intval($offer['data']['hotelOffer']['hotel']['rating']['overall']) / 10, 1 , ',', '.') ?></div>
+                                    <div class="average"><?= number_format((int) ($offer['data']['hotelOffer']['hotel']['rating']['overall']) / 10, 1, ',', '.'); ?></div>
                                     <div class="text">
                                         <h4 class="dark-grey-2">Empfehlenswert</h4>
                                         <h4>{{ $offer['data']['hotelOffer']['hotel']['rating']['count'] }} Bewertungen</h4>
@@ -222,6 +222,30 @@
 
     <script type="application/javascript">
 
+        $(document).ready(function(){
+            var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+
+            $('.btn-primary').css({
+                'background': brandColor,
+                'border': '1px solid ' + brandColor,
+                'color': '#fff',
+            });
+            $('.btn-secondary').css({
+                'background': '#fff',
+                'border': '1px solid ' + brandColor,
+                'color': brandColor,
+            });
+            $('.about-section h3 a').css({'color': brandColor});
+            $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
+            $('.fas.fa-heart, .fas.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
+            $('.offers .recommandations .average').css({'border-color': brandColor});
+            $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
+
+            if($('.offers .info-icons').length === 0) {
+                $('.offers .highlights').css({'padding-bottom': '15px'});
+            }
+        });
+
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
@@ -248,9 +272,11 @@
             infinite: true,
             speed: 300,
             slidesToShow: 1,
-            prevArrow: '<div class="btn btn-primary arrow-left"><i class="fa fa-chevron-left"></i></div>',
-            nextArrow: '<div class="btn btn-primary arrow-right"><i class="fa fa-chevron-right"></i></div>'
+            prevArrow: '<div class="btn arrow-left"><i class="fa fa-chevron-left"></i></div>',
+            nextArrow: '<div class="btn arrow-right"><i class="fa fa-chevron-right"></i></div>'
         });
 
     </script>
+
+
 @endsection

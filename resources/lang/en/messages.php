@@ -51,4 +51,5 @@ return [
     'background'                 => 'The background image has to be--- x --- Pixel in PNG / JPG / JPEG format. Maximum size --- KB.',
     'logo'                       => 'Logo has to be --- x --- Pixel in PNG / JPG / JPEG / SVG format. Maximum size --- KB.',
     'favicon'                    => 'Favicon has to be --- x --- Pixel in PNG / ICON format. Maximum size --- KB.',
+    'token_send'                 => 'We\'ve sent you a login link!',
 ];

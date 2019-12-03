@@ -146,28 +146,26 @@ class GroupsController extends Controller
     public function create(Request $request)
     {
         try {
-
             $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
 
             //$whitelabel = Whitelabel::find($request->get('whitelabelId'));
-
 
             if ((null === $whitelabel) && $request->has('whitelabelId')) {
                 $whitelabel = $this->whitelabels->find($request->get('whitelabelId'));
             }
 
             $result['group'] = [
-                'id'                               => 0,
-                'name'                             => '',
-                'display_name'                     => '',
-                'description'                      => '',
-                'status'                           => true,
-                'current'                          => false,
-                'users'                            => [],
-                'owner'                            => $this->auth->guard('web')->user()->first_name . ' ' . $this->auth->guard('web')->user()->last_name,
-                'logs'                             => [],
-                'whitelabel'                       => $whitelabel,
-                'whitelabel_id'                    => $whitelabel->id,
+                'id'                                 => 0,
+                'name'                               => '',
+                'display_name'                       => '',
+                'description'                        => '',
+                'status'                             => true,
+                'current'                            => false,
+                'users'                              => [],
+                'owner'                              => $this->auth->guard('web')->user()->first_name . ' ' . $this->auth->guard('web')->user()->last_name,
+                'logs'                               => [],
+                'whitelabel'                         => $whitelabel,
+                'whitelabel_id'                      => $whitelabel->id,
                 'deactivate_at'                      => null,
                 'deactivate_until'                   => null,
             ];

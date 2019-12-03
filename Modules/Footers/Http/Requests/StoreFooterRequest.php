@@ -14,9 +14,9 @@ class StoreFooterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:3|max:255',
-            'url' => 'required|url',
-            'position' => 'required|int|min:1',
+            'name'          => 'required|string|min:3|max:255',
+            'url'           => 'required|url',
+            'position'      => 'required|int|min:1',
             'whitelabel_id' => 'required|int|min:1',
         ];
     }

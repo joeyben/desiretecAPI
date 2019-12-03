@@ -54,3 +54,32 @@
         @endif
 </div>
 
+@section('after-scripts-include')
+
+<script>
+    $(document).ready(function(){
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+
+        $('.primary-btn').css({
+            'background': brandColor,
+            'border': '1px solid ' + brandColor,
+            'color': '#fff',
+        });
+        $('.secondary-btn').css({
+            'background': '#fff',
+            'border': '1px solid ' + brandColor,
+            'color': brandColor,
+        });
+        $("input").focus(function(){
+            $(this).css({'border-color': brandColor});
+        });
+        $("input").blur(function(){
+            $(this).css({'border-color': 'inherit'});
+        });
+        $('.fileUpload').css({
+            'padding': '7px 20px',
+        });
+    });
+</script>
+
+@endsection

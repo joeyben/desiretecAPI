@@ -12,7 +12,7 @@ class AddValueToCategoriesTables extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->string('value');
+            $table->string('value')->nullable();
         });
     }
 

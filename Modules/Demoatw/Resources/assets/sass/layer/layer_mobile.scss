@@ -1,6 +1,6 @@
 @import "utils";
 @import "rangeslider";
-@import "bootstrap-select";
+@import "../../../../../../resources/assets/sass/layer/bootstrap-select";
 @import "../variables";
 
 $gutter: 30px;
@@ -1842,4 +1842,19 @@ input[name="direkt_flug"]{
 }
 .description textarea{
   height: 90px !important;
+}
+
+.dt-modal {
+  .bootstrap-tagsinput {
+    padding: 0;
+    border: none!important;
+    box-shadow: none!important;
+    min-width: 100%;
+  }
+}
+.bootstrap-tagsinput .tag {
+  color: #46799b!important;
+  background: #e0eaf1!important;
+  font-size: 11px;
+  font-weight: 600;
 }

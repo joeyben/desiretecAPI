@@ -50,34 +50,36 @@ trait WishAttribute
     /**
      * @return string
      */
-    public function getAdultsAttribute($value){
+    public function getAdultsAttribute($value)
+    {
         return $value;
     }
 
     /**
      * @param $value
+     *
      * @return mixed
      */
-    public function getAdultsExtendedAttribute(){
+    public function getAdultsExtendedAttribute()
+    {
         return transformTravelers($this->adults, 'adults');
     }
 
     /**
      * @param $value
+     *
      * @return mixed
      */
-    public function getKidsAttribute($value){
+    public function getKidsAttribute($value)
+    {
         return $value;
     }
-
 
     /**
      * @return string
      */
-    public function getKidsExtendedAttribute(){
+    public function getKidsExtendedAttribute()
+    {
         return transformTravelers($this->kids, 'kids');
     }
-
-
-
 }

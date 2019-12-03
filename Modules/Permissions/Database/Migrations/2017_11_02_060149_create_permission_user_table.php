@@ -24,8 +24,14 @@ class CreatePermissionUserTable extends Migration
      */
     public function down()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        if ('testing' !== app()->environment()) {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        }
+
         Schema::dropIfExists('permission_user');
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+
+        if ('testing' !== app()->environment()) {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        }
     }
 }

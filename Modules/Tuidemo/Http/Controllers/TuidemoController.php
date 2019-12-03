@@ -21,7 +21,6 @@ class TuidemoController extends Controller
     protected $duration = [];
     protected $ages = [];
 
-
     private $whitelabelId;
 
     const BODY_CLASS = 'landing';
@@ -73,15 +72,15 @@ class TuidemoController extends Controller
     public function show(Request $request)
     {
         $input = $request->only('variant');
-        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
 
-        $html = view('tuidemo::'.$layer)->with([
+        $html = view('tuidemo::' . $layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
             'ages_arr'     => $this->ages,
-            'request' => $request->all()
+            'request'      => $request->all()
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -100,15 +99,15 @@ class TuidemoController extends Controller
     {
         $input = $request->all();
         if ($request->failed()) {
-            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
-            $html = view('tuidemo::'.$layer)->with([
+            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+            $html = view('tuidemo::' . $layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
                 'ages_arr'     => $this->ages,
-                'request' => $request->all()
+                'request'      => $request->all()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -154,7 +153,7 @@ class TuidemoController extends Controller
 
             return $new_user;
         }
-        $input['whitelabel_name'] = $this->whitelabel->getById(intval($this->whitelabelId))['display_name'];
+        $input['whitelabel_name'] = $this->whitelabel->getById((int) ($this->whitelabelId))['display_name'];
 
         $new_user = $user->create($input);
         $new_user->storeToken();
@@ -174,31 +173,30 @@ class TuidemoController extends Controller
      */
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
-
         $input = $request->all();
         // TODO: Change to only not except. (Exmpl: only('destination', etc
         $extra = [
             'locationAttributes' => isset($input['locationAttributes']) ? $input['locationAttributes'] : '',
-            'facilityAttributes'=> isset($input['facilityAttributes']) ? $input['facilityAttributes'] : '',
-            'travelAttributes'=> isset($input['travelAttributes']) ? $input['travelAttributes'] : '',
-            'maxStopOver'=> isset($input['maxStopOver']) ? $input['maxStopOver'] : '',
-            'cities'=> isset($input['cities']) ? $input['cities'] : '',
-            'ratings'=> isset($input['ratings']) ? $input['ratings'] : '',
-            'recommendationRate'=> isset($input['recommendationRate']) ? $input['recommendationRate'] : '',
-            'minPrice'=> isset($input['minPrice']) ? $input['minPrice'] : '',
-            'roomType'=> isset($input['roomType']) ? $input['roomType'] : '',
-            'earlyBird'=> isset($input['earlyBird']) ? $input['earlyBird'] : '',
-            'familyAttributes'=> isset($input['familyAttributes']) ? $input['familyAttributes'] : '',
-            'wellnessAttributes'=> isset($input['wellnessAttributes']) ? $input['wellnessAttributes'] : '',
-            'sportAttributes'=> isset($input['sportAttributes']) ? $input['sportAttributes'] : '',
-            'airlines'=> isset($input['airlines']) ? $input['airlines'] : '',
-            'hotelChains' => isset($input['hotelChains']) ? $input['hotelChains'] : '',
-            'operators' => isset($input['operators']) ? $input['operators'] : ''
+            'facilityAttributes' => isset($input['facilityAttributes']) ? $input['facilityAttributes'] : '',
+            'travelAttributes'   => isset($input['travelAttributes']) ? $input['travelAttributes'] : '',
+            'maxStopOver'        => isset($input['maxStopOver']) ? $input['maxStopOver'] : '',
+            'cities'             => isset($input['cities']) ? $input['cities'] : '',
+            'ratings'            => isset($input['ratings']) ? $input['ratings'] : '',
+            'recommendationRate' => isset($input['recommendationRate']) ? $input['recommendationRate'] : '',
+            'minPrice'           => isset($input['minPrice']) ? $input['minPrice'] : '',
+            'roomType'           => isset($input['roomType']) ? $input['roomType'] : '',
+            'earlyBird'          => isset($input['earlyBird']) ? $input['earlyBird'] : '',
+            'familyAttributes'   => isset($input['familyAttributes']) ? $input['familyAttributes'] : '',
+            'wellnessAttributes' => isset($input['wellnessAttributes']) ? $input['wellnessAttributes'] : '',
+            'sportAttributes'    => isset($input['sportAttributes']) ? $input['sportAttributes'] : '',
+            'airlines'           => isset($input['airlines']) ? $input['airlines'] : '',
+            'hotelChains'        => isset($input['hotelChains']) ? $input['hotelChains'] : '',
+            'operators'          => isset($input['operators']) ? $input['operators'] : ''
         ];
 
         $request->merge([
             'featured_image' => 'bg.jpg',
-            'extra_params' => json_encode($extra)
+            'extra_params'   => json_encode($extra)
         ]);
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email',
@@ -238,5 +236,10 @@ class TuidemoController extends Controller
         }
 
         return $duration;
+    }
+
+    public function getPDF()
+    {
+        return view('tuidemo::layer.pdf');
     }
 }

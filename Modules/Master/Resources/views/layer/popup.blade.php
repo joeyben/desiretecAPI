@@ -1,3 +1,9 @@
+@if (isset($color))
+    <script type="application/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+@endisset
+
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
@@ -147,7 +153,10 @@
 
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('master::layer.general.catering'), ['class' => 'control-label required']) }}
-                    {{ Form::select('catering', $catering_arr, '',['class' => 'selectpicker']) }}
+                <div class="kwp-custom-select">
+                    {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelers form-control box-size']) }}
+                </div>
+                <span class="caret"></span>
             </div>
 
         </div>

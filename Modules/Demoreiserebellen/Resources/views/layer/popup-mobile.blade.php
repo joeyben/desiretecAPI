@@ -1,3 +1,7 @@
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+
 {{ Form::open(['route' => 'demoreiserebellen.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <div class="kwp-minimal">
@@ -422,26 +426,44 @@
              */
             var autocomplete = function(){
               /* Destinations */
-              $.get('get-all-destinations', function(data){
-                $("#destination").typeahead({
-                  autoSelect: true,
+              $('#destination').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                  autoSelect: false,
                   minLength: 3,
-                  delay: 200,
-                  source: data
-                });
+                  highlight: true,
+                  source: function(query) {
+                    return $.get('get-all-destinations', {query: query});
+                  }
+                }
               });
               /* END Destinations */
 
               /* Airports */
-              $.get('get-all-airports', function(data){
-                $("#airport").typeahead({
-                  autoSelect: true,
+              $('#airport').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                  autoSelect: false,
                   minLength: 3,
-                  delay: 200,
-                  source: data
-                });
+                  highlight: true,
+                  source: function(query) {
+                    return $.get('get-all-airports', {query: query});
+                  }
+                }
               });
               /* END Airports */
+
+
+              $("#destination, #airport").on('itemAdded', function(event) {
+                setTimeout(function(){
+                  $("input[type=text]",".bootstrap-tagsinput").val("");
+                }, 1);
+              });
+
 
             }
 

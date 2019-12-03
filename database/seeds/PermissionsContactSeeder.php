@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\DB;
  */
 class PermissionsContactSeeder extends Seeder
 {
-    use DisableForeignKeys;
-
     const PERMISSIONS = [
         ['name' => 'View Contact'],
         ['name' => 'Create Contact'],
@@ -26,7 +24,9 @@ class PermissionsContactSeeder extends Seeder
      */
     public function run()
     {
-        $this->disableForeignKeys();
+        if(app()->environment() !== 'testing') {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        }
 
         /**
          * Don't need to assign any permissions to administrator because the all flag is set to true
@@ -42,12 +42,15 @@ class PermissionsContactSeeder extends Seeder
                     'name' => str_slug($value['name']),
                     'display_name' => $value['name'],
                     'status' => 1,
-                    'created_at' => DB::raw('now()'),
-                    'updated_at' => DB::raw('now()')
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]);
             }
         }
-        $this->enableForeignKeys();
+
+        if(app()->environment() !== 'testing') {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        }
     }
 }
 

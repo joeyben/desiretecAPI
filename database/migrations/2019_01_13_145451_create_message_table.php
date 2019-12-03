@@ -34,8 +34,14 @@ class CreateMessageTable extends Migration
      */
     public function down()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        if(app()->environment() !== 'testing') {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        }
+
         Schema::dropIfExists('message');
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+
+        if(app()->environment() !== 'testing') {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        }
     }
 }

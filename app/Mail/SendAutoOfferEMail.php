@@ -6,23 +6,24 @@ use App\Models\Wishes\Wish;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendAutoOfferEMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
     protected $wishId;
     protected $type;
-    public function __construct($wishId, $type)
+    protected $token;
+
+    public function __construct($wishId, $type, $token)
     {
         $this->wishId = $wishId;
         $this->type = $type;
+        $this->token = $token;
     }
 
     /**
@@ -32,9 +33,10 @@ class SendAutoOfferEMail extends Mailable
      */
     public function build()
     {
-        $wish = Wish::where('id',$this->wishId)->first();
-        return $this->view('wishes::emails.autooffer')->with([
-            'url'         => $wish->whitelabel->domain."/offer/ttlist/".$this->wishId
-        ]);;
+        $wish = Wish::where('id', $this->wishId)->first();
+
+        return $this->from(getCurrentWhiteLabelEmail(),trans('autooffers.email.name'))->subject(trans('autooffer.email.subject'))->view('wishes::emails.autooffer')->with([
+            'url'         => $wish->whitelabel->domain . '/offer/olist/' . $this->wishId . '/' . $this->token
+        ]);
     }
 }

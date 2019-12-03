@@ -4,8 +4,8 @@ namespace Modules\Novasol\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
-use App\Models\Wishes\Wish;
 use App\Models\Agents\Agent;
+use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
@@ -27,8 +27,6 @@ class NovasolWishesController extends Controller
         'Deleted'      => 'Deleted',
     ];
 
-
-
     protected $adults = [];
     protected $kids = [];
     protected $pets = [];
@@ -48,7 +46,7 @@ class NovasolWishesController extends Controller
 
     /**
      * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
      */
     public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories)
     {
@@ -73,6 +71,7 @@ class NovasolWishesController extends Controller
         if ($this->wish->validateToken($token)) {
             return redirect()->to('/wish/' . $wish->id);
         }
+
         return redirect()->to('/');
     }
 
@@ -86,6 +85,7 @@ class NovasolWishesController extends Controller
         if ($this->wish->validateToken($token)) {
             return redirect()->to('/wishlist');
         }
+
         return redirect()->to('/');
     }
 
@@ -96,7 +96,7 @@ class NovasolWishesController extends Controller
      */
     public function view(Wish $wish)
     {
-        if (!auth()->user()){
+        if (!auth()->user()) {
             return redirect()->to('/');
         }
         $offers = $wish->offers;
@@ -120,7 +120,6 @@ class NovasolWishesController extends Controller
             'adults_arr'   => $this->adults,
             'is_owner'     => $isOwner
         ]);
-
     }
 
     /**
@@ -133,7 +132,7 @@ class NovasolWishesController extends Controller
         //var_dump($request->ip());
         return view('novasol::wish.index')->with([
             'status'     => $this->status,
-            'count'      => count($this->wish->getForDataTable()->get()->toArray()),
+            'count'      => \count($this->wish->getForDataTable()->get()->toArray()),
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }
@@ -167,9 +166,8 @@ class NovasolWishesController extends Controller
      */
     private function translatePets($pets)
     {
-
         foreach ($pets as $key => $value) {
-            $pets[$key] = trans('layer.pets.'.$value);
+            $pets[$key] = trans('layer.pets.' . $value);
         }
 
         return $pets;

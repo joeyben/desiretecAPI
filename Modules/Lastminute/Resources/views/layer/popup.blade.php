@@ -8,6 +8,9 @@
     }
 </style>
 
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
 
 <div class="kwp-middle">
     Wir helfen Ihnen gerne, Ihre persönlichen Traumferien zu finden.<br> Probieren Sie es jetzt aus!
@@ -231,7 +234,7 @@
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('lastminute::layer.general.catering'), ['class' => 'control-label']) }}
                 <div class="kwp-custom-select">
-                {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelers']) }}
+                    {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'form-control box-size']) }}
                 </div>
                 <span class="caret"></span>
             </div>
@@ -476,29 +479,46 @@
             /**
              * Autocomplete
              */
-            function autocomplete(){
+            var autocomplete = function(){
+              /* Destinations */
+              $('#destination').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                  autoSelect: false,
+                  minLength: 3,
+                  highlight: true,
+                  source: function(query) {
+                    return $.get('get-all-destinations', {query: query});
+                  }
+                }
+              });
+              /* END Destinations */
 
-                $.get('getTTRegions', function(data){
-                    $("#destination").typeahead({
-                        autoSelect: true,
-                        minLength: 3,
-                        delay: 200,
-                        source: data
-                    });
-                });
+              /* Airports */
+              $('#airport').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                  autoSelect: false,
+                  minLength: 3,
+                  highlight: true,
+                  source: function(query) {
+                    return $.get('get-all-airports', {query: query});
+                  }
+                }
+              });
+              /* END Airports */
 
-                /* END Destinations */
 
-                /* Airports */
-                $.get('get-all-airports', function(data){
-                    $("#airport").typeahead({
-                        autoSelect: true,
-                        minLength: 3,
-                        delay: 200,
-                        source: data
-                    });
-                });
-                /* END Airports */
+              $("#destination, #airport").on('itemAdded', function(event) {
+                setTimeout(function(){
+                  $("input[type=text]",".bootstrap-tagsinput").val("");
+                }, 1);
+              });
+
 
             }
 

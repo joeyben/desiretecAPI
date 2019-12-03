@@ -1,3 +1,7 @@
+<script type="text/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+
 {{ Form::open(['route' => 'reiseexperten.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <div class="kwp-minimal">

@@ -56,7 +56,8 @@ class EloquentAttachmentsRepository extends RepositoryAbstract implements Attach
      *
      * @return mixed
      */
-    public function getAttachementsByType($id, $type){
+    public function getAttachementsByType($id, $type)
+    {
         $attachments = $this->model
             ->select([
                 config('module.attachments.table') . '.basename',
@@ -66,12 +67,10 @@ class EloquentAttachmentsRepository extends RepositoryAbstract implements Attach
             ->where('type', 'whitelabels/' . $type)
             ->first();
 
-        if(!is_null($attachments)){
+        if (null !== $attachments) {
             return $attachments->toArray();
         }
 
         return null;
-
-
     }
 }

@@ -17,7 +17,7 @@
                 </span>
 
                 <ul class="navbar-nav flex-wrap">
-                    <li class="nav-item m-1">
+                    <li class="nav-item m-1" v-if="hasRole('Administrator')">
                         <el-select v-model="whitelabelId" placeholder="Please choose a Whitelabel" style="width: 100%;" @input="doWhitelabel">
                             <el-option
                                     v-for="item in whitelabels"
@@ -169,7 +169,7 @@ export default {
         whitelabels: 'whitelabels'
       }),
       can_filter () {
-        return this.hasRole('Administrator')
+        return this.hasRole('Executive')
       }
     },
     methods: {

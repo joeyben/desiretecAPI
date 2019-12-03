@@ -13,13 +13,14 @@ class CreateNovasolCountries extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('novasol_country', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->integer('novasol_code')->unsigned();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('novasol_country')) {
+            Schema::create('novasol_country', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->integer('novasol_code')->unsigned();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -29,6 +30,6 @@ class CreateNovasolCountries extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('novasol_country');
     }
 }

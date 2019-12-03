@@ -22,7 +22,6 @@ class DemokreuzfahrtberatungController extends Controller
     protected $duration = [];
     protected $ages = [];
 
-
     private $whitelabelId;
 
     const BODY_CLASS = 'landing';
@@ -76,16 +75,18 @@ class DemokreuzfahrtberatungController extends Controller
     public function show(Request $request)
     {
         $input = $request->only('variant');
-        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+        $whitelabel = $this->whitelabel->getByName('Demokreuzfahrtberatung');
 
-        $html = view('demokreuzfahrtberatung::'.$layer)->with([
+        $html = view('demokreuzfahrtberatung::' . $layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
             'class_arr'    => $this->class,
             'ages_arr'     => $this->ages,
-            'request' => $request->all()
+            'request'      => $request->all(),
+            'color'        => $whitelabel['color'],
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -104,8 +105,8 @@ class DemokreuzfahrtberatungController extends Controller
     {
         $input = $request->all();
         if ($request->failed()) {
-            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
-            $html = view('demokreuzfahrtberatung::'.$layer)->with([
+            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+            $html = view('demokreuzfahrtberatung::' . $layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
@@ -113,7 +114,7 @@ class DemokreuzfahrtberatungController extends Controller
                 'duration_arr' => $this->duration,
                 'ages_arr'     => $this->ages,
                 'class_arr'    => $this->class,
-                'request' => $request->all()
+                'request'      => $request->all()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -159,7 +160,7 @@ class DemokreuzfahrtberatungController extends Controller
 
             return $new_user;
         }
-        $input['whitelabel_name'] = $this->whitelabel->getById(intval($this->whitelabelId))['display_name'];
+        $input['whitelabel_name'] = $this->whitelabel->getById((int) ($this->whitelabelId))['display_name'];
 
         $new_user = $user->create($input);
         $new_user->storeToken();
@@ -182,7 +183,7 @@ class DemokreuzfahrtberatungController extends Controller
         $request->merge(['featured_image' => 'bg.jpg']);
 
         $new_wish = $wish->create(
-            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms','airport','budget','ages1','ages2','ages3'),
+            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'airport', 'budget', 'ages1', 'ages2', 'ages3'),
              $this->whitelabelId
         );
 

@@ -21,8 +21,8 @@ class WhitelabelsTableSeeder extends Seeder
                 'display_name'      => 'Round Robin',
                 'description'       => 'Round Robin',
                 'created_by'        => 1,
-                'created_at'        => DB::raw('now()'),
-                'updated_at'        => DB::raw('now()'),
+                'created_at'        => now(),
+                'updated_at'        => now(),
             ]);
         }
 
@@ -32,88 +32,135 @@ class WhitelabelsTableSeeder extends Seeder
                 'display_name'      => 'Regional',
                 'description'       => 'Regional Distribution',
                 'created_by'        => 1,
-                'created_at'        => DB::raw('now()'),
-                'updated_at'        => DB::raw('now()'),
+                'created_at'        => now(),
+                'updated_at'        => now(),
             ]);
         }
 
         DB::table('whitelabels')->insertGetId([
-            'name'                    => 'tui',
-            'display_name'            => 'TUI Deutschland',
+            'name'                    => 'Master',
+            'display_name'            => 'master',
             'status'                  => true,
             'created_by'              => 1,
             'distribution_id'         => 1,
-            'state'                   => 3,
-            'created_at'              => DB::raw('now()'),
-            'updated_at'              => DB::raw('now()'),
+            'created_at'              => now(),
+            'updated_at'              => now(),
         ]);
 
         DB::table('whitelabels')->insertGetId([
-            'name'                    => 'aida',
-            'display_name'            => 'Aida',
+            'name'                    => 'Trendtours',
+            'display_name'            => 'Trendtours',
             'status'                  => true,
             'created_by'              => 1,
             'distribution_id'         => 2,
-            'state'                   => 3,
-            'created_at'              => DB::raw('now()'),
-            'updated_at'              => DB::raw('now()'),
+            'created_at'              => now(),
+            'updated_at'              => now(),
         ]);
 
         DB::table('whitelabels')->insertGetId([
-            'name'                    => 'tuisp',
-            'display_name'            => 'TUI Spain',
+            'name'                    => 'Lastminute',
+            'display_name'            => 'Lastminute',
+            'status'                  => true,
+            'created_by'              => 1,
+            'distribution_id'         => 1,
+            'created_at'              => now(),
+            'updated_at'              => now(),
+        ]);
+
+        DB::table('whitelabels')->insertGetId([
+            'name'                    => 'Tuidemo',
+            'display_name'            => 'Tuidemo',
+            'status'                  => true,
+            'created_by'              => 1,
+            'distribution_id'         => 1,
+            'created_at'              => now(),
+            'updated_at'              => now(),
+        ]);
+
+        DB::table('whitelabels')->insertGetId([
+            'name'                    => 'Traveloverland',
+            'display_name'            => 'Traveloverland',
             'status'                  => true,
             'created_by'              => 1,
             'distribution_id'         => 1,
             'state'                   => 3,
-            'created_at'              => DB::raw('now()'),
-            'updated_at'              => DB::raw('now()'),
+            'created_at'              => now(),
+            'updated_at'              => now(),
         ]);
 
         DB::table('whitelabels')->insertGetId([
-            'name'                    => 'tcook',
-            'display_name'            => 'Thomas Cook',
+            'name'                    => 'Reiseexperten',
+            'display_name'            => 'Reiseexperten',
             'status'                  => true,
             'created_by'              => 1,
             'distribution_id'         => 1,
             'state'                   => 3,
-            'created_at'              => DB::raw('now()'),
-            'updated_at'              => DB::raw('now()'),
+            'created_at'              => now(),
+            'updated_at'              => now(),
         ]);
 
         DB::table('whitelabels')->insertGetId([
-            'name'                    => 'tui-pg',
-            'display_name'            => 'TUI Portugal',
+            'name'                    => 'Tui',
+            'display_name'            => 'tui',
             'status'                  => true,
             'created_by'              => 1,
             'distribution_id'         => 1,
             'state'                   => 3,
-            'created_at'              => DB::raw('now()'),
-            'updated_at'              => DB::raw('now()'),
+            'created_at'              => now(),
+            'updated_at'              => now(),
         ]);
 
         DB::table('whitelabels')->insertGetId([
-            'name'                    => 'nmviajes',
-            'display_name'            => 'Nmviajes',
+            'name'                    => 'Demokreuzfahrtberatung',
+            'display_name'            => 'demokreuzfahrtberatung',
             'status'                  => true,
             'created_by'              => 1,
             'distribution_id'         => 1,
             'state'                   => 3,
-            'created_at'              => DB::raw('now()'),
-            'updated_at'              => DB::raw('now()'),
+            'created_at'              => now(),
+            'updated_at'              => now(),
+        ]);
+
+        DB::table('whitelabels')->insertGetId([
+            'name'                    => 'Demoreiserebellen',
+            'display_name'            => 'demoreiserebellen',
+            'status'                  => true,
+            'created_by'              => 1,
+            'distribution_id'         => 1,
+            'state'                   => 3,
+            'created_at'              => now(),
+            'updated_at'              => now(),
+        ]);
+
+        DB::table('whitelabels')->insertGetId([
+            'name'                    => 'Testkurenundwellness',
+            'display_name'            => 'testkurenundwellness',
+            'status'                  => true,
+            'created_by'              => 1,
+            'distribution_id'         => 1,
+            'state'                   => 3,
+            'created_at'              => now(),
+            'updated_at'              => now(),
+        ]);
+
+        DB::table('whitelabels')->insertGetId([
+            'name'                    => 'Demoatw',
+            'display_name'            => 'Demoatw',
+            'status'                  => true,
+            'created_by'              => 1,
+            'distribution_id'         => 1,
+            'state'                   => 3,
+            'created_at'              => now(),
+            'updated_at'              => now(),
         ]);
 
         //Attach user role to general user
         $user_model = config('auth.providers.users.model');
         $user_model = new $user_model();
-        $user_model::find(5)->whitelabels()->sync([1]);
+        $user_model::find(2)->whitelabels()->sync([1]);
         //Attach user role to general user
         $user_model = config('auth.providers.users.model');
         $user_model = new $user_model();
-        $user_model::find(6)->whitelabels()->sync([1]);
-        //Attach user role to general user
-        $user_model = config('auth.providers.users.model');
-        $user_model = new $user_model();
-        $user_model::find(7)->whitelabels()->sync([2]);
+        $user_model::find(3)->whitelabels()->sync([1]);
     }
 }

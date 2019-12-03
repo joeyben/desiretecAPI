@@ -21,8 +21,8 @@ class WishesDatabaseSeeder extends Seeder
                     'name'         => str_slug($value),
                     'display_name' => $value,
                     'status'       => 1,
-                    'created_at'   => DB::raw('now()'),
-                    'updated_at'   => DB::raw('now()')
+                    'created_at'   => now(),
+                    'updated_at'   => now()
                 ]);
             }
         }
@@ -47,7 +47,7 @@ class WishesDatabaseSeeder extends Seeder
                 'group_id'          => $faker->numberBetween(1, 5),
                 'whitelabel_id'     => $faker->numberBetween(1, 5),
                 'created_at'        => $faker->dateTimeThisMonth(),
-                'updated_at'        => DB::raw('now()'),
+                'updated_at'        => now(),
             ]);
         }
     }

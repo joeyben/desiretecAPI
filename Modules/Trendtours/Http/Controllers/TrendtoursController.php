@@ -6,13 +6,13 @@ use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Access\User\UserRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Trendtours\Http\Requests\StoreWishRequest;
-use Carbon\Carbon;
 
 class TrendtoursController extends Controller
 {
@@ -73,13 +73,13 @@ class TrendtoursController extends Controller
     public function show(Request $request)
     {
         $input = $request->only('variant');
-        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
-        $html = view('trendtours::'.$layer)->with([
-            'adults_arr'   => $this->adults,
+        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+        $html = view('trendtours::' . $layer)->with([
+            'adults_arr'     => $this->adults,
             'months_arr'     => $this->months,
-            'catering_arr' => $this->catering,
-            'duration_arr' => $this->duration,
-            'request' => $request->all()
+            'catering_arr'   => $this->catering,
+            'duration_arr'   => $this->duration,
+            'request'        => $request->all()
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -96,22 +96,21 @@ class TrendtoursController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
-
         $input = $request->all();
         if ($request->failed()) {
-            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
-            $html = view('trendtours::'.$layer)->with([
-                'adults_arr'   => $this->adults,
-                'errors'       => $request->errors(),
+            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+            $html = view('trendtours::' . $layer)->with([
+                'adults_arr'     => $this->adults,
+                'errors'         => $request->errors(),
                 'months_arr'     => $this->months,
-                'catering_arr' => $this->catering,
-                'duration_arr' => $this->duration,
-                'request' => $input
+                'catering_arr'   => $this->catering,
+                'duration_arr'   => $this->duration,
+                'request'        => $input
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
         }
-        $newsletter = $request->has('newsletter') ? true : false ;
+        $newsletter = $request->has('newsletter') ? true : false;
         session(['newsletter' => $newsletter]);
 
         $newUser = $user->createUserFromLayer(
@@ -138,7 +137,6 @@ class TrendtoursController extends Controller
         }
     }
 
-
     /**
      * Create new user from Layer.
      *
@@ -151,7 +149,7 @@ class TrendtoursController extends Controller
     {
         $input = $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'newsletter');
         $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('m.Y', $input['earliest_start'])->format('d.m.Y');
-        $input['latest_return'] = "01.01.2020";
+        $input['latest_return'] = '01.01.2020';
         $new_wish = $wish->create($input, $this->whitelabelId);
 
         return $new_wish;
@@ -173,38 +171,37 @@ class TrendtoursController extends Controller
     }
 
     /**
-     * @param array $children
+     * @param array  $children
      * @param string $type
      *
      * @return array
      */
     private function putPersonLabel($children, $type)
     {
-
         foreach ($children as $key => $value) {
-            $label = $type ? " ".trans_choice('labels.categories.'.$type, intval($value)) : "";
-            $children[$key] = $value."".$label;
+            $label = $type ? ' ' . trans_choice('labels.categories.' . $type, (int) $value) : '';
+            $children[$key] = $value . '' . $label;
         }
 
         return $children;
     }
 
     /**
-    * @param array $children
-    * @param string $type
-    *
-    * @return array
-    */
+     * @param array  $children
+     * @param string $type
+     *
+     * @return array
+     */
     private function transformMonth($children)
     {
         foreach ($children as $key => $value) {
             $date_arr = explode('.', $value);
-            $date = Carbon::parse($date_arr[1]."-".$date_arr[0]."-01");
+            $date = Carbon::parse($date_arr[1] . '-' . $date_arr[0] . '-01');
             $now = Carbon::now();
             $length = $now->diffInDays($date, false);
-            if ($length > - 28) {
-                $children[$key] = $this->translateToDe($date->formatLocalized('%B')) . " " . $date->formatLocalized('%Y');
-            }else{
+            if ($length > -28) {
+                $children[$key] = $this->translateToDe($date->formatLocalized('%B')) . ' ' . $date->formatLocalized('%Y');
+            } else {
                 unset($children[$key]);
             }
         }
@@ -220,41 +217,41 @@ class TrendtoursController extends Controller
     private function translateToDe($date)
     {
         switch ($date) {
-            case "January":
-                return "Januar";
+            case 'January':
+                return 'Januar';
                 break;
-            case "February":
-                return "Februar";
+            case 'February':
+                return 'Februar';
                 break;
-            case "March":
-                return "März";
+            case 'March':
+                return 'März';
                 break;
-            case "April":
-                return "April";
+            case 'April':
+                return 'April';
                 break;
-            case "May":
-                return "Mai";
+            case 'May':
+                return 'Mai';
                 break;
-            case "June":
-                return "Juni";
+            case 'June':
+                return 'Juni';
                 break;
-            case "July":
-                return "Juli";
+            case 'July':
+                return 'Juli';
                 break;
-            case "August":
-                return "August";
+            case 'August':
+                return 'August';
                 break;
-            case "September":
-                return "September";
+            case 'September':
+                return 'September';
                 break;
-            case "October":
-                return "Oktober";
+            case 'October':
+                return 'Oktober';
                 break;
-            case "November":
-                return "November";
+            case 'November':
+                return 'November';
                 break;
-            case "December":
-                return "Dezember";
+            case 'December':
+                return 'Dezember';
                 break;
         }
     }
