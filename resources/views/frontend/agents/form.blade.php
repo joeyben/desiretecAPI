@@ -54,7 +54,7 @@
         @endif
 </div>
 
-@section('after-scripts')
+@section('after-scripts-include')
 
 <script>
     $(document).ready(function(){

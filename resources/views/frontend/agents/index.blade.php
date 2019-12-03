@@ -68,7 +68,7 @@
 @endsection
 @section('after-scripts')
 
-{{ Html::script(mix('js/dataTable.js')) }}
+    {{ Html::script(mix('js/dataTable.js')) }}
 
 <script>
     $(function() {
@@ -89,11 +89,7 @@
                 {data: 'status', name: '{{config('module.agents.table')}}.status'},
                 {data: 'actions', name: '{{config('module.agents.table')}}.actions'},
             ],
-          columnDefs: [
-            {
-              className: 'dt-status',
-              targets: [4]
-            }],
+
             order: [[4, "asc"]],
             searchDelay: 500,
             dom: 'lBfrtip',
@@ -133,5 +129,7 @@
     });
 
 </script>
+
+@yield('after-scripts-include')
 
 @endsection
