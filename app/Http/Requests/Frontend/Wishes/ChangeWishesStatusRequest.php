@@ -2,12 +2,9 @@
 
 namespace App\Http\Requests\Frontend\Wishes;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class ChangeWishesStatusRequest.
- */
-class ChangeWishesStatusRequest extends Request
+class ChangeWishesStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +13,7 @@ class ChangeWishesStatusRequest extends Request
      */
     public function authorize()
     {
-        return access()->allow('edit-wish');
+        return access()->allow('view-wish');
     }
 
     /**
@@ -27,23 +24,7 @@ class ChangeWishesStatusRequest extends Request
     public function rules()
     {
         return [
-//            'id'            => 'required|int',
-//            'status'        => 'required|max:200',
-        ];
-    }
-
-    /**
-     * Get the validation message that apply to the request.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-//            'id.required' => 'Please insert Wish Title',
-//            'id.int'      => 'Wish Title may not be greater than 200 characters.',
-//            'status.required' => 'Please insert Wish Title',
-//            'status.max'      => 'Wish Title may not be greater than 200 characters.',
+            //
         ];
     }
 }

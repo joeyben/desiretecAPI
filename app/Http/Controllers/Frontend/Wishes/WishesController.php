@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
+use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Models\Access\User\User;
 use App\Models\Access\User\UserToken;
 use App\Models\Agents\Agent;
@@ -360,38 +361,24 @@ class WishesController extends Controller
     /**
      * @param \App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest $request
      *
-     * @return mixed
+     * @return JSON response
      */
     public function changeWishStatus(ChangeWishesStatusRequest $request)
     {
-        dd($request->all());
-        $status_arr = [
-            'new'               => '1',
-            'offer_created'     => '2',
-            'completed'         => '3',
-        ];
+        try {
+            $status_arr = [
+                'new'               => '1',
+                'offer_created'     => '2',
+                'completed'         => '3',
+            ];
 
-        $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+            $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
 
-        $wish = $this->wish->getForDataTable()
-            ->when($status, function ($wish, $status) {
-                return $wish->where(config('module.wishes.table') . '.status', $status)
-                    ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
-            })
-            ->paginate(10);
+            $wish = $this->wish->updateStatus($request->get('id'), $status);
 
-        $response = [
-            'pagination' => [
-                'total'        => $wish->total(),
-                'per_page'     => $wish->perPage(),
-                'current_page' => $wish->currentPage(),
-                'last_page'    => $wish->lastPage(),
-                'from'         => $wish->firstItem(),
-                'to'           => $wish->lastItem()
-            ],
-            'data' => $wish
-        ];
-        dd($wish);
-        return response()->json($response);
+            return json_response(array());
+        } catch (Exception $e) {
+            return json_response_error($e);
+        }
     }
 }

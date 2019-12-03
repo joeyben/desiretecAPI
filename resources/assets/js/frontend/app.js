@@ -28,15 +28,16 @@ const app = new Vue({
 
     data: {
         data: {},
-        status:'',
+        status:'new',
         pagination: {
             'current_page': 1
         },
         loading: true,
         messages: '',
-        user_name: ''
+        user_name: '',
 
     },
+    
     mounted() {
         this.fetchWishes();
     },
@@ -58,9 +59,13 @@ const app = new Vue({
             });
         },
 
-        changeStatus() {
-            axios.post('/wishes/changeWishStatus')
-                .then(response => {
+        changeStatus: function () {
+        //changeStatus() {
+
+            axios.post('/wishes/changeWishStatus', {
+                status: this.status,
+                id: this.data[0].id,
+            }).then(response => {
                     this.$nextTick(function () {
                         this.loading = false;
                     });
