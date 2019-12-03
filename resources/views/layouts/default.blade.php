@@ -286,6 +286,14 @@
                         </a>
                     </li>
                     @endif
+                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                    <li class="nav-item">
+                        <a href="{{ route('provider.footer.tnb', app()->getLocale()) }}" class="nav-link">
+                            <i class="icon-section"></i>
+                            <span>{{ __('menus.footer_tnb') }}</span>
+                        </a>
+                    </li>
+                    @endif
 
                     @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
                         <li class="nav-item">

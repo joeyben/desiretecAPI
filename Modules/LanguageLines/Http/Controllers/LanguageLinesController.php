@@ -544,4 +544,32 @@ class LanguageLinesController extends Controller
             $result['status'] = 500;
         }
     }
+
+    /**
+     * Fetch already existing Footer Teilnahmebedingungen or Create new Teilnahmebedingungen.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function tnb(string $lang)
+    {
+        try {
+            $result['data']['text'] = $this->languageline->firstOrCreate([
+                'locale' => $lang,
+                'key'    => 'email_signature',
+                'group'  => 'email'
+            ])->text;
+
+            $result['data']['language'] = $lang;
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return view('languagelines::email-signature', compact('result'));
+    }
 }
