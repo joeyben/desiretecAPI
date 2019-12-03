@@ -72,7 +72,7 @@ var exitIntent = window.exitIntent || {};
 
     var DTTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'KW WL',
-        matchesUrl: 'kurenundwellness.reisewunschservice.de|kurenundwellness.tv',
+        matchesUrl: 'kurenundwellness.reisewunschservice.de|kurenundwellness.tv|spa-booking.de',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
