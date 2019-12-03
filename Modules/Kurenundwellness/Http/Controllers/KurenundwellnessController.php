@@ -197,4 +197,10 @@ class KurenundwellnessController extends Controller
 
         return $duration;
     }
+
+    public function getPDF()
+    {
+        return view('kurenundwellness::layer.pdf');
+    }
+
 }
