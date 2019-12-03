@@ -85,7 +85,7 @@
                         <a :href="'offer/ttlist/'+wish.id" class="btn btn-flat btn-primary">{{ trans('labels.frontend.wishes.goto') }}</a>
                         @if($logged_in_user->hasRole('Seller'))
                             <div class="status-change-action">
-                                <select class="selectpicker" id="change-status" v-value="wish.status" v-model="status" @change="changeStatus()">
+                                <select class="selectpicker" id="change-status" v-bind:value="wish.status" v-model="status" @change="changeStatus(wish.id)">
                                     @foreach ($status as $st)
                                         <option value="{{ $st }}">
                                             {{ trans('menus.list.status.'.strtolower($st)) }}
@@ -96,7 +96,7 @@
                         @endif
                     </div>
                 </div>
-            </div>
+
             <pagination v-if="pagination.last_page > 1" :pagination="pagination" :offset="10" @paginate="fetchWishes()"></pagination>
         </div>
     </div>

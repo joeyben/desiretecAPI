@@ -59,14 +59,13 @@ const app = new Vue({
             });
         },
 
-        changeStatus: function () {
-        //changeStatus() {
-
+        changeStatus(id) {
             axios.post('/wishes/changeWishStatus', {
                 status: this.status,
-                id: this.data[0].id,
+                id: id,
             }).then(response => {
-                this.$route.router.go({ path: '/wishlist' });
+                // console.log(response.data.status);
+                // window.location.reload();
             })
             .catch(error => {
                 console.log(error);
