@@ -14,7 +14,6 @@ mix.scripts(
         base_url + "node_modules/jquery/dist/jquery.min.js",
         base_url + '/resources/assets/js/layer/datepicker.js',
         __dirname + '/Resources/assets/js/app.js',
-        __dirname + '/Resources/assets/js/app.js',
     ], __dirname + '/../../public/whitelabel/desiretecdemo/js/desiretecdemo.js')
     .scripts([
         base_url + '/resources/assets/js/layer/exitintent.js',
