@@ -21,5 +21,6 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'provider', 
     Route::get('languages/email/signature/{lang}', 'LanguageLinesController@signature')->name('provider.email.signature');
     Route::post('languages/email/signature/store', 'LanguageLinesController@signatureStore')->name('provider.email.signature.store');
 
-    Route::get('languages/footer/tnb/{lang}', 'LanguageLinesController@tnb')->name('provider.footer.tnb');
+    Route::get('languages/footer/tnb/{lang}', 'TnbController@tnb')->name('provider.footer.tnb');
+    Route::post('languages/footer/tnb/store', 'TnbController@tnbStore')->name('provider.footer.tnb.store');
 });
