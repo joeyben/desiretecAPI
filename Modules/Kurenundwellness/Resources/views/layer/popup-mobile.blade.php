@@ -1,6 +1,8 @@
-<script type="text/javascript">
-    var brandColor = {!! json_encode($color) !!};
-</script>
+@isset($color)
+    <script type="text/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+@endisset
 
 {{ Form::open(['route' => 'kurenundwellness.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
