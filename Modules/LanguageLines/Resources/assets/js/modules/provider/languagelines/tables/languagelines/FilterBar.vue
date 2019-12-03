@@ -8,6 +8,7 @@
             <div class="dropdown-menu dropdown-menu-left">
                 <router-link class="dropdown-item" :to="{name: 'root.create', params: { id: 0 }}"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
                 <router-link class="dropdown-item" :to="{name: 'root.export', params: { id: 0 }}" v-if="can_copy"><i class="icon-copy4"></i>{{ trans('button.copy') }}</router-link>
+                <a href="javascript:;" v-on:click="onReplaceSelected()" class="dropdown-item" v-if="can_copy"><i class="icon-file-text3"></i> Replace Selected</a>
                 <a href="javascript:;" class="dropdown-item" v-on:click="dialogFormVisible = true" v-if="can_clone"><i class="icon-stack"></i>  {{ trans('button.clone') }}</a>
                 <a href="javascript:;" v-on:click="onExportSelected()" class="dropdown-item" v-if="can_import_export"><i class="icon-file-text3"></i> Export Selected</a>
                 <a href="javascript:;" v-on:click="$refs.fileInput.click()" class="dropdown-item" v-if="can_import_export">
@@ -211,6 +212,19 @@
           }
 
           return data
+        },
+        onReplaceSelected () {
+          if (this.checked.length <= 0) {
+            this.$message({
+              message: 'Please select at least one item',
+              showClose: true,
+              type: 'error'
+            })
+
+            return false
+          }
+
+          this.$router.push({name: 'root.replace'})
         },
         onExportSelected () {
           if (this.checked.length <= 0) {
