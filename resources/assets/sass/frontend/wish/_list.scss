@@ -212,7 +212,10 @@ section {
     margin: 0;
     padding: 0;
   }
-  h1, h2 {
+  h1 {
+    font-weight: bold;
+  }
+  h2 {
     font-weight: normal;
   }
   h4, h5, h5 {
@@ -290,7 +293,8 @@ ul {
 // .main-offer-section
 .main-offer-section {
   padding: 80px 0;
-  margin-bottom: 200px;
+  height: 1050px;
+  margin-bottom: 300px;
   width: 80%;
   background-color: $steel;
   color: $white;
@@ -303,7 +307,7 @@ ul {
   }
   .map {
     width: 100%;
-    height: 700px;
+    height: 600px;
     background: black;
     border-radius: 5px;
     margin-bottom: 0px;
@@ -431,6 +435,10 @@ ul {
     display: flex;
     &:nth-child(even) {
       flex-direction: row-reverse;
+
+      .slider-item {
+        border-radius: 5px;
+      }
     }
   }
   .left-side {
@@ -453,8 +461,7 @@ ul {
     .slider-item {
       height: 500px;
       border-radius: 5px 0 0 5px;
-      background-color: $black;
-      background-image: url(../img-dummy/wave.jpg);
+      background-color: transparent;
       background-repeat: no-repeat;
       background-position: center;
       -webkit-background-size: cover;
@@ -462,11 +469,12 @@ ul {
       -o-background-size: cover;
       background-size: cover;
     }
-    .btn-secondary {
+    .btn {
       min-width: auto;
       padding: 15px 20px;
       position: absolute;
-      top: 42%;
+      top: 44%;
+      background-color: #fff;
       cursor: pointer;
       transition: all 0.3s;
       -webkit-transition: all 0.3s;
@@ -513,7 +521,12 @@ ul {
       text-overflow: ellipsis;
       overflow: hidden;
       line-height: 1em;
-      margin-right: 20px;
+      max-width: calc(100% - 150px);
+    }
+    .rating {
+      width: 150px;
+      display: flex;
+      justify-content: center;
     }
     i {
       padding: 10px 4px;

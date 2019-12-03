@@ -330,6 +330,52 @@
                 }
             }
 
+            /**
+             * Autocomplete
+             */
+            var autocomplete = function(){
+              /* Destinations */
+              $('#destination').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                  autoSelect: false,
+                  minLength: 3,
+                  highlight: true,
+                  source: function(query) {
+                    return $.get('get-all-destinations', {query: query});
+                  }
+                }
+              });
+              /* END Destinations */
+
+              /* Airports */
+              $('#airport').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                  autoSelect: false,
+                  minLength: 3,
+                  highlight: true,
+                  source: function(query) {
+                    return $.get('get-all-airports', {query: query});
+                  }
+                }
+              });
+              /* END Airports */
+
+
+              $("#destination, #airport").on('itemAdded', function(event) {
+                setTimeout(function(){
+                  $("input[type=text]",".bootstrap-tagsinput").val("");
+                }, 1);
+              });
+
+
+            }
+
             function validateDuration() {
                 var days_diff = (dt.endDate.getDate() - dt.startDate.getDate()) / 60000 / 60 / 24;
                 var $element = $('#duration > option');

@@ -1613,3 +1613,18 @@ and (max-device-width : 320px) {
 .dt_terms.hasError:after{
   border: 1px solid red !important;
 }
+
+.dt-modal {
+  .bootstrap-tagsinput {
+    padding: 0;
+    border: none!important;
+    box-shadow: none!important;
+    min-width: 100%;
+  }
+}
+.bootstrap-tagsinput .tag {
+  color: #46799b!important;
+  background: #e0eaf1!important;
+  font-size: 11px;
+  font-weight: 600;
+}

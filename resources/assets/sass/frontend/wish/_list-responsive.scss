@@ -28,6 +28,11 @@
 
 
 // .wave-image
+@media (max-width: 1400px) {
+  .wave-image {
+    height: 400px;
+  }
+}
 @media (max-width: 1200px) {
   .wave-image {
     display: none;
@@ -95,8 +100,14 @@
 
 
 // .main-offer-section
-@media (max-width: 1500px) {
+@media (max-width: 1550px) {
   .main-offer-section {
+    margin-bottom: 250px;
+  }
+}
+@media (max-width: 1200px) {
+  .main-offer-section {
+    height: auto;
     .offer-highlights {
       i {
         font-size: 17px;
@@ -107,7 +118,17 @@
 }
 
 // .main offer
-@media (max-width: 1500px) {
+@media (max-width: 1550px) {
+  .main-offer-section {
+    width: 90%;
+  }
+}
+@media (max-width: 1400px) {
+  .main-offer-section {
+    width: 100%;
+  }
+}
+@media (max-width: 1200px) {
   .main-offer-section {
     margin: 0 auto;
     margin-bottom: 150px;
@@ -130,6 +151,7 @@
         height: 35px;
         width: 35px;
         min-width: 35px;
+        min-height: 35px;
       }
     }
   }
@@ -197,9 +219,10 @@
     .offer-highlights {
       margin-bottom: 40px;
       .icon-background {
-        height: 25px;
-        min-width: 25px;
-        width: 25px;
+        height: 30px;
+        width: 30px;
+        min-width: 30px;
+        min-height: 30px;
       }
       h4 {
         font-size: 16px;
@@ -226,19 +249,14 @@
 }
 
 // .listed-offers-section
-@media (max-width: 1500px) {
+@media (max-width: 1200px) {
   .listed-offers-section {
     margin: 0 auto;
     margin-bottom: 150px;
-    width: 60%;
-    .shell {
-      padding: 0 100px;
-    }
-  }
-}
-@media (max-width: 1200px) {
-  .listed-offers-section {
     width: 80%;
+    .shell {
+      padding: 0 60px;
+    }
   }
 }
 @media (max-width: 1024px) {
@@ -250,7 +268,7 @@
       width: 4px;
       height: 30px;
       border-radius: 5px;
-      background-color: $orange;
+      background-color: $darkgrey;
       display: inline-block;
     }
     h1 {
@@ -270,7 +288,81 @@
 
 
 // offers
-@media (max-width: 1500px) {
+@media (max-width: 1480px) {
+  .offers {
+    .label {
+      font-size: 16px;
+    }
+    h2, h3 {
+      font-size: 30px;
+    }
+    h4, h5 {
+      font-size: 16px;
+    }
+    .slick-slider {
+      .slider-item {
+        height: 460px;
+      }
+      .btn {
+        padding: 10px 15px;
+      }
+      i {
+        font-size: 24px;
+      }
+      .arrow-left {
+        left: 30px;
+      }
+      .arrow-right {
+        right: 30px;
+      }
+    }
+    .price {
+      .btn {
+        padding: 10px 15px;
+      }
+      i {
+        font-size: 24px;
+      }
+    }
+    .recommandations {
+      .average {
+        padding: 2px 4px 0;
+        border: 2px solid $orange;
+      }
+    }
+  }
+}
+@media (max-width: 1400px) {
+  .offers {
+    .title {
+      h3 {
+        max-width: calc(100% - 115px);
+      }
+      .rating {
+        width: 115px;
+        i {
+          padding: 5px 3px;
+        }
+      }
+    }
+    .slick-slider {
+      .slider-item {
+        height: 500px;
+      }
+    }
+    .highlights {
+      ul {
+        padding-bottom: 50px;
+      }
+    }
+    .info-icons {
+      .info {
+        padding: 0 10px;
+      }
+    }
+  }
+}
+@media (max-width: 1200px) {
   .offers {
     display: flex;
     flex-wrap: wrap;
@@ -285,24 +377,22 @@
         width: 100%;
       }
     }
-  }
-}
-@media (max-width: 1024px) {
-  .offers {
-    .label {
-      font-size: 16px;
-    }
-    h2, h3 {
-      font-size: 30px;
-    }
-    h4, h5 {
-      font-size: 16px;
+    .highlights {
+      ul {
+        padding-bottom: 0;
+      }
     }
     .slick-slider {
       .slider-item {
         height: 280px;
       }
-      .btn-secondary {
+    }
+  }
+}
+@media (max-width: 1024px) {
+  .offers {
+    .slick-slider {
+      .btn {
         padding: 5px 10px;
       }
       i {
@@ -316,14 +406,6 @@
         right: 15px;
       }
     }
-    .fulfill {
-      h4 {
-        margin-left: 0;
-      }
-      progress {
-        width: 100%;
-      }
-    }
     .price {
       .btn {
         padding: 10px 15px;
@@ -335,13 +417,26 @@
     .recommandations {
       .average {
         padding: 2px 4px 0;
-        border: 2px solid #f96500;
+        border: 2px solid $darkgrey;
+      }
+    }
+    .highlights {
+      ul {
+        padding-bottom: 0;
       }
     }
   }
 }
 @media (max-width: 600px) {
   .offers {
+    .fulfill {
+      h4 {
+        margin-left: 0;
+      }
+      progress {
+        width: 100%;
+      }
+    }
     .highlights {
       padding-bottom: 50px;
       .travel-info {
