@@ -28,7 +28,7 @@ const app = new Vue({
 
     data: {
         data: {},
-        status:'',
+        status:'new',
         pagination: {
             'current_page': 1
         },
@@ -50,6 +50,7 @@ const app = new Vue({
                     this.pagination = response.data.pagination;
                     this.$nextTick(function () {
                         this.loading = false;
+                        $('.selectpicker').selectpicker('refresh');
                     });
 
                 }
@@ -64,8 +65,9 @@ const app = new Vue({
                 status: this.status,
                 id: id,
             }).then(response => {
-                // console.log(response.data.status);
-                // window.location.reload();
+                if(response.data.success == true){
+                    window.location.reload();
+                }
             })
             .catch(error => {
                 console.log(error);

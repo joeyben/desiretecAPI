@@ -38,7 +38,7 @@
                 @if($logged_in_user->hasRole('Seller'))
                     <div class="filter-action">
                         <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
-                            <option value="">{{ trans('menus.list.status.all') }}</option>
+                            {{--<option value="">{{ trans('menus.list.status.all') }}</option>--}}
                             @foreach ($status as $st)
                                 <option value="{{ $st }}">
                                     {{ trans('menus.list.status.'.strtolower($st)) }}
