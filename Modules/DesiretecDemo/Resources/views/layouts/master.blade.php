@@ -6,6 +6,7 @@
 
 @section('after-styles')
     <link rel="stylesheet" href="{{ asset('whitelabel/desiretecdemo/css/desiretecdemo.css') }}">
+    <link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 @endsection
 
 @section('demo')
@@ -30,7 +31,7 @@
 
 @section('after-scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-
+    <script type="text/javascript" src="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <script type="application/javascript">
         window.dt = {
             config: { baseUrl: ''  }
