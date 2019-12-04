@@ -241,7 +241,7 @@ $gutter: 30px;
     display: block;
     width: 100%;
     border: none;
-    padding: 15px;
+    padding: 11px;
     margin-top: 5px;
     transition: background-color .3s ease;
     &:hover, &:active {
@@ -1605,8 +1605,12 @@ and (max-device-width : 320px) {
 .direktflug{
   position: absolute;
   display: inline-flex;
+  left: 0;
+  bottom: -20px;
   span{
     margin-top: 2px;
+    display: block;
+    margin-left: 5px;
   }
 }
 .travelerss .caret, .catering .caret{
@@ -1670,9 +1674,13 @@ input[name="direkt_flug"]{
     min-width: 100%;
   }
 }
-.bootstrap-tagsinput .tag {
-  color: #46799b!important;
-  background: #e0eaf1!important;
-  font-size: 11px;
-  font-weight: 600;
+
+.bootstrap-tagsinput{
+  padding: 5px 0 0 0;
+  .tag {
+    color: #46799b!important;
+    background: #e0eaf1!important;
+    font-size: 11px;
+    font-weight: 600;
+  }
 }

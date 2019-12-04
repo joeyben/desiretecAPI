@@ -506,7 +506,7 @@
                   minLength: 3,
                   highlight: true,
                   source: function(query) {
-                    return $.get('get-all-airports', {query: query});
+                    return $.get('get-tt-airports', {query: query});
                   }
                 }
               });
