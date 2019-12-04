@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Regions;
+use App\Models\TTAirports;
 use App\Models\TTRegions;
+use Illuminate\Http\Request;
 
 /**
  * Class RegionsController.
@@ -71,6 +73,29 @@ class RegionsController extends Controller
                 $airports[] = $region->regionName . ' - ' . $region->regionCode;
             }
         });
+
+        return $airports;
+    }
+
+    /**
+     * URL: /get-all-airports
+     * Returns all airports.
+     *
+     * @return array
+     */
+    public function getTTAirports(Request $request)
+    {
+        $query = $request->get('query');
+        $airports = [];
+        TTAirports::select('name', 'code')
+            ->where('whitelabel', getCurrentWhiteLabelId())
+            ->where('name', 'like', $query . '%')
+            ->groupBy('name')
+            ->chunk(200, function ($regions) use (&$airports) {
+                foreach ($regions as $region) {
+                    $airports[] = $region->name;
+                }
+            });
 
         return $airports;
     }

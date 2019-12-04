@@ -15,6 +15,7 @@
     Route::get('/getTTRegions', 'RegionsController@getTTRegions');
     Route::get('/get-all-destinations', 'FrontendController@getAllDestinations');
     Route::get('/get-all-airports', 'FrontendController@getAllAirports');
+    Route::get('/get-tt-airports', 'RegionsController@getTTAirports');
     Route::get('macros', 'FrontendController@macros')->name('macros');
 //Route::post('/get/states', 'FrontendController@getStates')->name('get.states');
 //Route::post('/get/cities', 'FrontendController@getCities')->name('get.cities');
