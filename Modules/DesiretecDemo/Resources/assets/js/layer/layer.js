@@ -1092,6 +1092,9 @@ var exitIntent = window.exitIntent || {};
                 $('<span/>', {'class': 'trigger-modal'});
             $('body').prepend(this.trigger);
             this.trigger.fadeIn();
+            this.trigger.css({
+                'background-color': brandColor,
+            });
         }
 
 

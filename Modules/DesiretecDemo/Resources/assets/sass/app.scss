@@ -74,7 +74,7 @@ input:-internal-autofill-selected{
   height:700px;
   position: relative;
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
   .welcome{
@@ -104,16 +104,6 @@ input:-internal-autofill-selected{
       padding: 15px 35px;
       line-height: 1.5em;
       letter-spacing: 0.42px;
-    }
-  }
-}
-//Button
-.layer-top{
-  a{
-    background: #f96500;
-    color: #fff !important;
-    &:hover{
-      color: #f96500 !important;
     }
   }
 }
