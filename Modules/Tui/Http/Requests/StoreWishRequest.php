@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Tui\Http\Requests;
+namespace Modules\Tuidemo\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;

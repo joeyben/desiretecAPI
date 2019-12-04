@@ -1,17 +1,14 @@
 <?php
 
-$domain_env = array(
-    'local_url' => 'novasol.org',
+$domain_env = [
+    'local_url'       => 'novasol.org',
     'development_url' => 'novasol.reise-wunsch.com',
-    'production_url' => 'novasol.reisewunschservice.de',
-    'preproduction_url' => 'novasol.preprod.reisewunschservice.de'
-);
+    'production_url'  => 'novasol.reisewunschservice.de',
+];
 
-$domain = $domain_env[\Config::get('app.js_env'). '_url'];
+$domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
-Route::get('test', function(){
-
-
+Route::get('test', function () {
     $client = new GuzzleHttp\Client();
     $res = $client->get('https://de-staging-ttxml.traveltainment.eu/TTXml-1.8/DispatcherWS', [
         'auth' => [
@@ -20,13 +17,12 @@ Route::get('test', function(){
     ]);
 
     dd($res);
-
 });
 
 Route::group(['domain' => $domain], function () {
     setCurrentWhiteLabelId(\Config::get('novasol.id'));
     setTranslationLoaderModel(\Config::get('novasol.language_lines_model'));
-    Route::group(['middleware' => 'web', 'namespace' => 'Modules\Novasol\Http\Controllers' , 'as' => 'novasol.'], function () {
+    Route::group(['middleware' => 'web', 'namespace' => 'Modules\Novasol\Http\Controllers', 'as' => 'novasol.'], function () {
         Route::get('/', 'NovasolController@index');
         Route::get('show', 'NovasolController@show');
         Route::get('store', 'NovasolController@store')->name('store');

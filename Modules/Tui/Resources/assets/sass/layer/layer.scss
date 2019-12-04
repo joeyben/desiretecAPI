@@ -49,8 +49,7 @@ $fontcolor: #303030;
   height: 75px;
   position: fixed;
   display: none;
-  /* background: $mastercolor url(../../images/layer/pensil.png) no-repeat center / 60%; */
-  background: $mastercolor url(../../images/layer/guy_2.png) no-repeat center / 60%;
+  background: $mastercolor url(../../images/layer/pensil.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -217,7 +216,7 @@ $fontcolor: #303030;
   margin: 25px auto 0 auto;
 
   border-radius: 0;
-  box-shadow: 0 0 4px 0px rgba(0,0,0,0.25);
+  box-shadow: 0 0 4px 0px rgba(0,0,0,0.15);
   transition: transform 0.1s ease-out, opacity 0.15s ease-out;
   position: relative;
 
@@ -1558,7 +1557,7 @@ p.kwp-info {
     .email-col{
       margin: 5px 0;
     }
-
+  
   .rangeslider--horizontal{
     height: 10px;
     .rangeslider__handle{

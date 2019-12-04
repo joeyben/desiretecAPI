@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/reiseexperten",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Reiseexperten\\Providers\\ReiseexpertenServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Reiseexperten\\": ""
+        }
+    }
+}

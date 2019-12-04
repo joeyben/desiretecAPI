@@ -1,4 +1,4 @@
-{{ Form::open(['route' => 'tui.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
+{{ Form::open(['route' => 'tuidemo.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 <div class="kwp-minimal">
     <div class="kwp-content kwp-with-expansion">
@@ -63,8 +63,8 @@
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
-                            {{ Form::label('earliest_start', trans('tui::layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('tui::layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::label('earliest_start', trans('tuidemo::layer.general.earliest_start'), ['class' => 'control-label required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('tuidemo::layer.general.earliest_start'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -74,8 +74,8 @@
                             <i class="tui-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-4">
-                            {{ Form::label('latest_return', trans('tui::layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('tui::layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::label('latest_return', trans('tuidemo::layer.general.latest_return'), ['class' => 'control-label required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('tuidemo::layer.general.latest_return'), 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -84,9 +84,9 @@
                             <i class="tui-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-12">
-                            {{ Form::label('duration', trans('tui::layer.general.duration'), ['class' => 'control-label required']) }}
+                            {{ Form::label('duration', trans('tuidemo::layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('tui::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['' => trans('tuidemo::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
                             <i class="tui-icon--time"></i>
                         </div>
@@ -109,7 +109,7 @@
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-12">
-                            {{ Form::label('adults', trans('tui::layer.general.adults'), ['class' => 'control-label required']) }}
+                            {{ Form::label('adults', trans('tuidemo::layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr , ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
@@ -117,7 +117,7 @@
                         </div>
                         <div class="kwp-col-12 kids" style="position: relative;">
                             <div class="kwp-col-12">
-                                {{ Form::label('kids', trans('tui::layer.general.kids'), ['class' => 'control-label required']) }}
+                                {{ Form::label('kids', trans('tuidemo::layer.general.kids'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
                                     {{ Form::select('kids', $kids_arr, ['class' => 'form-control box-size']) }}
                                 </div>
@@ -161,7 +161,7 @@
             <div class="kwp-col-4 rangeslider-wrapper">
                     <div class="kwp-form-group ">
                           {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                          {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('tui::layer.placeholder.budget'), 'required' => 'required']) }}
+                          {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('tuidemo::layer.placeholder.budget'), 'required' => 'required']) }}
                     </div>
                           <span class="text">&nbsp;</span>
                           <input type="range" min="100" max="10000" value="50"  step="100" id="budgetRange">
@@ -170,7 +170,7 @@
             <div class="kwp-col-4 white-col stars">
                     <div class="kwp-form-group">
                              {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
-                             {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('tui::layer.placeholder.category')]) }}
+                             {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('tuidemo::layer.placeholder.category')]) }}
 
                               <span class="text">ab 0 Sonnen</span>
                               <div class="kwp-star-input">
@@ -199,7 +199,7 @@
 
                     <div class="kwp-col-4 description">
                         {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
-                        {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('tui::layer.placeholder.description')]) }}
+                        {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('tuidemo::layer.placeholder.description')]) }}
                         <i class="master-icon--calendar-month"></i>
                     </div>
 
@@ -313,6 +313,7 @@
 
 
             $(document).ready(function(){
+                autocomplete();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -437,6 +438,52 @@
                 }
             }
 
+
+            /**
+             * Autocomplete
+             */
+            var autocomplete = function(){
+              /* Destinations */
+              $('#destination').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                  autoSelect: false,
+                  minLength: 3,
+                  highlight: true,
+                  source: function(query) {
+                    return $.get('get-all-destinations', {query: query});
+                  }
+                }
+              });
+              /* END Destinations */
+
+              /* Airports */
+              $('#airport').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                  autoSelect: false,
+                  minLength: 3,
+                  highlight: true,
+                  source: function(query) {
+                    return $.get('get-all-airports', {query: query});
+                  }
+                }
+              });
+              /* END Airports */
+
+
+              $("#destination, #airport").on('itemAdded', function(event) {
+                setTimeout(function(){
+                  $("input[type=text]",".bootstrap-tagsinput").val("");
+                }, 1);
+              });
+
+
+            }
 
             function validateDuration() {
                 var days_diff = (dt.endDate.getDate() - dt.startDate.getDate()) / 60000 / 60 / 24;

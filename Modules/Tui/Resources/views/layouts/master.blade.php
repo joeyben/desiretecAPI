@@ -5,7 +5,8 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/tui/css/tui.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/tuidemo/css/tuidemo.css') }}">
+    <link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 @endsection
 
 @section('logo')
@@ -15,20 +16,12 @@
 @endsection
 
 @section('before-scripts')
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105970361-13"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-105970361-13');
-    </script>
-    <script src="{{ mix('whitelabel/tui/js/tui.js') }}"></script>
+    <script src="{{ mix('whitelabel/tuidemo/js/tuidemo.js') }}"></script>
 @endsection
 
 @section('after-scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+    <script type="text/javascript" src="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <script type="application/javascript">
         window.dt = {
             config: { baseUrl: ''  }
@@ -36,7 +29,7 @@
 
         var kwz = document.createElement('script');
         kwz.type = 'text/javascript'; kwz.async = true;
-        kwz.src = '/whitelabel/tui/js/layer/layer.js';
+        kwz.src = '/whitelabel/tuidemo/js/layer/layer.js';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(kwz, s);
 

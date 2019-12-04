@@ -1,4 +1,4 @@
-@extends('tui::layouts.master')
+@extends('tuidemo::layouts.master')
 
 @section('content')
     <div class="slider" style="background-image: url({{ $bg_image }})">
@@ -14,5 +14,5 @@
 @endsection
 
 @section('footer')
-    @include('tui::layouts.footer')
+    @include('tuidemo::layouts.footer')
 @endsection

@@ -1,10 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'master.com',
+
+$domain_env = [
+    'local_url'       => 'master.com',
     'development_url' => 'master.reise-wunsch.com',
-    'production_url' => 'master.reisewunschservice.de',
-    'preproduction_url' => 'master.preprod.reisewunschservice.de',
-);
+    'production_url'  => 'master.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -18,7 +18,5 @@ Route::group(['domain' => $domain], function () {
         Route::get('wish/{wish}', 'MasterWishesController@view')->name('wish.view');
         Route::get('wish/{wish}/{token}', 'MasterWishesController@details')->name('wish.details');
         Route::get('getwish/{wish}', 'MasterWishesController@getWish')->name('getWish');
-
     });
 });
-

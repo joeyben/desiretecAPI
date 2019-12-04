@@ -1,19 +1,16 @@
 <?php
-$domain_env = array(
-    'local_url' => 'lastminute.com',
+
+$domain_env = [
+    'local_url'       => 'lastminute.com',
     'development_url' => 'lastminute.reise-wunsch.com',
-    'production_url' => 'lastminute.reisewunschservice.de',
-    'preproduction_url' => 'lastminute.preprod.reisewunschservice.de',
-);
+    'production_url'  => 'lastminute.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
-
-
 
 Route::group(['domain' => $domain], function () {
     setCurrentWhiteLabelId(\Config::get('lastminute.id'));
     setTranslationLoaderModel(\Config::get('lastminute.language_lines_model'));
-
 
     Route::group(['middleware' => 'web', 'namespace' => 'Modules\Lastminute\Http\Controllers', 'as' => 'lastminute.'], function () {
         Route::get('/', 'LastminuteController@index');
@@ -26,4 +23,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist', 'LastminuteWishesController@wishList')->name('list');
     });
 });
-
