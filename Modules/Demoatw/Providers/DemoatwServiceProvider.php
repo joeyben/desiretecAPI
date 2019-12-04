@@ -42,7 +42,8 @@ class DemoatwServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('demoatw.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'demoatw'
+            __DIR__ . '/../Config/config.php',
+            'demoatw'
         );
     }
 

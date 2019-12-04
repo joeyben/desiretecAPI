@@ -174,7 +174,7 @@ class TraveloverlandController extends Controller
 
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'),
-             $this->whitelabelId
+            $this->whitelabelId
         );
 
         return $new_wish;

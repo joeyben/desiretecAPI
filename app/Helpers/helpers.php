@@ -355,8 +355,6 @@ if (!function_exists('isWhiteLabel')) {
      */
     function isWhiteLabel()
     {
-        //$url = str_replace(['http://', 'https://'], ['',''], url('/'));
-        //$id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('id');
         $id = getCurrentWhiteLabelField('id');
 
         return null !== $id;
@@ -383,10 +381,7 @@ if (!function_exists('getCurrentWhiteLabelId')) {
      */
     function getCurrentWhiteLabelId()
     {
-        //$url = str_replace(['http://', 'https://'], ['',''], url('/'));
-        //$id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('id');
         return getCurrentWhiteLabelField('id');
-        //return $id;
     }
 }
 
@@ -398,8 +393,6 @@ if (!function_exists('getCurrentWhiteLabelName')) {
      */
     function getCurrentWhiteLabelName()
     {
-        //$url = str_replace('http://', '', url('/'));
-        //$name = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
         $name = getCurrentWhiteLabelField('name');
 
         return mb_strtolower($name);
@@ -435,7 +428,7 @@ if (!function_exists('getCurrentWhiteLabelEmail')) {
     function getCurrentWhiteLabelEmail()
     {
         if (!isWhiteLabel()) {
-            return "noreply@desiretec.com";
+            return 'noreply@desiretec.com';
         }
 
         $email = getCurrentWhiteLabelField('email');
@@ -456,8 +449,6 @@ if (!function_exists('getCurrentWhiteLabelField')) {
     {
         $url = str_replace(['http://', 'https://'], ['', ''], url('/'));
         $url = explode(':', $url)[0]; // cut the port
-        //$url = str_replace('http://', '', url('/'));
-        //$url = str_replace('https://', '', $url);
 
         return \App\Models\Whitelabels\Whitelabel::Where('domain', '=', 'https://' . $url)
             ->orWhere('domain', '=', 'http://' . $url)->value($field);

@@ -42,7 +42,8 @@ class NovasolServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('novasol.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'novasol'
+            __DIR__ . '/../Config/config.php',
+            'novasol'
         );
     }
 

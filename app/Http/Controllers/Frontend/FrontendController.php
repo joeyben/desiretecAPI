@@ -95,4 +95,44 @@ class FrontendController extends Controller
 
         return $airports;
     }
+
+    /**
+     * Builds the main-layer with all WLs layer
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showLayer(Request $request)
+    {
+        return view('frontend.layers.layer', [
+            'layers' => [
+                [
+                    'id' => 1,
+                    'name' => 'cruise',
+                    'active' => true,
+                    'request' => $request,
+                    'title' => 'cruise title',
+                    'text' => 'cruise text',
+                    'bgImage' => 'https://i.ytimg.com/vi/fCaNg3zVY2s/maxresdefault.jpg'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'flight',
+                    'active' => false,
+                    'request' => $request,
+                    'title' => 'flight title',
+                    'text' => 'flight text',
+                    'bgImage' => 'https://tackatacka.com/portals/0/Images/Flights/flight-tickets.jpg'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'package',
+                    'active' => false,
+                    'request' => $request,
+                    'title' => 'package title',
+                    'text' => 'package text',
+                    'bgImage' => ''
+                ],
+            ],
+            'color' => '#808000',
+        ]);
+    }
 }

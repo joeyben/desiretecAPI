@@ -43,7 +43,8 @@ class RegionsServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('regions.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'regions'
+            __DIR__ . '/../Config/config.php',
+            'regions'
         );
     }
 

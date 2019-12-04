@@ -133,5 +133,6 @@ Route::get('/test', function(){
     * Show pages
     */
     Route::get('pages/{slug}', 'FrontendController@showPage')->name('pages.show');
+    Route::get('layer', 'FrontendController@showLayer')->name('layer.show');
 
 //});

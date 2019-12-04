@@ -42,7 +42,8 @@ class TestkurenundwellnessServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('testkurenundwellness.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'testkurenundwellness'
+            __DIR__ . '/../Config/config.php',
+            'testkurenundwellness'
         );
     }
 
