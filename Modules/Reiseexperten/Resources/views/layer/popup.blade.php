@@ -440,6 +440,7 @@
 
             }
 
+            var brandColor = {!! json_encode($color) !!};
             dt.applyBrandColor();
 
         </script>
