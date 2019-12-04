@@ -501,6 +501,8 @@
                 maxTags: 3,
                 maxChars: 20,
                 allowDuplicates: false,
+                cancelConfirmKeysOnEmpty: true,
+                freeInput:false,
                 typeahead: {
                   autoSelect: false,
                   minLength: 3,
