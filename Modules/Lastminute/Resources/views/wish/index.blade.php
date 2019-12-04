@@ -96,7 +96,6 @@
                         @endif
                     </div>
                 </div>
-
             <pagination v-if="pagination.last_page > 1" :pagination="pagination" :offset="10" @paginate="fetchWishes()"></pagination>
         </div>
     </div>

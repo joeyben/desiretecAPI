@@ -24,9 +24,9 @@ class MasterWishesController extends Controller
      * Wish Status.
      */
     protected $status = [
-        'Active'       => 'Active',
-        'Inactive'     => 'Inactive',
-        'Deleted'      => 'Deleted',
+        'new'               => 'new',
+        'offer_created'     => 'offer_created',
+        'completed'         => 'completed',
     ];
 
     /**
