@@ -41,6 +41,10 @@ COPY --chown=www-data:www-data . /var/www/html
 COPY --chown=www-data:www-data --from=vendor /app/vendor/ /var/www/html/vendor/
 COPY --chown=www-data:www-data --from=frontend /myapp/public /var/www/html/public
 COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+COPY .docker/laravel/supervisord.conf /etc/supervisord.conf
+COPY .docker/laravel/supervisord.d /etc/supervisord.d
+COPY .docker/laravel/apache2-foreground /usr/local/bin/apache2-foreground
+RUN chmod a+x /usr/local/bin/apache2-foreground
 
 RUN mv /var/www/html/docker/php/laravel.ini /usr/local/etc/php/conf.d
 RUN mv /var/www/html/docker/php/php.ini /usr/local/etc/php/php.ini

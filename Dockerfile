@@ -28,12 +28,18 @@ COPY package-lock.json package.json webpack.mix.js webpack.config.js yarn.lock /
 WORKDIR /myapp
 RUN npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
       npm config set "//npm.fontawesome.com/:_authToken" 872992B4-8894-4152-95B3-FAA83ECC14D4
-RUN cd /myapp && yarn install --ignore-engines && npm run production
-#RUN cd /myapp/Modules/Autooffers && yarn install --ignore-engines && npm run production
+RUN cd /myapp && yarn install --ignore-engines && npm i && npm run production
 RUN cd /myapp/Modules/Trendtours && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Kreuzfahrtberatung && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Reiseexperten && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Lastminute && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Traveloverland && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Tuidemo && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Tui && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Kurenundwellness && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Demokreuzfahrtberatung && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Demoreiserebellen && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Testkurenundwellness && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Demoatw && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/DesiretecDemo && yarn install --ignore-engines && npm run production
 
 FROM horrorhorst/laravel-base:latest
 
@@ -45,7 +51,10 @@ COPY . /var/www/html
 COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 COPY --from=frontend /myapp/public /var/www/html/public
 COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-
+COPY .docker/laravel/supervisord.conf /etc/supervisord.conf
+COPY .docker/laravel/supervisord.d /etc/supervisord.d
+COPY .docker/laravel/apache2-foreground /usr/local/bin/apache2-foreground
+RUN chmod a+x /usr/local/bin/apache2-foreground
 RUN mv /var/www/html/docker/php/laravel.ini /usr/local/etc/php/conf.d
 RUN mv /var/www/html/docker/php/php.ini /usr/local/etc/php/php.ini
 RUN mv /var/www/html/docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
