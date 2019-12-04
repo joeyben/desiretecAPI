@@ -217,4 +217,5 @@ return [
     'regions_management'    => 'Regions Management',
 
     'email_signature'       => 'E-mail Signature',
+    'footer_tnb'            => 'Terms and Conditions',
 ];

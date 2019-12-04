@@ -136,4 +136,7 @@ Route::get('/test', function(){
     */
     Route::get('pages/{slug}', 'FrontendController@showPage')->name('pages.show');
 
+
+    Route::get('/tnb', 'FrontendController@showTnb')->name('tnb');
+
 //});

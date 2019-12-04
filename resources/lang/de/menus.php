@@ -218,4 +218,5 @@ return [
     'regions_management' => 'Regions Management',
 
     'email_signature' => 'E-Mail Signatur',
+    'footer_tnb' => 'Teilnahmebedingungen',
 ];
