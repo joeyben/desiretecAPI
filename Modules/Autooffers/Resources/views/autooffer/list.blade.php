@@ -45,8 +45,7 @@
                                         <h4>Name Ansprechpartner</h4>
                                     </li>
                                     <li class="phone">
-                                        <!-- <i class="fal fa-phone-alt"></i> -->
-                                        <i class="fas fa-phone"></i>
+                                        <i class="fal fa-phone" aria-hidden="true"></i>
                                         <h4>089 - 714 595 35</h4>
                                     </li>
                                     <li class="name">
@@ -135,7 +134,6 @@
                                     <div class="label">Unser Tipp</div>
                                 @endif
                                 <div class="slick-slider">
-                                    <!-- TODO: Add images and style them -->
                                     @if (isset($offer['hotel_data']['data']['Bildfile']) and is_array($offer['hotel_data']['data']['Bildfile']))
                                         @foreach($offer['hotel_data']['data']['Bildfile'] as $image)
                                             <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $image) !!})"></div>
@@ -178,7 +176,7 @@
                                     <ul>
                                         @for ($i = 0; $i < 3; $i++)
                                         <li>
-                                            <i class="fas fa-check"></i>
+                                            <i class="fal fa-check"></i>
                                             <h4 class="dark-grey">{{ getKeywordText($offer['data']['hotelOffer']['hotel']['keywordList'][$i]) }}</h4>
                                         </li>
                                         @endfor
@@ -237,7 +235,7 @@
             });
             $('.about-section h3 a').css({'color': brandColor});
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
-            $('.fas.fa-heart, .fas.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
+            $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
             $('.offers .recommandations .average').css({'border-color': brandColor});
             $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
 
