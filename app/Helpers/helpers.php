@@ -435,7 +435,7 @@ if (!function_exists('getCurrentWhiteLabelEmail')) {
     function getCurrentWhiteLabelEmail()
     {
         if (!isWhiteLabel()) {
-            return "noreply@desiretec.com";
+            return 'noreply@desiretec.com';
         }
 
         $email = getCurrentWhiteLabelField('email');
@@ -691,7 +691,7 @@ if (!function_exists('getTTRegions')) {
      */
     function getTTRegions($value)
     {
-        return \App\Models\TTRegions::where('ort', 'like', '%' . $value . '%')->select('topRegionName')->get();
+        return \App\Models\TTRegions::where('ort', 'like', '%' . $value . '%')->select('topRegionName')->first()->topRegionName;
     }
 }
 

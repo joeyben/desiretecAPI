@@ -35,16 +35,18 @@
                 <div class="count">
                     <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', intval($count)) }}</span>
                 </div>
-                {{-- <div class="filter-action">
-                    <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
-                        <option value="">{{ trans('menus.list.status.all') }}</option>
-                        @foreach ($status as $st)
-                            <option value="{{ $st }}">
-                                {{ trans('menus.list.status.'.strtolower($st)) }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div> --}}
+                @if($logged_in_user->hasRole('Seller'))
+                    <div class="filter-action">
+                        <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
+                            {{--<option value="">{{ trans('menus.list.status.all') }}</option>--}}
+                            @foreach ($status as $st)
+                                <option value="{{ $st }}">
+                                    {{ trans('menus.list.status.'.strtolower($st)) }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
             </div>
             <hr>
             <div class="skeleton" v-if="loading"></div>
@@ -81,6 +83,17 @@
                             <!--<a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a> -->
                         @endif
                         <!--<a :href="'/offer/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a>-->
+                        @if($logged_in_user->hasRole('Seller'))
+                            <div class="status-change-action">
+                                <select class="selectpicker" id="change-status" v-bind:value="wish.status" v-model="status" @change="changeStatus(wish.id)">
+                                    @foreach ($status as $st)
+                                        <option value="{{ $st }}">
+                                            {{ trans('menus.list.status.'.strtolower($st)) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

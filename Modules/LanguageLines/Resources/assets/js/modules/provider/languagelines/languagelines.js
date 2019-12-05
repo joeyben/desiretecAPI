@@ -53,6 +53,10 @@ if ($languageLinesComponent) {
         path: '/export',
         name: 'root.export',
         component: require('./components/ExportLanguageLinesComponent.vue')
+      }, {
+        path: '/replace',
+        name: 'root.replace',
+        component: require('./components/ReplaceLanguageLinesComponent.vue')
       }]
     }]
   })

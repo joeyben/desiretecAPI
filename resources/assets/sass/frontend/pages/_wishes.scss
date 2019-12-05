@@ -102,6 +102,16 @@ body.wishlist{
           .primary-btn{
             display: block;
           }
+          .status-change-action{
+            width: 100%;
+            margin-top: 20px;
+            padding: 0 17px;
+            .dropdown{
+              @media screen and (max-width: $break-small) {
+                width: 200px;
+              }
+            }
+          }
         }
       }
     }

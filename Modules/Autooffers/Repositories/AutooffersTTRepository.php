@@ -163,7 +163,7 @@ class AutooffersTTRepository extends BaseRepository
            },
            "AirportFilter": {
             "DepartureAirportFilter": {
-             "AirportCodes": ["' . $this->airport . '"]
+             "AirportCodes": [' . $this->airport . ']
         } },
            "AccomFilter": {
             "AccomSelectors": {
@@ -277,7 +277,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
-        $this->setAirport(getRegionCode($wish->airport, 0));
+        $this->setAirport($wish->airport);
         $this->setCategory($wish->category);
         $this->setCatering($wish->catering);
         $this->setFrom($wish->earliest_start);
@@ -373,6 +373,7 @@ class AutooffersTTRepository extends BaseRepository
                 'currency' => $offer['PriceInfo']['Price']['CurrencyCode']
             ],
             'offerFeatures'    => \array_key_exists('OfferFeatures', $offer['OfferProperties']) ? $offer['OfferProperties']['OfferFeatures'] : '',
+            'hotel_id'         =>  $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'],
             'hotel_reviews'    => $this->reviews[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
             'hotel_attributes' => $this->hotelAttributes[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
             'hotel_geo'        => $this->geos[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
@@ -660,7 +661,16 @@ class AutooffersTTRepository extends BaseRepository
      */
     public function setAirport($airport)
     {
-        $this->airport = $airport;
+
+        $airarr = explode(',', $airport);
+        $airports = "";
+        foreach ($airarr as $key => $air) {
+            if ($key > 0){
+                $airports .= ',';
+            }
+            $airports .= '"'.getRegionCode($air, 0).'"';
+        }
+        $this->airport = $airports;
     }
 
     /**

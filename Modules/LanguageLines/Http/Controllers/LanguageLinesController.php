@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Log\LogManager;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
@@ -27,6 +28,7 @@ use Modules\LanguageLines\Exports\LanguageImport;
 use Modules\LanguageLines\Http\Requests\CloneLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\CopyLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\EmailSignatureStoreRequest;
+use Modules\LanguageLines\Http\Requests\ReplaceLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\StoreLanguageLineRequest;
 use Modules\LanguageLines\Http\Requests\UpdateLanguageLineRequest;
 use Modules\LanguageLines\Notifications\CloneLanguageLinesNotification;
@@ -83,6 +85,10 @@ class LanguageLinesController extends Controller
      * @var \Illuminate\Contracts\Console\Kernel
      */
     private $artisan;
+    /**
+     * @var \Illuminate\Log\LogManager
+     */
+    private $log;
 
     /**
      * LanguageLines constructor.
@@ -98,8 +104,9 @@ class LanguageLinesController extends Controller
      * @param \App\Models\Access\Role\Role                                      $role
      * @param \Modules\Languages\Repositories\Contracts\LanguagesRepository     $languages
      * @param \Illuminate\Contracts\Console\Kernel                              $artisan
+     * @param \Illuminate\Log\LogManager                                        $log
      */
-    public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role, LanguagesRepository $languages, Kernel $artisan)
+    public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role, LanguagesRepository $languages, Kernel $artisan, LogManager $log)
     {
         $this->languageline = $languageline;
         $this->response = $response;
@@ -112,6 +119,7 @@ class LanguageLinesController extends Controller
         $this->role = $role;
         $this->languages = $languages;
         $this->artisan = $artisan;
+        $this->log = $log;
     }
 
     /**
@@ -392,6 +400,58 @@ class LanguageLinesController extends Controller
         }
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \Modules\LanguageLines\Http\Requests\ReplaceLanguageLinesRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function replace(ReplaceLanguageLinesRequest $request)
+    {
+        $count = [];
+
+        try {
+            $translations = $this->languageline->withCriteria([
+                new OrderBy('id', 'ASC'),
+                new WhereIn('id', $request->get('checked'))
+            ])->get();
+
+            $whitelabels = $this->whitelabels->withCriteria([
+                new WhereIn('whitelabels.id', $request->get('whitelabels')),
+            ])->get();
+
+            foreach ($whitelabels as $whitelabel) {
+                $table = 'language_lines_' . mb_strtolower($whitelabel->name);
+
+                if (Schema::hasTable($table)) {
+                    ini_set('max_execution_time', 600);
+                    foreach ($translations as $translation) {
+                        $persistedTranslations = $this->database->table($table)
+                            ->where('locale', $translation->locale)
+                            ->where('group', $translation->group)
+                            ->where('key', $translation->key)
+                            ->first();
+
+                        if ((null !== $persistedTranslations) && ($persistedTranslations->text !== $translation->text)) {
+                            $this->database->table($table)
+                                ->where('id', $persistedTranslations->id)
+                                ->update($translation->only('text'));
+                            $count[$whitelabel->name] = [$persistedTranslations->text => $translation->text];
+                        }
+                    }
+                }
+            }
+            $this->log->info(json_encode($count));
+
+            $result['message'] = $this->lang->get('messages.updated', ['attribute' => \count($count) . ' Translation']);
+
+            return json_response($result);
+        } catch (Exception $e) {
+            return json_response_error($e);
+        }
     }
 
     /**

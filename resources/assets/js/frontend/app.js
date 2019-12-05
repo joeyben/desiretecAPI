@@ -28,18 +28,18 @@ const app = new Vue({
 
     data: {
         data: {},
-        status:'',
+        status:'new',
         pagination: {
             'current_page': 1
         },
         loading: true,
         messages: '',
-        user_name: ''
+        user_name: '',
 
     },
+    
     mounted() {
         this.fetchWishes();
-
     },
 
     methods: {
@@ -50,12 +50,27 @@ const app = new Vue({
                     this.pagination = response.data.pagination;
                     this.$nextTick(function () {
                         this.loading = false;
+                        $('.selectpicker').selectpicker('refresh');
                     });
 
                 }
             )
             .catch(error => {
                     console.log(error);
+            });
+        },
+
+        changeStatus(id) {
+            axios.post('/wishes/changeWishStatus', {
+                status: this.status,
+                id: id,
+            }).then(response => {
+                if(response.data.success == true){
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                console.log(error);
             });
         },
 
