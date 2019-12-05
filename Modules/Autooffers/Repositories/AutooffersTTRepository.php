@@ -137,7 +137,7 @@ class AutooffersTTRepository extends BaseRepository
         $xmlreq = '{
          "PackageOffersRQ": {
           "RQ_Metadata": {
-           "Language": "de-DE"
+           "Language": "de-CH"
           },
         "CurrencyCode": "' . $this->currency . '",
           "Travellers": {
@@ -148,13 +148,18 @@ class AutooffersTTRepository extends BaseRepository
             "OutboundFlightDateAndTimeFilter": {
              "FlightEvent": "Departure",
              "DateRange": {
-              "MinDate": "' . $this->from . '",
-              "MinDate": "' . $this->to . '"
+              "MinDate": "' . $this->from . '"
+             }
+            },
+            "InboundFlightDateAndTimeFilter": {
+             "FlightEvent": "Departure",
+             "DateRange": {
+              "MaxDate": "' . $this->to . '"
              }
             }
         },
            "TravelDurationFilter": {
-            "DurationKind": "Trip",
+            "DurationKind": "BetweenDepartures",
             "MinDuration": ' . $this->minDuration . ',
             "MaxDuration": ' . $this->maxDuration . '
            },
@@ -181,7 +186,7 @@ class AutooffersTTRepository extends BaseRepository
             "HotelReview": {
                 "MinRatingsCount": 10,
                 "MinMeanRatingOverall": 4,
-                "MinMeanRecommendationRate": 4
+                "MinMeanRecommendationRate": 70
             }
            }
           },
@@ -668,7 +673,7 @@ class AutooffersTTRepository extends BaseRepository
             if ($key > 0){
                 $airports .= ',';
             }
-            $airports .= '"'.getRegionCode($air, 0).'"';
+            $airports .= '"'.getTTAirports($air, getCurrentWhiteLabelId()).'"';
         }
         $this->airport = $airports;
     }

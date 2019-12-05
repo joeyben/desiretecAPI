@@ -507,6 +507,7 @@
                   autoSelect: false,
                   minLength: 3,
                   highlight: true,
+                  afterSelect: function(val) { this.$element.val(""); },
                   source: function(query) {
                     return $.get('get-tt-airports', {query: query});
                   }
