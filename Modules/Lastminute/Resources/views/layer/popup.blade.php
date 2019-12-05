@@ -7,11 +7,11 @@
         }
     }
 </style>
-
+@isset($color)
 <script type="application/javascript">
     var brandColor = {!! json_encode($color) !!};
 </script>
-
+@endisset
 <div class="kwp-middle">
     Wir helfen Ihnen gerne, Ihre persönlichen Traumferien zu finden.<br> Probieren Sie es jetzt aus!
 </div>
@@ -507,6 +507,7 @@
                   autoSelect: false,
                   minLength: 3,
                   highlight: true,
+                  afterSelect: function(val) { this.$element.val(""); },
                   source: function(query) {
                     return $.get('get-tt-airports', {query: query});
                   }
