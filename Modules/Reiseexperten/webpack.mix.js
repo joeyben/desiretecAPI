@@ -36,17 +36,14 @@ mix.scripts(
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/reiseexperten/js/layer/layer-locale.js')
     .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/reiseexperten/css/layer/layer.css')
-    .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/reiseexperten/css/layer/layer_mobile.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/layer-responsive.scss', 'whitelabel/reiseexperten/css/layer/layer-responsive.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/reiseexperten/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/reiseexperten/css/reiseexperten.css')
     .styles([
         base_url + '/public/whitelabel/reiseexperten/css/datepicker.css',
         base_url + '/public/whitelabel/reiseexperten/css/layer/layer.css',
+        base_url + '/public/whitelabel/reiseexperten/css/layer/layer-repsonsive.css',
     ], __dirname + '/../../public/whitelabel/reiseexperten/css/layer/whitelabel.css')
-    .styles([
-        base_url + '/public/whitelabel/reiseexperten/css/datepicker.css',
-        base_url + '/public/whitelabel/reiseexperten/css/layer/layer_mobile.css',
-    ], __dirname + '/../../public/whitelabel/reiseexperten/css/layer/whitelabel_mobile.css')
     .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/reiseexperten/images/')
     .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/reiseexperten/svg/');
 if (mix.inProduction()) {

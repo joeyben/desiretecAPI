@@ -11,17 +11,14 @@ var dt = window.dt || {};
     };
 
     dt.popupTemplate = function (variant) {
-        var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Dürfen wir Sie beraten?',
-        ]);
 
         var texts = {
             'eil-n1': {
-                header: 'Dürfen wir Sie beraten? ',
+                header: 'Dürfen wir Sie beraten?',
                 body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             },
             'eil-mobile': {
-                header: mobileHeader,
+                header: 'Dürfen wir Sie beraten?',
                 body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             }
         };
@@ -999,9 +996,7 @@ var dt = window.dt || {};
                $(this).remove();
                ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
            });
-
-
-       }
+       };
 
        dt.showTeaser = function (e) {
            $("body").addClass('mobile-layer');
@@ -1039,7 +1034,6 @@ var dt = window.dt || {};
            if(deviceDetector.device === "phone") {
                dt.PopupManager.teaser = true;
                dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
-               dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
                $(".dt-modal .kwp-close").on('touchend',function () {
                    dt.PopupManager.closePopup(e);
                });
@@ -1222,6 +1216,8 @@ var dt = window.dt || {};
 
     function isMobile(){
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            return true;
+        } else if( $(window).outerWidth() < 768 ) {
             return true;
         }
         return false;
