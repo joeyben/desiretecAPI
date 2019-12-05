@@ -39,26 +39,26 @@
         function isMobile(){
             if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
                 return true;
+            } else if( $(window).outerWidth() < 769 ) {
+                return true;
             }
             return false;
         }
 
         function showLayer(){
+            if($(".dt-modal").hasClass("teaser-on")){
+                return false;
+            }
+            dt.PopupManager.show();
 
-             if($(".dt-modal").hasClass("teaser-on")){
-                        return false;
-             }
-             dt.PopupManager.show();
+            if(isMobile()){
+                $("body").addClass('mobile-layer');
+                $(".dt-modal").addClass('m-open');
 
-             if(isMobile()){
-                 $("body").addClass('mobile-layer');
-                 $(".dt-modal").addClass('m-open');
-
-                 dt.PopupManager.isMobile = true;
-                 dt.PopupManager.layerShown = true;
-             }
+                dt.PopupManager.isMobile = true;
+                dt.PopupManager.layerShown = true;
+            }
         }
-
 
     </script>
 @endsection
