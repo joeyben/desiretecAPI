@@ -51,9 +51,8 @@
                             <div class="agency-contact-info">
                                 <ul>
                                     <li class="phone">
-                                        <!-- <i class="fal fa-phone-alt"></i> -->
                                         <div class="icon-background">
-                                            <i class="fas fa-phone" aria-hidden="true"></i>
+                                            <i class="fal fa-phone" aria-hidden="true"></i>
                                         </div>
                                         <h4>{{ trans('autooffer.contact.company_telephone') }}</h4>
                                     </li>
@@ -157,7 +156,6 @@
                                     <div class="label">Unser Tipp</div>
                                 @endif
                                 <div class="slick-slider">
-                                    <!-- TODO: Add images and style them -->
                                     @if (key_exists('Bildfile', $offer['hotel_data']['data']) and is_array($offer['hotel_data']['data']['Bildfile']))
                                         @foreach($offer['hotel_data']['data']['Bildfile'] as $image)
                                             <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $image) !!})"></div>
@@ -202,7 +200,7 @@
                                     <ul>
                                         @for ($i = 0; $i < 3; $i++)
                                         <li>
-                                            <i class="fas fa-check"></i>
+                                            <i class="fal fa-check"></i>
                                             <h4 class="dark-grey">{{ trans('hotel.offer.attributes.'.$offer['data']['hotel_attributes'][$i]) }}</h4>
                                         </li>
                                         @endfor
@@ -312,7 +310,7 @@
             });
             $('.about-section h3 a').css({'color': brandColor});
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
-            $('.fas.fa-heart, .fas.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
+            $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
             $('.offers .recommandations .average').css({'border-color': brandColor});
             $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
 
