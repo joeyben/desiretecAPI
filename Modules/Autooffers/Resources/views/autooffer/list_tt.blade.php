@@ -248,7 +248,7 @@
                                         </div>
                                     </div>
                                     <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span></h3>
-                                    <a class="btn btn-primary" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid={{ getTTRegionCodeFromOrt($offer['hotel_data']['data']['Stadtname']) }}&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&child=5,7&dur={{ $offer['data']['duration'] }}&price=0,{{ $wish->budget }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
+                                    <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid={{ getTTRegionCodeFromOrt($offer['hotel_data']['data']['Stadtname']) }}&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&child=5,7&dur={{ $offer['data']['duration'] }}&price=0,{{ $wish->budget }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>

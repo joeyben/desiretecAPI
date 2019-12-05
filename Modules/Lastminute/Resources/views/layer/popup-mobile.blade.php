@@ -449,21 +449,24 @@
             });
             /* END Destinations */
 
-            /* Airports */
-            $('#airport').tagsinput({
-              maxTags: 3,
-              maxChars: 20,
-              allowDuplicates: false,
-              typeahead: {
-                autoSelect: false,
-                minLength: 3,
-                highlight: true,
-                source: function(query) {
-                  return $.get('get-all-airports', {query: query});
-                }
-              }
-            });
-            /* END Airports */
+              /* Airports */
+              $('#airport').tagsinput({
+                  maxTags: 3,
+                  maxChars: 20,
+                  allowDuplicates: false,
+                  cancelConfirmKeysOnEmpty: true,
+                  freeInput:false,
+                  typeahead: {
+                      autoSelect: false,
+                      minLength: 3,
+                      highlight: true,
+                      afterSelect: function(val) { this.$element.val(""); },
+                      source: function(query) {
+                          return $.get('get-tt-airports', {query: query});
+                      }
+                  }
+              });
+              /* END Airports */
 
 
             $("#destination, #airport").on('itemAdded', function(event) {
