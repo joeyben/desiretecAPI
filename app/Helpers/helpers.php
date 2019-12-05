@@ -435,7 +435,7 @@ if (!function_exists('getCurrentWhiteLabelEmail')) {
     function getCurrentWhiteLabelEmail()
     {
         if (!isWhiteLabel()) {
-            return "noreply@desiretec.com";
+            return 'noreply@desiretec.com';
         }
 
         $email = getCurrentWhiteLabelField('email');
