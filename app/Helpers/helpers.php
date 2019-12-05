@@ -691,7 +691,7 @@ if (!function_exists('getTTRegions')) {
      */
     function getTTRegions($value)
     {
-        return \App\Models\TTRegions::where('ort', 'like', '%' . $value . '%')->select('topRegionName')->get();
+        return \App\Models\TTRegions::where('ort', 'like', '%' . $value . '%')->select('topRegionName')->first()->topRegionName;
     }
 }
 
