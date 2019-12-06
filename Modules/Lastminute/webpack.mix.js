@@ -20,6 +20,7 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/base.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',
         base_url + '/resources/assets/js/layer/datepicker.js',
+        base_url + '/resources/assets/js/layer/tagsinput.min.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/lastminute/js/layer/layer.js')
     .scripts([
