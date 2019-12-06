@@ -16,6 +16,7 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/exitintent-new.js',
         base_url + '/resources/assets/js/layer/touchswipe.js',
         base_url + '/resources/assets/js/layer/typeahead.js',
+        base_url + '/resources/assets/js/layer/bootstrap3-typeahead.min.js',
         base_url + '/node_modules/js-cookie/src/js.cookie.js',
         base_url + '/resources/assets/js/layer/base.js',
         base_url + '/resources/assets/js/layer/rangeslider.js',
