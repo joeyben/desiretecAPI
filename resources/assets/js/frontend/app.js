@@ -51,6 +51,11 @@ const app = new Vue({
                     this.$nextTick(function () {
                         this.loading = false;
                         $('.selectpicker').selectpicker('refresh');
+                        $('.btn-primary').css({
+                            'background': brandColor,
+                            'border': '1px solid ' + brandColor,
+                            'color': '#fff',
+                        });
                     });
 
                 }
