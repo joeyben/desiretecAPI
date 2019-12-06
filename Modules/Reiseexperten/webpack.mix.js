@@ -24,6 +24,7 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/datepicker.js',
         base_url + '/resources/assets/js/layer/devicedetector.min.js',
         base_url + '/resources/assets/js/layer/touchswipe.js',
+        base_url + '/resources/assets/js/layer/bootstrap3-typeahead.min.js',
         base_url + '/resources/assets/js/layer/tagsinput.min.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/reiseexperten/js/layer/layer.js')
