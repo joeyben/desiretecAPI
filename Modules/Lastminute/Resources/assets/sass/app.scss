@@ -115,7 +115,11 @@ input:-internal-autofill-selected{
     text-align: center;
     display: flex;
     justify-content: flex-start;
+    flex-wrap: wrap;
     padding: 20px 0;
+    @media (max-width: 600px) {
+      justify-content: center;
+    }
     li{
       display: inline-block;
       padding:0 10px 0 10px;
@@ -125,6 +129,15 @@ input:-internal-autofill-selected{
         &:before{
           content: "\00a9   " attr(data-copyyear);
           margin-right: 6px;
+        }
+        @media (max-width: 600px) {
+          position: relative;
+        }
+      }
+      a{
+        color: $master-primary;
+        &:hover{
+          color: $master-primary;
         }
       }
     }
