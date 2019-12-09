@@ -23,9 +23,9 @@ class TuidemoWishesController extends Controller
      * Wish Status.
      */
     protected $status = [
-        'new'               => 'new',
-        'offer_created'     => 'offer_created',
-        'completed'         => 'completed',
+        'Active'       => 'Active',
+        'Inactive'     => 'Inactive',
+        'Deleted'      => 'Deleted',
     ];
 
     /**
