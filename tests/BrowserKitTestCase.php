@@ -52,6 +52,10 @@ abstract class BrowserKitTestCase extends BaseTestCase
      * @var
      */
     protected $userRole;
+    /**
+     * @var \Faker\Generator
+     */
+    protected $faker;
 
     public function setUp()
     {
@@ -73,6 +77,8 @@ abstract class BrowserKitTestCase extends BaseTestCase
         $this->adminRole = Role::find(1);
         $this->executiveRole = Role::find(2);
         $this->userRole = Role::find(3);
+
+        $this->faker = \Faker\Factory::create();
     }
 
     public function tearDown()
