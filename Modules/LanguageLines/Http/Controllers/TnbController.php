@@ -115,8 +115,13 @@ class TnbController extends Controller
                 new Where('key', 'footer.tnb'),
                 new Where('group', 'layer'),
             ])->get()->count()) {
-                $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
-                $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
+                if(access()->user()->hasRole('Admin')){
+                    $whiteLabelName = getCurrentWhiteLabelDisplayName();
+                    $domain = getCurrentWhiteLabelField('domain');
+                } else {
+                    $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
+                    $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
+                }
 
                 $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
                 $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
