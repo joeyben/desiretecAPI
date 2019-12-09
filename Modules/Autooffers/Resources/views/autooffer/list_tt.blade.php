@@ -50,18 +50,36 @@
 
                             <div class="agency-contact-info">
                                 <ul>
-                                    <li class="phone">
-                                        <div class="icon-background">
-                                            <i class="fal fa-phone" aria-hidden="true"></i>
-                                        </div>
-                                        <h4>{{ trans('autooffer.contact.company_telephone') }}</h4>
-                                    </li>
+                                    @if(!(trans('autooffer.contact.ansprechpartner') == "autooffer.contact.ansprechpartner"))
+                                        <li class="name">
+                                            <i class="fal fa-user-circle"></i>
+                                            <h4>{{ trans('autooffer.contact.ansprechpartner') }}</h4>
+                                        </li>
+                                    @endif
+                                    @if(!(trans('autooffer.contact.company_telephone') == "autooffer.contact.company_telephone"))
+                                        <li class="phone">
+                                            <div class="icon-background">
+                                                <i class="fal fa-phone" aria-hidden="true"></i>
+                                            </div>
+                                            <h4>{{ trans('autooffer.contact.company_telephone') }}</h4>
+                                        </li>
+                                    @endif
+                                    @if(!(trans('autooffer.contact.company_email') == "autooffer.contact.company_email"))
                                     <li class="name">
                                         <div class="icon-background">
                                             <i class="fal fa-envelope" aria-hidden="true"></i>
                                         </div>
                                         <h4>{{ trans('autooffer.contact.company_email') }}</h4>
                                     </li>
+                                    @endif
+                                    @if(!(trans('autooffer.contact.timings') == "autooffer.contact.timings"))
+                                    <li class="name">
+                                        <div class="icon-background">
+                                            <i class="fal fa-clock" aria-hidden="true"></i>
+                                        </div>
+                                        <h4>{{ trans('autooffer.contact.timings') }}</h4>
+                                    </li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
