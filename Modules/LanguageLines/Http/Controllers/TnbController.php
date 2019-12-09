@@ -3,16 +3,10 @@
 namespace Modules\LanguageLines\Http\Controllers;
 
 use App\Models\Access\Role\Role;
-use App\Repositories\Criteria\Filter;
-use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
-use App\Repositories\Criteria\WhereIn;
-use App\Repositories\Criteria\findWhereRaw;
-use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -21,12 +15,11 @@ use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Translation\Translator;
+use Modules\LanguageLines\Http\Requests\FooterTnbStoreRequest;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
-use Modules\LanguageLines\Http\Requests\FooterTnbStoreRequest;
 
 class TnbController extends Controller
 {
@@ -122,7 +115,6 @@ class TnbController extends Controller
                 new Where('key', 'footer.tnb'),
                 new Where('group', 'layer'),
             ])->get()->count()) {
-
                 $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
                 $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
 

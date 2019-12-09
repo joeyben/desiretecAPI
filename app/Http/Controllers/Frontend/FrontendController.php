@@ -97,8 +97,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * 
-     * Respective Domain Teilnahmebedingungen
+     * Respective Domain Teilnahmebedingungen.
      *
      * @return view
      */
