@@ -16,6 +16,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
+use Illuminate\Auth\AuthManager;
 
 /**
  * Class WishesController.
@@ -63,6 +64,11 @@ class WishesController extends Controller
     protected $categories;
 
     /**
+     * @var \Illuminate\Auth\AuthManager
+     */
+    private $auth;
+
+    /**
      * @var \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository
      */
     private $rules;
@@ -70,12 +76,14 @@ class WishesController extends Controller
     /**
      * @param \App\Repositories\Frontend\Wishes\WishesRepository           $wish
      * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository $rules
+     * @param \Illuminate\Auth\AuthManager                                      $auth
      */
-    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules)
+    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth)
     {
         $this->wish = $wish;
         $this->categories = $categories;
         $this->rules = $rules;
+        $this->auth = $auth;
     }
 
     /**
@@ -198,7 +206,9 @@ class WishesController extends Controller
             'completed'         => '3',
         ];
 
+
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+        $rules = $this->rules->getRuleForWhitelabel((int) ($this->auth->guard('web')->user()->whitelabels()->first()->id));
 
         $wish = $this->wish->getForDataTable()
             ->when($status, function ($wish, $status) {
@@ -207,8 +217,25 @@ class WishesController extends Controller
             })
             ->paginate(10);
 
-        foreach($wish as $singleWist) {
-            $singleWist['status'] = array_search ($singleWist['status'], $status_arr) ? array_search ($singleWist['status'], $status_arr) : 'new';
+        foreach($wish as $singleWish) {
+            $singleWish['status'] = array_search ($singleWish['status'], $status_arr) ? array_search ($singleWish['status'], $status_arr) : 'new';
+
+            $manuelFlag = false;
+
+            if(is_array($rules['destination']) && !is_null($rules['destination'])) {
+                if(is_array($singleWish['destination'])) {
+                    foreach ($singleWish['destination'] as $destination) {
+                        if (in_array($destination, $rules['destination']))  $manuelFlag = true;
+                    }
+                } else {
+                    if (in_array($singleWish['destination'], $rules['destination']))    $manuelFlag = true;
+                }
+            }
+
+            if($singleWish['budget'] > $rules['budget'])   $manuelFlag = true;
+
+            $singleWish['manuelFlag'] = $manuelFlag;
+            $singleWish['wlRule'] = $rules['type'];
         }
 
         $response = [
