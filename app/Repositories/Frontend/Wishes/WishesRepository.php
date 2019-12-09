@@ -331,8 +331,8 @@ class WishesRepository extends BaseRepository
     /**
      * Update Wish Status.
      *
-     * @param int       $id
-     * @param string    $updatedStatus
+     * @param int    $id
+     * @param string $updatedStatus
      */
     public function updateStatus(int $id, string $updatedStatus)
     {
@@ -341,18 +341,18 @@ class WishesRepository extends BaseRepository
         $update = DB::transaction(function () use ($id, $input) {
             if (\Modules\Wishes\Entities\Wish::where('id', $id)->update($input)) {
                 return true;
-            } else {
-                return false;
             }
+
+            return false;
 
             throw new GeneralException(
                 trans('exceptions.backend.wishes.update_error')
             );
         });
-        if($update){
+        if ($update) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

@@ -2,21 +2,17 @@
 
 namespace Modules\Groups\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Criteria\ByWhitelabel;
 use App\Repositories\Criteria\EagerLoad;
-use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
-use App\Repositories\Criteria\Where;
-use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WhereIn;
-use App\Repositories\Criteria\WithTrashed;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +24,7 @@ use Modules\Groups\Exports\GroupExport;
 use Modules\Groups\Http\Requests\StoreGroupRequest;
 use Modules\Groups\Http\Requests\UpdateGroupRequest;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
+use Modules\Groups\Services\GroupsService;
 use Modules\Whitelabels\Entities\Whitelabel;
 
 class GroupsController extends Controller
@@ -65,10 +62,15 @@ class GroupsController extends Controller
      * @var \Maatwebsite\Excel\Excel
      */
     private $excel;
+    /**
+     * @var \Modules\Groups\Services\GroupsService
+     */
+    private $groupsService;
 
     /**
      * GroupsController constructor.
      *
+     * @param \Modules\Groups\Services\GroupsService                          $groupsService
      * @param \Modules\Groups\Repositories\Contracts\GroupsRepository         $groups
      * @param \Illuminate\Routing\ResponseFactory                             $response
      * @param \Illuminate\Auth\AuthManager                                    $auth
@@ -78,7 +80,7 @@ class GroupsController extends Controller
      * @param \App\Repositories\Backend\Whitelabels\WhitelabelsRepository     $whitelabels
      * @param \Maatwebsite\Excel\Excel                                        $excel
      */
-    public function __construct(GroupsRepository $groups, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, Excel $excel)
+    public function __construct(GroupsService $groupsService, GroupsRepository $groups, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, Excel $excel)
     {
         $this->groups = $groups;
         $this->response = $response;
@@ -88,6 +90,7 @@ class GroupsController extends Controller
         $this->activities = $activities;
         $this->whitelabels = $whitelabels;
         $this->excel = $excel;
+        $this->groupsService = $groupsService;
     }
 
     /**
@@ -105,35 +108,12 @@ class GroupsController extends Controller
         $this->authorize('view', Group::class);
 
         try {
-            $perPage = $request->get('per_page');
-            $sort = explode('|', $request->get('sort'));
+            $data = $this->groupsService->paginate($request);
 
-            $result['data'] = $this->groups->withCriteria([
-                new WithTrashed(),
-                new OrderBy($sort[0], $sort[1]),
-                new Where('groups.whitelabel_id', $request->get('whitelabel')),
-                new WhereBetween('groups.created_at', $request->get('start'), $request->get('end')),
-                new Filter($request->get('filter')),
-                new EagerLoad(['owner' => function ($query) {
-                    $select = $this->auth->guard('web')->user()->hasRole('Administrator') ? 'CONCAT(first_name, " ", last_name, " ( ", email, " ) ") AS full_name' : 'CONCAT(first_name, " ", last_name) AS full_name';
-                    $query->select('users.id', DB::raw($select));
-                }, 'users'  => function ($query) {
-                    $query->select('users.id', DB::raw('CONCAT(first_name, " ", last_name, " ( ", email, " ) ") AS full_name'));
-                }, 'whitelabel'  => function ($query) {
-                    $query->select('id', 'display_name');
-                }]),
-                new ByWhitelabel('groups')
-            ])->paginate($perPage);
-
-            $result['success'] = true;
-            $result['status'] = 200;
+            return $this->responseJsonPaginated($data);
         } catch (Exception $e) {
-            $result['success'] = false;
-            $result['message'] = $e->getMessage();
-            $result['status'] = 500;
+            return $this->responseJsonError($e);
         }
-
-        return $this->response->json($result['data'], $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
     /**

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\ServiceProvider;
 use Modules\Groups\Entities\Group;
 use Modules\Groups\Observers\GroupObserver;
+use Modules\Groups\Services\Contracts\GroupsServiceInterface;
+use Modules\Groups\Services\GroupsService;
 
 class GroupsServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,7 @@ class GroupsServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $this->app->bind(GroupsServiceInterface::class, GroupsService::class);
     }
 
     /**

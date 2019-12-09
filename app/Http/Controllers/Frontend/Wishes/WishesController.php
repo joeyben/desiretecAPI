@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Frontend\Wishes;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
-use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Models\Access\User\User;
 use App\Models\Access\User\UserToken;
 use App\Models\Agents\Agent;
@@ -218,7 +218,7 @@ class WishesController extends Controller
             ->paginate(10);
 
         foreach($wish as $singleWish) {
-            $singleWish['status'] = array_search ($singleWish['status'], $status_arr) ? array_search ($singleWish['status'], $status_arr) : 'new';
+            $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
 
             $manuelFlag = false;
 
@@ -236,7 +236,6 @@ class WishesController extends Controller
 
             $singleWish['manuelFlag'] = $manuelFlag;
             $singleWish['wlRule'] = $rules['type'];
-        }
 
         $response = [
             'pagination' => [
@@ -403,7 +402,7 @@ class WishesController extends Controller
 
             $wish = $this->wish->updateStatus($request->get('id'), $status);
 
-            return json_response(array());
+            return json_response([]);
         } catch (Exception $e) {
             return json_response_error($e);
         }
