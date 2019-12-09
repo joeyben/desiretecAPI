@@ -81,6 +81,14 @@ body.wishlist{
           .wish-top-infos{
             margin-bottom: 25px;
             text-align: right;
+            position: relative;
+            .wish-id{
+              position: absolute;
+              left: 15px;
+              &:before{
+                content: "#";
+              }
+            }
             .offer-count{
               background-color: #3097d1;
               color: #fff;

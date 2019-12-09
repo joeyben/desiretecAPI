@@ -63,6 +63,9 @@
                     </div>
                     <div class="action">
                         <div class="wish-top-infos">
+                            <span class="wish-id">
+                                @{{ wish.id }}
+                            </span>
                             <span v-if="wish.offers > 0" class="offer-count">
                                 @{{ wish.offers }}
                             </span>
