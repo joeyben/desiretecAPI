@@ -207,7 +207,7 @@
                                     </ul>
 
                                     <div class="travel-info">
-                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['offerFeatures'] }}">{{ $offer['data']['duration'] }} Tage, {{ str_limit($offer['data']['offerFeatures'], 20, "...") }}</h4>
+                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['offerFeatures'] }}">{{ $offer['data']['duration'] }} {{ trans('autooffers.offer.nights') }}, {{ str_limit($offer['data']['offerFeatures'], 20, "...") }}</h4>
                                         <h4>{{ trans('hotel.offer.boardtype.'.strtolower($offer['data']['boardType'])) }}</h4>
                                     </div>
                                 </div>
