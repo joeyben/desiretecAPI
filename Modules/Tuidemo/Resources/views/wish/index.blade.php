@@ -55,15 +55,17 @@
                         </ul>
                     </div>
                     <div class="action">
-                        <div class="wish-top-infos">
-                            <span v-if="wish.wlRule == 'mix'" class="wish-classification">
-                                <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
-                                <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
-                            </span>
-                            <span v-if="wish.offers > 0" class="offer-count">
-                                @{{ wish.offers }}
-                            </span>
-                        </div>
+                        @if($logged_in_user->hasRole('Seller'))
+                            <div class="wish-top-infos">
+                                <span v-if="wish.wlRule == 'mix'" class="wish-classification">
+                                    <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
+                                    <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
+                                </span>
+                                    <span v-if="wish.offers > 0" class="offer-count">
+                                    @{{ wish.offers }}
+                                </span>
+                            </div>
+                        @endif
                         <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
                         @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
                         <!--    <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>-->

@@ -236,6 +236,7 @@ class WishesController extends Controller
 
             $singleWish['manuelFlag'] = $manuelFlag;
             $singleWish['wlRule'] = $rules['type'];
+        }
 
         $response = [
             'pagination' => [
