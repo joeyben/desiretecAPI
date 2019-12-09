@@ -430,6 +430,38 @@ var exitIntent = window.exitIntent || {};
         }
     });
 
+    var TuiHMTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
+        name: 'TUI Honeymoon',
+        matchesUrl: 'www.tui.com/pauschalreisen(/[a-z-]+)*/flitterwochen|www.tui.com/de/pauschalreisen(/[a-z-]+)*/flitterwochen|' +
+            'tuicom-itest.tui-interactive.com/pauschalreisen(/[a-z-]+)*/flitterwochen|tuicom-itest.tui-interactive.com/de/pauschalreisen(/[a-z-]+)*/flitterwochen|' +
+            'tuicom-preprod.tui-interactive.com/pauschalreisen(/[a-z-]+)*/flitterwochen|tuicom-preprod.tui-interactive.com/de/pauschalreisen(/[a-z-]+)*/flitterwochen',
+        filterFormSelector: 'body',
+        filterDataDecoders: {},
+        getTripData: function () {
+            return {
+                is_popup_allowed: true
+            };
+        },
+        getRandomElement: function (arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        },
+        getVariant: function () {
+            if(deviceDetector.device === "phone"){
+                return 'eil-mobile';
+            }else if(deviceDetector.device === "tablet"){
+                return this.getRandomElement([
+                    'eil-tablet'
+                ]);
+            }else{
+                return this.getRandomElement([
+                    'eil-n1'
+                ]);
+            }
+        }
+    });
+
+
+
     var MasterIBETripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         decodeDate: function (raw) {
             var r = /\w+\.\s+(\d+\.\d+.\d+)/.exec(raw);
@@ -441,7 +473,7 @@ var exitIntent = window.exitIntent || {};
             return r[1];
         },
         name: 'TUI IBE',
-        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
+        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|www.tui.com/de/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {
@@ -1269,7 +1301,7 @@ var exitIntent = window.exitIntent || {};
         }
     });
     dt.decoders.push(MasterIBETripDataDecoder);
-    dt.decoders.push(MasterIBETripDataDecoderMobile);
+    dt.decoders.push(TuiHMTripDataDecoder);
     dt.decoders.push(KwizzmeFakeTripDataDecoder);
 
     //dt.decoders.push($.extend({}, MasterIBETripDataDecoder, {
@@ -1369,7 +1401,7 @@ var exitIntent = window.exitIntent || {};
                 }
             });
         };
-    
+
         dt.hideTeaser = function (e) {
             $("body").removeClass('mobile-layer');
             $(".dt-modal").remove();
@@ -1386,7 +1418,7 @@ var exitIntent = window.exitIntent || {};
                 });
             }
             dt.PopupManager.init();
-            dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
+            dt.Tracking.init('tui_exitwindow','UA-105970361-13');
             dt.triggerButton($event);
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
                 dt.scrollUpDetect();
