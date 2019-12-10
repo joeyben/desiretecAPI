@@ -44,7 +44,7 @@ const app = new Vue({
 
     methods: {
         fetchWishes() {
-            axios.get('/wishes/getlist?page=' + this.pagination.current_page+'&status=' + this.status)
+            axios.get('/wishes/getlist?page=' + this.pagination.current_page+'&status=' + this.status + '&id=' + this.id)
                 .then(response => {
                     this.data = response.data.data.data;
                     this.pagination = response.data.pagination;
