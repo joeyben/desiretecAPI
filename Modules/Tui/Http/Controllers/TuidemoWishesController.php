@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Tuidemo\Http\Controllers;
+namespace Modules\Tui\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Route;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 
 /**
- * Class TuidemoWishesController.
+ * Class TuiWishesController.
  */
-class TuidemoWishesController extends Controller
+class TuiWishesController extends Controller
 {
     const BODY_CLASS = 'wish';
     const BODY_CLASS_LIST = 'wishlist';
@@ -74,7 +74,7 @@ class TuidemoWishesController extends Controller
     {
         $this->wish = $wish;
         $this->whitelabel = $whitelabel;
-        $this->whitelabelId = \Config::get('tuidemo.id');
+        $this->whitelabelId = \Config::get('tui.id');
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
@@ -111,7 +111,7 @@ class TuidemoWishesController extends Controller
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
 
-        return view('tuidemo::wish.wish')->with([
+        return view('tui::wish.wish')->with([
             'wish'                => $wish,
             'avatar'              => $avatar,
             'agent_name'          => $agentName,
@@ -133,8 +133,8 @@ class TuidemoWishesController extends Controller
     public function validateTokenList($token)
     {
         if ($this->wish->validateToken($token)) {
-            if (Route::has('tuidemo.list')) {
-                return redirect()->route('tuidemo.list');
+            if (Route::has('tui.list')) {
+                return redirect()->route('tui.list');
             }
         }
 
@@ -148,7 +148,7 @@ class TuidemoWishesController extends Controller
      */
     public function wishList(ManageWishesRequest $request)
     {
-        return view('tuidemo::wish.index')->with([
+        return view('tui::wish.index')->with([
             'status'     => $this->status,
             'count'      => $this->wish->getForDataTable()->get()->count(),
             'body_class' => $this::BODY_CLASS_LIST,
