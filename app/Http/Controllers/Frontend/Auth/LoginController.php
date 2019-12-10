@@ -90,7 +90,7 @@ class LoginController extends Controller
         /*
          * Check to see if the users account is confirmed and active
          */
-        if ($user->hasRole(Flag::SELLER_ROLE) || $user->hasRole(Flag::EXECUTIVE_ROLE)) {
+        if (($user->hasRole(Flag::SELLER_ROLE) || $user->hasRole(Flag::EXECUTIVE_ROLE)) && !$user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
             $whitelabel = $user->whitelabels()->first();
             if (null !== $whitelabel && ($whitelabel->name !== getCurrentWhiteLabelField('name'))) {
                 access()->logout();
