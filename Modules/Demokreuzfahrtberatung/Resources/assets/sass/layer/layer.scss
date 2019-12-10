@@ -524,12 +524,12 @@ ul.kwp-form-errors {
 .kwp-logo {
   display: block;
   height: 65px;
-  background: transparent url(../../images/layer/Logo-kreuzfahrtberaung-signet-quadrat.png) no-repeat left top;
   /*******/
   position: absolute;
-  width: 100%;
-  left: 0;
-  background-size: 70px;
+  width: 30%;
+  left: 20px;
+  top: 20px;
+  background-size: contain !important;
 }
 
 

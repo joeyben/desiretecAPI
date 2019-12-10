@@ -198,4 +198,9 @@ class ReiseexpertenController extends Controller
 
         return $duration;
     }
+
+    public function getPDF()
+    {
+        return view('reiseexperten::layer.pdf');
+    }
 }

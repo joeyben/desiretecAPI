@@ -248,4 +248,9 @@ class TuidemoController extends Controller
 
         return $duration;
     }
+
+    public function getPDF()
+    {
+        return view('tui::layer.pdf');
+    }
 }
