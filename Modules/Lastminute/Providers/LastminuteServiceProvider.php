@@ -42,7 +42,8 @@ class LastminuteServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('lastminute.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'lastminute'
+            __DIR__ . '/../Config/config.php',
+            'lastminute'
         );
     }
 

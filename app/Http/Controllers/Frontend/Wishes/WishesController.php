@@ -199,14 +199,14 @@ class WishesController extends Controller
         ];
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
-        $id = ($request->get('id') && $request->get('id') != "undefined") ? $request->get('id') : '';
+        $id = ($request->get('id') && 'undefined' !== $request->get('id')) ? $request->get('id') : '';
 
         $wish = $this->wish->getForDataTable()
             ->when($status, function ($wish, $status) {
                 return $wish->where(config('module.wishes.table') . '.status', $status)
                     ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
-            })->when($id, function($wish, $id) {
-                return $wish->where(config('module.wishes.table') . '.id', 'like', '%'.$id.'%');
+            })->when($id, function ($wish, $id) {
+                return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
             })
             ->paginate(10);
 

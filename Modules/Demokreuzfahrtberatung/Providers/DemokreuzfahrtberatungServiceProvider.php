@@ -42,7 +42,8 @@ class DemokreuzfahrtberatungServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('demokreuzfahrtberatung.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'demokreuzfahrtberatung'
+            __DIR__ . '/../Config/config.php',
+            'demokreuzfahrtberatung'
         );
     }
 

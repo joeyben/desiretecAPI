@@ -43,7 +43,8 @@ class AutooffersServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('autooffers.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'autooffers'
+            __DIR__ . '/../Config/config.php',
+            'autooffers'
         );
     }
 
