@@ -204,4 +204,9 @@ class DemokreuzfahrtberatungController extends Controller
 
         return $duration;
     }
+
+    public function getPDF()
+    {
+        return view('demokreuzfahrtberatung::layer.pdf');
+    }
 }

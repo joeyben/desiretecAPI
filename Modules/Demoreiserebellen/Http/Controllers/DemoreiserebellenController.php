@@ -208,4 +208,9 @@ class DemoreiserebellenController extends Controller
 
         return $duration;
     }
+
+    public function getPDF()
+    {
+        return view('demoreiserebellen::layer.pdf');
+    }
 }
