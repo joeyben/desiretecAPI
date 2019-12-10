@@ -208,8 +208,8 @@ class WishesController extends Controller
 
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
-        $id = ($request->get('id') && $request->get('id') != "undefined") ? $request->get('id') : '';
-        $rules = $this->rules->getRuleForWhitelabel((int) ($this->auth->guard('web')->user()->whitelabels()->first()->id));
+        $id = ($request->get('id') && !is_null($request->get('id'))) ? $request->get('id') : '';
+        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelField('id')));
 
         $wish = $this->wish->getForDataTable()
             ->when($status, function ($wish, $status) {
