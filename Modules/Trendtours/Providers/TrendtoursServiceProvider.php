@@ -42,7 +42,8 @@ class TrendtoursServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('trendtours.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'trendtours'
+            __DIR__ . '/../Config/config.php',
+            'trendtours'
         );
     }
 

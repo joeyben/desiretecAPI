@@ -199,25 +199,36 @@ class TuidemoController extends Controller
             'extra_params'   => json_encode($extra)
         ]);
         $new_wish = $wish->create(
-            $request->except('variant', 'first_name', 'last_name', 'email',
-                'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3',
+            $request->except(
+                'variant',
+                'first_name',
+                'last_name',
+                'email',
+                'password',
+                'is_term_accept',
+                'name',
+                'terms',
+                'ages1',
+                'ages2',
+                'ages3',
                 'locationAttributes',
-  'facilityAttributes',
-  'travelAttributes',
-  'maxStopOver',
-  'cities',
-  'ratings',
-  'recommendationRate',
-  'minPrice',
-  'roomType',
-  'earlyBird',
-  'familyAttributes',
-  'wellnessAttributes',
-  'sportAttributes',
-  'airlines',
-  'hotelChains',
-  'operators'),
-             $this->whitelabelId
+                'facilityAttributes',
+                'travelAttributes',
+                'maxStopOver',
+                'cities',
+                'ratings',
+                'recommendationRate',
+                'minPrice',
+                'roomType',
+                'earlyBird',
+                'familyAttributes',
+                'wellnessAttributes',
+                'sportAttributes',
+                'airlines',
+                'hotelChains',
+                'operators'
+            ),
+            $this->whitelabelId
         );
 
         return $new_wish;
@@ -236,5 +247,10 @@ class TuidemoController extends Controller
         }
 
         return $duration;
+    }
+
+    public function getPDF()
+    {
+        return view('tui::layer.pdf');
     }
 }

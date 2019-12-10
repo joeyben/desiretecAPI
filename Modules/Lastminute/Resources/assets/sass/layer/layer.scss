@@ -515,11 +515,12 @@ ul.kwp-form-errors {
 .kwp-logo {
   display: block;
   height: 50px;
-  background: transparent url(../../images/layer/logo.png) no-repeat left top;
   /*******/
   position: absolute;
-  width: 100%;
-  left: 65%;
+  width: 30%;
+  left: 20px;
+  top: 20px;
+  background-size: contain !important;
 }
 
 

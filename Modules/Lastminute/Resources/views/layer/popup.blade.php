@@ -525,7 +525,7 @@
                     @endif
 
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                    <p>Ich habe die <a href="https://lastminute.reise-wunsch.com/pdfs/tnb_Lastminute.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.lastminute.ch/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    <p>Ich habe die <a href="/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.lastminute.ch/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                     @if ($errors->any() && $errors->get('terms'))
                         @foreach ($errors->get('terms') as $error)
                             <span class="error-input">{{ $error }}</span>
@@ -536,4 +536,9 @@
         </div>
     </div>
 </div>
+<style>
+    .kwp-logo {
+        background: transparent url({{ getWhiteLabelLogoUrl() }}) no-repeat left top;
+    }
+</style>
 {{ Form::close() }}
