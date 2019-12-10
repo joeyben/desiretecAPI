@@ -24,6 +24,19 @@ body.wishlist{
           width: 190px;
         }
       }
+      .id-filter{
+        padding: 8px !important;
+        padding-left: 15px !important;
+        border-radius: 5px !important;
+        border: 1px solid #ccc !important;
+        margin-left: 10px !important;
+        color: #000 !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        @media screen and (max-width: $break-small) {
+          width: 190px;
+        }
+      }
     }
   }
   .list-container {
@@ -81,6 +94,14 @@ body.wishlist{
           .wish-top-infos{
             margin-bottom: 25px;
             text-align: right;
+            position: relative;
+            .wish-id{
+              position: absolute;
+              left: 15px;
+              &:before{
+                content: "#";
+              }
+            }
             .offer-count{
               background-color: #3097d1;
               color: #fff;
