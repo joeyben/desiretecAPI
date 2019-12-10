@@ -490,8 +490,9 @@
                   autoSelect: false,
                   minLength: 3,
                   highlight: true,
+                  afterSelect: function(val) { this.$element.val(""); },
                   source: function(query) {
-                    return $.get('get-all-destinations', {query: query});
+                    return $.get('https://lastminute.reise-wunsch.com/get-all-destinations', {query: query});
                   }
                 }
               });
@@ -510,7 +511,7 @@
                   highlight: true,
                   afterSelect: function(val) { this.$element.val(""); },
                   source: function(query) {
-                    return $.get('get-tt-airports', {query: query});
+                    return $.get('https://lastminute.reise-wunsch.com/get-tt-airports', {query: query});
                   }
                 }
               });
