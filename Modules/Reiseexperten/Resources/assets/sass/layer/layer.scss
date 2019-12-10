@@ -249,7 +249,7 @@ $gutter: 30px;
     margin-top: 5px;
     transition: background-color .3s ease;
     &.error-button{
-      background: #D40E14;
+      background: $brand-danger;
     }
   }
 
@@ -506,13 +506,13 @@ ul.kwp-form-errors {
 
 .kwp-logo {
   display: block;
-  height: 50px;
+  height: 42px;
   background: transparent url(../../images/layer/logo.png) no-repeat left top;
   position: absolute;
   width: 100%;
   left: 0;
   top: 0;
-  background-size: 120px;
+  background-size: 150px;
 }
 
 .kwp-content, .kwp-content-extra-inner {
@@ -854,22 +854,6 @@ p.kwp-info {
   bottom: 0;
   left: 50%;
   margin: -25px;
-}
-
-@keyframes colours {
-  0% { color: red; }
-  15% { color: orange; }
-  30% { color: yellow; }
-  60% { color: green; }
-  90% { color: blue; }
-  100% { color: red; }
-}
-
-.kwp-colours {
-  animation-name: colours;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
 }
 
 .kwp-star-input {
@@ -1292,9 +1276,6 @@ p.kwp-info {
     .kwp-col-4{
       margin-bottom: 0;
     }
-    .button-col {
-      display: none;
-    }
   }
   /*.kwp input[type='date']:after {
       content: attr(placeholder);
@@ -1412,29 +1393,29 @@ p.kwp-info {
     }
     .haserrors{
       .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
-        border-color: #D40E14;
+        border-color: $brand-danger;
       }
 
       input[type="checkbox"]{
         &:after{
-          border-color: #D40E14;
+          border-color: $brand-danger;
         }
       }
       ~ .rangeslider--horizontal{
-        background: #D40E14;
+        background: $brand-danger;
         .rangeslider__handle{
-          border-color: #D40E14;
+          border-color: $brand-danger;
         }
       }
       .dd-trigger{
-        border-color: #D40E14;
+        border-color: $brand-danger;
         i{
-          color: #D40E14;
+          color: $brand-danger;
         }
       }
     }
     .haserrors + i{
-      color: #D40E14;
+      color: $brand-danger;
 
     }
   }
@@ -1536,12 +1517,13 @@ p.kwp-info {
 }
 .error-input{
   display: block;
-  background: #ED1C24 !important;
+  background: $brand-danger !important;
   padding: 0 10px;
   color: #fff;
+  font-size: 14px;
 }
 .dt_terms.hasError:after{
-  border: 1px solid red !important;
+  border: 1px solid $brand-danger !important;
 }
 
 // Customize bootstrap-taginput library
@@ -1549,6 +1531,8 @@ p.kwp-info {
   .bootstrap-tagsinput {
     padding: 0;
     width: 100%;
+    border: none;
+    box-shadow: none;
     input {
       min-width: 100%;
     }
@@ -1601,54 +1585,6 @@ p.kwp-info {
     }
   }
 
-  .kwp {
-    width: 80%;
-    margin: 0 auto;
-  }
-
-  .kwp-body {
-    .kwp-middle {
-      display: none;
-    }
-    .kwp-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      &:last-child{
-        margin-bottom: 20px;
-      }
-    }
-    [class*="kwp-col-"], [class*="kwp-col-"]:first-child {
-      width: 100%;
-      margin-right: 0;
-    }
-  }
-
-  .kwp-content {
-    overflow-x: hidden;
-
-    .button-col {
-      display: none;
-    }
-  }
-
-  .kwp-footer {
-    background: #fff;
-    .kwp-row {
-      textarea {
-        height: 60px;
-        overflow: auto;
-      }
-      .button-col {
-        display: block;
-        background: transparent;
-      }
-
-    }
-  }
-}
-
-@media(max-width: 769px) {
   .kwp{
     width: 400px;
     margin: 0 auto;
@@ -1677,11 +1613,46 @@ p.kwp-info {
       font-size: 14px;
     }
   }
+
   .teaser{
     h1{
       font-size: 20px;
       text-align: center;
       border: none;
+    }
+  }
+
+  .kwp-body {
+    .kwp-middle {
+      display: none;
+    }
+    .kwp-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      &:last-child{
+        margin-bottom: 20px;
+      }
+    }
+    [class*="kwp-col-"], [class*="kwp-col-"]:first-child {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+
+  .kwp-content {
+    overflow-x: hidden;
+  }
+
+  .kwp-footer {
+    background: #fff;
+    .kwp-row {
+      margin-bottom: 0 !important;
+
+      textarea {
+        height: 60px;
+        overflow: auto;
+      }
     }
   }
 }
@@ -1922,7 +1893,7 @@ p.kwp-info {
       color: $master-grey-dark;
       border-radius: 0;
       padding: 0 10px;
-      font-size: 16px;
+      font-size: 14px;
       display: block;
       width: 100%;
       position:relative;
@@ -1961,7 +1932,7 @@ p.kwp-info {
         padding: 10px 0;
         color: $master-primary;
         font-weight: 500;
-        font-size: 16px;
+        font-size: 14px;
         line-height: 1.5em;
         display: block;
       }
@@ -2007,38 +1978,31 @@ p.kwp-info {
       }
     }
 
-    .error-input{
-      display: block;
-      background: #ED1C24 !important;
-      padding: 0 10px;
-      color: #fff;
-    }
-
     .haserrors{
       .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="number"], input[type="date"]{
-        border-color: #D40E14;
+        border-color: $brand-danger;
       }
 
       input[type="checkbox"]{
         &:after{
-          border-color: #D40E14;
+          border-color: $brand-danger;
         }
       }
      .rangeslider--horizontal{
-        background: #D40E14;
+        background: $brand-danger;
         .rangeslider__handle{
-          border-color: #D40E14;
+          border-color: $brand-danger;
         }
       }
       .dd-trigger{
-        border-color: #D40E14;
+        border-color: $brand-danger;
         i{
-          color: #D40E14;
+          color: $brand-danger;
         }
       }
     }
     .haserrors + i{
-      color: #D40E14;
+      color: $brand-danger;
 
     }
   }
@@ -2053,7 +2017,7 @@ p.kwp-info {
     border-bottom: 1px solid $master-grey-light;
     border-radius: 0;
     padding: 0 10px;
-    font-size: 16px;
+    font-size: 14px;
     color: $master-grey-dark;
   }
   .kwp-custom-select{
@@ -2074,7 +2038,7 @@ p.kwp-info {
     box-sizing: padding-box;
     height: auto;
     border-bottom-color: #b9b9b9 !important;
-    font-size: 16px;
+    font-size: 14px;
   }
   .kwp input[type="email"]{
     width: 100%;
