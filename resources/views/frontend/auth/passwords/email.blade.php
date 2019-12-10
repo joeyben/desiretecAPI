@@ -26,14 +26,8 @@
 
 @section('content')
     <div class="row">
-
+        @include('includes.alert')
         <div class="col-md-8 col-md-offset-2">
-
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-            @endif
 
             <div class="panel panel-default">
 
