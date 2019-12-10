@@ -637,6 +637,18 @@ if (!function_exists('getApiByWhitelabel')) {
     }
 }
 
+if (!function_exists('getWhitelabelAutooffers')) {
+    /**
+     * return url(blade-format = with dot as seperator) to the whitelabel-footer.
+     *
+     * @return string
+     */
+    function getWhitelabelAutooffers()
+    {
+        return \App\Models\WhitelabelAutooffer::where('whitelabel_id', getCurrentWhiteLabelId())->first();
+    }
+}
+
 if (!function_exists('getKeywordText')) {
     /**
      * return language lines table name.

@@ -55,7 +55,6 @@ class DesiretecDemoController extends Controller
     public function index()
     {
         $whitelabel = $this->whitelabel->getByName('DesiretecDemo');
-
         return view('desiretecdemo::index')->with([
             'display_name'  => $whitelabel['display_name'],
             'color'         => $whitelabel['color'],
