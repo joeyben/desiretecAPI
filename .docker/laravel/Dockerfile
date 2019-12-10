@@ -28,9 +28,13 @@ WORKDIR /myapp
 RUN npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
       npm config set "//npm.fontawesome.com/:_authToken" 872992B4-8894-4152-95B3-FAA83ECC14D4
 RUN cd /myapp && yarn install --ignore-engines && npm i && npm run production
-#RUN cd /myapp/Modules/Autooffers && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Trendtours && yarn install --ignore-engines && npm run production
-RUN cd /myapp/Modules/Kreuzfahrtberatung && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Reiseexperten && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Lastminute && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Traveloverland && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Tui && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Demoatw && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/DesiretecDemo && yarn install --ignore-engines && npm run production
+
 
 FROM horrorhorst/laravel-base:latest
 
