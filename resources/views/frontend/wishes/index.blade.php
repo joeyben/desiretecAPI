@@ -53,16 +53,19 @@
                 <div class="count">
                     <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', $count ) }}</span>
                 </div>
-                {{-- <div class="filter-action">
-                    <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
-                        <option value="">{{ trans('menus.list.status.all') }}</option>
-                        @foreach ($status as $st)
-                            <option value="{{ $st }}">
-                                {{ trans('menus.list.status.'.strtolower($st)) }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div> --}}
+                @if($logged_in_user->hasRole('Seller'))
+                    <div class="filter-action">
+                        <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
+                            {{--<option value="">{{ trans('menus.list.status.all') }}</option>--}}
+                            @foreach ($status as $st)
+                                <option value="{{ $st }}">
+                                    {{ trans('menus.list.status.'.strtolower($st)) }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <input type="search" class="id-filter" placeholder="Search ID" v-model="id" @input="fetchWishes()">
+                    </div>
+                @endif
             </div>
             <hr>
             <div class="skeleton" v-if="loading"></div>
@@ -85,9 +88,18 @@
                     </div>
                     <div class="action">
                         <div class="wish-top-infos">
-                            <span v-if="wish.offers > 0" class="offer-count">
-                                @{{ wish.offers }}
+                            <span class="wish-id">
+                                @{{ wish.id }}
                             </span>
+                            @if($logged_in_user->hasRole('Seller'))
+                                <span v-if="wish.wlRule == 'mix'" class="wish-classification">
+                                    <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
+                                    <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
+                                </span>
+                                <span v-if="wish.offers > 0" class="offer-count">
+                                    @{{ wish.offers }}
+                                </span>
+                            @endif
                         </div>
                         <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
                         @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
@@ -98,7 +110,17 @@
                             <a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
                         @endif
                     <!--<a :href="'/offer/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a>-->
-
+                        @if($logged_in_user->hasRole('Seller'))
+                            <div class="status-change-action">
+                                <select class="selectpicker" id="change-status" v-bind:value="wish.status" v-model="status" @change="changeStatus(wish.id)">
+                                    @foreach ($status as $st)
+                                        <option value="{{ $st }}">
+                                            {{ trans('menus.list.status.'.strtolower($st)) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
