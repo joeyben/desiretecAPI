@@ -35,7 +35,7 @@ const app = new Vue({
         loading: true,
         messages: '',
         user_name: '',
-
+        id: '',
     },
     
     mounted() {
