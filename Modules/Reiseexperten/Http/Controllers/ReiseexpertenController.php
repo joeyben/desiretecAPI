@@ -97,6 +97,8 @@ class ReiseexpertenController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $whitelabel = $this->whitelabel->getByName('Reiseexperten');
+
         if ($request->failed()) {
             $html = view('reiseexperten::layer.popup')->with([
                 'adults_arr'   => $this->adults,
@@ -106,6 +108,7 @@ class ReiseexpertenController extends Controller
                 'duration_arr' => $this->duration,
                 'request'      => $request->all(),
                 'ages_arr'     => $this->ages,
+                'color'        => $whitelabel['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);

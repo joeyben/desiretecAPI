@@ -1,3 +1,9 @@
+@isset($color)
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+@endisset
+
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 <link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 
@@ -138,7 +144,7 @@
                     {{ Form::label('budget', trans('reiseexperten::layer.general.budget'), ['class' => 'control-label required']) }}
                     {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('reiseexperten::layer.placeholder.budget'), 'required' => 'required']) }}
                 </div>
-                <span class="text">bis 0 €</span>
+                <span class="text">&nbsp;</span>
                 <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
             </div>
 
@@ -189,7 +195,7 @@
                     @endforeach
                 @endif
             </div>
-            <div class="kwp-col-4 white-col button-col">
+            <div class="kwp-col-4 white-col submit-col">
                 <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
             </div>
         </div>
@@ -210,10 +216,11 @@
                 if(!$(this).parents('.main-col').hasClass('open')){
                     $('.main-col').removeClass('open')
                     $(this).parents('.main-col').addClass('open');
-                }else
+                }else {
                     $(this).parents('.main-col').removeClass('open');
+                }
 
-                $('.kwp-content').animate({ scrollTop: $(this).offset().top - 90}, 500);
+                $('.kwp-content').animate({ scrollTop: $(this).offset().top}, 500);
             });
 
             $(".duration-more .button a").click(function(e) {
@@ -271,6 +278,7 @@
             $(document).ready(function(){
 
                 autocomplete();
+                modifyDOM();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -382,6 +390,10 @@
                 });
             });
 
+            $(window).on('resize', function() {
+                modifyDOM();
+            });
+
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
@@ -432,11 +444,10 @@
                 });
             }
 
-            var brandColor = {!! json_encode($color) !!};
             dt.applyBrandColor();
 
-            $(window).on('resize', function(){
-                if( $(window).outerWidth() < 769 ) {
+            var modifyDOM = function(){
+                if( $(window).outerWidth() <= 768 ) {
                     $("body").addClass('mobile-layer');
                     $(".dt-modal").addClass('m-open');
 
@@ -445,17 +456,23 @@
 
                     $(".kwp-header").css('background', brandColor);
 
+                    $('.error-input').siblings('i').css('bottom', '30px');
+
+                    $('.dt-modal .submit-col').detach().appendTo('.footer-col');
                 } else {
                     $("body").removeClass('mobile-layer');
                     $(".dt-modal").removeClass('m-open');
-                    $(".kwp-header").css('background', 'transparent url(../../images/layer/header.png) no-repeat center center;');
+
+                    $(".kwp-header").removeAttr('style');
+
+                    $('.footer-col .submit-col').detach().appendTo('.kwp-content .kwp-row:last-child');
                 }
-            });
+            }
 
         </script>
 
         <div class="kwp-row">
-            <div class="kwp-col-12 white-col agb-col">
+            <div class="kwp-col-12 white-col footer-col">
                 <div class="kwp-agb">
                     @php
                         $terms_class = 'dt_terms'
@@ -474,10 +491,6 @@
                         @endforeach
                     @endif
                 </div>
-            </div>
-
-            <div class="kwp-col-4 button-col">
-                <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
             </div>
         </div>
     </div>
