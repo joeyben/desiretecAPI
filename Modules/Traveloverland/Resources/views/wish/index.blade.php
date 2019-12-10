@@ -38,6 +38,7 @@
                                 </option>
                             @endforeach
                         </select>
+                        <input type="search" class="id-filter" placeholder="Search ID" v-model="id" @input="fetchWishes()">
                     </div>
                 @endif
             </div>
