@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Frontend\Auth;
 use App\Events\Frontend\Auth\UserLoggedIn;
 use App\Events\Frontend\Auth\UserLoggedOut;
 use App\Exceptions\GeneralException;
+use App\Exceptions\WhitelabelException;
 use App\Helpers\Auth\Auth;
 use App\Helpers\Frontend\Auth\Socialite;
 use App\Http\Controllers\Controller;
 use App\Http\Utilities\NotificationIos;
 use App\Http\Utilities\PushNotification;
+use App\Services\Flag\Src\Flag;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -60,6 +62,21 @@ class LoginController extends Controller
             ->withSocialiteLinks((new Socialite())->getSocialLinks());
     }
 
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        try {
+            return $this->authenticated($request, $this->guard()->user());
+        } catch (WhitelabelException $e) {
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
+
     /**
      * @param Request $request
      * @param $user
@@ -73,7 +90,14 @@ class LoginController extends Controller
         /*
          * Check to see if the users account is confirmed and active
          */
-        if (!$user->isConfirmed()) {
+        if (($user->hasRole(Flag::SELLER_ROLE) || $user->hasRole(Flag::EXECUTIVE_ROLE)) && !$user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $user->whitelabels()->first();
+            if (null !== $whitelabel && ($whitelabel->name !== getCurrentWhiteLabelField('name'))) {
+                access()->logout();
+            }
+
+            throw WhitelabelException::mismatchException();
+        } elseif (!$user->isConfirmed()) {
             access()->logout();
 
             throw new GeneralException(trans('exceptions.frontend.auth.confirmation.resend', ['user_id' => $user->id]), true);

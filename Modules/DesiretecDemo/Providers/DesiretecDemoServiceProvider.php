@@ -42,7 +42,8 @@ class DesiretecDemoServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('desiretecdemo.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'desiretecdemo'
+            __DIR__ . '/../Config/config.php',
+            'desiretecdemo'
         );
     }
 

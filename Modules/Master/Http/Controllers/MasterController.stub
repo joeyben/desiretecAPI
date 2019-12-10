@@ -196,4 +196,9 @@ class $MODULE$Controller extends Controller
 
         return $duration;
     }
+
+    public function getPDF()
+        {
+            return view('$MODULESMAL$::layer.pdf');
+        }
 }

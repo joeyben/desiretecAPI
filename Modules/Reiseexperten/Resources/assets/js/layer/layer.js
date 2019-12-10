@@ -1331,11 +1331,6 @@ var dt = window.dt || {};
         var checkboxEl = $('.kwp input[type="checkbox"]:checked:after');
         $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
 
-        var datepicker = $('.datepicker-dropdown .day.active, .datepicker-dropdown .day.active.active:hover, .datepicker-dropdown .day.active:hover,.datepicker-dropdown .day.active.active:hover:hover, .datepicker-dropdown .month.active, .datepicker-dropdown .month.active.active:hover, .datepicker-dropdown .month.active:hover, .datepicker-dropdown .month.active.active:hover:hover, .datepicker-dropdown .year.active, .datepicker-dropdown .year.active.active:hover, .datepicker-dropdown .year.active:hover, .datepicker-dropdown .year.active.active:hover:hover');
-        datepicker.css({
-            'background': brandColor,
-        });
-
         var footerHref = $('.kwp-agb p a');
         footerHref.css({
             'color': brandColor,

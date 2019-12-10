@@ -1,3 +1,9 @@
+@isset($color)
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+@endisset
+
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 <link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 
@@ -50,7 +56,6 @@
                                 @endforeach
 
                             @endif
-                            <i class="tui-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
@@ -60,7 +65,6 @@
                                     <span class="error-input">{{ $error }}</span>
                                 @endforeach
                             @endif
-                            <i class="tui-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
@@ -138,7 +142,7 @@
                     {{ Form::label('budget', trans('reiseexperten::layer.general.budget'), ['class' => 'control-label required']) }}
                     {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('reiseexperten::layer.placeholder.budget'), 'required' => 'required']) }}
                 </div>
-                <span class="text">bis 0 €</span>
+                <span class="text">&nbsp;</span>
                 <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
             </div>
 
@@ -189,7 +193,7 @@
                     @endforeach
                 @endif
             </div>
-            <div class="kwp-col-4 white-col button-col">
+            <div class="kwp-col-4 white-col submit-col">
                 <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
             </div>
         </div>
@@ -210,10 +214,9 @@
                 if(!$(this).parents('.main-col').hasClass('open')){
                     $('.main-col').removeClass('open')
                     $(this).parents('.main-col').addClass('open');
-                }else
+                } else{
                     $(this).parents('.main-col').removeClass('open');
-
-                $('.kwp-content').animate({ scrollTop: $(this).offset().top - 90}, 500);
+                }
             });
 
             $(".duration-more .button a").click(function(e) {
@@ -271,6 +274,7 @@
             $(document).ready(function(){
 
                 autocomplete();
+                modifyDOM();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -382,6 +386,10 @@
                 });
             });
 
+            $(window).on('resize', function() {
+                modifyDOM();
+            });
+
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
@@ -432,11 +440,10 @@
                 });
             }
 
-            var brandColor = {!! json_encode($color) !!};
             dt.applyBrandColor();
 
-            $(window).on('resize', function(){
-                if( $(window).outerWidth() < 769 ) {
+            var modifyDOM = function(){
+                if( $(window).outerWidth() <= 768 ) {
                     $("body").addClass('mobile-layer');
                     $(".dt-modal").addClass('m-open');
 
@@ -445,17 +452,23 @@
 
                     $(".kwp-header").css('background', brandColor);
 
+                    $('.error-input').siblings('i').css('bottom', '30px');
+
+                    $('.dt-modal .submit-col').detach().appendTo('.footer-col');
                 } else {
                     $("body").removeClass('mobile-layer');
                     $(".dt-modal").removeClass('m-open');
-                    $(".kwp-header").css('background', 'transparent url(../../images/layer/header.png) no-repeat center center;');
+
+                    $(".kwp-header").removeAttr('style');
+
+                    $('.footer-col .submit-col').detach().appendTo('.kwp-content .kwp-row:last-child');
                 }
-            });
+            }
 
         </script>
 
         <div class="kwp-row">
-            <div class="kwp-col-12 white-col agb-col">
+            <div class="kwp-col-12 white-col footer-col">
                 <div class="kwp-agb">
                     @php
                         $terms_class = 'dt_terms'
@@ -467,7 +480,7 @@
                         @endphp
                     @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                    <p>Ich habe die <a href="https://reiseexperten.reise-wunsch.com/pdfs/tnb_REISEEXPERTEN.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.reiseexperten.com/datenschutzerkl-rung-8470" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    <p>Ich habe die <a href="/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.reiseexperten.com/datenschutzerkl-rung-8470" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                     @if ($errors->any() && $errors->get('terms'))
                         @foreach ($errors->get('terms') as $error)
                             <span class="error-input">{{ $error }}</span>
@@ -475,13 +488,14 @@
                     @endif
                 </div>
             </div>
-
-            <div class="kwp-col-4 button-col">
-                <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
-            </div>
         </div>
     </div>
 </div>
+<style>
+    .kwp-logo {
+        background: transparent url({{ getWhiteLabelLogoUrl() }}) no-repeat left top;
+    }
+</style>
 {{ Form::close() }}
 
 

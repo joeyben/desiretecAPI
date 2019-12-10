@@ -172,26 +172,26 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
     {
         if ('' === $start) {
             $data = DB::table('wishes')
-        ->select((DB::raw('DATE_FORMAT(created_at,"%Y%m%d") as date')), DB::raw('count(*) as wishes_count'))
-        ->Where([
+            ->select((DB::raw('DATE_FORMAT(created_at,"%Y%m%d") as date')), DB::raw('count(*) as wishes_count'))
+            ->Where([
             ['whitelabel_id', '=', $whitelabel],
-        ])
-        ->whereBetween('created_at', [DB::raw('DATE_ADD(NOW(),INTERVAL -30 day)'), DB::raw('NOW()')])
-        ->groupBy('date')
-        ->get()
-        ->pluck('wishes_count', 'date')
-        ->toArray();
+            ])
+            ->whereBetween('created_at', [DB::raw('DATE_ADD(NOW(),INTERVAL -30 day)'), DB::raw('NOW()')])
+            ->groupBy('date')
+            ->get()
+            ->pluck('wishes_count', 'date')
+            ->toArray();
         } else {
             $data = DB::table('wishes')
-        ->select((DB::raw('DATE_FORMAT(created_at,"%Y%m%d") as date')), DB::raw('count(*) as wishes_count'))
-        ->Where([
+            ->select((DB::raw('DATE_FORMAT(created_at,"%Y%m%d") as date')), DB::raw('count(*) as wishes_count'))
+            ->Where([
             ['whitelabel_id', '=', $whitelabel],
-        ])
-        ->whereBetween('created_at', [$start, $end])
-        ->groupBy('date')
-        ->get()
-        ->pluck('wishes_count', 'date')
-        ->toArray();
+            ])
+            ->whereBetween('created_at', [$start, $end])
+            ->groupBy('date')
+            ->get()
+            ->pluck('wishes_count', 'date')
+            ->toArray();
         }
 
         return $data;
@@ -205,40 +205,40 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
 
         switch ($viewid) {
             case '192484069':
-            $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-            $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-            break;
+                $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
+                $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
+                $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
+                break;
 
             case '159641355':
-            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtershare = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow_3.0';
-            break;
+                $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+                $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+                $filtershare = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow_3.0';
+                break;
 
             case '162076862':
-            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-            break;
+                $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+                $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+                $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
+                break;
 
             case '174270531':
-            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-            break;
+                $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+                $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+                $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
+                break;
 
             case '185523513':
-            $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-            $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-            break;
+                $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+                $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
+                $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
+                break;
 
             case '188170994':
-            $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
-            $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
-            $filtershare = 'ga:eventLabel==eil-mobile;ga:eventAction==Submit-Button;ga:eventCategory==tui_exitwindow';
-            break;
+                $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
+                $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
+                $filtershare = 'ga:eventLabel==eil-mobile;ga:eventAction==Submit-Button;ga:eventCategory==tui_exitwindow';
+                break;
         }
 
         return ['filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare];

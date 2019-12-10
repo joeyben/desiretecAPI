@@ -184,7 +184,7 @@ class DemokreuzfahrtberatungController extends Controller
 
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'airport', 'budget', 'ages1', 'ages2', 'ages3'),
-             $this->whitelabelId
+            $this->whitelabelId
         );
 
         return $new_wish;
@@ -203,5 +203,10 @@ class DemokreuzfahrtberatungController extends Controller
         }
 
         return $duration;
+    }
+
+    public function getPDF()
+    {
+        return view('demokreuzfahrtberatung::layer.pdf');
     }
 }

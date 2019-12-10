@@ -678,6 +678,7 @@ if (!function_exists('getTTRegionCode')) {
             $region = \App\Models\TTRegions::where('topRegionName', '=', $value)->pluck('topRegion')->all();
             $results = array_unique($region, SORT_REGULAR);
         }
+
         return $results;
     }
 }

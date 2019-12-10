@@ -33,18 +33,14 @@ mix.scripts(
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/lastminute/js/layer/layer-locale.js')
     .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/lastminute/css/layer/layer.css')
-    .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/lastminute/css/layer/layer_mobile.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/layer-responsive.scss', 'whitelabel/lastminute/css/layer/layer-responsive.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/lastminute/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/lastminute/css/lastminute.css')
     .styles([
         base_url + '/public/whitelabel/lastminute/css/datepicker.css',
         base_url + '/public/whitelabel/lastminute/css/layer/layer.css',
-        //base_url + '/public/css/frontend.css',
+        base_url + '/public/whitelabel/lastminute/css/layer/layer-responsive.css',
     ], __dirname + '/../../public/whitelabel/lastminute/css/layer/whitelabel.css')
-  .styles([
-      base_url + '/public/whitelabel/lastminute/css/datepicker.css',
-      base_url + '/public/whitelabel/lastminute/css/layer/layer_mobile.css',
-  ], __dirname + '/../../public/whitelabel/lastminute/css/layer/whitelabel_mobile.css')
     .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/lastminute/images/')
     .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/lastminute/svg/');
 if (mix.inProduction()) {
