@@ -406,20 +406,6 @@ if (!function_exists('getCurrentWhiteLabelName')) {
     }
 }
 
-if (!function_exists('getCurrentWhiteLabelDisplayName')) {
-    /**
-     * return current whitelabel Display Name.
-     *
-     * @return string
-     */
-    function getCurrentWhiteLabelDisplayName()
-    {
-        $display_name = getCurrentWhiteLabelField('display_name');
-
-        return $display_name;
-    }
-}
-
 if (!function_exists('getCurrentWhiteLabelColor')) {
     /**
      * return current whitelabel Color.
