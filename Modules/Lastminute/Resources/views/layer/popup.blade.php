@@ -490,7 +490,7 @@
                   minLength: 3,
                   highlight: true,
                   source: function(query) {
-                    return $.get('get-all-destinations', {query: query});
+                    return $.get('https://lastminute.reise-wunsch.com/get-all-destinations', {query: query});
                   }
                 }
               });
