@@ -56,7 +56,6 @@
                                 @endforeach
 
                             @endif
-                            <i class="tui-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
@@ -66,7 +65,6 @@
                                     <span class="error-input">{{ $error }}</span>
                                 @endforeach
                             @endif
-                            <i class="tui-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
@@ -216,11 +214,9 @@
                 if(!$(this).parents('.main-col').hasClass('open')){
                     $('.main-col').removeClass('open')
                     $(this).parents('.main-col').addClass('open');
-                }else {
+                } else{
                     $(this).parents('.main-col').removeClass('open');
                 }
-
-                $('.kwp-content').animate({ scrollTop: $(this).offset().top}, 500);
             });
 
             $(".duration-more .button a").click(function(e) {
