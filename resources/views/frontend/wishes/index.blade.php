@@ -101,7 +101,7 @@
                                 </span>
                             @endif
                         </div>
-                        <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('gotoeneral.currency') }}</div>
+                        <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
                         @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
                         <!--    <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>-->
                         @endif
