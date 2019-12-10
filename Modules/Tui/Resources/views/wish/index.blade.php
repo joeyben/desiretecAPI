@@ -30,6 +30,7 @@
                             </option>
                         @endforeach
                     </select>
+                    <input type="search" class="id-filter" placeholder="Search ID" v-model="id" @input="fetchWishes()">
                 </div> --}}
             </div>
             <hr>
@@ -53,17 +54,20 @@
                         </ul>
                     </div>
                     <div class="action">
-                        @if($logged_in_user->hasRole('Seller'))
-                            <div class="wish-top-infos">
+                        <div class="wish-top-infos">
+                            <span class="wish-id">
+                                @{{ wish.id }}
+                            </span>
+                            @if($logged_in_user->hasRole('Seller'))
                                 <span v-if="wish.wlRule == 'mix'" class="wish-classification">
                                     <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
                                     <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
                                 </span>
-                                    <span v-if="wish.offers > 0" class="offer-count">
+                                <span v-if="wish.offers > 0" class="offer-count">
                                     @{{ wish.offers }}
                                 </span>
-                            </div>
-                        @endif
+                            @endif
+                        </div>
                         <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
                         @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
                         <!--    <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>-->
