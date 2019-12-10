@@ -526,13 +526,6 @@ ul.kwp-form-errors {
 .kwp-header-content {
   margin-top: 65px;
 
-  h1 {
-    margin: 15px 0 0 0;
-    color:  $master-primary;
-    font-size: 36px;
-    font-weight: 700;
-  }
-
   p {
     margin: 10px 0 0 0;
     font-family: $font-family-brand;
@@ -1577,7 +1570,8 @@ p.kwp-info {
         h1 {
           font-size: 18px;
           line-height: 1.7em;
-          font-weight: 700;
+          font-weight: 500;
+          letter-spacing: 0.03em;
           color: #fff;
         }
       }
@@ -1964,7 +1958,7 @@ p.kwp-info {
     }
     .stars {
       .text {
-        font-size: 16px;
+        font-size: 14px;
         margin-bottom: 8px;
       }
     }

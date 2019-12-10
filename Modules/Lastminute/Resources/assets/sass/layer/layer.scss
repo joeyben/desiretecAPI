@@ -88,7 +88,7 @@ $gutter: 30px;
 
   font-size: 14px;
   line-height: 19px;
-  font-family: $font-family-master;
+  font-family: $font-family-brand;
 
   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #dedede !important;
@@ -110,9 +110,8 @@ $gutter: 30px;
   .teaser{
     height: 90px !important;
     top: -110px;
-    background-color: rgba(9,42,94,0.8);
-    background-image: url(../../images/layer/guy_2.png);
-    width: 55%;
+    background-color: rgba(255, 221, 0, 0.8);
+    width: 95%;
     padding: 0 0px;
     margin: auto;
     background-size: 100px;
@@ -141,17 +140,19 @@ $gutter: 30px;
     h1{
       font-size: 24px;
       margin: 10px;
-      padding-left: 90px;
-      text-align: left;
+      text-align: center;
       padding-top: 20px;
-      color: white;
+      color: $master-grey-dark;
+      line-height: 1.5em;
     }
     i{
       position: absolute;
-      color: #fff;
+      color: $master-grey-dark;
       right: 0px;
       top: 7px;
-      font-size: 40px;
+      font-size: 30px;
+      width: 30px;
+      height: 30px;
     }
   }
   &.tmp-hidden{
@@ -172,6 +173,7 @@ $gutter: 30px;
     box-sizing: border-box;
   }
 }
+
 
 .dt-modal-agb {
   background: rgba(0, 0, 0, 0.7);
@@ -200,7 +202,7 @@ $gutter: 30px;
   width: 760px;
   margin: 25px auto 0 auto;
 
-  font-family: $font-family-master;
+  font-family: $font-family-brand;
   border-radius: 0;
   box-shadow: 0 0 4px 0px rgba(0,0,0,0.15);
   transition: transform 0.1s ease-out, opacity 0.15s ease-out;
@@ -235,20 +237,20 @@ $gutter: 30px;
   button[type=submit] {
     border-radius: 3px;
     text-align: center;
-    font-family: $font-family-master;
+    font-family: $font-family-brand;
     font-size: 16px;
     font-weight: 700;
     display: block;
     width: 100%;
     border: none;
-    padding: 11px;
+    padding: 16px;
     margin-top: 5px;
     transition: background-color .3s ease;
     &:hover, &:active {
       background: $brand-secondary;
     }
     &.error-button{
-      background: #D40E14;
+      background: $brand-danger;
     }
   }
 
@@ -274,7 +276,8 @@ $gutter: 30px;
     border: 1px solid #aaa;
     color: $master-primary;
     font-size: 14px;
-    font-family: $font-family-master;
+    font-family: $font-family-brand;
+    min-width: 100%;
   }
 
   input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus, .form-control:focus {
@@ -293,7 +296,7 @@ $gutter: 30px;
   input:-internal-autofill-selected{
     color: $master-primary !important;
     background: $body-bg !important;
-    font-family: $font-family-master !important;
+    font-family: $font-family-brand !important;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px $body-bg !important;
   }
 
@@ -349,6 +352,7 @@ $gutter: 30px;
         }
         .button{
           background: transparent;
+          margin-bottom: 0;
           a{
             width: 100%;
             padding: 10px;
@@ -373,6 +377,7 @@ $gutter: 30px;
       .pax-group{
         border: 1px solid #b9b9b9;
         border-bottom: none;
+        box-shadow: 0 0 6px rgba(0,0,0,.3);
       }
       .travelers{
         background-color: #f3f0ec;
@@ -405,6 +410,7 @@ $gutter: 30px;
         left: -1px;
         border-top: none;
         width: calc(100% + 2px);
+        box-shadow: 0 0 6px rgba(0,0,0,.3);
         .kids{
           background: transparent;
           .kwp-col-ages{
@@ -412,7 +418,7 @@ $gutter: 30px;
             .main-label{
               color: $master-primary;
               padding: 0;
-              margin: 20px 0;
+              margin: 0 0 20px 0;
               font-size: 15px !important;
             }
             .kwp-col-3{
@@ -438,6 +444,7 @@ $gutter: 30px;
         }
         .button{
           background: transparent;
+          margin-bottom: 0;
           a{
             width: 100%;
             padding: 10px;
@@ -488,12 +495,12 @@ ul.kwp-form-errors {
   margin: 2px 0 0 0;
   font-size: 11px;
   color: #DB8021;
-  font-family: $font-family-master;
+  font-family: $font-family-brand;
 }
 
 .kwp-form-email-hint {
   font-size: 14px;
-  font-family: $font-family-master;
+  font-family: $font-family-brand;
   color: #64C3D7;
   display: none;
   cursor: pointer;
@@ -537,7 +544,7 @@ ul.kwp-form-errors {
 
   p {
     margin: 10px 0 0 0;
-    font-family: $font-family-master;
+    font-family: $font-family-brand;
     color: #818181;
     font-size: 17px;
     font-weight: 400;
@@ -560,8 +567,6 @@ ul.kwp-form-errors {
       p {
         text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
         color: #333;
-      }
-      h1 {
       }
     }
   }
@@ -660,9 +665,6 @@ p.kwp-info {
   min-height: 150px;
   background: #f2f2f2;
   height: calc(100% - 40px);
-  form, .kwp-minimal{
-    height: 100%;
-  }
   .kwp-close{
     display: none;
   }
@@ -730,7 +732,7 @@ p.kwp-info {
 .kwp-agb {
   padding-top: 4px;
   font-size: 12px;
-  font-family: $font-family-master;
+  font-family: $font-family-brand;
 
   input {
     vertical-align: middle;
@@ -738,7 +740,7 @@ p.kwp-info {
   }
   p{
     padding-left: 40px;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.3em;
     a {
       text-decoration: none;
@@ -810,7 +812,7 @@ p.kwp-info {
     width: 100%;
     height: 25px;
 
-    font-family: $font-family-master;
+    font-family: $font-family-brand;
     font-size: 12px;
 
     appearance: none;
@@ -857,22 +859,6 @@ p.kwp-info {
   bottom: 0;
   left: 50%;
   margin: -25px;
-}
-
-@keyframes colours {
-  0% { color: red; }
-  15% { color: orange; }
-  30% { color: yellow; }
-  60% { color: green; }
-  90% { color: blue; }
-  100% { color: red; }
-}
-
-.kwp-colours {
-  animation-name: colours;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
 }
 
 .kwp-star-input {
@@ -956,9 +942,9 @@ p.kwp-info {
   }
 }
 
-.kwp-continent {
-  label {
-    height: 38px;
+.kwp-content {
+  .kwp-row:last-child {
+    margin-top: 20px;
   }
 }
 
@@ -1064,13 +1050,6 @@ p.kwp-info {
       &:last-child{
         margin-right: 0;
       }
-      i{
-        position: absolute;
-        right: 10px;
-        top: 30px;
-        font-size: 16px;
-        color: $master-primary;
-      }
     }
   }
   .kwp-content-extra{
@@ -1160,6 +1139,8 @@ p.kwp-info {
         padding: 10px 20px;
         border-bottom: 1px solid $master-grey-light;
         font-size: 16px;
+        line-height: 22px;
+        text-align: center;
       }
 
       .kwp-form-errors{
@@ -1176,7 +1157,7 @@ p.kwp-info {
       }
       input[type="checkbox"]{
         display: block;
-        margin-top: 5px;
+        margin-top: 7px;
         margin-left: 5px;
         margin-right: 5px;
         &:after{
@@ -1205,7 +1186,7 @@ p.kwp-info {
         margin: 0px;
         padding: 8px 0;
         font-weight: bold;
-        font-family: $font-family-master;
+        font-family: $font-family-brand;
         text-align: center;
       }
     }
@@ -1235,10 +1216,10 @@ p.kwp-info {
     }
     .kwp-header-content{
       margin-top: 0px;
-      font-family: $font-family-master;
+      font-family: $font-family-brand;
       font-weight: bold;
       position: absolute;
-      top: 45px;
+      bottom: 0;
       text-align: center;
       width: 100%;
     }
@@ -1299,7 +1280,7 @@ p.kwp-info {
           position: absolute;
           right: 10px;
           top: 0;
-          font-size: 16px;
+          font-size: 14px;
           &.triggered{
             display: none;
           }
@@ -1381,35 +1362,32 @@ p.kwp-info {
             border-color: #D7D2C3;
           }
         }
-        i{
-          top: 45px;
-        }
       }
       .haserrors{
         .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
-          border-color: #D40E14;
+          border-color: $brand-danger;
         }
 
         input[type="checkbox"]{
           &:after{
-            border-color: #D40E14;
+            border-color: $brand-danger;
           }
         }
         ~ .rangeslider--horizontal{
-          background: #D40E14;
+          background: $brand-danger;
           .rangeslider__handle{
-            border-color: #D40E14;
+            border-color: $brand-danger;
           }
         }
         .dd-trigger{
-          border-color: #D40E14;
+          border-color: $brand-danger;
           i{
-            color: #D40E14;
+            color: $brand-danger;
           }
         }
       }
       .haserrors + i{
-        color: #D40E14;
+        color: $brand-danger;
 
       }
     }
@@ -1508,49 +1486,15 @@ p.kwp-info {
 
 
 
-@media only screen
-and (max-device-width : 320px) {
-  .mobile-layer {
-    .kwp{
-      .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"], textarea{
-        font-size: 14px;
-      }
-      .duration-time, .travelers{
-        font-size: 14px;
-      }
-      button[type=submit]{
-        font-size: 18px;
-      }
-      .kwp-star{
-        width: 30px;
-      }
-      .white-col{
-        label{
-          font-size: 14px;
-        }
-      }
-      label{
-        font-size: 14px;
-      }
-    }
-    .teaser{
-      h1{
-        font-size: 20px;
-      }
-    }
-  }
-
-
-
-}
 .error-input{
   display: block;
-  background: #ED1C24 !important;
+  background: $brand-danger !important;
   padding: 0 10px;
+  font-size: 14px;
   color: #fff;
 }
 .dt_terms.hasError:after{
-  border: 1px solid red !important;
+  border: 1px solid $brand-danger !important;
 }
 
 .budget {
@@ -1609,18 +1553,19 @@ and (max-device-width : 320px) {
   left: 0;
   bottom: -20px;
   span{
-    margin-top: 2px;
+    margin-top: 3px;
     display: block;
     margin-left: 5px;
   }
 }
-.travelerss .caret, .catering .caret{
-  position: absolute;
-  top: 70%;
-  right: 0;
-}
-.fas{
-  color: $master-primary;
+.travelerss, .catering{
+  i{
+    position: absolute;
+    right: 10px;
+    top: 30px;
+    font-size: 16px;
+    color: $master-primary;
+  }
 }
 #budget{
   border-style: none !important;
@@ -1632,9 +1577,6 @@ and (max-device-width : 320px) {
   border-top: 0;
   border-left: 0;
   border-right: 0;
-}
-.budget label{
-  padding-top: 0;
 }
 input[name="direkt_flug"]{
   height: 12px;
@@ -1659,7 +1601,7 @@ input[name="direkt_flug"]{
   }
 }
 
-.catering{
+.catering, .budget {
   label{
     padding-left: 5px;
   }
@@ -1670,9 +1612,12 @@ input[name="direkt_flug"]{
 .dt-modal {
   .bootstrap-tagsinput {
     padding: 0;
-    border: none!important;
-    box-shadow: none!important;
     min-width: 100%;
+    border: none;
+    box-shadow: none;
+    input {
+      min-width: 100%;
+    }
   }
 }
 

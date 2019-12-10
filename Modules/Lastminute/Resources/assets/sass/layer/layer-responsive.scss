@@ -1,4 +1,4 @@
-@import "utils";
+// @import "utils";
 @import "rangeslider";
 @import "../variables";
 
@@ -40,7 +40,8 @@
         h1 {
           font-size: 18px;
           line-height: 1.7em;
-          font-weight: 700;
+          font-weight: 500;
+          letter-spacing: 0.03em;
           color: #fff;
         }
       }
@@ -65,14 +66,6 @@
     }
     .kwp-star{
       width: 30px;
-    }
-    .white-col{
-      label{
-        font-size: 14px;
-      }
-    }
-    label{
-      font-size: 14px;
     }
   }
 
@@ -150,6 +143,9 @@
       top: 10px;
       font-size: 16px;
       color: $master-grey-dark;
+    }
+    &.airport {
+      margin-bottom: 35px;
     }
   }
   .kwp-content-extra{
@@ -229,37 +225,6 @@
     .kwp-form-errors{
       display: none;
     }
-    label{
-      font-size: 16px;
-      color: #a0a0a0;
-      padding-left: 10px;
-      padding-top: 10px;
-      font-weight: normal;
-      margin: 0;
-    }
-    input[type="checkbox"]{
-      display: block;
-      margin-top: 5px;
-      margin-left: 5px;
-      &:after{
-        content: "";
-        display: inline-block;
-        height: 25px;
-        width: 25px;
-        border: 1px solid #737373;
-        border-radius: 2px;
-        background-color: #fff;
-        background-size: 25px;
-        background-position: center center;
-        margin-left: -5px;
-        margin-top: -5px;
-      }
-    }
-    input[type="checkbox"]:checked{
-      &:after{
-        background-image: url(../../svg/check-white.svg);
-      }
-    }
   }
   .kwp-header{
     .kwp-log {
@@ -307,6 +272,7 @@
   .kwp-header-content{
     margin-top: 0px;
     font-weight: bold;
+    display: block;
   }
   .kwp-close{
     width: 25px;
@@ -354,25 +320,30 @@
       border-bottom: 1px solid $master-grey-light;
       color: $master-grey-dark;
       border-radius: 0;
-      padding: 0 10px;
       font-size: 14px;
       display: block;
       width: 100%;
       position:relative;
       margin: 0;
+      i{
+        position: absolute;
+        right: 15px;
+        top: auto;
+        bottom: 10px;
+        font-size: 18px;
+        &.triggered{
+          display: none;
+        }
+        &.not-triggered{
+          display: block;
+        }
+      }
     }
-    i{
-      position: absolute;
+    i {
       right: 15px;
       top: auto;
       bottom: 10px;
       font-size: 18px;
-      &.triggered{
-        display: none;
-      }
-      &.not-triggered{
-        display: block;
-      }
     }
     .rangeslider-wrapper{
       background: transparent;
@@ -380,7 +351,6 @@
       .kwp-form-group{
         label{
           margin-bottom: 0px;
-          font-size: 16px !important;
           color: #4c4c4c;
           font-weight: 600;
           padding-left: 0;
@@ -427,7 +397,6 @@
     }
     .stars {
       .text {
-        font-size: 16px;
         margin-bottom: 8px;
       }
     }
@@ -483,9 +452,6 @@
     color: $master-grey-dark;
   }
   .kwp-custom-select{
-    #catering{
-      padding: 0;
-    }
     .hidden{
       display: none;
     }
@@ -548,7 +514,6 @@
     label{
       color: #4c4c4c;
       padding: 0;
-      font-size: 16px !important;
       font-weight: 600;
       margin-bottom: 10px;
     }
