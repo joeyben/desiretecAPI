@@ -44,7 +44,8 @@ class AgentsServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('agents.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'agents'
+            __DIR__ . '/../Config/config.php',
+            'agents'
         );
     }
 

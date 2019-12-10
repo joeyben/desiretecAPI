@@ -42,7 +42,8 @@ class TuidemoServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('tuidemo.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'tuidemo'
+            __DIR__ . '/../Config/config.php',
+            'tuidemo'
         );
     }
 

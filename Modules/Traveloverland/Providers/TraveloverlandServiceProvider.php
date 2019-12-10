@@ -42,7 +42,8 @@ class TraveloverlandServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('traveloverland.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'traveloverland'
+            __DIR__ . '/../Config/config.php',
+            'traveloverland'
         );
     }
 

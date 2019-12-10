@@ -215,8 +215,8 @@ class WishesController extends Controller
             ->when($status, function ($wish, $status) {
                 return $wish->where(config('module.wishes.table') . '.status', $status)
                     ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
-            })->when($id, function($wish, $id) {
-                return $wish->where(config('module.wishes.table') . '.id', 'like', '%'.$id.'%');
+            })->when($id, function ($wish, $id) {
+                return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
             })
             ->paginate(10);
 

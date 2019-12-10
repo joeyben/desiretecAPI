@@ -44,7 +44,8 @@ class RulesServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('rules.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'rules'
+            __DIR__ . '/../Config/config.php',
+            'rules'
         );
     }
 

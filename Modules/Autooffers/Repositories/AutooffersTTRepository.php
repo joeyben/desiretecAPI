@@ -436,7 +436,8 @@ class AutooffersTTRepository extends BaseRepository
         $offerObj = [];
 
         foreach ($offers as $key => $offer) {
-            array_push($offerObj,
+            array_push(
+                $offerObj,
                 [
                     'data'       => json_decode($offer['data'], true),
                     'hotel_data' => json_decode($offer['hotel_data'], true)

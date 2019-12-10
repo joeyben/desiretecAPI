@@ -42,7 +42,8 @@ class DemoreiserebellenServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('demoreiserebellen.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'demoreiserebellen'
+            __DIR__ . '/../Config/config.php',
+            'demoreiserebellen'
         );
     }
 
