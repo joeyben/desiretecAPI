@@ -33,6 +33,16 @@ body.wishlist{
         color: #000 !important;
         background-color: transparent !important;
         box-shadow: none !important;
+        &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+          color: #839192;
+          opacity: 1; /* Firefox */
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+          color: #839192;
+        }
+        ::-ms-input-placeholder { /* Microsoft Edge */
+          color: #839192;
+        }
         @media screen and (max-width: $break-small) {
           width: 190px;
         }
