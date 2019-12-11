@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 use Illuminate\Auth\AuthManager;
+use App\Repositories\Backend\Access\User\UserRepository;
 
 /**
  * Class WishesController.
@@ -74,16 +75,22 @@ class WishesController extends Controller
     private $rules;
 
     /**
+     * @var UserRepository
+     */
+    protected $users;
+
+    /**
      * @param \App\Repositories\Frontend\Wishes\WishesRepository           $wish
      * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository $rules
      * @param \Illuminate\Auth\AuthManager                                      $auth
      */
-    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth)
+    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, UserRepository $users)
     {
         $this->wish = $wish;
         $this->categories = $categories;
         $this->rules = $rules;
         $this->auth = $auth;
+        $this->users = $users;
     }
 
     /**
@@ -209,7 +216,8 @@ class WishesController extends Controller
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
         $id = ($request->get('id') && !is_null($request->get('id'))) ? $request->get('id') : '';
-        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelField('id')));
+        $currentWhiteLabelID = getCurrentWhiteLabelField('id');
+        $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
 
         $wish = $this->wish->getForDataTable()
             ->when($status, function ($wish, $status) {
@@ -222,6 +230,10 @@ class WishesController extends Controller
 
         foreach($wish as $singleWish) {
             $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
+
+            if($currentWhiteLabelID === 198) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
+                $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
+            }
 
             $manuelFlag = false;
 
