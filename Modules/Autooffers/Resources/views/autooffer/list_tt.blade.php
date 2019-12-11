@@ -41,10 +41,10 @@
                             <div class="agency-info">
                                 <div class="avatar avatar-circle size-1"></div>
                                 <div class="text">
-                                    <h3>{{ trans('autooffer.contact.company_contact_person') }}</h3>
-                                    <h4>{{ trans('autooffer.contact.company_name') }}</h4>
-                                    <h4>{{ trans('autooffer.contact.company_addr') }}</h4>
-                                    <h4>{{ trans('autooffer.contact.company_postal_addr') }}</h4>
+                                    @if(!(trans('autooffer.contact.company_contact_person') == "autooffer.contact.company_contact_person"))<h3>{{ trans('autooffer.contact.company_contact_person') }}</h3>@endif
+                                    @if(!(trans('autooffer.contact.company_name') == "autooffer.contact.company_name"))<h4>{{ trans('autooffer.contact.company_name') }}</h4>@endif
+                                    @if(!(trans('autooffer.contact.company_addr') == "autooffer.contact.company_addr"))<h4>{{ trans('autooffer.contact.company_addr') }}</h4>@endif
+                                    @if(!(trans('autooffer.contact.company_postal_addr') == "autooffer.contact.company_postal_addr"))<h4>{{ trans('autooffer.contact.company_postal_addr') }}</h4>@endif
                                 </div>
                             </div>
 
