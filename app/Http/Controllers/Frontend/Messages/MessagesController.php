@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Storage;
 
 class MessagesController extends Controller
 {
-
     /**
      * @var \Illuminate\Session\Store
      */
@@ -54,7 +53,6 @@ class MessagesController extends Controller
         if (!$this->session->has('agent_id')) {
             $agent = Agent::where('user_id', $id)->where('status', 'Active')->value('id');
         }
-
 
         $message = Message::create([
             'user_id' => $consumerId,
