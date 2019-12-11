@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'https://bild.com',
+
+$domain_env = [
+    'local_url'       => 'https://bild.com',
     'development_url' => 'https://bild.reise-wunsch.com',
-    'production_url' => 'https://bild.reisewunschservice.de',
-);
+    'production_url'  => 'https://bild.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'BildWishesController@validateTokenList');
     });
 });
-
