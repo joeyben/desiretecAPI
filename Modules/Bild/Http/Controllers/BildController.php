@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
-use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Bild\Http\Requests\StoreWishRequest;
+use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 
 class BildController extends Controller
 {
@@ -71,10 +71,10 @@ class BildController extends Controller
     public function show(Request $request)
     {
         $input = $request->only('variant');
-        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
         $whitelabel = $this->whitelabel->getByName('Bild');
 
-        $html = view('bild::'.$layer)->with([
+        $html = view('bild::' . $layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -99,14 +99,14 @@ class BildController extends Controller
     {
         $input = $request->all();
         if ($request->failed()) {
-            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
-            $html = view('bild::'.$layer)->with([
+            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+            $html = view('bild::' . $layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
-                'request' => $request->all()
+                'request'      => $request->all()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -152,7 +152,7 @@ class BildController extends Controller
 
             return $new_user;
         }
-        $input['whitelabel_name'] = $this->whitelabel->getById(intval($this->whitelabelId))['display_name'];
+        $input['whitelabel_name'] = $this->whitelabel->getById((int) ($this->whitelabelId))['display_name'];
 
         $new_user = $user->create($input);
         $new_user->storeToken();
@@ -176,7 +176,7 @@ class BildController extends Controller
 
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'),
-             $this->whitelabelId
+            $this->whitelabelId
         );
 
         return $new_wish;
