@@ -108,7 +108,7 @@
 
     @elseif ($logged_in_user->hasRole('User'))
         @if(is_null($agent))
-            {{  $agent =$wish->group->users[0]->currentAgent[0] }}
+            <?php  $agent = $wish->group->users[0]->currentAgent[0] ?>
         @endif
         <div class="bg-bottom">
             <div class="container">
