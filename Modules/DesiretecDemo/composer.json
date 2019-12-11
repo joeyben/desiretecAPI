@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/desiretecdemo",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\DesiretecDemo\\Providers\\DesiretecDemoServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\DesiretecDemo\\": ""
+        }
+    }
+}

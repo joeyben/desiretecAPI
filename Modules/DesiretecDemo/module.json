@@ -1,0 +1,16 @@
+{
+    "name": "DesiretecDemo",
+    "alias": "desiretecdemo",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\DesiretecDemo\\Providers\\DesiretecDemoServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
