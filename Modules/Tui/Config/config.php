@@ -2,7 +2,7 @@
 
 return [
     'name'                 => 'Tui',
-    'id'                   => 157,
+    'id'                   => 60,
     'locale'               => 'de',
     'language_lines_table' => 'language_lines_tui',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,

@@ -13,10 +13,7 @@ var exitIntent = window.exitIntent || {};
     dt.popupTemplate = function (variant) {
 
         var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Jetzt Ihre Reise wünschen und Angebot erhalten!',
-            'Dürfen wir Sie beraten?',
-            'Hier klicken und persönliches Angebot erhalten',
-            'Nicht das Passende gefunden?'
+            'Dürfen wir Sie beraten?'
         ]);
 
         var texts = {
@@ -1328,23 +1325,21 @@ var exitIntent = window.exitIntent || {};
         dt.PopupManager.closePopup = function(event) {
             event.preventDefault();
 
-            if(isMobile()){
-                var formSent = $('.kwp-content').hasClass('kwp-completed-master');
+            var formSent = $('.kwp-content').hasClass('kwp-completed-master');
 
-                this.modal.addClass('tmp-hidden');
-                if(!formSent) {
-                    this.trigger =
-                        $('<span/>', {'class': 'trigger-modal'});
-                    $('body').prepend(this.trigger);
-                    this.trigger.fadeIn();
-                }
-            }else{
-                this.modal.css('display', 'none');
+            this.modal.addClass('tmp-hidden');
+            if(!formSent) {
+                this.trigger =
+                    $('<span/>', {'class': 'trigger-modal'});
+                $('body').prepend(this.trigger);
+                this.trigger.fadeIn();
             }
+
 
             this.shown = false;
             $("body").removeClass('mobile-layer');
             $("body, html").css({'overflow':'auto'});
+
 
             dt.Tracking.event('close', this.trackingLabel);
 
@@ -1354,7 +1349,7 @@ var exitIntent = window.exitIntent || {};
         dt.scrollUpDetect = function (e) {
             dt.PopupManager.layerShown = false;
             $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
-                if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
+                if(parseInt(distance) > 50 && !dt.PopupManager.layerShown && getCookie('exit_intent') !== "yes"){
                     dt.showTeaser(event);
                     dt.PopupManager.layerShown = true;
                 }
@@ -1381,6 +1376,7 @@ var exitIntent = window.exitIntent || {};
             $( ".dt-modal" ).addClass('m-open');
             dt.PopupManager.show();
             $("body, html").css({'overflow':'hidden'});
+            setCookie('exit_intent','yes');
             //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
             ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
         };
