@@ -8,6 +8,7 @@ use App\Http\Requests\Frontend\Agents\UpdateAgentsRequest;
 use App\Models\Agents\Agent;
 use App\Repositories\Frontend\Agents\AgentsRepository;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,15 +35,21 @@ class AgentsController extends Controller
     protected $upload_path;
 
     protected $storage;
+    /**
+     * @var \Illuminate\Session\Store
+     */
+    private $session;
 
     /**
      * @param \App\Repositories\Frontend\Agents\AgentsRepository $agent
+     * @param \Illuminate\Session\Store                          $session
      */
-    public function __construct(AgentsRepository $agent)
+    public function __construct(AgentsRepository $agent, Store $session)
     {
         $this->agent = $agent;
         $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'agent' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
+        $this->session = $session;
     }
 
     /**
@@ -167,6 +174,7 @@ class AgentsController extends Controller
     public function status($id)
     {
         $this->agent->updateStatus($id);
+        $this->session->put('agent_id', $id);
 
         return redirect()->back();
     }

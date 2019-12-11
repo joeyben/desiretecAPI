@@ -115,7 +115,7 @@ class TnbController extends Controller
                 new Where('key', 'footer.tnb'),
                 new Where('group', 'layer'),
             ])->get()->count()) {
-                if($this->auth->guard('web')->user()->hasRole('Admin')){
+                if ($this->auth->guard('web')->user()->hasRole('Admin')) {
                     $whiteLabelName = getCurrentWhiteLabelField('display_name');
                     $domain = getCurrentWhiteLabelField('domain');
                 } else {

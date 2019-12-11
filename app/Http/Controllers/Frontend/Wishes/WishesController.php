@@ -13,7 +13,9 @@ use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use Auth;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 use Illuminate\Auth\AuthManager;
@@ -73,6 +75,10 @@ class WishesController extends Controller
      * @var \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository
      */
     private $rules;
+    /**
+     * @var \Illuminate\Session\Store
+     */
+    private $session;
 
     /**
      * @var UserRepository
@@ -80,17 +86,21 @@ class WishesController extends Controller
     protected $users;
 
     /**
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository           $wish
-     * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository $rules
-     * @param \Illuminate\Auth\AuthManager                                      $auth
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
+     * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
+     * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository    $rules
+     * @param \Illuminate\Auth\AuthManager                                    $auth
+     * @param \Illuminate\Session\Store                                       $session
      */
     public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, UserRepository $users)
+    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, Store $session)
     {
         $this->wish = $wish;
         $this->categories = $categories;
         $this->rules = $rules;
         $this->auth = $auth;
         $this->users = $users;
+        $this->session = $session;
     }
 
     /**
@@ -118,6 +128,7 @@ class WishesController extends Controller
      */
     public function show(Wish $wish, ManageWishesRequest $request)
     {
+        $agent = null;
         $wishTye = $this->manageRules($wish);
 
         if ($wishTye > 0) {
@@ -133,9 +144,14 @@ class WishesController extends Controller
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
 
+        if ($this->session->has('agent_id')) {
+            $agent = Agent::find((int) $this->session->get('agent_id'));
+        }
+
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
+            'agent'              => $agent,
             'agent_name'         => $agentName,
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
@@ -213,7 +229,6 @@ class WishesController extends Controller
             'completed'         => '3',
         ];
 
-
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
         $id = ($request->get('id') && !is_null($request->get('id'))) ? $request->get('id') : '';
         $currentWhiteLabelID = getCurrentWhiteLabelField('id');
@@ -228,7 +243,7 @@ class WishesController extends Controller
             })
             ->paginate(10);
 
-        foreach($wish as $singleWish) {
+        foreach ($wish as $singleWish) {
             $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
 
             if($currentWhiteLabelID === 198) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
@@ -237,17 +252,23 @@ class WishesController extends Controller
 
             $manuelFlag = false;
 
-            if(is_array($rules['destination']) && !is_null($rules['destination'])) {
-                if(is_array($singleWish['destination'])) {
+            if (\is_array($rules['destination']) && null !== $rules['destination']) {
+                if (\is_array($singleWish['destination'])) {
                     foreach ($singleWish['destination'] as $destination) {
-                        if (in_array($destination, $rules['destination']))  $manuelFlag = true;
+                        if (\in_array($destination, $rules['destination'], true)) {
+                            $manuelFlag = true;
+                        }
                     }
                 } else {
-                    if (in_array($singleWish['destination'], $rules['destination']))    $manuelFlag = true;
+                    if (\in_array($singleWish['destination'], $rules['destination'], true)) {
+                        $manuelFlag = true;
+                    }
                 }
             }
 
-            if($singleWish['budget'] > $rules['budget'])   $manuelFlag = true;
+            if ($singleWish['budget'] > $rules['budget']) {
+                $manuelFlag = true;
+            }
 
             $singleWish['manuelFlag'] = $manuelFlag;
             $singleWish['wlRule'] = $rules['type'];
