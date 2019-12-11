@@ -42,7 +42,8 @@ class FootersServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('footers.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'footers'
+            __DIR__ . '/../Config/config.php',
+            'footers'
         );
     }
 

@@ -24,7 +24,6 @@ class ChangeWishesStatusRequest extends FormRequest
     public function rules()
     {
         return [
-            //
         ];
     }
 }

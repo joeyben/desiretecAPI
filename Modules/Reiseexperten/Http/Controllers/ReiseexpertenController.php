@@ -97,6 +97,8 @@ class ReiseexpertenController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $whitelabel = $this->whitelabel->getByName('Reiseexperten');
+
         if ($request->failed()) {
             $html = view('reiseexperten::layer.popup')->with([
                 'adults_arr'   => $this->adults,
@@ -106,6 +108,7 @@ class ReiseexpertenController extends Controller
                 'duration_arr' => $this->duration,
                 'request'      => $request->all(),
                 'ages_arr'     => $this->ages,
+                'color'        => $whitelabel['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -175,7 +178,7 @@ class ReiseexpertenController extends Controller
 
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3'),
-             $this->whitelabelId
+            $this->whitelabelId
         );
 
         return $new_wish;
@@ -194,5 +197,10 @@ class ReiseexpertenController extends Controller
         }
 
         return $duration;
+    }
+
+    public function getPDF()
+    {
+        return view('reiseexperten::layer.pdf');
     }
 }

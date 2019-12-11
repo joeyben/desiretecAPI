@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Tuidemo\Database\Seeders;
+namespace Modules\Tui\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
-class TuidemoDatabaseSeeder extends Seeder
+class TuiDatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.

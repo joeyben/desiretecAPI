@@ -378,7 +378,7 @@ class AutooffersTTRepository extends BaseRepository
                 'currency' => $offer['PriceInfo']['Price']['CurrencyCode']
             ],
             'offerFeatures'    => \array_key_exists('OfferFeatures', $offer['OfferProperties']) ? $offer['OfferProperties']['OfferFeatures'] : '',
-            'hotel_id'         =>  $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'],
+            'hotel_id'         => $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'],
             'hotel_reviews'    => $this->reviews[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
             'hotel_attributes' => $this->hotelAttributes[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
             'hotel_geo'        => $this->geos[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
@@ -436,7 +436,8 @@ class AutooffersTTRepository extends BaseRepository
         $offerObj = [];
 
         foreach ($offers as $key => $offer) {
-            array_push($offerObj,
+            array_push(
+                $offerObj,
                 [
                     'data'       => json_decode($offer['data'], true),
                     'hotel_data' => json_decode($offer['hotel_data'], true)
@@ -666,14 +667,13 @@ class AutooffersTTRepository extends BaseRepository
      */
     public function setAirport($airport)
     {
-
         $airarr = explode(',', $airport);
-        $airports = "";
+        $airports = '';
         foreach ($airarr as $key => $air) {
-            if ($key > 0){
+            if ($key > 0) {
                 $airports .= ',';
             }
-            $airports .= '"'.getTTAirports($air, getCurrentWhiteLabelId()).'"';
+            $airports .= '"' . getTTAirports($air, getCurrentWhiteLabelId()) . '"';
         }
         $this->airport = $airports;
     }

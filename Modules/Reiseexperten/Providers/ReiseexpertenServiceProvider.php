@@ -42,7 +42,8 @@ class ReiseexpertenServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('reiseexperten.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'reiseexperten'
+            __DIR__ . '/../Config/config.php',
+            'reiseexperten'
         );
     }
 

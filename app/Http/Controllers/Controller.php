@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Flag;
+use App\Services\Flag\Src\Flag;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -23,6 +23,11 @@ class Controller extends BaseController
         $result['status'] = Flag::STATUS_CODE_SUCCESS;
 
         return response()->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    protected function responseJsonPaginated($data = null): JsonResponse
+    {
+        return response()->json($data, Flag::STATUS_CODE_SUCCESS, [], JSON_NUMERIC_CHECK);
     }
 
     protected function responseJsonError(Exception $e): JsonResponse

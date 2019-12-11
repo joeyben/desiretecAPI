@@ -13,8 +13,8 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/tuidemo/css/wish/details.css') }}">
-    <link rel="stylesheet" href="{{ asset('whitelabel/tuidemo/css/tuidemo.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/tui/css/wish/details.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/tui/css/tui.css') }}">
 @endsection
 
 
@@ -411,7 +411,7 @@
 
 {{-- @include('frontend.wishes.partials.faq') --}}
 @section('footer')
-    @include('tuidemo::layouts.footer')
+    @include('tui::layouts.footer')
 @endsection
 
 <!-- Modal -->
@@ -670,7 +670,7 @@
 
 @section('before-scripts')
 
-    <script src="{{ mix('whitelabel/tuidemo/js/tuidemo.js') }}"></script>
+    <script src="{{ mix('whitelabel/tui/js/tui.js') }}"></script>
 @endsection
 
 @section('after-scripts')

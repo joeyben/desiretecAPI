@@ -24,6 +24,29 @@ body.wishlist{
           width: 190px;
         }
       }
+      .id-filter{
+        padding: 8px !important;
+        padding-left: 15px !important;
+        border-radius: 5px !important;
+        border: 1px solid #ccc !important;
+        margin-left: 10px !important;
+        color: #000 !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+          color: #839192;
+          opacity: 1; /* Firefox */
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+          color: #839192;
+        }
+        ::-ms-input-placeholder { /* Microsoft Edge */
+          color: #839192;
+        }
+        @media screen and (max-width: $break-small) {
+          width: 190px;
+        }
+      }
     }
   }
   .list-container {
@@ -80,7 +103,16 @@ body.wishlist{
           padding: 0 15px;
           .wish-top-infos{
             margin-bottom: 25px;
+            margin-right: 18px;
             text-align: right;
+            position: relative;
+            .wish-id{
+              position: absolute;
+              left: 15px;
+              &:before{
+                content: "#";
+              }
+            }
             .offer-count{
               background-color: #3097d1;
               color: #fff;

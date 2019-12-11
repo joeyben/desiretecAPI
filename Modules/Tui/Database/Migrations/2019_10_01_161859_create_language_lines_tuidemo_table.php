@@ -4,15 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLanguageLinesTuidemoTable extends Migration
+class CreateLanguageLinesTuiTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        if (!Schema::hasTable('language_lines_tuidemo')) {
-            Schema::create('language_lines_tuidemo', function (Blueprint $table) {
+        if (!Schema::hasTable('language_lines_tui')) {
+            Schema::create('language_lines_tui', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('locale');
                 $table->string('description')->nullable();
@@ -30,8 +30,8 @@ class CreateLanguageLinesTuidemoTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('language_lines_tuidemo')) {
-            Schema::drop('language_lines_tuidemo');
+        if (Schema::hasTable('language_lines_tui')) {
+            Schema::drop('language_lines_tui');
         }
     }
 }

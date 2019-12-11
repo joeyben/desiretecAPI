@@ -107,6 +107,9 @@
         </div>
 
     @elseif ($logged_in_user->hasRole('User'))
+        @if(is_null($agent))
+            {{  $agent =$wish->group->users[0]->currentAgent[0] }}
+        @endif
         <div class="bg-bottom">
             <div class="container">
                 <h4>{{ trans('wish.details.seller_title') }}</h4>
@@ -121,15 +124,15 @@
                 @if(count($wish->offers) > 0 || count($wish->sellerMessages) > 0)
                     <div class="col-md-3 c-info">
                         <i class="fas fa-user"></i>
-                        <span>{{ $wish->group->users[0]->currentAgent[0]->name }}</span>
+                        <span>{{ $agent->name }}</span>
                     </div>
                     <div class="col-md-3 c-info c-tel">
                         <i class="fas fa-phone"></i>
-                        <a href="tel:{{ $wish->group->users[0]->currentAgent[0]->telephone }}">{{ $wish->group->users[0]->currentAgent[0]->telephone }}</a>
+                        <a href="tel:{{ $agent->telephone }}">{{ $agent->telephone }}</a>
                     </div>
                     <div class="col-md-3 c-info">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->currentAgent[0]->email }}</a>
+                        <a href="mailto:mail@reisebuero.de">{{ $agent->email }}</a>
                     </div>
                 @else
                     <div class="col-md-3 c-info">

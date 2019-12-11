@@ -55,7 +55,8 @@ class CreatedWishNotificationForSeller extends Notification
 
         if ('Trendtours' === $this->wish->whitelabel->name) {
             if (session()->has('newsletter')) {
-                NewsletterFacade::subscribePending($this->wish->owner->email,
+                NewsletterFacade::subscribePending(
+                    $this->wish->owner->email,
                     [
                         'FNAME'    => 'Muster' === $this->wish->owner->first_name ? '-' : $this->wish->owner->first_name,
                         'LNAME'    => 'Name' === $this->wish->owner->last_name ? '-' : $this->wish->owner->last_name,
@@ -66,7 +67,8 @@ class CreatedWishNotificationForSeller extends Notification
                         'PAXE'     => $this->wish->adults,
                         'TEXT'     => null === $this->wish->description ? '-' : $this->wish->description,
                         'BUDGET'   => null === $this->wish->budget ? '-' : $this->wish->budget,
-                    ]);
+                    ]
+                );
                 session()->forget('newsletter');
             }
 
