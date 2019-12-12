@@ -187,7 +187,11 @@ class AutooffersController extends Controller
             return redirect()->to('/');
         }
 
-        return redirect()->to('/offer/ttlist/' . $wish->id);
+        $wlAutooffer = getWhitelabelAutooffers();
+        $type = $wlAutooffer ? $wlAutooffer['type'] : 1;
+        $url = $type == 0 ? '/offer/list/' : '/offer/ttlist/';
+
+        return redirect()->to($url . $wish->id);
     }
 
     /**

@@ -465,7 +465,7 @@ class AutooffersTTRepository extends BaseRepository
      */
     public function setBudget($budget)
     {
-        $this->budget = $budget;
+        $this->budget = $budget && $budget > 0 ? $budget : 10000;
     }
 
     /**
@@ -505,7 +505,7 @@ class AutooffersTTRepository extends BaseRepository
      */
     public function setMaxBudget($budget)
     {
-        $this->maxBudget = $budget;
+        $this->maxBudget = $budget * $this->getPersonsCount();
     }
 
     /**

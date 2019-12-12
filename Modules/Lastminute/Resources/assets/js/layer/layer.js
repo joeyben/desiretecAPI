@@ -215,8 +215,8 @@ var dt = window.dt || {};
                 }
             },
             'airport': function (form, formData) {
-                var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
-                return airport;
+                //var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
+                return "";
             },
             'direkt_flug': function (form, formData) {
                 var direkt_flug = getUrlParams('dfl') ? getUrlParams('dfl') : '';
@@ -436,8 +436,8 @@ var dt = window.dt || {};
                 return duration;
             },
             'airport': function (form, formData) {
-                var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
-                return airport;
+                //var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
+                return "";
             },
             'direkt_flug': function (form, formData) {
                 var direkt_flug = getUrlParams('dfl') ? getUrlParams('dfl') : '';

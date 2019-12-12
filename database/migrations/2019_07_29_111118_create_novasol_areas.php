@@ -20,7 +20,7 @@ class CreateNovasolAreas extends Migration
             $table->integer('novasol_country_id')->unsigned();
             $table->integer('novasol_area_code')->unsigned();
             $table->timestamps();
-            $table->foreign('novasol_country_id')->references('novasol_code')->on('novasol_country');
+            //$table->foreign('novasol_country_id')->references('novasol_code')->on('novasol_country');
         });
     }
 

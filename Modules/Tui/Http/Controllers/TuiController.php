@@ -1,27 +1,25 @@
 <?php
 
-namespace Modules\DesiretecDemo\Http\Controllers;
+namespace Modules\Tui\Http\Controllers;
 
-use App\Jobs\callTrafficsApi;
-use App\Jobs\sendAutoOffersMail;
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Access\User\UserRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
-use Modules\DesiretecDemo\Http\Requests\StoreWishRequest;
+use Modules\Tui\Http\Requests\StoreWishRequest;
 
-class DesiretecDemoController extends Controller
+class TuiController extends Controller
 {
     protected $adults = [];
     protected $kids = [];
     protected $catering = [];
     protected $duration = [];
+    protected $ages = [];
 
     private $whitelabelId;
 
@@ -44,7 +42,8 @@ class DesiretecDemoController extends Controller
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
-        $this->whitelabelId = \Config::get('desiretecdemo.id');
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
+        $this->whitelabelId = \Config::get('tui.id');
     }
 
     /**
@@ -54,11 +53,10 @@ class DesiretecDemoController extends Controller
      */
     public function index()
     {
-        $whitelabel = $this->whitelabel->getByName('DesiretecDemo');
+        $whitelabel = $this->whitelabel->getByName('Tui');
 
-        return view('desiretecdemo::index')->with([
+        return view('tui::index')->with([
             'display_name'  => $whitelabel['display_name'],
-            'color'         => $whitelabel['color'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
             'logo'          => $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['url'],
             'body_class'    => $this::BODY_CLASS,
@@ -75,15 +73,14 @@ class DesiretecDemoController extends Controller
     {
         $input = $request->only('variant');
         $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
-        $whitelabel = $this->whitelabel->getByName('DesiretecDemo');
 
-        $html = view('desiretecdemo::' . $layer)->with([
+        $html = view('tui::' . $layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
-            'request'      => $request->all(),
-            'color'        => $whitelabel['color'],
+            'ages_arr'     => $this->ages,
+            'request'      => $request->all()
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -103,12 +100,13 @@ class DesiretecDemoController extends Controller
         $input = $request->all();
         if ($request->failed()) {
             $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
-            $html = view('desiretecdemo::' . $layer)->with([
+            $html = view('tui::' . $layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
+                'ages_arr'     => $this->ages,
                 'request'      => $request->all()
             ])->render();
 
@@ -121,18 +119,7 @@ class DesiretecDemoController extends Controller
         );
 
         $wish = $this->createWishFromLayer($request, $wish);
-
-        $wishJob = (new callTrafficsApi($wish->id))->delay(Carbon::now()->addSeconds(0));
-        dispatch($wishJob);
-
-        $details = [
-            'email' => $newUser->email,
-            'token' => $newUser->token->token,
-            'type'  => 0
-        ];
-        dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
-
-        $html = view('desiretecdemo::layer.created')->with([
+        $html = view('tui::layer.created')->with([
             'token' => $newUser->token->token,
             'id'    => $wish->id
         ])->render();
@@ -186,11 +173,51 @@ class DesiretecDemoController extends Controller
      */
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
-        $request->merge(['featured_image' => 'bg.jpg']);
+        $input = $request->all();
+        // TODO: Change to only not except. (Exmpl: only('destination', etc
+        $extra = [
+            'locationAttributes' => isset($input['locationAttributes']) ? $input['locationAttributes'] : '',
+            'facilityAttributes' => isset($input['facilityAttributes']) ? $input['facilityAttributes'] : '',
+            'travelAttributes'   => isset($input['travelAttributes']) ? $input['travelAttributes'] : '',
+            'maxStopOver'        => isset($input['maxStopOver']) ? $input['maxStopOver'] : '',
+            'cities'             => isset($input['cities']) ? $input['cities'] : '',
+            'ratings'            => isset($input['ratings']) ? $input['ratings'] : '',
+            'recommendationRate' => isset($input['recommendationRate']) ? $input['recommendationRate'] : '',
+            'minPrice'           => isset($input['minPrice']) ? $input['minPrice'] : '',
+            'roomType'           => isset($input['roomType']) ? $input['roomType'] : '',
+            'earlyBird'          => isset($input['earlyBird']) ? $input['earlyBird'] : '',
+            'familyAttributes'   => isset($input['familyAttributes']) ? $input['familyAttributes'] : '',
+            'wellnessAttributes' => isset($input['wellnessAttributes']) ? $input['wellnessAttributes'] : '',
+            'sportAttributes'    => isset($input['sportAttributes']) ? $input['sportAttributes'] : '',
+            'airlines'           => isset($input['airlines']) ? $input['airlines'] : '',
+            'hotelChains'        => isset($input['hotelChains']) ? $input['hotelChains'] : '',
+            'operators'          => isset($input['operators']) ? $input['operators'] : ''
+        ];
 
+        $request->merge([
+            'featured_image' => 'bg.jpg',
+            'extra_params'   => json_encode($extra)
+        ]);
         $new_wish = $wish->create(
-            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'),
-            $this->whitelabelId
+            $request->except('variant', 'first_name', 'last_name', 'email',
+                'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3',
+                'locationAttributes',
+  'facilityAttributes',
+  'travelAttributes',
+  'maxStopOver',
+  'cities',
+  'ratings',
+  'recommendationRate',
+  'minPrice',
+  'roomType',
+  'earlyBird',
+  'familyAttributes',
+  'wellnessAttributes',
+  'sportAttributes',
+  'airlines',
+  'hotelChains',
+  'operators'),
+             $this->whitelabelId
         );
 
         return $new_wish;

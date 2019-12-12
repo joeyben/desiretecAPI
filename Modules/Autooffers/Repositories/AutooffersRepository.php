@@ -26,7 +26,7 @@ class AutooffersRepository extends BaseRepository
      */
     const MODEL = Autooffer::class;
 
-    private $auth = 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
+    private $auth = 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA='; // Bild dHJhdmVsbGlvbnMuY29ubmVjdG9ycHJvZDp5QmNHOHlicQ==
 
     private $url = 'https://connector.traffics.de/v3/rest';
 
@@ -95,7 +95,6 @@ class AutooffersRepository extends BaseRepository
                     ],
                     'on_stats' => function (TransferStats $stats) use (&$url) {
                         $url = $stats->getEffectiveUri();
-                        dd($url);
                     }
                 ]
             );
