@@ -5,6 +5,6 @@
         Wenn Sie Ihren Reisewunsch noch einmal überprüfen oder ändern möchten, <a  href="{{ route('lastminute.wish.details', [$id, $token]) }}" target="_blank">klicken Sie bitte hier.</a>
     </p-->
     <p>
-        Wir stellen Ihnen passende Angebote zusammen und melden uns sobald wie möglich per Mail bei Ihnen.
+        {{ trans('autooffer.layer.created') }}
     </p>
 </div>
