@@ -100,8 +100,12 @@ class OffersRepository extends BaseRepository
 
             $input['created_by'] = $id;
 
-            $agent = Agent::where('user_id', '=', $id)
+            $agent = session()->get('agent_id');
+
+            if (!session()->has('agent_id')) {
+                $agent = Agent::where('user_id', '=', $id)
                     ->where('status', '=', 'Active')->value('id');
+            }
 
             $input['agent_id'] = $agent;
 
