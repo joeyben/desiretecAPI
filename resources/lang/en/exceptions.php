@@ -11,7 +11,7 @@ return [
     | found in a intuitive way.
     |
     */
-
+    'whitelabel_mismatch' => 'Mismatch Whitelabel User.',
     'backend' => [
         'access' => [
             'roles' => [

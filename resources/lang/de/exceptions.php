@@ -11,7 +11,7 @@ return [
     | found in a intuitive way.
     |
     */
-
+    'whitelabel_mismatch' => 'Keine Übereinstimmung der Logindaten mit dem Whitelabel.',
     'backend' => [
         'access' => [
             'roles' => [
