@@ -66,6 +66,7 @@
                             <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
                             <li><i class="icon_group"></i><span class="value">@{{ wish.adults }} @{{ wish.kids }} @{{ wish.categories }} @{{ wish.categories ? 'Haustier(e)' : ''  }}</span></li>
                             <li><i class="fal fa-usd-circle"></i><span class="value">@{{ wish.budget }}€</span></li>
+                            <li v-if="wish.senderEmail"><i class="fal fa-at"></i><span class="value">@{{ wish.senderEmail }}</span></li>
                             <li>{{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("DD.MM.YYYY") }}</span></li>
                         </ul>
                     </div>

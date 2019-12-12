@@ -28,7 +28,7 @@ class ChangePasswordRequest extends Request
     {
         return [
             'old_password' => 'required',
-            'password'     => 'required|min:8|confirmed|regex:"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"',
+            'password'     => 'required|min:6|confirmed',
         ];
     }
 
