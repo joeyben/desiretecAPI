@@ -18,7 +18,6 @@ use Illuminate\Http\Request;
 use Illuminate\Session\Store;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
-use Illuminate\Auth\AuthManager;
 use App\Repositories\Backend\Access\User\UserRepository;
 
 /**
@@ -91,9 +90,9 @@ class WishesController extends Controller
      * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository    $rules
      * @param \Illuminate\Auth\AuthManager                                    $auth
      * @param \Illuminate\Session\Store                                       $session
+     * @param \App\Repositories\Backend\Access\User\UserRepository            $user
      */
-    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, UserRepository $users)
-    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, Store $session)
+    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, Store $session, UserRepository $users)
     {
         $this->wish = $wish;
         $this->categories = $categories;
