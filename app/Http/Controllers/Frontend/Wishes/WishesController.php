@@ -12,13 +12,11 @@ use App\Models\Access\User\UserToken;
 use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
 use App\Repositories\Frontend\Wishes\WishesRepository;
-use Auth;
 use Illuminate\Auth\AuthManager;
-use Illuminate\Http\Request;
 use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Auth;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
-use Illuminate\Auth\AuthManager;
 use App\Repositories\Backend\Access\User\UserRepository;
 
 /**
@@ -90,10 +88,10 @@ class WishesController extends Controller
      * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
      * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository    $rules
      * @param \Illuminate\Auth\AuthManager                                    $auth
+     * @param \App\Repositories\Backend\Access\User\UserRepository            $users
      * @param \Illuminate\Session\Store                                       $session
      */
-    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, UserRepository $users)
-    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, Store $session)
+    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, UserRepository $users, Store $session)
     {
         $this->wish = $wish;
         $this->categories = $categories;
