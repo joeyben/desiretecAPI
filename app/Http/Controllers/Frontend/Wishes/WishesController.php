@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Wishes;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
@@ -12,7 +13,9 @@ use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use Auth;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 
@@ -28,9 +31,9 @@ class WishesController extends Controller
      * Wish Status.
      */
     protected $status = [
-        'Active'       => 'Active',
-        'Inactive'     => 'Inactive',
-        'Deleted'      => 'Deleted',
+        'new'               => 'new',
+        'offer_created'     => 'offer_created',
+        'completed'         => 'completed',
     ];
 
     /**
@@ -62,19 +65,33 @@ class WishesController extends Controller
     protected $categories;
 
     /**
+     * @var \Illuminate\Auth\AuthManager
+     */
+    private $auth;
+
+    /**
      * @var \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository
      */
     private $rules;
+    /**
+     * @var \Illuminate\Session\Store
+     */
+    private $session;
 
     /**
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository           $wish
-     * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository $rules
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
+     * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
+     * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository    $rules
+     * @param \Illuminate\Auth\AuthManager                                    $auth
+     * @param \Illuminate\Session\Store                                       $session
      */
-    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules)
+    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, Store $session)
     {
         $this->wish = $wish;
         $this->categories = $categories;
         $this->rules = $rules;
+        $this->auth = $auth;
+        $this->session = $session;
     }
 
     /**
@@ -102,6 +119,7 @@ class WishesController extends Controller
      */
     public function show(Wish $wish, ManageWishesRequest $request)
     {
+        $agent = null;
         $wishTye = $this->manageRules($wish);
 
         if ($wishTye > 0) {
@@ -117,9 +135,14 @@ class WishesController extends Controller
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
 
+        if ($this->session->has('agent_id')) {
+            $agent = Agent::find((int) $this->session->get('agent_id'));
+        }
+
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
+            'agent'              => $agent,
             'agent_name'         => $agentName,
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
@@ -192,18 +215,50 @@ class WishesController extends Controller
     public function getList(ManageWishesRequest $request)
     {
         $status_arr = [
-            'Active'       => '1',
-            'Inactive'     => '2',
-            'Deleted'      => '3',
+            'new'               => '1',
+            'offer_created'     => '2',
+            'completed'         => '3',
         ];
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+        $id = ($request->get('id') && null !== $request->get('id')) ? $request->get('id') : '';
+        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelField('id')));
+
         $wish = $this->wish->getForDataTable()
             ->when($status, function ($wish, $status) {
                 return $wish->where(config('module.wishes.table') . '.status', $status)
                     ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
+            })->when($id, function ($wish, $id) {
+                return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
             })
             ->paginate(10);
+
+        foreach ($wish as $singleWish) {
+            $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
+
+            $manuelFlag = false;
+
+            if (\is_array($rules['destination']) && null !== $rules['destination']) {
+                if (\is_array($singleWish['destination'])) {
+                    foreach ($singleWish['destination'] as $destination) {
+                        if (\in_array($destination, $rules['destination'], true)) {
+                            $manuelFlag = true;
+                        }
+                    }
+                } else {
+                    if (\in_array($singleWish['destination'], $rules['destination'], true)) {
+                        $manuelFlag = true;
+                    }
+                }
+            }
+
+            if ($singleWish['budget'] > $rules['budget']) {
+                $manuelFlag = true;
+            }
+
+            $singleWish['manuelFlag'] = $manuelFlag;
+            $singleWish['wlRule'] = $rules['type'];
+        }
 
         $response = [
             'pagination' => [
@@ -350,5 +405,29 @@ class WishesController extends Controller
         }
 
         return $offer;
+    }
+
+    /**
+     * @param \App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest $request
+     *
+     * @return JSON response
+     */
+    public function changeWishStatus(ChangeWishesStatusRequest $request)
+    {
+        try {
+            $status_arr = [
+                'new'               => '1',
+                'offer_created'     => '2',
+                'completed'         => '3',
+            ];
+
+            $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+
+            $wish = $this->wish->updateStatus($request->get('id'), $status);
+
+            return json_response([]);
+        } catch (Exception $e) {
+            return json_response_error($e);
+        }
     }
 }
