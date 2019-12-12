@@ -1,46 +1,55 @@
 // Offers Styles
 body.wishlist{
+  .btn{
+    border-radius: 3px;
+    font-weight: 200;
+  }
   .filter{
     display: grid;
     grid-template-columns: 35% 65%;
     padding: 20px 0 0;
+    @media screen and (max-width: $break-small) {
+      display: block;
+    }
     .count{
+      display: flex;
+      align-items: center;
       @media screen and (max-width: $break-small) {
-        padding-top: 5px;
+        justify-content: center;
+        margin-bottom: 15px;
       }
       span{
         color: $text-color;
         font-size: 18px;
         font-weight: 600;
-        @media screen and (max-width: $break-small) {
-          font-size: 14px;
-        }
       }
     }
     .filter-action{
       padding: 0 30px;
+      @media screen and (max-width: $break-small) {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
       .dropdown{
-        @media screen and (max-width: $break-small) {
-          width: 190px;
-        }
+        margin: 5px;
       }
       .id-filter{
-        padding: 8px !important;
-        padding-left: 15px !important;
-        border-radius: 5px !important;
-        border: 1px solid #ccc !important;
-        margin-left: 10px !important;
-        color: #000 !important;
-        background-color: transparent !important;
-        box-shadow: none !important;
+        padding: 10px 9px 9px 20px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        margin: 5px;
+        font-size: 12px;
+        min-width: 220px;
         &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
           color: #839192;
           opacity: 1; /* Firefox */
+          font-size: 12px;
         }
-        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        &::-ms-input-placeholder { /* Internet Explorer 10-11 */
           color: #839192;
         }
-        ::-ms-input-placeholder { /* Microsoft Edge */
+        &::-ms-input-placeholder { /* Microsoft Edge */
           color: #839192;
         }
         @media screen and (max-width: $break-small) {
@@ -101,25 +110,34 @@ body.wishlist{
         }
         .action {
           padding: 0 15px;
+          min-width: 220px;
+          @media screen and (max-width: $break-small) {
+            padding: 0 30px;
+          }
           .wish-top-infos{
             margin-bottom: 25px;
-            margin-right: 18px;
             text-align: right;
             position: relative;
             .wish-id{
               position: absolute;
-              left: 15px;
+              left: 0;
+              font-weight: 200;
               &:before{
                 content: "#";
               }
             }
+            .wish-classification {
+              padding: 2px 5px 0;
+              @include border-radius(3px);
+              display: inline-block;
+              min-width: auto;
+            }
             .offer-count{
-              background-color: #3097d1;
-              color: #fff;
-              padding: 0 5px;
-              @include border-radius(2px);
+              padding: 2px 5px 0;
+              @include border-radius(3px);
               display: inline-block;
               text-align: center;
+              min-width: auto;
             }
           }
           .budget {
@@ -133,14 +151,17 @@ body.wishlist{
           }
           .primary-btn{
             display: block;
+            min-width: auto;
+            padding: 10px;
           }
           .status-change-action{
             width: 100%;
-            margin-top: 20px;
-            padding: 0 17px;
+            margin-top: 15px;
             .dropdown{
               @media screen and (max-width: $break-small) {
                 width: 200px;
+                display: block;
+                margin: 0 auto;
               }
             }
           }
