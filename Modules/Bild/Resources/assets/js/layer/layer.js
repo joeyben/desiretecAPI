@@ -1,13 +1,14 @@
-var dt = window.dt || {};
+.jsvar dt = window.dt || {};
 var exitIntent = window.exitIntent || {};
 
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'http://master.com',
+        baseUrl: 'https://build.reise-wunsch.com',
+        logoPath: '/whitelabel/build/images/layer/logo.png',
         popupPath: '/show',
         popupStore:'/store',
-        cssPath: '/whitelabel/master/css/layer/whitelabel.css'
+        cssPath: '/whitelabel/build/css/layer/whitelabel.css'
     };
 
     dt.popupTemplate = function (variant) {
@@ -51,6 +52,7 @@ var exitIntent = window.exitIntent || {};
           '<div class="kwp-header kwp-variant-' + variant + '">' +
           '<div class="kwp-close-button kwp-close"></div>' +
           '<div class="kwp-overlay"></div>' +
+          '<div class="kwp-logo"></div>' +
           '<div class="kwp-header-content">' +
           '<h1>' +
           texts[variant].header + ' <br/>' +
