@@ -10,13 +10,6 @@
     </script>
 @endsection
 
-@section('after-scripts')
-    <script type="text/javascript">
-        var cssPrimaryBtn = '.primary-btn { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; color: #fff !important; } ';
-        $('head').append('<style>' + cssPrimaryBtn + '</style>');
-    </script>
-@endsection
-
 @section('content')
     <div class="box box-info" style="display: none;">
         <div class="box-header with-border">
@@ -50,8 +43,9 @@
     <div class="list-container row">
         <div class="col col-lg-12">
             <div class="filter">
-                <div class="count">
-                    <span class="count" v-cloak>@{{ pagination.total }} {{ trans_choice('labels.frontend.wishes.wishes', $count ) }}</span>
+                <div v-cloak class="count">
+                    <span v-if="data.length === 1">@{{ data.length }} {{ trans_choice('labels.frontend.wishes.wishes', 1 ) }}</span>
+                    <span v-else>@{{ data.length }} {{ trans_choice('labels.frontend.wishes.wishes', 99 ) }}</span>
                 </div>
                 @if($logged_in_user->hasRole('Seller'))
                     <div class="filter-action">
@@ -93,11 +87,11 @@
                                 @{{ wish.id }}
                             </span>
                             @if($logged_in_user->hasRole('Seller'))
-                                <span v-if="wish.wlRule == 'mix'" class="wish-classification">
+                                <span v-if="wish.wlRule == 'mix'" class="wish-classification btn-secondary">
                                     <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
                                     <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
                                 </span>
-                                <span v-if="wish.offers > 0" class="offer-count">
+                                <span v-if="wish.offers > 0" class="offer-count btn-secondary">
                                     @{{ wish.offers }}
                                 </span>
                             @endif
