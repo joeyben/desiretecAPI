@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="row">
-
+        @include('includes.alert')
         <div class="col-xs-12">
 
             <div class="panel panel-default">
