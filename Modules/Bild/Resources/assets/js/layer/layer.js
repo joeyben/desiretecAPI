@@ -1,14 +1,14 @@
-.jsvar dt = window.dt || {};
+var dt = window.dt || {};
 var exitIntent = window.exitIntent || {};
 
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://build.reise-wunsch.com',
-        logoPath: '/whitelabel/build/images/layer/logo.png',
+        baseUrl: 'https://bild.reise-wunsch.com',
+        logoPath: '/whitelabel/bild/images/layer/logo.png',
         popupPath: '/show',
         popupStore:'/store',
-        cssPath: '/whitelabel/build/css/layer/whitelabel.css'
+        cssPath: '/whitelabel/bild/css/layer/whitelabel.css'
     };
 
     dt.popupTemplate = function (variant) {
