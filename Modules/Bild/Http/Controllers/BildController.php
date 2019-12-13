@@ -100,7 +100,9 @@ class BildController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $is_autooffer = false;
         $input = $request->all();
+        $wishRepo = $wish;
         if ($request->failed()) {
             $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
             $html = view('bild::' . $layer)->with([
@@ -122,19 +124,26 @@ class BildController extends Controller
 
         $wish = $this->createWishFromLayer($request, $wish);
 
-        $wishJob = (new callTrafficsApi($wish->id))->delay(Carbon::now()->addSeconds(0));
-        dispatch($wishJob);
+        $wishTye = $wishRepo->manageRules($wish);
 
-        $details = [
-            'email' => $newUser->email,
-            'token' => $newUser->token->token,
-            'type'  => 0
-        ];
-        dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
+        if ($wishTye > 0) {
+
+            $wishJob = (new callTrafficsApi($wish->id))->delay(Carbon::now()->addSeconds(0));
+            dispatch($wishJob);
+
+            $details = [
+                'email' => $newUser->email,
+                'token' => $newUser->token->token,
+                'type' => 0
+            ];
+            dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
+            $is_autooffer = true;
+        }
 
         $html = view('bild::layer.created')->with([
             'token' => $newUser->token->token,
-            'id'    => $wish->id
+            'id'    => $wish->id,
+            'is_auto'  => $is_autooffer
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
