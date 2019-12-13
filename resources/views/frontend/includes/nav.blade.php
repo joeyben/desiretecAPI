@@ -94,7 +94,7 @@
                                 <li>{{ link_to_route('frontend.offers.index', trans('navs.frontend.offers')) }}</li>
                             @endif
 
-                            @if ($logged_in_user && $logged_in_user->hasRole('User'))
+                            @if ($logged_in_user && ($logged_in_user->hasRole('User') || $logged_in_user->hasRole('Executive')))
                                 <li>{{ link_to_route('frontend.wishes.list', trans('navs.frontend.wishes')) }}</li>
                             @endif
 
