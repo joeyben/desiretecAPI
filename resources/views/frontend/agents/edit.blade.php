@@ -18,8 +18,10 @@
             @include("frontend.agents.form")
         </div>
         <div class="modal-footer">
-            {{ link_to_route('frontend.agents.index', trans('labels.agents.cancel'), [], ['class' => 'btn btn-danger btn-md']) }}
-            {{ Form::submit(trans('labels.agents.save'), ['class' => 'btn btn-primary btn-md']) }}
+            <div class="col-lg-12">
+                {{ link_to_route('frontend.agents.index', trans('labels.agents.cancel'), [], ['class' => 'btn btn-secondary btn-md']) }}
+                {{ Form::submit(trans('labels.agents.save'), ['class' => 'btn btn-primary btn-md']) }}
+            </div>
         </div>
     {{ Form::close() }}   
     
@@ -41,6 +43,27 @@
             else{
                 $(this).closest('.form-group').find('.form-control').attr("value",names);
             }
+        });
+
+        $(document).ready(function(){
+            var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+
+            $('.primary-btn, .btn-primary').css({
+                'background': brandColor,
+                'border': '1px solid ' + brandColor,
+                'color': '#fff',
+            });
+            $('.secondary-btn, .btn-secondary').css({
+                'background': '#fff',
+                'border': '1px solid ' + brandColor,
+                'color': brandColor,
+            });
+            $("input").focus(function(){
+                $(this).css({'border-color': brandColor});
+            });
+            $("input").blur(function(){
+                $(this).css({'border-color': 'inherit'});
+            });
         });
 
     </script>

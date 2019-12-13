@@ -100,6 +100,8 @@ class BildController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $whitelabel = $this->whitelabel->getByName('Bild');
+
         $input = $request->all();
         if ($request->failed()) {
             $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
@@ -109,7 +111,8 @@ class BildController extends Controller
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
-                'request'      => $request->all()
+                'request'      => $request->all(),
+                'color'        => $whitelabel['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);

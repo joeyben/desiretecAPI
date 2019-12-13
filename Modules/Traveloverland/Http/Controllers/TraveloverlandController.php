@@ -72,6 +72,8 @@ class TraveloverlandController extends Controller
      */
     public function show(Request $request)
     {
+        $whitelabel = $this->whitelabel->getByName('Traveloverland');
+
         $input = $request->only('variant');
         $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
 
@@ -81,7 +83,8 @@ class TraveloverlandController extends Controller
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
             'class_arr'    => $this->class,
-            'request'      => $request->all()
+            'request'      => $request->all(),
+            'color'        => $whitelabel['color'],
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -98,6 +101,8 @@ class TraveloverlandController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $whitelabel = $this->whitelabel->getByName('Traveloverland');
+
         $input = $request->all();
         if ($request->failed()) {
             $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
@@ -108,6 +113,7 @@ class TraveloverlandController extends Controller
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
                 'class_arr'    => $this->class,
+                'color'        => $whitelabel['color'],
                 'request'      => $request->all()
             ])->render();
 
