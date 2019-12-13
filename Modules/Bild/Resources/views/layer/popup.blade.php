@@ -172,11 +172,11 @@
         </div>
 
         <div class="kwp-row">
-            <div class="kwp-col-12 description">
+            <!--div class="kwp-col-12 description">
                 {{ Form::label('description', trans('bild::layer.general.description'), ['class' => 'control-label required']) }}
                 {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('bild::layer.placeholder.description')]) }}
                 <i class="master-icon--calendar-month"></i>
-            </div>
+            </div-->
         </div>
 
         <div class="kwp-row">
