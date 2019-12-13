@@ -131,7 +131,7 @@ class BildController extends Controller
             'type'  => 0
         ];
         dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
-        
+
         $html = view('bild::layer.created')->with([
             'token' => $newUser->token->token,
             'id'    => $wish->id
