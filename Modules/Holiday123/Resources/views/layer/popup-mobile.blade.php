@@ -438,7 +438,7 @@
                                minLength: 3,
                                highlight: true,
                                source: function(query) {
-                                 return $.get('get-all-destinations', {query: query});
+                                 return $.get('https://holiday123.reise-wunsch.com/get-all-destinations', {query: query});
                                }
                              }
                            });
@@ -454,7 +454,7 @@
                                minLength: 3,
                                highlight: true,
                                source: function(query) {
-                                 return $.get('get-all-airports', {query: query});
+                                 return $.get('https://holiday123.reise-wunsch.com/get-all-airports', {query: query});
                                }
                              }
                            });

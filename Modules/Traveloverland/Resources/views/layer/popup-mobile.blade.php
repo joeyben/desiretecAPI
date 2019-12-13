@@ -350,7 +350,7 @@
                   minLength: 3,
                   highlight: true,
                   source: function(query) {
-                    return $.get('get-all-destinations', {query: query});
+                    return $.get('https://traveloverland.reise-wunsch.com/get-all-destinations', {query: query});
                   }
                 }
               });
@@ -366,7 +366,7 @@
                   minLength: 3,
                   highlight: true,
                   source: function(query) {
-                    return $.get('get-all-airports', {query: query});
+                    return $.get('https://traveloverland.reise-wunsch.com/get-all-airports', {query: query});
                   }
                 }
               });
@@ -404,7 +404,7 @@
              */
             var autocomplete = function(){
                 /* Destinations */
-                $.get('get-all-destinations', function(data){
+                $.get('https://traveloverland.reise-wunsch.com/get-all-destinations', function(data){
                     $("#destination").typeahead({
                         autoSelect: true,
                         minLength: 3,
