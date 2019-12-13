@@ -31,27 +31,46 @@
                             <div class="agency-info">
                                 <div class="avatar avatar-circle size-1"></div>
                                 <div class="text">
-                                    <h3>Zuständiges Reisebüro</h3>
-                                    <h4>Reisebüro desiretec</h4>
-                                    <h4>Auf dem Sande 1</h4>
-                                    <h4>20457 Hamburg</h4>
+                                    @if(!(trans('autooffer.contact.company_contact_person') == "autooffer.contact.company_contact_person"))<h3>{{ trans('autooffer.contact.company_contact_person') }}</h3>@endif
+                                    @if(!(trans('autooffer.contact.company_name') == "autooffer.contact.company_name"))<h4>{{ trans('autooffer.contact.company_name') }}</h4>@endif
+                                    @if(!(trans('autooffer.contact.company_addr') == "autooffer.contact.company_addr"))<h4>{{ trans('autooffer.contact.company_addr') }}</h4>@endif
+                                    @if(!(trans('autooffer.contact.company_postal_addr') == "autooffer.contact.company_postal_addr"))<h4>{{ trans('autooffer.contact.company_postal_addr') }}</h4>@endif
+
                                 </div>
                             </div>
 
                             <div class="agency-contact-info">
                                 <ul>
-                                    <li class="name">
-                                        <i class="fal fa-user-circle"></i>
-                                        <h4>Name Ansprechpartner</h4>
-                                    </li>
-                                    <li class="phone">
-                                        <i class="fal fa-phone" aria-hidden="true"></i>
-                                        <h4>089 - 714 595 35</h4>
-                                    </li>
-                                    <li class="name">
-                                        <i class="fal fa-envelope"></i>
-                                        <h4>main@reisebuero.de</h4>
-                                    </li>
+                                    @if(!(trans('autooffer.contact.ansprechpartner') == "autooffer.contact.ansprechpartner"))
+                                        <li class="name">
+                                            <i class="fal fa-user-circle"></i>
+                                            <h4>{{ trans('autooffer.contact.ansprechpartner') }}</h4>
+                                        </li>
+                                    @endif
+                                    @if(!(trans('autooffer.contact.company_telephone') == "autooffer.contact.company_telephone"))
+                                        <li class="phone">
+                                            <div class="icon-background">
+                                                <i class="fal fa-phone" aria-hidden="true"></i>
+                                            </div>
+                                            <h4>{{ trans('autooffer.contact.company_telephone') }}</h4>
+                                        </li>
+                                    @endif
+                                    @if(!(trans('autooffer.contact.company_email') == "autooffer.contact.company_email"))
+                                        <li class="name">
+                                            <div class="icon-background">
+                                                <i class="fal fa-envelope" aria-hidden="true"></i>
+                                            </div>
+                                            <h4>{{ trans('autooffer.contact.company_email') }}</h4>
+                                        </li>
+                                    @endif
+                                    @if(!(trans('autooffer.contact.timings') == "autooffer.contact.timings"))
+                                        <li class="name">
+                                            <div class="icon-background">
+                                                <i class="fal fa-clock" aria-hidden="true"></i>
+                                            </div>
+                                            <h4>{{ trans('autooffer.contact.timings') }}</h4>
+                                        </li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
