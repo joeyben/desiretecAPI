@@ -13,33 +13,37 @@ var exitIntent = window.exitIntent || {};
 
     dt.popupTemplate = function (variant) {
 
+        var mobileHeader = dt.PopupManager.decoder.getRandomElement([
+            'Dürfen wir Dich beraten?',
+        ]);
+
         var texts = {
             'eil-n1-social': {
                 header: 'Dürfen wir Dich beraten?',
                 body: 'Unsere besten Reiseberater helfen Dir gerne, Deine persönliche Traumreise zu finden. Probiere es einfach aus! Natürlich kostenlos und unverbindlich.'
             },
             'eil-n1': {
-                header: 'Dürfen wir Sie beraten?',
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
+                header: 'Dürfen wir Dich beraten?',
+                body: 'Unsere besten Reiseberater helfen Dir gerne, Deine persönliche Traumreise zu finden. Probiere es einfach aus! Natürlich kostenlos und unverbindlich.'
             },
             'eil-n2': {
-                header: 'Dürfen wir Sie beraten?',
+                header: 'Dürfen wir Dich beraten?',
                 body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
             },
             'eil-n3': {
-                header: 'Dürfen wir Ihnen helfen?',
+                header: 'Dürfen wir Dir helfen?',
                 body: 'Einer unserer erfahrenen Reiseberater hilft Ihnen gerne, die für Sie passende Reise zu finden. Probieren Sie es einfach kostenlos und unverbindlich aus!'
             },
             'eil-n4': {
-                header: 'Dürfen wir Ihnen helfen?',
+                header: 'Dürfen wir Dir helfen?',
                 body: 'Einer unserer erfahrenen Reiseberater hilft Ihnen gerne, die für Sie passende Reise zu finden. Probieren Sie es einfach kostenlos und unverbindlich aus!'
             },
             'eil-n5': {
-                header: 'Dürfen wir Sie beraten?',
+                header: 'Dürfen wir Dich beraten?',
                 body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
             },
             'eil-mobile': {
-                header: 'Dürfen wir Sie beraten?',
+                header: mobileHeader,
                 body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden!'
             }
         };
@@ -689,10 +693,7 @@ var exitIntent = window.exitIntent || {};
                 return 'eil-mobile';
             }else{
                 return this.getRandomElement([
-                    'eil-n1',
-                    'eil-n1',
-                    'eil-n2',
-                    'eil-n5'
+                    'eil-n1'
                 ]);
             }
         },
@@ -1169,25 +1170,17 @@ var exitIntent = window.exitIntent || {};
     };
 
     $(document).ready(function (e) {
-        var $event = e;
         if(isMobile()) {
-            dt.PopupManager.teaser = true;
-            dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
-            $(".dt-modal .kwp-close").on('touchend',function () {
-                dt.PopupManager.closePopup(e);
-            });
+            dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('popup.css', 'popup_mobile.css');
         }
         dt.PopupManager.init();
-        dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
-        dt.triggerButton(e);
+        dt.Tracking.init('master_exitwindow','UA-105970361-1');
+
         if(isMobile() && dt.PopupManager.decoder){
             dt.scrollUpDetect();
             dt.PopupManager.isMobile = true;
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
-            textareaAutosize()
-            $(".dt-modal .teaser").find('i').on('click touchend',function () {
-                dt.hideTeaser($event);
-            });
+            textareaAutosize();
             if(getUrlParams('autoShow')){
                 dt.showMobileLayer();
                 shown = true;
@@ -1348,8 +1341,6 @@ var exitIntent = window.exitIntent || {};
     function isMobile(){
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
             return true;
-        } else if( $(window).outerWidth() < 769 ) {
-            return true;
         }
         return false;
     }
@@ -1475,6 +1466,11 @@ var exitIntent = window.exitIntent || {};
 
         var checkboxEl = $('.kwp input[type="checkbox"]:checked:after');
         $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
+
+        var datepicker = $('.datepicker-dropdown .day.active, .datepicker-dropdown .day.active.active:hover, .datepicker-dropdown .day.active:hover,.datepicker-dropdown .day.active.active:hover:hover, .datepicker-dropdown .month.active, .datepicker-dropdown .month.active.active:hover, .datepicker-dropdown .month.active:hover, .datepicker-dropdown .month.active.active:hover:hover, .datepicker-dropdown .year.active, .datepicker-dropdown .year.active.active:hover, .datepicker-dropdown .year.active:hover, .datepicker-dropdown .year.active.active:hover:hover');
+        datepicker.css({
+            'background': brandColor,
+        });
 
         var footerHref = $('.kwp-agb p a');
         footerHref.css({
