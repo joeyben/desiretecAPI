@@ -222,6 +222,7 @@ input:-internal-autofill-selected{
   top: -270%;
   background-color: white;
   display: none;
+  z-index: 900;
   ul {
     list-style: none;
   }
