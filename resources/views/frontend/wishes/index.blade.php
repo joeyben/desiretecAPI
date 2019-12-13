@@ -43,9 +43,9 @@
     <div class="list-container row">
         <div class="col col-lg-12">
             <div class="filter">
-                <div v-cloak class="count">
-                    <span v-if="data.length === 1">@{{ data.length }} {{ trans_choice('labels.frontend.wishes.wishes', 1 ) }}</span>
-                    <span v-else>@{{ data.length }} {{ trans_choice('labels.frontend.wishes.wishes', 99 ) }}</span>
+                <div class="count">
+                    <span v-cloak v-if="data.length === 1">@{{ data.length }} {{ trans_choice('labels.frontend.wishes.wishes', 1 ) }}</span>
+                    <span v-cloak v-else>@{{ data.length }} {{ trans_choice('labels.frontend.wishes.wishes', 99 ) }}</span>
                 </div>
                 @if($logged_in_user->hasRole('Seller'))
                     <div class="filter-action">

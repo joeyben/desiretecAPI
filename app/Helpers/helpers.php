@@ -29,7 +29,7 @@ if (!function_exists('homeRoute')) {
         if (access()->allow('view-backend')) {
             return 'admin.dashboard';
         } elseif (auth()->check()) {
-            return 'frontend.user.dashboard';
+            return 'frontend.index';
         }
 
         return 'frontend.index';
@@ -634,6 +634,18 @@ if (!function_exists('getApiByWhitelabel')) {
     function getApiByWhitelabel()
     {
         $name = getCurrentWhiteLabelField('name');
+    }
+}
+
+if (!function_exists('getWhitelabelAutooffers')) {
+    /**
+     * return url(blade-format = with dot as seperator) to the whitelabel-footer.
+     *
+     * @return string
+     */
+    function getWhitelabelAutooffers()
+    {
+        return \App\Models\WhitelabelAutooffer::where('whitelabel_id', getCurrentWhiteLabelId())->first();
     }
 }
 

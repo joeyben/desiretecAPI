@@ -12,10 +12,9 @@ use App\Models\Access\User\UserToken;
 use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
 use App\Repositories\Frontend\Wishes\WishesRepository;
-use Auth;
 use Illuminate\Auth\AuthManager;
-use Illuminate\Http\Request;
 use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Auth;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 use App\Repositories\Backend\Access\User\UserRepository;
@@ -89,10 +88,10 @@ class WishesController extends Controller
      * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
      * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository    $rules
      * @param \Illuminate\Auth\AuthManager                                    $auth
+     * @param \App\Repositories\Backend\Access\User\UserRepository            $users
      * @param \Illuminate\Session\Store                                       $session
-     * @param \App\Repositories\Backend\Access\User\UserRepository            $user
      */
-    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, Store $session, UserRepository $users)
+    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, UserRepository $users, Store $session)
     {
         $this->wish = $wish;
         $this->categories = $categories;
@@ -233,19 +232,27 @@ class WishesController extends Controller
         $currentWhiteLabelID = getCurrentWhiteLabelField('id');
         $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
 
-        $wish = $this->wish->getForDataTable()
-            ->when($status, function ($wish, $status) {
-                return $wish->where(config('module.wishes.table') . '.status', $status)
-                    ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
-            })->when($id, function ($wish, $id) {
-                return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
-            })
-            ->paginate(10);
+        if($this->auth->guard('web')->user()->hasRole('User')) {
+            $wish = $this->wish->getForDataTable()
+                ->when($id, function ($wish, $id) {
+                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%')->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
+                })
+                ->paginate(10);
+        } else {
+            $wish = $this->wish->getForDataTable()
+                ->when($status, function ($wish, $status) {
+                    return $wish->where(config('module.wishes.table') . '.status', $status)
+                        ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
+                })->when($id, function ($wish, $id) {
+                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
+                })
+                ->paginate(10);
+        }
 
         foreach ($wish as $singleWish) {
-            $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
+            $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
 
-            if($currentWhiteLabelID === 198) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
+            if($currentWhiteLabelID === 198 && $this->auth->guard('web')->user()->hasRole('Seller')) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
                 $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
             }
 

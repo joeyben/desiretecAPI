@@ -1,4 +1,4 @@
-@extends('tuidemo::layouts.master')
+@extends('tui::layouts.master')
 
 @section('content')
     <!-- Wish lis Box -->

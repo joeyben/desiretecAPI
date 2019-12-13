@@ -9,7 +9,7 @@
 @endsection
 
 @section('after-styles')
-    <link rel="stylesheet" href="{{ asset('whitelabel/tuidemo/css/tuidemo.css') }}">
+    <link rel="stylesheet" href="{{ asset('whitelabel/tui/css/tui.css') }}">
 @endsection
 
 @section('content')
@@ -30,7 +30,6 @@
                             </option>
                         @endforeach
                     </select>
-                    <input type="search" class="id-filter" placeholder="{{ trans('strings.wishlist.search') }}" v-model="id" @input="fetchWishes()">
                 </div> --}}
             </div>
             <hr>
@@ -55,18 +54,9 @@
                     </div>
                     <div class="action">
                         <div class="wish-top-infos">
-                            <span class="wish-id">
-                                @{{ wish.id }}
+                            <span v-if="wish.offers > 0" class="offer-count">
+                                @{{ wish.offers }}
                             </span>
-                            @if($logged_in_user->hasRole('Seller'))
-                                <span v-if="wish.wlRule == 'mix'" class="wish-classification">
-                                    <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
-                                    <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
-                                </span>
-                                <span v-if="wish.offers > 0" class="offer-count">
-                                    @{{ wish.offers }}
-                                </span>
-                            @endif
                         </div>
                         <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
                         @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
