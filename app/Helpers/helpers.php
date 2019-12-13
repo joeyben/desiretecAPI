@@ -29,7 +29,7 @@ if (!function_exists('homeRoute')) {
         if (access()->allow('view-backend')) {
             return 'admin.dashboard';
         } elseif (auth()->check()) {
-            return 'frontend.user.dashboard';
+            return 'frontend.index';
         }
 
         return 'frontend.index';
