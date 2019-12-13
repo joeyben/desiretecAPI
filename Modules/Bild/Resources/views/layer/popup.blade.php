@@ -5,6 +5,7 @@
 @endisset
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
+<link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 
 <div class="kwp-middle">
     Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
@@ -17,23 +18,23 @@
             <div class="kwp-col-4 destination">
                 {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
                 {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('bild::layer.placeholder.destination'), 'required' => 'required']) }}
+                <i class="fal fa-globe-europe"></i>
                 @if ($errors->any() && $errors->get('destination'))
                         @foreach ($errors->get('destination') as $error)
                             <span class="error-input">{{ $error }}</span>
                         @endforeach
                 @endif
-                <i class="master-icon--location-fill"></i>
             </div>
 
-            <div class="kwp-col-4">
+            <div class="kwp-col-4 airport">
                 {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
                 {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('bild::layer.placeholder.airport'), 'required' => 'required']) }}
+                <i class="fal fa-home"></i>
                 @if ($errors->any() && $errors->get('airport'))
                           @foreach ($errors->get('airport') as $error)
                                 <span class="error-input">{{ $error }}</span>
                           @endforeach
                 @endif
-                <i class="master-icon--aircraft-up"></i>
             </div>
 
         </div>
@@ -44,8 +45,8 @@
                     <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
                     <span class="duration-time dd-trigger">
                         <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
-                        <i class="master-icon--calendar-month not-triggered"></i>
-                        <i class="master-icon--close triggered"></i>
+                        <i class="fal fa-calendar-alt not-triggered"></i>
+                        <i class="fal fa-times triggered"></i>
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
@@ -57,7 +58,6 @@
                                 @endforeach
 
                             @endif
-                            <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
@@ -67,17 +67,14 @@
                                     <span class="error-input">{{ $error }}</span>
                                 @endforeach
                             @endif
-                            <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('duration', array_merge(['0' => trans('bild::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
-                            <i class="master-icon--time"></i>
                         </div>
                         <div class="clearfix"></div>
-                        <hr>
                         <div class="kwp-col-12 button">
                             <a href="#">OK</a>
                         </div>
@@ -90,8 +87,8 @@
                     <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
-                         <i class="master-icon--user-family not-triggered"></i>
-                         <i class="master-icon--close triggered"></i>
+                        <i class="fal fa-users not-triggered"></i>
+                        <i class="fal fa-times triggered"></i>
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-12">
@@ -99,7 +96,7 @@
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr , key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
-                            <i class="master-icon--user-family"></i>
+                            <i class="fal fa-users"></i>
                         </div>
                         <div class="kwp-col-12 kids" style="position: relative;">
                             <div class="kwp-col-12">
@@ -107,7 +104,7 @@
                                 <div class="kwp-custom-select">
                                     {{ Form::select('kids', $kids_arr, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                                 </div>
-                                <i class="master-icon--baby"></i>
+                                <i class="fal fa-child"></i>
                             </div>
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
@@ -126,7 +123,6 @@
                             </div>
                         </div>
                         <script>dt.childrenAges();</script>
-                        <hr>
                         <div class="kwp-col-12 button">
                             <a href="#">OK</a>
                         </div>
@@ -166,7 +162,7 @@
                 <div class="kwp-custom-select">
                     {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'travelers form-control box-size']) }}
                 </div>
-                <i class="master-icon--chevron-down"></i>
+                <i class="far fa-chevron-down"></i>
             </div>
 
         </div>
@@ -183,15 +179,15 @@
             <div class="kwp-col-4 email-col">
                 {{ Form::label('email', trans('bild::layer.general.email'), ['class' => 'control-label']) }}
                 {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('bild::layer.placeholder.email'), 'required' => 'required']) }}
-                <i class="master-icon--mail"></i>
+                <i class="fal fa-envelope"></i>
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
-                           @foreach ($errors->get('email') as $error)
-                                  <span class="error-input">{{ $error }}</span>
-                           @endforeach
+                    @foreach ($errors->get('email') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                    @endforeach
                 @endif
             </div>
-            <div class="kwp-col-4 white-col">
+            <div class="kwp-col-4 white-col submit-col">
                 <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
             </div>
 
@@ -274,6 +270,7 @@
             $(document).ready(function(){
                 $('.selectpicker').selectpicker();
                 autocomplete();
+                modifyDOM();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -384,65 +381,93 @@
                     check_button();
                 });
             });
+
+            $(window).on('resize', function() {
+                modifyDOM();
+            });
+
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
             }
 
-             /**
-                          * Autocomplete
-                          */
-                         var autocomplete = function(){
-                           /* Destinations */
-                           $('#destination').tagsinput({
-                             maxTags: 3,
-                             maxChars: 20,
-                             allowDuplicates: false,
-                             typeahead: {
-                               autoSelect: false,
-                               minLength: 3,
-                               highlight: true,
-                               source: function(query) {
-                                 return $.get('get-all-destinations', {query: query});
-                               }
-                             }
-                           });
-                           /* END Destinations */
+            /**
+             * Autocomplete
+             */
+            var autocomplete = function(){
+            /* Destinations */
+            $('#destination').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                autoSelect: false,
+                minLength: 3,
+                highlight: true,
+                source: function(query) {
+                    return $.get('get-all-destinations', {query: query});
+                }
+                }
+            });
+            /* END Destinations */
 
-                           /* Airports */
-                           $('#airport').tagsinput({
-                             maxTags: 3,
-                             maxChars: 20,
-                             allowDuplicates: false,
-                             typeahead: {
-                               autoSelect: false,
-                               minLength: 3,
-                               highlight: true,
-                               source: function(query) {
-                                 return $.get('get-all-airports', {query: query});
-                               }
-                             }
-                           });
-                           /* END Airports */
-
-
-                           $("#destination, #airport").on('itemAdded', function(event) {
-                             setTimeout(function(){
-                               $("input[type=text]",".bootstrap-tagsinput").val("");
-                             }, 1);
-                           });
+            /* Airports */
+            $('#airport').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                typeahead: {
+                autoSelect: false,
+                minLength: 3,
+                highlight: true,
+                source: function(query) {
+                    return $.get('get-all-airports', {query: query});
+                }
+                }
+            });
+            /* END Airports */
 
 
-                         }
+            $("#destination, #airport").on('itemAdded', function(event) {
+                setTimeout(function(){
+                $("input[type=text]",".bootstrap-tagsinput").val("");
+                }, 1);
+            });
+
+
+            }
 
             dt.applyBrandColor();
+
+            var modifyDOM = function(){
+                if( $(window).outerWidth() <= 768 ) {
+                    $("body").addClass('mobile-layer');
+                    $(".dt-modal").addClass('m-open');
+
+                    dt.PopupManager.isMobile = true;
+                    dt.PopupManager.layerShown = true;
+
+                    $(".kwp-header").css('background', brandColor);
+
+                    $('.error-input').siblings('i').css('bottom', '30px');
+
+                    $('.dt-modal .submit-col').detach().appendTo('.footer-col');
+                } else {
+                    $("body").removeClass('mobile-layer');
+                    $(".dt-modal").removeClass('m-open');
+
+                    $(".kwp-header").removeAttr('style');
+
+                    $('.footer-col .submit-col').detach().appendTo('.kwp-content .kwp-row:last-child');
+                }
+            }
 
         </script>
 
         <div class="kwp-row">
-            <div class="kwp-col-12 white-col">
-                <div class="kwp-agb ">
+            <div class="kwp-col-12 white-col footer-col">
+                <div class="kwp-agb">
                 @php
                    $terms_class = 'dt_terms'
                 @endphp
@@ -455,10 +480,10 @@
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
                      <p>Ich habe die <a href="/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://reisen.bild.de/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                      @if ($errors->any() && $errors->get('terms'))
-                                             @foreach ($errors->get('terms') as $error)
-                                                 <span class="error-input">{{ $error }}</span>
-                                             @endforeach
-                                         @endif
+                        @foreach ($errors->get('terms') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>

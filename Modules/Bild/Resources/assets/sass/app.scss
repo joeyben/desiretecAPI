@@ -1,13 +1,11 @@
 @import "variables";
 
 // Reset default
-
 *:focus {
   outline: none !important;
 }
 
 // Html, body, main-containers
-
 html, body{
   overflow: auto;
 }
@@ -41,7 +39,6 @@ body{
 }
 
 // Buttons
-
 .primary-btn, .btn-primary, .secondary-btn, .btn-secondary{
   padding: 5px 20px;
   min-width: 220px;
@@ -60,7 +57,6 @@ input:-internal-autofill-selected{
 }
 
 // Wish modal
-
 .wish-modal-1 .modal-body-left input[value=""]~label {
   top: 5px !important;
   font-size: 10px !important;
@@ -68,7 +64,6 @@ input:-internal-autofill-selected{
 }
 
 // Slider
-
 .slider{
   width: 100%;
   height:700px;
@@ -79,7 +74,7 @@ input:-internal-autofill-selected{
   background-color: transparent;
   .welcome{
     position: absolute;
-    top: 50px;
+    top: 100px;
     color: #fff;
     width: 100%;
     text-align: center;
@@ -88,8 +83,12 @@ input:-internal-autofill-selected{
     strong{
       display: block;
       font-size: 35px;
-      line-height: 70px;
+      line-height: 45px;
       font-weight: 400;
+      margin-top: 20px;
+      @media(max-width: 769px) {
+        font-size: 28px;
+      }
     }
   }
   .layer-action{
@@ -99,17 +98,19 @@ input:-internal-autofill-selected{
     right: 0;
     text-align: center;
     a{
-      font-size: 24px;
+      font-size: 22px;
       text-transform: uppercase;
       padding: 15px 35px;
       line-height: 1.5em;
       letter-spacing: 0.42px;
+      @media(max-width: 769px) {
+        font-size: 18px;
+      }
     }
   }
 }
 
 // Footer
-
 .footer{
   ul{
     text-align: center;
@@ -121,7 +122,6 @@ input:-internal-autofill-selected{
 }
 
 // Logo Fix
-
 .navbar-default{
   a.logo{
     .navbar-brand{
@@ -132,7 +132,6 @@ input:-internal-autofill-selected{
 }
 
 // Auth views
-
 .panel-body{
   .form-group{
     a{
