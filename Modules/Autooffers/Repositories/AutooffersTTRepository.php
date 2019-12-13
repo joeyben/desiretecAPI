@@ -159,12 +159,12 @@ class AutooffersTTRepository extends BaseRepository
             }
         },
            "TravelDurationFilter": {
-            "DurationKind": "BetweenDepartures",
+            "DurationKind": "Stay",
             "MinDuration": ' . $this->minDuration . ',
             "MaxDuration": ' . $this->maxDuration . '
            },
            "PriceFilter": {
-            "MaxPrice": ' . $this->maxBudget . '
+            "MaxPrice": ' . $this->getBudget() . '
            },
            "AirportFilter": {
             "DepartureAirportFilter": {
@@ -279,7 +279,7 @@ class AutooffersTTRepository extends BaseRepository
     public function saveWishData(Wish $wish)
     {
         $this->setMinBudget(0);
-        $this->setMaxBudget($wish->budget);
+        $this->setBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
         $this->setAirport($wish->airport);
