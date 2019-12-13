@@ -87,7 +87,7 @@ class LastminuteController extends Controller
             'budget_arr'   => $this->budget,
             'ages_arr'     => $this->ages,
             'request'      => $request->all(),
-             'color'       => $whitelabel['color'],
+            'color'        => $whitelabel['color'],
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);

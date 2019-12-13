@@ -507,12 +507,12 @@ ul.kwp-form-errors {
 .kwp-logo {
   display: block;
   height: 50px;
-  background: transparent url(https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/1568034687logo%20Reiseexperten.png) no-repeat left top;
   /*******/
   position: absolute;
-  width: 100%;
-  left: 0;
-  background-size: 120px;
+  width: 30%;
+  left: 20px;
+  top: 20px;
+  background-size: contain !important;
 }
 
 
@@ -546,15 +546,15 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/bild-layer.png) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/bild-layer.png) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
-    background-image: url(../../images/layer/visual_ipad_smile_TUI.jpg);
+    background-image: url(../../images/layer/bild-layer.png);
 
     .kwp-header-content {
       p {
