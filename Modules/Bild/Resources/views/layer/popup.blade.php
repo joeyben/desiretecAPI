@@ -464,4 +464,9 @@
         </div>
     </div>
 </div>
+<style>
+    .kwp-logo {
+        background: transparent url({{ getWhiteLabelLogoUrl() }}) no-repeat left top;
+    }
+</style>
 {{ Form::close() }}
