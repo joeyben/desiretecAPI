@@ -14,11 +14,18 @@
 
             <section class="about-section">
                 <div class="shell">
-                    <h1>Herzlich willkommen</h1>
-                    <h3>Hallo, wir haben wunderbare Angebote zu Ihrem Reiseziel "{{ $wish->destination }}" gefunden. Bei Rückfragen stehen wir gerne auch unter folgender Nummer zur Verfügung: <a href="tel:040238859-82">
-                            040 23 88 59-82
-                        </a></h3>
-                    <a class="btn btn-primary" onclick="scrollToAnchor('listed-offers-section')">Angebote ansehen</a>
+                    <h1>{{ trans('autooffer.message.welcome') }}</h1>
+                    <h3>
+                        @if (count($offers) === 0)
+                            {{ trans('autooffer.message.no_offers') }}
+                        @else
+                            {{ trans('autooffer.message.offers', ['destination' => $wish->destination]) }}
+                        @endif
+                        {{ trans('autooffer.message.callback') }}
+                    </h3>
+                    @if (count($offers) > 0)
+                        <a class="btn btn-primary" onclick="scrollToAnchor('listed-offers-section')">{{ trans('autooffer.offers.goto_button') }}</a>
+                    @endif
                 </div>
             </section>
 
@@ -148,6 +155,7 @@
                         @endphp
                         @foreach($offers as $offer)
                             <li class="offer box-shadow">
+                                <span class="wish_offer_id">{{ $wish->id }}/{{ $count + 1 }}</span>
                             <div class="left-side">
                                 @if ($count === 1)
                                     <div class="label">Unser Tipp</div>

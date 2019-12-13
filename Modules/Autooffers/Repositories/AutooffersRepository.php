@@ -26,7 +26,7 @@ class AutooffersRepository extends BaseRepository
      */
     const MODEL = Autooffer::class;
 
-    private $auth = 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA='; // Bild dHJhdmVsbGlvbnMuY29ubmVjdG9ycHJvZDp5QmNHOHlicQ==
+    private $auth = '';
 
     private $url = 'https://connector.traffics.de/v3/rest';
 
@@ -75,7 +75,7 @@ class AutooffersRepository extends BaseRepository
                 $this->url . '/offers/pauschal',
                 [
                     'query' => [
-                        'auth'                 => $this->auth,
+                        'auth'                 => $this->getAuth(),
                         'sortBy'               => 'price',
                         'productSubType'       => 'all',
                         'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
@@ -282,6 +282,23 @@ class AutooffersRepository extends BaseRepository
         }
 
         return $offerObj;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuth(): string
+    {
+        return $this->auth;
+    }
+
+    /**
+     * @param string $auth
+     */
+    public function setAuth(string $auth): void
+    {
+        $wlAutooffer = getWhitelabelAutooffers();
+        $this->auth = $wlAutooffer ? $wlAutooffer['token'] : 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
     }
 
     /**
