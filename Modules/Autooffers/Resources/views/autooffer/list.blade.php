@@ -1,5 +1,8 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    {{ ucfirst(getCurrentWhiteLabelName()) }} {{ trans('autooffer.list.tab_title') }}
+@endsection
 
 @section("after-styles")
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.css" />

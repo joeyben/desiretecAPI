@@ -70,6 +70,7 @@ class AutooffersRepository extends BaseRepository
     public function getTrafficsData()
     {
         $client = new Client();
+        $this->setAuth();
         try {
             $response = $client->get(
                 $this->url . '/offers/pauschal',
@@ -176,7 +177,8 @@ class AutooffersRepository extends BaseRepository
         ];
 
         $count = 0;
-        foreach ($data->offerList as $key => $autooffer) {
+        $offerList =  key_exists('offerList', $data) ? $data->offerList : [];
+        foreach ($offerList as $key => $autooffer) {
             if ($count >= $rulesArray['displayOffer']) {
                 break;
             }
@@ -295,7 +297,7 @@ class AutooffersRepository extends BaseRepository
     /**
      * @param string $auth
      */
-    public function setAuth(string $auth): void
+    public function setAuth(): void
     {
         $wlAutooffer = getWhitelabelAutooffers();
         $this->auth = $wlAutooffer ? $wlAutooffer['token'] : 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
@@ -398,7 +400,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setPeriod($period)
     {
-        $this->period = (int) $period;
+        $this->period = $period;
     }
 
     /**
