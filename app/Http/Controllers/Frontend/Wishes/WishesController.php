@@ -232,19 +232,27 @@ class WishesController extends Controller
         $currentWhiteLabelID = getCurrentWhiteLabelField('id');
         $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
 
-        $wish = $this->wish->getForDataTable()
-            ->when($status, function ($wish, $status) {
-                return $wish->where(config('module.wishes.table') . '.status', $status)
-                    ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
-            })->when($id, function ($wish, $id) {
-                return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
-            })
-            ->paginate(10);
+        if($this->auth->guard('web')->user()->hasRole('User')) {
+            $wish = $this->wish->getForDataTable()
+                ->when($id, function ($wish, $id) {
+                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%')->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
+                })
+                ->paginate(10);
+        } else {
+            $wish = $this->wish->getForDataTable()
+                ->when($status, function ($wish, $status) {
+                    return $wish->where(config('module.wishes.table') . '.status', $status)
+                        ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
+                })->when($id, function ($wish, $id) {
+                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
+                })
+                ->paginate(10);
+        }
 
         foreach ($wish as $singleWish) {
-            $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
+            $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
 
-            if($currentWhiteLabelID === 198) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
+            if($currentWhiteLabelID === 198 && $this->auth->guard('web')->user()->hasRole('Seller')) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
                 $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
             }
 
