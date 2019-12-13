@@ -2,10 +2,13 @@
 
 namespace Modules\Bild\Http\Controllers;
 
+use App\Jobs\callTrafficsApi;
+use App\Jobs\sendAutoOffersMail;
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Frontend\Access\User\UserRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -97,6 +100,9 @@ class BildController extends Controller
     {
         $whitelabel = $this->whitelabel->getByName('Bild');
 
+        $is_autooffer = false;
+        $input = $request->all();
+        $wishRepo = $wish;
         if ($request->failed()) {
             $html = view('bild::layer.popup')->with([
                 'adults_arr'   => $this->adults,
@@ -117,9 +123,27 @@ class BildController extends Controller
         );
 
         $wish = $this->createWishFromLayer($request, $wish);
+
+        $wishTye = $wishRepo->manageRules($wish);
+
+        if ($wishTye > 0) {
+
+            $wishJob = (new callTrafficsApi($wish->id))->delay(Carbon::now()->addSeconds(0));
+            dispatch($wishJob);
+
+            $details = [
+                'email' => $newUser->email,
+                'token' => $newUser->token->token,
+                'type' => 0
+            ];
+            dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
+            $is_autooffer = true;
+        }
+
         $html = view('bild::layer.created')->with([
             'token' => $newUser->token->token,
-            'id'    => $wish->id
+            'id'    => $wish->id,
+            'is_auto'  => $is_autooffer
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);

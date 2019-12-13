@@ -76,9 +76,6 @@
         $("input").blur(function(){
             $(this).css({'border-color': 'inherit'});
         });
-        $('.fileUpload').css({
-            'padding': '7px 20px',
-        });
     });
 </script>
 

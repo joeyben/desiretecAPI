@@ -16,6 +16,7 @@ use Auth;
 use DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
+use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 
 /**
  * Class WishesRepository.
@@ -41,10 +42,17 @@ class WishesRepository extends BaseRepository
 
     protected $whitelabel_id = null;
 
-    public function __construct()
+    /**
+     * @var \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository
+     */
+    private $rules;
+
+
+    public function __construct(EloquentRulesRepository $rules)
     {
         $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
+        $this->rules = $rules;
     }
 
     /**
@@ -354,5 +362,41 @@ class WishesRepository extends BaseRepository
         }
 
         return false;
+    }
+
+
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     *
+     * @return string
+     */
+    public function manageRules($wish)
+    {
+        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelId()));
+        $offer = 0;
+        switch ($rules['type']) {
+            case 'mix':
+                $destinations = \is_array($rules['destination']) ? $rules['destination'] : [];
+                $budget_lower = $wish->budget < $rules['budget'];
+                $description_notset = !$wish->description || '' === $wish->description;
+                $destination_exists = empty($destinations) || \in_array($wish->destination, $destinations, true);
+
+                if ($budget_lower && $description_notset && $destination_exists) {
+                    $offer = 1;
+                } else {
+                    $offer = 0;
+                }
+                break;
+            case 'auto':
+                $offer = 1;
+                break;
+            case 'manuel':
+                $offer = 0;
+                break;
+            default:
+                $offer = 0;
+        }
+
+        return $offer;
     }
 }
