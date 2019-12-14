@@ -435,12 +435,22 @@ ul {
     margin-bottom: 60px;
     border-radius: 5px;
     display: flex;
+    position: relative;
     &:nth-child(even) {
       flex-direction: row-reverse;
 
       .slider-item {
         border-radius: 5px;
       }
+    }
+    .wish_offer_id{
+      position: absolute;
+      top: -50px;
+      right: 50px;
+      display: block;
+      z-index: 111111;
+      font-weight: 600;
+      font-size: 15px;
     }
   }
   .left-side {

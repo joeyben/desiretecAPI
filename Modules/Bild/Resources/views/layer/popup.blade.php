@@ -177,7 +177,7 @@
 
         <div class="kwp-row">
             <div class="kwp-col-4 email-col">
-                {{ Form::label('email', trans('bild::layer.general.email'), ['class' => 'control-label']) }}
+                {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
                 {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('bild::layer.placeholder.email'), 'required' => 'required']) }}
                 <i class="fal fa-envelope"></i>
                 <div class="kwp-form-email-hint"></div>
