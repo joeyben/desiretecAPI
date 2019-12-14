@@ -21,6 +21,7 @@ class CreateWhitelabelAutoofferTable extends Migration
             $table->string('password', 191);
             $table->string('token', 191);
             $table->tinyInteger('type')->unsigned();
+            $table->text('tourOperators');
             $table->timestamps();
         });
 

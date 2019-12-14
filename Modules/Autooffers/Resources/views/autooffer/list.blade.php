@@ -139,8 +139,9 @@
 
                         </div>
                     </div>
-
-
+                    @if (count($offers) > 0)
+                        <div id="top-map" class="map"></div>
+                    @endif
                     <a class="btn btn-secondary" onclick="showMenu()">Reisewunsch ansehen</a>
                 </div>
 
@@ -156,20 +157,28 @@
                             $count = 0;
                             $locations = [];
                         @endphp
-                        @foreach($offers as $offer)
-                            <li class="offer box-shadow">
+                        @foreach($offers as $key => $offer)
+                            @php
+                                $hotelData = [
+                                    'title' => $offer['hotel_data']['hotel']['name'],
+                                    'stars' =>  $offer['hotel_data']['hotel']['category'],
+                                    'text' => $offer['hotel_data']['hotel']['catalogData']['previewText'],
+                                    'longitude' => $offer['hotel_data']['hotel']['location']['longitude'],
+                                    'latitude' => $offer['hotel_data']['hotel']['location']['latitude']
+                                ];
+                                $locations[] = $hotelData;
+                            @endphp
+                            <li class="offer box-shadow" id="hotel-{{ $key }}">
                                 <span class="wish_offer_id">{{ $wish->id }}/{{ $count + 1 }}</span>
                             <div class="left-side">
                                 @if ($count === 1)
                                     <div class="label">Unser Tipp</div>
                                 @endif
                                 <div class="slick-slider">
-                                    @if (isset($offer['hotel_data']['data']['Bildfile']) and is_array($offer['hotel_data']['data']['Bildfile']))
-                                        @foreach($offer['hotel_data']['data']['Bildfile'] as $image)
+                                    @if (isset($offer['hotel_data']['hotel']['catalogData']['imageList']))
+                                        @foreach($offer['hotel_data']['hotel']['catalogData']['imageList'] as $image)
                                             <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $image) !!})"></div>
                                         @endforeach
-                                    @elseif (isset($offer['hotel_data']['data']['Bildfile']))
-                                        <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $offer['hotel_data']['data']['Bildfile']) !!})"></div>
                                     @endif
                                 </div>
                             </div>
@@ -185,7 +194,7 @@
 
                                 <div class="location">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <h5>{{ $offer['hotel_data']['data']['Stadtname'] }}, {{ $offer['hotel_data']['data']['Landname'] }}</h5>
+                                    <h5>{{ $offer['hotel_data']['hotel']['location']['name'] }}, {{ $offer['hotel_data']['hotel']['location']['region']['name'] }}</h5>
                                 </div>
 
                                 <div class="fulfill">
@@ -219,7 +228,23 @@
 
                                 <div class="price">
                                     <h3>{{ number_format($offer['data']['totalPrice']['value'], 0, ',', '.') }} <span>&#8364;</span></h3>
-                                    <a class="btn btn-primary" href="{{ route('autooffer.details', [$wish->id, $count]) }}">
+                                    @php
+                                        $hin_arr = explode('-', $offer['data']['travelDate']['fromDate'] );
+                                        $year = $hin_arr[0][2].$hin_arr[0][3];
+                                        $hin = $hin_arr[2].$hin_arr[1].$year;
+
+                                        $zu_arr = explode('-', $offer['data']['travelDate']['toDate'] );
+                                        $year = $zu_arr[0][2].$zu_arr[0][3];
+                                        $zu  = $zu_arr[2].$zu_arr[1].$year;
+
+                                        $kids = "";
+                                        for ($i = 0; $i < $wish->kids; $i++){
+                                            $kids .= "&child".($i+1)."=6";
+                                        }
+                                        $wlAutooffer = getWhitelabelAutooffers();
+                                        $tourOperators = $wlAutooffer['tourOperators'];
+                                    @endphp
+                                    <a class="btn btn-primary" target="_blank" href="https://reisen.bild.de/buchen/?hotellist={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&productType=pauschal&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $offer['data']['travelDate']['duration'] }}&hotellist=&regionlist={{ $offer['hotel_data']['hotel']['location']['region']['code'] }}&departureairportlist={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&inclusiveList=&keywordList=&tourOperatorList={{ $tourOperators }}&sortBy=price&sortDir=up&navigationStart=1%2C10&navigationOffer=1%2C10&navigationHotel=1%2C10&partnerIdent=desiretec%2F&action=hoteldetail&filterdest=hotel&maxPricePerPerson={{ $offer['data']['personPrice']['value'] }}&destinationName={{ $wish->destination }}&departureName={{ $wish->airport }}&adults={{ $wish->adults }}{{ $kids }}&minCategory={{ $wish->category }}&recommendation=&roomTypeList=&boardTypeList=&inclusiveListSel=">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>
@@ -244,6 +269,8 @@
     <!-- jquery -->
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE60OtWg7HL-wqOpGHcRGAD6HpYzAh6t4"></script>
+
     <!-- sllick slider -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.min.js"></script>
 
@@ -286,7 +313,7 @@
 
         function showMenu() {
             $('#offer-highlights').detach().appendTo('#main-offer-section-shell');
-            $('#offer-highlights').css('height', '180px');
+            $('#offer-highlights').css('height', '210px');
             $('#offer-highlights').toggle();
 
             // TODO: Fix animation
@@ -304,6 +331,78 @@
             nextArrow: '<div class="btn arrow-right"><i class="fa fa-chevron-right"></i></div>'
         });
 
+    </script>
+
+    <script>
+        var locations = JSON.parse('{!! json_encode($locations) !!}');
+        var center = new google.maps.LatLng(locations[0].longitude, locations[0].latitude);
+
+        function initialize() {
+            var bounds = new google.maps.LatLngBounds();
+            var mapOptions = {
+                zoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: center,
+                mapTypeControl: false
+            };
+
+            map = new google.maps.Map(document.getElementById('top-map'), mapOptions);
+
+
+            for(var i = 0; i < locations.length; i++){
+                addMarker(locations[i], map, bounds, i)
+            }
+            map.fitBounds(bounds);
+        }
+
+        function addMarker(location, map, bounds, key) {
+            var stars = "";
+            for(var i = 0; i< location.stars; i++){
+                stars += '<i class="fas fa-heart"></i>';
+            }
+            var contentString = '<div>'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<div id="bodyContent">'+
+                '<p><b>'+location.title+'</b> '+stars+'<br>'+location.text.substring(0, 75)+'</p>'+
+                '</div>'+
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 200,
+                disableAutoPan: true
+            });
+
+            var marker = new google.maps.LatLng(location.latitude, location.longitude);
+
+            var markerObj = new google.maps.Marker({
+                map: map,
+                position: marker,
+                key: key
+            });
+
+            markerObj.addListener('click', function(e) {
+                scrollToHotel(this.key)
+            });
+
+            markerObj.addListener('mouseover', function() {
+                infowindow.open(map, markerObj);
+            });
+
+            markerObj.addListener('mouseout', function() {
+                infowindow.close();
+            });
+
+            bounds.extend(marker);
+        }
+        function scrollToHotel(key) {
+            var offset = $('#hotel-'+key).offset().top;
+            $('html, body').animate({
+                scrollTop: offset - 100
+            }, 750);
+        }
+        initialize();
     </script>
 
 
