@@ -5,6 +5,7 @@ namespace Modules\Wishes\Listeners;
 use App\Models\Access\Role\Role;
 use App\Models\Access\User\Traits\TokenAuthenticable;
 use App\Models\Access\User\User;
+use App\Repositories\Frontend\Wishes\WishesRepository;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
@@ -22,14 +23,16 @@ class WishesSubscriber
      */
     private $wish;
 
+    private $wishRepo;
     /**
      * Create the event listener.
      *
      * @param \Modules\Wishes\Entities\Wish $wish
      */
-    public function __construct(Wish $wish)
+    public function __construct(Wish $wish, WishesRepository $wishRepo)
     {
         $this->wish = $wish;
+        $this->wishRepo = $wishRepo;
     }
 
     /**
@@ -45,6 +48,7 @@ class WishesSubscriber
     public function onCreatedWish(Wish $wish)
     {
         $user = User::where('id', $wish->created_by)->firstOrFail();
+        $wishTye = $this->wishRepo->manageRules($wish);
 
         $usertoken = $user->storeToken();
 
@@ -59,7 +63,7 @@ class WishesSubscriber
         if ($wish->whitelabel->isAutooffer()) {
             //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish)));
         }
-        if (!$wish->whitelabel->isAutooffer()) {
+        if ($wishTye === 0) {
             Notification::send($users, new CreatedWishNotificationForSeller($wish));
         }
 
