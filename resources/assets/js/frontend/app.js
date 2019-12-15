@@ -40,7 +40,7 @@ const app = new Vue({
 
     mounted() {
         this.fetchWishes();
-
+        this.applyColors();
     },
 
     methods: {
@@ -52,11 +52,7 @@ const app = new Vue({
                     this.$nextTick(function () {
                         this.loading = false;
                         $('.selectpicker').selectpicker('refresh');
-                        $('.btn-primary').css({
-                            'background': brandColor,
-                            'border': '1px solid ' + brandColor,
-                            'color': '#fff',
-                        });
+                        this.applyColors();
                     });
 
                 }
@@ -86,6 +82,19 @@ const app = new Vue({
             }
 
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
+
+        applyColors() {
+            $('.primary-btn, .btn-primary').css({
+                'background': brandColor,
+                'border': '1px solid ' + brandColor,
+                'color': '#fff',
+            });
+            $('.secondary-btn, .btn-secondary').css({
+                'background': '#fff',
+                'border': '1px solid ' + brandColor,
+                'color': brandColor,
+            });
         },
     }
 });

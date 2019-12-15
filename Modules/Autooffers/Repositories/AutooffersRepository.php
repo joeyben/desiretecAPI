@@ -361,6 +361,9 @@ class AutooffersRepository extends BaseRepository
      */
     public function setMaxBudget($budget)
     {
+        if ($budget === 0) {
+            $budget = 10000;
+        }
         $this->maxBudget = $budget;
     }
 
@@ -403,7 +406,7 @@ class AutooffersRepository extends BaseRepository
     {
         $period = str_replace('Nächte', '', $period);
         $period = str_replace('Nacht', '', $period);
-        $this->period = intval($period);
+        $this->period = intval($period) + 1;
     }
 
     /**

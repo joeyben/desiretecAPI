@@ -197,10 +197,7 @@ var exitIntent = window.exitIntent || {};
                 ]);
             }else{
                 return this.getRandomElement([
-                    'eil-n1',
-                    'eil-n1',
-                    'eil-n2',
-                    'eil-n5'
+                    'eil-n1'
                 ]);
             }
         }

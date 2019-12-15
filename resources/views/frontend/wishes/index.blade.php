@@ -83,6 +83,7 @@
                             <li><i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
                             <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
                             <li><i class="icon_group"></i><span class="value">@{{ wish.adults }}</span></li>
+                            <li v-if="wish.senderEmail"><i class="fal fa-at"></i><span class="value">@{{ wish.senderEmail }}</span></li>
                             <li>{{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("DD.MM.YYYY") }}</span></li>
                         </ul>
                     </div>
@@ -92,11 +93,11 @@
                                 @{{ wish.id }}
                             </span>
                             @if($logged_in_user->hasRole('Seller'))
-                                <span v-if="wish.wlRule == 'mix'" class="wish-classification">
+                                <span v-if="wish.wlRule == 'mix'" class="wish-classification btn-secondary">
                                     <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
                                     <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
                                 </span>
-                                <span v-if="wish.offers > 0" class="offer-count">
+                                <span v-if="wish.offers > 0" class="offer-count btn-secondary">
                                     @{{ wish.offers }}
                                 </span>
                             @endif
