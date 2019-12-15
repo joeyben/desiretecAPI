@@ -136,7 +136,7 @@ class BildController extends Controller
                 'token' => $newUser->token->token,
                 'type' => 0
             ];
-            dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
+            dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addMinutes(2)));
             $is_autooffer = true;
         }
 
