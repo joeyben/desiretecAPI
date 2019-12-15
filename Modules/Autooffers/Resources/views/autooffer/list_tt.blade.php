@@ -41,28 +41,45 @@
                             <div class="agency-info">
                                 <div class="avatar avatar-circle size-1"></div>
                                 <div class="text">
-                                    <h3>{{ trans('autooffer.contact.company_contact_person') }}</h3>
-                                    <h4>{{ trans('autooffer.contact.company_name') }}</h4>
-                                    <h4>{{ trans('autooffer.contact.company_addr') }}</h4>
-                                    <h4>{{ trans('autooffer.contact.company_postal_addr') }}</h4>
+                                    @if(!(trans('autooffer.contact.company_contact_person') == "autooffer.contact.company_contact_person"))<h3>{{ trans('autooffer.contact.company_contact_person') }}</h3>@endif
+                                    @if(!(trans('autooffer.contact.company_name') == "autooffer.contact.company_name"))<h4>{{ trans('autooffer.contact.company_name') }}</h4>@endif
+                                    @if(!(trans('autooffer.contact.company_addr') == "autooffer.contact.company_addr"))<h4>{{ trans('autooffer.contact.company_addr') }}</h4>@endif
+                                    @if(!(trans('autooffer.contact.company_postal_addr') == "autooffer.contact.company_postal_addr"))<h4>{{ trans('autooffer.contact.company_postal_addr') }}</h4>@endif
                                 </div>
                             </div>
 
                             <div class="agency-contact-info">
                                 <ul>
-                                    <li class="phone">
-                                        <!-- <i class="fal fa-phone-alt"></i> -->
-                                        <div class="icon-background">
-                                            <i class="fas fa-phone" aria-hidden="true"></i>
-                                        </div>
-                                        <h4>{{ trans('autooffer.contact.company_telephone') }}</h4>
-                                    </li>
+                                    @if(!(trans('autooffer.contact.ansprechpartner') == "autooffer.contact.ansprechpartner"))
+                                        <li class="name">
+                                            <i class="fal fa-user-circle"></i>
+                                            <h4>{{ trans('autooffer.contact.ansprechpartner') }}</h4>
+                                        </li>
+                                    @endif
+                                    @if(!(trans('autooffer.contact.company_telephone') == "autooffer.contact.company_telephone"))
+                                        <li class="phone">
+                                            <div class="icon-background">
+                                                <i class="fal fa-phone" aria-hidden="true"></i>
+                                            </div>
+                                            <h4>{{ trans('autooffer.contact.company_telephone') }}</h4>
+                                        </li>
+                                    @endif
+                                    @if(!(trans('autooffer.contact.company_email') == "autooffer.contact.company_email"))
                                     <li class="name">
                                         <div class="icon-background">
                                             <i class="fal fa-envelope" aria-hidden="true"></i>
                                         </div>
                                         <h4>{{ trans('autooffer.contact.company_email') }}</h4>
                                     </li>
+                                    @endif
+                                    @if(!(trans('autooffer.contact.timings') == "autooffer.contact.timings"))
+                                    <li class="name">
+                                        <div class="icon-background">
+                                            <i class="fal fa-clock" aria-hidden="true"></i>
+                                        </div>
+                                        <h4>{{ trans('autooffer.contact.timings') }}</h4>
+                                    </li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -157,7 +174,6 @@
                                     <div class="label">Unser Tipp</div>
                                 @endif
                                 <div class="slick-slider">
-                                    <!-- TODO: Add images and style them -->
                                     @if (key_exists('Bildfile', $offer['hotel_data']['data']) and is_array($offer['hotel_data']['data']['Bildfile']))
                                         @foreach($offer['hotel_data']['data']['Bildfile'] as $image)
                                             <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $image) !!})"></div>
@@ -202,14 +218,14 @@
                                     <ul>
                                         @for ($i = 0; $i < 3; $i++)
                                         <li>
-                                            <i class="fas fa-check"></i>
+                                            <i class="fal fa-check"></i>
                                             <h4 class="dark-grey">{{ trans('hotel.offer.attributes.'.$offer['data']['hotel_attributes'][$i]) }}</h4>
                                         </li>
                                         @endfor
                                     </ul>
 
                                     <div class="travel-info">
-                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['offerFeatures'] }}">{{ $offer['data']['duration'] }} Tage, {{ str_limit($offer['data']['offerFeatures'], 20, "...") }}</h4>
+                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['offerFeatures'] }}">{{ $offer['data']['duration'] }} {{ trans('autooffers.offer.nights') }}, {{ str_limit($offer['data']['offerFeatures'], 20, "...") }}</h4>
                                         <h4>{{ trans('hotel.offer.boardtype.'.strtolower($offer['data']['boardType'])) }}</h4>
                                     </div>
                                 </div>
@@ -217,17 +233,38 @@
                                 <div class="price">
                                     <div class="info-icons">
                                         <div class="info">
-                                            <i class="fal fa-users"></i><div class="info-detail"><div class="up">Familie</div><div class="down"><ul><li>Babybett</li></ul></div></div>
+                                            <i class="fal fa-users"></i>
+                                            <div class="info-detail">
+                                                <div class="up">Familie</div>
+                                                <div class="down">
+                                                    <ul>
+                                                        @foreach($offer['data']['hotel_attributes'] as $attribute)
+                                                             @if(in_array($attribute, ['action_adventures_parties_fun','attractive_for_couples','attractive_for_singles','attractive_for_singles_w_child','baby_cot','baby_equipment','babysitting','family_friendly_2','kids_disco','pool_for_children','playground_for_children']))
+                                                                <li>{{ trans('hotel.offer.attributes.'.$attribute) }}</li>
+                                                            @endif
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="info">
-                                            <i class="fal fa-concierge-bell"></i></i><div class="info-detail" style="top: -270%;background: white;width: 180px;"><div class="up" style="width: 180px">Hotel Specials</div><div class="down" style="width: 180px"><ul><li>Kostenloses WLAN</li><li>Pool</li></ul></div></div>
-                                        </div>
-                                        <div class="info">
-                                            <i class="fal fa-umbrella-beach"></i><div class="info-detail" style="width: 120px;"><div class="up">Familie</div><div class="down"><ul><li>Sandstrand</li></ul></div></div>
+                                            <i class="fal fa-concierge-bell"></i>
+                                            <div class="info-detail">
+                                                <div class="up">Hotel Specials</div>
+                                                <div class="down">
+                                                    <ul>
+                                                        @foreach($offer['data']['hotel_attributes'] as $attribute)
+                                                            @if(in_array($attribute, ['wlan_available','central_location','city_breaks','club_with_entertainment','cosmetic_treatments','direct_beach_access','direct_proximity_ski_lift','diving_close_to_hotel','elegant_deluxe','great_sports_offer','hotel_near_beach','own_fitness_facilities','parking_spaces_available','pets_allowed','restaurant','sandy_beach']))
+                                                                <li>{{ trans('hotel.offer.attributes.'.$attribute) }}</li>
+                                                            @endif
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span></h3>
-                                    <a class="btn btn-primary" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rgid=10019&rid=620&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&child=5,7&dur=13,15&price=0,{{ $wish->budget }}&board={{ $wish->catering }}&aid=168400">
+                                    <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid={{ getTTRegionCodeFromOrt($offer['hotel_data']['data']['Stadtname']) }}&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&child=5,7&dur={{ $offer['data']['duration'] }}&price=0,{{ $wish->budget }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>
@@ -245,6 +282,22 @@
             @endif
         </div>
     </main>
+@endsection
+
+@section('footer')
+    <div class="footer">
+        <div class="container">
+            <div class="col-md-12">
+                <ul class="list-inline" id="copyright-year">
+                    @foreach (footers_by_whitelabel() as $footer)
+                        <li class="list-inline-item">
+                            <a href="{{ $footer->url }}" target="_blank">{{ $footer->name }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('after-scripts')
@@ -275,7 +328,7 @@
             });
             $('.about-section h3 a').css({'color': brandColor});
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
-            $('.fas.fa-heart, .fas.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
+            $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
             $('.offers .recommandations .average').css({'border-color': brandColor});
             $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
 

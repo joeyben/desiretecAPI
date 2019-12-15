@@ -26,7 +26,7 @@ class AutooffersRepository extends BaseRepository
      */
     const MODEL = Autooffer::class;
 
-    private $auth = 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
+    private $auth = '';
 
     private $url = 'https://connector.traffics.de/v3/rest';
 
@@ -75,7 +75,7 @@ class AutooffersRepository extends BaseRepository
                 $this->url . '/offers/pauschal',
                 [
                     'query' => [
-                        'auth'                 => $this->auth,
+                        'auth'                 => $this->getAuth(),
                         'sortBy'               => 'price',
                         'productSubType'       => 'all',
                         'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
@@ -95,7 +95,6 @@ class AutooffersRepository extends BaseRepository
                     ],
                     'on_stats' => function (TransferStats $stats) use (&$url) {
                         $url = $stats->getEffectiveUri();
-                        dd($url);
                     }
                 ]
             );
@@ -118,16 +117,17 @@ class AutooffersRepository extends BaseRepository
      */
     public function getFullHotelData($hotelId, $tOperator)
     {
-        /*$client = new Client();
+        $client = new Client();
         $response = $client->get(
             $this->url . '/hotels/' . $hotelId,
             [
                 'query' => [
-                    'auth' => $this->auth
+                    'auth' => $this->getAuth()
                 ]
             ]
-        );*/
-        $username = '203339';
+        );
+
+        /*$username = '203339';
         $password = '605e5129';
         $remote_url = 'https://xml.giatamedia.com/?show=text,geo,pic800,hn,vn,ln,lk,katid,kn,hk,sn,sn,zi,ln,lc&sc=hotel&vc=' . $tOperator . '&gid=' . $hotelId;
 
@@ -136,9 +136,9 @@ class AutooffersRepository extends BaseRepository
 
         $context = stream_context_create($opts);
         $file = file_get_contents($remote_url, false, $context);
-        $xml = simplexml_load_string($file, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml = simplexml_load_string($file, 'SimpleXMLElement', LIBXML_NOCDATA);*/
 
-        return json_decode(json_encode($xml), true);
+        return json_decode($response->getBody());
     }
 
     /**
@@ -148,6 +148,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function saveWishData(Wish $wish)
     {
+        $this->setAuth();
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
@@ -158,7 +159,7 @@ class AutooffersRepository extends BaseRepository
         $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
         $this->setPeriod($wish->duration);
         $this->setRegion(getRegionCode($wish->destination, 1));
-        $this->setTourOperatorList(['BIG,XBIG,5VF,X5VF,FTI,XFTI,FLYD,ADAC,AIR,AIRM,XAIR,ATID,ALD,ALL,XALL,AME,ANEX,ATK,BAVA,BU,BYE,CBM,COR,DER,XDER,XECC,ECC,FALK,FER,FUV,FIT,FOR,FOX,XBU,GRUB,HHT,TREX,IHOM,ITS,ITS-XITS,ITSX,ITT,JAHN-XJAH,JAHN,JANA,XJAH,JT,XLMX,LMXI,LMX,MLA,HERM,MED,MWR,MON,XNER,NEC,NER,XNEC,OGE,XOGE,OLI,PHX,SLRD,SLR,SNOW,TOC,TOR,AIR,TVR,XTOC,TISC,TJAX,XPOD,TUID,XTUI,VTO,WIN,XALD,XANE,XPUR']);
+        $this->setTourOperatorList();
 
         return true;
     }
@@ -177,7 +178,8 @@ class AutooffersRepository extends BaseRepository
         ];
 
         $count = 0;
-        foreach ($data->offerList as $key => $autooffer) {
+        $offerList =  key_exists('offerList', $data) ? $data->offerList : [];
+        foreach ($offerList as $key => $autooffer) {
             if ($count >= $rulesArray['displayOffer']) {
                 break;
             }
@@ -273,7 +275,8 @@ class AutooffersRepository extends BaseRepository
         $offerObj = [];
 
         foreach ($offers as $key => $offer) {
-            array_push($offerObj,
+            array_push(
+                $offerObj,
                 [
                     'data'       => json_decode($offer['data'], true),
                     'hotel_data' => json_decode($offer['hotel_data'], true)
@@ -282,6 +285,23 @@ class AutooffersRepository extends BaseRepository
         }
 
         return $offerObj;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuth(): string
+    {
+        return $this->auth;
+    }
+
+    /**
+     * @param string $auth
+     */
+    public function setAuth(): void
+    {
+        $wlAutooffer = getWhitelabelAutooffers();
+        $this->auth = $wlAutooffer ? $wlAutooffer['token'] : 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
     }
 
     /**
@@ -381,7 +401,9 @@ class AutooffersRepository extends BaseRepository
      */
     public function setPeriod($period)
     {
-        $this->period = (int) $period;
+        $period = str_replace('Nächte', '', $period);
+        $period = str_replace('Nacht', '', $period);
+        $this->period = intval($period);
     }
 
     /**
@@ -467,9 +489,10 @@ class AutooffersRepository extends BaseRepository
     /**
      * @param mixed $tourOperatorList
      */
-    public function setTourOperatorList($tourOperatorList)
+    public function setTourOperatorList()
     {
-        $this->tourOperatorList = $tourOperatorList;
+        $wlAutooffer = getWhitelabelAutooffers();
+        $this->tourOperatorList = [$wlAutooffer['tourOperators']];
     }
 
     /**

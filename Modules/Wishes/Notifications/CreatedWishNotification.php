@@ -69,14 +69,14 @@ class CreatedWishNotification extends Notification
 
         /*
                 $whitelabelData = $this->_getWhitelabelData();
-        
+
                 error_log(print_r($whitelabelData, true));
-        
-        
+
+
                 if(!is_null($whitelabelData)){
                     error_log('from => '. $whitelabelData['from']);
                     error_log('to => '. $whitelabelData['replayTo']);
-        
+
                     return (new MailMessage())
                         ->from($whitelabelData['from'], $this->wish->whitelabel->display_name . ' Portal')
                         ->replyTo($whitelabelData['replyTo'], $this->wish->whitelabel->display_name . ' Portal')

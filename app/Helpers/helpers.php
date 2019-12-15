@@ -29,7 +29,7 @@ if (!function_exists('homeRoute')) {
         if (access()->allow('view-backend')) {
             return 'admin.dashboard';
         } elseif (auth()->check()) {
-            return 'frontend.user.dashboard';
+            return 'frontend.index';
         }
 
         return 'frontend.index';
@@ -435,7 +435,7 @@ if (!function_exists('getCurrentWhiteLabelEmail')) {
     function getCurrentWhiteLabelEmail()
     {
         if (!isWhiteLabel()) {
-            return "noreply@desiretec.com";
+            return 'noreply@desiretec.com';
         }
 
         $email = getCurrentWhiteLabelField('email');
@@ -637,6 +637,18 @@ if (!function_exists('getApiByWhitelabel')) {
     }
 }
 
+if (!function_exists('getWhitelabelAutooffers')) {
+    /**
+     * return url(blade-format = with dot as seperator) to the whitelabel-footer.
+     *
+     * @return string
+     */
+    function getWhitelabelAutooffers()
+    {
+        return \App\Models\WhitelabelAutooffer::where('whitelabel_id', getCurrentWhiteLabelId())->first();
+    }
+}
+
 if (!function_exists('getKeywordText')) {
     /**
      * return language lines table name.
@@ -691,7 +703,31 @@ if (!function_exists('getTTRegions')) {
      */
     function getTTRegions($value)
     {
-        return \App\Models\TTRegions::where('ort', 'like', '%' . $value . '%')->select('topRegionName')->get();
+        return \App\Models\TTRegions::where('ort', 'like', '%' . $value . '%')->select('topRegionName')->first()->topRegionName;
+    }
+}
+
+if (!function_exists('getTTRegionCodeFromOrt')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getTTRegionCodeFromOrt($value)
+    {
+        return \App\Models\TTRegions::where('ort', 'like', '%' . $value . '%')->select('topRegion')->first()['topRegion'];
+    }
+}
+
+if (!function_exists('getTTAirports')) {
+    /**
+     * return Airport code.
+     *
+     * @return string
+     */
+    function getTTAirports($value)
+    {
+        return \App\Models\TTAirports::where('name', 'like', '%' . $value . '%')->select('code')->first()->code;
     }
 }
 

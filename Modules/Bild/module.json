@@ -1,0 +1,16 @@
+{
+    "name": "Bild",
+    "alias": "bild",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Bild\\Providers\\BildServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
