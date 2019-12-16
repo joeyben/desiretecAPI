@@ -252,8 +252,13 @@ class WishesController extends Controller
         foreach ($wish as $singleWish) {
             $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
 
-            if($currentWhiteLabelID === 198 && $this->auth->guard('web')->user()->hasRole('Seller')) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
-                $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
+            if($this->auth->guard('web')->user()->hasRole('Seller')) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
+                if($currentWhiteLabelID === 198) {
+                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
+                }
+                if($singleWish->messages() && $singleWish->messages()->count() > 0) {
+                    $singleWish['messageSentFlag'] = true;
+                }
             }
 
             $manuelFlag = false;
