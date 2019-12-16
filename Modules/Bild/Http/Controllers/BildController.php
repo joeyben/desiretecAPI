@@ -147,7 +147,7 @@ class BildController extends Controller
                 'email_subject' => trans('autooffer.email.subject'),
                 'email_content' => $contents,
             ];
-            dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addMinutes(2)));
+            dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addMinutes(rand(10,15))));
             $is_autooffer = true;
         }
 
