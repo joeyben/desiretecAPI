@@ -1453,7 +1453,7 @@ var exitIntent = window.exitIntent || {};
 
                 var i;
 
-                for (i = 1; i <= 3; ++i) {
+                for (i = 1; i <= 4; ++i) {
 
                     if (i <= val) {
                         $(age + i).find('.kwp-custom-select').show();
@@ -1469,13 +1469,16 @@ var exitIntent = window.exitIntent || {};
                     }
                 }
                 $( "select[name='ages1']" ).change(function() {
-                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
                 });
                 $( "select[name='ages2']" ).change(function() {
-                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
                 });
                 $( "select[name='ages3']" ).change(function() {
-                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/')
+                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
+                });
+                $( "select[name='ages4']" ).change(function() {
+                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
                 });
             }
             $(children).on('change keydown blur', update);
