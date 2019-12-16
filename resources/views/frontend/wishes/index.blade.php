@@ -91,6 +91,9 @@
                                     <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
                                     <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
                                 </span>
+                                <span v-if="wish.messageSentFlag" class="message-sent">
+                                    <i class="fal fa-envelope"></i>
+                                </span>
                                 <span v-if="wish.offers > 0" class="offer-count btn-secondary">
                                     @{{ wish.offers }}
                                 </span>
