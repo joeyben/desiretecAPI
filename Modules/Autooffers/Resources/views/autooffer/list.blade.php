@@ -333,7 +333,7 @@
         });
 
     </script>
-
+    @if (count($offers) > 0)
     <script>
         var locations = JSON.parse('{!! json_encode($locations) !!}');
         var center = new google.maps.LatLng(locations[0].longitude, locations[0].latitude);
@@ -405,6 +405,6 @@
         }
         initialize();
     </script>
-
+    @endif
 
 @endsection
