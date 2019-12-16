@@ -54,7 +54,7 @@
                     </div>
                     <div class="action">
                         <div class="wish-top-infos">
-                            <span v-if="wish.offers > 0" class="offer-count">
+                            <span id="{{ trans('strings.wishlist.offer_ex') }}" v-if="wish.offers > 0" class="offer-count">
                                 @{{ wish.offers }}
                             </span>
                         </div>
