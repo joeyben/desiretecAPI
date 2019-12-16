@@ -22,11 +22,13 @@ class sendAutoOffersMail implements ShouldQueue
      */
     protected $details;
     protected $wishId;
+    protected $wlEmail;
 
-    public function __construct($details, $wishId)
+    public function __construct($details, $wishId, $wlEmail)
     {
         $this->details = $details;
         $this->wishId = $wishId;
+        $this->wlEmail = $wlEmail;
     }
 
     /**
@@ -34,7 +36,7 @@ class sendAutoOffersMail implements ShouldQueue
      */
     public function handle()
     {
-        $email = new SendAutoOfferEMail($this->wishId, $this->details['type'], $this->details['token'], $this->details);
+        $email = new SendAutoOfferEMail($this->wishId, $this->details['type'], $this->details['token'], $this->wlEmail, $this->details);
         Mail::to($this->details['email'])->send($email);
     }
 }

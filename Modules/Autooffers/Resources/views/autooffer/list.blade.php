@@ -223,12 +223,13 @@
                                     </ul>
 
                                     <div class="travel-info">
+                                        <h4>{{ $offer['data']['hotelOffer']['boardType']['name'] }}</h4>
                                         <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['serviceOffer']['description'] }}">{{ $offer['data']['travelDate']['duration'] }} Tage, {{ str_limit($offer['data']['serviceOffer']['description'], 20, "...") }}</h4>
                                     </div>
                                 </div>
 
                                 <div class="price">
-                                    <h3>{{ number_format($offer['data']['totalPrice']['value'], 0, ',', '.') }} <span>&#8364;</span></h3>
+                                    <h3>{{ number_format($offer['data']['totalPrice']['value'], 0, ',', '.') }} <span>&#8364;</span> P.p</h3>
                                     @php
                                         $hin_arr = explode('-', $offer['data']['travelDate']['fromDate'] );
                                         $year = $hin_arr[0][2].$hin_arr[0][3];

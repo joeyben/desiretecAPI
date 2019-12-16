@@ -146,8 +146,9 @@ class BildController extends Controller
                 'email_name' => trans('autooffers.email.name'),
                 'email_subject' => trans('autooffer.email.subject'),
                 'email_content' => $contents,
+                'current_wl_email' => getCurrentWhiteLabelEmail()
             ];
-            dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addMinutes(rand(10,15))));
+            dispatch((new sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addMinutes(rand(1,2))));
             $is_autooffer = true;
         }
 

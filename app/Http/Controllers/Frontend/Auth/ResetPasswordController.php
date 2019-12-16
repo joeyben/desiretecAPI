@@ -76,7 +76,7 @@ class ResetPasswordController extends Controller
         return [
             'token'    => 'required',
             'email'    => 'required|email',
-            'password' => 'required|min:8|confirmed|regex:"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"',
+            'password' => 'required|min:6|confirmed',
         ];
     }
 
@@ -100,7 +100,7 @@ class ResetPasswordController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function sendResetResponse($request, $response)
+    protected function sendResetResponse($response)
     {
         return redirect()->route(homeRoute())->withFlashSuccess(trans($response));
     }
