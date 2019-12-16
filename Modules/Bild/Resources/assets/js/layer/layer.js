@@ -49,22 +49,22 @@ var exitIntent = window.exitIntent || {};
         };
 
         return '' +
-          '<div class="kwp-header kwp-variant-' + variant + '">' +
-          '<div class="kwp-close-button kwp-close"></div>' +
-          '<div class="kwp-overlay"></div>' +
-          '<div class="kwp-logo"></div>' +
-          '<div class="kwp-header-content">' +
-          '<h1>' +
-          texts[variant].header + ' <br/>' +
-          '</h1>' +
-          '<p>' +
-          texts[variant].body +
-          '</p>' +
-          '</div>' +
-          '</div>' +
-          '<div class="kwp-body '+variant+'-body">' +
-          '</div><div style="clear:both;"></div>'
-          ;
+            '<div class="kwp-header kwp-variant-' + variant + '">' +
+            '<div class="kwp-close-button kwp-close"></div>' +
+            '<div class="kwp-overlay"></div>' +
+            '<div class="kwp-logo"></div>' +
+            '<div class="kwp-header-content">' +
+            '<h1>' +
+            texts[variant].header + ' <br/>' +
+            '</h1>' +
+            '<p>' +
+            texts[variant].body +
+            '</p>' +
+            '</div>' +
+            '</div>' +
+            '<div class="kwp-body '+variant+'-body">' +
+            '</div><div style="clear:both;"></div>'
+            ;
     };
 
 
@@ -164,7 +164,7 @@ var exitIntent = window.exitIntent || {};
         },
         getTripData: function () {
             var form = null,
-              formData = null;
+                formData = null;
 
             return this.decodeFilterData(form, formData);
         },
@@ -253,11 +253,11 @@ var exitIntent = window.exitIntent || {};
     dt.scrollUpDetect = function (e) {
         dt.PopupManager.layerShown = false;
         $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
-            if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
-                dt.showTeaser(event);
-                dt.PopupManager.layerShown = true;
-            }
-        }, allowPageScroll:"vertical"} );
+                if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
+                    dt.showTeaser(event);
+                    dt.PopupManager.layerShown = true;
+                }
+            }, allowPageScroll:"vertical"} );
     };
 
     dt.triggerButton = function(e){
@@ -315,7 +315,7 @@ var exitIntent = window.exitIntent || {};
             });
         }
         dt.PopupManager.init();
-        dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
+        dt.Tracking.init('bild_exitwindow','UA-105970361-15');
         dt.triggerButton(e);
         if(isMobile() && dt.PopupManager.decoder){
             dt.scrollUpDetect();
@@ -542,19 +542,19 @@ var exitIntent = window.exitIntent || {};
 
     function textareaAutosize(){
         $(document)
-          .one('focus.textarea', '.kwp textarea', function(){
-              var savedValue = this.value;
-              this.value = '';
-              this.baseScrollHeight = this.scrollHeight;
-              this.value = savedValue;
-          })
-          .on('input.textarea', '.kwp textarea', function(){
-              var minRows = this.getAttribute('data-min-rows')|0,
-                rows;
-              this.rows = minRows;
-              rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 16);
-              this.rows = minRows + rows;
-          });
+            .one('focus.textarea', '.kwp textarea', function(){
+                var savedValue = this.value;
+                this.value = '';
+                this.baseScrollHeight = this.scrollHeight;
+                this.value = savedValue;
+            })
+            .on('input.textarea', '.kwp textarea', function(){
+                var minRows = this.getAttribute('data-min-rows')|0,
+                    rows;
+                this.rows = minRows;
+                rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 16);
+                this.rows = minRows + rows;
+            });
     }
 
 
@@ -592,8 +592,8 @@ var exitIntent = window.exitIntent || {};
             .mouseover(function () {
                 $(this).css(btnPrimaryHoverCss);
             }).mouseout(function () {
-                $(this).css(btnPrimaryCss);
-            });
+            $(this).css(btnPrimaryCss);
+        });
 
         var paxMore = $('.kwp .pax-col .kwp-form-group .pax-more .button a');
         paxMore.css({

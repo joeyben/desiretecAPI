@@ -1,7 +1,7 @@
 @if (isset($color))
-<script type="application/javascript">
-    var brandColor = {!! json_encode($color) !!};
-</script>
+    <script type="application/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
 @endisset
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
@@ -20,9 +20,9 @@
                 {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('bild::layer.placeholder.destination'), 'required' => 'required']) }}
                 <i class="fal fa-globe-europe"></i>
                 @if ($errors->any() && $errors->get('destination'))
-                        @foreach ($errors->get('destination') as $error)
-                            <span class="error-input">{{ $error }}</span>
-                        @endforeach
+                    @foreach ($errors->get('destination') as $error)
+                        <span class="error-input">{{ $error }}</span>
+                    @endforeach
                 @endif
             </div>
 
@@ -31,9 +31,9 @@
                 {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('bild::layer.placeholder.airport'), 'required' => 'required']) }}
                 <i class="fal fa-home"></i>
                 @if ($errors->any() && $errors->get('airport'))
-                          @foreach ($errors->get('airport') as $error)
-                                <span class="error-input">{{ $error }}</span>
-                          @endforeach
+                    @foreach ($errors->get('airport') as $error)
+                        <span class="error-input">{{ $error }}</span>
+                    @endforeach
                 @endif
             </div>
 
@@ -168,9 +168,9 @@
         </div>
 
         <div class="kwp-row">
-            <!--div class="kwp-col-12 description">
+        <!--div class="kwp-col-12 description">
                 {{ Form::label('description', trans('bild::layer.general.description'), ['class' => 'control-label required']) }}
-                {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('bild::layer.placeholder.description')]) }}
+        {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('bild::layer.placeholder.description')]) }}
                 <i class="master-icon--calendar-month"></i>
             </div-->
         </div>
@@ -183,7 +183,7 @@
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
                     @foreach ($errors->get('email') as $error)
-                            <span class="error-input">{{ $error }}</span>
+                        <span class="error-input">{{ $error }}</span>
                     @endforeach
                 @endif
             </div>
@@ -396,44 +396,48 @@
              * Autocomplete
              */
             var autocomplete = function(){
-            /* Destinations */
-            $('#destination').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                autoSelect: false,
-                minLength: 3,
-                highlight: true,
-                source: function(query) {
-                    return $.get('https://bild.reisewunschservice.de/get-all-destinations', {query: query});
-                }
-                }
-            });
-            /* END Destinations */
+                /* Destinations */
+                $('#destination').tagsinput({
+                    maxTags: 3,
+                    maxChars: 20,
+                    allowDuplicates: false,
+                    freeInput:false,
+                    typeahead: {
+                        autoSelect: false,
+                        minLength: 3,
+                        highlight: true,
+                        afterSelect: function(val) { this.$element.val(""); },
+                        source: function(query) {
+                            return $.get('https://bild.reisewunschservice.de/get-all-destinations', {query: query});
+                        }
+                    }
+                });
+                /* END Destinations */
 
-            /* Airports */
-            $('#airport').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                autoSelect: false,
-                minLength: 3,
-                highlight: true,
-                source: function(query) {
-                    return $.get('https://bild.reisewunschservice.de/get-all-airports', {query: query});
-                }
-                }
-            });
-            /* END Airports */
+                /* Airports */
+                $('#airport').tagsinput({
+                    maxTags: 3,
+                    maxChars: 20,
+                    allowDuplicates: false,
+                    freeInput:false,
+                    typeahead: {
+                        autoSelect: false,
+                        minLength: 3,
+                        highlight: true,
+                        afterSelect: function(val) { this.$element.val(""); },
+                        source: function(query) {
+                            return $.get('https://bild.reisewunschservice.de/get-all-airports', {query: query});
+                        }
+                    }
+                });
+                /* END Airports */
 
 
-            $("#destination, #airport").on('itemAdded', function(event) {
-                setTimeout(function(){
-                $("input[type=text]",".bootstrap-tagsinput").val("");
-                }, 1);
-            });
+                $("#destination, #airport").on('itemAdded', function(event) {
+                    setTimeout(function(){
+                        $("input[type=text]",".bootstrap-tagsinput").val("");
+                    }, 1);
+                });
 
 
             }
@@ -468,18 +472,18 @@
         <div class="kwp-row">
             <div class="kwp-col-12 white-col footer-col">
                 <div class="kwp-agb">
-                @php
-                   $terms_class = 'dt_terms'
-                @endphp
+                    @php
+                        $terms_class = 'dt_terms'
+                    @endphp
 
-                @if ($errors->any() && $errors->get('terms'))
-                  @php
-                  $terms_class = 'dt_terms hasError'
-                  @endphp
-                @endif
+                    @if ($errors->any() && $errors->get('terms'))
+                        @php
+                            $terms_class = 'dt_terms hasError'
+                        @endphp
+                    @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                     <p>Ich habe die <a href="/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://reisen.bild.de/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
-                     @if ($errors->any() && $errors->get('terms'))
+                    <p>Ich habe die <a href="/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://reisen.bild.de/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    @if ($errors->any() && $errors->get('terms'))
                         @foreach ($errors->get('terms') as $error)
                             <span class="error-input">{{ $error }}</span>
                         @endforeach
