@@ -15,9 +15,13 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'provider', 
     Route::get('language-lines/export', 'LanguageLinesController@export')->name('provider.language-lines.export');
     Route::post('language-lines/import', 'LanguageLinesController@import')->name('provider.language-lines.import');
     Route::put('language-lines/copy', 'LanguageLinesController@copy')->name('provider.language-lines.copy');
+    Route::put('language-lines/replace', 'LanguageLinesController@replace')->name('provider.language-lines.replace');
     Route::put('language-lines/clone', 'LanguageLinesController@clone')->name('provider.language-lines.clone');
     Route::get('language-lines/cacheClear', 'LanguageLinesController@cacheClear')->name('provider.language-lines.cacheClear');
 
     Route::get('languages/email/signature/{lang}', 'LanguageLinesController@signature')->name('provider.email.signature');
     Route::post('languages/email/signature/store', 'LanguageLinesController@signatureStore')->name('provider.email.signature.store');
+
+    Route::get('languages/footer/tnb/{lang}', 'TnbController@tnb')->name('provider.footer.tnb');
+    Route::post('languages/footer/tnb/store', 'TnbController@tnbStore')->name('provider.footer.tnb.store');
 });

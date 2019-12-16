@@ -682,7 +682,31 @@ if (!function_exists('getTTRegions')) {
      */
     function getTTRegions($value)
     {
-        return \App\Models\TTRegions::where('ort', 'like', '%' . $value . '%')->select('topRegionName')->get();
+        return \App\Models\TTRegions::where('ort', 'like', '%' . $value . '%')->select('topRegionName')->first()->topRegionName;
+    }
+}
+
+if (!function_exists('getTTRegionCodeFromOrt')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function getTTRegionCodeFromOrt($value)
+    {
+        return \App\Models\TTRegions::where('ort', 'like', '%' . $value . '%')->select('topRegion')->first()['topRegion'];
+    }
+}
+
+if (!function_exists('getTTAirports')) {
+    /**
+     * return Airport code.
+     *
+     * @return string
+     */
+    function getTTAirports($value)
+    {
+        return \App\Models\TTAirports::where('name', 'like', '%' . $value . '%')->select('code')->first()->code;
     }
 }
 

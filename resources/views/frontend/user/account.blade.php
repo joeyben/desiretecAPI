@@ -4,6 +4,12 @@
     {{ trans('general.url.account') }}
 @endsection
 
+@section('before-scripts')
+    <script type="application/javascript">
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+    </script>
+@endsection
+
 @section('content')
     <div class="row">
 
@@ -68,6 +74,11 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $('.primary-btn').css({
+            'background': brandColor,
+            'border': '1px solid ' + brandColor,
+            'color': '#fff',
+        });
 
         // To Use Select2
         Backend.Select2.init();

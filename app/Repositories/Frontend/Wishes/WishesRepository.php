@@ -327,4 +327,32 @@ class WishesRepository extends BaseRepository
             $wish->attachCategory($category);
         }
     }
+
+    /**
+     * Update Wish Status.
+     *
+     * @param int    $id
+     * @param string $updatedStatus
+     */
+    public function updateStatus(int $id, string $updatedStatus)
+    {
+        $input['updated_by'] = access()->user()->id;
+        $input['status'] = $updatedStatus;
+        $update = DB::transaction(function () use ($id, $input) {
+            if (\Modules\Wishes\Entities\Wish::where('id', $id)->update($input)) {
+                return true;
+            }
+
+            return false;
+
+            throw new GeneralException(
+                trans('exceptions.backend.wishes.update_error')
+            );
+        });
+        if ($update) {
+            return true;
+        }
+
+        return false;
+    }
 }

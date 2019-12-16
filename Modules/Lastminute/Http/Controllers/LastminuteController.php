@@ -194,7 +194,7 @@ class LastminuteController extends Controller
 
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3'),
-            $this->whitelabelId
+             $this->whitelabelId
         );
 
         return $new_wish;
@@ -220,7 +220,7 @@ class LastminuteController extends Controller
         $curl = curl_init();
         $auth_data = [
             'username'  => 'MKT_315150_DE',
-            'password'  => '!9kj7g6f5d4s3A1',
+            'password' 	=> '!9kj7g6f5d4s3A1',
             'client_id' => 'gateway',
             'grant_type'=> 'password'
         ];

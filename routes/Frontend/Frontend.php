@@ -15,6 +15,7 @@
     Route::get('/getTTRegions', 'RegionsController@getTTRegions');
     Route::get('/get-all-destinations', 'FrontendController@getAllDestinations');
     Route::get('/get-all-airports', 'FrontendController@getAllAirports');
+    Route::get('/get-tt-airports', 'RegionsController@getTTAirports');
     Route::get('macros', 'FrontendController@macros')->name('macros');
 //Route::post('/get/states', 'FrontendController@getStates')->name('get.states');
 //Route::post('/get/cities', 'FrontendController@getCities')->name('get.cities');
@@ -64,6 +65,7 @@ Route::get('/test', function(){
 
             Route::post('wishes/get', 'WishesTableController')->name('get');
             Route::get('wishes/getlist', 'WishesController@getList')->name('getlist');
+            Route::post('wishes/changeWishStatus', 'WishesController@changeWishStatus')->name('changeWishStatus');
 
             Route::get('wishes/create', 'WishesController@create')->name('create');
 
@@ -134,5 +136,8 @@ Route::get('/test', function(){
     */
     Route::get('pages/{slug}', 'FrontendController@showPage')->name('pages.show');
     Route::get('layer', 'FrontendController@showLayer')->name('layer.show');
+
+
+    Route::get('/tnb', 'FrontendController@showTnb')->name('tnb');
 
 //});

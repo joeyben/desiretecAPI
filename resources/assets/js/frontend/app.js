@@ -28,34 +28,54 @@ const app = new Vue({
 
     data: {
         data: {},
-        status:'',
+        status:'new',
         pagination: {
             'current_page': 1
         },
         loading: true,
         messages: '',
-        user_name: ''
-
+        user_name: '',
+        id: '',
     },
+    
     mounted() {
         this.fetchWishes();
-
     },
 
     methods: {
         fetchWishes() {
-            axios.get('/wishes/getlist?page=' + this.pagination.current_page+'&status=' + this.status)
+            axios.get('/wishes/getlist?page=' + this.pagination.current_page+'&status=' + this.status + '&id=' + this.id)
                 .then(response => {
                     this.data = response.data.data.data;
                     this.pagination = response.data.pagination;
                     this.$nextTick(function () {
                         this.loading = false;
+                        $('.selectpicker').selectpicker('refresh');
+                        $('.btn-primary').css({
+                            'background': brandColor,
+                            'border': '1px solid ' + brandColor,
+                            'color': '#fff',
+                        });
                     });
 
                 }
             )
             .catch(error => {
                     console.log(error);
+            });
+        },
+
+        changeStatus(id) {
+            axios.post('/wishes/changeWishStatus', {
+                status: this.status,
+                id: id,
+            }).then(response => {
+                if(response.data.success == true){
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                console.log(error);
             });
         },
 
