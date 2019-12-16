@@ -16,6 +16,8 @@ use Auth;
 use DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
+use Modules\Autooffers\Repositories\AutooffersRepository;
+use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 
 /**
@@ -46,13 +48,16 @@ class WishesRepository extends BaseRepository
      * @var \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository
      */
     private $rules;
+    private $autooffers;
+    private $autoRules;
 
-
-    public function __construct(EloquentRulesRepository $rules)
+    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, EloquentAutooffersRepository $autoRules)
     {
         $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
         $this->rules = $rules;
+        $this->autooffers = $autooffers;
+        $this->autoRules = $autoRules;
     }
 
     /**
@@ -398,5 +403,14 @@ class WishesRepository extends BaseRepository
         }
 
         return $offer;
+    }
+
+    public function callTraffics($wishID){
+        $wish = Wish::where('id', $wishID)->first();
+        $_rules = $this->autoRules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
+        //dd(getRegionCode($wish->airport, 0));
+        $this->autooffers->saveWishData($wish);
+        $response = $this->autooffers->getTrafficsData();
+        $this->autooffers->storeMany($response, $wish->id, $_rules);
     }
 }

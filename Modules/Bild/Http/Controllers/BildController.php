@@ -128,10 +128,11 @@ class BildController extends Controller
 
         if ($wishTye > 0) {
 
-            $wishJob = (new callTrafficsApi($wish->id))->delay(Carbon::now()->addSeconds(0));
-            dispatch($wishJob);
+            //$wishJob = (new callTrafficsApi($wish->id));
+            //dispatch($wishJob);
+            $wishRepo->callTraffics($wish->id);
 
-            $view = View::make('wishes::emails.autooffer',
+            $view = \View::make('wishes::emails.autooffer',
                 [
                     'url'=> $wish->whitelabel->domain . '/offer/olist/' . $wish->id . '/' . $newUser->token->token
                 ]

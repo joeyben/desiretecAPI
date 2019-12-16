@@ -23,8 +23,9 @@
                             {{ trans('autooffer.message.no_offers') }}
                         @else
                             {{ trans('autooffer.message.offers', ['destination' => $wish->destination]) }}
+                            {{ trans('autooffer.message.callback') }}
                         @endif
-                        {{ trans('autooffer.message.callback') }}
+
                     </h3>
                     @if (count($offers) > 0)
                         <a class="btn btn-primary" onclick="scrollToAnchor('listed-offers-section')">{{ trans('autooffer.offers.goto_button') }}</a>
@@ -146,7 +147,7 @@
                 </div>
 
             </section>
-
+            @if (count($offers) > 0)
             <section class="listed-offers-section" id="listed-offers-section">
                 <div class="shell">
                     <div class="vertical-line"></div>
@@ -244,7 +245,7 @@
                                         $wlAutooffer = getWhitelabelAutooffers();
                                         $tourOperators = $wlAutooffer['tourOperators'];
                                     @endphp
-                                    <a class="btn btn-primary" target="_blank" href="https://reisen.bild.de/buchen/?hotellist={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&productType=pauschal&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $offer['data']['travelDate']['duration'] }}&hotellist=&regionlist={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&departureairportlist={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&inclusiveList=&keywordList=&tourOperatorList={{ $tourOperators }}&sortBy=price&sortDir=up&navigationStart=1%2C10&navigationOffer=1%2C10&navigationHotel=1%2C10&partnerIdent=bildreisen%2F&action=hoteldetail&filterdest=hotel&maxPricePerPerson={{ $offer['data']['personPrice']['value'] }}&destinationName={{ $wish->destination }}&departureName={{ $wish->airport }}&adults={{ $wish->adults }}{{ $kids }}&minCategory={{ $wish->category }}&recommendation=&roomTypeList=&boardTypeList=&inclusiveListSel=&reference=desiretec">
+                                    <a class="btn btn-primary" target="_blank" href="https://reisen.bild.de/buchen/?hotellist={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&productType=pauschal&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $offer['data']['travelDate']['duration'] }}&hotellist=&regionlist={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&departureairportlist={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&inclusiveList=&keywordList=&tourOperatorList={{ $tourOperators }}&sortBy=price&sortDir=up&navigationStart=1%2C10&navigationOffer=1%2C10&navigationHotel=1%2C10&partnerIdent=bildreisen%2F&action=hoteldetail&filterdest=hotel&maxPricePerPerson={{ $offer['data']['personPrice']['value'] }}&destinationName={{ $wish->destination }}&departureName={{ $wish->airport }}&adults={{ $wish->adults }}{{ $kids }}&minCategory={{ $wish->category }}&recommendation=&roomTypeList=&boardTypeList={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveListSel=&reference=desiretec">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>
@@ -259,7 +260,7 @@
                     </ul>
                 </div>
             </section>
-
+            @endif
         </div>
     </main>
 @endsection

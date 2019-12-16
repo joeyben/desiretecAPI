@@ -406,6 +406,14 @@ class AutooffersRepository extends BaseRepository
     {
         $period = str_replace('Nächte', '', $period);
         $period = str_replace('Nacht', '', $period);
+        $period = str_replace('1 Woche', '7', $period);
+
+        if (strpos($period, 'Wochen') !== false) {
+            $period = str_replace('Wochen', '', $period);
+            $period = intval($period) * 7;
+            $period = $period."";
+        }
+
         $this->period = intval($period) + 1;
     }
 

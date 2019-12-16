@@ -39,6 +39,6 @@ class SendAutoOfferEMail extends Mailable
 
         return $this->from(getCurrentWhiteLabelEmail(), $this->details['email_name'])
             ->subject($this->details['email_subject'])
-            ->setBody($this->details['email_content'], 'text/html');
+            ->html($this->details['email_content'], 'text/html');
     }
 }
