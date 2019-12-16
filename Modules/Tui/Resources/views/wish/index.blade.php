@@ -54,6 +54,9 @@
                     </div>
                     <div class="action">
                         <div class="wish-top-infos">
+                            <span v-if="wish.messageSentFlag" class="message-sent">
+                                <i class="fal fa-envelope"></i>
+                            </span>
                             <span v-if="wish.offers > 0" class="offer-count">
                                 @{{ wish.offers }}
                             </span>

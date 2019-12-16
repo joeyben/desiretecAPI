@@ -132,6 +132,12 @@ body.wishlist{
               display: inline-block;
               min-width: auto;
             }
+            .message-sent {
+              padding: 2px 5px 0;
+              @include border-radius(3px);
+              display: inline-block;
+              min-width: auto;
+            }
             .offer-count{
               padding: 2px 5px 0;
               @include border-radius(3px);
