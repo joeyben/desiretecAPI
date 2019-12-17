@@ -91,10 +91,10 @@
                                     <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
                                     <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
                                 </span>
-                                <span v-if="wish.messageSentFlag" class="message-sent">
+                                <span v-if="wish.messageSentFlag" class="message-sent btn-secondary">
                                     <i class="fal fa-envelope"></i>
                                 </span>
-                                <span v-if="wish.offers > 0" class="offer-count btn-secondary">
+                                <span id="{{ trans('strings.wishlist.offer_ex') }}" v-if="wish.offers > 0" class="offer-count btn-secondary">
                                     @{{ wish.offers }}
                                 </span>
                             @endif

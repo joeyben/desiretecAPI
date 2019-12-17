@@ -145,6 +145,22 @@ body.wishlist{
               text-align: center;
               min-width: auto;
             }
+            .offer-count{
+              position: relative;
+            }
+            .offer-count::before {
+              content: "\2003" attr(id);
+              display: flex;
+              position: absolute; bottom: 100%;
+              background: #000; color: #FFF; padding: 5px; border-radius: 5px;
+              opacity:0; transition:0.3s;
+              pointer-events: none;
+              margin-bottom: 20px;
+              min-width: 100px;
+              right: -25px;
+            }
+
+            .offer-count:hover::before { opacity:1; bottom: 10px; }
           }
           .budget {
             font-weight: 600;
