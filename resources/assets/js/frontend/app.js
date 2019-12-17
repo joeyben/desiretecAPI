@@ -22,6 +22,7 @@ Vue.component('chat-messages', require('../components/frontend/ChatMessages.vue'
 Vue.component('message-form', require('../components/frontend/MessageForm.vue'));
 Vue.component('confirmation-modal', require('../components/frontend/ConfirmationModal.vue'));
 Vue.component('wish-edit-modal', require('../components/frontend/WishEditModal.vue'));
+Vue.component('note', require('../components/frontend/Note.vue'));
 
 const app = new Vue({
     el: '#app',
@@ -41,9 +42,15 @@ const app = new Vue({
     mounted() {
         this.fetchWishes();
         this.applyColors();
+        this.saveNote();
+        console.log(user_name);
+        console.log(data);
     },
 
     methods: {
+        saveNote() {
+            console.log('here');
+        },
         fetchWishes() {
             axios.get('/wishes/getlist?page=' + this.pagination.current_page+'&status=' + this.status + '&id=' + this.id)
                 .then(response => {
@@ -93,6 +100,9 @@ const app = new Vue({
             $('.secondary-btn, .btn-secondary').css({
                 'background': '#fff',
                 'border': '1px solid ' + brandColor,
+                'color': brandColor,
+            });
+            $('.note i').css({
                 'color': brandColor,
             });
         },

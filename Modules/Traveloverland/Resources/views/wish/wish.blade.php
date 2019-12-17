@@ -270,13 +270,14 @@
 <section class="section-contact">
     <div class="container">
         @if ($logged_in_user->hasRole('Seller'))
-            <div class="col-md-12 s2-first">
+            <div class="col-md-6 s2-first">
                 <h4>{{ trans('wish.details.subheadline.giving_wish') }}</h4>
                 <p>{{ trans('wish.details.subheadline.giving_wish_sub') }}</p>
                 <p><b>Kundennachricht:</b><br>
                     {{ $wish->description }}
                 </p>
             </div>
+            <note :wishid="{{ $wish->id }}" :userid="{{ Auth::user()->id }}"></note>
         @else
             <div class="col-md-12 s2-first">
                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>

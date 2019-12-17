@@ -6,6 +6,7 @@
             {{ $wish->description }}
         </p>
     </div>
+    <note :wishid="{{ $wish->id }}" :userid="{{ Auth::user()->id }}"></note>
 @else
     <div class="col-md-12 s2-first">
         <!--h4>Dein Reisewunsch</h4-->
