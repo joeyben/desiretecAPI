@@ -163,7 +163,7 @@
                                 $hotelData = [
                                     'title' => $offer['hotel_data']['hotel']['name'],
                                     'stars' =>  $offer['hotel_data']['hotel']['category'],
-                                    'text' => $offer['hotel_data']['hotel']['catalogData']['previewText'],
+                                    'text' => htmlspecialchars($offer['hotel_data']['hotel']['catalogData']['previewText'], ENT_QUOTES),
                                     'longitude' => $offer['hotel_data']['hotel']['location']['longitude'],
                                     'latitude' => $offer['hotel_data']['hotel']['location']['latitude']
                                 ];
@@ -229,7 +229,7 @@
                                 </div>
 
                                 <div class="price">
-                                    <h3>{{ number_format($offer['data']['totalPrice']['value'], 0, ',', '.') }} <span>&#8364;</span> P.p</h3>
+                                    <h3>{{ number_format($offer['data']['totalPrice']['value'], 0, ',', '.') }} <span>&#8364;</span> p.P</h3>
                                     @php
                                         $hin_arr = explode('-', $offer['data']['travelDate']['fromDate'] );
                                         $year = $hin_arr[0][2].$hin_arr[0][3];

@@ -414,7 +414,14 @@ class AutooffersRepository extends BaseRepository
             $period = $period."";
         }
 
-        $this->period = intval($period) + 1;
+        $int_duration = intval($period);
+
+        if ($int_duration === 0) {
+            $from = \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start);
+            $to   = \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return);
+            $int_duration  = $from->diffInDays($to);
+        }
+        $this->period = $int_duration + 1;
     }
 
     /**
