@@ -849,7 +849,7 @@ var dt = window.dt || {};
     }
 
 
-    dt.applyBrandColor = function () {
+    dt.applyBrandColor = function() {
 
         // Style variables
         // brandColor is passed through blade
@@ -924,5 +924,49 @@ var dt = window.dt || {};
             .appendTo(document.documentElement);
 
     }
+
+    /**
+     * Autocomplete
+     */
+    dt.autocomplete = function() {
+        /* Destinations */
+        $('#destination').tagsinput({
+            maxTags: 3,
+            maxChars: 20,
+            allowDuplicates: false,
+            typeahead: {
+                autoSelect: false,
+                minLength: 3,
+                highlight: true,
+                source: function(query) {
+                    return $.get('/get-all-destinations', {query: query});
+                }
+            }
+        });
+        /* END Destinations */
+
+        /* Airports */
+        $('#airport').tagsinput({
+            maxTags: 3,
+            maxChars: 20,
+            allowDuplicates: false,
+            typeahead: {
+                autoSelect: false,
+                minLength: 3,
+                highlight: true,
+                source: function(query) {
+                    return $.get('/get-all-airports', {query: query});
+                }
+            }
+        });
+        /* END Airports */
+
+
+        $("#destination, #airport").on('itemAdded', function(event) {
+            setTimeout(function(){
+            $("input[type=text]",".bootstrap-tagsinput").val("");
+            }, 1);
+        });
+    };
 
 })(jQuery);
