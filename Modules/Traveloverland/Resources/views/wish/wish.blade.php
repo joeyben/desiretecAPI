@@ -10,6 +10,7 @@
 
 @section('before-styles')
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700,700italic,900" media="all">
+    <link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 @endsection
 
 @section('after-styles')
@@ -277,7 +278,7 @@
                     {{ $wish->description }}
                 </p>
             </div>
-            <note :wishid="{{ $wish->id }}" :wishnote="{{ json_encode($wish->note) }}"></note>
+            <note :wishid="{{ $wish->id }}" :wishnote="{{ json_encode($wish->note) }}"  :lang="{{ json_encode(trans('strings.wishdetails.memo')) }}"></note>
         @else
             <div class="col-md-12 s2-first">
                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
