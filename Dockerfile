@@ -63,7 +63,10 @@ RUN mv /var/www/html/docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.in
 RUN a2enmod rewrite expires
 RUN echo "SetEnvIf x-forwarded-proto https HTTPS=on" >> /etc/apache2/conf-available/docker-php.conf
 ARG APP_KEY
-ENV APP_KEY $APP_KEY
+ARG AWS_KEY
+ARG AWS_SECRET
+ARG AWS_REGION
+ARG AWS_BUCKET
 RUN composer dump-autoload
 
 USER root

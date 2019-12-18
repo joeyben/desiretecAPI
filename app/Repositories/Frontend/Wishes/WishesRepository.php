@@ -87,6 +87,7 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.created_by',
                 config('module.wishes.table') . '.created_at',
                 config('module.wishes.table') . '.group_id',
+                config('module.wishes.table') . '.note',
                 config('access.users_table') . '.first_name as first_name',
                 config('access.users_table') . '.last_name as last_name',
                 config('module.whitelabels.table') . '.id as whitelabel_id',
@@ -398,5 +399,29 @@ class WishesRepository extends BaseRepository
         }
 
         return $offer;
+    }
+
+    /**
+    * @param int    $id
+    * @param string $updatedNote
+    */
+    public function updateNote(int $id, string $updatedNote)
+    {
+       $update = DB::transaction(function () use ($id, $updatedNote) {
+           if (\Modules\Wishes\Entities\Wish::where('id', $id)->update(['note' => $updatedNote])) {
+               return true;
+           }
+
+           return false;
+
+           throw new GeneralException(
+               trans('exceptions.backend.wishes.update_error')
+           );
+       });
+
+       if ($update) {
+           return true;
+       }
+       return false;
     }
 }
