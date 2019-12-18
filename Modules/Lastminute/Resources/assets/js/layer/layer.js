@@ -610,7 +610,7 @@ var dt = window.dt || {};
             });
         }
         dt.PopupManager.init();
-        dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
+        dt.Tracking.init('desiretec_exitwindow','UA-105970361-8');
         dt.triggerButton(e);
         if(isMobile() && dt.PopupManager.decoder){
             dt.scrollUpDetect();

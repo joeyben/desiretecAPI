@@ -1414,7 +1414,7 @@ var exitIntent = window.exitIntent || {};
                 });
             }
             dt.PopupManager.init();
-            dt.Tracking.init('tui_exitwindow','UA-105970361-13');
+            dt.Tracking.init('desiretec_exitwindow','UA-105970361-13');
             dt.triggerButton($event);
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
                 dt.scrollUpDetect();
