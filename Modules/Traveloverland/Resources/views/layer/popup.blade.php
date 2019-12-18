@@ -252,8 +252,10 @@
             });
 
             $(document).ready(function(){
-                autocomplete();
-                //$('.selectpicker').selectpicker();
+
+                dt.autocomplete();
+                dt.applyBrandColor();
+
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',
@@ -360,59 +362,12 @@
                     check_button();
                 });
             });
+
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
-            }
-
-            /**
-             * Autocomplete
-             */
-            var autocomplete = function(){
-              /* Destinations */
-              $('#destination').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                  autoSelect: false,
-                  minLength: 3,
-                  highlight: true,
-                  source: function(query) {
-                    return $.get('https://traveloverland.reise-wunsch.com/get-all-destinations', {query: query});
-                  }
-                }
-              });
-              /* END Destinations */
-
-              /* Airports */
-              $('#airport').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                  autoSelect: false,
-                  minLength: 3,
-                  highlight: true,
-                  source: function(query) {
-                    return $.get('https://traveloverland.reise-wunsch.com/get-all-airports', {query: query});
-                  }
-                }
-              });
-              /* END Airports */
-
-
-              $("#destination, #airport").on('itemAdded', function(event) {
-                setTimeout(function(){
-                  $("input[type=text]",".bootstrap-tagsinput").val("");
-                }, 1);
-              });
-
-
-            }
-
-            dt.applyBrandColor();
+            };
 
         </script>
 
