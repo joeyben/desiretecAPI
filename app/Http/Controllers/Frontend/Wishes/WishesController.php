@@ -7,6 +7,7 @@ use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
+use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
 use App\Models\Access\User\User;
 use App\Models\Access\User\UserToken;
 use App\Models\Agents\Agent;
@@ -154,7 +155,8 @@ class WishesController extends Controller
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
             'categories'         => $this->categories,
-            'extra'              => json_decode($wish->extra_params, true)
+            'extra'              => json_decode($wish->extra_params, true),
+            'note'               => $this->note,
         ]);
     }
 
@@ -449,6 +451,22 @@ class WishesController extends Controller
             $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
 
             $wish = $this->wish->updateStatus($request->get('id'), $status);
+
+            return json_response([]);
+        } catch (Exception $e) {
+            return json_response_error($e);
+        }
+    }
+
+    /**
+     * @param \App\Http\Requests\Frontend\Wishes\UpdateNoteRequest $request
+     *
+     * @return JSON response
+     */
+    public function updateNote(UpdateNoteRequest $request)
+    {
+        try {
+            $note = $this->wish->updateNote($request->get('id'), $request->get('note') ?? '');
 
             return json_response([]);
         } catch (Exception $e) {

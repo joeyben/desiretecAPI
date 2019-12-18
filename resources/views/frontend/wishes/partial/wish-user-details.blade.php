@@ -1,11 +1,12 @@
 @if ($logged_in_user->hasRole('Seller'))
-    <div class="col-md-12 s2-first">
+    <div class="col-md-6 s2-first">
         <h4>Reisewunsch Angaben</h4>
         <p>Dies sind die Angaben zum Reisewunsch.</p>
         <p><b>Kundennachricht:</b><br>
             {{ $wish->description }}
         </p>
     </div>
+    <note :wishid="{{ $wish->id }}" :wishnote="{{ $wish->note }}"></note>
 @else
     <div class="col-md-12 s2-first">
         <!--h4>Dein Reisewunsch</h4-->
