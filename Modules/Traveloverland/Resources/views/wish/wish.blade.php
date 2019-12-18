@@ -277,7 +277,7 @@
                     {{ $wish->description }}
                 </p>
             </div>
-            <note :wishid="{{ $wish->id }}" :userid="{{ Auth::user()->id }}"></note>
+            <note :wishid="{{ $wish->id }}" :wishnote="{{ json_encode($wish->note) }}"></note>
         @else
             <div class="col-md-12 s2-first">
                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>

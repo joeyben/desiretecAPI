@@ -42,15 +42,9 @@ const app = new Vue({
     mounted() {
         this.fetchWishes();
         this.applyColors();
-        this.saveNote();
-        console.log(user_name);
-        console.log(data);
     },
 
     methods: {
-        saveNote() {
-            console.log('here');
-        },
         fetchWishes() {
             axios.get('/wishes/getlist?page=' + this.pagination.current_page+'&status=' + this.status + '&id=' + this.id)
                 .then(response => {
@@ -102,7 +96,7 @@ const app = new Vue({
                 'border': '1px solid ' + brandColor,
                 'color': brandColor,
             });
-            $('.note i').css({
+            $('.wish-note i').css({
                 'color': brandColor,
             });
         },
