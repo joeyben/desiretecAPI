@@ -1,7 +1,7 @@
 <template>
    <div class="col-md-6 wish-note" >
       <div class="edit-mode" v-if="editMode">
-         <input type="text" placeolder="Note..." @keyup.enter="saveNote" v-model="note">
+         <input type="text" name="note" value="" :placeholder="placeholderText" @keyup.enter="saveNote" v-model="note">
          <a @click="saveNote">
             <i class="fal fa-save"></i>
          </a>
@@ -20,14 +20,16 @@
       data() {
          return {
             editMode: false,
-            note: ''
+            note: '',
+            placeholderText: ''
          };
       },
 
-      props: ['wishid', 'wishnote'],
+      props: ['wishid', 'wishnote', 'lang'],
 
       mounted() {
          this.note = this.wishnote;
+         this.placeholderText = this.lang;
 
          if (this.note == '') {
             this.editMode = true;
