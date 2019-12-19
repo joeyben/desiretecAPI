@@ -5,6 +5,9 @@
 @endisset
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700,700italic,900" media="all">
+<link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+
 <?php $kids_arr_new = [
     '0' => '0 Kinder (0-11 Jahre)',
     '1' => '1 Kind',
