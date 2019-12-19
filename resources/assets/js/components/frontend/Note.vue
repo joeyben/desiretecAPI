@@ -2,7 +2,7 @@
    <div class="col-md-6 wish-note" >
       <div class="edit-mode" v-if="editMode">
          <input type="text" name="note" value="" :placeholder="placeholderText" @keyup.enter="saveNote" v-model="note">
-         <a @click="saveNote">
+         <a @click.prevent="saveNote">
             <i class="fal fa-save"></i>
          </a>
       </div>
@@ -77,8 +77,9 @@
       font-weight: 100;
       min-width: 220px;
    }
-   input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+   input::placeholder {
     color: #dedede !important;
     opacity: 1; /* Firefox */
+    font-style: italic;
   }
 </style>
