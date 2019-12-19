@@ -156,7 +156,6 @@ class WishesController extends Controller
             'offer_url'          => $this::OFFER_URL,
             'categories'         => $this->categories,
             'extra'              => json_decode($wish->extra_params, true),
-            'note'               => $this->note,
         ]);
     }
 

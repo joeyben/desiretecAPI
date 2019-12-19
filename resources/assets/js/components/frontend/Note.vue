@@ -1,8 +1,8 @@
 <template>
    <div class="col-md-6 wish-note" >
       <div class="edit-mode" v-if="editMode">
-         <input type="text" name="note" value="" :placeholder="placeholderText" @keyup.enter="saveNote" v-model="note">
-         <a @click="saveNote">
+         <textarea name="note" value="" :placeholder="placeholderText" @keyup.enter="saveNote" v-model="note" />
+         <a @click.prevent="saveNote">
             <i class="fal fa-save"></i>
          </a>
       </div>
@@ -58,6 +58,10 @@
       display: flex;
       justify-content: flex-end
    }
+   .edit-mode {
+      display: flex;
+      align-items: flex-start;
+   }
    p {
       display: inline-block;
       margin-right: 15px;
@@ -68,7 +72,7 @@
       width: 30px;
       color: #000;
    }
-   input {
+   textarea {
       padding: 3px 15px;
       border-radius: 3px;
       border: 1px solid #ccc;
@@ -77,8 +81,9 @@
       font-weight: 100;
       min-width: 220px;
    }
-   input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+   textarea::placeholder {
     color: #dedede !important;
     opacity: 1; /* Firefox */
+    font-style: italic;
   }
 </style>
