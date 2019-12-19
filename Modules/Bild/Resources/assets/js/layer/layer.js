@@ -39,7 +39,7 @@ var exitIntent = window.exitIntent || {};
                 body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
             },
             'eil-mobile': {
-                header: mobileHeader,
+                header: 'Dürfen wir Dich beraten?',
                 body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden!'
             }
         };
