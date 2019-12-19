@@ -926,7 +926,7 @@ var dt = window.dt || {};
     }
 
 
-    var autocomplete = function(){
+    dt.autocomplete = function(){
         $('#destination').tagsinput({
             maxTags: 3,
             maxChars: 20,
