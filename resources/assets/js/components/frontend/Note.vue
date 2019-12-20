@@ -1,12 +1,12 @@
 <template>
    <div class="col-md-6 wish-note" >
-      <div class="edit-mode" v-if="editMode">
-         <textarea name="note" value="" :placeholder="placeholderText" @keyup.enter="saveNote" v-model="note" />
+      <div class="wish-note-wrapper edit-mode" v-if="editMode">
+         <textarea name="note" maxlength="200" value="" :placeholder="placeholderText" @keyup.enter="saveNote" v-model="note" />
          <a @click.prevent="saveNote">
             <i class="fal fa-save"></i>
          </a>
       </div>
-      <div class="not-edit-mode" v-else>
+      <div class="wish-note-wrapper not-edit-mode" v-else>
          <p>{{ this.note }}</p>
          <a @click.prevent="editMode = !editMode">
             <i class="fal fa-edit"></i>
@@ -56,9 +56,9 @@
 <style scoped>
    .wish-note {
       display: flex;
-      justify-content: flex-end
+      justify-content: flex-end;
    }
-   .edit-mode {
+   .wish-note-wrapper {
       display: flex;
       align-items: flex-start;
    }
@@ -66,6 +66,7 @@
       display: inline-block;
       margin-right: 15px;
       margin-bottom: 0;
+      max-width: 420px;
    }
    i {
       font-size: 20px;
@@ -79,7 +80,7 @@
       margin-right: 10px;
       font-size: 14px;
       font-weight: 100;
-      min-width: 220px;
+      width: 420px;
    }
    textarea::placeholder {
     color: #dedede !important;
