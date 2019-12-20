@@ -76,6 +76,20 @@ class StoreWishRequest extends FormRequest
         ];
     }
 
+    protected function getValidatorInstance() {
+        $validator = parent::getValidatorInstance();
+        $validator->sometimes('ages1', 'required', function($input) {
+            return $input->kids >= 1;
+        });
+        $validator->sometimes('ages2', 'required', function($input) {
+            return $input->kids >= 2;
+        });
+        $validator->sometimes('ages3', 'required', function($input) {
+            return $input->kids >= 3;
+        });
+        return $validator;
+    }
+
     /**
      * Get the validation message that apply to the request.
      *
@@ -84,13 +98,16 @@ class StoreWishRequest extends FormRequest
     public function messages()
     {
         return [
-           'email.required'            => trans('email.required'),
-           'email.email'               => trans('layer.email.required'),
-           'earliest_start.required'   => trans('earliest_start.required'),
-           'latest_return.required'    => trans('latest_return.required'),
-           'adults.required'           => trans('adults.required'),
-           'airport.required'          => trans('airport.required'),
-           'destination.required'      => trans('destination.required'),
+            'email.required'            => trans('email.required'),
+            'email.email'               => trans('layer.email.required'),
+            'earliest_start.required'   => trans('earliest_start.required'),
+            'latest_return.required'    => trans('latest_return.required'),
+            'adults.required'           => trans('adults.required'),
+            'airport.required'          => trans('airport.required'),
+            'destination.required'      => trans('destination.required'),
+            'ages1.required'            => trans('ages1.required'),
+            'ages2.required'            => trans('ages2.required'),
+            'ages3.required'            => trans('ages3.required'),
         ];
     }
 }

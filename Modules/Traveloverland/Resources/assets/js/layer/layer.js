@@ -925,11 +925,8 @@ var dt = window.dt || {};
 
     }
 
-    /**
-     * Autocomplete
-     */
-    dt.autocomplete = function() {
-        /* Destinations */
+
+    dt.autocomplete = function(){
         $('#destination').tagsinput({
             maxTags: 3,
             maxChars: 20,
@@ -939,13 +936,11 @@ var dt = window.dt || {};
                 minLength: 3,
                 highlight: true,
                 source: function(query) {
-                    return $.get('/get-all-destinations', {query: query});
+                    return $.get('https://traveloverland.reise-wunsch.com/get-all-destinations', {query: query});
                 }
             }
         });
-        /* END Destinations */
 
-        /* Airports */
         $('#airport').tagsinput({
             maxTags: 3,
             maxChars: 20,
@@ -955,13 +950,11 @@ var dt = window.dt || {};
                 minLength: 3,
                 highlight: true,
                 source: function(query) {
-                    return $.get('/get-all-airports', {query: query});
+                    return $.get('https://traveloverland.reise-wunsch.com/get-all-airports', {query: query});
                 }
             }
         });
         /* END Airports */
-
-
         $("#destination, #airport").on('itemAdded', function(event) {
             setTimeout(function(){
             $("input[type=text]",".bootstrap-tagsinput").val("");

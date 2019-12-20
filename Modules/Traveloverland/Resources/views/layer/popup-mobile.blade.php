@@ -4,6 +4,10 @@
 </script>
 @endisset
 
+<link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700,700italic,900" media="all">
+<link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+
 {{ Form::open(['route' => 'traveloverland.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 
@@ -209,7 +213,9 @@
 
 
             $(document).ready(function(){
-                autocomplete();
+
+                dt.applyBrandColor();
+                dt.autocomplete();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -336,52 +342,6 @@
                 }
             }
 
-            /**
-             * Autocomplete
-             */
-            var autocomplete = function(){
-              /* Destinations */
-              $('#destination').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                  autoSelect: false,
-                  minLength: 3,
-                  highlight: true,
-                  source: function(query) {
-                    return $.get('https://traveloverland.reise-wunsch.com/get-all-destinations', {query: query});
-                  }
-                }
-              });
-              /* END Destinations */
-
-              /* Airports */
-              $('#airport').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                  autoSelect: false,
-                  minLength: 3,
-                  highlight: true,
-                  source: function(query) {
-                    return $.get('https://traveloverland.reise-wunsch.com/get-all-airports', {query: query});
-                  }
-                }
-              });
-              /* END Airports */
-
-
-              $("#destination, #airport").on('itemAdded', function(event) {
-                setTimeout(function(){
-                  $("input[type=text]",".bootstrap-tagsinput").val("");
-                }, 1);
-              });
-
-
-            }
-
             function validateDuration() {
                 var days_diff = (dt.endDate.getDate() - dt.startDate.getDate()) / 60000 / 60 / 24;
                 var $element = $('#duration > option');
@@ -397,37 +357,7 @@
                 if($element.parent().val()) {
                     $element.removeAttr('selected').parent().val('');
                 }
-            }
-
-            /**
-             * Autocomplete
-             */
-            var autocomplete = function(){
-                /* Destinations */
-                $.get('https://traveloverland.reise-wunsch.com/get-all-destinations', function(data){
-                    $("#destination").typeahead({
-                        autoSelect: true,
-                        minLength: 3,
-                        delay: 200,
-                        source: data
-                    });
-                });
-                /* END Destinations */
-
-                /* Airports */
-                $.get('get-all-airports', function(data){
-                    $("#airport").typeahead({
-                        autoSelect: true,
-                        minLength: 3,
-                        delay: 200,
-                        source: data
-                    });
-                });
-                /* END Airports */
-
-            }
-
-            dt.applyBrandColor();
+            };
 
         </script>
 
