@@ -88,7 +88,7 @@ class AutooffersRepository extends BaseRepository
                         //'minPricePerPerson' => (int) ($this->minBudget / $this->getPersonsCount()),
                         'maxPricePerPerson' => (int) ($this->maxBudget / $this->getPersonsCount()),
                         'minCategory'       => $this->category,
-                        //'minBoardType' => $this->catering,
+                        'minBoardType' =>   $this->catering,
                         'rating[source]'   => 'holidaycheck',
                         'sortDir'          => 'up',
                         'tourOperatorList' => $this->tourOperatorList,
@@ -154,7 +154,7 @@ class AutooffersRepository extends BaseRepository
         $this->setAdults($wish->adults);
         $this->setAirport(getRegionCode($wish->airport, 0));
         $this->setCategory($wish->category);
-        $this->setCatering('XX,AO,BB,HB,HBP,FB,FBP,AI,AIP,AIU,AIR');
+        $this->setCatering($wish->category);
         $this->setFrom(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start)->format('dmy'));
         $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
         $this->setPeriod($wish->duration);
@@ -361,6 +361,9 @@ class AutooffersRepository extends BaseRepository
      */
     public function setMaxBudget($budget)
     {
+        if ($budget === 0) {
+            $budget = 10000;
+        }
         $this->maxBudget = $budget;
     }
 
@@ -403,7 +406,22 @@ class AutooffersRepository extends BaseRepository
     {
         $period = str_replace('Nächte', '', $period);
         $period = str_replace('Nacht', '', $period);
-        $this->period = intval($period);
+        $period = str_replace('1 Woche', '7', $period);
+
+        if (strpos($period, 'Wochen') !== false) {
+            $period = str_replace('Wochen', '', $period);
+            $period = intval($period) * 7;
+            $period = $period."";
+        }
+
+        $int_duration = intval($period);
+
+        if ($int_duration === 0) {
+            $from = \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start);
+            $to   = \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return);
+            $int_duration  = $from->diffInDays($to);
+        }
+        $this->period = $int_duration + 1;
     }
 
     /**
@@ -435,7 +453,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setCatering($catering)
     {
-        $this->catering = $catering;
+        $this->catering = $this->translateCatering($catering);
     }
 
     /**
@@ -509,5 +527,32 @@ class AutooffersRepository extends BaseRepository
     public function setGiataIds($giataIds)
     {
         $this->giataIds = $giataIds;
+    }
+
+    /**
+     * @param mixed $catering
+     */
+    public function translateCatering($catering)
+    {
+        switch ($catering) {
+            case '1':
+                return 'OV';
+                break;
+            case '2':
+                return 'UF';
+                break;
+            case '3':
+                return 'HP';
+                break;
+            case '4':
+                return 'VP';
+                break;
+            case '5':
+                return 'AI';
+                break;
+            default:
+                return '';
+                break;
+        }
     }
 }

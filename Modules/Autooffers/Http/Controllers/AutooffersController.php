@@ -139,11 +139,11 @@ class AutooffersController extends Controller
      */
     public function create(Wish $wish)
     {
-        $rules = $this->rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
+        //$rules = $this->rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
         //dd(getRegionCode($wish->airport, 0));
-        $this->autooffers->saveWishData($wish);
-        $response = $this->autooffers->getTrafficsData();
-        $this->autooffers->storeMany($response, $wish->id, $rules);
+        //$this->autooffers->saveWishData($wish);
+        //$response = $this->autooffers->getTrafficsData();
+        //$this->autooffers->storeMany($response, $wish->id, $rules);
 
         return redirect()->to('offer/list/' . $wish->id);
     }

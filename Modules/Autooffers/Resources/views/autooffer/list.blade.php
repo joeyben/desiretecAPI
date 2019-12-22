@@ -23,8 +23,9 @@
                             {{ trans('autooffer.message.no_offers') }}
                         @else
                             {{ trans('autooffer.message.offers', ['destination' => $wish->destination]) }}
+                            {{ trans('autooffer.message.callback') }}
                         @endif
-                        {{ trans('autooffer.message.callback') }}
+
                     </h3>
                     @if (count($offers) > 0)
                         <a class="btn btn-primary" onclick="scrollToAnchor('listed-offers-section')">{{ trans('autooffer.offers.goto_button') }}</a>
@@ -146,7 +147,7 @@
                 </div>
 
             </section>
-
+            @if (count($offers) > 0)
             <section class="listed-offers-section" id="listed-offers-section">
                 <div class="shell">
                     <div class="vertical-line"></div>
@@ -162,7 +163,7 @@
                                 $hotelData = [
                                     'title' => $offer['hotel_data']['hotel']['name'],
                                     'stars' =>  $offer['hotel_data']['hotel']['category'],
-                                    'text' => $offer['hotel_data']['hotel']['catalogData']['previewText'],
+                                    'text' => htmlspecialchars($offer['hotel_data']['hotel']['catalogData']['previewText'], ENT_QUOTES),
                                     'longitude' => $offer['hotel_data']['hotel']['location']['longitude'],
                                     'latitude' => $offer['hotel_data']['hotel']['location']['latitude']
                                 ];
@@ -222,12 +223,13 @@
                                     </ul>
 
                                     <div class="travel-info">
+                                        <h4>{{ $offer['data']['hotelOffer']['boardType']['name'] }}</h4>
                                         <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['serviceOffer']['description'] }}">{{ $offer['data']['travelDate']['duration'] }} Tage, {{ str_limit($offer['data']['serviceOffer']['description'], 20, "...") }}</h4>
                                     </div>
                                 </div>
 
                                 <div class="price">
-                                    <h3>{{ number_format($offer['data']['totalPrice']['value'], 0, ',', '.') }} <span>&#8364;</span></h3>
+                                    <h3>{{ number_format($offer['data']['totalPrice']['value'], 0, ',', '.') }} <span>&#8364;</span> p.P</h3>
                                     @php
                                         $hin_arr = explode('-', $offer['data']['travelDate']['fromDate'] );
                                         $year = $hin_arr[0][2].$hin_arr[0][3];
@@ -244,7 +246,7 @@
                                         $wlAutooffer = getWhitelabelAutooffers();
                                         $tourOperators = $wlAutooffer['tourOperators'];
                                     @endphp
-                                    <a class="btn btn-primary" target="_blank" href="https://reisen.bild.de/buchen/?hotellist={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&productType=pauschal&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $offer['data']['travelDate']['duration'] }}&hotellist=&regionlist={{ $offer['hotel_data']['hotel']['location']['region']['code'] }}&departureairportlist={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&inclusiveList=&keywordList=&tourOperatorList={{ $tourOperators }}&sortBy=price&sortDir=up&navigationStart=1%2C10&navigationOffer=1%2C10&navigationHotel=1%2C10&partnerIdent=desiretec%2F&action=hoteldetail&filterdest=hotel&maxPricePerPerson={{ $offer['data']['personPrice']['value'] }}&destinationName={{ $wish->destination }}&departureName={{ $wish->airport }}&adults={{ $wish->adults }}{{ $kids }}&minCategory={{ $wish->category }}&recommendation=&roomTypeList=&boardTypeList=&inclusiveListSel=">
+                                    <a class="btn btn-primary" target="_blank" href="https://reisen.bild.de/buchen/?hotellist={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&productType=pauschal&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $offer['data']['travelDate']['duration'] }}&hotellist=&regionlist={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&departureairportlist={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&inclusiveList=&keywordList=&tourOperatorList={{ $tourOperators }}&sortBy=price&sortDir=up&navigationStart=1%2C10&navigationOffer=1%2C10&navigationHotel=1%2C10&partnerIdent=bildreisen%2F&action=hoteldetail&filterdest=hotel&maxPricePerPerson={{ $offer['data']['personPrice']['value'] }}&destinationName={{ $wish->destination }}&departureName={{ $wish->airport }}&adults={{ $wish->adults }}{{ $kids }}&minCategory={{ $wish->category }}&recommendation=&roomTypeList=&boardTypeList={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveListSel=&reference=desiretec">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>
@@ -259,7 +261,7 @@
                     </ul>
                 </div>
             </section>
-
+            @endif
         </div>
     </main>
 @endsection
@@ -332,7 +334,7 @@
         });
 
     </script>
-
+    @if (count($offers) > 0)
     <script>
         var locations = JSON.parse('{!! json_encode($locations) !!}');
         var center = new google.maps.LatLng(locations[0].longitude, locations[0].latitude);
@@ -404,6 +406,6 @@
         }
         initialize();
     </script>
-
+    @endif
 
 @endsection

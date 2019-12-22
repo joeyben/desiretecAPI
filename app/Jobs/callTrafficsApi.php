@@ -19,13 +19,14 @@ class callTrafficsApi implements ShouldQueue
     use SerializesModels;
 
     protected $wishId;
-
+    protected $whitelabelId;
     /**
      * Create a new job instance.
      */
-    public function __construct($wishId)
+    public function __construct($wishId, $whitelabelId)
     {
         $this->wishId = $wishId;
+        $this->whitelabelId = $whitelabelId;
     }
 
     /**
@@ -34,7 +35,7 @@ class callTrafficsApi implements ShouldQueue
     public function handle(EloquentAutooffersRepository $rules, AutooffersRepository $autooffers)
     {
         $wish = Wish::where('id', $this->wishId)->first();
-        $_rules = $rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
+        $_rules = $rules->getSettingsForWhitelabel($this->whitelabelId);
         //dd(getRegionCode($wish->airport, 0));
         $autooffers->saveWishData($wish);
         $response = $autooffers->getTrafficsData();
