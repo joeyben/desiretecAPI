@@ -11,11 +11,15 @@ build:
     - docker:dind
   script:
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
-    - docker build --build-arg APP_KEY=${APP_KEY_PROD} --cache-from ${CONTAINER_IMAGE_LATEST} -f .docker/laravel/Dockerfile -t ${CONTAINER_IMAGE} -t ${CONTAINER_IMAGE_LATEST} .
+    - docker build --build-arg APP_KEY=${APP_KEY_PROD}
+      --build-arg AWS_KEY=${AWS_ACCESS_KEY}
+      --build-arg AWS_SECRET=${AWS_SECRET_KEY}
+      --build-arg AWS_BUCKET=${AWS_BUCKET}
+      --build-arg AWS_REGION=${AWS_DEFAULT_REGION}
+      --cache-from ${CONTAINER_IMAGE_LATEST} -f .docker/laravel/Dockerfile -t ${CONTAINER_IMAGE} -t ${CONTAINER_IMAGE_LATEST} .
     - docker push ${CONTAINER_IMAGE}
   only:
     - master
-  allow_failure: true
   variables:
     CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}/app
     CONTAINER_IMAGE_LATEST: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}/app:latest
@@ -30,7 +34,6 @@ build_echo_server:
     - docker push ${ECHO_CONTAINER_IMAGE}
   only:
     - master
-  allow_failure: true
   variables:
     ECHO_CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}/echo
     ECHO_CONTAINER_IMAGE_LATEST: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}/echo:latest
@@ -45,7 +48,6 @@ deploy_pre_prod:
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
   only:
     - master
-  allow_failure: true
   variables:
     SERVICE_WEBHOOK: ${PRE_PRODUCTION_SERVICE_HOOK}
     ECHO_SERVICE_WEBHOOK: ${PRE_PRODUCTION_ECHO_SERVICE_HOOK}
