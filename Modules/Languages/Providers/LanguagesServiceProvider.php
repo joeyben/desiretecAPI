@@ -42,7 +42,8 @@ class LanguagesServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/config.php' => config_path('languages.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'languages'
+            __DIR__ . '/../Config/config.php',
+            'languages'
         );
     }
 

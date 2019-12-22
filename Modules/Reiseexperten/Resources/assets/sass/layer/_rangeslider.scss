@@ -1,3 +1,5 @@
+@import "../variables";
+
 .rangeslider,
 .rangeslider__fill {
   display: block;
@@ -28,7 +30,6 @@
 }
 
 .rangeslider__fill {
-  background: #00ff00;
   position: absolute;
 }
 .rangeslider--horizontal .rangeslider__fill {
@@ -42,7 +43,7 @@
 
 .rangeslider__handle {
   background: #fff;
-  border: 2px solid #092a5e;
+  border: 2px solid $master-grey-dark;
   cursor: pointer;
   display: inline-block;
   width: 30px;
@@ -68,7 +69,7 @@
   border-radius: 50%;
 }
 .rangeslider__handle:active, .rangeslider--active .rangeslider__handle {
-  background: #092a5e;
+  background: $master-grey-dark;
 }
 .rangeslider--horizontal .rangeslider__handle {
   top: -5px;

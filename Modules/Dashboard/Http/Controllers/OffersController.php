@@ -311,7 +311,7 @@ class OffersController extends Controller
             $optParams = [
             'dimensions' => 'ga:browser',
             'filters'    => $filter['filters'],
-        ];
+            ];
 
             $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
             $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
@@ -355,7 +355,7 @@ class OffersController extends Controller
             $optParams = [
             'dimensions' => 'ga:yearMonth',
             'filters'    => $filter['filterd'],
-        ];
+            ];
 
             $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
             $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
@@ -364,8 +364,8 @@ class OffersController extends Controller
             new ByWhitelabel(),
             new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
             new GroupBy('month')
-        ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'), DB::raw('DATE(wishes.created_at) as date')])
-        ->pluck('wishes_count', 'date');
+            ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'), DB::raw('DATE(wishes.created_at) as date')])
+            ->pluck('wishes_count', 'date');
             $stack = [];
 
             $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
@@ -405,7 +405,7 @@ class OffersController extends Controller
             $optParams = [
             'dimensions' => 'ga:yearMonth',
             'filters'    => $filter['filterm'],
-        ];
+            ];
 
             $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
             $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
@@ -414,8 +414,8 @@ class OffersController extends Controller
             new ByWhitelabel(),
             new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
             new GroupBy('month')
-        ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'), DB::raw('DATE(wishes.created_at) as date')])
-        ->pluck('wishes_count', 'date');
+            ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'), DB::raw('DATE(wishes.created_at) as date')])
+            ->pluck('wishes_count', 'date');
             $stack = [];
 
             $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
@@ -510,9 +510,9 @@ class OffersController extends Controller
 
     public function getFilter()
     {
-        $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-        $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
+        $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
+        $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
+        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==desiretec_exitwindow';
 
         return ['filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare];
     }

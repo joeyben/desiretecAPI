@@ -11,17 +11,14 @@ var dt = window.dt || {};
     };
 
     dt.popupTemplate = function (variant) {
-        var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Dürfen wir Sie beraten?',
-        ]);
 
         var texts = {
             'eil-n1': {
-                header: 'Dürfen wir Sie beraten? ',
+                header: 'Dürfen wir Sie beraten?',
                 body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             },
             'eil-mobile': {
-                header: mobileHeader,
+                header: 'Dürfen wir Sie beraten?',
                 body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             }
         };
@@ -999,9 +996,7 @@ var dt = window.dt || {};
                $(this).remove();
                ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
            });
-
-
-       }
+       };
 
        dt.showTeaser = function (e) {
            $("body").addClass('mobile-layer');
@@ -1039,13 +1034,12 @@ var dt = window.dt || {};
            if(deviceDetector.device === "phone") {
                dt.PopupManager.teaser = true;
                dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
-               dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
                $(".dt-modal .kwp-close").on('touchend',function () {
                    dt.PopupManager.closePopup(e);
                });
            }
            dt.PopupManager.init();
-           dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
+           dt.Tracking.init('desiretec_exitwindow','UA-105970361-8');
            dt.triggerButton(e);
            if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
                dt.scrollUpDetect();
@@ -1223,6 +1217,8 @@ var dt = window.dt || {};
     function isMobile(){
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
             return true;
+        } else if( $(window).outerWidth() < 768 ) {
+            return true;
         }
         return false;
     }
@@ -1334,11 +1330,6 @@ var dt = window.dt || {};
 
         var checkboxEl = $('.kwp input[type="checkbox"]:checked:after');
         $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
-
-        var datepicker = $('.datepicker-dropdown .day.active, .datepicker-dropdown .day.active.active:hover, .datepicker-dropdown .day.active:hover,.datepicker-dropdown .day.active.active:hover:hover, .datepicker-dropdown .month.active, .datepicker-dropdown .month.active.active:hover, .datepicker-dropdown .month.active:hover, .datepicker-dropdown .month.active.active:hover:hover, .datepicker-dropdown .year.active, .datepicker-dropdown .year.active.active:hover, .datepicker-dropdown .year.active:hover, .datepicker-dropdown .year.active.active:hover:hover');
-        datepicker.css({
-            'background': brandColor,
-        });
 
         var footerHref = $('.kwp-agb p a');
         footerHref.css({

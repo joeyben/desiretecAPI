@@ -197,11 +197,10 @@ return [
 
     'list' => [
         'status' => [
-            'all'       => 'Alle Reisewünsche',
-            'active'    => 'Aktiv',
-            'inactive'  => 'Inaktiv',
-            'deleted'   => 'Gelöscht',
-
+            'all'               => 'Alle Reisewünsche',
+            'new'               => 'Neu',
+            'offer_created'     => 'Angebot Erstellt',
+            'completed'         => 'Erledigt',
         ]
     ],
     'wishes'  => 'Wünsche',
@@ -219,4 +218,5 @@ return [
     'regions_management' => 'Regions Management',
 
     'email_signature' => 'E-Mail Signatur',
+    'footer_tnb' => 'Teilnahmebedingungen',
 ];

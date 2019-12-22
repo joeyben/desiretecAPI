@@ -66,6 +66,7 @@ Route::get('/test', function(){
             Route::post('wishes/get', 'WishesTableController')->name('get');
             Route::get('wishes/getlist', 'WishesController@getList')->name('getlist');
             Route::post('wishes/changeWishStatus', 'WishesController@changeWishStatus')->name('changeWishStatus');
+            Route::post('wishes/updateNote', 'WishesController@updateNote')->name('updateNote');
 
             Route::get('wishes/create', 'WishesController@create')->name('create');
 

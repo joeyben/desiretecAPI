@@ -614,7 +614,7 @@ var dt = window.dt || {};
             });
         }
         dt.PopupManager.init();
-        dt.Tracking.init('trendtours_exitwindow','UA-105970361-11');
+        dt.Tracking.init('desiretec_exitwindow','UA-105970361-11');
         dt.triggerButton(e);
         if(isMobile() && dt.PopupManager.decoder){
             dt.scrollUpDetect();
@@ -849,7 +849,7 @@ var dt = window.dt || {};
     }
 
 
-    dt.applyBrandColor = function () {
+    dt.applyBrandColor = function() {
 
         // Style variables
         // brandColor is passed through blade
@@ -924,5 +924,42 @@ var dt = window.dt || {};
             .appendTo(document.documentElement);
 
     }
+
+
+    dt.autocomplete = function(){
+        $('#destination').tagsinput({
+            maxTags: 3,
+            maxChars: 20,
+            allowDuplicates: false,
+            typeahead: {
+                autoSelect: false,
+                minLength: 3,
+                highlight: true,
+                source: function(query) {
+                    return $.get('https://traveloverland.reise-wunsch.com/get-all-destinations', {query: query});
+                }
+            }
+        });
+
+        $('#airport').tagsinput({
+            maxTags: 3,
+            maxChars: 20,
+            allowDuplicates: false,
+            typeahead: {
+                autoSelect: false,
+                minLength: 3,
+                highlight: true,
+                source: function(query) {
+                    return $.get('https://traveloverland.reise-wunsch.com/get-all-airports', {query: query});
+                }
+            }
+        });
+        /* END Airports */
+        $("#destination, #airport").on('itemAdded', function(event) {
+            setTimeout(function(){
+            $("input[type=text]",".bootstrap-tagsinput").val("");
+            }, 1);
+        });
+    };
 
 })(jQuery);

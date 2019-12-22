@@ -71,11 +71,9 @@ class ReiseexpertenController extends Controller
      */
     public function show(Request $request)
     {
-        $input = $request->only('variant');
-        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
         $whitelabel = $this->whitelabel->getByName('Reiseexperten');
 
-        $html = view('reiseexperten::' . $layer)->with([
+        $html = view('reiseexperten::layer.popup')->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -99,10 +97,10 @@ class ReiseexpertenController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
-        $input = $request->all();
+        $whitelabel = $this->whitelabel->getByName('Reiseexperten');
+
         if ($request->failed()) {
-            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
-            $html = view('reiseexperten::' . $layer)->with([
+            $html = view('reiseexperten::layer.popup')->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
@@ -110,6 +108,7 @@ class ReiseexpertenController extends Controller
                 'duration_arr' => $this->duration,
                 'request'      => $request->all(),
                 'ages_arr'     => $this->ages,
+                'color'        => $whitelabel['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -179,7 +178,7 @@ class ReiseexpertenController extends Controller
 
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3'),
-             $this->whitelabelId
+            $this->whitelabelId
         );
 
         return $new_wish;
@@ -198,5 +197,10 @@ class ReiseexpertenController extends Controller
         }
 
         return $duration;
+    }
+
+    public function getPDF()
+    {
+        return view('reiseexperten::layer.pdf');
     }
 }

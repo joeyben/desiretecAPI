@@ -1,4 +1,13 @@
+@isset($color)
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+@endisset
+
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700,700italic,900" media="all">
+<link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+
 <?php $kids_arr_new = [
     '0' => '0 Kinder (0-11 Jahre)',
     '1' => '1 Kind',
@@ -246,8 +255,10 @@
             });
 
             $(document).ready(function(){
-                autocomplete();
-                //$('.selectpicker').selectpicker();
+
+                dt.autocomplete();
+                dt.applyBrandColor();
+
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
                     format: 'dd.mm.YYYY',
@@ -354,59 +365,12 @@
                     check_button();
                 });
             });
+
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
-            }
-
-            /**
-             * Autocomplete
-             */
-            var autocomplete = function(){
-              /* Destinations */
-              $('#destination').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                  autoSelect: false,
-                  minLength: 3,
-                  highlight: true,
-                  source: function(query) {
-                    return $.get('get-all-destinations', {query: query});
-                  }
-                }
-              });
-              /* END Destinations */
-
-              /* Airports */
-              $('#airport').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                  autoSelect: false,
-                  minLength: 3,
-                  highlight: true,
-                  source: function(query) {
-                    return $.get('get-all-airports', {query: query});
-                  }
-                }
-              });
-              /* END Airports */
-
-
-              $("#destination, #airport").on('itemAdded', function(event) {
-                setTimeout(function(){
-                  $("input[type=text]",".bootstrap-tagsinput").val("");
-                }, 1);
-              });
-
-
-            }
-
-            dt.applyBrandColor();
+            };
 
         </script>
 
@@ -424,7 +388,7 @@
                     @endif
 
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                    <p>Ich habe die <a href="https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/pdf/tnb_traveloverland.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.travel-overland.de/service/kleingedruckte/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    <p>Ich habe die <a href="{{get_current_whitelabel_url()}}/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.travel-overland.de/service/kleingedruckte/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                     <!-- @if ($errors->any() && $errors->get('terms'))
                         @foreach ($errors->get('terms') as $error)
                             <span class="error-input">{{ $error }}</span>
@@ -435,4 +399,9 @@
         </div>
     </div>
 </div>
+<style>
+    .kwp-logo {
+        background: transparent url({{ getWhiteLabelLogoUrl() }}) no-repeat left top;
+    }
+</style>
 {{ Form::close() }}

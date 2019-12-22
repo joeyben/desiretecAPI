@@ -230,6 +230,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         );
 
         $this->generateFile(
+            base_path('Modules/Master/Resources/assets/js/app.stub'),
+            base_path("Modules/$name/Resources/assets/js/app.js"),
+            ['$MODULESMAL$'],
+            [mb_strtolower($name)]
+        );
+
+        $this->generateFile(
             base_path('Modules/Master/Resources/views/index.blade.stub'),
             base_path("Modules/$name/Resources/views/index.blade.php"),
             ['$MODULESMAL$'],

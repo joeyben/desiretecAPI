@@ -1,3 +1,13 @@
+@isset($color)
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+@endisset
+
+<link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700,700italic,900" media="all">
+<link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+
 {{ Form::open(['route' => 'traveloverland.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}
 
 
@@ -146,7 +156,7 @@
                     <div class="kwp-col-4 white-col">
                         <div class="kwp-agb">
                             {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                            <p>Ich habe die <a href="https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/pdf/tnb_traveloverland.pdf" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.travel-overland.de/service/kleingedruckte/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                            <p>Ich habe die <a href="{{get_current_whitelabel_url()}}/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.travel-overland.de/service/kleingedruckte/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                         </div>
                     </div>
 
@@ -203,7 +213,9 @@
 
 
             $(document).ready(function(){
-                autocomplete();
+
+                dt.applyBrandColor();
+                dt.autocomplete();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -330,52 +342,6 @@
                 }
             }
 
-            /**
-             * Autocomplete
-             */
-            var autocomplete = function(){
-              /* Destinations */
-              $('#destination').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                  autoSelect: false,
-                  minLength: 3,
-                  highlight: true,
-                  source: function(query) {
-                    return $.get('get-all-destinations', {query: query});
-                  }
-                }
-              });
-              /* END Destinations */
-
-              /* Airports */
-              $('#airport').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                  autoSelect: false,
-                  minLength: 3,
-                  highlight: true,
-                  source: function(query) {
-                    return $.get('get-all-airports', {query: query});
-                  }
-                }
-              });
-              /* END Airports */
-
-
-              $("#destination, #airport").on('itemAdded', function(event) {
-                setTimeout(function(){
-                  $("input[type=text]",".bootstrap-tagsinput").val("");
-                }, 1);
-              });
-
-
-            }
-
             function validateDuration() {
                 var days_diff = (dt.endDate.getDate() - dt.startDate.getDate()) / 60000 / 60 / 24;
                 var $element = $('#duration > option');
@@ -391,37 +357,7 @@
                 if($element.parent().val()) {
                     $element.removeAttr('selected').parent().val('');
                 }
-            }
-
-            /**
-             * Autocomplete
-             */
-            var autocomplete = function(){
-                /* Destinations */
-                $.get('get-all-destinations', function(data){
-                    $("#destination").typeahead({
-                        autoSelect: true,
-                        minLength: 3,
-                        delay: 200,
-                        source: data
-                    });
-                });
-                /* END Destinations */
-
-                /* Airports */
-                $.get('get-all-airports', function(data){
-                    $("#airport").typeahead({
-                        autoSelect: true,
-                        minLength: 3,
-                        delay: 200,
-                        source: data
-                    });
-                });
-                /* END Airports */
-
-            }
-
-            dt.applyBrandColor();
+            };
 
         </script>
 

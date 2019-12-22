@@ -49,10 +49,10 @@ services:
         - JWT_SECRET=rqAPDdMPxyESuhElGlmPFzGAQB57A2cx
         - JWT_TTL=44640
         - JWT_REFRESH_TTL=null
-        - AWS_KEY=AKIAJ7MNWL257JAF3UWQ
-        - AWS_SECRET=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
-        - AWS_REGION=eu-central-1
-        - AWS_BUCKET=desiretec
+        - AWS_KEY=${AWS_ACCESS_KEY}
+        - AWS_SECRET=${AWS_SECRET_KEY}
+        - AWS_REGION=${AWS_DEFAULT_REGION}
+        - AWS_BUCKET=${AWS_BUCKET}
         - MAILCHIMP_APIKEY=dad542a4ce3fccff2cca9cf50903ce19-us7
         - MAILCHIMP_LIST_ID=512d1a4c34
         - REDIS_HOST=redis

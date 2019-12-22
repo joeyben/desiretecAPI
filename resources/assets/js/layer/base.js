@@ -167,9 +167,6 @@ var dt = window.dt || {};
         shown: false,
         teaser:false,
         teaserText: "Darf ich Sie beraten?",
-        isFromPaidTraffic: function() {
-            return Cookies.get('utag.data.exclude_lead') == 1;
-        },
         init: function() {
             if (this.initialized) {
                 Debug.warning('Popup script is already initialized. Preventing double init.');
@@ -348,12 +345,6 @@ var dt = window.dt || {};
         },
         show: function() {
             Debug.info('::show:start');
-
-            if(this.isFromPaidTraffic()) {
-                Debug.info('::popup-disabled');
-
-                return;
-            }
 
             if(this.shown || this.blocked) {
                 return;

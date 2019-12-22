@@ -7,6 +7,7 @@ use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
+use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
 use App\Models\Access\User\User;
 use App\Models\Access\User\UserToken;
 use App\Models\Agents\Agent;
@@ -154,7 +155,7 @@ class WishesController extends Controller
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
             'categories'         => $this->categories,
-            'extra'              => json_decode($wish->extra_params, true)
+            'extra'              => json_decode($wish->extra_params, true),
         ]);
     }
 
@@ -252,8 +253,13 @@ class WishesController extends Controller
         foreach ($wish as $singleWish) {
             $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
 
-            if($currentWhiteLabelID === 63 && $this->auth->guard('web')->user()->hasRole('Seller')) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
-                $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
+            if($this->auth->guard('web')->user()->hasRole('Seller')) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
+                if($currentWhiteLabelID === 198) {
+                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
+                }
+                if($singleWish->messages() && $singleWish->messages()->count() > 0) {
+                    $singleWish['messageSentFlag'] = true;
+                }
             }
 
             $manuelFlag = false;
@@ -444,6 +450,22 @@ class WishesController extends Controller
             $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
 
             $wish = $this->wish->updateStatus($request->get('id'), $status);
+
+            return json_response([]);
+        } catch (Exception $e) {
+            return json_response_error($e);
+        }
+    }
+
+    /**
+     * @param \App\Http\Requests\Frontend\Wishes\UpdateNoteRequest $request
+     *
+     * @return JSON response
+     */
+    public function updateNote(UpdateNoteRequest $request)
+    {
+        try {
+            $note = $this->wish->updateNote($request->get('id'), $request->get('note') ?? '');
 
             return json_response([]);
         } catch (Exception $e) {
