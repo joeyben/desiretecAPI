@@ -18,12 +18,16 @@ class SendAutoOfferEMail extends Mailable
     protected $wishId;
     protected $type;
     protected $token;
+    protected $details;
+    protected $wlEmail;
 
-    public function __construct($wishId, $type, $token)
+    public function __construct($wishId, $type, $token, $wlEmail,$details)
     {
         $this->wishId = $wishId;
         $this->type = $type;
         $this->token = $token;
+        $this->details = $details;
+        $this->wlEmail = $wlEmail;
     }
 
     /**
@@ -35,8 +39,8 @@ class SendAutoOfferEMail extends Mailable
     {
         $wish = Wish::where('id', $this->wishId)->first();
 
-        return $this->from(getCurrentWhiteLabelEmail(), trans('autooffers.email.name'))->subject(trans('autooffer.email.subject'))->view('wishes::emails.autooffer')->with([
-            'url'         => $wish->whitelabel->domain . '/offer/olist/' . $this->wishId . '/' . $this->token
-        ]);
+        return $this->from($this->wlEmail, $this->details['email_name'])
+            ->subject($this->details['email_subject'])
+            ->html($this->details['email_content'], 'text/html');
     }
 }
