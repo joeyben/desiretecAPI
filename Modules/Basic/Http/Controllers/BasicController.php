@@ -19,6 +19,7 @@ class BasicController extends Controller
     protected $kids = [];
     protected $catering = [];
     protected $duration = [];
+    protected $ages = [];
 
     private $whitelabelId;
 
@@ -41,6 +42,7 @@ class BasicController extends Controller
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->whitelabelId = \Config::get('basic.id');
     }
 
@@ -81,6 +83,7 @@ class BasicController extends Controller
             'duration_arr' => $this->duration,
             'request'      => $request->all(),
             'color'        => $whitelabel['color'],
+            'ages_arr'     => $this->ages,
             'layers'       => [
                 [
                     'name' => 'Hotel',
@@ -88,6 +91,12 @@ class BasicController extends Controller
                 ],
                 [
                     'name' => 'Flight',
+                    'active' => false
+                ],[
+                    'name' => 'package',
+                    'active' => false
+                ],[
+                    'name' => 'cruise',
                     'active' => false
                 ]
             ]

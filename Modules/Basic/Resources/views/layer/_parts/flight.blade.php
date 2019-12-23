@@ -1,4 +1,4 @@
-<div class="tab-pane fade show @if($layer['active']) active @endif" id="nav-{{ $layer['name'] }}" role="tabpanel" aria-labelledby="nav-{{ $layer['name'] }}-tab">
+<div class="tab-pane fade  @if($layer['active']) show active in @endif" id="nav-{{ $layer['name'] }}" role="tabpanel" aria-labelledby="nav-{{ $layer['name'] }}-tab">
     <div class="kwp-header kwp-variant-eil-n1">
         <div class="kwp-close-button kwp-close"></div>
         <div class="kwp-overlay"></div>

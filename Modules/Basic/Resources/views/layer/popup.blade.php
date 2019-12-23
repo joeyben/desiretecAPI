@@ -10,6 +10,7 @@
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 <link rel="stylesheet" href="/whitelabel/basic/css/layer-responsive.css">
 
+    {{--Tabs --}}
     @if(count($layers) > 1)
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             @foreach($layers as $layer)
@@ -20,6 +21,7 @@
         </div>
     @endif
 
+    {{-- Content --}}
     <div class="tab-content" id="nav-tabContent">
         @foreach($layers as $layer)
             @include('basic::layer._parts.'.strtolower($layer['name']),[
