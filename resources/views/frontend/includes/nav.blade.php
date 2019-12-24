@@ -97,10 +97,7 @@
                             @if ($logged_in_user && ($logged_in_user->hasRole('User') || $logged_in_user->hasRole('Executive')))
                                 <li>{{ link_to_route('frontend.wishes.list', trans('navs.frontend.wishes')) }}</li>
                             @endif
-                            
-                            @if ($logged_in_user && $logged_in_user->hasRole('Executive'))
-                                <li>{{ link_to_route('frontend.wishes.list', trans('navs.frontend.wishes')) }}</li>
-                            @endif
+
 
                             <li>{{ link_to_route('frontend.user.account', trans('navs.frontend.user.account')) }}</li>
 
