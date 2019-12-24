@@ -19,7 +19,6 @@
                 </td>
             </tr>
         </table>
-        <div style="display: none;">{{ $offer_type }},{{ $whitelabel }}</div>
 </div>
 @endsection
                         
