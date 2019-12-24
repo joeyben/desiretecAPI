@@ -34,7 +34,7 @@
 
 
         @if(isWhiteLabel())
-            {{ Html::style(mix('whitelabel/'.getCurrentWhiteLabelName().'/css/'.getCurrentWhiteLabelName().'.css')) }}
+            {{-- Html::style(mix('whitelabel/'.getCurrentWhiteLabelName().'/css/'.getCurrentWhiteLabelName().'.css')) --}}
         @endif
 
         <link media="all" type="text/css" rel="stylesheet" href="{{ asset('fontawsome/css/all.css') }}">
