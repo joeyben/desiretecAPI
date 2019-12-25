@@ -18,6 +18,10 @@ interface DashboardRepository
 
     public function loadOpenRate($whitelabel);
 
+    public function loadClickRateauto($whitelabel);
+
+    public function loadOpenRateauto($whitelabel);
+
     public function getFilterCategory(string $category);
 
     public function getFilterCategoryPosition(string $category);
