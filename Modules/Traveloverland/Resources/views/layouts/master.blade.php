@@ -51,6 +51,8 @@
         function isMobile(){
             if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
                 return true;
+            } else if( $(window).outerWidth() < 769 ) {
+                return true;
             }
             return false;
         }

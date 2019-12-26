@@ -1,3 +1,5 @@
+@import "../variables";
+
 .rangeslider,
 .rangeslider__fill {
   display: block;
@@ -42,7 +44,7 @@
 
 .rangeslider__handle {
   background: #fff;
-  border: 2px solid #FDCD0B;
+  border: 2px solid $master-grey-dark;
   cursor: pointer;
   display: inline-block;
   width: 30px;
@@ -68,7 +70,7 @@
   border-radius: 50%;
 }
 .rangeslider__handle:active, .rangeslider--active .rangeslider__handle {
-  background: #F5F5F5;
+  background: $master-grey-dark;
 }
 .rangeslider--horizontal .rangeslider__handle {
   top: -5px;
