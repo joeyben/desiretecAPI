@@ -11,9 +11,6 @@ var dt = window.dt || {};
     };
 
     dt.popupTemplate = function (variant) {
-        var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Dürfen wir Sie beraten?',
-        ]);
 
         var texts = {
             'eil-n1': {
@@ -21,7 +18,7 @@ var dt = window.dt || {};
                 body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             },
             'eil-mobile': {
-                header: mobileHeader,
+                header: 'Dürfen wir Sie beraten?',
                 body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             }
         };
@@ -41,8 +38,7 @@ var dt = window.dt || {};
           '</div>' +
           '</div>' +
           '<div class="kwp-body '+variant+'-body">' +
-          '</div><div style="clear:both;"></div>'
-          ;
+          '</div><div style="clear:both;"></div>';
     };
 
 
@@ -608,7 +604,6 @@ var dt = window.dt || {};
         if(isMobile()) {
             dt.PopupManager.teaser = true;
             dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
-            dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
             $(".dt-modal .kwp-close").on('touchend',function () {
                 dt.PopupManager.closePopup(e);
             });
@@ -792,6 +787,8 @@ var dt = window.dt || {};
     function isMobile(){
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
             return true;
+        } else if( $(window).outerWidth() < 769 ) {
+            return true;
         }
         return false;
     }
@@ -904,11 +901,6 @@ var dt = window.dt || {};
         var checkboxEl = $('.kwp input[type="checkbox"]:checked:after');
         $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
 
-        var datepicker = $('.datepicker-dropdown .day.active, .datepicker-dropdown .day.active.active:hover, .datepicker-dropdown .day.active:hover,.datepicker-dropdown .day.active.active:hover:hover, .datepicker-dropdown .month.active, .datepicker-dropdown .month.active.active:hover, .datepicker-dropdown .month.active:hover, .datepicker-dropdown .month.active.active:hover:hover, .datepicker-dropdown .year.active, .datepicker-dropdown .year.active.active:hover, .datepicker-dropdown .year.active:hover, .datepicker-dropdown .year.active.active:hover:hover');
-        datepicker.css({
-            'background': brandColor,
-        });
-
         var footerHref = $('.kwp-agb p a');
         footerHref.css({
             'color': brandColor,
@@ -960,6 +952,29 @@ var dt = window.dt || {};
             $("input[type=text]",".bootstrap-tagsinput").val("");
             }, 1);
         });
+    };
+
+    dt.adjustResponsive = function(){
+        if( $(window).outerWidth() <= 768 ) {
+            $("body").addClass('mobile-layer');
+            $(".dt-modal").addClass('m-open');
+
+            dt.PopupManager.isMobile = true;
+            dt.PopupManager.layerShown = true;
+
+            $(".kwp-header").css('background', brandColor);
+
+            $('.error-input').siblings('i').css('bottom', '30px');
+
+            $('.dt-modal .submit-col').detach().appendTo('.footer-col');
+        } else {
+            $("body").removeClass('mobile-layer');
+            $(".dt-modal").removeClass('m-open');
+
+            $(".kwp-header").removeAttr('style');
+
+            $('.footer-col .submit-col').detach().appendTo('.kwp-content .kwp-row:last-child');
+        }
     };
 
 })(jQuery);
