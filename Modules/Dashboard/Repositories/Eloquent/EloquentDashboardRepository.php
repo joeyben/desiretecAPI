@@ -112,7 +112,7 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         ->where(
             ['url', 'like', '%/wish/%'],
             ['content', 'like', '%manual,' . $whitelabel . '%'],
-            ['sent_emails_url_clicked.clicks', '>=', 1],
+            ['sent_emails_url_clicked.clicks', '>=', 1]
         )
         ->groupBy('date')
         ->get()->toArray();
