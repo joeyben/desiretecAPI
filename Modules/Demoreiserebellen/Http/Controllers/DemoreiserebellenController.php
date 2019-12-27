@@ -73,11 +73,9 @@ class DemoreiserebellenController extends Controller
      */
     public function show(Request $request)
     {
-        $input = $request->only('variant');
-        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
         $whitelabel = $this->whitelabel->getByName('Demoreiserebellen');
 
-        $html = view('demoreiserebellen::' . $layer)->with([
+        $html = view('demoreiserebellen::layer.popup')->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -100,16 +98,17 @@ class DemoreiserebellenController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
-        $input = $request->all();
+        $whitelabel = $this->whitelabel->getByName('Reiseexperten');
+
         if ($request->failed()) {
-            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
-            $html = view('demoreiserebellen::' . $layer)->with([
+            $html = view('demoreiserebellen::layer.popup')->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
-                'request'      => $request->all()
+                'request'      => $request->all(),
+                'color'        => $whitelabel['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);

@@ -268,9 +268,10 @@
             });
 
             $(document).ready(function(){
-                $('.selectpicker').selectpicker();
-                autocomplete();
-                modifyDOM();
+
+                dt.applyBrandColor();
+                dt.autocomplete();
+                dt.adjustResponsive();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -383,89 +384,14 @@
             });
 
             $(window).on('resize', function() {
-                modifyDOM();
+                dt.adjustResponsive();
             });
 
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
-            }
-
-            /**
-             * Autocomplete
-             */
-            var autocomplete = function(){
-                /* Destinations */
-                $('#destination').tagsinput({
-                    maxTags: 3,
-                    maxChars: 20,
-                    allowDuplicates: false,
-                    freeInput:false,
-                    typeahead: {
-                        autoSelect: false,
-                        minLength: 3,
-                        highlight: true,
-                        afterSelect: function(val) { this.$element.val(""); },
-                        source: function(query) {
-                            return $.get('https://bild.reisewunschservice.de/get-all-destinations', {query: query});
-                        }
-                    }
-                });
-                /* END Destinations */
-
-                /* Airports */
-                $('#airport').tagsinput({
-                    maxTags: 3,
-                    maxChars: 20,
-                    allowDuplicates: false,
-                    freeInput:false,
-                    typeahead: {
-                        autoSelect: false,
-                        minLength: 3,
-                        highlight: true,
-                        afterSelect: function(val) { this.$element.val(""); },
-                        source: function(query) {
-                            return $.get('https://bild.reisewunschservice.de/get-all-airports', {query: query});
-                        }
-                    }
-                });
-                /* END Airports */
-
-
-                $("#destination, #airport").on('itemAdded', function(event) {
-                    setTimeout(function(){
-                        $("input[type=text]",".bootstrap-tagsinput").val("");
-                    }, 1);
-                });
-
-
-            }
-
-            dt.applyBrandColor();
-
-            var modifyDOM = function(){
-                if( $(window).outerWidth() <= 768 ) {
-                    $("body").addClass('mobile-layer');
-                    $(".dt-modal").addClass('m-open');
-
-                    dt.PopupManager.isMobile = true;
-                    dt.PopupManager.layerShown = true;
-
-                    $(".kwp-header").css('background', brandColor);
-
-                    $('.error-input').siblings('i').css('bottom', '30px');
-
-                    $('.dt-modal .submit-col').detach().appendTo('.footer-col');
-                } else {
-                    $("body").removeClass('mobile-layer');
-                    $(".dt-modal").removeClass('m-open');
-
-                    $(".kwp-header").removeAttr('style');
-
-                    $('.footer-col .submit-col').detach().appendTo('.kwp-content .kwp-row:last-child');
-                }
-            }
+            };
 
         </script>
 

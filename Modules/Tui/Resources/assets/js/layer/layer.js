@@ -1068,7 +1068,7 @@ var exitIntent = window.exitIntent || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: 'https://tui.reisewunschservice.de',
+        matchesUrl: 'https://tui.reise-wunsch.com/|https://tui.reisewunschservice.de',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
