@@ -91,7 +91,9 @@
   import TileOfferComponent from './TileOfferComponent'
   import TileOfferdayComponent from './TileOfferdayComponent'
   import TileClickrateComponent from './TileClickrateComponent'
+  import TileClickrateautoComponent from './TileClickrateautoComponent'
   import TileOpenrateComponent from './TileOpenrateComponent'
+  import TileOpenrateautoComponent from './TileOpenrateautoComponent'
   import TileMobileComponent from './TileMobileComponent'
   import TileMobiledComponent from './TileMobiledComponent'
   import TileResponseComponent from './TileResponseComponent'
@@ -119,7 +121,9 @@ export default {
       TileOfferComponent,
       TileOfferdayComponent,
       TileClickrateComponent,
+      TileClickrateautoComponent,
       TileOpenrateComponent,
+      TileOpenrateautoComponent,
       TileMobileComponent,
       TileMobiledComponent,
       TileResponseComponent,
