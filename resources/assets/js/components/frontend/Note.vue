@@ -87,4 +87,16 @@
     opacity: 1; /* Firefox */
     font-style: italic;
   }
+
+   @media (max-width: 768px) {
+      p {
+         max-width: 240px;
+      }
+      textarea {
+         width: 240px;
+      }
+      .wish-note {
+         padding: 1em;
+      }
+   }
 </style>
