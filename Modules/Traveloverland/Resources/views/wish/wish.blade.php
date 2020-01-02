@@ -379,9 +379,9 @@
                             @endif
                         </div>
 
-
                     </div>
                 </div>
+                <note :wishid="{{ $wish->id }}" :wishnote="{{ json_encode($wish->note) }}"  :lang="{{ json_encode(trans('strings.wishdetails.memo')) }}"></note>
             </div>
         </div>
 
