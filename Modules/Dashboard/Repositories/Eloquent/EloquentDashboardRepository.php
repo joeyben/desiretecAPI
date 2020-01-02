@@ -109,11 +109,9 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         $click_links = DB::table('sent_emails_url_clicked')
         ->join('sent_emails', 'sent_email_id', '=', 'sent_emails.id')
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')), DB::raw('count(*) as clicks'))
-        ->where(
-            ['url', 'like', '%/wish/%'],
-            ['content', 'like', '%manual,' . $whitelabel . '%'],
-            ['sent_emails_url_clicked.clicks', '>=', 1]
-        )
+        ->where('url', 'like', '%/wish/%')
+        ->where('content', 'like', '%manual,' . $whitelabel . '%')
+        ->where('sent_emails_url_clicked.clicks', '>=', 1)
         ->groupBy('date')
         ->get()->toArray();
 
@@ -168,11 +166,9 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         $click_links = DB::table('sent_emails_url_clicked')
         ->join('sent_emails', 'sent_email_id', '=', 'sent_emails.id')
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')), DB::raw('count(*) as clicks'))
-        ->where(
-            ['url', 'like', '%/wish/%'],
-            ['content', 'like', '%auto,' . $whitelabel . '%'],
-            ['sent_emails_url_clicked.clicks', '>=', 1]
-        )
+        ->where('url', 'like', '%/wish/%')
+        ->where('content', 'like', '%auto,' . $whitelabel . '%')
+        ->where('sent_emails_url_clicked.clicks', '>=', 1)
         ->groupBy('date')
         ->get()->toArray();
 
