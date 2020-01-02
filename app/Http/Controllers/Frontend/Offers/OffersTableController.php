@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Offers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Offers\ManageOffersRequest;
+use App\Models\Agents\Agent;
 use App\Repositories\Frontend\Offers\OffersRepository;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -35,7 +36,7 @@ class OffersTableController extends Controller
                     . '">' . $offers->title . '</a>';
             })
             ->addColumn('created_by', function ($offers) {
-                return $offers->first_name . ' ' . $offers->last_name;
+                return Agent::where('id', $offers->agent_id)->first()->name;
             })
             ->addColumn('created_at', function ($offers) {
                 return $offers->created_at->format('d.m.Y') . ' ' . $offers->created_at->toTimeString();
