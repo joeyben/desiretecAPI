@@ -5,3 +5,6 @@
         Wenn Sie Ihren Reisewunsch noch einmal überprüfen oder ändern möchten, <a  href="{{ route('tui.wish.details', [$id, $token]) }}" target="_blank">klicken Sie bitte hier.</a>
     </p>
 </div>
+<script>
+    dt.Tracking.rawEvent('form_success', 'success', 'Form sent successfully');
+</script>
