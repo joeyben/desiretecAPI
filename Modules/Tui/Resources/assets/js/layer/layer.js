@@ -1367,7 +1367,7 @@ var exitIntent = window.exitIntent || {};
                 }
                 dt.PopupManager.modal.removeClass('tmp-hidden');
                 $(this).remove();
-                ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
+                ga('dt.send', 'event', 'Trigger button', 'Trigger button clicked', deviceDetector.device);
             });
         };
 
