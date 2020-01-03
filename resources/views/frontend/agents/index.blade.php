@@ -26,7 +26,7 @@
                 @include("frontend.agents.form")
             </div>
             <div class="modal-footer">
-                <div class="col-lg-12">
+                <div class="col-lg-12">p
                     {{ link_to_route('frontend.agents.index', trans('seller.agent.create.cancel'), [], ['class' => 'btn secondary-btn']) }}
                     {{ Form::button(trans('seller.agent.create.submit'), ['type' => 'submit','class' => 'btn primary-btn']) }}
                 </div>
