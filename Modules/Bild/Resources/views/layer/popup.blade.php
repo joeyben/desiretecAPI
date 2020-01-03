@@ -387,6 +387,7 @@
                 dt.adjustResponsive();
             });
 
+
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
