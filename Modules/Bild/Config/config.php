@@ -2,7 +2,7 @@
 
 return [
     'name'                 => 'Bild',
-    'id'                   => 63,
+    'id'                   => 198,
     'locale'               => 'de',
     'language_lines_table' => 'language_lines_bild',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
