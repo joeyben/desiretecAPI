@@ -1367,7 +1367,7 @@ var exitIntent = window.exitIntent || {};
                 }
                 dt.PopupManager.modal.removeClass('tmp-hidden');
                 $(this).remove();
-                ga('dt.send', 'event', 'Trigger button', 'Trigger button clicked', deviceDetector.device);
+                dt.Tracking.rawEvent('trigger_button', 'Trigger button', 'Trigger button clicked');
             });
         };
 
