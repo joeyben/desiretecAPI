@@ -8,7 +8,10 @@
                     <div style="padding: 14px;">
                         <span v-text="layer.description"></span>
                         <div class="bottom clearfix">
-                            <el-radio :value="whitelabel.layer" :label="layer.id" border @input="doSeleted">{{ layer.name }}</el-radio>
+                            <div class="row">
+                                <el-checkbox :id="layer.id" v-model="checked[layer.name]" :value="layer.name" :label="layer.id" border>{{ layer.name }}</el-checkbox>
+                                <el-input :id="layer.id" v-if="checked[layer.name]" style="width: 65%; padding-left:10px" placeholder="Please enter URL"></el-input>
+                            </div>
                         </div>
                     </div>
                 </el-card>
@@ -27,7 +30,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-            </el-form>
+            </el-form>n
             <span slot="footer" class="dialog-footer">
                 <button class="btn btn-outline-danger btn-sm" @click="dialogFormVisible = false"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.cancel') }}</button>
                 <button class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" @click="onCreate()" v-if="form.id !== ''"> {{ trans('button.confirm') }}</button>
@@ -35,7 +38,6 @@
         </el-dialog>
     </div>
 </template>
-
 <script>
   import Vuex from 'vuex'
   import FilterBar from './FilterBar'
@@ -45,8 +47,8 @@
     data () {
       return {
         layers: window.layers,
-        radio1: null,
         dialogFormVisible: false,
+        checked: [],
         form: {
           id: ''
         }
@@ -76,6 +78,12 @@
         this.loadWhitelabel(id)
       },
       doSeleted (value) {
+        if (value) {
+          console.log(name)
+          this.urlInputVisible = true
+        } else {
+          this.urlInputVisible = false
+        }
         this.$store.commit('updateWhitelabel', {name: 'layer', value: value})
         if (this.hasRole('Administrator')) {
           this.dialogFormVisible = true
@@ -120,34 +128,28 @@
     }
   }
 </script>
-
 <style scoped>
     .time {
         font-size: 13px;
         color: #999;
     }
-
     .bottom {
         margin-top: 13px;
         line-height: 12px;
     }
-
     .button {
         padding: 0;
         float: right;
     }
-
     .image {
         width: 100%;
         display: block;
     }
-
     .clearfix:before,
     .clearfix:after {
         display: table;
         content: "";
     }
-
     .clearfix:after {
         clear: both
     }

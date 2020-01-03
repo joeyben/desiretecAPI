@@ -12,6 +12,7 @@ use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Basic\Http\Requests\StoreWishRequest;
+use Modules\Basic\Http\Repositories\BasicRepository;
 
 class BasicController extends Controller
 {
@@ -29,12 +30,14 @@ class BasicController extends Controller
      */
     protected $whitelabel;
     protected $attachements;
+    protected $basic;
 
     /* @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
      * @param \Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository $attachements
      * @param WhitelabelsRepository $whitelabel
+     * @param Modules\Basic\Http\Repositories\BasicRepository
      */
-    public function __construct(WhitelabelsRepository $whitelabel, CategoriesRepository $categories, EloquentAttachmentsRepository $attachements)
+    public function __construct(WhitelabelsRepository $whitelabel, CategoriesRepository $categories, EloquentAttachmentsRepository $attachements, BasicRepository $basic)
     {
         $this->whitelabel = $whitelabel;
         $this->attachements = $attachements;
@@ -44,6 +47,7 @@ class BasicController extends Controller
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->whitelabelId = \Config::get('basic.id');
+        $this->basic = $basic;
     }
 
     /**
@@ -84,14 +88,14 @@ class BasicController extends Controller
             'request'      => $request->all(),
             'color'        => $whitelabel['color'],
             'ages_arr'     => $this->ages,
+//            'layers'       => $this->basic->getLayersData($whitelabel),
             'layers'       => [
                 [
                     'name' => 'Hotel',
-                    'active' => true
-                ],
-                [
-                    'name' => 'Flight',
                     'active' => false
+                ],[
+                    'name' => 'Flight',
+                    'active' => true
                 ],[
                     'name' => 'package',
                     'active' => false
