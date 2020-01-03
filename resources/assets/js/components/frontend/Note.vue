@@ -1,18 +1,28 @@
 <template>
    <div class="col-md-6 wish-note" >
-      <div class="wish-note-wrapper edit-mode" v-if="editMode">
-         <textarea name="note" maxlength="200" value="" :placeholder="placeholderText" @keyup.enter="saveNote" v-model="note" />
-         <a @click.prevent="saveNote">
-            <i class="fal fa-save"></i>
-         </a>
-      </div>
-      <div class="wish-note-wrapper not-edit-mode" v-else>
-         <p>{{ this.note }}</p>
-         <a @click.prevent="editMode = !editMode">
-            <i class="fal fa-edit"></i>
-         </a>
-      </div>
+
+      <textarea v-if="editMode"
+               name="note" 
+               ref="note" 
+               maxlength="200" 
+               value="" 
+               v-model="note" 
+               :placeholder="placeholderText" 
+               @keyup.enter="saveNote()" 
+               @focus="isFocused = true" />
+      <a v-if="editMode" 
+               @click.prevent="saveNote();">
+         <i v-if="isFocused" class="fal fa-save"></i>
+         <i v-else class="fal fa-edit"></i>
+      </a>
+
+      <p v-if="!editMode">{{ this.note }}</p>
+      <a v-if="!editMode" 
+               @click.prevent="editMode = true">
+         <i class="fal fa-edit"></i>
+      </a>
    </div>
+
 </template>
 
 <script>
@@ -20,8 +30,9 @@
       data() {
          return {
             editMode: false,
+            isFocused: false,
             note: '',
-            placeholderText: ''
+            placeholderText: '',
          };
       },
 
@@ -38,17 +49,21 @@
 
       methods: {
          saveNote() {
-            this.editMode = false;
-
             axios.post('/wishes/updateNote', {
                id: this.wishid,
                note: this.note
             }).then(function (response) {
             })
             .catch(function (error) {
-               console.log(error);
+               console.log("Catched error on note saving: " + error);
             });
-         }
+
+            this.resetEditMode();
+         },
+         resetEditMode() {
+            this.editMode = false;
+            this.isFocused = false;
+         },
       }
    }
 </script>
@@ -57,10 +72,6 @@
    .wish-note {
       display: flex;
       justify-content: flex-end;
-   }
-   .wish-note-wrapper {
-      display: flex;
-      align-items: flex-start;
    }
    p {
       display: inline-block;
@@ -87,4 +98,16 @@
     opacity: 1; /* Firefox */
     font-style: italic;
   }
+
+   @media (max-width: 768px) {
+      p {
+         max-width: 240px;
+      }
+      textarea {
+         width: 240px;
+      }
+      .wish-note {
+         padding: 1em;
+      }
+   }
 </style>

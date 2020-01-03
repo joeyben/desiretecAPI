@@ -4,6 +4,12 @@
     {{ trans('general.url.agent_create') }}
 @endsection
 
+@section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+    </script>
+@endsection
+
 @section('content')
     {{ Form::open(['route' => ['frontend.agents.update',$agent->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'POST', 'id' => 'create-permission', 'files' => true]) }}
 
@@ -46,8 +52,6 @@
         });
 
         $(document).ready(function(){
-            var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
-
             $('.primary-btn, .btn-primary').css({
                 'background': brandColor,
                 'border': '1px solid ' + brandColor,

@@ -372,6 +372,31 @@ class WishesRepository extends BaseRepository
 
 
     /**
+    * @param int    $id
+    * @param string $updatedNote
+    */
+    public function updateNote(int $id, string $updatedNote)
+    {
+       $update = DB::transaction(function () use ($id, $updatedNote) {
+           if (\Modules\Wishes\Entities\Wish::where('id', $id)->update(['note' => $updatedNote])) {
+               return true;
+           }
+
+           return false;
+
+           throw new GeneralException(
+               trans('exceptions.backend.wishes.update_error')
+           );
+       });
+
+       if ($update) {
+           return true;
+       }
+       return false;
+    }
+
+
+    /**
      * @param \App\Models\Wishes\Wish $wish
      *
      * @return string

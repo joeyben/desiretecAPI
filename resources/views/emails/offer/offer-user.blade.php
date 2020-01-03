@@ -19,6 +19,7 @@
                 </td>
             </tr>
         </table>
+    <div style="display: none">manual,{{ getCurrentWhiteLabelId() }}</div>
 </div>
 @endsection
                         
