@@ -450,7 +450,7 @@ class OffersController extends Controller
             }
 
             $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-            $result['clickrate'] = $this->dashboard->loadClickRate($whitelabelId);
+            $result['clickrate'] = $this->dashboard->loadClickRate($whitelabelId, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -481,7 +481,7 @@ class OffersController extends Controller
             }
 
             $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-            $result['clickrate'] = $this->dashboard->loadClickRateauto($whitelabelId);
+            $result['clickrate'] = $this->dashboard->loadClickRateauto($whitelabelId, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -512,7 +512,7 @@ class OffersController extends Controller
             }
 
             $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-            $result['openrate'] = $this->dashboard->loadOpenRate($whitelabelId);
+            $result['openrate'] = $this->dashboard->loadOpenRate($whitelabelId, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -543,7 +543,7 @@ class OffersController extends Controller
             }
 
             $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-            $result['openrate'] = $this->dashboard->loadOpenRateauto($whitelabelId);
+            $result['openrate'] = $this->dashboard->loadOpenRateauto($whitelabelId, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
