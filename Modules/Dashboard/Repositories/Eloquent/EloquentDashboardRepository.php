@@ -108,8 +108,67 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
         $click_links = DB::table('sent_emails_url_clicked')
         ->join('sent_emails', 'sent_email_id', '=', 'sent_emails.id')
-        ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')), DB::raw('sum(sent_emails_url_clicked.clicks) as clicks'))
+        ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')), DB::raw('count(*) as clicks'))
         ->where('url', 'like', '%/wish/%')
+        ->where('content', 'like', '%manual,' . $whitelabel . '%')
+        ->where('sent_emails_url_clicked.clicks', '>=', 1)
+        ->groupBy('date')
+        ->get()->toArray();
+
+        if (!empty($sent_emails)) {
+            foreach ($sent_emails as $key => $value) {
+                $result['sent'][$key][0] = $sent_emails[$key]->date;
+                $result['sent'][$key][1] = $sent_emails[$key]->nb_emails;
+            }
+            if (!empty($click_links)) {
+                foreach ($click_links as $key => $value) {
+                    $result['click'][$key][0] = $click_links[$key]->date;
+                    $result['click'][$key][1] = $click_links[$key]->clicks;
+                }
+            }
+            $result['clickrate'] = $result['sent'];
+            foreach ($result['clickrate'] as $key => $value) {
+                $result['clickrate'][$key][0] = $result['sent'][$key][0];
+                if (!empty($click_links) && '0' !== $result['clickrate'][$key][1]) {
+                    foreach ($result['click'] as $k => $v) {
+                        if ($result['clickrate'][$key][0] === $result['click'][$k][0]) {
+                            ++$i;
+                            $j = 0;
+                            $result['clickrate'][$key][1] = round($result['click'][$k][1] / $result['clickrate'][$key][1] * 100, 1);
+                            break;
+                        }
+                        ++$j;
+                    }
+                    if (0 !== $j) {
+                        $result['clickrate'][$key][1] = 0;
+                    }
+                } else {
+                    $result['clickrate'][$key][1] = 0;
+                }
+            }
+        } else {
+            $result['clickrate'] = [0, 0];
+        }
+
+        return $result['clickrate'];
+    }
+
+    public function loadClickRateauto($whitelabel)
+    {
+        $i = 0;
+        $j = 0;
+        $sent_emails = DB::table('sent_emails')
+        ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')), DB::raw('count(*) as nb_emails'))
+        ->where('content', 'like', '%auto,' . $whitelabel . '%')
+        ->groupBy('date')
+        ->get()->toArray();
+
+        $click_links = DB::table('sent_emails_url_clicked')
+        ->join('sent_emails', 'sent_email_id', '=', 'sent_emails.id')
+        ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')), DB::raw('count(*) as clicks'))
+        ->where('url', 'like', '%/wish/%')
+        ->where('content', 'like', '%auto,' . $whitelabel . '%')
+        ->where('sent_emails_url_clicked.clicks', '>=', 1)
         ->groupBy('date')
         ->get()->toArray();
 
@@ -165,6 +224,60 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         $sent_emails = DB::table('sent_emails')
         ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')), DB::raw('count(*) as nb_emails'))
         ->where('content', 'like', '%manual,' . $whitelabel . '%')
+        ->groupBy('date')
+        ->get()->toArray();
+
+        if (!empty($sent_emails)) {
+            foreach ($sent_emails as $key => $value) {
+                $result['sent'][$key][0] = $sent_emails[$key]->date;
+                $result['sent'][$key][1] = $sent_emails[$key]->nb_emails;
+            }
+
+            if (!empty($open_emails)) {
+                foreach ($open_emails as $key => $value) {
+                    $result['open'][$key][0] = $open_emails[$key]->date;
+                    $result['open'][$key][1] = $open_emails[$key]->nb_opens;
+                }
+            }
+            $result['openrate'] = $result['sent'];
+            foreach ($result['openrate'] as $key => $value) {
+                $result['openrate'][$key][0] = $result['sent'][$key][0];
+                if (!empty($open_emails) && '0' !== $result['openrate'][$key][1]) {
+                    foreach ($result['open'] as $k => $v) {
+                        if ($result['openrate'][$key][0] === $result['open'][$k][0]) {
+                            ++$i;
+                            $j = 0;
+                            $result['openrate'][$key][1] = round($result['open'][$k][1] / $result['openrate'][$key][1] * 100, 1);
+                            break;
+                        }
+                        ++$j;
+                    }
+                    if (0 !== $j) {
+                        $result['openrate'][$key][1] = 0;
+                    }
+                }
+            }
+        } else {
+            $result['openrate'] = [0, 0];
+        }
+
+        return $result['openrate'];
+    }
+
+    public function loadOpenRateauto($whitelabel)
+    {
+        $i = 0;
+        $j = 0;
+        $open_emails = DB::table('sent_emails')
+        ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')), DB::raw('count(*) as nb_opens'))
+        ->where('opens', '>=', 1)
+        ->where('content', 'like', '%auto,' . $whitelabel . '%')
+        ->groupBy('date')
+        ->get()->toArray();
+
+        $sent_emails = DB::table('sent_emails')
+        ->select((DB::raw('DATE_FORMAT(sent_emails.created_at,"%Y%m%d") as date')), DB::raw('count(*) as nb_emails'))
+        ->where('content', 'like', '%auto,' . $whitelabel . '%')
         ->groupBy('date')
         ->get()->toArray();
 

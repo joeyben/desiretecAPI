@@ -25,6 +25,8 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/datepicker.js',
         base_url + '/resources/assets/js/layer/devicedetector.min.js',
         base_url + '/resources/assets/js/layer/touchswipe.js',
+        base_url + '/resources/assets/js/layer/bootstrap3-typeahead.min.js',
+        base_url + '/resources/assets/js/layer/tagsinput.min.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/bild/js/layer/layer.js')
     .scripts([
@@ -36,8 +38,8 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/devicedetector.min.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/bild/js/layer/layer-locale.js')
-    .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/bild/css/layer/layer.css')
-    .sass(__dirname + '/Resources/assets/sass/layer/layer-responsible.scss', 'whitelabel/bild/css/layer/layer-responsible.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/_layer.scss', 'whitelabel/bild/css/layer/layer.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/_layer-responsible.scss', 'whitelabel/bild/css/layer/layer-responsible.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/bild/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/bild/css/bild.css')
     .styles([
