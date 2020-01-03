@@ -14,13 +14,13 @@ interface DashboardRepository
 
     public function calculateResponseData($result, $data, $stack);
 
-    public function loadClickRate($whitelabel);
+    public function loadClickRate($whitelabel, $start, $end);
 
-    public function loadOpenRate($whitelabel);
+    public function loadOpenRate($whitelabel, $start, $end);
 
-    public function loadClickRateauto($whitelabel);
+    public function loadClickRateauto($whitelabel, $start, $end);
 
-    public function loadOpenRateauto($whitelabel);
+    public function loadOpenRateauto($whitelabel, $start, $end);
 
     public function getFilterCategory(string $category);
 
