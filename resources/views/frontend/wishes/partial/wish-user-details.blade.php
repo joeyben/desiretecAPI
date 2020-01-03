@@ -101,11 +101,3 @@
     @endforeach
 </div>
 @endif
-
-@section('after-scripts')
-    <script type="application/javascript">
-        $(document).ready(function() {
-            alert("document ready occurred!");
-        });
-    </script>
-@endsection
