@@ -1283,7 +1283,7 @@ p.kwp-info {
       border-bottom: 1px solid $master-grey-light;
       color: $master-primary;
       border-radius: 0;
-      padding: 0 10px;
+      padding: .3em; // fix for firefox
       font-size: 14px;
       display: block;
       width: 100%;
