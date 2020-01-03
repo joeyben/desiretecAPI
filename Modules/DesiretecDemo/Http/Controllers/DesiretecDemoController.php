@@ -101,6 +101,8 @@ class DesiretecDemoController extends Controller
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
         $input = $request->all();
+        $is_autooffer = false;
+        $wishRepo = $wish;
         if ($request->failed()) {
             $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
             $html = view('desiretecdemo::' . $layer)->with([
@@ -122,19 +124,31 @@ class DesiretecDemoController extends Controller
 
         $wish = $this->createWishFromLayer($request, $wish);
 
-        $wishJob = (new callTrafficsApi($wish->id))->delay(Carbon::now()->addSeconds(0));
-        dispatch($wishJob);
+        $wishRepo->callTraffics($wish->id);
+
+        $view = \View::make('wishes::emails.autooffer',
+            [
+                'url'=> $wish->whitelabel->domain . '/offer/olist/' . $wish->id . '/' . $newUser->token->token
+            ]
+        );
+        $contents = $view->render();
 
         $details = [
             'email' => $newUser->email,
             'token' => $newUser->token->token,
-            'type'  => 0
+            'type' => 0,
+            'email_name' => trans('autooffers.email.name'),
+            'email_subject' => trans('autooffer.email.subject'),
+            'email_content' => $contents,
+            'current_wl_email' => getCurrentWhiteLabelEmail()
         ];
-        dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
+        dispatch((new sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addMinutes(rand(1,2))));
+        $is_autooffer = true;
 
         $html = view('desiretecdemo::layer.created')->with([
             'token' => $newUser->token->token,
-            'id'    => $wish->id
+            'id'    => $wish->id,
+            'is_auto'  => $is_autooffer
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
