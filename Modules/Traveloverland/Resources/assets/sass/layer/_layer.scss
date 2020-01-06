@@ -1594,3 +1594,7 @@ p.kwp-info {
     outline: 0;
   }
 }
+
+select option:disabled {
+  color: $master-grey-light;
+}

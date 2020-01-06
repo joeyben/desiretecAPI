@@ -1631,3 +1631,7 @@ input[name="direkt_flug"]{
     font-weight: 600;
   }
 }
+
+select option:disabled {
+  color: $master-grey-light;
+}

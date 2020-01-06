@@ -1614,3 +1614,7 @@ and (max-device-width : 320px) {
 .dt_terms.hasError:after{
   border: 1px solid red !important;
 }
+
+select option:disabled {
+  color: $master-grey-light;
+}

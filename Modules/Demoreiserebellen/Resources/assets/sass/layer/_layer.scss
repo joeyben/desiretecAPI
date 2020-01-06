@@ -1534,3 +1534,7 @@ p.kwp-info {
     }
   }
 }
+
+select option:disabled {
+  color: $master-grey-light;
+}
