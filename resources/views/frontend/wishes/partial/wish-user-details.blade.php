@@ -1,11 +1,4 @@
 @if ($logged_in_user->hasRole('Seller'))
-    <div class="col-md-6 s2-first">
-        <h4>Reisewunsch Angaben</h4>
-        <p>Dies sind die Angaben zum Reisewunsch.</p>
-        <p><b>Kundennachricht:</b><br>
-            {{ $wish->description }}
-        </p>
-    </div>
     <note :wishid="{{ $wish->id }}" :wishnote="{{ json_encode($wish->note) }}"  :lang="{{ json_encode(trans('strings.wishdetails.memo')) }}"></note>
 @else
     <div class="col-md-12 s2-first">
@@ -22,7 +15,11 @@
 
     <div class="col-md-3">
         <i class="fal fa-plane-departure"></i>
-        <input class="data-content" value="{{ $wish->airport }}">
+        <input class="data-content airport-mousehover" value="{{ $wish->airport }}">
+        <span id="departure-mousehover"></span>
+        <div class="departure-tooltip">
+            {{ $wish->airport }}
+        </div>
     </div>
     <div class="col-md-3">
         <i class="fal fa-calendar-alt"></i>
@@ -39,7 +36,11 @@
 
     <div class="col-md-3">
         <i class="fal fa-plane-arrival"></i>
-        <input class="data-content" value="{{ $wish->destination }}">
+        <input class="data-content airport-mousehover" value="{{ $wish->destination }}">
+        <span id="arrival-mousehover"></span>
+        <div class="arrival-tooltip">
+            {{ $wish->destination }}
+        </div>
     </div>
     <div class="col-md-3">
         <i class="fal fa-users"></i>

@@ -430,7 +430,7 @@ $gutter: 30px;
                 margin-right: 0px;
               }
               select{
-                text-indent: 10px;
+                // text-indent: 10px;
               }
             }
           }
@@ -1270,7 +1270,7 @@ p.kwp-info {
         border-bottom: 1px solid $master-grey-light;
         color: $master-primary;
         border-radius: 0;
-        padding: .3em; // fix for firefox
+        padding: 0 10px;
         font-size: 14px;
         display: block;
         width: 100%;
@@ -1630,4 +1630,8 @@ input[name="direkt_flug"]{
     font-size: 11px;
     font-weight: 600;
   }
+}
+
+select option:disabled {
+  color: $master-grey-light;
 }

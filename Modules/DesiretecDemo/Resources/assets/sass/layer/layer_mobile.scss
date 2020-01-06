@@ -688,7 +688,7 @@ $eil-border-radius: 4px;
                 margin-right: 0px;
               }
               select{
-                text-indent: 10px;
+                // text-indent: 10px;
               }
             }
           }
@@ -1557,7 +1557,7 @@ p.kwp-info {
         border-bottom: 1px solid $master-primary;
         color: $master-grey-dark;
         border-radius: 0;
-        padding: .3em; // fix for firefox
+        padding: 0 10px;
         font-size: 18px;
         display: block;
         width: 100%;
@@ -1840,4 +1840,8 @@ input[name="direkt_flug"]{
   background: #e0eaf1!important;
   font-size: 11px;
   font-weight: 600;
+}
+
+select option:disabled {
+  color: $master-grey-light;
 }
