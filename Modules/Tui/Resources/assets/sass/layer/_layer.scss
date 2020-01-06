@@ -1,15 +1,23 @@
 @import "utils";
 @import "rangeslider";
-@import "bootstrap-select";
 @import "../variables";
 
 $gutter: 30px;
+$altfont: 'Comfortaa', cursive;
+$zindex: 10000;
+$eil-border-radius: 4px;
+$mastercolor: #08295E;
+$secondarycolor: #001e46;
+$mastergrey: #737373;
+$master-blue: #70CBF4;
+$fontcolor: #303030;
+
 
 @include make-columns(12, $gutter - 5px, 'kwp-');
 
 
 .rangeslider__fill{
-  background-color: $master-primary;
+  background-color: $mastercolor;
 }
 
 .kwp-col-ages {
@@ -19,6 +27,10 @@ $gutter: 30px;
   .kwp-show-ages & {
     display: block;
   }
+}
+
+.kwp-col-ages.kwp-show-ages{
+  display: block;
 }
 
 .kwp-close-button {
@@ -36,11 +48,11 @@ $gutter: 30px;
   height: 75px;
   position: fixed;
   display: none;
-  background: url(../../images/layer/pensil.png) no-repeat center / 70%;
+  background: $mastercolor url(../../images/layer/guy_2.png) no-repeat center / 60%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
-  color: #fff;
+  color: $fontcolor;
   box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.1);
   /*transition: all 0.5s ease;
    -webkit-transition: all 0.5s ease;
@@ -83,11 +95,11 @@ $gutter: 30px;
   background: rgba(255, 255, 255, 0.7);
   position: fixed;
   display: block;
-
+  overflow-y: scroll;
   width: 100%;
   height: 100%;
   top: 0;
-  z-index: $zindex-modal;
+  z-index: $zindex;
 
   font-size: 14px;
   line-height: 19px;
@@ -204,7 +216,7 @@ $gutter: 30px;
   margin: 25px auto 0 auto;
 
   border-radius: 0;
-  box-shadow: 0 0 4px 0px rgba(0,0,0,0.25);
+  box-shadow: 0 0 4px 0px rgba(0,0,0,0.15);
   transition: transform 0.1s ease-out, opacity 0.15s ease-out;
   position: relative;
 
@@ -236,10 +248,14 @@ $gutter: 30px;
 
   button[type=submit] {
     border-radius: 3px;
+    background: $mastercolor;
+
     text-align: center;
-    color: #fff;
+
+    color:  #fff;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 700;
+
     display: block;
     width: 100%;
     border: none;
@@ -248,11 +264,14 @@ $gutter: 30px;
     &:active {
     }
     &.error-button{
-      background: $brand-danger;
+      background: #D40E14;
     }
   }
 
-  input[type="text"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"], input[type="tel"], textarea {
+  /* TUI INPUT STYLES FOR WL */
+
+
+  input[type="text"], input[type="password"], input[type="email"], input[type="emailFeedback"], input[type="date"], input[type="number"], input[type="telnumber"],input[type="tel"], textarea {
     -webkit-transition: border-color .3s ease;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
@@ -269,21 +288,25 @@ $gutter: 30px;
     padding-left: 10px;
     outline: none;
     border: 1px solid #aaa;
-    color: $master-primary;
+    color: $mastercolor;
     font-size: 14px;
+    &:focus{
+      transition: border-color .3s ease;
+      border-color: $mastercolor;
+    }
   }
 
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin: 0;
+  }
+  
   input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="emailFeedback"]:hover, input[type="date"]:hover, input[type="number"]:hover, input[type="telnumber"]:hover, input[type="tel"]:hover, textarea:hover, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="emailFeedback"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="telnumber"]:focus, input[type="tel"]:focus, textarea:focus, .form-control:focus {
     -webkit-transition: border-color .3s ease;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
     transition: border-color .3s ease;
     border-color: $master-primary;
-  }
-
-  input[type="radio"],
-  input[type="checkbox"] {
-    margin: 0;
   }
 
   input:-internal-autofill-selected{
@@ -345,8 +368,8 @@ $gutter: 30px;
         }
         .button{
           background: transparent;
-          margin-bottom: 0;
           a{
+            background: $mastercolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -370,7 +393,6 @@ $gutter: 30px;
       .pax-group{
         border: 1px solid #b9b9b9;
         border-bottom: none;
-        box-shadow: 0 0 6px rgba(0,0,0,.3);
       }
       .travelers{
         background-color: #f3f0ec;
@@ -403,27 +425,26 @@ $gutter: 30px;
         left: -1px;
         border-top: none;
         width: calc(100% + 2px);
-        box-shadow: 0 0 6px rgba(0,0,0,.3);
         .kids{
           background: transparent;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #092a5e;
+              color: $mastercolor;
               padding: 0;
-              margin: 0 0 20px 0;
+              margin: 20px 0;
               font-size: 15px !important;
             }
             .kwp-col-3{
               background-color: #fff;
               padding: 0;
-              width: 30%;
-              margin-right: 12px;
+              width: 20%;
+              margin-right: 12px !important;
               &:last-child{
                 margin-right: 0px;
               }
               select{
-                // text-indent: 10px;
+                text-indent: 10px;
               }
             }
           }
@@ -437,8 +458,8 @@ $gutter: 30px;
         }
         .button{
           background: transparent;
-          margin-bottom: 0;
           a{
+            background: $mastercolor;
             width: 100%;
             padding: 10px;
             font-size: 18px;
@@ -448,40 +469,50 @@ $gutter: 30px;
             color: #fff;
           }
         }
+        hr{
+          border-top: 1px solid #b9b9b9;
+          margin-top: 10px;
+        }
       }
     }
   }
 
   .bootstrap-select {
-    > .dropdown-toggle{
+    >.dropdown-toggle{
       box-shadow: none;
       border: none;
-      background: transparent;
-      height: 25px;
-      color: $mastercolor;
-      &:focus{
-        background: transparent;
-        padding: 2px 10px;
+      padding: 2px 0;
+      background-color: transparent;
+      .caret{
+        border-color: $mastercolor !important;
+        border-right: 6px solid transparent !important;
+        border-left: 6px solid transparent !important;
+        border-bottom: none !important;
+        border-top: 6px dashed $mastercolor !important;
+        display: none;
       }
-      &:hover{
-        background: transparent !important;
-        padding: 2px 10px;
-        border: none !important;
+      .filter-option-inner-inner{
+        color: $mastercolor;
+        font-size: 14px;
+        font-weight: 500;
       }
     }
   }
+}
+
+.kwp.dt-modal-visible  {
 }
 
 .kwp-completed {
   h1 {
     font-size: 26px;
     margin: 15px 0;
-    color: #20355a;
+    color: $mastercolor;
   }
 
   p {
     font-size: 17px;
-    font-weight: 400;
+    font-weight: normal;
     line-height: 1.4;
   }
 
@@ -518,11 +549,13 @@ ul.kwp-form-errors {
 .kwp-logo {
   display: block;
   height: 50px;
+  background: transparent url(../../images/layer/logo.png) no-repeat left top;
+  /*******/
   position: absolute;
-  width: 30%;
+  width: 100%;
   left: 20px;
   top: 20px;
-  background-size: contain !important;
+  background-size: 95px;
 }
 
 
@@ -538,6 +571,13 @@ ul.kwp-form-errors {
 .kwp-header-content {
   margin-top: 65px;
 
+  h1 {
+    margin: 15px 0 0 0;
+    color:  $mastercolor;
+    font-size: 36px;
+    font-weight: 700;
+  }
+
   p {
     margin: 10px 0 0 0;
     color: #818181;
@@ -548,24 +588,29 @@ ul.kwp-form-errors {
 }
 
 .kwp-header {
-  background: transparent url(../../images/layer/header_overland.jpg) no-repeat center center;
+  background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
   min-height: 40px;
   background-size: cover;
   &.kwp-variant-eil-auto-tablet{
-    background: transparent url(../../images/layer/header_overland.jpg) no-repeat center center;
+    background: transparent url(../../images/layer/visual_ipad_smile_TUI.jpg) no-repeat center center;
     background-size: cover;
   }
   &.kwp-variant-eil-d-beach2 {
-    background-image: url(../../images/layer/visual_2_smile_TUI.jpg);
+    background-image: url(../../images/layer/visual_ipad_smile_TUI.jpg);
 
     .kwp-header-content {
       p {
         text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
         color: #333;
       }
+
+      h1 {
+
+      }
     }
   }
 }
+
 
 .kwp-minimal {
   .kwp-footer.kwp-with-expansion {
@@ -586,6 +631,11 @@ ul.kwp-form-errors {
     padding-right: 5px;
   }
 }
+
+.kwp-header {
+  padding: $gutter;
+}
+
 
 .kwp-content-extra {
   overflow: hidden;
@@ -620,7 +670,7 @@ ul.kwp-form-errors {
 }
 .kwp-footer {
   &.kwp-with-expansion {
-    border-top: solid 2px $master-primary;
+    border-top: solid 2px #FCE237;
     padding-top: 40px;
   }
 }
@@ -628,7 +678,7 @@ ul.kwp-form-errors {
 .kwp-btn-expand {
   color: #252525;
   background-color: #DCDCDC;
-  font-weight: 400;
+  font-weight: bold;
   text-align: center;
   display: block;
   margin: 0 -30px;
@@ -650,7 +700,7 @@ ul.kwp-form-errors {
 }
 
 p.kwp-info {
-  font-weight: 400;
+  font-weight: bold;
   padding: 0;
   margin: 0 0 5px 0;
 }
@@ -660,6 +710,9 @@ p.kwp-info {
   min-height: 150px;
   background: #f2f2f2;
   height: calc(100% - 40px);
+  form, .kwp-minimal{
+    height: 100%;
+  }
   .kwp-close{
     display: none;
   }
@@ -734,11 +787,10 @@ p.kwp-info {
   }
   p{
     padding-left: 40px;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 12px;
     line-height: 1.3em;
-    color: #000;
     a {
+      color: $brand-primary !important;
       text-decoration: none;
     }
     #agb_link, #datenschutz{
@@ -748,7 +800,7 @@ p.kwp-info {
     }
   }
   label {
-    font-weight: 400;
+    font-weight: normal;
     display: inline-block;
     color: #a7a7a7;
     margin: 0;
@@ -775,9 +827,38 @@ p.kwp-info {
   .master-icon--aircraft-down, .master-icon--location-fill{
     display: none;
   }
+  .bootstrap-select>.dropdown-toggle{
+    box-shadow: none;
+    border: none;
+    padding: 2px 0;
+    background-color: transparent;
+    .caret{
+      border-color: $mastercolor !important;
+      border-right: 6px solid transparent !important;
+      border-left: 6px solid transparent !important;
+      border-bottom: none !important;
+      border-top: 6px dashed $mastercolor !important;
+      display: none;
+    }
+    .filter-option-inner-inner{
+      color: $mastercolor;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
   .open .btn-default.dropdown-toggle{
     background-color: transparent;
     outline: 0;
+  }
+  .bootstrap-select{
+    div.dropdown-menu {
+      max-height: 300px !important;
+      .inner {
+        &.open{
+          overflow-y: initial !important;
+        }
+      }
+    }
   }
 }
 .kwp-custom-select {
@@ -843,7 +924,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid #fff;
+  border: 10px solid $mastercolor;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1004,7 +1085,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $mastercolor;
     }
     .text-hidden{
       padding: 5px 0;
@@ -1025,7 +1106,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $mastercolor;
     }
   }
   .description{
@@ -1039,7 +1120,7 @@ p.kwp-info {
       color: #a0a0a0;
       padding-left: 10px;
       padding-top: 5px;
-      font-weight: 400;
+      font-weight: normal;
       margin: 0;
     }
     i{
@@ -1066,7 +1147,7 @@ p.kwp-info {
         right: 10px;
         top: 30px;
         font-size: 16px;
-        color: #092a5e;
+        color: $mastercolor;
       }
     }
   }
@@ -1083,7 +1164,7 @@ p.kwp-info {
     width: auto;
     display: none;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: bold;
     color: #fff;
     margin: 5px 5px 0 0;
     line-height: 1.2em;
@@ -1132,7 +1213,7 @@ p.kwp-info {
           h1{
             margin: 0px;
             padding: 5px 0;
-            color: #fff;
+            color: $mastercolor;
             position: absolute;
             bottom: 0px;
             font-size: 26px;
@@ -1154,11 +1235,10 @@ p.kwp-info {
       margin: 25px auto 0;
 
       .kwp-middle{
-        background: #fff;
-        padding: 10px 20px;
+        background: #E2F3FE;
+        padding: 5px 20px;
+        border-bottom: 1px solid $mastercolor;
         font-size: 16px;
-        font-weight: 400;
-        border-bottom: 1px solid $master-grey-light;
       }
 
       .kwp-form-errors{
@@ -1170,7 +1250,7 @@ p.kwp-info {
         color: #a0a0a0;
         padding-left: 10px;
         padding-top: 5px;
-        font-weight: 400;
+        font-weight: normal;
         margin: 0;
       }
       input[type="checkbox"]{
@@ -1182,7 +1262,7 @@ p.kwp-info {
           display: inline-block;
           height: 20px;
           width: 20px;
-          border: 1px solid $master-primary;
+          border: 1px solid #737373;
           border-radius: 2px;
           background-color: #fff;
           background-size: 20px;
@@ -1193,6 +1273,8 @@ p.kwp-info {
       }
       input[type="checkbox"]:checked{
         &:after{
+          border: 1px solid #092A59;
+          background-color: #092A59;
           background-image: url(../../svg/check-white.svg);
         }
       }
@@ -1201,11 +1283,10 @@ p.kwp-info {
       h1{
         font-size: 20px;
         margin: 0px;
-        color:#fff;
+        color:$mastercolor;
         padding: 8px 0;
         font-weight: bold;
         text-align: center;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
       }
     }
     .kwp-body{
@@ -1243,13 +1324,13 @@ p.kwp-info {
     .kwp-close{
       width: 25px;
       height: 25px;
-      background: transparent url(../../svg/times_light.svg) no-repeat center center;
+      background: transparent url(../../svg/times_dark.svg) no-repeat center center;
       top: 10px;
       right: 10px;
       z-index: 2;
     }
     .dt-modal-agb .kwp-close, .kwp-close.dark {
-      background: transparent url(../../svg/times_light.svg) no-repeat center center;
+      background: transparent url(../../svg/times_dark.svg) no-repeat center center;
     }
     .dt-modal-agb .kwp-close{
       width: 50px;
@@ -1282,11 +1363,11 @@ p.kwp-info {
         height: 25px;
         line-height: 1.5em;
         background-color: transparent;
-        font-weight: 400;
-        border-bottom: 1px solid $master-grey-light;
-        color: $master-primary;
+        font-weight: 500;
+        border-bottom: 1px solid $mastergrey;
+        color: $mastercolor;
         border-radius: 0;
-        padding: 0 10px;
+        padding: .3em; // fix for firefox
         font-size: 14px;
         display: block;
         width: 100%;
@@ -1315,7 +1396,7 @@ p.kwp-info {
             margin-bottom: 0px;
             font-size: 14px !important;
             color: #4c4c4c;
-            font-weight: 00;
+            font-weight: 600;
             padding-left: 0;
             padding-top: 0;
           }
@@ -1327,7 +1408,7 @@ p.kwp-info {
           margin-bottom: 0px;
           padding: 3px 0;
           font-size: 14px;
-          color: #17212b;
+          color: $mastercolor;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1348,7 +1429,7 @@ p.kwp-info {
             height: 25px;
             background: #fff;
             cursor: pointer;
-            border: 2px solid $master-primary;
+            border: 2px solid $mastercolor;
             border-radius: 50%;
           }
           &::-moz-range-thumb {
@@ -1383,29 +1464,29 @@ p.kwp-info {
       }
       .haserrors{
         .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
-          border-color: $brand-danger;
+          border-color: #D40E14;
         }
 
         input[type="checkbox"]{
           &:after{
-            border-color: $brand-danger;
+            border-color: #D40E14;
           }
         }
         ~ .rangeslider--horizontal{
-          background: $brand-danger;
+          background: #D40E14;
           .rangeslider__handle{
-            border-color: $master-primary;
+            border-color: #D40E14;
           }
         }
         .dd-trigger{
-          border-color: $brand-danger;
+          border-color: #D40E14;
           i{
-            color: $brand-danger;
+            color: #D40E14;
           }
         }
       }
       .haserrors + i{
-        color: $brand-danger;
+        color: #D40E14;
 
       }
     }
@@ -1417,15 +1498,13 @@ p.kwp-info {
       background: none;
       background-color: transparent;
       font-weight: 500;
-      border-bottom: 1px solid $master-grey-light;
+      border-bottom: 1px solid $mastergrey;
       border-radius: 0;
       padding: 0 10px;
       font-size: 14px;
-      color: #17212b;
+      color: $mastercolor;
     }
-    .kwp .duration-more input[type="text"]{
-      padding: 0 5px !important;
-    }
+
     .kwp-custom-select{
       #catering{
         padding: 0;
@@ -1496,7 +1575,7 @@ p.kwp-info {
     .email-col{
       margin: 5px 0;
     }
-
+  
   .rangeslider--horizontal{
     height: 10px;
     .rangeslider__handle{
@@ -1507,114 +1586,27 @@ p.kwp-info {
   }
 
 
-.category-col select{
-  border: none !important;
-  padding-top: 0;
-  background: white;
-}
-.category-col{
-  border-bottom: 1px solid #b9b9b9;
-}
-.duration-col{
-  width: calc(38.5% - 10px);
-  margin-right: 12px !important;
-}
-.class-col{
-  width: calc(29% - 10px);
-}
-.pax-col{
-  width: calc(33.5% - 10px);
-  margin-right: 12px !important;
-}
-.error-input,.email-col span{
+.error-input{
   display: block;
-  background: $brand-danger;
+  background: #ED1C24 !important;
   padding: 0 10px;
   color: #fff;
 }
 .dt_terms.hasError:after{
-  border: 1px solid $brand-danger !important;
-}
-.description textarea{
-  color: black;
+  border: 1px solid red !important;
 }
 
-
-//
-// Dropdown menus
-// --------------------------------------------------
-.dt-modal{
-
-  // Custom select
-  .custom-select{
-    margin-top: 5px;
-    padding-left: 5px;
-    color: $master-primary;
-    border: none;
-    border-bottom: 1px solid $master-grey-light;
-  }
-
-  // Customize bootstrap
+.dt-modal {
   .bootstrap-tagsinput {
     padding: 0;
     border: none!important;
     box-shadow: none!important;
     min-width: 100%;
   }
-  .bootstrap-tagsinput .tag {
-    color: #46799b;
-    background: #e0eaf1;
-    font-size: 11px;
-    font-weight: 600;
-    margin-right: 2px;
-    display: inline-block;
-    font-size: 11px;
-    border-radius: 5px;
-    border: 1px solid #eee;
-  }
-
-  // Bootstrap css copy
-  .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    display: none;
-    float: left;
-    min-width: 160px;
-    padding: 5px 0;
-    margin: 2px 0 0;
-    font-size: 14px;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 4px;
-    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
-  }
-  .dropdown-menu>li {
-    width: 100%;
-  }
-  .dropdown-menu>li>a {
-    display: block;
-    padding: 3px 20px;
-    clear: both;
-    font-weight: 400;
-    line-height: 1.6;
-    color: #333;
-    white-space: nowrap;
-  }
-  .dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{
-    color: #fff;
-    text-decoration: none;
-    background-color: #3097d1;
-    outline: 0;
-  }
 }
-
-select option:disabled {
-  color: $master-grey-light;
+.bootstrap-tagsinput .tag {
+  color: #46799b!important;
+  background: #e0eaf1!important;
+  font-size: 11px;
+  font-weight: 600;
 }

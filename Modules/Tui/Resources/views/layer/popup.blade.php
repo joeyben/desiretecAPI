@@ -1,3 +1,9 @@
+@isset($color)
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+@endisset
+
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 <div class="kwp-middle">
@@ -43,21 +49,21 @@
                             </script>
                         @endforeach
                 @endif
-                <i class="fas fa-map-marker-alt"></i>
+                <i class="fal fa-globe-europe"></i>
             </div>
 
-            <div class="kwp-col-4">
+            <div class="kwp-col-4 airport">
                 {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
                 {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('tui::layer.placeholder.airport'), 'required' => 'required']) }}
+                <i class="fal fa-home"></i>
                 @if ($errors->any() && $errors->get('airport'))
-                          @foreach ($errors->get('airport') as $error)
-                                <span class="error-input">{{ $error }}</span>
-                                <script>
-                                    dt.Tracking.rawEvent('form_error', 'airport', '{{ $error }}');
-                                </script>
-                          @endforeach
+                    @foreach ($errors->get('airport') as $error)
+                        <span class="error-input">{{ $error }}</span>
+                        <script>
+                            dt.Tracking.rawEvent('form_error', 'airport', '{{ $error }}');
+                        </script>
+                    @endforeach
                 @endif
-                <i class="fas fa-plane-departure"></i>
             </div>
 
         </div>
@@ -68,8 +74,8 @@
                     <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
                     <span class="duration-time dd-trigger">
                         <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
-                        <i class="fas fa-calendar-alt"></i>
-                        <i class="master-icon--close triggered"></i>
+                        <i class="fal fa-calendar-alt not-triggered"></i>
+                        <i class="fal fa-times triggered"></i>
                     </span>
                     <div class="duration-more">
                         <div class="kwp-col-4">
@@ -82,9 +88,7 @@
                                         dt.Tracking.rawEvent('form_error', 'earliest_start', '{{ $error }}');
                                     </script>
                                 @endforeach
-
                             @endif
-                            <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
@@ -97,14 +101,12 @@
                                     </script>
                                 @endforeach
                             @endif
-                            <i class="master-icon--calendar-month"></i>
                         </div>
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
                                 {{ Form::select('duration', array_merge(['' => trans('tui::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
-                            <i class="master-icon--time"></i>
                         </div>
                         <div class="clearfix"></div>
                         <hr>
@@ -120,8 +122,8 @@
                     <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                     <span class="travelers dd-trigger">
                         <span class="txt">2 Erwachsener</span>
-                         <i class="fas fa-users"></i>
-                         <i class="master-icon--close triggered"></i>
+                        <i class="fal fa-users not-triggered"></i>
+                        <i class="fal fa-times triggered"></i>
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-12">
@@ -129,7 +131,7 @@
                             <div class="kwp-custom-select">
                                 {{ Form::select('adults', $adults_arr , key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
-                            <i class="master-icon--user-family"></i>
+                            <i class="fal fa-users"></i>
                         </div>
                         <div class="kwp-col-12 kids" style="position: relative;">
                             <div class="kwp-col-12">
@@ -137,7 +139,7 @@
                                 <div class="kwp-custom-select">
                                     {{ Form::select('kids', $kids_arr, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                                 </div>
-                                <i class="master-icon--baby"></i>
+                                <i class="fal fa-child"></i>
                             </div>
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
@@ -261,7 +263,7 @@
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('tui::layer.general.catering'), ['class' => 'control-label required']) }}
                     {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'selectpicker']) }}
-                <i class="master-icon--chevron-down"></i>
+                <i class="far fa-chevron-down"></i>
             </div>
 
         </div>
@@ -270,7 +272,7 @@
             <div class="kwp-col-12 description">
                 {{ Form::label('description', trans('tui::layer.general.description'), ['class' => 'control-label required']) }}
                 {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('tui::layer.placeholder.description')]) }}
-                <i class="master-icon--calendar-month"></i>
+                <i class="fal fa-pencil"></i>
             </div>
         </div>
 
@@ -278,19 +280,19 @@
             <div class="kwp-col-4 email-col">
                 {{ Form::label('email', trans('tui::layer.general.email'), ['class' => 'control-label']) }}
                 {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('tui::layer.placeholder.email'), 'required' => 'required']) }}
-                <i class="master-icon--mail"></i>
+                <i class="fal fa-envelope"></i>
                 <div class="kwp-form-email-hint"></div>
                 @if ($errors->any() && $errors->get('email'))
-                           @foreach ($errors->get('email') as $error)
-                                  <span class="error-input">{{ $error }}</span>
-                                    <script>
-                                        dt.Tracking.rawEvent('form_error', 'email', '{{ $error }}');
-                                    </script>
-                           @endforeach
+                    @foreach ($errors->get('email') as $error)
+                        <span class="error-input">{{ $error }}</span>
+                        <script>
+                            dt.Tracking.rawEvent('form_error', 'email', '{{ $error }}');
+                        </script>
+                    @endforeach
                 @endif
             </div>
-            <div class="kwp-col-4 white-col">
-                <button id="submit-button" type="submit">Reisewunsch abschicken</button>
+            <div class="kwp-col-4 white-col submit-col">
+                <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
             </div>
 
 
@@ -398,9 +400,16 @@
                 },
             });
 
+            $(window).on('resize', function() {
+                dt.adjustResponsive();
+            });
+
             $(document).ready(function(){
-                //autocomplete()
                 $('.selectpicker').selectpicker();
+
+                //autocomplete()
+                dt.applyBrandColor();
+                dt.adjustResponsive();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -515,6 +524,7 @@
                 });
                 $("#latest_return").trigger("change");
             });
+
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
@@ -525,8 +535,8 @@
         </script>
 
         <div class="kwp-row">
-            <div class="kwp-col-12 white-col">
-                <div class="kwp-agb ">
+            <div class="kwp-col-12  white-col footer-col">
+                <div class="kwp-agb">
                 @php
                    $terms_class = 'dt_terms'
                 @endphp
