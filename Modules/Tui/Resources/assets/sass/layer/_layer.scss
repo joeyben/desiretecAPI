@@ -476,31 +476,6 @@ $fontcolor: #303030;
       }
     }
   }
-
-  .bootstrap-select {
-    >.dropdown-toggle{
-      box-shadow: none;
-      border: none;
-      padding: 2px 0;
-      background-color: transparent;
-      .caret{
-        border-color: $mastercolor !important;
-        border-right: 6px solid transparent !important;
-        border-left: 6px solid transparent !important;
-        border-bottom: none !important;
-        border-top: 6px dashed $mastercolor !important;
-        display: none;
-      }
-      .filter-option-inner-inner{
-        color: $mastercolor;
-        font-size: 14px;
-        font-weight: 500;
-      }
-    }
-  }
-}
-
-.kwp.dt-modal-visible  {
 }
 
 .kwp-completed {
@@ -519,10 +494,6 @@ $fontcolor: #303030;
   a {
     color: #DB2128;
   }
-}
-
-.kwp-date-input {
-  //background: #fff url(../../images/layer/calendar.png) no-repeat right 2px;
 }
 
 ul.kwp-form-errors {
@@ -1365,9 +1336,9 @@ p.kwp-info {
         background-color: transparent;
         font-weight: 500;
         border-bottom: 1px solid $mastergrey;
-        color: $mastercolor;
+        color: $master-primary;
         border-radius: 0;
-        padding: .3em; // fix for firefox
+        padding: 0 10px;
         font-size: 14px;
         display: block;
         width: 100%;
@@ -1408,7 +1379,6 @@ p.kwp-info {
           margin-bottom: 0px;
           padding: 3px 0;
           font-size: 14px;
-          color: $mastercolor;
           font-weight: 500;
           line-height: 1.5em;
           display: block;
@@ -1502,12 +1472,12 @@ p.kwp-info {
       border-radius: 0;
       padding: 0 10px;
       font-size: 14px;
-      color: $mastercolor;
+      color: $master-primary;
     }
 
     .kwp-custom-select{
       #catering{
-        padding: 0;
+        padding-left: 5px;
       }
     }
     .kwp textarea{

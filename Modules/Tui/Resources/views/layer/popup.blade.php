@@ -262,7 +262,9 @@
 
             <div class="kwp-col-3 white-col catering">
                 {{ Form::label('catering', trans('tui::layer.general.catering'), ['class' => 'control-label required']) }}
-                    {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'selectpicker']) }}
+                <div class="kwp-custom-select">
+                    {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'form-control box-size']) }}
+                </div>
                 <i class="far fa-chevron-down"></i>
             </div>
 
