@@ -300,6 +300,13 @@
 
 <section class="section-contact">
     <div class="container">
+        <div class="col-md-6 s2-first">
+            <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
+            <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
+            <p><b>Kundennachricht:</b><br>
+                {{ $wish->description }}
+            </p>
+        </div>
         @include('frontend.wishes.partial.wish-user-details')
     </div>
 
@@ -317,8 +324,8 @@
                                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
                                 <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
                             </div>
-                            <i class="fal fa-plus"></i>
-                            <i class="fal fa-minus"></i>
+                            <span class="glyphicon glyphicon-plus"></span></a>
+                            <span class="glyphicon glyphicon-minus"></span></a>
                     </h4>
                 </div>
 
