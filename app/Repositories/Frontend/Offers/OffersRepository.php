@@ -53,6 +53,7 @@ class OffersRepository extends BaseRepository
                 config('module.offers.table') . '.status',
                 config('module.offers.table') . '.created_by',
                 config('module.offers.table') . '.created_at',
+                config('module.offers.table') . '.agent_id',
                 config('access.users_table') . '.first_name as first_name',
                 config('access.users_table') . '.last_name as last_name',
                 config('module.wishes.table') . '.id as wish_id',

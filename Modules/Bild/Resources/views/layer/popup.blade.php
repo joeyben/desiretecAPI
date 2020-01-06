@@ -199,6 +199,35 @@
 
     <div class="kwp-footer">
         <script>
+            $("#earliest_start, #latest_return").on('change paste keyup input', function(){
+                var earliest_start_arr = $("#earliest_start").val().split('.');
+                var latest_return_arr = $("#latest_return").val().split('.');
+                var earliest_start = new Date(earliest_start_arr[2], earliest_start_arr[1]-1, earliest_start_arr[0]);
+                var latest_return = new Date(latest_return_arr[2], latest_return_arr[1]-1, latest_return_arr[0]);
+                var diff_days = Math.round((latest_return-earliest_start)/(1000*60*60*24));
+                var diff_nights =  diff_days - 1;
+                var options = document.getElementById("duration").getElementsByTagName("option");
+                for (var i = 0; i < options.length; i++) {
+                    if(options[i].value.includes('-')){
+                        var days = options[i].value.split('-');
+                        if(days[1].length){
+                            (parseInt(days[0]) <= parseInt(diff_days))
+                                ? options[i].disabled = false
+                                : options[i].disabled = true;
+                        } else {
+                            (parseInt(days[0]) <= parseInt(diff_days))
+                                ? options[i].disabled = false
+                                : options[i].disabled = true;
+                        }
+                    } else {
+                        (parseInt(options[i].value) <= parseInt(diff_nights))
+                            ? options[i].disabled = false
+                            : options[i].disabled = true;
+                    }
+                }
+                return true;
+            });
+
             $('.kwp-btn-expand').click(function(e) {
                 e.preventDefault();
                 $(this).toggleClass('kwp-open');
@@ -268,9 +297,10 @@
             });
 
             $(document).ready(function(){
-                $('.selectpicker').selectpicker();
-                autocomplete();
-                modifyDOM();
+
+                dt.applyBrandColor();
+                dt.autocomplete();
+                dt.adjustResponsive();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -380,92 +410,19 @@
                     $(this).parents('.haserrors').removeClass('haserrors');
                     check_button();
                 });
+                $("#latest_return").trigger("change");
             });
 
             $(window).on('resize', function() {
-                modifyDOM();
+                dt.adjustResponsive();
             });
+
 
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
-            }
-
-            /**
-             * Autocomplete
-             */
-            var autocomplete = function(){
-                /* Destinations */
-                $('#destination').tagsinput({
-                    maxTags: 3,
-                    maxChars: 20,
-                    allowDuplicates: false,
-                    freeInput:false,
-                    typeahead: {
-                        autoSelect: false,
-                        minLength: 3,
-                        highlight: true,
-                        afterSelect: function(val) { this.$element.val(""); },
-                        source: function(query) {
-                            return $.get('https://bild.reisewunschservice.de/get-all-destinations', {query: query});
-                        }
-                    }
-                });
-                /* END Destinations */
-
-                /* Airports */
-                $('#airport').tagsinput({
-                    maxTags: 3,
-                    maxChars: 20,
-                    allowDuplicates: false,
-                    freeInput:false,
-                    typeahead: {
-                        autoSelect: false,
-                        minLength: 3,
-                        highlight: true,
-                        afterSelect: function(val) { this.$element.val(""); },
-                        source: function(query) {
-                            return $.get('https://bild.reisewunschservice.de/get-all-airports', {query: query});
-                        }
-                    }
-                });
-                /* END Airports */
-
-
-                $("#destination, #airport").on('itemAdded', function(event) {
-                    setTimeout(function(){
-                        $("input[type=text]",".bootstrap-tagsinput").val("");
-                    }, 1);
-                });
-
-
-            }
-
-            dt.applyBrandColor();
-
-            var modifyDOM = function(){
-                if( $(window).outerWidth() <= 768 ) {
-                    $("body").addClass('mobile-layer');
-                    $(".dt-modal").addClass('m-open');
-
-                    dt.PopupManager.isMobile = true;
-                    dt.PopupManager.layerShown = true;
-
-                    $(".kwp-header").css('background', brandColor);
-
-                    $('.error-input').siblings('i').css('bottom', '30px');
-
-                    $('.dt-modal .submit-col').detach().appendTo('.footer-col');
-                } else {
-                    $("body").removeClass('mobile-layer');
-                    $(".dt-modal").removeClass('m-open');
-
-                    $(".kwp-header").removeAttr('style');
-
-                    $('.footer-col .submit-col').detach().appendTo('.kwp-content .kwp-row:last-child');
-                }
-            }
+            };
 
         </script>
 

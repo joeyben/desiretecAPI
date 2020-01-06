@@ -39,4 +39,6 @@ return [
     'clickrate'                                 => 'Click-Rate (%)',
     'openrate'                                  => 'Open-Rate (%)',
     'openrate_manuell'                          => 'Open-Rate Angebot manuell',
+    'openrate_auto'                             => 'Open-Rate Angebot automatisch',
+    'clickrate_auto'                            => 'Click-Rate Angebot automatisch',
 ];

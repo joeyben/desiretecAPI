@@ -57,7 +57,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <input type="search" class="id-filter" placeholder="{{ trans('strings.wishlist.search') }}" v-model="id" @input="fetchWishes()">
+                        <input type="search" class="id-filter" placeholder="{{ trans('strings.wishlist.search') }}" v-model="filter" @input="fetchWishes()">
                     </div>
                 @endif
             </div>

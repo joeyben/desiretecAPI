@@ -20,6 +20,10 @@
         var cssPrimaryBtn = '.primary-btn { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; color: #fff !important; } ';
         var cssSecondaryBtn = '.secondary-btn { background: transparent !important; color: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
         $('head').append('<style>' + cssPrimaryBtn + cssSecondaryBtn + '</style>');
+        $(document).ready(function() {
+            "<?php echo $wish->airport; ?>".length <= 30 ? document.getElementById("departure-mousehover").remove() : '';
+            "<?php echo $wish->destination; ?>".length <= 30 ? document.getElementById("arrival-mousehover").remove() : '';
+        });
     </script>
 @endsection
 
@@ -296,6 +300,13 @@
 
 <section class="section-contact">
     <div class="container">
+        <div class="col-md-6 s2-first">
+            <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
+            <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
+            <p><b>Kundennachricht:</b><br>
+                {{ $wish->description }}
+            </p>
+        </div>
         @include('frontend.wishes.partial.wish-user-details')
     </div>
 
@@ -313,8 +324,8 @@
                                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
                                 <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
                             </div>
-                            <i class="fal fa-plus"></i>
-                            <i class="fal fa-minus"></i>
+                            <span class="glyphicon glyphicon-plus"></span></a>
+                            <span class="glyphicon glyphicon-minus"></span></a>
                     </h4>
                 </div>
 

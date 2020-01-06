@@ -30,6 +30,8 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'na
     Route::get('dashboard/exportw', 'DashboardController@exportw')->name('admin.dashboard.exportw');
     Route::get('dashboard/events/clickRate', 'OffersController@clickRate')->name('admin.dashboard.events.clickRate');
     Route::get('dashboard/events/openRate', 'OffersController@openRate')->name('admin.dashboard.events.openRate');
+    Route::get('dashboard/events/clickRateauto', 'OffersController@clickRateauto')->name('admin.dashboard.events.clickRateauto');
+    Route::get('dashboard/events/openRateauto', 'OffersController@openRateauto')->name('admin.dashboard.events.openRateauto');
     Route::get('dashboard/events/shareperMonth', 'OffersController@shareperMonth')->name('admin.dashboard.events.shareperMonth');
     Route::put('dashboard/event/save', 'OffersController@save')->name('admin.event.save');
     Route::get('dashboard/sellers', 'SellersController@index')->name('admin.dashboard.sellers');

@@ -62,6 +62,10 @@ input{
   @include placeholder-color($gray1);
 }
 
+textarea {
+  resize: vertical;
+}
+
 input:focus,
 select:focus,
 textarea:focus,

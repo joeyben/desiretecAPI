@@ -429,7 +429,7 @@ $fontcolor: #303030;
                 margin-right: 0px;
               }
               select{
-                text-indent: 10px;
+                // text-indent: 10px;
               }
             }
           }
@@ -1627,4 +1627,8 @@ and (max-device-width : 320px) {
   background: #e0eaf1!important;
   font-size: 11px;
   font-weight: 600;
+}
+
+select option:disabled {
+  color: $master-grey-light;
 }

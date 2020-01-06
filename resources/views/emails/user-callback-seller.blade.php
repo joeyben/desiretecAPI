@@ -21,6 +21,8 @@
                         <strong>Nachname:</strong> {{ $contact->last_name }}<br>
                         <strong>Tel.:</strong> {{ $contact->telephone }}<br>
                     </p>
+                    <br><br>
+                    {!! trans('email.contact.seller.wish_url', ['id' => $wish_id,'token' => $token, 'url' => url('/wish')]) !!}
 
                     @include('emails.layouts.footer')
                 </td>

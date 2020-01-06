@@ -450,7 +450,38 @@ class OffersController extends Controller
             }
 
             $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-            $result['clickrate'] = $this->dashboard->loadClickRate($whitelabelId);
+            $result['clickrate'] = $this->dashboard->loadClickRate($whitelabelId, $startDate, $endDate);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function clickRateauto(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
+
+            if (null === $whitelabelId) {
+                $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if (false === mb_strpos($url[0], 'mvp')) {
+                    $whitelabelId = config($url[0] . '.id');
+                }
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+
+            $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
+            $result['clickrate'] = $this->dashboard->loadClickRateauto($whitelabelId, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -481,7 +512,38 @@ class OffersController extends Controller
             }
 
             $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-            $result['openrate'] = $this->dashboard->loadOpenRate($whitelabelId);
+            $result['openrate'] = $this->dashboard->loadOpenRate($whitelabelId, $startDate, $endDate);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function openRateauto(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $startDate = null === $request->get('start') ? '' : $request->get('start');
+            $endDate = null === $request->get('end') ? '' : $request->get('end');
+
+            if (null === $whitelabelId) {
+                $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if (false === mb_strpos($url[0], 'mvp')) {
+                    $whitelabelId = config($url[0] . '.id');
+                }
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+
+            $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
+            $result['openrate'] = $this->dashboard->loadOpenRateauto($whitelabelId, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {

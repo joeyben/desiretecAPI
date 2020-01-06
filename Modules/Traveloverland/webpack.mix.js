@@ -38,18 +38,15 @@ mix.scripts(
         __dirname + '/Resources/assets/js/layer/layer.js',
         __dirname + '/Resources/assets/js/app.js',
     ], __dirname + '/../../public/whitelabel/traveloverland/js/layer/layer-locale.js')
-    .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/traveloverland/css/layer/layer.css')
-    .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/traveloverland/css/layer/layer_mobile.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/_layer.scss', 'whitelabel/traveloverland/css/layer/layer.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/_layer-responsible.scss', 'whitelabel/traveloverland/css/layer/layer-responsible.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/traveloverland/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/traveloverland/css/traveloverland.css')
     .styles([
         base_url + '/public/whitelabel/traveloverland/css/datepicker.css',
         base_url + '/public/whitelabel/traveloverland/css/layer/layer.css',
+        base_url + '/public/whitelabel/traveloverland/css/layer/layer-responsible.css',
     ], __dirname + '/../../public/whitelabel/traveloverland/css/layer/whitelabel.css')
-  .styles([
-      base_url + '/public/whitelabel/traveloverland/css/datepicker.css',
-      base_url + '/public/whitelabel/traveloverland/css/layer/layer_mobile.css',
-  ], __dirname + '/../../public/whitelabel/traveloverland/css/layer/whitelabel_mobile.css')
     .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/traveloverland/images/')
     .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/traveloverland/svg/');
 if (mix.inProduction()) {

@@ -4,6 +4,12 @@
     {{ trans('general.url.agent') }}
 @endsection
 
+@section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+    </script>
+@endsection
+
 @section('content')
 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog" role="document">
@@ -20,7 +26,7 @@
                 @include("frontend.agents.form")
             </div>
             <div class="modal-footer">
-                <div class="col-lg-12">
+                <div class="col-lg-12">p
                     {{ link_to_route('frontend.agents.index', trans('seller.agent.create.cancel'), [], ['class' => 'btn secondary-btn']) }}
                     {{ Form::button(trans('seller.agent.create.submit'), ['type' => 'submit','class' => 'btn primary-btn']) }}
                 </div>
