@@ -15,7 +15,7 @@ class AddNoteToWishes extends Migration
     {
         if (Schema::hasTable('wishes') && !Schema::hasColumn('wishes', 'note')) {
             Schema::table('wishes', function (Blueprint $table) {
-                $table->string('note')->nullable();
+                $table->string('note');
             });
         }
     }
