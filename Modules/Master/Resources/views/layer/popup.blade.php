@@ -213,6 +213,8 @@
                                 ? options[i].disabled = false
                                 : options[i].disabled = true;
                         }
+                    } else if (options[i].value == "exact" || options[i].value == "" || !options[i].value.length) {
+                        options[i].disabled = false;
                     } else {
                         (parseInt(options[i].value) <= parseInt(diff_nights))
                             ? options[i].disabled = false
@@ -314,9 +316,18 @@
                         weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
                         weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
                     },
-                    onSelect: function() {
-                        dt.endDate.setDate(this.getDate()+1);
-                        dt.endDate.setMinDate(this.getDate());
+                    onSelect: function(date) {
+                        var dateFrom = this.getDate();
+                        var dateTo = dt.endDate.getDate();
+                        if(dateFrom >= dateTo){
+                            var d = date.getDate();
+                            var m = date.getMonth();
+                            var y = date.getFullYear();
+                            var updatedDate = new Date(y, m, d);
+                            dt.endDate.setMinDate(updatedDate);
+                            updatedDate = new Date(y, m, d+7);
+                            dt.endDate.setDate(updatedDate);
+                        }
                     },
                     onOpen: function() {
 
