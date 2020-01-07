@@ -3,6 +3,7 @@
 namespace App\Http\Composers;
 
 use App\Models\Agents\Agent;
+use App\Services\Flag\Src\Flag;
 use Auth;
 use Illuminate\View\View;
 
@@ -18,15 +19,26 @@ class GlobalComposer
      */
     public function compose(View $view)
     {
-        $id = Auth::id();
-        $agents = Agent::where('user_id', $id)->get();
+        $agents = null;
+        $loggedAvatar = null;
+        $loggedAgent = null;
 
-        $loggedAvatar = Agent::where('user_id', $id)->where('status', 'Active')->value('avatar');
-        $loggedAgent = Agent::where('user_id', $id)->where('status', 'Active')->value('display_name');
+        if (Auth::guard('web')->check()) {
+            $agents = Agent::where('user_id', Auth::guard('web')->user()->id)->get();
+
+            if ($agents->first()) {
+                if (!Auth::guard('agent')->check()) {
+                    Auth::guard('agent')->loginUsingId($agents->first()->id, true);
+                }
+
+                $loggedAvatar = Auth::guard('agent')->user()->avatar;
+                $loggedAgent = Auth::guard('agent')->user()->display_name;
+            }
+        }
 
         $view->with(['logged_in_user' => access()->user(),
-                    'agents'          => $agents,
-                    'logged_agent'    => $loggedAgent,
-                    'logged_avatar'   => $loggedAvatar]);
+            'agents'          => $agents,
+            'logged_agent'    => $loggedAgent,
+            'logged_avatar'   => $loggedAvatar]);
     }
 }
