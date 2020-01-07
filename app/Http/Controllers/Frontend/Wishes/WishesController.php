@@ -143,14 +143,10 @@ class WishesController extends Controller
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
 
-        if ($this->session->has('agent_id')) {
-            $agent = Agent::find((int) $this->session->get('agent_id'));
-        }
-
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
-            'agent'              => $agent,
+            'agent'              => Auth::guard('agent')->user(),
             'agent_name'         => $agentName,
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,

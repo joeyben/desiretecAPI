@@ -51,7 +51,7 @@
                         <ul class="dropdown-menu" role="menu">
                             @foreach($agents as $agent)
                             <li>
-                                <a href="{{route('frontend.agents.status', $agent->id)}}" >
+                                <a href="{{ route('agents.switch', ['id' => $agent->id]) }}" >
                                     <img class="agent-dropdown-img" src="{{ Storage::disk('s3')->url('img/agent/' . $agent->avatar) }}">
                                     <span>{{ $agent->name }}</span>
                                 </a>

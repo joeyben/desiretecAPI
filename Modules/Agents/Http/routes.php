@@ -1,5 +1,5 @@
 <?php
 
 Route::group(['middleware' => 'web', 'prefix' => 'agents', 'namespace' => 'Modules\Agents\Http\Controllers'], function () {
-    Route::get('/', 'AgentsController@index');
+    Route::get('/switch/{id}','LoginController@switch')->name('agents.switch');
 });
