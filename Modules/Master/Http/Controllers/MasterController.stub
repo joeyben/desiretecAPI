@@ -19,6 +19,7 @@ class $MODULE$Controller extends Controller
     protected $kids = [];
     protected $catering = [];
     protected $duration = [];
+    protected $ages = [];
 
     private $whitelabelId;
 
@@ -39,6 +40,7 @@ class $MODULE$Controller extends Controller
         $this->attachements = $attachements;
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->whitelabelId = \Config::get('$MODULESMAL$.id');
@@ -79,6 +81,7 @@ class $MODULE$Controller extends Controller
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
+            'ages_arr'     => $this->ages,
             'request'      => $request->all(),
             'color'        => $whitelabel['color'],
         ])->render();
@@ -97,6 +100,8 @@ class $MODULE$Controller extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $whitelabel = $this->whitelabel->getByName('Tui');
+
         $input = $request->all();
         if ($request->failed()) {
             $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
@@ -106,6 +111,8 @@ class $MODULE$Controller extends Controller
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
+                'ages_arr'     => $this->ages,
+                'color'        => $whitelabel['color'],
                 'request' => $request->all()
             ])->render();
 

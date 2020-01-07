@@ -133,7 +133,7 @@ class LastminuteController extends Controller
             'token' => $newUser->token->token,
             'type'  => 0
         ];
-        dispatch((new sendAutoOffersMail($details, $wish->id))->delay(Carbon::now()->addSeconds(1)));
+        dispatch((new sendAutoOffersMail($details, $wish->id, $whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
 
         $html = view('lastminute::layer.created')->with([
             'token' => $newUser->token->token,

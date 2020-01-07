@@ -36,18 +36,15 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/devicedetector.min.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/tui/js/layer/layer-locale.js')
-    .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/tui/css/layer/layer.css')
-    .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/tui/css/layer/layer_mobile.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/_layer.scss', 'whitelabel/tui/css/layer/layer.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/_layer-responsive.scss', 'whitelabel/tui/css/layer/layer-responsive.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/tui/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/tui/css/tui.css')
     .styles([
         base_url + '/public/whitelabel/tui/css/datepicker.css',
         base_url + '/public/whitelabel/tui/css/layer/layer.css',
+        base_url + '/public/whitelabel/tui/css/layer/layer-responsive.css',
     ], __dirname + '/../../public/whitelabel/tui/css/layer/whitelabel.css')
-    .styles([
-        base_url + '/public/whitelabel/tui/css/datepicker.css',
-        base_url + '/public/whitelabel/tui/css/layer/layer_mobile.css',
-    ], __dirname + '/../../public/whitelabel/tui/css/layer/whitelabel_mobile.css')
     .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/tui/images/')
     .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/tui/svg/');
 if (mix.inProduction()) {

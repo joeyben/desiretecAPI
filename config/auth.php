@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Access\User\User;
+use Modules\Agents\Entities\Agent;
 
 return [
 
@@ -47,6 +48,11 @@ return [
             'driver'   => 'jwt',
             'provider' => 'users',
         ],
+
+        'agent' => [
+            'driver'   => 'session',
+            'provider' => 'agents',
+        ],
     ],
 
     /*
@@ -70,6 +76,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model'  => User::class,
+        ],
+
+        'agents' => [
+            'driver' => 'eloquent',
+            'model'  => Agent::class,
         ],
 
         // 'users' => [
