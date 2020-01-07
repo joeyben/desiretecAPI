@@ -42,7 +42,7 @@
          this.note = this.wishnote;
          this.placeholderText = this.lang;
 
-         if (this.note == '') {
+         if (!this.note) {
             this.editMode = true;
          }
       },
