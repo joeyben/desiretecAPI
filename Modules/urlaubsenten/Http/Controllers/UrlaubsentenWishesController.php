@@ -76,6 +76,7 @@ class UrlaubsentenWishesController extends Controller
         $this->whitelabelId = \Config::get('urlaubsenten.id');
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->categories = $categories;
     }
@@ -119,6 +120,7 @@ class UrlaubsentenWishesController extends Controller
             'offer_url'          => $this::OFFER_URL,
             'kids_arr'           => $this->kids,
             'duration_arr'       => $this->duration,
+            'ages_arr'           => $this->ages,
             'adults_arr'         => $this->adults,
             'is_owner'           => $isOwner,
             'color'              => $whitelabel['color'],
