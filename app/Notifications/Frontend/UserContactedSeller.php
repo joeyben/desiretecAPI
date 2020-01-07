@@ -80,7 +80,9 @@ class UserContactedSeller extends Notification
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,
-                    'contact'          => $this->contact
+                    'contact'          => $this->contact,
+                    'wish_id' => $this->wish_id,
+                    'token' => $this->token
                 ]);
     }
 
