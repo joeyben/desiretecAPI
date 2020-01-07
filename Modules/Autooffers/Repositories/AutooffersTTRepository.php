@@ -214,7 +214,7 @@ class AutooffersTTRepository extends BaseRepository
         curl_close($curl);
 
         $this->data = json_decode($result, true)['PackageOffersRS'];
-        $this->offers = \array_key_exists('Offer', $this->data['Offers']) ? $this->data['Offers']['Offer'] : [];
+        $this->offers = \array_key_exists('Offers', $this->data) && \array_key_exists('Offer', $this->data['Offers']) ? $this->data['Offers']['Offer'] : [];
         $this->setGiataIds();
         $this->setReviews();
         $this->setHotelGeo();
