@@ -1,6 +1,5 @@
 @import "utils";
 @import "rangeslider";
-@import "bootstrap-select";
 @import "../variables";
 
 $gutter: 30px;
@@ -448,25 +447,6 @@ $gutter: 30px;
             color: #fff;
           }
         }
-      }
-    }
-  }
-
-  .bootstrap-select {
-    > .dropdown-toggle{
-      box-shadow: none;
-      border: none;
-      background: transparent;
-      height: 25px;
-      color: $mastercolor;
-      &:focus{
-        background: transparent;
-        padding: 2px 10px;
-      }
-      &:hover{
-        background: transparent !important;
-        padding: 2px 10px;
-        border: none !important;
       }
     }
   }
