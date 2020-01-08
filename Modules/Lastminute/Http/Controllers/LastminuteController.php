@@ -128,12 +128,23 @@ class LastminuteController extends Controller
         $wishJob = (new callTTApi($wish->id))->delay(Carbon::now()->addSeconds(3));
         dispatch($wishJob);
 
+        $view = \View::make('wishes::emails.autooffer',
+            [
+                'url'=> $wish->whitelabel->domain . '/offer/olist/' . $wish->id . '/' . $newUser->token->token
+            ]
+        );
+        $contents = $view->render();
+
         $details = [
             'email' => $newUser->email,
             'token' => $newUser->token->token,
+            'email_name' => trans('autooffers.email.name'),
+            'email_subject' => trans('autooffer.email.subject'),
+            'email_content' => $contents,
+            'current_wl_email' => getCurrentWhiteLabelEmail(),
             'type'  => 0
         ];
-        dispatch((new sendAutoOffersMail($details, $wish->id, $whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
+        dispatch((new sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addSeconds(1)));
 
         $html = view('lastminute::layer.created')->with([
             'token' => $newUser->token->token,
