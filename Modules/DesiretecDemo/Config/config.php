@@ -2,7 +2,7 @@
 
 return [
     'name'                 => 'DesiretecDemo',
-    'id'                   => 197,
+    'id'                   => env('DESIRETECDEMO_ID', 167),
     'locale'               => 'de',
     'language_lines_table' => 'language_lines_desiretecdemo',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
