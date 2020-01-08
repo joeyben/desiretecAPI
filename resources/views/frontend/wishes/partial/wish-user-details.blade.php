@@ -1,15 +1,6 @@
 @if ($logged_in_user->hasRole('Seller'))
     <note :wishid="{{ $wish->id }}" :wishnote="{{ json_encode($wish->note) }}"  :lang="{{ json_encode(trans('strings.wishdetails.memo')) }}"></note>
-@else
-    <div class="col-md-12 s2-first">
-        <!--h4>Dein Reisewunsch</h4-->
-        <!--p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p-->
-        <p><b>Ihre Nachricht:</b><br>
-            {{ $wish->description }}
-        </p>
-    </div>
 @endif
-
 
 <div class="col-md-12 s2-second">
 

@@ -272,9 +272,9 @@
     <div class="container">
         @if ($logged_in_user->hasRole('Seller'))
             <div class="col-md-6 s2-first">
-                <h4>{{ trans('wish.details.subheadline.giving_wish') }}</h4>
-                <p>{{ trans('wish.details.subheadline.giving_wish_sub') }}</p>
-                <p><b>Kundennachricht:</b><br>
+                <h4>{{ trans('wish.details.subheadline.customer_wish') }}</h4>
+                <p>{{ trans('wish.details.subheadline.customer_wish_sub') }}</p>
+                <p><b>{{ trans('wish.details.subheadline.customer_wish_description') }}</b><br>
                     {{ $wish->description }}
                 </p>
             </div>
@@ -283,7 +283,7 @@
             <div class="col-md-12 s2-first">
                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
                 <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
-                <p><b>Ihre Nachricht:</b><br>
+                <p><b>{{ trans('wish.details.subheadline.your_wish_description') }}</b><br>
                     {{ $wish->description }}
                 </p>
             </div>
