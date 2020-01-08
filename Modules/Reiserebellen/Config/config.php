@@ -2,7 +2,7 @@
 
 return [
     'name'                 => 'Reiserebellen',
-    'id'                   => 159,
+    'id'                   => env('REISEREBELLEN_ID', 159),
     'locale'               => 'de',
     'language_lines_table' => 'language_lines_reiserebellen',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,

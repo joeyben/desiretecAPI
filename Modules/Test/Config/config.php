@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Test',
-    'id'   => 202,
+    'id'   => env('TEST_ID', 202),
     'locale' => 'de',
     'language_lines_table' => 'language_lines_test',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
