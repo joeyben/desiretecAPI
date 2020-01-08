@@ -1485,7 +1485,7 @@ var exitIntent = window.exitIntent || {};
                     minLength: 3,
                     highlight: true,
                     source: function(query) {
-                        return $.get('https://reiserebellen.reise-wunsch.com/get-all-destinations', {query: query});
+                        return $.get('http://reiserebellen.com/get-all-destinations', {query: query});
                     }
                 }
             });
@@ -1499,7 +1499,7 @@ var exitIntent = window.exitIntent || {};
                     minLength: 3,
                     highlight: true,
                     source: function(query) {
-                        return $.get('https://reiserebellen.reise-wunsch.com/get-all-airports', {query: query});
+                        return $.get('http://reiserebellen.com/get-all-airports', {query: query});
                     }
                 }
             });
