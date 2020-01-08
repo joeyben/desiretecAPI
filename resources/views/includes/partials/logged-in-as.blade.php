@@ -4,7 +4,7 @@
     </div><!--alert alert-warning logged-in-as-->
 @endif
 
-@if (session('reset_password_success') && session()->has("reset_password_success"))
+@if (session()->has("reset_password_success"))
     <div class="alert alert-success alert-styled-left alert-arrow-left alert-bordered col-md-12 offset-md-12">
         <button type="button" class="close" data-dismiss="alert"> <span>x</span><span class="sr-only"></span> </button>
         <strong>{{ session('reset_password_success') }}</strong>
