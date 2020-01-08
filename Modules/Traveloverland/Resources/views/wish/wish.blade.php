@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-md-3 c-info">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:mail@reisebuero.de">{{ $wish->contacts[0]->email }}</a>
+                        <a href="mailto:{{ $wish->contacts[0]->email }}">{{ $wish->contacts[0]->email }}</a>
                     </div>
                 </div>
                 <div class="row">
@@ -121,7 +121,7 @@
                     </div>
                     <div class="col-md-3 c-info">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->agents[0]->email }}</a>
+                        <a href="mailto:{{ $wish->group->users[0]->agents[0]->email }}">{{ $wish->group->users[0]->agents[0]->email }}</a>
                     </div>
                 @endif
             </div>
