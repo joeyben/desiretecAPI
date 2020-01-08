@@ -301,15 +301,22 @@
 <section class="section-contact">
     <div class="container">
         <div class="col-md-6 s2-first">
-            <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
-            <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
-            <p><b>Kundennachricht:</b><br>
-                {{ $wish->description }}
-            </p>
+            @if ($logged_in_user->hasRole('Seller'))
+                <h4>{{ trans('wish.details.subheadline.customer_wish') }}</h4>
+                <p>{{ trans('wish.details.subheadline.customer_wish_sub') }}</p>
+                <p><b>{{ trans('wish.details.subheadline.customer_wish_description') }}</b><br>
+                    {{ $wish->description }}
+                </p>
+            @else
+                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
+                <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
+                <p><b>{{ trans('wish.details.subheadline.your_wish_description') }}</b><br>
+                    {{ $wish->description }}
+                </p>
+            @endif
         </div>
         @include('frontend.wishes.partial.wish-user-details')
     </div>
-
 </section>
 
 <section class="section-contact-mobile">
@@ -321,8 +328,19 @@
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion1" href="#content">
                             <div class="col-md-12 s2-first">
-                                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
-                                <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
+                                @if ($logged_in_user->hasRole('Seller'))
+                                    <h4>{{ trans('wish.details.subheadline.customer_wish') }}</h4>
+                                    <p>{{ trans('wish.details.subheadline.customer_wish_sub') }}</p>
+                                    <p><b>{{ trans('wish.details.subheadline.customer_wish_description') }}</b><br>
+                                        {{ $wish->description }}
+                                    </p>
+                                @else
+                                    <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
+                                    <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
+                                    <p><b>{{ trans('wish.details.subheadline.your_wish_description') }}</b><br>
+                                        {{ $wish->description }}
+                                    </p>
+                                @endif
                             </div>
                             <span class="glyphicon glyphicon-plus"></span></a>
                             <span class="glyphicon glyphicon-minus"></span></a>
