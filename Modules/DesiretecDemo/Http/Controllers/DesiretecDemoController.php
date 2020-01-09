@@ -98,20 +98,31 @@ class DesiretecDemoController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param UserRepository   $user
+     * @param \Modules\Desiretecdemo\Http\Requests\StoreWishRequest $request
+     * @param WishesRepository $wish
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
-        $input = $request->all();
+        $whitelabel = $this->whitelabel->getByName('Desiretecdemo');
+
         $is_autooffer = false;
+        $input = $request->all();
         $wishRepo = $wish;
         if ($request->failed()) {
-            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
-            $html = view('desiretecdemo::' . $layer)->with([
+            $html = view('desiretecdemo::layer.popup')->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
-                'request'      => $request->all()
+                'request'      => $request->all(),
+                'color'        => $whitelabel['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -124,26 +135,33 @@ class DesiretecDemoController extends Controller
 
         $wish = $this->createWishFromLayer($request, $wish);
 
-        $wishRepo->callTraffics($wish->id);
+        $wishTye = $wishRepo->manageRules($wish);
 
-        $view = \View::make('wishes::emails.autooffer',
-            [
-                'url'=> $wish->whitelabel->domain . '/offer/olist/' . $wish->id . '/' . $newUser->token->token
-            ]
-        );
-        $contents = $view->render();
+        if ($wishTye > 0) {
 
-        $details = [
-            'email' => $newUser->email,
-            'token' => $newUser->token->token,
-            'type' => 0,
-            'email_name' => trans('autooffers.email.name'),
-            'email_subject' => trans('autooffer.email.subject'),
-            'email_content' => $contents,
-            'current_wl_email' => getCurrentWhiteLabelEmail()
-        ];
-        dispatch((new sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addMinutes(rand(1,2))));
-        $is_autooffer = true;
+            //$wishJob = (new callTrafficsApi($wish->id));
+            //dispatch($wishJob);
+            $wishRepo->callTraffics($wish->id);
+
+            $view = \View::make('wishes::emails.autooffer',
+                [
+                    'url'=> $wish->whitelabel->domain . '/offer/olist/' . $wish->id . '/' . $newUser->token->token
+                ]
+            );
+            $contents = $view->render();
+
+            $details = [
+                'email' => $newUser->email,
+                'token' => $newUser->token->token,
+                'type' => 0,
+                'email_name' => trans('autooffers.email.name'),
+                'email_subject' => trans('autooffer.email.subject'),
+                'email_content' => $contents,
+                'current_wl_email' => getCurrentWhiteLabelEmail()
+            ];
+            dispatch((new sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addMinutes(rand(1,2))));
+            $is_autooffer = true;
+        }
 
         $html = view('desiretecdemo::layer.created')->with([
             'token' => $newUser->token->token,
