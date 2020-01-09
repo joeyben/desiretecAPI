@@ -38,12 +38,13 @@ mix.scripts(
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/reiserebellen/js/layer/layer-locale.js')
     .sass(__dirname + '/Resources/assets/sass/layer/_layer.scss', 'whitelabel/reiserebellen/css/layer/layer.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/_layer-responsive.scss', 'whitelabel/reiserebellen/css/layer/layer-responsive.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/reiserebellen/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/reiserebellen/css/reiserebellen.css')
     .styles([
         base_url + '/public/whitelabel/reiserebellen/css/datepicker.css',
         base_url + '/public/whitelabel/reiserebellen/css/layer/layer.css',
-        base_url + '/public/whitelabel/reiserebellen/css/layer/layer-responsible.css',
+        base_url + '/public/whitelabel/reiserebellen/css/layer/layer-responsive.css',
     ], __dirname + '/../../public/whitelabel/reiserebellen/css/layer/whitelabel.css')
     .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/reiserebellen/images/')
     .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/reiserebellen/svg/');
