@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Tymon\JWTAuth\Middleware\GetUserFromToken;
 use Tymon\JWTAuth\Middleware\RefreshToken;
@@ -80,7 +81,6 @@ class Kernel extends HttpKernel
          */
         'access.routeNeedsRole'       => \App\Http\Middleware\RouteNeedsRole::class,
         'access.routeNeedsPermission' => \App\Http\Middleware\RouteNeedsPermission::class,
-        'jwt.auth'                    => GetUserFromToken::class,
-        'jwt.refresh'                 => RefreshToken::class,
+        'jwt.verify'                  => JwtMiddleware::class,
     ];
 }
