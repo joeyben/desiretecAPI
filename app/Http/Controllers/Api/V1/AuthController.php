@@ -44,6 +44,11 @@ class AuthController extends APIController
         ]);
     }
 
+    public function test(){
+        return $this->respond([
+            'message'   => 'ALl right doooode!',
+        ]);
+    }
     /**
      * Log the user out (Invalidate the token).
      *

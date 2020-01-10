@@ -170,7 +170,7 @@
                                 $locations[] = $hotelData;
                             @endphp
                             <li class="offer box-shadow" id="hotel-{{ $key }}">
-                                <span class="wish_offer_id">{{ $wish->id }}/{{ $count + 1 }}</span>
+                                <span class="wish_offer_id">Angebotsnummer: {{ $wish->id }}/{{ $count + 1 }}</span>
                             <div class="left-side">
                                 @if ($count === 1)
                                     <div class="label">Unser Tipp</div>
@@ -229,7 +229,7 @@
                                 </div>
 
                                 <div class="price">
-                                    <h3>{{ number_format($offer['data']['totalPrice']['value'], 0, ',', '.') }} <span>&#8364;</span> p.P</h3>
+                                    <h3>{{ number_format($offer['data']['personPrice']['value'], 0, ',', '.') }} <span>&#8364;</span> p.P.</h3>
                                     @php
                                         $hin_arr = explode('-', $offer['data']['travelDate']['fromDate'] );
                                         $year = $hin_arr[0][2].$hin_arr[0][3];
@@ -246,9 +246,15 @@
                                         $wlAutooffer = getWhitelabelAutooffers();
                                         $tourOperators = $wlAutooffer['tourOperators'];
                                     @endphp
+                                    @if (getCurrentWhiteLabelId() === 159)
+                                        <a class="btn btn-primary" target="_blank" href="https://www.reise-rebellen.de/ibe/offers?giataIdList={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&roomTypeList=&minPricePerPerson={{ $offer['data']['personPrice']['value'] }}&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $offer['data']['travelDate']['duration'] }}&minBoardType={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveList=&adults={{ $wish->adults }}{{ $kids }}&departureAirportList={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&destinationName={{ $wish->destination }}&regionList={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&reference=desiretec">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    @else
                                     <a class="btn btn-primary" target="_blank" href="https://reisen.bild.de/buchen/?hotellist={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&productType=pauschal&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $offer['data']['travelDate']['duration'] }}&hotellist=&regionlist={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&departureairportlist={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&inclusiveList=&keywordList=&tourOperatorList={{ $tourOperators }}&sortBy=price&sortDir=up&navigationStart=1%2C10&navigationOffer=1%2C10&navigationHotel=1%2C10&partnerIdent=bildreisen%2F&action=hoteldetail&filterdest=hotel&maxPricePerPerson={{ $offer['data']['personPrice']['value'] }}&destinationName={{ $wish->destination }}&departureName={{ $wish->airport }}&adults={{ $wish->adults }}{{ $kids }}&minCategory={{ $wish->category }}&recommendation=&roomTypeList=&boardTypeList={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveListSel=&reference=desiretec">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
+                                    @endif
                                 </div>
 
                             </div>

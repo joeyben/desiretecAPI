@@ -18,6 +18,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('login', 'AuthController@login');
     });
 
+    Route::get('test', 'AuthController@test');
+
     Route::group(['prefix' => 'popup'], function () {
         Route::get('show', 'WishesController@show');
     });
