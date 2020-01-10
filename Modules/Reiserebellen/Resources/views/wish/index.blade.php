@@ -28,6 +28,7 @@
 
 @section('content')
 
+
     <!-- Wish lis Box -->
     <div class="list-container row">
         <div class="col col-lg-12">
@@ -45,7 +46,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <input type="search" class="id-filter" placeholder="{{ trans('strings.wishlist.search') }}" v-model="id" @input="fetchWishes()">
+                        <input type="search" class="id-filter" placeholder="{{ trans('strings.wishlist.search') }}" v-model="filter" @input="fetchWishes()">
                     </div>
                 @endif
             </div>
@@ -112,5 +113,5 @@
         </div>
     </div>
 
-
 @endsection
+
