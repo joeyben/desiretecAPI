@@ -76,21 +76,21 @@ class AutooffersRepository extends BaseRepository
                 [
                     'query' => [
                         'auth'                 => $this->getAuth(),
-                        'sortBy'               => 'price',
+                        'sortBy'               => 'overall',
                         'productSubType'       => 'all',
                         'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
                         'adults'               => $this->adults,
                         'children'             => $this->kids,
                         'navigation'           => '1,100',
-                        'departureAirportList' => $this->airport,
-                        'regionList'           => $this->region,
+                        'departureAirportList' => implode(',', $this->airport),
+                        'regionList'           => implode(',', $this->region),
                         //'locationList' => $this->location,
                         //'minPricePerPerson' => (int) ($this->minBudget / $this->getPersonsCount()),
                         'maxPricePerPerson' => (int) ($this->maxBudget / $this->getPersonsCount()),
                         'minCategory'       => $this->category,
                         'minBoardType' =>   $this->catering,
                         'rating[source]'   => 'holidaycheck',
-                        'sortDir'          => 'up',
+                        'sortDir'          => 'down',
                         'tourOperatorList' => $this->tourOperatorList,
                     ],
                     'on_stats' => function (TransferStats $stats) use (&$url) {
@@ -152,12 +152,13 @@ class AutooffersRepository extends BaseRepository
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
+        $this->setKids($wish->kids);
         $this->setAirport(getRegionCode($wish->airport, 0));
         $this->setCategory($wish->category);
         $this->setCatering($wish->category);
         $this->setFrom(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start)->format('dmy'));
         $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
-        $this->setPeriod($wish->duration);
+        $this->setPeriod($wish->duration, $wish);
         $this->setRegion(getRegionCode($wish->destination, 1));
         $this->setTourOperatorList();
 
@@ -396,7 +397,14 @@ class AutooffersRepository extends BaseRepository
      */
     public function setKids($kids)
     {
-        $this->kids = (int) $kids;
+        $age = "";
+        for($i=0; $i<$kids; $i++) {
+            if($i > 0) {
+                $age .= ",";
+            }
+            $age .= "6";
+        }
+        $this->kids =  $age;
     }
 
     /**
