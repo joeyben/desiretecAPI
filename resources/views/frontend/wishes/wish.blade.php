@@ -39,7 +39,7 @@
                 @elseif ($logged_in_user->hasRole('User') && $wish->owner->first_name)
                     <h3>Hallo lieber Kunde,</h3>
                 @elseif ($logged_in_user->hasRole('Seller'))
-                    <h3>Hallo {{ $logged_in_user->agents->where('status','Active')->first()->name }},</h3>
+                    <h3>Hallo {{ Auth::guard('agent')->user()->name }},</h3>
                 @else
                     <h3>Hallo,</h3>
                 @endif
