@@ -45,7 +45,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <input type="search" class="id-filter" placeholder="{{ trans('strings.wishlist.search') }}" v-model="filter" @input="fetchWishes()">
+                        <input type="search" class="id-filter" placeholder="{{ trans('strings.wishlist.search') }}" v-model="id" @input="fetchWishes()">
                     </div>
                 @endif
             </div>
@@ -66,6 +66,7 @@
                             <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
                             <li><i class="icon_group"></i><span class="value">@{{ wish.adults }} @{{ wish.kids }} @{{ wish.categories }} @{{ wish.categories ? 'Haustier(e)' : ''  }}</span></li>
                             <li><i class="fal fa-usd-circle"></i><span class="value">@{{ wish.budget }}€</span></li>
+                            <li v-if="wish.senderEmail"><i class="fal fa-at"></i><span class="value">@{{ wish.senderEmail }}</span></li>
                             <li>{{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("DD.MM.YYYY") }}</span></li>
                         </ul>
                     </div>
@@ -75,27 +76,24 @@
                                 @{{ wish.id }}
                             </span>
                             @if($logged_in_user->hasRole('Seller'))
-                                <span v-if="wish.wlRule == 'mix'" class="wish-classification btn-secondary">
+                                <span v-if="wish.wlRule == 'mix'" class="wish-classification">
                                     <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
                                     <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
                                 </span>
-                                <span v-if="wish.messageSentFlag" class="message-sent btn-secondary">
-                                    <i class="fal fa-envelope"></i>
-                                </span>
-                                <span id="{{ trans('strings.wishlist.offer_ex') }}" v-if="wish.offers > 0" class="offer-count btn-secondary">
+                                <span v-if="wish.offers > 0" class="offer-count">
                                     @{{ wish.offers }}
                                 </span>
                             @endif
                         </div>
                         <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
-                        @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
+                    @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
                         <!--    <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>-->
                         @endif
-                        <!--a type="button" class="primary-btn" :href="'/wish/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a-->
+                        <a type="button" class="primary-btn" :href="'/wish/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
                         @if($logged_in_user->allow('create-offer'))
-                            <!--<a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a> -->
+                        <!--<a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a> -->
                         @endif
-                        <a :href="'/offer/list/'+wish.id" class="btn btn-flat btn-primary">{{ trans('labels.frontend.wishes.goto')}}</a>
+                    <!--<a :href="'/offer/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a>-->
                         @if($logged_in_user->hasRole('Seller'))
                             <div class="status-change-action">
                                 <select class="selectpicker" id="change-status" v-bind:value="wish.status" v-model="status" @change="changeStatus(wish.id)">
@@ -116,4 +114,3 @@
 
 
 @endsection
-
