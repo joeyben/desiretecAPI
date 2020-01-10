@@ -240,14 +240,16 @@
                                         $zu  = $zu_arr[2].$zu_arr[1].$year;
 
                                         $kids = "";
+                                        $children = [];
                                         for ($i = 0; $i < $wish->kids; $i++){
                                             $kids .= "&child".($i+1)."=6";
+                                            array_push($children, "6");
                                         }
                                         $wlAutooffer = getWhitelabelAutooffers();
                                         $tourOperators = $wlAutooffer['tourOperators'];
                                     @endphp
                                     @if (getCurrentWhiteLabelId() === 159)
-                                        <a class="btn btn-primary" target="_blank" href="https://www.reise-rebellen.de/ibe/offers?giataIdList={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&roomTypeList=&minPricePerPerson={{ $offer['data']['personPrice']['value'] }}&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $offer['data']['travelDate']['duration'] }}&minBoardType={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveList=&adults={{ $wish->adults }}{{ $kids }}&departureAirportList={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&destinationName={{ $wish->destination }}&regionList={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&reference=desiretec">
+                                        <a class="btn btn-primary" target="_blank" href="https://www.reise-rebellen.de/ibe/offers?giataIdList={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&roomTypeList=&minPricePerPerson={{ $offer['data']['personPrice']['value'] }}&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $offer['data']['travelDate']['duration'] }}&minBoardType={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveList=&adults={{ $wish->adults }}{{ $kids }}&departureAirportList={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&children={{ implode (",", $children) }}&destinationName={{ $wish->destination }}&regionList={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&reference=desiretec">
                                             <i class="fas fa-chevron-right"></i>
                                         </a>
                                     @else
