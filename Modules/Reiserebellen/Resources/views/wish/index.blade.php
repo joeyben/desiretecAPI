@@ -95,7 +95,7 @@
                         @if($logged_in_user->allow('create-offer'))
                             <!--<a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a> -->
                         @endif
-                        <a :href="'/offerwl/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('labels.frontend.wishes.goto')}}</a>
+                        <a :href="'/offer/list/'+wish.id" class="btn btn-flat btn-primary">{{ trans('labels.frontend.wishes.goto')}}</a>
                         @if($logged_in_user->hasRole('Seller'))
                             <div class="status-change-action">
                                 <select class="selectpicker" id="change-status" v-bind:value="wish.status" v-model="status" @change="changeStatus(wish.id)">
