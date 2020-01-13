@@ -73,13 +73,13 @@ class CreatedWishNotificationForSeller extends Notification
             }
 
             return (new MailMessage())
-                ->from('trendtours@reisewunschservice.de', $this->wish->whitelabel->display_name . ' Portal')
+                ->from('trendtours@reisewunschservice.de', $this->wish->whitelabel->display_name . ' Reisewunschportal')
                 ->subject(trans('email.wish.seller_trendtours'))
                 ->view('wishes::emails.wish_seller_trendtours', ['wish' => $this->wish, 'token' => $userToken->token->token, 'user' => $notifiable]);
         }
 
         return (new MailMessage())
-            ->from($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Portal')
+            ->from($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Reisewunschportal')
             ->subject(trans('email.wish.seller', ['whitelabel' => $this->wish->whitelabel->name]))
             ->view('wishes::emails.wish_seller', ['wish' => $this->wish, 'token' => $userToken->token->token, 'user' => $notifiable]);
     }
