@@ -17,6 +17,11 @@
                 </el-card>
             </el-col>
         </div>
+        <div class="row row-footer">
+            <div style="margin-top: 15px;">
+                <button class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm ">{{ trans('button.confirm') }}</button>
+            </div>
+        </div>
         <el-dialog title="Please choose a Whitelabel" :visible.sync="dialogFormVisible" width="35%">
             <el-form :model="form">
                 <el-form-item :label="trans('modals.whitelabel')">
@@ -152,5 +157,10 @@
     }
     .clearfix:after {
         clear: both
+    }
+
+    .row-footer {
+        justify-content: flex-end;
+        padding: 0 15px;
     }
 </style>

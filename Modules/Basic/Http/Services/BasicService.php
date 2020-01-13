@@ -17,13 +17,16 @@ class BasicService{
      * @param Request $request
      * @return bool
      */
-    public function isLayerActive($whitelableLayer) {
+    public function isLayerActive($request, $whitelableLayer) {
+
         // todo: check the db-url and the request-url
-//        dd($whitelableLayer, 'asd');
-//        if(){
-//
-//        }
-        return true;
+        if($whitelableLayer['layer']['active'] == 1){
+            if($whitelableLayer['layer_url'] == $request->root()){
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
 }
