@@ -14,9 +14,20 @@
 
 Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], function () {
     Route::group(['prefix' => 'auth'], function () {
-        Route::post('register', 'RegisterController@register');
+        Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
     });
+
+    Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'auth'], function () {
+        Route::post('logout', 'AuthController@logout');
+        Route::post('refresh', 'AuthController@refresh');
+
+        // Password Reset Routes
+        Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
+        Route::post('password/reset', 'ResetPasswordController@reset')->name('password.reset');
+        Route::post('me', 'AuthController@me');
+    });
+
 
     Route::group(['prefix' => 'popup'], function () {
         Route::get('show', 'WishesController@show');
@@ -25,15 +36,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     // Offers
     Route::resource('offers', 'OffersController', ['except' => ['create', 'edit']]);
 
-    Route::group(['middleware' => ['jwt.auth']], function () {
-        Route::group(['prefix' => 'auth'], function () {
-            Route::post('logout', 'AuthController@logout');
-            Route::post('refresh', 'AuthController@refresh');
-
-            // Password Reset Routes
-            Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
-            // Route::post('password/reset', 'ResetPasswordController@reset')->name('password.reset');
-        });
+    Route::group(['middleware' => ['jwt.verify']], function () {
         // Users
         Route::resource('users', 'UsersController', ['except' => ['create', 'edit']]);
         Route::post('users/delete-all', 'UsersController@deleteAll');

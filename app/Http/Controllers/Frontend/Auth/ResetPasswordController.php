@@ -102,6 +102,6 @@ class ResetPasswordController extends Controller
      */
     protected function sendResetResponse($response)
     {
-        return redirect()->route(homeRoute())->with('success', trans($response));
+        return redirect()->route(homeRoute())->with('reset_password_success', trans($response));
     }
 }

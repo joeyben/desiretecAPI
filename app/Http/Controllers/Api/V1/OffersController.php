@@ -33,6 +33,6 @@ class OffersController extends Controller
      */
     public function index()
     {
-        dd($this->offer);
+        dd('$this->offer');
     }
 }
