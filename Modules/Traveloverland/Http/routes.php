@@ -1,9 +1,9 @@
 <?php
 
 $domain_env = [
-    'local_url'       => 'traveloverland.com',
-    'development_url' => 'traveloverland.reise-wunsch.com',
-    'production_url'  => 'traveloverland.reisewunschservice.de',
+    'local_url'       => 'travel-overland.com',
+    'development_url' => 'travel-overland.reise-wunsch.com',
+    'production_url'  => 'travel-overland.reisewunschservice.de',
 ];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
