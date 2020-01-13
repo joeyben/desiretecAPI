@@ -76,12 +76,12 @@ class AutooffersRepository extends BaseRepository
                 [
                     'query' => [
                         'auth'                 => $this->getAuth(),
-                        'sortBy'               => 'overall',
+                        'sortBy'               => 'price',
                         'productSubType'       => 'all',
                         'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
                         'adults'               => $this->adults,
                         'children'             => $this->kids,
-                        'navigation'           => '1,100',
+                        'navigation'           => '1,500',
                         'departureAirportList' => implode(',', $this->airport),
                         'regionList'           => implode(',', $this->region),
                         //'locationList' => $this->location,
@@ -90,7 +90,7 @@ class AutooffersRepository extends BaseRepository
                         'minCategory'       => $this->category,
                         'minBoardType' =>   $this->catering,
                         'rating[source]'   => 'holidaycheck',
-                        'sortDir'          => 'down',
+                        'sortDir'          => 'up',
                         'tourOperatorList' => $this->tourOperatorList,
                     ],
                     'on_stats' => function (TransferStats $stats) use (&$url) {
