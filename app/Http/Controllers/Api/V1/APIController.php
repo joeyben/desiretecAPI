@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Services\Flag\Src\Flag;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response as IlluminateResponse;
+use Illuminate\Support\Facades\Log;
 use Response;
 
 /**
@@ -189,5 +193,48 @@ class APIController extends Controller
     {
         return $this->setStatusCode(422)
             ->respondWithError($message);
+    }
+
+
+    public function parseRequest($request)
+    {
+        return [
+            $request->get('per_page', 10),
+            explode('|', $request->get('sort', 'id|asc')),
+            $request->get('filter')
+        ];
+    }
+
+    protected function responseJson(array $result = []): JsonResponse
+    {
+        $result['success'] = true;
+        $result['status'] = Flag::STATUS_CODE_SUCCESS;
+
+        return response()->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    protected function responseJsonPaginated($data = null): JsonResponse
+    {
+        return response()->json($data, Flag::STATUS_CODE_SUCCESS, [], JSON_NUMERIC_CHECK);
+    }
+
+    protected function responseJsonError(Exception $e): JsonResponse
+    {
+        if (method_exists(\get_class($e), 'getResponse')) {
+            return $e->getResponse();
+        }
+
+        Log::error($e);
+
+        $statusCode = (0 !== $e->getCode()) ? $e->getCode() : Flag::STATUS_CODE_ERROR;
+
+        $result = [
+            'success'   => false,
+            'exception' => \get_class($e),
+            'message'   => $e->getMessage(),
+            'status'    => $statusCode,
+        ];
+
+        return response()->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 }
