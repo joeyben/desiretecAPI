@@ -2,129 +2,100 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Resources\PagesResource;
-use App\Models\Wishes\Wish;
-use App\Repositories\Backend\Wishes\WishesRepository;
+use App\Repositories\Backend\Groups\GroupsRepository;
+use App\Repositories\Criteria\ByUser;
+use App\Repositories\Criteria\ByUserRole;
+use App\Repositories\Criteria\ByWhitelabel;
+use App\Repositories\Criteria\EagerLoad;
+use App\Repositories\Criteria\Filter;
+use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\Where;
+use App\Repositories\Criteria\WhereBetween;
+use App\Repositories\Criteria\WithTrashed;
+use Illuminate\Auth\AuthManager;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\ChannelManager;
+use Illuminate\Routing\ResponseFactory;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Translation\Translator;
+use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\Wishes\Repositories\Contracts\WishesRepository;
 use Validator;
 
 class WishesController extends APIController
 {
-    protected $wish;
-
+    use AuthorizesRequests;
     /**
-     * __construct.
-     *
-     * @param $repository
+     * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
      */
-    public function __construct(WishesRepository $wish)
+    private $wishes;
+    /**
+     * @var \Illuminate\Notifications\ChannelManager
+     */
+    private $notification;
+    /**
+     * @var \Illuminate\Routing\ResponseFactory
+     */
+    private $response;
+    /**
+     * @var \Illuminate\Auth\AuthManager
+     */
+    private $auth;
+    /**
+     * @var \Illuminate\Translation\Translator
+     */
+    private $lang;
+    /**
+     * @var \Illuminate\Support\Carbon
+     */
+    private $carbon;
+    /**
+     * @var \Modules\Activities\Repositories\Contracts\ActivitiesRepository
+     */
+    private $activities;
+    /**
+     * @var \App\Repositories\Backend\Groups\GroupsRepository
+     */
+    private $groups;
+
+    public function __construct(WishesRepository $wishes, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, GroupsRepository $groups)
     {
-        $this->wish = $wish;
+        $this->wishes = $wishes;
+        $this->notification = $notification;
+        $this->response = $response;
+        $this->auth = $auth;
+        $this->lang = $lang;
+        $this->carbon = $carbon;
+        $this->activities = $activities;
+        $this->groups = $groups;
     }
 
-    /**
-     * Return wishes.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(Request $request)
+    public function getWishes(Request $request)
     {
-    }
+        try {
+            [$perPage, $sort, $search] = $this->parseRequest($request);
 
-    /**
-     * Return the specified resource.
-     *
-     * @param Wishes $wish
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show(Request $request)
-    {
-        $html = view('whitelabel.layer.form')->with([
-        ])->render();
+            $result['data'] = $this->wishes->withCriteria([
+                new ByUserRole($this->auth->user()->id),
+                new OrderBy($sort[0], $sort[1]),
+                new Filter($search),
+                new EagerLoad(['owner' => function ($query) {
+                    $select = 'CONCAT(first_name, " ", last_name) AS full_name';
+                    $query->select('id', DB::raw($select));
+                }, 'group'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }, 'whitelabel'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }]),
+                new ByWhitelabel()
+            ])->paginate($perPage);
 
-        return response()->json(['success' => true, 'html'=>$html]);
-    }
-
-    public function wish(Wish $wish)
-    {
-        return response()->json($wish->id);
-    }
-
-    /**
-     * Creates the Resource for Page.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function store(Request $request)
-    {
-        $validation = $this->validatePages($request);
-        if ($validation->fails()) {
-            return $this->throwValidation($validation->messages()->first());
+            return $this->responseJson($result);
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
         }
 
-        $page = $this->wish->create($request->all());
-
-        return new PagesResource($page);
-    }
-
-    /**
-     *  Update Page.
-     *
-     * @param Page    $page
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update(Request $request, Page $page)
-    {
-        $validation = $this->validatePages($request, $page->id);
-
-        if ($validation->fails()) {
-            return $this->throwValidation($validation->messages()->first());
-        }
-
-        $this->wish->update($page, $request->all());
-
-        $page = Page::findOrfail($page->id);
-
-        return new PagesResource($page);
-    }
-
-    /**
-     *  Delete Page.
-     *
-     * @param Page              $page
-     * @param DeletePageRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy(Page $page, Request $request)
-    {
-        $this->wish->delete($page);
-
-        return $this->respond([
-            'message' => trans('alerts.backend.pages.deleted'),
-        ]);
-    }
-
-    /**
-     * validateUser Pages Requests.
-     *
-     * @param Request $request
-     * @param int     $id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function validatePages(Request $request, $id = 0)
-    {
-        $validation = Validator::make($request->all(), [
-            'title'       => 'required|max:191|unique:pages,title,' . $id,
-            'description' => 'required',
-        ]);
-
-        return $validation;
     }
 }
