@@ -17,8 +17,11 @@ class BasicService{
      * @param Request $request
      * @return bool
      */
-    public function isLayerActive($whitelableLayer) {
+    public function isLayerActive(Request $request, $whitelableLayer) {
         // todo: check the db-url and the request-url
+
+
+
 //        dd($whitelableLayer, 'asd');
 //        if(){
 //

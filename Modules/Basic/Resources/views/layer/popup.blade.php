@@ -11,15 +11,15 @@
 <link rel="stylesheet" href="/whitelabel/basic/css/layer-responsive.css">
 
     {{--Tabs --}}
-    @if(count($layers) > 1)
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            @foreach($layers as $layer)
-                    <a class="nav-item nav-link @if($layer['active']) active @endif" id="nav-{{ $layer['name'] }}-tab" data-toggle="tab" href="#nav-{{ $layer['name'] }}" role="tab" aria-controls="nav-{{ $layer['name'] }}" aria-selected="true">
-                        {{ $layer['name'] }}
-                    </a>
-            @endforeach
-        </div>
-    @endif
+@if(count($layers) > 1)
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        @foreach($layers as $layer)
+            <a class="nav-item nav-link @if($layer['active']) active @endif" id="nav-{{ $layer['name'] }}-tab" data-toggle="tab" href="#nav-{{ $layer['name'] }}" role="tab" aria-controls="nav-{{ $layer['name'] }}" aria-selected="true">
+                {{ $layer['name'] }}
+            </a>
+        @endforeach
+    </div>
+@endif
 
     {{-- Content --}}
     <div class="tab-content" id="nav-tabContent">
