@@ -22,6 +22,9 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('show', 'WishesController@show');
     });
 
+    // Offers
+    Route::resource('offers', 'OffersController', ['except' => ['create', 'edit']]);
+
     Route::group(['middleware' => ['jwt.auth']], function () {
         Route::group(['prefix' => 'auth'], function () {
             Route::post('logout', 'AuthController@logout');

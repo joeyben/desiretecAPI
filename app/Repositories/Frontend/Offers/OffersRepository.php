@@ -14,6 +14,7 @@ use App\Repositories\BaseRepository;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 /**
  * Class OffersRepository.
@@ -61,6 +62,28 @@ class OffersRepository extends BaseRepository
                 config('module.wishes.table') . '.title as wish_title',
             ])->where(config('module.offers.table') . '.created_by', access()->user()->id)
             ->orderBy(config('module.offers.table') . '.id', 'DESC');
+    }
+
+    public function getOffersData(){
+        return Datatables::of($this->offers->getForDataTable())
+            ->addColumn('title', function ($offers) {
+                return '<a href="' . route('frontend.wishes.show', [$offers->wish_id])
+                    . '">' . $offers->title . '</a>';
+            })
+            ->addColumn('created_by', function ($offers) {
+                return Agent::where('id', $offers->agent_id)->first()->name;
+            })
+            ->addColumn('created_at', function ($offers) {
+                return $offers->created_at->format('d.m.Y') . ' ' . $offers->created_at->toTimeString();
+            })
+            ->addColumn('status', function ($offers) {
+                return $offers->status;
+            })
+            ->addColumn('actions', function ($offers) {
+                return $offers->action_buttons;
+            })
+            ->rawColumns(['title'])
+            ->make(true);
     }
 
     /**
