@@ -29,7 +29,7 @@ class JwtMiddleware extends BaseMiddleware
                 $rawToken = $request->cookie('access_token');
                 $token = new Token($rawToken);
                 $payload = JWTAuth::decode($token);
-                Auth::loginUsingId($payload['id']);
+                Auth::loginUsingId($payload['sub']);
             }
         } catch (Exception $e) {
             if ($e instanceof TokenInvalidException){
