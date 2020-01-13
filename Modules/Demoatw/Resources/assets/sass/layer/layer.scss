@@ -1,6 +1,7 @@
 @import "utils";
 @import "rangeslider";
 @import "../../../../../../resources/assets/sass/layer/bootstrap-select";
+@import "../variables";
 
 $gutter: 30px;
 $altfont: 'Comfortaa', cursive;
@@ -431,7 +432,7 @@ $fontcolor: #303030;
                 margin-right: 0px;
               }
               select{
-                text-indent: 10px;
+                // text-indent: 10px;
               }
             }
           }
@@ -1613,4 +1614,8 @@ and (max-device-width : 320px) {
 }
 .dt_terms.hasError:after{
   border: 1px solid red !important;
+}
+
+select option:disabled {
+  color: $master-grey-light;
 }

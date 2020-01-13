@@ -214,7 +214,16 @@ class AutooffersTTRepository extends BaseRepository
         curl_close($curl);
 
         $this->data = json_decode($result, true)['PackageOffersRS'];
-        $this->offers = \array_key_exists('Offer', $this->data['Offers']) ? $this->data['Offers']['Offer'] : [];
+        if (\array_key_exists('Offers', $this->data)){
+            if (\array_key_exists ('Offer', $this->data['Offers'])){
+                $this->offers = $this->data['Offers']['Offer'];
+            }
+            else{
+                $this->offers = [];
+            }
+        }else{
+            $this->offers = [];
+        }
         $this->setGiataIds();
         $this->setReviews();
         $this->setHotelGeo();
@@ -749,10 +758,16 @@ class AutooffersTTRepository extends BaseRepository
     public function setGiataIds()
     {
         $giata = [];
-        if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+        if (!\array_key_exists('HotelDictionary', $this->data)) {
             $this->giataIds = [];
 
             return false;
+        } else {
+            if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+                $this->giataIds = [];
+
+                return false;
+            }
         }
         foreach ($this->data['HotelDictionary']['Hotel'] as $hotel) {
             $giata[$hotel['HotelCodes']['HotelIffCode']] = $hotel['HotelCodes']['HotelGiataID'];
@@ -766,11 +781,18 @@ class AutooffersTTRepository extends BaseRepository
     public function setReviews()
     {
         $reviews = [];
-        if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+        if (!\array_key_exists('HotelDictionary', $this->data)) {
             $this->reviews = [];
 
             return false;
+        } else {
+            if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+                $this->reviews = [];
+
+                return false;
+            }
         }
+
         foreach ($this->data['HotelDictionary']['Hotel'] as $hotel) {
             $reviews[$hotel['HotelCodes']['HotelIffCode']] = [
                 'count'          => $hotel['HotelReview']['RatingsCount'],
@@ -787,11 +809,18 @@ class AutooffersTTRepository extends BaseRepository
     public function setHotelGeo()
     {
         $geos = [];
-        if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+        if (!\array_key_exists('HotelDictionary', $this->data)) {
             $this->geos = [];
 
             return false;
+        } else {
+            if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+                $this->geos = [];
+
+                return false;
+            }
         }
+
         foreach ($this->data['HotelDictionary']['Hotel'] as $hotel) {
             $geos[$hotel['HotelCodes']['HotelIffCode']] = [
                 'longitude' => $hotel['HotelGeoPoint']['Longitude'],
@@ -807,11 +836,18 @@ class AutooffersTTRepository extends BaseRepository
     public function setHotelAttributes()
     {
         $hotelAttributes = [];
-        if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+        if (!\array_key_exists('HotelDictionary', $this->data)) {
             $this->hotelAttributes = [];
 
             return false;
+        } else {
+            if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+                $this->hotelAttributes = [];
+
+                return false;
+            }
         }
+
         foreach ($this->data['HotelDictionary']['Hotel'] as $hotel) {
             $hotelAttributes[$hotel['HotelCodes']['HotelIffCode']] = $hotel['HotelAttributes'];
         }

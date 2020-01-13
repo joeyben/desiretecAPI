@@ -662,7 +662,12 @@ if (!function_exists('getRegionCode')) {
      */
     function getRegionCode($value, $type)
     {
-        return str_replace('region.', '', \App\Models\Regions::where('regionName', 'like', '%' . $value . '%')->where('type', $type)->first()->regionCode);
+        $regions = explode(',', $value);
+        $codes = [];
+        foreach ($regions as $region){
+            array_push($codes, str_replace('region.', '', \App\Models\Regions::where('regionName', 'like', '%' . $region . '%')->where('type', $type)->first()->regionCode));
+        }
+        return $codes;
     }
 }
 

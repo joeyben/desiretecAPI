@@ -20,6 +20,10 @@
         var cssPrimaryBtn = '.primary-btn { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; color: #fff !important; } ';
         var cssSecondaryBtn = '.secondary-btn { background: transparent !important; color: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
         $('head').append('<style>' + cssPrimaryBtn + cssSecondaryBtn + '</style>');
+        $(document).ready(function() {
+            "<?php echo $wish->airport; ?>".length <= 30 ? document.getElementById("departure-mousehover").remove() : '';
+            "<?php echo $wish->destination; ?>".length <= 30 ? document.getElementById("arrival-mousehover").remove() : '';
+        });
     </script>
 @endsection
 
@@ -35,7 +39,7 @@
                 @elseif ($logged_in_user->hasRole('User') && $wish->owner->first_name)
                     <h3>Hallo lieber Kunde,</h3>
                 @elseif ($logged_in_user->hasRole('Seller'))
-                    <h3>Hallo {{ $logged_in_user->agents->where('status','Active')->first()->name }},</h3>
+                    <h3>Hallo {{ Auth::guard('agent')->user()->name }},</h3>
                 @else
                     <h3>Hallo,</h3>
                 @endif
@@ -81,7 +85,7 @@
                     </div>
                     <div class="col-md-3 c-info">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:mail@reisebuero.de">{{ $wish->contacts[0]->email }}</a>
+                        <a href="mailto:{{ $wish->contacts[0]->email }}">{{ $wish->contacts[0]->email }}</a>
                     </div>
                 </div>
                 <div class="row">
@@ -132,12 +136,12 @@
                     </div>
                     <div class="col-md-3 c-info">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:mail@reisebuero.de">{{ $agent->email }}</a>
+                        <a href="mailto:{{ $agent->email }}">{{ $agent->email }}</a>
                     </div>
                 @else
                     <div class="col-md-3 c-info">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->email }}</a>
+                        <a href="mailto:{{ $wish->group->users[0]->email }}">{{ $wish->group->users[0]->email }}</a>
                     </div>
                 @endif
             </div>
@@ -296,9 +300,23 @@
 
 <section class="section-contact">
     <div class="container">
+        <div class="col-md-6 s2-first">
+            @if ($logged_in_user->hasRole('Seller'))
+                <h4>{{ trans('wish.details.subheadline.customer_wish') }}</h4>
+                <p>{{ trans('wish.details.subheadline.customer_wish_sub') }}</p>
+                <p><b>{{ trans('wish.details.subheadline.customer_wish_description') }}</b><br>
+                    {{ $wish->description }}
+                </p>
+            @else
+                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
+                <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
+                <p><b>{{ trans('wish.details.subheadline.your_wish_description') }}</b><br>
+                    {{ $wish->description }}
+                </p>
+            @endif
+        </div>
         @include('frontend.wishes.partial.wish-user-details')
     </div>
-
 </section>
 
 <section class="section-contact-mobile">
@@ -310,11 +328,22 @@
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion1" href="#content">
                             <div class="col-md-12 s2-first">
-                                <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
-                                <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
+                                @if ($logged_in_user->hasRole('Seller'))
+                                    <h4>{{ trans('wish.details.subheadline.customer_wish') }}</h4>
+                                    <p>{{ trans('wish.details.subheadline.customer_wish_sub') }}</p>
+                                    <p><b>{{ trans('wish.details.subheadline.customer_wish_description') }}</b><br>
+                                        {{ $wish->description }}
+                                    </p>
+                                @else
+                                    <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
+                                    <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
+                                    <p><b>{{ trans('wish.details.subheadline.your_wish_description') }}</b><br>
+                                        {{ $wish->description }}
+                                    </p>
+                                @endif
                             </div>
-                            <i class="fal fa-plus"></i>
-                            <i class="fal fa-minus"></i>
+                            <span class="glyphicon glyphicon-plus"></span></a>
+                            <span class="glyphicon glyphicon-minus"></span></a>
                     </h4>
                 </div>
 

@@ -16,6 +16,11 @@
 @endsection
 
 @section('before-scripts')
+
+    <script type="application/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+
     <script src="{{ mix('whitelabel/tui/js/tui.js') }}"></script>
 @endsection
 

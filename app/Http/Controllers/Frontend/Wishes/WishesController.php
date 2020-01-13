@@ -143,14 +143,10 @@ class WishesController extends Controller
             array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
         }
 
-        if ($this->session->has('agent_id')) {
-            $agent = Agent::find((int) $this->session->get('agent_id'));
-        }
-
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
-            'agent'              => $agent,
+            'agent'              => Auth::guard('agent')->user(),
             'agent_name'         => $agentName,
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
@@ -229,7 +225,8 @@ class WishesController extends Controller
         ];
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
-        $id = ($request->get('id') && !is_null($request->get('id'))) ? $request->get('id') : '';
+        $id = ($request->get('filter') && !is_null($request->get('filter')) && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
+        $destination = ($request->get('filter') && !is_null($request->get('filter')) && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
         $currentWhiteLabelID = getCurrentWhiteLabelField('id');
         $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
 
@@ -237,6 +234,9 @@ class WishesController extends Controller
             $wish = $this->wish->getForDataTable()
                 ->when($id, function ($wish, $id) {
                     return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%')->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
+                })
+                ->when($destination, function ($wish, $destination) {
+                    return $wish->where(config('module.wishes.table') . '.destination', 'like', '%' . $destination . '%');
                 })
                 ->paginate(10);
         } else {
@@ -247,14 +247,17 @@ class WishesController extends Controller
                 })->when($id, function ($wish, $id) {
                     return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
                 })
+                ->when($destination, function ($wish, $destination) {
+                    return $wish->where(config('module.wishes.table') . '.destination', 'like', '%' . $destination . '%');
+                })
                 ->paginate(10);
         }
 
         foreach ($wish as $singleWish) {
             $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
 
-            if($this->auth->guard('web')->user()->hasRole('Seller')) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
-                if($currentWhiteLabelID === 198) {
+            if($this->auth->guard('web')->user()->hasRole('Seller')) { 
+                if($currentWhiteLabelID === 198) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
                     $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
                 }
                 if($singleWish->messages() && $singleWish->messages()->count() > 0) {

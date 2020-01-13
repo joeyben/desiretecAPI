@@ -430,7 +430,7 @@ $gutter: 30px;
                 margin-right: 0px;
               }
               select{
-                text-indent: 10px;
+                // text-indent: 10px;
               }
             }
           }
@@ -1630,4 +1630,8 @@ input[name="direkt_flug"]{
     font-size: 11px;
     font-weight: 600;
   }
+}
+
+select option:disabled {
+  color: $master-grey-light;
 }
