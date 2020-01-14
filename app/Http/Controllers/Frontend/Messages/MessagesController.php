@@ -55,7 +55,7 @@ class MessagesController extends Controller
         $message = $request->input('message');
         $agentId = null;
 
-        if ($this->auth->guard('agent')->check() && !$this->auth->guard('web')->user()->hasRole(Flag::USER_ROLE)) {
+        if ($this->auth->guard('agent')->check() && $this->auth->guard('web')->user()->hasRole(Flag::SELLER_ROLE)) {
             $agentId = $this->auth->guard('agent')->user()->id;
         }
 
