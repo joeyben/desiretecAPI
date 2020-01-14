@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Access\User\User;
 use App\Models\Agents\Agent;
 use App\Models\Messages\Message;
+use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
@@ -54,7 +55,7 @@ class MessagesController extends Controller
         $message = $request->input('message');
         $agentId = null;
 
-        if ($this->auth->guard('agent')->check()) {
+        if ($this->auth->guard('agent')->check() && !$this->auth->guard('web')->user()->hasRole(Flag::USER_ROLE)) {
             $agentId = $this->auth->guard('agent')->user()->id;
         }
 
