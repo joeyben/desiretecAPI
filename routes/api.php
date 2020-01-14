@@ -30,7 +30,6 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('me', 'AuthController@me');
     });
 
-
     Route::group(['prefix' => 'popup'], function () {
         Route::get('show', 'WishesController@show');
     });
@@ -38,5 +37,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('wishes', 'WishesController@getWishes');
         Route::get('wish/{wish}', 'WishesController@getWish');
+
+        Route::get('agents', 'AgentsController@getAgents');
     });
 });
