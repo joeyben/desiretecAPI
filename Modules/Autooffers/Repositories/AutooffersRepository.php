@@ -170,7 +170,7 @@ class AutooffersRepository extends BaseRepository
      * @param string $wish_id
      * @param array  $rules
      */
-    public function storeMany($data, $wish_id, $rules)
+    public function storeMany($data, $wish_id, $rules, $userId)
     {
         $rulesArray = [
             'displayOffer'   => \is_array($rules) ? $rules['display_offer'] : 3,
@@ -191,7 +191,7 @@ class AutooffersRepository extends BaseRepository
             $hotelId = $offer['hotelOffer']['hotel']['giata']['hotelId'];
             $tOperator = $offer['tourOperator']['code'];
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
-            $this->storeAutooffer($offer, $hotel, $wish_id);
+            $this->storeAutooffer($offer, $hotel, $wish_id, $userId);
             ++$count;
         }
     }
@@ -220,7 +220,7 @@ class AutooffersRepository extends BaseRepository
      *
      * @return mix
      */
-    public function storeAutooffer($offer, $hotel, $wish_id)
+    public function storeAutooffer($offer, $hotel, $wish_id, $userId)
     {
         try {
             $autooffer = self::MODEL;
@@ -245,7 +245,7 @@ class AutooffersRepository extends BaseRepository
             $autooffer->data = json_encode($offer);
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
-            $autooffer->user_id = \Auth::user()->id;
+            $autooffer->user_id = $userId;
 
             return $autooffer->save();
         } catch (\Illuminate\Database\QueryException $e) {
