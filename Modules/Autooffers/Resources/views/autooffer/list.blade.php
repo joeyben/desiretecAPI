@@ -98,7 +98,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-users" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->adults }} Erwachsene</h4>
+                                    <h4>{{ $wish->adults }} Erwachsene, {{ $wish->kids }} {{ $wish->kids == 1 ? "Kind" : "Kinder" }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
