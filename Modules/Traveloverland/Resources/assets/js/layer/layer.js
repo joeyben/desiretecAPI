@@ -3,7 +3,7 @@ var dt = window.dt || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://traveloverland.reise-wunsch.com',
+        baseUrl: 'https://travel-overland.reisewunschservice.de',
         logoPath: '/whitelabel/traveloverland/images/layer/logo.png',
         popupPath: '/show',
         popupStore:'/store',
@@ -928,7 +928,7 @@ var dt = window.dt || {};
                 minLength: 3,
                 highlight: true,
                 source: function(query) {
-                    return $.get('https://traveloverland.reise-wunsch.com/get-all-destinations', {query: query});
+                    return $.get('https://travel-overland.reisewunschservice.de/get-all-destinations', {query: query});
                 }
             }
         });
@@ -942,7 +942,7 @@ var dt = window.dt || {};
                 minLength: 3,
                 highlight: true,
                 source: function(query) {
-                    return $.get('https://traveloverland.reise-wunsch.com/get-all-airports', {query: query});
+                    return $.get('https://travel-overland.reisewunschservice.de/get-all-airports', {query: query});
                 }
             }
         });
