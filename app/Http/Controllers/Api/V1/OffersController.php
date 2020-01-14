@@ -31,8 +31,8 @@ class OffersController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index($id)
     {
-        dd('$this->offer');
+        return response()->json($this->offer->getOffersData($id));
     }
 }

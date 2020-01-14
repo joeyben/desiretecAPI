@@ -33,8 +33,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('show', 'WishesController@show');
     });
 
-    // Offers
-    Route::resource('offers', 'OffersController', ['except' => ['create', 'edit']]);
+    Route::get('offers/{id}', 'OffersController@index');
 
     Route::group(['middleware' => ['jwt.verify']], function () {
         // Users
@@ -70,5 +69,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
         // Blogs
         Route::resource('blogs', 'BlogsController', ['except' => ['create', 'edit']]);
+
+        // Offers
+
     });
 });

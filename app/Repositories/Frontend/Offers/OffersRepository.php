@@ -44,7 +44,7 @@ class OffersRepository extends BaseRepository
     /**
      * @return mixed
      */
-    public function getForDataTable()
+    public function getForDataTable($id)
     {
         return $this->query()
             ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.offers.table') . '.created_by')
@@ -60,12 +60,12 @@ class OffersRepository extends BaseRepository
                 config('access.users_table') . '.last_name as last_name',
                 config('module.wishes.table') . '.id as wish_id',
                 config('module.wishes.table') . '.title as wish_title',
-            ])->where(config('module.offers.table') . '.created_by', access()->user()->id)
+            ])->where(config('module.offers.table') . '.created_by', $id)
             ->orderBy(config('module.offers.table') . '.id', 'DESC');
     }
 
-    public function getOffersData(){
-        return Datatables::of($this->offers->getForDataTable())
+    public function getOffersData($id){
+        return Datatables::of($this->getForDataTable($id))
             ->addColumn('title', function ($offers) {
                 return '<a href="' . route('frontend.wishes.show', [$offers->wish_id])
                     . '">' . $offers->title . '</a>';
