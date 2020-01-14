@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Access\User\User;
 use App\Models\Agents\Agent;
 use App\Models\Messages\Message;
-use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class MessagesController extends Controller
@@ -46,19 +46,12 @@ class MessagesController extends Controller
     {
         $consumerId = $request->user_id;
         $message = $request->input('message');
-        $id = Auth::id();
-
-        $agent = $this->session->get('agent_id');
-
-        if (!$this->session->has('agent_id')) {
-            $agent = Agent::where('user_id', $id)->where('status', 'Active')->value('id');
-        }
 
         $message = Message::create([
             'user_id' => $consumerId,
             'wish_id' => $request->wish_id,
             'message' => $message,
-            'agent_id'=> $agent
+            'agent_id'=> Auth::guard('agent')->user()->id
         ]);
 
         if ($message) {

@@ -12,6 +12,7 @@ use App\Models\OfferFiles\OfferFile;
 use App\Models\Offers\Offer;
 use App\Repositories\BaseRepository;
 use DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -100,15 +101,7 @@ class OffersRepository extends BaseRepository
             $id = access()->user()->id;
 
             $input['created_by'] = $id;
-
-            $agent = session()->get('agent_id');
-
-            if (!session()->has('agent_id')) {
-                $agent = Agent::where('user_id', '=', $id)
-                    ->where('status', '=', 'Active')->value('id');
-            }
-
-            $input['agent_id'] = $agent;
+            $input['agent_id'] = Auth::guard('agent')->user()->id;
 
             if ($offer = Offer::create($input)) {
                 $fileUploaded = $this->uploadImage($files, $offer->id);

@@ -199,6 +199,37 @@
 
     <div class="kwp-footer">
         <script>
+            $("#earliest_start, #latest_return").on('change paste keyup input', function(){
+                var earliest_start_arr = $("#earliest_start").val().split('.');
+                var latest_return_arr = $("#latest_return").val().split('.');
+                var earliest_start = new Date(earliest_start_arr[2], earliest_start_arr[1]-1, earliest_start_arr[0]);
+                var latest_return = new Date(latest_return_arr[2], latest_return_arr[1]-1, latest_return_arr[0]);
+                var diff_days = Math.round((latest_return-earliest_start)/(1000*60*60*24));
+                var diff_nights =  diff_days - 1;
+                var options = document.getElementById("duration").getElementsByTagName("option");
+                for (var i = 0; i < options.length; i++) {
+                    if(options[i].value.includes('-')){
+                        var days = options[i].value.split('-');
+                        if(days[1].length){
+                            (parseInt(days[0]) <= parseInt(diff_days))
+                                ? options[i].disabled = false
+                                : options[i].disabled = true;
+                        } else {
+                            (parseInt(days[0]) <= parseInt(diff_days))
+                                ? options[i].disabled = false
+                                : options[i].disabled = true;
+                        }
+                    } else if (options[i].value == "exact" || options[i].value == "" || !options[i].value.length) {
+                        options[i].disabled = false;
+                    } else {
+                        (parseInt(options[i].value) <= parseInt(diff_nights))
+                            ? options[i].disabled = false
+                            : options[i].disabled = true;
+                    }
+                }
+                return true;
+            });
+
             $('.kwp-btn-expand').click(function(e) {
                 e.preventDefault();
                 $(this).toggleClass('kwp-open');
@@ -294,9 +325,18 @@
                         weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
                         weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
                     },
-                    onSelect: function() {
-                        dt.endDate.setDate(this.getDate()+1);
-                        dt.endDate.setMinDate(this.getDate());
+                    onSelect: function(date) {
+                        var dateFrom = this.getDate();
+                        var dateTo = dt.endDate.getDate();
+                        if(dateFrom >= dateTo){
+                            var d = date.getDate();
+                            var m = date.getMonth();
+                            var y = date.getFullYear();
+                            var updatedDate = new Date(y, m, d);
+                            dt.endDate.setMinDate(updatedDate);
+                            updatedDate = new Date(y, m, d+7);
+                            dt.endDate.setDate(updatedDate);
+                        }
                     },
                     onOpen: function() {
 
@@ -381,11 +421,13 @@
                     $(this).parents('.haserrors').removeClass('haserrors');
                     check_button();
                 });
+                $("#latest_return").trigger("change");
             });
 
             $(window).on('resize', function() {
                 dt.adjustResponsive();
             });
+
 
             function check_button(){
                 if(!$(".dt-modal .haserrors").length){

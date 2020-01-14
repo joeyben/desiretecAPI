@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="{{ asset('whitelabel/tui/css/tui.css') }}">
 @endsection
 
+@section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+    <script src="{{ mix('whitelabel/tui/js/tui.js') }}"></script>
+@endsection
+
 @section('content')
 
     <!-- Wish lis Box -->

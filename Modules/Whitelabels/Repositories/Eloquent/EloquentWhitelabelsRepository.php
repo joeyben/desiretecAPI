@@ -244,6 +244,8 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         );
 
         $whitelabelLangTable = 'language_lines_' . mb_strtolower($name);
+        $moduleId = strtoupper($name) . '_ID';
+
         $this->generateFile(
             base_path('Modules/Master/Config/config.stub'),
             base_path("Modules/$name/Config/config.php"),
@@ -251,13 +253,15 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 '$MODULE$',
                 '$ID$',
                 '$TABLE$',
-                '$MODULESMAL$'
+                '$MODULESMAL$',
+                '$MODULEID$'
             ],
             [
                 $name,
                 $id,
                 $whitelabelLangTable,
-                mb_strtolower($name)
+                mb_strtolower($name),
+                $moduleId
             ]
         );
 

@@ -1,7 +1,6 @@
 @import "variables";
 
 // Html, body, main-containers
-
 html, body{
   overflow: auto;
 }
@@ -35,40 +34,24 @@ body{
 }
 
 // Buttons
-
-.primary-btn, .secondary-btn{
+.primary-btn, .btn-primary, .secondary-btn, .btn-secondary{
   padding: 5px 20px;
   min-width: 220px;
-}
-a.primary-btn, .primary-btn, a.btn-primary, .btn-primary, input.primary-btn{
-  background: $brand-primary;
-  border: 1px solid $brand-primary;
-  transition: all .3s ease-out;
-  &:visited{
-    background: $brand-primary;
-    border: 1px solid $brand-primary;
-  }
-  &:hover, &:active{
-    background: $brand-secondary;
-    border: 1px solid $brand-secondary;
+  background: transparent;
+  border: 1px solid transparent;
+  color: transparent;
+  &:focus, &:hover, &:visited {
+    background: transparent;
+    border: 1px solid transparent;
+    color: transparent;
   }
 }
-a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
-  color: $brand-primary;
-  border: 1px solid $brand-primary;
-  transition: all .3s ease-out;
-  &:visited{
-    color: $brand-primary;
-    border: 1px solid $brand-primary;
-  }
-  &:hover, &:active{
-    color: $brand-secondary;
-    border: 1px solid $brand-secondary;
-  }
+
+input:-internal-autofill-selected{
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px #f8f8f8 !important;
 }
 
 // Confirm popup
-
 .confirm-popup {
   .popup-body {
     .primary-btn {
@@ -86,7 +69,6 @@ a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
 }
 
 // Slider
-
 .slider{
   width: 100%;
   height:700px;
@@ -95,29 +77,35 @@ a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
+  @media screen and (max-width: $break-small) {
+    background-position: 40% center;
+  }
   .welcome{
     position: absolute;
-    top: 50px;
+    top: 100px;
     color: #fff;
     width: 100%;
     text-align: center;
-    font-size: 18px;
     font-weight: 400;
     strong{
       display: block;
       font-size: 35px;
-      line-height: 70px;
+      line-height: 45px;
       font-weight: 400;
+      margin-top: 20px;
+      @media(max-width: 769px) {
+        font-size: 28px;
+      }
     }
   }
   .layer-action{
     position: absolute;
-    bottom: 130px;
+    bottom: 300px;
     left: 0;
     right: 0;
     text-align: center;
-    @media (max-width: $screen-md) {
-      bottom: 190px;
+    @media screen and (max-width: $break-small) {
+      bottom: 350px;
     }
     a{
       font-size: 24px;
@@ -125,9 +113,15 @@ a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
       padding: 15px 35px;
       line-height: 1.5em;
       letter-spacing: 0.42px;
+      border-color: transparent;
+      @media (max-width: $break-small){
+        font-size: 22px;
+      }
     }
   }
 }
+
+// Wish modal
 .wish-modal-1 .modal-body-left input[value=""]~label {
   top: 5px !important;
   font-size: 10px !important;
@@ -135,7 +129,6 @@ a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
 }
 
 // Footer
-
 .footer{
   padding-top: 20px;
   color: #4c4c4c;
@@ -258,6 +251,15 @@ a.secondary-btn, .secondary-btn, a.btn-secondary, .btn-secondary{
     .navbar-brand{
       padding: 0;
       height: 50px !important;
+    }
+  }
+}
+
+// Auth views
+.panel-body{
+  .form-group{
+    a{
+      color: transparent;
     }
   }
 }

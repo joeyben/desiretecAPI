@@ -12,10 +12,6 @@ var exitIntent = window.exitIntent || {};
 
     dt.popupTemplate = function (variant) {
 
-        var mobileHeader = dt.PopupManager.decoder.getRandomElement([
-            'Dürfen wir Sie beraten?'
-        ]);
-
         var texts = {
             'eil-n1-social': {
                 header: 'Dürfen wir Dich beraten?',
@@ -42,7 +38,7 @@ var exitIntent = window.exitIntent || {};
                 body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
             },
             'eil-mobile': {
-                header: mobileHeader,
+                header: 'Dürfen wir Sie beraten?',
                 body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden!'
             }
         };
@@ -66,366 +62,6 @@ var exitIntent = window.exitIntent || {};
             ;
     };
 
-
-    /**** Mobile Decoder ****/
-    var MasterIBETripDataDecoderMobile = $.extend({}, dt.AbstractTripDataDecoder, {
-        name: 'TUI Rundreisen Mobile',
-        matchesUrl: 'm.tui.com/(buchen)',
-        dictionaries: {
-            'catering': {
-                'AI': 'all-inclusive',
-                'AP': 'all-inclusive',
-                'FB': 'Vollpension',
-                'FP': 'Vollpension',
-                'HB': 'Halbpension',
-                'HP': 'Halbpension',
-                'BB': 'Frühstück',
-                'AO': 'ohne Verpflegung',
-                'XX': null
-            },
-            'cateringWeight': {
-                'AI': 5,
-                'AP': 5,
-                'FB': 4,
-                'FP': 4,
-                'HB': 3,
-                'HP': 3,
-                'BB': 2,
-                'AO': 1,
-                'XX': null
-            },
-            'allowedDestinations': {
-                1340: 'Seychellen',
-                1196: 'Malediven',
-                1333: 'Kapverdische Inseln'
-            }
-        },
-        filterFormSelector: '#search-form',
-        filterDataDecoders: {
-            'catering': function (form, formData) {
-                return '';
-            },
-            'hotel_category': function (form, formData) {
-                return '';
-            },
-            'destination': function (form, formData) {
-                return $(".search-criteria-list li:eq( 0 ) strong").attr('title');
-            },
-            'pax': function (form, formData) {
-                var pax = $(".search-criteria-list li:eq( 4 ) strong").attr('title').split(',');
-                return parseInt(pax[0].replace(' Erwachsene',''));
-            },
-            'budget': function (form, formData) {
-                return '';
-            },
-            'children': function (form, formData) {
-                var pax = $(".search-criteria-list li:eq( 4 ) strong").attr('title').split(',')
-                return parseInt(pax[1].replace(' Kinder',''));
-            },
-            'age_1': function (form, formData) {
-                return '';
-            },
-            'age_2': function (form, formData) {
-                return '';
-            },
-            'age_3': function (form, formData) {
-                return '';
-            },
-            'earliest_start': function (form, formData) {
-                var latest_return = $(".search-criteria-list li:eq( 3 )").text().split(' - ')
-                return $.trim(latest_return[0]);
-            },
-            'latest_return': function (form, formData) {
-                var latest_return = $(".search-criteria-list li:eq( 3 )").text().split(' - ')
-                return $.trim(latest_return[1]);
-            },
-            'duration': function (form, formData) {
-                var duration = $(".search-criteria-list li:eq( 2 ) strong").attr('title');
-                duration = duration.replace(' Wochen', '-');
-                duration = duration.replace(' Tage', '');
-                return duration;
-            },
-            'extra': function (form, formData) {
-                return '';
-            },
-            'room_type': function (form, formData) {
-                return '';
-            },
-            'cities': function (form, formData) {
-                return '';
-            },
-            'airport': function (form, formData) {
-                return $(".search-criteria-list li:eq( 1 ) strong").attr('title');
-            },
-            'is_popup_allowed': function (form, formData) {
-                //var step = this.getScope().IbeApi.state.stepNr;
-                return true;
-            }
-        },
-        getVariant: function () {
-            return 'eil-mobile';
-        },
-        getRandomElement: function (arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
-        },
-        getTripData: function () {
-            return this.decodeFilterData();
-        },
-        getTrackingLabel: function (tripData, variant) {
-            var destId = null,
-                destName = tripData.destination;
-
-            switch (destName) {
-                case 'Kapverdische Inseln':
-                case 'Kap Verde - Sal':
-                case 'Kap Verde - Boavista':
-                case 'Kap Verde Boavista':
-                case 'Kap Verde':
-                    destId = 'kap';
-                    break;
-                case 'Malediven':
-                    destId = 'mal';
-                    break;
-                case 'Seychellen':
-                    destId = 'sey';
-                    break;
-                case 'Mauritius & Reunion':
-                case 'Mauritius':
-                case 'La Réunion':
-                case 'Reunion':
-                    destId = 'mau';
-                    break;
-                case 'Mexiko':
-                case 'Mexiko: Yucatan / Cancun':
-                case 'Mexiko: Pazifikküste':
-                    destId = 'mex';
-                    break;
-                case 'Portugal':
-                case 'Algarve':
-                    destId = 'alg';
-                    break;
-                case 'Abu Dhabi':
-                case 'Ras Al-Khaimah':
-                case 'Fujairah':
-                case 'Ajman':
-                case 'Umm Al Quwain':
-                case 'Oman':
-                case 'Dubai':
-                    destId = 'dub';
-                    break;
-                case 'Dominikanische Republik':
-                case 'Dom. Republik - Osten (Punta Cana)':
-                case 'Dom. Republik - Norden (Puerto Plata & Samana)':
-                case 'Dom. Republik - Süden (Santo Domingo)':
-                    destId = 'dom';
-                    break;
-                case 'Insel Phuket':
-                case 'Bangkok & Umgebung':
-                case 'Insel Ko Samui':
-                case 'Westthailand (Hua Hin, Cha Am, River Kwai)':
-                case 'Südostthailand (Pattaya, Jomtien)':
-                case 'Krabi & Umgebung':
-                case 'Khao Lak & Umgebung':
-                case 'Nordthailand (Chiang Mai, Chiang Rai, Sukhothai)':
-                case 'Inseln im Golf von Thailand (Koh Chang, Koh Phangan)':
-                case 'Inseln in der Andaman See (Koh Pee Pee, Koh Lanta)':
-                case 'Nordostthailand (Issan)':
-                    destId = 'tha';
-                    break;
-                case 'USA':
-                case 'usa':
-                case 'Usa':
-                case 'Kalifornien':
-                case 'New York':
-                case 'Florida Ostküste':
-                case 'Arizona':
-                case 'Florida Orlando':
-                case 'Illinois':
-                case 'New England':
-                case 'Texas':
-                case 'Nevada':
-                case 'Ohio':
-                case 'Utah':
-                case 'Louisiana & Mississippi':
-                case 'Georgia':
-                case 'Colorado':
-                case 'Hawaii - Insel Oahu':
-                case 'Florida Westküste':
-                case 'Missouri':
-                case 'North Carolina':
-                case 'Washington':
-                case 'Hawaii - Insel Maui':
-                case 'Washington D.C. & Maryland':
-                case 'Minnesota':
-                case 'Oregon':
-                case 'Hawaii - Insel Big Island':
-                case 'South Carolina':
-                case 'Hawaii - Insel Kauai':
-                case 'Florida Südspitze':
-                case 'Montana':
-                case 'New Mexico':
-                case 'Wyoming':
-                case 'New Jersey':
-                case 'Alaska':
-                case 'Idaho':
-                case 'Virginia':
-                case 'Pennsylvania':
-                case 'South Dakota':
-                case 'Alabama':
-                case 'Indiana & Kentucky':
-                case 'Massachusetts':
-                case 'Tennessee':
-                case 'Michigan':
-                case 'Kansas & Nebraska':
-                case 'Oklahoma':
-                case 'Arkansas':
-                case 'Hawaii - Insel Molokai':
-                case 'North Dakota':
-                case 'Hawaii - Insel Lanai':
-                    destId = 'usa';
-                    break;
-                case 'Kuba':
-                case 'Kuba - Varadero & Havanna':
-                case 'Kuba (Holguin)':
-                    destId = 'kub';
-                    break;
-                case 'Sri Lanka':
-                    destId = 'sri';
-                    break;
-                case 'Jamaika':
-                    destId = 'jam';
-                    break;
-                case 'Curacao & Aruba & Bonaire':
-                    destId = 'cur';
-                    break;
-                case 'Barbados':
-                    destId = 'bar';
-                    break;
-                case 'Bahamas':
-                    destId = 'bah';
-                    break;
-                case 'St.Lucia':
-                    destId = 'stl';
-                    break;
-                case 'Antigua & Barbuda':
-                    destId = 'ant';
-                    break;
-                case 'Tobago':
-                    destId = 'tob';
-                    break;
-                case 'Turks & Caicos Inseln':
-                    destId = 'tur';
-                    break;
-                case 'Grenada':
-                    destId = 'gre';
-                    break;
-                case 'Puerto Rico':
-                    destId = 'pue';
-                    break;
-                case 'Guadeloupe':
-                    destId = 'gua';
-                    break;
-                case 'Martinique':
-                    destId = 'mar';
-                    break;
-                case 'St. Marteen (nl.) & St.Eustatius & Saba':
-                    destId = 'stmnl';
-                    break;
-                case 'St. Martin (frz.)':
-                    destId = 'stmfr';
-                    break;
-                case 'Virgin Islands & Anguilla':
-                    destId = 'vir';
-                    break;
-                case 'Anguilla':
-                    destId = 'ang';
-                    break;
-                case 'St.Kitts & Nevis':
-                    destId = 'stk';
-                    break;
-                case 'Bermuda':
-                    destId = 'ber';
-                    break;
-                case 'Cayman Inseln':
-                    destId = 'cay';
-                    break;
-                case 'Harbour Island':
-                    destId = 'har';
-                    break;
-                case 'Indonesien':
-                case 'Indonesien: Bali':
-                case 'Indonesien: Java':
-                case 'Indonesien: Sunda-Inseln':
-                case 'Indonesien: Nordosten':
-                case 'Indonesien: Sumatra':
-                case 'Indonesien: Insel Bintan':
-                    destId = 'ind';
-                    break;
-                case 'Kapstadt & Umgebung':
-                case 'Johannesburg & Umgebung':
-                case 'Eastern Cape':
-                case 'Krüger Park':
-                case 'Durban & Umgebung':
-                    destId = 'saf';
-                    break;
-                case 'Namibia':
-                    destId = 'nam';
-                    break;
-                case 'Tansania - Sansibar':
-                case 'Tansania':
-                case 'Zanzibar':
-                    destId = 'tan';
-                    break;
-                case 'Kenia - Nairobi':
-                case 'Kenia - Südküste':
-                case 'Kenia - Nordküste':
-                    destId = 'ken';
-                    break;
-                case 'Nordwesten':
-                    destId = 'nor';
-                    break;
-                case 'Simbabwe':
-                    destId = 'sim';
-                    break;
-                case 'Mozambique':
-                    destId = 'moz';
-                    break;
-                case 'Sambia':
-                    destId = 'sam';
-                    break;
-                case 'Botswana':
-                    destId = 'not';
-                    break;
-                case 'Swasiland':
-                    destId = 'swa';
-                    break;
-                case 'Afrika':
-                    destId = 'afr';
-                    break;
-            }
-
-            if (destId) {
-                return variant + '-' + destId;
-            }
-
-            return variant;
-        },
-        getExtraVariable: function(extraVar, attrName, splitChar){
-            splitChar = (splitChar === undefined) ? ';' : splitChar;
-            var attributesArr = [];
-            if(extraVar != ''){
-                var attributes = extraVar.split(splitChar);
-                $.each(attributes, function(i, e){
-                    var item = attrName+'_'+e;
-                    attributesArr.push($('label[for='+item+']').attr('title'));
-                });
-            }
-            if(attributesArr.length == 0){
-                return '';
-            }
-            return attributesArr.join(', ');
-        }
-    });
 
     var TuiHMTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'TUI Honeymoon',
@@ -804,19 +440,9 @@ var exitIntent = window.exitIntent || {};
             return arr[Math.floor(Math.random() * arr.length)];
         },
         getVariant: function () {
-            var regex = new RegExp("airtours.de");
-            if(regex.test(String(window.location))) {
-                return 'eil-at';
-            }else if(isMobile()){
-                return 'eil-mobile';
-            }else{
-                return this.getRandomElement([
-                    'eil-n1',
-                    'eil-n1',
-                    'eil-n2',
-                    'eil-n5'
-                ]);
-            }
+            return this.getRandomElement([
+                'eil-'+deviceDetector.device,
+            ]);
         },
         getTrackingLabel: function (tripData, variant) {
             var destId = null,
@@ -1068,7 +694,7 @@ var exitIntent = window.exitIntent || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: 'https://tui.reise-wunsch.com/|https://tui.reisewunschservice.de',
+        matchesUrl: 'https://tui.reise-wunsch.com/|https://tui.reisewunschservice.de/|http://tui.com',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
@@ -1266,20 +892,9 @@ var exitIntent = window.exitIntent || {};
             return arr[Math.floor(Math.random() * arr.length)];
         },
         getVariant: function () {
-            if(isMobile()){
-                return 'eil-mobile';
-            }else if(getUrlParams('utm_source') && getUrlParams('utm_source') == 'social'){
-                return this.getRandomElement([
-                    'eil-n1-social'
-                ]);
-            }else{
-                return this.getRandomElement([
-                    'eil-n1',
-                    'eil-n1',
-                    'eil-n2',
-                    'eil-n5'
-                ]);
-            }
+            return this.getRandomElement([
+                'eil-'+deviceDetector.device
+            ]);
         },
         getExtraVariable: function(extraVar, attrName, splitChar){
             splitChar = (splitChar === undefined) ? ';' : splitChar;
@@ -1367,7 +982,7 @@ var exitIntent = window.exitIntent || {};
                 }
                 dt.PopupManager.modal.removeClass('tmp-hidden');
                 $(this).remove();
-                ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
+                dt.Tracking.rawEvent('trigger_button', 'Trigger button', 'Trigger button clicked');
             });
         };
 
@@ -1408,7 +1023,6 @@ var exitIntent = window.exitIntent || {};
             if(deviceDetector.device === "phone") {
                 dt.PopupManager.teaser = true;
                 dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
-                dt.defaultConfig.cssPath = dt.defaultConfig.cssPath.replace('whitelabel.css', 'whitelabel_mobile.css');
                 $(".dt-modal .kwp-close").on('touchend',function () {
                     dt.PopupManager.closePopup(e);
                 });
@@ -1591,9 +1205,104 @@ var exitIntent = window.exitIntent || {};
             });
         };
 
+        dt.applyBrandColor = function() {
+
+            // Style variables
+            // brandColor is passed through blade
+            var brandColorDarker = brandColor;
+
+            var btnPrimaryCss = {
+                'background': brandColor,
+                'border': '1px solid ' + brandColor,
+                'color': '#fff',
+            };
+            var btnPrimaryHoverCss = {
+                'background': brandColorDarker,
+                'border': '1px solid ' + brandColorDarker,
+                'color': '#fff',
+            };
+            var btnSecondaryCss = {
+                'background': '#fff',
+                'border': '1px solid ' + brandColor,
+                'color': brandColor,
+            };
+            var btnSecondaryHoverCss = {
+                'background': '#fff',
+                'border': '1px solid ' + brandColorDarker,
+                'color': brandColorDarker,
+            };
+
+            // Apply styles
+            var layerButtons = $('.primary-btn, .kwp .pax-col .kwp-form-group .pax-more .button a');
+            layerButtons
+                .css(btnPrimaryCss)
+                .mouseover(function () {
+                    $(this).css(btnPrimaryHoverCss);
+                }).mouseout(function () {
+                    $(this).css(btnPrimaryCss);
+                });
+
+            var paxMore = $('.kwp .pax-col .kwp-form-group .pax-more .button a');
+            paxMore.css({
+                'background': brandColor,
+            });
+
+            var durationMore = $('.kwp .duration-col .kwp-form-group .duration-more .button a');
+            durationMore.css({
+                'background': brandColor,
+            });
+
+            var footerLinks = $('.kwp-agb p a');
+            footerLinks.css({
+                'color': brandColor,
+            });
+
+            var checkboxEl = $('.kwp input[type="checkbox"]:checked:after');
+            $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
+
+            var footerHref = $('.kwp-agb p a');
+            footerHref.css({
+                'color': brandColor,
+            });
+
+            var layerHeader = $('.mobile-layer .kwp-header');
+            layerHeader.css({
+                'background': brandColor,
+            });
+
+            var successHref = $('.kwp-completed-master a');
+            $("<style>.kwp-completed-master a { color: " + brandColor + "; }</style>")
+                .appendTo(document.documentElement);
+
+        }
+
+        dt.adjustResponsive = function(){
+            if( $(window).outerWidth() <= 768 ) {
+                $("body").addClass('mobile-layer');
+                $(".dt-modal").addClass('m-open');
+
+                dt.PopupManager.isMobile = true;
+                dt.PopupManager.layerShown = true;
+
+                $(".kwp-header").css('background', brandColor);
+
+                $('.error-input').siblings('i').css('bottom', '30px');
+
+                $('.dt-modal .submit-col').detach().appendTo('.footer-col');
+            } else {
+                $("body").removeClass('mobile-layer');
+                $(".dt-modal").removeClass('m-open');
+
+                $(".kwp-header").removeAttr('style');
+
+                $('.footer-col .submit-col').detach().appendTo('.kwp-content .kwp-row:last-child');
+            }
+        };
 
         function isMobile(){
             if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                return true;
+            } else if( $(window).outerWidth() < 769 ) {
                 return true;
             }
             return false;
@@ -1662,4 +1371,16 @@ var exitIntent = window.exitIntent || {};
                     this.rows = minRows + rows;
                 });
         }
+
+        function parseDate(str) {
+            var mdy = str.split('.');
+            return new Date(mdy[2], mdy[1]-1, mdy[0]);
+        }
+
+        function datediff(first, second) {
+            // Take the difference between the dates and divide by milliseconds per day.
+            // Round to nearest whole number to deal with DST.
+            return Math.round((second-first)/(1000*60*60*24));
+        }
+
     })(jQuery);

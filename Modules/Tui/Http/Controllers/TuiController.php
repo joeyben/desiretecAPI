@@ -57,6 +57,7 @@ class TuiController extends Controller
 
         return view('tui::index')->with([
             'display_name'  => $whitelabel['display_name'],
+            'color'         => $whitelabel['color'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
             'logo'          => $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['url'],
             'body_class'    => $this::BODY_CLASS,
@@ -71,16 +72,16 @@ class TuiController extends Controller
      */
     public function show(Request $request)
     {
-        $input = $request->only('variant');
-        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+        $whitelabel = $this->whitelabel->getByName('Tui');
 
-        $html = view('tui::' . $layer)->with([
+        $html = view('tui::layer.popup')->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
             'ages_arr'     => $this->ages,
-            'request'      => $request->all()
+            'request'      => $request->all(),
+            'color'        => $whitelabel['color'],
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -97,16 +98,18 @@ class TuiController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $whitelabel = $this->whitelabel->getByName('Tui');
+
         $input = $request->all();
         if ($request->failed()) {
-            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
-            $html = view('tui::' . $layer)->with([
+            $html = view('tui::layer.popup')->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
                 'ages_arr'     => $this->ages,
+                'color'        => $whitelabel['color'],
                 'request'      => $request->all()
             ])->render();
 

@@ -421,7 +421,7 @@ $gutter: 30px;
                 margin-right: 0px;
               }
               select{
-                text-indent: 10px;
+                // text-indent: 10px;
               }
             }
           }
@@ -1522,4 +1522,8 @@ p.kwp-info {
       min-width: 100%;
     }
   }
+}
+
+select option:disabled {
+  color: $master-grey-light;
 }

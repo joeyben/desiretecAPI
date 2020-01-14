@@ -429,7 +429,7 @@ $master-grey-dark: #303030;
                 margin-right: 0px;
               }
               select{
-                text-indent: 10px;
+                // text-indent: 10px;
               }
             }
           }
@@ -852,7 +852,7 @@ p.kwp-info {
 
   height: 50px;
   width: 50px;
-  border: 10px solid #fce237;
+  border: 10px solid #fff;
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -1592,4 +1592,8 @@ and (max-device-width : 320px) {
   background: #e0eaf1!important;
   font-size: 11px;
   font-weight: 600;
+}
+
+select option:disabled {
+  color: $master-grey-light;
 }

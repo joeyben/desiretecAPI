@@ -76,6 +76,7 @@ class $MODULE$WishesController extends Controller
         $this->whitelabelId = \Config::get('$MODULESMAL$.id');
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
         $this->categories = $categories;
     }
@@ -118,6 +119,7 @@ class $MODULE$WishesController extends Controller
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
             'kids_arr'           => $this->kids,
+            'ages_arr'           => $this->ages,
             'duration_arr'       => $this->duration,
             'adults_arr'         => $this->adults,
             'is_owner'           => $isOwner,
