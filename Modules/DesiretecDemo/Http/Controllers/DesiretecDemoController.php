@@ -139,9 +139,9 @@ class DesiretecDemoController extends Controller
 
         if ($wishTye > 0) {
 
-            //$wishJob = (new callTrafficsApi($wish->id));
-            //dispatch($wishJob);
-            $wishRepo->callTraffics($wish->id);
+            $wishJob = (new callTrafficsApi($wish->id, $this->whitelabelId, $newUser->id));
+            dispatch($wishJob);
+            //$wishRepo->callTraffics($wish->id);
 
             $view = \View::make('wishes::emails.autooffer',
                 [
