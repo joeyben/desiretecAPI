@@ -6,7 +6,7 @@ return [
     'locale'               => 'de',
     'language_lines_table' => 'language_lines_traveloverland',
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
-    'local_url'            => 'traveloverland.com',
-    'development_url'      => 'traveloverland.reise-wunsch.com',
-    'production_url'       => 'traveloverland.reisewunschservice.de',
+    'local_url'            => 'travel-overland.com',
+    'development_url'      => 'travel-overland.reise-wunsch.com',
+    'production_url'       => 'travel-overland.reisewunschservice.de',
 ];
