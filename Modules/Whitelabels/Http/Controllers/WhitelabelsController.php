@@ -345,10 +345,20 @@ class WhitelabelsController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
     public function show(int $id): JsonResponse
     {
         try {
-            $result['whitelabel'] = $this->whitelabels->find($id);
+            $result['whitelabel'] = $this->whitelabels->withCriteria([
+                new EagerLoad(['layers']),
+            ])->find($id);
+
+
+            //dd($result['whitelabel']->layers->first()->pivot->body);
+
 
             $background = $this->whitelabels->getBackgroundImage($result['whitelabel']);
 
@@ -359,9 +369,12 @@ class WhitelabelsController extends Controller
             $visual = $this->whitelabels->getVisual($result['whitelabel']);
 
             $result['whitelabel']['background'] = (null !== $background && null !== $background->first()) ? [$background->first()] : [];
-            $result['whitelabel']['logo'] = (null !== $logo && null !== $logo->first()) ? [$logo->first()] : [];
-            $result['whitelabel']['favicon'] = (null !== $favicon && null !== $favicon->first()) ? [$favicon->first()] : [];
-            $result['whitelabel']['visual'] = (null !== $visual && null !== $visual->first()) ? [$visual->first()] : [];
+            $result['whitelabel']['logo']       = (null !== $logo && null !== $logo->first()) ? [$logo->first()] : [];
+            $result['whitelabel']['favicon']    = (null !== $favicon && null !== $favicon->first()) ? [$favicon->first()] : [];
+            $result['whitelabel']['visual']     = (null !== $visual && null !== $visual->first()) ? [$visual->first()] : [];
+            $result['whitelabel']['layers']     = $result['whitelabel']->layers;
+
+
 
             $result['success'] = true;
             $result['status'] = 200;
