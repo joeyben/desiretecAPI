@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://bentour.reisewunschservice.de',
+        baseUrl: 'https://bentour.reise-wunsch.com',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/bentour/css/layer/whitelabel.css'
@@ -69,8 +69,8 @@ var exitIntent = window.exitIntent || {};
 
     /**** Mobile Decoder ****/
     var MasterIBETripDataDecoderMobile = $.extend({}, dt.AbstractTripDataDecoder, {
-        name: 'TUI Rundreisen Mobile',
-        matchesUrl: 'm.master.com/(buchen)',
+        name: 'Bentour WL',
+        matchesUrl: 'https://bentour.reise-wunsch.com',
         dictionaries: {
             'catering': {
                 'AI': 'all-inclusive',
