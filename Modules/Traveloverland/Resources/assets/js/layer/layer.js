@@ -47,7 +47,7 @@ var dt = window.dt || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: 'traveloverland.reise-wunsch.com',
+        matchesUrl: 'travel-overland.reisewunschservice.de',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
