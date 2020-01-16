@@ -97,7 +97,11 @@
                 {data: 'status', name: '{{config('module.agents.table')}}.status'},
                 {data: 'actions', name: '{{config('module.agents.table')}}.actions'},
             ],
-
+            columnDefs: [
+            {
+              className: 'dt-status',
+              targets: [4]
+            }],
             order: [[4, "asc"]],
             searchDelay: 500,
             dom: 'lBfrtip',

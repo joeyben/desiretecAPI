@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Access\User\User;
 use App\Models\Agents\Agent;
 use App\Models\Messages\Message;
+use App\Services\Flag\Src\Flag;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Auth;
@@ -18,10 +20,15 @@ class MessagesController extends Controller
      * @var \Illuminate\Session\Store
      */
     private $session;
+    /**
+     * @var \Illuminate\Auth\AuthManager
+     */
+    private $auth;
 
-    public function __construct(Store $session)
+    public function __construct(Store $session, AuthManager $auth)
     {
         $this->session = $session;
+        $this->auth = $auth;
     }
 
     public function index($wish_id)
@@ -46,12 +53,17 @@ class MessagesController extends Controller
     {
         $consumerId = $request->user_id;
         $message = $request->input('message');
+        $agentId = null;
+
+        if ($this->auth->guard('agent')->check() && $this->auth->guard('web')->user()->hasRole(Flag::SELLER_ROLE)) {
+            $agentId = $this->auth->guard('agent')->user()->id;
+        }
 
         $message = Message::create([
             'user_id' => $consumerId,
             'wish_id' => $request->wish_id,
             'message' => $message,
-            'agent_id'=> Auth::guard('agent')->user()->id
+            'agent_id'=> $agentId
         ]);
 
         if ($message) {
