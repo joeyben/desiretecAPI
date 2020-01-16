@@ -20,6 +20,8 @@ class AuthController extends APIController
      */
     private $auth;
 
+    protected $identifier = 'email';
+
     /**
      * Create a new AuthController instance.
      *
@@ -113,6 +115,26 @@ class AuthController extends APIController
 
     public function me()
     {
-        return response()->json(auth()->user());
+        return $this->respond(['user' => $this->auth->user(), 'status' => 200]);
+    }
+
+    public function sendLoginEmail(Request $request)
+    {
+        try {
+            $user = $this->getUserByIdentifier($request->get($this->identifier));
+            $user->storeToken()->sendApiTokenLink([
+                'email' => trim($user->email),
+                'host' => $request->get('host')
+            ]);
+        } catch (Exception $e) {
+            return $this->respondInternalError($e->getMessage());
+        }
+
+        return $this->respond(['message' => 'success', 'status' => 200]);
+    }
+
+    protected function getUserByIdentifier($value)
+    {
+        return User::where($this->identifier, $value)->firstOrFail();
     }
 }
