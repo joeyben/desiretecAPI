@@ -12,6 +12,7 @@ use App\Models\OfferFiles\OfferFile;
 use App\Models\Offers\Offer;
 use App\Repositories\BaseRepository;
 use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -116,15 +117,15 @@ class OffersRepository extends BaseRepository
      *
      * @return bool
      */
-    public function create(StoreOffersRequest $request)
+    public function create(Request $request)
     {
         $files = $request->hasfile('file') ? $request->file('file') : [];
         $input = $request->except('_token', 'file');
         DB::transaction(function () use ($input, $files) {
-            $id = access()->user()->id;
+            $id = 6 /*access()->user()->id*/;
 
             $input['created_by'] = $id;
-            $input['agent_id'] = Auth::guard('agent')->user()->id;
+            $input['agent_id'] = 9 /*Auth::guard('agent')->user()->id*/;
 
             if ($offer = Offer::create($input)) {
                 $fileUploaded = $this->uploadImage($files, $offer->id);

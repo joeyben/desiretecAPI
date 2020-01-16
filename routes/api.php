@@ -34,6 +34,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     });
 
     Route::get('offers/{id}', 'OffersController@index');
+    Route::post('offers/store', 'OffersController@store');
 
     Route::group(['middleware' => ['jwt.verify']], function () {
         // Users

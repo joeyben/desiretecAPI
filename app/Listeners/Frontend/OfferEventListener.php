@@ -38,16 +38,16 @@ class OfferEventListener
 
     public function onCreatedOffer(Offer $offer)
     {
-        $user_id = $offer->wish->owner->id;
-        $user = User::where('id', (int) $user_id)->firstOrFail();
-        $usertoken = $user->storeToken();
-        $token = $usertoken->token->token;
-
-        $seller = Auth::guard('web')->user();
-        $sellertoken = $seller->storeToken();
-        $token_seller = $sellertoken->token->token;
-
-        $seller->notify(new OfferCreated($offer->wish_id, $token_seller, $offer));
-        $user->notify(new OfferUser($offer->wish_id, $token, $offer));
+//        $user_id = $offer->wish->owner->id;
+//        $user = User::where('id', (int) $user_id)->firstOrFail();
+//        $usertoken = $user->storeToken();
+//        $token = $usertoken->token->token;
+//
+//        $seller = Auth::guard('web')->user();
+//        $sellertoken = $seller->storeToken();
+//        $token_seller = $sellertoken->token->token;
+//
+//        $seller->notify(new OfferCreated($offer->wish_id, $token_seller, $offer));
+//        $user->notify(new OfferUser($offer->wish_id, $token, $offer));
     }
 }
