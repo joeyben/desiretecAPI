@@ -149,7 +149,6 @@ class AuthController extends APIController
 
     public function token(Request $request, string $token)
     {
-        dd($request->all());
         if (!$token->belongsToEmail($request->email)) {
             return $this->respondInternalError('Invalid login link!');
         }
