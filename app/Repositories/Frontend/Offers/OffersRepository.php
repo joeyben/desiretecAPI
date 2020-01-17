@@ -12,8 +12,10 @@ use App\Models\OfferFiles\OfferFile;
 use App\Models\Offers\Offer;
 use App\Repositories\BaseRepository;
 use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 /**
  * Class OffersRepository.
@@ -63,6 +65,48 @@ class OffersRepository extends BaseRepository
             ->orderBy(config('module.offers.table') . '.id', 'DESC');
     }
 
+    public function getForDataTableTemp($id)
+    {
+        return $this->query()
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.offers.table') . '.created_by')
+            ->leftjoin(config('module.wishes.table'), config('module.wishes.table') . '.id', '=', config('module.offers.table') . '.wish_id')
+            ->select([
+                config('module.offers.table') . '.id',
+                config('module.offers.table') . '.title',
+                config('module.offers.table') . '.status',
+                config('module.offers.table') . '.created_by',
+                config('module.offers.table') . '.created_at',
+                config('module.offers.table') . '.agent_id',
+                config('access.users_table') . '.first_name as first_name',
+                config('access.users_table') . '.last_name as last_name',
+                config('module.wishes.table') . '.id as wish_id',
+                config('module.wishes.table') . '.title as wish_title',
+            ])->where(config('module.offers.table') . '.created_by', $id)
+            ->orderBy(config('module.offers.table') . '.id', 'DESC');
+    }
+
+    public function getOffersData($id){
+        return Datatables::of($this->getForDataTableTemp($id))
+            ->addColumn('title', function ($offers) {
+                return '<a href="' . route('frontend.wishes.show', [$offers->wish_id])
+                    . '">' . $offers->title . '</a>';
+            })
+            ->addColumn('created_by', function ($offers) {
+                return Agent::where('id', $offers->agent_id)->first()->name;
+            })
+            ->addColumn('created_at', function ($offers) {
+                return $offers->created_at->format('d.m.Y') . ' ' . $offers->created_at->toTimeString();
+            })
+            ->addColumn('status', function ($offers) {
+                return $offers->status;
+            })
+            ->addColumn('actions', function ($offers) {
+                return $offers->action_buttons;
+            })
+            ->rawColumns(['title'])
+            ->make(true);
+    }
+
     /**
      * @param string $id
      *
@@ -102,6 +146,27 @@ class OffersRepository extends BaseRepository
 
             $input['created_by'] = $id;
             $input['agent_id'] = Auth::guard('agent')->user()->id;
+
+            if ($offer = Offer::create($input)) {
+                $fileUploaded = $this->uploadImage($files, $offer->id);
+                event(new OfferCreated($offer));
+
+                return true;
+            }
+
+            throw new GeneralException(trans('exceptions.backend.offers.create_error'));
+        });
+    }
+
+    public function createTemp(Request $request)
+    {
+        $files = $request->hasfile('file') ? $request->file('file') : [];
+        $input = $request->except('_token', 'file');
+        DB::transaction(function () use ($input, $files) {
+            $id = 6 /*access()->user()->id*/;
+
+            $input['created_by'] = $id;
+            $input['agent_id'] = 9 /*Auth::guard('agent')->user()->id */;
 
             if ($offer = Offer::create($input)) {
                 $fileUploaded = $this->uploadImage($files, $offer->id);

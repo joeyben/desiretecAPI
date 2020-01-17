@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Groups\GroupsRepository;
 use App\Repositories\Criteria\ByUser;
 use App\Repositories\Criteria\ByUserRole;
@@ -91,6 +92,29 @@ class WishesController extends APIController
                 }]),
                 new ByWhitelabel()
             ])->paginate($perPage);
+
+            return $this->responseJson($result);
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
+        }
+
+    }
+    public function getWish(Wish $wish, Request $request)
+    {
+        try {
+
+            $result['data'] = $this->wishes->withCriteria([
+                new ByUserRole($this->auth->user()->id),
+                new EagerLoad(['owner' => function ($query) {
+                    $select = 'CONCAT(first_name, " ", last_name) AS full_name';
+                    $query->select('id', DB::raw($select));
+                }, 'group'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }, 'whitelabel'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }]),
+                new ByWhitelabel()
+            ])->find($wish->id);
 
             return $this->responseJson($result);
         } catch (Exception $e) {
