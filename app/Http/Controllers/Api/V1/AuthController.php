@@ -6,6 +6,7 @@ use App\Http\Requests\ApiLoginRequest;
 use App\Http\Requests\ApiRegisterRequest;
 use App\Models\Access\Role\Role;
 use App\Models\Access\User\User;
+use App\Models\Access\User\UserToken;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -115,7 +116,15 @@ class AuthController extends APIController
 
     public function me()
     {
+        $result['user'] = $this->auth->user();
+        $result['user']['role'] = $this->auth->user()->roles()->first()->name;
+
         return $this->respond(['user' => $this->auth->user(), 'status' => 200]);
+    }
+
+    public function ckeckRole(Request $request)
+    {
+        return $this->respond(['role' => true, 'status' => 200]);
     }
 
     public function sendLoginEmail(Request $request)
@@ -136,5 +145,17 @@ class AuthController extends APIController
     protected function getUserByIdentifier($value)
     {
         return User::where($this->identifier, $value)->firstOrFail();
+    }
+
+    public function token(Request $request, string $token)
+    {
+        dd($request->all());
+        if (!$token->belongsToEmail($request->email)) {
+            return $this->respondInternalError('Invalid login link!');
+        }
+
+        Auth::login($token->user, true);
+
+        return $this->respond(['access_token' => JWTAuth::fromUser($token->user), 'status' => 200]);
     }
 }
