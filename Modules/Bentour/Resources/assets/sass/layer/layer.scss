@@ -294,7 +294,7 @@ $master-grey-dark: #303030;
     -moz-transition: border-color .3s ease;
     -o-transition: border-color .3s ease;
     transition: border-color .3s ease;
-    border-color: #ffe336;
+    border-color: $master-primary;
   }
 
   input[type="radio"],
