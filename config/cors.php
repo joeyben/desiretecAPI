@@ -37,6 +37,8 @@ return [
             'x-xsrf-token',
             'x_csrftoken',
             'Authorization',
+            'x-csrf-token',
+            'XSRF-TOKEN',
         ],
 
          'expose_headers' => [

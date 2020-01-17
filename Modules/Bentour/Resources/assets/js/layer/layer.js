@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://bentour.reisewunschservice.de',
+        baseUrl: 'https://bentour.reise-wunsch.com',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/bentour/css/layer/whitelabel.css'
@@ -69,8 +69,8 @@ var exitIntent = window.exitIntent || {};
 
     /**** Mobile Decoder ****/
     var MasterIBETripDataDecoderMobile = $.extend({}, dt.AbstractTripDataDecoder, {
-        name: 'TUI Rundreisen Mobile',
-        matchesUrl: 'm.master.com/(buchen)',
+        name: 'Bentour WL',
+        matchesUrl: 'https://bentour.reise-wunsch.com/|https://bentour.reisewunschservice.de/|http://bentour.com',
         dictionaries: {
             'catering': {
                 'AI': 'all-inclusive',
@@ -112,15 +112,19 @@ var exitIntent = window.exitIntent || {};
                 return $(".search-criteria-list li:eq( 0 ) strong").attr('title');
             },
             'pax': function (form, formData) {
-                var pax = $(".search-criteria-list li:eq( 4 ) strong").attr('title').split(',');
-                return parseInt(pax[0].replace(' Erwachsene',''));
+                if($(".search-criteria-list li:eq( 4 ) strong").attr('title') !== undefined) {
+                    var pax = $(".search-criteria-list li:eq( 4 ) strong").attr('title').split(',');
+                    return parseInt(pax[0].replace(' Erwachsene',''));
+                }
             },
             'budget': function (form, formData) {
                 return '';
             },
             'children': function (form, formData) {
-                var pax = $(".search-criteria-list li:eq( 4 ) strong").attr('title').split(',')
-                return parseInt(pax[1].replace(' Kinder',''));
+                if($(".search-criteria-list li:eq( 4 ) strong").attr('title') !== undefined) {
+                    var pax = $(".search-criteria-list li:eq( 4 ) strong").attr('title').split(',')
+                    return parseInt(pax[1].replace(' Kinder',''));
+                }
             },
             'age_1': function (form, formData) {
                 return '';
@@ -140,10 +144,12 @@ var exitIntent = window.exitIntent || {};
                 return $.trim(latest_return[1]);
             },
             'duration': function (form, formData) {
-                var duration = $(".search-criteria-list li:eq( 2 ) strong").attr('title');
-                duration = duration.replace(' Wochen', '-');
-                duration = duration.replace(' Tage', '');
-                return duration;
+                if($(".search-criteria-list li:eq( 2 ) strong").attr('title') !== undefined) {
+                    var duration = $(".search-criteria-list li:eq( 2 ) strong").attr('title');
+                    duration = duration.replace(' Wochen', '-');
+                    duration = duration.replace(' Tage', '');
+                    return duration;
+                }
             },
             'extra': function (form, formData) {
                 return '';

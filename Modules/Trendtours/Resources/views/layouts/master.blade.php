@@ -24,8 +24,9 @@
 
         gtag('config', 'UA-105970361-8');
     </script>
-
+    <!--
     <script src="{{ mix('whitelabel/trendtours/js/trendtours.js') }}"></script>
+    -->
 @endsection
 
 @section('after-scripts')

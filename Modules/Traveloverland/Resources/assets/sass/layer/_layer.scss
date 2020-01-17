@@ -408,7 +408,7 @@ $gutter: 30px;
           .kwp-col-ages{
             background: transparent;
             .main-label{
-              color: #092a5e;
+              color: $master-grey-dark;
               padding: 0;
               margin: 0 0 20px 0;
               font-size: 15px !important;
@@ -984,7 +984,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $master-grey-dark;
     }
     .text-hidden{
       padding: 5px 0;
@@ -1005,7 +1005,7 @@ p.kwp-info {
       right: 10px;
       top: 25px;
       font-size: 16px;
-      color: #092a5e;
+      color: $master-grey-dark;
     }
   }
   .description{
@@ -1046,7 +1046,7 @@ p.kwp-info {
         right: 10px;
         top: 30px;
         font-size: 16px;
-        color: #092a5e;
+        color: $master-grey-dark;
       }
     }
   }
@@ -1597,4 +1597,16 @@ p.kwp-info {
 
 select option:disabled {
   color: $master-grey-light;
+}
+
+.dt-modal {
+  .form-control {
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0 12px 4px;
+    font-size: inherit;
+    color: $master-grey-dark;
+  }
 }

@@ -34,6 +34,9 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('show', 'WishesController@show');
     });
 
+    Route::get('offers/{id}', 'OffersController@index');
+    Route::post('offers/store', 'OffersController@store');
+
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('wishes', 'WishesController@getWishes');
         Route::get('wish/{wish}', 'WishesController@getWish');
