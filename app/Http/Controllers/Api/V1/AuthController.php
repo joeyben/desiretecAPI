@@ -124,7 +124,7 @@ class AuthController extends APIController
 
     public function ckeckRole(Request $request)
     {
-        return $this->respond(['role' => true, 'status' => 200]);
+        return $this->respond(['role' => $this->auth->user()->hasRole($request->get('role')), 'status' => 200]);
     }
 
     public function sendLoginEmail(Request $request)
