@@ -38,6 +38,11 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('wishes', 'WishesController@getWishes');
         Route::get('wish/{wish}', 'WishesController@getWish');
 
-        Route::get('agents', 'AgentsController@getAgents');
+        Route::group(['prefix' => 'agents'], function () {
+            Route::get('', 'AgentsController@getAgents');
+            Route::put('update/{id}', 'AgentsController@update');
+            Route::post('create', 'AgentsController@create');
+            Route::delete('delete/{id}', 'AgentsController@delete');
+        });
     });
 });

@@ -12,39 +12,96 @@ use Validator;
 
 class AgentsController extends APIController
 {
-    protected $agent;
+    protected $repository;
 
-    public function __construct(AgentsRepository $agent)
+    public function __construct(AgentsRepository $repository)
     {
-        $this->agent = $agent;
+        $this->repository = $repository;
     }
 
     public function getAgents(Request $request)
     {
+        // (Milena) TODO: Stop using datatables
         try {
-            return Datatables::of($this->agent->getForDataTable())
-                ->addColumn('avatar', function ($agent) {
+            return Datatables::of($this->repository->getForDataTable())
+                ->addColumn('avatar', function ($repository) {
                     $path = Storage::disk('s3')->url('img/agent/');
-                    return '<img src="' . $path . $agent->avatar . '"/>';
+                    return '<img src="' . $path . $repository->avatar . '"/>';
                 })
-                ->addColumn('name', function ($agent) {
-                    return $agent->name;
+                ->addColumn('name', function ($repository) {
+                    return $repository->name;
                 })
-                ->addColumn('display_name', function ($agent) {
-                    return $agent->display_name;
+                ->addColumn('display_name', function ($repository) {
+                    return $repository->display_name;
                 })
-                ->addColumn('status', function ($agent) {
-                    return $agent->status;
+                ->addColumn('actions', function ($repository) {
+                    return '<a href="' . 'localhost:8001/agents/update/' . $repository->id . '">' . trans('labels.agents.edit') . '</a> / ' . '<a href="' . 'localhost:8001/agents/delete/' . $repository->id . '">' . trans('labels.agents.delete') . '</a>';
                 })
-                ->addColumn('actions', function ($agent) {
-                    return '<a href="' . route('frontend.agents.edit', $agent->id) . '">' . trans('labels.agents.edit') . '</a> / ' . '<a href="' . route('frontend.agents.delete', $agent->id) . '">' . trans('labels.agents.delete') . '</a>';
-                })
-                ->addColumn('created_at', function ($agent) {
-                    return $agent->created_at->toFormattedDateString() . ' ' . $agent->created_at->toTimeString();
+                ->addColumn('created_at', function ($repository) {
+                    return $repository->created_at->toFormattedDateString() . ' ' . $repository->created_at->toTimeString();
                 })
                 ->rawColumns(['avatar', 'actions', 'status'])->make(true);
         } catch (Exception $e) {
             return $this->respondWithError($e);
         }
+    }
+
+    public function create(Request $request)
+    {
+        try {
+           $validator = $this->validateRequest($request);
+
+            if ($validator->fails()) {
+                return $this->throwValidation('validation failed');
+            }
+
+            $this->repository->create($request->except('_token'));
+
+            return $this->respondCreated('agent created successfully');
+
+        } catch (Exception $e) {
+            return $this->respondWithError($e);
+        }
+    }
+
+    public function update($id, Request $request)
+    {
+        try {
+            $validator = $this->validateRequest($request);
+
+            if ($validator->fails()) {
+                return $this->throwValidation('validation failed');
+            }
+
+            $this->repository->doUpdate($id, $request);
+
+            return $this->respondUpdated('agent updated successfully');
+
+        } catch (Exception $e) {
+            return $this->respondWithError($e);
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $this->repository->deleteAgent($id);
+
+            return $this->respondUpdated('agent deleted successfully');
+
+        } catch (Exception $e) {
+            return $this->respondWithError($e);
+        }
+    }
+
+    protected function validateRequest(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name'  => 'required|string|max:55',
+            'email' => 'required|email|max:255|unique:agents,email',
+            'telephone' => 'required|integer'
+        ]);
+
+        return $validator;
     }
 }

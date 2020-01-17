@@ -108,6 +108,23 @@ class APIController extends Controller
     }
 
     /**
+     * Respond Updated.
+     *
+     * @param string $message
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function respondUpdated($message)
+    {
+        return $this->respond([
+            'success' => [
+                'message'     => $message,
+                'status_code' => 204,
+            ],
+        ]);
+    }
+
+    /**
      * respond with error.
      *
      * @param $message
