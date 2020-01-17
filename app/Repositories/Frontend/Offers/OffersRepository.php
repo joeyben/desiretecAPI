@@ -137,7 +137,7 @@ class OffersRepository extends BaseRepository
      *
      * @return bool
      */
-    public function create(Request $request)
+    public function create(StoreOffersRequest $request)
     {
         $files = $request->hasfile('file') ? $request->file('file') : [];
         $input = $request->except('_token', 'file');
