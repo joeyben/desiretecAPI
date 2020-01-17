@@ -142,10 +142,31 @@ class OffersRepository extends BaseRepository
         $files = $request->hasfile('file') ? $request->file('file') : [];
         $input = $request->except('_token', 'file');
         DB::transaction(function () use ($input, $files) {
+            $id = access()->user()->id;
+
+            $input['created_by'] = $id;
+            $input['agent_id'] = Auth::guard('agent')->user()->id;
+
+            if ($offer = Offer::create($input)) {
+                $fileUploaded = $this->uploadImage($files, $offer->id);
+                event(new OfferCreated($offer));
+
+                return true;
+            }
+
+            throw new GeneralException(trans('exceptions.backend.offers.create_error'));
+        });
+    }
+
+    public function createTemp(Request $request)
+    {
+        $files = $request->hasfile('file') ? $request->file('file') : [];
+        $input = $request->except('_token', 'file');
+        DB::transaction(function () use ($input, $files) {
             $id = 6 /*access()->user()->id*/;
 
             $input['created_by'] = $id;
-            $input['agent_id'] = 9 /*Auth::guard('agent')->user()->id*/;
+            $input['agent_id'] = 9 /*Auth::guard('agent')->user()->id */;
 
             if ($offer = Offer::create($input)) {
                 $fileUploaded = $this->uploadImage($files, $offer->id);

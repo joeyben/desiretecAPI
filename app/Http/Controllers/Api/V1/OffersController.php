@@ -8,6 +8,7 @@ use App\Http\Requests\Frontend\Offers\ManageOffersRequest;
 use App\Http\Requests\Frontend\Offers\StoreOffersRequest;
 use App\Models\Agents\Agent;
 use App\Repositories\Frontend\Offers\OffersRepository;
+use PHPUnit\Exception;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\Frontend\Offers\OffersTableController;
 use Illuminate\Http\Request;
@@ -35,7 +36,11 @@ class OffersController extends APIController
      */
     public function index($id)
     {
-        return response()->json($this->offer->getOffersData($id)->original);
+        try {
+            return response()->json($this->offer->getOffersData($id)->original);
+        } catch (\Exception $e) {
+
+        }
     }
 
     /**
@@ -43,10 +48,14 @@ class OffersController extends APIController
      */
     public function store(Request $request)
     {
-        $this->offer->create($request);
+        try{
+            $this->offer->createTemp($request);
 
-        return $this->respond([
-            'message'   => 'asdasd',
-        ]);
+            return $this->respond([
+                'message'   => 'Success',
+            ],200);
+        } catch (\Exception $e) {
+
+        }
     }
 }
