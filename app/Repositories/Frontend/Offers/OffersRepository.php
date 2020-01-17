@@ -45,7 +45,27 @@ class OffersRepository extends BaseRepository
     /**
      * @return mixed
      */
-    public function getForDataTable($id)
+    public function getForDataTable()
+    {
+        return $this->query()
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.offers.table') . '.created_by')
+            ->leftjoin(config('module.wishes.table'), config('module.wishes.table') . '.id', '=', config('module.offers.table') . '.wish_id')
+            ->select([
+                config('module.offers.table') . '.id',
+                config('module.offers.table') . '.title',
+                config('module.offers.table') . '.status',
+                config('module.offers.table') . '.created_by',
+                config('module.offers.table') . '.created_at',
+                config('module.offers.table') . '.agent_id',
+                config('access.users_table') . '.first_name as first_name',
+                config('access.users_table') . '.last_name as last_name',
+                config('module.wishes.table') . '.id as wish_id',
+                config('module.wishes.table') . '.title as wish_title',
+            ])->where(config('module.offers.table') . '.created_by', access()->user()->id)
+            ->orderBy(config('module.offers.table') . '.id', 'DESC');
+    }
+
+    public function getForDataTableTemp($id)
     {
         return $this->query()
             ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.offers.table') . '.created_by')
@@ -66,7 +86,7 @@ class OffersRepository extends BaseRepository
     }
 
     public function getOffersData($id){
-        return Datatables::of($this->getForDataTable($id))
+        return Datatables::of($this->getForDataTableTemp($id))
             ->addColumn('title', function ($offers) {
                 return '<a href="' . route('frontend.wishes.show', [$offers->wish_id])
                     . '">' . $offers->title . '</a>';
