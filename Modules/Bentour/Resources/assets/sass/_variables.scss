@@ -17,16 +17,15 @@ $gray:                   lighten(#000, 33.5%) !default; // #555
 $gray-light:             lighten(#000, 60%) !default;   // #999
 $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 
-$master-grey-dark:      #303030;
+$master-grey-dark:      #454545;
 $master-grey-light:     #b9b9b9;
 
-$master-primary:        #303030;
+$master-grey-dark:        #454545;
 $master-secondary:      #70CBF4;
 
-$brand-primary:         #092a5e !default;
-$brand-secondary:       #092a5e !default;
+$brand-primary:         #007238 !default;
+$brand-secondary:       #007238 !default;
 
-$brand-primary:         #ed1c24 !default;
 $brand-success:         #5cb85c !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
@@ -59,6 +58,8 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
+
+$font-family-brand:       'Comfortaa', cursive;
 
 $font-size-base:          14px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px
@@ -840,3 +841,13 @@ $container-md:                 $container-desktop !default;
 $container-large-desktop:      ((1140px + $grid-gutter-width)) !default;
 //** For `$screen-lg-min` and up.
 $container-lg:                 $container-large-desktop !default;
+
+
+
+// @Media
+$break-phone: 480px;
+$break-phone-landscape: 640px;
+$break-iPad: 768px;
+$break-iPad-landscape: 1024px;
+$break-hd: 1366px;
+$break-fullHd: 1920px;

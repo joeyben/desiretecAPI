@@ -30,7 +30,7 @@
 }
 
 .rangeslider__fill {
-  background: $master-primary;
+  background: $master-grey-dark;
   position: absolute;
 }
 .rangeslider--horizontal .rangeslider__fill {
@@ -44,7 +44,7 @@
 
 .rangeslider__handle {
   background: #fff;
-  border: 2px solid $master-primary;
+  border: 2px solid $master-grey-dark;
   cursor: pointer;
   display: inline-block;
   width: 30px;
@@ -70,7 +70,7 @@
   border-radius: 50%;
 }
 .rangeslider__handle:active, .rangeslider--active .rangeslider__handle {
-  background: $master-primary;
+  background: $master-grey-dark;
 }
 .rangeslider--horizontal .rangeslider__handle {
   top: -5px;
