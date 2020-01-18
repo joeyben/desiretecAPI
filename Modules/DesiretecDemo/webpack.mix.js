@@ -35,18 +35,15 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/devicedetector.min.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/desiretecdemo/js/layer/layer-locale.js')
-    .sass(__dirname + '/Resources/assets/sass/layer/layer.scss', 'whitelabel/desiretecdemo/css/layer/layer.css')
-    .sass(__dirname + '/Resources/assets/sass/layer/layer_mobile.scss', 'whitelabel/desiretecdemo/css/layer/layer_mobile.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/_layer.scss', 'whitelabel/desiretecdemo/css/layer/layer.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/_layer-responsive.scss', 'whitelabel/desiretecdemo/css/layer/layer-responsive.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/desiretecdemo/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/desiretecdemo/css/desiretecdemo.css')
     .styles([
         base_url + '/public/whitelabel/desiretecdemo/css/datepicker.css',
         base_url + '/public/whitelabel/desiretecdemo/css/layer/layer.css',
+        base_url + '/public/whitelabel/desiretecdemo/css/layer/layer-responsive.css',
     ], __dirname + '/../../public/whitelabel/desiretecdemo/css/layer/whitelabel.css')
-    .styles([
-        base_url + '/public/whitelabel/desiretecdemo/css/datepicker.css',
-        base_url + '/public/whitelabel/desiretecdemo/css/layer/layer_mobile.css',
-    ], __dirname + '/../../public/whitelabel/desiretecdemo/css/layer/whitelabel_mobile.css')
     .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/desiretecdemo/images/')
     .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/desiretecdemo/svg/');
 if (mix.inProduction()) {
