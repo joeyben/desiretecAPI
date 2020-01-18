@@ -28,7 +28,7 @@ $gutter: 30px;
   height: 75px;
   position: fixed;
   display: none;
-  background: url(../../images/layer/pensil.png) no-repeat center / 60%;
+  background: url(../../images/layer/pensil.png) no-repeat center / 50%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -525,7 +525,7 @@ ul.kwp-form-errors {
   background: transparent url(../../images/layer/bg_header.png) no-repeat center center;
   min-height: 40px;
   background-size: cover;
-  background-position: 100% 70%;
+  background-position: 100% 42%;
 }
 
 .kwp-minimal {
@@ -897,7 +897,7 @@ p.kwp-info {
 .kwp-header{
   /*background: linear-gradient(179deg, #fce136 0, #e4cd34 100%);*/
   min-height: 40px;
-  height: 200px;
+  height: 240px;
   position: relative;
   width: 100%;
   z-index: 11111;
@@ -1065,7 +1065,7 @@ p.kwp-info {
     transition: transform 0.5s ease, opacity 0.1s ease, -webkit-transform 0.5s ease;
     height: auto;
     position: relative;
-    margin: 25px auto 0;
+    margin: 25px auto;
 
     .kwp-middle{
       background: #fff;
@@ -1119,7 +1119,7 @@ p.kwp-info {
       line-height: 30px;
       margin: 0px;
       color:$master-grey-dark;
-      padding: 30px 0;
+      padding: 20px 0;
       font-weight: bold;
       text-align: center;
       width: 100%;
