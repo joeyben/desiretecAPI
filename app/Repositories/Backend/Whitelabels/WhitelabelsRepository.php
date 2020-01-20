@@ -160,7 +160,7 @@ class WhitelabelsRepository extends BaseRepository
                 config('module.whitelabels.table') . '.bg_image',
                 config('module.whitelabels.table') . '.color',
             ])
-            ->where('name', $name)
+            ->where('name', $name)->with('whitelableLayer.layer')
             ->first()->toArray();
     }
 
