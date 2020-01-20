@@ -17,7 +17,6 @@ Route::group(['domain' => $domain], function () {
         Route::get('wish/{wish}/{token}', 'TestWishesController@details')->name('wish.details');
         Route::get('getwish/{wish}', 'TestWishesController@getWish')->name('getWish');
         Route::get('wishlist/{token}', 'TestWishesController@validateTokenList');
-        //Route::get('tnb', 'TestController@getPDF');
     });
 });
 
