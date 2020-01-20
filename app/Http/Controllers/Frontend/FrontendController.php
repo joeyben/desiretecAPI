@@ -95,4 +95,14 @@ class FrontendController extends Controller
 
         return $airports;
     }
+
+    /**
+     * Respective Domain Teilnahmebedingungen.
+     *
+     * @return view
+     */
+    public function showTnb()
+    {
+        return view('frontend.tnb.tnb');
+    }
 }
