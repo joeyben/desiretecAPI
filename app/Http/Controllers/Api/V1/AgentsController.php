@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Agents\Agent;
+use App\Http\Controllers\Api\V1\Contracts\AgentsControllerInterface;
 use App\Repositories\Frontend\Agents\AgentsRepository;
-use Illuminate\Http\Request;
-use App\Http\Resources\PagesResource;
-use Illuminate\Support\Facades\Storage;
-use Yajra\DataTables\Facades\DataTables;
-use Validator;
+use App\Http\Requests\Frontend\Agents\ManageAgentsRequest;
+use App\Http\Requests\Frontend\Agents\CreateAgentsRequest;
+use App\Http\Requests\Frontend\Agents\UpdateAgentsRequest;
+use App\Http\Requests\Frontend\Agents\DeleteAgentsRequest;
 
-class AgentsController extends APIController
+class AgentsController extends APIController implements AgentsControllerInterface
 {
     protected $repository;
 
@@ -19,42 +18,33 @@ class AgentsController extends APIController
         $this->repository = $repository;
     }
 
-    public function getAgents(Request $request)
+    public function listAgents(ManageAgentsRequest $request)
     {
-        // (Milena) TODO: Stop using datatables
         try {
-            return Datatables::of($this->repository->getForDataTable())
-                ->addColumn('avatar', function ($repository) {
-                    $path = Storage::disk('s3')->url('img/agent/');
-                    return '<img src="' . $path . $repository->avatar . '"/>';
-                })
-                ->addColumn('name', function ($repository) {
-                    return $repository->name;
-                })
-                ->addColumn('display_name', function ($repository) {
-                    return $repository->display_name;
-                })
-                ->addColumn('actions', function ($repository) {
-                    return '<a href="' . 'localhost:8001/agents/update/' . $repository->id . '">' . trans('labels.agents.edit') . '</a> / ' . '<a href="' . 'localhost:8001/agents/delete/' . $repository->id . '">' . trans('labels.agents.delete') . '</a>';
-                })
-                ->addColumn('created_at', function ($repository) {
-                    return $repository->created_at->toFormattedDateString() . ' ' . $repository->created_at->toTimeString();
-                })
-                ->rawColumns(['avatar', 'actions', 'status'])->make(true);
+            $agents['data'] = $this->repository->getAllWithAccess();
+
+            return $this->responseJson($agents);
+
         } catch (Exception $e) {
             return $this->respondWithError($e);
         }
     }
 
-    public function create(Request $request)
+    public function getAgent(int $id, ManageAgentsRequest $request)
     {
         try {
-           $validator = $this->validateRequest($request);
+            $agent['data'] = $this->repository->getById($id);
 
-            if ($validator->fails()) {
-                return $this->throwValidation('validation failed');
-            }
+            return $this->responseJson($agent);
 
+        } catch (Exception $e) {
+            return $this->respondWithError($e);
+        }
+    }
+
+    public function create(CreateAgentsRequest $request)
+    {
+        try {
             $this->repository->create($request->except('_token'));
 
             return $this->respondCreated('agent created successfully');
@@ -64,15 +54,9 @@ class AgentsController extends APIController
         }
     }
 
-    public function update($id, Request $request)
+    public function update(int $id, UpdateAgentsRequest $request)
     {
         try {
-            $validator = $this->validateRequest($request);
-
-            if ($validator->fails()) {
-                return $this->throwValidation('validation failed');
-            }
-
             $this->repository->doUpdate($id, $request);
 
             return $this->respondUpdated('agent updated successfully');
@@ -82,7 +66,7 @@ class AgentsController extends APIController
         }
     }
 
-    public function delete($id)
+    public function delete(int $id, DeleteAgentsRequest $request)
     {
         try {
             $this->repository->deleteAgent($id);
@@ -92,16 +76,5 @@ class AgentsController extends APIController
         } catch (Exception $e) {
             return $this->respondWithError($e);
         }
-    }
-
-    protected function validateRequest(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name'  => 'required|string|max:55',
-            'email' => 'required|email|max:255|unique:agents,email',
-            'telephone' => 'required|integer'
-        ]);
-
-        return $validator;
     }
 }
