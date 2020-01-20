@@ -179,6 +179,9 @@ class AgentsRepository extends BaseRepository
     public function deleteAgent($id)
     {
         $whitelabel_group = DB::table('groups')->where('whitelabel_id', getCurrentWhiteLabelId())->first();
+        $user_group = null;
+        $first_agent = null;
+
         if ($whitelabel_group) {
             $user_group = DB::table('group_user')->where('group_id', $whitelabel_group->id)->first();
         }
