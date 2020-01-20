@@ -42,7 +42,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('wish/{wish}', 'WishesController@getWish');
 
         Route::group(['prefix' => 'agents'], function () {
-            Route::get('', 'AgentsController@getAgents');
+            Route::get('', 'AgentsController@listAgents');
+            Route::get('{id}', 'AgentsController@getAgent');
             Route::put('update/{id}', 'AgentsController@update');
             Route::post('create', 'AgentsController@create');
             Route::delete('delete/{id}', 'AgentsController@delete');

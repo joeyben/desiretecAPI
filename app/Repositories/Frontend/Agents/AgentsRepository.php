@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class AgentsRepository extends BaseRepository
 {
+    // TODO: Delete $upload_path and $storage when switch to the whitelabel-module solution
     /**
      * Associated Repository Model.
      */
@@ -38,6 +39,7 @@ class AgentsRepository extends BaseRepository
         $this->storage = Storage::disk('s3');
     }
 
+    // TODO: Delete getForDataTable() when switch to the whitelabel-module solution
     /**
      * @return mixed
      */
@@ -54,6 +56,33 @@ class AgentsRepository extends BaseRepository
                 config('module.agents.table') . '.user_id',
                 config('module.agents.table') . '.created_at',
             ])->where(config('module.agents.table') . '.user_id', access()->user()->id);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllWithAccess()
+    {
+        return DB::table('agents')
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.agents.table') . '.user_id')
+            ->select([
+                config('module.agents.table') . '.id',
+                config('module.agents.table') . '.name',
+                config('module.agents.table') . '.avatar',
+                config('module.agents.table') . '.display_name',
+                config('module.agents.table') . '.user_id',
+                config('module.agents.table') . '.created_at',
+            ])->where(config('module.agents.table') . '.user_id', access()->user()->id)
+            ->get()
+            ->toArray();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getById(int $id)
+    {
+        return Agent::findOrFail($id);
     }
 
     /**
@@ -81,6 +110,7 @@ class AgentsRepository extends BaseRepository
         });
     }
 
+    // TODO: Delete update() when switch to the whitelabel-module solution
     /**
      * Update Agent.
      *
@@ -110,6 +140,7 @@ class AgentsRepository extends BaseRepository
         });
     }
 
+    // TODO: Delete delete() when switch to the whitelabel-module solution
     /**
      * @param \App\Models\Agents\Agent $agent
      *
@@ -130,6 +161,7 @@ class AgentsRepository extends BaseRepository
         });
     }
 
+    // TODO: Delete uploadImage() when switch to the whitelabel-module solution
     /**
      * Upload Image.
      *
@@ -164,6 +196,7 @@ class AgentsRepository extends BaseRepository
         return $input;
     }
 
+    // TODO: Delete deleteOldFile() when switch to the whitelabel-module solution
     /**
      * Destroy Old Image.
      *
@@ -213,6 +246,7 @@ class AgentsRepository extends BaseRepository
         }
     }
 
+    // TODO: Delete updateStatus() when switch to the whitelabel-module solution
     public function updateStatus($active_id)
     {
         $id = Auth::id();
