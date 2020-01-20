@@ -3,6 +3,7 @@
 namespace App\Models\Whitelabels\Traits\Relationship;
 
 use App\Models\Distributions\Distribution;
+use App\Models\Layers\WhitelableLayer;
 use App\Models\Wishes\Wish;
 use Modules\Attachments\Entities\Attachment;
 
@@ -41,5 +42,13 @@ trait WhitelabelRelationship
     public function attachments()
     {
         return $this->morphMany(Attachment::class, 'attachable');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function whitelableLayer()
+    {
+        return $this->hasMany(WhitelableLayer::class);
     }
 }

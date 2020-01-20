@@ -6,6 +6,7 @@ use App\Http\Requests\ApiLoginRequest;
 use App\Http\Requests\ApiRegisterRequest;
 use App\Models\Access\Role\Role;
 use App\Models\Access\User\User;
+use App\Models\Access\User\UserToken;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -19,6 +20,8 @@ class AuthController extends APIController
      * @var \Illuminate\Auth\AuthManager
      */
     private $auth;
+
+    protected $identifier = 'email';
 
     /**
      * Create a new AuthController instance.
@@ -113,6 +116,45 @@ class AuthController extends APIController
 
     public function me()
     {
-        return response()->json(auth()->user());
+        $result['user'] = $this->auth->user();
+        $result['user']['role'] = $this->auth->user()->roles()->first()->name;
+
+        return $this->respond(['user' => $this->auth->user(), 'status' => 200]);
+    }
+
+    public function ckeckRole(Request $request)
+    {
+        return $this->respond(['role' => $this->auth->user()->hasRole($request->get('role')), 'status' => 200]);
+    }
+
+    public function sendLoginEmail(Request $request)
+    {
+        try {
+            $user = $this->getUserByIdentifier($request->get($this->identifier));
+            $user->storeToken()->sendApiTokenLink([
+                'email' => trim($user->email),
+                'host' => $request->get('host')
+            ]);
+        } catch (Exception $e) {
+            return $this->respondInternalError($e->getMessage());
+        }
+
+        return $this->respond(['message' => 'success', 'status' => 200]);
+    }
+
+    protected function getUserByIdentifier($value)
+    {
+        return User::where($this->identifier, $value)->firstOrFail();
+    }
+
+    public function token(Request $request, string $token)
+    {
+        if (!$token->belongsToEmail($request->email)) {
+            return $this->respondInternalError('Invalid login link!');
+        }
+
+        Auth::login($token->user, true);
+
+        return $this->respond(['access_token' => JWTAuth::fromUser($token->user), 'status' => 200]);
     }
 }

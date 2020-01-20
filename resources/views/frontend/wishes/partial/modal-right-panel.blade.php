@@ -9,7 +9,7 @@
             </div>
             <div class="mc-mail">
                 <span class="glyphicon glyphicon-envelope"></span>
-                <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->currentAgent)){{ $wish->group->users[0]->currentAgent[0]->email }}@endif</a>
+                <a href="mailto:@if(count($wish->group->users[0]->currentAgent)){{ $wish->group->users[0]->currentAgent[0]->email }}@endif">@if(count($wish->group->users[0]->currentAgent)){{ $wish->group->users[0]->currentAgent[0]->email }}@endif</a>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
         <div class="modal-contact">
             <div class="mc-mail">
                 <span class="glyphicon glyphicon-envelope"></span>
-                <a href="mailto:mail@reisebuero.de">{{ $wish->group->users[0]->email }}</a>
+                <a href="mailto:{{ $wish->group->users[0]->email }}">{{ $wish->group->users[0]->email }}</a>
             </div>
         </div>
     </div>

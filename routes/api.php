@@ -18,6 +18,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     Route::group(['prefix' => 'auth'], function () {
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
+        Route::post('login/email', 'AuthController@sendLoginEmail');
+        Route::post('login/token/{token}', 'AuthController@token');
     });
 
     Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'auth'], function () {
@@ -28,6 +30,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
         Route::post('password/reset', 'ResetPasswordController@reset')->name('password.reset');
         Route::post('me', 'AuthController@me');
+        Route::post('check/role', 'AuthController@ckeckRole');
     });
 
     Route::group(['prefix' => 'popup'], function () {
