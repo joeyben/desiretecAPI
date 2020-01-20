@@ -609,7 +609,7 @@ var dt = window.dt || {};
             });
         }
         dt.PopupManager.init();
-        dt.Tracking.init('desiretec_exitwindow','UA-105970361-11');
+        dt.Tracking.init('desiretec_exitwindow','UA-105970361-16');
         dt.triggerButton(e);
         if(isMobile() && dt.PopupManager.decoder){
             dt.scrollUpDetect();
@@ -946,12 +946,12 @@ var dt = window.dt || {};
                 }
             }
         });
-        /* END Airports */
+        /* END Airports
         $("#destination, #airport").on('itemAdded', function(event) {
             setTimeout(function(){
             $("input[type=text]",".bootstrap-tagsinput").val("");
             }, 1);
-        });
+        });*/
     };
 
     dt.adjustResponsive = function(){

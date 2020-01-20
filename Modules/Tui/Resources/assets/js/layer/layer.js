@@ -87,7 +87,7 @@ var exitIntent = window.exitIntent || {};
                 ]);
             }else{
                 return this.getRandomElement([
-                    'eil-n1'
+                    'eil-'+deviceDetector.device
                 ]);
             }
         }
