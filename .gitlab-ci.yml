@@ -20,6 +20,7 @@ build:
     - docker push ${CONTAINER_IMAGE}
   only:
     - master
+  allow_failure: true
   variables:
     CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}/app
     CONTAINER_IMAGE_LATEST: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}/app:latest
@@ -34,6 +35,7 @@ build_echo_server:
     - docker push ${ECHO_CONTAINER_IMAGE}
   only:
     - master
+  allow_failure: true
   variables:
     ECHO_CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}/echo
     ECHO_CONTAINER_IMAGE_LATEST: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}/echo:latest
@@ -48,6 +50,7 @@ deploy_pre_prod:
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
   only:
     - master
+  allow_failure: true
   variables:
     SERVICE_WEBHOOK: ${PRE_PRODUCTION_SERVICE_HOOK}
     ECHO_SERVICE_WEBHOOK: ${PRE_PRODUCTION_ECHO_SERVICE_HOOK}
