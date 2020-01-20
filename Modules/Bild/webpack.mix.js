@@ -39,13 +39,13 @@ mix.scripts(
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/bild/js/layer/layer-locale.js')
     .sass(__dirname + '/Resources/assets/sass/layer/_layer.scss', 'whitelabel/bild/css/layer/layer.css')
-    .sass(__dirname + '/Resources/assets/sass/layer/_layer-responsible.scss', 'whitelabel/bild/css/layer/layer-responsible.css')
+    .sass(__dirname + '/Resources/assets/sass/layer/_layer-responsive.scss', 'whitelabel/bild/css/layer/layer-responsive.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/bild/css/datepicker.css')
     .sass(__dirname + '/Resources/assets/sass/app.scss', 'whitelabel/bild/css/bild.css')
     .styles([
         base_url + '/public/whitelabel/bild/css/datepicker.css',
         base_url + '/public/whitelabel/bild/css/layer/layer.css',
-        base_url + '/public/whitelabel/bild/css/layer/layer-responsible.css',
+        base_url + '/public/whitelabel/bild/css/layer/layer-responsive.css',
     ], __dirname + '/../../public/whitelabel/bild/css/layer/whitelabel.css')
     .copy(__dirname +'/Resources/assets/images/', __dirname +'/../../public/whitelabel/bild/images/')
     .copy(__dirname +'/Resources/assets/svg/', __dirname +'/../../public/whitelabel/bild/svg/');
