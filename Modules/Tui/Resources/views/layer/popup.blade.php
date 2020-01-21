@@ -410,7 +410,7 @@
 
             $(document).ready(function(){
                 $('.selectpicker').selectpicker();
-
+                $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
                 //autocomplete()
                 dt.applyBrandColor();
                 dt.adjustResponsive();
