@@ -45,7 +45,7 @@ RUN composer dump-autoload
 
 USER root
 
-RUN apt update && curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt install -y nodejs && apt install -y npm
+RUN apt update && curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt install -y nodejs
 RUN rm -rf /var/www/html/.docker && /var/www/html/docker-compose*.yml && /var/www/html/.gitlab-ci*.yml
 RUN make routes
 RUN make message
