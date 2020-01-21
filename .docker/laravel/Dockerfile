@@ -17,7 +17,7 @@ LABEL maintainer="Aljoscha <horrorhorst> Dembowsky - aljoscha@dembowsky.io"
 
 COPY --chown=www-data:www-data . /var/www/html
 COPY --chown=www-data:www-data --from=vendor /app/vendor/ /var/www/html/vendor/
-COPY .docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+COPY .docker/laravel/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY .docker/laravel/supervisord.conf /etc/supervisord.conf
 COPY .docker/laravel/supervisord.d /etc/supervisord.d
 COPY .docker/laravel/apache2-foreground /usr/local/bin/apache2-foreground
