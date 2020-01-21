@@ -29,6 +29,7 @@ RUN cd /myapp/Modules/Bentour && yarn install --ignore-engines && npm run produc
 FROM nginx:latest
 COPY public/ /var/www/html/public/
 COPY --from=frontend /myapp/public/whitelabel /var/www/html/public/whitelabel
+COPY --from=frontend /myapp/public/mix-manifest.json /var/www/html/public/mix-manifest.json
 
 COPY .docker/app-proxy/default.conf /etc/nginx/conf.d/default.conf
 COPY .docker/app-proxy/proxy.conf /etc/nginx/conf.d/custom_proxy.conf

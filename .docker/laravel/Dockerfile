@@ -24,8 +24,7 @@ COPY .docker/laravel/laravel.ini /usr/local/etc/php/conf.d
 COPY .docker/laravel/php.ini /usr/local/etc/php/php.ini
 COPY .docker/laravel/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
-RUN docker-php-ext-install zip && \
-    docker-php-ext-install soap && \
+RUN docker-php-ext-install soap && \
     apt update && \
     apt-get install nano && \
     rm -rf /tmp/* /var/tmp/* && \
