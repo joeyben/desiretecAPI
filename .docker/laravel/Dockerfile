@@ -20,7 +20,6 @@ COPY --chown=www-data:www-data --from=vendor /app/vendor/ /var/www/html/vendor/
 COPY .docker/laravel/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY .docker/laravel/supervisord.conf /etc/supervisord.conf
 COPY .docker/laravel/supervisord.d /etc/supervisord.d
-COPY .docker/laravel/apache2-foreground /usr/local/bin/apache2-foreground
 COPY .docker/laravel/laravel.ini /usr/local/etc/php/conf.d
 COPY .docker/laravel/php.ini /usr/local/etc/php/php.ini
 COPY .docker/laravel/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
@@ -31,17 +30,18 @@ RUN docker-php-ext-install zip && \
     apt-get install nano && \
     rm -rf /tmp/* /var/tmp/* && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    a2enmod rewrite expires
-RUN chmod a+x /usr/local/bin/apache2-foreground
-RUN echo "SetEnvIf x-forwarded-proto https HTTPS=on" >> /etc/apache2/conf-available/docker-php.conf
+    rm -rf /var/lib/apt/lists/*
+
+COPY .docker/laravel-fpm/docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint
+COPY .docker/laravel-fpm/artisan.sh /usr/local/bin/artisan-cmds
+RUN chmod +x /usr/local/bin/docker-php-entrypoint && chmod +x /usr/local/bin/artisan-cmds
 
 ARG APP_KEY
 ARG AWS_KEY
 ARG AWS_SECRET
 ARG AWS_REGION
 ARG AWS_BUCKET
-RUN composer dump-autoload
+RUN composer dump-autoload -a -no-dev
 
 USER root
 
