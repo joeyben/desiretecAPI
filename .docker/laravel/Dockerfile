@@ -41,7 +41,7 @@ ARG AWS_KEY
 ARG AWS_SECRET
 ARG AWS_REGION
 ARG AWS_BUCKET
-RUN composer dump-autoload -a -no-dev
+RUN composer dump-autoload -a --no-dev
 
 USER root
 
