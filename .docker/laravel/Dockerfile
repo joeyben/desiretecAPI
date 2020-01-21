@@ -30,7 +30,6 @@ RUN docker-php-ext-install zip && \
     apt update && \
     apt-get install nano && \
     rm -rf /tmp/* /var/tmp/* && \
-    rm /var/log/lastlog /var/log/faillog && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     a2enmod rewrite expires
