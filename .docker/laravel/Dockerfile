@@ -32,8 +32,8 @@ RUN docker-php-ext-install zip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY .docker/laravel-fpm/docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint
-COPY .docker/laravel-fpm/artisan.sh /usr/local/bin/artisan-cmds
+COPY .docker/laravel/docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint
+COPY .docker/laravel/artisan.sh /usr/local/bin/artisan-cmds
 RUN chmod +x /usr/local/bin/docker-php-entrypoint && chmod +x /usr/local/bin/artisan-cmds
 
 ARG APP_KEY
