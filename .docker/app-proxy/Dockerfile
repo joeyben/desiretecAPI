@@ -1,20 +1,3 @@
-FROM composer:latest as vendor
-
-LABEL maintainer="desiretec"
-
-COPY composer.json composer.json
-COPY composer.lock composer.lock
-COPY tests tests
-COPY database database
-
-RUN composer install \
-    --ignore-platform-reqs \
-    --no-interaction \
-    --no-plugins \
-    --no-scripts \
-    --prefer-dist
-
-
 FROM node:lts-stretch as frontend
 
 LABEL maintainer="desiretec"
@@ -42,40 +25,14 @@ RUN cd /myapp/Modules/DesiretecDemo && yarn install --ignore-engines && npm run 
 RUN cd /myapp/Modules/Bild && yarn install --ignore-engines && npm run production
 RUN cd /myapp/Modules/Bentour && yarn install --ignore-engines && npm run production
 
-FROM horrorhorst/laravel-base:latest
 
-LABEL maintainer="desiretec"
+FROM nginx:latest
 
-RUN docker-php-ext-install zip
-
-COPY . /var/www/html
-COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 COPY --from=frontend /myapp/public /var/www/html/public
-COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-COPY .docker/laravel/supervisord.conf /etc/supervisord.conf
-COPY .docker/laravel/supervisord.d /etc/supervisord.d
-COPY .docker/laravel/apache2-foreground /usr/local/bin/apache2-foreground
-RUN chmod a+x /usr/local/bin/apache2-foreground
-RUN mv /var/www/html/docker/php/laravel.ini /usr/local/etc/php/conf.d
-RUN mv /var/www/html/docker/php/php.ini /usr/local/etc/php/php.ini
-RUN mv /var/www/html/docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-RUN a2enmod rewrite expires
-RUN echo "SetEnvIf x-forwarded-proto https HTTPS=on" >> /etc/apache2/conf-available/docker-php.conf
-ARG APP_KEY
-ARG AWS_KEY
-ARG AWS_SECRET
-ARG AWS_REGION
-ARG AWS_BUCKET
-RUN composer dump-autoload
 
-USER root
+COPY .docker/app-proxy/default.conf /etc/nginx/conf.d/default.conf
+COPY .docker/app-proxy/proxy.conf /etc/nginx/conf.d/custom_proxy.conf
+COPY .docker/app-proxy/start.sh /root/start.sh
+RUN chmod +x /root/start.sh
 
-RUN apt update && curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt install -y nodejs && apt install -y npm
-RUN rm -r /var/www/html/docker
-RUN make routes
-RUN make message
-RUN apt-get install nano
-RUN docker-php-ext-install soap
-RUN chown -R www-data:www-data /var/www
-RUN npm install
-RUN chown -R www-data:www-data /var/www/html/node_modules/
+CMD ["/root/start.sh"]
