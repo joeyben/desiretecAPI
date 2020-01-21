@@ -233,19 +233,10 @@
                                 <div class="price">
                                     <div class="info-icons">
                                         <div class="info">
-                                            <i class="fal fa-users"></i>
-                                            <div class="info-detail">
-                                                <div class="up">Familie</div>
-                                                <div class="down">
-                                                    <ul>
-                                                        @foreach($offer['data']['hotel_attributes'] as $attribute)
-                                                             @if(in_array($attribute, ['action_adventures_parties_fun','attractive_for_couples','attractive_for_singles','attractive_for_singles_w_child','baby_cot','baby_equipment','babysitting','family_friendly_2','kids_disco','pool_for_children','playground_for_children']))
-                                                                <li>{{ trans('hotel.offer.attributes.'.$attribute) }}</li>
-                                                            @endif
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                            <i class="fal fa-users"></i><div class="info-detail"><div class="up">Familie</div><div class="down"><ul><li>Babybett</li></ul></div></div>
+                                        </div>
+                                        <div class="info">
+                                            <i class="fal fa-concierge-bell"></i></i><div class="info-detail" style="top: -270%;background: white;width: 180px;"><div class="up" style="width: 180px">Hotel Specials</div><div class="down" style="width: 180px"><ul><li>Kostenloses WLAN</li><li>Pool</li></ul></div></div>
                                         </div>
                                         <div class="info">
                                             <i class="fal fa-concierge-bell"></i>
