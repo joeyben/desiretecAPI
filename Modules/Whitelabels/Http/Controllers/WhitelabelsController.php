@@ -345,6 +345,23 @@ class WhitelabelsController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
+
+//select
+//`layers`.*,
+//`whitelabel_layers`.`whitelabel_id` as `pivot_whitelabel_id`,
+//`whitelabel_layers`.`layer_id` as `pivot_layer_id`,
+//`whitelabel_layers`.`image` as `pivot_image`,
+//`whitelabel_layers`.`title` as `pivot_title`,
+//`whitelabel_layers`.`body` as `pivot_body`,
+//`whitelabel_layers`.`layer_url` as `pivot_layer_url`,
+//`whitelabel_layers`.`success_title` as `pivot_success_title`,
+//`whitelabel_layers`.`success_body` as `pivot_success_body`
+//from `layers`
+//inner join `whitelabel_layers` on `layers`.`id` = `whitelabel_layers`.`layer_id`
+//where `whitelabel_layers`.`whitelabel_id` in (39))"
+
+
+
     /**
      * @param int $id
      * @return JsonResponse
@@ -356,8 +373,6 @@ class WhitelabelsController extends Controller
                 new EagerLoad(['layers']),
             ])->find($id);
 
-
-            //dd($result['whitelabel']->layers->first()->pivot->body);
 
 
             $background = $this->whitelabels->getBackgroundImage($result['whitelabel']);
@@ -373,8 +388,6 @@ class WhitelabelsController extends Controller
             $result['whitelabel']['favicon']    = (null !== $favicon && null !== $favicon->first()) ? [$favicon->first()] : [];
             $result['whitelabel']['visual']     = (null !== $visual && null !== $visual->first()) ? [$visual->first()] : [];
             $result['whitelabel']['layers']     = $result['whitelabel']->layers;
-
-
 
             $result['success'] = true;
             $result['status'] = 200;

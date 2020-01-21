@@ -10,11 +10,14 @@ use Illuminate\Database\Eloquent\Model;
 class WhitelableLayer extends Model
 {
     protected $fillable = [
+        'id',
         'whitelabel_id',
         'layer_id',
         'image',
-        'title  ',
-        'body',
+        'headline',
+        'subheadline',
+        'headline_success',
+        'subheadline_success',
     ];
 
     /**
