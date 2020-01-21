@@ -1,4 +1,5 @@
-deploy::Stage:
+
+deploy stage:
   stage: deploy
   image: pstauffer/curl
   script:
