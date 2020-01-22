@@ -77,11 +77,9 @@ class LastminuteController extends Controller
      */
     public function show(Request $request)
     {
-        $input = $request->only('variant');
-        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
         $whitelabel = $this->whitelabel->getByName('Lastminute');
 
-        $html = view('lastminute::' . $layer)->with([
+        $html = view('lastminute::layer.popup')->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -106,10 +104,10 @@ class LastminuteController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
-        $input = $request->all();
+        $whitelabel = $this->whitelabel->getByName('Lastminute');
+
         if ($request->failed()) {
-            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
-            $html = view('lastminute::' . $layer)->with([
+            $html = view('lastminute::layer.popup')->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
@@ -117,7 +115,8 @@ class LastminuteController extends Controller
                 'duration_arr' => $this->duration,
                 'budget_arr'   => $this->budget,
                 'ages_arr'     => $this->ages,
-                'request'      => $request->all()
+                'request'      => $request->all(),
+                'color'        => $whitelabel['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
