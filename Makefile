@@ -33,10 +33,10 @@ optimize: install ## optimize
 migrate: optimize ## migrate
 	$(PHP) artisan migrate:refresh --seed
 
-routes: optimize
-	$(PHP) artisan laroute:generate
+routes: optimize ## make sure u have linked the storage to public (artisan storage:link)
+	$(PHP) artisan laroute:generate -p public/storage/js
 
 message: optimize ## messages.js add /* eslint-disable */
-	$(PHP) artisan lang:js --no-lib resources/assets/js/utils/messages.js & php artisan lang:js public/js/messages.js
+	$(PHP) artisan lang:js --no-lib resources/assets/js/utils/messages.js & php artisan lang:js public/storage/js/messages.js
 
 
