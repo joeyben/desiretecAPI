@@ -128,47 +128,15 @@
                 @if(count($wish->offers) > 0 || count($wish->sellerMessages) > 0)
                     <div class="col-md-3 c-info">
                         <i class="fas fa-user"></i>
-                        <?php
-                        $mostRecentOffer= 0;
-                        $mostRecentMessage= 0;
-                        foreach($last_offer  as $offer){
-                            $curDate = strtotime($offer);
-                            if ($curDate > $mostRecentOffer) {
-                                $mostRecentOffer = $curDate;
-                            }
-                        }
-                        foreach($last_message as $message){
-                            $curDate = strtotime($message);
-                            if ($curDate > $mostRecentMessage) {
-                                $mostRecentMessage = $curDate;
-                            }
-                        }
-                        ?>
-                        <span>
-                            @if($mostRecentOffer > $mostRecentMessage)
-                                {{ end($agent_last_offer)->name }}
-                              @else
-                                {{ end($agent_last_message)->name }}
-                             @endif
-                        </span>
+                        <span>{{ $agent->name }}</span>
                     </div>
                     <div class="col-md-3 c-info c-tel">
                         <i class="fas fa-phone"></i>
-                        @if($mostRecentOffer > $mostRecentMessage)
-                            <a href="tel:{{ end($agent_last_offer)->telephone }}">{{ end($agent_last_offer)->telephone }}</a>
-                        @else
-                            <a href="tel:{{ end($agent_last_message)->telephone }}">{{ end($agent_last_message)->telephone }}</a>
-                        @endif
+                        <a href="tel:{{ $agent->telephone }}">{{ $agent->telephone }}</a>
                     </div>
                     <div class="col-md-3 c-info">
                         <i class="fas fa-envelope"></i>
-                        @if($mostRecentOffer > $mostRecentMessage)
-
-                            <a href="mailto:{{ end($agent_last_offer)->email }}">{{ end($agent_last_offer)->email }}</a>
-                        @else
-                            <a href="mailto:{{ end($agent_last_message)->email }}">{{ end($agent_last_message)->email }}</a>
-                        @endif
-
+                        <a href="mailto:{{ $agent->email }}">{{ $agent->email }}</a>
                     </div>
                 @else
                     <div class="col-md-3 c-info">
