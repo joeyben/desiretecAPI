@@ -44,12 +44,6 @@ class AuthController extends APIController
             if (!$token = JWTAuth::attempt($credentials)) {
                 return $this->throwValidation(trans('api.messages.login.failed'));
             }
-
-            $rawToken = new Token($token);
-            $payload = JWTAuth::decode($rawToken);
-            Auth::guard('web')->loginUsingId($payload['sub']);
-
-
         } catch (\Exception $e) {
             return $this->respondInternalError($e->getMessage());
         }
