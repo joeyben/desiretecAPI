@@ -135,19 +135,32 @@ class WishesController extends Controller
         }
 
         $offers = $wish->offers;
+        $messages = $wish->messages;
         $avatar = [];
         $agentName = [];
+        $agentLastMessage = [];
+        $lastOffer = [];
+        $lastMessage = [];
 
         foreach ($offers as $offer) {
             array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
-            array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
+            array_push($agentName, Agent::where('id', $offer->agent_id));
+            array_push($lastOffer, $offer->created_at);
+        }
+
+        foreach ($messages as $message) {
+            array_push($agentLastMessage, Agent::where('id', $message->agent_id));
+            array_push($lastMessage, $message->created_at);
         }
 
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
+            'last_offer'         => $lastOffer,
+            'last_message'       => $lastMessage,
             'agent'              => Auth::guard('agent')->user(),
-            'agent_name'         => $agentName,
+            'agent_last_offer'   => $agentName,
+            'agent_last_message' => $agentLastMessage,
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
             'categories'         => $this->categories,
