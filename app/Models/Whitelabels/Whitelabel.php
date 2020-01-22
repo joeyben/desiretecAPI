@@ -9,7 +9,6 @@ use App\Models\Whitelabels\Traits\Attribute\WhitelabelAttribute;
 use App\Models\Whitelabels\Traits\Relationship\WhitelabelRelationship;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Rules\Entities\Rule;
-use App\Models\Layers\WhitelableLayer;
 
 /**
  * Class Whitelabel.
