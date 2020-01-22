@@ -9,6 +9,9 @@ use App\Http\Requests\Frontend\Offers\UpdateOffersRequest;
 use App\Models\Offers\Offer;
 use App\Models\Wishes\Wish;
 use App\Repositories\Frontend\Offers\OffersRepository;
+use App\Services\Flag\Src\Flag;
+use Illuminate\Auth\AuthManager;
+use Modules\Wishes\Repositories\Contracts\WishesRepository;
 
 /**
  * Class OffersController.
@@ -29,13 +32,25 @@ class OffersController extends Controller
      * @var OffersRepository
      */
     protected $offer;
+    /**
+     * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
+     */
+    private $wishes;
+    /**
+     * @var \Illuminate\Auth\AuthManager
+     */
+    private $auth;
 
     /**
-     * @param \App\Repositories\Frontend\Offers\OffersRepository $offer
+     * @param \App\Repositories\Frontend\Offers\OffersRepository      $offer
+     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository $wishes
+     * @param \Illuminate\Auth\AuthManager                            $auth
      */
-    public function __construct(OffersRepository $offer)
+    public function __construct(OffersRepository $offer, WishesRepository $wishes, AuthManager $auth)
     {
         $this->offer = $offer;
+        $this->wishes = $wishes;
+        $this->auth = $auth;
     }
 
     /**
@@ -74,6 +89,11 @@ class OffersController extends Controller
     public function store(StoreOffersRequest $request)
     {
         $this->offer->create($request);
+
+        if ($this->auth->guard('agent')->check() && $this->auth->guard('web')->user()->hasRole(Flag::SELLER_ROLE)) {
+            $wish = $this->wishes->find($request->get('wish_id'));
+            $this->wishes->update($wish->id, ['agent_id' => $this->auth->guard('agent')->user()->id]);
+        }
 
         return redirect()
             ->route('frontend.offers.index')
