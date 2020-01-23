@@ -135,8 +135,12 @@ class WishesController extends Controller
         }
 
         $offers = $wish->offers;
+        $messages = $wish->messages;
         $avatar = [];
         $agentName = [];
+        $agentLastMessage = [];
+        $lastOffer = [];
+        $lastMessage = [];
 
         foreach ($offers as $offer) {
             array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
