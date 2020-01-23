@@ -310,7 +310,7 @@
             $(document).ready(function(){
 
                 dt.applyBrandColor();
-                dt.adjustResponsive();
+                //dt.adjustResponsive();
 
                 autocomplete();
 
@@ -458,7 +458,7 @@
                 minLength: 3,
                 highlight: true,
                 source: function(query) {
-                    return $.get('https://desiretecdemo.reise-wunsch.com/get-all-destinations', {query: query});
+                    return $.get('http://desiretecdemo.com/get-all-destinations', {query: query});
                 }
                 }
             });
@@ -474,7 +474,7 @@
                 minLength: 3,
                 highlight: true,
                 source: function(query) {
-                    return $.get('https://desiretecdemo.reise-wunsch.com/get-all-airports', {query: query});
+                    return $.get('http://desiretecdemo.com/get-all-airports', {query: query});
                 }
                 }
             });
