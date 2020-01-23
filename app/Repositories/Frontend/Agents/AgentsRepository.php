@@ -270,7 +270,13 @@ class AgentsRepository extends BaseRepository
     {
         DB::table('agents')
             ->where('id', $id)
-            ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone, 'avatar' => $request->avatar]);
+            ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone]);
+
+        if (isset($request->avatar)) {
+            DB::table('agents')
+            ->where('id', $id)
+            ->update(['avatar' => $request->avatar]);
+        }
     }
 
     public function createByApi(array $input)
