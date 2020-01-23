@@ -310,7 +310,7 @@
             $(document).ready(function(){
 
                 dt.applyBrandColor();
-                //dt.adjustResponsive();
+                dt.adjustResponsive();
 
                 autocomplete();
 
