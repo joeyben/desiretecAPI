@@ -1124,6 +1124,7 @@ p.kwp-info {
       text-align: center;
       width: 100%;
       border: none;
+      font-weight: 500;
     }
   }
   .kwp-body{
@@ -1373,6 +1374,7 @@ p.kwp-info {
   }
   .kwp-custom-select:after{
     background: none;
+    border-bottom: none;
   }
   .kwp-content-extra, .kwp-btn-expand{
     display: none;
@@ -1455,4 +1457,8 @@ p.kwp-info {
 
 select option:disabled {
   color: $master-grey-light;
+}
+
+.hidden {
+  display: none !important;
 }

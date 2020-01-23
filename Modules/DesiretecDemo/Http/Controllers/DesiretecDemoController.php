@@ -92,6 +92,11 @@ class DesiretecDemoController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $whitelabel = $this->whitelabel->getByName('Desiretecdemo');
+
+        $is_autooffer = false;
+        $input = $request->all();
+        $wishRepo = $wish;
         if ($request->failed()) {
             $html = view('desiretecdemo::layer.popup')->with([
                 'errors'       => $request->errors(),

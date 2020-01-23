@@ -191,7 +191,7 @@ class AutooffersTTRepository extends BaseRepository
            }
           },
           "Options": {
-            "NumberOfResults": 50,
+            "NumberOfResults": 500,
             "ResultOffset": 0,
             "Sorting": ["PriceAsc"]
           }

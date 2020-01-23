@@ -53,6 +53,6 @@ class ApiTokenLoginRequested extends Mailable
 
     protected function buildLink()
     {
-        return $this->options['host']  . '/login#/token/' . $this->user->token->token . '?' . http_build_query($this->options);
+        return $this->options['host']  . '/api/token/' . $this->user->token->token . '?' . http_build_query($this->options);
     }
 }

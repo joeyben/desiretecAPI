@@ -1446,4 +1446,42 @@ var exitIntent = window.exitIntent || {};
         }
     }
 
+
+    dt.autocomplete = function(){
+
+        $('#destination').tagsinput({
+            maxTags: 3,
+            maxChars: 20,
+            allowDuplicates: false,
+            typeahead: {
+            autoSelect: false,
+            minLength: 3,
+            highlight: true,
+            source: function(query) {
+                return $.get('https://bentour.reise-wunsch.com/get-all-destinations', {query: query});
+            }
+            }
+        });
+
+        $('#airport').tagsinput({
+            maxTags: 3,
+            maxChars: 20,
+            allowDuplicates: false,
+            typeahead: {
+            autoSelect: false,
+            minLength: 3,
+            highlight: true,
+            source: function(query) {
+                return $.get('https://bentour.reise-wunsch.com/get-all-airports', {query: query});
+            }
+            }
+        });
+
+        $("#destination, #airport").on('itemAdded', function(event) {
+            setTimeout(function(){
+            $("input[type=text]",".bootstrap-tagsinput").val("");
+            }, 1);
+        });
+    }
+
 })(jQuery);

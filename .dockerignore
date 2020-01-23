@@ -1,1 +1,5 @@
 .git/
+.gitlab-ci.build.yml
+.gitlab-ci.development.yml
+.gitlab-ci.production.yml
+.gitlab-ci.yml

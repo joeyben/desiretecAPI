@@ -28,6 +28,9 @@ class JwtMiddleware extends BaseMiddleware
         try {
             if ($request->hasHeader('authorization')) {
                 JWTAuth::parseToken()->authenticate();
+                $rawToken = JWTAuth::getToken();
+                $payload = JWTAuth::decode($rawToken);
+                Auth::guard('web')->loginUsingId($payload['sub']);
             } else {
                 $rawToken = $request->cookie('access_token');
                 $token = new Token($rawToken);

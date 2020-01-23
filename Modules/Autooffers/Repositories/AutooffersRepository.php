@@ -26,7 +26,7 @@ class AutooffersRepository extends BaseRepository
      */
     const MODEL = Autooffer::class;
 
-    private $auth = '';
+    private $auth = 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
 
     private $url = 'https://connector.traffics.de/v3/rest';
 

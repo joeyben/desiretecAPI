@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Modules\Wishes\Repositories\Contracts\WishesRepository;
 
 class MessagesController extends Controller
 {
@@ -24,11 +25,16 @@ class MessagesController extends Controller
      * @var \Illuminate\Auth\AuthManager
      */
     private $auth;
+    /**
+     * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
+     */
+    private $wishes;
 
-    public function __construct(Store $session, AuthManager $auth)
+    public function __construct(Store $session, AuthManager $auth, WishesRepository $wishes)
     {
         $this->session = $session;
         $this->auth = $auth;
+        $this->wishes = $wishes;
     }
 
     public function index($wish_id)
@@ -57,6 +63,8 @@ class MessagesController extends Controller
 
         if ($this->auth->guard('agent')->check() && $this->auth->guard('web')->user()->hasRole(Flag::SELLER_ROLE)) {
             $agentId = $this->auth->guard('agent')->user()->id;
+            $wish = $this->wishes->find($request->wish_id);
+            $this->wishes->update($wish->id, ['agent_id' => $agentId]);
         }
 
         $message = Message::create([

@@ -230,7 +230,7 @@
                                     </div>
                                 </div>
 
-                                <div class="price">
+                                <div class="price lastminute">
                                     <div class="info-icons">
                                         <div class="info">
                                             <i class="fal fa-users"></i>
