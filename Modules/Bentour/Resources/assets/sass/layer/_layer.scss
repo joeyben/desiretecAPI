@@ -661,7 +661,6 @@ p.kwp-info {
   p{
     padding-left: 40px;
     font-size: 14px;
-    font-weight: 500;
     line-height: 1.3em;
     color: $master-grey-dark;
     a {
@@ -1074,7 +1073,6 @@ p.kwp-info {
       border-bottom: 1px solid $master-grey-light;
       font-size: 16px;
       line-height: 22px;
-      font-weight: 500;
     }
 
     .kwp-form-errors{
@@ -1124,7 +1122,6 @@ p.kwp-info {
       text-align: center;
       width: 100%;
       border: none;
-      font-weight: 500;
     }
   }
   .kwp-body{
@@ -1153,7 +1150,6 @@ p.kwp-info {
       }
       p{
         color: #000;
-        font-weight: 500;
         margin-bottom: 20px;
       }
     }
@@ -1200,7 +1196,6 @@ p.kwp-info {
       height: 25px;
       line-height: 1.5em;
       background-color: transparent;
-      font-weight: 500;
       border-bottom: 1px solid $master-grey-light;
       color: $master-grey-dark;
       border-radius: 0;
@@ -1246,7 +1241,6 @@ p.kwp-info {
         padding: 3px 0 5px;
         font-size: 14px;
         color: $master-grey-dark;
-        font-weight: 500;
         line-height: 1.5em;
         display: block;
       }
@@ -1282,7 +1276,6 @@ p.kwp-info {
         display: block;
         margin-top: 5px;
         color: $master-grey-dark;
-        font-weight: 500;
       }
     }
     .catering{
@@ -1341,7 +1334,7 @@ p.kwp-info {
     box-shadow: none;
     background: none;
     background-color: transparent;
-    font-weight: 500;
+    font-weight: normal;
     border-bottom: 1px solid $master-grey-light;
     border-radius: 0;
     padding: 0 10px;
