@@ -45,7 +45,7 @@ class AgentsController extends APIController implements AgentsControllerInterfac
     public function create(CreateAgentsRequest $request)
     {
         try {
-            $this->repository->create($request->except('_token'));
+            $this->repository->createByApi($request->except('_token'));
 
             return $this->respondCreated('agent created successfully');
 
@@ -57,7 +57,7 @@ class AgentsController extends APIController implements AgentsControllerInterfac
     public function update(int $id, UpdateAgentsRequest $request)
     {
         try {
-            $this->repository->doUpdate($id, $request);
+            $this->repository->updateByApi($id, $request);
 
             return $this->respondUpdated('agent updated successfully');
 
