@@ -153,6 +153,7 @@ class LoginController extends Controller
          * Laravel specific logic
          */
         $this->guard()->logout();
+        $this->guard('agent')->logout();
         $request->session()->flush();
         $request->session()->regenerate();
 
