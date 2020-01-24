@@ -1,15 +1,21 @@
 @if(count($wish->offers) > 0 || count($wish->sellerMessages) > 0)
+    @php
+        $agent = $wish->agent()->first();
+        if (is_null($agent)) {
+            $agent = $wish->group->users[0]->currentAgent[0];
+        }
+    @endphp
     <div class="col-md-4 modal-body-right">
-        <img title="{{ $wish->agent->name }}" alt="{{ $wish->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent->avatar }}" />
-        <h4>{{ $wish->agent->name }}</h4>
+        <img title="{{ $agent->name }}" alt="{{ $agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $agent->avatar }}" />
+        <h4>{{ $agent->name }}</h4>
         <div class="modal-contact">
             <div class="mc-tel">
                 <span class="glyphicon glyphicon-earphone"></span>
-                <a href="tel:{{ $wish->agent->telephone }}">{{ $wish->agent->telephone }}</a>
+                <a href="tel:{{ $agent->telephone }}">{{ $agent->telephone }}</a>
             </div>
             <div class="mc-mail">
                 <span class="glyphicon glyphicon-envelope"></span>
-                <a href="mailto:@if(!is_null($wish->agent)){{ $wish->agent->email }}@endif">@if(!is_null($wish->agent)){{ $wish->agent->email }}@endif</a>
+                <a href="mailto:@if(!is_null($agent)){{ $agent->email }}@endif">@if(!is_null($agent)){{ $agent->email }}@endif</a>
             </div>
         </div>
     </div>
