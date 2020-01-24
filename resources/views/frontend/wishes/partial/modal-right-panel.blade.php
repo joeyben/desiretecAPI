@@ -1,15 +1,15 @@
 @if(count($wish->offers) > 0 || count($wish->sellerMessages) > 0)
     <div class="col-md-4 modal-body-right">
-        <img title="{{ $wish->group->users[0]->currentAgent[0]->name }}" alt="{{ $wish->group->users[0]->currentAgent[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->group->users[0]->currentAgent[0]->avatar }}" />
-        <h4>{{ $wish->group->users[0]->currentAgent[0]->name }}</h4>
+        <img title="{{ $wish->agent->name }}" alt="{{ $wish->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent->avatar }}" />
+        <h4>{{ $wish->agent->name }}</h4>
         <div class="modal-contact">
             <div class="mc-tel">
                 <span class="glyphicon glyphicon-earphone"></span>
-                <a href="tel:{{ $wish->group->users[0]->currentAgent[0]->telephone }}">{{ $wish->group->users[0]->currentAgent[0]->telephone }}</a>
+                <a href="tel:{{ $wish->agent->telephone }}">{{ $wish->agent->telephone }}</a>
             </div>
             <div class="mc-mail">
                 <span class="glyphicon glyphicon-envelope"></span>
-                <a href="mailto:@if(count($wish->group->users[0]->currentAgent)){{ $wish->group->users[0]->currentAgent[0]->email }}@endif">@if(count($wish->group->users[0]->currentAgent)){{ $wish->group->users[0]->currentAgent[0]->email }}@endif</a>
+                <a href="mailto:@if(!is_null($wish->agent)){{ $wish->agent->email }}@endif">@if(!is_null($wish->agent)){{ $wish->agent->email }}@endif</a>
             </div>
         </div>
     </div>

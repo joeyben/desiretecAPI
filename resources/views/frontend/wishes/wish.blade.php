@@ -112,7 +112,7 @@
 
     @elseif ($logged_in_user->hasRole('User'))
         @if(is_null($agent))
-            <?php  $agent = $wish->group->users[0]->currentAgent[0] ?>
+            <?php  $agent = $wish->agent()->first() ?>
         @endif
         <div class="bg-bottom">
             <div class="container">
