@@ -853,4 +853,92 @@ class AutooffersTTRepository extends BaseRepository
         }
         $this->hotelAttributes = $hotelAttributes;
     }
+
+    public function testTT()
+    {
+        $xmlreq = '{
+         "PackageOffersRQ": {
+          "RQ_Metadata": {
+           "Language": "de-CH"
+          },
+        "CurrencyCode": "CHF",
+          "Travellers": {
+           "Traveller": [{
+                    "Age": 35
+                }],"Traveller": [{
+                    "Age": 35
+                }],"Traveller": [{
+                    "Age": 6
+                }]
+          },
+          "OfferFilters": {
+           "DateAndTimeFilter": {
+            "OutboundFlightDateAndTimeFilter": {
+             "FlightEvent": "Departure",
+             "DateRange": {
+              "MinDate": "2020-02-01"
+             }
+            },
+            "InboundFlightDateAndTimeFilter": {
+             "FlightEvent": "Departure",
+             "DateRange": {
+              "MaxDate": "2020-06-30"
+             }
+            }
+        },
+           "TravelDurationFilter": {
+            "DurationKind": "Stay",
+            "MinDuration": 7,
+            "MaxDuration": 8
+           },
+           "PriceFilter": {
+            "MaxPrice": 1200
+           },
+           "AirportFilter": {
+            "DepartureAirportFilter": {
+             "AirportCodes": ["MUC"]
+        } },
+           "AccomFilter": {
+            "AccomSelectors": {
+             "RegionIDs": [35]
+            }
+           },
+           "AccomPropertiesFilter": {
+            "HotelAttributes": [],
+            "BoardTypes": ["Breakfast","BreakfastEconomy","BreakfastSuperior","HalfBoard","HalfBoardEconomy","HalfBoardSuperior","FullBoard","FullBoardEconomy","FullBoardSuperior","AllInclusive","AllInclusiveEconomy","AllInclusiveSuperior"],
+            "HotelCategoryFilter": {
+                "HotelCategoryRange": {
+                    "MinCategory": 3
+                }
+            },
+            "HotelReview": {
+                "MinRatingsCount": 10,
+                "MinMeanRatingOverall": 4,
+                "MinMeanRecommendationRate": 80
+            }
+           }
+          },
+          "Options": {
+            "NumberOfResults": 500,
+            "ResultOffset": 0,
+            "Sorting": ["PriceAsc"]
+          }
+        } }';
+        $authorization = 'Authorization: Bearer ' . $this->token;
+
+        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
+        curl_setopt($curl, CURLOPT_URL, $this->url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $xmlreq);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $result = curl_exec($curl);
+        if (!$result) {
+            die('Connection Failure');
+        }
+        curl_close($curl);
+        dd($result);
+    }
 }
