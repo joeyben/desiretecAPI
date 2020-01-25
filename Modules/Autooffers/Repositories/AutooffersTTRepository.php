@@ -864,12 +864,11 @@ class AutooffersTTRepository extends BaseRepository
         "CurrencyCode": "CHF",
           "Travellers": {
            "Traveller": [{
-                    "Age": 35
-                }],"Traveller": [{
-                    "Age": 35
-                }],"Traveller": [{
-                    "Age": 6
-                }]
+               "Age": 35
+            }],
+           "Traveller": [{
+                "Age": 25
+           }]
           },
           "OfferFilters": {
            "DateAndTimeFilter": {
@@ -924,6 +923,8 @@ class AutooffersTTRepository extends BaseRepository
             "Sorting": ["PriceAsc"]
           }
         } }';
+        $curl = curl_init();
+
         $authorization = 'Authorization: Bearer ' . $this->token;
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
