@@ -2,6 +2,7 @@
 
 namespace Modules\Wishes\Entities;
 
+use App\Models\Agents\Agent;
 use App\Models\Groups\Group;
 use App\Models\Offers\Offer;
 use App\Models\Whitelabels\Whitelabel;
@@ -39,6 +40,7 @@ class Wish extends Model
         'group_id',
         'updated_by',
         'whitelabel_id',
+        'agent_id',
         'extra_params'
     ];
 
@@ -93,6 +95,14 @@ class Wish extends Model
     public function group()
     {
         return $this->belongsTo(Group::class, 'group_id');
+    }
+
+    /**
+     * Wishes belongsTo with Group.
+     */
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class, 'agent_id');
     }
 
     /**

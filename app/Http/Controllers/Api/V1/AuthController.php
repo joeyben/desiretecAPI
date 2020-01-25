@@ -13,9 +13,9 @@ use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Token;
 
 class AuthController extends APIController
 {
@@ -44,7 +44,6 @@ class AuthController extends APIController
             if (!$token = JWTAuth::attempt($credentials)) {
                 return $this->throwValidation(trans('api.messages.login.failed'));
             }
-
         } catch (\Exception $e) {
             return $this->respondInternalError($e->getMessage());
         }

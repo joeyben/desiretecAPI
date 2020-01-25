@@ -156,11 +156,8 @@ class WishesController extends Controller
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
-            'last_offer'         => $lastOffer,
-            'last_message'       => $lastMessage,
             'agent'              => Auth::guard('agent')->user(),
-            'agent_last_offer'   => $agentName,
-            'agent_last_message' => $agentLastMessage,
+            'agent_name'         => $agentName,
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
             'categories'         => $this->categories,
@@ -269,7 +266,7 @@ class WishesController extends Controller
         foreach ($wish as $singleWish) {
             $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
 
-            if($this->auth->guard('web')->user()->hasRole('Seller')) { 
+            if($this->auth->guard('web')->user()->hasRole('Seller')) {
                 if($currentWhiteLabelID === 198) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
                     $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
                 }

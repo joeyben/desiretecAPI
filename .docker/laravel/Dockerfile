@@ -24,16 +24,15 @@ COPY .docker/laravel/laravel.ini /usr/local/etc/php/conf.d
 COPY .docker/laravel/php.ini /usr/local/etc/php/php.ini
 COPY .docker/laravel/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
-RUN docker-php-ext-install zip && \
-    docker-php-ext-install soap && \
+RUN docker-php-ext-install soap && \
     apt update && \
     apt-get install nano && \
     rm -rf /tmp/* /var/tmp/* && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY .docker/laravel-fpm/docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint
-COPY .docker/laravel-fpm/artisan.sh /usr/local/bin/artisan-cmds
+COPY .docker/laravel/docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint
+COPY .docker/laravel/artisan.sh /usr/local/bin/artisan-cmds
 RUN chmod +x /usr/local/bin/docker-php-entrypoint && chmod +x /usr/local/bin/artisan-cmds
 
 ARG APP_KEY
@@ -41,13 +40,14 @@ ARG AWS_KEY
 ARG AWS_SECRET
 ARG AWS_REGION
 ARG AWS_BUCKET
-RUN composer dump-autoload -a -no-dev
+RUN composer dump-autoload
 
 USER root
 
-RUN apt update && curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt install -y nodejs && apt install -y npm
-RUN rm -r /var/www/html/docker
-RUN make routes
-RUN make message
+RUN apt update && curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt install -y nodejs
+RUN rm -rf /var/www/html/.docker /var/www/html/docker-compose*.yml /var/www/html/.gitlab-ci*.yml
+# see artisan.sh
+#RUN make routes
+#RUN make message
 RUN npm install
 RUN chown -R www-data:www-data /var/www/html/node_modules/

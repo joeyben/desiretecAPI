@@ -32,7 +32,7 @@ class GlobalComposer
                 }
 
                 $loggedAvatar = Auth::guard('agent')->user()->avatar;
-                $loggedAgent = Auth::guard('agent')->user()->display_name;
+                $loggedAgent = Auth::guard('agent')->user()->name;
             }
         }
 

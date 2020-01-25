@@ -661,7 +661,6 @@ p.kwp-info {
   p{
     padding-left: 40px;
     font-size: 14px;
-    font-weight: 500;
     line-height: 1.3em;
     color: $master-grey-dark;
     a {
@@ -1074,7 +1073,6 @@ p.kwp-info {
       border-bottom: 1px solid $master-grey-light;
       font-size: 16px;
       line-height: 22px;
-      font-weight: 500;
     }
 
     .kwp-form-errors{
@@ -1120,7 +1118,7 @@ p.kwp-info {
       margin: 0px;
       color:$master-grey-dark;
       padding: 30px 0;
-      font-weight: bold;
+      font-weight: 500;
       text-align: center;
       width: 100%;
       border: none;
@@ -1152,7 +1150,6 @@ p.kwp-info {
       }
       p{
         color: #000;
-        font-weight: 500;
         margin-bottom: 20px;
       }
     }
@@ -1199,7 +1196,6 @@ p.kwp-info {
       height: 25px;
       line-height: 1.5em;
       background-color: transparent;
-      font-weight: 500;
       border-bottom: 1px solid $master-grey-light;
       color: $master-grey-dark;
       border-radius: 0;
@@ -1245,7 +1241,6 @@ p.kwp-info {
         padding: 3px 0 5px;
         font-size: 14px;
         color: $master-grey-dark;
-        font-weight: 500;
         line-height: 1.5em;
         display: block;
       }
@@ -1281,7 +1276,6 @@ p.kwp-info {
         display: block;
         margin-top: 5px;
         color: $master-grey-dark;
-        font-weight: 500;
       }
     }
     .catering{
@@ -1340,7 +1334,7 @@ p.kwp-info {
     box-shadow: none;
     background: none;
     background-color: transparent;
-    font-weight: 500;
+    font-weight: normal;
     border-bottom: 1px solid $master-grey-light;
     border-radius: 0;
     padding: 0 10px;
@@ -1373,6 +1367,7 @@ p.kwp-info {
   }
   .kwp-custom-select:after{
     background: none;
+    border-bottom: none;
   }
   .kwp-content-extra, .kwp-btn-expand{
     display: none;
@@ -1440,19 +1435,101 @@ p.kwp-info {
   border: 1px solid $brand-danger !important;
 }
 
-// Customize bootstrap-taginput library
-.dt-modal {
+//
+// Dropdown menus
+// --------------------------------------------------
+.dt-modal{
+
+  // Custom select
+  .custom-select{
+    margin-top: 5px;
+    padding-left: 5px;
+    color: $master-grey-dark;
+    border: none;
+    border-bottom: 1px solid $master-grey-light;
+  }
+
+  // Customize bootstrap
   .bootstrap-tagsinput {
     padding: 0;
+    border: none!important;
+    box-shadow: none!important;
+    min-width: 100%;
+  }
+  .bootstrap-tagsinput .tag {
+    color: #46799b;
+    background: #e0eaf1;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 2px;
+    display: inline-block;
+    font-size: 11px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+  }
+
+  // Bootstrap css copy
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  }
+  .dropdown-menu>li {
     width: 100%;
-    border: none;
-    box-shadow: none;
-    input {
-      min-width: 100%;
-    }
+  }
+  .dropdown-menu>li>a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #333;
+    white-space: nowrap;
+  }
+  .dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{
+    color: #fff;
+    text-decoration: none;
+    background-color: #3097d1;
+    outline: 0;
   }
 }
 
 select option:disabled {
   color: $master-grey-light;
+}
+
+.dt-modal {
+  .form-control {
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0 12px 4px;
+    font-size: inherit;
+    color: $master-grey-dark;
+  }
+}
+
+select option:disabled {
+  color: $master-grey-light;
+}
+
+.hidden {
+  display: none !important;
 }

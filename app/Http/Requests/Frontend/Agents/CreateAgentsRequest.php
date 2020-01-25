@@ -28,7 +28,7 @@ class CreateAgentsRequest extends Request
     {
         return [
             'name'  => 'required|string|max:64',
-            'email' => 'required|email|max:255|unique:agents,email',
+            'email' => 'required|email|max:255',
             'telephone' => 'required|integer'
         ];
     }

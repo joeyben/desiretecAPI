@@ -5,6 +5,8 @@
 @endisset
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700,700italic,900" media="all">
+<link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 
 <div class="kwp-middle">
     Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
@@ -311,8 +313,7 @@
 
                 dt.applyBrandColor();
                 dt.adjustResponsive();
-
-                autocomplete();
+                dt.autocomplete();
 
                 dt.startDate = new Pikaday({
                     field: document.getElementById('earliest_start'),
@@ -442,52 +443,6 @@
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
-            }
-
-             /**
-             * Autocomplete
-             */
-            var autocomplete = function(){
-            /* Destinations */
-            $('#destination').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                autoSelect: false,
-                minLength: 3,
-                highlight: true,
-                source: function(query) {
-                    return $.get('https://bentour.reise-wunsch.com/get-all-destinations', {query: query});
-                }
-                }
-            });
-            /* END Destinations */
-
-            /* Airports */
-            $('#airport').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                autoSelect: false,
-                minLength: 3,
-                highlight: true,
-                source: function(query) {
-                    return $.get('https://bentour.reise-wunsch.com/get-all-airports', {query: query});
-                }
-                }
-            });
-            /* END Airports */
-
-
-            $("#destination, #airport").on('itemAdded', function(event) {
-                setTimeout(function(){
-                $("input[type=text]",".bootstrap-tagsinput").val("");
-                }, 1);
-            });
-
-
             }
 
         </script>

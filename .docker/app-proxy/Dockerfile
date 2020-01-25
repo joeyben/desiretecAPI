@@ -27,8 +27,8 @@ RUN cd /myapp/Modules/Bentour && yarn install --ignore-engines && npm run produc
 
 
 FROM nginx:latest
-
-COPY --from=frontend /myapp/public /var/www/html/public
+COPY public/ /var/www/html/public/
+COPY --from=frontend /myapp/public/ /var/www/html/public/
 
 COPY .docker/app-proxy/default.conf /etc/nginx/conf.d/default.conf
 COPY .docker/app-proxy/proxy.conf /etc/nginx/conf.d/custom_proxy.conf

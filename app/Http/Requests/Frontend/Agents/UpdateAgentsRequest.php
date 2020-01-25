@@ -16,7 +16,7 @@ class UpdateAgentsRequest extends Request
      */
     public function authorize()
     {
-        return access()->allow('edit-agent');
+        return true;
     }
 
     /**

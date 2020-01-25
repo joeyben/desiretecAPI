@@ -326,8 +326,8 @@
 <script src="{{ asset("modules/js/main/jquery.min.js") }}" ></script>
 <script src="{{ asset("modules/js/main/bootstrap.bundle.min.js") }}" ></script>
 <script src="{{ asset("modules/js/plugins/loaders/blockui.min.js") }}" ></script>
-<script src="{{ asset("js/messages.js") }}" type="text/javascript" ></script>
-<script src="{{ asset("js/laroute.js") }}" type="text/javascript"></script>
+<script src="{{ asset("storage/js/messages.js") }}" type="text/javascript" ></script>
+<script src="{{ asset("storage/js/laroute.js") }}" type="text/javascript"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 <script>
   window.i18 = <?php echo json_encode([
