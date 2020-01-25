@@ -128,7 +128,7 @@ class AutooffersTTRepository extends BaseRepository
                 $travellers .= ',';
             }
             $travellers .= '"Traveller": [{
-                    "Age": 12
+                    "Age": 6
                 }]';
             if ($i + 1 < $this->kids) {
                 $travellers .= ',';
