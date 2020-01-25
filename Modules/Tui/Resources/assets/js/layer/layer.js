@@ -716,7 +716,7 @@ var exitIntent = window.exitIntent || {};
         var formSent = $('.kwp-content').hasClass('kwp-completed-master');
 
         this.modal.addClass('tmp-hidden');
-        if(!formSent) {
+        if(!formSent && deviceDetector.device === "phone") {
             this.trigger =
                 $('<span/>', {'class': 'trigger-modal'});
             $('body').prepend(this.trigger);
@@ -1053,7 +1053,7 @@ var exitIntent = window.exitIntent || {};
     function removeLayer(e){
         var $event = e;
         setTimeout(function(){
-            dt.triggerButton($event);
+            if(deviceDetector.device === "phone"){dt.triggerButton($event);}
             dt.PopupManager.closePopup($event);
             dt.PopupManager.teaserSwiped = true;
         }, 500);
