@@ -232,27 +232,7 @@
 
                                 <div class="price">
                                     <div class="info-icons">
-                                        <div class="info">
-                                            <i class="fal fa-users"></i><div class="info-detail"><div class="up">Familie</div><div class="down"><ul><li>Babybett</li></ul></div></div>
-                                        </div>
-                                        <div class="info">
-                                            <i class="fal fa-concierge-bell"></i></i><div class="info-detail" style="top: -270%;background: white;width: 180px;"><div class="up" style="width: 180px">Hotel Specials</div><div class="down" style="width: 180px"><ul><li>Kostenloses WLAN</li><li>Pool</li></ul></div></div>
-                                        </div>
-                                        <div class="info">
-                                            <i class="fal fa-concierge-bell"></i>
-                                            <div class="info-detail">
-                                                <div class="up">Hotel Specials</div>
-                                                <div class="down">
-                                                    <ul>
-                                                        @foreach($offer['data']['hotel_attributes'] as $attribute)
-                                                            @if(in_array($attribute, ['wlan_available','central_location','city_breaks','club_with_entertainment','cosmetic_treatments','direct_beach_access','direct_proximity_ski_lift','diving_close_to_hotel','elegant_deluxe','great_sports_offer','hotel_near_beach','own_fitness_facilities','parking_spaces_available','pets_allowed','restaurant','sandy_beach']))
-                                                                <li>{{ trans('hotel.offer.attributes.'.$attribute) }}</li>
-                                                            @endif
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @include('autooffer::autooffer.parts.hotel-attributes')
                                     </div>
                                     <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span></h3>
                                     <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid={{ getTTRegionCodeFromOrt($offer['hotel_data']['data']['Stadtname']) }}&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&child=5,7&dur={{ $offer['data']['duration'] }}&price=0,{{ $wish->budget }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
