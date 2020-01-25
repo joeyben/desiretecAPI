@@ -631,14 +631,14 @@ ul {
 }
 
 /*****ICONS CUSTOM********/
-.lastminute{
+.price{
   position: relative;
   .info-icons{
     position: absolute;
     left: 0;
     display: inline-flex;
     .info{
-      padding: 0px 20px 0px 20px;
+      padding: 0px 10px;
       i{
         padding: 7px ;
       }
@@ -662,6 +662,9 @@ ul {
     z-index: 900;
     ul {
       list-style: none;
+      li{
+        white-space: nowrap;
+      }
     }
 
     ul li:before {

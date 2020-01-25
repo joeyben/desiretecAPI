@@ -230,7 +230,7 @@
                                     </div>
                                 </div>
 
-                                <div class="price lastminute">
+                                <div class="price">
                                     <div class="info-icons">
                                         @include('autooffers::autooffer.parts.hotel-attributes')
                                     </div>
