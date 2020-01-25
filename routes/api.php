@@ -51,5 +51,9 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::post('create', 'AgentsController@create');
             Route::delete('delete/{id}', 'AgentsController@delete');
         });
+
+        Route::group(['prefix' => 'account'], function () {
+            Route::put('update/{id}', 'AccountController@update');
+        });
     });
 });
