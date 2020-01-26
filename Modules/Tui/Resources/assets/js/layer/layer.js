@@ -17,17 +17,17 @@ var exitIntent = window.exitIntent || {};
                 header: 'Dürfen wir Dich beraten?',
                 body: 'Unsere besten Reiseberater helfen Dir gerne, Deine persönliche Traumreise zu finden. Probiere es einfach aus! Natürlich kostenlos und unverbindlich.'
             },
-            'eil-n1': {
+            'eil-tablet': {
                 header: 'Dürfen wir Sie beraten?',
                 body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
             },
-            'eil-n2': {
+            'eil-phone': {
                 header: 'Dürfen wir Sie beraten?',
                 body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
             },
-            'eil-n3': {
-                header: 'Dürfen wir Ihnen helfen?',
-                body: 'Einer unserer erfahrenen Reiseberater hilft Ihnen gerne, die für Sie passende Reise zu finden. Probieren Sie es einfach kostenlos und unverbindlich aus!'
+            'eil-desktop': {
+                header: 'Dürfen wir Sie beraten?',
+                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
             },
             'eil-n4': {
                 header: 'Dürfen wir Ihnen helfen?',
