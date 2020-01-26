@@ -35,6 +35,8 @@ class AutooffersTTRepository extends BaseRepository
 
     private $currency = 'CHF';
 
+    private $specialSearch = false;
+
     protected $region;
 
     protected $location;
@@ -224,6 +226,11 @@ class AutooffersTTRepository extends BaseRepository
         }else{
             $this->offers = [];
         }
+        if (empty($this->offers) && !$this->specialSearch) {
+            $this->specialSearch = true;
+            $this->setBudget(0);
+            $this->getTTData();
+        }
         $this->setGiataIds();
         $this->setReviews();
         $this->setHotelGeo();
@@ -242,7 +249,7 @@ class AutooffersTTRepository extends BaseRepository
         $count = 0;
         foreach ($this->offers as $key => $offer) {
             $hotelId = $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'];
-            if (!$this->checkValidity($hotelId, $wish_id) || !\array_key_exists('TravelType', $offer)) {
+            if (!$this->checkValidity($hotelId, $wish_id)) {
                 continue;
             }
             $tOperator = $offer['TourOperator']['TourOperatorCode'];
@@ -312,7 +319,6 @@ class AutooffersTTRepository extends BaseRepository
     public function checkValidity($hotelId, $wish_id)
     {
         $autooffer = Autooffer::where('wish_id', $wish_id)->where('hotel_code', $hotelId)->count();
-
         return 0 === $autooffer;
     }
 
@@ -349,7 +355,7 @@ class AutooffersTTRepository extends BaseRepository
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
-
+            $autooffer->status = $this->specialSearch ? 0 : 1;
             return $autooffer->save();
         } catch (\Illuminate\Database\QueryException $e) {
             // something went wrong with the transaction, rollback
@@ -911,9 +917,9 @@ class AutooffersTTRepository extends BaseRepository
                 }
             },
             "HotelReview": {
-                "MinRatingsCount": 10,
-                "MinMeanRatingOverall": 4,
-                "MinMeanRecommendationRate": 80
+                "MinRatingsCount": 1,
+                "MinMeanRatingOverall": 1,
+                "MinMeanRecommendationRate": 20
             }
            }
           },
@@ -940,6 +946,6 @@ class AutooffersTTRepository extends BaseRepository
             die('Connection Failure');
         }
         curl_close($curl);
-        dd($result);
+        dd(json_decode($result, true)['PackageOffersRS']['Offers']['Offer'][1]);
     }
 }

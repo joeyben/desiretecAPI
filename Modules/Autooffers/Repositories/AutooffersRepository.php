@@ -280,7 +280,8 @@ class AutooffersRepository extends BaseRepository
                 $offerObj,
                 [
                     'data'       => json_decode($offer['data'], true),
-                    'hotel_data' => json_decode($offer['hotel_data'], true)
+                    'hotel_data' => json_decode($offer['hotel_data'], true),
+                    'personPrice'=> $offer['personPrice'],
                 ]
             );
         }
