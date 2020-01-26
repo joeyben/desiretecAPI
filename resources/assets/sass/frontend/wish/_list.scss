@@ -657,7 +657,6 @@ ul {
   .info-detail{
     position: absolute;
     top: 50px;
-    background-color: white;
     display: none;
     z-index: 900;
     ul {
@@ -686,6 +685,7 @@ ul {
       border-radius: 0px 0px 5px 5px;
       padding: 5px;
       border: 1px solid #DF007A;
+      background-color: white;
     }
   }
 }

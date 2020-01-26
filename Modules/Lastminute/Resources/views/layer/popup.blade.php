@@ -475,7 +475,7 @@
             /**
              * Autocomplete
              */
-            var autocomplete = function(){
+            function autocomplete(){
               /* Destinations */
               $('#destination').tagsinput({
                 maxTags: 3,
@@ -524,7 +524,7 @@
 
             dt.applyBrandColor();
 
-            var modifyDOM = function(){
+            function modifyDOM(){
                 if( $(window).outerWidth() <= 768 ) {
                     $("body").addClass('mobile-layer');
                     $(".dt-modal").addClass('m-open');

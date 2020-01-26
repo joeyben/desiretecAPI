@@ -751,10 +751,10 @@ if (!function_exists('getCateringFromCode')) {
                 $category = 'Vollpension';
                 break;
             case '5':
-                $category = 'Ohne Verpflegung';
+                $category = 'all inclusive';
                 break;
             default:
-                $category = 'all inclusive';
+                $category = 'Ohne Verpflegung';
         }
 
         return $category;
