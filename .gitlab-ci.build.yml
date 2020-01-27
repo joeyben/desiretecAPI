@@ -9,7 +9,7 @@ build::Backend:
       --build-arg AWS_SECRET=${AWS_SECRET_KEY}
       --build-arg AWS_BUCKET=${AWS_BUCKET}
       --build-arg AWS_REGION=${AWS_DEFAULT_REGION}
-      --cache-from ${CONTAINER_IMAGE_LATEST} -f .docker/laravel/Dockerfile -t ${CONTAINER_IMAGE} -t ${CONTAINER_IMAGE_LATEST} .
+      --cache-from ${CONTAINER_IMAGE_LATEST} -f .docker/laravel/Dockerfile -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA} -t ${CONTAINER_IMAGE_LATEST} .
     - docker push ${CONTAINER_IMAGE}
   only:
     - master
@@ -24,7 +24,7 @@ build::Frontend:
     - docker:dind
   script:
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
-    - docker build -f .docker/app-proxy/Dockerfile -t ${NGINX_CONTAINER_IMAGE} -t ${NGINX_CONTAINER_IMAGE_LATEST} .
+    - docker build -f .docker/app-proxy/Dockerfile -t ${NGINX_CONTAINER_IMAGE}:${CI_COMMIT_SHA} -t ${NGINX_CONTAINER_IMAGE_LATEST} .
     - docker push ${NGINX_CONTAINER_IMAGE}
   only:
     - master
