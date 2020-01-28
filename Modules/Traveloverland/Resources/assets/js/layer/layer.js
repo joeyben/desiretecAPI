@@ -13,11 +13,15 @@ var dt = window.dt || {};
     dt.popupTemplate = function (variant) {
 
         var texts = {
-            'eil-n1': {
+            'eil-desktop': {
                 header: 'Dürfen wir Sie beraten?',
                 body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             },
-            'eil-mobile': {
+            'eil-phone': {
+                header: 'Dürfen wir Sie beraten?',
+                body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
+            },
+            'eil-tablet': {
                 header: 'Dürfen wir Sie beraten?',
                 body: 'Unsere Reiseberater helfen Ihnen gerne, Ihr persönliches Traumferienhaus zu finden. Probieren Sie es einfach aus!'
             }
@@ -253,17 +257,9 @@ var dt = window.dt || {};
             return arr[Math.floor(Math.random() * arr.length)];
         },
         getVariant: function () {
-            if(isMobile()){
-                return 'eil-mobile';
-            }else if(getUrlParams('utm_source') && getUrlParams('utm_source') == 'social'){
-                return this.getRandomElement([
-                    'eil-n1-social'
-                ]);
-            }else{
-                return this.getRandomElement([
-                    'eil-n1'
-                ]);
-            }
+            return this.getRandomElement([
+                'eil-'+deviceDetector.device,
+            ]);
         }
     });
 
@@ -477,17 +473,9 @@ var dt = window.dt || {};
             return arr[Math.floor(Math.random() * arr.length)];
         },
         getVariant: function () {
-            if(isMobile()){
-                return 'eil-mobile';
-            }else if(getUrlParams('utm_source') && getUrlParams('utm_source') == 'social'){
-                return this.getRandomElement([
-                    'eil-n1-social'
-                ]);
-            }else{
-                return this.getRandomElement([
-                    'eil-n1',
-                ]);
-            }
+            return this.getRandomElement([
+                'eil-'+deviceDetector.device,
+            ]);
         }
     });
 

@@ -29,6 +29,9 @@
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
+                        <script>
+                            dt.Tracking.rawEvent('form_error', 'destination', '{{ $error }}');
+                        </script>
                     @endforeach
                 @endif
                 <i class="fal fa-globe-europe"></i>
@@ -41,6 +44,9 @@
                 @if ($errors->any() && $errors->get('airport'))
                     @foreach ($errors->get('airport') as $error)
                         <span class="error-input">{{ $error }}</span>
+                        <script>
+                            dt.Tracking.rawEvent('form_error', 'airport', '{{ $error }}');
+                        </script>
                     @endforeach
                 @endif
             </div>
@@ -63,6 +69,9 @@
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span>{{ $error }}</span>
+                                    <script>
+                                        dt.Tracking.rawEvent('form_error', 'earliest_start', '{{ $error }}');
+                                    </script>
                                 @endforeach
 
                             @endif
@@ -73,6 +82,9 @@
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span>{{ $error }}</span>
+                                    <script>
+                                        dt.Tracking.rawEvent('form_error', 'latest_return', '{{ $error }}');
+                                    </script>
                                 @endforeach
                             @endif
                         </div>
@@ -114,6 +126,9 @@
                                 @if ($errors->any() && $errors->get('kids'))
                                     @foreach ($errors->get('kids') as $error)
                                         <span class="error-input">{{ $error }}</span>
+                                        <script>
+                                            dt.Tracking.rawEvent('form_error', 'kids', '{{ $error }}');
+                                        </script>
                                     @endforeach
                                 @endif
                                 <i class="fal fa-child"></i>
@@ -168,6 +183,9 @@
                 @if ($errors->any() && $errors->get('email'))
                     @foreach ($errors->get('email') as $error)
                         <span class="error-input">{{ $error }}</span>
+                        <script>
+                            dt.Tracking.rawEvent('form_error', 'email', '{{ $error }}');
+                        </script>
                     @endforeach
                 @endif
             </div>
@@ -424,6 +442,9 @@
                         @php
                             $terms_class = 'dt_terms hasError'
                         @endphp
+                        <script>
+                            dt.Tracking.rawEvent('form_error', 'terms', 'Terms not set');
+                        </script>
                     @endif
 
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
