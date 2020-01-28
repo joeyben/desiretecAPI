@@ -56,4 +56,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::put('update/{id}', 'AccountController@update');
         });
     });
+
+    Route::group(['middleware' => []], function () {
+        Route::post('translations', 'TranslationsController@getTranslations');
+    });
 });
