@@ -874,6 +874,9 @@ class AutooffersTTRepository extends BaseRepository
             }],
            "Traveller": [{
                 "Age": 25
+           }],
+           "Traveller": [{
+                "Age": 9
            }]
           },
           "OfferFilters": {
@@ -946,6 +949,6 @@ class AutooffersTTRepository extends BaseRepository
             die('Connection Failure');
         }
         curl_close($curl);
-        dd(json_decode($result, true)['PackageOffersRS']['Offers']['Offer'][1]);
+        dd($result);
     }
 }

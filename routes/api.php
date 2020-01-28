@@ -63,4 +63,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::post('/store', 'OffersController@store');
         });
     });
+
+    Route::group(['middleware' => []], function () {
+        Route::post('translations', 'TranslationsController@getTranslations');
+    });
 });
