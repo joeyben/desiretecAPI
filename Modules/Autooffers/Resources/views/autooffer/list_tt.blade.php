@@ -21,8 +21,10 @@
                     <h3>
                         @if (count($offers) === 0)
                             {{ trans('autooffer.message.no_offers') }}
-                        @else
+                        @elseif ($offers[0]['status'])
                             {{ trans('autooffer.message.offers', ['destination' => $wish->destination]) }}
+                        @elseif (!$offers[0]['status'])
+                            {{ trans('autooffer.message.advanced_offers') }}
                         @endif
                             {{ trans('autooffer.message.callback') }}
                         </h3>
