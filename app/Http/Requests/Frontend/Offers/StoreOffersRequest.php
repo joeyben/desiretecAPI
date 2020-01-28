@@ -16,7 +16,7 @@ class StoreOffersRequest extends Request
      */
     public function authorize()
     {
-        return access()->allow('create-offer');
+        return true;
     }
 
     /**

@@ -34,28 +34,30 @@ class OffersController extends APIController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index($id)
+    public function index()
     {
         try {
-            return response()->json($this->offer->getOffersData($id)->original);
-        } catch (\Exception $e) {
+            $offers['data'] = $this->offer->getOffers();
 
+            return $this->responseJson($offers);
+        } catch (\Exception $e) {
+            return $this->respondWithError($e->getMessage());
         }
     }
 
     /**
      *
      */
-    public function store(Request $request)
+    public function store(StoreOffersRequest $request)
     {
         try{
-            $this->offer->createTemp($request);
+            if($this->offer->createTemp($request);){
+                return $this->respondCreated(trans('alerts.frontend.offers.created'));
+            }
 
-            return $this->respond([
-                'message'   => 'Success',
-            ],200);
+            return $this->respondWithError('error');
         } catch (\Exception $e) {
-
+            return $this->respondWithError($e->getMessage());
         }
     }
 }

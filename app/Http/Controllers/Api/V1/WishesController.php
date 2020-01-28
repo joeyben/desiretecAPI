@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
+use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Groups\GroupsRepository;
 use App\Repositories\Criteria\ByUser;
@@ -24,6 +26,7 @@ use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
 use Validator;
+use App\Repositories\Frontend\Wishes\WishesRepository as FrontWishesRepository;
 
 class WishesController extends APIController
 {
@@ -60,8 +63,12 @@ class WishesController extends APIController
      * @var \App\Repositories\Backend\Groups\GroupsRepository
      */
     private $groups;
+    /**
+     * @var \App\Repositories\Frontend\Wishes\WishesRepository
+     */
+    private $frontWishesRepository;
 
-    public function __construct(WishesRepository $wishes, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, GroupsRepository $groups)
+    public function __construct(WishesRepository $wishes, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, GroupsRepository $groups, FrontWishesRepository $frontWishesRepository)
     {
         $this->wishes = $wishes;
         $this->notification = $notification;
@@ -71,6 +78,7 @@ class WishesController extends APIController
         $this->carbon = $carbon;
         $this->activities = $activities;
         $this->groups = $groups;
+        $this->frontWishesRepository = $frontWishesRepository;
     }
 
     public function getWishes(Request $request)
@@ -121,5 +129,21 @@ class WishesController extends APIController
             return $this->responseJsonError($e);
         }
 
+    }
+
+    public function wishlist(ManageWishesRequest $request){
+        try {
+            return $this->responseJson($this->frontWishesRepository->getWishList($request));
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
+        }
+    }
+
+    public function changeWishStatus(ChangeWishesStatusRequest $request){
+        try {
+            return $this->responseJson($this->frontWishesRepository->changeWishStatus($request)->original);
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
+        }
     }
 }

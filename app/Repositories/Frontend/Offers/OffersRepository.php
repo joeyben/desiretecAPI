@@ -65,9 +65,9 @@ class OffersRepository extends BaseRepository
             ->orderBy(config('module.offers.table') . '.id', 'DESC');
     }
 
-    public function getForDataTableTemp($id)
+    public function getOffers()
     {
-        return $this->query()
+        $data = $this->query()
             ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.offers.table') . '.created_by')
             ->leftjoin(config('module.wishes.table'), config('module.wishes.table') . '.id', '=', config('module.offers.table') . '.wish_id')
             ->select([
@@ -81,12 +81,20 @@ class OffersRepository extends BaseRepository
                 config('access.users_table') . '.last_name as last_name',
                 config('module.wishes.table') . '.id as wish_id',
                 config('module.wishes.table') . '.title as wish_title',
-            ])->where(config('module.offers.table') . '.created_by', $id)
-            ->orderBy(config('module.offers.table') . '.id', 'DESC');
+            ])->where(config('module.offers.table') . '.created_by', Auth::guard('api')->user()->id)
+            ->orderBy(config('module.offers.table') . '.id', 'DESC')->get()->toArray();
+
+        foreach ($data as &$offer) {
+            $offer['title'] = '<a href="' . route('frontend.wishes.show', [$offer['wish_id']]) . '">' . $offer['title'] . '</a>';
+            $offer['created_by'] = Agent::where('id', $offer['agent_id'])->first()->name;
+            $offer['created_at'] = date('d.m.Y H:i:s', strtotime($offer['created_at']));
+        }
+
+        return $data;
     }
 
-    public function getOffersData($id){
-        return Datatables::of($this->getForDataTableTemp($id))
+    public function getOffersData(){
+        return Datatables::of($this->getForDataTable())
             ->addColumn('title', function ($offers) {
                 return '<a href="' . route('frontend.wishes.show', [$offers->wish_id])
                     . '">' . $offers->title . '</a>';
@@ -163,10 +171,10 @@ class OffersRepository extends BaseRepository
         $files = $request->hasfile('file') ? $request->file('file') : [];
         $input = $request->except('_token', 'file');
         DB::transaction(function () use ($input, $files) {
-            $id = 6 /*access()->user()->id*/;
+            $id = Auth::guard('api')->user()->id;
 
             $input['created_by'] = $id;
-            $input['agent_id'] = 9 /*Auth::guard('agent')->user()->id */;
+            $input['agent_id'] = 9 /*Auth::guard('agent')->user()->id*/;
 
             if ($offer = Offer::create($input)) {
                 $fileUploaded = $this->uploadImage($files, $offer->id);
