@@ -410,7 +410,7 @@ class AutooffersRepository extends BaseRepository
     /**
      * @param $period
      */
-    public function setPeriod($period)
+    public function setPeriod($period, $wish)
     {
         $period = str_replace('Nächte', '', $period);
         $period = str_replace('Nacht', '', $period);
