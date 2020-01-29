@@ -196,10 +196,16 @@ class TuiController extends Controller
             'hotelChains'        => isset($input['hotelChains']) ? $input['hotelChains'] : '',
             'operators'          => isset($input['operators']) ? $input['operators'] : ''
         ];
+        $ages1 = isset($input['ages1']) ? $input['ages1']."," : '';
+        $ages2 = isset($input['ages2']) ? $input['ages2']."," : '';
+        $ages3 = isset($input['ages3']) ? $input['ages3']."," : '';
+        $ages4 = isset($input['ages4']) ? $input['ages4'] : '';
+        $ages = $ages1.$ages2.$ages3.$ages4;
 
         $request->merge([
             'featured_image' => 'bg.jpg',
-            'extra_params'   => json_encode($extra)
+            'extra_params'   => json_encode($extra),
+            'ages'          => $ages
         ]);
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email',
