@@ -75,7 +75,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('lastminute::layer.general.duration-more'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('lastminute::layer.general.duration_empty')], $duration_arr),key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['0' => trans('lastminute::layer.general.duration_empty')], $duration_arr),key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                                 @if ($errors->any() && $errors->get('duration'))
                                     @foreach ($errors->get('duration') as $error)
                                         <span>{{ $error }}</span>
