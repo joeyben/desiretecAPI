@@ -232,6 +232,14 @@ class WishesRepository extends BaseRepository
     }
 
     /**
+     * @return Wish
+     */
+    public function getById(int $id)
+    {
+        return Wish::findOrFail($id);
+    }
+
+    /**
      * @return mixed
      */
     public function getLowestWishesGroup($whitelabel_id)

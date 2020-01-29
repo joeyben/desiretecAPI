@@ -12,7 +12,7 @@
                     </p>
                     
                     <p style="line-height: 24px; margin-bottom:20px;">
-                        {!! trans('email.offer.created.user.body', ['confirmation_url' => $confirmation_url, 'title' => $offer->wish->title]) !!}
+                        {!! nl2br(trans('email.offer.created.user.body', ['confirmation_url' => $confirmation_url, 'title' => $offer->wish->title])) !!}
                     </p>
 
                     @include('emails.layouts.footer')
