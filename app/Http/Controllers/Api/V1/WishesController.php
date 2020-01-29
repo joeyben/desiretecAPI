@@ -24,9 +24,10 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
-use Modules\Wishes\Repositories\Contracts\WishesRepository;
+use App\Repositories\Frontend\Wishes\WishesRepository;
 use Validator;
 use App\Repositories\Frontend\Wishes\WishesRepository as FrontWishesRepository;
+use Auth;
 
 class WishesController extends APIController
 {
@@ -107,28 +108,25 @@ class WishesController extends APIController
         }
 
     }
-    public function getWish(Wish $wish, Request $request)
+    public function getWish(int $id, Request $request)
     {
         try {
+            $wish = $this->wishes->getById($id);
+            $user = Auth::guard('api')->user();
 
-            $result['data'] = $this->wishes->withCriteria([
-                new ByUserRole($this->auth->user()->id),
-                new EagerLoad(['owner' => function ($query) {
-                    $select = 'CONCAT(first_name, " ", last_name) AS full_name';
-                    $query->select('id', DB::raw($select));
-                }, 'group'  => function ($query) {
-                    $query->select('id', 'display_name');
-                }, 'whitelabel'  => function ($query) {
-                    $query->select('id', 'display_name');
-                }]),
-                new ByWhitelabel()
-            ])->find($wish->id);
+            if ($user->hasRole('User') && $wish->created_by === $user->id) {
+                $result['data'] = $wish;
+                return $this->responseJson($result);
+            } elseif ($user->hasRole('Seller') && in_array($wish->group_id, $user->groups->pluck('id')->toArray())) {
+                $result['data'] = $wish;
+                return $this->responseJson($result);
+            } else {
+                return $this->respondUnauthorized();
+            }
 
-            return $this->responseJson($result);
         } catch (Exception $e) {
             return $this->responseJsonError($e);
         }
-
     }
 
     public function wishlist(ManageWishesRequest $request){
