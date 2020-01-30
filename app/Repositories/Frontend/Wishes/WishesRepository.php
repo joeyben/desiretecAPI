@@ -559,6 +559,29 @@ class WishesRepository extends BaseRepository
         return $offer;
     }
 
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     *
+     * @return string
+     */
+    public function getRuleType()
+    {
+        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelId()));
+        switch ($rules['type']) {
+            case 'mix':
+                return 2;
+                break;
+            case 'auto':
+                return 1;
+                break;
+            case 'manuel':
+                return 0;
+                break;
+            default:
+                return 0;
+        }
+    }
+
     public function callTraffics($wishID){
         $wish = Wish::where('id', $wishID)->first();
         $_rules = $this->autoRules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));

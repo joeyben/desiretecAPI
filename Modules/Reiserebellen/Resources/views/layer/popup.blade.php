@@ -329,7 +329,7 @@
             $(document).ready(function(){
 
                 dt.applyBrandColor();
-                dt.autocomplete();
+                autocomplete();
                 dt.adjustResponsive();
 
                 dt.startDate = new Pikaday({
@@ -460,6 +460,44 @@
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
+            };
+
+            function autocomplete(){
+                $('#destination').tagsinput({
+                    maxTags: 3,
+                    maxChars: 20,
+                    allowDuplicates: false,
+                    typeahead: {
+                        autoSelect: false,
+                        minLength: 3,
+                        highlight: true,
+                        source: function(query) {
+                            return $.get('https://reiserebellen.reise-wunsch.com/get-all-destinations', {query: query});
+                        }
+                    },
+                    freeInput: "{{ $ruleType === 2 ? true : false }}"
+                });
+
+                $('#airport').tagsinput({
+                    maxTags: 3,
+                    maxChars: 20,
+                    allowDuplicates: false,
+                    typeahead: {
+                        autoSelect: false,
+                        minLength: 3,
+                        highlight: true,
+                        source: function(query) {
+                            return $.get('https://reiserebellen.reise-wunsch.com/get-all-airports', {query: query});
+                        }
+                    },
+                    freeInput: "{{ $ruleType === 2 ? true : false }}"
+                });
+                /* END Airports */
+                $("#destination, #airport").on('itemAdded', function(event) {
+                    setTimeout(function(){
+                        $("input[type=text]",".bootstrap-tagsinput").val("");
+                    }, 1);
+                });
             };
 
         </script>

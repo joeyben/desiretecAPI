@@ -73,10 +73,10 @@ class ReiserebellenController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request)
+    public function show(Request $request, WishesRepository $wish)
     {
         $whitelabel = $this->whitelabel->getByName('Reiserebellen');
-
+        $wishRepo = $wish;
         $html = view('reiserebellen::layer.popup')->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
@@ -85,6 +85,7 @@ class ReiserebellenController extends Controller
             'ages_arr'     => $this->ages,
             'request'      => $request->all(),
             'color'        => $whitelabel['color'],
+            'ruleType'     => $wishRepo->getRuleType()
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -116,6 +117,7 @@ class ReiserebellenController extends Controller
                 'ages_arr'     => $this->ages,
                 'request'      => $request->all(),
                 'color'        => $whitelabel['color'],
+                'ruleType'     => $wishRepo->getRuleType()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
