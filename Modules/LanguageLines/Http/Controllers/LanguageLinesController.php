@@ -3,6 +3,7 @@
 namespace Modules\LanguageLines\Http\Controllers;
 
 use App\Models\Access\Role\Role;
+use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
@@ -168,6 +169,10 @@ class LanguageLinesController extends Controller
                 new OrderBy($sort[0], $sort[1]),
                 new Where('locale', $request->get('locale')),
                 new Filter($request->get('filter')),
+                new Where('language_lines.whitelabel_id', $request->get('whitelabel')),
+                new EagerLoad(['whitelabel'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }]),
             ])->paginate($perPage);
 
             $result['success'] = true;
@@ -220,7 +225,7 @@ class LanguageLinesController extends Controller
     {
         try {
             $result['languageline'] = $this->languageline->create(
-                $request->only('locale', 'description', 'group', 'key', 'text')
+                $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id')
             );
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'LanguageLine']);
@@ -258,12 +263,13 @@ class LanguageLinesController extends Controller
             $languageline = $this->languageline->find($id);
 
             $result['languageline'] = [
-                'id'          => $languageline->id,
-                'locale'      => $languageline->locale,
-                'description' => $languageline->description,
-                'group'       => $languageline->group,
-                'key'         => $languageline->key,
-                'text'        => $languageline->text
+                'id'               => $languageline->id,
+                'locale'           => $languageline->locale,
+                'description'      => $languageline->description,
+                'group'            => $languageline->group,
+                'key'              => $languageline->key,
+                'text'             => $languageline->text,
+                'whitelabel_id'    => $languageline->whitelabel_id,
             ];
 
             $result['success'] = true;
@@ -295,7 +301,8 @@ class LanguageLinesController extends Controller
                     'group',
                     'description',
                     'key',
-                    'text'
+                    'text',
+                    'whitelabel_id'
                 )
             );
             $result['languageline'] = $languageline;

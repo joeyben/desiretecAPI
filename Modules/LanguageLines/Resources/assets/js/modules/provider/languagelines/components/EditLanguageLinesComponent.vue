@@ -80,6 +80,19 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group row" v-if="hasRole('Administrator')">
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.whitelabel') }}</label>
+                                                <div class="col-lg-9">
+                                                    <el-select :value="languageline.whitelabel_id" :placeholder="trans('tables.whitelabel')" @input="doWhitelabel" style="width: 100%;">
+                                                        <el-option style="width: 100%;"
+                                                                   v-for="item in whitelabels"
+                                                                   :key="item.id"
+                                                                   :label="item.name"
+                                                                   :value="item.id">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </fieldset>
@@ -132,6 +145,7 @@
     },
     computed: {
       ...Vuex.mapGetters({
+        whitelabels: 'whitelabels',
         group: 'group',
         languageline: 'languageline',
         user: 'currentUser'
@@ -145,6 +159,9 @@
         addGroup: 'addGroup',
         addLanguageline: 'addLanguageline'
       }),
+      doWhitelabel (value) {
+        this.$store.commit('updateLanguageLine', {name: 'whitelabel_id', value: value})
+      },
       hasPermissionTo (permission) {
         return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
       },
