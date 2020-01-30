@@ -22,6 +22,7 @@ class ReiserebellenController extends Controller
     protected $kids = [];
     protected $catering = [];
     protected $duration = [];
+    protected $ages = [];
 
     private $whitelabelId;
 
@@ -44,6 +45,7 @@ class ReiserebellenController extends Controller
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->whitelabelId = \Config::get('reiserebellen.id');
     }
 
@@ -80,6 +82,7 @@ class ReiserebellenController extends Controller
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
+            'ages_arr'     => $this->ages,
             'request'      => $request->all(),
             'color'        => $whitelabel['color'],
         ])->render();
@@ -110,6 +113,7 @@ class ReiserebellenController extends Controller
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
+                'ages_arr'     => $this->ages,
                 'request'      => $request->all(),
                 'color'        => $whitelabel['color'],
             ])->render();

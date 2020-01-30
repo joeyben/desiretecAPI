@@ -1195,20 +1195,21 @@ var exitIntent = window.exitIntent || {};
                 function update() {
                     var val = $(children).val();
 
-                    if (val) {
-                        $('.kwp-content').addClass('kwp-show-ages');
+                    if (val>0) {
+                        $('.kwp-col-ages').addClass('kwp-show-ages');
                     } else {
-                        $('.kwp-content').removeClass('kwp-show-ages');
+                        $('.kwp-col-ages').removeClass('kwp-show-ages');
                     }
 
                     var i;
 
-                    for (i = 1; i <= 3; ++i) {
+                    for (i = 1; i <= 4; ++i) {
 
                         if (i <= val) {
-                            $(age + i).closest('.kwp-custom-select').show();
+                            $(age + i).find('.kwp-custom-select').show();
                         } else {
-                            $(age + i).val('').closest('.kwp-custom-select').hide();
+                            $(age + i +' select').val('').find('.kwp-custom-select').hide();
+                            $(age + i).find('.kwp-custom-select').hide();
                         }
 
                         if(i == val){
@@ -1217,12 +1218,22 @@ var exitIntent = window.exitIntent || {};
                             $(age + i).closest('.kwp-col-3').removeClass('last');
                         }
                     }
-
+                    $( "select[name='ages1']" ).change(function() {
+                        $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
+                    });
+                    $( "select[name='ages2']" ).change(function() {
+                        $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
+                    });
+                    $( "select[name='ages3']" ).change(function() {
+                        $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
+                    });
+                    $( "select[name='ages4']" ).change(function() {
+                        $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
+                    });
                 }
-
                 $(children).on('change keydown blur', update);
                 update();
-            })(jQuery, '#children', '#age_');
+            })(jQuery, '#kids', '#age_');
         };
 
         dt.hotelStars = function () {
