@@ -1,38 +1,55 @@
 <template>
     <div>
         <filter-bar :defaultWhitelabel="whitelabel.id" v-if="whitelabel.id"></filter-bar>
-        <div class="row">
-            <el-col v-for="(layer, index) in layers" :key="layer.id"  class="col-xl-4 col-sm-6">
-                <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                    <img :src="layer.url" class="image">
-                    <div style="padding: 14px;">
-                        <span v-text="layer.description"></span>
-                        <div class="bottom clearfix">
-                            <el-radio :value="whitelabel.layer" :label="layer.id" border @input="doSeleted">{{ layer.name }}</el-radio>
-                        </div>
+
+        <form action="#">
+            <div class="card">
+                <div class="card-header">
+                    Layer auswählen
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <el-col v-for="(layer, index) in layers" :key="layer.id" class="col-xl-4 col-sm-6">
+                            <el-card :body-style="{ padding: '0px' }" shadow="hover">
+                                <img :src="layer.url" class="image">
+                                <div style="padding: 14px;">
+                                    <span v-text="layer.description"></span>
+                                    <div class="bottom clearfix">
+                                        <el-checkbox
+                                                :name="layer.name"
+                                                :label="layer.id"
+                                                class="whitelabel_layer_selecter"
+                                                v-model="checked"
+                                                border
+                                                @input="doSeleted(layer.id)">
+                                            {{ layer.name }}
+                                        </el-checkbox>
+
+                                        <el-input
+                                                placeholder="Please input"
+                                                class="float-left hide"
+                                                :name="layer.name"
+                                                :value="layer.url"
+                                                @input="doUrlSelect(layer)"
+                                                clearable>
+                                        </el-input>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </el-col>
                     </div>
-                </el-card>
-            </el-col>
-        </div>
-        <el-dialog title="Please choose a Whitelabel" :visible.sync="dialogFormVisible" width="35%">
-            <el-form :model="form">
-                <el-form-item :label="trans('modals.whitelabel')">
-                    <el-select v-model="form.id" placeholder="Please choose a Whitelabel" style="width: 100%;">
-                        <el-option
-                                v-for="item in whitelabels"
-                                :key="item.id"
-                                :label="item.name"
-                                :value="item.id">
-                            <span style="float: left"><i :class="item.name"></i> {{ item.name }}</span>
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <button class="btn btn-outline-danger btn-sm" @click="dialogFormVisible = false"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.cancel') }}</button>
-                <button class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" @click="onCreate()" v-if="form.id !== ''"> {{ trans('button.confirm') }}</button>
-            </span>
-        </el-dialog>
+                </div>
+
+                <div class="card-footer">
+                    <div class="text-left">
+                        <button class="btn btn-primary">Speichern</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
     </div>
 </template>
 
@@ -45,7 +62,7 @@
     data () {
       return {
         layers: window.layers,
-        radio1: null,
+        checked: null,
         dialogFormVisible: false,
         form: {
           id: ''
@@ -74,6 +91,10 @@
       }),
       doWhitelabel (id) {
         this.loadWhitelabel(id)
+      },
+      doUrlSelect (layer) {
+
+        this.$store.commit('updateWhitelabelUrl', {name: layer.name, value: layer.url})
       },
       doSeleted (value) {
         this.$store.commit('updateWhitelabel', {name: 'layer', value: value})
@@ -118,6 +139,7 @@
         return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
       }
     }
+
   }
 </script>
 

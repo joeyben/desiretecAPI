@@ -3,6 +3,7 @@
 namespace Modules\Whitelabels\Entities;
 
 use App\Models\Distributions\Distribution;
+use App\Models\Layers\Layer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User;
@@ -139,5 +140,16 @@ class Whitelabel extends Model
     public function distribution()
     {
         return $this->hasOne(Distribution::class, 'id', 'distribution_id');
+    }
+
+    public function layers(){
+        return $this->belongsToMany(Layer::Class)->withPivot([
+            'id',
+            'headline',
+            'subheadline',
+            'headline_success',
+            'subheadline_success',
+            'layer_url'
+        ]);
     }
 }

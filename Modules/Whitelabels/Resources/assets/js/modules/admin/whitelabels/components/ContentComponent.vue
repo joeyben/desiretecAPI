@@ -21,7 +21,7 @@
                     <div class="tab-pane fade" :data-tabnr="layer.id" v-for="(layer, index) in whitelabel.layers" v-bind:class="{'active show': index === 0}" :id="layer.name" >
                         <form action="#" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
 
-                            <input type="text" :name="'layer_id_'+layer.id" :id="'layer_id_'+layer.id" :value="layer.id">
+                            <input type="hidden" :name="'layer_id_'+layer.id" :id="'layer_id_'+layer.id" :value="layer.id">
                             <fieldset class="mb-3">
                                 <div class="form-group">
                                     <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'visual'}" :fileList="whitelabel.visual" :tip="trans('modals.visual')" :limit="1" listType="picture-card"></upload-attachments>
@@ -43,7 +43,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline') }}</label>
                                     <div class="col-lg-9">
-                                        <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline') ? 'is-invalid': ''" id='subheadline' name='subheadline' :placeholder="trans('modals.subheadline')"  @input="updateWhitelabel" :value="layer.pivot.body"></textarea>
+                                        <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline') ? 'is-invalid': ''" id='subheadline' name='subheadline' :placeholder="trans('modals.subheadline')"  @input="updateWhitelabel" :value="layer.pivot.subheadline"></textarea>
                                         <div class="invalid-feedback">
                                             <strong v-text="errors.get('subheadline')"></strong>
                                         </div>
@@ -55,7 +55,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline_success') }}</label>
                                     <div class="col-lg-9">
-                                        <input type="text" class="form-control" :class="errors.has('headline_success') ? 'is-invalid': ''" id='headline_success' name='headline_success' :placeholder="trans('modals.headline_success')" @input="updateWhitelabel"  :value="layer.pivot.success_title"/>
+                                        <input type="text" class="form-control" :class="errors.has('headline_success') ? 'is-invalid': ''" id='headline_success' name='headline_success' :placeholder="trans('modals.headline_success')" @input="updateWhitelabel"  :value="layer.pivot.headline_success"/>
                                         <div class="invalid-feedback">
                                             <strong v-text="errors.get('headline_success')"></strong>
                                         </div>
@@ -65,7 +65,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline_success') }}</label>
                                     <div class="col-lg-9">
-                                        <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline_success') ? 'is-invalid': ''" id='subheadline_success' name='subheadline_success' :placeholder="trans('modals.subheadline_success')" @input="updateWhitelabel"  :value="layer.pivot.success_body"></textarea>
+                                        <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline_success') ? 'is-invalid': ''" id='subheadline_success' name='subheadline_success' :placeholder="trans('modals.subheadline_success')" @input="updateWhitelabel"  :value="layer.pivot.subheadline_success"></textarea>
                                         <div class="invalid-feedback">
                                             <strong v-text="errors.get('subheadline_success')"></strong>
                                         </div>
@@ -130,7 +130,7 @@
       }),
       updateWhitelabel (e) {
         if (e.target.value !== null) {
-          var tabnr = parseInt($('.tab-content .active').data('tabnr') - 1);
+          var tabnr = parseInt($('.tab-content .active').data('tabnr') - 1)
           this.$store.commit('updateWhitelabel', {name: e.target.name, value: e.target.value, tabnr: tabnr})
         }
       },

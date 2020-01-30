@@ -29,14 +29,14 @@ class LayersContentController extends Controller
      */
     private $response;
 
-    private $layersContentService;
 
-    public function __construct(WhitelabelsRepository $whitelabels, Translator $lang, ResponseFactory $response, LayersContentService $layersContentService)
+
+    public function __construct(WhitelabelsRepository $whitelabels, Translator $lang, ResponseFactory $response)
     {
         $this->whitelabels = $whitelabels;
         $this->lang = $lang;
         $this->response = $response;
-        $this->layersContentService = $layersContentService;
+
 
     }
 
@@ -94,7 +94,6 @@ class LayersContentController extends Controller
     public function update(Request $request)
     {
         try {
-
             $result['whitelabel'] = $this->whitelabels->withCriteria([
                 new EagerLoad(['layers']),
             ])->find($request->get('id'));
@@ -106,11 +105,11 @@ class LayersContentController extends Controller
                 $pivot = $layer->pivot;
                 $requestPivot = $layers[$key]['pivot'];
 
-                dd($requestPivot, $layer);
-                $pivot->title = $requestPivot['headline'];
-                $pivot->body = $requestPivot['subheadline'];
-                $pivot->success_title = $requestPivot['headline_success'];
-                $pivot->success_body = $requestPivot['subheadline_success'];
+                //dd($requestPivot, $layer);
+                $pivot->headline = $requestPivot['headline'];
+                $pivot->subheadline = $requestPivot['subheadline'];
+                $pivot->headline_success = $requestPivot['headline_success'];
+                $pivot->subheadline_success = $requestPivot['subheadline_success'];
                 $pivot->save();
 
             }
