@@ -471,6 +471,7 @@
                         autoSelect: false,
                         minLength: 3,
                         highlight: true,
+                        afterSelect: function(val) { this.$element.val(""); },
                         source: function(query) {
                             return $.get('https://reiserebellen.reise-wunsch.com/get-all-destinations', {query: query});
                         }
@@ -486,6 +487,7 @@
                         autoSelect: false,
                         minLength: 3,
                         highlight: true,
+                        afterSelect: function(val) { this.$element.val(""); },
                         source: function(query) {
                             return $.get('https://reiserebellen.reise-wunsch.com/get-all-airports', {query: query});
                         }
