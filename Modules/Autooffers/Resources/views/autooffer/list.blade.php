@@ -240,7 +240,6 @@
                                         $zu  = $zu_arr[2].$zu_arr[1].$year;
 
                                         $kids = "";
-                                        $children = [];
                                         for ($i = 0; $i < $wish->kids; $i++){
                                             $kids .= "&child".($i+1)."=6";
                                             array_push($children, "6");
