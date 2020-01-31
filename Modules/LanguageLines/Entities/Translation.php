@@ -33,20 +33,24 @@ class Translation extends Model
         static::deleted($flushGroupCache);
     }
 
+    public static function getTranslations(string $locale, string $group, int $whitelabelId = null)
+    {
+        return static::query()
+            ->where('whitelabel_id', $whitelabelId)
+            ->where('group', $group)
+            ->where('locale', $locale);
+    }
+
     public static function getTranslationsForGroup(string $locale, string $group, int $whitelabelId = null): array
     {
         return Cache::rememberForever(static::getCacheKey($group, $locale, $whitelabelId), function () use ($group, $locale, $whitelabelId) {
-            return static::query()
-                ->where('whitelabel_id', $whitelabelId)
-                ->where('group', $group)
-                ->where('locale', $locale)
-                ->get()
-                ->map(function (Translation $translation) {
+            return static::getTranslations($group, $locale, $whitelabelId)->map(function (Translation $translation) {
                     return [
                         'key' => $translation->key,
                         'text' => $translation->text,
                     ];
                 })
+                ->get()
                 ->pluck('text', 'key')
                 ->toArray();
         });

@@ -20,6 +20,9 @@ class LanguageLines extends LanguageLine
         'key',
         'text',
         'whitelabel_id',
+        'default',
+        'licence',
+        'is_updated',
     ];
 
     /**
@@ -27,7 +30,11 @@ class LanguageLines extends LanguageLine
      *
      * @var string
      */
-    protected $casts = [];
+    protected $casts = [
+        'default' => 'boolean',
+        'is_updated' => 'boolean',
+        'licence' => 'integer',
+    ];
 
     /**
      * Searchable rules.

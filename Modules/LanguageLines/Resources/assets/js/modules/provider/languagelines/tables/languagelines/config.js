@@ -5,6 +5,7 @@ import Actions from './Actions'
 import CustomLinkById from './CustomLinkById'
 import CustomLinkByName from './CustomLinkByName'
 import CustomStatus from './CustomStatus'
+import CustomDefault from './CustomDefault'
 import CustomUsers from './CustomUsers'
 export default {
   perPage: 10,
@@ -16,5 +17,6 @@ export default {
   customLinkById: CustomLinkById,
   CustomLinkByName: CustomLinkByName,
   CustomStatus: CustomStatus,
+  CustomDefault: CustomDefault,
   customUsers: CustomUsers
 }
