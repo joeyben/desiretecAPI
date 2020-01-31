@@ -9,6 +9,11 @@ export default [
     visible: true
   },
   {
+    name: 'whitelabel.display_name',
+    title: window.Lang.get('tables.whitelabel'),
+    visible: true
+  },
+  {
     name: 'locale',
     title: window.Lang.get('tables.locale'),
     sortField: 'locale',
