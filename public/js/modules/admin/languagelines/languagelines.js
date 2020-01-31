@@ -106972,6 +106972,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _vuex = __webpack_require__(7);
 
@@ -107126,12 +107127,20 @@ exports.default = {
         _this4.$store.dispatch('block', { element: 'languageLinesComponent', load: false });
       });
     },
-    onSubmitUpdate: function onSubmitUpdate(id) {
+    onDuplicate: function onDuplicate() {
       var _this5 = this;
 
       this.$store.dispatch('block', { element: 'languageLinesComponent', load: true });
-      this.$http.put(window.laroute.route('provider.language-lines.update', { id: id }), this.languageline).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+      this.$http.post(window.laroute.route('provider.language-lines.duplicate'), this.languageline).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
         _this5.$store.dispatch('block', { element: 'languageLinesComponent', load: false });
+      });
+    },
+    onSubmitUpdate: function onSubmitUpdate(id) {
+      var _this6 = this;
+
+      this.$store.dispatch('block', { element: 'languageLinesComponent', load: true });
+      this.$http.put(window.laroute.route('provider.language-lines.update', { id: id }), this.languageline).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+        _this6.$store.dispatch('block', { element: 'languageLinesComponent', load: false });
       });
     },
     onSubmitSuccess: function onSubmitSuccess(response) {
@@ -107914,6 +107923,22 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-footer" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-outline bg-purple-600 text-purple-600 border-purple-600 btn-sm",
+                            attrs: { type: "button" },
+                            on: { click: _vm.onDuplicate }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "icon-checkmark-circle mr-1"
+                            }),
+                            _vm._v(_vm._s(_vm.trans("button.duplicate")))
+                          ]
+                        ),
+                        _vm._v(" "),
                         _c(
                           "button",
                           {

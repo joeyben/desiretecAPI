@@ -98,6 +98,7 @@
                                     </fieldset>
                                 </div>
                                 <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline bg-purple-600 text-purple-600 border-purple-600 btn-sm" v-on:click="onDuplicate"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.duplicate') }}</button>
                                     <button type="submit" class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" v-on:click="close = false"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save') }}</button>
                                     <button type="submit" class="btn btn-outline bg-teal-400 text-teal-400 border-teal-400 btn-sm" v-on:click="close = true"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save_and_close') }}</button>
                                     <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.close') }}</button>
@@ -254,6 +255,15 @@
       onSubmitStore () {
         this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
         this.$http.put(window.laroute.route('provider.language-lines.store'), this.languageline)
+          .then(this.onSubmitSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'languageLinesComponent', load: false})
+          })
+      },
+      onDuplicate () {
+        this.$store.dispatch('block', {element: 'languageLinesComponent', load: true})
+        this.$http.post(window.laroute.route('provider.language-lines.duplicate'), this.languageline)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {

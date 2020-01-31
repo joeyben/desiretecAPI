@@ -240,6 +240,26 @@ class LanguageLinesController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
     }
 
+
+    public function duplicate(StoreLanguageLineRequest $request)
+    {
+        try {
+            $result['languageline'] = $this->languageline->create(
+                $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id')
+            );
+
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'LanguageLine']);
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
+    }
+
     /**
      * Show the specified resource.
      *
