@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'http://reiserebellen.com',
+        baseUrl: 'https://reiserebellen.reisewunschservice.de',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/reiserebellen/css/layer/whitelabel.css'
@@ -1164,7 +1164,7 @@ var exitIntent = window.exitIntent || {};
                 });
             }
             dt.PopupManager.init();
-            dt.Tracking.init('trendtours_exitwindow','UA-105970361-8');
+            dt.Tracking.init('desiretec_exitwindow','UA-105970361-17');
             dt.triggerButton($event);
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
                 dt.scrollUpDetect();
