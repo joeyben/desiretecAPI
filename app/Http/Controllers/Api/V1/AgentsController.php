@@ -2,47 +2,77 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Agents\Agent;
+use App\Http\Controllers\Api\V1\Contracts\AgentsControllerInterface;
 use App\Repositories\Frontend\Agents\AgentsRepository;
-use Illuminate\Http\Request;
-use App\Http\Resources\PagesResource;
-use Illuminate\Support\Facades\Storage;
-use Yajra\DataTables\Facades\DataTables;
-use Validator;
+use App\Http\Requests\Frontend\Agents\ManageAgentsRequest;
+use App\Http\Requests\Frontend\Agents\CreateAgentsRequest;
+use App\Http\Requests\Frontend\Agents\UpdateAgentsRequest;
+use App\Http\Requests\Frontend\Agents\DeleteAgentsRequest;
 
-class AgentsController extends APIController
+class AgentsController extends APIController implements AgentsControllerInterface
 {
-    protected $agent;
+    protected $repository;
 
-    public function __construct(AgentsRepository $agent)
+    public function __construct(AgentsRepository $repository)
     {
-        $this->agent = $agent;
+        $this->repository = $repository;
     }
 
-    public function getAgents(Request $request)
+    public function listAgents(ManageAgentsRequest $request)
     {
         try {
-            return Datatables::of($this->agent->getForDataTable())
-                ->addColumn('avatar', function ($agent) {
-                    $path = Storage::disk('s3')->url('img/agent/');
-                    return '<img src="' . $path . $agent->avatar . '"/>';
-                })
-                ->addColumn('name', function ($agent) {
-                    return $agent->name;
-                })
-                ->addColumn('display_name', function ($agent) {
-                    return $agent->display_name;
-                })
-                ->addColumn('status', function ($agent) {
-                    return $agent->status;
-                })
-                ->addColumn('actions', function ($agent) {
-                    return '<a href="' . route('frontend.agents.edit', $agent->id) . '">' . trans('labels.agents.edit') . '</a> / ' . '<a href="' . route('frontend.agents.delete', $agent->id) . '">' . trans('labels.agents.delete') . '</a>';
-                })
-                ->addColumn('created_at', function ($agent) {
-                    return $agent->created_at->toFormattedDateString() . ' ' . $agent->created_at->toTimeString();
-                })
-                ->rawColumns(['avatar', 'actions', 'status'])->make(true);
+            $agents['data'] = $this->repository->getAllWithAccess();
+
+            return $this->responseJson($agents);
+
+        } catch (Exception $e) {
+            return $this->respondWithError($e);
+        }
+    }
+
+    public function getAgent(int $id, ManageAgentsRequest $request)
+    {
+        try {
+            $agent['data'] = $this->repository->getById($id);
+
+            return $this->responseJson($agent);
+
+        } catch (Exception $e) {
+            return $this->respondWithError($e);
+        }
+    }
+
+    public function create(CreateAgentsRequest $request)
+    {
+        try {
+            $this->repository->createByApi($request->except('_token'));
+
+            return $this->respondCreated('agent created successfully');
+
+        } catch (Exception $e) {
+            return $this->respondWithError($e);
+        }
+    }
+
+    public function update(int $id, UpdateAgentsRequest $request)
+    {
+        try {
+            $this->repository->updateByApi($id, $request);
+
+            return $this->respondUpdated('agent updated successfully');
+
+        } catch (Exception $e) {
+            return $this->respondWithError($e);
+        }
+    }
+
+    public function delete(int $id, DeleteAgentsRequest $request)
+    {
+        try {
+            $this->repository->deleteAgent($id);
+
+            return $this->respondUpdated('agent deleted successfully');
+
         } catch (Exception $e) {
             return $this->respondWithError($e);
         }

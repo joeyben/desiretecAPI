@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
+use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
+use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Groups\GroupsRepository;
 use App\Repositories\Criteria\ByUser;
 use App\Repositories\Criteria\ByUserRole;
@@ -21,8 +24,10 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
-use Modules\Wishes\Repositories\Contracts\WishesRepository;
+use App\Repositories\Frontend\Wishes\WishesRepository;
 use Validator;
+use App\Repositories\Frontend\Wishes\WishesRepository as FrontWishesRepository;
+use Auth;
 
 class WishesController extends APIController
 {
@@ -59,8 +64,12 @@ class WishesController extends APIController
      * @var \App\Repositories\Backend\Groups\GroupsRepository
      */
     private $groups;
+    /**
+     * @var \App\Repositories\Frontend\Wishes\WishesRepository
+     */
+    private $frontWishesRepository;
 
-    public function __construct(WishesRepository $wishes, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, GroupsRepository $groups)
+    public function __construct(WishesRepository $wishes, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, GroupsRepository $groups, FrontWishesRepository $frontWishesRepository)
     {
         $this->wishes = $wishes;
         $this->notification = $notification;
@@ -70,6 +79,7 @@ class WishesController extends APIController
         $this->carbon = $carbon;
         $this->activities = $activities;
         $this->groups = $groups;
+        $this->frontWishesRepository = $frontWishesRepository;
     }
 
     public function getWishes(Request $request)
@@ -97,5 +107,41 @@ class WishesController extends APIController
             return $this->responseJsonError($e);
         }
 
+    }
+    public function getWish(int $id, Request $request)
+    {
+        try {
+            $wish = $this->wishes->getById($id);
+            $user = Auth::guard('api')->user();
+
+            if ($user->hasRole('User') && $wish->created_by === $user->id) {
+                $result['data'] = $wish;
+                return $this->responseJson($result);
+            } elseif ($user->hasRole('Seller') && in_array($wish->group_id, $user->groups->pluck('id')->toArray())) {
+                $result['data'] = $wish;
+                return $this->responseJson($result);
+            } else {
+                return $this->respondUnauthorized();
+            }
+
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
+        }
+    }
+
+    public function wishlist(ManageWishesRequest $request){
+        try {
+            return $this->responseJson($this->frontWishesRepository->getWishList($request));
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
+        }
+    }
+
+    public function changeWishStatus(ChangeWishesStatusRequest $request){
+        try {
+            return $this->responseJson($this->frontWishesRepository->changeWishStatus($request)->original);
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
+        }
     }
 }

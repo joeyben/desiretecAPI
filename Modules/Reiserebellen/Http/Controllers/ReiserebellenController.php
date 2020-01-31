@@ -22,6 +22,7 @@ class ReiserebellenController extends Controller
     protected $kids = [];
     protected $catering = [];
     protected $duration = [];
+    protected $ages = [];
 
     private $whitelabelId;
 
@@ -44,6 +45,7 @@ class ReiserebellenController extends Controller
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
+        $this->ages = $categories->getChildrenFromSlug('slug', 'ages');
         $this->whitelabelId = \Config::get('reiserebellen.id');
     }
 
@@ -71,17 +73,19 @@ class ReiserebellenController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request)
+    public function show(Request $request, WishesRepository $wish)
     {
         $whitelabel = $this->whitelabel->getByName('Reiserebellen');
-
+        $wishRepo = $wish;
         $html = view('reiserebellen::layer.popup')->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
+            'ages_arr'     => $this->ages,
             'request'      => $request->all(),
             'color'        => $whitelabel['color'],
+            'ruleType'     => $wishRepo->getRuleType()
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -110,8 +114,10 @@ class ReiserebellenController extends Controller
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
+                'ages_arr'     => $this->ages,
                 'request'      => $request->all(),
                 'color'        => $whitelabel['color'],
+                'ruleType'     => $wishRepo->getRuleType()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -207,10 +213,19 @@ class ReiserebellenController extends Controller
      */
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
-        $request->merge(['featured_image' => 'bg.jpg']);
+        $input = $request->all();
+
+        $ages1 = isset($input['ages1']) ? $input['ages1']."," : '';
+        $ages2 = isset($input['ages2']) ? $input['ages2']."," : '';
+        $ages3 = isset($input['ages3']) ? $input['ages3']."," : '';
+        $ages4 = isset($input['ages4']) ? $input['ages4'] : '';
+        $ages = rtrim($ages1.$ages2.$ages3.$ages4, ",");
+
+
+        $request->merge(['featured_image' => 'bg.jpg','ages' => $ages]);
 
         $new_wish = $wish->create(
-            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms'),
+            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3','ages4'),
             $this->whitelabelId
         );
 

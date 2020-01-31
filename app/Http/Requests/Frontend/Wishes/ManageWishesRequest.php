@@ -16,7 +16,7 @@ class ManageWishesRequest extends Request
      */
     public function authorize()
     {
-        return access()->allow('view-wish-frontend');
+        return true;
     }
 
     /**

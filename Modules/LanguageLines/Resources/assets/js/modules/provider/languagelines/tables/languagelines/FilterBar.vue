@@ -21,6 +21,18 @@
         <div class="header-elements">
             <form action="#" class="row">
                 <div class="col-xl-2 col-md-12 col-sm-12">
+                    <div class="form-group" v-if="hasRole('Administrator')">
+                        <el-select v-model="whitelabel" :placeholder="trans('tables.whitelabel')" @input="doWhitelabel">
+                            <el-option style="width: 100%;"
+                                       v-for="item in whitelabels"
+                                       :key="item.id"
+                                       :label="item.name"
+                                       :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-12 col-sm-12">
                     <div class="form-group">
                         <el-select v-model="locale" :placeholder="trans('tables.locale')" @input="doLocale">
                             <el-option style="width: 100%;"
@@ -67,7 +79,7 @@
                         </el-date-picker>
                     </div>
                 </div>
-                <div class="col-xl-4 col-md-12 col-sm-12">
+                <div class="col-xl-2 col-md-12 col-sm-12">
                     <div class="form-group form-group-feedback form-group-feedback-left">
                         <div class="input-group">
                             <input type="search" class="form-control" placeholder="Search" v-model="filterText" @input="doFilter">

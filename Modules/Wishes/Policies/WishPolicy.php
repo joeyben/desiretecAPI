@@ -58,7 +58,7 @@ class WishPolicy
      */
     public function update(User $user, Wish $wish)
     {
-        return $user->hasPermission('update-wish') || ((int) $user->id === (int) $wish->created_by);
+        return true;
     }
 
     /**

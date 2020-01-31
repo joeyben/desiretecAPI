@@ -35,6 +35,8 @@ class AutooffersTTRepository extends BaseRepository
 
     private $currency = 'CHF';
 
+    private $specialSearch = false;
+
     protected $region;
 
     protected $location;
@@ -191,7 +193,7 @@ class AutooffersTTRepository extends BaseRepository
            }
           },
           "Options": {
-            "NumberOfResults": 50,
+            "NumberOfResults": 500,
             "ResultOffset": 0,
             "Sorting": ["PriceAsc"]
           }
@@ -224,6 +226,11 @@ class AutooffersTTRepository extends BaseRepository
         }else{
             $this->offers = [];
         }
+        if (empty($this->offers) && !$this->specialSearch) {
+            $this->specialSearch = true;
+            $this->setBudget(0);
+            $this->getTTData();
+        }
         $this->setGiataIds();
         $this->setReviews();
         $this->setHotelGeo();
@@ -242,7 +249,7 @@ class AutooffersTTRepository extends BaseRepository
         $count = 0;
         foreach ($this->offers as $key => $offer) {
             $hotelId = $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'];
-            if (!$this->checkValidity($hotelId, $wish_id) || !\array_key_exists('TravelType', $offer)) {
+            if (!$this->checkValidity($hotelId, $wish_id)) {
                 continue;
             }
             $tOperator = $offer['TourOperator']['TourOperatorCode'];
@@ -312,7 +319,6 @@ class AutooffersTTRepository extends BaseRepository
     public function checkValidity($hotelId, $wish_id)
     {
         $autooffer = Autooffer::where('wish_id', $wish_id)->where('hotel_code', $hotelId)->count();
-
         return 0 === $autooffer;
     }
 
@@ -349,7 +355,7 @@ class AutooffersTTRepository extends BaseRepository
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
-
+            $autooffer->status = $this->specialSearch ? 0 : 1;
             return $autooffer->save();
         } catch (\Illuminate\Database\QueryException $e) {
             // something went wrong with the transaction, rollback
@@ -852,5 +858,97 @@ class AutooffersTTRepository extends BaseRepository
             $hotelAttributes[$hotel['HotelCodes']['HotelIffCode']] = $hotel['HotelAttributes'];
         }
         $this->hotelAttributes = $hotelAttributes;
+    }
+
+    public function testTT()
+    {
+        $xmlreq = '{
+         "PackageOffersRQ": {
+          "RQ_Metadata": {
+           "Language": "de-CH"
+          },
+        "CurrencyCode": "CHF",
+          "Travellers": {
+           "Traveller": [{
+               "Age": 35
+            }],
+           "Traveller": [{
+                "Age": 25
+           }],
+           "Traveller": [{
+                "Age": 9
+           }]
+          },
+          "OfferFilters": {
+           "DateAndTimeFilter": {
+            "OutboundFlightDateAndTimeFilter": {
+             "FlightEvent": "Departure",
+             "DateRange": {
+              "MinDate": "2020-02-01"
+             }
+            },
+            "InboundFlightDateAndTimeFilter": {
+             "FlightEvent": "Departure",
+             "DateRange": {
+              "MaxDate": "2020-06-30"
+             }
+            }
+        },
+           "TravelDurationFilter": {
+            "DurationKind": "Stay",
+            "MinDuration": 7,
+            "MaxDuration": 8
+           },
+           "PriceFilter": {
+            "MaxPrice": 1200
+           },
+           "AirportFilter": {
+            "DepartureAirportFilter": {
+             "AirportCodes": ["MUC"]
+        } },
+           "AccomFilter": {
+            "AccomSelectors": {
+             "RegionIDs": [35]
+            }
+           },
+           "AccomPropertiesFilter": {
+            "HotelAttributes": [],
+            "BoardTypes": ["Breakfast","BreakfastEconomy","BreakfastSuperior","HalfBoard","HalfBoardEconomy","HalfBoardSuperior","FullBoard","FullBoardEconomy","FullBoardSuperior","AllInclusive","AllInclusiveEconomy","AllInclusiveSuperior"],
+            "HotelCategoryFilter": {
+                "HotelCategoryRange": {
+                    "MinCategory": 3
+                }
+            },
+            "HotelReview": {
+                "MinRatingsCount": 1,
+                "MinMeanRatingOverall": 1,
+                "MinMeanRecommendationRate": 20
+            }
+           }
+          },
+          "Options": {
+            "NumberOfResults": 500,
+            "ResultOffset": 0,
+            "Sorting": ["PriceAsc"]
+          }
+        } }';
+        $curl = curl_init();
+
+        $authorization = 'Authorization: Bearer ' . $this->token;
+
+        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
+        curl_setopt($curl, CURLOPT_URL, $this->url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $xmlreq);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $result = curl_exec($curl);
+        if (!$result) {
+            die('Connection Failure');
+        }
+        curl_close($curl);
+        dd($result);
     }
 }

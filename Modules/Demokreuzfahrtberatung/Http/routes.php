@@ -20,6 +20,5 @@ Route::group(['domain' => $domain], function () {
         Route::get('getwish/{wish}', 'DemokreuzfahrtberatungWishesController@getWish')->name('getWish');
         Route::get('wishlist/{token}', 'DemokreuzfahrtberatungWishesController@validateTokenList');
         Route::get('wishlist', 'DemokreuzfahrtberatungWishesController@wishList')->name('list');
-        Route::get('tnb', 'DemokreuzfahrtberatungController@getPDF');
     });
 });

@@ -4,63 +4,83 @@
         <!-- Form inputs -->
         <div class="card">
             <div class="card-body">
-                <form action="#" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
-                    <fieldset class="mb-3">
-                        <legend class="text-uppercase font-size-sm font-weight-bold"><i class="icon-pencil ml-2"></i></legend>
-                        <div class="form-group">
-                            <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'visual'}" :fileList="whitelabel.visual" :tip="trans('modals.visual')" :limit="1" listType="picture-card"></upload-attachments>
-                            <div class="help-block text-danger" v-if="errors.has('visual')">
-                                <strong v-text="errors.get('visual')"></strong>
-                            </div>
-                        </div>
 
-                        <div class="form-group row mt-5">
-                            <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline') }}</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" :class="errors.has('headline') ? 'is-invalid': ''" id='headline' name='headline' :placeholder="trans('modals.headline')"  @input="updateWhitelabel" :value="whitelabel.headline"/>
-                                <div class="invalid-feedback">
-                                    <strong v-text="errors.get('headline')"></strong>
+                <legend class="text-uppercase font-size-sm font-weight-bold">
+                    <i class="icon-pencil ml-2"></i>
+                </legend>
+
+                <ul class="nav nav-tabs nav-tabs-highlight">
+                    <li class="nav-item" v-for="(layer, index) in whitelabel.layers"  v-if="whitelabel.layers.length > 0">
+                        <a :href="'#' + layer.name " class="nav-link" v-bind:class="{'active': index === 0}" data-toggle="tab">
+                            {{ layer.name }}
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade" v-for="(layer, index) in whitelabel.layers" v-bind:class="{'active show': index === 0}" :id="layer.name" >
+                        <form action="#" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
+                            <input type="hidden" name="layer_id" :value="layer.id">
+                            <fieldset class="mb-3">
+                                <div class="form-group">
+                                    <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'visual'}" :fileList="whitelabel.visual" :tip="trans('modals.visual')" :limit="1" listType="picture-card"></upload-attachments>
+                                    <div class="help-block text-danger" v-if="errors.has('visual')">
+                                        <strong v-text="errors.get('visual')"></strong>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline') }}</label>
-                            <div class="col-lg-9">
-                                <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline') ? 'is-invalid': ''" id='subheadline' name='subheadline' :placeholder="trans('modals.subheadline')"  @input="updateWhitelabel" :value="whitelabel.subheadline"></textarea>
-                                <div class="invalid-feedback">
-                                    <strong v-text="errors.get('subheadline')"></strong>
+                                <div class="form-group row mt-5">
+                                    <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline') }}</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control" :class="errors.has('headline') ? 'is-invalid': ''" id='headline' name='headline' :placeholder="trans('modals.headline')"  @input="updateWhitelabel" :value="layer.pivot.title"/>
+                                        <div class="invalid-feedback">
+                                            <strong v-text="errors.get('headline')"></strong>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <legend class="text-uppercase font-size-sm font-weight-bold">{{ trans('modals.message_success') }}</legend>
-
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline_success') }}</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" :class="errors.has('headline_success') ? 'is-invalid': ''" id='headline_success' name='headline_success' :placeholder="trans('modals.headline_success')" @input="updateWhitelabel"  :value="whitelabel.headline_success"/>
-                                <div class="invalid-feedback">
-                                    <strong v-text="errors.get('headline_success')"></strong>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline') }}</label>
+                                    <div class="col-lg-9">
+                                        <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline') ? 'is-invalid': ''" id='subheadline' name='subheadline' :placeholder="trans('modals.subheadline')"  @input="updateWhitelabel" :value="layer.pivot.body"></textarea>
+                                        <div class="invalid-feedback">
+                                            <strong v-text="errors.get('subheadline')"></strong>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline_success') }}</label>
-                            <div class="col-lg-9">
-                                <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline_success') ? 'is-invalid': ''" id='subheadline_success' name='subheadline_success' :placeholder="trans('modals.subheadline_success')" @input="updateWhitelabel"  :value="whitelabel.subheadline_success"></textarea>
-                                <div class="invalid-feedback">
-                                    <strong v-text="errors.get('subheadline_success')"></strong>
+                                <legend class="text-uppercase font-size-sm font-weight-bold">{{ trans('modals.message_success') }}</legend>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline_success') }}</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control" :class="errors.has('headline_success') ? 'is-invalid': ''" id='headline_success' name='headline_success' :placeholder="trans('modals.headline_success')" @input="updateWhitelabel"  :value="layer.pivot.success_title"/>
+                                        <div class="invalid-feedback">
+                                            <strong v-text="errors.get('headline_success')"></strong>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </fieldset>
 
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-primary">{{ trans('button.save') }}<i class="icon-paperplane ml-2"></i></button>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline_success') }}</label>
+                                    <div class="col-lg-9">
+                                        <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline_success') ? 'is-invalid': ''" id='subheadline_success' name='subheadline_success' :placeholder="trans('modals.subheadline_success')" @input="updateWhitelabel"  :value="layer.pivot.success_body"></textarea>
+                                        <div class="invalid-feedback">
+                                            <strong v-text="errors.get('subheadline_success')"></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">{{ trans('button.save') }}<i class="icon-paperplane ml-2"></i></button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+
+
+
             </div>
         </div>
         <!-- /form inputs -->

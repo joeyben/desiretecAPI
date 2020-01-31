@@ -102,11 +102,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         );
 
         $this->generateFile(
-            base_path('Modules/Master/Resources/assets/sass/layer/_bootstrap-select.scss'),
-            base_path("Modules/$name/Resources/assets/sass/layer/_bootstrap-select.scss")
-        );
-
-        $this->generateFile(
             base_path('Modules/Master/Resources/assets/sass/wish/details.scss'),
             base_path("Modules/$name/Resources/assets/sass/wish/details.scss")
         );
@@ -127,23 +122,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         );
 
         $this->generateFile(
-            base_path('Modules/Master/Resources/assets/sass/layer/bootstrap-select.css.map'),
-            base_path("Modules/$name/Resources/assets/sass/layer/bootstrap-select.css.map")
+            base_path('Modules/Master/Resources/assets/sass/layer/_layer.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/_layer.scss")
         );
 
         $this->generateFile(
-            base_path('Modules/Master/Resources/assets/sass/layer/layer.scss'),
-            base_path("Modules/$name/Resources/assets/sass/layer/layer.scss")
-        );
-
-        $this->generateFile(
-            base_path('Modules/Master/Resources/assets/sass/_variables.scss'),
-            base_path("Modules/$name/Resources/assets/sass/layer/_variables.scss")
-        );
-
-        $this->generateFile(
-            base_path('Modules/Master/Resources/assets/sass/layer/layer_mobile.scss'),
-            base_path("Modules/$name/Resources/assets/sass/layer/layer_mobile.scss")
+            base_path('Modules/Master/Resources/assets/sass/layer/_layer-responsive.scss'),
+            base_path("Modules/$name/Resources/assets/sass/layer/_layer-responsive.scss")
         );
 
         $this->generateFile(
@@ -178,13 +163,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $this->generateFile(
             base_path('Modules/Master/Resources/views/layer/popup.blade.stub'),
             base_path("Modules/$name/Resources/views/layer/popup.blade.php"),
-            ['$MODULESMAL$'],
-            [mb_strtolower($name)]
-        );
-
-        $this->generateFile(
-            base_path('Modules/Master/Resources/views/layer/popup-mobile.blade.stub'),
-            base_path("Modules/$name/Resources/views/layer/popup-mobile.blade.php"),
             ['$MODULESMAL$'],
             [mb_strtolower($name)]
         );

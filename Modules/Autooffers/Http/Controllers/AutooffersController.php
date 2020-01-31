@@ -237,4 +237,10 @@ class AutooffersController extends Controller
     public function destroy()
     {
     }
+
+    public function testTT()
+    {
+        $this->TTautooffers->getToken();
+        $this->TTautooffers->testTT();
+    }
 }

@@ -51,4 +51,10 @@ return [
     'attachments' => [
         'table' => 'attachments',
     ],
+    'whitelabel_layers' => [
+        'table' => 'whitelabel_layers',
+    ],
+    'layers' => [
+        'table' => 'layers',
+    ],
 ];

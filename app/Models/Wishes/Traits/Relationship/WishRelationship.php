@@ -3,6 +3,7 @@
 namespace App\Models\Wishes\Traits\Relationship;
 
 use App\Models\Access\User\User;
+use App\Models\Agents\Agent;
 use App\Models\Comments\Comment;
 use App\Models\Contact\Contact;
 use App\Models\Groups\Group;
@@ -22,6 +23,15 @@ trait WishRelationship
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    /**
+     * Wishes belongsTo with Group.
+     */
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class, 'agent_id');
+    }
+
 
     /**
      * Wishes belongsTo with Group.

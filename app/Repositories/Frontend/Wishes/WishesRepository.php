@@ -6,6 +6,8 @@ use App\Events\Frontend\Wishes\WishCreated;
 use App\Events\Frontend\Wishes\WishDeleted;
 use App\Events\Frontend\Wishes\WishUpdated;
 use App\Exceptions\GeneralException;
+use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
+use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Models\Access\User\User;
 use App\Models\Access\User\UserToken;
 use App\Models\Groups\Group;
@@ -109,6 +111,132 @@ class WishesRepository extends BaseRepository
         }
 
         return $query;
+    }
+
+    public function getWishList(ManageWishesRequest $request){
+        $status_arr = [
+            'new'               => '1',
+            'offer_created'     => '2',
+            'completed'         => '3',
+        ];
+
+        $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+        $id = ($request->get('filter') && !is_null($request->get('filter')) && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
+        $destination = ($request->get('filter') && !is_null($request->get('filter')) && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
+        $currentWhiteLabelID = Auth::guard('api')->user()->whitelabels()->first()->id;
+        $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
+
+        if(Auth::guard('api')->user()->hasRole('User')) {
+            $wish = $this->getForDataTable()
+                ->when($currentWhiteLabelID, function ($wish, $currentWhiteLabelID) {
+                    return $wish->where('whitelabel_id', (int) ($currentWhiteLabelID));
+                })
+                ->when($id, function ($wish, $id) {
+                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
+                })
+                ->when($destination, function ($wish, $destination) {
+                    return $wish->where(config('module.wishes.table') . '.destination', 'like', '%' . $destination . '%');
+                })
+                ->paginate(10);
+        } else {
+            $wish = $this->getForDataTable()
+                ->when($currentWhiteLabelID, function ($wish, $currentWhiteLabelID) {
+                    return $wish->where('whitelabel_id', (int) ($currentWhiteLabelID));
+                })
+                ->when($status, function ($wish, $status) {
+                    return $wish->where(config('module.wishes.table') . '.status', $status);
+                })
+                ->when($id, function ($wish, $id) {
+                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
+                })
+                ->when($destination, function ($wish, $destination) {
+                    return $wish->where(config('module.wishes.table') . '.destination', 'like', '%' . $destination . '%');
+                })
+                ->paginate(10);
+        }
+
+        foreach ($wish as $singleWish) {
+            $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
+
+            if(Auth::guard('api')->user()->hasRole('Seller')) {
+                if($currentWhiteLabelID === 198) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
+                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
+                }
+                if($singleWish->messages() && $singleWish->messages()->count() > 0) {
+                    $singleWish['messageSentFlag'] = true;
+                }
+            }
+
+            $manuelFlag = false;
+
+            if (\is_array($rules['destination']) && null !== $rules['destination']) {
+                if (\is_array($singleWish['destination'])) {
+                    foreach ($singleWish['destination'] as $destination) {
+                        if (\in_array($destination, $rules['destination'], true)) {
+                            $manuelFlag = true;
+                        }
+                    }
+                } else {
+                    if (\in_array($singleWish['destination'], $rules['destination'], true)) {
+                        $manuelFlag = true;
+                    }
+                }
+            }
+
+            if ($singleWish['budget'] > $rules['budget']) {
+                $manuelFlag = true;
+            }
+
+            $singleWish['manuelFlag'] = $manuelFlag;
+            $singleWish['wlRule'] = $rules['type'];
+        }
+
+        $response = [
+            'pagination' => [
+                'total'        => $wish->total(),
+                'per_page'     => $wish->perPage(),
+                'current_page' => $wish->currentPage(),
+                'last_page'    => $wish->lastPage(),
+                'from'         => $wish->firstItem(),
+                'to'           => $wish->lastItem()
+            ],
+            'data' => $wish
+        ];
+
+        return $response;
+    }
+
+
+    /**
+     * @param \App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest $request
+     *
+     * @return JSON response
+     */
+    public function changeWishStatus(ChangeWishesStatusRequest $request)
+    {
+        try {
+            $status_arr = [
+                'new'               => '1',
+                'offer_created'     => '2',
+                'completed'         => '3',
+            ];
+
+            $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+
+            $wish = $this->updateStatus($request->get('id'), $status);
+
+            return json_response([]);
+        } catch (Exception $e) {
+            return json_response_error($e);
+        }
+    }
+
+    /**
+     * @return Wish
+     */
+    public function getById(int $id)
+    {
+        return Wish::findOrFail($id);
     }
 
     /**
@@ -429,6 +557,29 @@ class WishesRepository extends BaseRepository
         }
 
         return $offer;
+    }
+
+    /**
+     * @param \App\Models\Wishes\Wish $wish
+     *
+     * @return string
+     */
+    public function getRuleType()
+    {
+        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelId()));
+        switch ($rules['type']) {
+            case 'mix':
+                return 2;
+                break;
+            case 'auto':
+                return 1;
+                break;
+            case 'manuel':
+                return 0;
+                break;
+            default:
+                return 0;
+        }
     }
 
     public function callTraffics($wishID){

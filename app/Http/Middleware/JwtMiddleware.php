@@ -4,7 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Exception;
+use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -25,6 +28,9 @@ class JwtMiddleware extends BaseMiddleware
         try {
             if ($request->hasHeader('authorization')) {
                 JWTAuth::parseToken()->authenticate();
+                $rawToken = JWTAuth::getToken();
+                $payload = JWTAuth::decode($rawToken);
+                Auth::guard('web')->loginUsingId($payload['sub']);
             } else {
                 $rawToken = $request->cookie('access_token');
                 $token = new Token($rawToken);
@@ -32,14 +38,19 @@ class JwtMiddleware extends BaseMiddleware
                 Auth::loginUsingId($payload['sub']);
             }
         } catch (Exception $e) {
-            if ($e instanceof TokenInvalidException){
-                return response()->json(['status' => 'Token is Invalid']);
-            }else if ($e instanceof TokenExpiredException){
-                return response()->json(['status' => 'Token is Expired']);
-            }else{
-                return response()->json(['status' => 'Authorization Token not found']);
+            if ($e instanceof TokenInvalidException) {
+                return response()->json(['message' => 'Token is Invalid'],  IlluminateResponse::HTTP_UNAUTHORIZED);
+            } elseif ($e instanceof TokenExpiredException) {
+                return response()->json(['message' => 'Token is Expired'], IlluminateResponse::HTTP_UNAUTHORIZED);
+            } elseif ($e instanceof TokenBlacklistedException) {
+                return response()->json(['message' => 'Token is Blacklisted'], IlluminateResponse::HTTP_UNAUTHORIZED);
+            } elseif ($e instanceof JWTException) {
+                return response()->json(['message' => 'Need to Login Again'], IlluminateResponse::HTTP_UNAUTHORIZED);
             }
+
+            return response()->json(['message' => 'Token missing or badly formatted'], IlluminateResponse::HTTP_UNAUTHORIZED);
         }
+
         return $next($request);
     }
 }

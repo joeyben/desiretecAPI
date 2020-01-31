@@ -54,7 +54,11 @@ class APIController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function respond($data, $headers = [])
+    public function respond($data, $headers = [
+        'Access-Control-Allow-Origin'  => '*',
+        'Access-Control-Allow-Methods' => '*',
+        'Access-Control-Allow-Headers' => '*',
+    ])
     {
         return response()->json($data, $this->getStatusCode(), $headers);
     }
@@ -105,6 +109,23 @@ class APIController extends Controller
     public function respondCreatedWithData($data)
     {
         return $this->setStatusCode(201)->respond($data);
+    }
+
+    /**
+     * Respond Updated.
+     *
+     * @param string $message
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function respondUpdated($message)
+    {
+        return $this->respond([
+            'success' => [
+                'message'     => $message,
+                'status_code' => 204,
+            ],
+        ]);
     }
 
     /**
@@ -210,7 +231,11 @@ class APIController extends Controller
         $result['success'] = true;
         $result['status'] = Flag::STATUS_CODE_SUCCESS;
 
-        return response()->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+        return response()->json($result, $result['status'], [
+            'Access-Control-Allow-Origin'  => '*',
+            'Access-Control-Allow-Methods' => '*',
+            'Access-Control-Allow-Headers' => '*',
+        ], JSON_NUMERIC_CHECK);
     }
 
     protected function responseJsonPaginated($data = null): JsonResponse

@@ -18,6 +18,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     Route::group(['prefix' => 'auth'], function () {
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
+        Route::post('login/email', 'AuthController@sendLoginEmail');
+        Route::post('login/token/{token}', 'AuthController@token');
     });
 
     Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'auth'], function () {
@@ -28,16 +30,41 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
         Route::post('password/reset', 'ResetPasswordController@reset')->name('password.reset');
         Route::post('me', 'AuthController@me');
+        Route::post('check/role', 'AuthController@ckeckRole');
     });
 
     Route::group(['prefix' => 'popup'], function () {
         Route::get('show', 'WishesController@show');
     });
 
+    Route::get('offers/{id}', 'OffersController@index');
+    Route::post('offers/store', 'OffersController@store');
+
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('wishes', 'WishesController@getWishes');
-        Route::get('wish/{wish}', 'WishesController@getWish');
+        Route::get('wish/{id}', 'WishesController@getWish');
+        Route::get('wishlist', 'WishesController@wishlist');
+        Route::post('wishes/changeWishStatus', 'WishesController@changeWishStatus');
 
-        Route::get('agents', 'AgentsController@getAgents');
+        Route::group(['prefix' => 'agents'], function () {
+            Route::get('', 'AgentsController@listAgents');
+            Route::get('{id}', 'AgentsController@getAgent');
+            Route::put('update/{id}', 'AgentsController@update');
+            Route::post('create', 'AgentsController@create');
+            Route::delete('delete/{id}', 'AgentsController@delete');
+        });
+
+        Route::group(['prefix' => 'account'], function () {
+            Route::put('update/{id}', 'AccountController@update');
+        });
+
+        Route::group(['prefix' => 'offers'], function () {
+            Route::get('', 'OffersController@index');
+            Route::post('/store', 'OffersController@store');
+        });
+    });
+
+    Route::group(['middleware' => []], function () {
+        Route::post('translations', 'TranslationsController@getTranslations');
     });
 });

@@ -26,7 +26,7 @@ class AutooffersRepository extends BaseRepository
      */
     const MODEL = Autooffer::class;
 
-    private $auth = '';
+    private $auth = 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
 
     private $url = 'https://connector.traffics.de/v3/rest';
 
@@ -280,7 +280,9 @@ class AutooffersRepository extends BaseRepository
                 $offerObj,
                 [
                     'data'       => json_decode($offer['data'], true),
-                    'hotel_data' => json_decode($offer['hotel_data'], true)
+                    'hotel_data' => json_decode($offer['hotel_data'], true),
+                    'personPrice'=> $offer['personPrice'],
+                    'status' => $offer['status']
                 ]
             );
         }

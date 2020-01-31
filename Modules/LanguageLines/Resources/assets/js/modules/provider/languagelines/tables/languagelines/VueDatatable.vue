@@ -19,6 +19,7 @@ import CssConfig from './CssConfig.js'
   Vue.component('custom-link-by-id', config.customLinkById)
   Vue.component('custom-link-by-name', config.CustomLinkByName)
   Vue.component('custom-status', config.CustomStatus)
+  Vue.component('custom-default', config.CustomDefault)
   Vue.component('custom-users', config.customUsers)
   toastr.options.progressBar = true
   toastr.options.preventDuplicates = true
