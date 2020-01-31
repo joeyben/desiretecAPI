@@ -102,7 +102,7 @@ class ReiserebellenController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
-        $whitelabel = $this->whitelabel->getByName('Reiseexperten');
+        $whitelabel = $this->whitelabel->getByName('Reiserebellen');
         $is_autooffer = false;
         $input = $request->all();
         $wishRepo = $wish;

@@ -473,7 +473,7 @@
                         highlight: true,
                         afterSelect: function(val) { this.$element.val(""); },
                         source: function(query) {
-                            return $.get('https://reiserebellen.reise-wunsch.com/get-all-destinations', {query: query});
+                            return $.get('https://reiserebellen.reisewunschservice.de/get-all-destinations', {query: query});
                         }
                     },
                     freeInput: "{{ $ruleType === 2 ? true : false }}"
@@ -489,7 +489,7 @@
                         highlight: true,
                         afterSelect: function(val) { this.$element.val(""); },
                         source: function(query) {
-                            return $.get('https://reiserebellen.reise-wunsch.com/get-all-airports', {query: query});
+                            return $.get('https://reiserebellen.reisewunschservice.de/get-all-airports', {query: query});
                         }
                     },
                     freeInput: "{{ $ruleType === 2 ? true : false }}"
