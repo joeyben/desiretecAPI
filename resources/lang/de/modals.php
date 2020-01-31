@@ -120,4 +120,7 @@ return [
     'visual'                        => 'Das Format des Visuals ist 3:1, mindestens 600x200 px.',
     'message_success'               => 'Nachricht Erfolg',
     'position'                      => 'Reihenfolge',
+    'default'                       => 'Default',
+    'licence'                       => 'Lizenz',
+    'duplicate'                     => 'Duplikat',
 ];

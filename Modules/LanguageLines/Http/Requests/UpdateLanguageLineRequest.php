@@ -20,6 +20,8 @@ class UpdateLanguageLineRequest extends FormRequest
             'group'                              => 'required|string|min:3|max:255',
             'key'                                => 'required|string|min:3|max:255',
             'text'                               => 'required|string|min:3',
+            'default'                            => 'required|boolean',
+            'licence'                            => 'required|in:0,1,2,3',
         ];
     }
 

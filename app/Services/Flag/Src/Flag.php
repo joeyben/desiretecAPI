@@ -58,4 +58,12 @@ class Flag implements FlagInterface
     const HTTP = 'http://';
 
     const HTTPS = 'https://';
+
+    const LIGHT = 0;
+
+    const BASIC = 1;
+
+    const PREMIUM = 2;
+
+    const MIX = 3;
 }

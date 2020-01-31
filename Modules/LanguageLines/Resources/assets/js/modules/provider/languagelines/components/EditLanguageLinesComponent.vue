@@ -80,6 +80,28 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group row"  v-if="languageline.whitelabel_id === null">
+                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.default') }} </label>
+                                                <div class="col-lg-9">
+                                                    <el-switch
+                                                            @input="updateDefault"
+                                                            :value="languageline.default"
+                                                            active-color="#13ce66"
+                                                            inactive-color="#ff4949">
+                                                    </el-switch>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.licence') }} </label>
+                                                <div class="col-lg-9">
+                                                    <el-radio-group :value="languageline.licence" @input="updateLicence">
+                                                        <el-radio-button label="0">Light</el-radio-button>
+                                                        <el-radio-button label="1">Basic</el-radio-button>
+                                                        <el-radio-button label="2">Premium</el-radio-button>
+                                                        <el-radio-button label="3">Mix</el-radio-button>
+                                                    </el-radio-group>
+                                                </div>
+                                            </div>
                                             <div class="form-group row" v-if="hasRole('Administrator')">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.whitelabel') }}</label>
                                                 <div class="col-lg-9">
@@ -98,7 +120,7 @@
                                     </fieldset>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline bg-purple-600 text-purple-600 border-purple-600 btn-sm" v-on:click="onDuplicate"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.duplicate') }}</button>
+                                    <button type="button" class="btn btn-outline bg-purple-600 text-purple-600 border-purple-600 btn-sm" v-on:click="onDuplicate"><i class="icon-checkmark-circle mr-1"></i>{{ trans('modals.duplicate') }}</button>
                                     <button type="submit" class="btn btn-outline bg-teal-600 text-teal-600 border-teal-600 btn-sm" v-on:click="close = false"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save') }}</button>
                                     <button type="submit" class="btn btn-outline bg-teal-400 text-teal-400 border-teal-400 btn-sm" v-on:click="close = true"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save_and_close') }}</button>
                                     <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.close') }}</button>
@@ -106,14 +128,14 @@
                             </form>                        </div>
                     </div>
 
-                    <!--<div class="tab-pane fade" id="highlighted-justified-tab2" v-if="can_logs">-->
-                        <!--<div class="modal-body">-->
-                            <!--<vue-table :options="group.logs"></vue-table>-->
-                        <!--</div>-->
-                        <!--<div class="modal-footer">-->
-                            <!--<button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.close') }}</button>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                    <div class="tab-pane fade" id="highlighted-justified-tab2" v-if="can_logs">
+                        <div class="modal-body">
+                            <vue-table :options="languageline.logs"></vue-table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.close') }}</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -160,6 +182,12 @@
         addGroup: 'addGroup',
         addLanguageline: 'addLanguageline'
       }),
+      updateLicence (value) {
+        this.$store.commit('updateLanguageLine', {name: 'licence', value: value})
+      },
+      updateDefault (value) {
+        this.$store.commit('updateLanguageLine', {name: 'default', value: value})
+      },
       doWhitelabel (value) {
         this.$store.commit('updateLanguageLine', {name: 'whitelabel_id', value: value})
       },
