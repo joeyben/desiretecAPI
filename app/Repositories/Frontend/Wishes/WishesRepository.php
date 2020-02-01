@@ -501,26 +501,17 @@ class WishesRepository extends BaseRepository
 
     /**
     * @param int    $id
-    * @param string $updatedNote
+    * @param string $note
     */
-    public function updateNote(int $id, string $updatedNote)
+    public function updateNote(int $id, string $note)
     {
-       $update = DB::transaction(function () use ($id, $updatedNote) {
-           if (\Modules\Wishes\Entities\Wish::where('id', $id)->update(['note' => $updatedNote])) {
-               return true;
-           }
+        DB::transaction(function () use ($id, $note) {
+            if (Wish::where('id', $id)->update(['note' => $note])) {
+                return true;
+            }
 
-           return false;
-
-           throw new GeneralException(
-               trans('exceptions.backend.wishes.update_error')
-           );
-       });
-
-       if ($update) {
-           return true;
-       }
-       return false;
+            throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
+        });
     }
 
 
