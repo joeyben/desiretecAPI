@@ -5,10 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\ResponseFactory;
-use Illuminate\Translation\Translator;
-use Spatie\TranslationLoader\Exceptions\InvalidConfiguration;
-use Spatie\TranslationLoader\LanguageLine;
+use Modules\LanguageLines\Entities\Translation;
 
 class TranslationsController extends APIController
 {
@@ -19,29 +16,15 @@ class TranslationsController extends APIController
     public function getTranslations(Request $request)
     {
         $group = $request->get('group');
-        $locale = $request->get('locale');
+        $locale = $request->get('locale', 'de');
+        $whitelabelId = $request->get('whitelabel_id', null);
 
 
-
-        return $this->loadTranslations($locale, $group);
+        return $this->loadTranslations($locale, $group, $whitelabelId);
     }
 
-    public function loadTranslations(string $locale, string $group): array
+    public function loadTranslations(string $locale, string $group, int $whitelabelId = null): array
     {
-        $model = $this->getConfiguredModelClass();
-
-        return $model::getTranslationsForGroup($locale, $group);
+        return Translation::getTranslationsForGroup($locale, $group, $whitelabelId);
     }
-
-    protected function getConfiguredModelClass(): string
-    {
-        $modelClass = config('translation-loader.model');
-
-        if (! is_a(new $modelClass, LanguageLine::class)) {
-            throw InvalidConfiguration::invalidModel($modelClass);
-        }
-
-        return $modelClass;
-    }
-
 }

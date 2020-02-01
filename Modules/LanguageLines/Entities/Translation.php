@@ -5,17 +5,21 @@ namespace Modules\LanguageLines\Entities;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\TranslationLoader\LanguageLine;
 
 class Translation extends Model
 {
     /** @var array */
-    public $translatable = ['text'];
+    public $table = 'language_lines';
+
+    /** @var array */
+    public $translatable = [];
 
     /** @var array */
     public $guarded = ['id'];
 
     /** @var array */
-    protected $casts = ['text' => 'array'];
+    protected $casts = [];
 
     public static function boot()
     {
@@ -29,66 +33,36 @@ class Translation extends Model
         static::deleted($flushGroupCache);
     }
 
-    public static function getTranslationsForGroup(string $locale, string $group): array
+    public static function getTranslations(string $locale, string $group, int $whitelabelId = null)
     {
-        return Cache::rememberForever(static::getCacheKey($group, $locale), function () use ($group, $locale) {
-            return static::query()
-                    ->where('group', $group)
-                    ->get()
-                    ->reduce(function ($lines, self $languageLine) use ($locale) {
-                        $translation = $languageLine->getTranslation($locale);
-                        if ($translation !== null) {
-                            Arr::set($lines, $languageLine->key, $translation);
-                        }
+        return static::query()
+            ->where('whitelabel_id', $whitelabelId)
+            ->where('group', $group)
+            ->where('locale', $locale);
+    }
 
-                        return $lines;
-                    }) ?? [];
+    public static function getTranslationsForGroup(string $locale, string $group, int $whitelabelId = null): array
+    {
+        return Cache::rememberForever(static::getCacheKey($group, $locale, $whitelabelId), function () use ($group, $locale, $whitelabelId) {
+            return static::getTranslations($group, $locale, $whitelabelId)->map(function (Translation $translation) {
+                    return [
+                        'key' => $translation->key,
+                        'text' => $translation->text,
+                    ];
+                })
+                ->get()
+                ->pluck('text', 'key')
+                ->toArray();
         });
     }
 
-    public static function getCacheKey(string $group, string $locale): string
+    public static function getCacheKey(string $group, string $locale, int $whitelabelId = null): string
     {
-        return "spatie.translation-loader.{$group}.{$locale}";
+        return "spatie.translation-loader.{$whitelabelId}.{$group}.{$locale}";
     }
 
-    /**
-     * @param string $locale
-     *
-     * @return string
-     */
-    public function getTranslation(string $locale): ?string
+    protected function flushGroupCache()
     {
-        if (! isset($this->text[$locale])) {
-            $fallback = config('app.fallback_locale');
-
-            return $this->text[$fallback] ?? null;
-        }
-
-        return $this->text[$locale];
-    }
-
-    /**
-     * @param string $locale
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function setTranslation(string $locale, string $value)
-    {
-        $this->text = array_merge($this->text ?? [], [$locale => $value]);
-
-        return $this;
-    }
-
-    public function flushGroupCache()
-    {
-        foreach ($this->getTranslatedLocales() as $locale) {
-            Cache::forget(static::getCacheKey($this->group, $locale));
-        }
-    }
-
-    protected function getTranslatedLocales(): array
-    {
-        return array_keys($this->text);
+        Cache::forget(static::getCacheKey($this->group, $this->locale, $this->whitelabel_id));
     }
 }

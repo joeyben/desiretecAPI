@@ -3,6 +3,7 @@
 namespace Modules\LanguageLines\Http\Controllers;
 
 use App\Models\Access\Role\Role;
+use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
@@ -24,6 +25,8 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\LanguageLines\Entities\Translation;
 use Modules\LanguageLines\Exports\LanguageImport;
 use Modules\LanguageLines\Http\Requests\CloneLanguageLinesRequest;
 use Modules\LanguageLines\Http\Requests\CopyLanguageLinesRequest;
@@ -89,6 +92,10 @@ class LanguageLinesController extends Controller
      * @var \Illuminate\Log\LogManager
      */
     private $log;
+    /**
+     * @var \Modules\Activities\Repositories\Contracts\ActivitiesRepository
+     */
+    private $activities;
 
     /**
      * LanguageLines constructor.
@@ -105,8 +112,9 @@ class LanguageLinesController extends Controller
      * @param \Modules\Languages\Repositories\Contracts\LanguagesRepository     $languages
      * @param \Illuminate\Contracts\Console\Kernel                              $artisan
      * @param \Illuminate\Log\LogManager                                        $log
+     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
      */
-    public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role, LanguagesRepository $languages, Kernel $artisan, LogManager $log)
+    public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role, LanguagesRepository $languages, Kernel $artisan, LogManager $log, ActivitiesRepository $activities)
     {
         $this->languageline = $languageline;
         $this->response = $response;
@@ -120,6 +128,7 @@ class LanguageLinesController extends Controller
         $this->languages = $languages;
         $this->artisan = $artisan;
         $this->log = $log;
+        $this->activities = $activities;
     }
 
     /**
@@ -168,6 +177,10 @@ class LanguageLinesController extends Controller
                 new OrderBy($sort[0], $sort[1]),
                 new Where('locale', $request->get('locale')),
                 new Filter($request->get('filter')),
+                new Where('language_lines.whitelabel_id', $request->get('whitelabel')),
+                new EagerLoad(['whitelabel'  => function ($query) {
+                    $query->select('id', 'display_name');
+                }]),
             ])->paginate($perPage);
 
             $result['success'] = true;
@@ -190,12 +203,15 @@ class LanguageLinesController extends Controller
     {
         try {
             $result['languageline'] = [
-                'id'          => 0,
-                'locale'      => '',
+                'id' => 0,
+                'locale' => '',
                 'description' => '',
-                'group'       => '',
-                'key'         => '',
-                'text'        => ''
+                'group' => '',
+                'key' => '',
+                'text' => '',
+                'whitelabel_id' => null,
+                'default' => false,
+                'licence' => 0,
             ];
 
             $result['success'] = true;
@@ -219,9 +235,45 @@ class LanguageLinesController extends Controller
     public function store(StoreLanguageLineRequest $request)
     {
         try {
-            $result['languageline'] = $this->languageline->create(
-                $request->only('locale', 'description', 'group', 'key', 'text')
+            $languageline = $this->languageline->create(
+                $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id', 'whitelabel_id', 'default', 'licence')
             );
+
+            if ($languageline->default && is_null($languageline->whitelabel_id))
+            {
+                Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
+            }
+
+            $result['languageline'] = $languageline;
+
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'LanguageLine']);
+            $result['success'] = true;
+            $result['status'] = 200;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
+    }
+
+
+    public function duplicate(StoreLanguageLineRequest $request)
+    {
+        try {
+
+            $languageline = $this->languageline->create(
+                $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id')
+            );
+
+            if ($languageline->default && is_null($languageline->whitelabel_id))
+            {
+                Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
+            }
+
+            $result['languageline'] = $languageline;
+
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'LanguageLine']);
             $result['success'] = true;
@@ -258,13 +310,18 @@ class LanguageLinesController extends Controller
             $languageline = $this->languageline->find($id);
 
             $result['languageline'] = [
-                'id'          => $languageline->id,
-                'locale'      => $languageline->locale,
-                'description' => $languageline->description,
-                'group'       => $languageline->group,
-                'key'         => $languageline->key,
-                'text'        => $languageline->text
+                'id'               => $languageline->id,
+                'locale'           => $languageline->locale,
+                'description'      => $languageline->description,
+                'group'            => $languageline->group,
+                'key'              => $languageline->key,
+                'text'             => $languageline->text,
+                'whitelabel_id'    => $languageline->whitelabel_id,
+                'default'          => $languageline->default,
+                'licence'          => $languageline->licence,
             ];
+
+            $result['languageline']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-group') ? $this->activities->byModel($languageline) : [];
 
             $result['success'] = true;
             $result['status'] = 200;
@@ -288,6 +345,7 @@ class LanguageLinesController extends Controller
     public function update(UpdateLanguageLineRequest $request, int $id)
     {
         try {
+            $languagelineOld = $this->languageline->find($id);
             $languageline = $this->languageline->update(
                 $id,
                 $request->only(
@@ -295,9 +353,18 @@ class LanguageLinesController extends Controller
                     'group',
                     'description',
                     'key',
-                    'text'
+                    'text',
+                    'whitelabel_id',
+                    'default',
+                    'licence'
                 )
             );
+
+            if ($languageline->default && !$languagelineOld->default && is_null($languageline->whitelabel_id))
+            {
+               Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
+            }
+
             $result['languageline'] = $languageline;
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'LanguageLine']);
             $result['success'] = true;
