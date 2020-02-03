@@ -17,7 +17,6 @@ Route::group(['domain' => $domain], function () {
         Route::get('wish/{wish}/{token}', '$MODULE$WishesController@details')->name('wish.details');
         Route::get('getwish/{wish}', '$MODULE$WishesController@getWish')->name('getWish');
         Route::get('wishlist/{token}', '$MODULE$WishesController@validateTokenList');
-        //Route::get('tnb', '$MODULE$Controller@getPDF');
     });
 });
 

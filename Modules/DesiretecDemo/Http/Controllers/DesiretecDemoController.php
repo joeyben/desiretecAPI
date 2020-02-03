@@ -18,19 +18,16 @@ use Modules\DesiretecDemo\Http\Requests\StoreWishRequest;
 
 class DesiretecDemoController extends Controller
 {
+    const BODY_CLASS = 'landing';
+
+    protected $whitelabel;
+    protected $whitelabelId;
+    protected $attachements;
     protected $adults = [];
     protected $kids = [];
+    protected $ages = [];
     protected $catering = [];
     protected $duration = [];
-
-    private $whitelabelId;
-
-    const BODY_CLASS = 'landing';
-    /**
-     * @var WhitelabelsRepository
-     */
-    protected $whitelabel;
-    protected $attachements;
 
     /* @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
      * @param \Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository $attachements
@@ -39,12 +36,12 @@ class DesiretecDemoController extends Controller
     public function __construct(WhitelabelsRepository $whitelabel, CategoriesRepository $categories, EloquentAttachmentsRepository $attachements)
     {
         $this->whitelabel = $whitelabel;
+        $this->whitelabelId = \Config::get('desiretecdemo.id');
         $this->attachements = $attachements;
         $this->adults = $categories->getChildrenFromSlug('slug', 'adults');
         $this->kids = $categories->getChildrenFromSlug('slug', 'kids');
         $this->catering = $categories->getChildrenFromSlug('slug', 'hotel-catering');
         $this->duration = $this->getFullDuration($categories->getChildrenFromSlug('slug', 'duration'));
-        $this->whitelabelId = \Config::get('desiretecdemo.id');
     }
 
     /**
@@ -54,11 +51,9 @@ class DesiretecDemoController extends Controller
      */
     public function index()
     {
-        $whitelabel = $this->whitelabel->getByName('DesiretecDemo');
-
         return view('desiretecdemo::index')->with([
-            'display_name'  => $whitelabel['display_name'],
-            'color'         => $whitelabel['color'],
+            'display_name'  => $this->whitelabel->getById($this->whitelabelId)['display_name'],
+            'color'         => $this->whitelabel->getById($this->whitelabelId)['color'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
             'logo'          => $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['url'],
             'body_class'    => $this::BODY_CLASS,
@@ -73,31 +68,19 @@ class DesiretecDemoController extends Controller
      */
     public function show(Request $request)
     {
-        $input = $request->only('variant');
-        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
-        $whitelabel = $this->whitelabel->getByName('DesiretecDemo');
-
-        $html = view('desiretecdemo::' . $layer)->with([
+        $html = view('desiretecdemo::layer.popup')->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration,
+            'ages_arr'     => $this->ages,
             'request'      => $request->all(),
-            'color'        => $whitelabel['color'],
+            'color'        => $this->whitelabel->getById($this->whitelabelId)['color'],
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
-     * @param WishesRepository $wish
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     /**
      * Store a newly created resource in storage.
      *
@@ -116,13 +99,14 @@ class DesiretecDemoController extends Controller
         $wishRepo = $wish;
         if ($request->failed()) {
             $html = view('desiretecdemo::layer.popup')->with([
-                'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
+                'adults_arr'   => $this->adults,
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
-                'request'      => $request->all(),
-                'color'        => $whitelabel['color'],
+                'ages_arr'     => $this->ages,
+                'color'        => $this->whitelabel->getById($this->whitelabelId)['color'],
+                'request'      => $request->all()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -139,9 +123,9 @@ class DesiretecDemoController extends Controller
 
         if ($wishTye > 0) {
 
-            //$wishJob = (new callTrafficsApi($wish->id));
-            //dispatch($wishJob);
-            $wishRepo->callTraffics($wish->id);
+            $wishJob = (new callTrafficsApi($wish->id, $this->whitelabelId, $newUser->id));
+            dispatch($wishJob);
+            //$wishRepo->callTraffics($wish->id);
 
             $view = \View::make('wishes::emails.autooffer',
                 [

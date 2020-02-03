@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
      * A cors profile determines which origins, methods, headers are allowed for
      * a given requests. The `DefaultProfile` reads its configuration from this
@@ -16,6 +15,8 @@ return [
      * This configuration is used by `DefaultProfile`.
      */
     'default_profile' => [
+
+        'allow_credentials' => false,
 
         'allow_origins' => [
             '*',
@@ -34,12 +35,10 @@ return [
             'Content-Type',
             'X-Auth-Token',
             'Origin',
-            'x-xsrf-token',
-            'x_csrftoken',
             'Authorization',
         ],
 
-         'expose_headers' => [
+        'expose_headers' => [
             'Cache-Control',
             'Content-Language',
             'Content-Type',
@@ -50,7 +49,7 @@ return [
 
         'forbidden_response' => [
             'message' => 'Forbidden (cors).',
-            'status'  => 403,
+            'status' => 403,
         ],
 
         /*

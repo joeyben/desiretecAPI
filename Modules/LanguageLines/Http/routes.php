@@ -14,6 +14,7 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'provider', 
     Route::put('language-lines/{id}/restore', 'LanguageLinesController@restore')->name('provider.language-lines.restore')->where('id', '[0-9]+');
     Route::get('language-lines/export', 'LanguageLinesController@export')->name('provider.language-lines.export');
     Route::post('language-lines/import', 'LanguageLinesController@import')->name('provider.language-lines.import');
+    Route::post('language-lines/duplicate', 'LanguageLinesController@duplicate')->name('provider.language-lines.duplicate');
     Route::put('language-lines/copy', 'LanguageLinesController@copy')->name('provider.language-lines.copy');
     Route::put('language-lines/replace', 'LanguageLinesController@replace')->name('provider.language-lines.replace');
     Route::put('language-lines/clone', 'LanguageLinesController@clone')->name('provider.language-lines.clone');

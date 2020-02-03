@@ -75,7 +75,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('lastminute::layer.general.duration-more'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('lastminute::layer.general.duration_empty')], $duration_arr),key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['0' => trans('lastminute::layer.general.duration_empty')], $duration_arr),key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                                 @if ($errors->any() && $errors->get('duration'))
                                     @foreach ($errors->get('duration') as $error)
                                         <span>{{ $error }}</span>
@@ -336,35 +336,6 @@
               return false;
             });
 
-            $('#budgetRange').rangeslider({
-                // Callback function
-                polyfill: false,
-                onInit: function() {
-                    $('.rangeslider__handle').on('mousedown touchstart mousemove touchmove', function(e) {
-                        e.preventDefault();
-                    })
-                },
-                fillClass: 'rangeslider__fill',
-                onSlide: function(position, value) {
-                    if($(".rangeslider-wrapper .haserrors").length)
-                        $(".rangeslider-wrapper .haserrors").removeClass('haserrors');
-
-                    if(value === 10000){
-                        $(".rangeslider-wrapper .text").text("beliebig");
-                        $("#budget").val("beliebig");
-                    }else if(value === 100){
-                        $(".rangeslider-wrapper .text").html("&nbsp;");
-                        $("#budget").val("");
-                    }else{
-                        $(".rangeslider-wrapper .text").text("bis "+value+" €");
-                        $("#budget").val(""+value);
-                    }
-                    check_button();
-                },
-            });
-
-
-
             $(document).ready(function(){
 
                 autocomplete();
@@ -465,10 +436,6 @@
                     $("#latest_return").val(d+"."+m+"."+y);
                 }
 
-                var range = parseInt($("#budget").val().replace('.',''));
-                if(range)
-                    $('input[type="range"]').val(range).change();
-
                 $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
                 var pax = $("#adults").val();
                 var children_count = parseInt($("#kids").val());
@@ -508,7 +475,7 @@
             /**
              * Autocomplete
              */
-            var autocomplete = function(){
+            function autocomplete(){
               /* Destinations */
               $('#destination').tagsinput({
                 maxTags: 3,
@@ -557,7 +524,7 @@
 
             dt.applyBrandColor();
 
-            var modifyDOM = function(){
+            function modifyDOM(){
                 if( $(window).outerWidth() <= 768 ) {
                     $("body").addClass('mobile-layer');
                     $(".dt-modal").addClass('m-open');

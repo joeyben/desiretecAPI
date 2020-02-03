@@ -21,8 +21,10 @@
                     <h3>
                         @if (count($offers) === 0)
                             {{ trans('autooffer.message.no_offers') }}
-                        @else
+                        @elseif ($offers[0]['status'])
                             {{ trans('autooffer.message.offers', ['destination' => $wish->destination]) }}
+                        @elseif (!$offers[0]['status'])
+                            {{ trans('autooffer.message.advanced_offers') }}
                         @endif
                             {{ trans('autooffer.message.callback') }}
                         </h3>
@@ -96,7 +98,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-users" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->adults }} Erwachsene</h4>
+                                    <h4>{{ $wish->adults }} Erwachsene<br>{{ $wish->kids }} Kind(er)</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
@@ -169,7 +171,9 @@
                                 $locations[] = $hotelData;
                             @endphp
                             <li class="offer box-shadow" id="hotel-{{ $key }}">
-                            <div class="left-side">
+                                <span class="wish_offer_id">Angebotsnummer: {{ $wish->id }}/{{ $count + 1 }}</span>
+
+                                <div class="left-side">
                                 @if ($count === 1)
                                     <div class="label">Unser Tipp</div>
                                 @endif
@@ -232,39 +236,10 @@
 
                                 <div class="price">
                                     <div class="info-icons">
-                                        <div class="info">
-                                            <i class="fal fa-users"></i>
-                                            <div class="info-detail">
-                                                <div class="up">Familie</div>
-                                                <div class="down">
-                                                    <ul>
-                                                        @foreach($offer['data']['hotel_attributes'] as $attribute)
-                                                             @if(in_array($attribute, ['action_adventures_parties_fun','attractive_for_couples','attractive_for_singles','attractive_for_singles_w_child','baby_cot','baby_equipment','babysitting','family_friendly_2','kids_disco','pool_for_children','playground_for_children']))
-                                                                <li>{{ trans('hotel.offer.attributes.'.$attribute) }}</li>
-                                                            @endif
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="info">
-                                            <i class="fal fa-concierge-bell"></i>
-                                            <div class="info-detail">
-                                                <div class="up">Hotel Specials</div>
-                                                <div class="down">
-                                                    <ul>
-                                                        @foreach($offer['data']['hotel_attributes'] as $attribute)
-                                                            @if(in_array($attribute, ['wlan_available','central_location','city_breaks','club_with_entertainment','cosmetic_treatments','direct_beach_access','direct_proximity_ski_lift','diving_close_to_hotel','elegant_deluxe','great_sports_offer','hotel_near_beach','own_fitness_facilities','parking_spaces_available','pets_allowed','restaurant','sandy_beach']))
-                                                                <li>{{ trans('hotel.offer.attributes.'.$attribute) }}</li>
-                                                            @endif
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @include('autooffers::autooffer.parts.hotel-attributes')
                                     </div>
-                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span></h3>
-                                    <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid={{ getTTRegionCodeFromOrt($offer['hotel_data']['data']['Stadtname']) }}&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&child=5,7&dur={{ $offer['data']['duration'] }}&price=0,{{ $wish->budget }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
+                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span> p.P.</h3>
+                                    <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid={{ getTTRegionCodeFromOrt($offer['hotel_data']['data']['Stadtname']) }}&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&dur={{ $offer['data']['duration'] }}&price=0,{{ $offer['personPrice'] }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>

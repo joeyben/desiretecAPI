@@ -112,7 +112,12 @@
 
     @elseif ($logged_in_user->hasRole('User'))
         @if(is_null($agent))
-            <?php  $agent = $wish->group->users[0]->currentAgent[0] ?>
+            @php
+                $agent = $wish->agent()->first();
+                if (is_null($agent)) {
+                    $agent = $wish->group->users[0]->currentAgent[0];
+                }
+            @endphp
         @endif
         <div class="bg-bottom">
             <div class="container">
@@ -498,7 +503,7 @@
                             </div>
                             <div class="mc-mail">
                                 <span class="glyphicon glyphicon-envelope"></span>
-                                <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
+                                <a href="mailto:@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
                             </div>
                         </div>
                     </div>

@@ -13,23 +13,33 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+// TODO: When switch to the whitelabel-module solution
+    // To delete:
+        // $upload_path
+        // $storage
+        // getForDataTable()
+        // create()
+        // update()
+        // doUpdate()
+        // deleteAgent()
+        // updateStatus()
+        // uploadImage()
+        // deleteOldFile()
+    // To rename:
+        // createByApi() to create()
+        // updateByApi() to update()
+    // To create and implement:
+        // AgentsRepositryInterface
+
 /**
  * Class AgentsRepository.
  */
 class AgentsRepository extends BaseRepository
 {
-    /**
-     * Associated Repository Model.
-     */
     const MODEL = Agent::class;
 
     protected $upload_path;
 
-    /**
-     * Storage Class Object.
-     *
-     * @var \Illuminate\Support\Facades\Storage
-     */
     protected $storage;
 
     public function __construct()
@@ -54,6 +64,33 @@ class AgentsRepository extends BaseRepository
                 config('module.agents.table') . '.user_id',
                 config('module.agents.table') . '.created_at',
             ])->where(config('module.agents.table') . '.user_id', access()->user()->id);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllWithAccess()
+    {
+        return DB::table('agents')
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.agents.table') . '.user_id')
+            ->select([
+                config('module.agents.table') . '.id',
+                config('module.agents.table') . '.name',
+                config('module.agents.table') . '.avatar',
+                config('module.agents.table') . '.display_name',
+                config('module.agents.table') . '.user_id',
+                config('module.agents.table') . '.created_at',
+            ])->where(config('module.agents.table') . '.user_id', Auth::guard('api')->user()->id)
+            ->get()
+            ->toArray();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getById(int $id)
+    {
+        return Agent::findOrFail($id);
     }
 
     /**
@@ -179,6 +216,9 @@ class AgentsRepository extends BaseRepository
     public function deleteAgent($id)
     {
         $whitelabel_group = DB::table('groups')->where('whitelabel_id', getCurrentWhiteLabelId())->first();
+        $user_group = null;
+        $first_agent = null;
+
         if ($whitelabel_group) {
             $user_group = DB::table('group_user')->where('group_id', $whitelabel_group->id)->first();
         }
@@ -224,5 +264,35 @@ class AgentsRepository extends BaseRepository
                 return true;
             }
         }
+    }
+
+    public function updateByApi($id, Request $request)
+    {
+        DB::table('agents')
+            ->where('id', $id)
+            ->update(['name' => $request->name, 'email' => $request->email, 'telephone' => $request->telephone]);
+
+        if (isset($request->avatar)) {
+            DB::table('agents')
+            ->where('id', $id)
+            ->update(['avatar' => $request->avatar]);
+        }
+    }
+
+    public function createByApi(array $input)
+    {
+        DB::transaction(function () use ($input) {
+            $input['user_id'] = access()->user()->id;
+            $input['display_name'] = $input['name'];
+            $input['avatar'] = $input['avatar'];
+
+            if ($agent = Agent::create($input)) {
+                event(new AgentCreated($agent));
+
+                return true;
+            }
+
+            throw new GeneralException(trans('exceptions.backend.agents.create_error'));
+        });
     }
 }

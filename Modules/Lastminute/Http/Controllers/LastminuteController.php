@@ -115,8 +115,8 @@ class LastminuteController extends Controller
                 'duration_arr' => $this->duration,
                 'budget_arr'   => $this->budget,
                 'ages_arr'     => $this->ages,
+                'request'      => $request->all(),
                 'color'        => $whitelabel['color'],
-                'request'      => $request->all()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -204,7 +204,7 @@ class LastminuteController extends Controller
 
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3'),
-            $this->whitelabelId
+             $this->whitelabelId
         );
 
         return $new_wish;
@@ -225,8 +225,51 @@ class LastminuteController extends Controller
         return $duration;
     }
 
-    public function getPDF()
+    public function testAPI()
     {
-        return view('lastminute::layer.pdf');
+        $curl = curl_init();
+        $auth_data = [
+            'username'  => 'MKT_315150_DE',
+            'password' 	=> '!9kj7g6f5d4s3A1',
+            'client_id' => 'gateway',
+            'grant_type'=> 'password'
+        ];
+
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $auth_data);
+        // curl_setopt($curl, CURLOPT_URL, 'https://staging-auth.ws.traveltainment.eu:443/SystemUser-BasicAccessLevel/protocol/openid-connect/token');
+        curl_setopt($curl, CURLOPT_URL, 'https://de-staging-ttxml.traveltainment.eu/TTXml-1.8/DispatcherWS/SystemUser-BasicAccessLevel/protocol/openid-connect/token');
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/x-www-form-urlencoded',
+        ]);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+        $result = curl_exec($curl);
+        if (!$result) {
+            die('Connection Failure');
+        }
+        curl_close($curl);
+        echo $result;
+    }
+
+    public function getHotels(Request $request)
+    {
+        $url = 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=MAD';
+        $access_token = $this->testAPI();
+        // use key 'http' even if you send the request to https://...
+        $options = [
+            'http' => [
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n" .
+                    'Authorization: Bearer ' . $access_token . "\r\n",
+                'method'  => 'GET',
+            ]
+        ];
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        $contents = utf8_encode($result);
+        $results = json_decode($contents);
+
+        dd($results);
     }
 }

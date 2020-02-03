@@ -135,12 +135,22 @@ class WishesController extends Controller
         }
 
         $offers = $wish->offers;
+        $messages = $wish->messages;
         $avatar = [];
         $agentName = [];
+        $agentLastMessage = [];
+        $lastOffer = [];
+        $lastMessage = [];
 
         foreach ($offers as $offer) {
             array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
-            array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
+            array_push($agentName, Agent::where('id', $offer->agent_id));
+            array_push($lastOffer, $offer->created_at);
+        }
+
+        foreach ($messages as $message) {
+            array_push($agentLastMessage, Agent::where('id', $message->agent_id));
+            array_push($lastMessage, $message->created_at);
         }
 
         return view('frontend.wishes.wish')->with([
@@ -256,7 +266,7 @@ class WishesController extends Controller
         foreach ($wish as $singleWish) {
             $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
 
-            if($this->auth->guard('web')->user()->hasRole('Seller')) { 
+            if($this->auth->guard('web')->user()->hasRole('Seller')) {
                 if($currentWhiteLabelID === 198) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
                     $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
                 }

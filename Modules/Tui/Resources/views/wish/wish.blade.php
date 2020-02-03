@@ -316,7 +316,20 @@
             </div>
             <div class="col-md-3">
                 <i class="fal fa-child"></i>
-                <input class="data-content" value="{{ $wish->kids }}">
+                <input class="data-content" value="{{ $wish->kids }}" style="width:30%;">
+                <div>(
+                    <?php $count = 0; ?>
+                    @foreach( explode("/", $wish->ages) as $age)
+                        @if ($age && $count > 0)
+                            ,
+                        @endif
+
+                        @if ($age)
+                            {{ $age }}
+                            <?php $count++; ?>
+                        @endif
+                    @endforeach
+                )</div>
             </div>
             <div class="col-md-3">
                 <i class="fal fa-dog"></i>
@@ -473,7 +486,7 @@
                             </div>
                             <div class="mc-mail">
                                 <span class="glyphicon glyphicon-envelope"></span>
-                                <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
+                                <a href="mailto:@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
                             </div>
                         </div>
                     </div>
@@ -560,7 +573,7 @@
                             </div>
                             <div class="mc-mail">
                                 <span class="glyphicon glyphicon-envelope"></span>
-                                <a href="mailto:mail@reisebuero.de">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
+                                <a href="mailto:@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif">@if(count($wish->group->users[0]->agents)){{ $wish->group->users[0]->agents[0]->email }}@endif</a>
                             </div>
                         </div>
                     </div>

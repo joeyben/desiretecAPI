@@ -12,10 +12,14 @@
 |
 */
 
+use App\Services\Flag\Src\Flag;
+
 Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], function () {
     Route::group(['prefix' => 'auth'], function () {
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
+        Route::post('login/email', 'AuthController@sendLoginEmail');
+        Route::post('login/token/{token}', 'AuthController@token');
     });
 
     Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'auth'], function () {
@@ -26,46 +30,49 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
         Route::post('password/reset', 'ResetPasswordController@reset')->name('password.reset');
         Route::post('me', 'AuthController@me');
+        Route::post('check/role', 'AuthController@ckeckRole');
     });
-
 
     Route::group(['prefix' => 'popup'], function () {
         Route::get('show', 'WishesController@show');
     });
 
+    Route::get('offers/{id}', 'OffersController@index');
+    Route::post('offers/store', 'OffersController@store');
+
     Route::group(['middleware' => ['jwt.verify']], function () {
-        // Users
-        Route::resource('users', 'UsersController', ['except' => ['create', 'edit']]);
-        Route::post('users/delete-all', 'UsersController@deleteAll');
+        Route::get('wishes', 'WishesController@getWishes');
+        Route::get('wishlist', 'WishesController@wishlist');
+        Route::post('wishes/changeWishStatus', 'WishesController@changeWishStatus');
+        Route::get('wishes/{id}', 'WishesController@getWish');
+        Route::post('wishes/note/update', 'WishesController@updateNote');
 
-        // Wishes
-        Route::resource('wishes', 'WishesController', ['except' => ['create', 'edit', 'wish']]);
-        Route::get('wish/{wish}', 'WishesController@getWish');
+        Route::group(['prefix' => 'agents'], function () {
+            Route::get('', 'AgentsController@listAgents');
+            Route::get('{id}', 'AgentsController@getAgent');
+            Route::put('update/{id}', 'AgentsController@update');
+            Route::post('create', 'AgentsController@create');
+            Route::delete('delete/{id}', 'AgentsController@delete');
+        });
 
-        //@todo need to change the route name and related changes
-        Route::get('deactivated-users', 'DeactivatedUsersController@index');
-        Route::get('deleted-users', 'DeletedUsersController@index');
+        Route::group(['prefix' => 'account'], function () {
+            Route::put('update/{id}', 'AccountController@update');
+        });
 
-        // Roles
-        Route::resource('roles', 'RolesController', ['except' => ['create', 'edit']]);
-        Route::post('roles/delete-all', 'RolesController@deleteAll');
+        Route::group(['prefix' => 'offers'], function () {
+            Route::get('', 'OffersController@index');
+            Route::post('/store', 'OffersController@store');
+        });
 
-        // Permission
-        Route::resource('permissions', 'PermissionController', ['except' => ['create', 'edit']]);
+        Route::group(['prefix' => 'messages'], function () {
+            Route::get('/{wishId}/{groupId}', 'MessagesController@list');
+            Route::post('/', 'MessagesController@create');
+            Route::put('/{id}', 'MessagesController@update');
+            Route::delete('/{id}', 'MessagesController@delete');
+        });
+    });
 
-        // Page
-        Route::resource('pages', 'PagesController', ['except' => ['create', 'edit']]);
-
-        // Faqs
-        Route::resource('faqs', 'FaqsController', ['except' => ['create', 'edit']]);
-
-        // Blog Categories
-        Route::resource('blog_categories', 'BlogCategoriesController', ['except' => ['create', 'edit']]);
-
-        // Blog Tags
-        Route::resource('blog_tags', 'BlogTagsController', ['except' => ['create', 'edit']]);
-
-        // Blogs
-        Route::resource('blogs', 'BlogsController', ['except' => ['create', 'edit']]);
+    Route::group(['middleware' => []], function () {
+        Route::post('translations', 'TranslationsController@getTranslations');
     });
 });

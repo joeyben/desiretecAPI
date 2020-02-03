@@ -20,13 +20,15 @@ class callTrafficsApi implements ShouldQueue
 
     protected $wishId;
     protected $whitelabelId;
+    protected $userId;
     /**
      * Create a new job instance.
      */
-    public function __construct($wishId, $whitelabelId)
+    public function __construct($wishId, $whitelabelId, $userId)
     {
         $this->wishId = $wishId;
         $this->whitelabelId = $whitelabelId;
+        $this->userId = $userId;
     }
 
     /**
@@ -39,6 +41,6 @@ class callTrafficsApi implements ShouldQueue
         //dd(getRegionCode($wish->airport, 0));
         $autooffers->saveWishData($wish);
         $response = $autooffers->getTrafficsData();
-        $autooffers->storeMany($response, $wish->id, $_rules);
+        $autooffers->storeMany($response, $wish->id, $_rules, $this->userId);
     }
 }

@@ -26,7 +26,7 @@ class AutooffersRepository extends BaseRepository
      */
     const MODEL = Autooffer::class;
 
-    private $auth = '';
+    private $auth = 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
 
     private $url = 'https://connector.traffics.de/v3/rest';
 
@@ -81,9 +81,9 @@ class AutooffersRepository extends BaseRepository
                         'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
                         'adults'               => $this->adults,
                         'children'             => $this->kids,
-                        'navigation'           => '1,100',
-                        'departureAirportList' => $this->airport,
-                        'regionList'           => $this->region,
+                        'navigation'           => '1,500',
+                        'departureAirportList' => implode(',', $this->airport),
+                        'regionList'           => implode(',', $this->region),
                         //'locationList' => $this->location,
                         //'minPricePerPerson' => (int) ($this->minBudget / $this->getPersonsCount()),
                         'maxPricePerPerson' => (int) ($this->maxBudget / $this->getPersonsCount()),
@@ -152,12 +152,13 @@ class AutooffersRepository extends BaseRepository
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
+        $this->setKids($wish->kids);
         $this->setAirport(getRegionCode($wish->airport, 0));
         $this->setCategory($wish->category);
         $this->setCatering($wish->category);
         $this->setFrom(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start)->format('dmy'));
         $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
-        $this->setPeriod($wish->duration);
+        $this->setPeriod($wish->duration, $wish);
         $this->setRegion(getRegionCode($wish->destination, 1));
         $this->setTourOperatorList();
 
@@ -169,7 +170,7 @@ class AutooffersRepository extends BaseRepository
      * @param string $wish_id
      * @param array  $rules
      */
-    public function storeMany($data, $wish_id, $rules)
+    public function storeMany($data, $wish_id, $rules, $userId)
     {
         $rulesArray = [
             'displayOffer'   => \is_array($rules) ? $rules['display_offer'] : 3,
@@ -190,7 +191,7 @@ class AutooffersRepository extends BaseRepository
             $hotelId = $offer['hotelOffer']['hotel']['giata']['hotelId'];
             $tOperator = $offer['tourOperator']['code'];
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
-            $this->storeAutooffer($offer, $hotel, $wish_id);
+            $this->storeAutooffer($offer, $hotel, $wish_id, $userId);
             ++$count;
         }
     }
@@ -219,7 +220,7 @@ class AutooffersRepository extends BaseRepository
      *
      * @return mix
      */
-    public function storeAutooffer($offer, $hotel, $wish_id)
+    public function storeAutooffer($offer, $hotel, $wish_id, $userId)
     {
         try {
             $autooffer = self::MODEL;
@@ -244,7 +245,7 @@ class AutooffersRepository extends BaseRepository
             $autooffer->data = json_encode($offer);
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
-            $autooffer->user_id = \Auth::user()->id;
+            $autooffer->user_id = $userId;
 
             return $autooffer->save();
         } catch (\Illuminate\Database\QueryException $e) {
@@ -279,7 +280,9 @@ class AutooffersRepository extends BaseRepository
                 $offerObj,
                 [
                     'data'       => json_decode($offer['data'], true),
-                    'hotel_data' => json_decode($offer['hotel_data'], true)
+                    'hotel_data' => json_decode($offer['hotel_data'], true),
+                    'personPrice'=> $offer['personPrice'],
+                    'status' => $offer['status']
                 ]
             );
         }
@@ -396,7 +399,14 @@ class AutooffersRepository extends BaseRepository
      */
     public function setKids($kids)
     {
-        $this->kids = (int) $kids;
+        $age = "";
+        for($i=0; $i<$kids; $i++) {
+            if($i > 0) {
+                $age .= ",";
+            }
+            $age .= "6";
+        }
+        $this->kids =  $age;
     }
 
     /**

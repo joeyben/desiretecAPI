@@ -4,18 +4,37 @@ namespace Modules\LanguageLines\Entities;
 
 use Illuminate\Support\Facades\Cache;
 use Modules\LanguageLines\Traits\LanguageLinesSearchableTrait;
+use Modules\Whitelabels\Entities\Whitelabel;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\TranslationLoader\LanguageLine;
 
 class LanguageLines extends LanguageLine
 {
     use LanguageLinesSearchableTrait;
+    use LogsActivity;
+
+    protected static $logOnlyDirty = true;
+
+    protected static $logAttributes = [
+        'group',
+        'key',
+        'text',
+        'whitelabel_id',
+        'default',
+        'licence',
+        'is_updated',
+    ];
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $casts = [];
+    protected $casts = [
+        'default' => 'boolean',
+        'is_updated' => 'boolean',
+        'licence' => 'integer',
+    ];
 
     /**
      * Searchable rules.
@@ -85,5 +104,13 @@ class LanguageLines extends LanguageLine
     public function getTable()
     {
         return getLanguageLinesTable();
+    }
+
+    /**
+     * Wishes belongsTo with Whitelabel.
+     */
+    public function whitelabel()
+    {
+        return $this->belongsTo(Whitelabel::class);
     }
 }
