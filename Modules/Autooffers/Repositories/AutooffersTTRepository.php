@@ -865,9 +865,9 @@ class AutooffersTTRepository extends BaseRepository
         $xmlreq = '{
          "PackageOffersRQ": {
           "RQ_Metadata": {
-           "Language": "de-CH"
+           "Language": "de-DE"
           },
-        "CurrencyCode": "CHF",
+        "CurrencyCode": "EUR",
           "Travellers": {
            "Traveller": [{
                "Age": 35
@@ -876,7 +876,10 @@ class AutooffersTTRepository extends BaseRepository
                 "Age": 25
            }],
            "Traveller": [{
-                "Age": 9
+                "Age": 10
+           }],
+           "Traveller": [{
+                "Age": 5
            }]
           },
           "OfferFilters": {
