@@ -373,8 +373,6 @@ class WhitelabelsController extends Controller
                 new EagerLoad(['layers']),
             ])->find($id);
 
-
-
             $background = $this->whitelabels->getBackgroundImage($result['whitelabel']);
 
             $logo = $this->whitelabels->getLogo($result['whitelabel']);

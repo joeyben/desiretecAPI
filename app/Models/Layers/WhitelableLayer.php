@@ -33,6 +33,9 @@ class WhitelableLayer extends Model
         $this->table = config('module.whitelabel_layers.table');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function layers(){
         return $this->hasOne(Layer::Class, 'id', 'layer_id');
     }

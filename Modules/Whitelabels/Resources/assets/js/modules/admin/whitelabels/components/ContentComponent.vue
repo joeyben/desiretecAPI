@@ -1,4 +1,3 @@
-
 <template>
     <div>
         <filter-bar :defaultWhitelabel="whitelabel.id" v-if="whitelabel.id"></filter-bar>
