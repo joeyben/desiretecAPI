@@ -33,7 +33,7 @@ class AutooffersTTRepository extends BaseRepository
 
     private $url = 'http://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/PackageSearch/packageOffers';
 
-    private $currency = 'CHF';
+    private $currency = 'EUR';
 
     private $specialSearch = false;
 
@@ -139,7 +139,7 @@ class AutooffersTTRepository extends BaseRepository
         $xmlreq = '{
          "PackageOffersRQ": {
           "RQ_Metadata": {
-           "Language": "de-CH"
+           "Language": "de-DE"
           },
         "CurrencyCode": "' . $this->currency . '",
           "Travellers": {
