@@ -148,7 +148,6 @@ class AutooffersRepository extends BaseRepository
      */
     public function saveWishData(Wish $wish)
     {
-        $this->setAuth();
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
@@ -299,11 +298,12 @@ class AutooffersRepository extends BaseRepository
     }
 
     /**
-     * @param string $auth
+     * @param int $whitelabel_id
      */
-    public function setAuth(): void
+    public function setAuth($whitelabel_id)
     {
-        $wlAutooffer = getWhitelabelAutooffers();
+        $wlAutooffer = getWhitelabelAutooffersById($whitelabel_id);
+        Log::info('Log message', $wlAutooffer);
         $this->auth = $wlAutooffer ? $wlAutooffer['token'] : 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
     }
 

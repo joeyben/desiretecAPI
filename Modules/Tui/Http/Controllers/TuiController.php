@@ -200,7 +200,7 @@ class TuiController extends Controller
         $ages2 = isset($input['ages2']) ? $input['ages2']."," : '';
         $ages3 = isset($input['ages3']) ? $input['ages3']."," : '';
         $ages4 = isset($input['ages4']) ? $input['ages4'] : '';
-        $ages = $ages1.$ages2.$ages3.$ages4;
+        $ages = rtrim($ages1.$ages2.$ages3.$ages4, ",");
 
         $request->merge([
             'featured_image' => 'bg.jpg',
