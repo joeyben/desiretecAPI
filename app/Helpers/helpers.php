@@ -751,7 +751,7 @@ if (!function_exists('getCateringFromCode')) {
                 $category = 'Vollpension';
                 break;
             case '5':
-                $category = 'all inclusive';
+                $category = 'All Inclusive';
                 break;
             default:
                 $category = 'Ohne Verpflegung';
