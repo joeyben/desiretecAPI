@@ -465,8 +465,7 @@ if (!function_exists('getWhitelabelBySlug')) {
      */
     function getWhitelabelBySlug($slug)
     {
-        return \App\Models\Whitelabels\Whitelabel::Where('name', 'LIKE', '%' . $slug . '%')
-            ->first()->toArray();
+        return \App\Models\Whitelabels\Whitelabel::Where('name', 'LIKE', '%' . $slug . '%')->get();
     }
 }
 

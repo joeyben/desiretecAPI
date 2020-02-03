@@ -27,6 +27,7 @@ class WhitelabelController extends Controller
      */
     public function getWhitelabelBySlug(string $slug)
     {
-        return $this->responseJson($this->whitelabels->getWhitelabelByName($slug));
+        $response['data'] = $this->whitelabels->getWhitelabelByName($slug);
+        return $this->responseJson($response);
     }
 }

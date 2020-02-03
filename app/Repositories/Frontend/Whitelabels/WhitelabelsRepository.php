@@ -10,6 +10,7 @@ use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\BaseRepository;
 use Auth;
 use DB;
+use Modules\Attachments\Entities\Attachment;
 
 /**
  * Class WhitelabelsRepository.
@@ -45,18 +46,19 @@ class WhitelabelsRepository extends BaseRepository
                 config('module.whitelabels.table') . '.color',
                 config('module.whitelabels.table') . '.email',
                 config('module.whitelabels.table') . '.layer',
-                config('module.attachments.table') . '.id as image_id',
-                config('module.attachments.table') . '.name as image_name',
-                config('module.attachments.table') . '.basename as image_basename',
-                config('module.attachments.table') . '.type as image_type',
             ])
-            ->leftjoin(config('module.attachments.table'), config('module.attachments.table') . '.attachable_id', '=', config('module.whitelabels.table') . '.id')
             ->where(config('module.whitelabels.table').'.name', 'LIKE', '%' . $name . '%')
-            ->groupBy('image_id')
-            ->get()
+            ->first()
             ->toArray();
+        $attachments = Attachment::select([
+            config('module.attachments.table') . '.basename',
+            config('module.attachments.table') . '.type',
+        ])
+            ->where('attachable_id',$query['id'])->get()->toArray();
 
-
+        foreach ($attachments as $attachment) {
+            $query['attachments'][str_replace('whitelabels/','',$attachment['type'])] = $attachment['url'];
+        }
         return $query;
     }
 }
