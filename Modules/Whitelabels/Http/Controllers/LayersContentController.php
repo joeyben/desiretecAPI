@@ -91,6 +91,10 @@ class LayersContentController extends Controller
         return view('whitelabels::edit');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request)
     {
         try {

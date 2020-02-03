@@ -37,7 +37,6 @@ const mutations = {
     state.whitelabel.layers[obj.tabnr].pivot[obj.name] = obj.value
   },
   updateWhitelabelUrl (state, obj) {
-    debugger
     state.whitelabel.layers[obj.tabnr].pivot[obj.name] = obj.value
   },
   addWhitelabelFile (state, obj) {

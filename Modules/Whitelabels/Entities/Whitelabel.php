@@ -110,8 +110,9 @@ class Whitelabel extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+
     /**
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
     {
@@ -142,6 +143,9 @@ class Whitelabel extends Model
         return $this->hasOne(Distribution::class, 'id', 'distribution_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function layers(){
         return $this->belongsToMany(Layer::Class)->withPivot([
             'id',

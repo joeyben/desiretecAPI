@@ -93,7 +93,6 @@
         this.loadWhitelabel(id)
       },
       doUrlSelect (layer) {
-
         this.$store.commit('updateWhitelabelUrl', {name: layer.name, value: layer.url})
       },
       doSeleted (value) {
