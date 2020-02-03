@@ -171,7 +171,9 @@
                                 $locations[] = $hotelData;
                             @endphp
                             <li class="offer box-shadow" id="hotel-{{ $key }}">
-                            <div class="left-side">
+                                <span class="wish_offer_id">Angebotsnummer: {{ $wish->id }}/{{ $count + 1 }}</span>
+
+                                <div class="left-side">
                                 @if ($count === 1)
                                     <div class="label">Unser Tipp</div>
                                 @endif
@@ -236,7 +238,7 @@
                                     <div class="info-icons">
                                         @include('autooffers::autooffer.parts.hotel-attributes')
                                     </div>
-                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span></h3>
+                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span> p.P.</h3>
                                     <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid={{ getTTRegionCodeFromOrt($offer['hotel_data']['data']['Stadtname']) }}&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&dur={{ $offer['data']['duration'] }}&price=0,{{ $offer['personPrice'] }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>

@@ -298,10 +298,16 @@ var dt = window.dt || {};
                 'AO': 1,
                 'XX': null
             },
-            'allowedDestinations': {
-                1340: 'Seychellen',
-                1196: 'Malediven',
-                1333: 'Kapverdische Inseln'
+            'airports': {
+                'ZRH':'Zürich',
+                'GVA':'Genf',
+                'BSL':'Basel',
+                'BRN':'Bern',
+                'LUG':'Lugano',
+                'FDH':'Friedrichshafen',
+                'MXP':'Mailand-Malpensa',
+                'MUC':'München',
+                'STR':'Stuttgart'
             }
         },
         filterDataDecoders: {
@@ -436,7 +442,12 @@ var dt = window.dt || {};
                 return duration;
             },
             'airport': function (form, formData) {
-                //var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
+                var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
+                var airport_arr = airport.split(',');
+                for(var i = 0; i<airport_arr.length;i++) {
+                    var airport_name = this.dictionaries.airports[airport_arr[i]];
+                    $('#airport').tagsinput('add', airport_name);
+                }
                 return "";
             },
             'direkt_flug': function (form, formData) {
