@@ -455,6 +455,21 @@ if (!function_exists('getCurrentWhiteLabelField')) {
     }
 }
 
+if (!function_exists('getWhitelabelBySlug')) {
+    /**
+     * return current whitelabel Field.
+     *
+     * @param string $field
+     *
+     * @return int
+     */
+    function getWhitelabelBySlug($slug)
+    {
+        return \App\Models\Whitelabels\Whitelabel::Where('name', 'LIKE', '%' . $slug . '%')
+            ->first()->toArray();
+    }
+}
+
 if (!function_exists('getWhiteLabelLogo')) {
     /**
      * return current whitelabel logo url.

@@ -40,6 +40,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     Route::get('offers/{id}', 'OffersController@index');
     Route::post('offers/store', 'OffersController@store');
 
+    Route::get('whitelabel/{id}', 'WhitelabelController@getWhitelabelBySlug');
+
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('wishes', 'WishesController@getWishes');
         Route::get('wishlist', 'WishesController@wishlist');
