@@ -258,6 +258,7 @@ class OffersController extends Controller
             $result['tablet'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams2, $startDate, $endDate);
 
             for ($i=0; $i<count($result['phone']); $i++) {
+                $result['mobile'][$i][0] = $result['phone'][$i][0];
                 $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1];
             }
 
@@ -309,6 +310,7 @@ class OffersController extends Controller
             $result['tablet'] = $this->dashboard->uniqueEventsDay($viewId, $optParams2, $startDate, $endDate);
 
             for ($i=0; $i<count($result['phone']); $i++) {
+                $result['mobile'][$i][0] = $result['phone'][$i][0];
                 $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1];
             }
 
