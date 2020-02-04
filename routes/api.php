@@ -40,11 +40,14 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     Route::get('offers/{id}', 'OffersController@index');
     Route::post('offers/store', 'OffersController@store');
 
+    Route::get('whitelabel/{id}', 'WhitelabelController@getWhitelabelBySlug');
+
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('wishes', 'WishesController@getWishes');
-        Route::get('wish/{id}', 'WishesController@getWish');
         Route::get('wishlist', 'WishesController@wishlist');
         Route::post('wishes/changeWishStatus', 'WishesController@changeWishStatus');
+        Route::get('wishes/{id}', 'WishesController@getWish');
+        Route::post('wishes/note/update', 'WishesController@updateNote');
 
         Route::group(['prefix' => 'agents'], function () {
             Route::get('', 'AgentsController@listAgents');
@@ -61,6 +64,13 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::group(['prefix' => 'offers'], function () {
             Route::get('', 'OffersController@index');
             Route::post('/store', 'OffersController@store');
+        });
+
+        Route::group(['prefix' => 'messages'], function () {
+            Route::get('/{wishId}/{groupId}', 'MessagesController@list');
+            Route::post('/', 'MessagesController@create');
+            Route::put('/{id}', 'MessagesController@update');
+            Route::delete('/{id}', 'MessagesController@delete');
         });
     });
 

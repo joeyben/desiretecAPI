@@ -20,6 +20,7 @@
     data () {
       return {
         // eslint-disable-next-line
+        created: '',
         wunsch: 1,
         errors: new Errors(),
         data: [],
@@ -94,7 +95,8 @@
     },
     mounted () {
       this.loadWishByMonth()
-      this.$events.$on('whitelabel-set', whitelabelId => this.loadWishByMonth(whitelabelId))
+      this.$events.$on('whitelabel-set', (whitelabelId, start, end) => this.loadWishByMonth(whitelabelId, start, end))
+      this.$events.$on('range-date-set', (whitelabelId, start, end) => this.loadWishByMonth(whitelabelId, start, end))
       this.$events.$on('wunsch-set', wunsch => this.loadWunsch(wunsch))
     },
     updated () {
@@ -108,10 +110,11 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadWishByMonth: function (whitelabelId = null) {
+      loadWishByMonth: function (whitelabelId = null, start = '', end = '') {
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
+        let paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.wishes.byDay') + params)
+        this.$http.get(window.laroute.route('admin.dashboard.events.wishesDay') + params + paramsdate)
           .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -136,7 +139,7 @@
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
           this.wunsch = response.data.wunsch
-          this.chartOptions.series[0].data = this.generateData(response.data.data)
+          this.chartOptions.series[0].data = this.generateData(response.data.wishesday)
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
         }
