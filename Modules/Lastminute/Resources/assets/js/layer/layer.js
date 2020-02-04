@@ -273,7 +273,7 @@ var dt = window.dt || {};
 
     var LastminuteTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Lastminute',
-        matchesUrl: 'lastminute-ch-staging.traveltainment.de/*',
+        matchesUrl: 'lastminute-ch-staging.traveltainment.de/*|*.lastminute.ch',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
