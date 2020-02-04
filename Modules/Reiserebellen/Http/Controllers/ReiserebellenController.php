@@ -134,9 +134,8 @@ class ReiserebellenController extends Controller
 
         if ($wishTye > 0) {
 
-            $wishJob = (new \App\Jobs\callTrafficsApi($wish->id, $this->whitelabelId, $newUser->id));
-            dispatch($wishJob);
-            //$wishRepo->callTraffics($wish->id);
+
+            //$wishRepo->callTraffics($wish->id, $newUser->id);
 
             $view = \View::make('wishes::emails.autooffer',
                 [
@@ -156,6 +155,9 @@ class ReiserebellenController extends Controller
             ];
             dispatch((new \App\Jobs\sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addMinutes(rand(1,2))));
             $is_autooffer = true;
+
+            $wishJob = (new \App\Jobs\callTrafficsApi($wish->id, $this->whitelabelId, $newUser->id))->delay(Carbon::now());
+            dispatch($wishJob);
         }
 
         $html = view('reiserebellen::layer.created')->with([

@@ -36,9 +36,9 @@ class callTrafficsApi implements ShouldQueue
      */
     public function handle(EloquentAutooffersRepository $rules, AutooffersRepository $autooffers)
     {
+        $autooffers->setAuth($this->whitelabelId);
         $wish = Wish::where('id', $this->wishId)->first();
         $_rules = $rules->getSettingsForWhitelabel($this->whitelabelId);
-        //dd(getRegionCode($wish->airport, 0));
         $autooffers->saveWishData($wish);
         $response = $autooffers->getTrafficsData();
         $autooffers->storeMany($response, $wish->id, $_rules, $this->userId);

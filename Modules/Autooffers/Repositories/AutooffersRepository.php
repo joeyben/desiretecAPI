@@ -148,7 +148,6 @@ class AutooffersRepository extends BaseRepository
      */
     public function saveWishData(Wish $wish)
     {
-        $this->setAuth();
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
@@ -210,7 +209,10 @@ class AutooffersRepository extends BaseRepository
         $recommendation = (int) ($data['hotelOffer']['hotel']['rating']['recommendation']);
         $rules_ratings = ((int) (str_replace('.', '', $rulesArray['rating'])) / 10);
 
-        return $rating > $rules_ratings && 0 === $autooffer && $recommendation > $rulesArray['recommendation'];
+        $rating_b = $rating ? $rating > $rules_ratings : true;
+        $recommendation_b = $recommendation ? $recommendation > $rulesArray['recommendation'] : true;
+
+        return $rating_b && 0 === $autooffer && $recommendation_b;
     }
 
     /**
@@ -299,11 +301,11 @@ class AutooffersRepository extends BaseRepository
     }
 
     /**
-     * @param string $auth
+     * @param int $whitelabel_id
      */
-    public function setAuth(): void
+    public function setAuth($whitelabel_id)
     {
-        $wlAutooffer = getWhitelabelAutooffers();
+        $wlAutooffer = getWhitelabelAutooffersById($whitelabel_id);
         $this->auth = $wlAutooffer ? $wlAutooffer['token'] : 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
     }
 
