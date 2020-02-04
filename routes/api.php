@@ -42,7 +42,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('wishes', 'WishesController@getWishes');
-        Route::get('wish/{id}', 'WishesController@getWish');
+        Route::get('wishes/{id}', 'WishesController@getWish');
         Route::get('wishlist', 'WishesController@wishlist');
         Route::post('wishes/changeWishStatus', 'WishesController@changeWishStatus');
 
@@ -62,6 +62,11 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::get('', 'OffersController@index');
             Route::post('/store', 'OffersController@store');
         });
+
+        Route::group(['prefix' => 'offer'], function () {
+            Route::get('list/{wishId}', 'AutooffersController@list');
+        });
+
     });
 
     Route::group(['middleware' => []], function () {
