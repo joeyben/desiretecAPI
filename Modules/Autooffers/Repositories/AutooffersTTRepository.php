@@ -33,7 +33,7 @@ class AutooffersTTRepository extends BaseRepository
 
     private $url = 'http://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/PackageSearch/packageOffers';
 
-    private $currency = 'EUR';
+    private $currency = 'CHF';
 
     private $specialSearch = false;
 
@@ -139,7 +139,7 @@ class AutooffersTTRepository extends BaseRepository
         $xmlreq = '{
          "PackageOffersRQ": {
           "RQ_Metadata": {
-           "Language": "de-DE"
+           "Language": "de-CH"
           },
         "CurrencyCode": "' . $this->currency . '",
           "Travellers": {
@@ -887,7 +887,7 @@ class AutooffersTTRepository extends BaseRepository
             "OutboundFlightDateAndTimeFilter": {
              "FlightEvent": "Departure",
              "DateRange": {
-              "MinDate": "2020-02-01"
+              "MinDate": "2020-03-01"
              }
             },
             "InboundFlightDateAndTimeFilter": {
