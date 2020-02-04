@@ -8,6 +8,7 @@
 <script>
   import Vuex from 'vuex'
   import {Chart} from 'highcharts-vue'
+  import moment from 'moment'
   import Highcharts from 'highcharts'
   import exportingInit from 'highcharts/modules/exporting'
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
@@ -18,13 +19,14 @@
     data () {
       return {
         // eslint-disable-next-line
+        created: '',
         wunsch: 1,
         errors: new Errors(),
         data: [],
         updateArgs: [true, true, {duration: 1000}],
         chartOptions: {
           chart: {
-            type: 'line'
+            type: 'column'
           },
           title: {
             text: this.trans('dashboard.monthly_average_wish')
@@ -33,7 +35,10 @@
             text: this.trans('dashboard.source_2019')
           },
           xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            type: 'datetime',
+            title: {
+              text: this.trans('dashboard.date')
+            }
           },
           yAxis: {
             title: {
@@ -73,7 +78,8 @@
     },
     mounted () {
       this.loadWishByMonth()
-      this.$events.$on('whitelabel-set', whitelabelId => this.loadWishByMonth(whitelabelId))
+      this.$events.$on('whitelabel-set', (whitelabelId, start, end) => this.loadWishByMonth(whitelabelId, start, end))
+      this.$events.$on('range-date-set', (whitelabelId, start, end) => this.loadWishByMonth(whitelabelId, start, end))
       this.$events.$on('wunsch-set', wunsch => this.loadWunsch(wunsch))
     },
     updated () {
@@ -87,10 +93,11 @@
     methods: {
       ...Vuex.mapActions({
       }),
-      loadWishByMonth: function (whitelabelId = null) {
+      loadWishByMonth: function (whitelabelId = null, start = '', end = '') {
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
+        let paramsdate = whitelabelId ? '&start=' + start + '&end=' + end : '?start=' + start + '&end=' + end
         this.$store.dispatch('block', {element: 'dashboardComponent', load: true})
-        this.$http.get(window.laroute.route('admin.dashboard.wishes.byMonth') + params)
+        this.$http.get(window.laroute.route('admin.dashboard.events.wishesMonth') + params + paramsdate)
           .then(this.onLoadDashboardSellerSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -106,10 +113,18 @@
           this.$http.put(window.laroute.route('admin.event.save'), {shown: this.wunsch, id: 2})
         }
       },
+      generateData (items) {
+        let data = []
+        items.forEach((item, index) => {
+          data.push([moment(item[0], 'YYYY-MM').utc(+1).valueOf(), item[1]])
+        })
+
+        return data
+      },
       onLoadDashboardSellerSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
           this.wunsch = response.data.wunsch
-          this.chartOptions.series[0].data = response.data.data
+          this.chartOptions.series[0].data = this.generateData(response.data.wishesmonth)
           this.data = response.data
         } else {
           this.$notify.error({ title: 'Failed', message: response.data.message })
