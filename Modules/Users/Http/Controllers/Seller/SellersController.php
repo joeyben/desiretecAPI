@@ -118,11 +118,18 @@ class SellersController
             $perPage = $request->get('per_page');
             $sort = explode('|', $request->get('sort'));
 
+            $users = null;
             $usersForWhitelabels = null;
 
             if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                 $whitelabelId = $this->auth->guard('web')->user()->whitelabels()->first()->id;
-                $usersForWhitelabels = $this->whitelabels->find($whitelabelId)->users()->get()->pluck('id')->all();
+                $users = $this->whitelabels->find($whitelabelId)->users()->get();
+
+                foreach ($users as $user) {
+                    if ($user->hasRole(Flag::SELLER_ROLE) && !$user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                        $usersForWhitelabels[] = $user->id;
+                    }
+                }
             }
 
             $result['data'] = $this->users->withCriteria([
@@ -135,7 +142,6 @@ class SellersController
                 }, 'roles'  => function ($query) {
                     $query->select('roles.id', 'roles.name');
                 }]),
-                new HasRole(Flag::SELLER_ROLE)
             ])->paginate($perPage, ['id', 'first_name', 'last_name', 'email', 'status', 'confirmed', 'created_by', 'created_at', 'updated_at', 'deleted_at']);
 
             $result['success'] = true;
