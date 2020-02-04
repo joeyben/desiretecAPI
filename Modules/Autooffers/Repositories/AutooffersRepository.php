@@ -81,7 +81,7 @@ class AutooffersRepository extends BaseRepository
                         'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
                         'adults'               => $this->adults,
                         'children'             => $this->kids,
-                        'navigation'           => '1,5000',
+                        'navigation'           => '1,1000',
                         'departureAirportList' => implode(',', $this->airport),
                         'regionList'           => implode(',', $this->region),
                         //'locationList' => $this->location,
