@@ -161,7 +161,7 @@
                         @foreach($offers as $key => $offer)
                             @php
                                 $hotelData = [
-                                    'title' => htmlspecialchars($offer['hotel_data']['hotel']['name']),
+                                    'title' => addslashes($offer['hotel_data']['hotel']['name']),
                                     'stars' =>  $offer['hotel_data']['hotel']['category'],
                                     'text' => htmlspecialchars($offer['hotel_data']['hotel']['catalogData']['previewText'], ENT_QUOTES),
                                     'longitude' => $offer['hotel_data']['hotel']['location']['longitude'],
