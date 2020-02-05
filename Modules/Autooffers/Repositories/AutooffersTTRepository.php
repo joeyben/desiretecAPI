@@ -865,9 +865,9 @@ class AutooffersTTRepository extends BaseRepository
         $xmlreq = '{
          "PackageOffersRQ": {
           "RQ_Metadata": {
-           "Language": "de-DE"
-          },
-        "CurrencyCode": "EUR",
+           "Language": "de-CH"
+          }, 
+        "CurrencyCode": "CHF",
           "Travellers": {
            "Traveller": [{
                "Age": 35
@@ -932,7 +932,8 @@ class AutooffersTTRepository extends BaseRepository
           "Options": {
             "NumberOfResults": 500,
             "ResultOffset": 0,
-            "Sorting": ["PriceAsc"]
+            "Sorting": ["PriceAsc"],
+            "AdditionalCurrencyCodes":["EUR"]
           }
         } }';
         $curl = curl_init();
