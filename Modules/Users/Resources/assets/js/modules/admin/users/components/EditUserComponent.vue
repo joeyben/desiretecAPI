@@ -93,7 +93,7 @@
                                             </div>
                                             <legend class="font-weight-semibold text-uppercase font-size-sm">
                                                 <i class="icon-atom2"></i>
-                                                {{ trans('validation.attributes.backend.access.users.associated_whitelabels') }}
+                                                {{ trans('modals.whitelabel') }}
                                                 <a class="float-right text-default" data-toggle="collapse" data-target="#demo5">
                                                     <i class="icon-circle-down2"></i>
                                                 </a>
