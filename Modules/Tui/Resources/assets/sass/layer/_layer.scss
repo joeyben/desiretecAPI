@@ -155,9 +155,9 @@ $fontcolor: #303030;
       font-size: 24px;
       margin: 10px;
       text-align: center;
-      padding-top: 25px;
+      margin-top: 30px;
       color: $master-grey-dark;
-      line-height: 1.5em;
+      line-height: 32px;
     }
     i{
       position: absolute;
@@ -1145,7 +1145,7 @@ p.kwp-info {
     height: 40px;
   }
     .dt-modal{
-      top: 0 !important;
+      top: 0;
       opacity: 1;
       transition: all 0.2s ease;
       -webkit-transition: all 0.2s ease;
@@ -1162,7 +1162,7 @@ p.kwp-info {
         }
         .teaser{
           &.active{
-            top: 10px;
+            top: 350px;
             transition: all 0.5s ease;
             -webkit-transition: all 0.5s ease;
             -moz-transition: all 0.5s ease;

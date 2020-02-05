@@ -188,7 +188,7 @@
   }
 
   .dt-modal{
-    top: 0 !important;
+    top: 350px;
     background: rgba(255, 255, 255, 0.01);
     opacity: 1;
     transition: all 0.2s ease;
@@ -206,7 +206,7 @@
       }
       .teaser{
         &.active{
-          top: 10px;
+          top: 0;
           transition: all 0.5s ease;
           -webkit-transition: all 0.5s ease;
           -moz-transition: all 0.5s ease;
@@ -214,7 +214,7 @@
       }
     }
     &.m-open{
-      top:0 !important;
+      top: 60px;
       transition: all 0.2s ease;
       -webkit-transition: all 0.2s ease;
       -moz-transition: all 0.2s ease;
