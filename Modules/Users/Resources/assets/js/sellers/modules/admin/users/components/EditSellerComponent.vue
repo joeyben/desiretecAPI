@@ -72,7 +72,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('validation.attributes.backend.access.users.associated_whitelabels') }}</label>
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.whitelabel') }}</label>
                                                 <div class="col-lg-9">
                                                     <input type="text" class="form-control"  id='whitelabel' name='whitelabel' :placeholder="trans('validation.attributes.backend.access.users.associated_whitelabels')"   :value="getWhitelabel('whitelabel', 'display_name')" disabled readonly/>
                                                     <div class="invalid-feedback">
@@ -104,7 +104,7 @@
                                             </div>
                                             <legend class="font-weight-semibold text-uppercase font-size-sm">
                                                 <i class="icon-collaboration"></i>
-                                                {{ trans('validation.attributes.backend.access.users.groups') }}
+                                                {{ trans('modals.group') }}
                                                 <a class="float-right text-default" data-toggle="collapse" data-target="#demo5">
                                                     <i class="icon-circle-down2"></i>
                                                 </a>
