@@ -117613,11 +117613,7 @@ var render = function() {
                                   _c("i", { staticClass: "icon-atom2" }),
                                   _vm._v(
                                     "\n                                            " +
-                                      _vm._s(
-                                        _vm.trans(
-                                          "validation.attributes.backend.access.users.associated_whitelabels"
-                                        )
-                                      ) +
+                                      _vm._s(_vm.trans("modals.whitelabel")) +
                                       "\n                                            "
                                   ),
                                   _vm._m(4)
