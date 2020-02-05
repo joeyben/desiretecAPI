@@ -1034,7 +1034,6 @@ var exitIntent = window.exitIntent || {};
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
                 dt.scrollUpDetect();
                 dt.PopupManager.isMobile = true;
-                $(".dt-modal").css({'top':'0'});
                 textareaAutosize();
                 $(".dt-modal .teaser").find('i').on('click touchend',function () {
                     dt.hideTeaser($event);
