@@ -219,6 +219,10 @@ $gutter: 30px;
     height: 25px;
   }
 
+  input[type=number] {
+    display: none;
+  }
+
   textarea {
     height: 60px;
     padding: 5px;
@@ -1452,6 +1456,7 @@ p.kwp-info {
   }
   .kwp-custom-select:after{
     background: none;
+    border-bottom: none;
   }
   .kwp-content-extra, .kwp-btn-expand{
     display: none;
