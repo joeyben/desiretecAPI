@@ -85,7 +85,7 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
             }
 
             foreach ($wishes as $k => $v) {
-                if ($k === $result[$key]['0']) {
+                if ((string) $k === $result[$key]['0']) {
                     ++$i;
                     $j = 0;
                     $result[$key]['3'] = $v;
@@ -197,12 +197,12 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
 
     public function getFilter()
     {
-
-        $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
+        $filterdesk = 'ga:eventLabel==eil-desktop;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
         $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
+        $filterphone = 'ga:eventLabel==eil-phone;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
+        $filtertablet = 'ga:eventLabel==eil-tablet;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
         $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==desiretec_exitwindow';
 
-
-        return ['filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare];
+        return ['filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare, 'filterphone'=>$filterphone, 'filtertablet'=>$filtertablet];
     }
 }
