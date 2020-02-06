@@ -225,6 +225,11 @@ class DashboardController extends Controller
 
             if (null === $whitelabelId) {
                 $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if (false === mb_strpos($url[0], 'mvp')) {
+                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }

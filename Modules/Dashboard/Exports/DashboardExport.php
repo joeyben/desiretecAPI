@@ -64,8 +64,7 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
         $whitelabel = $_SESSION['whitelabel'];
         $start = $_SESSION['start'];
         $end = $_SESSION['end'];
-
-        $filter = $this->getFilter($viewid);
+        $filter = $this->getFilter();
         $optParams = [
             'dimensions' => 'ga:date',
             'filters'    => $filter['filterd'],
@@ -77,7 +76,6 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
         $result = $this->dashboard->uniqueEventsDay($viewid, $optParams, $start, $end);
         $wishes = $this->getWishes($whitelabel, $start, $end);
         $uem = $this->dashboard->uniqueEventsDay($viewid, $optParams1, $start, $end);
-
         $i = 0;
         $j = 0;
         foreach ($result as $key => $value) {
@@ -197,49 +195,13 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
         return $data;
     }
 
-    public function getFilter(string $viewid)
+    public function getFilter()
     {
-        $filterdesk = '';
-        $filtermobile = '';
-        $filtershare = '';
 
-        switch ($viewid) {
-            case '192484069':
-                $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-                $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==trendtours_exitwindow';
-                $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-                break;
+        $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
+        $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
+        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==desiretec_exitwindow';
 
-            case '159641355':
-                $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-                $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-                $filtershare = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow_3.0';
-                break;
-
-            case '162076862':
-                $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-                $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-                $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-                break;
-
-            case '174270531':
-                $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-                $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-                $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-                break;
-
-            case '185523513':
-                $filterdesk = 'ga:eventLabel==eil-n1-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-                $filtermobile = 'ga:eventLabel==eil-auto-tablet-3.0;ga:eventAction==shown;ga:eventCategory==tui_exitwindow_3.0';
-                $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==trendtours_exitwindow';
-                break;
-
-            case '188170994':
-                $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
-                $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==tui_exitwindow';
-                $filtershare = 'ga:eventLabel==eil-mobile;ga:eventAction==Submit-Button;ga:eventCategory==tui_exitwindow';
-                break;
-        }
 
         return ['filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare];
     }
