@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\ApiLinkRequest;
 use App\Http\Requests\ApiLoginRequest;
 use App\Http\Requests\ApiRegisterRequest;
+use App\Http\Requests\LoginRequest;
 use App\Models\Access\Role\Role;
 use App\Models\Access\User\User;
+use App\Models\Access\User\UserToken;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Token;
 
 class AuthController extends APIController
 {
@@ -19,6 +23,8 @@ class AuthController extends APIController
      * @var \Illuminate\Auth\AuthManager
      */
     private $auth;
+
+    protected $identifier = 'email';
 
     /**
      * Create a new AuthController instance.
@@ -38,7 +44,6 @@ class AuthController extends APIController
             if (!$token = JWTAuth::attempt($credentials)) {
                 return $this->throwValidation(trans('api.messages.login.failed'));
             }
-
         } catch (\Exception $e) {
             return $this->respondInternalError($e->getMessage());
         }
@@ -46,7 +51,7 @@ class AuthController extends APIController
         return $this->respond([
             'message'   => trans('api.messages.login.success'),
             'access_token'     => $token,
-        ])->cookie('access_token', $token, 3600);
+        ])->cookie('access_token', $token, JWTAuth::factory()->getTTL() * 60);
     }
 
     public function register(ApiRegisterRequest $request)
@@ -108,11 +113,52 @@ class AuthController extends APIController
         return $this->respond([
             'status' => trans('api.messages.refresh.status'),
             'token'  => $refreshedToken,
-        ])->cookie('access_token', $refreshedToken, 3600);
+        ])->cookie('access_token', $refreshedToken, JWTAuth::factory()->getTTL() * 60);
     }
 
     public function me()
     {
-        return response()->json(auth()->user());
+        $result['user'] = $this->auth->user();
+        $result['user']['role'] = $this->auth->user()->roles()->first()->name;
+
+        return $this->respond(['user' => $this->auth->user(), 'status' => 200]);
+    }
+
+    public function ckeckRole(Request $request)
+    {
+        return $this->respond(['role' => $this->auth->user()->hasRole($request->get('role')), 'status' => 200]);
+    }
+
+    public function sendLoginEmail(ApiLinkRequest $request)
+    {
+        try {
+            $user = $this->getUserByIdentifier($request->get($this->identifier));
+            $user->storeToken()->sendApiTokenLink([
+                'email' => trim($user->email),
+                'host' => $request->get('host')
+            ]);
+        } catch (Exception $e) {
+            return $this->respondInternalError($e->getMessage());
+        }
+
+        return $this->respond(['message' => 'Wir haben Ihren Login Link per E-Mail gesendet!', 'status' => 200]);
+    }
+
+    protected function getUserByIdentifier($value)
+    {
+        return User::where($this->identifier, $value)->firstOrFail();
+    }
+
+    public function token(Request $request, UserToken $token)
+    {
+        if (!$token->belongsToEmail($request->email)) {
+            return $this->respondInternalError('Invalid login link!');
+        }
+
+        Auth::login($token->user, true);
+        $jwtToken = JWTAuth::fromUser($token->user);
+
+        return $this->respond(['access_token' => JWTAuth::fromUser($token->user), 'status' => 200])
+            ->cookie('access_token', $jwtToken, JWTAuth::factory()->getTTL() * 60);
     }
 }
