@@ -37,6 +37,7 @@ mix.scripts(
         base_url + '/resources/assets/js/layer/devicedetector.min.js',
         __dirname + '/Resources/assets/js/layer/layer.js',
     ], __dirname + '/../../public/whitelabel/reiserebellen/js/layer/layer-locale.js')
+    .sass(__dirname + '/Resources/assets/sass/layer/_reset.scss', 'whitelabel/reiserebellen/css/layer/reset.css')
     .sass(__dirname + '/Resources/assets/sass/layer/_layer.scss', 'whitelabel/reiserebellen/css/layer/layer.css')
     .sass(__dirname + '/Resources/assets/sass/layer/_layer-responsive.scss', 'whitelabel/reiserebellen/css/layer/layer-responsive.css')
     .sass(base_url + '/resources/assets/sass/layer/_datepicker.scss', 'whitelabel/reiserebellen/css/datepicker.css')

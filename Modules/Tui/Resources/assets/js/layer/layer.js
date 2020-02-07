@@ -770,6 +770,8 @@ var exitIntent = window.exitIntent || {};
     };
 
     dt.showTeaser = function (e) {
+        return false;
+        
         $("body").addClass('mobile-layer');
         $(".dt-modal").addClass('teaser-on').show().find('.teaser').addClass('active').swipe( {
             tap:function(event, target) {
@@ -804,7 +806,7 @@ var exitIntent = window.exitIntent || {};
         dt.Tracking.init('desiretec_exitwindow','UA-105970361-13');
         dt.triggerButton($event);
         if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
-            dt.scrollUpDetect();
+            //dt.scrollUpDetect();
             dt.PopupManager.isMobile = true;
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
             textareaAutosize();
@@ -812,14 +814,14 @@ var exitIntent = window.exitIntent || {};
                 dt.hideTeaser($event);
             });
             if(getUrlParams('autoShow')){
-                dt.showMobileLayer();
+                //dt.showMobileLayer();
                 shown = true;
                 $(this).addClass('m-open');
                 $("body, html").css({'overflow':'hidden'});
             }
         }
         if(getUrlParams('autoShow') && !isMobile()){
-            dt.PopupManager.show();
+            //dt.PopupManager.show();
         }
     });
 

@@ -10,6 +10,15 @@ var exitIntent = window.exitIntent || {};
         cssPath: '/whitelabel/reiserebellen/css/layer/whitelabel.css'
     };
 
+    var fontAwesomeIcons = jQuery("<link>");
+    fontAwesomeIcons.attr({
+        rel:  "stylesheet",
+        type: "text/css",
+        href: "https://mvp.desiretec.com/fontawsome/css/all.css"
+    });
+    $("head").append(fontAwesomeIcons);
+
+
     dt.popupTemplate = function (variant) {
 
         var texts = {
