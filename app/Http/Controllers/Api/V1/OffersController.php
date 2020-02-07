@@ -51,7 +51,7 @@ class OffersController extends APIController
     public function store(StoreOffersRequest $request)
     {
         try{
-            if($this->offer->createTemp($request);){
+            if($this->offer->createTemp($request)){
                 return $this->respondCreated(trans('alerts.frontend.offers.created'));
             }
 
