@@ -68,7 +68,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
         // autooffers
         Route::group(['prefix' => 'offer'], function () {
-            Route::get('list/{wishId}', 'AutooffersController@list');
+            Route::get('list/{wishId}', 'AutooffersController@show');
         });
 
         Route::group(['prefix' => 'messages'], function () {
