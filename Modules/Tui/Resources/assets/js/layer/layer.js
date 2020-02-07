@@ -943,12 +943,12 @@ var exitIntent = window.exitIntent || {};
             var formSent = $('.kwp-content').hasClass('kwp-completed-master');
 
             this.modal.addClass('tmp-hidden');
-            if(!formSent) {
-                this.trigger =
-                    $('<span/>', {'class': 'trigger-modal'});
-                $('body').prepend(this.trigger);
-                this.trigger.fadeIn();
-            }
+            // if(!formSent) {
+            //     this.trigger =
+            //         $('<span/>', {'class': 'trigger-modal'});
+            //     $('body').prepend(this.trigger);
+            //     this.trigger.fadeIn();
+            // }
 
 
             this.shown = false;
@@ -988,7 +988,8 @@ var exitIntent = window.exitIntent || {};
 
         dt.showMobileLayer = function (e) {
             $(".dt-modal").removeClass('teaser-on').find('.teaser').remove();
-            $( ".dt-modal" ).addClass('m-open');
+            $(".dt-modal").addClass('m-open');
+            $(".dt-modal.m-open").css({'top':'0'});
             dt.PopupManager.show();
             $("body, html").css({'overflow':'hidden'});
             setCookie('exit_intent','yes');
@@ -1033,7 +1034,6 @@ var exitIntent = window.exitIntent || {};
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
                 dt.scrollUpDetect();
                 dt.PopupManager.isMobile = true;
-                $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
                 textareaAutosize();
                 $(".dt-modal .teaser").find('i').on('click touchend',function () {
                     dt.hideTeaser($event);
@@ -1349,7 +1349,7 @@ var exitIntent = window.exitIntent || {};
         function removeLayer(e){
             var $event = e;
             setTimeout(function(){
-                dt.triggerButton($event);
+                // dt.triggerButton($event);
                 dt.PopupManager.closePopup($event);
                 dt.PopupManager.teaserSwiped = true;
             }, 500);

@@ -11,7 +11,9 @@
             </div>
 
             <div class="navbar-collapse collapse" id="navbar-filter">
-                <a href="#" @click="onExport()" class="nav-item m-2"><i class="icon-file-text3"></i> Export</a>
+                <a href="#" @click="onExport()" class="export nav-item m-2" v-bind:class="{ active: filtered}"><i class="icon-file-text3"></i> Export
+                    <span class="tooltiptext">Bitte wählen Sie den Zeitraum</span>
+                </a>
                 <span class="navbar-text font-weight-semibold mr-3">
                     Filter:
                 </span>
@@ -147,6 +149,7 @@ export default {
       return {
         urlExport: window.laroute.route('admin.dashboard.export'),
         created: '',
+        filtered: false,
         whitelabelId: null,
         basis: 1,
         wunsch: 1,
@@ -182,7 +185,9 @@ export default {
         loadWhitelabels: 'loadWhitelabels'
       }),
       onExport () {
-        window.location.href = this.urlExport
+        if (this.filtered === true) {
+          window.location.href = this.urlExport
+        }
       },
       onExportW: function (whitelabelId = null, start = '', end = '') {
         let params = whitelabelId ? '?whitelabelId=' + whitelabelId : ''
@@ -194,6 +199,7 @@ export default {
           })
       },
       doWhitelabel () {
+        this.filtered = true
         this.$events.fire('whitelabel-set', this.whitelabelId)
       },
       doLiDesktop (e) {
@@ -224,6 +230,7 @@ export default {
         this.loadLayout()
       },
       doRange (e) {
+        this.filtered = true
         this.$events.fire('range-date-set', this.whitelabelId, moment(e[0], moment.ISO_8601).startOf('day').format('YYYY-MM-DD'), moment(e[1], moment.ISO_8601).endOf('day').format('YYYY-MM-DD '))
       },
       hasPermissionTo (permission) {
@@ -292,5 +299,34 @@ export default {
 <style>
     .datatable {
         overflow-y: auto;
+    }
+    a.export{
+        cursor: default;
+        color: grey;
+    }
+    a.export.active{
+        cursor: pointer;
+        color:#2196f3;
+    }
+    a.export.active:hover .tooltiptext{
+        visibility: hidden;
+    }
+    a.export:hover .tooltiptext{
+        visibility: visible;
+    }
+    .tooltiptext {
+        visibility: hidden;
+        background-color: #2196f3;
+        color: #fff;
+        font-weight:bold;
+        top: 45px;
+        left: 10px;
+        padding: 5px 5px 5px;
+        text-align: center;
+        border-radius: 6px;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
     }
 </style>

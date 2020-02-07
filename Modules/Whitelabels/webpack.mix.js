@@ -8,13 +8,7 @@ mix.webpackConfig({
   module: {
     rules:[
       {
-        enforce: 'pre',
-        test: /\.(js|vue)$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'eslint-loader',
-        options: {
-          fix: true
-        }
+
       }
     ]
   },

@@ -66,6 +66,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::post('/store', 'OffersController@store');
         });
 
+        // autooffers
         Route::group(['prefix' => 'offer'], function () {
             Route::get('list/{wishId}', 'AutooffersController@list');
         });

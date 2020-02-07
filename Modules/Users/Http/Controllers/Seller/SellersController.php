@@ -11,6 +11,7 @@ namespace Modules\Users\Http\Controllers\Seller;
 
 use App\Events\Backend\Access\User\UserCreated;
 use App\Models\Access\Role\Role;
+use App\Models\Access\User\User;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\HasRole;
@@ -123,7 +124,19 @@ class SellersController
 
             if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                 $whitelabelId = $this->auth->guard('web')->user()->whitelabels()->first()->id;
-                $users = $this->whitelabels->find($whitelabelId)->users()->get();
+                $users = $this->whitelabels->find($whitelabelId)->users()->whereHas('roles', function ($query) {
+                    $query->where('roles.name', Flag::SELLER_ROLE);
+                })->get();
+
+                foreach ($users as $user) {
+                    if ($user->hasRole(Flag::SELLER_ROLE) && !$user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                        $usersForWhitelabels[] = $user->id;
+                    }
+                }
+            } else if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $users = User::whereHas('roles', function ($query) {
+                    $query->where('roles.name', Flag::SELLER_ROLE);
+                })->get();
 
                 foreach ($users as $user) {
                     if ($user->hasRole(Flag::SELLER_ROLE) && !$user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
@@ -141,7 +154,7 @@ class SellersController
                     $query->select('id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'));
                 }, 'roles'  => function ($query) {
                     $query->select('roles.id', 'roles.name');
-                }]),
+                }])
             ])->paginate($perPage, ['id', 'first_name', 'last_name', 'email', 'status', 'confirmed', 'created_by', 'created_at', 'updated_at', 'deleted_at']);
 
             $result['success'] = true;

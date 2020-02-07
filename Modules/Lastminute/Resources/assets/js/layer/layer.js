@@ -448,7 +448,6 @@ var dt = window.dt || {};
                     var airport_name = this.dictionaries.airports[airport_arr[i]];
                     $('#airport').tagsinput('add', airport_name);
                 }
-                return "";
             },
             'direkt_flug': function (form, formData) {
                 var direkt_flug = getUrlParams('dfl') ? getUrlParams('dfl') : '';

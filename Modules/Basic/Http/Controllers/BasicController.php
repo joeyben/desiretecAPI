@@ -88,22 +88,22 @@ class BasicController extends Controller
             'request'      => $request->all(),
             'color'        => $whitelabel['color'],
             'ages_arr'     => $this->ages,
-            'layers'       => $this->basic->getLayersData($request, $whitelabel),
-//            'layers'       => [
-//                [
-//                    'name' => 'Hotel',
-//                    'active' => false
-//                ],[
-//                    'name' => 'Flight',
-//                    'active' => true
-//                ],[
-//                    'name' => 'package',
-//                    'active' => false
-//                ],[
-//                    'name' => 'cruise',
-//                    'active' => false
-//                ]
-//            ]
+//            'layers'       => $this->basic->getLayersData($whitelabel),
+            'layers'       => [
+                [
+                    'name' => 'Hotel',
+                    'active' => false
+                ],[
+                    'name' => 'Flight',
+                    'active' => true
+                ],[
+                    'name' => 'package',
+                    'active' => false
+                ],[
+                    'name' => 'cruise',
+                    'active' => false
+                ]
+            ]
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);

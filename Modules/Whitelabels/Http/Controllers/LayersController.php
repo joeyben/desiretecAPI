@@ -2,6 +2,7 @@
 
 namespace Modules\Whitelabels\Http\Controllers;
 
+use App\Repositories\Criteria\EagerLoad;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -39,6 +40,7 @@ class LayersController extends Controller
      */
     public function index()
     {
+
         return view('whitelabels::layers');
     }
 
