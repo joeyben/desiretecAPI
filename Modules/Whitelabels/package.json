@@ -42,7 +42,7 @@
         "webpack-shell-plugin": "^0.5.0"
     },
     "dependencies": {
-        "element-ui": "^2.4.8",
+        "element-ui": "^2.13.0",
         "laravel-echo": "^1.4.0",
         "moment": "^2.22.1",
         "socket.io-client": "^2.1.1",
