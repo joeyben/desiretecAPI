@@ -66,19 +66,16 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::post('/store', 'OffersController@store');
         });
 
-<<<<<<< HEAD
         Route::group(['prefix' => 'offer'], function () {
             Route::get('list/{wishId}', 'AutooffersController@list');
         });
 
-=======
         Route::group(['prefix' => 'messages'], function () {
             Route::get('/{wishId}/{groupId}', 'MessagesController@list');
             Route::post('/', 'MessagesController@create');
             Route::put('/{id}', 'MessagesController@update');
             Route::delete('/{id}', 'MessagesController@delete');
         });
->>>>>>> origin/development
     });
 
     Route::group(['middleware' => []], function () {
