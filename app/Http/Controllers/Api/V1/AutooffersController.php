@@ -13,8 +13,6 @@ use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 
 class AutooffersController extends APIController
 {
-    const BODY_CLASS = 'wish';
-
     protected $status = [
         'Active'       => 'Active',
         'Inactive'     => 'Inactive',
@@ -49,93 +47,10 @@ class AutooffersController extends APIController
         $this->rules = $rules;
     }
 
-    public function index()
-    {
-        return view('frontend.autooffer.index');
-    }
-
-    /**
-     * @param \App\Models\Wishes\Wish $wish
-     * @param string                  $index
-     *
-     * @return mixed
-     */
-    public function details(Wish $wish, $index)
-    {
-        $offers = $this->autooffers->getOffersDataFromId($wish->id);
-        $offer = $offers[$index];
-        $body_class = 'autooffer_list';
-
-        return view('frontend.offer.details', compact('wish', 'offer', 'body_class'));
-    }
-
-    /**
-     * @param \App\Models\Wishes\Wish $wish
-     * @param string                  $index
-     *
-     * @return mixed
-     */
-    public function ttdetails(Wish $wish, $index)
-    {
-        $offers = $this->autooffers->getOffersDataFromId($wish->id);
-        $offer = $offers[$index];
-        $body_class = 'autooffer_list';
-
-        return view('autooffers::autooffer.details_tt', compact('wish', 'offer', 'body_class'));
-    }
-
-    /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
-     * @return mixed
-     */
-    public function createTT(Wish $wish)
-    {
-        $rules = $this->rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
-        //dd(getRegionCode($wish->airport, 0));
-        $this->TTautooffers->saveWishData($wish);
-        //$response = $this->autooffers->getTrafficsData();
-        $this->TTautooffers->getToken();
-        $response = $this->TTautooffers->getTTData();
-        $this->TTautooffers->storeMany($wish->id, $rules);
-
-        return redirect()->to('offer/list/' . $wish->id);
-    }
-
-    /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
-     * @return mixed
-     */
-    public function create(Wish $wish)
-    {
-        //$rules = $this->rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
-        //dd(getRegionCode($wish->airport, 0));
-        //$this->autooffers->saveWishData($wish);
-        //$response = $this->autooffers->getTrafficsData();
-        //$this->autooffers->storeMany($response, $wish->id, $rules);
-
-        return redirect()->to('offer/list/' . $wish->id);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        $this->autooffers->saveWishData($request->all());
-        $response = $this->autooffers->getTrafficsData();
-        $this->autooffers->storeMany($response);
-    }
-
-    public function list(int $wishId)
+    public function show(int $wishId)
     {
         try {
-            $offers['data'] = $this->autooffers->getOffersDataFromId($wishId);;
+            $offers['data'] = $this->autooffers->getOffersDataFromId($wishId);
 
             return $this->responseJson($offers);
 
@@ -144,11 +59,15 @@ class AutooffersController extends APIController
         }
     }
 
-    /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
-     * @return Response
-     */
+    public function showtt(Wish $wish)
+    {
+        $offers = $this->autooffers->getOffersDataFromId($wish->id);
+
+        $body_class = 'autooffer_list';
+
+        return view('autooffers::autooffer.list_tt', compact('wish', 'offers', 'body_class'));
+    }
+
     public function showttredirect(Wish $wish, string $token)
     {
         if (!$this->wish->validateToken($token)) {
@@ -162,53 +81,52 @@ class AutooffersController extends APIController
         return redirect()->to($url . $wish->id);
     }
 
-    /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
-     * @return Response
-     */
-    public function showtt(Wish $wish)
+    public function details(Wish $wish, $index)
     {
         $offers = $this->autooffers->getOffersDataFromId($wish->id);
-        //dd($offers[0]);
+        $offer = $offers[$index];
         $body_class = 'autooffer_list';
-        //dd($offers);
-        return view('autooffers::autooffer.list_tt', compact('wish', 'offers', 'body_class'));
+
+        return view('frontend.offer.details', compact('wish', 'offer', 'body_class'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @return Response
-     */
-    public function edit()
+    public function ttdetails(Wish $wish, $index)
     {
-        return view('autooffers::edit');
+        $offers = $this->autooffers->getOffersDataFromId($wish->id);
+        $offer = $offers[$index];
+        $body_class = 'autooffer_list';
+
+        return view('autooffers::autooffer.details_tt', compact('wish', 'offer', 'body_class'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function update(Request $request)
+    public function create(Wish $wish)
     {
+        //$rules = $this->rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
+        //dd(getRegionCode($wish->airport, 0));
+        //$this->autooffers->saveWishData($wish);
+        //$response = $this->autooffers->getTrafficsData();
+        //$this->autooffers->storeMany($response, $wish->id, $rules);
+
+        return redirect()->to('offer/list/' . $wish->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @return Response
-     */
-    public function destroy()
+    public function createTT(Wish $wish)
     {
-    }
-
-    public function testTT()
-    {
+        $rules = $this->rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
+        $this->TTautooffers->saveWishData($wish);
         $this->TTautooffers->getToken();
-        $this->TTautooffers->testTT();
+        $response = $this->TTautooffers->getTTData();
+        $this->TTautooffers->storeMany($wish->id, $rules);
+
+        return redirect()->to('offer/list/' . $wish->id);
     }
+
+    public function store(Request $request)
+    {
+        $this->autooffers->saveWishData($request->all());
+        $response = $this->autooffers->getTrafficsData();
+        $this->autooffers->storeMany($response);
+    }
+
+
 }
