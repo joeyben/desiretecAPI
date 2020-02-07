@@ -117,9 +117,9 @@ class AutooffersTTRepository extends BaseRepository
         $travellers = '';
 
         for ($i = 0; $i < $this->adults; ++$i) {
-            $travellers .= '"Traveller": [{
+            $travellers .= '{
                     "Age": 35
-                }]';
+                }';
             if ($i + 1 < $this->adults) {
                 $travellers .= ',';
             }
@@ -129,9 +129,9 @@ class AutooffersTTRepository extends BaseRepository
             if (0 === $i) {
                 $travellers .= ',';
             }
-            $travellers .= '"Traveller": [{
+            $travellers .= '{
                     "Age": 6
-                }]';
+                }';
             if ($i + 1 < $this->kids) {
                 $travellers .= ',';
             }
@@ -143,7 +143,9 @@ class AutooffersTTRepository extends BaseRepository
           },
         "CurrencyCode": "' . $this->currency . '",
           "Travellers": {
-           ' . $travellers . '
+            "Traveller": [
+            ' . $travellers . '
+            ]
           },
           "OfferFilters": {
            "DateAndTimeFilter": {
@@ -869,19 +871,18 @@ class AutooffersTTRepository extends BaseRepository
           }, 
         "CurrencyCode": "CHF",
           "Travellers": {
-           "Traveller": [{
-               "Age": 35
-            }],
-           "Traveller": [{
-                "Age": 25
-           }],
-           "Traveller": [{
-                "Age": 10
-           }],
-           "Traveller": [{
-                "Age": 5
-           }]
-          },
+                    "Traveller": [
+                           {
+                                  "Age": 33
+                           },
+                           {
+                                  "Age": 33
+                           },
+                           {
+                                  "Age": 6
+                           }
+                    ]
+             },
           "OfferFilters": {
            "DateAndTimeFilter": {
             "OutboundFlightDateAndTimeFilter": {
