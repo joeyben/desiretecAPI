@@ -190,6 +190,9 @@ class AutooffersRepository extends BaseRepository
             $hotelId = $offer['hotelOffer']['hotel']['giata']['hotelId'];
             $tOperator = $offer['tourOperator']['code'];
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
+            if (!$hotel["hotel"] || empty($hotel["hotel"])) {
+                continue;
+            }
             $this->storeAutooffer($offer, $hotel, $wish_id, $userId);
             ++$count;
         }

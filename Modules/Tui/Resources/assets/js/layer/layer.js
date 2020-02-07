@@ -771,7 +771,7 @@ var exitIntent = window.exitIntent || {};
 
     dt.showTeaser = function (e) {
         return false;
-        
+
         $("body").addClass('mobile-layer');
         $(".dt-modal").addClass('teaser-on').show().find('.teaser').addClass('active').swipe( {
             tap:function(event, target) {
