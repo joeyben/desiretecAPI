@@ -133,7 +133,7 @@
                                     <div class="icon-background">
                                         <i class="fa fa-clock" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->duration }}</h4>
+                                    <h4>{{ $duration }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
