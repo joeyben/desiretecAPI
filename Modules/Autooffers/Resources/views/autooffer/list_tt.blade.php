@@ -1,3 +1,8 @@
+@php
+ $duration = str_replace('Nächte', 'Tage', $wish->duration);
+ $duration = str_replace('Nacht', 'Tag', $duration);
+@endphp
+
 @extends('frontend.layouts.app')
 
 @section('title')
