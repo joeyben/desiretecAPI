@@ -40,6 +40,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     Route::get('offers/{id}', 'OffersController@index');
     Route::post('offers/store', 'OffersController@store');
 
+    Route::post('wish/store', 'WishesController@store');
+
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('wishes', 'WishesController@getWishes');
         Route::get('wish/{id}', 'WishesController@getWish');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
+use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Groups\GroupsRepository;
 use App\Repositories\Criteria\ByUser;
@@ -142,6 +143,22 @@ class WishesController extends APIController
             return $this->responseJson($this->frontWishesRepository->changeWishStatus($request)->original);
         } catch (Exception $e) {
             return $this->responseJsonError($e);
+        }
+    }
+
+    /**
+     *
+     */
+    public function store(StoreWishesRequest $request)
+    {
+        try{
+            if ($this->wishes->createFromApi($request->all())){
+                return $this->respondCreated(trans('alerts.frontend.wish.created'));
+            }
+
+            return $this->respondWithError('error');
+        } catch (\Exception $e) {
+            return $this->respondWithError($e->getMessage());
         }
     }
 }
