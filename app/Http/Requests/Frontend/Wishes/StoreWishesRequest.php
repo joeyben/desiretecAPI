@@ -16,7 +16,7 @@ class StoreWishesRequest extends Request
      */
     public function authorize()
     {
-        return access()->allow('create-wish');
+        return true;
     }
 
     /**
