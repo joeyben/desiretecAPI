@@ -41,6 +41,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     Route::post('offers/store', 'OffersController@store');
 
     Route::get('whitelabel/{id}', 'WhitelabelController@getWhitelabelBySlug');
+    Route::post('wish/store', 'WishesController@store');
 
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('wishes', 'WishesController@getWishes');

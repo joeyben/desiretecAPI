@@ -146,4 +146,20 @@ class WishesController extends APIController
             return $this->responseJsonError($e);
         }
     }
+
+    /**
+     *
+     */
+    public function store(StoreWishesRequest $request)
+    {
+        try{
+            if ($this->wishes->createFromApi($request->all())){
+                return $this->respondCreated(trans('alerts.frontend.wish.created'));
+            }
+
+            return $this->respondWithError('error');
+        } catch (\Exception $e) {
+            return $this->respondWithError($e->getMessage());
+        }
+    }
 }
