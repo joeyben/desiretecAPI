@@ -28,6 +28,7 @@ use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use Validator;
 use Auth;
+use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 
 class WishesController extends APIController
 {
