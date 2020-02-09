@@ -299,6 +299,32 @@ class WishesRepository extends BaseRepository
         return $wish;
     }
 
+    public function createFromApi(array $input)
+    {
+        $this->whitelabel_id = $input['whitelabel_id'];
+        $wish = DB::transaction(function () use ($input) {
+            $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
+            $input['created_by'] = access()->user()->id;
+            $input['group_id'] = $this->getGroup();
+            $input['title'] = '-';
+            $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
+            $input['latest_return'] = $input['latest_return'] ? \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']) : '0000-00-00';
+            $input['adults'] = (int) ($input['adults']);
+            $input['extra_params'] = isset($input['extra_params']) ? $input['extra_params'] : '';
+
+            if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
+                $this->updateGroup($input['group_id'], $input['whitelabel_id']);
+                event(new WishCreated($wish));
+
+                return $wish;
+            }
+
+            throw new GeneralException(trans('exceptions.backend.wishes.create_error'));
+        });
+
+        return $wish;
+    }
+
     /**
      * Update Wish.
      *
