@@ -164,7 +164,7 @@
                             @endif
                             @php
                                 $hotelData = [
-                                    'title' => addslashes($offer['hotel_data']['hotel']['name']),
+                                    'title' => str_replace("'","",$offer['hotel_data']['hotel']['name']),
                                     'stars' =>  $offer['hotel_data']['hotel']['category'],
                                     'text' => htmlspecialchars($offer['hotel_data']['hotel']['catalogData']['previewText'], ENT_QUOTES),
                                     'longitude' => $offer['hotel_data']['hotel']['location']['longitude'],
