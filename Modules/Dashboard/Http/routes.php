@@ -1,7 +1,9 @@
 <?php
-
 Route::group(['middleware' => ['web', 'auth', 'admin', 'step'], 'prefix' => 'admin', 'namespace' => 'Modules\Dashboard\Http\Controllers'], function () {
     Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
+});
+
+Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'namespace' => 'Modules\Dashboard\Http\Controllers'], function () {
     Route::get('dashboard/view', 'DashboardController@view')->name('admin.dashboard.view');
     Route::put('dashboard', 'DashboardController@store')->name('admin.dashboard.store');
     Route::put('dashboard/save', 'DashboardController@save')->name('admin.dashboard.save');

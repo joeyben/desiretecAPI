@@ -5,7 +5,9 @@ use App\Models\Notification\Notification;
 use App\Models\Settings\Setting;
 use App\Services\Flag\Src\Flag;
 use Carbon\Carbon as Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use Modules\Languages\Entities\Language;
 
 /**
@@ -840,5 +842,50 @@ if (!function_exists('get_current_whitelabel_url')) {
     function get_current_whitelabel_url()
     {
         return getCurrentWhiteLabelField('domain');
+    }
+}
+
+if (!function_exists('current_step')) {
+    function current_step()
+    {
+        if (Auth::user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            return Flag::MAX_STEP;
+        }
+        if (Auth::user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+            $step =  (int)Auth::user()->whitelabels()->first()->state;
+
+
+            return $step;
+        }
+
+        return Flag::MAX_STEP;
+    }
+}
+
+if (!function_exists('is_active')) {
+    function is_active(string $route = '')
+    {
+        return (strpos(Route::currentRouteName(), $route) === 0) ? 'active' : '';
+    }
+}
+
+if (!function_exists('is_active_step')) {
+    function is_active_step(int $step = 1)
+    {
+        return $step === current_step() + 1;
+    }
+}
+
+if (!function_exists('is_disabled')) {
+    function is_disabled(int $step)
+    {
+        return current_step() + 1 < $step ? 'disabled' : '';
+    }
+}
+
+if (!function_exists('is_step_finished')) {
+    function is_step_finished()
+    {
+        return current_step() === Flag::MAX_STEP;
     }
 }

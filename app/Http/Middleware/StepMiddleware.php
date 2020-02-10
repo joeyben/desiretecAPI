@@ -20,7 +20,13 @@ class StepMiddleware
         }
 
         if (Auth::guard($guard)->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-            return $next($request);
+            $step = Auth::guard($guard)->user()->whitelabels()->first()->state;
+
+            if ($step >= 10) {
+                return $next($request);
+            }
+
+            return redirect()->route('admin.step', [$step]);
         }
 
         return $next($request);
