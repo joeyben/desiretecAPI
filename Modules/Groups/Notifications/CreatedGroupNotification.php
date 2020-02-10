@@ -29,9 +29,6 @@ class CreatedGroupNotification extends Notification implements ShouldBroadcast
 
     /**
      * Create a new notification instance.
-     *
-     * @param \Modules\Groups\Entities\Group $group
-     * @param string                         $owner
      */
     public function __construct(Group $group, string $owner)
     {

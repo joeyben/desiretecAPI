@@ -41,8 +41,6 @@ class DistributionsRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -64,9 +62,6 @@ class DistributionsRepository extends BaseRepository
 
     /**
      * Update Distribution.
-     *
-     * @param \App\Models\Distributions\Distribution $distribution
-     * @param array                                  $input
      */
     public function update(Distribution $distribution, array $input)
     {
@@ -79,15 +74,11 @@ class DistributionsRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.distributions.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.distributions.update_error'));
         });
     }
 
     /**
-     * @param \App\Models\Distributions\Distribution $distribution
-     *
      * @throws GeneralException
      *
      * @return bool

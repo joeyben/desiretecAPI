@@ -22,17 +22,12 @@ class PagesController extends Controller
 {
     protected $pages;
 
-    /**
-     * @param \App\Repositories\Backend\Pages\PagesRepository $pages
-     */
     public function __construct(PagesRepository $pages)
     {
         $this->pages = $pages;
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Pages\ManagePageRequest $request
-     *
      * @return \App\Http\Responses\ViewResponse
      */
     public function index(ManagePageRequest $request)
@@ -41,8 +36,6 @@ class PagesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Pages\CreatePageRequest $request
-     *
      * @return \App\Http\Responses\ViewResponse
      */
     public function create(CreatePageRequest $request)
@@ -51,8 +44,6 @@ class PagesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Pages\StorePageRequest $request
-     *
      * @return \App\Http\Responses\RedirectResponse
      */
     public function store(StorePageRequest $request)
@@ -63,9 +54,6 @@ class PagesController extends Controller
     }
 
     /**
-     * @param \App\Models\Page\Page                            $page
-     * @param \App\Http\Requests\Backend\Pages\EditPageRequest $request
-     *
      * @return \App\Http\Responses\Backend\Page\EditResponse
      */
     public function edit(Page $page, EditPageRequest $request)
@@ -74,9 +62,6 @@ class PagesController extends Controller
     }
 
     /**
-     * @param \App\Models\Page\Page                              $page
-     * @param \App\Http\Requests\Backend\Pages\UpdatePageRequest $request
-     *
      * @return \App\Http\Responses\RedirectResponse
      */
     public function update(Page $page, UpdatePageRequest $request)
@@ -87,9 +72,6 @@ class PagesController extends Controller
     }
 
     /**
-     * @param \App\Models\Page\Page                              $page
-     * @param \App\Http\Requests\Backend\Pages\DeletePageRequest $request
-     *
      * @return \App\Http\Responses\RedirectResponse
      */
     public function destroy(Page $page, DeletePageRequest $request)

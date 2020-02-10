@@ -18,18 +18,12 @@ class UserPasswordController extends Controller
      */
     protected $users;
 
-    /**
-     * @param UserRepository $users
-     */
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
     }
 
     /**
-     * @param User              $user
-     * @param ManageUserRequest $request
-     *
      * @return mixed
      */
     public function edit(User $user, ManageUserRequest $request)
@@ -39,9 +33,6 @@ class UserPasswordController extends Controller
     }
 
     /**
-     * @param User                      $user
-     * @param UpdateUserPasswordRequest $request
-     *
      * @return mixed
      */
     public function update(User $user, UpdateUserPasswordRequest $request)

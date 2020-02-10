@@ -37,8 +37,6 @@ class PermissionRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws GeneralException
      *
      * @return bool

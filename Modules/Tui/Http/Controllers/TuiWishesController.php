@@ -66,10 +66,6 @@ class TuiWishesController extends Controller
      */
     protected $whitelabel;
 
-    /**
-     * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
-     */
     public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories)
     {
         $this->wish = $wish;
@@ -83,9 +79,6 @@ class TuiWishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     * @param string                  $token
-     *
      * @return mixed
      */
     public function details(Wish $wish, string $token)
@@ -96,8 +89,6 @@ class TuiWishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return mixed
      */
     public function view(Wish $wish)
@@ -142,8 +133,6 @@ class TuiWishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function wishList(ManageWishesRequest $request)

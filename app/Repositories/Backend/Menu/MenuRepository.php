@@ -33,8 +33,6 @@ class MenuRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -55,7 +53,6 @@ class MenuRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Menu\Menu $menu
      * @param  $input
      *
      * @throws \App\Exceptions\GeneralException
@@ -78,8 +75,6 @@ class MenuRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Menu\Menu $menu
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool

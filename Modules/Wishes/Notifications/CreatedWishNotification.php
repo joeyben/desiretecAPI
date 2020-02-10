@@ -23,8 +23,6 @@ class CreatedWishNotification extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @param \Modules\Wishes\Entities\Wish $wish
      */
     public function __construct(Wish $wish)
     {

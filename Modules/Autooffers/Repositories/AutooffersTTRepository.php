@@ -218,14 +218,13 @@ class AutooffersTTRepository extends BaseRepository
         curl_close($curl);
 
         $this->data = json_decode($result, true)['PackageOffersRS'];
-        if (\array_key_exists('Offers', $this->data)){
-            if (\array_key_exists ('Offer', $this->data['Offers'])){
+        if (\array_key_exists('Offers', $this->data)) {
+            if (\array_key_exists('Offer', $this->data['Offers'])) {
                 $this->offers = $this->data['Offers']['Offer'];
-            }
-            else{
+            } else {
                 $this->offers = [];
             }
-        }else{
+        } else {
             $this->offers = [];
         }
         if (empty($this->offers) && !$this->specialSearch) {
@@ -290,8 +289,6 @@ class AutooffersTTRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return bool
      */
     public function saveWishData(Wish $wish)
@@ -321,6 +318,7 @@ class AutooffersTTRepository extends BaseRepository
     public function checkValidity($hotelId, $wish_id)
     {
         $autooffer = Autooffer::where('wish_id', $wish_id)->where('hotel_code', $hotelId)->count();
+
         return 0 === $autooffer;
     }
 
@@ -358,6 +356,7 @@ class AutooffersTTRepository extends BaseRepository
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = \Auth::user()->id;
             $autooffer->status = $this->specialSearch ? 0 : 1;
+
             return $autooffer->save();
         } catch (\Illuminate\Database\QueryException $e) {
             // something went wrong with the transaction, rollback
@@ -770,13 +769,13 @@ class AutooffersTTRepository extends BaseRepository
             $this->giataIds = [];
 
             return false;
-        } else {
-            if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
-                $this->giataIds = [];
-
-                return false;
-            }
         }
+        if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+            $this->giataIds = [];
+
+            return false;
+        }
+
         foreach ($this->data['HotelDictionary']['Hotel'] as $hotel) {
             $giata[$hotel['HotelCodes']['HotelIffCode']] = $hotel['HotelCodes']['HotelGiataID'];
         }
@@ -793,12 +792,11 @@ class AutooffersTTRepository extends BaseRepository
             $this->reviews = [];
 
             return false;
-        } else {
-            if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
-                $this->reviews = [];
+        }
+        if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+            $this->reviews = [];
 
-                return false;
-            }
+            return false;
         }
 
         foreach ($this->data['HotelDictionary']['Hotel'] as $hotel) {
@@ -821,12 +819,11 @@ class AutooffersTTRepository extends BaseRepository
             $this->geos = [];
 
             return false;
-        } else {
-            if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
-                $this->geos = [];
+        }
+        if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+            $this->geos = [];
 
-                return false;
-            }
+            return false;
         }
 
         foreach ($this->data['HotelDictionary']['Hotel'] as $hotel) {
@@ -848,12 +845,11 @@ class AutooffersTTRepository extends BaseRepository
             $this->hotelAttributes = [];
 
             return false;
-        } else {
-            if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
-                $this->hotelAttributes = [];
+        }
+        if (!\array_key_exists('Hotel', $this->data['HotelDictionary'])) {
+            $this->hotelAttributes = [];
 
-                return false;
-            }
+            return false;
         }
 
         foreach ($this->data['HotelDictionary']['Hotel'] as $hotel) {

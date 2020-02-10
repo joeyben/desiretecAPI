@@ -32,8 +32,6 @@ class FaqsRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -51,9 +49,6 @@ class FaqsRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Faqs\Faq $faq
-     * @param array                $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * return bool
@@ -71,8 +66,6 @@ class FaqsRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Faqs\Faq $faq
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -87,8 +80,7 @@ class FaqsRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Faqs\Faq $faq
-     * @param string               $status
+     * @param string $status
      *
      * @throws \App\Exceptions\GeneralException
      *

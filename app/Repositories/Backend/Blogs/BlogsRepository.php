@@ -60,8 +60,6 @@ class BlogsRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -100,9 +98,6 @@ class BlogsRepository extends BaseRepository
 
     /**
      * Update Blog.
-     *
-     * @param \App\Models\Blogs\Blog $blog
-     * @param array                  $input
      */
     public function update(Blog $blog, array $input)
     {
@@ -137,9 +132,7 @@ class BlogsRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.blogs.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.blogs.update_error'));
         });
     }
 
@@ -193,8 +186,6 @@ class BlogsRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Blogs\Blog $blog
-     *
      * @throws GeneralException
      *
      * @return bool

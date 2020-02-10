@@ -9,8 +9,6 @@ class GroupObserver
 {
     /**
      * Handle the group "created" event.
-     *
-     * @param \Modules\Groups\Entities\Group $group
      */
     public function creating(Group $group)
     {
@@ -19,8 +17,6 @@ class GroupObserver
 
     /**
      * Handle the group "updated" event.
-     *
-     * @param \Modules\Groups\Entities\Group $group
      */
     public function updating(Group $group)
     {
@@ -29,8 +25,6 @@ class GroupObserver
 
     /**
      * Handle the group "deleted" event.
-     *
-     * @param \Modules\Groups\Entities\Group $group
      */
     public function deleting(Group $group)
     {
@@ -39,8 +33,6 @@ class GroupObserver
 
     /**
      * Handle the group "restored" event.
-     *
-     * @param \Modules\Groups\Entities\Group $group
      */
     public function restoring(Group $group)
     {
@@ -49,8 +41,6 @@ class GroupObserver
 
     /**
      * Handle the group "force deleted" event.
-     *
-     * @param \Modules\Groups\Entities\Group $group
      */
     public function forceDeleted(Group $group)
     {

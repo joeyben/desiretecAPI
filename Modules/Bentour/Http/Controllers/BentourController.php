@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
-use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Bentour\Http\Requests\StoreWishRequest;
+use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 
 class BentourController extends Controller
 {
@@ -61,7 +61,6 @@ class BentourController extends Controller
     /**
      * Return the specified resource.
      *
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request)
@@ -81,10 +80,6 @@ class BentourController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
-     * @param WishesRepository $wish
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -132,8 +127,7 @@ class BentourController extends Controller
     /**
      * Create new user from Layer.
      *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
+     * @param UserRepository $user
      *
      * @return UserRepository $user
      */
@@ -145,7 +139,7 @@ class BentourController extends Controller
 
             return $new_user;
         }
-        $input['whitelabel_name'] = $this->whitelabel->getById(intval($this->whitelabelId))['display_name'];
+        $input['whitelabel_name'] = $this->whitelabel->getById((int) ($this->whitelabelId))['display_name'];
 
         $new_user = $user->create($input);
         $new_user->storeToken();
@@ -159,7 +153,6 @@ class BentourController extends Controller
      * Create new user from Layer.
      *
      * @param WishesRepository $wish
-     * @param StoreWishRequest $request
      *
      * @return object
      */
@@ -168,7 +161,7 @@ class BentourController extends Controller
         $request->merge(['featured_image' => 'bg.jpg']);
 
         $new_wish = $wish->create(
-            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3','ages4'),
+            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'),
              $this->whitelabelId
         );
 

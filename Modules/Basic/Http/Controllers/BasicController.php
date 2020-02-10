@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
-use Modules\Categories\Repositories\Contracts\CategoriesRepository;
-use Modules\Basic\Http\Requests\StoreWishRequest;
 use Modules\Basic\Http\Repositories\BasicRepository;
+use Modules\Basic\Http\Requests\StoreWishRequest;
+use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 
 class BasicController extends Controller
 {
@@ -71,16 +71,15 @@ class BasicController extends Controller
     /**
      * Return the specified resource.
      *
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request)
     {
         $input = $request->only('variant');
-        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
         $whitelabel = $this->whitelabel->getByName('Basic');
 
-        $html = view('basic::'.$layer)->with([
+        $html = view('basic::' . $layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -91,16 +90,16 @@ class BasicController extends Controller
 //            'layers'       => $this->basic->getLayersData($whitelabel),
             'layers'       => [
                 [
-                    'name' => 'Hotel',
+                    'name'   => 'Hotel',
                     'active' => false
-                ],[
-                    'name' => 'Flight',
+                ], [
+                    'name'   => 'Flight',
                     'active' => true
-                ],[
-                    'name' => 'package',
+                ], [
+                    'name'   => 'package',
                     'active' => false
-                ],[
-                    'name' => 'cruise',
+                ], [
+                    'name'   => 'cruise',
                     'active' => false
                 ]
             ]
@@ -112,24 +111,20 @@ class BasicController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
-     * @param WishesRepository $wish
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
         $input = $request->all();
         if ($request->failed()) {
-            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
-            $html = view('basic::'.$layer)->with([
+            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+            $html = view('basic::' . $layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
-                'request' => $request->all()
+                'request'      => $request->all()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -162,8 +157,7 @@ class BasicController extends Controller
     /**
      * Create new user from Layer.
      *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
+     * @param UserRepository $user
      *
      * @return UserRepository $user
      */
@@ -175,7 +169,7 @@ class BasicController extends Controller
 
             return $new_user;
         }
-        $input['whitelabel_name'] = $this->whitelabel->getById(intval($this->whitelabelId))['display_name'];
+        $input['whitelabel_name'] = $this->whitelabel->getById((int) ($this->whitelabelId))['display_name'];
 
         $new_user = $user->create($input);
         $new_user->storeToken();
@@ -189,7 +183,6 @@ class BasicController extends Controller
      * Create new user from Layer.
      *
      * @param WishesRepository $wish
-     * @param StoreWishRequest $request
      *
      * @return object
      */
@@ -221,7 +214,7 @@ class BasicController extends Controller
     }
 
     public function getPDF()
-        {
-            return view('basic::layer.pdf');
-        }
+    {
+        return view('basic::layer.pdf');
+    }
 }

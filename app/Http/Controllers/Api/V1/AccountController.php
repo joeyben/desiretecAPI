@@ -21,7 +21,6 @@ class AccountController extends APIController implements AccountControllerInterf
             $this->repository->updateProfile($id, $request->all());
 
             return $this->respondUpdated('account updated successfully');
-
         } catch (Exception $e) {
             return $this->respondWithError($e);
         }

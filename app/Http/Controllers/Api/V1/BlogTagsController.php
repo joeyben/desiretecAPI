@@ -41,8 +41,6 @@ class BlogTagsController extends APIController
     /**
      * Return the specified resource.
      *
-     * @param BlogTag $blog_tag
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(BlogTag $blog_tag)
@@ -52,8 +50,6 @@ class BlogTagsController extends APIController
 
     /**
      * Creates the Resource for BlogTag.
-     *
-     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -71,9 +67,6 @@ class BlogTagsController extends APIController
 
     /**
      * Update BlogTag.
-     *
-     * @param BlogTag $blog_tag
-     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -95,7 +88,6 @@ class BlogTagsController extends APIController
     /**
      * Delete BlogTag.
      *
-     * @param BlogTag              $blog_tag
      * @param DeleteBlogTagRequest $request
      *
      * @return \Illuminate\Http\JsonResponse

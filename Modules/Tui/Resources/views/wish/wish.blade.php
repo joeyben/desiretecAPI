@@ -326,7 +326,7 @@
 
                         @if ($age)
                             {{ $age }}
-                            <?php $count++; ?>
+                            <?php ++$count; ?>
                         @endif
                     @endforeach
                 )</div>

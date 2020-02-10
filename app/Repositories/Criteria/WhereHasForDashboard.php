@@ -28,8 +28,7 @@ class WhereHasForDashboard
     /**
      * WhereHasForDashboard constructor.
      *
-     * @param string $relation
-     * @param        $closure
+     * @param $closure
      */
     public function __construct(string $relation, $closure)
     {

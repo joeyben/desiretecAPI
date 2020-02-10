@@ -25,8 +25,6 @@ class RestoredWhitelabelNotification extends Notification implements ShouldBroad
 
     /**
      * Create a new notification instance.
-     *
-     * @param \Modules\Whitelabels\Entities\Whitelabel $whitelabel
      */
     public function __construct(Whitelabel $whitelabel)
     {

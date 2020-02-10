@@ -72,7 +72,6 @@ class LastminuteController extends Controller
     /**
      * Return the specified resource.
      *
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request)
@@ -95,10 +94,6 @@ class LastminuteController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
-     * @param WishesRepository $wish
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -136,13 +131,13 @@ class LastminuteController extends Controller
         $contents = $view->render();
 
         $details = [
-            'email' => $newUser->email,
-            'token' => $newUser->token->token,
-            'email_name' => trans('autooffers.email.name'),
-            'email_subject' => trans('autooffer.email.subject'),
-            'email_content' => $contents,
+            'email'            => $newUser->email,
+            'token'            => $newUser->token->token,
+            'email_name'       => trans('autooffers.email.name'),
+            'email_subject'    => trans('autooffer.email.subject'),
+            'email_content'    => $contents,
             'current_wl_email' => getCurrentWhiteLabelEmail(),
-            'type'  => 0
+            'type'             => 0
         ];
         dispatch((new sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addSeconds(1)));
 
@@ -167,8 +162,7 @@ class LastminuteController extends Controller
     /**
      * Create new user from Layer.
      *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
+     * @param UserRepository $user
      *
      * @return UserRepository $user
      */
@@ -194,21 +188,19 @@ class LastminuteController extends Controller
      * Create new user from Layer.
      *
      * @param WishesRepository $wish
-     * @param StoreWishRequest $request
      *
      * @return object
      */
     private function createWishFromLayer(StoreWishRequest $request, $wish)
     {
         $input = $request->all();
-        $ages1 = isset($input['ages1']) ? $input['ages1']."," : '';
-        $ages2 = isset($input['ages2']) ? $input['ages2']."," : '';
-        $ages3 = isset($input['ages3']) ? $input['ages3']."," : '';
+        $ages1 = isset($input['ages1']) ? $input['ages1'] . ',' : '';
+        $ages2 = isset($input['ages2']) ? $input['ages2'] . ',' : '';
+        $ages3 = isset($input['ages3']) ? $input['ages3'] . ',' : '';
         $ages4 = isset($input['ages4']) ? $input['ages4'] : '';
-        $ages = rtrim($ages1.$ages2.$ages3.$ages4, ",");
+        $ages = rtrim($ages1 . $ages2 . $ages3 . $ages4, ',');
 
-
-        $request->merge(['featured_image' => 'bg.jpg','ages' => $ages]);
+        $request->merge(['featured_image' => 'bg.jpg', 'ages' => $ages]);
 
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3'),

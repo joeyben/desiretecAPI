@@ -6,8 +6,6 @@ interface ActivitiesRepository
 {
     /**
      * @param $subject
-     *
-     * @return array
      */
     public function byModel($subject): array;
 }

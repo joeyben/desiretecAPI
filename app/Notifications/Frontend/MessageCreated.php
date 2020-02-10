@@ -45,7 +45,6 @@ class MessageCreated extends Notification
      * @param $wish_id
      * @param $token
      * @param $type
-     * @param Message $message
      */
     public function __construct($wish_id, $type, $token, Message $message)
     {

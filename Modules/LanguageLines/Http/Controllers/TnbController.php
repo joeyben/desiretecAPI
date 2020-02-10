@@ -14,7 +14,6 @@ use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Translation\Translator;
 use Modules\LanguageLines\Http\Requests\FooterTnbStoreRequest;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
@@ -72,18 +71,6 @@ class TnbController extends Controller
 
     /**
      * LanguageLines constructor.
-     *
-     * @param LanguageLinesRepository                                           $languageline
-     * @param \Illuminate\Routing\ResponseFactory                               $response
-     * @param \Illuminate\Auth\AuthManager                                      $auth
-     * @param \Illuminate\Translation\Translator                                $lang
-     * @param \Illuminate\Support\Carbon                                        $carbon
-     * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
-     * @param \Illuminate\Database\DatabaseManager                              $database
-     * @param \Illuminate\Notifications\ChannelManager                          $notification
-     * @param \App\Models\Access\Role\Role                                      $role
-     * @param \Modules\Languages\Repositories\Contracts\LanguagesRepository     $languages
-     * @param \Illuminate\Contracts\Console\Kernel                              $artisan
      */
     public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role, LanguagesRepository $languages, Kernel $artisan)
     {
@@ -154,8 +141,6 @@ class TnbController extends Controller
 
     /**
      * Edit already existing Teilnahmebedingungen or Create new Teilnahmebedingungen.
-     *
-     * @param FooterTnbStoreRequest $request
      *
      * @return Response
      */

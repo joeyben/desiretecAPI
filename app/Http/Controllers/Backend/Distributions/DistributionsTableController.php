@@ -23,8 +23,6 @@ class DistributionsTableController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Distributions\ManageDistributionsRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageDistributionsRequest $request)

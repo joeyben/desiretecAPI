@@ -24,8 +24,6 @@ class CloneLanguageLinesNotification extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @param string $count
      */
     public function __construct(string $count)
     {

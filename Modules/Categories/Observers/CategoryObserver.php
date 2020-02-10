@@ -9,8 +9,6 @@ class CategoryObserver
 {
     /**
      * Handle the category "created" event.
-     *
-     * @param \BrianFaust\Categories\Models\Category $category
      */
     public function creating(Category $category)
     {
@@ -19,8 +17,6 @@ class CategoryObserver
 
     /**
      * Handle the category "updated" event.
-     *
-     * @param \BrianFaust\Categories\Models\Category $category
      */
     public function updating(Category $category)
     {
@@ -29,8 +25,6 @@ class CategoryObserver
 
     /**
      * Handle the category "deleted" event.
-     *
-     * @param \BrianFaust\Categories\Models\Category $category
      */
     public function deleting(Category $category)
     {
@@ -39,8 +33,6 @@ class CategoryObserver
 
     /**
      * Handle the category "restored" event.
-     *
-     * @param \BrianFaust\Categories\Models\Category $category
      */
     public function restoring(Category $category)
     {
@@ -49,8 +41,6 @@ class CategoryObserver
 
     /**
      * Handle the category "force deleted" event.
-     *
-     * @param \BrianFaust\Categories\Models\Category $category
      */
     public function forceDeleted(Category $category)
     {

@@ -75,8 +75,6 @@ class RegionsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request $request
-     *
      * @return Response
      */
     public function view(Request $request)
@@ -106,8 +104,6 @@ class RegionsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function create(Request $request)
@@ -134,9 +130,6 @@ class RegionsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     *
-     * @param \Modules\Regions\Http\Requests\StoreRegionRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -172,8 +165,6 @@ class RegionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function edit(int $id)
@@ -205,9 +196,6 @@ class RegionsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Modules\Regions\Http\Requests\UpdateRegionRequest $request
-     * @param int                                                $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateRegionRequest $request, int $id)
@@ -234,8 +222,6 @@ class RegionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
@@ -255,8 +241,6 @@ class RegionsController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function restore(int $id)
@@ -276,8 +260,6 @@ class RegionsController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function forceDelete(int $id)

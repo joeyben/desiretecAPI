@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'https://bentour.com',
+
+$domain_env = [
+    'local_url'       => 'https://bentour.com',
     'development_url' => 'https://bentour.reise-wunsch.com',
-    'production_url' => 'https://bentour.reisewunschservice.de',
-);
+    'production_url'  => 'https://bentour.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'BentourWishesController@validateTokenList');
     });
 });
-

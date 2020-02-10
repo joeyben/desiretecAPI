@@ -55,8 +55,6 @@ class ContactRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return mixed
@@ -83,9 +81,6 @@ class ContactRepository extends BaseRepository
 
     /**
      * Update Contact.
-     *
-     * @param \App\Models\Contact\Contact $contact
-     * @param array                       $input
      */
     public function update(Contact $contact, array $input)
     {
@@ -98,15 +93,11 @@ class ContactRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.contact.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.contact.update_error'));
         });
     }
 
     /**
-     * @param \App\Models\Contact\Contact $contact
-     *
      * @throws GeneralException
      *
      * @return bool

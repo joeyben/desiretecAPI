@@ -147,9 +147,8 @@ if (!function_exists('createNotification')) {
     /**
      * create new notification.
      *
-     * @param          $message message you want to show in notification
-     * @param          $userId  To Whom You Want To send Notification
-     * @param int|null $fromId
+     * @param $message message you want to show in notification
+     * @param $userId  To Whom You Want To send Notification
      *
      * @return object
      */
@@ -568,8 +567,6 @@ if (!function_exists('category_name_by_value')) {
     /**
      * Set locale.
      *
-     * @param string $value
-     *
      * @return string
      */
     function category_name_by_value(string $value)
@@ -688,9 +685,10 @@ if (!function_exists('getRegionCode')) {
         $regions = explode(',', $value);
 
         $codes = [];
-        foreach ($regions as $region){
+        foreach ($regions as $region) {
             array_push($codes, str_replace('region.', '', \App\Models\Regions::where('regionName', 'like', '%' . $region . '%')->where('type', $type)->first()->regionCode));
         }
+
         return $codes;
     }
 }
@@ -835,7 +833,7 @@ if (!function_exists('live_preview_url')) {
     }
 }
 
-/**
+/*
  * Returns the Domain for the current WL
  */
 if (!function_exists('get_current_whitelabel_url')) {

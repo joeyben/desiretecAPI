@@ -1,10 +1,7 @@
 <?php
 
-
 namespace App\Models\Layers;
 
-
-use App\Models\Layers\Layer;
 use Illuminate\Database\Eloquent\Model;
 
 class WhitelableLayer extends Model
@@ -36,7 +33,8 @@ class WhitelableLayer extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function layers(){
-        return $this->hasOne(Layer::Class, 'id', 'layer_id');
+    public function layers()
+    {
+        return $this->hasOne(Layer::class, 'id', 'layer_id');
     }
 }

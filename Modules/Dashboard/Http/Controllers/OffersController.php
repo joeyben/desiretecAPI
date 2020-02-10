@@ -52,14 +52,6 @@ class OffersController extends Controller
 
     /**
      * WishesController constructor.
-     *
-     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository           $wishes
-     * @param \Illuminate\Routing\ResponseFactory                               $response
-     * @param \Illuminate\Auth\AuthManager                                      $auth
-     * @param \Illuminate\Translation\Translator                                $lang
-     * @param \Carbon\Carbon                                                    $carbon
-     * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
-     * @param \Modules\Dashboard\Repositories\Contracts\DashboardRepository     $dashboard
      */
     public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DashboardRepository $dashboard)
     {
@@ -82,15 +74,13 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function wishesMonth(Request $request)
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
-            $startDate = null === $request->get('start') ? '' : str_replace('-', '',$request->get('start'));
+            $startDate = null === $request->get('start') ? '' : str_replace('-', '', $request->get('start'));
             $endDate = null === $request->get('end') ? '' : str_replace('-', '', $request->get('end'));
 
             if (null === $whitelabelId) {
@@ -121,7 +111,7 @@ class OffersController extends Controller
     {
         try {
             $whitelabelId = $request->get('whitelabelId');
-            $startDate = null === $request->get('start') ? '' : str_replace('-', '',$request->get('start'));
+            $startDate = null === $request->get('start') ? '' : str_replace('-', '', $request->get('start'));
             $endDate = null === $request->get('end') ? '' : str_replace('-', '', $request->get('end'));
 
             if (null === $whitelabelId) {
@@ -257,7 +247,7 @@ class OffersController extends Controller
             $result['phone'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams1, $startDate, $endDate);
             $result['tablet'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams2, $startDate, $endDate);
 
-            for ($i=0; $i<count($result['phone']); $i++) {
+            for ($i = 0; $i < \count($result['phone']); ++$i) {
                 $result['mobile'][$i][0] = $result['phone'][$i][0];
                 $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1];
             }
@@ -309,7 +299,7 @@ class OffersController extends Controller
             $result['phone'] = $this->dashboard->uniqueEventsDay($viewId, $optParams1, $startDate, $endDate);
             $result['tablet'] = $this->dashboard->uniqueEventsDay($viewId, $optParams2, $startDate, $endDate);
 
-            for ($i=0; $i<count($result['phone']); $i++) {
+            for ($i = 0; $i < \count($result['phone']); ++$i) {
                 $result['mobile'][$i][0] = $result['phone'][$i][0];
                 $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1];
             }
@@ -679,8 +669,6 @@ class OffersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -709,8 +697,6 @@ class OffersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */

@@ -25,8 +25,6 @@ class RolesController extends APIController
     /**
      * Return the roles.
      *
-     * @param Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
@@ -43,8 +41,6 @@ class RolesController extends APIController
     /**
      * Return the specified resource.
      *
-     * @param Role $role
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Role $role)
@@ -54,8 +50,6 @@ class RolesController extends APIController
 
     /**
      * Creates the Resource for Role.
-     *
-     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -74,9 +68,6 @@ class RolesController extends APIController
 
     /**
      * Update Role.
-     *
-     * @param Request $request
-     * @param Role    $role
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -98,9 +89,6 @@ class RolesController extends APIController
     /**
      *  Delete Role.
      *
-     * @param Role    $role
-     * @param Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Role $role, Request $request)
@@ -116,8 +104,7 @@ class RolesController extends APIController
     /**
      * validateUser Role Requests.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return Validator object
      */

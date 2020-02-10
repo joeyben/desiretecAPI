@@ -31,9 +31,9 @@ class LanguageLines extends LanguageLine
      * @var string
      */
     protected $casts = [
-        'default' => 'boolean',
+        'default'    => 'boolean',
         'is_updated' => 'boolean',
-        'licence' => 'integer',
+        'licence'    => 'integer',
     ];
 
     /**

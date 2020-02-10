@@ -23,8 +23,6 @@ class WhereMonth
 
     /**
      * WhereMonth constructor.
-     *
-     * @param string|null $month
      */
     public function __construct(string $month = null)
     {
@@ -33,8 +31,6 @@ class WhereMonth
 
     /**
      * @param $model
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply($model): Builder
     {

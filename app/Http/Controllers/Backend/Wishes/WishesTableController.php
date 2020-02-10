@@ -23,8 +23,6 @@ class WishesTableController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageWishesRequest $request)

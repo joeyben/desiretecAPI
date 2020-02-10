@@ -64,8 +64,6 @@ class WhitelabelsRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -96,9 +94,6 @@ class WhitelabelsRepository extends BaseRepository
 
     /**
      * Update Whitelabel.
-     *
-     * @param \App\Models\Whitelabels\Whitelabel $whitelabel
-     * @param array                              $input
      */
     public function update(Whitelabel $whitelabel, array $input)
     {
@@ -117,15 +112,11 @@ class WhitelabelsRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.whitelabels.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.whitelabels.update_error'));
         });
     }
 
     /**
-     * @param \App\Models\Whitelabels\Whitelabel $whitelabel
-     *
      * @throws GeneralException
      *
      * @return bool

@@ -23,8 +23,6 @@ class DeactivatedUsersController extends APIController
     /**
      * Return the  deactivated users.
      *
-     * @param Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)

@@ -1,20 +1,11 @@
 <?php
 
-
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Frontend\Offers\ManageOffersRequest;
 use App\Http\Requests\Frontend\Offers\StoreOffersRequest;
-use App\Models\Agents\Agent;
 use App\Repositories\Frontend\Offers\OffersRepository;
-use PHPUnit\Exception;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Controllers\Frontend\Offers\OffersTableController;
-use Illuminate\Http\Request;
 
 class OffersController extends APIController
-
 {
     protected $offer;
     protected $offersList;
@@ -45,13 +36,10 @@ class OffersController extends APIController
         }
     }
 
-    /**
-     *
-     */
     public function store(StoreOffersRequest $request)
     {
-        try{
-            if($this->offer->createTemp($request)){
+        try {
+            if ($this->offer->createTemp($request)) {
                 return $this->respondCreated(trans('alerts.frontend.offers.created'));
             }
 

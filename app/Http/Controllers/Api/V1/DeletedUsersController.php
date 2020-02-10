@@ -23,8 +23,6 @@ class DeletedUsersController extends APIController
     /**
      *  Return the  deleted users.
      *
-     * @param Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)

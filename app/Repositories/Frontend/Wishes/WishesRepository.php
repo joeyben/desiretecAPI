@@ -113,7 +113,8 @@ class WishesRepository extends BaseRepository
         return $query;
     }
 
-    public function getWishList(ManageWishesRequest $request){
+    public function getWishList(ManageWishesRequest $request)
+    {
         $status_arr = [
             'new'               => '1',
             'offer_created'     => '2',
@@ -121,12 +122,12 @@ class WishesRepository extends BaseRepository
         ];
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
-        $id = ($request->get('filter') && !is_null($request->get('filter')) && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
-        $destination = ($request->get('filter') && !is_null($request->get('filter')) && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
+        $id = ($request->get('filter') && null !== $request->get('filter') && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
+        $destination = ($request->get('filter') && null !== $request->get('filter') && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
         $currentWhiteLabelID = Auth::guard('api')->user()->whitelabels()->first()->id;
         $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
 
-        if(Auth::guard('api')->user()->hasRole('User')) {
+        if (Auth::guard('api')->user()->hasRole('User')) {
             $wish = $this->getForDataTable()
                 ->when($currentWhiteLabelID, function ($wish, $currentWhiteLabelID) {
                     return $wish->where('whitelabel_id', (int) ($currentWhiteLabelID));
@@ -156,13 +157,13 @@ class WishesRepository extends BaseRepository
         }
 
         foreach ($wish as $singleWish) {
-            $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
+            $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
 
-            if(Auth::guard('api')->user()->hasRole('Seller')) {
-                if($currentWhiteLabelID === 198) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
-                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
+            if (Auth::guard('api')->user()->hasRole('Seller')) {
+                if (198 === $currentWhiteLabelID) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
+                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && null !== $this->users->find($singleWish['created_by'])->email) ? $this->users->find($singleWish['created_by'])->email : 'No Email';
                 }
-                if($singleWish->messages() && $singleWish->messages()->count() > 0) {
+                if ($singleWish->messages() && $singleWish->messages()->count() > 0) {
                     $singleWish['messageSentFlag'] = true;
                 }
             }
@@ -206,10 +207,7 @@ class WishesRepository extends BaseRepository
         return $response;
     }
 
-
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest $request
-     *
      * @return JSON response
      */
     public function changeWishStatus(ChangeWishesStatusRequest $request)
@@ -263,8 +261,7 @@ class WishesRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     * @param int   $whitelabelId
+     * @param int $whitelabelId
      *
      * @throws \App\Exceptions\GeneralException
      *
@@ -280,7 +277,7 @@ class WishesRepository extends BaseRepository
             $input['whitelabel_id'] = $whitelabelId;
             $input['group_id'] = $this->getGroup();
             $input['title'] = '-';
-            $input['duration'] = $input['duration'] === "0" ? "7-" : $input['duration'];
+            $input['duration'] = '0' === $input['duration'] ? '7-' : $input['duration'];
             $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
             $input['latest_return'] = $input['latest_return'] ? \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']) : '0000-00-00';
             $input['adults'] = (int) ($input['adults']);
@@ -327,9 +324,6 @@ class WishesRepository extends BaseRepository
 
     /**
      * Update Wish.
-     *
-     * @param \App\Models\Wishes\Wish $wish
-     * @param array                   $input
      */
     public function update(Wish $wish, array $input)
     {
@@ -348,15 +342,11 @@ class WishesRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.wishes.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
         });
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @throws GeneralException
      *
      * @return bool
@@ -483,8 +473,7 @@ class WishesRepository extends BaseRepository
     /**
      * Find data by multiple values in one field.
      *
-     * @param \Modules\Wishes\Entities\Wish $wish
-     * @param                               $category
+     * @param $category
      */
     public function storeCategoryWish($category, \Modules\Wishes\Entities\Wish $wish)
     {
@@ -499,9 +488,6 @@ class WishesRepository extends BaseRepository
 
     /**
      * Update Wish Status.
-     *
-     * @param int    $id
-     * @param string $updatedStatus
      */
     public function updateStatus(int $id, string $updatedStatus)
     {
@@ -514,9 +500,7 @@ class WishesRepository extends BaseRepository
 
             return false;
 
-            throw new GeneralException(
-                trans('exceptions.backend.wishes.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
         });
         if ($update) {
             return true;
@@ -525,11 +509,6 @@ class WishesRepository extends BaseRepository
         return false;
     }
 
-
-    /**
-    * @param int    $id
-    * @param string $note
-    */
     public function updateNote(int $id, string $note)
     {
         DB::transaction(function () use ($id, $note) {
@@ -540,7 +519,6 @@ class WishesRepository extends BaseRepository
             throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
         });
     }
-
 
     /**
      * @param \App\Models\Wishes\Wish $wish
@@ -600,7 +578,8 @@ class WishesRepository extends BaseRepository
         }
     }
 
-    public function callTraffics($wishID){
+    public function callTraffics($wishID)
+    {
         $wish = Wish::where('id', $wishID)->first();
         $_rules = $this->autoRules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
         //dd(getRegionCode($wish->airport, 0));
