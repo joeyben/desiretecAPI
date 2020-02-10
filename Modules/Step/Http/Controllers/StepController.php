@@ -2,71 +2,28 @@
 
 namespace Modules\Step\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Services\Flag\Src\Flag;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Routing\Controller;
 
 class StepController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @return Response
+     * @var \Illuminate\Auth\AuthManager
      */
-    public function index()
+    private $auth;
+
+    public function __construct(AuthManager $auth)
     {
-        return view('step::index');
+        $this->auth = $auth;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
+    public function step(int $step)
     {
-        return view('step::create');
-    }
+        $whitelabel = $this->auth->user()->whitelabels()->first();
+        $quote = ($whitelabel->state * 100) / Flag::MAX_STEP;
+        $quote = number_format($quote, 2, '.', '');
 
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-    }
-
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
-    public function show()
-    {
-        return view('step::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('step::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
-    public function destroy()
-    {
+        return view('step::index', compact(['quote']));
     }
 }

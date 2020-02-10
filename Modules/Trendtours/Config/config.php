@@ -1,10 +1,12 @@
 <?php
 
 return [
-    'name'                 => 'Trendtours',
-    'id'                   => env('TRENDTOURS_ID', 39),
-    'locale'               => 'de',
-    'url'                  => 'https://trendtours.' . Config('APP_ENV_URL'),
+    'name' => 'Trendtours',
+    'id'   => env('$MODULEID$', 39),
+    'locale' => 'de',
     'language_lines_table' => 'language_lines_trendtours',
-    'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class
+    'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
+    'local_url' => 'https://trendtours.com',
+    'development_url' => 'https://trendtours.reise-wunsch.com',
+    'production_url' => 'https://trendtours.reisewunschservice.de',
 ];
