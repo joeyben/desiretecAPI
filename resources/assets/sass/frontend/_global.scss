@@ -327,6 +327,12 @@ a.primary-btn, input.primary-btn{
     margin: 40px 0;
   }
 }
+.ellipsised{
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
 .section-contact{
   p,a{
     font-weight: 100;

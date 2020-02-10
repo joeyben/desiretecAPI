@@ -6,7 +6,9 @@
 
     <div class="col-md-3">
         <i class="fal fa-plane-departure"></i>
-        <input class="data-content airport-mousehover" value="{{ $wish->airport }}">
+        <div class="data-content ellipsised" id="departure-mousehover-value">
+            {{ $wish->airport }}
+        </div>
         <span id="departure-mousehover"></span>
         <div class="departure-tooltip">
             {{ $wish->airport }}
@@ -27,7 +29,9 @@
 
     <div class="col-md-3">
         <i class="fal fa-plane-arrival"></i>
-        <input class="data-content airport-mousehover" value="{{ $wish->destination }}">
+        <div class="data-content ellipsised" id="arrival-mousehover-value">
+            {{ $wish->destination }}
+        </div>
         <span id="arrival-mousehover"></span>
         <div class="arrival-tooltip">
             {{ $wish->destination }}
