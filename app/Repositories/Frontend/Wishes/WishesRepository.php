@@ -280,6 +280,9 @@ class WishesRepository extends BaseRepository
             $input['whitelabel_id'] = $whitelabelId;
             $input['group_id'] = $this->getGroup();
             $input['title'] = '-';
+            $input['budget'] = $input['budget'] === null ? 0 : $input['budget'];
+            $input['category'] = $input['category'] === null ? 3 : $input['category'];
+            $input['duration'] = '0' === $input['duration'] ? '7-' : $input['duration'];
             $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
             $input['latest_return'] = $input['latest_return'] ? \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']) : '0000-00-00';
             $input['adults'] = (int) ($input['adults']);
