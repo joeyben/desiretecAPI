@@ -24,10 +24,9 @@ class WishesSubscriber
     private $wish;
 
     private $wishRepo;
+
     /**
      * Create the event listener.
-     *
-     * @param \Modules\Wishes\Entities\Wish $wish
      */
     public function __construct(Wish $wish, WishesRepository $wishRepo)
     {
@@ -63,7 +62,7 @@ class WishesSubscriber
         if ($wish->whitelabel->isAutooffer()) {
             //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish)));
         }
-        if ($wishTye === 0) {
+        if (0 === $wishTye) {
             Notification::send($users, new CreatedWishNotificationForSeller($wish));
         }
 

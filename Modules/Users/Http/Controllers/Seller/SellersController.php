@@ -24,7 +24,6 @@ use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\ResponseFactory;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
@@ -76,15 +75,6 @@ class SellersController
 
     /**
      * SellersController constructor.
-     *
-     * @param \Modules\Users\Repositories\Contracts\UsersRepository             $users
-     * @param \Illuminate\Routing\ResponseFactory                               $response
-     * @param \Illuminate\Auth\AuthManager                                      $auth
-     * @param \Illuminate\Translation\Translator                                $lang
-     * @param \Modules\Groups\Repositories\Contracts\GroupsRepository           $groups
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
-     * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
-     * @param \Illuminate\Notifications\ChannelManager                          $notification
      */
     public function __construct(UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, GroupsRepository $groups, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, ChannelManager $notification)
     {
@@ -109,8 +99,6 @@ class SellersController
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function view(Request $request)
@@ -133,7 +121,7 @@ class SellersController
                         $usersForWhitelabels[] = $user->id;
                     }
                 }
-            } else if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            } elseif ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                 $users = User::whereHas('roles', function ($query) {
                     $query->where('roles.name', Flag::SELLER_ROLE);
                 })->get();
@@ -170,8 +158,6 @@ class SellersController
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -220,8 +206,6 @@ class SellersController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function create(Request $request)
@@ -266,9 +250,6 @@ class SellersController
     /**
      * Update the specified resource in storage.
      *
-     * @param \Modules\Users\Http\Requests\UpdateSellerRequest $request
-     * @param int                                              $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateSellerRequest $request, int $id)
@@ -301,8 +282,6 @@ class SellersController
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Modules\Users\Http\Requests\StoreSellerRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */

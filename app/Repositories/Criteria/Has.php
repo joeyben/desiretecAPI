@@ -25,8 +25,6 @@ class Has
      * Check if entity has relation.
      *
      * @param $model
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply($model): Builder
     {

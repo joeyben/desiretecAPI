@@ -78,7 +78,6 @@ class LoginController extends Controller
     }
 
     /**
-     * @param Request $request
      * @param $user
      *
      * @throws GeneralException
@@ -121,8 +120,6 @@ class LoginController extends Controller
 
     /**
      * Log the user out of the application.
-     *
-     * @param Request $request
      *
      * @return \Illuminate\Http\Response
      */

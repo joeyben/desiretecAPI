@@ -53,8 +53,6 @@ class BlogsController extends APIController
     /**
      * Creates the Resource for Blog.
      *
-     * @param Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
@@ -72,9 +70,6 @@ class BlogsController extends APIController
 
     /**
      * Update blog.
-     *
-     * @param Blog    $blog
-     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -95,9 +90,6 @@ class BlogsController extends APIController
 
     /**
      * Delete Blog.
-     *
-     * @param Blog    $blog
-     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */

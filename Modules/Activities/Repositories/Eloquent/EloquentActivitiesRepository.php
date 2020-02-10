@@ -26,8 +26,6 @@ class EloquentActivitiesRepository extends RepositoryAbstract implements Activit
 
     /**
      * @param $subject
-     *
-     * @return array
      */
     public function byModel($subject): array
     {

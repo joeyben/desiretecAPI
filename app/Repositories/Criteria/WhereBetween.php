@@ -31,10 +31,6 @@ class WhereBetween
 
     /**
      * WhereBetween constructor.
-     *
-     * @param string      $column
-     * @param string|null $start
-     * @param string|null $end
      */
     public function __construct(string $column, string $start = null, string $end = null)
     {
@@ -45,8 +41,6 @@ class WhereBetween
 
     /**
      * @param $model
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply($model): Builder
     {

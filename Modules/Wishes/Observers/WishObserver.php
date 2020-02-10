@@ -9,8 +9,6 @@ class WishObserver
 {
     /**
      * Handle the wish "created" event.
-     *
-     * @param \Modules\Wishes\Entities\Wish $wish
      */
     public function creating(Wish $wish)
     {
@@ -21,8 +19,6 @@ class WishObserver
 
     /**
      * Handle the wish "updated" event.
-     *
-     * @param \Modules\Wishes\Entities\Wish $wish
      */
     public function updating(Wish $wish)
     {
@@ -31,8 +27,6 @@ class WishObserver
 
     /**
      * Handle the wish "deleted" event.
-     *
-     * @param \Modules\Wishes\Entities\Wish $wish
      */
     public function deleting(Wish $wish)
     {
@@ -41,8 +35,6 @@ class WishObserver
 
     /**
      * Handle the wish "restored" event.
-     *
-     * @param \Modules\Wishes\Entities\Wish $wish
      */
     public function restoring(Wish $wish)
     {
@@ -51,8 +43,6 @@ class WishObserver
 
     /**
      * Handle the wish "force deleted" event.
-     *
-     * @param \Modules\Wishes\Entities\Wish $wish
      */
     public function forceDeleted(Wish $wish)
     {

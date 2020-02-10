@@ -13,9 +13,6 @@ use Modules\LanguageLines\Entities\LanguageLines;
  */
 class LanguageImport implements ToCollection, WithHeadingRow
 {
-    /**
-     * @param \Illuminate\Support\Collection $rows
-     */
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {

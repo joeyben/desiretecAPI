@@ -45,8 +45,6 @@ class StoreWishRequest extends FormRequest
     /**
      * Handle a failed validation attempt.
      *
-     * @param \Illuminate\Contracts\Validation\Validator $validator
-     *
      * @throws \Illuminate\Validation\ValidationException
      *
      * @return JsonResponse

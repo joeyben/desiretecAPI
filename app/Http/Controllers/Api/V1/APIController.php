@@ -220,7 +220,6 @@ class APIController extends Controller
             ->respondWithError($message);
     }
 
-
     public function parseRequest($request)
     {
         return [

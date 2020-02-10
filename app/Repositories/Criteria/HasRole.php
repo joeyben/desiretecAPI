@@ -25,8 +25,6 @@ class HasRole
 
     /**
      * HasRole constructor.
-     *
-     * @param string|null $role
      */
     public function __construct(string $role = null)
     {
@@ -35,8 +33,6 @@ class HasRole
 
     /**
      * @param $model
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply($model): Builder
     {

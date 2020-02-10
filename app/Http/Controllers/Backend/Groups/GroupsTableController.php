@@ -23,8 +23,6 @@ class GroupsTableController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Groups\ManageGroupsRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageGroupsRequest $request)

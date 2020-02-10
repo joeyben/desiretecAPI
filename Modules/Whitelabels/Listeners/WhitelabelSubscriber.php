@@ -21,8 +21,6 @@ class WhitelabelSubscriber
 
     /**
      * Create the event listener.
-     *
-     * @param \Modules\Whitelabels\Entities\Whitelabel $whitelabel
      */
     public function __construct(Whitelabel $whitelabel)
     {

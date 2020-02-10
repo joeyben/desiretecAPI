@@ -18,8 +18,6 @@ class GroupSubscriber
 
     /**
      * Create the event listener.
-     *
-     * @param \Modules\Groups\Entities\Group $group
      */
     public function __construct(Group $group)
     {

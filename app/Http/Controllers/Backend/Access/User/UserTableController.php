@@ -18,17 +18,12 @@ class UserTableController extends Controller
      */
     protected $users;
 
-    /**
-     * @param \App\Repositories\Backend\Access\User\UserRepository $users
-     */
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Access\User\ManageUserRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageUserRequest $request)

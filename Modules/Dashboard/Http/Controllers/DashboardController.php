@@ -62,14 +62,6 @@ class DashboardController extends Controller
 
     /**
      * DashboardController constructor.
-     *
-     * @param \Modules\Dashboard\Repositories\Contracts\DashboardRepository   $dashboard
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository $activities
-     * @param \Illuminate\Routing\ResponseFactory                             $response
-     * @param \Illuminate\Auth\AuthManager                                    $auth
-     * @param \Illuminate\Translation\Translator                              $lang
-     * @param \App\Repositories\Backend\Access\User\UserRepository            $users
-     * @param \Illuminate\Support\Carbon                                      $carbon
      */
     public function __construct(DashboardRepository $dashboard, ActivitiesRepository $activities, ResponseFactory $response, AuthManager $auth, Translator $lang, UserRepository $users, Carbon $carbon, WishesRepository $wishes, OffersRepository $offers, WhitelabelsRepository $whitelabels)
     {
@@ -107,8 +99,6 @@ class DashboardController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */
@@ -170,8 +160,6 @@ class DashboardController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */
@@ -252,8 +240,6 @@ class DashboardController extends Controller
 
     /**
      * Google analytics.
-     *
-     * @param Request $request
      *
      * @return Response
      */

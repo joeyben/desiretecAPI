@@ -29,15 +29,11 @@ class LayersContentController extends Controller
      */
     private $response;
 
-
-
     public function __construct(WhitelabelsRepository $whitelabels, Translator $lang, ResponseFactory $response)
     {
         $this->whitelabels = $whitelabels;
         $this->lang = $lang;
         $this->response = $response;
-
-
     }
 
     /**
@@ -62,8 +58,6 @@ class LayersContentController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */
@@ -92,7 +86,6 @@ class LayersContentController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request)
@@ -105,7 +98,7 @@ class LayersContentController extends Controller
             $layers = $request->get('layers');
             //$this->layersContentService->updateWhitelabelLayersInfo($request, $result['whitelabel']->layers);
 
-            foreach ($result['whitelabel']->layers as $key => $layer){
+            foreach ($result['whitelabel']->layers as $key => $layer) {
                 $pivot = $layer->pivot;
                 $requestPivot = $layers[$key]['pivot'];
 
@@ -115,12 +108,9 @@ class LayersContentController extends Controller
                 $pivot->headline_success = $requestPivot['headline_success'];
                 $pivot->subheadline_success = $requestPivot['subheadline_success'];
                 $pivot->save();
-
             }
 
-
             //dd($result['whitelabel']->layers->where('id', 1));
-
 
             /*$result['whitelabel'] = $this->whitelabels->with()->update(
                 $request->get('id'),

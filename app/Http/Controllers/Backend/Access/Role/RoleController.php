@@ -34,10 +34,6 @@ class RoleController extends Controller
      */
     protected $permissions;
 
-    /**
-     * @param \App\Repositories\Backend\Access\Role\RoleRepository             $roles
-     * @param \App\Repositories\Backend\Access\Permission\PermissionRepository $permissions
-     */
     public function __construct(RoleRepository $roles, PermissionRepository $permissions)
     {
         $this->roles = $roles;
@@ -45,8 +41,6 @@ class RoleController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Access\Role\ManageRoleRequest $request
-     *
      * @return mixed
      */
     public function index(ManageRoleRequest $request)
@@ -55,8 +49,6 @@ class RoleController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Access\Role\CreateRoleRequest $request
-     *
      * @return \App\Http\Responses\Backend\Access\Role\CreateResponse
      */
     public function create(CreateRoleRequest $request)
@@ -65,8 +57,6 @@ class RoleController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Access\Role\StoreRoleRequest $request
-     *
      * @return \App\Http\Responses\RedirectResponse
      */
     public function store(StoreRoleRequest $request)
@@ -77,9 +67,6 @@ class RoleController extends Controller
     }
 
     /**
-     * @param \App\Models\Access\Role\Role                           $role
-     * @param \App\Http\Requests\Backend\Access\Role\EditRoleRequest $request
-     *
      * @return \App\Http\Responses\Backend\Access\Role\EditResponse
      */
     public function edit(Role $role, EditRoleRequest $request)
@@ -88,9 +75,6 @@ class RoleController extends Controller
     }
 
     /**
-     * @param \App\Models\Access\Role\Role                             $role
-     * @param \App\Http\Requests\Backend\Access\Role\UpdateRoleRequest $request
-     *
      * @return \App\Http\Responses\RedirectResponse
      */
     public function update(Role $role, UpdateRoleRequest $request)
@@ -101,9 +85,6 @@ class RoleController extends Controller
     }
 
     /**
-     * @param \App\Models\Access\Role\Role                             $role
-     * @param \App\Http\Requests\Backend\Access\Role\DeleteRoleRequest $request
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return \Illuminate\Http\JsonResponse

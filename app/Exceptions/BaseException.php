@@ -18,10 +18,9 @@ class BaseException extends Exception
     /**
      * BaseException constructor.
      *
-     * @param                 $errorMessage
-     * @param int             $errorCode
-     * @param int             $httpStatusCode
-     * @param \Throwable|null $previous
+     * @param     $errorMessage
+     * @param int $errorCode
+     * @param int $httpStatusCode
      */
     public function __construct(
         $errorMessage = null,

@@ -23,8 +23,6 @@ class ByUser implements CriterionInterface
 
     /**
      * ByUser constructor.
-     *
-     * @param int $userId
      */
     public function __construct(int $userId)
     {
@@ -33,8 +31,6 @@ class ByUser implements CriterionInterface
 
     /**
      * @param $model
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply($model): Builder
     {

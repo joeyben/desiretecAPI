@@ -13,8 +13,6 @@ use Illuminate\Routing\Controller;
 use Modules\Attachments\Repositories\Eloquent\EloquentAttachmentsRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Reiserebellen\Http\Requests\StoreWishRequest;
-use Modules\Reiserebellen\Jobs\callTrafficsApi;
-use Modules\Reiserebellen\Jobs\sendAutoOffersMail;
 
 class ReiserebellenController extends Controller
 {
@@ -70,7 +68,6 @@ class ReiserebellenController extends Controller
     /**
      * Return the specified resource.
      *
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request, WishesRepository $wish)
@@ -93,10 +90,6 @@ class ReiserebellenController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
-     * @param WishesRepository $wish
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -133,7 +126,6 @@ class ReiserebellenController extends Controller
         $wishTye = $wishRepo->manageRules($wish);
 
         if ($wishTye > 0) {
-
             $wishJob = (new \App\Jobs\callTrafficsApi($wish->id, $this->whitelabelId, $newUser->id));
             dispatch($wishJob);
             //$wishRepo->callTraffics($wish->id);
@@ -146,21 +138,21 @@ class ReiserebellenController extends Controller
             $contents = $view->render();
 
             $details = [
-                'email' => $newUser->email,
-                'token' => $newUser->token->token,
-                'type' => 0,
-                'email_name' => trans('autooffers.email.name'),
-                'email_subject' => trans('autooffer.email.subject'),
-                'email_content' => $contents,
+                'email'            => $newUser->email,
+                'token'            => $newUser->token->token,
+                'type'             => 0,
+                'email_name'       => trans('autooffers.email.name'),
+                'email_subject'    => trans('autooffer.email.subject'),
+                'email_content'    => $contents,
                 'current_wl_email' => getCurrentWhiteLabelEmail()
             ];
-            dispatch((new \App\Jobs\sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addMinutes(rand(1,2))));
+            dispatch((new \App\Jobs\sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addMinutes(rand(1, 2))));
             $is_autooffer = true;
         }
 
         $html = view('reiserebellen::layer.created')->with([
-            'token' => $newUser->token->token,
-            'id'    => $wish->id,
+            'token'    => $newUser->token->token,
+            'id'       => $wish->id,
             'is_auto'  => $is_autooffer
         ])->render();
 
@@ -180,8 +172,7 @@ class ReiserebellenController extends Controller
     /**
      * Create new user from Layer.
      *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
+     * @param UserRepository $user
      *
      * @return UserRepository $user
      */
@@ -207,7 +198,6 @@ class ReiserebellenController extends Controller
      * Create new user from Layer.
      *
      * @param WishesRepository $wish
-     * @param StoreWishRequest $request
      *
      * @return object
      */
@@ -215,17 +205,16 @@ class ReiserebellenController extends Controller
     {
         $input = $request->all();
 
-        $ages1 = isset($input['ages1']) ? $input['ages1']."," : '';
-        $ages2 = isset($input['ages2']) ? $input['ages2']."," : '';
-        $ages3 = isset($input['ages3']) ? $input['ages3']."," : '';
+        $ages1 = isset($input['ages1']) ? $input['ages1'] . ',' : '';
+        $ages2 = isset($input['ages2']) ? $input['ages2'] . ',' : '';
+        $ages3 = isset($input['ages3']) ? $input['ages3'] . ',' : '';
         $ages4 = isset($input['ages4']) ? $input['ages4'] : '';
-        $ages = rtrim($ages1.$ages2.$ages3.$ages4, ",");
+        $ages = rtrim($ages1 . $ages2 . $ages3 . $ages4, ',');
 
-
-        $request->merge(['featured_image' => 'bg.jpg','ages' => $ages]);
+        $request->merge(['featured_image' => 'bg.jpg', 'ages' => $ages]);
 
         $new_wish = $wish->create(
-            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3','ages4'),
+            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'),
             $this->whitelabelId
         );
 

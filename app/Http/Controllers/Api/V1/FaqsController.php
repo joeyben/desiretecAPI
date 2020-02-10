@@ -41,8 +41,6 @@ class FaqsController extends APIController
     /**
      * Return the specified resource.
      *
-     * @param Faq $faq
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Faq $faq)
@@ -52,8 +50,6 @@ class FaqsController extends APIController
 
     /**
      * Creates the Resource for Faq.
-     *
-     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -71,9 +67,6 @@ class FaqsController extends APIController
 
     /**
      * Update Faq.
-     *
-     * @param Faq     $faq
-     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -94,9 +87,6 @@ class FaqsController extends APIController
 
     /**
      * Delete Faq.
-     *
-     * @param Faq     $faq
-     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */

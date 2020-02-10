@@ -17,17 +17,12 @@ class RoleTableController extends Controller
      */
     protected $roles;
 
-    /**
-     * @param RoleRepository $roles
-     */
     public function __construct(RoleRepository $roles)
     {
         $this->roles = $roles;
     }
 
     /**
-     * @param ManageRoleRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageRoleRequest $request)

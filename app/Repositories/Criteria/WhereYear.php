@@ -23,8 +23,6 @@ class WhereYear
 
     /**
      * Filter constructor.
-     *
-     * @param string|null $year
      */
     public function __construct(string $year = null)
     {
@@ -33,8 +31,6 @@ class WhereYear
 
     /**
      * @param $model
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply($model): Builder
     {

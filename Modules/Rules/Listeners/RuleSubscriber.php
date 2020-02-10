@@ -15,8 +15,6 @@ class RuleSubscriber
 
     /**
      * Create the event listener.
-     *
-     * @param \Modules\Rules\Entities\Rule $rule
      */
     public function __construct(Rule $rule)
     {

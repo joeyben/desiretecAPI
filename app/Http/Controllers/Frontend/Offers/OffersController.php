@@ -41,11 +41,6 @@ class OffersController extends Controller
      */
     private $auth;
 
-    /**
-     * @param \App\Repositories\Frontend\Offers\OffersRepository      $offer
-     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository $wishes
-     * @param \Illuminate\Auth\AuthManager                            $auth
-     */
     public function __construct(OffersRepository $offer, WishesRepository $wishes, AuthManager $auth)
     {
         $this->offer = $offer;
@@ -54,8 +49,6 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
-     *
      * @return mixed
      */
     public function index(ManageOffersRequest $request)
@@ -67,8 +60,7 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
-     * @param type                                                   $id
+     * @param type $id
      *
      * @return mixed
      */
@@ -82,8 +74,6 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Offers\StoreOffersRequest $request
-     *
      * @return mixed
      */
     public function store(StoreOffersRequest $request)
@@ -101,9 +91,6 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Offers\Offer                               $offer
-     * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
-     *
      * @return mixed
      */
     public function edit(Offer $offer, ManageOffersRequest $request)
@@ -116,9 +103,6 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Offers\Offer                               $offer
-     * @param \App\Http\Requests\Frontend\Offers\UpdateOffersRequest $request
-     *
      * @return mixed
      */
     public function update(Offer $offer, UpdateOffersRequest $request)
@@ -133,9 +117,6 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Offers\Offer                               $offer
-     * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
-     *
      * @return mixed
      */
     public function destroy(Offer $offer, ManageOffersRequest $request)
@@ -148,9 +129,6 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                                $wish
-     * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
-     *
      * @return mixed
      */
     public function getWishOffers(Wish $wish, ManageOffersRequest $request)

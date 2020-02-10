@@ -12,7 +12,7 @@ return [
     |
     */
     'whitelabel_mismatch' => 'Mismatch Whitelabel User.',
-    'backend' => [
+    'backend'             => [
         'access' => [
             'roles' => [
                 'already_exists'    => 'That role already exists. Please choose a different name.',

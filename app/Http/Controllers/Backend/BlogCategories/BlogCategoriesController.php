@@ -22,17 +22,12 @@ class BlogCategoriesController extends Controller
 {
     protected $blogcategory;
 
-    /**
-     * @param BlogCategoriesRepository $blogcategory
-     */
     public function __construct(BlogCategoriesRepository $blogcategory)
     {
         $this->blogcategory = $blogcategory;
     }
 
     /**
-     * @param \App\Http\Requests\Backend\BlogCategories\ManageBlogCategoriesRequest $request
-     *
      * @return ViewResponse
      */
     public function index(ManageBlogCategoriesRequest $request)
@@ -41,8 +36,6 @@ class BlogCategoriesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\BlogCategories\CreateBlogCategoriesRequest $request
-     *
      * @return \App\Http\Responses\ViewResponse
      */
     public function create(CreateBlogCategoriesRequest $request)
@@ -51,8 +44,6 @@ class BlogCategoriesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\BlogCategories\StoreBlogCategoriesRequest $request
-     *
      * @return mixed
      */
     public function store(StoreBlogCategoriesRequest $request)
@@ -63,9 +54,6 @@ class BlogCategoriesController extends Controller
     }
 
     /**
-     * @param \App\Models\BlogCategories\BlogCategory                             $blogCategory
-     * @param \App\Http\Requests\Backend\BlogCategories\EditBlogCategoriesRequest $request
-     *
      * @return \App\Http\Responses\Backend\BlogCategory\EditResponse
      */
     public function edit(BlogCategory $blogCategory, EditBlogCategoriesRequest $request)
@@ -74,9 +62,6 @@ class BlogCategoriesController extends Controller
     }
 
     /**
-     * @param \App\Models\BlogCategories\BlogCategory                               $blogCategory
-     * @param \App\Http\Requests\Backend\BlogCategories\UpdateBlogCategoriesRequest $request
-     *
      * @return \App\Http\Responses\RedirectResponse
      */
     public function update(BlogCategory $blogCategory, UpdateBlogCategoriesRequest $request)
@@ -87,9 +72,6 @@ class BlogCategoriesController extends Controller
     }
 
     /**
-     * @param \App\Models\BlogCategories\BlogCategory                               $blogCategory
-     * @param \App\Http\Requests\Backend\BlogCategories\DeleteBlogCategoriesRequest $request
-     *
      * @return \App\Http\Responses\RedirectResponse
      */
     public function destroy(BlogCategory $blogCategory, DeleteBlogCategoriesRequest $request)

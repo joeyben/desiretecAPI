@@ -18,8 +18,6 @@ class ChangePasswordController extends Controller
 
     /**
      * ChangePasswordController constructor.
-     *
-     * @param UserRepository $user
      */
     public function __construct(UserRepository $user)
     {
@@ -27,8 +25,6 @@ class ChangePasswordController extends Controller
     }
 
     /**
-     * @param ChangePasswordRequest $request
-     *
      * @return mixed
      */
     public function changePassword(ChangePasswordRequest $request)

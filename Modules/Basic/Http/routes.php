@@ -1,21 +1,17 @@
 <?php
-$domain_env = array(
-    'local_url' => 'http://basic.local',
+
+$domain_env = [
+    'local_url'       => 'http://basic.local',
     'development_url' => 'https://basic.reise-wunsch.com',
-    'production_url' => 'https://basic.reisewunschservice.de',
-);
+    'production_url'  => 'https://basic.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
-
-
-
-
 
 Route::group(['domain' => $domain], function () {
     setCurrentWhiteLabelId(\Config::get('basic.id'));
     setTranslationLoaderModel(\Config::get('basic.language_lines_model'));
     Route::group(['middleware' => 'web', 'namespace' => 'Modules\Basic\Http\Controllers', 'as' => 'basic.'], function () {
-
         Route::get('/', 'BasicController@index');
         Route::get('show', 'BasicController@show');
         Route::get('store', 'BasicController@store')->name('store');
@@ -24,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'BasicWishesController@validateTokenList');
     });
 });
-

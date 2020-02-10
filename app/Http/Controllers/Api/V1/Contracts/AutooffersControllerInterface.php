@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1\Contracts;
 
-Interface AutooffersControllerInterface
+interface AutooffersControllerInterface
 {
-	public function list(int $wishId);
+    public function list(int $wishId);
 
     public function listTt(int $wishId);
 }

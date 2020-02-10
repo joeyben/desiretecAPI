@@ -39,8 +39,6 @@ class GroupExport implements FromCollection, Responsable, WithMapping, WithHeadi
 
     /**
      * GroupExport constructor.
-     *
-     * @param \Modules\Groups\Repositories\Contracts\GroupsRepository $groups
      */
     public function __construct(GroupsRepository $groups)
     {
@@ -57,8 +55,6 @@ class GroupExport implements FromCollection, Responsable, WithMapping, WithHeadi
 
     /**
      * @param mixed $group
-     *
-     * @return array
      */
     public function map($group): array
     {
@@ -90,9 +86,6 @@ class GroupExport implements FromCollection, Responsable, WithMapping, WithHeadi
         ];
     }
 
-    /**
-     * @return array
-     */
     public function columnFormats(): array
     {
         return [

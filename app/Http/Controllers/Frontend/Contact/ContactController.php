@@ -22,17 +22,12 @@ class ContactController extends Controller
      */
     protected $contact;
 
-    /**
-     * @param \App\Repositories\Frontend\Contact\ContactRepository $contact
-     */
     public function __construct(ContactRepository $contact)
     {
         $this->contact = $contact;
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Contact\ManageContactRequest $request
-     *
      * @return mixed
      */
     public function index(ManageContactRequest $request)
@@ -40,8 +35,6 @@ class ContactController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Contact\StoreContactRequest $request
-     *
      * @return mixed
      */
     public function store(StoreContactRequest $request)
@@ -55,8 +48,6 @@ class ContactController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Contact\StoreCallbackRequest $request
-     *
      * @return mixed
      */
     public function storeCallback(StoreCallbackRequest $request)
@@ -70,9 +61,6 @@ class ContactController extends Controller
     }
 
     /**
-     * @param \App\Models\Contact\Contact                              $contact
-     * @param \App\Http\Requests\Frontend\Contact\ManageContactRequest $request
-     *
      * @return mixed
      */
     public function edit(Contact $contact, ManageContactRequest $request)
@@ -87,9 +75,6 @@ class ContactController extends Controller
     }
 
     /**
-     * @param \App\Models\Contact\Contact                              $contact
-     * @param \App\Http\Requests\Frontend\Contact\UpdateContactRequest $request
-     *
      * @return mixed
      */
     public function update(Contact $contact, UpdateContactRequest $request)
@@ -104,9 +89,6 @@ class ContactController extends Controller
     }
 
     /**
-     * @param \App\Models\Contact\Contact                              $contact
-     * @param \App\Http\Requests\Frontend\Contact\ManageContactRequest $request
-     *
      * @return mixed
      */
     public function destroy(Contact $contact, ManageContactRequest $request)

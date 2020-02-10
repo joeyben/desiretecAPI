@@ -200,8 +200,6 @@ class FileUploads
     /**
      * Upload File.
      *
-     * @param UploadedFile $file
-     *
      * @return $this
      */
     public function upload(UploadedFile $file, $manualFilename = null)

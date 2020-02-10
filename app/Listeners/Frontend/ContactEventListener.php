@@ -18,8 +18,6 @@ class ContactEventListener
 
     /**
      * Create the event listener.
-     *
-     * @param Contact $contact
      */
     public function __construct(Contact $contact)
     {

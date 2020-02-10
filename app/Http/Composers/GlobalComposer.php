@@ -3,7 +3,6 @@
 namespace App\Http\Composers;
 
 use App\Models\Agents\Agent;
-use App\Services\Flag\Src\Flag;
 use Auth;
 use Illuminate\View\View;
 
@@ -14,8 +13,6 @@ class GlobalComposer
 {
     /**
      * Bind data to the view.
-     *
-     * @param View $view
      */
     public function compose(View $view)
     {
@@ -37,8 +34,8 @@ class GlobalComposer
         }
 
         $view->with(['logged_in_user' => access()->user(),
-            'agents'          => $agents,
-            'logged_agent'    => $loggedAgent,
-            'logged_avatar'   => $loggedAvatar]);
+            'agents'                  => $agents,
+            'logged_agent'            => $loggedAgent,
+            'logged_avatar'           => $loggedAvatar]);
     }
 }

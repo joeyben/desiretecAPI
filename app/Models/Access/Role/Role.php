@@ -43,9 +43,6 @@ class Role extends BaseModel
         'status'  => 'boolean',
     ];
 
-    /**
-     * @param array $attributes
-     */
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
