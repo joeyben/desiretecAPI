@@ -38,8 +38,6 @@ class BlogCategoriesRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -65,7 +63,6 @@ class BlogCategoriesRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\BlogCategories\BlogCategory $blogcategory
      * @param  $input
      *
      * @throws \App\Exceptions\GeneralException
@@ -93,8 +90,6 @@ class BlogCategoriesRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\BlogCategories\BlogCategory $blogcategory
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool

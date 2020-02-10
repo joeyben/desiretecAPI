@@ -93,7 +93,8 @@ class OffersRepository extends BaseRepository
         return $data;
     }
 
-    public function getOffersData(){
+    public function getOffersData()
+    {
         return Datatables::of($this->getForDataTable())
             ->addColumn('title', function ($offers) {
                 return '<a href="' . route('frontend.wishes.show', [$offers->wish_id])
@@ -139,8 +140,6 @@ class OffersRepository extends BaseRepository
     }
 
     /**
-     * @param StoreOffersRequest $request
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -189,9 +188,6 @@ class OffersRepository extends BaseRepository
 
     /**
      * Update Offer.
-     *
-     * @param \App\Models\Offers\Offer $offer
-     * @param array                    $input
      */
     public function update(Offer $offer, array $input)
     {
@@ -210,15 +206,11 @@ class OffersRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.offers.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.offers.update_error'));
         });
     }
 
     /**
-     * @param \App\Models\Offers\Offer $offer
-     *
      * @throws GeneralException
      *
      * @return bool

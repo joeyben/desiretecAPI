@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Events\Frontend\Messages\MessageCreated;
 use App\Http\Controllers\Api\V1\Contracts\MessagesControllerInterface;
-use App\Models\Messages\Message;
 use App\Models\Access\User\User;
 use App\Models\Agents\Agent;
+use App\Models\Messages\Message;
 use App\Repositories\Frontend\Wishes\WishesRepository;
-use App\Events\Frontend\Messages\MessageCreated;
 use App\Services\Flag\Src\Flag;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Storage;
-use Validator;
-use Auth;
 
 class MessagesController extends APIController implements MessagesControllerInterface
 {
@@ -80,7 +79,6 @@ class MessagesController extends APIController implements MessagesControllerInte
         // TODO: Resolve current agent
         // if ($this->auth->guard('agent')->check() && $this->auth->guard('web')->user()->hasRole(Flag::SELLER_ROLE)) {
         if (true) {
-
             // TODO: Get current agent
             $agentId = 155;
             // $agentId = $this->auth->guard('agent')->user()->id;
@@ -108,7 +106,6 @@ class MessagesController extends APIController implements MessagesControllerInte
         return  $this->respondCreated('message: ' . $message);
     }
 
-
     public function delete(int $id)
     {
         Message::findOrFail($id)->delete();
@@ -123,12 +120,10 @@ class MessagesController extends APIController implements MessagesControllerInte
 
             $m->message = $request->input('message');
 
-            if($m->save()) {
+            if ($m->save()) {
                 return $this->respondUpdated('message deleted successfully');
-            } else {
-                throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
             }
-
+            throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
         } catch (Exception $e) {
             return $this->respondWithError($e);
         }

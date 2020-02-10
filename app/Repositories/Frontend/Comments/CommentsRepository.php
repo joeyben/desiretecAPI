@@ -53,8 +53,6 @@ class CommentsRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return mixed
@@ -75,9 +73,6 @@ class CommentsRepository extends BaseRepository
 
     /**
      * Update Comment.
-     *
-     * @param \App\Models\Comments\Comment $comment
-     * @param array                        $input
      */
     public function update(Comment $comment, array $input)
     {
@@ -90,15 +85,11 @@ class CommentsRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.comments.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.comments.update_error'));
         });
     }
 
     /**
-     * @param \App\Models\Comments\Comment $comment
-     *
      * @throws GeneralException
      *
      * @return bool

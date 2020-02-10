@@ -31,11 +31,6 @@ class NewsletterController extends Controller
 
     /**
      * NewsletterController constructor.
-     *
-     * @param \Modules\Newsletter\Repositories\Contracts\NewsletterRepository $newsletter
-     * @param \Illuminate\Routing\ResponseFactory                             $response
-     * @param \Illuminate\Auth\AuthManager                                    $auth
-     * @param \Illuminate\Translation\Translator                              $lang
      */
     public function __construct(NewsletterRepository $newsletter, ResponseFactory $response, AuthManager $auth, Translator $lang)
     {
@@ -67,8 +62,6 @@ class NewsletterController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */
@@ -112,8 +105,7 @@ class NewsletterController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return Response
      */

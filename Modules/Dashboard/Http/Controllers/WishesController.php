@@ -45,12 +45,6 @@ class WishesController extends Controller
 
     /**
      * WishesController constructor.
-     *
-     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository $wishes
-     * @param \Illuminate\Routing\ResponseFactory                     $response
-     * @param \Illuminate\Auth\AuthManager                            $auth
-     * @param \Illuminate\Translation\Translator                      $lang
-     * @param \Carbon\Carbon                                          $carbon
      */
     public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, DashboardRepository $dashboard)
     {
@@ -63,8 +57,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
@@ -87,8 +79,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function byMonth(Request $request)
@@ -123,8 +113,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function byDay(Request $request)
@@ -178,8 +166,6 @@ class WishesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -208,8 +194,6 @@ class WishesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */

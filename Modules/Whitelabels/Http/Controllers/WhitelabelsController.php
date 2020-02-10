@@ -101,22 +101,6 @@ class WhitelabelsController extends Controller
 
     /**
      * WhitelabelsController constructor.
-     *
-     * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
-     * @param \App\Repositories\Backend\Distributions\DistributionsRepository   $distributions
-     * @param \Illuminate\Routing\ResponseFactory                               $response
-     * @param \Illuminate\Auth\AuthManager                                      $auth
-     * @param \Illuminate\Translation\Translator                                $lang
-     * @param \Carbon\Carbon                                                    $carbon
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
-     * @param \Maatwebsite\Excel\Excel                                          $excel
-     * @param \Illuminate\Filesystem\FilesystemManager                          $storage
-     * @param \Illuminate\Contracts\Console\Kernel                              $artisan
-     * @param \Illuminate\Support\Str                                           $str
-     * @param \Modules\Attachments\Repositories\Contracts\AttachmentsRepository $attachments
-     * @param \Illuminate\Notifications\ChannelManager                          $notification
-     * @param \Modules\Roles\Repositories\Contracts\RolesRepository             $roles
-     * @param LanguagesRepository                                               $languages
      */
     public function __construct(WhitelabelsRepository $whitelabels, DistributionsRepository $distributions, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel, FilesystemManager $storage, Kernel $artisan, Str $str, AttachmentsRepository $attachments, ChannelManager $notification, RolesRepository $roles, LanguagesRepository $languages)
     {
@@ -244,8 +228,6 @@ class WhitelabelsController extends Controller
     }
 
     /**
-     * @param \Modules\Whitelabels\Http\Requests\StoreWhitelabelRequest $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreWhitelabelRequest $request)
@@ -345,27 +327,20 @@ class WhitelabelsController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
+    //select
+    //`layers`.*,
+    //`whitelabel_layers`.`whitelabel_id` as `pivot_whitelabel_id`,
+    //`whitelabel_layers`.`layer_id` as `pivot_layer_id`,
+    //`whitelabel_layers`.`image` as `pivot_image`,
+    //`whitelabel_layers`.`title` as `pivot_title`,
+    //`whitelabel_layers`.`body` as `pivot_body`,
+    //`whitelabel_layers`.`layer_url` as `pivot_layer_url`,
+    //`whitelabel_layers`.`success_title` as `pivot_success_title`,
+    //`whitelabel_layers`.`success_body` as `pivot_success_body`
+    //from `layers`
+    //inner join `whitelabel_layers` on `layers`.`id` = `whitelabel_layers`.`layer_id`
+    //where `whitelabel_layers`.`whitelabel_id` in (39))"
 
-//select
-//`layers`.*,
-//`whitelabel_layers`.`whitelabel_id` as `pivot_whitelabel_id`,
-//`whitelabel_layers`.`layer_id` as `pivot_layer_id`,
-//`whitelabel_layers`.`image` as `pivot_image`,
-//`whitelabel_layers`.`title` as `pivot_title`,
-//`whitelabel_layers`.`body` as `pivot_body`,
-//`whitelabel_layers`.`layer_url` as `pivot_layer_url`,
-//`whitelabel_layers`.`success_title` as `pivot_success_title`,
-//`whitelabel_layers`.`success_body` as `pivot_success_body`
-//from `layers`
-//inner join `whitelabel_layers` on `layers`.`id` = `whitelabel_layers`.`layer_id`
-//where `whitelabel_layers`.`whitelabel_id` in (39))"
-
-
-
-    /**
-     * @param int $id
-     * @return JsonResponse
-     */
     public function show(int $id): JsonResponse
     {
         try {
@@ -382,10 +357,10 @@ class WhitelabelsController extends Controller
             $visual = $this->whitelabels->getVisual($result['whitelabel']);
 
             $result['whitelabel']['background'] = (null !== $background && null !== $background->first()) ? [$background->first()] : [];
-            $result['whitelabel']['logo']       = (null !== $logo && null !== $logo->first()) ? [$logo->first()] : [];
-            $result['whitelabel']['favicon']    = (null !== $favicon && null !== $favicon->first()) ? [$favicon->first()] : [];
-            $result['whitelabel']['visual']     = (null !== $visual && null !== $visual->first()) ? [$visual->first()] : [];
-            $result['whitelabel']['layers']     = $result['whitelabel']->layers;
+            $result['whitelabel']['logo'] = (null !== $logo && null !== $logo->first()) ? [$logo->first()] : [];
+            $result['whitelabel']['favicon'] = (null !== $favicon && null !== $favicon->first()) ? [$favicon->first()] : [];
+            $result['whitelabel']['visual'] = (null !== $visual && null !== $visual->first()) ? [$visual->first()] : [];
+            $result['whitelabel']['layers'] = $result['whitelabel']->layers;
 
             $result['success'] = true;
             $result['status'] = 200;
@@ -400,8 +375,6 @@ class WhitelabelsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -462,9 +435,6 @@ class WhitelabelsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Modules\Whitelabels\Http\Requests\UpdateWhitelabelRequest $request
-     * @param int                                                        $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateWhitelabelRequest $request, int $id)
@@ -492,9 +462,6 @@ class WhitelabelsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Modules\Whitelabels\Http\Requests\SaveWhitelabelRequest $request
-     * @param int                                                      $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -531,9 +498,6 @@ class WhitelabelsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Modules\Whitelabels\Http\Requests\DomainWhitelabelRequest $request
-     * @param int                                                        $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function domain(DomainWhitelabelRequest $request, int $id)
@@ -566,8 +530,6 @@ class WhitelabelsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
@@ -587,8 +549,6 @@ class WhitelabelsController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function restore(int $id)
@@ -608,8 +568,6 @@ class WhitelabelsController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function forceDelete(int $id)

@@ -2,10 +2,8 @@
 
 namespace Modules\LanguageLines\Entities;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\TranslationLoader\LanguageLine;
+use Illuminate\Support\Facades\Cache;
 
 class Translation extends Model
 {
@@ -49,9 +47,9 @@ class Translation extends Model
                 ->where('group', $group)
                 ->where('locale', $locale)
                 ->get()
-                ->map(function (Translation $translation) {
+                ->map(function (self $translation) {
                     return [
-                        'key' => $translation->key,
+                        'key'  => $translation->key,
                         'text' => $translation->text,
                     ];
                 })

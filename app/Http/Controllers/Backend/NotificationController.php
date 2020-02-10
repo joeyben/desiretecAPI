@@ -82,9 +82,8 @@ class NotificationController extends Controller
     }
 
     /**
-     * @param type                    $id
-     * @param type                    $status
-     * @param MarkNotificationRequest $request
+     * @param type $id
+     * @param type $status
      *
      * @return type
      */

@@ -24,8 +24,6 @@ class OffersTableController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageOffersRequest $request)
@@ -52,8 +50,6 @@ class OffersTableController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Offers\ManageOffersRequest $request
-     *
      * @return mixed
      */
     public function showOffersForWish(ManageOffersRequest $request)

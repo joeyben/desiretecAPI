@@ -1003,71 +1003,34 @@ aside {
   }
 }
 
-.airport-mousehover{
-    display:inline-block;
-    white-space: nowrap;
-    overflow:hidden !important;
-    text-overflow: ellipsis;
-}
-
-.departure-tooltip {
-  width: 90%;
-  visibility: hidden;
-  background-color: #fff;
-  padding: 10px;
-  -webkit-box-shadow: 0 0 30px 0 rgba(0,0,0,0.2);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  position:absolute;
-  bottom:2em;
-  left:0;
-  z-index: 99;
-  word-wrap: break-word;
-  text-justify: inter-word;
-}
-
-#departure-mousehover{
-  cursor: pointer;
-  display:block;
-  position:absolute;
-  top:0;
-  width:100%;
-  height:2.2em;
-}
-
-#departure-mousehover:hover + .departure-tooltip {
-  visibility: visible;
-  transition: opacity 0.5s ease;
-  opacity: 1;
-}
-
-.arrival-tooltip {
-  width: 90%;
-  visibility: hidden;
-  background-color: #fff;
-  padding: 10px;
-  -webkit-box-shadow: 0 0 30px 0 rgba(0,0,0,0.2);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  position:absolute;
-  bottom:2em;
-  left:0;
-  z-index: 99;
-  word-wrap: break-word;
-  text-justify: inter-word;
-}
-
-#arrival-mousehover{
-  cursor: pointer;
-  display:block;
-  position:absolute;
-  top:0;
-  width:100%;
-  height:2.2em;
-}
-
-#arrival-mousehover:hover + .arrival-tooltip {
-  visibility: visible;
-  transition: opacity 0.5s ease;
-  opacity: 1;
+.wish {
+  .tooltip {
+    width: 90%;
+    visibility: hidden;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    position:absolute;
+    bottom:2em;
+    left:0;
+    z-index: 99;
+    word-wrap: break-word;
+    text-justify: inter-word;
+  }
+  .mousehover{
+    cursor: pointer;
+    display:block;
+    position:absolute;
+    top:0;
+    width:100%;
+    height:2.2em;
+  }
+  .mousehover:hover + .custom-tooltip {
+    visibility: visible;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+  }
 }

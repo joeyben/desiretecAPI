@@ -28,9 +28,6 @@ class UserRepository extends BaseRepository
      */
     protected $role;
 
-    /**
-     * @param RoleRepository $role
-     */
     public function __construct(RoleRepository $role)
     {
         $this->role = $role;
@@ -81,8 +78,7 @@ class UserRepository extends BaseRepository
     /**
      * Create User.
      *
-     * @param array $data
-     * @param bool  $provider
+     * @param bool $provider
      *
      * @return static
      */

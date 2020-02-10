@@ -60,8 +60,6 @@ class RoleRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws GeneralException
      *
      * @return bool
@@ -194,8 +192,6 @@ class RoleRepository extends BaseRepository
     }
 
     /**
-     * @param Role $role
-     *
      * @throws GeneralException
      *
      * @return bool

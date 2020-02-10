@@ -41,8 +41,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
 
     /**
      * @param array $columns
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function all($columns = ['*']): Collection
     {
@@ -66,7 +64,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     /**
      * Alias of Get method with relation.
      *
-     * @param array $relations
      * @param array $columns
      *
      * @return mixed
@@ -93,7 +90,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
-     * @param int   $id
      * @param array $columns
      *
      * @return mixed
@@ -114,9 +110,8 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
-     * @param string $column
-     * @param        $value
-     * @param array  $columns
+     * @param       $value
+     * @param array $columns
      *
      * @return mixed
      */
@@ -129,9 +124,8 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
-     * @param string $column
-     * @param        $value
-     * @param array  $columns
+     * @param       $value
+     * @param array $columns
      *
      * @return mixed
      */
@@ -147,7 +141,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
      * Find data by multiple values in one field.
      *
      * @param       $field
-     * @param array $values
      * @param array $columns
      *
      * @return mixed
@@ -164,7 +157,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
      * Find data by excluding multiple values in one field.
      *
      * @param       $field
-     * @param array $values
      * @param array $columns
      *
      * @return mixed
@@ -178,8 +170,7 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
-     * @param string $clause
-     * @param array  $columns
+     * @param array $columns
      *
      * @return mixed
      */
@@ -192,11 +183,8 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
-     * @param int|null $perPage
-     * @param array    $columns
-     * @param string   $method
-     *
-     * @return \Illuminate\Pagination\LengthAwarePaginator
+     * @param array  $columns
+     * @param string $method
      */
     public function paginate(int $perPage = null, $columns = ['*'], $method = 'paginate'): LengthAwarePaginator
     {
@@ -206,8 +194,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
-     * @param array $data
-     *
      * @return mixed
      */
     public function create(array $data)
@@ -216,9 +202,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
-     * @param int   $id
-     * @param array $data
-     *
      * @return mixed
      */
     public function update(int $id, array $data)
@@ -230,8 +213,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
-     * @param int $id
-     *
      * @return mixed
      */
     public function delete(int $id)
@@ -243,8 +224,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
-     * @param int $id
-     *
      * @return mixed
      */
     public function forceDelete(int $id)
@@ -256,8 +235,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
-     * @param int $id
-     *
      * @return mixed
      */
     public function restore(int $id)
@@ -340,8 +317,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     /**
      * Retrieve first data of repository, or return new Entity.
      *
-     * @param array $attributes
-     *
      * @return mixed
      */
     public function firstOrNew(array $attributes = [])
@@ -352,8 +327,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     /**
      * Retrieve first data of repository, or return new Entity.
      *
-     * @param array $attributes
-     *
      * @return mixed
      */
     public function firstOrCreate(array $attributes = [])
@@ -361,9 +334,6 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
         return $this->model->firstOrCreate($attributes);
     }
 
-    /**
-     * @return array
-     */
     public function supportedLocales(): array
     {
         $languages = LaravelLocalization::getSupportedLocales();

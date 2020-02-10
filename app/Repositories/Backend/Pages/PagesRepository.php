@@ -38,8 +38,6 @@ class PagesRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -66,7 +64,6 @@ class PagesRepository extends BaseRepository
 
     /**
      * @param \App\Models\Page\Page $page
-     * @param array                 $input
      *
      * @throws \App\Exceptions\GeneralException
      *

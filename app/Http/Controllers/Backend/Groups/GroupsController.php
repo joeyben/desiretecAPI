@@ -34,10 +34,6 @@ class GroupsController extends Controller
      */
     protected $whitelabels;
 
-    /**
-     * @param \App\Repositories\Backend\Groups\GroupsRepository $group
-     * @param WhitelabelsRepository                             $whitelabels
-     */
     public function __construct(GroupsRepository $group, WhitelabelsRepository $whitelabels)
     {
         $this->group = $group;
@@ -45,8 +41,6 @@ class GroupsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Groups\ManageGroupsRequest $request
-     *
      * @return mixed
      */
     public function index(ManageGroupsRequest $request)
@@ -55,8 +49,6 @@ class GroupsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Groups\ManageGroupsRequest $request
-     *
      * @return mixed
      */
     public function create(ManageGroupsRequest $request)
@@ -68,8 +60,6 @@ class GroupsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Groups\StoreGroupsRequest $request
-     *
      * @return mixed
      */
     public function store(StoreGroupsRequest $request)
@@ -82,9 +72,6 @@ class GroupsController extends Controller
     }
 
     /**
-     * @param \App\Models\Groups\Group                              $group
-     * @param \App\Http\Requests\Backend\Groups\ManageGroupsRequest $request
-     *
      * @return mixed
      */
     public function edit(Group $group, ManageGroupsRequest $request)
@@ -97,9 +84,6 @@ class GroupsController extends Controller
     }
 
     /**
-     * @param \App\Models\Groups\Group                              $group
-     * @param \App\Http\Requests\Backend\Groups\UpdateGroupsRequest $request
-     *
      * @return mixed
      */
     public function update(Group $group, UpdateGroupsRequest $request)
@@ -114,9 +98,6 @@ class GroupsController extends Controller
     }
 
     /**
-     * @param \App\Models\Groups\Group                              $group
-     * @param \App\Http\Requests\Backend\Groups\ManageGroupsRequest $request
-     *
      * @return mixed
      */
     public function destroy(Group $group, ManageGroupsRequest $request)

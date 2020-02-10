@@ -32,7 +32,6 @@ trait WishRelationship
         return $this->belongsTo(Agent::class, 'agent_id');
     }
 
-
     /**
      * Wishes belongsTo with Group.
      */

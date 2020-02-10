@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests\ApiLinkRequest;
 use App\Http\Requests\ApiLoginRequest;
 use App\Http\Requests\ApiRegisterRequest;
-use App\Http\Requests\LoginRequest;
 use App\Models\Access\Role\Role;
 use App\Models\Access\User\User;
 use App\Models\Access\User\UserToken;
@@ -28,8 +27,6 @@ class AuthController extends APIController
 
     /**
      * Create a new AuthController instance.
-     *
-     * @param \Illuminate\Auth\AuthManager $auth
      */
     public function __construct(AuthManager $auth)
     {
@@ -49,7 +46,7 @@ class AuthController extends APIController
         }
 
         return $this->respond([
-            'message'   => trans('api.messages.login.success'),
+            'message'          => trans('api.messages.login.success'),
             'access_token'     => $token,
         ])->cookie('access_token', $token, JWTAuth::factory()->getTTL() * 60);
     }
@@ -66,7 +63,7 @@ class AuthController extends APIController
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user','token'),201);
+        return response()->json(compact('user', 'token'), 201);
     }
 
     /**
@@ -135,7 +132,7 @@ class AuthController extends APIController
             $user = $this->getUserByIdentifier($request->get($this->identifier));
             $user->storeToken()->sendApiTokenLink([
                 'email' => trim($user->email),
-                'host' => $request->get('host')
+                'host'  => $request->get('host')
             ]);
         } catch (Exception $e) {
             return $this->respondInternalError($e->getMessage());

@@ -27,8 +27,8 @@ class UpdateAgentsRequest extends Request
     public function rules()
     {
         return [
-            'name'  => 'required|string|max:64',
-            'email' => 'required|email|max:255',
+            'name'      => 'required|string|max:64',
+            'email'     => 'required|email|max:255',
             'telephone' => 'required|integer'
         ];
     }

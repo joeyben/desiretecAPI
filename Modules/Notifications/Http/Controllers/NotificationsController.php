@@ -43,12 +43,6 @@ class NotificationsController extends Controller
 
     /**
      * NotificationsController constructor.
-     *
-     * @param \Modules\Notifications\Repositories\Contracts\NotificationsRepository $notifications
-     * @param \Illuminate\Routing\ResponseFactory                                   $response
-     * @param \Illuminate\Auth\AuthManager                                          $auth
-     * @param \Illuminate\Translation\Translator                                    $lang
-     * @param \Carbon\Carbon                                                        $carbon
      */
     public function __construct(NotificationsRepository $notifications, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
     {
@@ -71,8 +65,6 @@ class NotificationsController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -116,8 +108,6 @@ class NotificationsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -136,8 +126,6 @@ class NotificationsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -166,7 +154,6 @@ class NotificationsController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param int     $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -195,8 +182,6 @@ class NotificationsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
@@ -216,8 +201,6 @@ class NotificationsController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function forceDelete(int $id)
@@ -237,8 +220,6 @@ class NotificationsController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function restore(int $id)

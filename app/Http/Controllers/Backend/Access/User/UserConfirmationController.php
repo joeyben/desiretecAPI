@@ -13,9 +13,6 @@ use App\Notifications\Frontend\Auth\UserNeedsConfirmation;
 class UserConfirmationController extends Controller
 {
     /**
-     * @param User              $user
-     * @param ManageUserRequest $request
-     *
      * @return mixed
      */
     public function sendConfirmationEmail(User $user, ManageUserRequest $request)

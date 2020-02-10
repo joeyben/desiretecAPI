@@ -14,9 +14,6 @@ class SettingsLogoController extends Controller
 {
     protected $settings;
 
-    /**
-     * @param \App\Repositories\Backend\Settings\SettingsRepository $settings
-     */
     public function __construct(SettingsRepository $settings)
     {
         $this->settings = $settings;
@@ -24,9 +21,6 @@ class SettingsLogoController extends Controller
 
     /**
      * Remove logo or favicon icon.
-     *
-     * @param \App\Models\Settings\Setting $setting
-     * @param \Illuminate\Http\Request     $request
      *
      * @return mixed
      */

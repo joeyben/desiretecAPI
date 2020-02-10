@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Access\User\User;
 use Auth;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;

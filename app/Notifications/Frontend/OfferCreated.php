@@ -41,7 +41,6 @@ class OfferCreated extends Notification
      *
      * @param $wish_id
      * @param $token
-     * @param Offer $offer
      */
     public function __construct($wish_id, $token, Offer $offer)
     {

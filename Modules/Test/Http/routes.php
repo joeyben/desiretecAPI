@@ -1,9 +1,10 @@
 <?php
-$domain_env = array(
-    'local_url' => 'http://test.local',
+
+$domain_env = [
+    'local_url'       => 'http://test.local',
     'development_url' => 'https://test.reise-wunsch.com',
-    'production_url' => 'https://test.reisewunschservice.de',
-);
+    'production_url'  => 'https://test.reisewunschservice.de',
+];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
 
@@ -19,4 +20,3 @@ Route::group(['domain' => $domain], function () {
         Route::get('wishlist/{token}', 'TestWishesController@validateTokenList');
     });
 });
-

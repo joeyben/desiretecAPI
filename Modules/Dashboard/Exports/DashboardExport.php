@@ -44,8 +44,6 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
 
     /**
      * WishExport constructor.
-     *
-     * @param \Modules\Dashboard\Repositories\Contracts\DashboardRepository $dashboard
      */
     public function __construct(DashboardRepository $dashboard, WishesRepository $wishes, Carbon $carbon)
     {
@@ -103,8 +101,6 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
 
     /**
      * @param mixed $wish
-     *
-     * @return array
      */
     public function map($dash): array
     {
@@ -157,9 +153,6 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
         ];
     }
 
-    /**
-     * @return array
-     */
     public function columnFormats(): array
     {
         return [

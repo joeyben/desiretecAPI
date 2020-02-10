@@ -88,10 +88,10 @@ class AutooffersRepository extends BaseRepository
                         //'minPricePerPerson' => (int) ($this->minBudget / $this->getPersonsCount()),
                         'maxPricePerPerson' => (int) ($this->maxBudget / $this->getPersonsCount()),
                         'minCategory'       => $this->category,
-                        'minBoardType' =>   $this->catering,
-                        'rating[source]'   => 'holidaycheck',
-                        'sortDir'          => 'up',
-                        'tourOperatorList' => $this->tourOperatorList,
+                        'minBoardType'      => $this->catering,
+                        'rating[source]'    => 'holidaycheck',
+                        'sortDir'           => 'up',
+                        'tourOperatorList'  => $this->tourOperatorList,
                     ],
                     'on_stats' => function (TransferStats $stats) use (&$url) {
                         $url = $stats->getEffectiveUri();
@@ -142,8 +142,6 @@ class AutooffersRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return bool
      */
     public function saveWishData(Wish $wish)
@@ -179,7 +177,7 @@ class AutooffersRepository extends BaseRepository
         ];
 
         $count = 0;
-        $offerList =  key_exists('offerList', $data) ? $data->offerList : [];
+        $offerList = array_key_exists('offerList', $data) ? $data->offerList : [];
         foreach ($offerList as $key => $autooffer) {
             if ($count >= $rulesArray['displayOffer']) {
                 break;
@@ -282,7 +280,7 @@ class AutooffersRepository extends BaseRepository
                     'data'       => json_decode($offer['data'], true),
                     'hotel_data' => json_decode($offer['hotel_data'], true),
                     'personPrice'=> $offer['personPrice'],
-                    'status' => $offer['status']
+                    'status'     => $offer['status']
                 ]
             );
         }
@@ -290,9 +288,6 @@ class AutooffersRepository extends BaseRepository
         return $offerObj;
     }
 
-    /**
-     * @return string
-     */
     public function getAuth(): string
     {
         return $this->auth;
@@ -364,7 +359,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setMaxBudget($budget)
     {
-        if ($budget === 0) {
+        if (0 === $budget) {
             $budget = 10000;
         }
         $this->maxBudget = $budget;
@@ -399,14 +394,14 @@ class AutooffersRepository extends BaseRepository
      */
     public function setKids($kids)
     {
-        $age = "";
-        for($i=0; $i<$kids; $i++) {
-            if($i > 0) {
-                $age .= ",";
+        $age = '';
+        for ($i = 0; $i < $kids; ++$i) {
+            if ($i > 0) {
+                $age .= ',';
             }
-            $age .= "6";
+            $age .= '6';
         }
-        $this->kids =  $age;
+        $this->kids = $age;
     }
 
     /**
@@ -418,18 +413,18 @@ class AutooffersRepository extends BaseRepository
         $period = str_replace('Nacht', '', $period);
         $period = str_replace('1 Woche', '7', $period);
 
-        if (strpos($period, 'Wochen') !== false) {
+        if (false !== mb_strpos($period, 'Wochen')) {
             $period = str_replace('Wochen', '', $period);
-            $period = intval($period) * 7;
-            $period = $period."";
+            $period = (int) $period * 7;
+            $period = $period . '';
         }
 
-        $int_duration = intval($period);
+        $int_duration = (int) $period;
 
-        if ($int_duration === 0) {
+        if (0 === $int_duration) {
             $from = \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start);
-            $to   = \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return);
-            $int_duration  = $from->diffInDays($to);
+            $to = \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return);
+            $int_duration = $from->diffInDays($to);
         }
         $this->period = $int_duration + 1;
     }

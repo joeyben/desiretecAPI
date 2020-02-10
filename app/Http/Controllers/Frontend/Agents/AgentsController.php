@@ -40,10 +40,6 @@ class AgentsController extends Controller
      */
     private $session;
 
-    /**
-     * @param \App\Repositories\Frontend\Agents\AgentsRepository $agent
-     * @param \Illuminate\Session\Store                          $session
-     */
     public function __construct(AgentsRepository $agent, Store $session)
     {
         $this->agent = $agent;
@@ -53,8 +49,6 @@ class AgentsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
-     *
      * @return mixed
      */
     public function index(ManageAgentsRequest $request)
@@ -77,8 +71,7 @@ class AgentsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
-     * @param type                                                   $id
+     * @param type $id
      *
      * @return mixed
      */
@@ -105,9 +98,6 @@ class AgentsController extends Controller
     }
 
     /**
-     * @param \App\Models\Agents\Agent                               $agent
-     * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
-     *
      * @return mixed
      */
     public function edit(Agent $agent, ManageAgentsRequest $request)
@@ -131,9 +121,6 @@ class AgentsController extends Controller
     }
 
     /**
-     * @param \App\Models\Agents\Agent                               $agent
-     * @param \App\Http\Requests\Frontend\Agents\UpdateAgentsRequest $request
-     *
      * @return mixed
      */
     public function update(Agent $agent, UpdateAgentsRequest $request)
@@ -157,9 +144,6 @@ class AgentsController extends Controller
     }
 
     /**
-     * @param \App\Models\Agents\Agent                               $agent
-     * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
-     *
      * @return mixed
      */
     public function destroy(Agent $agent, ManageAgentsRequest $request)

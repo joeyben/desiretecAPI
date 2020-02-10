@@ -47,13 +47,6 @@ class LanguagesController extends Controller
 
     /**
      * GroupsController constructor.
-     *
-     * @param LanguagesRepository   $languages
-     * @param WhitelabelsRepository $whitelabels
-     * @param ResponseFactory       $response
-     * @param AuthManager           $auth
-     * @param Translator            $lang
-     * @param Carbon                $carbon
      */
     public function __construct(LanguagesRepository $languages, WhitelabelsRepository $whitelabels, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
     {
@@ -216,8 +209,6 @@ class LanguagesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function update(Request $request)
@@ -226,8 +217,6 @@ class LanguagesController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */

@@ -61,10 +61,7 @@ class AutooffersController extends Controller
     private $rules;
 
     /**
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository                     $wish
-     * @param \Modules\Autooffers\Repositories\AutooffersRepository                  $autooffers
-     * @param \Modules\Autooffers\Repositories\AutooffersTTRepository                $autooffers
-     * @param \Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository $rules
+     * @param \Modules\Autooffers\Repositories\AutooffersTTRepository $autooffers
      */
     public function __construct(WishesRepository $wish, AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers, EloquentAutooffersRepository $rules)
     {
@@ -85,8 +82,7 @@ class AutooffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     * @param string                  $index
+     * @param string $index
      *
      * @return mixed
      */
@@ -100,8 +96,7 @@ class AutooffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     * @param string                  $index
+     * @param string $index
      *
      * @return mixed
      */
@@ -115,8 +110,6 @@ class AutooffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return mixed
      */
     public function createTT(Wish $wish)
@@ -133,8 +126,6 @@ class AutooffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return mixed
      */
     public function create(Wish $wish)
@@ -151,8 +142,6 @@ class AutooffersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -163,8 +152,6 @@ class AutooffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return Response
      */
     public function show(Wish $wish)
@@ -177,8 +164,6 @@ class AutooffersController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return Response
      */
     public function showttredirect(Wish $wish, string $token)
@@ -189,14 +174,12 @@ class AutooffersController extends Controller
 
         $wlAutooffer = getWhitelabelAutooffers();
         $type = $wlAutooffer ? $wlAutooffer['type'] : 1;
-        $url = $type == 0 ? '/offer/list/' : '/offer/ttlist/';
+        $url = 0 === $type ? '/offer/list/' : '/offer/ttlist/';
 
         return redirect()->to($url . $wish->id);
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return Response
      */
     public function showtt(Wish $wish)
@@ -220,8 +203,6 @@ class AutooffersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */

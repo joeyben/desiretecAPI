@@ -94,8 +94,6 @@ class AgentsRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -120,9 +118,6 @@ class AgentsRepository extends BaseRepository
 
     /**
      * Update Agent.
-     *
-     * @param \App\Models\Agents\Agent $agent
-     * @param array                    $input
      */
     public function update(Agent $agent, array $input)
     {
@@ -141,15 +136,11 @@ class AgentsRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.agents.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.agents.update_error'));
         });
     }
 
     /**
-     * @param \App\Models\Agents\Agent $agent
-     *
      * @throws GeneralException
      *
      * @return bool

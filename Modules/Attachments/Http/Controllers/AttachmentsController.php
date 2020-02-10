@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Services\Flag\Src\Flag;
 use Exception;
 use Illuminate\Auth\AuthManager;
-use Illuminate\Http\Response;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
 use Modules\Attachments\Http\Requests\StoreAttachmentRequest;
@@ -34,11 +33,6 @@ class AttachmentsController extends Controller
 
     /**
      * AttachmentsController constructor.
-     *
-     * @param \Modules\Attachments\Repositories\Contracts\AttachmentsRepository $attachments
-     * @param \Illuminate\Routing\ResponseFactory                               $response
-     * @param \Illuminate\Auth\AuthManager                                      $auth
-     * @param \Illuminate\Translation\Translator                                $lang
      */
     public function __construct(AttachmentsRepository $attachments, ResponseFactory $response, AuthManager $auth, Translator $lang)
     {

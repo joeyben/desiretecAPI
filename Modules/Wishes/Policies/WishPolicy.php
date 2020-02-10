@@ -12,8 +12,7 @@ class WishPolicy
     use HandlesAuthorization;
 
     /**
-     * @param \App\Models\Access\User\User $user
-     * @param                              $ability
+     * @param $ability
      *
      * @return bool
      */
@@ -27,8 +26,6 @@ class WishPolicy
     /**
      * Determine whether the user can view the wish.
      *
-     * @param \App\Models\Access\User\User $user
-     *
      * @return mixed
      */
     public function view(User $user)
@@ -38,8 +35,6 @@ class WishPolicy
 
     /**
      * Determine whether the user can create wishes.
-     *
-     * @param \App\Models\Access\User\User $user
      *
      * @return mixed
      */
@@ -51,9 +46,6 @@ class WishPolicy
     /**
      * Determine whether the user can update the wish.
      *
-     * @param \App\Models\Access\User\User  $user
-     * @param \Modules\Wishes\Entities\Wish $wish
-     *
      * @return mixed
      */
     public function update(User $user, Wish $wish)
@@ -63,9 +55,6 @@ class WishPolicy
 
     /**
      * Determine whether the user can delete the wish.
-     *
-     * @param \App\Models\Access\User\User  $user
-     * @param \Modules\Wishes\Entities\Wish $wish
      *
      * @return mixed
      */
@@ -77,9 +66,6 @@ class WishPolicy
     /**
      * Determine whether the user can restore the wish.
      *
-     * @param \App\Models\Access\User\User  $user
-     * @param \Modules\Wishes\Entities\Wish $wish
-     *
      * @return mixed
      */
     public function restore(User $user, Wish $wish)
@@ -89,9 +75,6 @@ class WishPolicy
 
     /**
      * Determine whether the user can permanently delete the wish.
-     *
-     * @param \App\Models\Access\User\User  $user
-     * @param \Modules\Wishes\Entities\Wish $wish
      *
      * @return mixed
      */

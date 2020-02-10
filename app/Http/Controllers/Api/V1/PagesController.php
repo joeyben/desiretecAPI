@@ -53,8 +53,6 @@ class PagesController extends APIController
     /**
      * Creates the Resource for Page.
      *
-     * @param Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
@@ -71,9 +69,6 @@ class PagesController extends APIController
 
     /**
      *  Update Page.
-     *
-     * @param Page    $page
-     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -95,7 +90,6 @@ class PagesController extends APIController
     /**
      *  Delete Page.
      *
-     * @param Page              $page
      * @param DeletePageRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
@@ -112,8 +106,7 @@ class PagesController extends APIController
     /**
      * validateUser Pages Requests.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */

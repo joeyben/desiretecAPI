@@ -20,17 +20,12 @@ class UserStatusController extends Controller
      */
     protected $users;
 
-    /**
-     * @param UserRepository $users
-     */
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
     }
 
     /**
-     * @param ManageDeactivatedRequest $request
-     *
      * @return mixed
      */
     public function getDeactivated(ManageDeactivatedRequest $request)
@@ -39,8 +34,6 @@ class UserStatusController extends Controller
     }
 
     /**
-     * @param ManageDeletedRequest $request
-     *
      * @return mixed
      */
     public function getDeleted(ManageDeletedRequest $request)
@@ -49,7 +42,6 @@ class UserStatusController extends Controller
     }
 
     /**
-     * @param User $user
      * @param $status
      * @param ManageUserRequest $request
      *
@@ -63,9 +55,6 @@ class UserStatusController extends Controller
     }
 
     /**
-     * @param User              $deletedUser
-     * @param DeleteUserRequest $request
-     *
      * @return mixed
      */
     public function delete(User $deletedUser, DeleteUserRequest $request)
@@ -76,9 +65,6 @@ class UserStatusController extends Controller
     }
 
     /**
-     * @param User              $deletedUser
-     * @param DeleteUserRequest $request
-     *
      * @return mixed
      */
     public function restore(User $deletedUser, DeleteUserRequest $request)

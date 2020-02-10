@@ -21,7 +21,6 @@ use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -99,20 +98,6 @@ class LanguageLinesController extends Controller
 
     /**
      * LanguageLines constructor.
-     *
-     * @param LanguageLinesRepository                                           $languageline
-     * @param \Illuminate\Routing\ResponseFactory                               $response
-     * @param \Illuminate\Auth\AuthManager                                      $auth
-     * @param \Illuminate\Translation\Translator                                $lang
-     * @param \Illuminate\Support\Carbon                                        $carbon
-     * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
-     * @param \Illuminate\Database\DatabaseManager                              $database
-     * @param \Illuminate\Notifications\ChannelManager                          $notification
-     * @param \App\Models\Access\Role\Role                                      $role
-     * @param \Modules\Languages\Repositories\Contracts\LanguagesRepository     $languages
-     * @param \Illuminate\Contracts\Console\Kernel                              $artisan
-     * @param \Illuminate\Log\LogManager                                        $log
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
      */
     public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role, LanguagesRepository $languages, Kernel $artisan, LogManager $log, ActivitiesRepository $activities)
     {
@@ -203,15 +188,15 @@ class LanguageLinesController extends Controller
     {
         try {
             $result['languageline'] = [
-                'id' => 0,
-                'locale' => '',
-                'description' => '',
-                'group' => '',
-                'key' => '',
-                'text' => '',
+                'id'            => 0,
+                'locale'        => '',
+                'description'   => '',
+                'group'         => '',
+                'key'           => '',
+                'text'          => '',
                 'whitelabel_id' => null,
-                'default' => false,
-                'licence' => 0,
+                'default'       => false,
+                'licence'       => 0,
             ];
 
             $result['success'] = true;
@@ -239,8 +224,7 @@ class LanguageLinesController extends Controller
                 $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id', 'whitelabel_id', 'default', 'licence')
             );
 
-            if ($languageline->default && is_null($languageline->whitelabel_id))
-            {
+            if ($languageline->default && null === $languageline->whitelabel_id) {
                 Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
             }
 
@@ -258,22 +242,18 @@ class LanguageLinesController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_PRESERVE_ZERO_FRACTION);
     }
 
-
     public function duplicate(StoreLanguageLineRequest $request)
     {
         try {
-
             $languageline = $this->languageline->create(
                 $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id')
             );
 
-            if ($languageline->default && is_null($languageline->whitelabel_id))
-            {
+            if ($languageline->default && null === $languageline->whitelabel_id) {
                 Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
             }
 
             $result['languageline'] = $languageline;
-
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'LanguageLine']);
             $result['success'] = true;
@@ -299,8 +279,6 @@ class LanguageLinesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -337,9 +315,6 @@ class LanguageLinesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateLanguageLineRequest $request
-     * @param int                       $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateLanguageLineRequest $request, int $id)
@@ -360,9 +335,8 @@ class LanguageLinesController extends Controller
                 )
             );
 
-            if ($languageline->default && !$languagelineOld->default && is_null($languageline->whitelabel_id))
-            {
-               Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
+            if ($languageline->default && !$languagelineOld->default && null === $languageline->whitelabel_id) {
+                Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
             }
 
             $result['languageline'] = $languageline;
@@ -380,8 +354,6 @@ class LanguageLinesController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -403,8 +375,6 @@ class LanguageLinesController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param \Modules\LanguageLines\Http\Requests\CopyLanguageLinesRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -472,8 +442,6 @@ class LanguageLinesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Modules\LanguageLines\Http\Requests\ReplaceLanguageLinesRequest $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function replace(ReplaceLanguageLinesRequest $request)
@@ -523,8 +491,6 @@ class LanguageLinesController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param \Modules\LanguageLines\Http\Requests\CloneLanguageLinesRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -645,8 +611,6 @@ class LanguageLinesController extends Controller
 
     /**
      * Edit already existing Signature or Create new Signature.
-     *
-     * @param EmailSignatureStoreRequest $request
      *
      * @return Response
      */

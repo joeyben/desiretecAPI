@@ -24,8 +24,6 @@ class ByWhitelabel
 
     /**
      * ByWhitelabel constructor.
-     *
-     * @param string $table
      */
     public function __construct(string $table = 'wishes')
     {
@@ -34,8 +32,6 @@ class ByWhitelabel
 
     /**
      * @param $model
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply($model): Builder
     {

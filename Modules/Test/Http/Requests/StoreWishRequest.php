@@ -45,8 +45,6 @@ class StoreWishRequest extends FormRequest
     /**
      * Handle a failed validation attempt.
      *
-     * @param \Illuminate\Contracts\Validation\Validator $validator
-     *
      * @throws \Illuminate\Validation\ValidationException
      *
      * @return JsonResponse
@@ -71,7 +69,7 @@ class StoreWishRequest extends FormRequest
             'earliest_start'  => 'required',
             'latest_return'   => 'required',
             'adults'          => 'required',
-            'terms'          => 'required',
+            'terms'           => 'required',
             'email'           => 'required|email'
         ];
     }

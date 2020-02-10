@@ -21,8 +21,6 @@ class DeletedUserNotification extends Notification implements ShouldBroadcast
 
     /**
      * Create a new notification instance.
-     *
-     * @param \App\Models\Access\User\User $user
      */
     public function __construct(User $user)
     {
