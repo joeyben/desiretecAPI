@@ -304,7 +304,7 @@ class WishesRepository extends BaseRepository
         $this->whitelabel_id = $input['whitelabel_id'];
         $wish = DB::transaction(function () use ($input) {
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
-            $input['created_by'] = access()->user()->id;
+            $input['created_by'] = $input['user_id'];
             $input['group_id'] = $this->getGroup();
             $input['title'] = '-';
             $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);

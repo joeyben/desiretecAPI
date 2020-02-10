@@ -16,6 +16,7 @@ use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WithTrashed;
+use App\Repositories\Frontend\Access\User\UserRepository;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -151,10 +152,16 @@ class WishesController extends APIController
     /**
      *
      */
-    public function store(StoreWishesRequest $request)
+    public function store(StoreWishesRequest $request, UserRepository $user)
     {
         try{
-            if ($this->wishes->createFromApi($request->all())){
+            $newUser = $user->createUserFromLayer(
+                $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'),
+                $request->input('whitelabel_id')
+            );
+
+            if ($this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
+                'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3','ages4'))){
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
             }
 
