@@ -250,14 +250,18 @@
 }
 
 // .listed-offers-section
+@media (max-width: 1400px) {
+  .listed-offers-section {
+    .shell {
+      padding: 0 30px;
+    }
+  }
+}
 @media (max-width: 1200px) {
   .listed-offers-section {
     margin: 0 auto;
     margin-bottom: 150px;
     width: 80%;
-    .shell {
-      padding: 0 60px;
-    }
   }
 }
 @media (max-width: 1024px) {
@@ -356,11 +360,6 @@
         padding-bottom: 50px;
       }
     }
-    .info-icons {
-      .info {
-        padding: 0 10px;
-      }
-    }
   }
 }
 @media (max-width: 1200px) {
@@ -449,9 +448,6 @@
     .price {
       .info-icons {
         bottom: 75px;
-        .info {
-          padding: 0 10px 0 10px;
-        }
       }
     }
   }
