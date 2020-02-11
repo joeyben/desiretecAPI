@@ -461,12 +461,12 @@
                 });
                 $("#latest_return").trigger("change");
 
-                var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
+                /*var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
                 var airport_arr = airport.split(',');
                 for(var i = 0; i<airport_arr.length;i++) {
                     var airport_name = dt.PopupManager.decoder.dictionaries.airports[airport_arr[i]];
                     $('#airport').tagsinput('add', airport_name);
-                }
+                }*/
             });
 
             $(window).on('resize', function() {
