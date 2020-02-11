@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\LanguageLines\Entities\LanguageLines;
 use Modules\LanguageLines\Entities\Translation;
 use Modules\LanguageLines\Exports\LanguageImport;
 use Modules\LanguageLines\Http\Requests\CloneLanguageLinesRequest;
@@ -36,6 +37,7 @@ use Modules\LanguageLines\Http\Requests\UpdateLanguageLineRequest;
 use Modules\LanguageLines\Notifications\CloneLanguageLinesNotification;
 use Modules\LanguageLines\Notifications\CopyLanguageLinesNotification;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
+use Modules\Languages\Entities\Language;
 use Modules\Languages\Exports\LanguageExport;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
@@ -152,21 +154,29 @@ class LanguageLinesController extends Controller
 
     public function view(Request $request)
     {
-//        $this->authorize('view', LanguageLines::class);
 
         try {
             $perPage = $request->get('per_page');
             $sort = explode('|', $request->get('sort'));
 
-            $result['data'] = $this->languageline->withCriteria([
-                new OrderBy($sort[0], $sort[1]),
-                new Where('locale', $request->get('locale')),
-                new Filter($request->get('filter')),
-                new Where('language_lines.whitelabel_id', $request->get('whitelabel')),
-                new EagerLoad(['whitelabel'  => function ($query) {
-                    $query->select('id', 'display_name');
-                }]),
-            ])->paginate($perPage);
+            if (with(new LanguageLines())->getTable() === 'language_lines') {
+                $result['data'] = $this->languageline->withCriteria([
+                    new OrderBy($sort[0], $sort[1]),
+                    new Where('locale', $request->get('locale')),
+                    new Filter($request->get('filter')),
+                    new Where('language_lines.whitelabel_id', $request->get('whitelabel')),
+                    new EagerLoad(['whitelabel'  => function ($query) {
+                        $query->select('id', 'display_name');
+                    }]),
+                ])->paginate($perPage);
+            } else {
+                $result['data'] = $this->languageline->withCriteria([
+                    new OrderBy($sort[0], $sort[1]),
+                    new Where('locale', $request->get('locale')),
+                    new Filter($request->get('filter')),
+                    new Where('language_lines.whitelabel_id', $request->get('whitelabel'))
+                ])->paginate($perPage);
+            }
 
             $result['success'] = true;
             $result['status'] = 200;
@@ -220,13 +230,20 @@ class LanguageLinesController extends Controller
     public function store(StoreLanguageLineRequest $request)
     {
         try {
-            $languageline = $this->languageline->create(
-                $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id', 'whitelabel_id', 'default', 'licence')
-            );
+            if (with(new LanguageLines())->getTable() === 'language_lines') {
+                $languageline = $this->languageline->create(
+                    $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id', 'default', 'licence')
+                );
 
-            if ($languageline->default && null === $languageline->whitelabel_id) {
-                Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
+                if ($languageline->default && null === $languageline->whitelabel_id) {
+                    Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
+                }
+            } else {
+                $languageline = $this->languageline->create(
+                    $request->only('locale', 'description', 'group', 'key', 'text')
+                );
             }
+
 
             $result['languageline'] = $languageline;
 
@@ -245,13 +262,16 @@ class LanguageLinesController extends Controller
     public function duplicate(StoreLanguageLineRequest $request)
     {
         try {
-            $languageline = $this->languageline->create(
-                $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id')
-            );
+            if (with(new LanguageLines())->getTable() !== 'language_lines') {
+                $languageline = $this->languageline->create(
+                    $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id')
+                );
 
-            if ($languageline->default && null === $languageline->whitelabel_id) {
-                Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
+                if ($languageline->default && null === $languageline->whitelabel_id) {
+                    Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
+                }
             }
+
 
             $result['languageline'] = $languageline;
 
@@ -287,17 +307,30 @@ class LanguageLinesController extends Controller
         try {
             $languageline = $this->languageline->find($id);
 
-            $result['languageline'] = [
-                'id'               => $languageline->id,
-                'locale'           => $languageline->locale,
-                'description'      => $languageline->description,
-                'group'            => $languageline->group,
-                'key'              => $languageline->key,
-                'text'             => $languageline->text,
-                'whitelabel_id'    => $languageline->whitelabel_id,
-                'default'          => $languageline->default,
-                'licence'          => $languageline->licence,
-            ];
+            if (with(new LanguageLines())->getTable() === 'language_lines') {
+                $result['languageline'] = [
+                    'id'               => $languageline->id,
+                    'locale'           => $languageline->locale,
+                    'description'      => $languageline->description,
+                    'group'            => $languageline->group,
+                    'key'              => $languageline->key,
+                    'text'             => $languageline->text,
+                    'whitelabel_id'    => $languageline->whitelabel_id,
+                    'default'          => $languageline->default,
+                    'licence'          => $languageline->licence,
+                ];
+            } else {
+                $result['languageline'] = [
+                    'id'               => $languageline->id,
+                    'locale'           => $languageline->locale,
+                    'description'      => $languageline->description,
+                    'group'            => $languageline->group,
+                    'key'              => $languageline->key,
+                    'text'             => $languageline->text,
+                ];
+            }
+
+
 
             $result['languageline']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-group') ? $this->activities->byModel($languageline) : [];
 
@@ -321,19 +354,34 @@ class LanguageLinesController extends Controller
     {
         try {
             $languagelineOld = $this->languageline->find($id);
-            $languageline = $this->languageline->update(
-                $id,
-                $request->only(
-                    'locale',
-                    'group',
-                    'description',
-                    'key',
-                    'text',
-                    'whitelabel_id',
-                    'default',
-                    'licence'
-                )
-            );
+
+            if (with(new LanguageLines())->getTable() === 'language_lines') {
+                $languageline = $this->languageline->update(
+                    $id,
+                    $request->only(
+                        'locale',
+                        'group',
+                        'description',
+                        'key',
+                        'text',
+                        'whitelabel_id',
+                        'default',
+                        'licence'
+                    )
+                );
+            } else {
+                $languageline = $this->languageline->update(
+                    $id,
+                    $request->only(
+                        'locale',
+                        'group',
+                        'description',
+                        'key',
+                        'text'
+                    )
+                );
+            }
+
 
             if ($languageline->default && !$languagelineOld->default && null === $languageline->whitelabel_id) {
                 Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
