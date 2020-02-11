@@ -34,6 +34,7 @@ class Whitelabel extends Model
         'state',
         'layer',
         'color',
+        'licence',
         'headline',
         'subheadline',
         'headline_success',
@@ -50,6 +51,7 @@ class Whitelabel extends Model
         'ga_view_id',
         'color',
         'headline',
+        'licence',
         'subheadline',
         'headline_success',
         'subheadline_success'
