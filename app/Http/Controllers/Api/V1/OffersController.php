@@ -51,11 +51,11 @@ class OffersController extends APIController
     public function store(StoreOffersRequest $request)
     {
         try{
-            if($this->offer->create($request);){
+            if($this->offer->createOfferAPI($request)){
                 return $this->respondCreated(trans('alerts.frontend.offers.created'));
+            } else {
+                return $this->respondInternalError('error');
             }
-
-            return $this->respondWithError('error');
         } catch (\Exception $e) {
             return $this->respondWithError($e->getMessage());
         }
