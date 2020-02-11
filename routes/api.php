@@ -84,4 +84,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     Route::group(['middleware' => []], function () {
         Route::post('translations', 'TranslationsController@getTranslations');
     });
+
+    Route::group(['middleware' => []], function () {
+        Route::post('whitelabels', 'WhitelabelsController@store');
+    });
 });

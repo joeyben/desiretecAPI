@@ -12,6 +12,8 @@ interface WhitelabelsRepository
 
     public function copyLanguage(string $table, string $locale);
 
+    public function apiCopyLanguage(int $whitelabelId);
+
     public function current(bool $first = true);
 
     public function getBackgroundImage($whitelabel);
