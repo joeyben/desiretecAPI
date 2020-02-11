@@ -66,7 +66,7 @@
                             <li><i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
                             <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
                             <li><i class="icon_group"></i><span class="value">@{{ wish.adults }} Erwachsene(r) @{{ wish.kids }} Kind(er) </span></li>
-                            <li><i class="fal fa-usd-circle"></i><span class="value">@{{ wish.budget }}CHF</span></li>
+                            <li><i class="fal fa-usd-circle"></i><span class="value">CHF @{{ wish.budget }}</span></li>
                             <li>{{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("DD.MM.YYYY") }}</span></li>
                         </ul>
                     </div>
