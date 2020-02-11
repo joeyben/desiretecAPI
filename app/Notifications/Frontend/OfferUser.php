@@ -6,6 +6,7 @@ use App\Models\Offers\Offer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class OfferUser.
@@ -95,6 +96,10 @@ class OfferUser extends Notification
             $whitelabelslug = mb_strtolower($this->wl_name);
 
             return $whitelabelslug . '.wish.details';
+        } else {
+            $whitelabelId = mb_strtolower(Auth::guard('api')->user()->whitelabels()->first()->name);
+
+            return $whitelabelId . '.wish.details';
         }
 
         return 'frontend.wishes.wish';

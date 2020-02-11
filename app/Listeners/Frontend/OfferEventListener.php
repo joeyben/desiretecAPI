@@ -43,7 +43,7 @@ class OfferEventListener
         $usertoken = $user->storeToken();
         $token = $usertoken->token->token;
 
-        $seller = Auth::guard('web')->user();
+        $seller = Auth::user();
         $sellertoken = $seller->storeToken();
         $token_seller = $sellertoken->token->token;
 

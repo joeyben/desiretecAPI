@@ -146,6 +146,7 @@ class OffersRepository extends BaseRepository
      */
     public function create(StoreOffersRequest $request)
     {
+
         $files = $request->hasfile('file') ? $request->file('file') : [];
         $input = $request->except('_token', 'file');
         DB::transaction(function () use ($input, $files) {
@@ -163,19 +164,22 @@ class OffersRepository extends BaseRepository
 
             throw new GeneralException(trans('exceptions.backend.offers.create_error'));
         });
+
     }
 
-    public function createTemp(Request $request)
+    public function createOfferAPI(Request $request)
     {
         $files = $request->hasfile('file') ? $request->file('file') : [];
         $input = $request->except('_token', 'file');
-        DB::transaction(function () use ($input, $files) {
-            $id = Auth::guard('api')->user()->id;
+        return DB::transaction(function () use ($input, $files) {
+            $id = access()->user()->id;
+            $active_agent = Agent::where('user_id', $id)->where('status', 'Active')->first();
 
             $input['created_by'] = $id;
-            $input['agent_id'] = 9 /*Auth::guard('agent')->user()->id*/;
+            $input['agent_id'] = $active_agent['id'];
 
             if ($offer = Offer::create($input)) {
+
                 $fileUploaded = $this->uploadImage($files, $offer->id);
                 event(new OfferCreated($offer));
 
@@ -185,6 +189,8 @@ class OffersRepository extends BaseRepository
             throw new GeneralException(trans('exceptions.backend.offers.create_error'));
         });
     }
+
+
 
     /**
      * Update Offer.
