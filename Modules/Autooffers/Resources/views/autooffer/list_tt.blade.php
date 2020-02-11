@@ -165,9 +165,12 @@
                     <ul class="offers">
 
                         @foreach($offers as $key => $offer)
+                            @if (!$offer['hotel_data']['hotel'])
+                                @continue
+                            @endif
                             @php
                                 $hotelData = [
-                                    'title' => $offer['hotel_data']['data']['Hotelname'],
+                                    'title' => str_replace("'","",$offer['hotel_data']['hotel']['name']),
                                     'stars' => key_exists('Hotelkategorie', $offer['hotel_data']['data']) ? intval($offer['hotel_data']['data']['Hotelkategorie']) : 0 ,
                                     'text' => $offer['data']['boardType'],
                                     'longitude' => $offer['data']['hotel_geo']['longitude'],
