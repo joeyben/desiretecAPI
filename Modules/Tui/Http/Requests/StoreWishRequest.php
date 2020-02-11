@@ -45,8 +45,6 @@ class StoreWishRequest extends FormRequest
     /**
      * Handle a failed validation attempt.
      *
-     * @param \Illuminate\Contracts\Validation\Validator $validator
-     *
      * @throws \Illuminate\Validation\ValidationException
      *
      * @return JsonResponse
@@ -76,20 +74,22 @@ class StoreWishRequest extends FormRequest
         ];
     }
 
-    protected function getValidatorInstance() {
+    protected function getValidatorInstance()
+    {
         $validator = parent::getValidatorInstance();
-        $validator->sometimes('ages1', 'required', function($input) {
+        $validator->sometimes('ages1', 'required', function ($input) {
             return $input->kids >= 1;
         });
-        $validator->sometimes('ages2', 'required', function($input) {
+        $validator->sometimes('ages2', 'required', function ($input) {
             return $input->kids >= 2;
         });
-        $validator->sometimes('ages3', 'required', function($input) {
+        $validator->sometimes('ages3', 'required', function ($input) {
             return $input->kids >= 3;
         });
-        $validator->sometimes('ages4', 'required', function($input) {
+        $validator->sometimes('ages4', 'required', function ($input) {
             return $input->kids >= 4;
         });
+
         return $validator;
     }
 

@@ -45,12 +45,6 @@ class InboxController extends Controller
 
     /**
      * InboxController constructor.
-     *
-     * @param \Modules\Notifications\Repositories\Contracts\NotificationsRepository $notifications
-     * @param \Illuminate\Routing\ResponseFactory                                   $response
-     * @param \Illuminate\Auth\AuthManager                                          $auth
-     * @param \Illuminate\Translation\Translator                                    $lang
-     * @param \Illuminate\Support\Carbon                                            $carbon
      */
     public function __construct(NotificationsRepository $notifications, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon)
     {
@@ -73,8 +67,6 @@ class InboxController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -119,8 +111,6 @@ class InboxController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -150,8 +140,6 @@ class InboxController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function update(Request $request)
@@ -160,9 +148,6 @@ class InboxController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -188,8 +173,6 @@ class InboxController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */

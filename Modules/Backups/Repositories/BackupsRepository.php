@@ -48,13 +48,6 @@ class BackupsRepository
 
     /**
      * BackupsRepository constructor.
-     *
-     * @param \Illuminate\Filesystem\FilesystemManager $adapter
-     * @param \Illuminate\Contracts\Console\Kernel     $artisan
-     * @param \Illuminate\Log\Logger                   $log
-     * @param \Illuminate\Support\Carbon               $carbon
-     * @param \Illuminate\Filesystem\FilesystemManager $storage
-     * @param \Illuminate\Translation\Translator       $lang
      */
     public function __construct(FilesystemManager $adapter, Kernel $artisan, Logger $log, Carbon $carbon, FilesystemManager $storage, Translator $lang)
     {
@@ -67,9 +60,6 @@ class BackupsRepository
     }
 
     /**
-     * @param int $bytes
-     * @param int $decimals
-     *
      * @return string
      */
     public function humanFileSize(int $bytes, int $decimals = 2)
@@ -141,11 +131,6 @@ class BackupsRepository
         return $this->storage->disk(config('backup.backup.destination.disks')[0])->getDriver();
     }
 
-    /**
-     * @param string $file
-     *
-     * @return array
-     */
     public function delete(string $file): array
     {
         $disk = $this->storage->disk(config('backup.backup.destination.disks')[0]);

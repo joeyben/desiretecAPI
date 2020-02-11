@@ -19,17 +19,12 @@ class DistributionsController extends Controller
      */
     protected $distribution;
 
-    /**
-     * @param \App\Repositories\Backend\Distributions\DistributionsRepository $distribution
-     */
     public function __construct(DistributionsRepository $distribution)
     {
         $this->distribution = $distribution;
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Distributions\ManageDistributionsRequest $request
-     *
      * @return mixed
      */
     public function index(ManageDistributionsRequest $request)
@@ -39,8 +34,6 @@ class DistributionsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Distributions\ManageDistributionsRequest $request
-     *
      * @return mixed
      */
     public function create(ManageDistributionsRequest $request)
@@ -50,8 +43,6 @@ class DistributionsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Distributions\StoreDistributionsRequest $request
-     *
      * @return mixed
      */
     public function store(StoreDistributionsRequest $request)
@@ -64,9 +55,6 @@ class DistributionsController extends Controller
     }
 
     /**
-     * @param \App\Models\Distributions\Distribution                              $distribution
-     * @param \App\Http\Requests\Backend\Distributions\ManageDistributionsRequest $request
-     *
      * @return mixed
      */
     public function edit(Distribution $distribution, ManageDistributionsRequest $request)
@@ -78,9 +66,6 @@ class DistributionsController extends Controller
     }
 
     /**
-     * @param \App\Models\Distributions\Distribution                              $distribution
-     * @param \App\Http\Requests\Backend\Distributions\UpdateDistributionsRequest $request
-     *
      * @return mixed
      */
     public function update(Distribution $distribution, UpdateDistributionsRequest $request)
@@ -95,9 +80,6 @@ class DistributionsController extends Controller
     }
 
     /**
-     * @param \App\Models\Distributions\Distribution                              $distribution
-     * @param \App\Http\Requests\Backend\Distributions\ManageDistributionsRequest $request
-     *
      * @return mixed
      */
     public function destroy(Distribution $distribution, ManageDistributionsRequest $request)

@@ -38,8 +38,6 @@ class BlogTagsRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -65,7 +63,6 @@ class BlogTagsRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\BlogTags\BlogTag $blogtag
      * @param  $input
      *
      * @throws \App\Exceptions\GeneralException
@@ -88,15 +85,11 @@ class BlogTagsRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.blogtags.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.blogtags.update_error'));
         });
     }
 
     /**
-     * @param \App\Models\BlogTags\BlogTag $blogtag
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool

@@ -3,7 +3,7 @@ var dt = window.dt || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://lastminute.reise-wunsch.com',
+        baseUrl: 'https://travelwish.lastminute.ch',
         logoPath: '/whitelabel/lastminute/images/layer/logo.png',
         popupPath: '/show',
         popupStore:'/store',
@@ -47,7 +47,7 @@ var dt = window.dt || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: 'lastminute',
+        matchesUrl: 'travelwish.lastminute.ch',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
@@ -273,7 +273,7 @@ var dt = window.dt || {};
 
     var LastminuteTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Lastminute',
-        matchesUrl: 'lastminute-ch-staging.traveltainment.de/*',
+        matchesUrl: 'https://lastminute.reise-wunsch.com/|https://lastminute.reisewunschservice.de/|http://lastminute.com/' + '|https://www.lastminute.ch|https://badeferien.lastminute.ch/' + '|lastminute-ch-staging.traveltainment.de/*',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
@@ -298,10 +298,16 @@ var dt = window.dt || {};
                 'AO': 1,
                 'XX': null
             },
-            'allowedDestinations': {
-                1340: 'Seychellen',
-                1196: 'Malediven',
-                1333: 'Kapverdische Inseln'
+            'airports': {
+                'ZRH':'Zürich',
+                'GVA':'Genf',
+                'BSL':'Basel',
+                'BRN':'Bern',
+                'LUG':'Lugano',
+                'FDH':'Friedrichshafen',
+                'MXP':'Mailand-Malpensa',
+                'MUC':'München',
+                'STR':'Stuttgart'
             }
         },
         filterDataDecoders: {
@@ -436,8 +442,12 @@ var dt = window.dt || {};
                 return duration;
             },
             'airport': function (form, formData) {
-                //var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
-                return "";
+                var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
+                var airport_arr = airport.split(',');
+                for(var i = 0; i<airport_arr.length;i++) {
+                    var airport_name = this.dictionaries.airports[airport_arr[i]];
+                    $('#airport').tagsinput('add', airport_name);
+                }
             },
             'direkt_flug': function (form, formData) {
                 var direkt_flug = getUrlParams('dfl') ? getUrlParams('dfl') : '';

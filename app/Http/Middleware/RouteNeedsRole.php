@@ -11,7 +11,6 @@ class RouteNeedsRole
 {
     /**
      * @param $request
-     * @param Closure $next
      * @param $role
      * @param bool $needsAll
      *

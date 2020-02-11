@@ -67,17 +67,15 @@ class TestController extends Controller
     /**
      * Return the specified resource.
      *
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request)
     {
         $input = $request->only('variant');
-        $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
+        $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
         $whitelabel = $this->whitelabel->getByName('Test');
 
-
-        $html = view('test::'.$layer)->with([
+        $html = view('test::' . $layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -93,24 +91,20 @@ class TestController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
-     * @param WishesRepository $wish
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
         $input = $request->all();
         if ($request->failed()) {
-            $layer = $input['variant'] === "eil-mobile" ? "layer.popup-mobile" : "layer.popup";
-            $html = view('test::'.$layer)->with([
+            $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
+            $html = view('test::' . $layer)->with([
                 'adults_arr'   => $this->adults,
                 'errors'       => $request->errors(),
                 'kids_arr'     => $this->kids,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration,
-                'request' => $request->all()
+                'request'      => $request->all()
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -143,8 +137,7 @@ class TestController extends Controller
     /**
      * Create new user from Layer.
      *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
+     * @param UserRepository $user
      *
      * @return UserRepository $user
      */
@@ -156,7 +149,7 @@ class TestController extends Controller
 
             return $new_user;
         }
-        $input['whitelabel_name'] = $this->whitelabel->getById(intval($this->whitelabelId))['display_name'];
+        $input['whitelabel_name'] = $this->whitelabel->getById((int) ($this->whitelabelId))['display_name'];
 
         $new_user = $user->create($input);
         $new_user->storeToken();
@@ -170,7 +163,6 @@ class TestController extends Controller
      * Create new user from Layer.
      *
      * @param WishesRepository $wish
-     * @param StoreWishRequest $request
      *
      * @return object
      */
@@ -179,7 +171,7 @@ class TestController extends Controller
         $request->merge(['featured_image' => 'bg.jpg']);
 
         $new_wish = $wish->create(
-            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3','ages4'),
+            $request->except('variant', 'first_name', 'last_name', 'email', 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'),
              $this->whitelabelId
         );
 
@@ -202,7 +194,7 @@ class TestController extends Controller
     }
 
     public function getPDF()
-        {
-            return view('test::layer.pdf');
-        }
+    {
+        return view('test::layer.pdf');
+    }
 }

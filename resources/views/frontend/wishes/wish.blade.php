@@ -17,13 +17,20 @@
 
 @section('after-scripts')
     <script type="text/javascript">
-        var cssPrimaryBtn = '.primary-btn { background: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; color: #fff !important; } ';
-        var cssSecondaryBtn = '.secondary-btn { background: transparent !important; color: ' + brandColor + ' !important; border: 1px solid ' + brandColor + ' !important; } ';
-        $('head').append('<style>' + cssPrimaryBtn + cssSecondaryBtn + '</style>');
         $(document).ready(function() {
-            "<?php echo $wish->airport; ?>".length <= 30 ? document.getElementById("departure-mousehover").remove() : '';
-            "<?php echo $wish->destination; ?>".length <= 30 ? document.getElementById("arrival-mousehover").remove() : '';
+
+            function isEllipsisActive(element) {
+                return (element.offsetWidth < element.scrollWidth);
+            }
+
+            if(!isEllipsisActive(document.getElementById("departure-mousehover-value"))) {
+                document.getElementById("departure-mousehover").remove();
+            }
+            if(!isEllipsisActive(document.getElementById("arrival-mousehover-value"))) {
+                document.getElementById("arrival-mousehover").remove();
+            }
         });
+
     </script>
 @endsection
 

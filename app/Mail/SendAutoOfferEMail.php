@@ -21,7 +21,7 @@ class SendAutoOfferEMail extends Mailable
     protected $details;
     protected $wlEmail;
 
-    public function __construct($wishId, $type, $token, $wlEmail,$details)
+    public function __construct($wishId, $type, $token, $wlEmail, $details)
     {
         $this->wishId = $wishId;
         $this->type = $type;

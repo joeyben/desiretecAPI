@@ -21,9 +21,6 @@ class SessionTimeout
      */
     protected $timeout;
 
-    /**
-     * @param Store $session
-     */
     public function __construct(Store $session)
     {
         $this->session = $session;
@@ -34,7 +31,6 @@ class SessionTimeout
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
      *
      * @return mixed
      */

@@ -36,6 +36,12 @@ const mutations = {
   updateWhitelabel (state, obj) {
     state.whitelabel[obj.name] = obj.value
   },
+  updateWhitelabelLayers (state, obj) {
+    state.whitelabel.layers[obj.tabnr].pivot[obj.name] = obj.value
+  },
+  updateWhitelabelUrl (state, obj) {
+    state.whitelabel.layers[obj.tabnr].pivot[obj.name] = obj.value
+  },
   addWhitelabelFile (state, obj) {
     let key = obj.type.replace('whitelabels', '').slice(1)
 
@@ -70,3 +76,4 @@ export default {
   actions,
   mutations
 }
+

@@ -27,7 +27,7 @@ hgroup, nav, section {
 /* This helps to make newer HTML5 elements behave like DIVs in older browers */
 article, aside, details, figcaption, figure, dialog,
 footer, header, hgroup, menu, nav, section {
-  display:block;
+    display:block;
 }
 
 /* Line-height should always be unitless! */
@@ -60,3 +60,4 @@ a img { border: none; }
 
 /* Remember to define your own focus styles! */
 :focus { outline: 0; }
+

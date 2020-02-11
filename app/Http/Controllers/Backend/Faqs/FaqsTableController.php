@@ -15,17 +15,12 @@ class FaqsTableController extends Controller
      */
     protected $faqs;
 
-    /**
-     * @param FaqsRepository $faqs
-     */
     public function __construct(FaqsRepository $faqs)
     {
         $this->faqs = $faqs;
     }
 
     /**
-     * @param ManageFaqsRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageFaqsRequest $request)

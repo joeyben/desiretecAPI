@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1\Contracts;
 
-use App\Http\Requests\Frontend\Agents\ManageAgentsRequest;
 use App\Http\Requests\Frontend\Agents\CreateAgentsRequest;
-use App\Http\Requests\Frontend\Agents\UpdateAgentsRequest;
 use App\Http\Requests\Frontend\Agents\DeleteAgentsRequest;
+use App\Http\Requests\Frontend\Agents\ManageAgentsRequest;
+use App\Http\Requests\Frontend\Agents\UpdateAgentsRequest;
 
-
-Interface AgentsControllerInterface
+interface AgentsControllerInterface
 {
     public function listAgents(ManageAgentsRequest $request);
 

@@ -56,10 +56,6 @@ class WishesController extends Controller
      */
     protected $whitelabels;
 
-    /**
-     * @param \App\Repositories\Backend\Wishes\WishesRepository $wish
-     * @param WhitelabelsRepository                             $whitelabels
-     */
     public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabels)
     {
         $this->wish = $wish;
@@ -67,8 +63,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function index(ManageWishesRequest $request)
@@ -81,8 +75,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function create(ManageWishesRequest $request)
@@ -96,8 +88,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Wishes\StoreWishesRequest $request
-     *
      * @return mixed
      */
     public function store(StoreWishesRequest $request)
@@ -110,9 +100,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                               $wish
-     * @param \App\Http\Requests\Backend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function edit(Wish $wish, ManageWishesRequest $request)
@@ -127,9 +114,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                               $wish
-     * @param \App\Http\Requests\Backend\Wishes\UpdateWishesRequest $request
-     *
      * @return mixed
      */
     public function update(Wish $wish, UpdateWishesRequest $request)
@@ -144,9 +128,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                               $wish
-     * @param \App\Http\Requests\Backend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function destroy(Wish $wish, ManageWishesRequest $request)

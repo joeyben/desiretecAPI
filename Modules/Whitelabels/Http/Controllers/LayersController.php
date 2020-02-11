@@ -55,8 +55,6 @@ class LayersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -85,8 +83,6 @@ class LayersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */

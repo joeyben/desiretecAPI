@@ -58,8 +58,6 @@ class DashboardController extends Controller
 
     /**
      * This function is used to get permissions details by role.
-     *
-     * @param Request $request
      */
     public function getPermissionByRole(Request $request)
     {

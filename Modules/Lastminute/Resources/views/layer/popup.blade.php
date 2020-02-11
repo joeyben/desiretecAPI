@@ -75,7 +75,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('lastminute::layer.general.duration-more'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('lastminute::layer.general.duration_empty')], $duration_arr),key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['0' => trans('lastminute::layer.general.duration_empty')], $duration_arr),key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                                 @if ($errors->any() && $errors->get('duration'))
                                     @foreach ($errors->get('duration') as $error)
                                         <span>{{ $error }}</span>
@@ -460,6 +460,13 @@
                     check_button();
                 });
                 $("#latest_return").trigger("change");
+
+                var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
+                var airport_arr = airport.split(',');
+                for(var i = 0; i<airport_arr.length;i++) {
+                    var airport_name = dt.PopupManager.decoder.dictionaries.airports[airport_arr[i]];
+                    $('#airport').tagsinput('add', airport_name);
+                }
             });
 
             $(window).on('resize', function() {
@@ -547,6 +554,11 @@
                 }
             }
 
+            function getUrlParams(params){
+                var url_string = window.location.href;
+                var url = new URL(url_string);
+                return url.searchParams.get(params);
+            }
         </script>
 
         <div class="kwp-row">

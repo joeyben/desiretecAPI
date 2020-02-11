@@ -31,8 +31,6 @@ class AgentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -61,8 +59,6 @@ class AgentsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */

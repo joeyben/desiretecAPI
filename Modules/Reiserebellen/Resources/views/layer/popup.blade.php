@@ -232,7 +232,7 @@
                 var earliest_start = new Date(earliest_start_arr[2], earliest_start_arr[1]-1, earliest_start_arr[0]);
                 var latest_return = new Date(latest_return_arr[2], latest_return_arr[1]-1, latest_return_arr[0]);
                 var diff_days = Math.round((latest_return-earliest_start)/(1000*60*60*24));
-                var diff_nights =  diff_days - 1;
+                var diff_nights =  diff_days;
                 var options = document.getElementById("duration").getElementsByTagName("option");
                 for (var i = 0; i < options.length; i++) {
                     if(options[i].value.includes('-')){

@@ -219,6 +219,10 @@ $gutter: 30px;
     height: 25px;
   }
 
+  input[type=number] {
+    display: none;
+  }
+
   textarea {
     height: 60px;
     padding: 5px;
@@ -247,7 +251,7 @@ $gutter: 30px;
     border: none;
     padding: 15px;
     margin-top: 5px;
-    //transition: background-color .3s ease;
+    // transition: background-color .3s ease;
     &.error-button{
       background: $brand-danger;
     }
@@ -1452,6 +1456,7 @@ p.kwp-info {
   }
   .kwp-custom-select:after{
     background: none;
+    border-bottom: none;
   }
   .kwp-content-extra, .kwp-btn-expand{
     display: none;
@@ -1522,7 +1527,6 @@ p.kwp-info {
   border: 1px solid $brand-danger !important;
 }
 
-// Customize bootstrap-taginput library
 //
 // Dropdown menus
 // --------------------------------------------------

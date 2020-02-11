@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
-use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
+use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
 use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Groups\GroupsRepository;
 use App\Repositories\Criteria\ByUser;
@@ -16,6 +16,7 @@ use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WithTrashed;
+use App\Repositories\Frontend\Access\User\UserRepository;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -27,8 +28,8 @@ use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use Validator;
-use App\Repositories\Frontend\Wishes\WishesRepository as FrontWishesRepository;
 use Auth;
+use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 
 class WishesController extends APIController
 {
@@ -58,29 +59,23 @@ class WishesController extends APIController
      */
     private $carbon;
     /**
-     * @var \Modules\Activities\Repositories\Contracts\ActivitiesRepository
-     */
-    private $activities;
-    /**
      * @var \App\Repositories\Backend\Groups\GroupsRepository
      */
     private $groups;
     /**
      * @var \App\Repositories\Frontend\Wishes\WishesRepository
      */
-    private $frontWishesRepository;
+    private $repository;
 
-    public function __construct(WishesRepository $wishes, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, GroupsRepository $groups, FrontWishesRepository $frontWishesRepository)
+    public function __construct(WishesRepository $repository, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, GroupsRepository $groups)
     {
-        $this->wishes = $wishes;
+        $this->repository = $repository;
         $this->notification = $notification;
         $this->response = $response;
         $this->auth = $auth;
         $this->lang = $lang;
         $this->carbon = $carbon;
-        $this->activities = $activities;
         $this->groups = $groups;
-        $this->frontWishesRepository = $frontWishesRepository;
     }
 
     public function getWishes(Request $request)
@@ -88,7 +83,7 @@ class WishesController extends APIController
         try {
             [$perPage, $sort, $search] = $this->parseRequest($request);
 
-            $result['data'] = $this->wishes->withCriteria([
+            $result['data'] = $this->repository->withCriteria([
                 new ByUserRole($this->auth->user()->id),
                 new OrderBy($sort[0], $sort[1]),
                 new Filter($search),
@@ -112,19 +107,17 @@ class WishesController extends APIController
     public function getWish(int $id, Request $request)
     {
         try {
-            $wish = $this->wishes->getById($id);
             $user = Auth::guard('api')->user();
+            $wish = $this->repository->getById($id);
+            $result['data'] = $wish;
 
             if ($user->hasRole('User') && $wish->created_by === $user->id) {
-                $result['data'] = $wish;
                 return $this->responseJson($result);
-            } elseif ($user->hasRole('Seller') && in_array($wish->group_id, $user->groups->pluck('id')->toArray())) {
-                $result['data'] = $wish;
+            } else if(($user->hasRole('Seller') && in_array($wish->group_id, $user->groups->pluck('id')->toArray()))) {
                 return $this->responseJson($result);
-            } else {
-                return $this->respondUnauthorized();
             }
 
+            return $this->respondUnauthorized();
         } catch (Exception $e) {
             return $this->responseJsonError($e);
         }
@@ -132,7 +125,7 @@ class WishesController extends APIController
 
     public function wishlist(ManageWishesRequest $request){
         try {
-            return $this->responseJson($this->frontWishesRepository->getWishList($request));
+            return $this->responseJson($this->repository->getWishList($request));
         } catch (Exception $e) {
             return $this->responseJsonError($e);
         }
@@ -140,7 +133,17 @@ class WishesController extends APIController
 
     public function changeWishStatus(ChangeWishesStatusRequest $request){
         try {
-            return $this->responseJson($this->frontWishesRepository->changeWishStatus($request)->original);
+            return $this->responseJson($this->repository->changeWishStatus($request)->original);
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
+        }
+    }
+
+    public function updateNote(UpdateNoteRequest $request) {
+        try {
+            $this->repository->updateNote($request->get('id'), $request->get('note') ?? '');
+
+            return $this->respondUpdated();
         } catch (Exception $e) {
             return $this->responseJsonError($e);
         }
@@ -149,10 +152,16 @@ class WishesController extends APIController
     /**
      *
      */
-    public function store(StoreWishesRequest $request)
+    public function store(StoreWishesRequest $request, UserRepository $user)
     {
         try{
-            if ($this->wishes->createFromApi($request->all())){
+            $newUser = $user->createUserFromLayer(
+                $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'),
+                $request->input('whitelabel_id')
+            );
+
+            if ($this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
+                'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3','ages4'))){
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
             }
 

@@ -7,9 +7,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface RepositoryInterface
 {
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
     public function all(): Collection;
 
     /**
@@ -22,8 +19,6 @@ interface RepositoryInterface
     public function get($columns = ['*']);
 
     /**
-     * @param int $id
-     *
      * @return mixed
      */
     public function find(int $id);
@@ -36,16 +31,14 @@ interface RepositoryInterface
     public function first($columns = ['*']);
 
     /**
-     * @param string $column
-     * @param        $value
+     * @param $value
      *
      * @return mixed
      */
     public function findWhere(string $column, $value);
 
     /**
-     * @param string $column
-     * @param        $value
+     * @param $value
      *
      * @return mixed
      */
@@ -55,7 +48,6 @@ interface RepositoryInterface
      * Find data by excluding multiple values in one field.
      *
      * @param       $field
-     * @param array $values
      * @param array $columns
      *
      * @return mixed
@@ -66,52 +58,35 @@ interface RepositoryInterface
      * Find data by excluding multiple values in one field.
      *
      * @param       $field
-     * @param array $values
      * @param array $columns
      *
      * @return mixed
      */
     public function findWhereNotIn($field, array $values, $columns = ['*']);
 
-    /**
-     * @param int $perPage
-     *
-     * @return \Illuminate\Pagination\LengthAwarePaginator
-     */
     public function paginate(int $perPage): LengthAwarePaginator;
 
     /**
-     * @param array $data
-     *
      * @return mixed
      */
     public function create(array $data);
 
     /**
-     * @param int   $id
-     * @param array $data
-     *
      * @return mixed
      */
     public function update(int $id, array $data);
 
     /**
-     * @param int $id
-     *
      * @return mixed
      */
     public function delete(int $id);
 
     /**
-     * @param int $id
-     *
      * @return mixed
      */
     public function forceDelete(int $id);
 
     /**
-     * @param int $id
-     *
      * @return mixed
      */
     public function restore(int $id);
@@ -153,16 +128,12 @@ interface RepositoryInterface
     /**
      * Retrieve first data of repository, or return new Entity.
      *
-     * @param array $attributes
-     *
      * @return mixed
      */
     public function firstOrNew(array $attributes = []);
 
     /**
      * Retrieve first data of repository, or return new Entity.
-     *
-     * @param array $attributes
      *
      * @return mixed
      */

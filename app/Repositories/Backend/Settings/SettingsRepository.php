@@ -49,9 +49,6 @@ class SettingsRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Settings\Setting $setting
-     * @param array                        $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool

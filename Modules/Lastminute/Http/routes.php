@@ -3,7 +3,7 @@
 $domain_env = [
     'local_url'       => 'lastminute.com',
     'development_url' => 'lastminute.reise-wunsch.com',
-    'production_url'  => 'lastminute.reisewunschservice.de',
+    'production_url'  => 'travelwish.lastminute.ch',
 ];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];

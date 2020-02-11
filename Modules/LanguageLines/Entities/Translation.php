@@ -2,10 +2,8 @@
 
 namespace Modules\LanguageLines\Entities;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\TranslationLoader\LanguageLine;
+use Illuminate\Support\Facades\Cache;
 
 class Translation extends Model
 {
@@ -44,13 +42,17 @@ class Translation extends Model
     public static function getTranslationsForGroup(string $locale, string $group, int $whitelabelId = null): array
     {
         return Cache::rememberForever(static::getCacheKey($group, $locale, $whitelabelId), function () use ($group, $locale, $whitelabelId) {
-            return static::getTranslations($group, $locale, $whitelabelId)->map(function (Translation $translation) {
+            return static::query()
+                ->where('whitelabel_id', $whitelabelId)
+                ->where('group', $group)
+                ->where('locale', $locale)
+                ->get()
+                ->map(function (self $translation) {
                     return [
-                        'key' => $translation->key,
+                        'key'  => $translation->key,
                         'text' => $translation->text,
                     ];
                 })
-                ->get()
                 ->pluck('text', 'key')
                 ->toArray();
         });

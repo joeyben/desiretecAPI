@@ -23,8 +23,6 @@ class WhitelabelsTableController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Whitelabels\ManageWhitelabelsRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageWhitelabelsRequest $request)

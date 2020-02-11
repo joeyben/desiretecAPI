@@ -11,7 +11,6 @@ class RouteNeedsPermission
 {
     /**
      * @param $request
-     * @param Closure $next
      * @param $permission
      * @param bool $needsAll
      *

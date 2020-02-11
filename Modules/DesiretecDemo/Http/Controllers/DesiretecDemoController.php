@@ -63,7 +63,6 @@ class DesiretecDemoController extends Controller
     /**
      * Return the specified resource.
      *
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request)
@@ -83,10 +82,6 @@ class DesiretecDemoController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param UserRepository   $user
-     * @param \Modules\Desiretecdemo\Http\Requests\StoreWishRequest $request
-     * @param WishesRepository $wish
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -122,7 +117,6 @@ class DesiretecDemoController extends Controller
         $wishTye = $wishRepo->manageRules($wish);
 
         if ($wishTye > 0) {
-
             $wishJob = (new callTrafficsApi($wish->id, $this->whitelabelId, $newUser->id));
             dispatch($wishJob);
             //$wishRepo->callTraffics($wish->id);
@@ -135,21 +129,21 @@ class DesiretecDemoController extends Controller
             $contents = $view->render();
 
             $details = [
-                'email' => $newUser->email,
-                'token' => $newUser->token->token,
-                'type' => 0,
-                'email_name' => trans('autooffers.email.name'),
-                'email_subject' => trans('autooffer.email.subject'),
-                'email_content' => $contents,
+                'email'            => $newUser->email,
+                'token'            => $newUser->token->token,
+                'type'             => 0,
+                'email_name'       => trans('autooffers.email.name'),
+                'email_subject'    => trans('autooffer.email.subject'),
+                'email_content'    => $contents,
                 'current_wl_email' => getCurrentWhiteLabelEmail()
             ];
-            dispatch((new sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addMinutes(rand(1,2))));
+            dispatch((new sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addMinutes(rand(1, 2))));
             $is_autooffer = true;
         }
 
         $html = view('desiretecdemo::layer.created')->with([
-            'token' => $newUser->token->token,
-            'id'    => $wish->id,
+            'token'    => $newUser->token->token,
+            'id'       => $wish->id,
             'is_auto'  => $is_autooffer
         ])->render();
 
@@ -169,8 +163,7 @@ class DesiretecDemoController extends Controller
     /**
      * Create new user from Layer.
      *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
+     * @param UserRepository $user
      *
      * @return UserRepository $user
      */
@@ -196,7 +189,6 @@ class DesiretecDemoController extends Controller
      * Create new user from Layer.
      *
      * @param WishesRepository $wish
-     * @param StoreWishRequest $request
      *
      * @return object
      */

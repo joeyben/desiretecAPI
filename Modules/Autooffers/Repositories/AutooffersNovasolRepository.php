@@ -126,8 +126,6 @@ class AutooffersNovasolRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return bool
      */
     public function saveWishData(Wish $wish)

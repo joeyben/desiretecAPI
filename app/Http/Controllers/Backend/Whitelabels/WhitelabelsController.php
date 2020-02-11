@@ -38,11 +38,6 @@ class WhitelabelsController extends Controller
      */
     private $response;
 
-    /**
-     * @param \App\Repositories\Backend\Whitelabels\WhitelabelsRepository     $whitelabel
-     * @param \App\Repositories\Backend\Distributions\DistributionsRepository $distributions
-     * @param \Illuminate\Routing\ResponseFactory                             $response
-     */
     public function __construct(WhitelabelsRepository $whitelabel, DistributionsRepository $distributions, ResponseFactory $response)
     {
         $this->whitelabel = $whitelabel;
@@ -51,8 +46,6 @@ class WhitelabelsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Whitelabels\ManageWhitelabelsRequest $request
-     *
      * @return mixed
      */
     public function index(ManageWhitelabelsRequest $request)
@@ -101,8 +94,6 @@ class WhitelabelsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Whitelabels\ManageWhitelabelsRequest $request
-     *
      * @return mixed
      */
     public function create(Whitelabel $whitelabel, ManageWhitelabelsRequest $request)
@@ -115,8 +106,6 @@ class WhitelabelsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Whitelabels\StoreWhitelabelsRequest $request
-     *
      * @return mixed
      */
     public function store(StoreWhitelabelsRequest $request)
@@ -129,9 +118,6 @@ class WhitelabelsController extends Controller
     }
 
     /**
-     * @param \App\Models\Whitelabels\Whitelabel                              $whitelabel
-     * @param \App\Http\Requests\Backend\Whitelabels\ManageWhitelabelsRequest $request
-     *
      * @return mixed
      */
     public function edit(Whitelabel $whitelabel, ManageWhitelabelsRequest $request)
@@ -144,9 +130,6 @@ class WhitelabelsController extends Controller
     }
 
     /**
-     * @param \App\Models\Whitelabels\Whitelabel                              $whitelabel
-     * @param \App\Http\Requests\Backend\Whitelabels\UpdateWhitelabelsRequest $request
-     *
      * @return mixed
      */
     public function update(Whitelabel $whitelabel, UpdateWhitelabelsRequest $request)
@@ -161,9 +144,6 @@ class WhitelabelsController extends Controller
     }
 
     /**
-     * @param \App\Models\Whitelabels\Whitelabel                              $whitelabel
-     * @param \App\Http\Requests\Backend\Whitelabels\ManageWhitelabelsRequest $request
-     *
      * @return mixed
      */
     public function destroy(Whitelabel $whitelabel, ManageWhitelabelsRequest $request)

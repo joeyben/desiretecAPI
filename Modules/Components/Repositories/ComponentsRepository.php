@@ -39,11 +39,6 @@ class ComponentsRepository
 
     /**
      * ComponentsRepository constructor.
-     *
-     * @param \Nwidart\Modules\Laravel\LaravelFileRepository $module
-     * @param \Illuminate\Contracts\Console\Kernel           $artisan
-     * @param \Illuminate\Translation\Translator             $translator
-     * @param \Illuminate\Support\Str                        $str
      */
     public function __construct(LaravelFileRepository $module, Kernel $artisan, Translator $translator, Str $str)
     {
@@ -53,9 +48,6 @@ class ComponentsRepository
         $this->translator = $translator;
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
     public function getModules(): Collection
     {
         $modules = collect($this->module->all());
@@ -116,8 +108,6 @@ class ComponentsRepository
     }
 
     /**
-     * @param string $key
-     *
      * @throws \Exception
      *
      * @return string
@@ -138,8 +128,6 @@ class ComponentsRepository
     }
 
     /**
-     * @param string $key
-     *
      * @throws \Exception
      *
      * @return string

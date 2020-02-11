@@ -8,5 +8,5 @@ return [
     'language_lines_model' => \Modules\LanguageLines\Entities\LanguageLines::class,
     'local_url'            => 'lastminute.com',
     'development_url'      => 'lastminute.reise-wunsch.com',
-    'production_url'       => 'lastminute.reisewunschservice.de',
+    'production_url'       => 'travelwish.lastminute.ch',
 ];

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Models\Layers;
-
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +21,6 @@ class Layer extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('module.layers.table');;
+        $this->table = config('module.layers.table');
     }
 }

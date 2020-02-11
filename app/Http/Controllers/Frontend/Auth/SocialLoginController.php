@@ -27,9 +27,6 @@ class SocialLoginController extends Controller
 
     /**
      * SocialLoginController constructor.
-     *
-     * @param UserRepository  $user
-     * @param SocialiteHelper $helper
      */
     public function __construct(UserRepository $user, SocialiteHelper $helper)
     {
@@ -38,7 +35,6 @@ class SocialLoginController extends Controller
     }
 
     /**
-     * @param Request $request
      * @param $provider
      *
      * @throws GeneralException

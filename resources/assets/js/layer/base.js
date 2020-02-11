@@ -372,7 +372,7 @@ var dt = window.dt || {};
             this.popup.find('#submit-button').click($.proxy(this.onFormSubmit, this));
             this.popup.find('#next-button').click($.proxy(this.setNext, this));
             this.popup.find('.kwp-close').click($.proxy(this.closePopup, this));
-            if($(".kwp-content").hasClass('kwp-completed-tui') || $(".kwp-content").hasClass('kwp-completed')){
+            if($(".kwp-content").hasClass('kwp-completed')){
                 if( dt.PopupManager.isMobile){
                     $(".kwp-header").hide();
                 }

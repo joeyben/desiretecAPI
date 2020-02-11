@@ -38,8 +38,6 @@ class LanguageExport implements FromCollection, Responsable, WithMapping, WithHe
 
     /**
      * LanguageExport constructor.
-     *
-     * @param \Modules\LanguageLines\Repositories\Eloquent\EloquentLanguageLinesRepository $language
      */
     public function __construct(EloquentLanguageLinesRepository $language)
     {
@@ -56,8 +54,6 @@ class LanguageExport implements FromCollection, Responsable, WithMapping, WithHe
 
     /**
      * @param mixed $language
-     *
-     * @return array
      */
     public function map($language): array
     {
@@ -83,9 +79,6 @@ class LanguageExport implements FromCollection, Responsable, WithMapping, WithHe
         ];
     }
 
-    /**
-     * @return array
-     */
     public function columnFormats(): array
     {
         return [

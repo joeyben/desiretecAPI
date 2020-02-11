@@ -1,0 +1,16 @@
+{
+    "name": "Step",
+    "alias": "step",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Step\\Providers\\StepServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

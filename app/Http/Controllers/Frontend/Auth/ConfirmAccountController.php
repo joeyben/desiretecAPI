@@ -19,8 +19,6 @@ class ConfirmAccountController extends Controller
 
     /**
      * ConfirmAccountController constructor.
-     *
-     * @param UserRepository $user
      */
     public function __construct(UserRepository $user)
     {

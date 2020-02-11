@@ -38,10 +38,8 @@ class BaseRepository
     }
 
     /**
-     * @param string $column
-     * @param string $operator
-     * @param        $value
-     * @param array  $columns
+     * @param       $value
+     * @param array $columns
      *
      * @return mixed
      */

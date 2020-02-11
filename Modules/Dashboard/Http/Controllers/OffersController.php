@@ -52,14 +52,6 @@ class OffersController extends Controller
 
     /**
      * WishesController constructor.
-     *
-     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository           $wishes
-     * @param \Illuminate\Routing\ResponseFactory                               $response
-     * @param \Illuminate\Auth\AuthManager                                      $auth
-     * @param \Illuminate\Translation\Translator                                $lang
-     * @param \Carbon\Carbon                                                    $carbon
-     * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
-     * @param \Modules\Dashboard\Repositories\Contracts\DashboardRepository     $dashboard
      */
     public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DashboardRepository $dashboard)
     {
@@ -82,10 +74,70 @@ class OffersController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
+    public function wishesMonth(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $startDate = null === $request->get('start') ? '' : str_replace('-', '', $request->get('start'));
+            $endDate = null === $request->get('end') ? '' : str_replace('-', '', $request->get('end'));
+
+            if (null === $whitelabelId) {
+                $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if (false === mb_strpos($url[0], 'mvp')) {
+                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                }
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+
+            $result['wunsch'] = $this->dashboard->getFilterCategory('Wünsche');
+            $result['wishesmonth'] = $this->dashboard->wishesMonth($whitelabel['id'], $startDate, $endDate);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function wishesDay(Request $request)
+    {
+        try {
+            $whitelabelId = $request->get('whitelabelId');
+            $startDate = null === $request->get('start') ? '' : str_replace('-', '', $request->get('start'));
+            $endDate = null === $request->get('end') ? '' : str_replace('-', '', $request->get('end'));
+
+            if (null === $whitelabelId) {
+                $whitelabel = $this->whitelabels->first();
+                $url = explode('.', $_SERVER['HTTP_HOST']);
+
+                if (false === mb_strpos($url[0], 'mvp')) {
+                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                }
+            } else {
+                $whitelabel = $this->whitelabels->find($whitelabelId);
+            }
+
+            $result['wunsch'] = $this->dashboard->getFilterCategory('Wünsche');
+            $result['wishesday'] = $this->dashboard->wishesDay($whitelabel['id'], $startDate, $endDate);
+            $result['success'] = true;
+            $result['status'] = Flag::STATUS_CODE_SUCCESS;
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = Flag::STATUS_CODE_ERROR;
+        }
+
+        return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
     public function perMonth(Request $request)
     {
         try {
@@ -184,13 +236,24 @@ class OffersController extends Controller
             $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter();
 
-            $optParams = [
+            $optParams1 = [
                 'dimensions' => 'ga:yearMonth',
-                'filters'    => $filter['filterm'],
+                'filters'    => $filter['filterphone'],
             ];
+            $optParams2 = [
+                'dimensions' => 'ga:yearMonth',
+                'filters'    => $filter['filtertablet'],
+            ];
+            $result['phone'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams1, $startDate, $endDate);
+            $result['tablet'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams2, $startDate, $endDate);
+
+            for ($i = 0; $i < \count($result['phone']); ++$i) {
+                $result['mobile'][$i][0] = $result['phone'][$i][0];
+                $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1];
+            }
 
             $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
-            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+            $result['ga'] = $result['mobile'];
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -224,13 +287,25 @@ class OffersController extends Controller
             $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter();
 
-            $optParams = [
+            $optParams1 = [
                 'dimensions' => 'ga:date',
-                'filters'    => $filter['filterm'],
+                'filters'    => $filter['filterphone'],
+            ];
+            $optParams2 = [
+                'dimensions' => 'ga:date',
+                'filters'    => $filter['filtertablet'],
             ];
 
+            $result['phone'] = $this->dashboard->uniqueEventsDay($viewId, $optParams1, $startDate, $endDate);
+            $result['tablet'] = $this->dashboard->uniqueEventsDay($viewId, $optParams2, $startDate, $endDate);
+
+            for ($i = 0; $i < \count($result['phone']); ++$i) {
+                $result['mobile'][$i][0] = $result['phone'][$i][0];
+                $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1];
+            }
+
             $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
-            $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);
+            $result['ga'] = $result['mobile'];
 
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
@@ -572,11 +647,13 @@ class OffersController extends Controller
 
     public function getFilter()
     {
-        $filterdesk = 'ga:eventLabel==eil-n1;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
+        $filterdesk = 'ga:eventLabel==eil-desktop;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
         $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
+        $filterphone = 'ga:eventLabel==eil-phone;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
+        $filtertablet = 'ga:eventLabel==eil-tablet;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
         $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==desiretec_exitwindow';
 
-        return ['filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare];
+        return ['filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare, 'filterphone'=>$filterphone, 'filtertablet'=>$filtertablet];
     }
 
     /**
@@ -591,8 +668,6 @@ class OffersController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */
@@ -622,8 +697,6 @@ class OffersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */

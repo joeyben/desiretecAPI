@@ -73,10 +73,6 @@ class ReiserebellenWishesController extends Controller
 
     private $rules;
 
-    /**
-     * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
-     */
     public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories, AutooffersRepository $autooffers, EloquentAutooffersRepository $rules)
     {
         $this->wish = $wish;
@@ -103,8 +99,6 @@ class ReiserebellenWishesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -115,9 +109,6 @@ class ReiserebellenWishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     * @param string                  $token
-     *
      * @return mixed
      */
     public function details(Wish $wish, string $token)
@@ -136,8 +127,6 @@ class ReiserebellenWishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return mixed
      */
     public function view(Wish $wish)
@@ -183,8 +172,6 @@ class ReiserebellenWishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function wishList(ManageWishesRequest $request)

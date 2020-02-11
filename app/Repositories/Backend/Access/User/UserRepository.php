@@ -38,9 +38,6 @@ class UserRepository extends BaseRepository
      */
     protected $role;
 
-    /**
-     * @param RoleRepository $role
-     */
     public function __construct(User $model, RoleRepository $role)
     {
         $this->model = $model;

@@ -69,16 +69,6 @@ class GroupsController extends Controller
 
     /**
      * GroupsController constructor.
-     *
-     * @param \Modules\Groups\Services\GroupsService                          $groupsService
-     * @param \Modules\Groups\Repositories\Contracts\GroupsRepository         $groups
-     * @param \Illuminate\Routing\ResponseFactory                             $response
-     * @param \Illuminate\Auth\AuthManager                                    $auth
-     * @param \Illuminate\Translation\Translator                              $lang
-     * @param \Illuminate\Support\Carbon                                      $carbon
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository $activities
-     * @param \App\Repositories\Backend\Whitelabels\WhitelabelsRepository     $whitelabels
-     * @param \Maatwebsite\Excel\Excel                                        $excel
      */
     public function __construct(GroupsService $groupsService, GroupsRepository $groups, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, Excel $excel)
     {
@@ -118,8 +108,6 @@ class GroupsController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -225,8 +213,6 @@ class GroupsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function edit(int $id)
@@ -279,9 +265,6 @@ class GroupsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Modules\Groups\Http\Requests\UpdateGroupRequest $request
-     * @param int                                              $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -338,8 +321,6 @@ class GroupsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
@@ -380,8 +361,6 @@ class GroupsController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function restore(int $id)
@@ -401,8 +380,6 @@ class GroupsController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      *
      * @return \Illuminate\Http\JsonResponse

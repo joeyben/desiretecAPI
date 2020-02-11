@@ -18,17 +18,12 @@ class BlogTagsTableController extends Controller
      */
     protected $blogtags;
 
-    /**
-     * @param \App\Repositories\Backend\BlogTags\BlogTagsRepository $blogtags
-     */
     public function __construct(BlogTagsRepository $blogtags)
     {
         $this->blogtags = $blogtags;
     }
 
     /**
-     * @param \App\Http\Requests\Backend\BlogTags\ManageBlogTagsRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageBlogTagsRequest $request)

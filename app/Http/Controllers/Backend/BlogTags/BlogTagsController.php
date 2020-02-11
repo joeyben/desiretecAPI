@@ -25,17 +25,12 @@ class BlogTagsController extends Controller
      */
     protected $blogtag;
 
-    /**
-     * @param \App\Repositories\Backend\BlogTags\BlogTagsRepository $blogtag
-     */
     public function __construct(BlogTagsRepository $blogtag)
     {
         $this->blogtag = $blogtag;
     }
 
     /**
-     * @param \App\Http\Requests\Backend\BlogTags\ManageBlogTagsRequest $request
-     *
      * @return \App\Http\Responses\ViewResponse
      */
     public function index(ManageBlogTagsRequest $request)
@@ -44,8 +39,6 @@ class BlogTagsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\BlogTags\CreateBlogTagsRequest $request
-     *
      * @return \App\Http\Responses\ViewResponse
      */
     public function create(CreateBlogTagsRequest $request)
@@ -54,8 +47,6 @@ class BlogTagsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\BlogTags\StoreBlogTagsRequest $request
-     *
      * @return \App\Http\Responses\RedirectResponse
      */
     public function store(StoreBlogTagsRequest $request)
@@ -66,9 +57,6 @@ class BlogTagsController extends Controller
     }
 
     /**
-     * @param \App\Models\BlogTags\BlogTag                            $blogTag
-     * @param \App\Http\Requests\Backend\BlogTags\EditBlogTagsRequest $request
-     *
      * @return \App\Http\Responses\Backend\BlogTag\EditResponse
      */
     public function edit(BlogTag $blogTag, EditBlogTagsRequest $request)
@@ -77,9 +65,6 @@ class BlogTagsController extends Controller
     }
 
     /**
-     * @param \App\Models\BlogTags\BlogTag                              $blogTag
-     * @param \App\Http\Requests\Backend\BlogTags\UpdateBlogTagsRequest $request
-     *
      * @return mixed
      */
     public function update(BlogTag $blogTag, UpdateBlogTagsRequest $request)
@@ -90,9 +75,6 @@ class BlogTagsController extends Controller
     }
 
     /**
-     * @param \App\Models\BlogTags\BlogTag                              $blogTag
-     * @param \App\Http\Requests\Backend\BlogTags\DeleteBlogTagsRequest $request
-     *
      * @return mixed
      */
     public function destroy(BlogTag $blogTag, DeleteBlogTagsRequest $request)

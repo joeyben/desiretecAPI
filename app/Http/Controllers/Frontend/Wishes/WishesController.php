@@ -6,19 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
-use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
+use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
 use App\Models\Access\User\User;
 use App\Models\Access\User\UserToken;
 use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
+use App\Repositories\Backend\Access\User\UserRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Auth;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
-use App\Repositories\Backend\Access\User\UserRepository;
 
 /**
  * Class WishesController.
@@ -84,14 +84,6 @@ class WishesController extends Controller
      */
     protected $users;
 
-    /**
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
-     * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository    $rules
-     * @param \Illuminate\Auth\AuthManager                                    $auth
-     * @param \App\Repositories\Backend\Access\User\UserRepository            $users
-     * @param \Illuminate\Session\Store                                       $session
-     */
     public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, UserRepository $users, Store $session)
     {
         $this->wish = $wish;
@@ -103,8 +95,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function index(ManageWishesRequest $request)
@@ -120,9 +110,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     * @param \App\Models\Wishes\Wish                                $wish
-     *
      * @return mixed
      */
     public function show(Wish $wish, ManageWishesRequest $request)
@@ -209,8 +196,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function wishList(ManageWishesRequest $request)
@@ -225,8 +210,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function getList(ManageWishesRequest $request)
@@ -238,12 +221,12 @@ class WishesController extends Controller
         ];
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
-        $id = ($request->get('filter') && !is_null($request->get('filter')) && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
-        $destination = ($request->get('filter') && !is_null($request->get('filter')) && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
+        $id = ($request->get('filter') && null !== $request->get('filter') && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
+        $destination = ($request->get('filter') && null !== $request->get('filter') && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
         $currentWhiteLabelID = getCurrentWhiteLabelField('id');
         $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
 
-        if($this->auth->guard('web')->user()->hasRole('User')) {
+        if ($this->auth->guard('web')->user()->hasRole('User')) {
             $wish = $this->wish->getForDataTable()
                 ->when($id, function ($wish, $id) {
                     return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%')->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
@@ -267,13 +250,13 @@ class WishesController extends Controller
         }
 
         foreach ($wish as $singleWish) {
-            $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
+            $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
 
-            if($this->auth->guard('web')->user()->hasRole('Seller')) {
-                if($currentWhiteLabelID === 198) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
-                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
+            if ($this->auth->guard('web')->user()->hasRole('Seller')) {
+                if (198 === $currentWhiteLabelID) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
+                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && null !== $this->users->find($singleWish['created_by'])->email) ? $this->users->find($singleWish['created_by'])->email : 'No Email';
                 }
-                if($singleWish->messages() && $singleWish->messages()->count() > 0) {
+                if ($singleWish->messages() && $singleWish->messages()->count() > 0) {
                     $singleWish['messageSentFlag'] = true;
                 }
             }
@@ -318,8 +301,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function create(ManageWishesRequest $request)
@@ -333,8 +314,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\StoreWishesRequest $request
-     *
      * @return mixed
      */
     public function store(StoreWishesRequest $request)
@@ -347,9 +326,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                                $wish
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function edit(Wish $wish, ManageWishesRequest $request)
@@ -364,9 +340,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                                $wish
-     * @param \App\Http\Requests\Frontend\Wishes\UpdateWishesRequest $request
-     *
      * @return mixed
      */
     public function update(Wish $wish, UpdateWishesRequest $request)
@@ -381,9 +354,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                                $wish
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function destroy(Wish $wish, ManageWishesRequest $request)
@@ -450,8 +420,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest $request
-     *
      * @return JSON response
      */
     public function changeWishStatus(ChangeWishesStatusRequest $request)
@@ -474,8 +442,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\UpdateNoteRequest $request
-     *
      * @return JSON response
      */
     public function updateNote(UpdateNoteRequest $request)

@@ -22,8 +22,8 @@ services:
     volumes:
       - /home/ubuntu/desiretech/storage:/var/www/html/storage
     environment:
-      - VIRTUAL_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,kurenundwellness.reisewunschservice.de,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com,kreuzfahrtberatung.reisewunschservice.de,tui.reisewunschservice.de,bild.reisewunschservice.de,travel-overland.reisewunschservice.de,desiretecdemo.reisewunschservice.de,reiserebellen.reisewunschservice.de
-      - LETSENCRYPT_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,kurenundwellness.reisewunschservice.de,kreuzfahrtberatung.reisewunschservice.de,tui.reisewunschservice.de,bild.reisewunschservice.de,travel-overland.reisewunschservice.de,desiretecdemo.reisewunschservice.de,reiserebellen.reisewunschservice.de
+      - VIRTUAL_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,kurenundwellness.reisewunschservice.de,*.reisewunschservice.de,*.wish-service.com,*.reise-wunsch.de,*.reise-wunsch.com,kreuzfahrtberatung.reisewunschservice.de,tui.reisewunschservice.de,bild.reisewunschservice.de,travel-overland.reisewunschservice.de,desiretecdemo.reisewunschservice.de,reiserebellen.reisewunschservice.de,travelwish.lastminute.ch
+      - LETSENCRYPT_HOST=mvpprod.desiretec.com,trendtours.reisewunschservice.de,kurenundwellness.reisewunschservice.de,kreuzfahrtberatung.reisewunschservice.de,tui.reisewunschservice.de,bild.reisewunschservice.de,travel-overland.reisewunschservice.de,desiretecdemo.reisewunschservice.de,reiserebellen.reisewunschservice.de,travelwish.lastminute.ch
       - LETSENCRYPT_EMAIL=info@desiretec.com
     networks:
       - frontend

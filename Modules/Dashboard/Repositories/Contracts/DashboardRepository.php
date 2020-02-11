@@ -10,6 +10,10 @@ interface DashboardRepository
 
     public function uniqueEventsMonth(string $gaViewId, array $optParams, string $startDate, string $endDate);
 
+    public function wishesMonth($whitelabel, string $startDate, string $endDate);
+
+    public function wishesDay($whitelabel, string $startDate, string $endDate);
+
     public function calculateBrowserData(array $result, array $browsers, int $sum);
 
     public function calculateResponseData($result, $data, $stack);

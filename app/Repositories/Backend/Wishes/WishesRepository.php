@@ -66,8 +66,6 @@ class WishesRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -90,9 +88,6 @@ class WishesRepository extends BaseRepository
 
     /**
      * Update Wish.
-     *
-     * @param \App\Models\Wishes\Wish $wish
-     * @param array                   $input
      */
     public function update(Wish $wish, array $input)
     {
@@ -111,15 +106,11 @@ class WishesRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.wishes.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
         });
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @throws GeneralException
      *
      * @return bool

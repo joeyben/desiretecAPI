@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateLayersTable extends Migration
+class Layers extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +15,9 @@ class CreateLayersTable extends Migration
     {
         Schema::create('layers', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name', 255);
             $table->string('path', 255);
-            $table->string('category', 255);
-            $table->timestamps();
+            $table->boolean('active')->default(true);
         });
     }
 
@@ -28,10 +28,5 @@ class CreateLayersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('layers');
     }
 }
-
-
-
-

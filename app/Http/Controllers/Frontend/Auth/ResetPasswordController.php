@@ -21,8 +21,6 @@ class ResetPasswordController extends Controller
 
     /**
      * ChangePasswordController constructor.
-     *
-     * @param UserRepository $user
      */
     public function __construct(UserRepository $user)
     {

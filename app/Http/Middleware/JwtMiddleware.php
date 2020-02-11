@@ -19,8 +19,8 @@ class JwtMiddleware extends BaseMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -39,7 +39,7 @@ class JwtMiddleware extends BaseMiddleware
             }
         } catch (Exception $e) {
             if ($e instanceof TokenInvalidException) {
-                return response()->json(['message' => 'Token is Invalid'],  IlluminateResponse::HTTP_UNAUTHORIZED);
+                return response()->json(['message' => 'Token is Invalid'], IlluminateResponse::HTTP_UNAUTHORIZED);
             } elseif ($e instanceof TokenExpiredException) {
                 return response()->json(['message' => 'Token is Expired'], IlluminateResponse::HTTP_UNAUTHORIZED);
             } elseif ($e instanceof TokenBlacklistedException) {
