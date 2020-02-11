@@ -24,9 +24,6 @@ class FaqsController extends Controller
      */
     protected $faq;
 
-    /**
-     * @param \App\Repositories\Backend\Faqs\FaqsRepository $faq
-     */
     public function __construct(FaqsRepository $faq)
     {
         $this->faq = $faq;
@@ -34,8 +31,6 @@ class FaqsController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param \App\Http\Requests\Backend\Faqs\ManageFaqsRequest $request
      *
      * @return \App\Http\Responses\ViewResponse
      */
@@ -47,8 +42,6 @@ class FaqsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param \App\Http\Requests\Backend\Faqs\CreateFaqsRequest $request
-     *
      * @return \App\Http\Responses\ViewResponse
      */
     public function create(CreateFaqsRequest $request)
@@ -58,8 +51,6 @@ class FaqsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\Backend\Faqs\StoreFaqsRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
      */
@@ -73,9 +64,6 @@ class FaqsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Faqs\Faq                            $faq
-     * @param \App\Http\Requests\Backend\Faqs\EditFaqsRequest $request
-     *
      * @return \App\Http\Responses\Backend\Faq\EditResponse
      */
     public function edit(Faq $faq, EditFaqsRequest $request)
@@ -86,8 +74,7 @@ class FaqsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\Backend\Faqs\UpdateFaqsRequest $request
-     * @param \App\Models\Faqs\Faq                              $id
+     * @param \App\Models\Faqs\Faq $id
      *
      * @return \App\Http\Responses\RedirectResponse
      */
@@ -100,9 +87,6 @@ class FaqsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Faqs\Faq                              $faq
-     * @param \App\Http\Requests\Backend\Faqs\DeleteFaqsRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
      */

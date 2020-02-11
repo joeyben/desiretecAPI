@@ -20,12 +20,7 @@ class CreatedUserNotificationForExecutive extends Notification
      */
     private $password;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @param \App\Models\Access\User\User $user
-     * @param string                       $password
-     */
+
     public function __construct(User $user, string $password)
     {
         $this->user = $user;
@@ -54,7 +49,7 @@ class CreatedUserNotificationForExecutive extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-            ->subject(Lang::get('email.account.subject_for_executive', ['whitelabel' => $this->whitelabel->name]))
+            ->subject(Lang::get('email.account.subject_for_executive', ['whitelabel' => $this->user->whitelabels()->first()->name]))
             ->view('users::emails.created_executive', ['user' => $this->user, 'password' => $this->password, 'whitelabel' => $this->user->whitelabels()->first()])
             ->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
     }

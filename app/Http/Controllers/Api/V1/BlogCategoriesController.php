@@ -25,8 +25,6 @@ class BlogCategoriesController extends APIController
     /**
      * Return the blog-categories.
      *
-     * @param Request $request
-     *
      *@return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
@@ -43,8 +41,6 @@ class BlogCategoriesController extends APIController
     /**
      * Return the specified resource.
      *
-     * @param BlogCategory $blog_category
-     *
      *@return \Illuminate\Http\JsonResponse
      */
     public function show(BlogCategory $blog_category)
@@ -54,8 +50,6 @@ class BlogCategoriesController extends APIController
 
     /**
      * Creates the Resource for BlogCategory.
-     *
-     * @param Request $request
      *
      *@return \Illuminate\Http\JsonResponse
      */
@@ -72,9 +66,6 @@ class BlogCategoriesController extends APIController
     }
 
     /**
-     * @param BlogCategory $blog_category
-     * @param Request      $request
-     *
      * @return mixed
      */
     public function update(Request $request, BlogCategory $blog_category)
@@ -93,9 +84,6 @@ class BlogCategoriesController extends APIController
     }
 
     /**
-     * @param BlogCategory $blog_category
-     * @param Request      $request
-     *
      * @return mixed
      */
     public function destroy(BlogCategory $blog_category, Request $request)
@@ -109,8 +97,6 @@ class BlogCategoriesController extends APIController
 
     /**
      * validateUser BlogCategory Requests.
-     *
-     * @param Request $request
      *
      * @return Validator object
      */

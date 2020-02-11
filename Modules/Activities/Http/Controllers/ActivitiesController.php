@@ -25,9 +25,6 @@ class ActivitiesController extends Controller
 
     /**
      * ActivitiesController constructor.
-     *
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository $activities
-     * @param \Illuminate\Routing\ResponseFactory                             $response
      */
     public function __construct(ActivitiesRepository $activities, ResponseFactory $response)
     {
@@ -92,8 +89,6 @@ class ActivitiesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -122,8 +117,6 @@ class ActivitiesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */

@@ -37,11 +37,6 @@ class RolesController extends Controller
 
     /**
      * RolesController constructor.
-     *
-     * @param \Modules\Roles\Repositories\Contracts\RolesRepository $roles
-     * @param \Illuminate\Routing\ResponseFactory                   $response
-     * @param \Illuminate\Auth\AuthManager                          $auth
-     * @param \Illuminate\Translation\Translator                    $lang
      */
     public function __construct(RolesRepository $roles, ResponseFactory $response, AuthManager $auth, Translator $lang)
     {
@@ -62,8 +57,6 @@ class RolesController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function view(Request $request)
@@ -115,8 +108,6 @@ class RolesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -145,8 +136,6 @@ class RolesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */

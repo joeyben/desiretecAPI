@@ -76,8 +76,6 @@ class AutooffersNovasolController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return mixed
      */
     public function details(Wish $wish)
@@ -86,8 +84,6 @@ class AutooffersNovasolController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return mixed
      */
     public function create(Wish $wish)
@@ -113,8 +109,6 @@ class AutooffersNovasolController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -130,8 +124,6 @@ class AutooffersNovasolController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return Response
      */
     public function show(Wish $wish)
@@ -173,8 +165,6 @@ class AutooffersNovasolController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */

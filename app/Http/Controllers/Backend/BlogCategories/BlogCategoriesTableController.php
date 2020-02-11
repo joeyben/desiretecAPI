@@ -24,8 +24,6 @@ class BlogCategoriesTableController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Backend\BlogCategories\ManageBlogCategoriesRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageBlogCategoriesRequest $request)

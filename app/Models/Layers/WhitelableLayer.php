@@ -1,20 +1,20 @@
 <?php
 
-
 namespace App\Models\Layers;
 
-
-use App\Models\Layers\Layer;
 use Illuminate\Database\Eloquent\Model;
 
 class WhitelableLayer extends Model
 {
     protected $fillable = [
+        'id',
         'whitelabel_id',
         'layer_id',
         'image',
-        'title  ',
-        'body',
+        'headline',
+        'subheadline',
+        'headline_success',
+        'subheadline_success',
     ];
 
     /**
@@ -30,7 +30,11 @@ class WhitelableLayer extends Model
         $this->table = config('module.whitelabel_layers.table');
     }
 
-    public function layer(){
-        return $this->hasOne(Layer::Class, 'id', 'layer_id');
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function layers()
+    {
+        return $this->hasOne(Layer::class, 'id', 'layer_id');
     }
 }

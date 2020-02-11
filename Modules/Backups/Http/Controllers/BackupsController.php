@@ -29,10 +29,6 @@ class BackupsController extends Controller
 
     /**
      * BackupsController constructor.
-     *
-     * @param \Modules\Backups\Repositories\BackupsRepository $backupsRepository
-     * @param \Illuminate\Routing\ResponseFactory             $response
-     * @param \Illuminate\Filesystem\FilesystemManager        $storage
      */
     public function __construct(BackupsRepository $backupsRepository, ResponseFactory $response, FilesystemManager $storage)
     {
@@ -53,8 +49,6 @@ class BackupsController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -84,8 +78,6 @@ class BackupsController extends Controller
      * Downloads a backup zip file.
      *
      * TODO: make it work no matter the flysystem driver (S3 Bucket, etc).
-     *
-     * @param string $fileName
      *
      * @return $this|\Symfony\Component\HttpFoundation\StreamedResponse
      */
@@ -144,8 +136,6 @@ class BackupsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -175,8 +165,6 @@ class BackupsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function update(Request $request)
@@ -185,8 +173,6 @@ class BackupsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param string $file
      *
      * @return \Illuminate\Http\Response
      */

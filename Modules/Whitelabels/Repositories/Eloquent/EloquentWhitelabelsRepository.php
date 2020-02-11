@@ -222,7 +222,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         );
 
         $whitelabelLangTable = 'language_lines_' . mb_strtolower($name);
-        $moduleId = strtoupper($name) . '_ID';
+        $moduleId = mb_strtoupper($name) . '_ID';
 
         $this->generateFile(
             base_path('Modules/Master/Config/config.stub'),
@@ -317,6 +317,27 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             ->toArray();
 
         return DB::table($table)->insert($languageLines);
+    }
+
+    public function apiCopyLanguage(int $whitelabelId)
+    {
+        $languageLines = DB::table('language_lines')
+            ->select('locale', 'description', 'group', 'key', 'text')
+            ->where('default', 1)
+            ->get()
+            ->map(function ($languageLine) use ($whitelabelId) {
+                return [
+                    'locale'      => $languageLine->locale,
+                    'description' => $languageLine->description,
+                    'group'       => $languageLine->group,
+                    'key'         => $languageLine->key,
+                    'text'        => $languageLine->text,
+                    'whitelabel_id'        => $whitelabelId,
+                ];
+            })
+            ->toArray();
+
+        return DB::table('language_lines')->insert($languageLines);
     }
 
     public function current(bool $first = true)

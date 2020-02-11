@@ -12,8 +12,7 @@ class GroupPolicy
     use HandlesAuthorization;
 
     /**
-     * @param \App\Models\Access\User\User $user
-     * @param                              $ability
+     * @param $ability
      *
      * @return bool
      */
@@ -27,8 +26,6 @@ class GroupPolicy
     /**
      * Determine whether the user can view the group.
      *
-     * @param \App\Models\Access\User\User $user
-     *
      * @return mixed
      */
     public function view(User $user)
@@ -38,8 +35,6 @@ class GroupPolicy
 
     /**
      * Determine whether the user can create groupes.
-     *
-     * @param \App\Models\Access\User\User $user
      *
      * @return mixed
      */
@@ -51,9 +46,6 @@ class GroupPolicy
     /**
      * Determine whether the user can update the group.
      *
-     * @param \App\Models\Access\User\User   $user
-     * @param \Modules\Groups\Entities\Group $group
-     *
      * @return mixed
      */
     public function update(User $user, Group $group)
@@ -63,9 +55,6 @@ class GroupPolicy
 
     /**
      * Determine whether the user can delete the group.
-     *
-     * @param \App\Models\Access\User\User   $user
-     * @param \Modules\Groups\Entities\Group $group
      *
      * @return mixed
      */
@@ -77,9 +66,6 @@ class GroupPolicy
     /**
      * Determine whether the user can restore the group.
      *
-     * @param \App\Models\Access\User\User   $user
-     * @param \Modules\Groups\Entities\Group $group
-     *
      * @return mixed
      */
     public function restore(User $user, Group $group)
@@ -89,8 +75,6 @@ class GroupPolicy
 
     /**
      * Determine whether the user can permanently delete the group.
-     *
-     * @param \App\Models\Access\User\User $user
      *
      * @return mixed
      */

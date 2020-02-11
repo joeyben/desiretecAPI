@@ -29,9 +29,6 @@ class CreateWhitelabelNotification extends Notification implements ShouldBroadca
 
     /**
      * Create a new notification instance.
-     *
-     * @param \Modules\Whitelabels\Entities\Whitelabel $whitelabel
-     * @param string                                   $step
      */
     public function __construct(Whitelabel $whitelabel, string $step = 'Step 1')
     {

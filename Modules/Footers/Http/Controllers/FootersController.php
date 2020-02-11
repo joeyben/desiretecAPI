@@ -61,15 +61,6 @@ class FootersController extends Controller
 
     /**
      * FootersController constructor.
-     *
-     * @param \Modules\Footers\Repositories\Contracts\FootersRepository         $footers
-     * @param \Illuminate\Routing\ResponseFactory                               $response
-     * @param \Illuminate\Auth\AuthManager                                      $auth
-     * @param \Illuminate\Translation\Translator                                $lang
-     * @param \Illuminate\Support\Carbon                                        $carbon
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
-     * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
-     * @param \Maatwebsite\Excel\Excel                                          $excel
      */
     public function __construct(FootersRepository $footers, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, Excel $excel)
     {
@@ -160,8 +151,6 @@ class FootersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Modules\Footers\Http\Requests\StoreFooterRequest $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreFooterRequest $request)
@@ -193,8 +182,6 @@ class FootersController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -232,9 +219,6 @@ class FootersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Modules\Footers\Http\Requests\UpdateFooterRequest $request
-     * @param int                                                $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateFooterRequest $request, int $id)
@@ -258,8 +242,6 @@ class FootersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
@@ -279,8 +261,6 @@ class FootersController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function forceDelete(int $id)
@@ -300,8 +280,6 @@ class FootersController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function restore(int $id)

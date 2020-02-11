@@ -21,6 +21,7 @@ class callTrafficsApi implements ShouldQueue
     protected $wishId;
     protected $whitelabelId;
     protected $userId;
+
     /**
      * Create a new job instance.
      */

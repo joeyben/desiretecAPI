@@ -37,11 +37,6 @@ class GroupsController extends Controller
 
     /**
      * GroupsController constructor.
-     *
-     * @param \Modules\Groups\Repositories\Contracts\GroupsRepository $groups
-     * @param \Illuminate\Routing\ResponseFactory                     $response
-     * @param \Illuminate\Auth\AuthManager                            $auth
-     * @param \Illuminate\Translation\Translator                      $lang
      */
     public function __construct(GroupsRepository $groups, ResponseFactory $response, AuthManager $auth, Translator $lang, DashboardRepository $dashboard)
     {
@@ -54,8 +49,6 @@ class GroupsController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -91,8 +84,6 @@ class GroupsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -121,8 +112,6 @@ class GroupsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */

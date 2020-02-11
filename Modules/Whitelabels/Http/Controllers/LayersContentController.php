@@ -2,12 +2,16 @@
 
 namespace Modules\Whitelabels\Http\Controllers;
 
+use App\Repositories\Criteria\EagerLoad;
+use App\Repositories\Criteria\Where;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
+use Modules\Whitelabels\Entities\Whitelabel;
+use Modules\Whitelabels\Http\Services\LayersContentService;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class LayersContentController extends Controller
@@ -55,8 +59,6 @@ class LayersContentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -83,13 +85,37 @@ class LayersContentController extends Controller
         return view('whitelabels::edit');
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request)
     {
         try {
-            $result['whitelabel'] = $this->whitelabels->update(
+            $result['whitelabel'] = $this->whitelabels->withCriteria([
+                new EagerLoad(['layers']),
+            ])->find($request->get('id'));
+
+            $layers = $request->get('layers');
+            //$this->layersContentService->updateWhitelabelLayersInfo($request, $result['whitelabel']->layers);
+
+            foreach ($result['whitelabel']->layers as $key => $layer) {
+                $pivot = $layer->pivot;
+                $requestPivot = $layers[$key]['pivot'];
+
+                //dd($requestPivot, $layer);
+                $pivot->headline = $requestPivot['headline'];
+                $pivot->subheadline = $requestPivot['subheadline'];
+                $pivot->headline_success = $requestPivot['headline_success'];
+                $pivot->subheadline_success = $requestPivot['subheadline_success'];
+                $pivot->save();
+            }
+
+            //dd($result['whitelabel']->layers->where('id', 1));
+
+            /*$result['whitelabel'] = $this->whitelabels->with()->update(
                 $request->get('id'),
                 $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success')
-            );
+            );*/
 
             file_put_contents(public_path('whitelabels-config.son'), json_encode($this->whitelabels->all()));
 

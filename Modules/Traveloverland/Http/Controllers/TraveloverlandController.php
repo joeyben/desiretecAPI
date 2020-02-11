@@ -67,7 +67,6 @@ class TraveloverlandController extends Controller
     /**
      * Return the specified resource.
      *
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request)
@@ -89,10 +88,6 @@ class TraveloverlandController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
-     * @param WishesRepository $wish
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -139,8 +134,7 @@ class TraveloverlandController extends Controller
     /**
      * Create new user from Layer.
      *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
+     * @param UserRepository $user
      *
      * @return UserRepository $user
      */
@@ -166,7 +160,6 @@ class TraveloverlandController extends Controller
      * Create new user from Layer.
      *
      * @param WishesRepository $wish
-     * @param StoreWishRequest $request
      *
      * @return object
      */

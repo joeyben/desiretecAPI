@@ -47,6 +47,56 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         )->rows;
     }
 
+    public function wishesMonth($whitelabel, string $start, string $end)
+    {
+        $start = '' === $start ? date('Ymd', strtotime(date('Ymd') . '-12 months')) : $start;
+        $end = '' === $end ? date('Ymd') : $end;
+
+        $wishes = DB::table('wishes')
+            ->select((DB::raw('DATE_FORMAT(wishes.created_at,"%Y%m%d") as date')), DB::raw('count(*) as nb_wishes'), (DB::raw('MONTH(wishes.created_at) as month')))
+            ->having('date', '>=', $start)
+            ->having('date', '<=', $end)
+            ->where('whitelabel_id', '=', $whitelabel)
+            ->groupBy('month')
+            ->get()->toArray();
+
+        if (!empty($wishes)) {
+            foreach ($wishes as $key => $value) {
+                $result['wishes'][$key][0] = $wishes[$key]->date;
+                $result['wishes'][$key][1] = $wishes[$key]->nb_wishes;
+            }
+        } else {
+            $result['wishes'] = [0, 0];
+        }
+
+        return $result['wishes'];
+    }
+
+    public function wishesDay($whitelabel, string $start, string $end)
+    {
+        $start = '' === $start ? date('Ymd', strtotime(date('Ymd') . '-1 months')) : $start;
+        $end = '' === $end ? date('Ymd') : $end;
+
+        $wishes = DB::table('wishes')
+            ->select((DB::raw('DATE_FORMAT(wishes.created_at,"%Y%m%d") as date')), DB::raw('count(*) as nb_wishes'))
+            ->having('date', '>=', $start)
+            ->having('date', '<=', $end)
+            ->where('whitelabel_id', '=', $whitelabel)
+            ->groupBy('date')
+            ->get()->toArray();
+
+        if (!empty($wishes)) {
+            foreach ($wishes as $key => $value) {
+                $result['wishes'][$key][0] = $wishes[$key]->date;
+                $result['wishes'][$key][1] = $wishes[$key]->nb_wishes;
+            }
+        } else {
+            $result['wishes'] = [0, 0];
+        }
+
+        return $result['wishes'];
+    }
+
     public function calculateBrowserData(array $result, array $browsers, int $sum)
     {
         foreach ($result['ga'] as $key => $value) {
@@ -98,8 +148,8 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function loadClickRate($whitelabel, $start, $end)
     {
-        $start = $start === '' ? date('Ymd') : $start;
-        $end = $end === '' ? date('Ymd', strtotime($start.'+1 months')) : $end;
+        $start = '' === $start ? date('Ymd') : $start;
+        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
 
         $i = 0;
         $j = 0;
@@ -162,8 +212,8 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function loadClickRateauto($whitelabel, $start, $end)
     {
-        $start = $start === '' ? date('Ymd') : $start;
-        $end = $end === '' ? date('Ymd', strtotime($start.'+1 months')) : $end;
+        $start = '' === $start ? date('Ymd') : $start;
+        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
 
         $i = 0;
         $j = 0;
@@ -226,8 +276,8 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function loadOpenRate($whitelabel, $start, $end)
     {
-        $start = $start === '' ? date('Ymd') : $start;
-        $end = $end === '' ? date('Ymd', strtotime($start.'+1 months')) : $end;
+        $start = '' === $start ? date('Ymd') : $start;
+        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
 
         $i = 0;
         $j = 0;
@@ -287,8 +337,8 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function loadOpenRateauto($whitelabel, $start, $end)
     {
-        $start = $start === '' ? date('Ymd') : $start;
-        $end = $end === '' ? date('Ymd', strtotime($start.'+1 months')) : $end;
+        $start = '' === $start ? date('Ymd') : $start;
+        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
 
         $i = 0;
         $j = 0;

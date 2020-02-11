@@ -15,17 +15,12 @@ class MenuTableController extends Controller
 {
     protected $menus;
 
-    /**
-     * @param \App\Repositories\Backend\Menu\MenuRepository $menus
-     */
     public function __construct(MenuRepository $menus)
     {
         $this->menus = $menus;
     }
 
     /**
-     * @param \App\Http\Requests\Backend\Menu\ManageMenuRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageMenuRequest $request)

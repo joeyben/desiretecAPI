@@ -9,7 +9,9 @@
 
 namespace App\Repositories\Criteria;
 
+use App\Services\Flag\Src\Flag;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class HasRole.
@@ -23,8 +25,6 @@ class HasRole
 
     /**
      * HasRole constructor.
-     *
-     * @param string|null $role
      */
     public function __construct(string $role = null)
     {
@@ -33,13 +33,15 @@ class HasRole
 
     /**
      * @param $model
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply($model): Builder
     {
-        return $model->whereHas('roles', function ($query) {
-            $query->where('roles.name', $this->role);
-        });
+        if (Auth::guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            return $model->whereHas('roles', function ($query) {
+                $query->where('roles.name', $this->role);
+            });
+        }
+
+        return $model->newQuery();
     }
 }

@@ -21,17 +21,12 @@ class CommentsController extends Controller
      */
     protected $comment;
 
-    /**
-     * @param \App\Repositories\Frontend\Comments\CommentsRepository $comment
-     */
     public function __construct(CommentsRepository $comment)
     {
         $this->comment = $comment;
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Comments\ManageCommentsRequest $request
-     *
      * @return mixed
      */
     public function index(ManageCommentsRequest $request)
@@ -47,8 +42,6 @@ class CommentsController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Comments\StoreCommentsRequest $request
-     *
      * @return mixed
      */
     public function store(StoreCommentsRequest $request)
@@ -70,9 +63,6 @@ class CommentsController extends Controller
     }
 
     /**
-     * @param \App\Models\Comments\Comment                               $comment
-     * @param \App\Http\Requests\Frontend\Comments\ManageCommentsRequest $request
-     *
      * @return mixed
      */
     public function edit(Comment $comment, ManageCommentsRequest $request)
@@ -87,9 +77,6 @@ class CommentsController extends Controller
     }
 
     /**
-     * @param \App\Models\Comments\Comment                               $comment
-     * @param \App\Http\Requests\Frontend\Comments\UpdateCommentsRequest $request
-     *
      * @return mixed
      */
     public function update(Comment $comment, UpdateCommentsRequest $request)
@@ -104,9 +91,6 @@ class CommentsController extends Controller
     }
 
     /**
-     * @param \App\Models\Comments\Comment                               $comment
-     * @param \App\Http\Requests\Frontend\Comments\ManageCommentsRequest $request
-     *
      * @return mixed
      */
     public function destroy(Comment $comment, ManageCommentsRequest $request)

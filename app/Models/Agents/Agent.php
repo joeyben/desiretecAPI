@@ -39,9 +39,6 @@ class Agent extends BaseModel
         'updated_at',
     ];
 
-    /**
-     * @param array $attributes
-     */
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);

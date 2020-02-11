@@ -25,8 +25,6 @@ class UsersController extends APIController
     /**
      * Return the users.
      *
-     * @param Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
@@ -43,8 +41,6 @@ class UsersController extends APIController
     /**
      * Return the specified resource.
      *
-     * @param User $user
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(User $user)
@@ -54,8 +50,6 @@ class UsersController extends APIController
 
     /**
      * Create User.
-     *
-     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -74,9 +68,6 @@ class UsersController extends APIController
 
     /**
      * Update User.
-     *
-     * @param Request $request
-     * @param User    $user
      *
      * @return Validator object
      */
@@ -98,9 +89,6 @@ class UsersController extends APIController
     /**
      * Delete User.
      *
-     * @param User    $user
-     * @param Request $request
-     *
      * @return mixed
      */
     public function destroy(User $user, Request $request)
@@ -115,8 +103,6 @@ class UsersController extends APIController
 
     /**
      * Delete All User.
-     *
-     * @param Request $request
      *
      * @return mixed
      */

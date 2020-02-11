@@ -40,9 +40,6 @@ class MenuController extends Controller
      */
     protected $types;
 
-    /**
-     * @param \App\Repositories\Backend\Menu\MenuRepository $menu
-     */
     public function __construct(MenuRepository $menu, Module $module)
     {
         $this->menu = $menu;
@@ -58,8 +55,6 @@ class MenuController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \App\Http\Requests\Backend\Menu\ManageMenuRequest $request
-     *
      * @return \App\Http\Responses\ViewResponse
      */
     public function index(ManageMenuRequest $request)
@@ -70,8 +65,6 @@ class MenuController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param \App\Http\Requests\Backend\Menu\CreateMenuRequest $request
-     *
      * @return \App\Http\Responses\Backend\Menu\CreateResponse
      */
     public function create(CreateMenuRequest $request)
@@ -81,8 +74,6 @@ class MenuController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\Backend\Menu\StoreMenuRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
      */
@@ -96,9 +87,6 @@ class MenuController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Menu\Menu                           $menu
-     * @param \App\Http\Requests\Backend\Menu\EditMenuRequest $request
-     *
      * @return \App\Http\Responses\Backend\Menu\EditResponse
      */
     public function edit(Menu $menu, EditMenuRequest $request)
@@ -108,9 +96,6 @@ class MenuController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Models\Menu\Menu                             $menu
-     * @param \App\Http\Requests\Backend\Menu\UpdateMenuRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
      */
@@ -123,9 +108,6 @@ class MenuController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Menu\Menu                             $menu
-     * @param \App\Http\Requests\Backend\Menu\DeleteMenuRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
      */

@@ -28,17 +28,12 @@ class PermissionController extends Controller
      */
     protected $permissions;
 
-    /**
-     * @param PermissionRepository $permissions
-     */
     public function __construct(PermissionRepository $permissions)
     {
         $this->permissions = $permissions;
     }
 
     /**
-     * @param ManagePermissionRequest $request
-     *
      * @return \App\Http\Responses\ViewResponse
      */
     public function index(ManagePermissionRequest $request)
@@ -47,8 +42,6 @@ class PermissionController extends Controller
     }
 
     /**
-     * @param CreatePermissionRequest $request
-     *
      * @return \App\Http\Responses\Backend\Access\Permission\CreateResponse
      */
     public function create(CreatePermissionRequest $request)
@@ -57,8 +50,6 @@ class PermissionController extends Controller
     }
 
     /**
-     * @param StorePermissionRequest $request
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -71,9 +62,6 @@ class PermissionController extends Controller
     }
 
     /**
-     * @param Permission            $permission
-     * @param EditPermissionRequest $request
-     *
      * @return \App\Http\Responses\Backend\Access\Permission\EditResponse
      */
     public function edit(Permission $permission, EditPermissionRequest $request)
@@ -82,9 +70,6 @@ class PermissionController extends Controller
     }
 
     /**
-     * @param Permission              $permission
-     * @param UpdatePermissionRequest $request
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -97,9 +82,6 @@ class PermissionController extends Controller
     }
 
     /**
-     * @param Permission              $permission
-     * @param DeletePermissionRequest $request
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return \Illuminate\Http\JsonResponse

@@ -5,7 +5,9 @@ use App\Models\Notification\Notification;
 use App\Models\Settings\Setting;
 use App\Services\Flag\Src\Flag;
 use Carbon\Carbon as Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use Modules\Languages\Entities\Language;
 
 /**
@@ -147,9 +149,8 @@ if (!function_exists('createNotification')) {
     /**
      * create new notification.
      *
-     * @param          $message message you want to show in notification
-     * @param          $userId  To Whom You Want To send Notification
-     * @param int|null $fromId
+     * @param $message message you want to show in notification
+     * @param $userId  To Whom You Want To send Notification
      *
      * @return object
      */
@@ -355,6 +356,8 @@ if (!function_exists('isWhiteLabel')) {
      */
     function isWhiteLabel()
     {
+        //$url = str_replace(['http://', 'https://'], ['',''], url('/'));
+        //$id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('id');
         $id = getCurrentWhiteLabelField('id');
 
         return null !== $id;
@@ -381,7 +384,10 @@ if (!function_exists('getCurrentWhiteLabelId')) {
      */
     function getCurrentWhiteLabelId()
     {
+        //$url = str_replace(['http://', 'https://'], ['',''], url('/'));
+        //$id = \App\Models\Whitelabels\Whitelabel::Where('domain', 'like' ,'%'.$url.'%')->value('id');
         return getCurrentWhiteLabelField('id');
+        //return $id;
     }
 }
 
@@ -393,6 +399,8 @@ if (!function_exists('getCurrentWhiteLabelName')) {
      */
     function getCurrentWhiteLabelName()
     {
+        //$url = str_replace('http://', '', url('/'));
+        //$name = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('name');
         $name = getCurrentWhiteLabelField('name');
 
         return mb_strtolower($name);
@@ -449,9 +457,25 @@ if (!function_exists('getCurrentWhiteLabelField')) {
     {
         $url = str_replace(['http://', 'https://'], ['', ''], url('/'));
         $url = explode(':', $url)[0]; // cut the port
+        //$url = str_replace('http://', '', url('/'));
+        //$url = str_replace('https://', '', $url);
 
         return \App\Models\Whitelabels\Whitelabel::Where('domain', '=', 'https://' . $url)
             ->orWhere('domain', '=', 'http://' . $url)->value($field);
+    }
+}
+
+if (!function_exists('getWhitelabelBySlug')) {
+    /**
+     * return current whitelabel Field.
+     *
+     * @param string $field
+     *
+     * @return int
+     */
+    function getWhitelabelBySlug($slug)
+    {
+        return \App\Models\Whitelabels\Whitelabel::Where('name', 'LIKE', '%' . $slug . '%')->get();
     }
 }
 
@@ -544,8 +568,6 @@ if (!function_exists('setWhitelabelLocale')) {
 if (!function_exists('category_name_by_value')) {
     /**
      * Set locale.
-     *
-     * @param string $value
      *
      * @return string
      */
@@ -665,9 +687,10 @@ if (!function_exists('getRegionCode')) {
         $regions = explode(',', $value);
 
         $codes = [];
-        foreach ($regions as $region){
+        foreach ($regions as $region) {
             array_push($codes, str_replace('region.', '', \App\Models\Regions::where('regionName', 'like', '%' . $region . '%')->where('type', $type)->first()->regionCode));
         }
+
         return $codes;
     }
 }
@@ -751,7 +774,7 @@ if (!function_exists('getCateringFromCode')) {
                 $category = 'Vollpension';
                 break;
             case '5':
-                $category = 'all inclusive';
+                $category = 'All Inclusive';
                 break;
             default:
                 $category = 'Ohne Verpflegung';
@@ -812,12 +835,57 @@ if (!function_exists('live_preview_url')) {
     }
 }
 
-/**
+/*
  * Returns the Domain for the current WL
  */
 if (!function_exists('get_current_whitelabel_url')) {
     function get_current_whitelabel_url()
     {
         return getCurrentWhiteLabelField('domain');
+    }
+}
+
+if (!function_exists('current_step')) {
+    function current_step()
+    {
+        if (Auth::user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            return Flag::MAX_STEP;
+        }
+        if (Auth::user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+            $step =  (int)Auth::user()->whitelabels()->first()->state;
+
+
+            return $step;
+        }
+
+        return Flag::MAX_STEP;
+    }
+}
+
+if (!function_exists('is_active')) {
+    function is_active(string $route = '')
+    {
+        return (strpos(Route::currentRouteName(), $route) === 0) ? 'active' : '';
+    }
+}
+
+if (!function_exists('is_active_step')) {
+    function is_active_step(int $step = 1)
+    {
+        return $step === current_step() + 1;
+    }
+}
+
+if (!function_exists('is_disabled')) {
+    function is_disabled(int $step)
+    {
+        return current_step() + 1 < $step ? 'disabled' : '';
+    }
+}
+
+if (!function_exists('is_step_finished')) {
+    function is_step_finished()
+    {
+        return current_step() === Flag::MAX_STEP;
     }
 }

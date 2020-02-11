@@ -37,6 +37,7 @@ const app = new Vue({
         messages: '',
         user_name: '',
         filter: '',
+        total: '',
     },
 
     mounted() {
@@ -50,6 +51,7 @@ const app = new Vue({
                 .then(response => {
                     this.data = response.data.data.data;
                     this.pagination = response.data.pagination;
+                    this.total = response.data.pagination.total;
                     this.$nextTick(function () {
                         this.loading = false;
                         $('.selectpicker').selectpicker('refresh');

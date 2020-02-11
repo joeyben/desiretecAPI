@@ -80,8 +80,6 @@ class RulesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request $request
-     *
      * @return Response
      */
     public function view(Request $request)
@@ -118,8 +116,6 @@ class RulesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param \Modules\Rules\Http\Requests\CreateRuleRequest $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function create(CreateRuleRequest $request)
@@ -155,8 +151,6 @@ class RulesController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Modules\Rules\Http\Requests\StoreRuleRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -208,8 +202,6 @@ class RulesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function edit(int $id)
@@ -249,9 +241,6 @@ class RulesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Modules\Rules\Http\Requests\UpdateRuleRequest $request
-     * @param int                                            $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -303,8 +292,6 @@ class RulesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
@@ -324,8 +311,6 @@ class RulesController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function restore(int $id)
@@ -345,8 +330,6 @@ class RulesController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function forceDelete(int $id)

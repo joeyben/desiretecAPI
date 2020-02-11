@@ -34,6 +34,7 @@ class Whitelabel extends Model
         'state',
         'layer',
         'color',
+        'licence',
         'headline',
         'subheadline',
         'headline_success',
@@ -50,6 +51,7 @@ class Whitelabel extends Model
         'ga_view_id',
         'color',
         'headline',
+        'licence',
         'subheadline',
         'headline_success',
         'subheadline_success'
@@ -111,7 +113,7 @@ class Whitelabel extends Model
     }
 
     /**
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
     {
@@ -143,16 +145,17 @@ class Whitelabel extends Model
     }
 
     /**
-     * Returns the layers
-     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function layers(){
-        return $this->belongsToMany(
-            Layer::class,
-            'whitelabel_layers',
-            'whitelabel_id',
-            'layer_id')
-            ->withPivot(['image', 'title', 'body', 'layer_url', 'success_title', 'success_body']);
+    public function layers()
+    {
+        return $this->belongsToMany(Layer::class)->withPivot([
+            'id',
+            'headline',
+            'subheadline',
+            'headline_success',
+            'subheadline_success',
+            'layer_url'
+        ]);
     }
 }

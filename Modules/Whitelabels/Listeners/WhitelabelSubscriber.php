@@ -21,8 +21,6 @@ class WhitelabelSubscriber
 
     /**
      * Create the event listener.
-     *
-     * @param \Modules\Whitelabels\Entities\Whitelabel $whitelabel
      */
     public function __construct(Whitelabel $whitelabel)
     {
@@ -41,9 +39,11 @@ class WhitelabelSubscriber
 
     public function onCreatedWhitelabel(Whitelabel $whitelabel)
     {
-        $users = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->get();
+        if (Auth::check()) {
+            $users = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->get();
 
-        Notification::send($users, new CreateWhitelabelNotification($whitelabel));
+            Notification::send($users, new CreateWhitelabelNotification($whitelabel));
+        }
     }
 
     public function onDeletedWhitelabel(Whitelabel $whitelabel)

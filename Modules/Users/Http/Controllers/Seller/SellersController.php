@@ -11,6 +11,7 @@ namespace Modules\Users\Http\Controllers\Seller;
 
 use App\Events\Backend\Access\User\UserCreated;
 use App\Models\Access\Role\Role;
+use App\Models\Access\User\User;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\HasRole;
@@ -23,7 +24,6 @@ use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\ResponseFactory;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
@@ -75,15 +75,6 @@ class SellersController
 
     /**
      * SellersController constructor.
-     *
-     * @param \Modules\Users\Repositories\Contracts\UsersRepository             $users
-     * @param \Illuminate\Routing\ResponseFactory                               $response
-     * @param \Illuminate\Auth\AuthManager                                      $auth
-     * @param \Illuminate\Translation\Translator                                $lang
-     * @param \Modules\Groups\Repositories\Contracts\GroupsRepository           $groups
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
-     * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
-     * @param \Illuminate\Notifications\ChannelManager                          $notification
      */
     public function __construct(UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, GroupsRepository $groups, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, ChannelManager $notification)
     {
@@ -108,8 +99,6 @@ class SellersController
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function view(Request $request)
@@ -118,11 +107,30 @@ class SellersController
             $perPage = $request->get('per_page');
             $sort = explode('|', $request->get('sort'));
 
+            $users = null;
             $usersForWhitelabels = null;
 
             if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                 $whitelabelId = $this->auth->guard('web')->user()->whitelabels()->first()->id;
-                $usersForWhitelabels = $this->whitelabels->find($whitelabelId)->users()->get()->pluck('id')->all();
+                $users = $this->whitelabels->find($whitelabelId)->users()->whereHas('roles', function ($query) {
+                    $query->where('roles.name', Flag::SELLER_ROLE);
+                })->get();
+
+                foreach ($users as $user) {
+                    if ($user->hasRole(Flag::SELLER_ROLE) && !$user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                        $usersForWhitelabels[] = $user->id;
+                    }
+                }
+            } elseif ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $users = User::whereHas('roles', function ($query) {
+                    $query->where('roles.name', Flag::SELLER_ROLE);
+                })->get();
+
+                foreach ($users as $user) {
+                    if ($user->hasRole(Flag::SELLER_ROLE) && !$user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                        $usersForWhitelabels[] = $user->id;
+                    }
+                }
             }
 
             $result['data'] = $this->users->withCriteria([
@@ -134,8 +142,7 @@ class SellersController
                     $query->select('id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'));
                 }, 'roles'  => function ($query) {
                     $query->select('roles.id', 'roles.name');
-                }]),
-                new HasRole(Flag::SELLER_ROLE)
+                }])
             ])->paginate($perPage, ['id', 'first_name', 'last_name', 'email', 'status', 'confirmed', 'created_by', 'created_at', 'updated_at', 'deleted_at']);
 
             $result['success'] = true;
@@ -151,8 +158,6 @@ class SellersController
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -201,8 +206,6 @@ class SellersController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function create(Request $request)
@@ -247,9 +250,6 @@ class SellersController
     /**
      * Update the specified resource in storage.
      *
-     * @param \Modules\Users\Http\Requests\UpdateSellerRequest $request
-     * @param int                                              $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateSellerRequest $request, int $id)
@@ -282,8 +282,6 @@ class SellersController
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Modules\Users\Http\Requests\StoreSellerRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */

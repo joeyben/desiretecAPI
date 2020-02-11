@@ -1,3 +1,8 @@
+@php
+ $duration = str_replace('Nächte', 'Tage', $wish->duration);
+ $duration = str_replace('Nacht', 'Tag', $duration);
+@endphp
+
 @extends('frontend.layouts.app')
 
 @section('title')
@@ -116,7 +121,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-credit-card" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->budget }}CHF</h4>
+                                    <h4>CHF {{ $wish->budget }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
@@ -128,7 +133,7 @@
                                     <div class="icon-background">
                                         <i class="fa fa-clock" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->duration }}</h4>
+                                    <h4>{{ $duration }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
@@ -160,9 +165,12 @@
                     <ul class="offers">
 
                         @foreach($offers as $key => $offer)
+                            @if (!$offer['hotel_data']['hotel'])
+                                @continue
+                            @endif
                             @php
                                 $hotelData = [
-                                    'title' => $offer['hotel_data']['data']['Hotelname'],
+                                    'title' => str_replace("'","",$offer['hotel_data']['hotel']['name']),
                                     'stars' => key_exists('Hotelkategorie', $offer['hotel_data']['data']) ? intval($offer['hotel_data']['data']['Hotelkategorie']) : 0 ,
                                     'text' => $offer['data']['boardType'],
                                     'longitude' => $offer['data']['hotel_geo']['longitude'],
@@ -171,7 +179,9 @@
                                 $locations[] = $hotelData;
                             @endphp
                             <li class="offer box-shadow" id="hotel-{{ $key }}">
-                            <div class="left-side">
+                                <span class="wish_offer_id">Angebotsnummer: {{ $wish->id }}/{{ $count + 1 }}</span>
+
+                                <div class="left-side">
                                 @if ($count === 1)
                                     <div class="label">Unser Tipp</div>
                                 @endif
@@ -236,8 +246,8 @@
                                     <div class="info-icons">
                                         @include('autooffers::autooffer.parts.hotel-attributes')
                                     </div>
-                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span></h3>
-                                    <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid={{ getTTRegionCodeFromOrt($offer['hotel_data']['data']['Stadtname']) }}&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&dur={{ $offer['data']['duration'] }}&price=0,{{ $offer['personPrice'] }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
+                                    <h3><span>CHF</span> {{ number_format($offer['data']['price']['value'], 0, ',', '.') }} p.P.</h3>
+                                    <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid={{ getTTRegionCodeFromOrt($offer['hotel_data']['data']['Stadtname']) }}&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&child={{ $wish->ages }}&dur={{ $offer['data']['duration'] }}&price=0,{{ $wish->budget }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>

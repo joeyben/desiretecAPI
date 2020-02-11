@@ -14,17 +14,12 @@ class PagesTableController extends Controller
 {
     protected $pages;
 
-    /**
-     * @param PagesRepository $pages
-     */
     public function __construct(PagesRepository $pages)
     {
         $this->pages = $pages;
     }
 
     /**
-     * @param ManagePageRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManagePageRequest $request)

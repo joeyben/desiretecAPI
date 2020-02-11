@@ -39,8 +39,6 @@ class WishExport implements FromCollection, Responsable, WithMapping, WithHeadin
 
     /**
      * WishExport constructor.
-     *
-     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository $wishes
      */
     public function __construct(WishesRepository $wishes)
     {
@@ -57,8 +55,6 @@ class WishExport implements FromCollection, Responsable, WithMapping, WithHeadin
 
     /**
      * @param mixed $wish
-     *
-     * @return array
      */
     public function map($wish): array
     {
@@ -106,9 +102,6 @@ class WishExport implements FromCollection, Responsable, WithMapping, WithHeadin
         ];
     }
 
-    /**
-     * @return array
-     */
     public function columnFormats(): array
     {
         return [

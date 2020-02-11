@@ -24,9 +24,7 @@ class CreatedUserNotificationForSeller extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param \App\Models\Access\User\User $user
-     * @param string                       $password
-     * @param                              $whitelabel
+     * @param $whitelabel
      */
     public function __construct(User $user, string $password, $whitelabel)
     {

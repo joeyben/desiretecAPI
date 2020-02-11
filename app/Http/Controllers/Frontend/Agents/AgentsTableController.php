@@ -24,8 +24,6 @@ class AgentsTableController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManageAgentsRequest $request)

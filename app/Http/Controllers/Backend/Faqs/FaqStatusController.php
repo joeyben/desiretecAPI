@@ -11,9 +11,6 @@ class FaqStatusController extends Controller
 {
     protected $faq;
 
-    /**
-     * @param \App\Repositories\Backend\Faqs\FaqsRepository $faq
-     */
     public function __construct(FaqsRepository $faq)
     {
         $this->faq = $faq;

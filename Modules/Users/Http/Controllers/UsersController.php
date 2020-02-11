@@ -74,17 +74,6 @@ class UsersController extends Controller
 
     /**
      * UsersController constructor.
-     *
-     * @param \Modules\Users\Repositories\Contracts\UsersRepository             $users
-     * @param \Illuminate\Routing\ResponseFactory                               $response
-     * @param \Illuminate\Auth\AuthManager                                      $auth
-     * @param \Illuminate\Translation\Translator                                $lang
-     * @param \Modules\Groups\Repositories\Contracts\GroupsRepository           $groups
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
-     * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
-     * @param \Modules\Dashboard\Repositories\Contracts\DashboardRepository     $dashboards
-     * @param \Modules\Roles\Repositories\Contracts\RolesRepository             $roles
-     * @param \Illuminate\Notifications\ChannelManager                          $notification
      */
     public function __construct(UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, GroupsRepository $groups, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, DashboardRepository $dashboards, RolesRepository $roles, ChannelManager $notification)
     {
@@ -111,8 +100,6 @@ class UsersController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function view(Request $request)
@@ -160,8 +147,6 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function create(Request $request)
@@ -198,8 +183,6 @@ class UsersController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Modules\Users\Http\Requests\StoreUserRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -256,8 +239,6 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function edit(int $id)
@@ -309,9 +290,6 @@ class UsersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Modules\Users\Http\Requests\UpdateUserRequest $request
-     * @param int                                            $id
      *
      * @return \Illuminate\Http\JsonResponse
      */

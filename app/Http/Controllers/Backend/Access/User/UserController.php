@@ -49,13 +49,6 @@ class UserController extends Controller
      */
     private $response;
 
-    /**
-     * @param UserRepository                                              $users
-     * @param RoleRepository                                              $roles
-     * @param \App\Repositories\Backend\Whitelabels\WhitelabelsRepository $whitelabels
-     * @param \Illuminate\Auth\AuthManager                                $auth
-     * @param \Illuminate\Routing\ResponseFactory                         $response
-     */
     public function __construct(UserRepository $users, RoleRepository $roles, WhitelabelsRepository $whitelabels, AuthManager $auth, ResponseFactory $response)
     {
         $this->users = $users;
@@ -66,8 +59,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param ManageUserRequest $request
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(ManageUserRequest $request)
@@ -76,8 +67,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param CreateUserRequest $request
-     *
      * @return mixed
      */
     public function create(CreateUserRequest $request)
@@ -91,8 +80,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param StoreUserRequest $request
-     *
      * @return mixed
      */
     public function store(StoreUserRequest $request)
@@ -103,9 +90,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param User            $user
-     * @param ShowUserRequest $request
-     *
      * @return mixed
      */
     public function show(User $user, ShowUserRequest $request)
@@ -117,9 +101,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param User            $user
-     * @param EditUserRequest $request
-     *
      * @return mixed
      */
     public function edit(User $user, EditUserRequest $request)
@@ -144,9 +125,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param User              $user
-     * @param UpdateUserRequest $request
-     *
      * @return mixed
      */
     public function update(User $user, UpdateUserRequest $request)
@@ -157,9 +135,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param User              $user
-     * @param DeleteUserRequest $request
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return

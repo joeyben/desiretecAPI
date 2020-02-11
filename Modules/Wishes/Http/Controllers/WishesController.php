@@ -13,7 +13,6 @@ use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WhereIn;
 use App\Repositories\Criteria\WithTrashed;
 use App\Services\Flag\Src\Flag;
-use Auth;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -70,15 +69,6 @@ class WishesController extends Controller
 
     /**
      * WishesController constructor.
-     *
-     * @param \Modules\Wishes\Repositories\Contracts\WishesRepository         $wishes
-     * @param \Illuminate\Notifications\ChannelManager                        $notification
-     * @param \Illuminate\Routing\ResponseFactory                             $response
-     * @param \Illuminate\Auth\AuthManager                                    $auth
-     * @param \Illuminate\Translation\Translator                              $lang
-     * @param \Illuminate\Support\Carbon                                      $carbon
-     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository $activities
-     * @param \App\Repositories\Backend\Groups\GroupsRepository               $groups
      */
     public function __construct(WishesRepository $wishes, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, GroupsRepository $groups)
     {
@@ -179,8 +169,6 @@ class WishesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Modules\Wishes\Http\Requests\StoreWishRequest $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreWishRequest $request)
@@ -217,8 +205,6 @@ class WishesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -260,9 +246,6 @@ class WishesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Modules\Wishes\Http\Requests\UpdateWishRequest $request
-     * @param int                                             $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -338,8 +321,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function restore(int $id)
@@ -359,8 +340,6 @@ class WishesController extends Controller
     }
 
     /**
-     * @param int $id
-     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      *
      * @return \Illuminate\Http\JsonResponse

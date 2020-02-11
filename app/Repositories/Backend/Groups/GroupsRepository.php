@@ -57,8 +57,6 @@ class GroupsRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     *
      * @throws \App\Exceptions\GeneralException
      *
      * @return bool
@@ -80,9 +78,6 @@ class GroupsRepository extends BaseRepository
 
     /**
      * Update Group.
-     *
-     * @param \App\Models\Groups\Group $group
-     * @param array                    $input
      */
     public function update(Group $group, array $input)
     {
@@ -95,15 +90,11 @@ class GroupsRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.groups.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.groups.update_error'));
         });
     }
 
     /**
-     * @param \App\Models\Groups\Group $group
-     *
      * @throws GeneralException
      *
      * @return bool

@@ -39,7 +39,6 @@ class UserContactedSeller extends Notification
      *
      * @param $wish_id
      * @param $token
-     * @param Contact $contact
      */
     public function __construct($wish_id, $token, Contact $contact)
     {
@@ -81,8 +80,8 @@ class UserContactedSeller extends Notification
             ->view($view, [
                     'confirmation_url' => $confirmation_url,
                     'contact'          => $this->contact,
-                    'wish_id' => $this->wish_id,
-                    'token' => $this->token
+                    'wish_id'          => $this->wish_id,
+                    'token'            => $this->token
                 ]);
     }
 

@@ -33,10 +33,6 @@ class CategoriesController extends Controller
 
     /**
      * CategoriesController constructor.
-     *
-     * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \Illuminate\Routing\ResponseFactory                             $response
-     * @param \Illuminate\Translation\Translator                              $lang
      */
     public function __construct(CategoriesRepository $categories, ResponseFactory $response, Translator $lang)
     {
@@ -59,8 +55,6 @@ class CategoriesController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -86,8 +80,6 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function children(int $id)
@@ -108,8 +100,6 @@ class CategoriesController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param string $slug
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -158,9 +148,6 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     *
-     * @param \Modules\Categories\Http\Requests\StoreCategoryRequest $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreCategoryRequest $request)
@@ -193,8 +180,6 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function edit(int $id)
@@ -223,9 +208,6 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Modules\Categories\Http\Requests\UpdateCategoryRequest $request
-     * @param int                                                     $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateCategoryRequest $request, int $id)
@@ -249,8 +231,6 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function append(int $id)
@@ -270,8 +250,6 @@ class CategoriesController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */

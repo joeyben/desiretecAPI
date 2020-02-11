@@ -67,7 +67,6 @@ class TuiController extends Controller
     /**
      * Return the specified resource.
      *
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request)
@@ -89,10 +88,6 @@ class TuiController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
-     * @param WishesRepository $wish
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -143,8 +138,7 @@ class TuiController extends Controller
     /**
      * Create new user from Layer.
      *
-     * @param UserRepository   $user
-     * @param StoreWishRequest $request
+     * @param UserRepository $user
      *
      * @return UserRepository $user
      */
@@ -170,7 +164,6 @@ class TuiController extends Controller
      * Create new user from Layer.
      *
      * @param WishesRepository $wish
-     * @param StoreWishRequest $request
      *
      * @return object
      */
@@ -196,10 +189,16 @@ class TuiController extends Controller
             'hotelChains'        => isset($input['hotelChains']) ? $input['hotelChains'] : '',
             'operators'          => isset($input['operators']) ? $input['operators'] : ''
         ];
+        $ages1 = isset($input['ages1']) ? $input['ages1'] . ',' : '';
+        $ages2 = isset($input['ages2']) ? $input['ages2'] . ',' : '';
+        $ages3 = isset($input['ages3']) ? $input['ages3'] . ',' : '';
+        $ages4 = isset($input['ages4']) ? $input['ages4'] : '';
+        $ages = $ages1 . $ages2 . $ages3 . $ages4;
 
         $request->merge([
             'featured_image' => 'bg.jpg',
-            'extra_params'   => json_encode($extra)
+            'extra_params'   => json_encode($extra),
+            'ages'           => $ages
         ]);
         $new_wish = $wish->create(
             $request->except('variant', 'first_name', 'last_name', 'email',

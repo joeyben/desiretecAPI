@@ -55,9 +55,6 @@ class TrendtoursWishesController extends Controller
      */
     protected $whitelabel;
 
-    /**
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
-     */
     public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel)
     {
         $this->wish = $wish;
@@ -66,9 +63,6 @@ class TrendtoursWishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     * @param string                  $token
-     *
      * @return mixed
      */
     public function details(Wish $wish, string $token)

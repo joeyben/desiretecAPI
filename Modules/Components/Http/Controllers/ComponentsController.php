@@ -73,8 +73,6 @@ class ComponentsController extends Controller
     }
 
     /**
-     * @param string $key
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function install(string $key)
@@ -94,9 +92,6 @@ class ComponentsController extends Controller
     }
 
     /**
-     * @param string $key
-     * @param bool   $keep
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function uninstall(string $key, bool $keep)
@@ -116,8 +111,6 @@ class ComponentsController extends Controller
     }
 
     /**
-     * @param string $key
-     *
      * @throws \Exception
      *
      * @return \Illuminate\Http\JsonResponse
@@ -139,8 +132,6 @@ class ComponentsController extends Controller
     }
 
     /**
-     * @param string $key
-     *
      * @throws \Exception
      *
      * @return \Illuminate\Http\JsonResponse
@@ -162,8 +153,6 @@ class ComponentsController extends Controller
     }
 
     /**
-     * @param string $key
-     *
      * @throws \Exception
      *
      * @return \Illuminate\Http\JsonResponse
@@ -185,8 +174,6 @@ class ComponentsController extends Controller
     }
 
     /**
-     * @param string $key
-     *
      * @throws \Exception
      *
      * @return \Illuminate\Http\JsonResponse
@@ -220,8 +207,6 @@ class ComponentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function store(Request $request)
@@ -250,8 +235,6 @@ class ComponentsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
      *
      * @return Response
      */

@@ -8,7 +8,6 @@ use App\Models\Whitelabels\Traits\Attribute\WhitelabelAttribute;
 use App\Models\Whitelabels\Traits\Relationship\WhitelabelRelationship;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Rules\Entities\Rule;
-use App\Models\Layers\WhitelableLayer;
 
 /**
  * Class Whitelabel.
@@ -45,9 +44,6 @@ class Whitelabel extends BaseModel
         'updated_at',
     ];
 
-    /**
-     * @param array $attributes
-     */
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);

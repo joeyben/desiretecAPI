@@ -17,17 +17,12 @@ class PermissionTableController extends Controller
      */
     protected $permissions;
 
-    /**
-     * @param PermissionRepository $permissions
-     */
     public function __construct(PermissionRepository $permissions)
     {
         $this->permissions = $permissions;
     }
 
     /**
-     * @param ManagePermissionRequest $request
-     *
      * @return mixed
      */
     public function __invoke(ManagePermissionRequest $request)

@@ -25,8 +25,6 @@ class PermissionController extends APIController
     /**
      * Return the permissions.
      *
-     * @param Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
@@ -43,8 +41,6 @@ class PermissionController extends APIController
     /**
      * Return the specified resource.
      *
-     * @param Permission $permission
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Permission $permission)
@@ -54,8 +50,6 @@ class PermissionController extends APIController
 
     /**
      * Creates the Resource for Permission.
-     *
-     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -73,9 +67,6 @@ class PermissionController extends APIController
     }
 
     /**
-     * @param Permission $permission
-     * @param Request    $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, Permission $permission)
@@ -114,8 +105,7 @@ class PermissionController extends APIController
     /**
      * validateUser Permission Requests.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return Validator object
      */

@@ -1,7 +1,9 @@
 <?php
+Route::group(['middleware' => ['web', 'auth', 'admin', 'step'], 'prefix' => 'admin', 'namespace' => 'Modules\Dashboard\Http\Controllers'], function () {
+    Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
+});
 
 Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'namespace' => 'Modules\Dashboard\Http\Controllers'], function () {
-    Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
     Route::get('dashboard/view', 'DashboardController@view')->name('admin.dashboard.view');
     Route::put('dashboard', 'DashboardController@store')->name('admin.dashboard.store');
     Route::put('dashboard/save', 'DashboardController@save')->name('admin.dashboard.save');
@@ -30,6 +32,8 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'na
     Route::get('dashboard/exportw', 'DashboardController@exportw')->name('admin.dashboard.exportw');
     Route::get('dashboard/events/clickRate', 'OffersController@clickRate')->name('admin.dashboard.events.clickRate');
     Route::get('dashboard/events/openRate', 'OffersController@openRate')->name('admin.dashboard.events.openRate');
+    Route::get('dashboard/events/wishesMonth', 'OffersController@wishesMonth')->name('admin.dashboard.events.wishesMonth');
+    Route::get('dashboard/events/wishesDay', 'OffersController@wishesDay')->name('admin.dashboard.events.wishesDay');
     Route::get('dashboard/events/clickRateauto', 'OffersController@clickRateauto')->name('admin.dashboard.events.clickRateauto');
     Route::get('dashboard/events/openRateauto', 'OffersController@openRateauto')->name('admin.dashboard.events.openRateauto');
     Route::get('dashboard/events/shareperMonth', 'OffersController@shareperMonth')->name('admin.dashboard.events.shareperMonth');

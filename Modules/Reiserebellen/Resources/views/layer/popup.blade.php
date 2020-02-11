@@ -44,7 +44,7 @@
                     <div class="duration-more">
                         <div class="kwp-col-4">
                             {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('reiserebellen::layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('reiserebellen::layer.general.earliest_start'),'readonly' => 'readonly', 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('reiserebellen::layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('reiserebellen::layer.general.latest_return'),'readonly' => 'readonly', 'required' => 'required']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -63,7 +63,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('reiserebellen::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['0' => trans('reiserebellen::layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -100,15 +100,63 @@
                             </div>
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
-                                    <label class="main-label">Alter (Hinreise)</label>
-                                    <div class="kwp-col-3">
+                                    <label class="main-label">Alter der Kinder bei Rückreise</label>
+                                    <input name="ages" type="hidden">
+                                    <div id="age_1" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                        </div>
+                                        @if ($errors->any() && $errors->get('ages1'))
+                                            @foreach ($errors->get('ages1') as $error)
+                                                <span class="error-input">{{ $error }}</span>
+                                                <script>
+                                                    dt.Tracking.rawEvent('form_error', 'ages1', '{{ $error }}');
+                                                </script>
+                                            @endforeach
+                                        @endif
                                     </div>
-                                    <div class="kwp-col-3">
+                                    <div id="age_2" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                        </div>
+                                        @if ($errors->any() && $errors->get('ages2'))
+                                            @foreach ($errors->get('ages2') as $error)
+                                                <span class="error-input">{{ $error }}</span>
+                                                <script>
+                                                    dt.Tracking.rawEvent('form_error', 'ages2', '{{ $error }}');
+                                                </script>
+                                            @endforeach
+                                        @endif
                                     </div>
-                                    <div class="kwp-col-3">
+                                    <div id="age_3" class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                        </div>
+                                        @if ($errors->any() && $errors->get('ages3'))
+                                            @foreach ($errors->get('ages3') as $error)
+                                                <span class="error-input">{{ $error }}</span>
+                                                <script>
+                                                    dt.Tracking.rawEvent('form_error', 'ages3', '{{ $error }}');
+                                                </script>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div id="age_4" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages4', $ages_arr,key_exists('ages4', $request) ? $request['ages4'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                        </div>
+                                        @if ($errors->any() && $errors->get('ages4'))
+                                            @foreach ($errors->get('ages4') as $error)
+                                                <span class="error-input">{{ $error }}</span>
+                                                <script>
+                                                    dt.Tracking.rawEvent('form_error', 'ages4', '{{ $error }}');
+                                                </script>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +232,7 @@
                 var earliest_start = new Date(earliest_start_arr[2], earliest_start_arr[1]-1, earliest_start_arr[0]);
                 var latest_return = new Date(latest_return_arr[2], latest_return_arr[1]-1, latest_return_arr[0]);
                 var diff_days = Math.round((latest_return-earliest_start)/(1000*60*60*24));
-                var diff_nights =  diff_days - 1;
+                var diff_nights =  diff_days;
                 var options = document.getElementById("duration").getElementsByTagName("option");
                 for (var i = 0; i < options.length; i++) {
                     if(options[i].value.includes('-')){
@@ -281,7 +329,7 @@
             $(document).ready(function(){
 
                 dt.applyBrandColor();
-                dt.autocomplete();
+                autocomplete();
                 dt.adjustResponsive();
 
                 dt.startDate = new Pikaday({
@@ -412,6 +460,46 @@
                 if(!$(".dt-modal .haserrors").length){
                     $('.dt-modal #submit-button').removeClass('error-button');
                 }
+            };
+
+            function autocomplete(){
+                $('#destination').tagsinput({
+                    maxTags: 3,
+                    maxChars: 20,
+                    allowDuplicates: false,
+                    typeahead: {
+                        autoSelect: false,
+                        minLength: 3,
+                        highlight: true,
+                        afterSelect: function(val) { this.$element.val(""); },
+                        source: function(query) {
+                            return $.get('https://reiserebellen.reise-wunsch.com/get-all-destinations', {query: query});
+                        }
+                    },
+                    freeInput: "{{ $ruleType === 2 ? true : false }}"
+                });
+
+                $('#airport').tagsinput({
+                    maxTags: 3,
+                    maxChars: 20,
+                    allowDuplicates: false,
+                    typeahead: {
+                        autoSelect: false,
+                        minLength: 3,
+                        highlight: true,
+                        afterSelect: function(val) { this.$element.val(""); },
+                        source: function(query) {
+                            return $.get('https://reiserebellen.reise-wunsch.com/get-all-airports', {query: query});
+                        }
+                    },
+                    freeInput: "{{ $ruleType === 2 ? true : false }}"
+                });
+                /* END Airports */
+                $("#destination, #airport").on('itemAdded', function(event) {
+                    setTimeout(function(){
+                        $("input[type=text]",".bootstrap-tagsinput").val("");
+                    }, 1);
+                });
             };
 
         </script>

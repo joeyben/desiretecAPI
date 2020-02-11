@@ -11,8 +11,6 @@ use App\Models\Access\User\User;
 class UserSessionRepository
 {
     /**
-     * @param User $user
-     *
      * @throws GeneralException
      *
      * @return mixed
