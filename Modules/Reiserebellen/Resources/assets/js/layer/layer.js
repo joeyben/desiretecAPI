@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://reiserebellen.reisewunschservice.de',
+        baseUrl: 'https://reise-rebellen.reisewunschservice.de',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/reiserebellen/css/layer/whitelabel.css'
@@ -928,7 +928,7 @@ var exitIntent = window.exitIntent || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: '',
+        matchesUrl: 'https://reise-rebellen.reisewunschservice.de',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
