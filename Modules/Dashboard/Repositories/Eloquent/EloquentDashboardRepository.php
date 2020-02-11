@@ -36,6 +36,28 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         )->rows;
     }
 
+    public function uniqueEventsDayMobile(string $gaViewId, array $optParams1, array $optParams2, string $startDate, string $endDate)
+    {
+        $uem1 = \Analytics::getAnalyticsService()->data_ga->get(
+            'ga:' . $gaViewId,
+            ('' === $startDate) ? '30daysAgo' : $startDate,
+            ('' === $endDate) ? 'yesterday' : $endDate,
+            'ga:uniqueEvents',
+            $optParams1
+        )->rows;
+        $uem2 = \Analytics::getAnalyticsService()->data_ga->get(
+            'ga:' . $gaViewId,
+            ('' === $startDate) ? '30daysAgo' : $startDate,
+            ('' === $endDate) ? 'yesterday' : $endDate,
+            'ga:uniqueEvents',
+            $optParams2
+        )->rows;
+        for ($i=0; $i<count($uem1); $i++) {
+            $uem1[$i][1] = $uem1[$i][1] + $uem2[$i][1];
+        }
+        return $uem1;
+    }
+
     public function uniqueEventsMonth(string $gaViewId, array $optParams, string $startDate, string $endDate)
     {
         return \Analytics::getAnalyticsService()->data_ga->get(
