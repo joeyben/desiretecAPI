@@ -121,7 +121,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-credit-card" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->budget }}CHF</h4>
+                                    <h4>CHF {{ $wish->budget }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
