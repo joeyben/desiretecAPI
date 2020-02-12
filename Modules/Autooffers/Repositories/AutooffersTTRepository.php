@@ -861,6 +861,56 @@ class AutooffersTTRepository extends BaseRepository
     public function testTT()
     {
         $xmlreq = '{
+         "AvailabilityAndPriceCheckRQ": {
+          "RQ_Metadata": {
+           "Language": "de-CH"
+          }, 
+        "CurrencyCode": "CHF",
+          "Travellers": {
+                    "Traveller": [
+                           {
+                                  "Age": 33
+                           },
+                           {
+                                  "Age": 33
+                           },
+                           {
+                                  "Age": 6
+                           }
+                    ]
+             },
+          "OfferID": "24ZNGUXB7JHE9JDAKUUWY83ZZ2J9BVBF2ZG9CGHZF6B8WBHE2AS66HTU4N3R2WBT4SDGTNL8LU78DY",
+          "Options": {
+            "NumberOfResults": 500,
+            "ResultOffset": 0,
+            "Sorting": ["PriceAsc"],
+            "AdditionalCurrencyCodes":["EUR"]
+          }
+        }}';
+        $curl = curl_init();
+
+        $authorization = 'Authorization: Bearer ' . $this->token;
+
+        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
+        curl_setopt($curl, CURLOPT_URL, "http://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/Package/AvailabilityAndPriceCheck");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $xmlreq);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $result = curl_exec($curl);
+        if (!$result) {
+            die('Connection Failure');
+        }
+        curl_close($curl);
+        dd($result);
+    }
+
+
+    public function testTTbkp()
+    {
+        $xmlreq = '{
          "PackageOffersRQ": {
           "RQ_Metadata": {
            "Language": "de-CH"

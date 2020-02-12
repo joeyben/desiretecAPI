@@ -272,6 +272,16 @@ class WishesRepository extends BaseRepository
         $this->whitelabel_id = $whitelabelId;
 
         $wish = DB::transaction(function () use ($input, $whitelabelId) {
+            $from = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
+            $to   = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
+            $daysDiff = $to->diffInDays($from);
+
+            if ('0' === $input['duration'] && $daysDiff < 7) {
+                $input['duration'] =  "".$daysDiff;
+            } elseif ('0' === $input['duration']) {
+                $input['duration'] =  '7-';
+            }
+
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
             $input['created_by'] = access()->user()->id;
             $input['whitelabel_id'] = $whitelabelId;
@@ -279,11 +289,12 @@ class WishesRepository extends BaseRepository
             $input['title'] = '-';
             $input['budget'] = $input['budget'] === null ? 0 : $input['budget'];
             $input['category'] = $input['category'] === null ? 3 : $input['category'];
-            $input['duration'] = '0' === $input['duration'] ? '7-' : $input['duration'];
-            $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
-            $input['latest_return'] = $input['latest_return'] ? \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']) : '0000-00-00';
+
+            $input['earliest_start'] = $from;
+            $input['latest_return'] = $input['latest_return'] ? $to : '0000-00-00';
             $input['adults'] = (int) ($input['adults']);
             $input['extra_params'] = isset($input['extra_params']) ? $input['extra_params'] : '';
+            $input['duration'] = 'exact' === $input['duration'] ? "".$daysDiff : $input['duration'];
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
@@ -302,14 +313,25 @@ class WishesRepository extends BaseRepository
     {
         $this->whitelabel_id = $input['whitelabel_id'];
         $wish = DB::transaction(function () use ($input) {
+            $from = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
+            $to   = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
+            $daysDiff = $to->diffInDays($from);
+
+            if ('0' === $input['duration'] && $daysDiff < 7) {
+                $input['duration'] =  "".$daysDiff;
+            } elseif ('0' === $input['duration']) {
+                $input['duration'] =  '7-';
+            }
+
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
             $input['created_by'] = $input['user_id'];
             $input['group_id'] = $this->getGroup();
             $input['title'] = '-';
-            $input['earliest_start'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
-            $input['latest_return'] = $input['latest_return'] ? \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']) : '0000-00-00';
+            $input['earliest_start'] = $from;
+            $input['latest_return'] = $input['latest_return'] ? $to : '0000-00-00';
             $input['adults'] = (int) ($input['adults']);
             $input['extra_params'] = isset($input['extra_params']) ? $input['extra_params'] : '';
+            $input['duration'] = 'exact' === $input['duration'] ? "".$daysDiff : $input['duration'];
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
