@@ -170,7 +170,7 @@
                             @endif
                             @php
                                 $hotelData = [
-                                    'title' => str_replace("'","",$offer['hotel_data']['hotel']['name']),
+                                    'title' => str_replace("'","",$offer['hotel_data']['data']['Hotelname']),
                                     'stars' => key_exists('Hotelkategorie', $offer['hotel_data']['data']) ? intval($offer['hotel_data']['data']['Hotelkategorie']) : 0 ,
                                     'text' => $offer['data']['boardType'],
                                     'longitude' => $offer['data']['hotel_geo']['longitude'],
