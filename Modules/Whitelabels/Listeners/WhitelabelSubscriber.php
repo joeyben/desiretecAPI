@@ -39,9 +39,11 @@ class WhitelabelSubscriber
 
     public function onCreatedWhitelabel(Whitelabel $whitelabel)
     {
-        $users = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->get();
+        if (Auth::check()) {
+            $users = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->get();
 
-        Notification::send($users, new CreateWhitelabelNotification($whitelabel));
+            Notification::send($users, new CreateWhitelabelNotification($whitelabel));
+        }
     }
 
     public function onDeletedWhitelabel(Whitelabel $whitelabel)

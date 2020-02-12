@@ -8,6 +8,8 @@ interface DashboardRepository
 {
     public function uniqueEventsDay(string $gaViewId, array $optParams, string $startDate, string $endDate);
 
+    public function uniqueEventsDayMobile(string $gaViewId, array $optParams1, array $optParams2, string $startDate, string $endDate);
+
     public function uniqueEventsMonth(string $gaViewId, array $optParams, string $startDate, string $endDate);
 
     public function wishesMonth($whitelabel, string $startDate, string $endDate);

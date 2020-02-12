@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Lang;
 
-class CreatedUserNotificationForExecutive extends Notification
+class ApiCreatedUserNotificationForExecutive extends Notification
 {
     use Queueable;
     /**
@@ -50,7 +50,7 @@ class CreatedUserNotificationForExecutive extends Notification
     {
         return (new MailMessage())
             ->subject(Lang::get('email.account.subject_for_executive', ['whitelabel' => $this->user->whitelabels()->first()->name]))
-            ->view('users::emails.created_executive', ['user' => $this->user, 'password' => $this->password, 'whitelabel' => $this->user->whitelabels()->first()])
+            ->view('users::emails.api_created_executive', ['user' => $this->user, 'password' => $this->password, 'whitelabel' => $this->user->whitelabels()->first()])
             ->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
     }
 

@@ -225,7 +225,7 @@ class DashboardController extends Controller
             $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
 
             $_SESSION['viewid'] = $viewId;
-            $_SESSION['whitelabel'] = $whitelabelId;
+            $_SESSION['whitelabel'] = $whitelabel['id'];
             $_SESSION['start'] = $startDate;
             $_SESSION['end'] = $endDate;
 

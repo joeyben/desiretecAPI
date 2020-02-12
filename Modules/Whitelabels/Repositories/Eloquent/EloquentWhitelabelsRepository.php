@@ -319,6 +319,27 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         return DB::table($table)->insert($languageLines);
     }
 
+    public function apiCopyLanguage(int $whitelabelId)
+    {
+        $languageLines = DB::table('language_lines')
+            ->select('locale', 'description', 'group', 'key', 'text')
+            ->where('default', 1)
+            ->get()
+            ->map(function ($languageLine) use ($whitelabelId) {
+                return [
+                    'locale'      => $languageLine->locale,
+                    'description' => $languageLine->description,
+                    'group'       => $languageLine->group,
+                    'key'         => $languageLine->key,
+                    'text'        => $languageLine->text,
+                    'whitelabel_id'        => $whitelabelId,
+                ];
+            })
+            ->toArray();
+
+        return DB::table('language_lines')->insert($languageLines);
+    }
+
     public function current(bool $first = true)
     {
         $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
