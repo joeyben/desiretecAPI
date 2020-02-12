@@ -715,7 +715,6 @@ var exitIntent = window.exitIntent || {};
         }
     });
     dt.decoders.push(MasterIBETripDataDecoder);
-    dt.decoders.push(MasterIBETripDataDecoderMobile);
     dt.decoders.push(KwizzmeFakeTripDataDecoder);
 
     dt.initCallbacks = dt.initCallbacks || [];
