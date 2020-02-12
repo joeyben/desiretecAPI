@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Api\V1;
 
 
 
-use App\Events\Backend\Access\User\UserCreated;
 use App\Models\Access\Role\Role;
 use App\Models\Access\User\User;
 use App\Services\Flag\Src\Flag;
-use Illuminate\Http\Request;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Str;
-use Modules\Users\Notifications\CreatedUserNotificationForExecutive;
+use Modules\Users\Notifications\ApiCreatedUserNotificationForExecutive;
 use Modules\Users\Repositories\Contracts\UsersRepository;
 use Modules\Whitelabels\Http\Requests\ApiStoreWhitelabelRequest;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
@@ -53,7 +51,9 @@ class WhitelabelsController extends APIController
             $user = User::create([
                 'first_name' => $request->get('name'),
                 'email' => $request->get('email'),
-                'password' => $password,
+                'confirmed' => true,
+                'status' => true,
+                'password' => bcrypt($password),
             ]);
 
             $user->attachRole(Role::where('name', Flag::EXECUTIVE_ROLE)->first());
@@ -80,7 +80,7 @@ class WhitelabelsController extends APIController
             $user->fresh();
 
             if ($user->hasRole(Flag::EXECUTIVE_ROLE)) {
-                $this->notification->send($user, new CreatedUserNotificationForExecutive($user, $password));
+                $this->notification->send($user, new ApiCreatedUserNotificationForExecutive($user, $password));
             }
 
             ini_set('max_execution_time', 500);
