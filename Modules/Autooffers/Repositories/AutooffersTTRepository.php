@@ -237,7 +237,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->setHotelGeo();
         $this->setHotelAttributes();
 
-        return $result;
+        return $this->offers;
     }
 
     /**
@@ -245,10 +245,10 @@ class AutooffersTTRepository extends BaseRepository
      * @param string $wish_id
      * @param array  $rules
      */
-    public function storeMany($wish_id, $rules)
+    public function storeMany($offers, $wish_id, $rules, $userId)
     {
         $count = 0;
-        foreach ($this->offers as $key => $offer) {
+        foreach ($offers as $key => $offer) {
             $hotelId = $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'];
             if (!$this->checkValidity($hotelId, $wish_id)) {
                 continue;
@@ -258,7 +258,7 @@ class AutooffersTTRepository extends BaseRepository
             if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
                 continue;
             }
-            $this->storeAutooffer($offer, $hotel, $wish_id);
+            $this->storeAutooffer($offer, $hotel, $wish_id, $userId);
             ++$count;
             if ($count >= 3) {
                 break;
@@ -329,7 +329,7 @@ class AutooffersTTRepository extends BaseRepository
      *
      * @return mix
      */
-    public function storeAutooffer($offer, $hotel, $wish_id)
+    public function storeAutooffer($offer, $hotel, $wish_id,$userId)
     {
         try {
             $autooffer = self::MODEL;
@@ -354,7 +354,7 @@ class AutooffersTTRepository extends BaseRepository
             $autooffer->data = json_encode($this->deserializeData($offer));
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
-            $autooffer->user_id = \Auth::user()->id;
+            $autooffer->user_id = $userId;
             $autooffer->status = $this->specialSearch ? 0 : 1;
 
             return $autooffer->save();

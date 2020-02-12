@@ -22,10 +22,14 @@ class callTTApi implements ShouldQueue
      * Create a new job instance.
      */
     protected $wishId;
+    protected $whitelabelId;
+    protected $userId;
 
-    public function __construct($wishId)
+    public function __construct($wishId, $whitelabelId, $userId)
     {
         $this->wishId = $wishId;
+        $this->whitelabelId = $whitelabelId;
+        $this->userId = $userId;
     }
 
     /**
@@ -34,10 +38,10 @@ class callTTApi implements ShouldQueue
     public function handle(EloquentAutooffersRepository $rules, AutooffersTTRepository $TTautooffers)
     {
         $wish = Wish::where('id', $this->wishId)->first();
-        $_rules = $rules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
+        $_rules = $rules->getSettingsForWhitelabel($this->whitelabelId);
         $TTautooffers->saveWishData($wish);
         $TTautooffers->getToken();
         $response = $TTautooffers->getTTData();
-        $TTautooffers->storeMany($wish->id, $_rules);
+        $TTautooffers->storeMany($response,$wish->id, $_rules,$this->userId);
     }
 }
