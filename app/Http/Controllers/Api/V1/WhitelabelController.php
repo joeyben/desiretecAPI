@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Where;
-use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
+use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
+
 
 /**
  * Class WhitelabelController.
@@ -25,7 +26,9 @@ class WhitelabelController extends Controller
         $this->moduleWhitelabelsRepository = $moduleWhitelabelsRepository;
     }
 
-
+    /**
+     * show page by $page_slug.
+     */
     public function getWhitelabelBySlug(string $slug)
     {
         $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
@@ -58,10 +61,10 @@ class WhitelabelController extends Controller
             'layers' => $whitelabel->layers,
         ];
 
-        $result['data']['attachments']['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/1581433096bg.jpg';
-        $result['data']['attachments']['logo'] = (null !== $logo && null !== $logo->first()) ? $logo->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/1581433101snapchat_PNG65.png';
-        $result['data']['attachments']['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/15734971451569923191Smile-only_3CPM_tilewhite.png';
-        $result['data']['attachments']['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : '';
+        $result['data']['attachments']['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
+        $result['data']['attachments']['logo'] = (null !== $logo && null !== $logo->first()) ? $logo->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/default_logo.png';
+        $result['data']['attachments']['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
+        $result['data']['attachments']['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
 
         return $this->responseJson($result);
     }
