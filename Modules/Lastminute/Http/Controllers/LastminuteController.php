@@ -120,7 +120,7 @@ class LastminuteController extends Controller
         $newUser = $this->createUserFromLayer($request, $user);
         $wish = $this->createWishFromLayer($request, $wish);
 
-        $wishJob = (new callTTApi($wish->id))->delay(Carbon::now()->addSeconds(3));
+        $wishJob = (new callTTApi($wish->id, $this->whitelabelId, $newUser->id))->delay(Carbon::now()->addSeconds(3));
         dispatch($wishJob);
 
         $view = \View::make('wishes::emails.autooffer',
