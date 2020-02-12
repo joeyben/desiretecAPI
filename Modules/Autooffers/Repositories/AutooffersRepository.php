@@ -431,7 +431,7 @@ class AutooffersRepository extends BaseRepository
             $to = \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return);
             $int_duration = $from->diffInDays($to);
         }
-        $this->period = $int_duration + 1;
+        $this->period = $int_duration;
     }
 
     /**
