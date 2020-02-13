@@ -458,7 +458,7 @@
                 minLength: 3,
                 highlight: true,
                 source: function(query) {
-                    return $.get('https://bentour.reise-wunsch.com/get-all-destinations', {query: query});
+                    return $.get('https://olimar.reise-wunsch.com/get-all-destinations', {query: query});
                 }
                 }
             });
@@ -474,7 +474,7 @@
                 minLength: 3,
                 highlight: true,
                 source: function(query) {
-                    return $.get('https://bentour.reise-wunsch.com/get-all-airports', {query: query});
+                    return $.get('https://olimar.reise-wunsch.com/get-all-airports', {query: query});
                 }
                 }
             });

@@ -66,7 +66,7 @@ class OlimarController extends Controller
      */
     public function show(Request $request)
     {
-        $html = view('bentour::layer.popup')->with([
+        $html = view('olimar::layer.popup')->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'catering_arr' => $this->catering,
@@ -91,7 +91,7 @@ class OlimarController extends Controller
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
         if ($request->failed()) {
-            $html = view('bentour::layer.popup')->with([
+            $html = view('olimar::layer.popup')->with([
                 'errors'       => $request->errors(),
                 'adults_arr'   => $this->adults,
                 'kids_arr'     => $this->kids,
