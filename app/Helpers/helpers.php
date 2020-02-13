@@ -872,7 +872,7 @@ if (!function_exists('is_active')) {
 if (!function_exists('is_active_step')) {
     function is_active_step(int $step = 1)
     {
-        return $step === current_step() + 1;
+        return $step === current_step();
     }
 }
 
@@ -886,6 +886,6 @@ if (!function_exists('is_disabled')) {
 if (!function_exists('is_step_finished')) {
     function is_step_finished()
     {
-        return current_step() === Flag::MAX_STEP;
+        return current_step() >= Flag::MAX_STEP - 2;
     }
 }

@@ -57,7 +57,7 @@ return [
     'message' => [
         'new'            => 'Neue Nachricht!',
         'subject'        => 'Sie haben eine neue Nachricht erhalten',
-        'token_new'          => 'Ihr Zugang zu Ihrem :whitelabel Reisewunschportal ',
+        'token_new'      => 'Ihr Zugang zu Ihrem :whitelabel Reisewunschportal ',
         'created-seller' => 'Sie haben eine neue Nachricht von Ihrem Kunden erhalten',
         'created-user'   => 'Wichtig: Es gibt eine neue Nachricht von Ihrem Berater im :whitelabel Reisewunschportal',
     ],

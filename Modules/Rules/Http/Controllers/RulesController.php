@@ -74,7 +74,22 @@ class RulesController extends Controller
      */
     public function index()
     {
-        return view('rules::index');
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int)$whitelabel->state < 9) {
+                $this->whitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' =>  9]
+                );
+            }
+
+            $step = Flag::step()[10];
+        }
+
+        return view('rules::index', compact(['step']));
     }
 
     /**

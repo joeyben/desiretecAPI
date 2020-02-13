@@ -69,7 +69,7 @@ class WhitelabelsController extends APIController
                         'display_name' => $request->get('name'),
                         'domain' => env('API_HTTP', 'https://') . str_slug($request->get('name')) . '.' . env('API_DOMAIN', 'reise-wunsch.com'),
                         'distribution_id' => 1,
-                        'state' => 0
+                        'state' => 1
                     ]
                 )
             );
