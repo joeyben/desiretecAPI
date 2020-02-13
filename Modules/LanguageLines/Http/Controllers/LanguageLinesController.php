@@ -629,15 +629,24 @@ class LanguageLinesController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-    /**
-     * Fetch already existing Signature or Create new Signature.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+
     public function signature(string $lang)
     {
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int)$whitelabel->state < 4) {
+                $this->whitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' =>  4]
+                );
+            }
+
+            $step = Flag::step()[5];
+        }
+
         try {
             $result['data']['text'] = $this->languageline->firstOrCreate([
                 'locale' => $lang,
@@ -654,7 +663,7 @@ class LanguageLinesController extends Controller
             $result['status'] = 500;
         }
 
-        return view('languagelines::email-signature', compact('result'));
+        return view('languagelines::email-signature', compact(['step', 'result']));
     }
 
     /**

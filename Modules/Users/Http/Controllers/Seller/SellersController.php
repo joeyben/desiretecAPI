@@ -95,7 +95,22 @@ class SellersController
      */
     public function index()
     {
-        return view('users::sellers.index');
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int)$whitelabel->state < 7) {
+                $this->whitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' =>  7]
+                );
+            }
+
+            $step = Flag::step()[8];
+        }
+
+        return view('users::sellers.index', compact(['step']));
     }
 
     /**

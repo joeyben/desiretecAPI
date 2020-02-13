@@ -67,7 +67,7 @@ class Flag implements FlagInterface
 
     const MIX = 3;
 
-    const MAX_STEP = 10;
+    const MAX_STEP = 12;
 
     public static function step()
     {
@@ -78,47 +78,52 @@ class Flag implements FlagInterface
                 'url' => route('provider.whitelabels')
             ],
             2 => [
-                'name' => 'Step 2: Layer Management',
+                'name' => 'Step 2: Layer version',
                 'route' => 'admin.whitelabels.layers',
                 'url' => route('admin.whitelabels.layers')
             ],
             3 => [
-                'name' => 'Step 3: E-Mail Signature',
+                'name' => 'Step 3: Layer content',
+                'route' => 'admin.whitelabels.content',
+                'url' => route('admin.whitelabels.content')
+            ],
+            4 => [
+                'name' => 'Step 4: E-Mail Signature',
                 'route' => 'provider.email.signature',
                 'url' => route('provider.email.signature', app()->getLocale())
             ],
-            4 => [
-                'name' => 'Step 4: Footers',
+            5 => [
+                'name' => 'Step 5: Footers',
                 'route' => 'admin.footers',
                 'url' => route('admin.footers')
             ],
-            5 => [
-                'name' => 'Step 5: Teilnahmebedingungen',
+            6 => [
+                'name' => 'Step 6: Teilnahmebedingungen',
                 'route' => 'provider.whitelabels.tnb',
                 'url' => route('provider.footer.tnb', app()->getLocale())
             ],
-            6 => [
-                'name' => 'Step 6: Anbieter Management',
+            7 => [
+                'name' => 'Step 7: Anbieter Management',
                 'route' => 'admin.sellers',
                 'url' => route('admin.sellers')
             ],
-            7 => [
-                'name' => 'Step 7: Gruppen Management',
+            8 => [
+                'name' => 'Step 8: Gruppen Management',
                 'route' => 'admin.groups',
                 'url' => route('admin.groups')
             ],
-            8 => [
-                'name' => 'Step 8: (if BASIC or PREMIUM)',
+            9 => [
+                'name' => 'Step 9: Lead Management (if BASIC or PREMIUM)',
                 'route' => 'admin.rules',
                 'url' => route('admin.rules')
             ],
-            9 => [
-                'name' => 'Step 9 (if BASIC or PREMIUM)',
+            10 => [
+                'name' => 'Step 10: Offer Management (if BASIC or PREMIUM)',
                 'route' => 'autooffer.setting',
                 'url' => route('autooffer.setting')
             ],
-            10 => [
-                'name' => 'Step 10: Download JS Snippet',
+            11 => [
+                'name' => 'Step 11: Download JS Snippet',
                 'route' => '#',
                 'url' => '#'
             ]

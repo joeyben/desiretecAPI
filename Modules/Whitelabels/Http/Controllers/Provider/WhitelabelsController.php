@@ -68,7 +68,10 @@ class WhitelabelsController extends Controller
             return redirect()->route('admin.whitelabels');
         }
 
-        return view('whitelabels::provider');
+
+        $step = Flag::step()[2];
+
+        return view('whitelabels::provider', compact(['step']));
     }
 
     /**
