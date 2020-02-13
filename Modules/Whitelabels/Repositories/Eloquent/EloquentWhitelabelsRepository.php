@@ -203,8 +203,8 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $this->generateFile(
             base_path('Modules/Master/Resources/assets/js/layer/layer.stub'),
             base_path("Modules/$name/Resources/assets/js/layer/layer.js"),
-            ['$MODULESMAL$'],
-            [mb_strtolower($name)]
+            ['$MODULE$', '$MODULESMAL$'],
+            [$name, mb_strtolower($name)]
         );
 
         $this->generateFile(
