@@ -46,9 +46,15 @@
 
         function showLayer(){
 
-             if($(".dt-modal").hasClass("teaser-on")){
-                        return false;
+            if($(".dt-modal").hasClass("teaser-on")){
+                return false;
              }
+
+             if($(".trigger-modal").length){
+                $(".trigger-modal").click();
+                return false;
+             }
+
              dt.PopupManager.show();
 
              if(isMobile()){

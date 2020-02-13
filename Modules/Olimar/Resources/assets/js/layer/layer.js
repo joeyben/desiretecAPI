@@ -33,12 +33,8 @@ var exitIntent = window.exitIntent || {};
           '<div class="kwp-overlay"></div>' +
           '<div class="kwp-logo"></div>' +
           '<div class="kwp-header-content">' +
-          '<h1>' +
-          texts[variant].header + ' <br/>' +
-          '</h1>' +
-          '<p>' +
-          texts[variant].body +
-          '</p>' +
+          '<h1>Dürfen wir Sie beraten? <br/> </h1>' +
+          '<p>Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.</p>' +
           '</div>' +
           '</div>' +
           '<div class="kwp-body '+variant+'-body">' +
@@ -50,7 +46,7 @@ var exitIntent = window.exitIntent || {};
     /**** Mobile Decoder ****/
     var MasterIBETripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master',
-        matchesUrl: 'https://master.reise-wunsch.com/|https://master.reisewunschservice.de/|http://master.com',
+        matchesUrl: 'https://olimar.reise-wunsch.com/|https://olimar.reisewunschservice.de/|http://olimar.com',
         dictionaries: {
             'catering': {
                 'AI': 'all-inclusive',
