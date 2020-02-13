@@ -116,7 +116,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-credit-card" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->budget }}€</h4>
+                                    <h4>{{ $wish->budget === 0 ? "Beliebig" : $wish->budget."€" }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
