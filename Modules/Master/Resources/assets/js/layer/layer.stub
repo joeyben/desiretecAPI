@@ -4,10 +4,10 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'http://$MODULE$.com',
+        baseUrl: 'https://$MODULESMAL$.reise-wunsch.com',
         popupPath: '/show',
         popupStore:'/store',
-        cssPath: '/whitelabel/$MODULE$/css/layer/whitelabel.css'
+        cssPath: '/whitelabel/$MODULESMAL$/css/layer/whitelabel.css'
     };
 
     dt.popupTemplate = function (variant) {
