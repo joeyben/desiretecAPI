@@ -1,3 +1,7 @@
+@php
+    $budget = $wish->budget === 0 ? "Beliebig" : $wish->budget."€";
+@endphp
+
 @extends('frontend.layouts.app')
 
 @section('title')
@@ -116,7 +120,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-credit-card" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->budget }}€</h4>
+                                    <h4>{{ $budget }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
