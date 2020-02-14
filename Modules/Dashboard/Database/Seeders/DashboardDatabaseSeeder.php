@@ -124,18 +124,6 @@ class DashboardDatabaseSeeder extends Seeder
         ]);
 
         DB::table('dashboards')->insert([
-            'name'            => 'Tile Comment',
-            'x'               => 9,
-            'y'               => 0,
-            'w'               => 3,
-            'h'               => 2,
-            'i'               => 10,
-            'component'       => 'tile-comment-component',
-            'created_at'      => now(),
-            'updated_at'      => now()
-        ]);
-
-        DB::table('dashboards')->insert([
             'name'            => 'Alle Wünsche pro Monat',
             'x'               => 0,
             'y'               => 2,
@@ -143,18 +131,6 @@ class DashboardDatabaseSeeder extends Seeder
             'h'               => 8,
             'i'               => 11,
             'component'       => 'chart-wish-component',
-            'created_at'      => now(),
-            'updated_at'      => now()
-        ]);
-
-        DB::table('dashboards')->insert([
-            'name'            => 'Tile spider',
-            'x'               => 4,
-            'y'               => 2,
-            'w'               => 4,
-            'h'               => 8,
-            'i'               => 12,
-            'component'       => 'tile-spider-component',
             'created_at'      => now(),
             'updated_at'      => now()
         ]);
@@ -179,54 +155,6 @@ class DashboardDatabaseSeeder extends Seeder
             'h'               => 8,
             'i'               => 14,
             'component'       => 'chart-wish-day-component',
-            'created_at'      => now(),
-            'updated_at'      => now()
-        ]);
-
-        DB::table('dashboards')->insert([
-            'name'            => 'Tile bar',
-            'x'               => 4,
-            'y'               => 5,
-            'w'               => 4,
-            'h'               => 8,
-            'i'               => 15,
-            'component'       => 'tile-bar-component',
-            'created_at'      => now(),
-            'updated_at'      => now()
-        ]);
-
-        DB::table('dashboards')->insert([
-            'name'            => 'Tile 3D',
-            'x'               => 8,
-            'y'               => 5,
-            'w'               => 4,
-            'h'               => 8,
-            'i'               => 16,
-            'component'       => 'tile-td-component',
-            'created_at'      => now(),
-            'updated_at'      => now()
-        ]);
-
-        DB::table('dashboards')->insert([
-            'name'            => 'GA Datatable',
-            'x'               => 0,
-            'y'               => 0,
-            'w'               => 12,
-            'h'               => 5,
-            'i'               => 17,
-            'component'       => 'ga-datatable-component',
-            'created_at'      => now(),
-            'updated_at'      => now()
-        ]);
-
-        DB::table('dashboards')->insert([
-            'name'            => 'Backend Analytics',
-            'x'               => 0,
-            'y'               => 0,
-            'w'               => 12,
-            'h'               => 10,
-            'i'               => 18,
-            'component'       => 'backend-analytics-component',
             'created_at'      => now(),
             'updated_at'      => now()
         ]);
