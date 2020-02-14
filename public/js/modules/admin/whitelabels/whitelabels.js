@@ -100245,7 +100245,7 @@ exports.default = {
       this.checkedLayers.forEach(function (layer) {
         if (_this2.pivot[layer] === '') {
           _this2.$message({
-            message: 'Error',
+            message: 'Bitte geben Sie die korrekte URL an',
             showClose: true,
             type: 'error'
           });

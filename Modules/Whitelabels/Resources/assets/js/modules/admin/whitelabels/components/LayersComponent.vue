@@ -123,7 +123,7 @@
         this.checkedLayers.forEach((layer) => {
           if (this.pivot[layer] === '') {
             this.$message({
-              message: 'Error',
+              message: 'Bitte geben Sie die korrekte URL an',
               showClose: true,
               type: 'error'
             })
