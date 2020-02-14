@@ -892,7 +892,7 @@ class AutooffersTTRepository extends BaseRepository
         $authorization = 'Authorization: Bearer ' . $this->token;
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
-        curl_setopt($curl, CURLOPT_URL, "http://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/Package/AvailabilityAndPriceCheck");
+        curl_setopt($curl, CURLOPT_URL, 'http://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/rest/Package/AvailabilityAndPriceCheck');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
@@ -906,7 +906,6 @@ class AutooffersTTRepository extends BaseRepository
         curl_close($curl);
         dd($result);
     }
-
 
     public function testTTbkp()
     {

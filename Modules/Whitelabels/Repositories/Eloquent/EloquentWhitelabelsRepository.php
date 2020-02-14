@@ -327,11 +327,11 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             ->get()
             ->map(function ($languageLine) use ($whitelabelId) {
                 return [
-                    'locale'      => $languageLine->locale,
-                    'description' => $languageLine->description,
-                    'group'       => $languageLine->group,
-                    'key'         => $languageLine->key,
-                    'text'        => $languageLine->text,
+                    'locale'               => $languageLine->locale,
+                    'description'          => $languageLine->description,
+                    'group'                => $languageLine->group,
+                    'key'                  => $languageLine->key,
+                    'text'                 => $languageLine->text,
                     'whitelabel_id'        => $whitelabelId,
                 ];
             })

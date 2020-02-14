@@ -4,7 +4,6 @@ namespace Modules\Groups\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
-use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
 use App\Repositories\Criteria\ByWhitelabel;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\OrderBy;
@@ -27,6 +26,7 @@ use Modules\Groups\Http\Requests\UpdateGroupRequest;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
 use Modules\Groups\Services\GroupsService;
 use Modules\Whitelabels\Entities\Whitelabel;
+use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
 
 class GroupsController extends Controller
 {
@@ -101,10 +101,10 @@ class GroupsController extends Controller
         if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
             $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
 
-            if ((int)$whitelabel->state < 8) {
+            if ((int) $whitelabel->state < 8) {
                 $this->moduleWhitelabels->update(
                     $this->auth->guard('web')->user()->whitelabels()->first()->id,
-                    ['state' =>  8]
+                    ['state' => 8]
                 );
             }
 

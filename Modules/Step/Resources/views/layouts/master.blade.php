@@ -8,7 +8,7 @@
     <meta name="i18" content="{{ App::getLocale() }}">
     <title> @yield('title') - {{ config('app.name', 'Laravel') }} </title>
 <?php
-if(!empty($google_analytics)){
+if (!empty($google_analytics)) {
     echo $google_analytics;
 }
 ?>
@@ -34,7 +34,7 @@ if(!empty($google_analytics)){
 </head>
 
 <body class="navbar-top">
-<?php $module = Module::collections() ?>
+<?php $module = Module::collections(); ?>
 <!-- Main navbar -->
 <div class="navbar navbar-dark navbar-expand-md fixed-top">
     <div class="navbar-brand">
