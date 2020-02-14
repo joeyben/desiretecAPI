@@ -54,10 +54,10 @@ class LayersContentController extends Controller
         if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
             $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
 
-            if ((int)$whitelabel->state < 3) {
+            if ((int) $whitelabel->state < 3) {
                 $this->whitelabels->update(
                     $this->auth->guard('web')->user()->whitelabels()->first()->id,
-                    ['state' =>  3]
+                    ['state' => 3]
                 );
             }
 

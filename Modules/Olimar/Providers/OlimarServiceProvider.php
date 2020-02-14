@@ -2,8 +2,8 @@
 
 namespace Modules\Olimar\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
 
 class OlimarServiceProvider extends ServiceProvider
 {
@@ -35,7 +35,6 @@ class OlimarServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
     }
 
     /**
@@ -46,10 +45,10 @@ class OlimarServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('olimar.php'),
+            __DIR__ . '/../Config/config.php' => config_path('olimar.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'olimar'
+            __DIR__ . '/../Config/config.php', 'olimar'
         );
     }
 
@@ -62,11 +61,11 @@ class OlimarServiceProvider extends ServiceProvider
     {
         $viewPath = resource_path('views/modules/olimar');
 
-        $sourcePath = __DIR__.'/../Resources/views';
+        $sourcePath = __DIR__ . '/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
-        ],'views');
+        ], 'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/olimar';
@@ -85,18 +84,18 @@ class OlimarServiceProvider extends ServiceProvider
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'olimar');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'olimar');
+            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'olimar');
         }
     }
 
     /**
      * Register an additional directory of factories.
-     * 
+     *
      * @return void
      */
     public function registerFactories()
     {
-        if (! app()->environment('production')) {
+        if (!app()->environment('production')) {
             app(Factory::class)->load(__DIR__ . '/../Database/factories');
         }
     }

@@ -52,9 +52,10 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             'ga:uniqueEvents',
             $optParams2
         )->rows;
-        for ($i=0; $i<count($uem1); $i++) {
+        for ($i = 0; $i < \count($uem1); ++$i) {
             $uem1[$i][1] = $uem1[$i][1] + $uem2[$i][1];
         }
+
         return $uem1;
     }
 

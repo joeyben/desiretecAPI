@@ -65,10 +65,6 @@ class OlimarWishesController extends Controller
      */
     protected $whitelabel;
 
-    /**
-     * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository $wish
-     */
     public function __construct(WishesRepository $wish, WhitelabelsRepository $whitelabel, CategoriesRepository $categories)
     {
         $this->wish = $wish;
@@ -82,9 +78,6 @@ class OlimarWishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     * @param string                  $token
-     *
      * @return mixed
      */
     public function details(Wish $wish, string $token)
@@ -95,13 +88,10 @@ class OlimarWishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @return mixed
      */
     public function view(Wish $wish)
     {
-
         $offers = $wish->offers;
         $avatar = [];
         $agentName = [];
@@ -125,9 +115,7 @@ class OlimarWishesController extends Controller
             'is_owner'           => $isOwner,
             'color'              => $whitelabel['color'],
         ]);
-
     }
-
 
     /**
      * @param string $token
@@ -136,7 +124,6 @@ class OlimarWishesController extends Controller
      */
     public function validateTokenList($token)
     {
-
         if ($this->wish->validateToken($token)) {
             if (Route::has('olimar.list')) {
                 return redirect()->route('olimar.list');
@@ -147,8 +134,6 @@ class OlimarWishesController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
      * @return mixed
      */
     public function wishList(ManageWishesRequest $request)

@@ -852,8 +852,7 @@ if (!function_exists('current_step')) {
             return Flag::MAX_STEP;
         }
         if (Auth::user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-            $step =  (int)Auth::user()->whitelabels()->first()->state;
-
+            $step = (int) Auth::user()->whitelabels()->first()->state;
 
             return $step;
         }
@@ -865,7 +864,7 @@ if (!function_exists('current_step')) {
 if (!function_exists('is_active')) {
     function is_active(string $route = '')
     {
-        return (strpos(Route::currentRouteName(), $route) === 0) ? 'active' : '';
+        return (0 === mb_strpos(Route::currentRouteName(), $route)) ? 'active' : '';
     }
 }
 

@@ -41,9 +41,9 @@ class OffersController extends APIController
         try {
             if ($this->offer->createOfferAPI($request)) {
                 return $this->respondCreated(trans('alerts.frontend.offers.created'));
-            } else {
-                return $this->respondInternalError('error');
             }
+
+            return $this->respondInternalError('error');
         } catch (\Exception $e) {
             return $this->respondWithError($e->getMessage());
         }
