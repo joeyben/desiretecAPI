@@ -18172,18 +18172,6 @@ function toComment(sourceMap) {
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports) {
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  // eslint-disable-next-line no-new-func
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18264,6 +18252,18 @@ var Errors = exports.Errors = function () {
 
   return Errors;
 }();
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  // eslint-disable-next-line no-new-func
+  : Function('return this')();
+if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+
 
 /***/ }),
 /* 13 */
@@ -18609,7 +18609,7 @@ module.exports = function (it) {
 
 var store = __webpack_require__(53)('wks');
 var uid = __webpack_require__(35);
-var Symbol = __webpack_require__(11).Symbol;
+var Symbol = __webpack_require__(12).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
 var $exports = module.exports = function (name) {
@@ -21204,7 +21204,7 @@ exports.default = aria.Utils;
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(11);
+var global = __webpack_require__(12);
 var core = __webpack_require__(22);
 var ctx = __webpack_require__(267);
 var hide = __webpack_require__(16);
@@ -21325,7 +21325,7 @@ module.exports = function (key) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var core = __webpack_require__(22);
-var global = __webpack_require__(11);
+var global = __webpack_require__(12);
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || (global[SHARED] = {});
 
@@ -21386,7 +21386,7 @@ exports.f = __webpack_require__(20);
 /* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(11);
+var global = __webpack_require__(12);
 var core = __webpack_require__(22);
 var LIBRARY = __webpack_require__(34);
 var wksExt = __webpack_require__(58);
@@ -23451,7 +23451,7 @@ module.exports = !__webpack_require__(18) && !__webpack_require__(24)(function (
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(23);
-var document = __webpack_require__(11).document;
+var document = __webpack_require__(12).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
 module.exports = function (it) {
@@ -92165,7 +92165,7 @@ module.exports = __webpack_require__(18) ? Object.defineProperties : function de
 /* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var document = __webpack_require__(11).document;
+var document = __webpack_require__(12).document;
 module.exports = document && document.documentElement;
 
 
@@ -92193,7 +92193,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(282);
-var global = __webpack_require__(11);
+var global = __webpack_require__(12);
 var hide = __webpack_require__(16);
 var Iterators = __webpack_require__(56);
 var TO_STRING_TAG = __webpack_require__(20)('toStringTag');
@@ -92294,7 +92294,7 @@ module.exports = __webpack_require__(22).Symbol;
 "use strict";
 
 // ECMAScript 6 symbols shim
-var global = __webpack_require__(11);
+var global = __webpack_require__(12);
 var has = __webpack_require__(14);
 var DESCRIPTORS = __webpack_require__(18);
 var $export = __webpack_require__(48);
@@ -98325,7 +98325,7 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(11);
 
 var _Table = __webpack_require__(89);
 
@@ -98558,7 +98558,7 @@ var _vuex = __webpack_require__(358);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -100157,10 +100157,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
 
 var _vuex = __webpack_require__(3);
 
@@ -100170,6 +100166,8 @@ var _FilterBar = __webpack_require__(90);
 
 var _FilterBar2 = _interopRequireDefault(_FilterBar);
 
+var _errors = __webpack_require__(11);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
@@ -100177,7 +100175,13 @@ exports.default = {
   components: { FilterBar: _FilterBar2.default },
   data: function data() {
     return {
-      layers: window.layers,
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      checkedLayers: [],
+      pivot: [],
+      max: 1,
+      whitelabel: {},
+      layers: [],
       checked: null,
       dialogFormVisible: false,
       form: {
@@ -100187,7 +100191,6 @@ exports.default = {
   },
 
   computed: _extends({}, _vuex2.default.mapGetters({
-    whitelabel: 'whitelabel',
     whitelabels: 'whitelabels',
     user: 'currentUser'
   })),
@@ -100196,7 +100199,6 @@ exports.default = {
 
     this.loadUser();
     this.loadWhitelabels();
-    this.loadCurrentWhitelabel();
     this.$events.$on('whitelabel-set', function (id) {
       return _this.doWhitelabel(id);
     });
@@ -100208,6 +100210,16 @@ exports.default = {
     loadWhitelabels: 'loadWhitelabels',
     loadCurrentWhitelabel: 'loadCurrentWhitelabel'
   }), {
+    doLayerSelect: function doLayerSelect(id) {
+      debugger;
+    },
+    isIncludes: function isIncludes(id) {
+      if (!this.checkedLayers.includes(id)) {
+        this.pivot[id] = '';
+      }
+
+      return !this.checkedLayers.includes(id);
+    },
     doWhitelabel: function doWhitelabel(id) {
       this.loadWhitelabel(id);
     },
@@ -100229,10 +100241,24 @@ exports.default = {
     onSubmit: function onSubmit() {
       var _this2 = this;
 
-      this.$store.dispatch('block', { element: 'layersComponent', load: true });
-      this.$http.put(window.laroute.route('admin.whitelabels.layers.update'), { layer: this.whitelabel.layer, whitelabel_id: this.form.id }).then(this.onSubmitStore).catch(this.onFailed).then(function () {
-        _this2.$store.dispatch('block', { element: 'layersComponent', load: false });
+      var check = true;
+      this.checkedLayers.forEach(function (layer) {
+        if (_this2.pivot[layer] === '') {
+          _this2.$message({
+            message: 'Error',
+            showClose: true,
+            type: 'error'
+          });
+
+          check = false;
+        }
       });
+      if (check) {
+        this.$store.dispatch('block', { element: 'layersComponent', load: true });
+        this.$http.put(window.laroute.route('admin.whitelabels.layers.update'), { layers: this.checkedLayers, pivot: this.pivot }).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+          _this2.$store.dispatch('block', { element: 'layersComponent', load: false });
+        });
+      }
     },
     onSubmitSuccess: function onSubmitSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
@@ -100254,9 +100280,55 @@ exports.default = {
     },
     hasPermissionTo: function hasPermissionTo(permission) {
       return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
+    },
+    generateLayers: function generateLayers(layers) {
+      var data = [];
+      var pivot = [];
+      layers.forEach(function (layer, index) {
+        data.push(layer['id']);
+        pivot[layer['id']] = layer['pivot'].layer_url;
+      });
+      this.checkedLayers = data;
+      this.pivot = pivot;
+    },
+    onFailed: function onFailed(error) {
+      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+        this.errors.record(error.response.data.errors);
+        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
+          this.$notify.error({ title: 'Failed', message: error.response.data.message });
+        } else {
+          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
+        }
+      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Failed', message: error.response.data.message });
+      } else if (error.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Error', message: error.message });
+      } else {
+        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
+        console.log(error);
+      }
     }
-  })
+  }),
+  created: function created() {
+    var _this3 = this;
 
+    this.$store.dispatch('block', { element: 'layersComponent', load: true });
+    this.$http.get(window.laroute.route('admin.whitelabels.layers.view')).then(function (response) {
+      _this3.layers = response.data.layers;
+    }).catch(this.onFailed).then(function () {
+      _this3.$store.dispatch('block', { element: 'layersComponent', load: false });
+    });
+
+    this.$http.get(window.laroute.route('admin.whitelabels.current')).then(function (response) {
+      _this3.whitelabel = response.data.whitelabel;
+      _this3.generateLayers(_this3.whitelabel.layers);
+      if (_this3.whitelabel.licence !== 0) {
+        _this3.max = 4;
+      }
+    }).catch(this.onFailed).then(function () {
+      _this3.$store.dispatch('block', { element: 'layersComponent', load: false });
+    });
+  }
 };
 
 /***/ }),
@@ -100504,106 +100576,120 @@ var render = function() {
         ? _c("filter-bar", { attrs: { defaultWhitelabel: _vm.whitelabel.id } })
         : _vm._e(),
       _vm._v(" "),
-      _c("form", { attrs: { action: "#" } }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("\n                Layer auswählen\n            ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "div",
-              { staticClass: "row" },
-              _vm._l(_vm.layers, function(layer, index) {
-                return _c(
-                  "el-col",
-                  { key: layer.id, staticClass: "col-xl-4 col-sm-6" },
-                  [
-                    _c(
-                      "el-card",
-                      {
-                        attrs: {
-                          "body-style": { padding: "0px" },
-                          shadow: "hover"
-                        }
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "image",
-                          attrs: { src: layer.url }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticStyle: { padding: "14px" } }, [
-                          _c("span", {
-                            domProps: { textContent: _vm._s(layer.description) }
-                          }),
-                          _vm._v(" "),
+      _c(
+        "form",
+        {
+          attrs: { action: "#" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.onSubmit($event)
+            },
+            keydown: function($event) {
+              _vm.errors.clear($event.target.name)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("\n                Layer auswählen\n            ")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _c(
+                    "el-checkbox-group",
+                    {
+                      attrs: { max: _vm.max },
+                      model: {
+                        value: _vm.checkedLayers,
+                        callback: function($$v) {
+                          _vm.checkedLayers = $$v
+                        },
+                        expression: "checkedLayers"
+                      }
+                    },
+                    _vm._l(_vm.layers, function(layer, index) {
+                      return _c(
+                        "el-col",
+                        { key: layer.id, staticClass: "col-xl-3 col-sm-6" },
+                        [
                           _c(
-                            "div",
-                            { staticClass: "bottom clearfix" },
+                            "el-card",
+                            {
+                              attrs: {
+                                "body-style": { padding: "0px" },
+                                shadow: "hover"
+                              }
+                            },
                             [
-                              _c(
-                                "el-checkbox",
-                                {
-                                  staticClass: "whitelabel_layer_selecter",
-                                  attrs: {
-                                    name: layer.name,
-                                    label: layer.id,
-                                    border: ""
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      _vm.doSeleted(layer.id)
-                                    }
-                                  },
-                                  model: {
-                                    value: _vm.checked,
-                                    callback: function($$v) {
-                                      _vm.checked = $$v
-                                    },
-                                    expression: "checked"
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        " +
-                                      _vm._s(layer.name) +
-                                      "\n                                    "
-                                  )
-                                ]
-                              ),
+                              _c("img", {
+                                staticClass: "image",
+                                attrs: { src: layer.image }
+                              }),
                               _vm._v(" "),
-                              _c("el-input", {
-                                staticClass: "float-left hide",
-                                attrs: {
-                                  placeholder: "Please input",
-                                  name: layer.name,
-                                  value: layer.url,
-                                  clearable: ""
-                                },
-                                on: {
-                                  input: function($event) {
-                                    _vm.doUrlSelect(layer)
+                              _c("div", { staticStyle: { padding: "14px" } }, [
+                                _c("span", {
+                                  domProps: {
+                                    textContent: _vm._s(layer.description)
                                   }
-                                }
-                              })
-                            ],
-                            1
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "bottom clearfix" },
+                                  [
+                                    _c(
+                                      "el-checkbox",
+                                      {
+                                        key: layer.id,
+                                        attrs: { label: layer.id }
+                                      },
+                                      [_vm._v(_vm._s(layer.name))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      staticClass: "float-left hide",
+                                      attrs: {
+                                        placeholder: "Please input",
+                                        type: "url",
+                                        name: _vm.pivot[layer.id],
+                                        disabled: _vm.isIncludes(layer.id),
+                                        clearable: ""
+                                      },
+                                      model: {
+                                        value: _vm.pivot[layer.id],
+                                        callback: function($$v) {
+                                          _vm.$set(_vm.pivot, layer.id, $$v)
+                                        },
+                                        expression: "pivot[layer.id]"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ]
                           )
-                        ])
-                      ]
-                    )
-                  ],
-                  1
-                )
-              }),
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _vm._m(0)
-        ])
-      ])
+                        ],
+                        1
+                      )
+                    }),
+                    1
+                  )
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ]
+      )
     ],
     1
   )
@@ -100826,7 +100912,7 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(11);
 
 var _UploadAttachments = __webpack_require__(37);
 
@@ -118635,7 +118721,7 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(11);
 
 var _Table = __webpack_require__(89);
 
@@ -119658,7 +119744,7 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(11);
 
 var _vueFormWizard = __webpack_require__(450);
 
@@ -120067,7 +120153,7 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(11);
 
 var _UploadAttachments = __webpack_require__(37);
 
@@ -120622,7 +120708,7 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -120951,7 +121037,7 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
