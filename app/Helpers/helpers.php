@@ -8,6 +8,7 @@ use Carbon\Carbon as Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Modules\LanguageLines\Entities\LanguageLines;
 use Modules\Languages\Entities\Language;
 
 /**
@@ -828,7 +829,11 @@ if (!function_exists('live_preview_url')) {
         $whitelabel = \Illuminate\Support\Facades\Auth::guard('web')->user()->whitelabels()->first();
 
         if (null !== $whitelabel) {
-            $link = $whitelabel->domain . '/cache/clear';
+            if ('language_lines' === with(new LanguageLines())->getTable()) {
+                $link = $whitelabel->domain . '/cache/clear';
+            } else {
+                $link = $whitelabel->domain;
+            }
         }
 
         return $link;
