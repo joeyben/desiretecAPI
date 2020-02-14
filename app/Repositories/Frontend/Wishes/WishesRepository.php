@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
-
+require_once 'Mobile_Detect.php';
 /**
  * Class WishesRepository.
  */
@@ -275,6 +275,7 @@ class WishesRepository extends BaseRepository
             $from = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
             $to = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
             $daysDiff = $to->diffInDays($from);
+            $detect = new \Mobile_Detect();
 
             if ('0' === $input['duration'] && $daysDiff < 7) {
                 $input['duration'] = '' . $daysDiff;
@@ -289,6 +290,7 @@ class WishesRepository extends BaseRepository
             $input['title'] = '-';
             $input['budget'] = null === $input['budget'] ? 0 : $input['budget'];
             $input['category'] = null === $input['category'] ? 3 : $input['category'];
+            $input['mobile'] = $detect->isMobile() || $detect->isTablet() ? 1 : 0;
 
             $input['earliest_start'] = $from;
             $input['latest_return'] = $input['latest_return'] ? $to : '0000-00-00';
