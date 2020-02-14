@@ -73,59 +73,59 @@ class Flag implements FlagInterface
     {
         return [
             1 => [
-                'name' => 'Step 1: White Label',
+                'name'  => 'Step 1: White Label',
                 'route' => 'provider.whitelabels',
-                'url' => route('provider.whitelabels')
+                'url'   => route('provider.whitelabels')
             ],
             2 => [
-                'name' => 'Step 2: Layer version',
+                'name'  => 'Step 2: Layer version',
                 'route' => 'admin.whitelabels.layers',
-                'url' => route('admin.whitelabels.layers')
+                'url'   => route('admin.whitelabels.layers')
             ],
             3 => [
-                'name' => 'Step 3: Layer content',
+                'name'  => 'Step 3: Layer content',
                 'route' => 'admin.whitelabels.content',
-                'url' => route('admin.whitelabels.content')
+                'url'   => route('admin.whitelabels.content')
             ],
             4 => [
-                'name' => 'Step 4: E-Mail Signature',
+                'name'  => 'Step 4: E-Mail Signature',
                 'route' => 'provider.email.signature',
-                'url' => route('provider.email.signature', app()->getLocale())
+                'url'   => route('provider.email.signature', app()->getLocale())
             ],
             5 => [
-                'name' => 'Step 5: Footers',
+                'name'  => 'Step 5: Footers',
                 'route' => 'admin.footers',
-                'url' => route('admin.footers')
+                'url'   => route('admin.footers')
             ],
             6 => [
-                'name' => 'Step 6: Teilnahmebedingungen',
+                'name'  => 'Step 6: Teilnahmebedingungen',
                 'route' => 'provider.whitelabels.tnb',
-                'url' => route('provider.footer.tnb', app()->getLocale())
+                'url'   => route('provider.footer.tnb', app()->getLocale())
             ],
             7 => [
-                'name' => 'Step 7: Anbieter Management',
+                'name'  => 'Step 7: Anbieter Management',
                 'route' => 'admin.sellers',
-                'url' => route('admin.sellers')
+                'url'   => route('admin.sellers')
             ],
             8 => [
-                'name' => 'Step 8: Gruppen Management',
+                'name'  => 'Step 8: Gruppen Management',
                 'route' => 'admin.groups',
-                'url' => route('admin.groups')
+                'url'   => route('admin.groups')
             ],
             9 => [
-                'name' => 'Step 9: Lead Management (if BASIC or PREMIUM)',
+                'name'  => 'Step 9: Lead Management (if BASIC or PREMIUM)',
                 'route' => 'admin.rules',
-                'url' => route('admin.rules')
+                'url'   => route('admin.rules')
             ],
             10 => [
-                'name' => 'Step 10: Offer Management (if BASIC or PREMIUM)',
+                'name'  => 'Step 10: Offer Management (if BASIC or PREMIUM)',
                 'route' => 'autooffer.setting',
-                'url' => route('autooffer.setting')
+                'url'   => route('autooffer.setting')
             ],
             11 => [
-                'name' => 'Step 11: Download JS Snippet',
+                'name'  => 'Step 11: Download JS Snippet',
                 'route' => '#',
-                'url' => '#'
+                'url'   => '#'
             ]
         ];
     }

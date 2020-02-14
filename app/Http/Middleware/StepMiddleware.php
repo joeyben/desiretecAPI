@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class StepMiddleware
 {
-
     public function handle($request, Closure $next, $guard = null)
     {
         if (!Auth::guard($guard)->check()) {

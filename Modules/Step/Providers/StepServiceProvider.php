@@ -2,8 +2,8 @@
 
 namespace Modules\Step\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
 
 class StepServiceProvider extends ServiceProvider
 {
@@ -35,7 +35,6 @@ class StepServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
     }
 
     /**
@@ -46,10 +45,10 @@ class StepServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('step.php'),
+            __DIR__ . '/../Config/config.php' => config_path('step.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'step'
+            __DIR__ . '/../Config/config.php', 'step'
         );
     }
 
@@ -62,11 +61,11 @@ class StepServiceProvider extends ServiceProvider
     {
         $viewPath = resource_path('views/modules/step');
 
-        $sourcePath = __DIR__.'/../Resources/views';
+        $sourcePath = __DIR__ . '/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
-        ],'views');
+        ], 'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/step';
@@ -85,18 +84,18 @@ class StepServiceProvider extends ServiceProvider
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'step');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'step');
+            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'step');
         }
     }
 
     /**
      * Register an additional directory of factories.
-     * 
+     *
      * @return void
      */
     public function registerFactories()
     {
-        if (! app()->environment('production')) {
+        if (!app()->environment('production')) {
             app(Factory::class)->load(__DIR__ . '/../Database/factories');
         }
     }
