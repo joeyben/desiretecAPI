@@ -24,6 +24,7 @@ Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' 
 Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' . \App\Services\Flag\Src\Flag::EXECUTIVE_ROLE], 'prefix' => 'admin', 'namespace' => 'Modules\Whitelabels\Http\Controllers'], function () {
     Route::get('whitelabels/show/{id}', 'WhitelabelsController@show')->name('admin.whitelabels.show')->where('id', '[0-9]+');
     Route::get('whitelabels/layers', 'LayersController@index')->name('admin.whitelabels.layers');
+    Route::get('whitelabels/layers/view', 'LayersController@view')->name('admin.whitelabels.layers.view');
     Route::put('whitelabels/layers/update', 'LayersController@update')->name('admin.whitelabels.layers.update');
     Route::get('whitelabels/current', 'WhitelabelsController@current')->name('admin.whitelabels.current');
 });

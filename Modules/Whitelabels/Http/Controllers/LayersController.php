@@ -2,13 +2,15 @@
 
 namespace Modules\Whitelabels\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
+use Modules\Whitelabels\Http\Requests\LayerRequest;
+use Modules\Whitelabels\Repositories\Contracts\LayersRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class LayersController extends Controller
@@ -29,13 +31,18 @@ class LayersController extends Controller
      * @var \Illuminate\Auth\AuthManager
      */
     private $auth;
+    /**
+     * @var \Modules\Whitelabels\Repositories\Contracts\LayersRepository
+     */
+    private $layers;
 
-    public function __construct(WhitelabelsRepository $whitelabels, Translator $lang, ResponseFactory $response, AuthManager $auth)
+    public function __construct(WhitelabelsRepository $whitelabels, LayersRepository $layers, Translator $lang, ResponseFactory $response, AuthManager $auth)
     {
         $this->whitelabels = $whitelabels;
         $this->lang = $lang;
         $this->response = $response;
         $this->auth = $auth;
+        $this->layers = $layers;
     }
 
     /**
@@ -61,6 +68,17 @@ class LayersController extends Controller
         }
 
         return view('whitelabels::layers', compact(['step']));
+    }
+
+    public function view()
+    {
+        try {
+            $result['layers'] = $this->layers->all();
+
+            return $this->responseJson($result);
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
+        }
     }
 
     /**
@@ -102,24 +120,16 @@ class LayersController extends Controller
         return view('whitelabels::edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @return Response
-     */
-    public function update(Request $request)
+    public function update(LayerRequest $request)
     {
         try {
-            $whitelabel = $this->whitelabels->current(false);
-
-            if (null === $whitelabel && $request->has('whitelabel_id')) {
-                $whitelabel = $this->whitelabels->find($request->get('whitelabel_id'));
+            $data = [];
+            $whitelabel = $this->auth->user()->whitelabels()->first();
+            foreach ($request->get('layers') as $layer) {
+                $data[$layer] = ['layer_url' => $request->get('pivot')[$layer]];
             }
 
-            $result['whitelabel'] = $this->whitelabels->update(
-                $whitelabel->id,
-                $request->only('layer')
-            );
+            $this->whitelabels->sync($whitelabel->id, 'layers', $data);
 
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Layer']);
             $result['success'] = true;
