@@ -73,6 +73,7 @@ class WhitelabelsController extends APIController
             );
 
             $this->users->sync($user->id, 'whitelabels', [$result['whitelabel']->id]);
+            $this->whitelabels->sync($result['whitelabel']->id, 'layers', [Flag::PACKAGE]);
 
             $user->fresh();
 

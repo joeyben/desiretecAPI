@@ -5,6 +5,10 @@
 $gutter: 30px;
 @include make-columns(12, $gutter - 5px, 'kwp-');
 
+.hidden {
+  display: none !important;
+}
+
 .kwp-col-ages {
   @extend  .kwp-col-4;
   display: none;
@@ -164,6 +168,7 @@ $gutter: 30px;
   }
   * {
     box-sizing: border-box;
+    font-family: inherit;
   }
 }
 
@@ -1198,7 +1203,7 @@ p.kwp-info {
   /***** Fix layer on Mobile ******/
   .kwp{
     .duration-time, .travelers{
-      height: 25px;
+      height: 25px !important;
       line-height: 1.5em;
       background-color: transparent;
       font-weight: 500;
@@ -1375,6 +1380,7 @@ p.kwp-info {
   }
   .kwp-custom-select:after{
     background: none;
+    border-bottom: none;
   }
   .kwp-content-extra, .kwp-btn-expand{
     display: none;

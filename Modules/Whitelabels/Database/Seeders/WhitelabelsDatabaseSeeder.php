@@ -14,6 +14,6 @@ class WhitelabelsDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(WhitelabelsTableSeeder::class);
+        $this->call(LayersTableSeeder::class);
     }
 }

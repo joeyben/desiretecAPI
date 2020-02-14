@@ -9,6 +9,7 @@
 
 namespace Modules\Whitelabels\Repositories\Eloquent;
 
+use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\RepositoryAbstract;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Auth;
@@ -345,9 +346,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
 
         if (null !== $whitelabel) {
-            return $this->resolveModel()->find($whitelabel->id);
+            return $this->withCriteria([
+                new EagerLoad(['layers']),
+            ])->find($whitelabel->id);
         } elseif ($first) {
-            return $this->resolveModel()->first();
+            return $this->withCriteria([
+                new EagerLoad(['layers']),
+            ])->first();
         }
     }
 

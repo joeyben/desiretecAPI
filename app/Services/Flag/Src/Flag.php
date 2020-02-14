@@ -53,6 +53,8 @@ class Flag implements FlagInterface
 
     const CRUISE = 3;
 
+    const HOTEL = 4;
+
     const COLOR = '#f96500';
 
     const HTTP = 'http://';
