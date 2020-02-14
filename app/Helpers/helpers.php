@@ -828,7 +828,7 @@ if (!function_exists('live_preview_url')) {
         $whitelabel = \Illuminate\Support\Facades\Auth::guard('web')->user()->whitelabels()->first();
 
         if (null !== $whitelabel) {
-            $link = $whitelabel->domain;
+            $link = $whitelabel->domain . '/cache/clear';
         }
 
         return $link;
