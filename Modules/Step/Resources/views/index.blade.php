@@ -35,7 +35,7 @@
 
                     <div>
                         @if(current_step() < \App\Services\Flag\Src\Flag::MAX_STEP)
-                            <a role="button" class="btn bg-blue-400" href="{{ Flag::step()[current_step() + 1]['url'] }}">{{ Flag::step()[current_step() + 1]['name'] }}</a>
+                            <a role="button" class="btn bg-blue-400" href="{{ Flag::step()[current_step()]['url'] }}">{{ Flag::step()[current_step()]['name'] }}</a>
                         @endif
                     </div>
                 </div>
