@@ -123,7 +123,7 @@ class SellersController
             $sort = explode('|', $request->get('sort'));
 
             $users = null;
-            $usersForWhitelabels = null;
+            $usersForWhitelabels = [];
 
             if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                 $whitelabelId = $this->auth->guard('web')->user()->whitelabels()->first()->id;
