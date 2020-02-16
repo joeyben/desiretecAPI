@@ -2,6 +2,7 @@
 
 namespace Modules\LanguageLines\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Access\Role\Role;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
@@ -18,7 +19,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Log\LogManager;
 use Illuminate\Notifications\ChannelManager;
-use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;

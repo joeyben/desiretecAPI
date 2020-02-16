@@ -2,12 +2,12 @@
 
 namespace Modules\Whitelabels\Http\Controllers\Provider;
 
+use App\Http\Controllers\Controller;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Str;
 use Illuminate\Translation\Translator;
@@ -142,10 +142,16 @@ class WhitelabelsController extends Controller
             $domain = Flag::HTTPS . $subDomain . $request->get('main_domain');
 
             if ($result['whitelabel']->domain !== $this->str->lower($domain)) {
-                $this->whitelabels->updateRoute($id, $result['whitelabel']->name, $subDomain);
+                if ($this->isOldWhitelabel()) {
+                    $this->whitelabels->updateRoute($id, $result['whitelabel']->name, $subDomain);
+                }
+
                 ini_set('max_execution_time', 300);
                 $result['whitelabel'] = $this->whitelabels->update($id, ['domain' => $domain]);
-                $this->artisan->call('whitelabel:make-route', ['domain' => $subDomain, 'module' => $result['whitelabel']->name]);
+
+                if ($this->isOldWhitelabel()) {
+                    $this->artisan->call('whitelabel:make-route', ['domain' => $subDomain, 'module' => $result['whitelabel']->name]);
+                }
             }
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
