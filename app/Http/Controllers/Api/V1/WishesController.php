@@ -23,6 +23,8 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
+use Modules\Categories\Repositories\Contracts\CategoriesRepository;
+
 
 class WishesController extends APIController
 {
@@ -60,7 +62,10 @@ class WishesController extends APIController
      */
     private $repository;
 
-    public function __construct(WishesRepository $repository, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, GroupsRepository $groups)
+    protected $categories;
+
+
+    public function __construct(WishesRepository $repository, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, GroupsRepository $groups, CategoriesRepository $categories)
     {
         $this->repository = $repository;
         $this->notification = $notification;
@@ -69,6 +74,7 @@ class WishesController extends APIController
         $this->lang = $lang;
         $this->carbon = $carbon;
         $this->groups = $groups;
+        $this->categories = $categories;
     }
 
     public function getWishes(Request $request)
@@ -102,6 +108,9 @@ class WishesController extends APIController
         try {
             $user = Auth::guard('api')->user();
             $wish = $this->repository->getById($id);
+
+            $wish->category = $this->categories->getCategoryByParentValue('catering', $wish->catering);
+
             $result['data'] = $wish;
 
             if ($user->hasRole('User') && $wish->created_by === $user->id) {
