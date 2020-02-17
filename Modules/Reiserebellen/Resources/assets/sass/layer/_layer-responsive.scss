@@ -430,34 +430,6 @@
         top: auto;
       }
     }
-
-    .haserrors{
-      .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="number"], input[type="date"]{
-        border-color: $brand-danger;
-      }
-
-      input[type="checkbox"]{
-        &:after{
-          border-color: $brand-danger;
-        }
-      }
-     .rangeslider--horizontal{
-        background: $brand-danger;
-        .rangeslider__handle{
-          border-color: $brand-danger;
-        }
-      }
-      .dd-trigger{
-        border-color: $brand-danger;
-        i{
-          color: $brand-danger;
-        }
-      }
-    }
-    .haserrors + i{
-      color: $brand-danger;
-
-    }
   }
   .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after,.kwp input[type="text"],.kwp input[type="number"], .kwp input[type="date"]{
     height: 35px;
