@@ -315,9 +315,7 @@ class WishesRepository extends BaseRepository
     {
 
         $this->whitelabel_id = $input['whitelabel_id'];
-        $input['user_id'] = $userId;
-        unset($input['whitelabel_id']);
-        $wish = DB::transaction(function () use ($input) {
+        $wish = DB::transaction(function () use ($input, $userId) {
             $from = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
             $to = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
             $daysDiff = $to->diffInDays($from);
@@ -329,7 +327,7 @@ class WishesRepository extends BaseRepository
             }
 
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
-            $input['created_by'] = $input['user_id'];
+            $input['created_by'] = $userId;
             $input['group_id'] = $this->getGroup();
             $input['title'] = '-';
             $input['earliest_start'] = $from;
