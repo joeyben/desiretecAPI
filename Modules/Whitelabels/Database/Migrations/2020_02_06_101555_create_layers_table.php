@@ -18,6 +18,8 @@ class CreateLayersTable extends Migration
             $table->string('name', 255);
             $table->string('path', 255);
             $table->boolean('active')->default(true);
+            $table->softDeletes();
+            $table->timestamps();
         });
 
         Schema::create('layer_whitelabel', function (Blueprint $table) {
