@@ -122,7 +122,7 @@ class AuthController extends APIController
         $result['user']['isExecutive'] = $this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE);
         $result['user']['isAdmin'] = $this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE);
         $result['user']['agents'] = $this->auth->user()->agents()->get();
-        $result['user']['currentAgents'] = null;
+        $result['user']['currentAgent'] = null;
 
         if ($this->auth->user()->hasRole(Flag::SELLER_ROLE) && Auth::guard('agent')->check()) {
             $result['user']['currentAgent'] = Auth::guard('agent')->user();
