@@ -2,17 +2,19 @@
 
 namespace Modules\Whitelabels\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Repositories\Criteria\EagerLoad;
+use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
-use Modules\Whitelabels\Entities\Whitelabel;
+use Modules\Whitelabels\Http\Requests\LayerContentRequest;
 use Modules\Whitelabels\Http\Services\LayersContentService;
+use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class LayersContentController extends Controller
@@ -33,13 +35,18 @@ class LayersContentController extends Controller
      * @var \Illuminate\Auth\AuthManager
      */
     private $auth;
+    /**
+     * @var \Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository
+     */
+    private $layerWhitelabels;
 
-    public function __construct(WhitelabelsRepository $whitelabels, Translator $lang, ResponseFactory $response, AuthManager $auth)
+    public function __construct(WhitelabelsRepository $whitelabels,LayerWhitelabelRepository $layerWhitelabels, Translator $lang, ResponseFactory $response, AuthManager $auth)
     {
         $this->whitelabels = $whitelabels;
         $this->lang = $lang;
         $this->response = $response;
         $this->auth = $auth;
+        $this->layerWhitelabels = $layerWhitelabels;
     }
 
     /**
@@ -65,6 +72,49 @@ class LayersContentController extends Controller
         }
 
         return view('whitelabels::content', compact(['step']));
+    }
+
+
+    public function view()
+    {
+        $result['data'] = [];
+
+        try {
+            if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+                $data = $this->layerWhitelabels->withCriteria([
+                    new OrderBy('layer_id'),
+                    new Where('whitelabel_id', $whitelabel->id),
+                    new EagerLoad(['layer', 'attachments'])
+                ])->all();
+
+                $result['data'] = $data->map(function ($layer) {
+                    return [
+                        'id'  => $layer->id,
+                        'name' => $layer->layer->name,
+                        'layer_id' => $layer->layer_id,
+                        'whitelabel_id' => $layer->whitelabel_id,
+                        'headline' => $layer->headline,
+                        'subheadline' => $layer->subheadline,
+                        'headline_success' => $layer->headline_success,
+                        'subheadline_success' => $layer->subheadline_success,
+                        'layer_url' => $layer->layer_url,
+                        'attachments' => $layer->attachments->map(function ($attachment) {
+                            return [
+                                'uid'  => $attachment->id,
+                                'name' => $attachment->name . '.' . $attachment->extension,
+                                'url'  => $attachment->url
+                            ];
+                        })
+                    ];
+                });
+            }
+
+
+            return $this->responseJson($result);
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
+        }
     }
 
     /**
@@ -109,36 +159,12 @@ class LayersContentController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request)
+    public function update(LayerContentRequest $request)
     {
         try {
-            $result['whitelabel'] = $this->whitelabels->withCriteria([
-                new EagerLoad(['layers']),
-            ])->find($request->get('id'));
-
-            $layers = $request->get('layers');
-            //$this->layersContentService->updateWhitelabelLayersInfo($request, $result['whitelabel']->layers);
-
-            foreach ($result['whitelabel']->layers as $key => $layer) {
-                $pivot = $layer->pivot;
-                $requestPivot = $layers[$key]['pivot'];
-
-                //dd($requestPivot, $layer);
-                $pivot->headline = $requestPivot['headline'];
-                $pivot->subheadline = $requestPivot['subheadline'];
-                $pivot->headline_success = $requestPivot['headline_success'];
-                $pivot->subheadline_success = $requestPivot['subheadline_success'];
-                $pivot->save();
-            }
-
-            //dd($result['whitelabel']->layers->where('id', 1));
-
-            /*$result['whitelabel'] = $this->whitelabels->with()->update(
-                $request->get('id'),
-                $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success')
-            );*/
-
-            file_put_contents(public_path('whitelabels-config.son'), json_encode($this->whitelabels->all()));
+            $whitelabel = $this->whitelabels->find($request->get('whitelabel_id'));
+            $whitelabel->layers()->updateExistingPivot($request->get('id'), $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success'));
+            $this->layerWhitelabels->update($request->get('id'), $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success'));
 
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Content']);
             $result['success'] = true;

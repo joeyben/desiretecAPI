@@ -31,7 +31,7 @@ class WhitelabelController extends Controller
     public function getWhitelabelBySlug(string $slug)
     {
         $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
-            new EagerLoad(['layers']),
+            new EagerLoad(['layers', 'footers']),
             new Where('name', $slug),
         ])->first();
 
@@ -58,6 +58,7 @@ class WhitelabelController extends Controller
             'is_autooffer'        => $whitelabel->is_autooffer,
             'licence'             => $whitelabel->licence,
             'layers'              => $whitelabel->layers,
+            'footers'              => $whitelabel->footers,
         ];
 
         $result['data']['attachments']['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
