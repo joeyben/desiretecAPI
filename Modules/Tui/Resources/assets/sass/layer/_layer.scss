@@ -1225,6 +1225,8 @@ p.kwp-info {
         display: block;
         margin-top: 5px;
         margin-left: 5px;
+        height: 20px;
+        width: 20px;
         &:after{
           content: "";
           display: inline-block;
@@ -1235,8 +1237,6 @@ p.kwp-info {
           background-color: #fff;
           background-size: 20px;
           background-position: center center;
-          margin-left: -5px;
-          margin-top: -5px;
         }
       }
       input[type="checkbox"]:checked{
@@ -1433,12 +1433,6 @@ p.kwp-info {
         .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
           border-color: #D40E14;
         }
-
-        input[type="checkbox"]{
-          &:after{
-            border-color: #D40E14;
-          }
-        }
         ~ .rangeslider--horizontal{
           background: #D40E14;
           .rangeslider__handle{
@@ -1553,14 +1547,18 @@ p.kwp-info {
   }
 
 
-.error-input{
-  display: block;
-  background: #ED1C24 !important;
-  padding: 0 10px;
-  color: #fff;
-}
-.dt_terms.hasError:after{
-  border: 1px solid red !important;
+// Errors
+.dt-modal {
+  .error-input{
+    display: block;
+    background: #ED1C24 !important;
+    padding: 0 10px;
+    color: #fff;
+    font-size: 14px;
+  }
+  input[type="checkbox"].hasError{
+    outline: 3px solid #ED1C24 !important;
+  }
 }
 
 .dt-modal {
@@ -1570,10 +1568,10 @@ p.kwp-info {
     box-shadow: none!important;
     min-width: 100%;
   }
-}
-.bootstrap-tagsinput .tag {
-  color: #46799b!important;
-  background: #e0eaf1!important;
-  font-size: 11px;
-  font-weight: 600;
+  .bootstrap-tagsinput .tag {
+    color: #46799b!important;
+    background: #e0eaf1!important;
+    font-size: 11px;
+    font-weight: 600;
+  }
 }
