@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-
-
 use App\Models\Access\Role\Role;
 use App\Models\Access\User\User;
 use App\Services\Flag\Src\Flag;
@@ -46,14 +44,14 @@ class WhitelabelsController extends APIController
         try {
             $pool = '0123456789abcdefghijklmnopqrstuvwxyz';
 
-            $password =  substr(str_shuffle(str_repeat($pool, 5)), 0, 6);
+            $password = mb_substr(str_shuffle(str_repeat($pool, 5)), 0, 6);
 
             $user = User::create([
                 'first_name' => $request->get('name'),
-                'email' => $request->get('email'),
-                'confirmed' => true,
-                'status' => true,
-                'password' => bcrypt($password),
+                'email'      => $request->get('email'),
+                'confirmed'  => true,
+                'status'     => true,
+                'password'   => bcrypt($password),
             ]);
 
             $user->attachRole(Role::where('name', Flag::EXECUTIVE_ROLE)->first());
@@ -61,21 +59,20 @@ class WhitelabelsController extends APIController
             $user->storeToken();
 
             $result['whitelabel'] = $this->whitelabels->create(
-                array_merge(
-                    $request->only('email', 'licence'),
-                    [
-                        'created_by' => $user->id,
-                        'name' => $this->str->studly($request->get('name')),
-                        'display_name' => $this->str->studly($request->get('name')),
-                        'domain' => env('API_HTTP', 'https://') . str_slug($request->get('name')) . '.' . env('API_DOMAIN', 'reise-wunsch.com'),
-                        'distribution_id' => 1,
-                        'state' => 0
-                    ]
-                )
+                [
+                    'created_by'      => $user->id,
+                    'name'            => $this->str->studly($request->get('name')),
+                    'display_name'    => $request->get('name'),
+                    'email'           => $request->get('email'),
+                    'licence'         => (string) $request->get('licence'),
+                    'domain'          => env('API_HTTP', 'https://') . str_slug($request->get('name')) . '.' . env('API_DOMAIN', 'reise-wunsch.com'),
+                    'distribution_id' => 1,
+                    'state'           => 1
+                ]
             );
 
-
             $this->users->sync($user->id, 'whitelabels', [$result['whitelabel']->id]);
+            $this->whitelabels->sync($result['whitelabel']->id, 'layers', [Flag::PACKAGE]);
 
             $user->fresh();
 

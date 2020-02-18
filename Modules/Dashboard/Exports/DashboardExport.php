@@ -81,7 +81,7 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
         $i = 0;
         $j = 0;
         foreach ($result as $key => $value) {
-            $result[$key]['2'] = (string)$uem[$key]['1']!=='0' ? $uem[$key]['1'] : '0';
+            $result[$key]['2'] = '0' !== (string) $uem[$key]['1'] ? $uem[$key]['1'] : '0';
             if (!$wishes) {
                 $result[$key]['3'] = '0';
             }
@@ -108,15 +108,15 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
      */
     public function map($dash): array
     {
-        $d31 = '0' !== (string)$dash['1'] ? round($dash['3'] / $dash['1'] * 100, 1) : '0';
-        $d32 = '0' !== (string)$dash['2'] ? round($dash['3'] / $dash['2'] * 100, 1) : '0';
+        $d31 = '0' !== (string) $dash['1'] ? round($dash['3'] / $dash['1'] * 100, 1) : '0';
+        $d32 = '0' !== (string) $dash['2'] ? round($dash['3'] / $dash['2'] * 100, 1) : '0';
 
         return [
             $dash['0'],
             $dash['1'],
             $dash['2'],
             '',
-            (string)(intval($dash['1']) + intval($dash['2'])),
+            (string) ((int) ($dash['1']) + (int) ($dash['2'])),
             '',
             $dash['3'],
             '',

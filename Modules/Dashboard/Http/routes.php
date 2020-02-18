@@ -1,4 +1,5 @@
 <?php
+
 Route::group(['middleware' => ['web', 'auth', 'admin', 'step'], 'prefix' => 'admin', 'namespace' => 'Modules\Dashboard\Http\Controllers'], function () {
     Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
 });

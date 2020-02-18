@@ -4,6 +4,7 @@ namespace Modules\LanguageLines\Http\Controllers;
 
 use App\Models\Access\Role\Role;
 use App\Repositories\Criteria\Where;
+use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\DatabaseManager;
@@ -96,6 +97,21 @@ class TnbController extends Controller
      */
     public function tnb(string $lang)
     {
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int) $whitelabel->state < 6) {
+                $this->whitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' => 6]
+                );
+            }
+
+            $step = Flag::step()[7];
+        }
+
         try {
             if (!$this->languageline->withCriteria([
                 new Where('locale', $lang),
@@ -136,7 +152,7 @@ class TnbController extends Controller
             $result['status'] = 500;
         }
 
-        return view('languagelines::footer-tnb', compact('result'));
+        return view('languagelines::footer-tnb', compact(['step', 'result']));
     }
 
     /**

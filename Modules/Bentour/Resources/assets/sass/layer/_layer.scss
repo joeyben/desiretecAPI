@@ -164,6 +164,7 @@ $gutter: 30px;
   }
   * {
     box-sizing: border-box;
+    font-weight: 400;
   }
 }
 
@@ -1153,6 +1154,9 @@ p.kwp-info {
         margin-bottom: 20px;
       }
     }
+    form{
+      margin: 0;
+    }
   }
   .kwp-content{
     z-index: 11111111;
@@ -1466,6 +1470,7 @@ p.kwp-info {
     font-size: 11px;
     border-radius: 5px;
     border: 1px solid #eee;
+    padding: 0 10px;
   }
 
   // Bootstrap css copy

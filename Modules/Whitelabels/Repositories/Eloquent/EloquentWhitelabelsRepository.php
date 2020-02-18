@@ -9,6 +9,7 @@
 
 namespace Modules\Whitelabels\Repositories\Eloquent;
 
+use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\RepositoryAbstract;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Auth;
@@ -203,8 +204,8 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $this->generateFile(
             base_path('Modules/Master/Resources/assets/js/layer/layer.stub'),
             base_path("Modules/$name/Resources/assets/js/layer/layer.js"),
-            ['$MODULESMAL$'],
-            [mb_strtolower($name)]
+            ['$MODULE$', '$MODULESMAL$'],
+            [$name, mb_strtolower($name)]
         );
 
         $this->generateFile(
@@ -327,11 +328,11 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             ->get()
             ->map(function ($languageLine) use ($whitelabelId) {
                 return [
-                    'locale'      => $languageLine->locale,
-                    'description' => $languageLine->description,
-                    'group'       => $languageLine->group,
-                    'key'         => $languageLine->key,
-                    'text'        => $languageLine->text,
+                    'locale'               => $languageLine->locale,
+                    'description'          => $languageLine->description,
+                    'group'                => $languageLine->group,
+                    'key'                  => $languageLine->key,
+                    'text'                 => $languageLine->text,
                     'whitelabel_id'        => $whitelabelId,
                 ];
             })
@@ -345,9 +346,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
 
         if (null !== $whitelabel) {
-            return $this->resolveModel()->find($whitelabel->id);
+            return $this->withCriteria([
+                new EagerLoad(['layers']),
+            ])->find($whitelabel->id);
         } elseif ($first) {
-            return $this->resolveModel()->first();
+            return $this->withCriteria([
+                new EagerLoad(['layers']),
+            ])->first();
         }
     }
 

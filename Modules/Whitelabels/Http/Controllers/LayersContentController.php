@@ -5,6 +5,7 @@ namespace Modules\Whitelabels\Http\Controllers;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Where;
 use App\Services\Flag\Src\Flag;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -28,12 +29,17 @@ class LayersContentController extends Controller
      * @var \Illuminate\Routing\ResponseFactory
      */
     private $response;
+    /**
+     * @var \Illuminate\Auth\AuthManager
+     */
+    private $auth;
 
-    public function __construct(WhitelabelsRepository $whitelabels, Translator $lang, ResponseFactory $response)
+    public function __construct(WhitelabelsRepository $whitelabels, Translator $lang, ResponseFactory $response, AuthManager $auth)
     {
         $this->whitelabels = $whitelabels;
         $this->lang = $lang;
         $this->response = $response;
+        $this->auth = $auth;
     }
 
     /**
@@ -43,7 +49,22 @@ class LayersContentController extends Controller
      */
     public function index()
     {
-        return view('whitelabels::content');
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int) $whitelabel->state < 3) {
+                $this->whitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' => 3]
+                );
+            }
+
+            $step = Flag::step()[4];
+        }
+
+        return view('whitelabels::content', compact(['step']));
     }
 
     /**

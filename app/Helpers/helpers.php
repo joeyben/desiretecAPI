@@ -8,6 +8,7 @@ use Carbon\Carbon as Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Modules\LanguageLines\Entities\LanguageLines;
 use Modules\Languages\Entities\Language;
 
 /**
@@ -828,7 +829,11 @@ if (!function_exists('live_preview_url')) {
         $whitelabel = \Illuminate\Support\Facades\Auth::guard('web')->user()->whitelabels()->first();
 
         if (null !== $whitelabel) {
-            $link = $whitelabel->domain;
+            if ('language_lines' === with(new LanguageLines())->getTable()) {
+                $link = $whitelabel->domain . '/cache/clear';
+            } else {
+                $link = $whitelabel->domain;
+            }
         }
 
         return $link;
@@ -852,8 +857,7 @@ if (!function_exists('current_step')) {
             return Flag::MAX_STEP;
         }
         if (Auth::user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-            $step =  (int)Auth::user()->whitelabels()->first()->state;
-
+            $step = (int) Auth::user()->whitelabels()->first()->state;
 
             return $step;
         }
@@ -865,14 +869,14 @@ if (!function_exists('current_step')) {
 if (!function_exists('is_active')) {
     function is_active(string $route = '')
     {
-        return (strpos(Route::currentRouteName(), $route) === 0) ? 'active' : '';
+        return (0 === mb_strpos(Route::currentRouteName(), $route)) ? 'active' : '';
     }
 }
 
 if (!function_exists('is_active_step')) {
     function is_active_step(int $step = 1)
     {
-        return $step === current_step() + 1;
+        return $step === current_step();
     }
 }
 
@@ -886,6 +890,6 @@ if (!function_exists('is_disabled')) {
 if (!function_exists('is_step_finished')) {
     function is_step_finished()
     {
-        return current_step() === Flag::MAX_STEP;
+        return current_step() >= Flag::MAX_STEP - 2;
     }
 }

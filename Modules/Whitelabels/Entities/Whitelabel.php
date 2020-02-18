@@ -156,6 +156,6 @@ class Whitelabel extends Model
             'headline_success',
             'subheadline_success',
             'layer_url'
-        ]);
+        ])->using(LayerWhitelabel::class);
     }
 }

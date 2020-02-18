@@ -69,7 +69,22 @@ class AutooffersSettingController extends Controller
      */
     public function index()
     {
-        return view('autooffers::index');
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int) $whitelabel->state < 10) {
+                $this->whitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' => 10]
+                );
+            }
+
+            $step = Flag::step()[11];
+        }
+
+        return view('autooffers::index', compact(['step']));
     }
 
     public function view(Request $request)

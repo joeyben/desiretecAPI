@@ -2,6 +2,7 @@
 
 namespace Modules\LanguageLines\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Access\Role\Role;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
@@ -18,7 +19,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Log\LogManager;
 use Illuminate\Notifications\ChannelManager;
-use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
@@ -37,7 +37,6 @@ use Modules\LanguageLines\Http\Requests\UpdateLanguageLineRequest;
 use Modules\LanguageLines\Notifications\CloneLanguageLinesNotification;
 use Modules\LanguageLines\Notifications\CopyLanguageLinesNotification;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
-use Modules\Languages\Entities\Language;
 use Modules\Languages\Exports\LanguageExport;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
@@ -154,12 +153,11 @@ class LanguageLinesController extends Controller
 
     public function view(Request $request)
     {
-
         try {
             $perPage = $request->get('per_page');
             $sort = explode('|', $request->get('sort'));
 
-            if (with(new LanguageLines())->getTable() === 'language_lines') {
+            if ('language_lines' === with(new LanguageLines())->getTable()) {
                 $result['data'] = $this->languageline->withCriteria([
                     new OrderBy($sort[0], $sort[1]),
                     new Where('locale', $request->get('locale')),
@@ -230,7 +228,7 @@ class LanguageLinesController extends Controller
     public function store(StoreLanguageLineRequest $request)
     {
         try {
-            if (with(new LanguageLines())->getTable() === 'language_lines') {
+            if ('language_lines' === with(new LanguageLines())->getTable()) {
                 $languageline = $this->languageline->create(
                     $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id', 'default', 'licence')
                 );
@@ -243,7 +241,6 @@ class LanguageLinesController extends Controller
                     $request->only('locale', 'description', 'group', 'key', 'text')
                 );
             }
-
 
             $result['languageline'] = $languageline;
 
@@ -262,7 +259,7 @@ class LanguageLinesController extends Controller
     public function duplicate(StoreLanguageLineRequest $request)
     {
         try {
-            if (with(new LanguageLines())->getTable() !== 'language_lines') {
+            if ('language_lines' !== with(new LanguageLines())->getTable()) {
                 $languageline = $this->languageline->create(
                     $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id')
                 );
@@ -271,7 +268,6 @@ class LanguageLinesController extends Controller
                     Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
                 }
             }
-
 
             $result['languageline'] = $languageline;
 
@@ -307,7 +303,7 @@ class LanguageLinesController extends Controller
         try {
             $languageline = $this->languageline->find($id);
 
-            if (with(new LanguageLines())->getTable() === 'language_lines') {
+            if ('language_lines' === with(new LanguageLines())->getTable()) {
                 $result['languageline'] = [
                     'id'               => $languageline->id,
                     'locale'           => $languageline->locale,
@@ -329,8 +325,6 @@ class LanguageLinesController extends Controller
                     'text'             => $languageline->text,
                 ];
             }
-
-
 
             $result['languageline']['logs'] = $this->auth->guard('web')->user()->hasPermission('logs-group') ? $this->activities->byModel($languageline) : [];
 
@@ -355,7 +349,7 @@ class LanguageLinesController extends Controller
         try {
             $languagelineOld = $this->languageline->find($id);
 
-            if (with(new LanguageLines())->getTable() === 'language_lines') {
+            if ('language_lines' === with(new LanguageLines())->getTable()) {
                 $languageline = $this->languageline->update(
                     $id,
                     $request->only(
@@ -381,7 +375,6 @@ class LanguageLinesController extends Controller
                     )
                 );
             }
-
 
             if ($languageline->default && !$languagelineOld->default && null === $languageline->whitelabel_id) {
                 Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
@@ -629,15 +622,23 @@ class LanguageLinesController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-    /**
-     * Fetch already existing Signature or Create new Signature.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function signature(string $lang)
     {
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int) $whitelabel->state < 4) {
+                $this->whitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' => 4]
+                );
+            }
+
+            $step = Flag::step()[5];
+        }
+
         try {
             $result['data']['text'] = $this->languageline->firstOrCreate([
                 'locale' => $lang,
@@ -654,7 +655,7 @@ class LanguageLinesController extends Controller
             $result['status'] = 500;
         }
 
-        return view('languagelines::email-signature', compact('result'));
+        return view('languagelines::email-signature', compact(['step', 'result']));
     }
 
     /**
