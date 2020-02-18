@@ -161,7 +161,7 @@ class WishesController extends APIController
             );
 
             if ($this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
-                'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3','ages4'))){
+                'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3','ages4'), $newUser->id)){
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
             }
 

@@ -309,9 +309,12 @@ class WishesRepository extends BaseRepository
         return $wish;
     }
 
-    public function createFromApi(array $input)
+    public function createFromApi(array $input, string $userId)
     {
+
         $this->whitelabel_id = $input['whitelabel_id'];
+        $input['user_id'] = $userId;
+        unset($input['whitelabel_id']);
         $wish = DB::transaction(function () use ($input) {
             $from = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
             $to   = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
