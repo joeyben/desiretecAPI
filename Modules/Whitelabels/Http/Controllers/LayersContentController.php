@@ -156,14 +156,10 @@ class LayersContentController extends Controller
         return view('whitelabels::edit');
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function update(LayerContentRequest $request)
     {
         try {
-            $whitelabel = $this->whitelabels->find($request->get('whitelabel_id'));
-            $whitelabel->layers()->updateExistingPivot($request->get('id'), $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success'));
             $this->layerWhitelabels->update($request->get('id'), $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success'));
 
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Content']);
