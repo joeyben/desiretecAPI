@@ -222,10 +222,12 @@
                                     <h4 class="dark-grey-2">Highlights der Unterkunft:</h4>
                                     <ul>
                                         @for ($i = 0; $i < 3; $i++)
-                                        <li>
-                                            <i class="fal fa-check"></i>
-                                            <h4 class="dark-grey">{{ getKeywordText($offer['data']['hotelOffer']['hotel']['keywordList'][$i]) }}</h4>
-                                        </li>
+                                            @if (is_array($offer['data']['hotelOffer']['hotel']['keywordList']) and array_key_exists($i, $offer['data']['hotelOffer']['hotel']['keywordList']))
+                                            <li>
+                                                <i class="fal fa-check"></i>
+                                                <h4 class="dark-grey">{{ getKeywordText($offer['data']['hotelOffer']['hotel']['keywordList'][$i]) }}</h4>
+                                            </li>
+                                            @endif
                                         @endfor
                                     </ul>
 

@@ -152,7 +152,7 @@ class AutooffersRepository extends BaseRepository
         $this->setKids($wish->kids);
         $this->setAirport(getRegionCode($wish->airport, 0));
         $this->setCategory($wish->category);
-        $this->setCatering($wish->category);
+        $this->setCatering($wish->catering);
         $this->setFrom(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start)->format('dmy'));
         $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
         $this->setPeriod($wish->duration, $wish);
