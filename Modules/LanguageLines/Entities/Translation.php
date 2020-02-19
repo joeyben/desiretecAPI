@@ -42,19 +42,36 @@ class Translation extends Model
     public static function getTranslationsForGroup(string $locale, string $group, int $whitelabelId = null): array
     {
         return Cache::rememberForever(static::getCacheKey($group, $locale, $whitelabelId), function () use ($group, $locale, $whitelabelId) {
-            return static::query()
+            $data = static::query()
                 ->where('whitelabel_id', $whitelabelId)
                 ->where('group', $group)
                 ->where('locale', $locale)
                 ->get()
                 ->map(function (self $translation) {
                     return [
-                        'key'  => $translation->key,
+                        'key' => $translation->key,
                         'text' => $translation->text,
                     ];
                 })
                 ->pluck('text', 'key')
                 ->toArray();
+
+            if ($data === []) {
+                $data = static::query()
+                    ->where('group', $group)
+                    ->where('locale', $locale)
+                    ->get()
+                    ->map(function (self $translation) {
+                        return [
+                            'key' => $translation->key,
+                            'text' => $translation->text,
+                        ];
+                    })
+                    ->pluck('text', 'key')
+                    ->toArray();
+            }
+
+            return $data;
         });
     }
 
