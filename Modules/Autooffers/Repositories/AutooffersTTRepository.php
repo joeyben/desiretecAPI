@@ -879,60 +879,29 @@ class AutooffersTTRepository extends BaseRepository
                            }
                     ]
              },
-          "OfferID": "24ZNGUXB7JHE9JDAKUUWY83ZZ2J9BVBF2ZG9CGHZF6B8WBHE2AS66HTU4N3R2WBT4SDGTNL8LU78DY",
+          "OfferID": "2OUC6GYWCCKS9TNL1GLX6WJ3K3C8W1KX91JZEKZNXRSMJ9AVMAGNRNH4X7UVE8KX9YWLDTJM42MMDL",
           "Options": {
-            "NumberOfResults": 500,
-            "ResultOffset": 0,
-            "Sorting": ["PriceAsc"],
-            "AdditionalCurrencyCodes":["EUR"]
           }
         }}';
+        $curl = curl_init();
 
-        $xmlreq = '<?xml version="1.0" encoding="utf-8"?>
-<ttxml:AvailabilityAndPriceCheckRQ xmlns:ttxml="http://traveltainment.de/middleware/xml/AvailabilityAndPriceCheckRQ" LanguageCode="de-CH">
-	<OfferID>2L9CXTMUOW1BRKBSWWXKT9DK62MFZZUT6Y1VKP1J3TA669GJMZKGCDNJA83ATHK3TNC7E4P3ATKG6C</OfferID>
-	<TravellerList>
-		<Traveller>
-			<PersonName>
-				<FirstName>Max</FirstName>
-				<LastName>Mustermann</LastName>
-			</PersonName>
-			<Gender>MALE</Gender>
-			<BirthDate>1970-01-01</BirthDate>
-			<Type>ADULT</Type>
-		</Traveller>
-		<Traveller>
-			<PersonName>
-				<FirstName>Maxa</FirstName>
-				<LastName>Mustermann</LastName>
-			</PersonName>
-			<Gender>FEMALE</Gender>
-			<BirthDate>1970-01-01</BirthDate>
-			<Type>ADULT</Type>
-		</Traveller>
-	</TravellerList>
-</ttxml:AvailabilityAndPriceCheckRQ>';
+        $authorization = 'Authorization: Bearer ' . $this->token;
 
-        $header  = "POST HTTP/1.0 \r\n";
-        $header .= "Content-type: text/xml \r\n";
-        $header .= "Content-length: ".strlen($xmlreq)." \r\n";
-        $header .= "Content-transfer-encoding: text \r\n";
-        $header .= "Connection: close \r\n\r\n";
-        $header .= $xmlreq;
+        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
+        curl_setopt($curl, CURLOPT_URL, "https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $xmlreq);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_URL,"https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 4);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $header);
-
-        $data = curl_exec($ch);
-        var_dump($data);die();
-        if(curl_errno($ch))
-            print curl_error($ch);
-        else
-            curl_close($ch);
+        $result = curl_exec($curl);
+        dd($result);
+        if (!$result) {
+            die('Connection Failure');
+        }
+        curl_close($curl);
+        dd($result);
     }
 
 
