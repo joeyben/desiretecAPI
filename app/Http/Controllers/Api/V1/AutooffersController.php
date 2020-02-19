@@ -32,12 +32,14 @@ class AutooffersController extends APIController implements AutooffersController
 
             foreach ($offers['data'] as $offer) {
 
+                $offer['data']['hotelOffer']['hotel']['keywordHighlights'] = array();
+
                 for ($i = 0; $i < 3; $i++) {
                     $keyword = $offer['data']['hotelOffer']['hotel']['keywordList'][$i];
                     $keywordCode = $this->keywordList::where('code', $keyword)->first();
                     $keywordName = $keywordCode ? $keywordCode->name : '';
 
-                    $offer['data']['hotelOffer']['hotel']['keywordHighlights'][$i] = $keywordName;
+                    $offer['data']['hotelOffer']['hotel']['keywordHighlights'] = $keywordName;
                 }
             }
 
