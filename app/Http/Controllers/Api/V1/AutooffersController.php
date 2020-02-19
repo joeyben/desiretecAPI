@@ -30,7 +30,7 @@ class AutooffersController extends APIController implements AutooffersController
         try {
             $offers['data'] = $this->autooffers->getOffersDataFromId($wishId);
 
-            foreach ($offers as $offer) {
+            foreach ($offers['data'] as $offer) {
 
                 for ($i = 0; $i < 3; $i++) {
                     $keyword = $offer['data']['hotelOffer']['hotel']['keywordList'][$i];
