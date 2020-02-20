@@ -477,17 +477,29 @@ class OffersController extends Controller
             $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter();
 
-            $optParams = [
+            $optParams1 = [
             'dimensions' => 'ga:yearMonth',
-            'filters'    => $filter['filterm'],
+            'filters'    => $filter['filterphone'],
             ];
+            $optParams2 = [
+                'dimensions' => 'ga:yearMonth',
+                'filters'    => $filter['filtertablet'],
+            ];
+            $result['phone'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams1, $startDate, $endDate);
+            $result['tablet'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams2, $startDate, $endDate);
+
+            for ($i = 0; $i < \count($result['phone']); ++$i) {
+                $result['mobile'][$i][0] = $result['phone'][$i][0];
+                $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1];
+            }
 
             $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
-            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+            $result['ga'] =  $result['mobile'];
 
             $data = $this->wishes->withCriteria([
             new ByWhitelabel(),
             new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
+            new Where('wishes.mobile', 1),
             new GroupBy('month')
             ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'), DB::raw('DATE(wishes.created_at) as date')])
             ->pluck('wishes_count', 'date');

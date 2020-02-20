@@ -31,7 +31,7 @@ class WhitelabelController extends Controller
     public function getWhitelabelBySlug(string $slug)
     {
         $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
-            new EagerLoad(['layers']),
+            new EagerLoad(['layers', 'footers']),
             new Where('name', $slug),
         ])->first();
 

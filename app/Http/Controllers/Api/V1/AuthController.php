@@ -117,8 +117,18 @@ class AuthController extends APIController
     {
         $result['user'] = $this->auth->user();
         $result['user']['role'] = $this->auth->user()->roles()->first()->name;
+        $result['user']['isUser'] = $this->auth->user()->hasRole(Flag::USER_ROLE);
+        $result['user']['isSeller'] = $this->auth->user()->hasRole(Flag::SELLER_ROLE);
+        $result['user']['isExecutive'] = $this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE);
+        $result['user']['isAdmin'] = $this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE);
+        $result['user']['agents'] = $this->auth->user()->agents()->get();
+        $result['user']['currentAgent'] = null;
 
-        return $this->respond(['user' => $this->auth->user(), 'status' => 200]);
+        if ($this->auth->user()->hasRole(Flag::SELLER_ROLE) && Auth::guard('agent')->check()) {
+            $result['user']['currentAgent'] = Auth::guard('agent')->user();
+        }
+
+        return $this->respond(['user' => $this->auth->user(), 'status' => Flag::STATUS_CODE_SUCCESS]);
     }
 
     public function ckeckRole(Request $request)

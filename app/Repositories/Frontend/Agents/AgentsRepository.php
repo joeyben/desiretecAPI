@@ -80,7 +80,7 @@ class AgentsRepository extends BaseRepository
                 config('module.agents.table') . '.display_name',
                 config('module.agents.table') . '.user_id',
                 config('module.agents.table') . '.created_at',
-            ])->where(config('module.agents.table') . '.user_id', Auth::guard('api')->user()->id)
+            ])->where(config('module.agents.table') . '.user_id', Auth::user()->id)
             ->get()
             ->toArray();
     }

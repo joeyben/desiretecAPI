@@ -584,7 +584,7 @@ var exitIntent = window.exitIntent || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: 'https://reise-rebellen.reisewunschservice.de',
+        matchesUrl: 'https://reise-rebellen.reisewunschservice.de|https://reiserebellen.reise-wunsch.com/|http://reiserebellen.com',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {

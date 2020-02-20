@@ -4,8 +4,10 @@ namespace Modules\Whitelabels\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Whitelabels\Repositories\Contracts\LayersRepository;
+use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Modules\Whitelabels\Repositories\Eloquent\EloquentLayersRepository;
+use Modules\Whitelabels\Repositories\Eloquent\EloquentLayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Eloquent\EloquentWhitelabelsRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -21,6 +23,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(WhitelabelsRepository::class, EloquentWhitelabelsRepository::class);
         $this->app->bind(LayersRepository::class, EloquentLayersRepository::class);
+        $this->app->bind(LayerWhitelabelRepository::class, EloquentLayerWhitelabelRepository::class);
     }
 
     /**
