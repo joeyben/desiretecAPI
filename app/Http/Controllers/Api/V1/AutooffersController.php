@@ -11,16 +11,16 @@ use App\Models\KeywordList;
 
 class AutooffersController extends APIController implements AutooffersControllerInterface
 {
-    private $autooffers;
-    private $TTautooffers;
+    private $repository;
+    private $TTrepository;
     private $rules;
     private $keywordList;
 
-    public function __construct(WishesRepository $wish, AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers, EloquentAutooffersRepository $rules, KeywordList $keywordList)
+    public function __construct(WishesRepository $wish, AutooffersRepository $repository, AutooffersTTRepository $TTrepository, EloquentAutooffersRepository $rules, KeywordList $keywordList)
     {
         $this->wish = $wish;
-        $this->autooffers = $autooffers;
-        $this->TTautooffers = $TTautooffers;
+        $this->repository = $repository;
+        $this->TTrepository = $TTrepository;
         $this->rules = $rules;
         $this->keywordList = $keywordList;
     }
@@ -28,14 +28,16 @@ class AutooffersController extends APIController implements AutooffersController
     public function list(int $wishId)
     {
         try {
-            $offers['data'] = $this->autooffers->getOffersDataFromId($wishId);
+            $offers['data'] = $this->repository->getOffersDataFromId($wishId);
 
-            foreach ($offers['data'] as $offer) {
+            foreach ($offers['data'] as &$offer) {
+
+                $offer['data']['hotelOffer']['hotel']['keywordHighlights'] = array();
 
                 for ($i = 0; $i < 3; $i++) {
                     $keyword = $offer['data']['hotelOffer']['hotel']['keywordList'][$i];
                     $keywordCode = $this->keywordList::where('code', $keyword)->first();
-                    $keywordName = $keywords ? $keywords->name : '';
+                    $keywordName = $keywordCode ? $keywordCode->name : '';
 
                     $offer['data']['hotelOffer']['hotel']['keywordHighlights'][$i] = $keywordName;
                 }
@@ -50,7 +52,7 @@ class AutooffersController extends APIController implements AutooffersController
     public function listTt(int $wishId)
     {
         try {
-            $offers['data'] = $this->autooffers->getOffersDataFromId($wishId);
+            $offers['data'] = $this->repository->getOffersDataFromId($wishId);
 
             foreach ($offers as $offer) {
 
