@@ -97,9 +97,7 @@ class LanguageLinesController extends Controller
      */
     private $activities;
 
-    /**
-     * LanguageLines constructor.
-     */
+
     public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role, LanguagesRepository $languages, Kernel $artisan, LogManager $log, ActivitiesRepository $activities)
     {
         $this->languageline = $languageline;
@@ -267,9 +265,10 @@ class LanguageLinesController extends Controller
                 if ($languageline->default && null === $languageline->whitelabel_id) {
                     Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
                 }
+                $result['languageline'] = $languageline;
             }
 
-            $result['languageline'] = $languageline;
+
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'LanguageLine']);
             $result['success'] = true;
