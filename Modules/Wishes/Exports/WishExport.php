@@ -71,6 +71,7 @@ class WishExport implements FromCollection, Responsable, WithMapping, WithHeadin
             $wish->status ? 'Active' : 'Inactive',
             $wish->booking_status,
             null === $wish->owner ? '' : $wish->owner->full_name,
+            null === $wish->owner ? '' : $wish->owner->email,
             $wish->whitelabel->display_name,
             $wish->group->display_name,
             $wish->description,
@@ -94,6 +95,7 @@ class WishExport implements FromCollection, Responsable, WithMapping, WithHeadin
             Lang::get('tables.status'),
             Lang::get('tables.booking_status'),
             Lang::get('tables.owner'),
+            Lang::get('tables.email'),
             Lang::get('tables.whitelabel'),
             Lang::get('tables.group'),
             Lang::get('tables.description'),
@@ -105,8 +107,8 @@ class WishExport implements FromCollection, Responsable, WithMapping, WithHeadin
     public function columnFormats(): array
     {
         return [
-            'P' => 'dd.mm.yy',
             'Q' => 'dd.mm.yy',
+            'R' => 'dd.mm.yy',
         ];
     }
 }
