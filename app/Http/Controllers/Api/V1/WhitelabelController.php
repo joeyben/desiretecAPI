@@ -43,6 +43,8 @@ class WhitelabelController extends Controller
 
         $visual = $this->moduleWhitelabelsRepository->getVisual($whitelabel);
 
+        $tourOperators = $this->moduleWhitelabelsRepository->getTourOperators($whitelabel->id);
+
         $result['data'] = [
             'id'                  => $whitelabel->id,
             'name'                => $whitelabel->name,
@@ -58,7 +60,8 @@ class WhitelabelController extends Controller
             'is_autooffer'        => $whitelabel->is_autooffer,
             'licence'             => $whitelabel->licence,
             'layers'              => $whitelabel->layers,
-            'footers'              => $whitelabel->footers,
+            'footers'             => $whitelabel->footers,
+            'tourOperators'       => $tourOperators,
         ];
 
         $result['data']['attachments']['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
