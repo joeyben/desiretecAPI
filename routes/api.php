@@ -62,6 +62,10 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::put('update/{id}', 'AccountController@update');
         });
 
+        Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'account'], function () {
+            Route::put('changePassword', 'AccountController@changePassword');
+        });
+
         Route::group(['prefix' => 'offers'], function () {
             Route::get('', 'OffersController@index');
             Route::post('/store', 'OffersController@store');
