@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://dkferien.reise-wunsch.com',
+        baseUrl: 'https://dk-ferien.reise-wunsch.com',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/dkferien/css/layer/whitelabel.css'
@@ -46,7 +46,7 @@ var exitIntent = window.exitIntent || {};
     /**** Mobile Decoder ****/
     var MasterIBETripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master',
-        matchesUrl: 'https://master.reise-wunsch.com/|https://master.reisewunschservice.de/|http://master.com',
+        matchesUrl: 'https://dk-ferien.reise-wunsch.com/|https://dk-ferien.reisewunschservice.de/|http://dk-ferien.com',
         dictionaries: {
             'catering': {
                 'AI': 'all-inclusive',
@@ -604,6 +604,42 @@ var exitIntent = window.exitIntent || {};
           });
     }
 
+    dt.autocomplete = function(){
+
+        $('#destination').tagsinput({
+            maxTags: 3,
+            maxChars: 20,
+            allowDuplicates: false,
+            typeahead: {
+            autoSelect: false,
+            minLength: 3,
+            highlight: true,
+            source: function(query) {
+                return $.get('https://dk-ferien.reise-wunsch.com/get-all-destinations', {query: query});
+            }
+            }
+        });
+
+        $('#airport').tagsinput({
+            maxTags: 3,
+            maxChars: 20,
+            allowDuplicates: false,
+            typeahead: {
+            autoSelect: false,
+            minLength: 3,
+            highlight: true,
+            source: function(query) {
+                return $.get('https://dk-ferien.reise-wunsch.com/get-all-airports', {query: query});
+            }
+            }
+        });
+
+        $("#destination, #airport").on('itemAdded', function(event) {
+            setTimeout(function(){
+            $("input[type=text]",".bootstrap-tagsinput").val("");
+            }, 1);
+        });
+    }
 
     dt.applyBrandColor = function () {
 
