@@ -265,8 +265,11 @@ class LanguageLinesController extends Controller
                 if ($languageline->default && null === $languageline->whitelabel_id) {
                     Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
                 }
-                $result['languageline'] = $languageline;
+            } else {
+                $languageline = $this->languageline->find($request->get('id'));
             }
+
+            $result['languageline'] = $languageline;
 
 
 
