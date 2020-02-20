@@ -26,15 +26,15 @@ var exitIntent = window.exitIntent || {};
                 header: 'Dürfen wir dich beraten?',
                 body: 'Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!'
             },
-            'eil-n1': {
+            'eil-tablet': {
                 header: 'Dürfen wir dich beraten?',
                 body: 'Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!'
             },
-            'eil-n2': {
+            'eil-desktop': {
                 header: 'Dürfen wir dich beraten?',
                 body: 'Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!'
             },
-            'eil-n3': {
+            'eil-phone': {
                 header: 'Dürfen wir dich beraten?',
                 body: 'Teile uns deinen Reisewunsch mit und du erhältst innerhalb weniger Minuten von den besten Reise-Experten passende Angebote - individuell, kostenlos & in Echtzeit!'
             },
@@ -189,20 +189,9 @@ var exitIntent = window.exitIntent || {};
             return arr[Math.floor(Math.random() * arr.length)];
         },
         getVariant: function () {
-            if(isMobile()){
-                return 'eil-mobile';
-            }else if(getUrlParams('utm_source') && getUrlParams('utm_source') == 'social'){
-                return this.getRandomElement([
-                    'eil-n1-social'
-                ]);
-            }else{
-                return this.getRandomElement([
-                    'eil-n1',
-                    'eil-n1',
-                    'eil-n2',
-                    'eil-n5'
-                ]);
-            }
+            return this.getRandomElement([
+                'eil-'+deviceDetector.device,
+            ]);
         }
     });
     dt.decoders.push(KwizzmeFakeTripDataDecoder);

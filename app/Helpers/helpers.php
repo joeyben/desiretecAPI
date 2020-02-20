@@ -700,7 +700,7 @@ if (!function_exists('getRegionCode')) {
 
         $codes = [];
         foreach ($regions as $region) {
-            array_push($codes, str_replace('region.', '', \App\Models\Regions::where('regionName', 'like', '%' . $region . '%')->where('type', $type)->first()->regionCode));
+            array_push($codes, str_replace('region.', '', \App\Models\Regions::where('regionName', $region)->where('type', $type)->first()->regionCode));
         }
 
         return $codes;
