@@ -32,6 +32,10 @@ class AutooffersController extends APIController implements AutooffersController
 
             foreach ($offers['data'] as &$offer) {
 
+                if (! array_key_exists( 'hotelOffer', $offer['data'] )) {
+                    continue;
+                }
+
                 $offer['data']['hotelOffer']['hotel']['keywordHighlights'] = array();
 
                 for ($i = 0; $i < 3; $i++) {

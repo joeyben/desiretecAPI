@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Criteria\EagerLoad;
+use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
+use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
 use Illuminate\Http\Request;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
@@ -21,14 +23,19 @@ class WhitelabelController extends Controller
      */
     private $moduleWhitelabelsRepository;
     /**
+     * @var \Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository
+     */
+    private $layerWhitelabels;
+    /**
      * @var \Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository
      */
     private $languageline;
 
-    public function __construct(WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabelsRepository, LanguageLinesRepository $languageline)
+    public function __construct(WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabelsRepository, LayerWhitelabelRepository $layerWhitelabels, LanguageLinesRepository $languageline)
     {
         $this->whitelabels = $whitelabels;
         $this->moduleWhitelabelsRepository = $moduleWhitelabelsRepository;
+        $this->layerWhitelabels = $layerWhitelabels;
         $this->languageline = $languageline;
     }
 
@@ -38,7 +45,7 @@ class WhitelabelController extends Controller
     public function getWhitelabelBySlug(string $slug)
     {
         $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
-            new EagerLoad(['layers', 'footers']),
+            new EagerLoad(['footers']),
             new Where('name', $slug),
         ])->first();
 
@@ -66,7 +73,7 @@ class WhitelabelController extends Controller
             'color'               => $whitelabel->color,
             'is_autooffer'        => $whitelabel->is_autooffer,
             'licence'             => $whitelabel->licence,
-            'layers'              => $whitelabel->layers,
+            'layers'              => $this->getLayers($whitelabel->id),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
         ];
@@ -88,5 +95,14 @@ class WhitelabelController extends Controller
         ])->get()->first()->text;
 
         return $this->responseJson($result);
+    }
+
+    private function getLayers(int $id)
+    {
+        return $this->layerWhitelabels->withCriteria([
+            new OrderBy('layer_id'),
+            new Where('whitelabel_id', $id),
+            new EagerLoad(['layer', 'attachments'])
+        ])->all();
     }
 }
