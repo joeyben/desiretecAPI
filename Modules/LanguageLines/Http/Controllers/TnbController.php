@@ -2,6 +2,7 @@
 
 namespace Modules\LanguageLines\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Access\Role\Role;
 use App\Repositories\Criteria\Where;
 use App\Services\Flag\Src\Flag;
@@ -12,7 +13,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Notifications\ChannelManager;
-use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Translation\Translator;
@@ -89,13 +89,7 @@ class TnbController extends Controller
         $this->artisan = $artisan;
     }
 
-    /**
-     * Fetch already existing Footer Teilnahmebedingungen or Create new Teilnahmebedingungen.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+
     public function tnb(string $lang)
     {
         $step = null;
@@ -114,47 +108,51 @@ class TnbController extends Controller
         }
 
         try {
-            if ($this->auth->guard('web')->user()->hasRole('Admin')) {
+            if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                 $whiteLabelID = getCurrentWhiteLabelField('id');
                 $whiteLabelName = getCurrentWhiteLabelField('display_name');
                 $domain = getCurrentWhiteLabelField('domain');
-            } else if($this->auth->guard('web')->user()->hasRole('Executive')){
+            } else if($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)){
                 $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
                 $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
                 $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
             } else {
-                return redirect(route('provider.footer.tnb', $request->language))->with('error', trans('User guard is different'));
+                return redirect(route('provider.footer.tnb', $lang))->with('error', trans('User guard is different'));
             }
 
-//            dd(with(new LanguageLines())->getTable());
+             if (!$this->isOldWhitelabel()) {
+                 // new Logic
+                 $tnb = $this->languageline->withCriteria([
+                     new Where('locale', $lang),
+                     new Where('key', 'footer.tnb'),
+                     new Where('group', 'layer'),
+                     new Where('whitelabel_id', $whiteLabelID),
+                 ])->first();
 
-//            if ('language_lines' !== with(new LanguageLines())->getTable()) {
-                if (!$this->languageline->withCriteria([
-                    new Where('locale', $lang),
-                    new Where('key', 'footer.tnb'),
-                    new Where('group', 'layer'),
-                    new Where('whitelabel_id', $whiteLabelID),
-                ])->get()->count()) {
+                 if (!is_null($tnb)) {
+                     $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
+                     $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
 
-                    $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
-                    $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
-
-                    $result['data']['text'] = $this->languageline->firstOrCreate([
-                        'locale' => $lang,
-                        'key'    => 'footer.tnb',
-                        'group'  => 'layer',
-                        'text'   => $tnb,
-                        'whitelabel_id'   => $whiteLabelID,
-                    ])->text;
-                } else {
-                    $result['data']['text'] = $this->languageline->withCriteria([
-                        new Where('locale', $lang),
-                        new Where('key', 'footer.tnb'),
-                        new Where('group', 'layer'),
-                        new Where('whitelabel_id', $whiteLabelID),
-                    ])->first()->text;
-                }
-//            }
+                     $result['data']['text'] = $this->languageline->update($tnb->id, [
+                         'locale' => $lang,
+                         'key'    => 'footer.tnb',
+                         'group'  => 'layer',
+                         'text'   => $tnb,
+                         'whitelabel_id'   => $whiteLabelID,
+                     ])->text;
+                 } else {
+                     //create new LanguageLine for footer.tnb
+                     $result['data']['text'] = $this->languageline->create([
+                         'locale' => $lang,
+                         'key'    => 'footer.tnb',
+                         'group'  => 'layer',
+                         'text'   => $tnb,
+                         'whitelabel_id'   => $whiteLabelID,
+                     ])->text;
+                 }
+             } else {
+                 // old Logic
+             }
 
             $result['data']['language'] = $lang;
             $result['success'] = true;
