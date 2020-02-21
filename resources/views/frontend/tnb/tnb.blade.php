@@ -19,6 +19,7 @@
         <meta name="author" content="@yield('meta_author', 'Joe Ben Slimane')">
     </head>
     <body id="app-layout" class="{{ ( ! empty($body_class) ? $body_class : '' )}}" style="margin-bottom:30px; margin-top:30px;margin-right:20px;margin-left:20px;text-align: justify;text-justify:inter-word;">
-        {!! Lang::get('layer.footer.tnb') !!}
+{{--        {!! Lang::get('layer.footer.tnb') !!}--}}
+            {!! $tnb !!}
     </body>
 </html>

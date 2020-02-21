@@ -20,6 +20,7 @@ use Modules\LanguageLines\Http\Requests\FooterTnbStoreRequest;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
+use Modules\LanguageLines\Entities\LanguageLines;
 
 class TnbController extends Controller
 {
@@ -113,35 +114,47 @@ class TnbController extends Controller
         }
 
         try {
-            if (!$this->languageline->withCriteria([
-                new Where('locale', $lang),
-                new Where('key', 'footer.tnb'),
-                new Where('group', 'layer'),
-            ])->get()->count()) {
-                if ($this->auth->guard('web')->user()->hasRole('Admin')) {
-                    $whiteLabelName = getCurrentWhiteLabelField('display_name');
-                    $domain = getCurrentWhiteLabelField('domain');
-                } else {
-                    $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
-                    $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
-                }
-
-                $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
-                $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
-
-                $result['data']['text'] = $this->languageline->firstOrCreate([
-                    'locale' => $lang,
-                    'key'    => 'footer.tnb',
-                    'group'  => 'layer',
-                    'text'   => $tnb
-                ])->text;
+            if ($this->auth->guard('web')->user()->hasRole('Admin')) {
+                $whiteLabelID = getCurrentWhiteLabelField('id');
+                $whiteLabelName = getCurrentWhiteLabelField('display_name');
+                $domain = getCurrentWhiteLabelField('domain');
+            } else if($this->auth->guard('web')->user()->hasRole('Executive')){
+                $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
+                $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
+                $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
             } else {
-                $result['data']['text'] = $this->languageline->withCriteria([
+                return redirect(route('provider.footer.tnb', $request->language))->with('error', trans('User guard is different'));
+            }
+
+//            dd(with(new LanguageLines())->getTable());
+
+//            if ('language_lines' !== with(new LanguageLines())->getTable()) {
+                if (!$this->languageline->withCriteria([
                     new Where('locale', $lang),
                     new Where('key', 'footer.tnb'),
                     new Where('group', 'layer'),
-                ])->first()->text;
-            }
+                    new Where('whitelabel_id', $whiteLabelID),
+                ])->get()->count()) {
+
+                    $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
+                    $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
+
+                    $result['data']['text'] = $this->languageline->firstOrCreate([
+                        'locale' => $lang,
+                        'key'    => 'footer.tnb',
+                        'group'  => 'layer',
+                        'text'   => $tnb,
+                        'whitelabel_id'   => $whiteLabelID,
+                    ])->text;
+                } else {
+                    $result['data']['text'] = $this->languageline->withCriteria([
+                        new Where('locale', $lang),
+                        new Where('key', 'footer.tnb'),
+                        new Where('group', 'layer'),
+                        new Where('whitelabel_id', $whiteLabelID),
+                    ])->first()->text;
+                }
+//            }
 
             $result['data']['language'] = $lang;
             $result['success'] = true;
@@ -151,6 +164,8 @@ class TnbController extends Controller
             $result['message'] = $e->getMessage();
             $result['status'] = 500;
         }
+
+//        dd($result);
 
         return view('languagelines::footer-tnb', compact(['step', 'result']));
     }
@@ -163,11 +178,20 @@ class TnbController extends Controller
     public function tnbStore(FooterTnbStoreRequest $request)
     {
         try {
+            if ($this->auth->guard('web')->user()->hasRole('Admin')) {
+                $whiteLabelID = getCurrentWhiteLabelField('id');
+            } else if($this->auth->guard('web')->user()->hasRole('Executive')){
+                $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
+            } else {
+                return redirect(route('provider.footer.tnb', $request->language))->with('error', trans('User guard is different'));
+            }
+
             $languageline = $this->languageline->update(
                 $this->languageline->firstOrCreate([
                 'locale' => $request->get('language'),
                 'key'    => 'footer.tnb',
-                'group'  => 'layer'])->id,
+                'group'  => 'layer',
+                'whitelabel_id'  => $whiteLabelID])->id,
                 ['text'=> $request->get('footer_tnb_editor')]
             );
 

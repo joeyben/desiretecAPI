@@ -7,6 +7,8 @@ use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
+use Illuminate\Http\Request;
+use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 
 /**
  * Class WhitelabelController.
@@ -18,11 +20,16 @@ class WhitelabelController extends Controller
      * @var \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository
      */
     private $moduleWhitelabelsRepository;
+    /**
+     * @var \Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository
+     */
+    private $languageline;
 
-    public function __construct(WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabelsRepository)
+    public function __construct(WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabelsRepository, LanguageLinesRepository $languageline)
     {
         $this->whitelabels = $whitelabels;
         $this->moduleWhitelabelsRepository = $moduleWhitelabelsRepository;
+        $this->languageline = $languageline;
     }
 
     /**
@@ -68,6 +75,17 @@ class WhitelabelController extends Controller
         $result['data']['attachments']['logo'] = (null !== $logo && null !== $logo->first()) ? $logo->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/default_logo.png';
         $result['data']['attachments']['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
         $result['data']['attachments']['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
+
+        return $this->responseJson($result);
+    }
+
+    public function getTnb(Request $request){
+        $result['data'] = $this->languageline->withCriteria([
+            new Where('locale', 'de'),
+            new Where('key', 'footer.tnb'),
+            new Where('group', 'layer'),
+            new Where('whitelabel_id', $request->id),
+        ])->get()->first()->text;
 
         return $this->responseJson($result);
     }
