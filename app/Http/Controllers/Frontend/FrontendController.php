@@ -111,15 +111,21 @@ class FrontendController extends Controller
      */
     public function showTnb(Request $request)
     {
-        $arr = explode(".", $request->root());
-        $domain = explode("//", $arr[0]);
-        $tnb = $this->languageline->withCriteria([
-            new Where('locale', 'de'),
-            new Where('key', 'footer.tnb'),
-            new Where('group', 'layer'),
-            new Where('whitelabel_id', getWhitelabelBySlug($domain[1])->first()->id),
-        ])->get()->first()->text;
+        if (!$this->isOldWhitelabel()) {
+            $arr = explode(".", $request->root());
+            $domain = explode("//", $arr[0]);
+            $tnb = $this->languageline->withCriteria([
+                new Where('locale', 'de'),
+                new Where('key', 'footer.tnb'),
+                new Where('group', 'layer'),
+                new Where('whitelabel_id', getWhitelabelBySlug($domain[1])->first()->id),
+            ])->get()->first()->text;
 
-        return view('frontend.tnb.tnb', compact(['tnb']));
+            return view('frontend.tnb.tnb', compact(['tnb']));
+        } else {
+            return view('frontend.tnb.tnb');
+        }
+
+        return view('frontend.tnb.tnb');
     }
 }
