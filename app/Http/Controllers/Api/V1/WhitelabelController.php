@@ -7,8 +7,11 @@ use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
+use Illuminate\Support\Facades\DB;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
+use Illuminate\Http\Request;
+use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 
 /**
  * Class WhitelabelController.
@@ -24,12 +27,17 @@ class WhitelabelController extends Controller
      * @var \Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository
      */
     private $layerWhitelabels;
+    /**
+     * @var \Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository
+     */
+    private $languageline;
 
-    public function __construct(WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabelsRepository, LayerWhitelabelRepository $layerWhitelabels)
+    public function __construct(WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabelsRepository, LayerWhitelabelRepository $layerWhitelabels, LanguageLinesRepository $languageline)
     {
         $this->whitelabels = $whitelabels;
         $this->moduleWhitelabelsRepository = $moduleWhitelabelsRepository;
         $this->layerWhitelabels = $layerWhitelabels;
+        $this->languageline = $languageline;
     }
 
     /**
@@ -77,6 +85,32 @@ class WhitelabelController extends Controller
         $result['data']['attachments']['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
 
         return $this->responseJson($result);
+    }
+
+    public function getTnb(Request $request){
+        if (!$this->isOldWhitelabel()) {
+            $result['data'] = $this->languageline->withCriteria([
+                new Where('locale', 'de'),
+                new Where('key', 'footer.tnb'),
+                new Where('group', 'layer'),
+                new Where('whitelabel_id', $request->id),
+            ])->get()->first()->text;
+
+            return $this->responseJson($result);
+        } else {
+            $wlName = $this->moduleWhitelabelsRepository->withCriteria([
+                new Where('id', $request->id),
+            ])->first()->name;
+
+            $result['data'] = DB::table("language_lines_{$wlName}")
+                ->select('text')
+                ->where('locale', 'de')
+                ->where('group', 'layer')
+                ->where('key', 'footer.tnb')
+                ->get()->first()->text;
+
+            return $this->responseJson($result);
+        }
     }
 
     private function getLayers(int $id)
