@@ -133,7 +133,7 @@ class TnbController extends Controller
                      $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
                      $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
 
-                     $result['data']['text'] = $this->languageline->firstOrCreate([
+                     $result['data']['text'] = $this->languageline->update($tnb->id, [
                          'locale' => $lang,
                          'key'    => 'footer.tnb',
                          'group'  => 'layer',
@@ -142,6 +142,13 @@ class TnbController extends Controller
                      ])->text;
                  } else {
                      //create new LanguageLine for footer.tnb
+                     $result['data']['text'] = $this->languageline->create([
+                         'locale' => $lang,
+                         'key'    => 'footer.tnb',
+                         'group'  => 'layer',
+                         'text'   => $tnb,
+                         'whitelabel_id'   => $whiteLabelID,
+                     ])->text;
                  }
              } else {
                  // old Logic
