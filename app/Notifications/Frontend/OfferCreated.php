@@ -100,12 +100,14 @@ class OfferCreated extends Notification
         if (isWhiteLabel()) {
             $whitelabelslug = mb_strtolower($this->wl_name);
 
-            return $whitelabelslug . '.wish.details';
+//            return $whitelabelslug . '.wish.details';
+            return 'frontend.wishes.show';
         }
         $whitelabelId = mb_strtolower(Auth::guard('api')->user()->whitelabels()->first()->name);
 
-        return $whitelabelId . '.wish.details';
+//        return $whitelabelId . '.wish.details';
 
-        return 'frontend.wishes.details';
+//        return 'frontend.wishes.details';
+        return 'frontend.wishes.show';
     }
 }
