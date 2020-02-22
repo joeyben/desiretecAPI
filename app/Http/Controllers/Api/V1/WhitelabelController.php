@@ -97,7 +97,7 @@ class WhitelabelController extends Controller
                         new Where('group', 'layer'),
                         new Where('whitelabel_id', $request->id),
                     ])->get()->first() === null){
-                    throw new \ErrorException('Teilnahmebedingungen is not set');
+                    throw new \ErrorException(trans('errors.tnb.notset'));
                 } else {
                     $result['data'] = $this->languageline->withCriteria([
                         new Where('locale', 'de'),
@@ -118,7 +118,7 @@ class WhitelabelController extends Controller
                         ->where('group', 'layer')
                         ->where('key', 'footer.tnb')
                         ->get()->first() === null){
-                    throw new \ErrorException('Teilnahmebedingungen is not set');
+                    throw new \ErrorException(trans('errors.tnb.notset'));
                 } else {
                     $result['data'] = DB::table("language_lines_{$wlName}")
                         ->select('text')

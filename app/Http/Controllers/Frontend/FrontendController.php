@@ -132,7 +132,7 @@ class FrontendController extends Controller
 
                     return view('frontend.tnb.tnb', compact(['tnb']));
                 } else {
-                    $tnb = "Please set Tnb in admin Portal";
+                    $tnb = trans('errors.tnb.notset');
                     return view('frontend.tnb.tnb', compact(['tnb']));
                 }
             } else {
@@ -151,7 +151,7 @@ class FrontendController extends Controller
 
                     return view('frontend.tnb.tnb', compact(['tnb']));
                 } else {
-                    $tnb = "Please set Tnb in admin Portal";
+                    $tnb = trans('errors.tnb.notset');
                     return view('frontend.tnb.tnb', compact(['tnb']));
                 }
             }

@@ -94,7 +94,7 @@ class TnbController extends Controller
     {
         try {
             if ($this->auth->guard('web')->user()->whitelabels()->first() === null){
-                abort(403, 'Unauthorized action, User has no WhiteLabel assigned!');
+                abort(403, trans('errors.user.nowhitelabel'));
             }
 
             $step = null;
