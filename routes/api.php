@@ -33,17 +33,6 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('check/role', 'AuthController@ckeckRole');
     });
 
-    Route::group(['prefix' => 'popup'], function () {
-        Route::get('show', 'WishesController@show');
-    });
-
-    Route::get('offers/{id}', 'OffersController@index');
-    Route::post('offers/store', 'OffersController@store');
-
-    Route::get('whitelabel/{id}', 'WhitelabelController@getWhitelabelBySlug');
-    Route::get('wish/store', 'WishesController@store');
-    Route::get('tnb', 'WhitelabelController@getTnb');
-
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('wishes', 'WishesController@getWishes');
         Route::get('wishlist', 'WishesController@wishlist');
@@ -88,9 +77,14 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
     Route::group(['middleware' => []], function () {
         Route::post('translations', 'TranslationsController@getTranslations');
-    });
 
-    Route::group(['middleware' => []], function () {
         Route::post('whitelabels', 'WhitelabelsController@store');
+        Route::get('whitelabel/{id}', 'WhitelabelController@getWhitelabelBySlug');
+        Route::get('tnb', 'WhitelabelController@getTnb');
+
+        Route::get('wish/store', 'WishesController@store');
+
+        Route::get('destinations', 'RegionsController@getAllDestinations');
+        Route::get('airports', 'RegionsController@getAllAirports');
     });
 });
