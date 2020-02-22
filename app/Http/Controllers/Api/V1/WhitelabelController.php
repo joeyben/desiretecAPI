@@ -12,6 +12,7 @@ use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
 use Illuminate\Http\Request;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
+use Illuminate\Validation\ValidationException;
 
 /**
  * Class WhitelabelController.
@@ -88,28 +89,49 @@ class WhitelabelController extends Controller
     }
 
     public function getTnb(Request $request){
-        if (!$this->isOldWhitelabel()) {
-            $result['data'] = $this->languageline->withCriteria([
-                new Where('locale', 'de'),
-                new Where('key', 'footer.tnb'),
-                new Where('group', 'layer'),
-                new Where('whitelabel_id', $request->id),
-            ])->get()->first()->text;
+        try {
+            if (!$this->isOldWhitelabel()) {
+                if($this->languageline->withCriteria([
+                        new Where('locale', 'de'),
+                        new Where('key', 'footer.tnb'),
+                        new Where('group', 'layer'),
+                        new Where('whitelabel_id', $request->id),
+                    ])->get()->first() === null){
+                    throw new \ErrorException('Teilnahmebedingungen is not set');
+                } else {
+                    $result['data'] = $this->languageline->withCriteria([
+                        new Where('locale', 'de'),
+                        new Where('key', 'footer.tnb'),
+                        new Where('group', 'layer'),
+                        new Where('whitelabel_id', $request->id),
+                    ])->get()->first()->text;
 
-            return $this->responseJson($result);
-        } else {
-            $wlName = $this->moduleWhitelabelsRepository->withCriteria([
-                new Where('id', $request->id),
-            ])->first()->name;
+                    return $this->responseJson($result);
+                }
+            } else {
+                $wlName = $this->moduleWhitelabelsRepository->withCriteria([
+                    new Where('id', $request->id),
+                ])->first()->name;
+                if(DB::table("language_lines_{$wlName}")
+                        ->select('text')
+                        ->where('locale', 'de')
+                        ->where('group', 'layer')
+                        ->where('key', 'footer.tnb')
+                        ->get()->first() === null){
+                    throw new \ErrorException('Teilnahmebedingungen is not set');
+                } else {
+                    $result['data'] = DB::table("language_lines_{$wlName}")
+                        ->select('text')
+                        ->where('locale', 'de')
+                        ->where('group', 'layer')
+                        ->where('key', 'footer.tnb')
+                        ->get()->first()->text;
 
-            $result['data'] = DB::table("language_lines_{$wlName}")
-                ->select('text')
-                ->where('locale', 'de')
-                ->where('group', 'layer')
-                ->where('key', 'footer.tnb')
-                ->get()->first()->text;
-
-            return $this->responseJson($result);
+                    return $this->responseJson($result);
+                }
+            }
+        } catch (\Exception $e) {
+            return $this->responseJsonError($e);
         }
     }
 
