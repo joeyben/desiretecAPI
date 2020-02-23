@@ -41,6 +41,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     Route::post('offers/store', 'OffersController@store');
 
     Route::get('whitelabel/{id}', 'WhitelabelController@getWhitelabelBySlug');
+    Route::get('whitelabelfromhost/{host}', 'WhitelabelController@getWhitelabelByHost');
     Route::get('wish/store', 'WishesController@store');
     Route::get('tnb', 'WhitelabelController@getTnb');
 
