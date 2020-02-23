@@ -110,7 +110,7 @@ class WishesController extends APIController
             $user = Auth::guard('api')->user();
             $wish = $this->repository->getById($id);
             $result['data'] = $wish;
-
+            return $this->responseJson($result);
             if ($user->hasRole('User') && $wish->created_by === $user->id) {
                 return $this->responseJson($result);
             } else if(($user->hasRole('Seller') && in_array($wish->group_id, $user->groups->pluck('id')->toArray()))) {
