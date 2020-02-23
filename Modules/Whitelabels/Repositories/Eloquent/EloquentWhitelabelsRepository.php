@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManager;
 use Modules\Whitelabels\Entities\Whitelabel;
+use Modules\Whitelabels\Entities\WhitelabelHost;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
@@ -27,6 +28,20 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     public function model()
     {
         return Whitelabel::class;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWhitelabelNameByHost(string $host)
+    {
+        $query = WhitelabelHost::select([
+                config('module.whitelabel_host.table') . '.whitelabel_id'
+            ])
+            ->where(config('module.whitelabel_host.table') . '.host', 'LIKE', '%' . $host . '%')
+            ->first();
+
+        return $query->whitelabel_id;
     }
 
     public function updateRoute(int $id, string $name, string $subDomain)
