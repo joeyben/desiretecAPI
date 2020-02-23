@@ -52,19 +52,4 @@ class WhitelabelsRepository extends BaseRepository
 
         return $query;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getWhitelabelNameByHost(string $host)
-    {
-        $query = $this->query()
-            ->select([
-                config('module.whitelabel_host.table') . '.whitelabel_id'
-            ])
-            ->where(config('module.whitelabel_host.table') . '.host', 'LIKE', '%' . $host . '%')
-            ->first();
-
-        return $query->whitelabel_id;
-    }
 }
