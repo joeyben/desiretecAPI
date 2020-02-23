@@ -97,9 +97,7 @@ class LanguageLinesController extends Controller
      */
     private $activities;
 
-    /**
-     * LanguageLines constructor.
-     */
+
     public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role, LanguagesRepository $languages, Kernel $artisan, LogManager $log, ActivitiesRepository $activities)
     {
         $this->languageline = $languageline;
@@ -228,7 +226,7 @@ class LanguageLinesController extends Controller
     public function store(StoreLanguageLineRequest $request)
     {
         try {
-            if ('language_lines' === with(new LanguageLines())->getTable()) {
+            if (!$this->isOldWhitelabel()) {
                 $languageline = $this->languageline->create(
                     $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id', 'default', 'licence')
                 );
@@ -267,9 +265,13 @@ class LanguageLinesController extends Controller
                 if ($languageline->default && null === $languageline->whitelabel_id) {
                     Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
                 }
+            } else {
+                $languageline = $this->languageline->find($request->get('id'));
             }
 
             $result['languageline'] = $languageline;
+
+
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'LanguageLine']);
             $result['success'] = true;

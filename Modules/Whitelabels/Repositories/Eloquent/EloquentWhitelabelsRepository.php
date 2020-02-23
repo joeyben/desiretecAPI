@@ -446,4 +446,11 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
         return null;
     }
+
+    public function getTourOperators(int $whitelabelId)
+    {
+        $whitelabelOffer = \App\Models\WhitelabelAutooffer::where('whitelabel_id', $whitelabelId)->first();
+
+        return $whitelabelOffer ? $whitelabelOffer['tourOperators'] : '';
+    }
 }

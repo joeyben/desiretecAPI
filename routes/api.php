@@ -42,6 +42,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
     Route::get('whitelabel/{id}', 'WhitelabelController@getWhitelabelBySlug');
     Route::get('wish/store', 'WishesController@store');
+    Route::get('tnb', 'WhitelabelController@getTnb');
 
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('wishes', 'WishesController@getWishes');
@@ -60,6 +61,10 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
         Route::group(['prefix' => 'account'], function () {
             Route::put('update/{id}', 'AccountController@update');
+        });
+
+        Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'account'], function () {
+            Route::put('changePassword', 'AccountController@changePassword');
         });
 
         Route::group(['prefix' => 'offers'], function () {

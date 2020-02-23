@@ -1,8 +1,8 @@
 <?php
 $domain_env = array(
-    'local_url' => 'https://.com',
-    'development_url' => 'https://.reise-wunsch.com',
-    'production_url' => 'https://.reisewunschservice.de',
+    'local_url' => 'https://dk-ferien.com',
+    'development_url' => 'https://dk-ferien.reise-wunsch.com',
+    'production_url' => 'https://dk-ferien.reisewunschservice.de',
 );
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
