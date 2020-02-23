@@ -92,9 +92,12 @@ class WhitelabelController extends Controller
      */
     public function getWhitelabelByHost(string $host)
     {
+
+        $id = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
+
         $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
             new EagerLoad(['footers']),
-            new Where('name', $host),
+            new Where('id', $id),
         ])->first();
 
         $background = $this->moduleWhitelabelsRepository->getBackgroundImage($whitelabel);
