@@ -58,7 +58,8 @@ class MessagesController extends APIController implements MessagesControllerInte
                                 ->get();
 
         foreach ($agentMessages as $agentMessage) {
-            $agentMessage['avatar'] = $agentMessage['avatar'];
+            $path = Storage::disk('s3')->url('img/agent/');
+            $agentMessage['avatar'] = $path . $agentMessage['avatar'];
         }
 
         $messages = array_merge($userMessages->toArray(), $agentMessages->toArray());
