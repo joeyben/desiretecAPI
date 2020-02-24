@@ -80,7 +80,7 @@ class MessagesController extends APIController implements MessagesControllerInte
 
         if ($this->auth->user()->hasRole(Flag::SELLER_ROLE) && Auth::guard('agent')->check()) {
             $agentId = Auth::guard('agent')->user()->id;
-            $wish = $this->wishesRepository->find($request->wish_id);
+            $wish = $this->wishesRepository->getById($request->wish_id);
 
             $this->wishesRepository->update($wish, ['agent_id' => $agentId]);
         }
@@ -120,7 +120,7 @@ class MessagesController extends APIController implements MessagesControllerInte
             $m->message = $request->input('message');
 
             if ($m->save()) {
-                return $this->respondUpdated('message deleted successfully');
+                return $this->respondUpdated('message updated successfully');
             }
             throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
         } catch (Exception $e) {
