@@ -21,13 +21,21 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-body border-top-primary text-center">
-                    <h6 class="mb-0 font-weight-semibold">
-                        {{ Auth::user()->whitelabels()->first()->display_name }}
-                        <span class="badge bg-warning-400 align-self-center ml-auto">In Bearbeitung</span>
-                    </h6>
-                    <p class="mb-3 text-muted">Bitte geben Sie die erforderlichen Informationen für jeden Schritt ein</p>
+                    @if(current_step() >= 12)
+                        <h6 class="mb-0 font-weight-semibold">
+                            {{ Auth::user()->whitelabels()->first()->display_name }}
+                            <span class="badge bg-success-800 align-self-center ml-auto">Done</span>
+                        </h6>
+                    @else
+                        <h6 class="mb-0 font-weight-semibold">
+                            {{ Auth::user()->whitelabels()->first()->display_name }}
+                            <span class="badge bg-warning-400 align-self-center ml-auto">In Bearbeitung</span>
+                        </h6>
+                        <p class="mb-3 text-muted">Bitte geben Sie die erforderlichen Informationen für jeden Schritt ein</p>
+                    @endif
 
-                    <div class="progress mb-3">
+
+                    <div class="progress mb-3 mt-3">
                         <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: {{ $quote }}%">
                             <span>{{ $quote }}% Complete</span>
                         </div>
@@ -38,6 +46,11 @@
                             <a role="button" class="btn bg-blue-400" href="{{ Flag::step()[current_step()]['url'] }}">{{ Flag::step()[current_step()]['name'] }}</a>
                         @endif
                     </div>
+                    @if(current_step() >= 12)
+                        <div>
+                            <a role="button" class="btn bg-blue-400 m-4" href="{{ route('admin.dashboard') }}">START</a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

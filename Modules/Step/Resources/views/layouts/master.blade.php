@@ -63,7 +63,11 @@ if (!empty($google_analytics)) {
         @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
             <a href="{{ live_preview_url() }}" target="_blank" class="btn btn-outline bg-orange-800 text-orange-800 border-orange-800 text-uppercase font-size-sm line-height-sm font-weight-semibold py-2 px-3 ml-sm-4 shadow  d-block d-sm-inline-block">Live Preview <i class="icon-circle-right2 ml-2"></i></a>
            @isset($step)
-                <a href="{{ $step['url'] }}" class="btn bg-orange-800 text-uppercase font-size-sm line-height-sm font-weight-semibold py-2 px-3 ml-sm-4 shadow  d-block d-sm-inline-block"> {{ $step['name'] }} <i class="icon-circle-right2 ml-2"></i></a>
+               @if($step['name'] !== 'Dashboard')
+                    <a href="{{ $step['url'] }}" class="btn bg-orange-800 text-uppercase font-size-sm line-height-sm font-weight-semibold py-2 px-3 ml-sm-4 shadow  d-block d-sm-inline-block"> {{ $step['name'] }} <i class="icon-circle-right2 ml-2"></i></a>
+               @else
+                    <a href="{{ $step['url'] }}" class="btn bg-success text-uppercase font-size-sm line-height-sm font-weight-semibold py-2 px-3 ml-sm-4 shadow  d-block d-sm-inline-block"> {{ $step['name'] }} <i class="icon-circle-right2 ml-2"></i></a>
+                @endif
            @endisset()
         @endif
         <ul class="navbar-nav ml-auto" id="notificationsComponent">

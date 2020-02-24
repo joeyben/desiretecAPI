@@ -73,14 +73,25 @@ class WhitelabelsController extends Controller
         return view('whitelabels::provider', compact(['step']));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
+
+    public function snippet()
     {
-        return view('whitelabels::create');
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int) $whitelabel->state < 11) {
+                $this->whitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' => 11]
+                );
+            }
+
+            $step = Flag::step()[12];
+        }
+
+        return view('whitelabels::snippet', compact(['step', 'whitelabel']));
     }
 
     /**
