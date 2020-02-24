@@ -90,7 +90,7 @@
       this.initValues()
     },
     watch: {
-      layer(val) {
+      layer (val) {
         this.initValues()
       }
     },

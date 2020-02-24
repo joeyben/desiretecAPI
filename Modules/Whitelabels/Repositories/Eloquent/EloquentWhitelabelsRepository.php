@@ -362,11 +362,11 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
         if (null !== $whitelabel) {
             return $this->withCriteria([
-                new EagerLoad(['layers']),
+                new EagerLoad(['layers', 'hosts']),
             ])->find($whitelabel->id);
         } elseif ($first) {
             return $this->withCriteria([
-                new EagerLoad(['layers']),
+                new EagerLoad(['layers', 'hosts']),
             ])->first();
         }
     }
@@ -467,5 +467,28 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $whitelabelOffer = \App\Models\WhitelabelAutooffer::where('whitelabel_id', $whitelabelId)->first();
 
         return $whitelabelOffer ? $whitelabelOffer['tourOperators'] : '';
+    }
+
+    public function addHost(string $host)
+    {
+        $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
+        WhitelabelHost::create([
+                'host' => $host,
+                'whitelabel_id' => $whitelabel->id
+        ]);
+
+        return $whitelabel;
+    }
+
+    public function deleteHost(string $host)
+    {
+        $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
+        $host = WhitelabelHost::where('whitelabel_id', $whitelabel->id)->where('host', $host)->first();
+
+        if ($host) {
+            $host->delete();
+        }
+
+        return $whitelabel;
     }
 }
