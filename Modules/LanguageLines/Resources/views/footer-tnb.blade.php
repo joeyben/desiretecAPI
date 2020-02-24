@@ -31,6 +31,17 @@
                 <div class="form-group row">
                     {{ Form::textarea('footer_tnb_editor', $result['data']['text'], ['id' => 'footerTnbEditor', 'name' => 'footer_tnb_editor', 'class' => 'form-control']) }}
                 </div>
+                <div class="form-group row">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" name="checkbox" class="form-check-input">
+                            <p class="font-italic font-size-xs">
+                                 <span class="font-weight-black">@lang('tnb.title')</span>
+                                 @lang('tnb.message')
+                            </p>
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-right">
                 {{ Form::submit(trans('button.save'), ['class' => 'btn', 'style' => 'background-color: rgb(19, 206, 102); border-color: rgb(19, 206, 102); color: white;']) }}
