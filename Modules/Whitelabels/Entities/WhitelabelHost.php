@@ -9,4 +9,12 @@ class WhitelabelHost extends Model
 
     protected $guarded = [];
 
+    /**
+     * Wishes belongsTo with Whitelabel.
+     */
+    public function whitelabel()
+    {
+        return $this->belongsTo(Whitelabel::class);
+    }
+
 }
