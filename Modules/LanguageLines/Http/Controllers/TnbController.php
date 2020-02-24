@@ -92,40 +92,45 @@ class TnbController extends Controller
 
     public function tnb(string $lang)
     {
-        $step = null;
-
-        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
-
-            if ((int) $whitelabel->state < 6) {
-                $this->whitelabels->update(
-                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
-                    ['state' => 6]
-                );
+        try {
+            if ($this->auth->guard('web')->user()->whitelabels()->first() === null){
+                abort(403, trans('errors.user.nowhitelabel'));
             }
 
-            $step = Flag::step()[7];
-        }
+            $step = null;
 
-        try {
+            if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+                if ((int) $whitelabel->state < 6) {
+                    $this->whitelabels->update(
+                        $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                        ['state' => 6]
+                    );
+                }
+
+                $step = Flag::step()[7];
+            }
+
+            if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $whiteLabelID = getCurrentWhiteLabelField('id');
+                $whiteLabelName = getCurrentWhiteLabelField('display_name');
+                $domain = getCurrentWhiteLabelField('domain');
+            } else if($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)){
+                $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
+                $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
+                $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
+            } else {
+                return redirect(route('provider.footer.tnb', $lang))->with('error', trans('User guard is different'));
+            }
+
              if (!$this->isOldWhitelabel()) {
                  // new Logic
-                 if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                     $whiteLabelID = getCurrentWhiteLabelField('id');
-                     $whiteLabelName = getCurrentWhiteLabelField('display_name');
-                     $domain = getCurrentWhiteLabelField('domain');
-                 } else if($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)){
-                     $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
-                     $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
-                     $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
-                 } else {
-                     return redirect(route('provider.footer.tnb', $lang))->with('error', trans('User guard is different'));
-                 }
-
                  if (!$this->languageline->withCriteria([
                      new Where('locale', $lang),
                      new Where('key', 'footer.tnb'),
                      new Where('group', 'layer'),
+                     new Where('whitelabel_id', $whiteLabelID),
                  ])->get()->count()) {
                      $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
                      $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
@@ -142,6 +147,7 @@ class TnbController extends Controller
                          new Where('locale', $lang),
                          new Where('key', 'footer.tnb'),
                          new Where('group', 'layer'),
+                         new Where('whitelabel_id', $whiteLabelID),
                      ])->first()->text;
                  }
              } else {
