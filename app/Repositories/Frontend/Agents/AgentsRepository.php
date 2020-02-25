@@ -206,21 +206,22 @@ class AgentsRepository extends BaseRepository
 
     public function deleteAgent($id, $request)
     {
-        $arr = explode(".", $request->root());
-        $domain = explode("//", $arr[0]);
-
-        $user = Auth::guard('api')->user()->whitelabels()->first();
-
-        $whitelabel_group = DB::table('groups')->where('whitelabel_id', getWhitelabelBySlug($domain[1])->first()->id)->first();
+        $whitelabel_group = null;
         $user_group = null;
         $first_agent = null;
 
+        $whitelabel = Auth::guard('api')->user()->whitelabels()->first();
+
+        if($whitelabel) {
+            $whitelabel_group = DB::table('groups')->where('whitelabel_id', $whitelabel->id);
+        }
         if ($whitelabel_group) {
             $user_group = DB::table('group_user')->where('group_id', $whitelabel_group->id)->first();
         }
         if ($user_group) {
             $first_agent = DB::table('agents')->where([['user_id', $user_group->user_id], ['status', 'Active'], ['id', '!=', $id]])->first();
         }
+
         if ($first_agent) {
             DB::table('offers')->where('agent_id', '=', $id)->update(['agent_id' => $first_agent->id]);
             DB::table('message')->where('agent_id', '=', $id)->update(['agent_id' => $first_agent->id]);
