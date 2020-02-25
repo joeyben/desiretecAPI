@@ -675,7 +675,7 @@ var exitIntent = window.exitIntent || {};
             });
         }
         dt.PopupManager.init();
-        dt.Tracking.init('bentour_exitwindow','UA-105970361-14');
+        // dt.Tracking.init('bentour_exitwindow','UA-105970361-14');
         dt.triggerButton($event);
         if(isMobile() && dt.PopupManager.decoder){
             dt.scrollUpDetect();
