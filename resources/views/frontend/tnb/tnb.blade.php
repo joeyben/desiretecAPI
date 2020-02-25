@@ -22,7 +22,7 @@
         @if(isset($tnb))
             {!! $tnb !!}
         @else
-            Lang::get('layer.footer.tnb') !!}
+            {!! Lang::get('layer.footer.tnb') !!}
         @endif
     </body>
 </html>

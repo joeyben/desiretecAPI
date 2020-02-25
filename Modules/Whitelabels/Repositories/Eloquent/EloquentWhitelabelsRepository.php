@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManager;
 use Modules\Whitelabels\Entities\Whitelabel;
+use Modules\Whitelabels\Entities\WhitelabelHost;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
@@ -27,6 +28,20 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     public function model()
     {
         return Whitelabel::class;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWhitelabelNameByHost(string $host)
+    {
+        $query = WhitelabelHost::select([
+                config('module.whitelabel_host.table') . '.whitelabel_id'
+            ])
+            ->where(config('module.whitelabel_host.table') . '.host', 'LIKE', '%' . $host . '%')
+            ->first();
+
+        return $query->whitelabel_id;
     }
 
     public function updateRoute(int $id, string $name, string $subDomain)
@@ -347,11 +362,11 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
         if (null !== $whitelabel) {
             return $this->withCriteria([
-                new EagerLoad(['layers']),
+                new EagerLoad(['layers', 'hosts']),
             ])->find($whitelabel->id);
         } elseif ($first) {
             return $this->withCriteria([
-                new EagerLoad(['layers']),
+                new EagerLoad(['layers', 'hosts']),
             ])->first();
         }
     }
@@ -452,5 +467,28 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $whitelabelOffer = \App\Models\WhitelabelAutooffer::where('whitelabel_id', $whitelabelId)->first();
 
         return $whitelabelOffer ? $whitelabelOffer['tourOperators'] : '';
+    }
+
+    public function addHost(string $host)
+    {
+        $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
+        WhitelabelHost::create([
+                'host' => $host,
+                'whitelabel_id' => $whitelabel->id
+        ]);
+
+        return $whitelabel;
+    }
+
+    public function deleteHost(string $host)
+    {
+        $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
+        $host = WhitelabelHost::where('whitelabel_id', $whitelabel->id)->where('host', $host)->first();
+
+        if ($host) {
+            $host->delete();
+        }
+
+        return $whitelabel;
     }
 }

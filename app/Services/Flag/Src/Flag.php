@@ -126,8 +126,13 @@ class Flag implements FlagInterface
             ],
             11 => [
                 'name'  => 'Step 11: Download JS Snippet',
-                'route' => '#',
-                'url'   => '#'
+                'route' => 'provider.whitelabels.snippet',
+                'url'   => route('provider.whitelabels.snippet')
+            ],
+            12 => [
+                'name'  => 'Dashboard',
+                'route' => 'admin.dashboard',
+                'url'   => route('admin.dashboard')
             ]
         ];
     }

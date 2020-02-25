@@ -123,4 +123,6 @@ return [
     'default'                       => 'Default',
     'licence'                       => 'Lizenz',
     'duplicate'                     => 'Duplikat',
+    'host'                          => 'Domain',
+    'hosts'                         => 'Domains',
 ];

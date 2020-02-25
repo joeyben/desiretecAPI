@@ -315,6 +315,7 @@ class WhitelabelsController extends Controller
             $result['whitelabel']['visual'] = null !== $visual ? [$visual->first()] : [];
             $result['whitelabel']['sub_domain'] = $this->whitelabels->getSubDomain($domain);
             $result['whitelabel']['main_domain'] = $this->whitelabels->getDomain($domain);
+            $result['whitelabel']['hostsList'] = $result['whitelabel']->hosts->pluck('host');
 
             $result['success'] = true;
             $result['status'] = 200;
