@@ -10,7 +10,7 @@
             <div class="form-group row mt-5">
                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline') }}</label>
                 <div class="col-lg-9">
-                    <input type="text" class="form-control" :class="errors.has('headline') ? 'is-invalid': ''" :id="name + 'headline'" :name="name + 'headline'" :placeholder="trans('modals.headline')"  v-model="headline"/>
+                    <input type="text" class="form-control" :class="errors.has('headline') ? 'is-invalid': ''" :id="name + 'headline'" name="headline" :placeholder="trans('modals.headline')"  v-model="headline"/>
                     <div class="invalid-feedback">
                         <strong v-text="errors.get('headline')"></strong>
                     </div>
@@ -20,7 +20,7 @@
             <div class="form-group row">
                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline') }}</label>
                 <div class="col-lg-9">
-                    <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline') ? 'is-invalid': ''" :id="name + 'subheadline'" :name="name + 'subheadline'" :placeholder="trans('modals.subheadline')"  v-model="subheadline"></textarea>
+                    <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline') ? 'is-invalid': ''" :id="name + 'subheadline'" name="subheadline" :placeholder="trans('modals.subheadline')"  v-model="subheadline"></textarea>
                     <div class="invalid-feedback">
                         <strong v-text="errors.get('subheadline')"></strong>
                     </div>
@@ -32,7 +32,7 @@
             <div class="form-group row">
                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline_success') }}</label>
                 <div class="col-lg-9">
-                    <input type="text" class="form-control" :class="errors.has('headline_success') ? 'is-invalid': ''" :id="name + 'headline_success'" :name="name + 'headline_success'" :placeholder="trans('modals.headline_success')" v-model="headline_success"/>
+                    <input type="text" class="form-control" :class="errors.has('headline_success') ? 'is-invalid': ''" :id="name + 'headline_success'" name="headline_success" :placeholder="trans('modals.headline_success')" v-model="headline_success"/>
                     <div class="invalid-feedback">
                         <strong v-text="errors.get('headline_success')"></strong>
                     </div>
@@ -42,7 +42,7 @@
             <div class="form-group row">
                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline_success') }}</label>
                 <div class="col-lg-9">
-                    <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline_success') ? 'is-invalid': ''" :id="name + 'subheadline_success'" :name="name + 'subheadline_success'" :placeholder="trans('modals.subheadline_success')"  v-model="subheadline_success"></textarea>
+                    <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline_success') ? 'is-invalid': ''" :id="name + 'subheadline_success'" name="subheadline_success" :placeholder="trans('modals.subheadline_success')"  v-model="subheadline_success"></textarea>
                     <div class="invalid-feedback">
                         <strong v-text="errors.get('subheadline_success')"></strong>
                     </div>
@@ -124,7 +124,6 @@
             showClose: true,
             type: 'success'
           })
-          this.errors.drop()
         } else {
           this.$message({
             message: response.data.message,

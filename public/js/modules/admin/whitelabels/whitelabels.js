@@ -101414,7 +101414,7 @@ exports = module.exports = __webpack_require__(8)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -101571,7 +101571,6 @@ exports.default = {
           showClose: true,
           type: 'success'
         });
-        this.errors.drop();
       } else {
         this.$message({
           message: response.data.message,
@@ -101667,7 +101666,7 @@ var render = function() {
               attrs: {
                 type: "text",
                 id: _vm.name + "headline",
-                name: _vm.name + "headline",
+                name: "headline",
                 placeholder: _vm.trans("modals.headline")
               },
               domProps: { value: _vm.headline },
@@ -101710,7 +101709,7 @@ var render = function() {
                 rows: "5",
                 cols: "5",
                 id: _vm.name + "subheadline",
-                name: _vm.name + "subheadline",
+                name: "subheadline",
                 placeholder: _vm.trans("modals.subheadline")
               },
               domProps: { value: _vm.subheadline },
@@ -101758,7 +101757,7 @@ var render = function() {
               attrs: {
                 type: "text",
                 id: _vm.name + "headline_success",
-                name: _vm.name + "headline_success",
+                name: "headline_success",
                 placeholder: _vm.trans("modals.headline_success")
               },
               domProps: { value: _vm.headline_success },
@@ -101803,7 +101802,7 @@ var render = function() {
                 rows: "5",
                 cols: "5",
                 id: _vm.name + "subheadline_success",
-                name: _vm.name + "subheadline_success",
+                name: "subheadline_success",
                 placeholder: _vm.trans("modals.subheadline_success")
               },
               domProps: { value: _vm.subheadline_success },
