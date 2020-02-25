@@ -19,7 +19,7 @@
     <div class="content" id="whitelabelsProviderComponent">
         <div class="row">
             <div class="alert alert-info border-0 alert-dismissible col-md-12 offset-md-12">
-                Kopieren Sie dieses Snippet und fügen Sie es auf Ihrer Website ein
+                Kopieren Sie dieses Snippet und fügen Sie es auf Ihrer Website ein:
             </div>
         </div>
 
