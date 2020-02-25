@@ -65,7 +65,7 @@ class AgentsController extends APIController implements AgentsControllerInterfac
     public function delete(int $id, DeleteAgentsRequest $request)
     {
         try {
-            $this->repository->deleteAgent($id);
+            $this->repository->deleteAgent($id, $request);
 
             return $this->respondUpdated('agent deleted successfully');
         } catch (Exception $e) {
