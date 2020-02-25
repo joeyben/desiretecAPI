@@ -165,7 +165,7 @@
                     <ul class="offers">
 
                         @foreach($offers as $key => $offer)
-                            @if (!$offer['hotel_data']['hotel'])
+                            @if (!$offer['hotel_data']['data'])
                                 @continue
                             @endif
                             @php
