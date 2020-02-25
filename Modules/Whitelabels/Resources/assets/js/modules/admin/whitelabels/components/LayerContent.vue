@@ -27,8 +27,6 @@
                 </div>
             </div>
 
-            <legend class="text-uppercase font-size-sm font-weight-bold">{{ trans('modals.message_success') }}</legend>
-
             <div class="form-group row">
                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline_success') }}</label>
                 <div class="col-lg-9">
