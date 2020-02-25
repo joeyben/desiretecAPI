@@ -1902,7 +1902,7 @@
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(384)("./" + name);
+                __webpack_require__(394)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4579,7 +4579,7 @@
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(383)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(393)(module)))
 
 /***/ }),
 /* 1 */
@@ -16929,7 +16929,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26), __webpack_require__(223).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27), __webpack_require__(223).setImmediate))
 
 /***/ }),
 /* 5 */
@@ -17576,6 +17576,171 @@ module.exports = {
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// eslint-disable-next-line
+var Errors = exports.Errors = function () {
+  function Errors() {
+    _classCallCheck(this, Errors);
+
+    this.errors = {};
+  }
+
+  _createClass(Errors, [{
+    key: 'get',
+    value: function get(field) {
+      if (this.errors[field]) {
+        return this.errors[field][0];
+      }
+    }
+  }, {
+    key: 'getWithMutator',
+    value: function getWithMutator(field, mutator) {
+      if (this.errors[field]) {
+        return this.errors[field][0].replace(field, mutator);
+      }
+    }
+  }, {
+    key: 'clear',
+    value: function clear(field) {
+      if (this.errors !== undefined && this.errors[field]) delete this.errors[field];
+    }
+  }, {
+    key: 'drop',
+    value: function drop() {
+      this.errors = {};
+    }
+  }, {
+    key: 'has',
+    value: function has(field) {
+      return this.errors.hasOwnProperty(field);
+    }
+  }, {
+    key: 'first',
+    value: function first(field) {
+      if (this.errors[field]) {
+        return this.errors[field];
+      }
+    }
+  }, {
+    key: 'any',
+    value: function any() {
+      return Object.keys(this.errors).length > 0;
+    }
+  }, {
+    key: 'record',
+    value: function record(errors) {
+      this.errors = errors;
+    }
+  }, {
+    key: 'getErrors',
+    value: function getErrors() {
+      var msg = '';
+      for (var field in this.errors) {
+        msg += this.errors[field][0] + '<br/>';
+      }
+      return msg;
+    }
+  }]);
+
+  return Errors;
+}();
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17849,7 +18014,7 @@ function objToArray(obj) {
 }
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18089,236 +18254,7 @@ var isInContainer = exports.isInContainer = function isInContainer(el, container
 };
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  // eslint-disable-next-line no-new-func
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-
-/***/ }),
 /* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// eslint-disable-next-line
-var Errors = exports.Errors = function () {
-  function Errors() {
-    _classCallCheck(this, Errors);
-
-    this.errors = {};
-  }
-
-  _createClass(Errors, [{
-    key: 'get',
-    value: function get(field) {
-      if (this.errors[field]) {
-        return this.errors[field][0];
-      }
-    }
-  }, {
-    key: 'getWithMutator',
-    value: function getWithMutator(field, mutator) {
-      if (this.errors[field]) {
-        return this.errors[field][0].replace(field, mutator);
-      }
-    }
-  }, {
-    key: 'clear',
-    value: function clear(field) {
-      if (this.errors !== undefined && this.errors[field]) delete this.errors[field];
-    }
-  }, {
-    key: 'drop',
-    value: function drop() {
-      this.errors = {};
-    }
-  }, {
-    key: 'has',
-    value: function has(field) {
-      return this.errors.hasOwnProperty(field);
-    }
-  }, {
-    key: 'first',
-    value: function first(field) {
-      if (this.errors[field]) {
-        return this.errors[field];
-      }
-    }
-  }, {
-    key: 'any',
-    value: function any() {
-      return Object.keys(this.errors).length > 0;
-    }
-  }, {
-    key: 'record',
-    value: function record(errors) {
-      this.errors = errors;
-    }
-  }, {
-    key: 'getErrors',
-    value: function getErrors() {
-      var msg = '';
-      for (var field in this.errors) {
-        msg += this.errors[field][0] + '<br/>';
-      }
-      return msg;
-    }
-  }]);
-
-  return Errors;
-}();
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-function _broadcast(componentName, eventName, params) {
-  this.$children.forEach(function (child) {
-    var name = child.$options.componentName;
-
-    if (name === componentName) {
-      child.$emit.apply(child, [eventName].concat(params));
-    } else {
-      _broadcast.apply(child, [componentName, eventName].concat([params]));
-    }
-  });
-}
-exports.default = {
-  methods: {
-    dispatch: function dispatch(componentName, eventName, params) {
-      var parent = this.$parent || this.$root;
-      var name = parent.$options.componentName;
-
-      while (parent && (!name || name !== componentName)) {
-        parent = parent.$parent;
-
-        if (parent) {
-          name = parent.$options.componentName;
-        }
-      }
-      if (parent) {
-        parent.$emit.apply(parent, [eventName].concat(params));
-      }
-    },
-    broadcast: function broadcast(componentName, eventName, params) {
-      _broadcast.call(this, componentName, eventName, params);
-    }
-  }
-};
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-
-/***/ }),
-/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -18546,11 +18482,75 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  // eslint-disable-next-line no-new-func
+  : Function('return this')();
+if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+function _broadcast(componentName, eventName, params) {
+  this.$children.forEach(function (child) {
+    var name = child.$options.componentName;
+
+    if (name === componentName) {
+      child.$emit.apply(child, [eventName].concat(params));
+    } else {
+      _broadcast.apply(child, [componentName, eventName].concat([params]));
+    }
+  });
+}
+exports.default = {
+  methods: {
+    dispatch: function dispatch(componentName, eventName, params) {
+      var parent = this.$parent || this.$root;
+      var name = parent.$options.componentName;
+
+      while (parent && (!name || name !== componentName)) {
+        parent = parent.$parent;
+
+        if (parent) {
+          name = parent.$options.componentName;
+        }
+      }
+      if (parent) {
+        parent.$emit.apply(parent, [eventName].concat(params));
+      }
+    },
+    broadcast: function broadcast(componentName, eventName, params) {
+      _broadcast.call(this, componentName, eventName, params);
+    }
+  }
+};
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+
+/***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(17);
-var createDesc = __webpack_require__(32);
+var createDesc = __webpack_require__(33);
 module.exports = __webpack_require__(18) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
@@ -18563,7 +18563,7 @@ module.exports = __webpack_require__(18) ? function (object, key, value) {
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(31);
+var anObject = __webpack_require__(32);
 var IE8_DOM_DEFINE = __webpack_require__(71);
 var toPrimitive = __webpack_require__(49);
 var dP = Object.defineProperty;
@@ -18608,8 +18608,8 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var store = __webpack_require__(53)('wks');
-var uid = __webpack_require__(35);
-var Symbol = __webpack_require__(11).Symbol;
+var uid = __webpack_require__(36);
+var Symbol = __webpack_require__(13).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
 var $exports = module.exports = function (name) {
@@ -18748,6 +18748,53 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 
 /***/ }),
 /* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(357)
+/* template */
+var __vue_template__ = __webpack_require__(359)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/utils/UploadAttachments.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-57f8942f", Component.options)
+  } else {
+    hotAPI.reload("data-v-57f8942f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 27 */
 /***/ (function(module, exports) {
 
 var g;
@@ -18774,7 +18821,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18982,7 +19029,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19009,7 +19056,7 @@ exports.default = function (target) {
 ;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19027,7 +19074,7 @@ function isKorean(text) {
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint-disable no-undefined */
@@ -19054,7 +19101,7 @@ module.exports = function ( delay, atBegin, callback ) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(23);
@@ -19065,7 +19112,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -19079,7 +19126,7 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
@@ -19092,14 +19139,14 @@ module.exports = Object.keys || function keys(O) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = true;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 var id = 0;
@@ -19110,57 +19157,10 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(357)
-/* template */
-var __vue_template__ = __webpack_require__(359)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/utils/UploadAttachments.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-57f8942f", Component.options)
-  } else {
-    hotAPI.reload("data-v-57f8942f", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
 
 
 /***/ }),
@@ -19626,14 +19626,14 @@ module.exports = __webpack_require__(65);
 /***/ 21:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(29);
+module.exports = __webpack_require__(30);
 
 /***/ }),
 
 /***/ 4:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(14);
 
 /***/ }),
 
@@ -20410,7 +20410,7 @@ input.install = function (Vue) {
 /***/ 9:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(28);
+module.exports = __webpack_require__(29);
 
 /***/ })
 
@@ -20983,14 +20983,14 @@ module.exports = __webpack_require__(42);
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(11);
 
 /***/ }),
 
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
@@ -21204,11 +21204,11 @@ exports.default = aria.Utils;
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(11);
+var global = __webpack_require__(13);
 var core = __webpack_require__(22);
 var ctx = __webpack_require__(267);
 var hide = __webpack_require__(16);
-var has = __webpack_require__(14);
+var has = __webpack_require__(15);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -21314,7 +21314,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(53)('keys');
-var uid = __webpack_require__(35);
+var uid = __webpack_require__(36);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
@@ -21325,7 +21325,7 @@ module.exports = function (key) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var core = __webpack_require__(22);
-var global = __webpack_require__(11);
+var global = __webpack_require__(13);
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || (global[SHARED] = {});
 
@@ -21333,7 +21333,7 @@ var store = global[SHARED] || (global[SHARED] = {});
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
   version: core.version,
-  mode: __webpack_require__(34) ? 'pure' : 'global',
+  mode: __webpack_require__(35) ? 'pure' : 'global',
   copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
 });
 
@@ -21367,7 +21367,7 @@ module.exports = {};
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(17).f;
-var has = __webpack_require__(14);
+var has = __webpack_require__(15);
 var TAG = __webpack_require__(20)('toStringTag');
 
 module.exports = function (it, tag, stat) {
@@ -21386,9 +21386,9 @@ exports.f = __webpack_require__(20);
 /* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(11);
+var global = __webpack_require__(13);
 var core = __webpack_require__(22);
-var LIBRARY = __webpack_require__(34);
+var LIBRARY = __webpack_require__(35);
 var wksExt = __webpack_require__(58);
 var defineProperty = __webpack_require__(17).f;
 module.exports = function (name) {
@@ -21509,7 +21509,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(7);
-var normalizeHeaderName = __webpack_require__(392);
+var normalizeHeaderName = __webpack_require__(402);
 
 var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 var DEFAULT_CONTENT_TYPE = {
@@ -22028,7 +22028,7 @@ var _vue = __webpack_require__(4);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _merge = __webpack_require__(28);
+var _merge = __webpack_require__(29);
 
 var _merge2 = _interopRequireDefault(_merge);
 
@@ -22040,7 +22040,7 @@ var _scrollbarWidth = __webpack_require__(40);
 
 var _scrollbarWidth2 = _interopRequireDefault(_scrollbarWidth);
 
-var _dom = __webpack_require__(9);
+var _dom = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22262,7 +22262,7 @@ exports.PopupManager = _popupManager2.default;
 
 exports.__esModule = true;
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(10);
 
 /**
  * Show migrating guide in browser console.
@@ -22341,7 +22341,7 @@ var _vue = __webpack_require__(4);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _dom = __webpack_require__(9);
+var _dom = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22611,7 +22611,7 @@ function normalizeComponent (
 /***/ 4:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(14);
 
 /***/ }),
 
@@ -23451,7 +23451,7 @@ module.exports = !__webpack_require__(18) && !__webpack_require__(24)(function (
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(23);
-var document = __webpack_require__(11).document;
+var document = __webpack_require__(13).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
 module.exports = function (it) {
@@ -23463,7 +23463,7 @@ module.exports = function (it) {
 /* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(14);
+var has = __webpack_require__(15);
 var toIObject = __webpack_require__(19);
 var arrayIndexOf = __webpack_require__(270)(false);
 var IE_PROTO = __webpack_require__(52)('IE_PROTO');
@@ -23522,7 +23522,7 @@ module.exports = function (it) {
 
 "use strict";
 
-var LIBRARY = __webpack_require__(34);
+var LIBRARY = __webpack_require__(35);
 var $export = __webpack_require__(48);
 var redefine = __webpack_require__(78);
 var hide = __webpack_require__(16);
@@ -23604,7 +23604,7 @@ module.exports = __webpack_require__(16);
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(31);
+var anObject = __webpack_require__(32);
 var dPs = __webpack_require__(278);
 var enumBugKeys = __webpack_require__(54);
 var IE_PROTO = __webpack_require__(52)('IE_PROTO');
@@ -24179,7 +24179,7 @@ src_radio.install = function (Vue) {
 /***/ 4:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(14);
 
 /***/ })
 
@@ -24866,13 +24866,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(365)
+  __webpack_require__(370)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(367)
+var __vue_script__ = __webpack_require__(372)
 /* template */
-var __vue_template__ = __webpack_require__(368)
+var __vue_template__ = __webpack_require__(373)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -36904,12 +36904,12 @@ module.exports = function bind(fn, thisArg) {
 
 
 var utils = __webpack_require__(7);
-var settle = __webpack_require__(393);
-var buildURL = __webpack_require__(395);
-var parseHeaders = __webpack_require__(396);
-var isURLSameOrigin = __webpack_require__(397);
+var settle = __webpack_require__(403);
+var buildURL = __webpack_require__(405);
+var parseHeaders = __webpack_require__(406);
+var isURLSameOrigin = __webpack_require__(407);
 var createError = __webpack_require__(217);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(398);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(408);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -37005,7 +37005,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(399);
+      var cookies = __webpack_require__(409);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -37087,7 +37087,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(394);
+var enhanceError = __webpack_require__(404);
 
 /**
  * Create an Error with the specified message, config, error code, and response.
@@ -37153,35 +37153,35 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _columns = __webpack_require__(418);
+var _columns = __webpack_require__(428);
 
 var _columns2 = _interopRequireDefault(_columns);
 
-var _sort = __webpack_require__(419);
+var _sort = __webpack_require__(429);
 
 var _sort2 = _interopRequireDefault(_sort);
 
-var _Detail = __webpack_require__(420);
+var _Detail = __webpack_require__(430);
 
 var _Detail2 = _interopRequireDefault(_Detail);
 
-var _Actions = __webpack_require__(423);
+var _Actions = __webpack_require__(433);
 
 var _Actions2 = _interopRequireDefault(_Actions);
 
-var _CustomLinkById = __webpack_require__(428);
+var _CustomLinkById = __webpack_require__(438);
 
 var _CustomLinkById2 = _interopRequireDefault(_CustomLinkById);
 
-var _CustomLinkByName = __webpack_require__(431);
+var _CustomLinkByName = __webpack_require__(441);
 
 var _CustomLinkByName2 = _interopRequireDefault(_CustomLinkByName);
 
-var _CustomStatus = __webpack_require__(434);
+var _CustomStatus = __webpack_require__(444);
 
 var _CustomStatus2 = _interopRequireDefault(_CustomStatus);
 
-var _CustomUsers = __webpack_require__(437);
+var _CustomUsers = __webpack_require__(447);
 
 var _CustomUsers2 = _interopRequireDefault(_CustomUsers);
 
@@ -37314,7 +37314,7 @@ if ($layersComponent) {
     routes: [{
       path: '/',
       name: 'root',
-      component: __webpack_require__(361)
+      component: __webpack_require__(366)
     }]
   });
 
@@ -37334,7 +37334,7 @@ if ($contentComponent) {
     routes: [{
       path: '/',
       name: 'root',
-      component: __webpack_require__(370)
+      component: __webpack_require__(375)
     }]
   });
 
@@ -37354,28 +37354,28 @@ if ($whitelabelsComponent) {
     routes: [{
       path: '/',
       name: 'root',
-      component: __webpack_require__(375),
+      component: __webpack_require__(385),
       children: [{
         path: '/edit/:id(\\d+)',
         name: 'root.edit',
-        component: __webpack_require__(445)
+        component: __webpack_require__(455)
       }]
     }, {
       path: '/create',
       name: 'root.create',
-      component: __webpack_require__(448),
+      component: __webpack_require__(458),
       children: [{
         path: '/first',
         name: 'create.first',
-        component: __webpack_require__(454)
+        component: __webpack_require__(464)
       }, {
         path: '/second',
         name: 'create.second',
-        component: __webpack_require__(457)
+        component: __webpack_require__(467)
       }, {
         path: '/third',
         name: 'create.third',
-        component: __webpack_require__(460)
+        component: __webpack_require__(470)
       }]
     }]
   });
@@ -37458,7 +37458,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27)))
 
 /***/ }),
 /* 224 */
@@ -37651,7 +37651,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26), __webpack_require__(38)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27), __webpack_require__(38)))
 
 /***/ }),
 /* 225 */
@@ -41463,7 +41463,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /* eslint-disable */
-module.exports = { 'ar.backup::notifications': { 'backup_failed_body': '\u0645\u0647\u0645: \u062D\u062F\u062B \u062E\u0637\u0623 \u0623\u062B\u0646\u0627\u0621 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A :application_name', 'backup_failed_subject': '\u0623\u062E\u0641\u0642 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A \u0644\u0644 :application_name', 'backup_successful_body': '\u0623\u062E\u0628\u0627\u0631 \u0639\u0638\u064A\u0645\u0629\u060C \u0646\u0633\u062E\u0629 \u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u062C\u062F\u064A\u062F\u0629 \u0644 :application_name \u062A\u0645 \u0625\u0646\u0634\u0627\u0624\u0647\u0627 \u0628\u0646\u062C\u0627\u062D \u0639\u0644\u0649 \u0627\u0644\u0642\u0631\u0635 \u0627\u0644\u0645\u0633\u0645\u0649 :disk_name.', 'backup_successful_subject': '\u0646\u0633\u062E \u0627\u062D\u062A\u064A\u0627\u0637\u064A \u062C\u062F\u064A\u062F \u0646\u0627\u062C\u062D \u0644 :application_name', 'backup_successful_subject_title': '\u0646\u062C\u0627\u062D \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A \u0627\u0644\u062C\u062F\u064A\u062F!', 'cleanup_failed_body': '\u062D\u062F\u062B \u062E\u0637\u0623 \u0623\u062B\u0646\u0627\u0621 \u062A\u0646\u0638\u064A\u0641 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name', 'cleanup_failed_subject': '\u0641\u0634\u0644 \u062A\u0646\u0638\u064A\u0641 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A \u0644\u0644\u062A\u0637\u0628\u064A\u0642 :application_name .', 'cleanup_successful_body': '\u062A\u0646\u0638\u064A\u0641 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u0639\u0644\u0649 \u0627\u0644\u0642\u0631\u0635 \u0627\u0644\u0645\u0633\u0645\u0649 :disk_name \u062A\u0645 \u0628\u0646\u062C\u0627\u062D.', 'cleanup_successful_subject': '\u062A\u0646\u0638\u064A\u0641 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u062A\u0645\u062A \u0628\u0646\u062C\u0627\u062D', 'cleanup_successful_subject_title': '\u062A\u0646\u0638\u064A\u0641 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u062A\u0645 \u0628\u0646\u062C\u0627\u062D!', 'exception_message': '\u0631\u0633\u0627\u0644\u0629 \u0627\u0633\u062A\u062B\u0646\u0627\u0621: :message', 'exception_message_title': '\u0631\u0633\u0627\u0644\u0629 \u0627\u0633\u062A\u062B\u0646\u0627\u0621', 'exception_trace': '\u062A\u062A\u0628\u0639 \u0627\u0644\u0625\u0633\u062A\u062B\u0646\u0627\u0621: :trace', 'exception_trace_title': '\u062A\u062A\u0628\u0639 \u0627\u0644\u0625\u0633\u062A\u062B\u0646\u0627\u0621', 'healthy_backup_found_body': '\u062A\u0639\u062A\u0628\u0631 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u0635\u062D\u064A\u0629. \u0639\u0645\u0644 \u062C\u064A\u062F!', 'healthy_backup_found_subject': '\u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u0639\u0644\u0649 \u0627\u0644\u0642\u0631\u0635 :disk_name \u0635\u062D\u064A\u0629', 'healthy_backup_found_subject_title': '\u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u0635\u062D\u064A\u0629', 'unhealthy_backup_found_body': '\u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u0639\u0644\u0649 \u0627\u0644\u0642\u0631\u0635 :disk_name \u063A\u064A\u0631 \u0635\u062D\u064A\u0629.', 'unhealthy_backup_found_empty': '\u0644\u0627 \u062A\u0648\u062C\u062F \u0646\u0633\u062E \u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644\u0647\u0630\u0627 \u0627\u0644\u062A\u0637\u0628\u064A\u0642 \u0639\u0644\u0649 \u0627\u0644\u0625\u0637\u0644\u0627\u0642.', 'unhealthy_backup_found_full': '\u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u062A\u0633\u062A\u062E\u062F\u0645 \u0627\u0644\u0643\u062B\u064A\u0631 \u0645\u0646 \u0627\u0644\u062A\u062E\u0632\u064A\u0646. \u0627\u0644\u0627\u0633\u062A\u062E\u062F\u0627\u0645 \u0627\u0644\u062D\u0627\u0644\u064A \u0647\u0648 :disk_usage \u0648\u0647\u0648 \u0623\u0639\u0644\u0649 \u0645\u0646 \u0627\u0644\u062D\u062F \u0627\u0644\u0645\u0633\u0645\u0648\u062D \u0628\u0647 \u0645\u0646 :disk_limit.', 'unhealthy_backup_found_not_reachable': '\u0644\u0627 \u064A\u0645\u0643\u0646 \u0627\u0644\u0648\u0635\u0648\u0644 \u0625\u0644\u0649 \u0648\u062C\u0647\u0629 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A. :error', 'unhealthy_backup_found_old': '\u062A\u0645 \u0625\u0646\u0634\u0627\u0621 \u0623\u062D\u062F\u062B \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0641\u064A :date \u0648\u062A\u0639\u062A\u0628\u0631 \u0642\u062F\u064A\u0645\u0629 \u062C\u062F\u0627.', 'unhealthy_backup_found_subject': '\u0645\u0647\u0645: \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u063A\u064A\u0631 \u0635\u062D\u064A\u0629', 'unhealthy_backup_found_subject_title': '\u0645\u0647\u0645: \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u063A\u064A\u0631 \u0635\u062D\u064A\u0629. :problem', 'unhealthy_backup_found_unknown': '\u0639\u0630\u0631\u0627\u060C \u0644\u0627 \u064A\u0645\u0643\u0646 \u062A\u062D\u062F\u064A\u062F \u0633\u0628\u0628 \u062F\u0642\u064A\u0642.' }, 'ar.log-viewer::general': { 'all': '\u062C\u0645\u064A\u0639', 'date': '\u062A\u0627\u0631\u064A\u062E' }, 'ar.log-viewer::levels': { 'alert': '\u0625\u0646\u0630\u0627\u0631', 'all': '\u0627\u0644\u062C\u0645\u064A\u0639', 'critical': '\u062D\u0631\u062C', 'debug': '\u0627\u0644\u062A\u0635\u062D\u064A\u062D', 'emergency': '\u062D\u0627\u0644\u0627\u062A \u0627\u0644\u0637\u0648\u0627\u0631\u0626', 'error': '\u062E\u0637\u0623', 'info': '\u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062A', 'notice': '\u0645\u0644\u0627\u062D\u0638\u0629', 'warning': '\u062A\u062D\u0630\u064A\u0631' }, 'bg.log-viewer::general': { 'all': '\u0412\u0441\u0438\u0447\u043A\u0438', 'date': '\u0414\u0430\u0442\u0430', 'empty-logs': '\u041D\u0435 \u0441\u0430 \u043D\u0430\u043C\u0435\u0440\u0435\u043D\u0438 \u043B\u043E\u0433\u043E\u0432\u0435!' }, 'bg.log-viewer::levels': { 'alert': 'Alert', 'all': '\u0412\u0441\u0438\u0447\u043A\u0438', 'critical': 'Critical', 'debug': 'Debug', 'emergency': 'Emergency', 'error': 'Error', 'info': 'Info', 'notice': 'Notice', 'warning': 'Warning' }, 'da.backup::notifications': { 'backup_failed_body': 'Vigtigt: Der skete en fejl under backup af :application_name', 'backup_failed_subject': 'Backup af :application_name fejlede', 'backup_successful_body': 'Gode nyheder - der blev oprettet en ny backup af :application_name p\xE5 disken :disk_name.', 'backup_successful_subject': 'Ny backup af :application_name oprettet', 'backup_successful_subject_title': 'Ny backup!', 'cleanup_failed_body': 'Der skete en fejl under oprydning af backups for :application_name', 'cleanup_failed_subject': 'Oprydning af backups for :application_name fejlede.', 'cleanup_successful_body': 'Oprydningen af backups for :application_name p\xE5 disken :disk_name er gennemf\xF8rt.', 'cleanup_successful_subject': 'Oprydning af backups for :application_name gennemf\xF8rt', 'cleanup_successful_subject_title': 'Backup oprydning gennemf\xF8rt!', 'exception_message': 'Fejlbesked: :message', 'exception_message_title': 'Fejlbesked', 'exception_trace': 'Fejl trace: :trace', 'exception_trace_title': 'Fejl trace', 'healthy_backup_found_body': 'Alle backups for :application_name er ok. Godt g\xE5et!', 'healthy_backup_found_subject': 'Alle backups for :application_name p\xE5 disken :disk_name er OK', 'healthy_backup_found_subject_title': 'Alle backups for :application_name er OK', 'unhealthy_backup_found_body': 'Backups for :application_name p\xE5 disken :disk_name er fejlbeh\xE6ftede.', 'unhealthy_backup_found_empty': 'Denne applikation har ingen backups overhovedet.', 'unhealthy_backup_found_full': 'Backups bruger for meget plads. Nuv\xE6rende disk forbrug er :disk_usage, hvilket er mere end den tilladte gr\xE6nse p\xE5 :disk_limit.', 'unhealthy_backup_found_not_reachable': 'Backup destinationen kunne ikke findes. :error', 'unhealthy_backup_found_old': 'Den seneste backup fra :date er for gammel.', 'unhealthy_backup_found_subject': 'Vigtigt: Backups for :application_name fejlbeh\xE6ftede', 'unhealthy_backup_found_subject_title': 'Vigtigt: Backups for :application_name er fejlbeh\xE6ftede. :problem', 'unhealthy_backup_found_unknown': 'Beklager, en pr\xE6cis \xE5rsag kunne ikke findes.' }, 'de.alerts': { 'backend': { 'blogcategories': { 'created': 'The Blog Category was successfully created.', 'deleted': 'The Blog Category was successfully deleted.', 'updated': 'The Blog Category was successfully updated.' }, 'blogs': { 'created': 'The Blog was successfully created.', 'deleted': 'The Blog was successfully deleted.', 'updated': 'The Blog was successfully updated.' }, 'blogtags': { 'created': 'The Blog Tag was successfully created.', 'deleted': 'The Blog Tag was successfully deleted.', 'updated': 'The Blog Tag was successfully updated.' }, 'emailtemplates': { 'deleted': 'Das Email Template wurde erfolgreich gel\xF6scht.', 'updated': 'Das Email Template wurde erfolgreich ge\xE4ndert.' }, 'faqs': { 'created': 'Die FAQ wurde erfolgreich erstellt.', 'deleted': 'Die FAQ wurde erfolgreich gel\xF6scht.', 'updated': 'Die FAQ wurde erfolgreich ge\xE4ndert.' }, 'groups': { 'created': 'Die Gruppe wurde erfolgreich erstellt.', 'deleted': 'Die Gruppe wurde erfolgreich gel\xF6scht.', 'updated': 'Die Gruppe wurde erfolgreich ge\xE4ndert.' }, 'menus': { 'created': 'Das Men\xFC wurde erfolgreich erstellt.', 'deleted': 'Das Men\xFC wurde erfolgreich gel\xF6scht.', 'updated': 'Das Men\xFC wurde erfolgreich ge\xE4ndert.' }, 'pages': { 'created': 'Die Seite wurde erfolgreich erstellt.', 'deleted': 'Die Seite wurde erfolgreich gel\xF6scht.', 'updated': 'Die Seite wurde erfolgreich ge\xE4ndert.' }, 'permissions': { 'created': 'Die Berechtigung wurde erfolgreich erstellt.', 'deleted': 'Die Berechtigung wurde erfolgreich gel\xF6scht.', 'updated': 'Die Berechtigung wurde erfolgreich ge\xE4ndert.' }, 'roles': { 'created': 'Die Rolle wurde erfolgreich erstellt.', 'deleted': 'Die Rolle wurde erfolgreich gel\xF6scht.', 'updated': 'Die Rolle wurde erfolgreich ge\xE4ndert.' }, 'settings': { 'updated': 'Die Einstellung wurde erfolgreich ge\xE4ndert.' }, 'users': { 'confirmation_email': 'Eine neue Best\xE4tigungs E-Mail wurde gesendet.', 'created': 'Der User wurde erfolgreich erstellt.', 'deleted': 'Der User wurde erfolgreich gel\xF6scht.', 'deleted_permanently': 'Der User wurde dauerhaft gel\xF6scht.', 'restored': 'Der User wurde erfolgreich wiederhergestellt.', 'session_cleared': 'Die User Session wurde erfolgreich gel\xF6scht.', 'updated': 'Der User wurde erfolgreich ge\xE4ndert.', 'updated_password': 'Das Benutzer Passwort wurde erfolgreich aktualisiert.' }, 'whitelabels': { 'created': 'Das Whitelabel wurde erfolgreich erstellt.', 'deleted': 'Das Whitelabel wurde erfolgreich gel\xF6scht.', 'updated': 'Das Whitelabel wurde erfolgreich ge\xE4ndert.' }, 'wishes': { 'created': 'Der Wunsch wurde erfolgreich erstellt.', 'deleted': 'Der Wunsch wurde erfolgreich gel\xF6scht.', 'updated': 'Der Wunsch wurde erfolgreich ge\xE4ndert.' } }, 'frontend': { 'offers': { 'created': 'Das Angebot wurde erfolgreich erstellt.' }, 'wishes': { 'created': 'Der Wunsch wurde erfolgreich erstellt.', 'deleted': 'Der Wunsch wurde erfolgreich gel\xF6scht.', 'updated': 'Der Wunsch wurde erfolgreich ge\xE4ndert.' } } }, 'de.api': { 'messages': { 'forgot_password': { 'success': 'Wir haben eine E-Mail mit einem Link zum Zur\xFCcksetzen des Passworts geschickt.', 'validation': { 'email_not_found': 'Diese E-Mail-Adresse ist uns nicht bekannt.' } }, 'login': { 'failed': 'Ung\xFCltige Zugangsdaten! Bitte erneut versuchen.', 'success': 'Login erfolgreich.' }, 'logout': { 'success': 'Erfolgreich ausgeloggt.' }, 'refresh': { 'status': 'Ok', 'token': { 'not_provided': 'Token not provided.' } }, 'registeration': { 'success': 'Du hast dich erfolgreich registriert. Bitte \xFCberpr\xFCfe zur Aktivierung deine E-Mails.' } } }, 'de.auth': { 'failed': 'Diese Kombination aus Zugangsdaten wurde nicht in unserer Datenbank gefunden.', 'throttle': 'Zu viele Loginversuche. Versuchen Sie es bitte in :seconds Sekunden nochmal.' }, 'de.backup::notifications': { 'backup_failed_body': 'Wichtig: Beim Backup von :application_name ist ein Fehler aufgetreten', 'backup_failed_subject': 'Backup von :application_name konnte nicht erstellt werden', 'backup_successful_body': 'Gute Nachrichten, ein neues Backup von :application_name wurde erfolgreich erstellt und in :disk_name gepeichert.', 'backup_successful_subject': 'Erfolgreiches neues Backup von :application_name', 'backup_successful_subject_title': 'Erfolgreiches neues Backup!', 'cleanup_failed_body': 'Beim aufr\xE4umen der Backups von :application_name ist ein Fehler aufgetreten', 'cleanup_failed_subject': 'Aufr\xE4umen der Backups von :application_name schlug fehl.', 'cleanup_successful_body': 'Aufr\xE4umen der Backups von :application_name in :disk_name war erfolgreich.', 'cleanup_successful_subject': 'Aufr\xE4umen der Backups von :application_name backups erfolgreich', 'cleanup_successful_subject_title': 'Aufr\xE4umen der Backups erfolgreich!', 'exception_message': 'Fehlermeldung: :message', 'exception_message_title': 'Fehlermeldung', 'exception_trace': 'Fehlerverfolgung: :trace', 'exception_trace_title': 'Fehlerverfolgung', 'healthy_backup_found_body': 'Die Backups von :application_name wurden als gesund eingestuft. Gute Arbeit!', 'healthy_backup_found_subject': 'Die Backups von :application_name in :disk_name sind gesund', 'healthy_backup_found_subject_title': 'Die Backups von :application_name sind Gesund', 'unhealthy_backup_found_body': 'Die Backups f\xFCr :application_name in :disk_name sind ungesund.', 'unhealthy_backup_found_empty': 'Es gibt f\xFCr die Anwendung noch gar keine Backups.', 'unhealthy_backup_found_full': 'Die Backups verbrauchen zu viel Platz. Aktuell wird :disk_usage belegt, dass ist h\xF6her als das erlaubte Limit von :disk_limit.', 'unhealthy_backup_found_not_reachable': 'Das Backup Ziel konnte nicht erreicht werden. :error', 'unhealthy_backup_found_old': 'Das letzte Backup am :date ist zu lange her.', 'unhealthy_backup_found_subject': 'Wichtig: Die Backups f\xFCr :application_name sind nicht gesund', 'unhealthy_backup_found_subject_title': 'Wichtig: Die Backups f\xFCr :application_name sind ungesund. :problem', 'unhealthy_backup_found_unknown': 'Sorry, ein genauer Grund konnte nicht gefunden werden.' }, 'de.button': { 'cancel': 'Abbrechen', 'clone': 'Klonen', 'close': 'Schlie\xDFen', 'confirm': 'Best\xE4tigen', 'copy': 'Kopieren', 'create': 'Erstellen', 'delete': 'L\xF6schen', 'delete_all': 'Alles l\xF6schen', 'edit': '\xC4ndern', 'language': 'Sprache', 'mark_as_read': 'Als gelesen markieren', 'required': 'Erforderlich', 'restore': 'Wiederherstellen', 'save': 'Speichern', 'save_and_close': 'Speichern und schlie\xDFen', 'save_and_create': 'Speichern und erstellen', 'save_and_create_new': 'Speichern und neu erstellen' }, 'de.buttons': { 'backend': { 'access': { 'users': { 'activate': 'Aktivieren', 'change_password': 'Passwort \xE4ndern', 'clear_session': 'Session l\xF6schen', 'deactivate': 'Deaktivieren', 'delete_permanently': 'Dauerhaft l\xF6schen', 'login_as': 'Einloggen als :user', 'resend_email': 'Best\xE4tigungs E-Mail erneut senden', 'restore_user': 'Benutzer wiederherstellen' } } }, 'emails': { 'auth': { 'confirm_account': 'Account best\xE4tigen', 'reset_password': 'Passwort zur\xFCcksetzen' } }, 'general': { 'cancel': 'Abbrechen', 'continue': 'Fortsetzen', 'crud': { 'add': 'Hinzuf\xFCgen', 'create': 'Erstellen', 'delete': 'L\xF6schen', 'edit': 'Editieren', 'update': 'Aktualisieren', 'view': 'Anzeigen' }, 'preview': 'Vorschau', 'save': 'Speichern', 'view': 'Anzeigen' }, 'wishes': { 'frontend': { 'create_autooffer': 'Automatisches Angebot erstellen', 'create_offer': 'Angebot erstellen' } } }, 'de.comment': { 'comments': 'Kommentare' }, 'de.dashboard': { 'browsers': 'Browser Share', 'clickrate': 'Click-Rate (%)', 'clickrate_auto': 'Click-Rate Angebot automatisch', 'clickrate_manuell': 'Click-Rate Angebot manuell', 'current_month': 'Aktueller Monat', 'daily_average_wish': 'W\xFCnsche pro Tag', 'daily_desktop_layer': 'Layerimpressions Desktop pro Tag', 'daily_mobile_layer': 'Layerimpressions Mobile pro Tag', 'date': 'Datum', 'layers': 'Layers', 'monthly_average_wish': 'W\xFCnsche pro Monat', 'monthly_desktop_browser_share': 'Browser-Share Desktop pro Monat', 'monthly_desktop_browser_shareklicks': 'Browser-Share Desktop Klicks pro Monat', 'monthly_desktop_layer': 'Layerimpressions Desktop pro Monat', 'monthly_desktop_response': 'Desktop Response Rate pro Monat', 'monthly_mobile_layer': 'Layerimpressions Mobile pro Monat', 'monthly_mobile_response': 'Mobile Response Rate pro Monat', 'openrate': 'Open-Rate (%)', 'openrate_auto': 'Open-Rate Angebot automatisch', 'openrate_manuell': 'Open-Rate Angebot manuell', 'reaction_time_average_day': 'Reaktionszeit \/ Tag', 'reaction_time_average_month': 'Reaktionszeit \/ Monat', 'response': 'Response Rate (%)', 'source_2019': 'Zeitraum: 2019', 'total_groups': 'Alle Gruppen', 'total_sellers': 'Alle Anbieter', 'total_wishes': 'Alle W\xFCnsche', 'wish': 'Wunsch', 'wishes': 'W\xFCnsche' }, 'de.email': { 'account': { 'activate': 'Login', 'activated': 'F\xFCr Sie wurde ein neuer :account Account f\xFCr das :whitelabel Reisewunschportal erstellt.', 'greeting': 'Thank you for your trust in our services', 'hello': 'Hallo :username', 'link': 'Mit Klick auf den folgenden Button k\xF6nnen Sie sich mit Ihren Benutzerdaten einloggen.', 'password': 'Passwort: :password', 'subject': 'Account Details for :username at :company', 'subject_for_executive': 'Ihre Zugangsdaten zu Ihrem :whitelabel Reisewunschportal', 'subject_for_seller': 'Ihre Zugangsdaten zum :whitelabel Reisewunschportal', 'username': 'E-Mail-Adresse: :email' }, 'footer': { 'line1': 'Sonnige Gr\xFC\xDFe', 'line2': 'Ihr desiretec Team', 'line3': 'DesireTec GmbH', 'line4': 'Auf dem Sande 1 | D-20457 Hamburg | Deutschland', 'line5': 'Gesch\xE4ftsf\xFChrung: John Muster', 'line6': 'Sitz der Gesellschaft: Hamburg', 'line7': 'Handelsregister: Amtsgericht Hamburg HRB XXXXX', 'line8': 'BAN: DEXX XXXX XXXX XXXX XXXX XX', 'line9': 'BIC: XXXXXXXXXX' }, 'footer_novasol': { 'line1': 'Mit freundlichen Gr\xFC\xDFen | With kind regards | Med venlig hilsen', 'line2': 'Ihr NOVASOL Buchungsservice', 'line3': 'NOVASOL Reise GmbH', 'line4': 'Gotenstrasse 11 - 20097 Hamburg, Germany', 'line5': 'Phone +49 (0) 40 238859 - 82 | novasol@novasol.de \u2013 an Awaze Company', 'line6': 'Handelsregister Amtsgericht Hamburg, HRB 95067 | Gesch\xE4ftsf\xFChrer: Jan Haapanen', 'line7': 'www.novasol.de | www.dansommer.de | www.cuendet.de' }, 'message': { 'created-seller': 'Sie haben eine neue Nachricht von Ihrem Kunden erhalten', 'created-user': 'Wichtig: Es gibt eine neue Nachricht von Ihrem Berater im :whitelabel Reisewunschportal', 'new': 'Neue Nachricht!', 'subject': 'Sie haben eine neue Nachricht erhalten', 'token_new': 'Ihr Zugang zu Ihrem :whitelabel Reisewunschportal ' }, 'offer': { 'body': '<p>Hallo! </p>\r\n                            <p>Herzlich willkommen bei Ihrem :whitelabel Reisewunschportal. </p>\r\n                            <p>Sie haben sich soeben registriert und Ihr Reisewunsch <a href=\':link\'>:link</a> wurde erfolgreich an uns \xFCbermittelt.</p>\r\n                            <p>Wir suchen gerade nach passenden Angeboten f\xFCr Ihren pers\xF6nlichen Reisewunsch und informieren Sie in wenigen Minuten per E-Mail dar\xFCber.</p>\r\n                            <p>Anschlie\xDFend k\xF6nnen Sie sich Ihre pers\xF6nlichen Angebote im :whitelabel Reisewunschportal anschauen.</p>', 'created': 'Sie haben erfolgreich ein Angebot erstellt', 'created_user': 'Es gibt ein neues Angebot f\xFCr Ihren :whitelabel Reisewunsch!', 'footer': 'Wir hoffen, dass Ihnen die Angebote zusagen. Bei Fragen stehen Ihnen unsere Reiseberater jederzeit zur Verf\xFCgung.', 'header': 'Hallo!', 'link': 'Sie k\xF6nnen diese unter dem folgenden Link direkt aufrufen <a href=\':link\'>:link</a>', 'novasol_created_user': { 'body': 'Herzlichen Gl\xFCckwunsch! Wir haben neue passende :whitelabel Angebote f\xFCr Ihren Reisewunsch gefunden.', 'footer': 'Wir hoffen, dass Ihnen die Angebote zusagen. Bei Fragen stehen Ihnen unsere Reiseberater jederzeit zur Verf\xFCgung.', 'header': 'Hallo lieber Kunde!', 'link': 'Sie k\xF6nnen diese unter dem folgenden Link direkt aufrufen <a href=":link">:link</a>', 'subject': 'Wir haben Ihre Traumferien gefunden \u2013 NOVASOL Reisewunschportal' } }, 'signature': { 'stored': 'Sie haben die E-Mail-Signatur erfolgreich gespeichert' }, 'token_new': 'Vielen Dank f\xFCr das Anfordern Ihrer Zugangsdaten zum :whitelabel Reisewunschportal. \r\n                    Sie k\xF6nnen sich \xFCber den folgenden Link ganz einfach in Ihr Profil einloggen. \r\n                <a href=":token">:token</a>', 'wish': { 'seller': 'Es gibt einen neuen :whitelabel Reisewunsch zur Bearbeitung!', 'subject_for_seller': 'Es gibt einen neuen :whitelabel Reisewunsch zur Bearbeitung!', 'user': 'Herzlich willkommen beim :whitelabel Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.', 'user_callback_seller': 'Ihr Kunde bittet Sie um einen R\xFCckruf', 'user_cnt_seller': 'Ihr Angebot war erfolgreich, Sie haben einen neuen Kontakt erzeugt!', 'user_novasol': 'Herzlich willkommen beim NOVASOL Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.' } }, 'de.exceptions': { 'backend': { 'access': { 'permissions': { 'already_exists': 'Diese Berechtigung existiert bereits. Bitte w\xE4hlen Sie einen anderen Namen.', 'create_error': 'Es gab ein Problem bei der Erstellung dieser Berechtigung. Bitte erneut versuchen.', 'delete_error': 'Es gab ein Problem beim L\xF6schen dieser Berechtigung. Bitte erneut versuchen.', 'not_found': 'Diese Berechtigung existiert nicht.', 'update_error': 'Es gab ein Problem beim \xC4ndern dieser Berechtigung. Bitter erneut versuchen.' }, 'roles': { 'already_exists': 'Diese Rolle existiert bereits. Bitte w\xE4hlen Sie einen anderen Namen.', 'cant_delete_admin': 'Die Administrator Rolle kann nicht gel\xF6scht werden.', 'create_error': 'Es gab ein Problem bei der Erstellung dieser Rolle. Bitte erneut versuchen.', 'delete_error': 'Es gab ein Problem beim L\xF6schen dieser Rolle. Bitte erneut versuchen.', 'has_users': 'Sie k\xF6nnen keine mit Benutzern verkn\xFCpfte Rolle l\xF6schen.', 'needs_permission': 'Sie m\xFCssen mindestens 1 Berechtigung f\xFCr diese Rolle ausw\xE4hlen.', 'not_found': 'Diese Rolle existiert nicht.', 'update_error': 'Es gab ein Problem beim \xC4ndern dieser Rolle. Bitter erneut versuchen.' }, 'users': { 'cant_deactivate_self': 'Sie k\xF6nnen das nicht mit sich selbst machen.', 'cant_delete_admin': 'Sie k\xF6nnen keinen Administrator l\xF6schen.', 'cant_delete_own_session': 'Sie k\xF6nnen nicht Ihre eigene Session l\xF6schen.', 'cant_delete_self': 'Sie k\xF6nnen sich nicht selbst l\xF6schen.', 'cant_restore': 'Dieser User ist nicht gel\xF6scht und kann nicht wiederhergestellt werden.', 'change_mismatch': 'Das ist nicht Ihr altes Passwort.', 'create_error': 'Es gab ein Problem bei der Erstellung dieses Users. Bitte erneut versuchen.', 'delete_error': 'Es gab ein Problem beim L\xF6schen dieses Users. Bitte erneut versuchen.', 'delete_first': 'Dieser Benutzer muss zun\xE4chst gel\xF6scht werden, bevor er dauerhaft gel\xF6scht werden kann.', 'email_error': 'Diese E-Mail-Adresse geh\xF6rt zu einem anderen User.', 'mark_error': 'Es gab ein Problem beim \xC4ndern dieses Users. Bitter erneut versuchen.', 'not_found': 'Dieser User existiert nicht.', 'restore_error': 'Es gab ein Problem bei der Wiederherstellung des Users. Bitte erneut versuchen.', 'role_needed': 'Sie m\xFCssen mindestens eine Rolle ausw\xE4hlen.', 'role_needed_create': 'Sie m\xFCssen mindestens eine Rolle ausw\xE4hlen.', 'session_wrong_driver': 'Your session driver must be set to database to use this feature.', 'update_error': 'Es gab ein Problem bei der \xC4nderung dieses Users. Bitte erneut versuchen.', 'update_password_error': 'Es gab ein Problem bei \xC4ndern dieses User Passworts. Bitte erneut versuchen.' } }, 'blogcategories': { 'already_exists': 'That Blog Category already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Category. Please try again.', 'delete_error': 'There was a problem deleting this Blog Category. Please try again.', 'not_found': 'That Blog Category does not exist.', 'update_error': 'There was a problem updating this Blog Category. Please try again.' }, 'blogtags': { 'already_exists': 'That Blog Tag already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Tag. Please try again.', 'delete_error': 'There was a problem deleting this Blog Tag. Please try again.', 'not_found': 'That Blog Tag does not exist.', 'update_error': 'There was a problem updating this Blog Tag. Please try again.' }, 'menus': { 'already_exists': 'That Menu already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Menu. Please try again.', 'delete_error': 'There was a problem deleting this Menu. Please try again.', 'not_found': 'That Menu does not exist.', 'update_error': 'There was a problem updating this Menu. Please try again.' }, 'modules': { 'already_exists': 'That Module already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Module. Please try again.', 'delete_error': 'There was a problem deleting this Module. Please try again.', 'not_found': 'That Module does not exist.', 'update_error': 'There was a problem updating this Module. Please try again.' }, 'pages': { 'already_exists': 'That Page already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Page. Please try again.', 'delete_error': 'There was a problem deleting this Page. Please try again.', 'not_found': 'That Page does not exist.', 'update_error': 'There was a problem updating this Page. Please try again.' }, 'settings': { 'update_error': 'Es gab ein Problem beim \xC4ndern dieser Einstellung. Bitte erneut versuchen.' } }, 'frontend': { 'auth': { 'confirmation': { 'already_confirmed': 'Ihr Account wurde bereits best\xE4tigt.', 'confirm': 'Best\xE4tigen Sie Ihren Account!', 'created_confirm': 'Ihr Account wurde erfolgreich erstellt. Wir haben Ihnen eine E-Mail zur Best\xE4tigung geschickt.', 'created_pending': 'Ihr Account wurde erfolgreich erstellt und wartet auf Genehmigung. Nach Genehmigung wird eine E-Mail gesendet.', 'mismatch': 'Ihr Best\xE4tigungs-Code stimmt nicht.', 'not_found': 'Ihr Best\xE4tigungs-Code existiert nicht.', 'resend': 'Ihr Account ist nicht best\xE4tigt. Bitte klicken Sie auf den Best\xE4tigungslink in Ihrer E-Mail, oder <a href=http://127.0.0.1:8001/account/confirm/resend/:user_id>klicken Sie hier</a> um sich die Best\xE4tigungs E-Mail erneut zusenden zu lassen.', 'resent': 'Eine neue Best\xE4tigungs E-Mail wurde an Ihre E-Mail-Adresse geschickt.', 'success': 'Ihr Account wurde erfolgreich best\xE4tigt!' }, 'deactivated': 'Ihr Account wurde deaktiviert.', 'email_taken': 'Diese E-Mail-Adresse wird bereits verwendet.', 'password': { 'change_mismatch': 'Dies ist nicht Ihr altes Passwort.' }, 'registration_disabled': 'Eine Registrierung ist derzeit nicht m\xF6glich.' } }, 'whitelabel_mismatch': 'Keine \xDCbereinstimmung der Logindaten mit dem Whitelabel.' }, 'de.general': { 'currency': '\u20AC', 'lastminute_currency': 'CHF' }, 'de.history': { 'backend': { 'blogcategories': { 'created': 'created Blog Category', 'deleted': 'deleted Blog Category', 'updated': 'updated Blog Category' }, 'blogs': { 'created': 'created Blog', 'deleted': 'deleted Blog', 'updated': 'updated Blog' }, 'blogtags': { 'created': 'created Blog Tag', 'deleted': 'deleted Blog Tag', 'updated': 'updated Blog Tag' }, 'none': 'Es existiert keine Historie.', 'none_for_entity': 'Es existiert keine Historie f\xFCr :entity.', 'none_for_type': 'Es existiert keine Historie f\xFCr diesen Typ', 'pages': { 'created': 'Seite erstelltcreated ', 'deleted': 'Seite gel\xF6scht', 'updated': 'Seite ge\xE4ndert' }, 'permissions': { 'created': 'Berechtigung erstellt', 'deleted': 'Berechtigung gel\xF6scht', 'updated': 'Berechtigung ge\xE4ndert' }, 'recent_history': 'Historie', 'roles': { 'created': 'Rolle erstellt', 'deleted': 'Rolle gel\xF6scht', 'updated': 'Rolle ge\xE4ndert' }, 'users': { 'changed_password': 'User Passwort ge\xE4ndert', 'created': 'User erstellt', 'deactivated': 'User deaktiviert', 'deleted': 'User gel\xF6scht', 'permanently_deleted': 'User dauerhaft gel\xF6scht', 'reactivated': 'User reaktiviert', 'restored': 'User wiederhergestellt', 'updated': 'User ge\xE4ndert' } } }, 'de.http': { '404': { 'description': 'Entschuldigung, diese Seite existiert leider nicht.', 'title': 'Seite nicht gefunden' }, '503': { 'description': 'Gleich wieder da.', 'title': 'Gleich wieder da.' } }, 'de.labels': { 'about': '\xDCber uns', 'account': 'Account', 'activated': 'aktiviert', 'address': 'Adresse', 'attendee': 'Teilnehmer', 'attendees': 'Teilnehmer', 'backend': { 'access': { 'permissions': { 'create': 'Berechtigung erstellen', 'edit': 'Berechtigung bearbeiten', 'management': 'Management Berechtigungen', 'table': { 'display_name': 'Anzeigename', 'permission': 'Berechtigung', 'sort': 'Sorte', 'status': 'Status', 'total': 'Rollen gesamt' } }, 'roles': { 'create': 'Rolle erstellen', 'edit': 'Rolle bearbeiten', 'management': 'Management Rollen', 'table': { 'number_of_users': 'Useranzahl', 'permissions': 'Berechtigungen', 'role': 'Rolle', 'sort': 'Sorte', 'total': 'Rollen gesamt' } }, 'users': { 'active': 'Aktive User', 'all_permissions': 'Password \xE4ndern', 'change_password_for': 'Passwort \xE4ndern f\xFCr :user', 'create': 'User erstellen', 'deactivated': 'Deaktivierte User', 'deleted': 'Gel\xF6schte User', 'edit': 'User bearbeiten', 'edit-profile': 'Profil bearbeiten', 'management': 'Management User', 'no_permissions': 'Keine Berechtigungen', 'no_roles': 'Keine Rolle zum Vergeben.', 'permissions': 'Berechtigungen', 'table': { 'confirmed': 'Best\xE4tigt', 'created': 'Erstellt', 'email': 'E-Mail-Adresse', 'id': 'ID', 'last_name': 'Nachname', 'last_updated': 'Vorname', 'no_deactivated': 'Keine deaktivieren User', 'no_deleted': 'Keine gel\xF6schten User', 'roles': 'Rollen', 'total': 'User gesamt' }, 'tabs': { 'content': { 'overview': { 'avatar': 'Avatar', 'confirmed': 'Best\xE4tigt', 'created_at': 'Erstellt am', 'deleted_at': 'Gel\xF6scht am', 'email': 'E-Mail-Adresse', 'last_updated': 'Zuletzt aktualisiert', 'name': 'Name', 'status': 'Status', 'whitelabels': 'Whitelabel' } }, 'titles': { 'history': 'Historie', 'overview': '\xDCbersicht' } }, 'view': 'User ansehen' } }, 'blogcategories': { 'create': 'Blogkategorie erstellen', 'edit': 'Blogkategorie bearbeiten', 'management': 'Management Blogkategorie', 'table': { 'all': 'Alle', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'status': 'Status', 'title': 'Blogkategorie' }, 'title': 'Blogkategorie' }, 'blogs': { 'create': 'Blog erstellen', 'edit': 'Blog bearbeiten', 'management': 'Management Blogs', 'table': { 'all': 'Alle', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'publish': 'Ver\xF6ffentlichungsdatum', 'status': 'Status', 'title': 'Blog' }, 'title': 'Blogs' }, 'blogtags': { 'create': 'Blog-Tag erstellen', 'edit': 'Blog-Tag bearbeiten', 'management': 'Management Blog-Tag', 'table': { 'all': 'Alle', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'status': 'Status', 'title': 'Blog-Tag' }, 'title': 'Blog-Tags' }, 'distributions': { 'create': 'Verteilung erstellen', 'edit': 'Verteilung bearbeiten', 'management': 'Verteilungen', 'no_distributions': 'keine Verteilungen', 'table': { 'all': 'Alle', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'description': 'Beschreibung', 'display_name': 'Anzeigename', 'name': 'Verteilung', 'whitelabel': 'Whitelabel' }, 'title': 'Verteilungen' }, 'emailtemplates': { 'create': 'E-Mail-Template erstellen', 'edit': 'E-Mail-Template bearbeiten', 'management': 'Management E-Mail-Templates', 'table': { 'all': 'Alle', 'createdat': 'Erstellt am', 'status': 'Status', 'subject': 'Betreff', 'title': 'Titel', 'updatedat': 'Aktualisiert am' }, 'title': 'E-Mail-Templates' }, 'faqs': { 'create': 'FAQ erstellen', 'edit': 'FAQ bearbeiten', 'management': 'Management FAQ ', 'table': { 'all': 'Alle', 'answer': 'Antwort', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'publish': 'Ver\xF6ffentlichungsdatum', 'question': 'Frage', 'status': 'Status', 'title': 'FAQs', 'updatedat': 'Aktualisiert am' }, 'title': 'FAQ' }, 'groups': { 'create': 'Gruppe erstellen', 'edit': 'Gruppe bearbeiten', 'management': 'Gruppen', 'no_whitelabels': 'keine Whitelabel', 'table': { 'all': 'Alle', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'description': 'Beschreibung', 'display_name': 'Anzeigename', 'name': 'Gruppe', 'status': 'Status', 'users': 'User', 'whitelabel': 'Whitelabel' }, 'title': 'Gruppen' }, 'menus': { 'create': 'Men\xFC erstellen', 'edit': 'Men\xFC bearbeiten', 'field': { 'icon': 'Icon-Klasse', 'icon_title': 'Font Awesome Class. eg. fa-edit', 'items': 'Men\xFCfelder', 'name': 'Name', 'open_in_new_tab': '\xD6ffne URL in neuem Tab', 'type': 'Typ', 'url': 'URL', 'url_type': 'URL-Typ', 'url_types': { 'route': 'Route', 'static': 'Statisch' }, 'view_permission_id': 'Berechtigung' }, 'management': 'Management Men\xFC', 'table': { 'all': 'Alle', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'name': 'Name', 'type': 'Typ' }, 'title': 'Men\xFCs' }, 'modules': { 'create': 'Modul erstellen', 'edit': 'Module bearbeiten', 'form': { 'controller_name': 'Controller &nbsp;Name', 'create_file': 'Erstellen', 'directory_name': 'Directory Name', 'edit_file': 'Bearbeiten', 'event': 'Event Name', 'form_file': 'Form', 'index_file': 'Index', 'model_name': 'Model Name', 'name': 'Modulname', 'namespace': 'Namespace', 'repo_name': 'Repository Name', 'resource_controller': 'Resourceful Controller', 'resource_route': 'Resourceful Routes', 'route_controller_name': 'Controller &nbsp;Name', 'route_name': 'Pfadname', 'table_controller_name': 'Controller &nbsp;Name', 'table_name': 'Tabellen Name', 'url': 'Pfad', 'view_permission_id': 'Berechtigung ansehen', 'views_directory': 'Directory &nbsp;&nbsp;&nbsp;Name' }, 'management': 'Management Module', 'table': { 'created_by': 'Erstellt von', 'name': 'Modulname', 'url': 'Modul Pfad anzeigen', 'view_permission_id': 'Berechtigung sehen' }, 'title': 'Module' }, 'pages': { 'create': 'Seite erstellen', 'edit': 'Seite erstellen', 'management': 'Management Seiten', 'table': { 'all': 'Alle', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'status': 'Status', 'title': 'Titel', 'updatedat': 'Aktualisiert am' }, 'title': 'Seiten' }, 'profile_updated': 'Dein Profil wurde aktualisiert.', 'settings': { 'companydetails': 'Unternehmenskontaktdaten', 'edit': 'Einstellungen bearbeiten', 'footer': 'Footer-Einstellungen', 'google': 'Google Analytics Tracking Code', 'mail': 'E-Mail-Einstellungen', 'management': 'Management Einstellungen', 'seo': 'SEO-Einstellungen', 'terms': 'Gesch\xE4ftsbedingungen-Einstellungen', 'title': 'Einstellungen' }, 'whitelabels': { 'create': 'Whitelabel erstellen', 'edit': 'Whitelabel bearbeiten', 'management': 'Whitelabel', 'management_client': 'Whitelabel', 'table': { 'all': 'Alle', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'display_name': 'Whitelabel', 'distribution': 'Verteilung', 'ga_view_id': 'Google View Id', 'name': 'Key', 'status': 'Status' }, 'title': 'Whitelabel' }, 'wishes': { 'create': 'Wunsch erstellen', 'edit': 'Wunsch bearbeiten', 'management': 'W\xFCnsche', 'no_whitelabels': 'keine Whitelabel', 'table': { 'airport': 'Flughafen', 'all': 'Alle', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'destination': 'Destination', 'earliest_start': 'Fr\xFChester Start', 'group': 'Gruppe', 'latest_return': 'Sp\xE4teste R\xFCckkehr', 'offerCount': 'Angebote', 'status': 'Status', 'title': 'Wunsch', 'whitelabel': 'Whitelabel' }, 'title': 'W\xFCnsche' } }, 'cancel': 'Abbrechen', 'contact': 'Kontakt', 'content': 'Inhalt', 'country': 'Land', 'current': 'Aktuell', 'current_password': 'Aktuelles Passwort', 'description': 'Beschreibung', 'details': 'Details', 'documents': 'Dokumente', 'domain': 'Domain', 'download': 'Download', 'email': 'E-Mail-Adresse', 'events': 'Events', 'export_all': 'Alles exportieren', 'export_selected': 'Auswahl exportieren', 'fax': 'Fax', 'feedback': 'Feedback', 'finish': 'Fertig', 'first_name': 'Vorname', 'footers': 'Footers', 'frontend': { 'agents': { 'create': 'Neuen Agenten erstellen', 'management': 'Agenten', 'table': { 'avatar': 'Avatar', 'created_at': 'Erstellt am', 'createdby': 'Erstellt von', 'display_name': 'Anzeigename', 'id': 'ID', 'name': 'Name', 'status': 'Status' } }, 'auth': { 'login_box_title': 'Login', 'login_button': 'Login', 'login_with': 'Login mit :social_media', 'register_box_title': 'Registrieren', 'register_button': 'Registrieren', 'remember_me': 'Erinnere mich' }, 'dashboard': { 'analytics': { 'answered_wishes': 'Beantwortete Reisew\xFCnsche', 'bookings': 'Buchungen', 'changed_wishes': 'Bearbeitete Reisew\xFCnsche', 'created_wishes': 'Erstellte Reisew\xFCnsche', 'free_text': 'Freitext', 'latest_answered_wishes': 'Zuletzt beantwortete Reisew\xFCnsche', 'latest_reaction_quota': 'Aktuelle Reaktionsquote', 'reaction_quota': 'Reaktionsquote', 'reaction_time': 'Reaktionszeit' } }, 'macros': { 'country': { 'alpha': 'Country Alpha Codes', 'alpha2': 'Country Alpha 2 Codes', 'alpha3': 'Country Alpha 3 Codes', 'numeric': 'Country Numeric Codes' }, 'macro_examples': 'Makrobeispiele', 'state': { 'mexico': 'Mexico State List', 'us': { 'armed': 'US Armed Forces', 'outlying': 'US Outlying Territories', 'us': 'US States' } }, 'territories': { 'canada': 'Canada Province & Territories List' }, 'timezone': 'Zeitzone' }, 'offers': { 'create': 'Neues Angebot erstellen', 'management': 'Angebote', 'offers_for_wish': 'Angebote f\xFCr', 'table': { 'all': 'Alle', 'createdat': 'Erstellt in', 'createdby': 'Erstellt von', 'status': 'Status', 'title': 'Angebot' } }, 'passwords': { 'forgot_password': 'Passwort vergessen?', 'reset_password_box_title': 'Passwort zur\xFCcksetzen', 'reset_password_button': 'Passwort zur\xFCcksetzen', 'send_password_reset_link_button': 'Sende Passwort-Reset-Link' }, 'user': { 'passwords': { 'change': 'Passwort \xE4ndern' }, 'profile': { 'address': 'Adresse', 'avatar': 'Avatar', 'city': 'Stadt', 'country': 'Land', 'created_at': 'Erstellt am', 'edit_information': 'Informationen bearbeiten', 'email': 'E-Mail-Adresse', 'first_name': 'Vorname', 'last_name': 'Nachname', 'last_updated': 'Zuletzt ge\xE4ndert', 'ssn': 'SSN', 'update_information': 'Profil \xE4ndern', 'zipcode': 'PLZ' } }, 'wishes': { 'add-comment': 'Kommentar hinzuf\xFCgen', 'created_at': 'erstellt am', 'edit': 'Reisewunsch bearbeiten', 'goto': 'Reisewunsch ansehen', 'night': ':value Nacht|:value N\xE4chte', 'table': { 'adults': ':count Erwachsener|:count Erwachsene', 'kids': '{0}Kein Kinder|Kind|Kinder' }, 'week': ':value Woche|:value Wochen', 'wishes': 'Reisew\xFCnsche' } }, 'full_name': 'Name', 'general': { 'actions': 'Actionen', 'active': 'Aktiv', 'all': 'Alle', 'buttons': { 'save': 'Speichern', 'update': 'Aktualisieren' }, 'custom': 'Custom', 'hide': 'Verstecken', 'inactive': 'Inaktiv', 'no': 'Nein', 'none': 'Keine', 'show': 'Anzeigen', 'toggle_navigation': 'Navigation einblenden', 'yes': 'Ja' }, 'go_back': 'Zur\xFCck!', 'go_next': 'Weiter!', 'id': 'ID', 'inbox': 'Posteingang', 'interest': 'Internet', 'join': 'Beitreten', 'language': 'Sprache', 'last_name': 'Nachname', 'login': 'Login', 'logo': 'Logo', 'logout': 'Logout', 'message': 'Nachricht', 'message_text': 'Nachrichtentext', 'mobile': 'Mobile', 'name': 'Name', 'new': 'Neu', 'note': 'Notiz', 'notes': 'Notizen', 'notifications': 'Benachrichtigungen', 'now': 'Jetzt', 'occupation': 'Beruf', 'ok': 'Ok', 'online': 'Online', 'password': 'Passwort', 'password_confirm': 'Passwort best\xE4tigen', 'personal_timezone': 'Zeitzone', 'phone': 'Telefon', 'plus': 'plus', 'posts': 'Posts', 'ratings': 'Bewertungen', 'recipient': 'Empf\xE4nger', 'register': 'Registrieren', 'reset': 'Passwort zur\xFCcksetzen', 'reset_link': 'Passwort-Reset-Link senden', 'review': 'Rezension', 'role': 'Rolle', 'send': 'Jetzt senden', 'street': 'Stra\xDFe', 'subject': 'Betreff', 'tel': 'Telefonnummer', 'title': 'Titel', 'user': 'User', 'username': 'Username', 'verify': 'E-Mail-Verifizierung', 'verify_email': 'Verifiziere Deine E-Mail-Adresse', 'warning': 'Warnung', 'whitelabel': 'Whitelabel', 'whitelabel_executive': 'Whitelabel Executive', 'whitelabel_information': 'Whitelabel Informationen', 'whitelabel_subtitle': 'Ein neuer Untertitel', 'whitelabel_title': 'Neues Whitelabel', 'wish': 'Reisewunsch', 'wishes': 'Reisew\xFCnsche', 'zipcode': 'PLZ' }, 'de.log-viewer::general': { 'all': 'Alle', 'date': 'Datum' }, 'de.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Alle', 'critical': 'Kritisch', 'debug': 'Debug', 'emergency': 'Notfall', 'error': 'Fehler', 'info': 'Info', 'notice': 'Hinweis', 'warning': 'Warnung' }, 'de.menus': { 'access_management': 'Zugriffsverwaltung', 'autooffers_management': 'Offer Management', 'backend': { 'access': { 'permissions': { 'all': 'Alle Berechtigungen', 'create': 'Berechtigung erstellen', 'edit': 'Berechtigung bearbeiten', 'main': 'Berechtigungen', 'management': 'Management Berechtigungen', 'version_restrictions': 'In anderen Versionen verf\xFCgbar' }, 'roles': { 'all': 'Alle Rollen', 'create': 'Rolle erstellen', 'edit': 'Rolle bearbeiten', 'main': 'Rollen', 'management': 'Management Rollen' }, 'title': 'Management Zug\xE4nge', 'users': { 'all': 'Alle User', 'change-password': 'Passwort \xE4ndern', 'create': 'User erstellen', 'deactivated': 'User deaktivieren', 'deleted': 'User l\xF6schen', 'edit': 'User bearbeiten', 'main': 'User', 'view': 'User ansehen' } }, 'blog': { 'all': 'Alle Blogseiten', 'create': 'Blogseite erstellen', 'edit': 'Blogseite bearbeiten', 'main': 'Blogseiten', 'management': 'Management Blogseiten' }, 'blogcategories': { 'all': 'Alle Blogkategorien', 'create': 'Blogkategorie erstellen', 'edit': 'Blogkategorie bearbeiten', 'main': 'CMS-Seiten', 'management': 'Management Blogkategorie' }, 'blogs': { 'all': 'Alle Blogs', 'create': 'Blog erstellen', 'edit': 'Blog bearbeiten', 'main': 'Blogs', 'management': 'Management Blogs' }, 'blogtags': { 'all': 'Alle Blog-Tags', 'create': 'Blog-Tag erstellen', 'edit': 'Blog-Tag bearbeiten', 'main': 'Blog-Tags', 'management': 'Management Blog-Tags' }, 'distributions': { 'all': 'Alle Verteilungen', 'create': 'Verteilung erstellen', 'edit': 'Verteilung bearbeiten', 'main': 'Verteilungen', 'management': 'Management Verteilungen' }, 'faqs': { 'all': 'Alle FAQ-Seiten', 'create': 'FAQ-Seite erstellen', 'edit': 'FAQ-Seite bearbeiten', 'main': 'FAQ-Seiten', 'management': 'Management FAQ' }, 'groups': { 'all': 'Alle Gruppen', 'create': 'Gruppe erstellen', 'edit': 'Gruppe bearbeiten', 'main': 'Gruppen', 'management': 'Management Gruppen' }, 'log-viewer': { 'dashboard': 'Dashboard', 'logs': 'Logs', 'main': 'Log Viewer' }, 'menus': { 'all': 'Alle Men\xFCs', 'create': 'Men\xFC erstellen', 'edit': 'Men\xFC bearbeiten', 'main': 'Men\xFCs', 'management': 'Management Men\xFCs' }, 'modules': { 'all': 'Alle Modulseiten', 'create': 'Modulseite erstellen', 'main': 'Modulseiten', 'management': 'Management Module' }, 'pages': { 'all': 'Alle Seiten', 'create': 'Seite erstellen', 'edit': 'Seite bearbeiten', 'main': 'Seiten', 'management': 'Management Seiten' }, 'settings': { 'all': 'Alle Einstellungen', 'create': 'Einstellungen erstellen', 'edit': 'Einstellungen bearbeiten', 'main': 'Einstellungen', 'management': 'Management Einstellungen' }, 'sidebar': { 'dashboard': 'Dashboard', 'general': 'General', 'system': 'System' }, 'whitelabels': { 'all': 'Alle Whitelabel', 'create': 'Whitelabel erstellen', 'edit': 'Whitelabel bearbeiten', 'main': 'Whitelabel', 'management': 'Management Whitelabel' }, 'wishes': { 'all': 'Alle W\xFCnsche', 'create': 'Wunsch erstellen', 'edit': 'Wunsch bearbeiten', 'main': 'W\xFCnsche', 'management': 'Management W\xFCnsche' } }, 'categories_management': 'Kategorienverwaltung', 'email_signature': 'E-Mail Signatur', 'footer_tnb': 'Teilnahmebedingungen', 'frontend': { 'agents': { 'all': 'Alle Men\xFCs', 'create': 'Agent erstellen', 'edit': 'Men\xFC bearbeiten', 'main': 'Men\xFCs', 'management': 'Management Men\xFCs' } }, 'groups_management': 'Gruppenmanagement', 'language-picker': { 'langs': { 'ar': 'Arabisch', 'da': 'D\xE4nisch', 'de': 'Deutsch', 'el': 'Griechisch', 'en': 'Englisch', 'es': 'Spanisch', 'fr': 'Franz\xF6sisch', 'id': 'Indonesisch', 'it': 'Italienisch', 'nl': 'Niederl\xE4ndisch', 'pt_BR': 'Portugiesisch', 'ru': 'Russisch', 'sv': 'Schwedisch', 'th': 'Thai' }, 'language': 'Sprache' }, 'languages': 'Sprachen', 'languages_lines': 'Sprachenzeilen', 'list': { 'status': { 'all': 'Alle Reisew\xFCnsche', 'completed': 'Erledigt', 'new': 'Neu', 'offer_created': 'Angebot Erstellt' } }, 'list_wishes': 'W\xFCnsche auflisten', 'regions_management': 'Regions Management', 'rules_management': 'Lead Management', 'sellers': 'Seller', 'sellers_management': 'Anbieter-Management', 'wishes': 'W\xFCnsche', 'wishes_management': 'W\xFCnsche Management' }, 'de.messages': { '_account': 'Hast Du einen Account', 'account': 'Kein Account gefunden', 'background': 'The background image must be 1200 x 600 pixels in PNG\/JPG\/JPEG format. Maximum file size is 1MB.', 'contact': 'Kontaktiere uns', 'contact_success': 'Deine Nachricht wurde erfolgreich gesendet', 'created': ':attribute wurde erfolgreich erstellt', 'delete': 'M\xF6chten Sie das wirklich l\xF6schen?', 'delete_canceled': 'L\xF6schen abgebrochen', 'deleted': ':attribute wurde erfolgreich gel\xF6scht', 'destroy': 'M\xF6chten Sie das wirklich permanent l\xF6schen?', 'destroyed': ':attribute wurde permanent gel\xF6scht', 'event_upcoming': 'Bevorstehendes Event', 'favicon': 'The favicon must be PNG\/ICON format. Maximum file size is 1MB.', 'forgot': 'Passwort vergessen', 'here': 'Hier einloggen', 'install': 'Modul[:attribute] wurde erfolgreich installiert', 'join': 'Du bist dem Event erfolgreich beigetreten.', 'login': 'Login', 'logo': 'The logo must be PNG\/JPG\/JPEG\/SVG format. Maximum file size is 1MB.', 'new_posts': 'Letzte Posts', 'recent_event': 'K\xFCrzliche Events', 'register': 'Erstelle Deinen Account', 'remember': 'Erinnere mich', 'reset': 'Passwort zur\xFCcksetzen', 'restore': 'M\xF6chten Sie mit der Wiederherstellung fortfahren?', 'restore_canceled': 'Wiederherstellung abgebrochen', 'restored': ':attribute wurde erfolgreich wiederhergestellt', 'show_all': 'Alle Artikel anzeigen', 'show_all_events': 'Alle Events anzeigen', 'sign_up': 'Registrieren', 'terms': 'Gesch\xE4ftsbedingungen zustimmen', 'title': 'Willkomen zur\xFCck', 'token_send': "We've sent you a login link!", 'uninstall': 'Modul[:attribute] wurde erfolgreich deinstalliert', 'unsaved': 'Du hast nicht gespeicherte \xC4nderungen - sichern und fortfahren?', 'updated': ':attribute wurde erfolgreich aktualisiert', 'verify': 'Bevor Du fortf\xE4hrst, \xFCberpr\xFCfe bitte Deine E-Mails auf einen Verifizierungslink.', 'verify_link': 'Falls Du die E-Mail nicht erhalten hast,', 'verify_request': 'klicke hier, um eine neue E-Mail zu erhalten', 'whitelabel_user': 'Erstelle Whitelabel User' }, 'de.modals': { 'activated': 'Aktiviert', 'active': 'Aktiv', 'add_document': 'Dokument hinzuf\xFCgen', 'add_documents': 'Dokumente hinzuf\xFCgen', 'address': 'Adresse', 'adults': 'Erwachsene', 'airport': 'Flughafen', 'alert_email': 'Benachrichtigungs-E-Mail', 'asc': 'Asc', 'auto': 'Auto', 'boards': 'Boards', 'budget': 'Budget', 'categories': 'Kategorien', 'category': 'Hotelkategorie', 'catering': 'Verpflegung', 'click_to_upload': 'Klick zum Hochladen', 'color': 'Farbe', 'confirmed': 'Best\xE4tigt', 'content': 'Inhalt', 'country_code': 'Country Code', 'create': 'Erstellen', 'created_at': 'Erstellt am', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'current': 'Aktuell', 'dashboard': 'Dashboard', 'deactivation_duration': 'Dauer der Deaktivierung', 'default': 'Default', 'desc': 'Desc', 'description': 'Beschreibung', 'destination': 'Ziel', 'display_name': 'Anzeigename', 'display_offer': 'Angezeigte Angebote', 'domain': 'Domain', 'duplicate': 'Duplikat', 'duration': 'Dauer', 'earliest_start': 'Fr\xFChester', 'email': 'Email', 'email_verified_at': 'Verifiziert am', 'end': 'Ende', 'first_name': 'Vorname', 'from': 'Ab', 'full_name': 'Name', 'group': 'Gruppe', 'groups': 'Gruppen', 'headline': '\xDCberschrift', 'headline_success': 'Erfolg \xDCberschrift', 'hotel_loop': 'Hotel Loop', 'id': 'ID', 'image': 'Bild', 'inactive_until': 'Deaktiviert bis', 'kids': 'Kinder', 'last_login': 'Letzter Login', 'last_name': 'Nachname', 'latest_return': 'Sp\xE4teste R\xFCckker', 'licence': 'Lizenz', 'lockout_time': 'Sperrzeit', 'login_failures': 'Loginfehler', 'logs': 'Logs', 'manuel': 'Manuell', 'message_success': 'Nachricht Erfolg', 'mix': 'Mix', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Beruf', 'offerCount': 'Angebote', 'online': 'Online', 'owner': 'Inhaber', 'password': 'Passwort', 'password_confirm': 'Passwortbest\xE4tigung', 'pending': 'Ausstehend', 'period': 'Zeitraum', 'permission': 'Berechtigung', 'permissions': 'Berechtigungen', 'phone': 'Telefon', 'position': 'Reihenfolge', 'price': 'Price', 'price_loop': 'Price Loop', 'primary_color': 'Prim\xE4rfarbe', 'rating': 'Bewertung', 'recommendation': 'Empfehlung', 'region_code': 'Region code', 'region_name': 'Region Name', 'role': 'Rolle', 'roles': 'Rollen', 'start': 'Start', 'status': 'Status', 'subheadline': 'Unter\xFCberschrift', 'subheadline_success': 'Erfolg Unter\xFCberschrift', 'summary': 'Zusammenfassung', 'text': 'Text', 'title': 'Titel', 'type': 'Type', 'unconfirmed': 'Unbest\xE4tigt', 'until': 'Bis', 'updated_at': 'Aktualisiert am', 'upload_documents': 'Dokumente hochladen', 'upload_photo': 'Foto hochladen', 'upload_tip': 'Upload Tipp', 'url': 'Url', 'users': 'Benutzer', 'value': 'Wert', 'visual': 'Das Format des Visuals ist 3:1, mindestens 600x200 px.', 'whitelabel': 'Whitelabel', 'whitelabels_distribution': 'Distribution', 'whitelabels_image': 'Hintergrundbild', 'wish': 'Wunsch' }, 'de.navs': { 'frontend': { 'agents': 'Agenten', 'create_wish': 'Wunsch erstellen', 'dashboard': 'Dashboard', 'login': 'Einloggen', 'macros': 'Makros', 'offers': 'Meine Angebote', 'register': 'Registrieren', 'user': { 'account': 'Mein Konto', 'administration': 'Administration', 'agents': 'Agenten', 'change_password': 'Passwort \xE4ndern', 'my_information': 'Meine Informationen', 'name': 'Ich', 'profile': 'Profil' }, 'wishes': 'Meine Reisew\xFCnsche', 'wisheslist': 'Reisew\xFCnsche' }, 'general': { 'home': 'Home', 'logout': 'Ausloggen' } }, 'de.notification': { 'created': '<span class="badge badge-flat border-success text-success-600 rounded-0 mr-2"> Erstellt <\/span> <strong>:name<\/strong> (:url) wurde <strong>erfolgreich erstellt<\/strong> by <strong>:user<\/strong>', 'deleted': '<span class="badge badge-flat border-danger text-danger-600 rounded-0 mr-2"> Gel\xF6scht </span><strong>:name</strong> (:url) wurde <strong>erfolgreich gel\xF6scht</strong> by <strong>:user</strong>', 'restored': '<span class="badge badge-flat border-info text-info-600 rounded-0 mr-2"> Wiederhergestellt <\/span><strong>:name<\/strong> (:url) wurde <strong>erfolgreich wiederhergestellt<\/strong> by <strong>:user<\/strong>' }, 'de.pagination': { 'next': 'Weiter &raquo;', 'previous': '&laquo; Zur\xFCck' }, 'de.passwords': { 'password': 'Passw\xF6rter m\xFCssen mindestens 6 Zeichen lang sein und korrekt best\xE4tigt werden.', 'reset': 'Das Passwort wurde zur\xFCckgesetzt!', 'sent': 'Passworterinnerung wurde gesendet!', 'token': 'Der Passwort-Wiederherstellungs-Schl\xFCssel ist ung\xFCltig oder abgelaufen.', 'user': 'Es konnte leider kein Nutzer mit dieser E-Mail-Adresse gefunden werden.' }, 'de.roles': { 'administrator': 'Administrator', 'user': 'User' }, 'de.seller': { 'agent': { 'create': 'Agent hinzuf\xFCgen', 'email': 'E-Mail Adresse', 'email_placeholder': 'seller@seller.com', 'tel': 'Tel.', 'tel_placeholder': '01761234567' } }, 'de.strings': { 'backend': { 'access': { 'users': { 'delete_user_confirm': "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", 'if_confirmed_off': '(Falls Auto - Best\xE4tigung aus ist)', 'restore_user_confirm': 'Diesen User in seinem Ursprungszustand wiederherstellen?' } }, 'dashboard': { 'title': 'Admin Dashboard', 'welcome': 'Willkommen' }, 'general': { 'all_rights_reserved': 'All Rights Reserved.', 'are_you_sure': 'Sind Sie sicher?', 'boilerplate_link': 'Laravel AdminPanel', 'continue': 'Weiter', 'member_since': 'Member since', 'minutes': 'Minuten', 'search_placeholder': 'Suchen...', 'see_all': { 'messages': 'Alle Nachrichten anzeigen', 'notifications': 'Alle anzeigen', 'tasks': 'Alle Aufgaben anzeigen' }, 'status': { 'offline': 'Offline', 'online': 'Online' }, 'timeout': 'Sie wurden aus Sicherheitsgr\xFCnden auf Grund von Inaktivit\xE4t ausgeloggt.', 'you_have': { 'messages': "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", 'notifications': "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", 'tasks': "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, 'search': { 'empty': 'Bitte geben Sie einen Suchbegriff.', 'incomplete': 'You must write your own search logic for this system.', 'results': 'Suchergebnisse f\xFCr :query', 'title': 'Suchergebnisse' }, 'welcome': '<p>This is the AdminLTE theme by <a href="https:\/\/almsaeedstudio.com\/" target="_blank">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\r\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\r\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\r\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href="https:\/\/github.com\/rappasoft\/laravel-5-boilerplate" target="_blank">GitHub<\/a> page for more information and report any <a href="https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues" target="_blank">issues here<\/a>.<\/p>\r\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\r\n<p>- Viral Solani<\/p>' }, 'emails': { 'auth': { 'click_to_confirm': 'Click here to confirm your account:', 'error': 'Whoops!', 'greeting': 'Hello!', 'password_cause_of_email': 'You are receiving this email because we received a password reset request for your account.', 'password_if_not_requested': 'If you did not request a password reset, no further action is required.', 'password_reset_subject': 'Reset Password', 'regards': 'Regards,', 'reset_password': 'Click here to reset your password', 'thank_you_for_using_app': 'Thank you for using our application!', 'trouble_clicking_button': 'If you\u2019re having trouble clicking the ":action_text" button, copy and paste the URL below into your web browser:' } }, 'frontend': { 'test': 'Test', 'tests': { 'based_on': { 'permission': 'berechtigungsbasiert - ', 'role': 'rollenbasiert - ' }, 'js_injected_from_controller': 'Javascript Injected from a Controller', 'using_access_helper': { 'array_permissions': "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", 'array_permissions_not': "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", 'array_roles': "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", 'array_roles_not': "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", 'permission_id': 'Using Access Helper with Permission ID', 'permission_name': 'Using Access Helper with Permission Name', 'role_id': 'Using Access Helper with Role ID', 'role_name': 'Using Access Helper with Role Name' }, 'using_blade_extensions': 'Using Blade Extensions', 'view_console_it_works': "View console, you should see 'it works!' which is coming from FrontendController@index", 'you_can_see_because': "You can see this because you have the role of ':role'!", 'you_can_see_because_permission': "You can see this because you have the permission of ':permission'!" }, 'user': { 'change_email_notice': 'Wenn Sie Ihre E-Mail-Adresse \xE4ndern, werden Sie ausgeloggt, bis Sie Ihre neue E-Mail-Adresse best\xE4tigt haben.', 'email_changed_notice': 'Sie m\xFCssen Ihre E-Mail-Adresse best\xE4tigen, bevor Sie sich erneut einloggen k\xF6nnen.', 'password_updated': 'Passwort erfolgreich ge\xE4ndert.', 'profile_updated': 'Profil erfolgreich aktualisiert.' }, 'welcome_to': 'Willkommen zum :place' } }, 'de.tables': { 'actions': 'Aktionen', 'activated': 'Aktiviert', 'activities': 'Aktivit\xE4ten', 'activity': 'Aktivit\xE4t', 'add_documents': 'Dokumente hinzuf\xFCgen', 'address': 'Adresse', 'adults': 'Erwachsene', 'ago': 'Vor', 'airport': 'Flughafen', 'alias': 'alias', 'boards': 'Boards', 'booking_status': 'Buchungsstatus', 'budget': 'Budget', 'categories': 'Kategorien', 'category': 'Hotelkategorie', 'catering': 'Verpflegung', 'color': 'Farbe', 'confirmed': 'Best\xE4tigt', 'content': 'Inhalt', 'country_code': 'Country Code', 'created_at': 'Erstellt am', 'created_by': 'Erstellt von', 'date': 'Datum', 'description': 'Beschreibung', 'destination': 'Ziel', 'display_name': 'Anzeigename', 'duration': 'Dauer', 'earliest_start': 'Fr\xFChester Start', 'email': 'Email', 'email_verified_at': 'Verifiziert am', 'empty_table': 'Keine Daten in der Tabelle verf\xFCgbar', 'end': 'Ende', 'eventAction': 'Eventaktion', 'eventCategory': 'Eventkategorie', 'eventLabel': 'Eventlabel', 'first_name': 'Vorname', 'from': 'Von', 'full_name': 'Namen', 'group': 'Gruppe', 'groups': 'Gruppen', 'id': 'ID', 'install': 'Installation', 'key': 'Key', 'kids': 'Kinder', 'last_login': 'Letzter Login', 'last_name': 'Nachname', 'latest_return': 'Sp\xE4teste R\xFCckkehr', 'locale': 'Lokal', 'lockout_time': 'Sperrzeit', 'login_failures': 'Loginfehler', 'message': 'Benachrichtigung', 'migrate': 'Migrierung', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Beruf', 'offerCount': 'Angebote', 'online': 'online', 'owner': 'Inhaber', 'package': 'Paket', 'pending': 'Ausstehend', 'period': 'Zeitraum', 'permissions': 'Berechtigungen', 'phone': 'Telefon', 'region_code': 'Region code', 'region_name': 'Region Name', 'roles': 'Rollen', 'start': 'Start', 'status': 'Status', 'subject': 'Betreff', 'text': 'Text', 'title': 'Wunsch', 'type': 'Type', 'unconfirmed': 'Unbest\xE4tigt', 'uninstall': 'Deinstallation', 'updated_at': 'Aktualisiert am', 'url': 'Url', 'users': 'Benutzer', 'when': 'Wann', 'whitelabel': 'Whitelabel' }, 'de.tnb': { 'not_stored': 'Fehler beim Speichern der Teilnahmebedingungen', 'stored': 'Sie haben die Teilnahmebedingungen erfolgreich gespeichert', 'template': '<p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">Bedingungen f&uuml;r die Nutzung des </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportals</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>1. Funktion des </strong></span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportals</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>, Nutzungsbedingungen</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">1.1 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> bietet &uuml;ber das Online-Tool &bdquo;</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportal&ldquo; unentgeltlich die technische M&ouml;glichkeit Suchanzeigen nach Reiseangeboten (&bdquo;Reisew&uuml;nsche&ldquo;) aufzugeben und so pers&ouml;nlichen Kontakt zu den </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> Reiseberatern zum Zwecke einer individuellen Angebotskommunikation herzustellen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">1.2 F&uuml;r die Nutzung des Online-Tools gelten diese Nutzungsbedingungen, die nach Ma&szlig;gabe von Ziffer 8.1 ge&auml;ndert werden k&ouml;nnen.</span></span></span></p>\r\n    &nbsp;\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>2. Anmeldung</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.1 Das Online-Tool ist &uuml;ber ein entsprechendes Dialogfeld auf der Webseite des </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> sowie &uuml;ber </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$URL-REISEWUNSCHPORTAL</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> zu erreichen. Die Nutzung des Online-Tools setzt die Anmeldung als Nutzer voraus.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.2 Die Anmeldung ist nur vollj&auml;hrigen und unbeschr&auml;nkt haftenden Personen gestattet.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.3 Die Anmeldung erfolgt durch Einsendung der E-Mail-Adresse sowie des Reisewunsches und ggf. weiterer Suchkriterien sowie der Akzeptanz der Nutzungsbedingungen. Sie wird durch Zusendung einer Best&auml;tigungsmail mit einem individuellen Zugangslink durch </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> an die angegebene E-Mail-Adresse abgeschlossen.&nbsp;&nbsp;</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.4 &Uuml;ber den Zugangslink kann der Nutzer seinen Reisewunsch einschlie&szlig;lich der weiteren angegeben Daten im Online-Tool jederzeit einsehen, anpassen oder deaktivieren. Passt der Nutzer den Reisewunsch an oder deaktiviert ihn, verschickt das Online-Tool eine entsprechende Info-Mail an ihn.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.5 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> &uuml;berpr&uuml;ft nicht die Richtigkeit der Nutzerdaten.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.6 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> beh&auml;lt sich das Recht vor, nach alleinigem Ermessen und ohne Ank&uuml;ndigung den Zugang von Nutzern zum Online-Tool oder dessen Teilen zu verweigern und/oder den Betrieb des Online-Tools einzustellen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">&nbsp;</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>3. Reisew&uuml;nsche, Bearbeitung</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.1 Ein Reisewunsch stellt nur eine unverbindliche Anfrage und kein rechtlich bindendes Angebot dar.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.2 Die in das Online-Tool eingegebenen Reisew&uuml;nsche der Nutzer werden durch das System an </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> Reiseberater zur weiteren Bearbeitung weitergeleitet.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.3 Die Reisew&uuml;nsche werden nicht ver&ouml;ffentlicht.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.4 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> Reiseberater k&ouml;nnen auf einen Reisewunsch mit einem Angebotsvorschlag reagieren. Dieser Vorschlag ist rechtlich unverbindlich, soweit darin nichts anderes bestimmt ist.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.5 Nachdem ein Reiseberater einen Reisewunsch bearbeitet und das Angebot in das Online-Tool eingestellt hat, bekommt der Nutzer eine E-Mail, in der erneut ein Link zum Reisewunsch und dem Angebot enthalten ist.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.6 Der Nutzer, welcher den Reisewunsch eingestellt hat, kann auf den Vorschlag hin den </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> Reiseberater kontaktieren. Er ist jedoch nicht verpflichtet, auf einen Vorschlag zu reagieren.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.7 Der Nutzer kann w&auml;hlen, &uuml;ber welchen Weg (E-Mail, Telefon) er weiter mit dem Reiseberater kommunizieren m&ouml;chte. Solange der Nutzer keine Kontaktdaten f&uuml;r einen Direktkontakt mitteilt, erfolgt die Kommunikation ausschlie&szlig;lich &uuml;ber das Online-Tool.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">&nbsp;</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>4. Pflichten des Nutzers, Verantwortung f&uuml;r Inhalte</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">4.1 Der Nutzer ist verpflichtet, den pers&ouml;nlichen Zugangslink geheim zu halten.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">4.2 Der Nutzer ist grunds&auml;tzlich f&uuml;r alle &uuml;ber seinen Zugangslink vorgenommenen Aktivit&auml;ten verantwortlich. Die Regelungen dieses Absatzes gelten nicht, wenn der Nutzer einen etwaigen Missbrauch seines Zugangslinks nicht zu vertreten hat, weil keine Sorgfaltspflichtverletzung des Nutzers vorliegt. Der Nutzer ist verpflichtet, </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> umgehend zu informieren, wenn er Anhaltspunkte f&uuml;r einen Missbrauch seines Zugangslink durch Dritte hat.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">4.3 Der Nutzer ist verpflichtet, bei der Einstellung von Reisew&uuml;nschen und sonstigen Inhalten s&auml;mtliche geltende Rechtsvorschriften, Rechte Dritter und diese Nutzungsbedingungen zu beachten. Er ist f&uuml;r die Rechtm&auml;&szlig;igkeit, Richtigkeit und Vollst&auml;ndigkeit aller von ihm eingestellten Inhalte verantwortlich und haftet f&uuml;r die Verletzung von Rechtsvorschriften oder von rechten Dritter durch von ihm eingestellte Inhalte.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">4.4 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> &uuml;berpr&uuml;ft die in das Online-Tool eingestellten Inhalte der Nutzer grunds&auml;tzlich nicht und &uuml;bernimmt keine Haftung. </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span>r <span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">beh\xE4lt sich aber das Recht vor, die Inhalte zu &uuml;berpr&uuml;fen, auch wenn keine&nbsp; Verpflichtung besteht.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">4.5 Der Nutzer erh&auml;lt etwaige Informationen &uuml;ber die von ihm im Online-Tool hinterlegte E-Mail-Adresse. Es obliegt ihm, sicherzustellen, dass er unter dieser E-Mail-Adresse erreichbar ist.</span></span></span><br />\r\n    <br />\r\n    <br />\r\n    <span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>5. Unzul&auml;ssige Nutzungshandlungen, Ma&szlig;nahmen bei Verst&ouml;&szlig;en, Freistellung</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.1 Die folgenden Handlungen sind unzul&auml;ssig:&nbsp; Das Einstellen von anderen Inhalten als Reisew&uuml;nschen. Das Einstellen von unzul&auml;ssigen Inhalten; unzul&auml;ssige Inhalte, die gegen die Nutzungsbedingungen oder gegen gesetzliche Verbote oder die guten Sitten versto&szlig;en oder Rechte Dritter verletzen. Die Offenlegung und Weitergabe des Zugangslinks zum Online-Tool. Das automatisierte Auslesen der im Online-Tool befindlichen Daten sowie der Aufbau eigener Suchsysteme, Dienste und Verzeichnisse unter Zuhilfenahme der im Online-Tool abrufbaren Inhalte sowie das vielfache Erstellen gleicher Inhalte. Die Verwendung oder das Aufspielen von Dateien, die Viren, besch&auml;digte Dateien, Software oder sonstige Mechanismen oder Inhalte enthalten, welche das Online-Tool oder dessen Nutzer, deren Rechner, die Server von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> oder die auf den Rechnern der Nutzer oder von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> verwendete Software ausspionieren, attackieren oder in sonstiger Weise beeintr&auml;chtigen k&ouml;nnten.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.2 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> kann folgende Ma&szlig;nahmen ergreifen, wenn konkrete Anhaltspunkte daf&uuml;r bestehen, dass ein Nutzer gesetzliche Vorschriften, Rechte Dritter oder diese Bedingungen verletzt, oder wenn </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ein sonstiges berechtigtes Interesse hat: L&ouml;schen von Reisew&uuml;nschen oder sonstigen Inhalten, Verwarnung des Nutzers, Beschr&auml;nkung der Nutzungsm&ouml;glichkeiten des Online-Tools durch den Nutzer, so dass u.a. keine Inhalte mehr eingestellt werden k&ouml;nnen, L&ouml;schung des Nutzerkontos.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.3 Der Nutzer stellt </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> von allen Anspr&uuml;chen frei, die von Dritten gegen </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> aufgrund einer Verletzung ihrer Rechte geltend gemacht werden, soweit der Nutzer diese Rechtsverletzung zu vertreten hat. Die Freistellung umfasst die &Uuml;bernahme s&auml;mtlicher Gerichtskosten und angemessener Anwaltskosten.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.4 Der Nutzer wird </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> bei der Verteidigung gegen die Inanspruchnahme unterst&uuml;tzen und insbesondere unverz&uuml;glich alle Informationen zur Verf&uuml;gung stellen, die f&uuml;r die Pr&uuml;fung und Abwehr der Anspr&uuml;che von Bedeutung sein k&ouml;nnen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.5 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ist im Fall der berechtigten Geltendmachung von Rechten durch einen Dritten berechtigt, dem Dritten den Namen und die E-Mail-Adresse des Nutzers mitzuteilen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.6 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ist zur Geltendmachung weiterer gesetzlicher Rechte im Fall von unzul&auml;ssigen Nutzungshandlungen berechtigt.</span></span></span></p>\r\n    &nbsp;\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>6. Haftungsbeschr&auml;nkung</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">6.1 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> &uuml;bernimmt keine Garantie oder Gew&auml;hr f&uuml;r die Verf&uuml;gbarkeit und Funktion des Online-Tools oder der eingestellten Inhalte. </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> beh&auml;lt sich vor das </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span>&gt;<span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportal (auch ohne vorherige Ank&uuml;ndigung) ganz oder teilweise&nbsp;</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">einzustellen oder den Zugang hierzu ganz oder teilweise einzuschr&auml;nken, ohne dass hieraus Anspr&uuml;che der Nutzer gegen&uuml;ber </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> entstehen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">6.2 F&uuml;r eine Haftung von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> auf Schadenersatz gelten unbeschadet der sonstigen gesetzlichen Anspruchsvoraussetzungen folgende Haftungsausschl&uuml;sse und Haftungsbegrenzungen</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">6.2.1 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> haftet unbeschr&auml;nkt, soweit die Schadensursache auf Vorsatz oder grober Fahrl&auml;ssigkeit beruht. Ferner haftet </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> f&uuml;r die fahrl&auml;ssige Verletzung von wesentlichen Pflichten, deren Verletzung die Erreichung des Vertragszwecks gef&auml;hrdet, und f&uuml;r die Verletzung von Pflichten auf deren Einhaltung Vertragspartner regelm&auml;&szlig;ig vertrauen. In diesem Fall haftet </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> jedoch nur f&uuml;r den vorhersehbaren, vertragstypischen Schaden. </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> haftet nicht f&uuml;r die fahrl&auml;ssige Verletzung anderer als der in den vorstehenden S&auml;tzen genannten Pflichten. Die vorstehenden Haftungsbeschr&auml;nkungen gelten nicht bei Verletzung von leben, K&ouml;rper und Gesundheit. Im &Uuml;brigen ist die Haftung von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ausgeschlossen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">6.2.2 Soweit die Haftung von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ausgeschlossen oder beschr&auml;nkt ist, gilt dies auch f&uuml;r die pers&ouml;nliche Haftung ihrer Arbeitnehmer, Vertreter und Erf&uuml;llungsgehilfen.</span></span></span></p>\r\n\r\n    <p><br />\r\n    <span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>7. Datenschutz</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">7.1 Die im Rahmen der Nutzung des Reisewunschportals angegebenen personenbezogenen Daten (Name, E-Mail Adresse) werden zur Bearbeitung des Reisewunsches, zur Kundenbetreuung und Marktforschung oder zur Erf&uuml;llung gesetzlicher Bestimmungen gespeichert, verarbeitet und genutzt. Dar&uuml;ber hinaus k&ouml;nnen die Daten zur Zusendung von aktuellen Informationen und Angeboten verwendet werden. Sollten Sie diese Informationen nicht w&uuml;nschen, wenden Sie sich bitte mit Ihrem Anliegen an: </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">xy@xy.de.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">7.2 Weitere Informationen zur Datenverarbeitung und zum Datenschutz ergeben sich aus unserer Datenschutzerkl&auml;rung. Diese finden Sie hier: </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">https://www.abc.de/datenschutz.</span></span></span></p>\r\n    &nbsp;\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>8. Schlussbestimmungen</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">8.1 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ist berechtigt, &Auml;nderungen oder Erg&auml;nzungen an diesen Nutzungsbedingungen vorzunehmen, sofern dies dem billigem Ermessen von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">&nbsp;</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">entspricht und f&uuml;r den Nutzer zumutbar ist. Diese werden erst wirksam, nachdem </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> den registrierten Nutzer die &Auml;nderung der Nutzungsbedingungen in Textform mitgeteilt hat und der Nutzer dieser Neufassung nicht innerhalb von 6 Wochen ab Zugang mindestens in Textform widerspricht. Der Nutzer wird bei Mitteilung der &Auml;nderung auf die Bedeutung seines Schweigens besonders hingewiesen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">8.2 Sofern einzelne oder mehrere Bestimmungen in diesen Nutzungsbedingungen ganz oder teilweise unwirksam oder ung&uuml;ltig sind oder werden, bleibt die Wirksamkeit der &uuml;brigen Regelungen und Bestimmungen hiervon unber&uuml;hrt. Die unwirksame oder ung&uuml;ltige Regelung gilt durch eine Regelung ersetzt, die dem Sinn und Zweck der unwirksamen oder ung&uuml;ltigen Regelung in rechtswirksamer Weise wirtschaftlich am n&auml;chsten kommt. Gleiches gilt f&uuml;r eventuelle Regelungsl&uuml;cken.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">8.3 Streitigkeiten, die im Zusammenhang mit diesen Nutzungsbedingungen oder aufgrund der Nutzung des </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportal gef&uuml;hrt werden unterliegen ausschlie&szlig;lich dem Recht der Bundesrepublik Deutschland.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">&nbsp;</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">Stand: Dezember 2019</span></span></span></p>' }, 'de.validation': { 'accepted': ':attribute muss akzeptiert werden.', 'active_url': ':attribute ist keine g\xFCltige Internet-Adresse.', 'after': ':attribute muss ein Datum nach dem :date sein.', 'after_or_equal': ':attribute muss ein Datum nach dem :date oder gleich dem :date sein.', 'alpha': ':attribute darf nur aus Buchstaben bestehen.', 'alpha_dash': ':attribute darf nur aus Buchstaben, Zahlen, Binde- und Unterstrichen bestehen.', 'alpha_num': ':attribute darf nur aus Buchstaben und Zahlen bestehen.', 'array': ':attribute muss ein Array sein.', 'attributes': { 'address': 'Adresse', 'age': 'Alter', 'available': 'verf\xFCgbar', 'city': 'Stadt', 'content': 'Inhalt', 'country': 'Land', 'date': 'Datum', 'day': 'Tag', 'description': 'Beschreibung', 'email': 'E-Mail-Adresse', 'excerpt': 'Auszug', 'first_name': 'Vorname', 'gender': 'Geschlecht', 'hour': 'Stunde', 'last_name': 'Nachname', 'minute': 'Minute', 'mobile': 'Handynummer', 'month': 'Monat', 'name': 'Name', 'password': 'Passwort', 'password_confirmation': 'Passwort-Best\xE4tigung', 'phone': 'Telefonnummer', 'second': 'Sekunde', 'sex': 'Geschlecht', 'size': 'Gr\xF6\xDFe', 'time': 'Uhrzeit', 'title': 'Titel', 'username': 'Benutzername', 'year': 'Jahr' }, 'before': ':attribute muss ein Datum vor dem :date sein.', 'before_or_equal': ':attribute muss ein Datum vor dem :date oder gleich dem :date sein.', 'between': { 'array': ':attribute muss zwischen :min & :max Elemente haben.', 'file': ':attribute muss zwischen :min & :max Kilobytes gro\xDF sein.', 'numeric': ':attribute muss zwischen :min & :max liegen.', 'string': ':attribute muss zwischen :min & :max Zeichen lang sein.' }, 'boolean': ":attribute muss entweder 'true' oder 'false' sein.", 'confirmed': ':attribute stimmt nicht mit der Best\xE4tigung \xFCberein.', 'custom': { 'attribute-name': { 'rule-name': 'custom-message' } }, 'date': ':attribute muss ein g\xFCltiges Datum sein.', 'date_equals': 'The :attribute must be a date equal to :date.', 'date_format': ':attribute entspricht nicht dem g\xFCltigen Format f\xFCr :format.', 'different': ':attribute und :other m\xFCssen sich unterscheiden.', 'digits': ':attribute muss :digits Stellen haben.', 'digits_between': ':attribute muss zwischen :min und :max Stellen haben.', 'dimensions': ':attribute hat ung\xFCltige Bildabmessungen.', 'distinct': ':attribute beinhaltet einen bereits vorhandenen Wert.', 'email': ':attribute muss eine g\xFCltige E-Mail-Adresse sein.', 'exists': 'Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.', 'file': ':attribute muss eine Datei sein.', 'filled': ':attribute muss ausgef\xFCllt sein.', 'gt': { 'array': ':attribute muss mindestens :min Elemente haben.', 'file': ':attribute muss mindestens :min Kilobytes gro\xDF sein.', 'numeric': ':attribute muss mindestens :min sein.', 'string': ':attribute muss mindestens :min Zeichen lang sein.' }, 'gte': { 'array': ':attribute muss gr\xF6\xDFer oder gleich :min Elemente haben.', 'file': ':attribute muss gr\xF6\xDFer oder gleich :min Kilobytes sein.', 'numeric': ':attribute muss gr\xF6\xDFer oder gleich :min sein.', 'string': ':attribute muss gr\xF6\xDFer oder gleich :min Zeichen lang sein.' }, 'image': ':attribute muss ein Bild sein.', 'in': 'Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.', 'in_array': 'Der gew\xE4hlte Wert f\xFCr :attribute kommt nicht in :other vor.', 'integer': ':attribute muss eine ganze Zahl sein.', 'ip': ':attribute muss eine g\xFCltige IP-Adresse sein.', 'ipv4': ':attribute muss eine g\xFCltige IPv4-Adresse sein.', 'ipv6': ':attribute muss eine g\xFCltige IPv6-Adresse sein.', 'json': ':attribute muss ein g\xFCltiger JSON-String sein.', 'lt': { 'array': ':attribute muss kleiner :min Elemente haben.', 'file': ':attribute muss kleiner :min Kilobytes gro\xDF sein.', 'numeric': ':attribute muss kleiner :min sein.', 'string': ':attribute muss kleiner :min Zeichen lang sein.' }, 'lte': { 'array': ':attribute muss kleiner oder gleich :min Elemente haben.', 'file': ':attribute muss kleiner oder gleich :min Kilobytes sein.', 'numeric': ':attribute muss kleiner oder gleich :min sein.', 'string': ':attribute muss kleiner oder gleich :min Zeichen lang sein.' }, 'max': { 'array': ':attribute darf nicht mehr als :max Elemente haben.', 'file': ':attribute darf maximal :max Kilobytes gro\xDF sein.', 'numeric': ':attribute darf maximal :max sein.', 'string': ':attribute darf maximal :max Zeichen haben.' }, 'mimes': ':attribute muss den Dateityp :values haben.', 'mimetypes': ':attribute muss den Dateityp :values haben.', 'min': { 'array': ':attribute muss mindestens :min Elemente haben.', 'file': ':attribute muss mindestens :min Kilobytes gro\xDF sein.', 'numeric': ':attribute muss mindestens :min sein.', 'string': ':attribute muss mindestens :min Zeichen lang sein.' }, 'not_in': 'Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.', 'not_regex': ':attribute hat ein ung\xFCltiges Format.', 'numeric': ':attribute muss eine Zahl sein.', 'present': ':attribute muss vorhanden sein.', 'regex': ':attribute Format ist ung\xFCltig.', 'required': ':attribute muss ausgef\xFCllt sein.', 'required_if': ':attribute muss ausgef\xFCllt sein, wenn :other :value ist.', 'required_unless': ':attribute muss ausgef\xFCllt sein, wenn :other nicht :values ist.', 'required_with': ':attribute muss angegeben werden, wenn :values ausgef\xFCllt wurde.', 'required_with_all': ':attribute muss angegeben werden, wenn :values ausgef\xFCllt wurde.', 'required_without': ':attribute muss angegeben werden, wenn :values nicht ausgef\xFCllt wurde.', 'required_without_all': ':attribute muss angegeben werden, wenn keines der Felder :values ausgef\xFCllt wurde.', 'same': ':attribute und :other m\xFCssen \xFCbereinstimmen.', 'size': { 'array': ':attribute muss genau :size Elemente haben.', 'file': ':attribute muss :size Kilobyte gro\xDF sein.', 'numeric': ':attribute muss gleich :size sein.', 'string': ':attribute muss :size Zeichen lang sein.' }, 'starts_with': 'The :attribute must start with one of the following: :values', 'string': ':attribute muss ein String sein.', 'timezone': ':attribute muss eine g\xFCltige Zeitzone sein.', 'unique': ':attribute ist schon vergeben.', 'uploaded': ':attribute konnte nicht hochgeladen werden.', 'url': ':attribute muss eine URL sein.', 'uuid': ':attribute muss ein UUID sein.' }, 'de.wish': { 'contact': { 'text': 'Schreiben Sie Ihrem Reiseberater eine Nachricht oder nutzen Sie den R\xFCckruf-Service.' }, 'view': { 'adults': 'Erwachsene', 'airport': 'Flughafen', 'any_price': 'beliebig', 'budget': 'Budget', 'category': 'Hotelkategorie', 'catering': 'Verpflegung', 'comment-header': 'Nachricht an Agenten', 'createdat': 'Erstellt am', 'createdby': 'Erstellt von', 'destination': 'Destination', 'duration': 'Reisedauer', 'earliest_start': 'Fr\xFChester Start', 'email': 'E-Mail', 'kids': 'Kinder', 'latest_return': 'Sp\xE4teste R\xFCckkehr', 'new_offers': 'Neue Angebote', 'offerCount': 'Angebote', 'offer_number': 'Angebot Nummer', 'owner': 'Name', 'pets': 'Haustiere', 'stage': { 'seller_empty': 'Der Reisewunsch wurde am <b>:date</b> an Sie<br>\r\n                    \xFCbermittelt. Erstellen Sie jetzt ein Angebot.', 'seller_message': 'Der Reisewunsch wurde am <b>:date</b> an Sie<br>\r\n                    \xFCbermittelt. Der Kunder hat Ihnen eine Nachricht hinterlassen.', 'seller_offer': 'Der Reisewunsch wurde am <b>:date</b> an Sie<br>\r\n                    \xFCbermittelt. Sie haben ein Angebot erstellt.', 'user_empty': 'Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\r\n                    \xFCbermittelt. Leider liegt momentan noch kein Angebot vor.', 'user_message': 'Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\r\n                    \xFCbermittelt. Es gibt eine neue Nachricht f\xFCr Sie.', 'user_offer': 'Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\r\n                    \xFCbermittelt. Es gibt ein Angebot f\xFCr Sie.' }, 'status': 'Status', 'text': 'Text', 'title': 'Wunschtitel', 'whitelabel': 'Whitelabel' } }, 'en.alerts': { 'backend': { 'blogcategories': { 'created': 'The Blog Category was successfully created.', 'deleted': 'The Blog Category was successfully deleted.', 'updated': 'The Blog Category was successfully updated.' }, 'blogs': { 'created': 'The Blog was successfully created.', 'deleted': 'The Blog was successfully deleted.', 'updated': 'The Blog was successfully updated.' }, 'blogtags': { 'created': 'The Blog Tag was successfully created.', 'deleted': 'The Blog Tag was successfully deleted.', 'updated': 'The Blog Tag was successfully updated.' }, 'emailtemplates': { 'deleted': 'The Email Template was successfully deleted.', 'updated': 'The Email Template was successfully updated.' }, 'faqs': { 'created': 'The Faq was successfully created.', 'deleted': 'The Faq was successfully deleted.', 'updated': 'The Faq was successfully updated.' }, 'groups': { 'created': 'The Group was successfully created.', 'deleted': 'The Group was successfully deleted.', 'updated': 'The Group was successfully updated.' }, 'menus': { 'created': 'The Menu was successfully created.', 'deleted': 'The Menu was successfully deleted.', 'updated': 'The Menu was successfully updated.' }, 'pages': { 'created': 'The Page was successfully created.', 'deleted': 'The Page was successfully deleted.', 'updated': 'The Page was successfully updated.' }, 'permissions': { 'created': 'The permission was successfully created.', 'deleted': 'The permission was successfully deleted.', 'updated': 'The permission was successfully updated.' }, 'roles': { 'created': 'The role was successfully created.', 'deleted': 'The role was successfully deleted.', 'updated': 'The role was successfully updated.' }, 'settings': { 'updated': 'The Setting was successfully updated.' }, 'users': { 'confirmation_email': 'A new confirmation e-mail has been sent to the address on file.', 'created': 'The user was successfully created.', 'deleted': 'The user was successfully deleted.', 'deleted_permanently': 'The user was deleted permanently.', 'restored': 'The user was successfully restored.', 'session_cleared': "The user's session was successfully cleared.", 'updated': 'The user was successfully updated.', 'updated_password': "The user's password was successfully updated." }, 'whitelabels': { 'created': 'The Whitelabel was successfully created.', 'deleted': 'The Whitelabel was successfully deleted.', 'updated': 'The Whitelabel was successfully updated.' }, 'wishes': { 'created': 'The Wish was successfully created.', 'deleted': 'The Wish was successfully deleted.', 'updated': 'The Wish was successfully updated.' } }, 'frontend': { 'offers': { 'created': 'Offer successfully created' }, 'wishes': { 'created': 'The Wish was successfully created.', 'deleted': 'The Wish was successfully deleted.', 'updated': 'The Wish was successfully updated.' } } }, 'en.api': { 'messages': { 'forgot_password': { 'success': 'We have sent email with reset password link. Please check your inbox!.', 'validation': { 'email_not_found': 'This email address is not registered.' } }, 'login': { 'failed': 'Invalid Credentials! Please try again.', 'success': 'Login Successfull.' }, 'logout': { 'success': 'Successfully logged out.' }, 'refresh': { 'status': 'Ok', 'token': { 'not_provided': 'Token not provided.' } }, 'registeration': { 'success': 'You have registered successfully. Please check your email for activation!' } } }, 'en.auth': { 'failed': 'These credentials do not match our records.', 'general_error': 'You do not have access to do that.', 'socialite': { 'unacceptable': ':provider is not an acceptable login type.' }, 'throttle': 'Too many login attempts. Please try again in :seconds seconds.', 'unknown': 'An unknown error occurred' }, 'en.backup::notifications': { 'backup_failed_body': 'Important: An error occurred while backing up :application_name', 'backup_failed_subject': 'Failed back up of :application_name', 'backup_successful_body': 'Great news, a new backup of :application_name was successfully created on the disk named :disk_name.', 'backup_successful_subject': 'Successful new backup of :application_name', 'backup_successful_subject_title': 'Successful new backup!', 'cleanup_failed_body': 'An error occurred while cleaning up the backups of :application_name', 'cleanup_failed_subject': 'Cleaning up the backups of :application_name failed.', 'cleanup_successful_body': 'The clean up of the :application_name backups on the disk named :disk_name was successful.', 'cleanup_successful_subject': 'Clean up of :application_name backups successful', 'cleanup_successful_subject_title': 'Clean up of backups successful!', 'exception_message': 'Exception message: :message', 'exception_message_title': 'Exception message', 'exception_trace': 'Exception trace: :trace', 'exception_trace_title': 'Exception trace', 'healthy_backup_found_body': 'The backups for :application_name are considered healthy. Good job!', 'healthy_backup_found_subject': 'The backups for :application_name on disk :disk_name are healthy', 'healthy_backup_found_subject_title': 'The backups for :application_name are healthy', 'unhealthy_backup_found_body': 'The backups for :application_name on disk :disk_name are unhealthy.', 'unhealthy_backup_found_empty': 'There are no backups of this application at all.', 'unhealthy_backup_found_full': 'The backups are using too much storage. Current usage is :disk_usage which is higher than the allowed limit of :disk_limit.', 'unhealthy_backup_found_not_reachable': 'The backup destination cannot be reached. :error', 'unhealthy_backup_found_old': 'The latest backup made on :date is considered too old.', 'unhealthy_backup_found_subject': 'Important: The backups for :application_name are unhealthy', 'unhealthy_backup_found_subject_title': 'Important: The backups for :application_name are unhealthy. :problem', 'unhealthy_backup_found_unknown': 'Sorry, an exact reason cannot be determined.' }, 'en.button': { 'cancel': 'cancel', 'clone': 'Clone', 'close': 'close', 'confirm': 'confirm', 'copy': 'Copy', 'create': 'create', 'delete': 'delete', 'delete_all': 'delete all', 'edit': 'edit', 'language': 'Language', 'mark_as_read': 'mark as read', 'required': 'required', 'restore': 'restore', 'save': 'save', 'save_and_close': 'save and close', 'save_and_create': 'save and create', 'save_and_create_new': 'save and create new' }, 'en.buttons': { 'backend': { 'access': { 'users': { 'activate': 'Activate', 'change_password': 'Change Password', 'clear_session': 'Clear Session', 'deactivate': 'Deactivate', 'delete_permanently': 'Delete Permanently', 'login_as': 'Login As :user', 'resend_email': 'Resend Confirmation E-mail', 'restore_user': 'Restore User' } } }, 'emails': { 'auth': { 'confirm_account': 'Confirm Account', 'reset_password': 'Reset Password' } }, 'general': { 'cancel': 'Cancel', 'continue': 'Continue', 'crud': { 'add': 'Add', 'create': 'Create', 'delete': 'Delete', 'edit': 'Edit', 'update': 'Update', 'view': 'View' }, 'preview': 'Preview', 'save': 'Save', 'view': 'View' }, 'wishes': { 'frontend': { 'create_autooffer': 'Create Auto Offer', 'create_offer': 'Create Offer' } } }, 'en.comment': { 'comments': 'Comments' }, 'en.dashboard': { 'browsers': 'Browser Share', 'clickrate': 'Click-Rate (%)', 'clickrate_manuell': 'Click-Rate manuall Offer', 'current_month': 'current month', 'daily_average_wish': 'wishes per day', 'daily_desktop_layer': 'Layerimpressions Desktop \/ Day', 'daily_mobile_layer': 'Layerimpressions Mobile \/ Day', 'date': 'date', 'layers': 'Layers', 'monthly_average_wish': 'wishes per month', 'monthly_desktop_browser_share': 'Browser-Share Desktop \/ Month', 'monthly_desktop_browser_shareklicks': 'Browser-Share Desktop Klicks \/ Month', 'monthly_desktop_layer': 'Layerimpressions Desktop \/ Month', 'monthly_desktop_response': 'Desktop Response Rate \/ Month', 'monthly_mobile_layer': 'Layerimpressions Mobile \/ Month', 'monthly_mobile_response': 'Mobile Response Rate \/ Month', 'openrate': 'Open-Rate (%)', 'openrate_manuell': 'Open-Rate manuall Offer', 'reaction_time_average_day': 'reaction time \/ day', 'reaction_time_average_month': 'reaction time \/ month', 'response': 'Response Rate (%)', 'source_2019': 'period: 2019', 'total_groups': 'all groups', 'total_sellers': 'all sellers', 'total_wishes': 'all wishes', 'wish': 'wish', 'wishes': 'wishes' }, 'en.email': { 'account': { 'activate': 'Login', 'activated': 'A new :account account for the :whitelabel wish portal has been created for you.', 'greeting': 'Thank you for your trust in our services', 'hello': 'Hello :username', 'link': 'You can login with your user data via click on the following button.', 'password': 'Password : :password', 'subject': 'Account Details for :username at :company', 'subject_for_executive': 'Your login data for desiretec portal', 'subject_for_seller': 'Your login data for desiretec whitelabel', 'username': 'Email address: :email' }, 'footer': { 'line1': 'Sunny greetings', 'line2': 'Your desiretec team', 'line3': 'DesireTec GmbH', 'line4': 'Auf dem Sande 1 | D-20457 Hamburg | Deutschland', 'line5': 'Gesch\xE4ftsf\xFChrung: John Muster', 'line6': 'Sitz der Gesellschaft: Hamburg', 'line7': 'Handelsregister: Amtsgericht Hamburg HRB XXXXX', 'line8': 'BAN: DEXX XXXX XXXX XXXX XXXX XX', 'line9': 'BIC: XXXXXXXXXX' }, 'footer_novasol': { 'line1': 'Mit freundlichen Gr\xFC\xDFen | With kind regards | Med venlig hilsen', 'line2': 'Your NOVASOL booking service', 'line3': 'NOVASOL Reise GmbH', 'line4': 'Gotenstrasse 11 - 20097 Hamburg, Germany', 'line5': 'Phone +49 (0) 40 238859 - 82 | novasol@novasol.de \u2013 an Awaze Company', 'line6': 'Handelsregister Amtsgericht Hamburg, HRB 95067 | Gesch\xE4ftsf\xFChrer: Jan Haapanen', 'line7': 'www.novasol.de | www.dansommer.de | www.cuendet.de' }, 'message': { 'created-seller': 'You received a new message from your customer', 'created-user': 'Important: There is a new message from your consultant waiting in the desiretec travel wish portal for you', 'new': 'New message!', 'subject': 'You received a new message', 'token': 'Your login link' }, 'offer': { 'created': 'Your offer has been created successfully', 'created_user': 'You received a new offer for your :whitelabel travel wish!' }, 'signature': { 'stored': 'You have successfully stored the E-mail Signature' }, 'token': 'Your login link: <a href=":token">:token<\/a>', 'wish': { 'seller_trendtours': 'A new travel wish is waiting for you!', 'subject_for_seller': 'A new travel wish is waiting for you!', 'user': 'Welcome to the desiretec wish portal! Your travel wish has been created successfully.', 'user_callback_seller': 'Your customer is asking for a callback', 'user_cnt_seller': 'Your offer has been successful, a new contact has been created!', 'user_novasol': 'Welcome to the Novasol wish portal! Your travel wish has been created', 'user_trendtours': 'Welcome to the trendtours wish portal! Your travel wish has been created successfully.' } }, 'en.exceptions': { 'backend': { 'access': { 'permissions': { 'already_exists': 'That permission already exists. Please choose a different name.', 'create_error': 'There was a problem creating this permission. Please try again.', 'delete_error': 'There was a problem deleting this permission. Please try again.', 'not_found': 'That permission does not exist.', 'update_error': 'There was a problem updating this permission. Please try again.' }, 'roles': { 'already_exists': 'That role already exists. Please choose a different name.', 'cant_delete_admin': 'You can not delete the Administrator role.', 'create_error': 'There was a problem creating this role. Please try again.', 'delete_error': 'There was a problem deleting this role. Please try again.', 'has_users': 'You can not delete a role with associated users.', 'needs_permission': 'You must select at least one permission for this role.', 'not_found': 'That role does not exist.', 'update_error': 'There was a problem updating this role. Please try again.' }, 'users': { 'cant_deactivate_self': 'You can not do that to yourself.', 'cant_delete_admin': 'You can not delete Admin.', 'cant_delete_own_session': 'You can not delete your own session.', 'cant_delete_self': 'You can not delete yourself.', 'cant_restore': 'This user is not deleted so it can not be restored.', 'change_mismatch': 'That is not your old password.', 'create_error': 'There was a problem creating this user. Please try again.', 'delete_error': 'There was a problem deleting this user. Please try again.', 'delete_first': 'This user must be deleted first before it can be destroyed permanently.', 'email_error': 'That email address belongs to a different user.', 'mark_error': 'There was a problem updating this user. Please try again.', 'not_found': 'That user does not exist.', 'restore_error': 'There was a problem restoring this user. Please try again.', 'role_needed': 'You must choose at least one role.', 'role_needed_create': 'You must choose at lease one role.', 'session_wrong_driver': 'Your session driver must be set to database to use this feature.', 'update_error': 'There was a problem updating this user. Please try again.', 'update_password_error': 'There was a problem changing this users password. Please try again.' } }, 'blogcategories': { 'already_exists': 'That Blog Category already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Category. Please try again.', 'delete_error': 'There was a problem deleting this Blog Category. Please try again.', 'not_found': 'That Blog Category does not exist.', 'update_error': 'There was a problem updating this Blog Category. Please try again.' }, 'blogtags': { 'already_exists': 'That Blog Tag already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Blog Tag. Please try again.', 'delete_error': 'There was a problem deleting this Blog Tag. Please try again.', 'not_found': 'That Blog Tag does not exist.', 'update_error': 'There was a problem updating this Blog Tag. Please try again.' }, 'menus': { 'already_exists': 'That Menu already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Menu. Please try again.', 'delete_error': 'There was a problem deleting this Menu. Please try again.', 'not_found': 'That Menu does not exist.', 'update_error': 'There was a problem updating this Menu. Please try again.' }, 'modules': { 'already_exists': 'That Module already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Module. Please try again.', 'delete_error': 'There was a problem deleting this Module. Please try again.', 'not_found': 'That Module does not exist.', 'update_error': 'There was a problem updating this Module. Please try again.' }, 'pages': { 'already_exists': 'That Page already exists. Please choose a different name.', 'create_error': 'There was a problem creating this Page. Please try again.', 'delete_error': 'There was a problem deleting this Page. Please try again.', 'not_found': 'That Page does not exist.', 'update_error': 'There was a problem updating this Page. Please try again.' }, 'settings': { 'update_error': 'There was a problem updating this Settings. Please try again.' } }, 'frontend': { 'auth': { 'confirmation': { 'already_confirmed': 'Your account is already confirmed.', 'confirm': 'Confirm your account!', 'created_confirm': 'Your account was successfully created. We have sent you an e-mail to confirm your account.', 'created_pending': 'Your account was successfully created and is pending approval. An e-mail will be sent when your account is approved.', 'mismatch': 'Your confirmation code does not match.', 'not_found': 'That confirmation code does not exist.', 'resend': 'Your account is not confirmed. Please click the confirmation link in your e-mail, or <a href=http:\/\/127.0.0.1:8001\/account\/confirm\/resend\/:user_id>click here<\/a> to resend the confirmation e-mail.', 'resent': 'A new confirmation e-mail has been sent to the address on file.', 'success': 'Your account has been successfully confirmed!' }, 'deactivated': 'Your account has been deactivated.', 'email_taken': 'That e-mail address is already taken.', 'password': { 'change_mismatch': 'That is not your old password.' }, 'registration_disabled': 'Registration is currently closed.' } }, 'whitelabel_mismatch': 'Mismatch Whitelabel User.' }, 'en.general': { 'currency': '\u20AC' }, 'en.history': { 'backend': { 'blogcategories': { 'created': 'created Blog Category', 'deleted': 'deleted Blog Category', 'updated': 'updated Blog Category' }, 'blogs': { 'created': 'created Blog', 'deleted': 'deleted Blog', 'updated': 'updated Blog' }, 'blogtags': { 'created': 'created Blog Tag', 'deleted': 'deleted Blog Tag', 'updated': 'updated Blog Tag' }, 'none': 'There is no recent history.', 'none_for_entity': 'There is no history for this :entity.', 'none_for_type': 'There is no history for this type.', 'pages': { 'created': 'created Page', 'deleted': 'deleted Page', 'updated': 'updated Page' }, 'permissions': { 'created': 'created permission', 'deleted': 'deleted permission', 'updated': 'updated permission' }, 'recent_history': 'Recent History', 'roles': { 'created': 'created role', 'deleted': 'deleted role', 'updated': 'updated role' }, 'users': { 'changed_password': 'changed password for user', 'created': 'created user', 'deactivated': 'deactivated user', 'deleted': 'deleted user', 'permanently_deleted': 'permanently deleted user', 'reactivated': 'reactivated user', 'restored': 'restored user', 'updated': 'updated user' } } }, 'en.http': { '404': { 'description': 'Sorry, but the page you were trying to view does not exist.', 'title': 'Page Not Found' }, '503': { 'description': 'Be right back.', 'title': 'Be right back.' } }, 'en.labels': { 'about': 'About us', 'account': 'Account', 'activated': 'activated', 'address': 'Address', 'attendee': 'Attendee', 'attendees': 'Attendees', 'backend': { 'access': { 'permissions': { 'create': 'Create Permission', 'edit': 'Edit Permission', 'management': 'Permission Management', 'table': { 'display_name': 'Display Name', 'permission': 'Permission', 'sort': 'Sort', 'status': 'Status', 'total': 'role total|roles total' } }, 'roles': { 'create': 'Create Role', 'edit': 'Edit Role', 'management': 'Role Management', 'table': { 'number_of_users': 'Number of Users', 'permissions': 'Permissions', 'role': 'Role', 'sort': 'Sort', 'total': 'role total|roles total' } }, 'users': { 'active': 'Active Users', 'all_permissions': 'All Permissions', 'change_password': 'Change Password', 'change_password_for': 'Change Password for :user', 'create': 'Create User', 'deactivated': 'Deactivated Users', 'deleted': 'Deleted Users', 'edit': 'Edit User', 'edit-profile': 'Edit Profile', 'management': 'User Management', 'no_permissions': 'No Permissions', 'no_roles': 'No Roles to set.', 'permissions': 'Permissions', 'table': { 'confirmed': 'Confirmed', 'created': 'Created', 'email': 'E-Mail-Adresse', 'first_name': 'First Name', 'id': 'ID', 'last_name': 'Last Name', 'last_updated': 'Last Updated', 'no_deactivated': 'No Deactivated Users', 'no_deleted': 'No Deleted Users', 'roles': 'Roles', 'total': 'user total|users total' }, 'tabs': { 'content': { 'overview': { 'avatar': 'Avatar', 'confirmed': 'Confirmed', 'created_at': 'Created At', 'deleted_at': 'Deleted At', 'email': 'Email address', 'last_updated': 'Last Updated', 'name': 'Name', 'status': 'Status', 'whitelabels': 'Whitelabels' } }, 'titles': { 'history': 'History', 'overview': 'Overview' } }, 'view': 'View User' } }, 'blogcategories': { 'create': 'Create Blog Category', 'edit': 'Edit Blog Category', 'management': 'Blog Category Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Blog Category' }, 'title': 'Blog Category' }, 'blogs': { 'create': 'Create Blog', 'edit': 'Edit Blog', 'management': 'Blog Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'publish': 'PublishDateTime', 'status': 'Status', 'title': 'Blog' }, 'title': 'Blogs' }, 'blogtags': { 'create': 'Create Blog Tag', 'edit': 'Edit Blog Tag', 'management': 'Blog Tag Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Blog Tag' }, 'title': 'Blog Tags' }, 'distributions': { 'create': 'Create Distribution', 'edit': 'Edit Distribution', 'management': 'Distributions', 'no_distributions': 'no Distributions', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'description': 'Description', 'display_name': 'Display Name', 'name': 'Distribution', 'whitelabel': 'Whitelabel' }, 'title': 'Distributions' }, 'emailtemplates': { 'create': 'Create Email Template', 'edit': 'Edit Email Template', 'management': 'Email Template Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'status': 'Status', 'subject': 'Subject', 'title': 'Title', 'updatedat': 'Updated At' }, 'title': 'Email Templates' }, 'faqs': { 'create': 'Create FAQ', 'edit': 'Edit FAQ', 'management': 'FAQ Management', 'table': { 'all': 'All', 'answer': 'Answer', 'createdat': 'Created At', 'createdby': 'Created By', 'publish': 'PublishDateTime', 'question': 'Question', 'status': 'Status', 'title': 'FAQs', 'updatedat': 'Updated At' }, 'title': 'FAQ' }, 'groups': { 'create': 'Create Group', 'edit': 'Edit Group', 'management': 'Groups', 'no_whitelabels': 'no Whitelabels', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'description': 'Description', 'display_name': 'Display Name', 'name': 'Group', 'status': 'Status', 'users': 'Users', 'whitelabel': 'Whitelabel' }, 'title': 'Groups' }, 'menus': { 'create': 'Create Menu', 'edit': 'Edit Menu', 'field': { 'icon': 'Icon Class', 'icon_title': 'Font Awesome Class. eg. fa-edit', 'items': 'Menu Items', 'name': 'Name', 'open_in_new_tab': 'Open URL in new tab', 'type': 'Type', 'url': 'URL', 'url_type': 'URL Type', 'url_types': { 'route': 'Route', 'static': 'Static' }, 'view_permission_id': 'Permission' }, 'management': 'Menu Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'name': 'Name', 'type': 'Type' }, 'title': 'Menus' }, 'modules': { 'create': 'Create Module', 'edit': 'Edit Module', 'form': { 'controller_name': 'Controller &nbsp;Name', 'create_file': 'Create', 'directory_name': 'Directory Name', 'edit_file': 'Edit', 'event': 'Event Name', 'form_file': 'Form', 'index_file': 'Index', 'model_name': 'Model Name', 'name': 'Module Name', 'namespace': 'Namespace', 'repo_name': 'Repository Name', 'resource_controller': 'Resourceful Controller', 'resource_route': 'Resourceful Routes', 'route_controller_name': 'Controller &nbsp;Name', 'route_name': 'Route Name', 'table_controller_name': 'Controller &nbsp;Name', 'table_name': 'Table Name', 'url': 'View Route', 'view_permission_id': 'View Permission', 'views_directory': 'Directory &nbsp;&nbsp;&nbsp;Name' }, 'management': 'Module Management', 'table': { 'created_by': 'Created By', 'name': 'Module Name', 'url': 'Module View Route', 'view_permission_id': 'View Permission' }, 'title': 'Module' }, 'pages': { 'create': 'Create Page', 'edit': 'Edit Page', 'management': 'Page Management', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'status': 'Status', 'title': 'Title', 'updatedat': 'Updated At' }, 'title': 'Pages' }, 'profile_updated': 'Your profile has been updated.', 'settings': { 'companydetails': 'Company Contact Details', 'edit': 'Edit Settings', 'footer': 'Footer Settings', 'google': 'Google Analytics Track Code', 'mail': 'Mail Settings', 'management': 'Settings Management', 'seo': 'SEO Settings', 'terms': 'Terms and Condition Settings', 'title': 'Settings' }, 'whitelabels': { 'create': 'Create Whitelabel', 'edit': 'Edit Whitelabel', 'management': 'Whitelabels', 'management_client': 'Whitelabel', 'table': { 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'display_name': 'Whitelabel', 'distribution': 'Distribution', 'ga_view_id': 'Google View Id', 'name': 'Identifier', 'status': 'Status' }, 'title': 'Whitelabels' }, 'wishes': { 'create': 'Create Wish', 'edit': 'Edit Wish', 'management': 'Wishes', 'no_whitelabels': 'no Whitelabels', 'table': { 'airport': 'Airport', 'all': 'All', 'createdat': 'Created At', 'createdby': 'Created By', 'destination': 'Destination', 'earliest_start': 'Earliest Start', 'group': 'Group', 'latest_return': 'Latest Return', 'offerCount': 'Offers', 'status': 'Status', 'title': 'Wish', 'whitelabel': 'Whitelabel' }, 'title': 'Wishes' } }, 'cancel': 'Cancel', 'contact': 'Contact', 'content': 'Content', 'country': 'Country', 'current': 'Current', 'current_password': 'Current Password', 'description': 'Description', 'details': 'Details', 'documents': 'Documents', 'domain': 'Domain', 'download': 'Download', 'email': 'Email address', 'events': 'Events', 'export_all': 'Export All', 'export_selected': 'Export Selected', 'fax': 'Fax', 'feedback': 'Feedback', 'finish': 'Finish', 'first_name': 'Firstname', 'frontend': { 'agents': { 'create': 'Create new Agent', 'management': 'Agenten', 'table': { 'avatar': 'Avatar', 'created_at': 'Created at', 'createdby': 'Created by', 'display_name': 'Display name', 'id': 'Id', 'name': 'Name', 'status': 'Status' } }, 'auth': { 'login_box_title': 'Login', 'login_button': 'Login', 'login_with': 'Login with :social_media', 'register_box_title': 'Register', 'register_button': 'Register', 'remember_me': 'Remember Me' }, 'dashboard': { 'analytics': { 'answered_wishes': 'Answered Wishes', 'bookings': 'Bookings', 'changed_wishes': 'Changed Wishes', 'created_wishes': 'Created Wishes', 'free_text': 'Free text', 'latest_answered_wishes': 'Latest Answered Wishes', 'latest_reaction_quota': 'Latest Reaction Quota', 'reaction_quota': 'Reaction Quota', 'reaction_time': 'Reaction Time' } }, 'macros': { 'country': { 'alpha': 'Country Alpha Codes', 'alpha2': 'Country Alpha 2 Codes', 'alpha3': 'Country Alpha 3 Codes', 'numeric': 'Country Numeric Codes' }, 'macro_examples': 'Macro Examples', 'state': { 'mexico': 'Mexico State List', 'us': { 'armed': 'US Armed Forces', 'outlying': 'US Outlying Territories', 'us': 'US States' } }, 'territories': { 'canada': 'Canada Province & Territories List' }, 'timezone': 'Timezone' }, 'offers': { 'create': 'Create new offer', 'management': 'Offers', 'offers_for_wish': 'Offer for', 'table': { 'all': 'All', 'createdat': 'Created at', 'createdby': 'Created by', 'status': 'Status', 'title': 'Offer' } }, 'passwords': { 'forgot_password': 'Forgot Your Password?', 'reset_password_box_title': 'Reset Password', 'reset_password_button': 'Reset Password', 'send_password_reset_link_button': 'Send Password Reset Link' }, 'user': { 'passwords': { 'change': 'Change Password' }, 'profile': { 'address': 'Address', 'avatar': 'Avatar', 'city': 'City', 'country': 'Country', 'created_at': 'Created at', 'edit_information': 'Edit Information', 'email': 'Email address', 'first_name': 'First name', 'last_name': 'Last name', 'last_updated': 'Last updated', 'ssn': 'SSN', 'update_information': 'Update information', 'zipcode': 'Zip' } }, 'wishes': { 'add-comment': 'Add comment', 'created_at': 'Created at', 'edit': 'Edit wish', 'goto': 'View travel wish', 'night': ':value night|:value nights', 'table': { 'adults': 'adult|adults', 'kids': '{0}|kid|kids' }, 'week': ':value week|:value weeks', 'wishes': 'Travel wishes' } }, 'full_name': 'Full Name', 'general': { 'actions': 'Actions', 'active': 'Active', 'all': 'All', 'buttons': { 'save': 'Save', 'update': 'Update' }, 'custom': 'Custom', 'hide': 'Hide', 'inactive': 'Inactive', 'no': 'No', 'none': 'None', 'show': 'Show', 'toggle_navigation': 'Toggle Navigation', 'yes': 'Yes' }, 'go_back': 'Back!', 'go_next': 'Next!', 'id': 'Id', 'inbox': 'Inbox', 'interest': 'Interest', 'join': 'Join Now', 'language': 'Language', 'last_name': 'Lastname', 'login': 'Sign', 'logo': 'Logo', 'logout': 'Logout', 'message': 'Message', 'message_text': 'Message text', 'mobile': 'Mobile', 'name': 'Name', 'new': 'New', 'note': 'note', 'notes': 'notes', 'notifications': 'Notifications', 'now': 'Now', 'occupation': 'Occupation', 'ok': 'Ok', 'online': 'Online', 'password': 'Password', 'password_confirm': 'Confirm Password', 'personal_timezone': 'Timezone', 'phone': 'Phone', 'plus': 'More', 'posts': 'Posts', 'ratings': 'Ratings', 'recipient': 'Recipient', 'register': 'Register', 'reset': 'Reset Password', 'reset_link': 'Send Password Reset Link', 'review': 'Review', 'role': 'Role', 'send': 'Send Now', 'street': 'Street', 'subject': 'Subject', 'tel': 'Telephone number', 'title': 'Title', 'user': 'User', 'username': 'Username', 'verify': 'Email Verification', 'verify_email': 'Verify Your Email Address', 'warning': 'Warning', 'whitelabel': 'Whitelabel', 'whitelabel_executive': 'Whitelabel executive', 'whitelabel_information': 'Whitelabel information', 'whitelabel_subtitle': 'New subtitle', 'whitelabel_title': 'New whitelabel', 'wish': 'Wish', 'wishes': 'Wishes', 'zipcode': 'Zip' }, 'en.log-viewer::general': { 'all': 'All', 'date': 'Date' }, 'en.log-viewer::levels': { 'alert': 'Alert', 'all': 'All', 'critical': 'Critical', 'debug': 'Debug', 'emergency': 'Emergency', 'error': 'Error', 'info': 'Info', 'notice': 'Notice', 'warning': 'Warning' }, 'en.menus': { 'access_management': 'Access Management', 'backend': { 'access': { 'permissions': { 'all': 'All Permissions', 'create': 'Create Permission', 'edit': 'Edit Permission', 'main': 'Permissions', 'management': 'Permission Management', 'version_restrictions': 'Available in other versions' }, 'roles': { 'all': 'All Roles', 'create': 'Create Role', 'edit': 'Edit Role', 'main': 'Roles', 'management': 'Role Management' }, 'title': 'Access Management', 'users': { 'all': 'All Users', 'change-password': 'Change Password', 'create': 'Create User', 'deactivated': 'Deactivated Users', 'deleted': 'Deleted Users', 'edit': 'Edit User', 'main': 'Users', 'view': 'View User' } }, 'blog': { 'all': 'All Blog Page', 'create': 'Create Blog Page', 'edit': 'Edit Blog Page', 'main': 'Blog Pages', 'management': 'Blog Management' }, 'blogcategories': { 'all': 'All Blog Categories', 'create': 'Create Blog Category', 'edit': 'Edit Blog Category', 'main': 'CMS Pages', 'management': 'Blog Category Management' }, 'blogs': { 'all': 'All Blog', 'create': 'Create Blog', 'edit': 'Edit Blog', 'main': 'Blogs', 'management': 'Blog Management' }, 'blogtags': { 'all': 'All Blog Tag', 'create': 'Create Blog Tag', 'edit': 'Edit Blog Tag', 'main': 'Blog Tags', 'management': 'Blog Tag Management' }, 'distributions': { 'all': 'All Distributions', 'create': 'Create Distribution', 'edit': 'Edit Distribution', 'main': 'Distributions', 'management': 'Distribution Management' }, 'faqs': { 'all': 'All Faq Page', 'create': 'Create Faq Page', 'edit': 'Edit Faq Page', 'main': 'Faq Pages', 'management': 'Faq Management' }, 'groups': { 'all': 'All Groups', 'create': 'Create Group', 'edit': 'Edit Group', 'main': 'Groups', 'management': 'Group Management' }, 'log-viewer': { 'dashboard': 'Dashboard', 'logs': 'Logs', 'main': 'Log Viewer' }, 'menus': { 'all': 'All Menu', 'create': 'Create Menu', 'edit': 'Edit Menu', 'main': 'Menus', 'management': 'Menu Management' }, 'modules': { 'all': 'All Modules Page', 'create': 'Create Module Page', 'main': 'Module Pages', 'management': 'Module Management' }, 'pages': { 'all': 'All Pages', 'create': 'Create Page', 'edit': 'Edit Page', 'main': 'Pages', 'management': 'Page Management' }, 'settings': { 'all': 'All Settings', 'create': 'Create Settings', 'edit': 'Edit Settings', 'main': 'Settings', 'management': 'Settings Management' }, 'sidebar': { 'dashboard': 'Dashboard', 'general': 'General', 'system': 'System' }, 'whitelabels': { 'all': 'All Whitelabels', 'create': 'Create Whitelabel', 'edit': 'Edit Whitelabel', 'main': 'Whitelabels', 'management': 'Whitelabel Management' }, 'wishes': { 'all': 'All Wishes', 'create': 'Create Wish', 'edit': 'Edit Wish', 'main': 'Wishes', 'management': 'Wish Management' } }, 'categories_management': 'Categories Management', 'email_signature': 'E-mail Signature', 'footer_tnb': 'Terms and Conditions', 'frontend': { 'agents': { 'all': 'All Menu', 'create': 'Create Agent', 'edit': 'Edit Menu', 'main': 'Menus', 'management': 'Menu Management' } }, 'groups_management': 'Groups Management', 'language-picker': { 'langs': { 'ar': 'Arabic', 'da': 'Danish', 'de': 'German', 'el': 'Greek', 'en': 'English', 'es': 'Spanish', 'fr': 'French', 'id': 'Indonesian', 'it': 'Italian', 'nl': 'Dutch', 'pt_BR': 'Brazilian Portuguese', 'ru': 'Russian', 'sv': 'Swedish', 'th': 'Thai' }, 'language': 'Language' }, 'languages': 'Languages', 'languages_lines': 'Languages Lines', 'list': { 'status': { 'all': 'All travel wishes', 'completed': 'Completed', 'new': 'New', 'offer_created': 'Offer Created' } }, 'list_of_wishes': 'List wishes', 'regions_management': 'Regions Management', 'rules_management': 'Lead Management', 'sellers': 'Sellers', 'sellers_management': 'Sellers Management', 'wishes': 'Wishes', 'wishes_management': 'Wishes Management' }, 'en.messages': { '_account': 'Do you have an account', 'account': "Don't have an account", 'background': 'The background image has to be--- x --- Pixel in PNG \/ JPG \/ JPEG format. Maximum size --- KB.', 'contact': 'Contact us', 'contact_success': 'Your message has been sent successfully', 'created': ':attribute wurde erfolgreich erstellt', 'delete': 'Do you really want to delete this item? Continue?', 'delete_canceled': 'Delete canceled', 'deleted': ':attribute wurde erfolgreich gel\xF6scht', 'destroy': 'Do you really want to delete this item permanently? Continue?', 'destroyed': ':attribute wurde endg\xFCltig gel\xF6scht', 'event_upcoming': 'Event Upcoming', 'favicon': 'Favicon has to be --- x --- Pixel in PNG \/ ICON format. Maximum size --- KB.', 'forgot': 'Forgot Password', 'here': 'login here', 'install': 'Module[:attribute] has been installed successfully', 'join': 'you successfully joined event', 'login': 'Login', 'logo': 'Logo has to be --- x --- Pixel in PNG \/ JPG \/ JPEG \/ SVG format. Maximum size --- KB.', 'new_posts': 'Latest Posts', 'recent_event': 'Recent event', 'register': 'Create your account', 'remember': 'Remember me', 'reset': 'Reset Password', 'restore': 'Do you really want to restore this item? Continue?', 'restore_canceled': 'Restore canceled', 'restored': ':attribute wurde erfolgreich wiederhergestellt', 'show_all': 'Show all articles', 'show_all_events': 'Show all events', 'sign_up': 'Sign Up', 'terms': 'Agree to terms and conditions', 'title': 'Welcome Back', 'token_send': "We've sent you a login link!", 'uninstall': 'Module[:attribute] has been uninstalled successfully', 'unsaved': 'You have unsaved changes, save and proceed ?', 'updated': ':attribute wurde erfolgreich aktualisiert', 'verify': 'Before proceeding, please check your email for a verification link.', 'verify_link': 'If you did not receive the email,', 'verify_request': 'click here to request another.', 'whitelabel_user': 'Create an associate whitelabel user' }, 'en.modals': { 'activated': 'Activated', 'active': 'Active', 'add_document': 'Add document', 'add_documents': 'Add documents', 'address': 'Address', 'adults': 'Adults', 'airport': 'Airport', 'alert_email': 'Alert Email', 'asc': 'Asc', 'auto': 'Auto', 'boards': 'Boards', 'budget': 'Budget', 'categories': 'Categories', 'category': 'Hotel category', 'catering': 'Hotel catering', 'click_to_upload': 'Click to upload', 'color': 'Color', 'confirmed': 'Confirmed', 'content': 'Content', 'country_code': 'Country Code', 'create': 'Create', 'created_at': 'Created at', 'createdat': 'created at', 'createdby': 'created by', 'current': 'Current', 'dashboard': 'Dashboard', 'deactivation_duration': 'Duration of deactivation', 'default': 'Default', 'desc': 'Desc', 'description': 'Description', 'destination': 'Destination', 'display_name': 'Display name', 'display_offer': 'Displayed offers', 'domain': 'Domain', 'duplicate': 'Duplicate', 'duration': 'duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'email_verified_at': 'Verified at', 'end': 'End', 'first_name': 'First name', 'from': 'From', 'full_name': 'Name', 'group': 'Group', 'groups': 'Groups', 'headline': 'Headline', 'headline_success': 'Success headline', 'hotel_loop': 'Hotel Loop', 'id': 'ID', 'image': 'Image', 'inactive_until': 'Inactive until', 'kids': 'Children', 'last_login': 'Last login ', 'last_name': 'Last name', 'latest_return': 'Latest Return', 'licence': 'Licence', 'lockout_time': 'Lockout time', 'login_failures': 'Login failures', 'logs': 'Logs', 'manuel': 'Manuel', 'message_success': 'Message success', 'mix': 'Mix', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Occupation', 'offerCount': 'Offers', 'online': 'Online', 'owner': 'Owner', 'password': 'Password', 'password_confirm': 'Password confirmation', 'pending': 'Pending', 'period': 'Period', 'permission': 'Permission', 'permissions': 'Permissions', 'phone': 'Phone', 'position': 'Position', 'price': 'Price', 'price_loop': 'Price Loop', 'primary_color': 'Primary color', 'rating': 'Rating', 'recommendation': 'Recommendation', 'region_code': 'Region code', 'region_name': 'Region Name', 'role': 'Role', 'roles': 'Roles', 'start': 'Start', 'status': 'Status', 'subheadline': 'Sub headline', 'subheadline_success': 'Success sub headline', 'summary': 'Summary', 'text': 'Text', 'title': 'Title', 'type': 'Type', 'unconfirmed': 'Unconfirmed', 'until': 'Until', 'updated_at': 'Updated at', 'upload_documents': 'Upload documents', 'upload_photo': 'Upload photo', 'upload_tip': 'Upload tip', 'url': 'Url', 'users': 'User', 'value': 'Value', 'visual': 'The format of the visual is 3:1, at least 600x200 px.', 'whitelabel': 'Whitelabel', 'whitelabels_distribution': 'Distribution', 'whitelabels_image': 'Background image', 'wish': 'Wish' }, 'en.navs': { 'frontend': { 'agents': 'Agents', 'create_wish': 'Create wish', 'dashboard': 'Dashboard', 'login': 'Login', 'macros': 'Macros', 'offers': 'My offers', 'register': 'Register', 'user': { 'account': 'Account', 'administration': 'Administration', 'agents': 'Agents', 'change_password': 'Change password', 'my_information': 'My information', 'profile': 'Profile' }, 'wishes': 'My wishes', 'wisheslist': 'Wishes' }, 'general': { 'home': 'Home', 'logout': 'Logout' } }, 'en.notification': { 'created': '<span class="badge badge-flat border-success text-success-600 rounded-0 mr-2"> Created <\/span> <strong>:name<\/strong> (:url) has been <strong>successfully created<\/strong> by <strong>:user<\/strong>', 'deleted': '<span class="badge badge-flat border-danger text-danger-600 rounded-0 mr-2"> Deleted <\/span><strong>:name<\/strong> (:url) has been <strong>successfully deleted<\/strong> by <strong>:user<\/strong>', 'restored': '<span class="badge badge-flat border-info text-info-600 rounded-0 mr-2"> Restored <\/span><strong>:name<\/strong> (:url) has been <strong>successfully restored<\/strong> by <strong>:user<\/strong>' }, 'en.pagination': { 'next': 'Next &raquo;', 'previous': '&laquo; Previous' }, 'en.passwords': { 'password': 'Passwords must be at least six characters and match the confirmation.', 'reset': 'Your password has been reset!', 'sent': 'We have e-mailed your password reset link!', 'token': 'This password reset token is invalid.', 'user': "We can't find a user with that e-mail address." }, 'en.roles': { 'administrator': 'Administrator', 'user': 'User' }, 'en.seller': { 'agent': { 'create': 'create agent', 'email': 'email address', 'email_placeholder': 'seller@seller.com', 'tel': 'Tel.', 'tel_placeholder': '01761234567' } }, 'en.strings': { 'backend': { 'access': { 'users': { 'delete_user_confirm': "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", 'if_confirmed_off': '(If confirmed is off)', 'restore_user_confirm': 'Restore this user to its original state?' } }, 'dashboard': { 'title': 'Administrative Dashboard', 'welcome': 'Welcome' }, 'general': { 'all_rights_reserved': 'All Rights Reserved.', 'are_you_sure': 'Are you sure you want to do this?', 'boilerplate_link': 'Laravel AdminPanel', 'continue': 'Continue', 'member_since': 'Member since', 'minutes': ' minutes', 'search_placeholder': 'Search...', 'see_all': { 'messages': 'See all messages', 'notifications': 'View all', 'tasks': 'View all tasks' }, 'status': { 'offline': 'Offline', 'online': 'Online' }, 'timeout': 'You were automatically logged out for security reasons since you had no activity in ', 'you_have': { 'messages': "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", 'notifications': "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", 'tasks': "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, 'search': { 'empty': 'Please enter a search term.', 'incomplete': 'You must write your own search logic for this system.', 'results': 'Search Results for :query', 'title': 'Search Results' }, 'welcome': '<p>This is the AdminLTE theme by <a href="https:\/\/almsaeedstudio.com\/" target="_blank">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\r\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\r\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\r\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href="https:\/\/github.com\/rappasoft\/laravel-5-boilerplate" target="_blank">GitHub<\/a> page for more information and report any <a href="https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues" target="_blank">issues here<\/a>.<\/p>\r\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\r\n<p>- Viral Solani<\/p>' }, 'emails': { 'auth': { 'click_to_confirm': 'Click here to confirm your account:', 'error': 'Whoops!', 'greeting': 'Hello!', 'password_cause_of_email': 'You are receiving this email because we received a password reset request for your account.', 'password_if_not_requested': 'If you did not request a password reset, no further action is required.', 'password_reset_subject': 'Reset Password', 'regards': 'Regards,', 'reset_password': 'Click here to reset your password', 'thank_you_for_using_app': 'Thank you for using our application!', 'trouble_clicking_button': 'If you\u2019re having trouble clicking the ":action_text" button, copy and paste the URL below into your web browser:' } }, 'frontend': { 'test': 'Test', 'tests': { 'based_on': { 'permission': 'Permission Based - ', 'role': 'Role Based - ' }, 'js_injected_from_controller': 'Javascript Injected from a Controller', 'using_access_helper': { 'array_permissions': "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", 'array_permissions_not': "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", 'array_roles': "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", 'array_roles_not': "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", 'permission_id': 'Using Access Helper with Permission ID', 'permission_name': 'Using Access Helper with Permission Name', 'role_id': 'Using Access Helper with Role ID', 'role_name': 'Using Access Helper with Role Name' }, 'using_blade_extensions': 'Using Blade Extensions', 'view_console_it_works': "View console, you should see 'it works!' which is coming from FrontendController@index", 'you_can_see_because': "You can see this because you have the role of ':role'!", 'you_can_see_because_permission': "You can see this because you have the permission of ':permission'!" }, 'user': { 'change_email_notice': 'If you change your e-mail you will be logged out until you confirm your new e-mail address.', 'email_changed_notice': 'You must confirm your new e-mail address before you can log in again.', 'password_updated': 'Password successfully updated.', 'profile_updated': 'Profile successfully updated.' }, 'welcome_to': 'Welcome to :place' } }, 'en.tables': { 'actions': 'Actions', 'activated': 'Activated', 'activities': 'Activities', 'activity': 'Activity', 'add_documents': 'Add documents', 'address': 'Address', 'adults': 'Adults', 'ago': 'Ago', 'airport': 'Airport', 'alias': 'Alias', 'boards': 'Boards', 'booking_status': 'Booking status', 'budget': 'Budget', 'categories': 'Categories', 'category': 'Hotel category', 'catering': 'Hotel catering', 'color': 'Color', 'confirmed': 'Confirmed', 'content': 'Content', 'country_code': 'Country Code', 'created_at': 'Created at', 'created_by': 'Created by', 'date': 'Date', 'description': 'Description', 'destination': 'Destination', 'display_name': 'Display name', 'duration': 'Duration', 'earliest_start': 'Earliest start', 'email': 'Email', 'email_verified_at': 'Verified at', 'empty_table': 'No data accessable in the table', 'end': 'End', 'eventAction': 'Event Action', 'eventCategory': 'Event Category', 'eventLabel': 'Event Label', 'first_name': 'First name', 'from': 'From', 'full_name': 'Name', 'group': 'Group', 'groups': 'Groups', 'id': 'Id', 'install': 'Install', 'kids': 'Children', 'last_login': 'Last login ', 'last_name': 'Last name', 'latest_return': 'Latest return', 'locale': 'Locale', 'lockout_time': 'Lockout time', 'login_failures': 'Login failures', 'message': 'Message', 'migrate': 'Migrate', 'mobile': 'Mobile', 'name': 'Name', 'occupation': 'Occupation', 'offerCount': 'Offer count', 'online': 'online', 'owner': 'Owner', 'package': 'Package', 'pending': 'Pending', 'period': 'Period', 'permissions': 'Permissions', 'phone': 'Phone', 'region_code': 'Region code', 'region_name': 'Region Name', 'roles': 'Roles', 'start': 'Start', 'status': 'Status', 'subject': 'Subject', 'text': 'Text', 'title': 'Wish', 'type': 'Type', 'unconfirmed': 'Unconfirmed', 'uninstall': 'Uninstall', 'updated_at': 'Updated at', 'url': 'Url', 'users': 'Users', 'when': 'When', 'whitelabel': 'Whitelabel' }, 'en.tnb': { 'not_stored': 'Error saving Terms and Conditions', 'stored': 'You have successfully stored the Terms and Conditions', 'template': '<p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">Bedingungen f&uuml;r die Nutzung des </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportals</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>1. Funktion des </strong></span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportals</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>, Nutzungsbedingungen</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">1.1 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> bietet &uuml;ber das Online-Tool &bdquo;</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportal&ldquo; unentgeltlich die technische M&ouml;glichkeit Suchanzeigen nach Reiseangeboten (&bdquo;Reisew&uuml;nsche&ldquo;) aufzugeben und so pers&ouml;nlichen Kontakt zu den </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> Reiseberatern zum Zwecke einer individuellen Angebotskommunikation herzustellen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">1.2 F&uuml;r die Nutzung des Online-Tools gelten diese Nutzungsbedingungen, die nach Ma&szlig;gabe von Ziffer 8.1 ge&auml;ndert werden k&ouml;nnen.</span></span></span></p>\r\n    &nbsp;\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>2. Anmeldung</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.1 Das Online-Tool ist &uuml;ber ein entsprechendes Dialogfeld auf der Webseite des </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> sowie &uuml;ber </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$URL-REISEWUNSCHPORTAL</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> zu erreichen. Die Nutzung des Online-Tools setzt die Anmeldung als Nutzer voraus.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.2 Die Anmeldung ist nur vollj&auml;hrigen und unbeschr&auml;nkt haftenden Personen gestattet.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.3 Die Anmeldung erfolgt durch Einsendung der E-Mail-Adresse sowie des Reisewunsches und ggf. weiterer Suchkriterien sowie der Akzeptanz der Nutzungsbedingungen. Sie wird durch Zusendung einer Best&auml;tigungsmail mit einem individuellen Zugangslink durch </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> an die angegebene E-Mail-Adresse abgeschlossen.&nbsp;&nbsp;</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.4 &Uuml;ber den Zugangslink kann der Nutzer seinen Reisewunsch einschlie&szlig;lich der weiteren angegeben Daten im Online-Tool jederzeit einsehen, anpassen oder deaktivieren. Passt der Nutzer den Reisewunsch an oder deaktiviert ihn, verschickt das Online-Tool eine entsprechende Info-Mail an ihn.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.5 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> &uuml;berpr&uuml;ft nicht die Richtigkeit der Nutzerdaten.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">2.6 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> beh&auml;lt sich das Recht vor, nach alleinigem Ermessen und ohne Ank&uuml;ndigung den Zugang von Nutzern zum Online-Tool oder dessen Teilen zu verweigern und/oder den Betrieb des Online-Tools einzustellen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">&nbsp;</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>3. Reisew&uuml;nsche, Bearbeitung</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.1 Ein Reisewunsch stellt nur eine unverbindliche Anfrage und kein rechtlich bindendes Angebot dar.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.2 Die in das Online-Tool eingegebenen Reisew&uuml;nsche der Nutzer werden durch das System an </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> Reiseberater zur weiteren Bearbeitung weitergeleitet.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.3 Die Reisew&uuml;nsche werden nicht ver&ouml;ffentlicht.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.4 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> Reiseberater k&ouml;nnen auf einen Reisewunsch mit einem Angebotsvorschlag reagieren. Dieser Vorschlag ist rechtlich unverbindlich, soweit darin nichts anderes bestimmt ist.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.5 Nachdem ein Reiseberater einen Reisewunsch bearbeitet und das Angebot in das Online-Tool eingestellt hat, bekommt der Nutzer eine E-Mail, in der erneut ein Link zum Reisewunsch und dem Angebot enthalten ist.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.6 Der Nutzer, welcher den Reisewunsch eingestellt hat, kann auf den Vorschlag hin den </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> Reiseberater kontaktieren. Er ist jedoch nicht verpflichtet, auf einen Vorschlag zu reagieren.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">3.7 Der Nutzer kann w&auml;hlen, &uuml;ber welchen Weg (E-Mail, Telefon) er weiter mit dem Reiseberater kommunizieren m&ouml;chte. Solange der Nutzer keine Kontaktdaten f&uuml;r einen Direktkontakt mitteilt, erfolgt die Kommunikation ausschlie&szlig;lich &uuml;ber das Online-Tool.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">&nbsp;</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>4. Pflichten des Nutzers, Verantwortung f&uuml;r Inhalte</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">4.1 Der Nutzer ist verpflichtet, den pers&ouml;nlichen Zugangslink geheim zu halten.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">4.2 Der Nutzer ist grunds&auml;tzlich f&uuml;r alle &uuml;ber seinen Zugangslink vorgenommenen Aktivit&auml;ten verantwortlich. Die Regelungen dieses Absatzes gelten nicht, wenn der Nutzer einen etwaigen Missbrauch seines Zugangslinks nicht zu vertreten hat, weil keine Sorgfaltspflichtverletzung des Nutzers vorliegt. Der Nutzer ist verpflichtet, </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> umgehend zu informieren, wenn er Anhaltspunkte f&uuml;r einen Missbrauch seines Zugangslink durch Dritte hat.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">4.3 Der Nutzer ist verpflichtet, bei der Einstellung von Reisew&uuml;nschen und sonstigen Inhalten s&auml;mtliche geltende Rechtsvorschriften, Rechte Dritter und diese Nutzungsbedingungen zu beachten. Er ist f&uuml;r die Rechtm&auml;&szlig;igkeit, Richtigkeit und Vollst&auml;ndigkeit aller von ihm eingestellten Inhalte verantwortlich und haftet f&uuml;r die Verletzung von Rechtsvorschriften oder von rechten Dritter durch von ihm eingestellte Inhalte.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">4.4 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> &uuml;berpr&uuml;ft die in das Online-Tool eingestellten Inhalte der Nutzer grunds&auml;tzlich nicht und &uuml;bernimmt keine Haftung. </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span>r <span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">beh\xE4lt sich aber das Recht vor, die Inhalte zu &uuml;berpr&uuml;fen, auch wenn keine&nbsp; Verpflichtung besteht.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">4.5 Der Nutzer erh&auml;lt etwaige Informationen &uuml;ber die von ihm im Online-Tool hinterlegte E-Mail-Adresse. Es obliegt ihm, sicherzustellen, dass er unter dieser E-Mail-Adresse erreichbar ist.</span></span></span><br />\r\n    <br />\r\n    <br />\r\n    <span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>5. Unzul&auml;ssige Nutzungshandlungen, Ma&szlig;nahmen bei Verst&ouml;&szlig;en, Freistellung</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.1 Die folgenden Handlungen sind unzul&auml;ssig:&nbsp; Das Einstellen von anderen Inhalten als Reisew&uuml;nschen. Das Einstellen von unzul&auml;ssigen Inhalten; unzul&auml;ssige Inhalte, die gegen die Nutzungsbedingungen oder gegen gesetzliche Verbote oder die guten Sitten versto&szlig;en oder Rechte Dritter verletzen. Die Offenlegung und Weitergabe des Zugangslinks zum Online-Tool. Das automatisierte Auslesen der im Online-Tool befindlichen Daten sowie der Aufbau eigener Suchsysteme, Dienste und Verzeichnisse unter Zuhilfenahme der im Online-Tool abrufbaren Inhalte sowie das vielfache Erstellen gleicher Inhalte. Die Verwendung oder das Aufspielen von Dateien, die Viren, besch&auml;digte Dateien, Software oder sonstige Mechanismen oder Inhalte enthalten, welche das Online-Tool oder dessen Nutzer, deren Rechner, die Server von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> oder die auf den Rechnern der Nutzer oder von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> verwendete Software ausspionieren, attackieren oder in sonstiger Weise beeintr&auml;chtigen k&ouml;nnten.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.2 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> kann folgende Ma&szlig;nahmen ergreifen, wenn konkrete Anhaltspunkte daf&uuml;r bestehen, dass ein Nutzer gesetzliche Vorschriften, Rechte Dritter oder diese Bedingungen verletzt, oder wenn </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ein sonstiges berechtigtes Interesse hat: L&ouml;schen von Reisew&uuml;nschen oder sonstigen Inhalten, Verwarnung des Nutzers, Beschr&auml;nkung der Nutzungsm&ouml;glichkeiten des Online-Tools durch den Nutzer, so dass u.a. keine Inhalte mehr eingestellt werden k&ouml;nnen, L&ouml;schung des Nutzerkontos.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.3 Der Nutzer stellt </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> von allen Anspr&uuml;chen frei, die von Dritten gegen </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> aufgrund einer Verletzung ihrer Rechte geltend gemacht werden, soweit der Nutzer diese Rechtsverletzung zu vertreten hat. Die Freistellung umfasst die &Uuml;bernahme s&auml;mtlicher Gerichtskosten und angemessener Anwaltskosten.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.4 Der Nutzer wird </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> bei der Verteidigung gegen die Inanspruchnahme unterst&uuml;tzen und insbesondere unverz&uuml;glich alle Informationen zur Verf&uuml;gung stellen, die f&uuml;r die Pr&uuml;fung und Abwehr der Anspr&uuml;che von Bedeutung sein k&ouml;nnen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.5 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ist im Fall der berechtigten Geltendmachung von Rechten durch einen Dritten berechtigt, dem Dritten den Namen und die E-Mail-Adresse des Nutzers mitzuteilen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">5.6 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ist zur Geltendmachung weiterer gesetzlicher Rechte im Fall von unzul&auml;ssigen Nutzungshandlungen berechtigt.</span></span></span></p>\r\n    &nbsp;\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>6. Haftungsbeschr&auml;nkung</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">6.1 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> &uuml;bernimmt keine Garantie oder Gew&auml;hr f&uuml;r die Verf&uuml;gbarkeit und Funktion des Online-Tools oder der eingestellten Inhalte. </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> beh&auml;lt sich vor das </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span>&gt;<span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportal (auch ohne vorherige Ank&uuml;ndigung) ganz oder teilweise&nbsp;</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">einzustellen oder den Zugang hierzu ganz oder teilweise einzuschr&auml;nken, ohne dass hieraus Anspr&uuml;che der Nutzer gegen&uuml;ber </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> entstehen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">6.2 F&uuml;r eine Haftung von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> auf Schadenersatz gelten unbeschadet der sonstigen gesetzlichen Anspruchsvoraussetzungen folgende Haftungsausschl&uuml;sse und Haftungsbegrenzungen</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">6.2.1 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> haftet unbeschr&auml;nkt, soweit die Schadensursache auf Vorsatz oder grober Fahrl&auml;ssigkeit beruht. Ferner haftet </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> f&uuml;r die fahrl&auml;ssige Verletzung von wesentlichen Pflichten, deren Verletzung die Erreichung des Vertragszwecks gef&auml;hrdet, und f&uuml;r die Verletzung von Pflichten auf deren Einhaltung Vertragspartner regelm&auml;&szlig;ig vertrauen. In diesem Fall haftet </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> jedoch nur f&uuml;r den vorhersehbaren, vertragstypischen Schaden. </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> haftet nicht f&uuml;r die fahrl&auml;ssige Verletzung anderer als der in den vorstehenden S&auml;tzen genannten Pflichten. Die vorstehenden Haftungsbeschr&auml;nkungen gelten nicht bei Verletzung von leben, K&ouml;rper und Gesundheit. Im &Uuml;brigen ist die Haftung von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ausgeschlossen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">6.2.2 Soweit die Haftung von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ausgeschlossen oder beschr&auml;nkt ist, gilt dies auch f&uuml;r die pers&ouml;nliche Haftung ihrer Arbeitnehmer, Vertreter und Erf&uuml;llungsgehilfen.</span></span></span></p>\r\n\r\n    <p><br />\r\n    <span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>7. Datenschutz</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">7.1 Die im Rahmen der Nutzung des Reisewunschportals angegebenen personenbezogenen Daten (Name, E-Mail Adresse) werden zur Bearbeitung des Reisewunsches, zur Kundenbetreuung und Marktforschung oder zur Erf&uuml;llung gesetzlicher Bestimmungen gespeichert, verarbeitet und genutzt. Dar&uuml;ber hinaus k&ouml;nnen die Daten zur Zusendung von aktuellen Informationen und Angeboten verwendet werden. Sollten Sie diese Informationen nicht w&uuml;nschen, wenden Sie sich bitte mit Ihrem Anliegen an: </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">xy@xy.de.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">7.2 Weitere Informationen zur Datenverarbeitung und zum Datenschutz ergeben sich aus unserer Datenschutzerkl&auml;rung. Diese finden Sie hier: </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">https://www.abc.de/datenschutz.</span></span></span></p>\r\n    &nbsp;\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>8. Schlussbestimmungen</strong></span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">8.1 </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> ist berechtigt, &Auml;nderungen oder Erg&auml;nzungen an diesen Nutzungsbedingungen vorzunehmen, sofern dies dem billigem Ermessen von </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">&nbsp;</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">entspricht und f&uuml;r den Nutzer zumutbar ist. Diese werden erst wirksam, nachdem </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"> den registrierten Nutzer die &Auml;nderung der Nutzungsbedingungen in Textform mitgeteilt hat und der Nutzer dieser Neufassung nicht innerhalb von 6 Wochen ab Zugang mindestens in Textform widerspricht. Der Nutzer wird bei Mitteilung der &Auml;nderung auf die Bedeutung seines Schweigens besonders hingewiesen.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">8.2 Sofern einzelne oder mehrere Bestimmungen in diesen Nutzungsbedingungen ganz oder teilweise unwirksam oder ung&uuml;ltig sind oder werden, bleibt die Wirksamkeit der &uuml;brigen Regelungen und Bestimmungen hiervon unber&uuml;hrt. Die unwirksame oder ung&uuml;ltige Regelung gilt durch eine Regelung ersetzt, die dem Sinn und Zweck der unwirksamen oder ung&uuml;ltigen Regelung in rechtswirksamer Weise wirtschaftlich am n&auml;chsten kommt. Gleiches gilt f&uuml;r eventuelle Regelungsl&uuml;cken.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">8.3 Streitigkeiten, die im Zusammenhang mit diesen Nutzungsbedingungen oder aufgrund der Nutzung des </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportal gef&uuml;hrt werden unterliegen ausschlie&szlig;lich dem Recht der Bundesrepublik Deutschland.</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">&nbsp;</span></span></span></p>\r\n\r\n    <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">Stand: Dezember 2019</span></span></span></p>' }, 'en.validation': { 'accepted': 'The :attribute must be accepted.', 'active_url': 'The :attribute is not a valid URL.', 'after': 'The :attribute must be a date after :date.', 'after_or_equal': 'The :attribute must be a date after or equal to :date.', 'alpha': 'The :attribute may only contain letters.', 'alpha_dash': 'The :attribute may only contain letters, numbers, and dashes.', 'alpha_num': 'The :attribute may only contain letters and numbers.', 'api': { 'confirmaccount': { 'already_confirmed': 'Account is already confirmed.', 'invalid_email': 'Email is not register with fin builders', 'invalid_otp': 'Please enter valid otp.' }, 'forgotpassword': { 'email_not_valid': 'Email you entered is not register with fin builders.', 'email_required': 'Please enter email', 'valid_email': 'Please enter valid email address.' }, 'login': { 'email_required': 'Please enter email', 'password_required': 'Please enter passsword.', 'username_password_didnt_match': 'Please enter valid credentials.', 'valid_email': 'Please enter valid email address.' }, 'register': { 'city_required': 'Please enter city.', 'state_required': 'Please enter state.' }, 'resetpassword': { 'confirm_password_required': 'Please enter confirm password.', 'email_not_valid': 'Email you entered is not register with fin builders.', 'email_required': 'Please enter email', 'password_confirmed': 'passsword and confirm passsword do not match.', 'password_required': 'Please enter passsword.', 'token_not_valid': 'Given token is invalid.', 'token_required': 'Please enter token.', 'valid_email': 'Please enter valid email address.' } }, 'array': 'The :attribute must be an array.', 'attributes': { 'backend': { 'access': { 'permissions': { 'associated_roles': 'Associated Roles', 'dependencies': 'Dependencies', 'display_name': 'Display Name', 'group': 'Group', 'group_sort': 'Group Sort', 'groups': { 'name': 'Group Name' }, 'name': 'Name', 'sort': 'Sort', 'system': 'System?' }, 'roles': { 'active': 'Active', 'associated_permissions': 'Associated Permissions', 'name': 'Name', 'sort': 'Sort' }, 'users': { 'active': 'Active', 'associated_roles': 'Associated Roles', 'associated_whitelabels': 'Associated Whitelabels', 'confirmed': 'Confirmed', 'email': 'E-mail Address', 'firstName': 'First Name', 'groups': 'User Groups', 'lastName': 'Last Name', 'no-group': 'None', 'old_password': 'Old password', 'other_permissions': 'Other Permissions', 'password': 'New Password', 'password_confirmation': 'New Password Confirmation', 'send_confirmation_email': 'Send Confirmation E-mail' } }, 'blogcategories': { 'is_active': 'Active', 'title': 'Blog Category' }, 'blogs': { 'cannonical_link': 'Cannonical Link', 'category': 'Blog Category', 'content': 'Content', 'image': 'Featured Image', 'meta-title': 'Meta Title', 'meta_description': 'Meta Description', 'meta_keyword': 'Meta Keyword', 'publish': 'Publish Date & Time', 'slug': 'Slug', 'status': 'Status', 'tags': 'Tags', 'title': 'Blog Title' }, 'blogtags': { 'is_active': 'Active', 'title': 'Blog Tag' }, 'distributions': { 'description': 'Description', 'display_name': 'Display Name', 'name': 'Name' }, 'faqs': { 'answer': 'Answer', 'question': 'Question', 'status': 'Status' }, 'groups': { 'associated_whitelabels': 'Associated Whitelabels', 'description': 'Description', 'display_name': 'Display Name', 'groups': 'Seller Groups', 'name': 'Group Name', 'status': 'Status' }, 'pages': { 'cannonical_link': 'Cannonical Link', 'description': 'Description', 'is_active': 'Active', 'seo_description': 'SEO Description', 'seo_keyword': 'SEO Keyword', 'seo_title': 'SEO Title', 'title': 'Title' }, 'settings': { 'companydetails': { 'address': 'Company Address', 'contactnumber': 'Contact Number' }, 'favicon': 'Fav Icon', 'footer': { 'copyright': 'Copyright Text', 'text': 'Footer Text' }, 'google': { 'analytic': 'Google Analytics' }, 'mail': { 'fromemail': 'From Email', 'fromname': 'From Name' }, 'metadescription': 'Meta Description', 'metakeyword': 'Meta Keyawords', 'metatitle': 'Meta Title', 'sitelogo': 'Site Logo', 'termscondition': { 'disclaimer': 'Disclaimer', 'terms': 'Terms & Condition' } }, 'whitelabels': { 'associated_distribution': 'Associated Distribution', 'display_name': 'Display Name', 'ga_view_id': 'Google View Id', 'image': 'Background Image', 'name': 'Name', 'status': 'Status' }, 'wishes': { 'adults': 'Adults', 'airport': 'Airport', 'associated_whitelabels': 'Associated Whitelabels', 'budget': 'Budget', 'category': 'Hotel category', 'catering': 'Hotel catering', 'description': 'Description', 'destination': 'Destination', 'duration': 'Duration', 'earliest_start': 'Earliest start', 'image': 'Featured Image', 'kids': 'Kids', 'latest_return': 'Latest return', 'status': 'Status', 'title': 'Wish Title' } }, 'frontend': { 'offers': { 'file': 'file(filename)', 'file_placeholder': 'file', 'link': 'link(target, link)', 'link_placeholder': 'http:\/\/goo.gl\/abc', 'select_file': 'select a file', 'status': 'status', 'status_placeholder': 'status', 'text': 'messages', 'text_placeholder': 'your message to your customer', 'title': 'offer title', 'title_placeholder': 'short offer description' }, 'register-user': { 'address': 'address', 'city': 'city', 'country': 'country', 'email': 'email address', 'firstName': 'first name', 'lastName': 'last name', 'new_password': 'new password', 'new_password_confirmation': 'new password confirmation', 'old_password': 'old password', 'password': 'password', 'password_confirmation': 'password confirmation', 'ssn': 'SSN', 'state': 'state', 'terms_and_conditions': 'terms and conditions', 'user_type': 'I use the white label as a', 'user_type_seller': 'seller', 'user_type_user': 'user', 'zipcode': 'zip code' } } }, 'before': 'The :attribute must be a date before :date.', 'before_or_equal': 'The :attribute must be a date before or equal to :date.', 'between': { 'array': 'The :attribute must have between :min and :max items.', 'file': 'The :attribute must be between :min and :max kilobytes.', 'numeric': 'The :attribute must be between :min and :max.', 'string': 'The :attribute must be between :min and :max characters.' }, 'boolean': 'The :attribute field must be true or false.', 'confirmed': 'The :attribute confirmation does not match.', 'custom': { 'attribute-name': { 'rule-name': 'custom-message' } }, 'date': 'The :attribute is not a valid date.', 'date_format': 'The :attribute does not match the format :format.', 'different': 'The :attribute and :other must be different.', 'digits': 'The :attribute must be :digits digits.', 'digits_between': 'The :attribute must be between :min and :max digits.', 'dimensions': 'The :attribute has invalid image dimensions.', 'distinct': 'The :attribute field has a duplicate value.', 'email': 'The :attribute must be a valid email address.', 'exists': 'The selected :attribute is invalid.', 'file': 'The :attribute must be a file.', 'filled': 'The :attribute field must have a value.', 'image': 'The :attribute must be an image.', 'in': 'The selected :attribute is invalid.', 'in_array': 'The :attribute field does not exist in :other.', 'integer': 'The :attribute must be an integer.', 'ip': 'The :attribute must be a valid IP address.', 'json': 'The :attribute must be a valid JSON string.', 'max': { 'array': 'The :attribute may not have more than :max items.', 'file': 'The :attribute may not be greater than :max kilobytes.', 'numeric': 'The :attribute may not be greater than :max.', 'string': 'The :attribute may not be greater than :max characters.' }, 'mimes': 'The :attribute must be a file of type: :values.', 'mimetypes': 'The :attribute must be a file of type: :values.', 'min': { 'array': 'The :attribute must have at least :min items.', 'file': 'The :attribute must be at least :min kilobytes.', 'numeric': 'The :attribute must be at least :min.', 'string': 'The :attribute must be at least :min characters.' }, 'not_in': 'The selected :attribute is invalid.', 'numeric': 'The :attribute must be a number.', 'present': 'The :attribute field must be present.', 'regex': 'The :attribute format is invalid.', 'required': 'The :attribute field is required.', 'required_if': 'The :attribute field is required when :other is :value.', 'required_unless': 'The :attribute field is required unless :other is in :values.', 'required_with': 'The :attribute field is required when :values is present.', 'required_with_all': 'The :attribute field is required when :values is present.', 'required_without': 'The :attribute field is required when :values is not present.', 'required_without_all': 'The :attribute field is required when none of :values are present.', 'same': 'The :attribute and :other must match.', 'size': { 'array': 'The :attribute must contain :size items.', 'file': 'The :attribute must be :size kilobytes.', 'numeric': 'The :attribute must be :size.', 'string': 'The :attribute must be :size characters.' }, 'string': 'The :attribute must be a string.', 'timezone': 'The :attribute must be a valid zone.', 'unique': 'The :attribute has already been taken.', 'uploaded': 'The :attribute failed to upload.', 'url': 'The :attribute format is invalid.' }, 'en.wish': { 'view': { 'adults': 'Adults', 'airport': 'Airport', 'budget': 'Budget', 'category': 'Hotel category', 'catering': 'Hotel catering', 'comment-header': 'Communicate with Agent', 'createdat': 'Created at', 'createdby': 'Created by', 'destination': 'Destination', 'duration': 'Duration', 'earliest_start': 'Earliest Start', 'email': 'Email', 'kids': 'Kids', 'latest_return': 'Latest Return', 'new_offers': 'New offers', 'offerCount': 'Offers', 'offer_number': 'Offer number', 'owner': 'Name', 'stage': { 'seller_empty': 'This travel wish has been distributed on <b>:date<\/b> to you.<br>\r\n                    Please create an offer.', 'seller_message': 'This travel wish has been distributed on <b>:date<\/b> to you.<br>\r\n                    The customer left a message for you.', 'seller_offer': 'This travel wish has been distributed on <b>:date<\/b> to you.<br>\r\n                    You created an offer.', 'user_empty': 'This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\r\n                     . Unfortunately no received offers yet.', 'user_message': 'This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\r\n                    . You received a new message.', 'user_offer': 'This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\r\n                    . You received an offer.' }, 'status': 'Status', 'text': 'Text', 'title': 'Wish title', 'whitelabel': 'Whitelabel' } }, 'es.backup::notifications': { 'backup_failed_body': 'Importante: Ocurri\xF3 un error al realizar la copia de seguridad de :application_name', 'backup_failed_subject': 'Copia de seguridad de :application_name fallida', 'backup_successful_body': 'Buenas noticias, una nueva copia de seguridad de :application_name fue creada con \xE9xito en el disco llamado :disk_name.', 'backup_successful_subject': 'Se complet\xF3 con \xE9xito la copia de seguridad de :application_name', 'backup_successful_subject_title': '\xA1Nueva copia de seguridad creada con \xE9xito!', 'cleanup_failed_body': 'Ocurri\xF3 un error mientras se realizaba la limpieza de copias de seguridad de :application_name', 'cleanup_failed_subject': 'La limpieza de copias de seguridad de :application_name fall\xF3.', 'cleanup_successful_body': 'La limpieza de copias de seguridad de :application_name en el disco llamado :disk_name se completo con \xE9xito.', 'cleanup_successful_subject': 'La limpieza de copias de seguridad de :application_name se complet\xF3 con \xE9xito', 'cleanup_successful_subject_title': '!Limpieza de copias de seguridad completada con \xE9xito!', 'exception_message': 'Mensaje de la excepci\xF3n: :message', 'exception_message_title': 'Mensaje de la excepci\xF3n', 'exception_trace': 'Traza de la excepci\xF3n: :trace', 'exception_trace_title': 'Traza de la excepci\xF3n', 'healthy_backup_found_body': 'Las copias de seguridad de :application_name se consideran en buen estado. \xA1Buen trabajo!', 'healthy_backup_found_subject': 'Las copias de seguridad de :application_name en el disco :disk_name est\xE1n en buen estado', 'healthy_backup_found_subject_title': 'Las copias de seguridad de :application_name est\xE1n en buen estado', 'unhealthy_backup_found_body': 'Las copias de seguridad de :application_name en el disco :disk_name est\xE1n en mal estado.', 'unhealthy_backup_found_empty': 'No existe ninguna copia de seguridad de esta aplicaci\xF3n.', 'unhealthy_backup_found_full': 'Las copias de seguridad  est\xE1n ocupando demasiado espacio. El espacio utilizado actualmente es :disk_usage el cual es mayor que el l\xEDmite permitido de :disk_limit.', 'unhealthy_backup_found_not_reachable': 'No se puede acceder al destino de la copia de seguridad. :error', 'unhealthy_backup_found_old': 'La \xFAltima copia de seguriad hecha en :date es demasiado antigua.', 'unhealthy_backup_found_subject': 'Importante: Las copias de seguridad de :application_name est\xE1n en mal estado', 'unhealthy_backup_found_subject_title': 'Importante: Las copias de seguridad de :application_name est\xE1n en mal estado. :problem', 'unhealthy_backup_found_unknown': 'Lo siento, no es posible determinar la raz\xF3n exacta.' }, 'es.log-viewer::general': { 'all': 'Todos', 'date': 'Fecha' }, 'es.log-viewer::levels': { 'alert': 'Alerta', 'all': 'Todos', 'critical': 'Criticos', 'debug': 'Debug', 'emergency': 'Emergencia', 'error': 'Errores', 'info': 'Info', 'notice': 'Aviso', 'warning': 'Advertencia' }, 'et.log-viewer::general': { 'all': 'K\xF5ik', 'date': 'Kuup\xE4ev', 'empty-logs': 'Logide nimekiri on t\xFChi!' }, 'et.log-viewer::levels': { 'alert': 'H\xE4ire', 'all': 'K\xF5ik', 'critical': 'Kriitiline', 'debug': 'Silumine', 'emergency': 'Erakorraline', 'error': 'Viga', 'info': 'Info', 'notice': 'Teade', 'warning': 'Hoiatus' }, 'fa.backup::notifications': { 'backup_failed_body': '\u067E\u06CC\u063A\u0627\u0645 \u0645\u0647\u0645: \u0647\u0646\u06AF\u0627\u0645 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u200C\u06AF\u06CC\u0631\u06CC \u0627\u0632 :application_name \u062E\u0637\u0627\u06CC\u06CC \u0631\u062E \u062F\u0627\u062F\u0647 \u0627\u0633\u062A. ', 'backup_failed_subject': '\u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u200C\u06AF\u06CC\u0631\u06CC :application_name \u0628\u0627 \u062E\u0637\u0627 \u0645\u0648\u0627\u062C\u0647 \u0634\u062F.', 'backup_successful_body': '\u062E\u0628\u0631 \u062E\u0648\u0628, \u0628\u0647 \u062A\u0627\u0632\u06AF\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0631 \u0631\u0648\u06CC \u062F\u06CC\u0633\u06A9 :disk_name \u0628\u0627 \u0645\u0648\u0641\u0642\u06CC\u062A \u0633\u0627\u062E\u062A\u0647 \u0634\u062F. ', 'backup_successful_subject': '\u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 \u062C\u062F\u06CC\u062F :application_name \u0628\u0627 \u0645\u0648\u0641\u0642\u06CC\u062A \u0633\u0627\u062E\u062A\u0647 \u0634\u062F.', 'backup_successful_subject_title': '\u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u200C\u06AF\u06CC\u0631\u06CC \u0645\u0648\u0641\u0642!', 'cleanup_failed_body': '\u0647\u0646\u06AF\u0627\u0645 \u067E\u0627\u06A9\u200C\u0633\u0627\u0632\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u062E\u0637\u0627\u06CC\u06CC \u0631\u062E \u062F\u0627\u062F\u0647 \u0627\u0633\u062A.', 'cleanup_failed_subject': '\u067E\u0627\u06A9\u200C\u200C\u0633\u0627\u0632\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F.', 'cleanup_successful_body': '\u067E\u0627\u06A9\u200C\u0633\u0627\u0632\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0631 \u0631\u0648\u06CC \u062F\u06CC\u0633\u06A9 :disk_name \u0628\u0627 \u0645\u0648\u0641\u0642\u06CC\u062A \u0627\u0646\u062C\u0627\u0645 \u0634\u062F.', 'cleanup_successful_subject': '\u067E\u0627\u06A9\u200C\u0633\u0627\u0632\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0627 \u0645\u0648\u0641\u0642\u06CC\u062A \u0627\u0646\u062C\u0627\u0645 \u0634\u062F.', 'cleanup_successful_subject_title': '\u067E\u0627\u06A9\u200C\u0633\u0627\u0632\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646!', 'exception_message': '\u067E\u06CC\u063A\u0627\u0645 \u062E\u0637\u0627: :message', 'exception_message_title': '\u067E\u06CC\u063A\u0627\u0645 \u062E\u0637\u0627', 'exception_trace': '\u062C\u0632\u06CC\u06CC\u0627\u062A \u062E\u0637\u0627: :trace', 'exception_trace_title': '\u062C\u0632\u06CC\u06CC\u0627\u062A \u062E\u0637\u0627', 'healthy_backup_found_body': '\u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0647 \u0646\u0638\u0631 \u0633\u0627\u0644\u0645 \u0645\u06CC\u0627\u062F. \u062F\u0645\u062A \u06AF\u0631\u0645!', 'healthy_backup_found_subject': '\u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0631 \u0631\u0648\u06CC \u062F\u06CC\u0633\u06A9 :disk_name \u0633\u0627\u0644\u0645 \u0628\u0648\u062F.', 'healthy_backup_found_subject_title': '\u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0633\u0627\u0644\u0645 \u0628\u0648\u062F.', 'unhealthy_backup_found_body': '\u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0631 \u0631\u0648\u06CC \u062F\u06CC\u0633\u06A9 :disk_name \u0633\u0627\u0644\u0645 \u0646\u0628\u0648\u062F.', 'unhealthy_backup_found_empty': '\u0628\u0631\u0627\u06CC \u0627\u06CC\u0646 \u0628\u0631\u0646\u0627\u0645\u0647 \u0647\u06CC\u0686 \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u06CC \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F.', 'unhealthy_backup_found_full': '\u0646\u0633\u062E\u0647\u200C\u0647\u0627\u06CC \u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u06CC \u06A9\u0647 \u062A\u0647\u06CC\u0647 \u06A9\u0631\u062F\u0647 \u0627\u06CC\u062F \u062D\u062C\u0645 \u0632\u06CC\u0627\u062F\u06CC \u0627\u0634\u063A\u0627\u0644 \u06A9\u0631\u062F\u0647 \u0627\u0646\u062F. \u0645\u06CC\u0632\u0627\u0646 \u062F\u06CC\u0633\u06A9 \u0627\u0633\u062A\u0641\u0627\u062F\u0647 \u0634\u062F\u0647 :disk_usage \u0627\u0633\u062A \u06A9\u0647 \u0627\u0632 \u0645\u06CC\u0632\u0627\u0646 \u0645\u062C\u0627\u0632 :disk_limit \u0641\u0631\u0627\u062A\u0631 \u0631\u0641\u062A\u0647 \u0627\u0633\u062A. ', 'unhealthy_backup_found_not_reachable': '\u0645\u0642\u0635\u062F \u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u200C\u06AF\u06CC\u0631\u06CC \u062F\u0631 \u062F\u0633\u062A\u0631\u0633 \u0646\u0628\u0648\u062F. :error', 'unhealthy_backup_found_old': '\u0622\u062E\u0631\u06CC\u0646 \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 \u0628\u0631\u0627\u06CC \u062A\u0627\u0631\u06CC\u062E :date \u0627\u0633\u062A. \u06A9\u0647 \u0628\u0647 \u0646\u0638\u0631 \u062E\u06CC\u0644\u06CC \u0642\u062F\u06CC\u0645\u06CC \u0645\u06CC\u0627\u062F. ', 'unhealthy_backup_found_subject': '\u062E\u0628\u0631 \u0645\u0647\u0645: \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0633\u0627\u0644\u0645 \u0646\u0628\u0648\u062F.', 'unhealthy_backup_found_subject_title': '\u062E\u0628\u0631 \u0645\u0647\u0645: \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0633\u0627\u0644\u0645 \u0646\u0628\u0648\u062F. :problem', 'unhealthy_backup_found_unknown': '\u0645\u062A\u0627\u0633\u0641\u0627\u0646\u0647 \u062F\u0644\u06CC\u0644 \u062F\u0642\u06CC\u0642 \u0645\u0634\u062E\u0635 \u0646\u0634\u062F\u0647 \u0627\u0633\u062A.' }, 'fa.log-viewer::general': { 'all': '\u0647\u0645\u0647', 'date': '\u062A\u0627\u0631\u06CC\u062E' }, 'fa.log-viewer::levels': { 'alert': '\u0627\u062E\u0637\u0627\u0631', 'all': '\u0647\u0645\u0647', 'critical': '\u0628\u062D\u0631\u0627\u0646\u06CC', 'debug': '\u062F\u06CC\u0628\u0627\u06AF', 'emergency': '\u0627\u0648\u0631\u0698\u0627\u0646\u0633\u06CC', 'error': '\u062E\u0637\u0627', 'info': '\u0627\u0637\u0644\u0627\u0639\u0627\u062A', 'notice': '\u0627\u0639\u0644\u0627\u0646', 'warning': '\u0647\u0634\u062F\u0627\u0631' }, 'fr.backup::notifications': { 'backup_failed_body': 'Important : Une erreur est survenue lors de la sauvegarde de :application_name', 'backup_failed_subject': '\xC9chec de la sauvegarde de :application_name', 'backup_successful_body': 'Bonne nouvelle, une nouvelle sauvegarde de :application_name a \xE9t\xE9 cr\xE9\xE9e avec succ\xE8s sur le disque nomm\xE9 :disk_name.', 'backup_successful_subject': 'Succ\xE8s de la sauvegarde de :application_name', 'backup_successful_subject_title': 'Sauvegarde cr\xE9\xE9e avec succ\xE8s !', 'cleanup_failed_body': 'Une erreur est survenue lors du nettoyage des sauvegardes de :application_name', 'cleanup_failed_subject': 'Le nettoyage des sauvegardes de :application_name a echou\xE9.', 'cleanup_successful_body': 'Le nettoyage des sauvegardes de :application_name sur le disque nomm\xE9 :disk_name a \xE9t\xE9 effectu\xE9 avec succ\xE8s.', 'cleanup_successful_subject': 'Succ\xE8s du nettoyage des sauvegardes de :application_name', 'cleanup_successful_subject_title': 'Sauvegardes nettoy\xE9es avec succ\xE8s !', 'exception_message': "Message de l'exception : :message", 'exception_message_title': "Message de l'exception", 'exception_trace': "Trace de l'exception : :trace", 'exception_trace_title': "Trace de l'exception", 'healthy_backup_found_body': 'Les sauvegardes pour :application_name sont consid\xE9r\xE9es saines. Bon travail !', 'healthy_backup_found_subject': 'Les sauvegardes pour :application_name sur le disque :disk_name sont saines', 'healthy_backup_found_subject_title': 'Les sauvegardes pour :application_name sont saines', 'unhealthy_backup_found_body': 'Les sauvegardes pour :application_name sur le disque :disk_name sont corrompues.', 'unhealthy_backup_found_empty': "Il n'y a aucune sauvegarde pour cette application.", 'unhealthy_backup_found_full': 'Les sauvegardes utilisent trop d\'espace disque. L\'utilisation actuelle est de :disk_usage alors que la limite autoris\xE9e est de :disk_limit.', 'unhealthy_backup_found_not_reachable': "La destination de la sauvegarde n'est pas accessible. :error", 'unhealthy_backup_found_old': 'La derni\xE8re sauvegarde du :date est consid\xE9r\xE9e trop vieille.', 'unhealthy_backup_found_subject': 'Important : Les sauvegardes pour :application_name sont corrompues', 'unhealthy_backup_found_subject_title': 'Important : Les sauvegardes pour :application_name sont corrompues. :problem', 'unhealthy_backup_found_unknown': 'D\xE9sol\xE9, une raison exacte ne peut \xEAtre d\xE9termin\xE9e.' }, 'fr.log-viewer::general': { 'all': 'Tous', 'date': 'Date' }, 'fr.log-viewer::levels': { 'alert': 'Alerte', 'all': 'Tous', 'critical': 'Critique', 'debug': 'Debug', 'emergency': 'Urgence', 'error': 'Erreur', 'info': 'Info', 'notice': 'Notice', 'warning': 'Avertissement' }, 'hi.backup::notifications': { 'backup_failed_body': '\u091C\u0930\u0942\u0930\u0940 \u0938\u0941\u091A\u0928\u093E: :application_name \u0915\u093E \u092C\u0948\u0915\u0905\u092A \u0932\u0947\u0924\u0947 \u0938\u092E\u092F \u0905\u0938\u092B\u0932 \u0930\u0939\u0947', 'backup_failed_subject': ':application_name \u0915\u093E \u092C\u0948\u0915\u0905\u092A \u0905\u0938\u092B\u0932 \u0930\u0939\u093E', 'backup_successful_body': '\u0916\u0941\u0936\u0916\u092C\u0930\u0940, :application_name \u0915\u093E \u092C\u0948\u0915\u0905\u092A :disk_name \u092A\u0930 \u0938\u0902\u0917\u094D\u0930\u0939\u093F\u0924 \u0915\u0930\u0928\u0947 \u092E\u0947 \u0938\u092B\u0932 \u0930\u0939\u0947.', 'backup_successful_subject': ':application_name \u0915\u093E \u092C\u0948\u0915\u0905\u092A \u0938\u092B\u0932 \u0930\u0939\u093E', 'backup_successful_subject_title': '\u092C\u0948\u0915\u0905\u092A \u0938\u092B\u0932 \u0930\u0939\u093E!', 'cleanup_failed_body': ':application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0915\u0940 \u0938\u092B\u093E\u0908 \u0915\u0930\u0924\u0947 \u0938\u092E\u092F \u0915\u0941\u091B \u092C\u093E\u0927\u093E \u0906\u092F\u0940 \u0939\u0948.', 'cleanup_failed_subject': ':application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0915\u0940 \u0938\u092B\u093E\u0908 \u0905\u0938\u092B\u0932 \u0930\u0939\u0940.', 'cleanup_successful_body': ':application_name \u0915\u093E \u092C\u0948\u0915\u0905\u092A \u091C\u094B :disk_name \u0928\u093E\u092E \u0915\u0940 \u0921\u093F\u0938\u094D\u0915 \u092A\u0930 \u0938\u0902\u0917\u094D\u0930\u0939\u093F\u0924 \u0939\u0948, \u0909\u0938\u0915\u0940 \u0938\u092B\u093E\u0908 \u0938\u092B\u0932 \u0930\u0939\u0940.', 'cleanup_successful_subject': ':application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0915\u0940 \u0938\u092B\u093E\u0908 \u0938\u092B\u0932 \u0930\u0939\u0940', 'cleanup_successful_subject_title': '\u092C\u0948\u0915\u0905\u092A \u0915\u0940 \u0938\u092B\u093E\u0908 \u0938\u092B\u0932 \u0930\u0939\u0940!', 'exception_message': '\u0917\u0932\u0924\u0940 \u0938\u0902\u0926\u0947\u0936: :message', 'exception_message_title': '\u0917\u0932\u0924\u0940 \u0938\u0902\u0926\u0947\u0936', 'exception_trace': '\u0917\u0932\u0924\u0940 \u0928\u093F\u0936\u093E\u0928: :trace', 'exception_trace_title': '\u0917\u0932\u0924\u0940 \u0928\u093F\u0936\u093E\u0928', 'healthy_backup_found_body': '\u092C\u0939\u0941\u0924 \u092C\u0922\u093C\u093F\u092F\u093E! :application_name \u0915\u0947 \u0938\u092D\u0940 \u092C\u0948\u0915\u0905\u092A \u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948.', 'healthy_backup_found_subject': ':disk_name \u0928\u093E\u092E \u0915\u0940 \u0921\u093F\u0938\u094D\u0915 \u092A\u0930 \u0938\u0902\u0917\u094D\u0930\u0939\u093F\u0924 :application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948', 'healthy_backup_found_subject_title': ':application_name \u0915\u0947 \u0938\u092D\u0940 \u092C\u0948\u0915\u0905\u092A \u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948', 'unhealthy_backup_found_body': ':disk_name \u0928\u093E\u092E \u0915\u0940 \u0921\u093F\u0938\u094D\u0915 \u092A\u0930 \u0938\u0902\u0917\u094D\u0930\u0939\u093F\u0924 :application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0905\u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948', 'unhealthy_backup_found_empty': '\u0907\u0938 \u090F\u092A\u094D\u0932\u0940\u0915\u0947\u0936\u0928 \u0915\u093E \u0915\u094B\u0908 \u092D\u0940 \u092C\u0948\u0915\u0905\u092A \u0928\u0939\u0940\u0902 \u0939\u0948.', 'unhealthy_backup_found_full': '\u0938\u092D\u0940 \u092C\u0948\u0915\u0905\u092A \u092C\u0939\u0941\u0924 \u091C\u094D\u092F\u093E\u0926\u093E \u091C\u0917\u0939 \u0915\u093E \u0909\u092A\u092F\u094B\u0917 \u0915\u0930 \u0930\u0939\u0947 \u0939\u0948. \u095E\u093F\u0932\u0939\u093E\u0932 \u0938\u092D\u0940 \u092C\u0948\u0915\u0905\u092A :disk_usage \u091C\u0917\u0939 \u0915\u093E \u0909\u092A\u092F\u094B\u0917 \u0915\u0930 \u0930\u0939\u0947 \u0939\u0948, \u091C\u094B \u0915\u0940 :disk_limit \u0905\u0928\u0941\u092E\u0924\u093F \u0938\u0940\u092E\u093E \u0938\u0947 \u0905\u0927\u093F\u0915 \u0915\u093E \u0939\u0948.', 'unhealthy_backup_found_not_reachable': ':error \u0915\u0947 \u092C\u091C\u0947\u0938\u0947 \u092C\u0948\u0915\u0905\u092A \u0915\u0940 \u092E\u0902\u091C\u093F\u0932 \u0924\u0915 \u092A\u094B\u0939\u094B\u091A \u0928\u0939\u0940\u0902 \u0938\u0915\u0924\u0947.', 'unhealthy_backup_found_old': '\u0939\u093E\u0932\u0939\u0940\u092E\u0947\u0902 :date \u0915\u094B \u0932\u093F\u092F\u093E \u0939\u0941\u0906 \u092C\u0948\u0915\u0905\u092A \u092C\u0939\u0941\u0924 \u092A\u0941\u0930\u093E\u0928\u093E \u0939\u0948.', 'unhealthy_backup_found_subject': '\u091C\u0930\u0942\u0930\u0940 \u0938\u0941\u091A\u0928\u093E :  :application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0905\u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948', 'unhealthy_backup_found_subject_title': '\u091C\u0930\u0942\u0930\u0940 \u0938\u0941\u091A\u0928\u093E : :application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A :problem \u0915\u0947 \u092C\u091C\u0947\u0938\u0947 \u0905\u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948', 'unhealthy_backup_found_unknown': '\u092E\u093E\u092B\u093C \u0915\u0940\u091C\u093F\u092F\u0947, \u0938\u0939\u0940 \u0915\u093E\u0930\u0923 \u0928\u093F\u0930\u094D\u0927\u093E\u0930\u093F\u0924 \u0928\u0939\u0940\u0902 \u0915\u0930 \u0938\u0915\u0924\u0947.' }, 'hu.log-viewer::general': { 'all': '\xD6sszes', 'date': 'D\xE1tum', 'empty-logs': 'The list of logs is empty!' }, 'hu.log-viewer::levels': { 'alert': 'Riaszt\xE1s', 'all': '\xD6sszes', 'critical': 'Kritikus', 'debug': 'Hibakeres\xE9s', 'emergency': 'V\xE9szhelyzet', 'error': 'Hiba', 'info': 'Inform\xE1ci\xF3', 'notice': '\xC9rtes\xEDt\xE9s', 'warning': 'Figyelmeztet\xE9s' }, 'hy.log-viewer::general': { 'all': '\u0532\u0578\u056C\u0578\u0580\u0568', 'date': '\u0531\u0574\u057D\u0561\u0569\u056B\u057E' }, 'hy.log-viewer::levels': { 'alert': '\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574', 'all': '\u0532\u0578\u056C\u0578\u0580\u0568', 'critical': '\u053F\u0580\u056B\u057F\u056B\u056F\u0561\u056F\u0561\u0576', 'debug': '\u053F\u0561\u0580\u0563\u0561\u0562\u0565\u0580\u0578\u0582\u0574', 'emergency': '\u054E\u0569\u0561\u0580\u0561\u0575\u056B\u0576', 'error': '\u054D\u056D\u0561\u056C', 'info': '\u054F\u0565\u0572\u0565\u056F\u0561\u057F\u057E\u0578\u0582\u0569\u0575\u0578\u0582\u0576', 'notice': '\u053E\u0561\u0576\u0578\u0582\u0581\u0578\u0582\u0574', 'warning': '\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574' }, 'id.backup::notifications': { 'backup_failed_body': 'Penting: Sebuah error terjadi ketika membackup :application_name', 'backup_failed_subject': 'Gagal backup :application_name', 'backup_successful_body': 'Kabar baik, sebuah backup baru dari :application_name sukses dibuat pada disk bernama :disk_name.', 'backup_successful_subject': 'Backup baru sukses dari :application_name', 'backup_successful_subject_title': 'Backup baru sukses!', 'cleanup_failed_body': 'Sebuah error teradi ketika membersihkan backup dari :application_name', 'cleanup_failed_subject': 'Membersihkan backup dari :application_name yang gagal.', 'cleanup_successful_body': 'Pembersihan backup :application_name pada disk bernama :disk_name telah sukses.', 'cleanup_successful_subject': 'Sukses membersihkan backup :application_name', 'cleanup_successful_subject_title': 'Sukses membersihkan backup!', 'exception_message': 'Pesan pengecualian: :message', 'exception_message_title': 'Pesan pengecualian', 'exception_trace': 'Jejak pengecualian: :trace', 'exception_trace_title': 'Jejak pengecualian', 'healthy_backup_found_body': 'Backup untuk :application_name dipertimbangkan sehat. Kerja bagus!', 'healthy_backup_found_subject': 'Backup untuk :application_name pada disk :disk_name sehat', 'healthy_backup_found_subject_title': 'Backup untuk :application_name sehat', 'unhealthy_backup_found_body': 'Backup untuk :application_name pada disk :disk_name tidak sehat.', 'unhealthy_backup_found_empty': 'Tidak ada backup pada aplikasi ini sama sekali.', 'unhealthy_backup_found_full': 'Backup menggunakan terlalu banyak kapasitas penyimpanan. Penggunaan terkini adalah :disk_usage dimana lebih besar dari batas yang diperbolehkan yaitu :disk_limit.', 'unhealthy_backup_found_not_reachable': 'Tujuan backup tidak dapat terjangkau. :error', 'unhealthy_backup_found_old': 'Backup terakhir dibuat pada :date dimana dipertimbahkan sudah sangat lama.', 'unhealthy_backup_found_subject': 'Penting: Backup untuk :application_name tidak sehat', 'unhealthy_backup_found_subject_title': 'Penting: Backup untuk :application_name tidak sehat. :problem', 'unhealthy_backup_found_unknown': 'Maaf, sebuah alasan persisnya tidak dapat ditentukan.' }, 'id.log-viewer::general': { 'all': 'Semua', 'date': 'Tanggal' }, 'id.log-viewer::levels': { 'alert': 'Waspada', 'all': 'Semua', 'critical': 'Kritis', 'debug': 'Debug', 'emergency': 'Darurat', 'error': 'Kesalahan', 'info': 'Info', 'notice': 'Perhatian', 'warning': 'Peringatan' }, 'it.backup::notifications': { 'backup_failed_body': 'Importante: Si \xE8 verificato un errore durante il backup di :application_name', 'backup_failed_subject': 'Fallito il backup di :application_name', 'backup_successful_body': 'Grande notizia, un nuovo backup di :application_name \xE8 stato creato con successo sul disco :disk_name.', 'backup_successful_subject': 'Creato nuovo backup di :application_name', 'backup_successful_subject_title': 'Nuovo backup creato!', 'cleanup_failed_body': 'Si \xE8 verificato un errore durante la pulizia dei backup di :application_name', 'cleanup_failed_subject': 'Pulizia dei backup di :application_name fallita.', 'cleanup_successful_body': 'La pulizia dei backup di :application_name sul disco :disk_name \xE8 avvenuta con successo.', 'cleanup_successful_subject': 'Pulizia dei backup di :application_name avvenuta con successo', 'cleanup_successful_subject_title': 'Pulizia dei backup avvenuta con successo!', 'exception_message': "Messaggio dell'eccezione: :message", 'exception_message_title': "Messaggio dell'eccezione", 'exception_trace': "Traccia dell'eccezione: :trace", 'exception_trace_title': "Traccia dell'eccezione", 'healthy_backup_found_body': 'I backup per :application_name sono considerati sani. Bel Lavoro!', 'healthy_backup_found_subject': 'I backup per :application_name sul disco :disk_name sono sani', 'healthy_backup_found_subject_title': 'I backup per :application_name sono sani', 'unhealthy_backup_found_body': 'I backup per :application_name sul disco :disk_name sono corrotti.', 'unhealthy_backup_found_empty': 'Non esiste alcun backup di questa applicazione.', 'unhealthy_backup_found_full': 'I backup utilizzano troppa memoria. L\'utilizzo corrente \xE8 :disk_usage che \xE8 superiore al limite consentito di :disk_limit.', 'unhealthy_backup_found_not_reachable': 'Impossibile raggiungere la destinazione di backup. :error', 'unhealthy_backup_found_old': 'L\'ultimo backup fatto il :date \xE8 considerato troppo vecchio.', 'unhealthy_backup_found_subject': 'Importante: i backup per :application_name sono corrotti', 'unhealthy_backup_found_subject_title': 'Importante: i backup per :application_name sono corrotti. :problem', 'unhealthy_backup_found_unknown': 'Spiacenti, non \xE8 possibile determinare una ragione esatta.' }, 'it.log-viewer::general': { 'all': 'Tutti', 'date': 'Data' }, 'it.log-viewer::levels': { 'alert': 'Allarme', 'all': 'Tutti', 'critical': 'Critico', 'debug': 'Debug', 'emergency': 'Emergenza', 'error': 'Errore', 'info': 'Info', 'notice': 'Notifica', 'warning': 'Avviso' }, 'ja.log-viewer::general': { 'all': '\u3059\u3079\u3066', 'date': '\u65E5\u4ED8', 'empty-logs': '\u30ED\u30B0\u30EA\u30B9\u30C8\u304C\u7A7A\u3067\u3059!' }, 'ja.log-viewer::levels': { 'alert': '\u8B66\u6212', 'all': '\u3059\u3079\u3066', 'critical': '\u81F4\u547D\u7684', 'debug': '\u30C7\u30D0\u30C3\u30B0', 'emergency': '\u7DCA\u6025', 'error': '\u30A8\u30E9\u30FC', 'info': '\u60C5\u5831', 'notice': '\u901A\u77E5', 'warning': '\u8B66\u544A' }, 'ko.log-viewer::general': { 'all': '\uC804\uCCB4', 'date': '\uB0A0\uC9DC' }, 'ko.log-viewer::levels': { 'alert': '\uACBD\uACE0', 'all': '\uC804\uCCB4', 'critical': '\uC2EC\uAC01', 'debug': '\uB514\uBC84\uADF8', 'emergency': '\uAE34\uAE09', 'error': '\uC624\uB958', 'info': '\uC815\uBCF4', 'notice': '\uC54C\uB9BC', 'warning': '\uC8FC\uC758' }, 'nl.log-viewer::general': { 'all': 'Alles', 'date': 'Datum' }, 'nl.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Alle', 'critical': 'Cruciaal', 'debug': 'Debug', 'emergency': 'Noodgeval', 'error': 'Error', 'info': 'Informatie', 'notice': 'Opmerking', 'warning': 'Waarschuwing' }, 'pl.backup::notifications': { 'backup_failed_body': 'Wa\u017Cne: Wyst\u0105pi\u0142 b\u0142\u0105d podczas tworzenia kopii zapasowej aplikacji :application_name', 'backup_failed_subject': 'Tworzenie kopii zapasowej aplikacji :application_name nie powiod\u0142o si\u0119', 'backup_successful_body': 'Wspania\u0142a wiadomo\u015B\u0107, nowa kopia zapasowa aplikacji :application_name zosta\u0142a pomy\u015Blnie utworzona na dysku o nazwie :disk_name.', 'backup_successful_subject': 'Pomy\u015Blnie utworzono kopi\u0119 zapasow\u0105 aplikacji :application_name', 'backup_successful_subject_title': 'Nowa kopia zapasowa!', 'cleanup_failed_body': 'Wyst\u0105pi\u0142 b\u0142\u0105d podczas czyszczenia kopii zapasowej aplikacji :application_name', 'cleanup_failed_subject': 'Czyszczenie kopii zapasowych aplikacji :application_name nie powiod\u0142o si\u0119.', 'cleanup_successful_body': 'Czyszczenie kopii zapasowych aplikacji :application_name na dysku :disk_name zako\u0144czone sukcecem.', 'cleanup_successful_subject': 'Kopie zapasowe aplikacji :application_name zosta\u0142y pomy\u015Blnie wyczyszczone', 'cleanup_successful_subject_title': 'Kopie zapasowe zosta\u0142y pomy\u015Blnie wyczyszczone!', 'exception_message': 'B\u0142\u0105d: :message', 'exception_message_title': 'B\u0142\u0105d', 'exception_trace': 'Zrzut b\u0142\u0119du: :trace', 'exception_trace_title': 'Zrzut b\u0142\u0119du', 'healthy_backup_found_body': 'Kopie zapasowe aplikacji :application_name s\u0105 poprawne. Dobra robota!', 'healthy_backup_found_subject': 'Kopie zapasowe aplikacji :application_name na dysku :disk_name s\u0105 poprawne', 'healthy_backup_found_subject_title': 'Kopie zapasowe aplikacji :application_name s\u0105 poprawne', 'unhealthy_backup_found_body': 'Kopie zapasowe aplikacji :application_name na dysku :disk_name s\u0105 niepoprawne.', 'unhealthy_backup_found_empty': 'W aplikacji nie ma \u017Cadnej kopii zapasowych tej aplikacji.', 'unhealthy_backup_found_full': 'Kopie zapasowe zajmuj\u0105 zbyt du\u017Co miejsca. Obecne u\u017Cycie dysku :disk_usage jest wi\u0119ksze od ustalonego limitu :disk_limit.', 'unhealthy_backup_found_not_reachable': 'Miejsce docelowe kopii zapasowej nie jest osi\u0105galne. :error', 'unhealthy_backup_found_old': 'Ostatnia kopia zapasowa wykonania dnia :date jest zbyt stara.', 'unhealthy_backup_found_subject': 'Wa\u017Cne: Kopie zapasowe aplikacji :application_name s\u0105 niepoprawne', 'unhealthy_backup_found_subject_title': 'Wa\u017Cne: Kopie zapasowe aplikacji :application_name s\u0105 niepoprawne. :problem', 'unhealthy_backup_found_unknown': 'Niestety, nie mo\u017Cna ustali\u0107 dok\u0142adnego b\u0142\u0119du.' }, 'pl.log-viewer::general': { 'all': 'Wszystkie', 'date': 'Data' }, 'pl.log-viewer::levels': { 'alert': 'Alerty', 'all': 'Wszystkie', 'critical': 'Krytyczne', 'debug': 'Debug', 'emergency': 'Awaryjne', 'error': 'B\u0142\u0119dy', 'info': 'Informacje', 'notice': 'Warte uwagi', 'warning': 'Ostrze\u017Cenia' }, 'pt-BR.backup::notifications': { 'backup_failed_body': 'Importante: Ocorreu um erro ao fazer o backup da aplica\xE7\xE3o :application_name', 'backup_failed_subject': 'Falha no backup da aplica\xE7\xE3o :application_name', 'backup_successful_body': 'Boas not\xEDcias, um novo backup da aplica\xE7\xE3o :application_name foi criado no disco :disk_name.', 'backup_successful_subject': 'Backup realizado com sucesso: :application_name', 'backup_successful_subject_title': 'Backup Realizado com sucesso!', 'cleanup_failed_body': 'Um erro ocorreu ao fazer a limpeza dos backups da aplica\xE7\xE3o :application_name', 'cleanup_failed_subject': 'Falha na limpeza dos backups da aplica\xE7\xE3o :application_name.', 'cleanup_successful_body': 'A limpeza dos backups da aplica\xE7\xE3o :application_name no disco :disk_name foi conclu\xEDda.', 'cleanup_successful_subject': 'Limpeza dos backups da aplica\xE7\xE3o :application_name conclu\xEDda!', 'cleanup_successful_subject_title': 'Limpeza dos backups conclu\xEDda!', 'exception_message': 'Exception message: :message', 'exception_message_title': 'Exception message', 'exception_trace': 'Exception trace: :trace', 'exception_trace_title': 'Exception trace', 'healthy_backup_found_body': 'Os backups da aplica\xE7\xE3o :application_name est\xE3o em dia. Bom trabalho!', 'healthy_backup_found_subject': 'Os backups da aplica\xE7\xE3o :application_name no disco :disk_name est\xE3o em dia', 'healthy_backup_found_subject_title': 'Os backups da aplica\xE7\xE3o :application_name est\xE3o em dia', 'unhealthy_backup_found_body': 'Os backups da aplica\xE7\xE3o :application_name no disco :disk_name n\xE3o est\xE3o em dia.', 'unhealthy_backup_found_empty': 'N\xE3o existem backups para essa aplica\xE7\xE3o.', 'unhealthy_backup_found_full': 'Os backups est\xE3o usando muito espa\xE7o de armazenamento. A utiliza\xE7\xE3o atual \xE9 de :disk_usage, o que \xE9 maior que o limite permitido de :disk_limit.', 'unhealthy_backup_found_not_reachable': 'O destino dos backups n\xE3o pode ser alcan\xE7ado. :error', 'unhealthy_backup_found_old': 'O \xFAltimo backup realizado em :date \xE9 considerado muito antigo.', 'unhealthy_backup_found_subject': 'Importante: Os backups da aplica\xE7\xE3o :application_name n\xE3o est\xE3o em dia', 'unhealthy_backup_found_subject_title': 'Importante: Os backups da aplica\xE7\xE3o :application_name n\xE3o est\xE3o em dia. :problem', 'unhealthy_backup_found_unknown': 'Desculpe, a exata raz\xE3o n\xE3o pode ser encontrada.' }, 'pt-BR.log-viewer::general': { 'all': 'Todos', 'date': 'Data' }, 'pt-BR.log-viewer::levels': { 'alert': 'Alerta', 'all': 'Todos', 'critical': 'Cr\xEDtico', 'debug': 'Debug', 'emergency': 'Emerg\xEAncia', 'error': 'Erro', 'info': 'Informa\xE7\xE3o', 'notice': 'Not\xEDcia', 'warning': 'Aviso' }, 'ro.backup::notifications': { 'backup_failed_body': 'Important: A ap\u0103rut o eroare \xEEn timpul gener\u0103rii copiei de rezerv\u0103 pentru :application_name', 'backup_failed_subject': 'Nu s-a putut face copie de rezerv\u0103 pentru :application_name', 'backup_successful_body': 'Ve\u0219ti bune, o nou\u0103 copie de rezerv\u0103 pentru :application_name a fost creat\u0103 cu succes pe discul cu numele :disk_name.', 'backup_successful_subject': 'Copie de rezerv\u0103 efectuat\u0103 cu succes pentru :application_name', 'backup_successful_subject_title': 'O nou\u0103 copie de rezerv\u0103 a fost efectuat\u0103 cu succes!', 'cleanup_failed_body': 'A ap\u0103rut o eroare \xEEn timpul cur\u0103\u021Birii copiilor de rezerv\u0103 pentru :application_name', 'cleanup_failed_subject': 'Cur\u0103\u021Barea copiilor de rezerv\u0103 pentru :application_name nu a reu\u0219it.', 'cleanup_successful_body': 'Cur\u0103\u021Barea copiilor de rezerv\u0103 pentru :application_name de pe discul cu numele :disk_name a fost f\u0103cut\u0103 cu succes.', 'cleanup_successful_subject': 'Cur\u0103\u021Barea copiilor de rezerv\u0103 pentru :application_name a fost f\u0103cut\u0103 cu succes', 'cleanup_successful_subject_title': 'Cur\u0103\u021Barea copiilor de rezerv\u0103 a fost f\u0103cut\u0103 cu succes!', 'exception_message': 'Cu excep\u021Bia mesajului: :message', 'exception_message_title': 'Mesaj de excep\u021Bie', 'exception_trace': 'Urm\u0103 excep\u0163ie: :trace', 'exception_trace_title': 'Urm\u0103 excep\u0163ie', 'healthy_backup_found_body': 'Copiile de rezerv\u0103 pentru :application_name sunt considerate \xEEn regul\u0103. Bun\u0103 treab\u0103!', 'healthy_backup_found_subject': 'Copiile de rezerv\u0103 pentru :application_name de pe discul :disk_name sunt \xEEn regul\u0103', 'healthy_backup_found_subject_title': 'Copiile de rezerv\u0103 pentru :application_name sunt \xEEn regul\u0103', 'unhealthy_backup_found_body': 'Copiile de rezerv\u0103 pentru :application_name de pe discul :disk_name nu sunt \xEEn regul\u0103.', 'unhealthy_backup_found_empty': 'Nu exist\u0103 copii de rezerv\u0103 ale acestei aplica\u021Bii.', 'unhealthy_backup_found_full': 'Copiile de rezerv\u0103 folosesc prea mult spa\u021Biu de stocare. Utilizarea curent\u0103 este de :disk_usage care este mai mare dec\xE2t limita permis\u0103 de :disk_limit.', 'unhealthy_backup_found_not_reachable': 'Nu se poate ajunge la destina\u021Bia copiilor de rezerv\u0103. :error', 'unhealthy_backup_found_old': 'Cea mai recent\u0103 copie de rezerv\u0103 f\u0103cut\u0103 la :date este considerat\u0103 prea veche.', 'unhealthy_backup_found_subject': 'Important: Copiile de rezerv\u0103 pentru :application_name nu sunt \xEEn regul\u0103', 'unhealthy_backup_found_subject_title': 'Important: Copiile de rezerv\u0103 pentru :application_name nu sunt \xEEn regul\u0103. :problem', 'unhealthy_backup_found_unknown': 'Ne pare r\u0103u, un motiv exact nu poate fi determinat.' }, 'ro.log-viewer::general': { 'all': 'Toate', 'date': 'Dat\u0103' }, 'ro.log-viewer::levels': { 'alert': 'Alert\u0103', 'all': 'Toate', 'critical': 'Critic', 'debug': 'Depanare', 'emergency': 'Urgen\u021B\u0103', 'error': 'Eroare', 'info': 'Informare', 'notice': 'Avertisment', 'warning': 'Pericol' }, 'ru.backup::notifications': { 'backup_failed_body': '\u0412\u043D\u0438\u043C\u0430\u043D\u0438\u0435: \u041F\u0440\u043E\u0438\u0437\u043E\u0448\u043B\u0430 \u043E\u0448\u0438\u0431\u043A\u0430 \u0432\u043E \u0432\u0440\u0435\u043C\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u043E\u0433\u043E \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F :application_name', 'backup_failed_subject': '\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u0434\u0435\u043B\u0430\u0442\u044C \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0443\u044E \u043A\u043E\u043F\u0438\u044E :application_name', 'backup_successful_body': '\u041E\u0442\u043B\u0438\u0447\u043D\u0430\u044F \u043D\u043E\u0432\u043E\u0441\u0442\u044C, \u043D\u043E\u0432\u0430\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u0441\u043E\u0437\u0434\u0430\u043D\u0430 \u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0430 \u043D\u0430 \u0434\u0438\u0441\u043A :disk_name.', 'backup_successful_subject': '\u0423\u0441\u043F\u0435\u0448\u043D\u043E \u0441\u043E\u0437\u0434\u0430\u043D\u0430 \u043D\u043E\u0432\u0430\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name', 'backup_successful_subject_title': '\u0423\u0441\u043F\u0435\u0448\u043D\u043E \u0441\u043E\u0437\u0434\u0430\u043D\u0430 \u043D\u043E\u0432\u0430\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F!', 'cleanup_failed_body': '\u041F\u0440\u043E\u0438\u0437\u043E\u0448\u043B\u0430 \u043E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043E\u0447\u0438\u0441\u0442\u043A\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0445 \u043A\u043E\u043F\u0438\u0439 :application_name', 'cleanup_failed_subject': '\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0447\u0438\u0441\u0442\u0438\u0442\u044C \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0435 \u043A\u043E\u043F\u0438\u0438 :application_name', 'cleanup_successful_body': '\u041E\u0447\u0438\u0441\u0442\u043A\u0430 \u043E\u0442 \u0441\u0442\u0430\u0440\u044B\u0445 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0445 \u043A\u043E\u043F\u0438\u0439 :application_name \u043D\u0430 \u0434\u0438\u0441\u043A\u0435 :disk_name \u043F\u0440\u043E\u0448\u043B\u0430 \u0443\u0434\u0430\u0447\u043D\u043E.', 'cleanup_successful_subject': '\u041E\u0447\u0438\u0441\u0442\u043A\u0430 \u043E\u0442 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0445 \u043A\u043E\u043F\u0438\u0439 :application_name \u043F\u0440\u043E\u0448\u043B\u0430 \u0443\u0441\u043F\u0435\u0448\u043D\u043E', 'cleanup_successful_subject_title': '\u041E\u0447\u0438\u0441\u0442\u043A\u0430 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0445 \u043A\u043E\u043F\u0438\u0439 \u043F\u0440\u043E\u0448\u043B\u0430 \u0443\u0434\u0430\u0447\u043D\u043E!', 'exception_message': '\u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435 \u043E\u0431 \u043E\u0448\u0438\u0431\u043A\u0435: :message', 'exception_message_title': '\u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435 \u043E\u0431 \u043E\u0448\u0438\u0431\u043A\u0435', 'exception_trace': '\u0421\u0432\u0435\u0434\u0435\u043D\u0438\u044F \u043E\u0431 \u043E\u0448\u0438\u0431\u043A\u0435: :trace', 'exception_trace_title': '\u0421\u0432\u0435\u0434\u0435\u043D\u0438\u044F \u043E\u0431 \u043E\u0448\u0438\u0431\u043A\u0435', 'healthy_backup_found_body': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430. \u0425\u043E\u0440\u043E\u0448\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430!', 'healthy_backup_found_subject': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name \u0441 \u0434\u0438\u0441\u043A\u0430 :disk_name \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430', 'healthy_backup_found_subject_title': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430', 'unhealthy_backup_found_body': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u0434\u043B\u044F :application_name \u043D\u0430 \u0434\u0438\u0441\u043A\u0435 :disk_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C.', 'unhealthy_backup_found_empty': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0435 \u043A\u043E\u043F\u0438\u0438 \u0434\u043B\u044F \u044D\u0442\u043E\u0433\u043E \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u044F \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u044E\u0442.', 'unhealthy_backup_found_full': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0435 \u043A\u043E\u043F\u0438\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u044E\u0442 \u0441\u043B\u0438\u0448\u043A\u043E\u043C \u043C\u043D\u043E\u0433\u043E \u043F\u0430\u043C\u044F\u0442\u0438. \u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u0442\u0441\u044F :disk_usage \u0447\u0442\u043E \u0432\u044B\u0448\u0435 \u0434\u043E\u043F\u0443\u0441\u0442\u0438\u043C\u043E\u0433\u043E \u043F\u0440\u0435\u0434\u0435\u043B\u0430: :disk_limit.', 'unhealthy_backup_found_not_reachable': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u043D\u0435 \u0441\u043C\u043E\u0433\u043B\u0430 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C\u0441\u044F. :error', 'unhealthy_backup_found_old': '\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u043E\u0435 \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0441\u043E\u0437\u0434\u0430\u043D\u043E :date \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0443\u0441\u0442\u0430\u0440\u0435\u0432\u0448\u0438\u043C.', 'unhealthy_backup_found_subject': '\u0412\u043D\u0438\u043C\u0430\u043D\u0438\u0435: \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C', 'unhealthy_backup_found_subject_title': '\u0412\u043D\u0438\u043C\u0430\u043D\u0438\u0435: \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u0434\u043B\u044F :application_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C. :problem', 'unhealthy_backup_found_unknown': '\u0418\u0437\u0432\u0438\u043D\u0438\u0442\u0435, \u0442\u043E\u0447\u043D\u0430\u044F \u043F\u0440\u0438\u0447\u0438\u043D\u0430 \u043D\u0435 \u043C\u043E\u0436\u0435\u0442 \u0431\u044B\u0442\u044C \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0435\u043D\u0430.' }, 'ru.log-viewer::general': { 'all': '\u0412\u0441\u0435', 'date': '\u0414\u0430\u0442\u0430' }, 'ru.log-viewer::levels': { 'alert': '\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435', 'all': '\u0412\u0441\u0435', 'critical': '\u041A\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439', 'debug': '\u041E\u0442\u043B\u0430\u0434\u043A\u0430', 'emergency': '\u0410\u0432\u0430\u0440\u0438\u0439\u043D\u0430\u044F', 'error': '\u041E\u0448\u0438\u0431\u043A\u0430', 'info': '\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F', 'notice': '\u0423\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u0435', 'warning': '\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435' }, 'sv.log-viewer::general': { 'all': 'Alla', 'date': 'Datum' }, 'sv.log-viewer::levels': { 'alert': 'Alarmerande', 'all': 'Alla', 'critical': 'Kritisk', 'debug': 'Debug', 'emergency': 'Akut', 'error': 'Error', 'info': 'Information', 'notice': 'Notis', 'warning': 'Varning' }, 'th.log-viewer::general': { 'all': '\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14', 'date': '\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48', 'empty-logs': 'The list of logs is empty!' }, 'th.log-viewer::levels': { 'alert': '\u0E27\u0E34\u0E01\u0E24\u0E15\u0E34', 'all': '\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14', 'critical': '\u0E23\u0E49\u0E32\u0E22\u0E41\u0E23\u0E07', 'debug': '\u0E14\u0E35\u0E1A\u0E31\u0E01', 'emergency': '\u0E09\u0E38\u0E01\u0E40\u0E09\u0E34\u0E19', 'error': '\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14', 'info': '\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25', 'notice': '\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28', 'warning': '\u0E04\u0E33\u0E40\u0E15\u0E37\u0E2D\u0E19' }, 'tr.backup::notifications': { 'backup_failed_body': '\xD6nemli: Yedeklenirken bir hata olu\u015Ftu :application_name', 'backup_failed_subject': 'Yedeklenemedi :application_name', 'backup_successful_body': 'Harika bir haber, :application_name \xE2it yeni bir yedekleme :disk_name adl\u0131 diskte ba\u015Far\u0131yla olu\u015Fturuldu.', 'backup_successful_subject': 'Ba\u015Far\u0131l\u0131 :application_name yeni yedeklemesi', 'backup_successful_subject_title': 'Ba\u015Far\u0131l\u0131 bir yeni yedekleme!', 'cleanup_failed_body': ':application_name yedeklerini temizlerken bir hata olu\u015Ftu ', 'cleanup_failed_subject': ':application_name yedeklemeleri temizlenmesi ba\u015Far\u0131s\u0131z.', 'cleanup_successful_body': ':application_name yedeklemeleri temizlenmesi ,:disk_name diskinden silindi', 'cleanup_successful_subject': ':application_name yedeklemeleri temizlenmesi ba\u015Far\u0131l\u0131.', 'cleanup_successful_subject_title': 'Yedeklerin temizlenmesi ba\u015Far\u0131l\u0131!', 'exception_message': 'Hata mesaj\u0131: :message', 'exception_message_title': 'Hata mesaj\u0131', 'exception_trace': 'Hata izleri: :trace', 'exception_trace_title': 'Hata izleri', 'healthy_backup_found_body': ':application_name i\xE7in yap\u0131lan yedeklemeler sa\u011Fl\u0131kl\u0131 say\u0131l\u0131r. Aferin!', 'healthy_backup_found_subject': ':application_name yedeklenmesi ,:disk_name adl\u0131 diskte sa\u011Fl\u0131kl\u0131', 'healthy_backup_found_subject_title': ':application_name yedeklenmesi sa\u011Fl\u0131kl\u0131', 'unhealthy_backup_found_body': 'Yedeklemeler: :application_name disk: :disk_name sa\u011Fl\u0131ks\u0131z.', 'unhealthy_backup_found_empty': 'Bu uygulaman\u0131n yedekleri yok.', 'unhealthy_backup_found_full': 'Yedeklemeler \xE7ok fazla depolama alan\u0131 kullan\u0131yor. \u015Eu anki kullan\u0131m: :disk_usage, izin verilen s\u0131n\u0131rdan y\xFCksek: :disk_limit.', 'unhealthy_backup_found_not_reachable': 'Yedekleme hedefine ula\u015F\u0131lam\u0131yor. :error', 'unhealthy_backup_found_old': ':date tarihinde yap\u0131lan en son yedekleme \xE7ok eski kabul ediliyor.', 'unhealthy_backup_found_subject': '\xD6nemli: :application_name i\xE7in yedeklemeler sa\u011Fl\u0131ks\u0131z', 'unhealthy_backup_found_subject_title': '\xD6nemli: :application_name i\xE7in yedeklemeler sa\u011Fl\u0131ks\u0131z. :problem', 'unhealthy_backup_found_unknown': '\xDCzg\xFCn\xFCm, kesin bir sebep belirlenemiyor.' }, 'tr.log-viewer::general': { 'all': 'Toplam', 'date': 'Tarih' }, 'tr.log-viewer::levels': { 'alert': 'Alarm', 'all': 'Toplam', 'critical': 'Kritik', 'debug': 'Debug', 'emergency': 'Acil', 'error': 'Hata', 'info': 'Bilgi', 'notice': 'Bildirim', 'warning': 'Uyar\u0131' }, 'uk.backup::notifications': { 'backup_failed_body': '\u0423\u0432\u0430\u0433\u0430: \u0422\u0440\u0430\u043F\u0438\u043B\u0430\u0441\u044C \u043F\u043E\u043C\u0438\u043B\u043A\u0430 \u043F\u0456\u0434 \u0447\u0430\u0441 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u043E\u0433\u043E \u043A\u043E\u043F\u0456\u044E\u0432\u0430\u043D\u043D\u044F :application_name', 'backup_failed_subject': '\u041D\u0435 \u0432\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0440\u043E\u0431\u0438\u0442\u0438 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0443 \u043A\u043E\u043F\u0456\u044E :application_name', 'backup_successful_body': '\u0427\u0443\u0434\u043E\u0432\u0430 \u043D\u043E\u0432\u0438\u043D\u0430, \u043D\u043E\u0432\u0430 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F :application_name \u0443\u0441\u043F\u0456\u0448\u043D\u043E \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u0430 \u0456 \u0437\u0431\u0435\u0440\u0435\u0436\u0435\u043D\u0430 \u043D\u0430 \u0434\u0438\u0441\u043A :disk_name.', 'backup_successful_subject': '\u0423\u0441\u043F\u0456\u0448\u043D\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0435 \u043A\u043E\u043F\u0456\u044E\u0432\u0430\u043D\u043D\u044F :application_name', 'backup_successful_subject_title': '\u0423\u0441\u043F\u0456\u0448\u043D\u043E \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u0430 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F!', 'cleanup_failed_body': '\u0421\u0442\u0430\u043B\u0430\u0441\u044F \u043F\u043E\u043C\u0438\u043B\u043A\u0430 \u043F\u0456\u0434 \u0447\u0430\u0441 \u043E\u0447\u0438\u0449\u0435\u043D\u043D\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0438\u0445 \u043A\u043E\u043F\u0456\u0439 :application_name', 'cleanup_failed_subject': '\u041D\u0435 \u0432\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0447\u0438\u0441\u0442\u0438\u0442\u0438 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0456 \u043A\u043E\u043F\u0456\u0457 :application_name', 'cleanup_successful_body': '\u041E\u0447\u0438\u0449\u0435\u043D\u043D\u043E \u0432\u0456\u0434 \u0441\u0442\u0430\u0440\u0438\u0445 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0438\u0445 \u043A\u043E\u043F\u0456\u0439 :application_name \u043D\u0430 \u0434\u0438\u0441\u043A\u0443 :disk_name \u043F\u043E\u0439\u0448\u043B\u043E \u0443\u0441\u043F\u0456\u0448\u043D\u043E.', 'cleanup_successful_subject': '\u0423\u0441\u043F\u0456\u0448\u043D\u0435 \u043E\u0447\u0438\u0449\u0435\u043D\u043D\u044F \u0432\u0456\u0434 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0438\u0445 \u043A\u043E\u043F\u0456\u0439 :application_name', 'cleanup_successful_subject_title': '\u041E\u0447\u0438\u0449\u0435\u043D\u043D\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0438\u0445 \u043A\u043E\u043F\u0456\u0439 \u043F\u0440\u043E\u0439\u0448\u043B\u043E \u0432\u0434\u0430\u043B\u043E!', 'exception_message': '\u041F\u043E\u0432\u0456\u0434\u043E\u043C\u043B\u0435\u043D\u043D\u044F \u043F\u0440\u043E \u043F\u043E\u043C\u0438\u043B\u043A\u0443: :message', 'exception_message_title': '\u041F\u043E\u0432\u0456\u0434\u043E\u043C\u043B\u0435\u043D\u043D\u044F \u043F\u043E\u043C\u0438\u043B\u043A\u0438', 'exception_trace': '\u0414\u0435\u0442\u0430\u043B\u0456 \u043F\u043E\u043C\u0438\u043B\u043A\u0438: :trace', 'exception_trace_title': '\u0414\u0435\u0442\u0430\u043B\u0456 \u043F\u043E\u043C\u0438\u043B\u043A\u0438', 'healthy_backup_found_body': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F :application_name \u0443\u0441\u043F\u0456\u0448\u043D\u043E \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430. \u0425\u043E\u0440\u043E\u0448\u0430 \u0440\u043E\u0431\u043E\u0442\u0430!', 'healthy_backup_found_subject': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F :application_name \u0437 \u0434\u0438\u0441\u043A\u0443 :disk_name \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430', 'healthy_backup_found_subject_title': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F :application_name \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430', 'unhealthy_backup_found_body': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F \u0434\u043B\u044F :application_name \u043D\u0430 \u0434\u0438\u0441\u043A\u0443 :disk_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C.', 'unhealthy_backup_found_empty': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0456 \u043A\u043E\u043F\u0456\u0457 \u0434\u043B\u044F \u0446\u044C\u043E\u0433\u043E \u0434\u043E\u0434\u0430\u0442\u043A\u0443 \u0432\u0456\u0434\u0441\u0443\u0442\u043D\u0456.', 'unhealthy_backup_found_full': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0456 \u043A\u043E\u043F\u0456\u0457 \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u044E\u0442\u044C \u0437\u0430\u043D\u0430\u0434\u0442\u043E \u0431\u0430\u0433\u0430\u0442\u043E \u043F\u0430\u043C`\u044F\u0442\u0456. \u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0454\u0442\u044C\u0441\u044F :disk_usage \u0449\u043E \u0432\u0438\u0449\u0435 \u0437\u0430 \u0434\u043E\u043F\u0443\u0441\u0442\u0438\u043C\u0443 \u043C\u0435\u0436\u0443 :disk_limit.', 'unhealthy_backup_found_not_reachable': '\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F \u043D\u0435 \u0437\u043C\u043E\u0433\u043B\u0430 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0438\u0441\u044C. :error', 'unhealthy_backup_found_old': '\u041E\u0441\u0442\u0430\u043D\u043D\u0454 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0435 \u043A\u043E\u043F\u0456\u044E\u0432\u0430\u043D\u043D\u044F \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043E :date \u0454 \u0437\u0430\u0441\u0442\u0430\u0440\u0456\u043B\u0438\u043C.', 'unhealthy_backup_found_subject': '\u0423\u0432\u0430\u0433\u0430: \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F :application_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C', 'unhealthy_backup_found_subject_title': '\u0423\u0432\u0430\u0433\u0430: \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F \u0434\u043B\u044F :application_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C. :problem', 'unhealthy_backup_found_unknown': '\u0412\u0438\u0431\u0430\u0447\u0442\u0435, \u0430\u043B\u0435 \u043C\u0438 \u043D\u0435 \u0437\u043C\u043E\u0433\u043B\u0438 \u0432\u0438\u0437\u043D\u0430\u0447\u0438\u0442\u0438 \u0442\u043E\u0447\u043D\u0443 \u043F\u0440\u0438\u0447\u0438\u043D\u0443.' }, 'zh-TW.log-viewer::general': { 'all': '\u5168\u90E8', 'date': '\u65E5\u671F' }, 'zh-TW.log-viewer::levels': { 'alert': '\u8B66\u5831', 'all': '\u5168\u90E8', 'critical': '\u56B4\u91CD', 'debug': '\u9664\u932F', 'emergency': '\u7DCA\u6025', 'error': '\u932F\u8AA4', 'info': '\u8A0A\u606F', 'notice': '\u6CE8\u610F', 'warning': '\u8B66\u544A' }, 'zh.log-viewer::general': { 'all': '\u5168\u90E8', 'date': '\u65E5\u671F' }, 'zh.log-viewer::levels': { 'alert': '\u7D27\u6025', 'all': '\u5168\u90E8', 'critical': '\u4E25\u91CD', 'debug': '\u8C03\u8BD5', 'emergency': '\u5371\u6025', 'error': '\u9519\u8BEF', 'info': '\u4FE1\u606F', 'notice': '\u6CE8\u610F', 'warning': '\u8B66\u544A' } };
+module.exports = { "ar.backup::notifications": { "backup_failed_body": "\u0645\u0647\u0645: \u062D\u062F\u062B \u062E\u0637\u0623 \u0623\u062B\u0646\u0627\u0621 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A :application_name", "backup_failed_subject": "\u0623\u062E\u0641\u0642 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A \u0644\u0644 :application_name", "backup_successful_body": "\u0623\u062E\u0628\u0627\u0631 \u0639\u0638\u064A\u0645\u0629\u060C \u0646\u0633\u062E\u0629 \u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u062C\u062F\u064A\u062F\u0629 \u0644 :application_name \u062A\u0645 \u0625\u0646\u0634\u0627\u0624\u0647\u0627 \u0628\u0646\u062C\u0627\u062D \u0639\u0644\u0649 \u0627\u0644\u0642\u0631\u0635 \u0627\u0644\u0645\u0633\u0645\u0649 :disk_name.", "backup_successful_subject": "\u0646\u0633\u062E \u0627\u062D\u062A\u064A\u0627\u0637\u064A \u062C\u062F\u064A\u062F \u0646\u0627\u062C\u062D \u0644 :application_name", "backup_successful_subject_title": "\u0646\u062C\u0627\u062D \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A \u0627\u0644\u062C\u062F\u064A\u062F!", "cleanup_failed_body": "\u062D\u062F\u062B \u062E\u0637\u0623 \u0623\u062B\u0646\u0627\u0621 \u062A\u0646\u0638\u064A\u0641 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name", "cleanup_failed_subject": "\u0641\u0634\u0644 \u062A\u0646\u0638\u064A\u0641 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A \u0644\u0644\u062A\u0637\u0628\u064A\u0642 :application_name .", "cleanup_successful_body": "\u062A\u0646\u0638\u064A\u0641 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u0639\u0644\u0649 \u0627\u0644\u0642\u0631\u0635 \u0627\u0644\u0645\u0633\u0645\u0649 :disk_name \u062A\u0645 \u0628\u0646\u062C\u0627\u062D.", "cleanup_successful_subject": "\u062A\u0646\u0638\u064A\u0641 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u062A\u0645\u062A \u0628\u0646\u062C\u0627\u062D", "cleanup_successful_subject_title": "\u062A\u0646\u0638\u064A\u0641 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u062A\u0645 \u0628\u0646\u062C\u0627\u062D!", "exception_message": "\u0631\u0633\u0627\u0644\u0629 \u0627\u0633\u062A\u062B\u0646\u0627\u0621: :message", "exception_message_title": "\u0631\u0633\u0627\u0644\u0629 \u0627\u0633\u062A\u062B\u0646\u0627\u0621", "exception_trace": "\u062A\u062A\u0628\u0639 \u0627\u0644\u0625\u0633\u062A\u062B\u0646\u0627\u0621: :trace", "exception_trace_title": "\u062A\u062A\u0628\u0639 \u0627\u0644\u0625\u0633\u062A\u062B\u0646\u0627\u0621", "healthy_backup_found_body": "\u062A\u0639\u062A\u0628\u0631 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u0635\u062D\u064A\u0629. \u0639\u0645\u0644 \u062C\u064A\u062F!", "healthy_backup_found_subject": "\u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u0639\u0644\u0649 \u0627\u0644\u0642\u0631\u0635 :disk_name \u0635\u062D\u064A\u0629", "healthy_backup_found_subject_title": "\u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u0635\u062D\u064A\u0629", "unhealthy_backup_found_body": "\u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u0639\u0644\u0649 \u0627\u0644\u0642\u0631\u0635 :disk_name \u063A\u064A\u0631 \u0635\u062D\u064A\u0629.", "unhealthy_backup_found_empty": "\u0644\u0627 \u062A\u0648\u062C\u062F \u0646\u0633\u062E \u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644\u0647\u0630\u0627 \u0627\u0644\u062A\u0637\u0628\u064A\u0642 \u0639\u0644\u0649 \u0627\u0644\u0625\u0637\u0644\u0627\u0642.", "unhealthy_backup_found_full": "\u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u062A\u0633\u062A\u062E\u062F\u0645 \u0627\u0644\u0643\u062B\u064A\u0631 \u0645\u0646 \u0627\u0644\u062A\u062E\u0632\u064A\u0646. \u0627\u0644\u0627\u0633\u062A\u062E\u062F\u0627\u0645 \u0627\u0644\u062D\u0627\u0644\u064A \u0647\u0648 :disk_usage \u0648\u0647\u0648 \u0623\u0639\u0644\u0649 \u0645\u0646 \u0627\u0644\u062D\u062F \u0627\u0644\u0645\u0633\u0645\u0648\u062D \u0628\u0647 \u0645\u0646 :disk_limit.", "unhealthy_backup_found_not_reachable": "\u0644\u0627 \u064A\u0645\u0643\u0646 \u0627\u0644\u0648\u0635\u0648\u0644 \u0625\u0644\u0649 \u0648\u062C\u0647\u0629 \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A. :error", "unhealthy_backup_found_old": "\u062A\u0645 \u0625\u0646\u0634\u0627\u0621 \u0623\u062D\u062F\u062B \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0641\u064A :date \u0648\u062A\u0639\u062A\u0628\u0631 \u0642\u062F\u064A\u0645\u0629 \u062C\u062F\u0627.", "unhealthy_backup_found_subject": "\u0645\u0647\u0645: \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u063A\u064A\u0631 \u0635\u062D\u064A\u0629", "unhealthy_backup_found_subject_title": "\u0645\u0647\u0645: \u0627\u0644\u0646\u0633\u062E \u0627\u0644\u0627\u062D\u062A\u064A\u0627\u0637\u064A\u0629 \u0644 :application_name \u063A\u064A\u0631 \u0635\u062D\u064A\u0629. :problem", "unhealthy_backup_found_unknown": "\u0639\u0630\u0631\u0627\u060C \u0644\u0627 \u064A\u0645\u0643\u0646 \u062A\u062D\u062F\u064A\u062F \u0633\u0628\u0628 \u062F\u0642\u064A\u0642." }, "ar.log-viewer::general": { "all": "\u062C\u0645\u064A\u0639", "date": "\u062A\u0627\u0631\u064A\u062E" }, "ar.log-viewer::levels": { "alert": "\u0625\u0646\u0630\u0627\u0631", "all": "\u0627\u0644\u062C\u0645\u064A\u0639", "critical": "\u062D\u0631\u062C", "debug": "\u0627\u0644\u062A\u0635\u062D\u064A\u062D", "emergency": "\u062D\u0627\u0644\u0627\u062A \u0627\u0644\u0637\u0648\u0627\u0631\u0626", "error": "\u062E\u0637\u0623", "info": "\u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062A", "notice": "\u0645\u0644\u0627\u062D\u0638\u0629", "warning": "\u062A\u062D\u0630\u064A\u0631" }, "bg.log-viewer::general": { "all": "\u0412\u0441\u0438\u0447\u043A\u0438", "date": "\u0414\u0430\u0442\u0430", "empty-logs": "\u041D\u0435 \u0441\u0430 \u043D\u0430\u043C\u0435\u0440\u0435\u043D\u0438 \u043B\u043E\u0433\u043E\u0432\u0435!" }, "bg.log-viewer::levels": { "alert": "Alert", "all": "\u0412\u0441\u0438\u0447\u043A\u0438", "critical": "Critical", "debug": "Debug", "emergency": "Emergency", "error": "Error", "info": "Info", "notice": "Notice", "warning": "Warning" }, "da.backup::notifications": { "backup_failed_body": "Vigtigt: Der skete en fejl under backup af :application_name", "backup_failed_subject": "Backup af :application_name fejlede", "backup_successful_body": "Gode nyheder - der blev oprettet en ny backup af :application_name p\xE5 disken :disk_name.", "backup_successful_subject": "Ny backup af :application_name oprettet", "backup_successful_subject_title": "Ny backup!", "cleanup_failed_body": "Der skete en fejl under oprydning af backups for :application_name", "cleanup_failed_subject": "Oprydning af backups for :application_name fejlede.", "cleanup_successful_body": "Oprydningen af backups for :application_name p\xE5 disken :disk_name er gennemf\xF8rt.", "cleanup_successful_subject": "Oprydning af backups for :application_name gennemf\xF8rt", "cleanup_successful_subject_title": "Backup oprydning gennemf\xF8rt!", "exception_message": "Fejlbesked: :message", "exception_message_title": "Fejlbesked", "exception_trace": "Fejl trace: :trace", "exception_trace_title": "Fejl trace", "healthy_backup_found_body": "Alle backups for :application_name er ok. Godt g\xE5et!", "healthy_backup_found_subject": "Alle backups for :application_name p\xE5 disken :disk_name er OK", "healthy_backup_found_subject_title": "Alle backups for :application_name er OK", "unhealthy_backup_found_body": "Backups for :application_name p\xE5 disken :disk_name er fejlbeh\xE6ftede.", "unhealthy_backup_found_empty": "Denne applikation har ingen backups overhovedet.", "unhealthy_backup_found_full": "Backups bruger for meget plads. Nuv\xE6rende disk forbrug er :disk_usage, hvilket er mere end den tilladte gr\xE6nse p\xE5 :disk_limit.", "unhealthy_backup_found_not_reachable": "Backup destinationen kunne ikke findes. :error", "unhealthy_backup_found_old": "Den seneste backup fra :date er for gammel.", "unhealthy_backup_found_subject": "Vigtigt: Backups for :application_name fejlbeh\xE6ftede", "unhealthy_backup_found_subject_title": "Vigtigt: Backups for :application_name er fejlbeh\xE6ftede. :problem", "unhealthy_backup_found_unknown": "Beklager, en pr\xE6cis \xE5rsag kunne ikke findes." }, "de.alerts": { "backend": { "blogcategories": { "created": "The Blog Category was successfully created.", "deleted": "The Blog Category was successfully deleted.", "updated": "The Blog Category was successfully updated." }, "blogs": { "created": "The Blog was successfully created.", "deleted": "The Blog was successfully deleted.", "updated": "The Blog was successfully updated." }, "blogtags": { "created": "The Blog Tag was successfully created.", "deleted": "The Blog Tag was successfully deleted.", "updated": "The Blog Tag was successfully updated." }, "emailtemplates": { "deleted": "Das Email Template wurde erfolgreich gel\xF6scht.", "updated": "Das Email Template wurde erfolgreich ge\xE4ndert." }, "faqs": { "created": "Die FAQ wurde erfolgreich erstellt.", "deleted": "Die FAQ wurde erfolgreich gel\xF6scht.", "updated": "Die FAQ wurde erfolgreich ge\xE4ndert." }, "groups": { "created": "Die Gruppe wurde erfolgreich erstellt.", "deleted": "Die Gruppe wurde erfolgreich gel\xF6scht.", "updated": "Die Gruppe wurde erfolgreich ge\xE4ndert." }, "menus": { "created": "Das Men\xFC wurde erfolgreich erstellt.", "deleted": "Das Men\xFC wurde erfolgreich gel\xF6scht.", "updated": "Das Men\xFC wurde erfolgreich ge\xE4ndert." }, "pages": { "created": "Die Seite wurde erfolgreich erstellt.", "deleted": "Die Seite wurde erfolgreich gel\xF6scht.", "updated": "Die Seite wurde erfolgreich ge\xE4ndert." }, "permissions": { "created": "Die Berechtigung wurde erfolgreich erstellt.", "deleted": "Die Berechtigung wurde erfolgreich gel\xF6scht.", "updated": "Die Berechtigung wurde erfolgreich ge\xE4ndert." }, "roles": { "created": "Die Rolle wurde erfolgreich erstellt.", "deleted": "Die Rolle wurde erfolgreich gel\xF6scht.", "updated": "Die Rolle wurde erfolgreich ge\xE4ndert." }, "settings": { "updated": "Die Einstellung wurde erfolgreich ge\xE4ndert." }, "users": { "confirmation_email": "Eine neue Best\xE4tigungs E-Mail wurde gesendet.", "created": "Der User wurde erfolgreich erstellt.", "deleted": "Der User wurde erfolgreich gel\xF6scht.", "deleted_permanently": "Der User wurde dauerhaft gel\xF6scht.", "restored": "Der User wurde erfolgreich wiederhergestellt.", "session_cleared": "Die User Session wurde erfolgreich gel\xF6scht.", "updated": "Der User wurde erfolgreich ge\xE4ndert.", "updated_password": "Das Benutzer Passwort wurde erfolgreich aktualisiert." }, "whitelabels": { "created": "Das Whitelabel wurde erfolgreich erstellt.", "deleted": "Das Whitelabel wurde erfolgreich gel\xF6scht.", "updated": "Das Whitelabel wurde erfolgreich ge\xE4ndert." }, "wishes": { "created": "Der Wunsch wurde erfolgreich erstellt.", "deleted": "Der Wunsch wurde erfolgreich gel\xF6scht.", "updated": "Der Wunsch wurde erfolgreich ge\xE4ndert." } }, "frontend": { "offers": { "created": "Das Angebot wurde erfolgreich erstellt." }, "wishes": { "created": "Der Wunsch wurde erfolgreich erstellt.", "deleted": "Der Wunsch wurde erfolgreich gel\xF6scht.", "updated": "Der Wunsch wurde erfolgreich ge\xE4ndert." } } }, "de.api": { "messages": { "forgot_password": { "success": "Wir haben eine E-Mail mit einem Link zum Zur\xFCcksetzen des Passworts geschickt.", "validation": { "email_not_found": "Diese E-Mail-Adresse ist uns nicht bekannt." } }, "login": { "failed": "Ung\xFCltige Zugangsdaten! Bitte erneut versuchen.", "success": "Login erfolgreich." }, "logout": { "success": "Erfolgreich ausgeloggt." }, "refresh": { "status": "Ok", "token": { "not_provided": "Token not provided." } }, "registeration": { "success": "Du hast dich erfolgreich registriert. Bitte \xFCberpr\xFCfe zur Aktivierung deine E-Mails." } } }, "de.auth": { "failed": "Diese Kombination aus Zugangsdaten wurde nicht in unserer Datenbank gefunden.", "throttle": "Zu viele Loginversuche. Versuchen Sie es bitte in :seconds Sekunden nochmal." }, "de.backup::notifications": { "backup_failed_body": "Wichtig: Beim Backup von :application_name ist ein Fehler aufgetreten", "backup_failed_subject": "Backup von :application_name konnte nicht erstellt werden", "backup_successful_body": "Gute Nachrichten, ein neues Backup von :application_name wurde erfolgreich erstellt und in :disk_name gepeichert.", "backup_successful_subject": "Erfolgreiches neues Backup von :application_name", "backup_successful_subject_title": "Erfolgreiches neues Backup!", "cleanup_failed_body": "Beim aufr\xE4umen der Backups von :application_name ist ein Fehler aufgetreten", "cleanup_failed_subject": "Aufr\xE4umen der Backups von :application_name schlug fehl.", "cleanup_successful_body": "Aufr\xE4umen der Backups von :application_name in :disk_name war erfolgreich.", "cleanup_successful_subject": "Aufr\xE4umen der Backups von :application_name backups erfolgreich", "cleanup_successful_subject_title": "Aufr\xE4umen der Backups erfolgreich!", "exception_message": "Fehlermeldung: :message", "exception_message_title": "Fehlermeldung", "exception_trace": "Fehlerverfolgung: :trace", "exception_trace_title": "Fehlerverfolgung", "healthy_backup_found_body": "Die Backups von :application_name wurden als gesund eingestuft. Gute Arbeit!", "healthy_backup_found_subject": "Die Backups von :application_name in :disk_name sind gesund", "healthy_backup_found_subject_title": "Die Backups von :application_name sind Gesund", "unhealthy_backup_found_body": "Die Backups f\xFCr :application_name in :disk_name sind ungesund.", "unhealthy_backup_found_empty": "Es gibt f\xFCr die Anwendung noch gar keine Backups.", "unhealthy_backup_found_full": "Die Backups verbrauchen zu viel Platz. Aktuell wird :disk_usage belegt, dass ist h\xF6her als das erlaubte Limit von :disk_limit.", "unhealthy_backup_found_not_reachable": "Das Backup Ziel konnte nicht erreicht werden. :error", "unhealthy_backup_found_old": "Das letzte Backup am :date ist zu lange her.", "unhealthy_backup_found_subject": "Wichtig: Die Backups f\xFCr :application_name sind nicht gesund", "unhealthy_backup_found_subject_title": "Wichtig: Die Backups f\xFCr :application_name sind ungesund. :problem", "unhealthy_backup_found_unknown": "Sorry, ein genauer Grund konnte nicht gefunden werden." }, "de.button": { "cancel": "Abbrechen", "clone": "Klonen", "close": "Schlie\xDFen", "confirm": "Best\xE4tigen", "copy": "Kopieren", "create": "Erstellen", "delete": "L\xF6schen", "delete_all": "Alles l\xF6schen", "edit": "\xC4ndern", "language": "Sprache", "mark_as_read": "Als gelesen markieren", "required": "Erforderlich", "restore": "Wiederherstellen", "save": "Speichern", "save_and_close": "Speichern und schlie\xDFen", "save_and_create": "Speichern und erstellen", "save_and_create_new": "Speichern und neu erstellen" }, "de.buttons": { "backend": { "access": { "users": { "activate": "Aktivieren", "change_password": "Passwort \xE4ndern", "clear_session": "Session l\xF6schen", "deactivate": "Deaktivieren", "delete_permanently": "Dauerhaft l\xF6schen", "login_as": "Einloggen als :user", "resend_email": "Best\xE4tigungs E-Mail erneut senden", "restore_user": "Benutzer wiederherstellen" } } }, "emails": { "auth": { "confirm_account": "Account best\xE4tigen", "reset_password": "Passwort zur\xFCcksetzen" } }, "general": { "cancel": "Abbrechen", "continue": "Fortsetzen", "crud": { "add": "Hinzuf\xFCgen", "create": "Erstellen", "delete": "L\xF6schen", "edit": "Editieren", "update": "Aktualisieren", "view": "Anzeigen" }, "preview": "Vorschau", "save": "Speichern", "view": "Anzeigen" }, "wishes": { "frontend": { "create_autooffer": "Automatisches Angebot erstellen", "create_offer": "Angebot erstellen" } } }, "de.comment": { "comments": "Kommentare" }, "de.dashboard": { "browsers": "Browser Share", "clickrate": "Click-Rate (%)", "clickrate_auto": "Click-Rate Angebot automatisch", "clickrate_manuell": "Click-Rate Angebot manuell", "current_month": "Aktueller Monat", "daily_average_wish": "W\xFCnsche pro Tag", "daily_desktop_layer": "Layerimpressions Desktop pro Tag", "daily_mobile_layer": "Layerimpressions Mobile pro Tag", "date": "Datum", "layers": "Layers", "monthly_average_wish": "W\xFCnsche pro Monat", "monthly_desktop_browser_share": "Browser-Share Desktop pro Monat", "monthly_desktop_browser_shareklicks": "Browser-Share Desktop Klicks pro Monat", "monthly_desktop_layer": "Layerimpressions Desktop pro Monat", "monthly_desktop_response": "Desktop Response Rate pro Monat", "monthly_mobile_layer": "Layerimpressions Mobile pro Monat", "monthly_mobile_response": "Mobile Response Rate pro Monat", "openrate": "Open-Rate (%)", "openrate_auto": "Open-Rate Angebot automatisch", "openrate_manuell": "Open-Rate Angebot manuell", "reaction_time_average_day": "Reaktionszeit \/ Tag", "reaction_time_average_month": "Reaktionszeit \/ Monat", "response": "Response Rate (%)", "source_2019": "Zeitraum: 2019", "total_groups": "Alle Gruppen", "total_sellers": "Alle Anbieter", "total_wishes": "Alle W\xFCnsche", "wish": "Wunsch", "wishes": "W\xFCnsche" }, "de.email": { "account": { "activate": "Login", "activated": "F\xFCr Sie wurde ein neuer :account Account f\xFCr das :whitelabel Reisewunschportal erstellt.", "greeting": "Thank you for your trust in our services", "hello": "Hallo :username", "link": "Mit Klick auf den folgenden Button k\xF6nnen Sie sich mit Ihren Benutzerdaten einloggen.", "password": "Passwort: :password", "subject": "Account Details for :username at :company", "subject_for_executive": "Ihre Zugangsdaten zu Ihrem :whitelabel Reisewunschportal", "subject_for_seller": "Ihre Zugangsdaten zum :whitelabel Reisewunschportal", "username": "E-Mail-Adresse: :email" }, "footer": { "line1": "Sonnige Gr\xFC\xDFe", "line2": "Ihr desiretec Team", "line3": "DesireTec GmbH", "line4": "Auf dem Sande 1 | D-20457 Hamburg | Deutschland", "line5": "Gesch\xE4ftsf\xFChrung: John Muster", "line6": "Sitz der Gesellschaft: Hamburg", "line7": "Handelsregister: Amtsgericht Hamburg HRB XXXXX", "line8": "BAN: DEXX XXXX XXXX XXXX XXXX XX", "line9": "BIC: XXXXXXXXXX" }, "footer_novasol": { "line1": "Mit freundlichen Gr\xFC\xDFen | With kind regards | Med venlig hilsen", "line2": "Ihr NOVASOL Buchungsservice", "line3": "NOVASOL Reise GmbH", "line4": "Gotenstrasse 11 - 20097 Hamburg, Germany", "line5": "Phone +49 (0) 40 238859 - 82 | novasol@novasol.de \u2013 an Awaze Company", "line6": "Handelsregister Amtsgericht Hamburg, HRB 95067 | Gesch\xE4ftsf\xFChrer: Jan Haapanen", "line7": "www.novasol.de | www.dansommer.de | www.cuendet.de" }, "message": { "created-seller": "Sie haben eine neue Nachricht von Ihrem Kunden erhalten", "created-user": "Wichtig: Es gibt eine neue Nachricht von Ihrem Berater im :whitelabel Reisewunschportal", "new": "Neue Nachricht!", "subject": "Sie haben eine neue Nachricht erhalten", "token_new": "Ihr Zugang zu Ihrem :whitelabel Reisewunschportal " }, "offer": { "body": "<p>Hallo! </p>\n                            <p>Herzlich willkommen bei Ihrem :whitelabel Reisewunschportal. </p>\n                            <p>Sie haben sich soeben registriert und Ihr Reisewunsch <a href=':link'>:link</a> wurde erfolgreich an uns \xFCbermittelt.</p>\n                            <p>Wir suchen gerade nach passenden Angeboten f\xFCr Ihren pers\xF6nlichen Reisewunsch und informieren Sie in wenigen Minuten per E-Mail dar\xFCber.</p>\n                            <p>Anschlie\xDFend k\xF6nnen Sie sich Ihre pers\xF6nlichen Angebote im :whitelabel Reisewunschportal anschauen.</p>", "created": "Sie haben erfolgreich ein Angebot erstellt", "created_user": "Es gibt ein neues Angebot f\xFCr Ihren :whitelabel Reisewunsch!", "footer": "Wir hoffen, dass Ihnen die Angebote zusagen. Bei Fragen stehen Ihnen unsere Reiseberater jederzeit zur Verf\xFCgung.", "header": "Hallo!", "link": "Sie k\xF6nnen diese unter dem folgenden Link direkt aufrufen <a href=':link'>:link</a>", "novasol_created_user": { "body": "Herzlichen Gl\xFCckwunsch! Wir haben neue passende :whitelabel Angebote f\xFCr Ihren Reisewunsch gefunden.", "footer": "Wir hoffen, dass Ihnen die Angebote zusagen. Bei Fragen stehen Ihnen unsere Reiseberater jederzeit zur Verf\xFCgung.", "header": "Hallo lieber Kunde!", "link": "Sie k\xF6nnen diese unter dem folgenden Link direkt aufrufen <a href=\":link\">:link</a>", "subject": "Wir haben Ihre Traumferien gefunden \u2013 NOVASOL Reisewunschportal" } }, "signature": { "stored": "Sie haben die E-Mail-Signatur erfolgreich gespeichert" }, "token_new": "Vielen Dank f\xFCr das Anfordern Ihrer Zugangsdaten zum :whitelabel Reisewunschportal. \n                    Sie k\xF6nnen sich \xFCber den folgenden Link ganz einfach in Ihr Profil einloggen. \n                <a href=\":token\">:token</a>", "wish": { "seller": "Es gibt einen neuen :whitelabel Reisewunsch zur Bearbeitung!", "subject_for_seller": "Es gibt einen neuen :whitelabel Reisewunsch zur Bearbeitung!", "user": "Herzlich willkommen beim :whitelabel Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt.", "user_callback_seller": "Ihr Kunde bittet Sie um einen R\xFCckruf", "user_cnt_seller": "Ihr Angebot war erfolgreich, Sie haben einen neuen Kontakt erzeugt!", "user_novasol": "Herzlich willkommen beim NOVASOL Reisewunschportal! Ihr Reisewunsch wurde erfolgreich erstellt." } }, "de.exceptions": { "backend": { "access": { "permissions": { "already_exists": "Diese Berechtigung existiert bereits. Bitte w\xE4hlen Sie einen anderen Namen.", "create_error": "Es gab ein Problem bei der Erstellung dieser Berechtigung. Bitte erneut versuchen.", "delete_error": "Es gab ein Problem beim L\xF6schen dieser Berechtigung. Bitte erneut versuchen.", "not_found": "Diese Berechtigung existiert nicht.", "update_error": "Es gab ein Problem beim \xC4ndern dieser Berechtigung. Bitter erneut versuchen." }, "roles": { "already_exists": "Diese Rolle existiert bereits. Bitte w\xE4hlen Sie einen anderen Namen.", "cant_delete_admin": "Die Administrator Rolle kann nicht gel\xF6scht werden.", "create_error": "Es gab ein Problem bei der Erstellung dieser Rolle. Bitte erneut versuchen.", "delete_error": "Es gab ein Problem beim L\xF6schen dieser Rolle. Bitte erneut versuchen.", "has_users": "Sie k\xF6nnen keine mit Benutzern verkn\xFCpfte Rolle l\xF6schen.", "needs_permission": "Sie m\xFCssen mindestens 1 Berechtigung f\xFCr diese Rolle ausw\xE4hlen.", "not_found": "Diese Rolle existiert nicht.", "update_error": "Es gab ein Problem beim \xC4ndern dieser Rolle. Bitter erneut versuchen." }, "users": { "cant_deactivate_self": "Sie k\xF6nnen das nicht mit sich selbst machen.", "cant_delete_admin": "Sie k\xF6nnen keinen Administrator l\xF6schen.", "cant_delete_own_session": "Sie k\xF6nnen nicht Ihre eigene Session l\xF6schen.", "cant_delete_self": "Sie k\xF6nnen sich nicht selbst l\xF6schen.", "cant_restore": "Dieser User ist nicht gel\xF6scht und kann nicht wiederhergestellt werden.", "change_mismatch": "Das ist nicht Ihr altes Passwort.", "create_error": "Es gab ein Problem bei der Erstellung dieses Users. Bitte erneut versuchen.", "delete_error": "Es gab ein Problem beim L\xF6schen dieses Users. Bitte erneut versuchen.", "delete_first": "Dieser Benutzer muss zun\xE4chst gel\xF6scht werden, bevor er dauerhaft gel\xF6scht werden kann.", "email_error": "Diese E-Mail-Adresse geh\xF6rt zu einem anderen User.", "mark_error": "Es gab ein Problem beim \xC4ndern dieses Users. Bitter erneut versuchen.", "not_found": "Dieser User existiert nicht.", "restore_error": "Es gab ein Problem bei der Wiederherstellung des Users. Bitte erneut versuchen.", "role_needed": "Sie m\xFCssen mindestens eine Rolle ausw\xE4hlen.", "role_needed_create": "Sie m\xFCssen mindestens eine Rolle ausw\xE4hlen.", "session_wrong_driver": "Your session driver must be set to database to use this feature.", "update_error": "Es gab ein Problem bei der \xC4nderung dieses Users. Bitte erneut versuchen.", "update_password_error": "Es gab ein Problem bei \xC4ndern dieses User Passworts. Bitte erneut versuchen." } }, "blogcategories": { "already_exists": "That Blog Category already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Category. Please try again.", "delete_error": "There was a problem deleting this Blog Category. Please try again.", "not_found": "That Blog Category does not exist.", "update_error": "There was a problem updating this Blog Category. Please try again." }, "blogtags": { "already_exists": "That Blog Tag already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Tag. Please try again.", "delete_error": "There was a problem deleting this Blog Tag. Please try again.", "not_found": "That Blog Tag does not exist.", "update_error": "There was a problem updating this Blog Tag. Please try again." }, "menus": { "already_exists": "That Menu already exists. Please choose a different name.", "create_error": "There was a problem creating this Menu. Please try again.", "delete_error": "There was a problem deleting this Menu. Please try again.", "not_found": "That Menu does not exist.", "update_error": "There was a problem updating this Menu. Please try again." }, "modules": { "already_exists": "That Module already exists. Please choose a different name.", "create_error": "There was a problem creating this Module. Please try again.", "delete_error": "There was a problem deleting this Module. Please try again.", "not_found": "That Module does not exist.", "update_error": "There was a problem updating this Module. Please try again." }, "pages": { "already_exists": "That Page already exists. Please choose a different name.", "create_error": "There was a problem creating this Page. Please try again.", "delete_error": "There was a problem deleting this Page. Please try again.", "not_found": "That Page does not exist.", "update_error": "There was a problem updating this Page. Please try again." }, "settings": { "update_error": "Es gab ein Problem beim \xC4ndern dieser Einstellung. Bitte erneut versuchen." } }, "frontend": { "auth": { "confirmation": { "already_confirmed": "Ihr Account wurde bereits best\xE4tigt.", "confirm": "Best\xE4tigen Sie Ihren Account!", "created_confirm": "Ihr Account wurde erfolgreich erstellt. Wir haben Ihnen eine E-Mail zur Best\xE4tigung geschickt.", "created_pending": "Ihr Account wurde erfolgreich erstellt und wartet auf Genehmigung. Nach Genehmigung wird eine E-Mail gesendet.", "mismatch": "Ihr Best\xE4tigungs-Code stimmt nicht.", "not_found": "Ihr Best\xE4tigungs-Code existiert nicht.", "resend": "Ihr Account ist nicht best\xE4tigt. Bitte klicken Sie auf den Best\xE4tigungslink in Ihrer E-Mail, oder <a href=http://localhost:8000/account/confirm/resend/:user_id>klicken Sie hier</a> um sich die Best\xE4tigungs E-Mail erneut zusenden zu lassen.", "resent": "Eine neue Best\xE4tigungs E-Mail wurde an Ihre E-Mail-Adresse geschickt.", "success": "Ihr Account wurde erfolgreich best\xE4tigt!" }, "deactivated": "Ihr Account wurde deaktiviert.", "email_taken": "Diese E-Mail-Adresse wird bereits verwendet.", "password": { "change_mismatch": "Dies ist nicht Ihr altes Passwort." }, "registration_disabled": "Eine Registrierung ist derzeit nicht m\xF6glich." } }, "whitelabel_mismatch": "Keine \xDCbereinstimmung der Logindaten mit dem Whitelabel." }, "de.general": { "currency": "\u20AC", "lastminute_currency": "CHF" }, "de.history": { "backend": { "blogcategories": { "created": "created Blog Category", "deleted": "deleted Blog Category", "updated": "updated Blog Category" }, "blogs": { "created": "created Blog", "deleted": "deleted Blog", "updated": "updated Blog" }, "blogtags": { "created": "created Blog Tag", "deleted": "deleted Blog Tag", "updated": "updated Blog Tag" }, "none": "Es existiert keine Historie.", "none_for_entity": "Es existiert keine Historie f\xFCr :entity.", "none_for_type": "Es existiert keine Historie f\xFCr diesen Typ", "pages": { "created": "Seite erstelltcreated ", "deleted": "Seite gel\xF6scht", "updated": "Seite ge\xE4ndert" }, "permissions": { "created": "Berechtigung erstellt", "deleted": "Berechtigung gel\xF6scht", "updated": "Berechtigung ge\xE4ndert" }, "recent_history": "Historie", "roles": { "created": "Rolle erstellt", "deleted": "Rolle gel\xF6scht", "updated": "Rolle ge\xE4ndert" }, "users": { "changed_password": "User Passwort ge\xE4ndert", "created": "User erstellt", "deactivated": "User deaktiviert", "deleted": "User gel\xF6scht", "permanently_deleted": "User dauerhaft gel\xF6scht", "reactivated": "User reaktiviert", "restored": "User wiederhergestellt", "updated": "User ge\xE4ndert" } } }, "de.http": { "404": { "description": "Entschuldigung, diese Seite existiert leider nicht.", "title": "Seite nicht gefunden" }, "503": { "description": "Gleich wieder da.", "title": "Gleich wieder da." } }, "de.labels": { "about": "\xDCber uns", "account": "Account", "activated": "aktiviert", "address": "Adresse", "attendee": "Teilnehmer", "attendees": "Teilnehmer", "backend": { "access": { "permissions": { "create": "Berechtigung erstellen", "edit": "Berechtigung bearbeiten", "management": "Management Berechtigungen", "table": { "display_name": "Anzeigename", "permission": "Berechtigung", "sort": "Sorte", "status": "Status", "total": "Rollen gesamt" } }, "roles": { "create": "Rolle erstellen", "edit": "Rolle bearbeiten", "management": "Management Rollen", "table": { "number_of_users": "Useranzahl", "permissions": "Berechtigungen", "role": "Rolle", "sort": "Sorte", "total": "Rollen gesamt" } }, "users": { "active": "Aktive User", "all_permissions": "Password \xE4ndern", "change_password_for": "Passwort \xE4ndern f\xFCr :user", "create": "User erstellen", "deactivated": "Deaktivierte User", "deleted": "Gel\xF6schte User", "edit": "User bearbeiten", "edit-profile": "Profil bearbeiten", "management": "Management User", "no_permissions": "Keine Berechtigungen", "no_roles": "Keine Rolle zum Vergeben.", "permissions": "Berechtigungen", "table": { "confirmed": "Best\xE4tigt", "created": "Erstellt", "email": "E-Mail-Adresse", "id": "ID", "last_name": "Nachname", "last_updated": "Vorname", "no_deactivated": "Keine deaktivieren User", "no_deleted": "Keine gel\xF6schten User", "roles": "Rollen", "total": "User gesamt" }, "tabs": { "content": { "overview": { "avatar": "Avatar", "confirmed": "Best\xE4tigt", "created_at": "Erstellt am", "deleted_at": "Gel\xF6scht am", "email": "E-Mail-Adresse", "last_updated": "Zuletzt aktualisiert", "name": "Name", "status": "Status", "whitelabels": "Whitelabel" } }, "titles": { "history": "Historie", "overview": "\xDCbersicht" } }, "view": "User ansehen" } }, "blogcategories": { "create": "Blogkategorie erstellen", "edit": "Blogkategorie bearbeiten", "management": "Management Blogkategorie", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "status": "Status", "title": "Blogkategorie" }, "title": "Blogkategorie" }, "blogs": { "create": "Blog erstellen", "edit": "Blog bearbeiten", "management": "Management Blogs", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "publish": "Ver\xF6ffentlichungsdatum", "status": "Status", "title": "Blog" }, "title": "Blogs" }, "blogtags": { "create": "Blog-Tag erstellen", "edit": "Blog-Tag bearbeiten", "management": "Management Blog-Tag", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "status": "Status", "title": "Blog-Tag" }, "title": "Blog-Tags" }, "distributions": { "create": "Verteilung erstellen", "edit": "Verteilung bearbeiten", "management": "Verteilungen", "no_distributions": "keine Verteilungen", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "description": "Beschreibung", "display_name": "Anzeigename", "name": "Verteilung", "whitelabel": "Whitelabel" }, "title": "Verteilungen" }, "emailtemplates": { "create": "E-Mail-Template erstellen", "edit": "E-Mail-Template bearbeiten", "management": "Management E-Mail-Templates", "table": { "all": "Alle", "createdat": "Erstellt am", "status": "Status", "subject": "Betreff", "title": "Titel", "updatedat": "Aktualisiert am" }, "title": "E-Mail-Templates" }, "faqs": { "create": "FAQ erstellen", "edit": "FAQ bearbeiten", "management": "Management FAQ ", "table": { "all": "Alle", "answer": "Antwort", "createdat": "Erstellt am", "createdby": "Erstellt von", "publish": "Ver\xF6ffentlichungsdatum", "question": "Frage", "status": "Status", "title": "FAQs", "updatedat": "Aktualisiert am" }, "title": "FAQ" }, "groups": { "create": "Gruppe erstellen", "edit": "Gruppe bearbeiten", "management": "Gruppen", "no_whitelabels": "keine Whitelabel", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "description": "Beschreibung", "display_name": "Anzeigename", "name": "Gruppe", "status": "Status", "users": "User", "whitelabel": "Whitelabel" }, "title": "Gruppen" }, "menus": { "create": "Men\xFC erstellen", "edit": "Men\xFC bearbeiten", "field": { "icon": "Icon-Klasse", "icon_title": "Font Awesome Class. eg. fa-edit", "items": "Men\xFCfelder", "name": "Name", "open_in_new_tab": "\xD6ffne URL in neuem Tab", "type": "Typ", "url": "URL", "url_type": "URL-Typ", "url_types": { "route": "Route", "static": "Statisch" }, "view_permission_id": "Berechtigung" }, "management": "Management Men\xFC", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "name": "Name", "type": "Typ" }, "title": "Men\xFCs" }, "modules": { "create": "Modul erstellen", "edit": "Module bearbeiten", "form": { "controller_name": "Controller &nbsp;Name", "create_file": "Erstellen", "directory_name": "Directory Name", "edit_file": "Bearbeiten", "event": "Event Name", "form_file": "Form", "index_file": "Index", "model_name": "Model Name", "name": "Modulname", "namespace": "Namespace", "repo_name": "Repository Name", "resource_controller": "Resourceful Controller", "resource_route": "Resourceful Routes", "route_controller_name": "Controller &nbsp;Name", "route_name": "Pfadname", "table_controller_name": "Controller &nbsp;Name", "table_name": "Tabellen Name", "url": "Pfad", "view_permission_id": "Berechtigung ansehen", "views_directory": "Directory &nbsp;&nbsp;&nbsp;Name" }, "management": "Management Module", "table": { "created_by": "Erstellt von", "name": "Modulname", "url": "Modul Pfad anzeigen", "view_permission_id": "Berechtigung sehen" }, "title": "Module" }, "pages": { "create": "Seite erstellen", "edit": "Seite erstellen", "management": "Management Seiten", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "status": "Status", "title": "Titel", "updatedat": "Aktualisiert am" }, "title": "Seiten" }, "profile_updated": "Dein Profil wurde aktualisiert.", "settings": { "companydetails": "Unternehmenskontaktdaten", "edit": "Einstellungen bearbeiten", "footer": "Footer-Einstellungen", "google": "Google Analytics Tracking Code", "mail": "E-Mail-Einstellungen", "management": "Management Einstellungen", "seo": "SEO-Einstellungen", "terms": "Gesch\xE4ftsbedingungen-Einstellungen", "title": "Einstellungen" }, "whitelabels": { "create": "Whitelabel erstellen", "edit": "Whitelabel bearbeiten", "management": "Whitelabel", "management_client": "Whitelabel", "table": { "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "display_name": "Whitelabel", "distribution": "Verteilung", "ga_view_id": "Google View Id", "name": "Key", "status": "Status" }, "title": "Whitelabel" }, "wishes": { "create": "Wunsch erstellen", "edit": "Wunsch bearbeiten", "management": "W\xFCnsche", "no_whitelabels": "keine Whitelabel", "table": { "airport": "Flughafen", "all": "Alle", "createdat": "Erstellt am", "createdby": "Erstellt von", "destination": "Destination", "earliest_start": "Fr\xFChester Start", "group": "Gruppe", "latest_return": "Sp\xE4teste R\xFCckkehr", "offerCount": "Angebote", "status": "Status", "title": "Wunsch", "whitelabel": "Whitelabel" }, "title": "W\xFCnsche" } }, "cancel": "Abbrechen", "contact": "Kontakt", "content": "Inhalt", "country": "Land", "current": "Aktuell", "current_password": "Aktuelles Passwort", "description": "Beschreibung", "details": "Details", "documents": "Dokumente", "domain": "Domain", "download": "Download", "email": "E-Mail-Adresse", "events": "Events", "export_all": "Alles exportieren", "export_selected": "Auswahl exportieren", "fax": "Fax", "feedback": "Feedback", "finish": "Fertig", "first_name": "Vorname", "footers": "Footers", "frontend": { "agents": { "create": "Neuen Agenten erstellen", "management": "Agenten", "table": { "avatar": "Avatar", "created_at": "Erstellt am", "createdby": "Erstellt von", "display_name": "Anzeigename", "id": "ID", "name": "Name", "status": "Status" } }, "auth": { "login_box_title": "Login", "login_button": "Login", "login_with": "Login mit :social_media", "register_box_title": "Registrieren", "register_button": "Registrieren", "remember_me": "Erinnere mich" }, "dashboard": { "analytics": { "answered_wishes": "Beantwortete Reisew\xFCnsche", "bookings": "Buchungen", "changed_wishes": "Bearbeitete Reisew\xFCnsche", "created_wishes": "Erstellte Reisew\xFCnsche", "free_text": "Freitext", "latest_answered_wishes": "Zuletzt beantwortete Reisew\xFCnsche", "latest_reaction_quota": "Aktuelle Reaktionsquote", "reaction_quota": "Reaktionsquote", "reaction_time": "Reaktionszeit" } }, "macros": { "country": { "alpha": "Country Alpha Codes", "alpha2": "Country Alpha 2 Codes", "alpha3": "Country Alpha 3 Codes", "numeric": "Country Numeric Codes" }, "macro_examples": "Makrobeispiele", "state": { "mexico": "Mexico State List", "us": { "armed": "US Armed Forces", "outlying": "US Outlying Territories", "us": "US States" } }, "territories": { "canada": "Canada Province & Territories List" }, "timezone": "Zeitzone" }, "offers": { "create": "Neues Angebot erstellen", "management": "Angebote", "offers_for_wish": "Angebote f\xFCr", "table": { "all": "Alle", "createdat": "Erstellt in", "createdby": "Erstellt von", "status": "Status", "title": "Angebot" } }, "passwords": { "forgot_password": "Passwort vergessen?", "reset_password_box_title": "Passwort zur\xFCcksetzen", "reset_password_button": "Passwort zur\xFCcksetzen", "send_password_reset_link_button": "Sende Passwort-Reset-Link" }, "user": { "passwords": { "change": "Passwort \xE4ndern" }, "profile": { "address": "Adresse", "avatar": "Avatar", "city": "Stadt", "country": "Land", "created_at": "Erstellt am", "edit_information": "Informationen bearbeiten", "email": "E-Mail-Adresse", "first_name": "Vorname", "last_name": "Nachname", "last_updated": "Zuletzt ge\xE4ndert", "ssn": "SSN", "update_information": "Profil \xE4ndern", "zipcode": "PLZ" } }, "wishes": { "add-comment": "Kommentar hinzuf\xFCgen", "created_at": "erstellt am", "edit": "Reisewunsch bearbeiten", "goto": "Reisewunsch ansehen", "night": ":value Nacht|:value N\xE4chte", "table": { "adults": ":count Erwachsener|:count Erwachsene", "kids": "{0}Kein Kinder|Kind|Kinder" }, "week": ":value Woche|:value Wochen", "wishes": "Reisew\xFCnsche" } }, "full_name": "Name", "general": { "actions": "Actionen", "active": "Aktiv", "all": "Alle", "buttons": { "save": "Speichern", "update": "Aktualisieren" }, "custom": "Custom", "hide": "Verstecken", "inactive": "Inaktiv", "no": "Nein", "none": "Keine", "show": "Anzeigen", "toggle_navigation": "Navigation einblenden", "yes": "Ja" }, "go_back": "Zur\xFCck!", "go_next": "Weiter!", "id": "ID", "inbox": "Posteingang", "interest": "Internet", "join": "Beitreten", "language": "Sprache", "last_name": "Nachname", "login": "Login", "logo": "Logo", "logout": "Logout", "message": "Nachricht", "message_text": "Nachrichtentext", "mobile": "Mobile", "name": "Name", "new": "Neu", "note": "Notiz", "notes": "Notizen", "notifications": "Benachrichtigungen", "now": "Jetzt", "occupation": "Beruf", "ok": "Ok", "online": "Online", "password": "Passwort", "password_confirm": "Passwort best\xE4tigen", "personal_timezone": "Zeitzone", "phone": "Telefon", "plus": "plus", "posts": "Posts", "ratings": "Bewertungen", "recipient": "Empf\xE4nger", "register": "Registrieren", "reset": "Passwort zur\xFCcksetzen", "reset_link": "Passwort-Reset-Link senden", "review": "Rezension", "role": "Rolle", "send": "Jetzt senden", "street": "Stra\xDFe", "subject": "Betreff", "tel": "Telefonnummer", "title": "Titel", "user": "User", "username": "Username", "verify": "E-Mail-Verifizierung", "verify_email": "Verifiziere Deine E-Mail-Adresse", "warning": "Warnung", "whitelabel": "Whitelabel", "whitelabel_executive": "Whitelabel Executive", "whitelabel_information": "Whitelabel Informationen", "whitelabel_subtitle": "Ein neuer Untertitel", "whitelabel_title": "Neues Whitelabel", "wish": "Reisewunsch", "wishes": "Reisew\xFCnsche", "zipcode": "PLZ" }, "de.log-viewer::general": { "all": "Alle", "date": "Datum" }, "de.log-viewer::levels": { "alert": "Alarm", "all": "Alle", "critical": "Kritisch", "debug": "Debug", "emergency": "Notfall", "error": "Fehler", "info": "Info", "notice": "Hinweis", "warning": "Warnung" }, "de.menus": { "access_management": "Zugriffsverwaltung", "autooffers_management": "Offer Management", "backend": { "access": { "permissions": { "all": "Alle Berechtigungen", "create": "Berechtigung erstellen", "edit": "Berechtigung bearbeiten", "main": "Berechtigungen", "management": "Management Berechtigungen", "version_restrictions": "In anderen Versionen verf\xFCgbar" }, "roles": { "all": "Alle Rollen", "create": "Rolle erstellen", "edit": "Rolle bearbeiten", "main": "Rollen", "management": "Management Rollen" }, "title": "Management Zug\xE4nge", "users": { "all": "Alle User", "change-password": "Passwort \xE4ndern", "create": "User erstellen", "deactivated": "User deaktivieren", "deleted": "User l\xF6schen", "edit": "User bearbeiten", "main": "User", "view": "User ansehen" } }, "blog": { "all": "Alle Blogseiten", "create": "Blogseite erstellen", "edit": "Blogseite bearbeiten", "main": "Blogseiten", "management": "Management Blogseiten" }, "blogcategories": { "all": "Alle Blogkategorien", "create": "Blogkategorie erstellen", "edit": "Blogkategorie bearbeiten", "main": "CMS-Seiten", "management": "Management Blogkategorie" }, "blogs": { "all": "Alle Blogs", "create": "Blog erstellen", "edit": "Blog bearbeiten", "main": "Blogs", "management": "Management Blogs" }, "blogtags": { "all": "Alle Blog-Tags", "create": "Blog-Tag erstellen", "edit": "Blog-Tag bearbeiten", "main": "Blog-Tags", "management": "Management Blog-Tags" }, "distributions": { "all": "Alle Verteilungen", "create": "Verteilung erstellen", "edit": "Verteilung bearbeiten", "main": "Verteilungen", "management": "Management Verteilungen" }, "faqs": { "all": "Alle FAQ-Seiten", "create": "FAQ-Seite erstellen", "edit": "FAQ-Seite bearbeiten", "main": "FAQ-Seiten", "management": "Management FAQ" }, "groups": { "all": "Alle Gruppen", "create": "Gruppe erstellen", "edit": "Gruppe bearbeiten", "main": "Gruppen", "management": "Management Gruppen" }, "log-viewer": { "dashboard": "Dashboard", "logs": "Logs", "main": "Log Viewer" }, "menus": { "all": "Alle Men\xFCs", "create": "Men\xFC erstellen", "edit": "Men\xFC bearbeiten", "main": "Men\xFCs", "management": "Management Men\xFCs" }, "modules": { "all": "Alle Modulseiten", "create": "Modulseite erstellen", "main": "Modulseiten", "management": "Management Module" }, "pages": { "all": "Alle Seiten", "create": "Seite erstellen", "edit": "Seite bearbeiten", "main": "Seiten", "management": "Management Seiten" }, "settings": { "all": "Alle Einstellungen", "create": "Einstellungen erstellen", "edit": "Einstellungen bearbeiten", "main": "Einstellungen", "management": "Management Einstellungen" }, "sidebar": { "dashboard": "Dashboard", "general": "General", "system": "System" }, "whitelabels": { "all": "Alle Whitelabel", "create": "Whitelabel erstellen", "edit": "Whitelabel bearbeiten", "main": "Whitelabel", "management": "Management Whitelabel" }, "wishes": { "all": "Alle W\xFCnsche", "create": "Wunsch erstellen", "edit": "Wunsch bearbeiten", "main": "W\xFCnsche", "management": "Management W\xFCnsche" } }, "categories_management": "Kategorienverwaltung", "email_signature": "E-Mail Signatur", "footer_tnb": "Teilnahmebedingungen", "frontend": { "agents": { "all": "Alle Men\xFCs", "create": "Agent erstellen", "edit": "Men\xFC bearbeiten", "main": "Men\xFCs", "management": "Management Men\xFCs" } }, "groups_management": "Gruppenmanagement", "language-picker": { "langs": { "ar": "Arabisch", "da": "D\xE4nisch", "de": "Deutsch", "el": "Griechisch", "en": "Englisch", "es": "Spanisch", "fr": "Franz\xF6sisch", "id": "Indonesisch", "it": "Italienisch", "nl": "Niederl\xE4ndisch", "pt_BR": "Portugiesisch", "ru": "Russisch", "sv": "Schwedisch", "th": "Thai" }, "language": "Sprache" }, "languages": "Sprachen", "languages_lines": "Sprachenzeilen", "list": { "status": { "all": "Alle Reisew\xFCnsche", "completed": "Erledigt", "new": "Neu", "offer_created": "Angebot Erstellt" } }, "list_wishes": "W\xFCnsche auflisten", "regions_management": "Regions Management", "rules_management": "Lead Management", "sellers": "Seller", "sellers_management": "Anbieter-Management", "wishes": "W\xFCnsche", "wishes_management": "W\xFCnsche Management" }, "de.messages": { "_account": "Hast Du einen Account", "account": "Kein Account gefunden", "background": "The background image must be 1200 x 600 pixels in PNG\/JPG\/JPEG format. Maximum file size is 1MB.", "contact": "Kontaktiere uns", "contact_success": "Deine Nachricht wurde erfolgreich gesendet", "created": ":attribute wurde erfolgreich erstellt", "delete": "M\xF6chten Sie das wirklich l\xF6schen?", "delete_canceled": "L\xF6schen abgebrochen", "deleted": ":attribute wurde erfolgreich gel\xF6scht", "destroy": "M\xF6chten Sie das wirklich permanent l\xF6schen?", "destroyed": ":attribute wurde permanent gel\xF6scht", "event_upcoming": "Bevorstehendes Event", "favicon": "The favicon must be PNG\/ICON format. Maximum file size is 1MB.", "forgot": "Passwort vergessen", "here": "Hier einloggen", "install": "Modul[:attribute] wurde erfolgreich installiert", "join": "Du bist dem Event erfolgreich beigetreten.", "login": "Login", "logo": "The logo must be PNG\/JPG\/JPEG\/SVG format. Maximum file size is 1MB.", "new_posts": "Letzte Posts", "recent_event": "K\xFCrzliche Events", "register": "Erstelle Deinen Account", "remember": "Erinnere mich", "reset": "Passwort zur\xFCcksetzen", "restore": "M\xF6chten Sie mit der Wiederherstellung fortfahren?", "restore_canceled": "Wiederherstellung abgebrochen", "restored": ":attribute wurde erfolgreich wiederhergestellt", "show_all": "Alle Artikel anzeigen", "show_all_events": "Alle Events anzeigen", "sign_up": "Registrieren", "terms": "Gesch\xE4ftsbedingungen zustimmen", "title": "Willkomen zur\xFCck", "token_send": "We've sent you a login link!", "uninstall": "Modul[:attribute] wurde erfolgreich deinstalliert", "unsaved": "Du hast nicht gespeicherte \xC4nderungen - sichern und fortfahren?", "updated": ":attribute wurde erfolgreich aktualisiert", "verify": "Bevor Du fortf\xE4hrst, \xFCberpr\xFCfe bitte Deine E-Mails auf einen Verifizierungslink.", "verify_link": "Falls Du die E-Mail nicht erhalten hast,", "verify_request": "klicke hier, um eine neue E-Mail zu erhalten", "whitelabel_user": "Erstelle Whitelabel User" }, "de.modals": { "activated": "Aktiviert", "active": "Aktiv", "add_document": "Dokument hinzuf\xFCgen", "add_documents": "Dokumente hinzuf\xFCgen", "address": "Adresse", "adults": "Erwachsene", "airport": "Flughafen", "alert_email": "Benachrichtigungs-E-Mail", "asc": "Asc", "auto": "Auto", "boards": "Boards", "budget": "Budget", "categories": "Kategorien", "category": "Hotelkategorie", "catering": "Verpflegung", "click_to_upload": "Klick zum Hochladen", "color": "Farbe", "confirmed": "Best\xE4tigt", "content": "Inhalt", "country_code": "Country Code", "create": "Erstellen", "created_at": "Erstellt am", "createdat": "Erstellt am", "createdby": "Erstellt von", "current": "Aktuell", "dashboard": "Dashboard", "deactivation_duration": "Dauer der Deaktivierung", "default": "Default", "desc": "Desc", "description": "Beschreibung", "destination": "Ziel", "display_name": "Anzeigename", "display_offer": "Angezeigte Angebote", "domain": "Domain", "duplicate": "Duplikat", "duration": "Dauer", "earliest_start": "Fr\xFChester", "email": "Email", "email_verified_at": "Verifiziert am", "end": "Ende", "first_name": "Vorname", "from": "Ab", "full_name": "Name", "group": "Gruppe", "groups": "Gruppen", "headline": "\xDCberschrift", "headline_success": "Erfolg \xDCberschrift", "host": "Domain", "hosts": "Domains", "hotel_loop": "Hotel Loop", "id": "ID", "image": "Bild", "inactive_until": "Deaktiviert bis", "kids": "Kinder", "last_login": "Letzter Login", "last_name": "Nachname", "latest_return": "Sp\xE4teste R\xFCckker", "licence": "Lizenz", "lockout_time": "Sperrzeit", "login_failures": "Loginfehler", "logs": "Logs", "manuel": "Manuell", "message_success": "Nachricht Erfolg", "mix": "Mix", "mobile": "Mobile", "name": "Name", "occupation": "Beruf", "offerCount": "Angebote", "online": "Online", "owner": "Inhaber", "password": "Passwort", "password_confirm": "Passwortbest\xE4tigung", "pending": "Ausstehend", "period": "Zeitraum", "permission": "Berechtigung", "permissions": "Berechtigungen", "phone": "Telefon", "position": "Reihenfolge", "price": "Price", "price_loop": "Price Loop", "primary_color": "Prim\xE4rfarbe", "rating": "Bewertung", "recommendation": "Empfehlung", "region_code": "Region code", "region_name": "Region Name", "role": "Rolle", "roles": "Rollen", "start": "Start", "status": "Status", "subheadline": "Unter\xFCberschrift", "subheadline_success": "Erfolg Unter\xFCberschrift", "summary": "Zusammenfassung", "text": "Text", "title": "Titel", "type": "Type", "unconfirmed": "Unbest\xE4tigt", "until": "Bis", "updated_at": "Aktualisiert am", "upload_documents": "Dokumente hochladen", "upload_photo": "Foto hochladen", "upload_tip": "Upload Tipp", "url": "Url", "users": "Benutzer", "value": "Wert", "visual": "Das Format des Visuals ist 3:1, mindestens 600x200 px.", "whitelabel": "Whitelabel", "whitelabels_distribution": "Distribution", "whitelabels_image": "Hintergrundbild", "wish": "Wunsch" }, "de.navs": { "frontend": { "agents": "Agenten", "create_wish": "Wunsch erstellen", "dashboard": "Dashboard", "login": "Einloggen", "macros": "Makros", "offers": "Meine Angebote", "register": "Registrieren", "user": { "account": "Mein Konto", "administration": "Administration", "agents": "Agenten", "change_password": "Passwort \xE4ndern", "my_information": "Meine Informationen", "name": "Ich", "profile": "Profil" }, "wishes": "Meine Reisew\xFCnsche", "wisheslist": "Reisew\xFCnsche" }, "general": { "home": "Home", "logout": "Ausloggen" } }, "de.notification": { "created": "<span class=\"badge badge-flat border-success text-success-600 rounded-0 mr-2\"> Erstellt <\/span> <strong>:name<\/strong> (:url) wurde <strong>erfolgreich erstellt<\/strong> by <strong>:user<\/strong>", "deleted": "<span class=\"badge badge-flat border-danger text-danger-600 rounded-0 mr-2\"> Gel\xF6scht </span><strong>:name</strong> (:url) wurde <strong>erfolgreich gel\xF6scht</strong> by <strong>:user</strong>", "restored": "<span class=\"badge badge-flat border-info text-info-600 rounded-0 mr-2\"> Wiederhergestellt <\/span><strong>:name<\/strong> (:url) wurde <strong>erfolgreich wiederhergestellt<\/strong> by <strong>:user<\/strong>" }, "de.pagination": { "next": "Weiter &raquo;", "previous": "&laquo; Zur\xFCck" }, "de.passwords": { "password": "Passw\xF6rter m\xFCssen mindestens 6 Zeichen lang sein und korrekt best\xE4tigt werden.", "reset": "Das Passwort wurde zur\xFCckgesetzt!", "sent": "Passworterinnerung wurde gesendet!", "token": "Der Passwort-Wiederherstellungs-Schl\xFCssel ist ung\xFCltig oder abgelaufen.", "user": "Es konnte leider kein Nutzer mit dieser E-Mail-Adresse gefunden werden." }, "de.roles": { "administrator": "Administrator", "user": "User" }, "de.seller": { "agent": { "create": "Agent hinzuf\xFCgen", "email": "E-Mail Adresse", "email_placeholder": "seller@seller.com", "tel": "Tel.", "tel_placeholder": "01761234567" } }, "de.strings": { "backend": { "access": { "users": { "delete_user_confirm": "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", "if_confirmed_off": "(Falls Auto - Best\xE4tigung aus ist)", "restore_user_confirm": "Diesen User in seinem Ursprungszustand wiederherstellen?" } }, "dashboard": { "title": "Admin Dashboard", "welcome": "Willkommen" }, "general": { "all_rights_reserved": "All Rights Reserved.", "are_you_sure": "Sind Sie sicher?", "boilerplate_link": "Laravel AdminPanel", "continue": "Weiter", "member_since": "Member since", "minutes": "Minuten", "search_placeholder": "Suchen...", "see_all": { "messages": "Alle Nachrichten anzeigen", "notifications": "Alle anzeigen", "tasks": "Alle Aufgaben anzeigen" }, "status": { "offline": "Offline", "online": "Online" }, "timeout": "Sie wurden aus Sicherheitsgr\xFCnden auf Grund von Inaktivit\xE4t ausgeloggt.", "you_have": { "messages": "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", "notifications": "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", "tasks": "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, "search": { "empty": "Bitte geben Sie einen Suchbegriff.", "incomplete": "You must write your own search logic for this system.", "results": "Suchergebnisse f\xFCr :query", "title": "Suchergebnisse" }, "welcome": "<p>This is the AdminLTE theme by <a href=\"https:\/\/almsaeedstudio.com\/\" target=\"_blank\">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href=\"https:\/\/github.com\/rappasoft\/laravel-5-boilerplate\" target=\"_blank\">GitHub<\/a> page for more information and report any <a href=\"https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues\" target=\"_blank\">issues here<\/a>.<\/p>\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\n<p>- Viral Solani<\/p>" }, "emails": { "auth": { "click_to_confirm": "Click here to confirm your account:", "error": "Whoops!", "greeting": "Hello!", "password_cause_of_email": "You are receiving this email because we received a password reset request for your account.", "password_if_not_requested": "If you did not request a password reset, no further action is required.", "password_reset_subject": "Reset Password", "regards": "Regards,", "reset_password": "Click here to reset your password", "thank_you_for_using_app": "Thank you for using our application!", "trouble_clicking_button": "If you\u2019re having trouble clicking the \":action_text\" button, copy and paste the URL below into your web browser:" } }, "frontend": { "test": "Test", "tests": { "based_on": { "permission": "berechtigungsbasiert - ", "role": "rollenbasiert - " }, "js_injected_from_controller": "Javascript Injected from a Controller", "using_access_helper": { "array_permissions": "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", "array_permissions_not": "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", "array_roles": "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", "array_roles_not": "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", "permission_id": "Using Access Helper with Permission ID", "permission_name": "Using Access Helper with Permission Name", "role_id": "Using Access Helper with Role ID", "role_name": "Using Access Helper with Role Name" }, "using_blade_extensions": "Using Blade Extensions", "view_console_it_works": "View console, you should see 'it works!' which is coming from FrontendController@index", "you_can_see_because": "You can see this because you have the role of ':role'!", "you_can_see_because_permission": "You can see this because you have the permission of ':permission'!" }, "user": { "change_email_notice": "Wenn Sie Ihre E-Mail-Adresse \xE4ndern, werden Sie ausgeloggt, bis Sie Ihre neue E-Mail-Adresse best\xE4tigt haben.", "email_changed_notice": "Sie m\xFCssen Ihre E-Mail-Adresse best\xE4tigen, bevor Sie sich erneut einloggen k\xF6nnen.", "password_updated": "Passwort erfolgreich ge\xE4ndert.", "profile_updated": "Profil erfolgreich aktualisiert." }, "welcome_to": "Willkommen zum :place" } }, "de.tables": { "actions": "Aktionen", "activated": "Aktiviert", "activities": "Aktivit\xE4ten", "activity": "Aktivit\xE4t", "add_documents": "Dokumente hinzuf\xFCgen", "address": "Adresse", "adults": "Erwachsene", "ago": "Vor", "airport": "Flughafen", "alias": "alias", "boards": "Boards", "booking_status": "Buchungsstatus", "budget": "Budget", "categories": "Kategorien", "category": "Hotelkategorie", "catering": "Verpflegung", "color": "Farbe", "confirmed": "Best\xE4tigt", "content": "Inhalt", "country_code": "Country Code", "created_at": "Erstellt am", "created_by": "Erstellt von", "date": "Datum", "description": "Beschreibung", "destination": "Ziel", "display_name": "Anzeigename", "duration": "Dauer", "earliest_start": "Fr\xFChester Start", "email": "Email", "email_verified_at": "Verifiziert am", "empty_table": "Keine Daten in der Tabelle verf\xFCgbar", "end": "Ende", "eventAction": "Eventaktion", "eventCategory": "Eventkategorie", "eventLabel": "Eventlabel", "first_name": "Vorname", "from": "Von", "full_name": "Namen", "group": "Gruppe", "groups": "Gruppen", "id": "ID", "install": "Installation", "key": "Key", "kids": "Kinder", "last_login": "Letzter Login", "last_name": "Nachname", "latest_return": "Sp\xE4teste R\xFCckkehr", "locale": "Lokal", "lockout_time": "Sperrzeit", "login_failures": "Loginfehler", "message": "Benachrichtigung", "migrate": "Migrierung", "mobile": "Mobile", "name": "Name", "occupation": "Beruf", "offerCount": "Angebote", "online": "online", "owner": "Inhaber", "package": "Paket", "pending": "Ausstehend", "period": "Zeitraum", "permissions": "Berechtigungen", "phone": "Telefon", "region_code": "Region code", "region_name": "Region Name", "roles": "Rollen", "start": "Start", "status": "Status", "subject": "Betreff", "text": "Text", "title": "Wunsch", "type": "Type", "unconfirmed": "Unbest\xE4tigt", "uninstall": "Deinstallation", "updated_at": "Aktualisiert am", "url": "Url", "users": "Benutzer", "when": "Wann", "whitelabel": "Whitelabel" }, "de.tnb": { "not_stored": "Fehler beim Speichern der Teilnahmebedingungen", "stored": "Sie haben die Teilnahmebedingungen erfolgreich gespeichert", "template": "<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">Bedingungen f&uuml;r die Nutzung des </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">-Reisewunschportals</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>1. Funktion des </strong></span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">-Reisewunschportals</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>, Nutzungsbedingungen</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">1.1 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> bietet &uuml;ber das Online-Tool &bdquo;</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">-Reisewunschportal&ldquo; unentgeltlich die technische M&ouml;glichkeit Suchanzeigen nach Reiseangeboten (&bdquo;Reisew&uuml;nsche&ldquo;) aufzugeben und so pers&ouml;nlichen Kontakt zu den </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> Reiseberatern zum Zwecke einer individuellen Angebotskommunikation herzustellen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">1.2 F&uuml;r die Nutzung des Online-Tools gelten diese Nutzungsbedingungen, die nach Ma&szlig;gabe von Ziffer 8.1 ge&auml;ndert werden k&ouml;nnen.</span></span></span></p>\n    &nbsp;\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>2. Anmeldung</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.1 Das Online-Tool ist &uuml;ber ein entsprechendes Dialogfeld auf der Webseite des </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> sowie &uuml;ber </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$URL-REISEWUNSCHPORTAL</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> zu erreichen. Die Nutzung des Online-Tools setzt die Anmeldung als Nutzer voraus.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.2 Die Anmeldung ist nur vollj&auml;hrigen und unbeschr&auml;nkt haftenden Personen gestattet.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.3 Die Anmeldung erfolgt durch Einsendung der E-Mail-Adresse sowie des Reisewunsches und ggf. weiterer Suchkriterien sowie der Akzeptanz der Nutzungsbedingungen. Sie wird durch Zusendung einer Best&auml;tigungsmail mit einem individuellen Zugangslink durch </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> an die angegebene E-Mail-Adresse abgeschlossen.&nbsp;&nbsp;</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.4 &Uuml;ber den Zugangslink kann der Nutzer seinen Reisewunsch einschlie&szlig;lich der weiteren angegeben Daten im Online-Tool jederzeit einsehen, anpassen oder deaktivieren. Passt der Nutzer den Reisewunsch an oder deaktiviert ihn, verschickt das Online-Tool eine entsprechende Info-Mail an ihn.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.5 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> &uuml;berpr&uuml;ft nicht die Richtigkeit der Nutzerdaten.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.6 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> beh&auml;lt sich das Recht vor, nach alleinigem Ermessen und ohne Ank&uuml;ndigung den Zugang von Nutzern zum Online-Tool oder dessen Teilen zu verweigern und/oder den Betrieb des Online-Tools einzustellen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">&nbsp;</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>3. Reisew&uuml;nsche, Bearbeitung</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.1 Ein Reisewunsch stellt nur eine unverbindliche Anfrage und kein rechtlich bindendes Angebot dar.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.2 Die in das Online-Tool eingegebenen Reisew&uuml;nsche der Nutzer werden durch das System an </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> Reiseberater zur weiteren Bearbeitung weitergeleitet.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.3 Die Reisew&uuml;nsche werden nicht ver&ouml;ffentlicht.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.4 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> Reiseberater k&ouml;nnen auf einen Reisewunsch mit einem Angebotsvorschlag reagieren. Dieser Vorschlag ist rechtlich unverbindlich, soweit darin nichts anderes bestimmt ist.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.5 Nachdem ein Reiseberater einen Reisewunsch bearbeitet und das Angebot in das Online-Tool eingestellt hat, bekommt der Nutzer eine E-Mail, in der erneut ein Link zum Reisewunsch und dem Angebot enthalten ist.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.6 Der Nutzer, welcher den Reisewunsch eingestellt hat, kann auf den Vorschlag hin den </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> Reiseberater kontaktieren. Er ist jedoch nicht verpflichtet, auf einen Vorschlag zu reagieren.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.7 Der Nutzer kann w&auml;hlen, &uuml;ber welchen Weg (E-Mail, Telefon) er weiter mit dem Reiseberater kommunizieren m&ouml;chte. Solange der Nutzer keine Kontaktdaten f&uuml;r einen Direktkontakt mitteilt, erfolgt die Kommunikation ausschlie&szlig;lich &uuml;ber das Online-Tool.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">&nbsp;</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>4. Pflichten des Nutzers, Verantwortung f&uuml;r Inhalte</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">4.1 Der Nutzer ist verpflichtet, den pers&ouml;nlichen Zugangslink geheim zu halten.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">4.2 Der Nutzer ist grunds&auml;tzlich f&uuml;r alle &uuml;ber seinen Zugangslink vorgenommenen Aktivit&auml;ten verantwortlich. Die Regelungen dieses Absatzes gelten nicht, wenn der Nutzer einen etwaigen Missbrauch seines Zugangslinks nicht zu vertreten hat, weil keine Sorgfaltspflichtverletzung des Nutzers vorliegt. Der Nutzer ist verpflichtet, </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> umgehend zu informieren, wenn er Anhaltspunkte f&uuml;r einen Missbrauch seines Zugangslink durch Dritte hat.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">4.3 Der Nutzer ist verpflichtet, bei der Einstellung von Reisew&uuml;nschen und sonstigen Inhalten s&auml;mtliche geltende Rechtsvorschriften, Rechte Dritter und diese Nutzungsbedingungen zu beachten. Er ist f&uuml;r die Rechtm&auml;&szlig;igkeit, Richtigkeit und Vollst&auml;ndigkeit aller von ihm eingestellten Inhalte verantwortlich und haftet f&uuml;r die Verletzung von Rechtsvorschriften oder von rechten Dritter durch von ihm eingestellte Inhalte.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">4.4 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> &uuml;berpr&uuml;ft die in das Online-Tool eingestellten Inhalte der Nutzer grunds&auml;tzlich nicht und &uuml;bernimmt keine Haftung. </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span>r <span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">beh\xE4lt sich aber das Recht vor, die Inhalte zu &uuml;berpr&uuml;fen, auch wenn keine&nbsp; Verpflichtung besteht.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">4.5 Der Nutzer erh&auml;lt etwaige Informationen &uuml;ber die von ihm im Online-Tool hinterlegte E-Mail-Adresse. Es obliegt ihm, sicherzustellen, dass er unter dieser E-Mail-Adresse erreichbar ist.</span></span></span><br />\n    <br />\n    <br />\n    <span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>5. Unzul&auml;ssige Nutzungshandlungen, Ma&szlig;nahmen bei Verst&ouml;&szlig;en, Freistellung</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.1 Die folgenden Handlungen sind unzul&auml;ssig:&nbsp; Das Einstellen von anderen Inhalten als Reisew&uuml;nschen. Das Einstellen von unzul&auml;ssigen Inhalten; unzul&auml;ssige Inhalte, die gegen die Nutzungsbedingungen oder gegen gesetzliche Verbote oder die guten Sitten versto&szlig;en oder Rechte Dritter verletzen. Die Offenlegung und Weitergabe des Zugangslinks zum Online-Tool. Das automatisierte Auslesen der im Online-Tool befindlichen Daten sowie der Aufbau eigener Suchsysteme, Dienste und Verzeichnisse unter Zuhilfenahme der im Online-Tool abrufbaren Inhalte sowie das vielfache Erstellen gleicher Inhalte. Die Verwendung oder das Aufspielen von Dateien, die Viren, besch&auml;digte Dateien, Software oder sonstige Mechanismen oder Inhalte enthalten, welche das Online-Tool oder dessen Nutzer, deren Rechner, die Server von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> oder die auf den Rechnern der Nutzer oder von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> verwendete Software ausspionieren, attackieren oder in sonstiger Weise beeintr&auml;chtigen k&ouml;nnten.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.2 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> kann folgende Ma&szlig;nahmen ergreifen, wenn konkrete Anhaltspunkte daf&uuml;r bestehen, dass ein Nutzer gesetzliche Vorschriften, Rechte Dritter oder diese Bedingungen verletzt, oder wenn </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ein sonstiges berechtigtes Interesse hat: L&ouml;schen von Reisew&uuml;nschen oder sonstigen Inhalten, Verwarnung des Nutzers, Beschr&auml;nkung der Nutzungsm&ouml;glichkeiten des Online-Tools durch den Nutzer, so dass u.a. keine Inhalte mehr eingestellt werden k&ouml;nnen, L&ouml;schung des Nutzerkontos.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.3 Der Nutzer stellt </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> von allen Anspr&uuml;chen frei, die von Dritten gegen </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> aufgrund einer Verletzung ihrer Rechte geltend gemacht werden, soweit der Nutzer diese Rechtsverletzung zu vertreten hat. Die Freistellung umfasst die &Uuml;bernahme s&auml;mtlicher Gerichtskosten und angemessener Anwaltskosten.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.4 Der Nutzer wird </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> bei der Verteidigung gegen die Inanspruchnahme unterst&uuml;tzen und insbesondere unverz&uuml;glich alle Informationen zur Verf&uuml;gung stellen, die f&uuml;r die Pr&uuml;fung und Abwehr der Anspr&uuml;che von Bedeutung sein k&ouml;nnen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.5 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ist im Fall der berechtigten Geltendmachung von Rechten durch einen Dritten berechtigt, dem Dritten den Namen und die E-Mail-Adresse des Nutzers mitzuteilen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.6 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ist zur Geltendmachung weiterer gesetzlicher Rechte im Fall von unzul&auml;ssigen Nutzungshandlungen berechtigt.</span></span></span></p>\n    &nbsp;\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>6. Haftungsbeschr&auml;nkung</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">6.1 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> &uuml;bernimmt keine Garantie oder Gew&auml;hr f&uuml;r die Verf&uuml;gbarkeit und Funktion des Online-Tools oder der eingestellten Inhalte. </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> beh&auml;lt sich vor das </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span>&gt;<span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">-Reisewunschportal (auch ohne vorherige Ank&uuml;ndigung) ganz oder teilweise&nbsp;</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">einzustellen oder den Zugang hierzu ganz oder teilweise einzuschr&auml;nken, ohne dass hieraus Anspr&uuml;che der Nutzer gegen&uuml;ber </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> entstehen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">6.2 F&uuml;r eine Haftung von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> auf Schadenersatz gelten unbeschadet der sonstigen gesetzlichen Anspruchsvoraussetzungen folgende Haftungsausschl&uuml;sse und Haftungsbegrenzungen</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">6.2.1 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> haftet unbeschr&auml;nkt, soweit die Schadensursache auf Vorsatz oder grober Fahrl&auml;ssigkeit beruht. Ferner haftet </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> f&uuml;r die fahrl&auml;ssige Verletzung von wesentlichen Pflichten, deren Verletzung die Erreichung des Vertragszwecks gef&auml;hrdet, und f&uuml;r die Verletzung von Pflichten auf deren Einhaltung Vertragspartner regelm&auml;&szlig;ig vertrauen. In diesem Fall haftet </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> jedoch nur f&uuml;r den vorhersehbaren, vertragstypischen Schaden. </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> haftet nicht f&uuml;r die fahrl&auml;ssige Verletzung anderer als der in den vorstehenden S&auml;tzen genannten Pflichten. Die vorstehenden Haftungsbeschr&auml;nkungen gelten nicht bei Verletzung von leben, K&ouml;rper und Gesundheit. Im &Uuml;brigen ist die Haftung von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ausgeschlossen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">6.2.2 Soweit die Haftung von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ausgeschlossen oder beschr&auml;nkt ist, gilt dies auch f&uuml;r die pers&ouml;nliche Haftung ihrer Arbeitnehmer, Vertreter und Erf&uuml;llungsgehilfen.</span></span></span></p>\n\n    <p><br />\n    <span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>7. Datenschutz</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">7.1 Die im Rahmen der Nutzung des Reisewunschportals angegebenen personenbezogenen Daten (Name, E-Mail Adresse) werden zur Bearbeitung des Reisewunsches, zur Kundenbetreuung und Marktforschung oder zur Erf&uuml;llung gesetzlicher Bestimmungen gespeichert, verarbeitet und genutzt. Dar&uuml;ber hinaus k&ouml;nnen die Daten zur Zusendung von aktuellen Informationen und Angeboten verwendet werden. Sollten Sie diese Informationen nicht w&uuml;nschen, wenden Sie sich bitte mit Ihrem Anliegen an: </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">xy@xy.de.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">7.2 Weitere Informationen zur Datenverarbeitung und zum Datenschutz ergeben sich aus unserer Datenschutzerkl&auml;rung. Diese finden Sie hier: </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">https://www.abc.de/datenschutz.</span></span></span></p>\n    &nbsp;\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>8. Schlussbestimmungen</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">8.1 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ist berechtigt, &Auml;nderungen oder Erg&auml;nzungen an diesen Nutzungsbedingungen vorzunehmen, sofern dies dem billigem Ermessen von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">&nbsp;</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">entspricht und f&uuml;r den Nutzer zumutbar ist. Diese werden erst wirksam, nachdem </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> den registrierten Nutzer die &Auml;nderung der Nutzungsbedingungen in Textform mitgeteilt hat und der Nutzer dieser Neufassung nicht innerhalb von 6 Wochen ab Zugang mindestens in Textform widerspricht. Der Nutzer wird bei Mitteilung der &Auml;nderung auf die Bedeutung seines Schweigens besonders hingewiesen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">8.2 Sofern einzelne oder mehrere Bestimmungen in diesen Nutzungsbedingungen ganz oder teilweise unwirksam oder ung&uuml;ltig sind oder werden, bleibt die Wirksamkeit der &uuml;brigen Regelungen und Bestimmungen hiervon unber&uuml;hrt. Die unwirksame oder ung&uuml;ltige Regelung gilt durch eine Regelung ersetzt, die dem Sinn und Zweck der unwirksamen oder ung&uuml;ltigen Regelung in rechtswirksamer Weise wirtschaftlich am n&auml;chsten kommt. Gleiches gilt f&uuml;r eventuelle Regelungsl&uuml;cken.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">8.3 Streitigkeiten, die im Zusammenhang mit diesen Nutzungsbedingungen oder aufgrund der Nutzung des </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">-Reisewunschportal gef&uuml;hrt werden unterliegen ausschlie&szlig;lich dem Recht der Bundesrepublik Deutschland.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">&nbsp;</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">Stand: Dezember 2019</span></span></span></p>" }, "de.validation": { "accepted": ":attribute muss akzeptiert werden.", "active_url": ":attribute ist keine g\xFCltige Internet-Adresse.", "after": ":attribute muss ein Datum nach dem :date sein.", "after_or_equal": ":attribute muss ein Datum nach dem :date oder gleich dem :date sein.", "alpha": ":attribute darf nur aus Buchstaben bestehen.", "alpha_dash": ":attribute darf nur aus Buchstaben, Zahlen, Binde- und Unterstrichen bestehen.", "alpha_num": ":attribute darf nur aus Buchstaben und Zahlen bestehen.", "array": ":attribute muss ein Array sein.", "attributes": { "address": "Adresse", "age": "Alter", "available": "verf\xFCgbar", "city": "Stadt", "content": "Inhalt", "country": "Land", "date": "Datum", "day": "Tag", "description": "Beschreibung", "email": "E-Mail-Adresse", "excerpt": "Auszug", "first_name": "Vorname", "gender": "Geschlecht", "hour": "Stunde", "last_name": "Nachname", "minute": "Minute", "mobile": "Handynummer", "month": "Monat", "name": "Name", "password": "Passwort", "password_confirmation": "Passwort-Best\xE4tigung", "phone": "Telefonnummer", "second": "Sekunde", "sex": "Geschlecht", "size": "Gr\xF6\xDFe", "time": "Uhrzeit", "title": "Titel", "username": "Benutzername", "year": "Jahr" }, "before": ":attribute muss ein Datum vor dem :date sein.", "before_or_equal": ":attribute muss ein Datum vor dem :date oder gleich dem :date sein.", "between": { "array": ":attribute muss zwischen :min & :max Elemente haben.", "file": ":attribute muss zwischen :min & :max Kilobytes gro\xDF sein.", "numeric": ":attribute muss zwischen :min & :max liegen.", "string": ":attribute muss zwischen :min & :max Zeichen lang sein." }, "boolean": ":attribute muss entweder 'true' oder 'false' sein.", "confirmed": ":attribute stimmt nicht mit der Best\xE4tigung \xFCberein.", "custom": { "attribute-name": { "rule-name": "custom-message" } }, "date": ":attribute muss ein g\xFCltiges Datum sein.", "date_equals": "The :attribute must be a date equal to :date.", "date_format": ":attribute entspricht nicht dem g\xFCltigen Format f\xFCr :format.", "different": ":attribute und :other m\xFCssen sich unterscheiden.", "digits": ":attribute muss :digits Stellen haben.", "digits_between": ":attribute muss zwischen :min und :max Stellen haben.", "dimensions": ":attribute hat ung\xFCltige Bildabmessungen.", "distinct": ":attribute beinhaltet einen bereits vorhandenen Wert.", "email": ":attribute muss eine g\xFCltige E-Mail-Adresse sein.", "exists": "Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.", "file": ":attribute muss eine Datei sein.", "filled": ":attribute muss ausgef\xFCllt sein.", "gt": { "array": ":attribute muss mindestens :min Elemente haben.", "file": ":attribute muss mindestens :min Kilobytes gro\xDF sein.", "numeric": ":attribute muss mindestens :min sein.", "string": ":attribute muss mindestens :min Zeichen lang sein." }, "gte": { "array": ":attribute muss gr\xF6\xDFer oder gleich :min Elemente haben.", "file": ":attribute muss gr\xF6\xDFer oder gleich :min Kilobytes sein.", "numeric": ":attribute muss gr\xF6\xDFer oder gleich :min sein.", "string": ":attribute muss gr\xF6\xDFer oder gleich :min Zeichen lang sein." }, "image": ":attribute muss ein Bild sein.", "in": "Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.", "in_array": "Der gew\xE4hlte Wert f\xFCr :attribute kommt nicht in :other vor.", "integer": ":attribute muss eine ganze Zahl sein.", "ip": ":attribute muss eine g\xFCltige IP-Adresse sein.", "ipv4": ":attribute muss eine g\xFCltige IPv4-Adresse sein.", "ipv6": ":attribute muss eine g\xFCltige IPv6-Adresse sein.", "json": ":attribute muss ein g\xFCltiger JSON-String sein.", "lt": { "array": ":attribute muss kleiner :min Elemente haben.", "file": ":attribute muss kleiner :min Kilobytes gro\xDF sein.", "numeric": ":attribute muss kleiner :min sein.", "string": ":attribute muss kleiner :min Zeichen lang sein." }, "lte": { "array": ":attribute muss kleiner oder gleich :min Elemente haben.", "file": ":attribute muss kleiner oder gleich :min Kilobytes sein.", "numeric": ":attribute muss kleiner oder gleich :min sein.", "string": ":attribute muss kleiner oder gleich :min Zeichen lang sein." }, "max": { "array": ":attribute darf nicht mehr als :max Elemente haben.", "file": ":attribute darf maximal :max Kilobytes gro\xDF sein.", "numeric": ":attribute darf maximal :max sein.", "string": ":attribute darf maximal :max Zeichen haben." }, "mimes": ":attribute muss den Dateityp :values haben.", "mimetypes": ":attribute muss den Dateityp :values haben.", "min": { "array": ":attribute muss mindestens :min Elemente haben.", "file": ":attribute muss mindestens :min Kilobytes gro\xDF sein.", "numeric": ":attribute muss mindestens :min sein.", "string": ":attribute muss mindestens :min Zeichen lang sein." }, "not_in": "Der gew\xE4hlte Wert f\xFCr :attribute ist ung\xFCltig.", "not_regex": ":attribute hat ein ung\xFCltiges Format.", "numeric": ":attribute muss eine Zahl sein.", "present": ":attribute muss vorhanden sein.", "regex": ":attribute Format ist ung\xFCltig.", "required": ":attribute muss ausgef\xFCllt sein.", "required_if": ":attribute muss ausgef\xFCllt sein, wenn :other :value ist.", "required_unless": ":attribute muss ausgef\xFCllt sein, wenn :other nicht :values ist.", "required_with": ":attribute muss angegeben werden, wenn :values ausgef\xFCllt wurde.", "required_with_all": ":attribute muss angegeben werden, wenn :values ausgef\xFCllt wurde.", "required_without": ":attribute muss angegeben werden, wenn :values nicht ausgef\xFCllt wurde.", "required_without_all": ":attribute muss angegeben werden, wenn keines der Felder :values ausgef\xFCllt wurde.", "same": ":attribute und :other m\xFCssen \xFCbereinstimmen.", "size": { "array": ":attribute muss genau :size Elemente haben.", "file": ":attribute muss :size Kilobyte gro\xDF sein.", "numeric": ":attribute muss gleich :size sein.", "string": ":attribute muss :size Zeichen lang sein." }, "starts_with": "The :attribute must start with one of the following: :values", "string": ":attribute muss ein String sein.", "timezone": ":attribute muss eine g\xFCltige Zeitzone sein.", "unique": ":attribute ist schon vergeben.", "uploaded": ":attribute konnte nicht hochgeladen werden.", "url": ":attribute muss eine URL sein.", "uuid": ":attribute muss ein UUID sein." }, "de.wish": { "contact": { "text": "Schreiben Sie Ihrem Reiseberater eine Nachricht oder nutzen Sie den R\xFCckruf-Service." }, "view": { "adults": "Erwachsene", "airport": "Flughafen", "any_price": "beliebig", "budget": "Budget", "category": "Hotelkategorie", "catering": "Verpflegung", "comment-header": "Nachricht an Agenten", "createdat": "Erstellt am", "createdby": "Erstellt von", "destination": "Destination", "duration": "Reisedauer", "earliest_start": "Fr\xFChester Start", "email": "E-Mail", "kids": "Kinder", "latest_return": "Sp\xE4teste R\xFCckkehr", "new_offers": "Neue Angebote", "offerCount": "Angebote", "offer_number": "Angebot Nummer", "owner": "Name", "pets": "Haustiere", "stage": { "seller_empty": "Der Reisewunsch wurde am <b>:date</b> an Sie<br>\n                    \xFCbermittelt. Erstellen Sie jetzt ein Angebot.", "seller_message": "Der Reisewunsch wurde am <b>:date</b> an Sie<br>\n                    \xFCbermittelt. Der Kunder hat Ihnen eine Nachricht hinterlassen.", "seller_offer": "Der Reisewunsch wurde am <b>:date</b> an Sie<br>\n                    \xFCbermittelt. Sie haben ein Angebot erstellt.", "user_empty": "Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\n                    \xFCbermittelt. Leider liegt momentan noch kein Angebot vor.", "user_message": "Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\n                    \xFCbermittelt. Es gibt eine neue Nachricht f\xFCr Sie.", "user_offer": "Der Reisewunsch wurde am <b>:date</b> an <b>:seller</b><br>\n                    \xFCbermittelt. Es gibt ein Angebot f\xFCr Sie." }, "status": "Status", "text": "Text", "title": "Wunschtitel", "whitelabel": "Whitelabel" } }, "en.alerts": { "backend": { "blogcategories": { "created": "The Blog Category was successfully created.", "deleted": "The Blog Category was successfully deleted.", "updated": "The Blog Category was successfully updated." }, "blogs": { "created": "The Blog was successfully created.", "deleted": "The Blog was successfully deleted.", "updated": "The Blog was successfully updated." }, "blogtags": { "created": "The Blog Tag was successfully created.", "deleted": "The Blog Tag was successfully deleted.", "updated": "The Blog Tag was successfully updated." }, "emailtemplates": { "deleted": "The Email Template was successfully deleted.", "updated": "The Email Template was successfully updated." }, "faqs": { "created": "The Faq was successfully created.", "deleted": "The Faq was successfully deleted.", "updated": "The Faq was successfully updated." }, "groups": { "created": "The Group was successfully created.", "deleted": "The Group was successfully deleted.", "updated": "The Group was successfully updated." }, "menus": { "created": "The Menu was successfully created.", "deleted": "The Menu was successfully deleted.", "updated": "The Menu was successfully updated." }, "pages": { "created": "The Page was successfully created.", "deleted": "The Page was successfully deleted.", "updated": "The Page was successfully updated." }, "permissions": { "created": "The permission was successfully created.", "deleted": "The permission was successfully deleted.", "updated": "The permission was successfully updated." }, "roles": { "created": "The role was successfully created.", "deleted": "The role was successfully deleted.", "updated": "The role was successfully updated." }, "settings": { "updated": "The Setting was successfully updated." }, "users": { "confirmation_email": "A new confirmation e-mail has been sent to the address on file.", "created": "The user was successfully created.", "deleted": "The user was successfully deleted.", "deleted_permanently": "The user was deleted permanently.", "restored": "The user was successfully restored.", "session_cleared": "The user's session was successfully cleared.", "updated": "The user was successfully updated.", "updated_password": "The user's password was successfully updated." }, "whitelabels": { "created": "The Whitelabel was successfully created.", "deleted": "The Whitelabel was successfully deleted.", "updated": "The Whitelabel was successfully updated." }, "wishes": { "created": "The Wish was successfully created.", "deleted": "The Wish was successfully deleted.", "updated": "The Wish was successfully updated." } }, "frontend": { "offers": { "created": "Offer successfully created" }, "wishes": { "created": "The Wish was successfully created.", "deleted": "The Wish was successfully deleted.", "updated": "The Wish was successfully updated." } } }, "en.api": { "messages": { "forgot_password": { "success": "We have sent email with reset password link. Please check your inbox!.", "validation": { "email_not_found": "This email address is not registered." } }, "login": { "failed": "Invalid Credentials! Please try again.", "success": "Login Successfull." }, "logout": { "success": "Successfully logged out." }, "refresh": { "status": "Ok", "token": { "not_provided": "Token not provided." } }, "registeration": { "success": "You have registered successfully. Please check your email for activation!" } } }, "en.auth": { "failed": "These credentials do not match our records.", "general_error": "You do not have access to do that.", "socialite": { "unacceptable": ":provider is not an acceptable login type." }, "throttle": "Too many login attempts. Please try again in :seconds seconds.", "unknown": "An unknown error occurred" }, "en.backup::notifications": { "backup_failed_body": "Important: An error occurred while backing up :application_name", "backup_failed_subject": "Failed back up of :application_name", "backup_successful_body": "Great news, a new backup of :application_name was successfully created on the disk named :disk_name.", "backup_successful_subject": "Successful new backup of :application_name", "backup_successful_subject_title": "Successful new backup!", "cleanup_failed_body": "An error occurred while cleaning up the backups of :application_name", "cleanup_failed_subject": "Cleaning up the backups of :application_name failed.", "cleanup_successful_body": "The clean up of the :application_name backups on the disk named :disk_name was successful.", "cleanup_successful_subject": "Clean up of :application_name backups successful", "cleanup_successful_subject_title": "Clean up of backups successful!", "exception_message": "Exception message: :message", "exception_message_title": "Exception message", "exception_trace": "Exception trace: :trace", "exception_trace_title": "Exception trace", "healthy_backup_found_body": "The backups for :application_name are considered healthy. Good job!", "healthy_backup_found_subject": "The backups for :application_name on disk :disk_name are healthy", "healthy_backup_found_subject_title": "The backups for :application_name are healthy", "unhealthy_backup_found_body": "The backups for :application_name on disk :disk_name are unhealthy.", "unhealthy_backup_found_empty": "There are no backups of this application at all.", "unhealthy_backup_found_full": "The backups are using too much storage. Current usage is :disk_usage which is higher than the allowed limit of :disk_limit.", "unhealthy_backup_found_not_reachable": "The backup destination cannot be reached. :error", "unhealthy_backup_found_old": "The latest backup made on :date is considered too old.", "unhealthy_backup_found_subject": "Important: The backups for :application_name are unhealthy", "unhealthy_backup_found_subject_title": "Important: The backups for :application_name are unhealthy. :problem", "unhealthy_backup_found_unknown": "Sorry, an exact reason cannot be determined." }, "en.button": { "cancel": "cancel", "clone": "Clone", "close": "close", "confirm": "confirm", "copy": "Copy", "create": "create", "delete": "delete", "delete_all": "delete all", "edit": "edit", "language": "Language", "mark_as_read": "mark as read", "required": "required", "restore": "restore", "save": "save", "save_and_close": "save and close", "save_and_create": "save and create", "save_and_create_new": "save and create new" }, "en.buttons": { "backend": { "access": { "users": { "activate": "Activate", "change_password": "Change Password", "clear_session": "Clear Session", "deactivate": "Deactivate", "delete_permanently": "Delete Permanently", "login_as": "Login As :user", "resend_email": "Resend Confirmation E-mail", "restore_user": "Restore User" } } }, "emails": { "auth": { "confirm_account": "Confirm Account", "reset_password": "Reset Password" } }, "general": { "cancel": "Cancel", "continue": "Continue", "crud": { "add": "Add", "create": "Create", "delete": "Delete", "edit": "Edit", "update": "Update", "view": "View" }, "preview": "Preview", "save": "Save", "view": "View" }, "wishes": { "frontend": { "create_autooffer": "Create Auto Offer", "create_offer": "Create Offer" } } }, "en.comment": { "comments": "Comments" }, "en.dashboard": { "browsers": "Browser Share", "clickrate": "Click-Rate (%)", "clickrate_manuell": "Click-Rate manuall Offer", "current_month": "current month", "daily_average_wish": "wishes per day", "daily_desktop_layer": "Layerimpressions Desktop \/ Day", "daily_mobile_layer": "Layerimpressions Mobile \/ Day", "date": "date", "layers": "Layers", "monthly_average_wish": "wishes per month", "monthly_desktop_browser_share": "Browser-Share Desktop \/ Month", "monthly_desktop_browser_shareklicks": "Browser-Share Desktop Klicks \/ Month", "monthly_desktop_layer": "Layerimpressions Desktop \/ Month", "monthly_desktop_response": "Desktop Response Rate \/ Month", "monthly_mobile_layer": "Layerimpressions Mobile \/ Month", "monthly_mobile_response": "Mobile Response Rate \/ Month", "openrate": "Open-Rate (%)", "openrate_manuell": "Open-Rate manuall Offer", "reaction_time_average_day": "reaction time \/ day", "reaction_time_average_month": "reaction time \/ month", "response": "Response Rate (%)", "source_2019": "period: 2019", "total_groups": "all groups", "total_sellers": "all sellers", "total_wishes": "all wishes", "wish": "wish", "wishes": "wishes" }, "en.email": { "account": { "activate": "Login", "activated": "A new :account account for the :whitelabel wish portal has been created for you.", "greeting": "Thank you for your trust in our services", "hello": "Hello :username", "link": "You can login with your user data via click on the following button.", "password": "Password : :password", "subject": "Account Details for :username at :company", "subject_for_executive": "Your login data for desiretec portal", "subject_for_seller": "Your login data for desiretec whitelabel", "username": "Email address: :email" }, "footer": { "line1": "Sunny greetings", "line2": "Your desiretec team", "line3": "DesireTec GmbH", "line4": "Auf dem Sande 1 | D-20457 Hamburg | Deutschland", "line5": "Gesch\xE4ftsf\xFChrung: John Muster", "line6": "Sitz der Gesellschaft: Hamburg", "line7": "Handelsregister: Amtsgericht Hamburg HRB XXXXX", "line8": "BAN: DEXX XXXX XXXX XXXX XXXX XX", "line9": "BIC: XXXXXXXXXX" }, "footer_novasol": { "line1": "Mit freundlichen Gr\xFC\xDFen | With kind regards | Med venlig hilsen", "line2": "Your NOVASOL booking service", "line3": "NOVASOL Reise GmbH", "line4": "Gotenstrasse 11 - 20097 Hamburg, Germany", "line5": "Phone +49 (0) 40 238859 - 82 | novasol@novasol.de \u2013 an Awaze Company", "line6": "Handelsregister Amtsgericht Hamburg, HRB 95067 | Gesch\xE4ftsf\xFChrer: Jan Haapanen", "line7": "www.novasol.de | www.dansommer.de | www.cuendet.de" }, "message": { "created-seller": "You received a new message from your customer", "created-user": "Important: There is a new message from your consultant waiting in the desiretec travel wish portal for you", "new": "New message!", "subject": "You received a new message", "token": "Your login link" }, "offer": { "created": "Your offer has been created successfully", "created_user": "You received a new offer for your :whitelabel travel wish!" }, "signature": { "stored": "You have successfully stored the E-mail Signature" }, "token": "Your login link: <a href=\":token\">:token<\/a>", "wish": { "seller_trendtours": "A new travel wish is waiting for you!", "subject_for_seller": "A new travel wish is waiting for you!", "user": "Welcome to the desiretec wish portal! Your travel wish has been created successfully.", "user_callback_seller": "Your customer is asking for a callback", "user_cnt_seller": "Your offer has been successful, a new contact has been created!", "user_novasol": "Welcome to the Novasol wish portal! Your travel wish has been created", "user_trendtours": "Welcome to the trendtours wish portal! Your travel wish has been created successfully." } }, "en.exceptions": { "backend": { "access": { "permissions": { "already_exists": "That permission already exists. Please choose a different name.", "create_error": "There was a problem creating this permission. Please try again.", "delete_error": "There was a problem deleting this permission. Please try again.", "not_found": "That permission does not exist.", "update_error": "There was a problem updating this permission. Please try again." }, "roles": { "already_exists": "That role already exists. Please choose a different name.", "cant_delete_admin": "You can not delete the Administrator role.", "create_error": "There was a problem creating this role. Please try again.", "delete_error": "There was a problem deleting this role. Please try again.", "has_users": "You can not delete a role with associated users.", "needs_permission": "You must select at least one permission for this role.", "not_found": "That role does not exist.", "update_error": "There was a problem updating this role. Please try again." }, "users": { "cant_deactivate_self": "You can not do that to yourself.", "cant_delete_admin": "You can not delete Admin.", "cant_delete_own_session": "You can not delete your own session.", "cant_delete_self": "You can not delete yourself.", "cant_restore": "This user is not deleted so it can not be restored.", "change_mismatch": "That is not your old password.", "create_error": "There was a problem creating this user. Please try again.", "delete_error": "There was a problem deleting this user. Please try again.", "delete_first": "This user must be deleted first before it can be destroyed permanently.", "email_error": "That email address belongs to a different user.", "mark_error": "There was a problem updating this user. Please try again.", "not_found": "That user does not exist.", "restore_error": "There was a problem restoring this user. Please try again.", "role_needed": "You must choose at least one role.", "role_needed_create": "You must choose at lease one role.", "session_wrong_driver": "Your session driver must be set to database to use this feature.", "update_error": "There was a problem updating this user. Please try again.", "update_password_error": "There was a problem changing this users password. Please try again." } }, "blogcategories": { "already_exists": "That Blog Category already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Category. Please try again.", "delete_error": "There was a problem deleting this Blog Category. Please try again.", "not_found": "That Blog Category does not exist.", "update_error": "There was a problem updating this Blog Category. Please try again." }, "blogtags": { "already_exists": "That Blog Tag already exists. Please choose a different name.", "create_error": "There was a problem creating this Blog Tag. Please try again.", "delete_error": "There was a problem deleting this Blog Tag. Please try again.", "not_found": "That Blog Tag does not exist.", "update_error": "There was a problem updating this Blog Tag. Please try again." }, "menus": { "already_exists": "That Menu already exists. Please choose a different name.", "create_error": "There was a problem creating this Menu. Please try again.", "delete_error": "There was a problem deleting this Menu. Please try again.", "not_found": "That Menu does not exist.", "update_error": "There was a problem updating this Menu. Please try again." }, "modules": { "already_exists": "That Module already exists. Please choose a different name.", "create_error": "There was a problem creating this Module. Please try again.", "delete_error": "There was a problem deleting this Module. Please try again.", "not_found": "That Module does not exist.", "update_error": "There was a problem updating this Module. Please try again." }, "pages": { "already_exists": "That Page already exists. Please choose a different name.", "create_error": "There was a problem creating this Page. Please try again.", "delete_error": "There was a problem deleting this Page. Please try again.", "not_found": "That Page does not exist.", "update_error": "There was a problem updating this Page. Please try again." }, "settings": { "update_error": "There was a problem updating this Settings. Please try again." } }, "frontend": { "auth": { "confirmation": { "already_confirmed": "Your account is already confirmed.", "confirm": "Confirm your account!", "created_confirm": "Your account was successfully created. We have sent you an e-mail to confirm your account.", "created_pending": "Your account was successfully created and is pending approval. An e-mail will be sent when your account is approved.", "mismatch": "Your confirmation code does not match.", "not_found": "That confirmation code does not exist.", "resend": "Your account is not confirmed. Please click the confirmation link in your e-mail, or <a href=http:\/\/localhost:8000\/account\/confirm\/resend\/:user_id>click here<\/a> to resend the confirmation e-mail.", "resent": "A new confirmation e-mail has been sent to the address on file.", "success": "Your account has been successfully confirmed!" }, "deactivated": "Your account has been deactivated.", "email_taken": "That e-mail address is already taken.", "password": { "change_mismatch": "That is not your old password." }, "registration_disabled": "Registration is currently closed." } }, "whitelabel_mismatch": "Mismatch Whitelabel User." }, "en.general": { "currency": "\u20AC" }, "en.history": { "backend": { "blogcategories": { "created": "created Blog Category", "deleted": "deleted Blog Category", "updated": "updated Blog Category" }, "blogs": { "created": "created Blog", "deleted": "deleted Blog", "updated": "updated Blog" }, "blogtags": { "created": "created Blog Tag", "deleted": "deleted Blog Tag", "updated": "updated Blog Tag" }, "none": "There is no recent history.", "none_for_entity": "There is no history for this :entity.", "none_for_type": "There is no history for this type.", "pages": { "created": "created Page", "deleted": "deleted Page", "updated": "updated Page" }, "permissions": { "created": "created permission", "deleted": "deleted permission", "updated": "updated permission" }, "recent_history": "Recent History", "roles": { "created": "created role", "deleted": "deleted role", "updated": "updated role" }, "users": { "changed_password": "changed password for user", "created": "created user", "deactivated": "deactivated user", "deleted": "deleted user", "permanently_deleted": "permanently deleted user", "reactivated": "reactivated user", "restored": "restored user", "updated": "updated user" } } }, "en.http": { "404": { "description": "Sorry, but the page you were trying to view does not exist.", "title": "Page Not Found" }, "503": { "description": "Be right back.", "title": "Be right back." } }, "en.labels": { "about": "About us", "account": "Account", "activated": "activated", "address": "Address", "attendee": "Attendee", "attendees": "Attendees", "backend": { "access": { "permissions": { "create": "Create Permission", "edit": "Edit Permission", "management": "Permission Management", "table": { "display_name": "Display Name", "permission": "Permission", "sort": "Sort", "status": "Status", "total": "role total|roles total" } }, "roles": { "create": "Create Role", "edit": "Edit Role", "management": "Role Management", "table": { "number_of_users": "Number of Users", "permissions": "Permissions", "role": "Role", "sort": "Sort", "total": "role total|roles total" } }, "users": { "active": "Active Users", "all_permissions": "All Permissions", "change_password": "Change Password", "change_password_for": "Change Password for :user", "create": "Create User", "deactivated": "Deactivated Users", "deleted": "Deleted Users", "edit": "Edit User", "edit-profile": "Edit Profile", "management": "User Management", "no_permissions": "No Permissions", "no_roles": "No Roles to set.", "permissions": "Permissions", "table": { "confirmed": "Confirmed", "created": "Created", "email": "E-Mail-Adresse", "first_name": "First Name", "id": "ID", "last_name": "Last Name", "last_updated": "Last Updated", "no_deactivated": "No Deactivated Users", "no_deleted": "No Deleted Users", "roles": "Roles", "total": "user total|users total" }, "tabs": { "content": { "overview": { "avatar": "Avatar", "confirmed": "Confirmed", "created_at": "Created At", "deleted_at": "Deleted At", "email": "Email address", "last_updated": "Last Updated", "name": "Name", "status": "Status", "whitelabels": "Whitelabels" } }, "titles": { "history": "History", "overview": "Overview" } }, "view": "View User" } }, "blogcategories": { "create": "Create Blog Category", "edit": "Edit Blog Category", "management": "Blog Category Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "status": "Status", "title": "Blog Category" }, "title": "Blog Category" }, "blogs": { "create": "Create Blog", "edit": "Edit Blog", "management": "Blog Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "publish": "PublishDateTime", "status": "Status", "title": "Blog" }, "title": "Blogs" }, "blogtags": { "create": "Create Blog Tag", "edit": "Edit Blog Tag", "management": "Blog Tag Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "status": "Status", "title": "Blog Tag" }, "title": "Blog Tags" }, "distributions": { "create": "Create Distribution", "edit": "Edit Distribution", "management": "Distributions", "no_distributions": "no Distributions", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "description": "Description", "display_name": "Display Name", "name": "Distribution", "whitelabel": "Whitelabel" }, "title": "Distributions" }, "emailtemplates": { "create": "Create Email Template", "edit": "Edit Email Template", "management": "Email Template Management", "table": { "all": "All", "createdat": "Created At", "status": "Status", "subject": "Subject", "title": "Title", "updatedat": "Updated At" }, "title": "Email Templates" }, "faqs": { "create": "Create FAQ", "edit": "Edit FAQ", "management": "FAQ Management", "table": { "all": "All", "answer": "Answer", "createdat": "Created At", "createdby": "Created By", "publish": "PublishDateTime", "question": "Question", "status": "Status", "title": "FAQs", "updatedat": "Updated At" }, "title": "FAQ" }, "groups": { "create": "Create Group", "edit": "Edit Group", "management": "Groups", "no_whitelabels": "no Whitelabels", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "description": "Description", "display_name": "Display Name", "name": "Group", "status": "Status", "users": "Users", "whitelabel": "Whitelabel" }, "title": "Groups" }, "menus": { "create": "Create Menu", "edit": "Edit Menu", "field": { "icon": "Icon Class", "icon_title": "Font Awesome Class. eg. fa-edit", "items": "Menu Items", "name": "Name", "open_in_new_tab": "Open URL in new tab", "type": "Type", "url": "URL", "url_type": "URL Type", "url_types": { "route": "Route", "static": "Static" }, "view_permission_id": "Permission" }, "management": "Menu Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "name": "Name", "type": "Type" }, "title": "Menus" }, "modules": { "create": "Create Module", "edit": "Edit Module", "form": { "controller_name": "Controller &nbsp;Name", "create_file": "Create", "directory_name": "Directory Name", "edit_file": "Edit", "event": "Event Name", "form_file": "Form", "index_file": "Index", "model_name": "Model Name", "name": "Module Name", "namespace": "Namespace", "repo_name": "Repository Name", "resource_controller": "Resourceful Controller", "resource_route": "Resourceful Routes", "route_controller_name": "Controller &nbsp;Name", "route_name": "Route Name", "table_controller_name": "Controller &nbsp;Name", "table_name": "Table Name", "url": "View Route", "view_permission_id": "View Permission", "views_directory": "Directory &nbsp;&nbsp;&nbsp;Name" }, "management": "Module Management", "table": { "created_by": "Created By", "name": "Module Name", "url": "Module View Route", "view_permission_id": "View Permission" }, "title": "Module" }, "pages": { "create": "Create Page", "edit": "Edit Page", "management": "Page Management", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "status": "Status", "title": "Title", "updatedat": "Updated At" }, "title": "Pages" }, "profile_updated": "Your profile has been updated.", "settings": { "companydetails": "Company Contact Details", "edit": "Edit Settings", "footer": "Footer Settings", "google": "Google Analytics Track Code", "mail": "Mail Settings", "management": "Settings Management", "seo": "SEO Settings", "terms": "Terms and Condition Settings", "title": "Settings" }, "whitelabels": { "create": "Create Whitelabel", "edit": "Edit Whitelabel", "management": "Whitelabels", "management_client": "Whitelabel", "table": { "all": "All", "createdat": "Created At", "createdby": "Created By", "display_name": "Whitelabel", "distribution": "Distribution", "ga_view_id": "Google View Id", "name": "Identifier", "status": "Status" }, "title": "Whitelabels" }, "wishes": { "create": "Create Wish", "edit": "Edit Wish", "management": "Wishes", "no_whitelabels": "no Whitelabels", "table": { "airport": "Airport", "all": "All", "createdat": "Created At", "createdby": "Created By", "destination": "Destination", "earliest_start": "Earliest Start", "group": "Group", "latest_return": "Latest Return", "offerCount": "Offers", "status": "Status", "title": "Wish", "whitelabel": "Whitelabel" }, "title": "Wishes" } }, "cancel": "Cancel", "contact": "Contact", "content": "Content", "country": "Country", "current": "Current", "current_password": "Current Password", "description": "Description", "details": "Details", "documents": "Documents", "domain": "Domain", "download": "Download", "email": "Email address", "events": "Events", "export_all": "Export All", "export_selected": "Export Selected", "fax": "Fax", "feedback": "Feedback", "finish": "Finish", "first_name": "Firstname", "frontend": { "agents": { "create": "Create new Agent", "management": "Agenten", "table": { "avatar": "Avatar", "created_at": "Created at", "createdby": "Created by", "display_name": "Display name", "id": "Id", "name": "Name", "status": "Status" } }, "auth": { "login_box_title": "Login", "login_button": "Login", "login_with": "Login with :social_media", "register_box_title": "Register", "register_button": "Register", "remember_me": "Remember Me" }, "dashboard": { "analytics": { "answered_wishes": "Answered Wishes", "bookings": "Bookings", "changed_wishes": "Changed Wishes", "created_wishes": "Created Wishes", "free_text": "Free text", "latest_answered_wishes": "Latest Answered Wishes", "latest_reaction_quota": "Latest Reaction Quota", "reaction_quota": "Reaction Quota", "reaction_time": "Reaction Time" } }, "macros": { "country": { "alpha": "Country Alpha Codes", "alpha2": "Country Alpha 2 Codes", "alpha3": "Country Alpha 3 Codes", "numeric": "Country Numeric Codes" }, "macro_examples": "Macro Examples", "state": { "mexico": "Mexico State List", "us": { "armed": "US Armed Forces", "outlying": "US Outlying Territories", "us": "US States" } }, "territories": { "canada": "Canada Province & Territories List" }, "timezone": "Timezone" }, "offers": { "create": "Create new offer", "management": "Offers", "offers_for_wish": "Offer for", "table": { "all": "All", "createdat": "Created at", "createdby": "Created by", "status": "Status", "title": "Offer" } }, "passwords": { "forgot_password": "Forgot Your Password?", "reset_password_box_title": "Reset Password", "reset_password_button": "Reset Password", "send_password_reset_link_button": "Send Password Reset Link" }, "user": { "passwords": { "change": "Change Password" }, "profile": { "address": "Address", "avatar": "Avatar", "city": "City", "country": "Country", "created_at": "Created at", "edit_information": "Edit Information", "email": "Email address", "first_name": "First name", "last_name": "Last name", "last_updated": "Last updated", "ssn": "SSN", "update_information": "Update information", "zipcode": "Zip" } }, "wishes": { "add-comment": "Add comment", "created_at": "Created at", "edit": "Edit wish", "goto": "View travel wish", "night": ":value night|:value nights", "table": { "adults": "adult|adults", "kids": "{0}|kid|kids" }, "week": ":value week|:value weeks", "wishes": "Travel wishes" } }, "full_name": "Full Name", "general": { "actions": "Actions", "active": "Active", "all": "All", "buttons": { "save": "Save", "update": "Update" }, "custom": "Custom", "hide": "Hide", "inactive": "Inactive", "no": "No", "none": "None", "show": "Show", "toggle_navigation": "Toggle Navigation", "yes": "Yes" }, "go_back": "Back!", "go_next": "Next!", "id": "Id", "inbox": "Inbox", "interest": "Interest", "join": "Join Now", "language": "Language", "last_name": "Lastname", "login": "Sign", "logo": "Logo", "logout": "Logout", "message": "Message", "message_text": "Message text", "mobile": "Mobile", "name": "Name", "new": "New", "note": "note", "notes": "notes", "notifications": "Notifications", "now": "Now", "occupation": "Occupation", "ok": "Ok", "online": "Online", "password": "Password", "password_confirm": "Confirm Password", "personal_timezone": "Timezone", "phone": "Phone", "plus": "More", "posts": "Posts", "ratings": "Ratings", "recipient": "Recipient", "register": "Register", "reset": "Reset Password", "reset_link": "Send Password Reset Link", "review": "Review", "role": "Role", "send": "Send Now", "street": "Street", "subject": "Subject", "tel": "Telephone number", "title": "Title", "user": "User", "username": "Username", "verify": "Email Verification", "verify_email": "Verify Your Email Address", "warning": "Warning", "whitelabel": "Whitelabel", "whitelabel_executive": "Whitelabel executive", "whitelabel_information": "Whitelabel information", "whitelabel_subtitle": "New subtitle", "whitelabel_title": "New whitelabel", "wish": "Wish", "wishes": "Wishes", "zipcode": "Zip" }, "en.log-viewer::general": { "all": "All", "date": "Date" }, "en.log-viewer::levels": { "alert": "Alert", "all": "All", "critical": "Critical", "debug": "Debug", "emergency": "Emergency", "error": "Error", "info": "Info", "notice": "Notice", "warning": "Warning" }, "en.menus": { "access_management": "Access Management", "backend": { "access": { "permissions": { "all": "All Permissions", "create": "Create Permission", "edit": "Edit Permission", "main": "Permissions", "management": "Permission Management", "version_restrictions": "Available in other versions" }, "roles": { "all": "All Roles", "create": "Create Role", "edit": "Edit Role", "main": "Roles", "management": "Role Management" }, "title": "Access Management", "users": { "all": "All Users", "change-password": "Change Password", "create": "Create User", "deactivated": "Deactivated Users", "deleted": "Deleted Users", "edit": "Edit User", "main": "Users", "view": "View User" } }, "blog": { "all": "All Blog Page", "create": "Create Blog Page", "edit": "Edit Blog Page", "main": "Blog Pages", "management": "Blog Management" }, "blogcategories": { "all": "All Blog Categories", "create": "Create Blog Category", "edit": "Edit Blog Category", "main": "CMS Pages", "management": "Blog Category Management" }, "blogs": { "all": "All Blog", "create": "Create Blog", "edit": "Edit Blog", "main": "Blogs", "management": "Blog Management" }, "blogtags": { "all": "All Blog Tag", "create": "Create Blog Tag", "edit": "Edit Blog Tag", "main": "Blog Tags", "management": "Blog Tag Management" }, "distributions": { "all": "All Distributions", "create": "Create Distribution", "edit": "Edit Distribution", "main": "Distributions", "management": "Distribution Management" }, "faqs": { "all": "All Faq Page", "create": "Create Faq Page", "edit": "Edit Faq Page", "main": "Faq Pages", "management": "Faq Management" }, "groups": { "all": "All Groups", "create": "Create Group", "edit": "Edit Group", "main": "Groups", "management": "Group Management" }, "log-viewer": { "dashboard": "Dashboard", "logs": "Logs", "main": "Log Viewer" }, "menus": { "all": "All Menu", "create": "Create Menu", "edit": "Edit Menu", "main": "Menus", "management": "Menu Management" }, "modules": { "all": "All Modules Page", "create": "Create Module Page", "main": "Module Pages", "management": "Module Management" }, "pages": { "all": "All Pages", "create": "Create Page", "edit": "Edit Page", "main": "Pages", "management": "Page Management" }, "settings": { "all": "All Settings", "create": "Create Settings", "edit": "Edit Settings", "main": "Settings", "management": "Settings Management" }, "sidebar": { "dashboard": "Dashboard", "general": "General", "system": "System" }, "whitelabels": { "all": "All Whitelabels", "create": "Create Whitelabel", "edit": "Edit Whitelabel", "main": "Whitelabels", "management": "Whitelabel Management" }, "wishes": { "all": "All Wishes", "create": "Create Wish", "edit": "Edit Wish", "main": "Wishes", "management": "Wish Management" } }, "categories_management": "Categories Management", "email_signature": "E-mail Signature", "footer_tnb": "Terms and Conditions", "frontend": { "agents": { "all": "All Menu", "create": "Create Agent", "edit": "Edit Menu", "main": "Menus", "management": "Menu Management" } }, "groups_management": "Groups Management", "language-picker": { "langs": { "ar": "Arabic", "da": "Danish", "de": "German", "el": "Greek", "en": "English", "es": "Spanish", "fr": "French", "id": "Indonesian", "it": "Italian", "nl": "Dutch", "pt_BR": "Brazilian Portuguese", "ru": "Russian", "sv": "Swedish", "th": "Thai" }, "language": "Language" }, "languages": "Languages", "languages_lines": "Languages Lines", "list": { "status": { "all": "All travel wishes", "completed": "Completed", "new": "New", "offer_created": "Offer Created" } }, "list_of_wishes": "List wishes", "regions_management": "Regions Management", "rules_management": "Lead Management", "sellers": "Sellers", "sellers_management": "Sellers Management", "wishes": "Wishes", "wishes_management": "Wishes Management" }, "en.messages": { "_account": "Do you have an account", "account": "Don't have an account", "background": "The background image has to be--- x --- Pixel in PNG \/ JPG \/ JPEG format. Maximum size --- KB.", "contact": "Contact us", "contact_success": "Your message has been sent successfully", "created": ":attribute wurde erfolgreich erstellt", "delete": "Do you really want to delete this item? Continue?", "delete_canceled": "Delete canceled", "deleted": ":attribute wurde erfolgreich gel\xF6scht", "destroy": "Do you really want to delete this item permanently? Continue?", "destroyed": ":attribute wurde endg\xFCltig gel\xF6scht", "event_upcoming": "Event Upcoming", "favicon": "Favicon has to be --- x --- Pixel in PNG \/ ICON format. Maximum size --- KB.", "forgot": "Forgot Password", "here": "login here", "install": "Module[:attribute] has been installed successfully", "join": "you successfully joined event", "login": "Login", "logo": "Logo has to be --- x --- Pixel in PNG \/ JPG \/ JPEG \/ SVG format. Maximum size --- KB.", "new_posts": "Latest Posts", "recent_event": "Recent event", "register": "Create your account", "remember": "Remember me", "reset": "Reset Password", "restore": "Do you really want to restore this item? Continue?", "restore_canceled": "Restore canceled", "restored": ":attribute wurde erfolgreich wiederhergestellt", "show_all": "Show all articles", "show_all_events": "Show all events", "sign_up": "Sign Up", "terms": "Agree to terms and conditions", "title": "Welcome Back", "token_send": "We've sent you a login link!", "uninstall": "Module[:attribute] has been uninstalled successfully", "unsaved": "You have unsaved changes, save and proceed ?", "updated": ":attribute wurde erfolgreich aktualisiert", "verify": "Before proceeding, please check your email for a verification link.", "verify_link": "If you did not receive the email,", "verify_request": "click here to request another.", "whitelabel_user": "Create an associate whitelabel user" }, "en.modals": { "activated": "Activated", "active": "Active", "add_document": "Add document", "add_documents": "Add documents", "address": "Address", "adults": "Adults", "airport": "Airport", "alert_email": "Alert Email", "asc": "Asc", "auto": "Auto", "boards": "Boards", "budget": "Budget", "categories": "Categories", "category": "Hotel category", "catering": "Hotel catering", "click_to_upload": "Click to upload", "color": "Color", "confirmed": "Confirmed", "content": "Content", "country_code": "Country Code", "create": "Create", "created_at": "Created at", "createdat": "created at", "createdby": "created by", "current": "Current", "dashboard": "Dashboard", "deactivation_duration": "Duration of deactivation", "default": "Default", "desc": "Desc", "description": "Description", "destination": "Destination", "display_name": "Display name", "display_offer": "Displayed offers", "domain": "Domain", "duplicate": "Duplicate", "duration": "duration", "earliest_start": "Earliest Start", "email": "Email", "email_verified_at": "Verified at", "end": "End", "first_name": "First name", "from": "From", "full_name": "Name", "group": "Group", "groups": "Groups", "headline": "Headline", "headline_success": "Success headline", "hotel_loop": "Hotel Loop", "id": "ID", "image": "Image", "inactive_until": "Inactive until", "kids": "Children", "last_login": "Last login ", "last_name": "Last name", "latest_return": "Latest Return", "licence": "Licence", "lockout_time": "Lockout time", "login_failures": "Login failures", "logs": "Logs", "manuel": "Manuel", "message_success": "Message success", "mix": "Mix", "mobile": "Mobile", "name": "Name", "occupation": "Occupation", "offerCount": "Offers", "online": "Online", "owner": "Owner", "password": "Password", "password_confirm": "Password confirmation", "pending": "Pending", "period": "Period", "permission": "Permission", "permissions": "Permissions", "phone": "Phone", "position": "Position", "price": "Price", "price_loop": "Price Loop", "primary_color": "Primary color", "rating": "Rating", "recommendation": "Recommendation", "region_code": "Region code", "region_name": "Region Name", "role": "Role", "roles": "Roles", "start": "Start", "status": "Status", "subheadline": "Sub headline", "subheadline_success": "Success sub headline", "summary": "Summary", "text": "Text", "title": "Title", "type": "Type", "unconfirmed": "Unconfirmed", "until": "Until", "updated_at": "Updated at", "upload_documents": "Upload documents", "upload_photo": "Upload photo", "upload_tip": "Upload tip", "url": "Url", "users": "User", "value": "Value", "visual": "The format of the visual is 3:1, at least 600x200 px.", "whitelabel": "Whitelabel", "whitelabels_distribution": "Distribution", "whitelabels_image": "Background image", "wish": "Wish" }, "en.navs": { "frontend": { "agents": "Agents", "create_wish": "Create wish", "dashboard": "Dashboard", "login": "Login", "macros": "Macros", "offers": "My offers", "register": "Register", "user": { "account": "Account", "administration": "Administration", "agents": "Agents", "change_password": "Change password", "my_information": "My information", "profile": "Profile" }, "wishes": "My wishes", "wisheslist": "Wishes" }, "general": { "home": "Home", "logout": "Logout" } }, "en.notification": { "created": "<span class=\"badge badge-flat border-success text-success-600 rounded-0 mr-2\"> Created <\/span> <strong>:name<\/strong> (:url) has been <strong>successfully created<\/strong> by <strong>:user<\/strong>", "deleted": "<span class=\"badge badge-flat border-danger text-danger-600 rounded-0 mr-2\"> Deleted <\/span><strong>:name<\/strong> (:url) has been <strong>successfully deleted<\/strong> by <strong>:user<\/strong>", "restored": "<span class=\"badge badge-flat border-info text-info-600 rounded-0 mr-2\"> Restored <\/span><strong>:name<\/strong> (:url) has been <strong>successfully restored<\/strong> by <strong>:user<\/strong>" }, "en.pagination": { "next": "Next &raquo;", "previous": "&laquo; Previous" }, "en.passwords": { "password": "Passwords must be at least six characters and match the confirmation.", "reset": "Your password has been reset!", "sent": "We have e-mailed your password reset link!", "token": "This password reset token is invalid.", "user": "We can't find a user with that e-mail address." }, "en.roles": { "administrator": "Administrator", "user": "User" }, "en.seller": { "agent": { "create": "create agent", "email": "email address", "email_placeholder": "seller@seller.com", "tel": "Tel.", "tel_placeholder": "01761234567" } }, "en.strings": { "backend": { "access": { "users": { "delete_user_confirm": "Are you sure you want to delete this user permanently? Anywhere in the application that references this user's id will most likely error. Proceed at your own risk. This can not be un-done.", "if_confirmed_off": "(If confirmed is off)", "restore_user_confirm": "Restore this user to its original state?" } }, "dashboard": { "title": "Administrative Dashboard", "welcome": "Welcome" }, "general": { "all_rights_reserved": "All Rights Reserved.", "are_you_sure": "Are you sure you want to do this?", "boilerplate_link": "Laravel AdminPanel", "continue": "Continue", "member_since": "Member since", "minutes": " minutes", "search_placeholder": "Search...", "see_all": { "messages": "See all messages", "notifications": "View all", "tasks": "View all tasks" }, "status": { "offline": "Offline", "online": "Online" }, "timeout": "You were automatically logged out for security reasons since you had no activity in ", "you_have": { "messages": "{0} You don't have messages|{1} You have 1 message|[2,Inf] You have :number messages", "notifications": "{0} You don't have notifications|{1} You have 1 notification|[2,Inf] You have :number notifications", "tasks": "{0} You don't have tasks|{1} You have 1 task|[2,Inf] You have :number tasks" } }, "search": { "empty": "Please enter a search term.", "incomplete": "You must write your own search logic for this system.", "results": "Search Results for :query", "title": "Search Results" }, "welcome": "<p>This is the AdminLTE theme by <a href=\"https:\/\/almsaeedstudio.com\/\" target=\"_blank\">https:\/\/almsaeedstudio.com\/<\/a>. This is a stripped down version with only the necessary styles and scripts to get it running. Download the full version to start adding components to your dashboard.<\/p>\n<p>All the functionality is for show with the exception of the <strong>Access Management<\/strong> to the left. This boilerplate comes with a fully functional access control library to manage users\/roles\/permissions.<\/p>\n<p>Keep in mind it is a work in progress and their may be bugs or other issues I have not come across. I will do my best to fix them as I receive them.<\/p>\n<p>Hope you enjoy all of the work I have put into this. Please visit the <a href=\"https:\/\/github.com\/rappasoft\/laravel-5-boilerplate\" target=\"_blank\">GitHub<\/a> page for more information and report any <a href=\"https:\/\/github.com\/rappasoft\/Laravel-5-Boilerplate\/issues\" target=\"_blank\">issues here<\/a>.<\/p>\n<p><strong>This project is very demanding to keep up with given the rate at which the master Laravel branch changes, so any help is appreciated.<\/strong><\/p>\n<p>- Viral Solani<\/p>" }, "emails": { "auth": { "click_to_confirm": "Click here to confirm your account:", "error": "Whoops!", "greeting": "Hello!", "password_cause_of_email": "You are receiving this email because we received a password reset request for your account.", "password_if_not_requested": "If you did not request a password reset, no further action is required.", "password_reset_subject": "Reset Password", "regards": "Regards,", "reset_password": "Click here to reset your password", "thank_you_for_using_app": "Thank you for using our application!", "trouble_clicking_button": "If you\u2019re having trouble clicking the \":action_text\" button, copy and paste the URL below into your web browser:" } }, "frontend": { "test": "Test", "tests": { "based_on": { "permission": "Permission Based - ", "role": "Role Based - " }, "js_injected_from_controller": "Javascript Injected from a Controller", "using_access_helper": { "array_permissions": "Using Access Helper with Array of Permission Names or ID's where the user does have to possess all.", "array_permissions_not": "Using Access Helper with Array of Permission Names or ID's where the user does not have to possess all.", "array_roles": "Using Access Helper with Array of Role Names or ID's where the user does have to possess all.", "array_roles_not": "Using Access Helper with Array of Role Names or ID's where the user does not have to possess all.", "permission_id": "Using Access Helper with Permission ID", "permission_name": "Using Access Helper with Permission Name", "role_id": "Using Access Helper with Role ID", "role_name": "Using Access Helper with Role Name" }, "using_blade_extensions": "Using Blade Extensions", "view_console_it_works": "View console, you should see 'it works!' which is coming from FrontendController@index", "you_can_see_because": "You can see this because you have the role of ':role'!", "you_can_see_because_permission": "You can see this because you have the permission of ':permission'!" }, "user": { "change_email_notice": "If you change your e-mail you will be logged out until you confirm your new e-mail address.", "email_changed_notice": "You must confirm your new e-mail address before you can log in again.", "password_updated": "Password successfully updated.", "profile_updated": "Profile successfully updated." }, "welcome_to": "Welcome to :place" } }, "en.tables": { "actions": "Actions", "activated": "Activated", "activities": "Activities", "activity": "Activity", "add_documents": "Add documents", "address": "Address", "adults": "Adults", "ago": "Ago", "airport": "Airport", "alias": "Alias", "boards": "Boards", "booking_status": "Booking status", "budget": "Budget", "categories": "Categories", "category": "Hotel category", "catering": "Hotel catering", "color": "Color", "confirmed": "Confirmed", "content": "Content", "country_code": "Country Code", "created_at": "Created at", "created_by": "Created by", "date": "Date", "description": "Description", "destination": "Destination", "display_name": "Display name", "duration": "Duration", "earliest_start": "Earliest start", "email": "Email", "email_verified_at": "Verified at", "empty_table": "No data accessable in the table", "end": "End", "eventAction": "Event Action", "eventCategory": "Event Category", "eventLabel": "Event Label", "first_name": "First name", "from": "From", "full_name": "Name", "group": "Group", "groups": "Groups", "id": "Id", "install": "Install", "kids": "Children", "last_login": "Last login ", "last_name": "Last name", "latest_return": "Latest return", "locale": "Locale", "lockout_time": "Lockout time", "login_failures": "Login failures", "message": "Message", "migrate": "Migrate", "mobile": "Mobile", "name": "Name", "occupation": "Occupation", "offerCount": "Offer count", "online": "online", "owner": "Owner", "package": "Package", "pending": "Pending", "period": "Period", "permissions": "Permissions", "phone": "Phone", "region_code": "Region code", "region_name": "Region Name", "roles": "Roles", "start": "Start", "status": "Status", "subject": "Subject", "text": "Text", "title": "Wish", "type": "Type", "unconfirmed": "Unconfirmed", "uninstall": "Uninstall", "updated_at": "Updated at", "url": "Url", "users": "Users", "when": "When", "whitelabel": "Whitelabel" }, "en.tnb": { "not_stored": "Error saving Terms and Conditions", "stored": "You have successfully stored the Terms and Conditions", "template": "<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">Bedingungen f&uuml;r die Nutzung des </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">-Reisewunschportals</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>1. Funktion des </strong></span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">-Reisewunschportals</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>, Nutzungsbedingungen</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">1.1 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> bietet &uuml;ber das Online-Tool &bdquo;</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">-Reisewunschportal&ldquo; unentgeltlich die technische M&ouml;glichkeit Suchanzeigen nach Reiseangeboten (&bdquo;Reisew&uuml;nsche&ldquo;) aufzugeben und so pers&ouml;nlichen Kontakt zu den </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> Reiseberatern zum Zwecke einer individuellen Angebotskommunikation herzustellen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">1.2 F&uuml;r die Nutzung des Online-Tools gelten diese Nutzungsbedingungen, die nach Ma&szlig;gabe von Ziffer 8.1 ge&auml;ndert werden k&ouml;nnen.</span></span></span></p>\n    &nbsp;\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>2. Anmeldung</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.1 Das Online-Tool ist &uuml;ber ein entsprechendes Dialogfeld auf der Webseite des </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> sowie &uuml;ber </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$URL-REISEWUNSCHPORTAL</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> zu erreichen. Die Nutzung des Online-Tools setzt die Anmeldung als Nutzer voraus.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.2 Die Anmeldung ist nur vollj&auml;hrigen und unbeschr&auml;nkt haftenden Personen gestattet.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.3 Die Anmeldung erfolgt durch Einsendung der E-Mail-Adresse sowie des Reisewunsches und ggf. weiterer Suchkriterien sowie der Akzeptanz der Nutzungsbedingungen. Sie wird durch Zusendung einer Best&auml;tigungsmail mit einem individuellen Zugangslink durch </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> an die angegebene E-Mail-Adresse abgeschlossen.&nbsp;&nbsp;</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.4 &Uuml;ber den Zugangslink kann der Nutzer seinen Reisewunsch einschlie&szlig;lich der weiteren angegeben Daten im Online-Tool jederzeit einsehen, anpassen oder deaktivieren. Passt der Nutzer den Reisewunsch an oder deaktiviert ihn, verschickt das Online-Tool eine entsprechende Info-Mail an ihn.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.5 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> &uuml;berpr&uuml;ft nicht die Richtigkeit der Nutzerdaten.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">2.6 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> beh&auml;lt sich das Recht vor, nach alleinigem Ermessen und ohne Ank&uuml;ndigung den Zugang von Nutzern zum Online-Tool oder dessen Teilen zu verweigern und/oder den Betrieb des Online-Tools einzustellen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">&nbsp;</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>3. Reisew&uuml;nsche, Bearbeitung</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.1 Ein Reisewunsch stellt nur eine unverbindliche Anfrage und kein rechtlich bindendes Angebot dar.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.2 Die in das Online-Tool eingegebenen Reisew&uuml;nsche der Nutzer werden durch das System an </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> Reiseberater zur weiteren Bearbeitung weitergeleitet.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.3 Die Reisew&uuml;nsche werden nicht ver&ouml;ffentlicht.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.4 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> Reiseberater k&ouml;nnen auf einen Reisewunsch mit einem Angebotsvorschlag reagieren. Dieser Vorschlag ist rechtlich unverbindlich, soweit darin nichts anderes bestimmt ist.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.5 Nachdem ein Reiseberater einen Reisewunsch bearbeitet und das Angebot in das Online-Tool eingestellt hat, bekommt der Nutzer eine E-Mail, in der erneut ein Link zum Reisewunsch und dem Angebot enthalten ist.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.6 Der Nutzer, welcher den Reisewunsch eingestellt hat, kann auf den Vorschlag hin den </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> Reiseberater kontaktieren. Er ist jedoch nicht verpflichtet, auf einen Vorschlag zu reagieren.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">3.7 Der Nutzer kann w&auml;hlen, &uuml;ber welchen Weg (E-Mail, Telefon) er weiter mit dem Reiseberater kommunizieren m&ouml;chte. Solange der Nutzer keine Kontaktdaten f&uuml;r einen Direktkontakt mitteilt, erfolgt die Kommunikation ausschlie&szlig;lich &uuml;ber das Online-Tool.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">&nbsp;</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>4. Pflichten des Nutzers, Verantwortung f&uuml;r Inhalte</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">4.1 Der Nutzer ist verpflichtet, den pers&ouml;nlichen Zugangslink geheim zu halten.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">4.2 Der Nutzer ist grunds&auml;tzlich f&uuml;r alle &uuml;ber seinen Zugangslink vorgenommenen Aktivit&auml;ten verantwortlich. Die Regelungen dieses Absatzes gelten nicht, wenn der Nutzer einen etwaigen Missbrauch seines Zugangslinks nicht zu vertreten hat, weil keine Sorgfaltspflichtverletzung des Nutzers vorliegt. Der Nutzer ist verpflichtet, </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> umgehend zu informieren, wenn er Anhaltspunkte f&uuml;r einen Missbrauch seines Zugangslink durch Dritte hat.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">4.3 Der Nutzer ist verpflichtet, bei der Einstellung von Reisew&uuml;nschen und sonstigen Inhalten s&auml;mtliche geltende Rechtsvorschriften, Rechte Dritter und diese Nutzungsbedingungen zu beachten. Er ist f&uuml;r die Rechtm&auml;&szlig;igkeit, Richtigkeit und Vollst&auml;ndigkeit aller von ihm eingestellten Inhalte verantwortlich und haftet f&uuml;r die Verletzung von Rechtsvorschriften oder von rechten Dritter durch von ihm eingestellte Inhalte.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">4.4 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> &uuml;berpr&uuml;ft die in das Online-Tool eingestellten Inhalte der Nutzer grunds&auml;tzlich nicht und &uuml;bernimmt keine Haftung. </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span>r <span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">beh\xE4lt sich aber das Recht vor, die Inhalte zu &uuml;berpr&uuml;fen, auch wenn keine&nbsp; Verpflichtung besteht.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">4.5 Der Nutzer erh&auml;lt etwaige Informationen &uuml;ber die von ihm im Online-Tool hinterlegte E-Mail-Adresse. Es obliegt ihm, sicherzustellen, dass er unter dieser E-Mail-Adresse erreichbar ist.</span></span></span><br />\n    <br />\n    <br />\n    <span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>5. Unzul&auml;ssige Nutzungshandlungen, Ma&szlig;nahmen bei Verst&ouml;&szlig;en, Freistellung</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.1 Die folgenden Handlungen sind unzul&auml;ssig:&nbsp; Das Einstellen von anderen Inhalten als Reisew&uuml;nschen. Das Einstellen von unzul&auml;ssigen Inhalten; unzul&auml;ssige Inhalte, die gegen die Nutzungsbedingungen oder gegen gesetzliche Verbote oder die guten Sitten versto&szlig;en oder Rechte Dritter verletzen. Die Offenlegung und Weitergabe des Zugangslinks zum Online-Tool. Das automatisierte Auslesen der im Online-Tool befindlichen Daten sowie der Aufbau eigener Suchsysteme, Dienste und Verzeichnisse unter Zuhilfenahme der im Online-Tool abrufbaren Inhalte sowie das vielfache Erstellen gleicher Inhalte. Die Verwendung oder das Aufspielen von Dateien, die Viren, besch&auml;digte Dateien, Software oder sonstige Mechanismen oder Inhalte enthalten, welche das Online-Tool oder dessen Nutzer, deren Rechner, die Server von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> oder die auf den Rechnern der Nutzer oder von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> verwendete Software ausspionieren, attackieren oder in sonstiger Weise beeintr&auml;chtigen k&ouml;nnten.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.2 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> kann folgende Ma&szlig;nahmen ergreifen, wenn konkrete Anhaltspunkte daf&uuml;r bestehen, dass ein Nutzer gesetzliche Vorschriften, Rechte Dritter oder diese Bedingungen verletzt, oder wenn </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ein sonstiges berechtigtes Interesse hat: L&ouml;schen von Reisew&uuml;nschen oder sonstigen Inhalten, Verwarnung des Nutzers, Beschr&auml;nkung der Nutzungsm&ouml;glichkeiten des Online-Tools durch den Nutzer, so dass u.a. keine Inhalte mehr eingestellt werden k&ouml;nnen, L&ouml;schung des Nutzerkontos.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.3 Der Nutzer stellt </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> von allen Anspr&uuml;chen frei, die von Dritten gegen </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> aufgrund einer Verletzung ihrer Rechte geltend gemacht werden, soweit der Nutzer diese Rechtsverletzung zu vertreten hat. Die Freistellung umfasst die &Uuml;bernahme s&auml;mtlicher Gerichtskosten und angemessener Anwaltskosten.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.4 Der Nutzer wird </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> bei der Verteidigung gegen die Inanspruchnahme unterst&uuml;tzen und insbesondere unverz&uuml;glich alle Informationen zur Verf&uuml;gung stellen, die f&uuml;r die Pr&uuml;fung und Abwehr der Anspr&uuml;che von Bedeutung sein k&ouml;nnen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.5 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ist im Fall der berechtigten Geltendmachung von Rechten durch einen Dritten berechtigt, dem Dritten den Namen und die E-Mail-Adresse des Nutzers mitzuteilen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">5.6 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ist zur Geltendmachung weiterer gesetzlicher Rechte im Fall von unzul&auml;ssigen Nutzungshandlungen berechtigt.</span></span></span></p>\n    &nbsp;\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>6. Haftungsbeschr&auml;nkung</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">6.1 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> &uuml;bernimmt keine Garantie oder Gew&auml;hr f&uuml;r die Verf&uuml;gbarkeit und Funktion des Online-Tools oder der eingestellten Inhalte. </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> beh&auml;lt sich vor das </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span>&gt;<span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">-Reisewunschportal (auch ohne vorherige Ank&uuml;ndigung) ganz oder teilweise&nbsp;</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">einzustellen oder den Zugang hierzu ganz oder teilweise einzuschr&auml;nken, ohne dass hieraus Anspr&uuml;che der Nutzer gegen&uuml;ber </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> entstehen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">6.2 F&uuml;r eine Haftung von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> auf Schadenersatz gelten unbeschadet der sonstigen gesetzlichen Anspruchsvoraussetzungen folgende Haftungsausschl&uuml;sse und Haftungsbegrenzungen</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">6.2.1 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> haftet unbeschr&auml;nkt, soweit die Schadensursache auf Vorsatz oder grober Fahrl&auml;ssigkeit beruht. Ferner haftet </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> f&uuml;r die fahrl&auml;ssige Verletzung von wesentlichen Pflichten, deren Verletzung die Erreichung des Vertragszwecks gef&auml;hrdet, und f&uuml;r die Verletzung von Pflichten auf deren Einhaltung Vertragspartner regelm&auml;&szlig;ig vertrauen. In diesem Fall haftet </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> jedoch nur f&uuml;r den vorhersehbaren, vertragstypischen Schaden. </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> haftet nicht f&uuml;r die fahrl&auml;ssige Verletzung anderer als der in den vorstehenden S&auml;tzen genannten Pflichten. Die vorstehenden Haftungsbeschr&auml;nkungen gelten nicht bei Verletzung von leben, K&ouml;rper und Gesundheit. Im &Uuml;brigen ist die Haftung von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ausgeschlossen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">6.2.2 Soweit die Haftung von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ausgeschlossen oder beschr&auml;nkt ist, gilt dies auch f&uuml;r die pers&ouml;nliche Haftung ihrer Arbeitnehmer, Vertreter und Erf&uuml;llungsgehilfen.</span></span></span></p>\n\n    <p><br />\n    <span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>7. Datenschutz</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">7.1 Die im Rahmen der Nutzung des Reisewunschportals angegebenen personenbezogenen Daten (Name, E-Mail Adresse) werden zur Bearbeitung des Reisewunsches, zur Kundenbetreuung und Marktforschung oder zur Erf&uuml;llung gesetzlicher Bestimmungen gespeichert, verarbeitet und genutzt. Dar&uuml;ber hinaus k&ouml;nnen die Daten zur Zusendung von aktuellen Informationen und Angeboten verwendet werden. Sollten Sie diese Informationen nicht w&uuml;nschen, wenden Sie sich bitte mit Ihrem Anliegen an: </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">xy@xy.de.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">7.2 Weitere Informationen zur Datenverarbeitung und zum Datenschutz ergeben sich aus unserer Datenschutzerkl&auml;rung. Diese finden Sie hier: </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">https://www.abc.de/datenschutz.</span></span></span></p>\n    &nbsp;\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><strong>8. Schlussbestimmungen</strong></span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">8.1 </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> ist berechtigt, &Auml;nderungen oder Erg&auml;nzungen an diesen Nutzungsbedingungen vorzunehmen, sofern dies dem billigem Ermessen von </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">&nbsp;</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">entspricht und f&uuml;r den Nutzer zumutbar ist. Diese werden erst wirksam, nachdem </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"> den registrierten Nutzer die &Auml;nderung der Nutzungsbedingungen in Textform mitgeteilt hat und der Nutzer dieser Neufassung nicht innerhalb von 6 Wochen ab Zugang mindestens in Textform widerspricht. Der Nutzer wird bei Mitteilung der &Auml;nderung auf die Bedeutung seines Schweigens besonders hingewiesen.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">8.2 Sofern einzelne oder mehrere Bestimmungen in diesen Nutzungsbedingungen ganz oder teilweise unwirksam oder ung&uuml;ltig sind oder werden, bleibt die Wirksamkeit der &uuml;brigen Regelungen und Bestimmungen hiervon unber&uuml;hrt. Die unwirksame oder ung&uuml;ltige Regelung gilt durch eine Regelung ersetzt, die dem Sinn und Zweck der unwirksamen oder ung&uuml;ltigen Regelung in rechtswirksamer Weise wirtschaftlich am n&auml;chsten kommt. Gleiches gilt f&uuml;r eventuelle Regelungsl&uuml;cken.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">8.3 Streitigkeiten, die im Zusammenhang mit diesen Nutzungsbedingungen oder aufgrund der Nutzung des </span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">$KUNDE</span></span></span><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">-Reisewunschportal gef&uuml;hrt werden unterliegen ausschlie&szlig;lich dem Recht der Bundesrepublik Deutschland.</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">&nbsp;</span></span></span></p>\n\n    <p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\">Stand: Dezember 2019</span></span></span></p>" }, "en.validation": { "accepted": "The :attribute must be accepted.", "active_url": "The :attribute is not a valid URL.", "after": "The :attribute must be a date after :date.", "after_or_equal": "The :attribute must be a date after or equal to :date.", "alpha": "The :attribute may only contain letters.", "alpha_dash": "The :attribute may only contain letters, numbers, and dashes.", "alpha_num": "The :attribute may only contain letters and numbers.", "api": { "confirmaccount": { "already_confirmed": "Account is already confirmed.", "invalid_email": "Email is not register with fin builders", "invalid_otp": "Please enter valid otp." }, "forgotpassword": { "email_not_valid": "Email you entered is not register with fin builders.", "email_required": "Please enter email", "valid_email": "Please enter valid email address." }, "login": { "email_required": "Please enter email", "password_required": "Please enter passsword.", "username_password_didnt_match": "Please enter valid credentials.", "valid_email": "Please enter valid email address." }, "register": { "city_required": "Please enter city.", "state_required": "Please enter state." }, "resetpassword": { "confirm_password_required": "Please enter confirm password.", "email_not_valid": "Email you entered is not register with fin builders.", "email_required": "Please enter email", "password_confirmed": "passsword and confirm passsword do not match.", "password_required": "Please enter passsword.", "token_not_valid": "Given token is invalid.", "token_required": "Please enter token.", "valid_email": "Please enter valid email address." } }, "array": "The :attribute must be an array.", "attributes": { "backend": { "access": { "permissions": { "associated_roles": "Associated Roles", "dependencies": "Dependencies", "display_name": "Display Name", "group": "Group", "group_sort": "Group Sort", "groups": { "name": "Group Name" }, "name": "Name", "sort": "Sort", "system": "System?" }, "roles": { "active": "Active", "associated_permissions": "Associated Permissions", "name": "Name", "sort": "Sort" }, "users": { "active": "Active", "associated_roles": "Associated Roles", "associated_whitelabels": "Associated Whitelabels", "confirmed": "Confirmed", "email": "E-mail Address", "firstName": "First Name", "groups": "User Groups", "lastName": "Last Name", "no-group": "None", "old_password": "Old password", "other_permissions": "Other Permissions", "password": "New Password", "password_confirmation": "New Password Confirmation", "send_confirmation_email": "Send Confirmation E-mail" } }, "blogcategories": { "is_active": "Active", "title": "Blog Category" }, "blogs": { "cannonical_link": "Cannonical Link", "category": "Blog Category", "content": "Content", "image": "Featured Image", "meta-title": "Meta Title", "meta_description": "Meta Description", "meta_keyword": "Meta Keyword", "publish": "Publish Date & Time", "slug": "Slug", "status": "Status", "tags": "Tags", "title": "Blog Title" }, "blogtags": { "is_active": "Active", "title": "Blog Tag" }, "distributions": { "description": "Description", "display_name": "Display Name", "name": "Name" }, "faqs": { "answer": "Answer", "question": "Question", "status": "Status" }, "groups": { "associated_whitelabels": "Associated Whitelabels", "description": "Description", "display_name": "Display Name", "groups": "Seller Groups", "name": "Group Name", "status": "Status" }, "pages": { "cannonical_link": "Cannonical Link", "description": "Description", "is_active": "Active", "seo_description": "SEO Description", "seo_keyword": "SEO Keyword", "seo_title": "SEO Title", "title": "Title" }, "settings": { "companydetails": { "address": "Company Address", "contactnumber": "Contact Number" }, "favicon": "Fav Icon", "footer": { "copyright": "Copyright Text", "text": "Footer Text" }, "google": { "analytic": "Google Analytics" }, "mail": { "fromemail": "From Email", "fromname": "From Name" }, "metadescription": "Meta Description", "metakeyword": "Meta Keyawords", "metatitle": "Meta Title", "sitelogo": "Site Logo", "termscondition": { "disclaimer": "Disclaimer", "terms": "Terms & Condition" } }, "whitelabels": { "associated_distribution": "Associated Distribution", "display_name": "Display Name", "ga_view_id": "Google View Id", "image": "Background Image", "name": "Name", "status": "Status" }, "wishes": { "adults": "Adults", "airport": "Airport", "associated_whitelabels": "Associated Whitelabels", "budget": "Budget", "category": "Hotel category", "catering": "Hotel catering", "description": "Description", "destination": "Destination", "duration": "Duration", "earliest_start": "Earliest start", "image": "Featured Image", "kids": "Kids", "latest_return": "Latest return", "status": "Status", "title": "Wish Title" } }, "frontend": { "offers": { "file": "file(filename)", "file_placeholder": "file", "link": "link(target, link)", "link_placeholder": "http:\/\/goo.gl\/abc", "select_file": "select a file", "status": "status", "status_placeholder": "status", "text": "messages", "text_placeholder": "your message to your customer", "title": "offer title", "title_placeholder": "short offer description" }, "register-user": { "address": "address", "city": "city", "country": "country", "email": "email address", "firstName": "first name", "lastName": "last name", "new_password": "new password", "new_password_confirmation": "new password confirmation", "old_password": "old password", "password": "password", "password_confirmation": "password confirmation", "ssn": "SSN", "state": "state", "terms_and_conditions": "terms and conditions", "user_type": "I use the white label as a", "user_type_seller": "seller", "user_type_user": "user", "zipcode": "zip code" } } }, "before": "The :attribute must be a date before :date.", "before_or_equal": "The :attribute must be a date before or equal to :date.", "between": { "array": "The :attribute must have between :min and :max items.", "file": "The :attribute must be between :min and :max kilobytes.", "numeric": "The :attribute must be between :min and :max.", "string": "The :attribute must be between :min and :max characters." }, "boolean": "The :attribute field must be true or false.", "confirmed": "The :attribute confirmation does not match.", "custom": { "attribute-name": { "rule-name": "custom-message" } }, "date": "The :attribute is not a valid date.", "date_format": "The :attribute does not match the format :format.", "different": "The :attribute and :other must be different.", "digits": "The :attribute must be :digits digits.", "digits_between": "The :attribute must be between :min and :max digits.", "dimensions": "The :attribute has invalid image dimensions.", "distinct": "The :attribute field has a duplicate value.", "email": "The :attribute must be a valid email address.", "exists": "The selected :attribute is invalid.", "file": "The :attribute must be a file.", "filled": "The :attribute field must have a value.", "image": "The :attribute must be an image.", "in": "The selected :attribute is invalid.", "in_array": "The :attribute field does not exist in :other.", "integer": "The :attribute must be an integer.", "ip": "The :attribute must be a valid IP address.", "json": "The :attribute must be a valid JSON string.", "max": { "array": "The :attribute may not have more than :max items.", "file": "The :attribute may not be greater than :max kilobytes.", "numeric": "The :attribute may not be greater than :max.", "string": "The :attribute may not be greater than :max characters." }, "mimes": "The :attribute must be a file of type: :values.", "mimetypes": "The :attribute must be a file of type: :values.", "min": { "array": "The :attribute must have at least :min items.", "file": "The :attribute must be at least :min kilobytes.", "numeric": "The :attribute must be at least :min.", "string": "The :attribute must be at least :min characters." }, "not_in": "The selected :attribute is invalid.", "numeric": "The :attribute must be a number.", "present": "The :attribute field must be present.", "regex": "The :attribute format is invalid.", "required": "The :attribute field is required.", "required_if": "The :attribute field is required when :other is :value.", "required_unless": "The :attribute field is required unless :other is in :values.", "required_with": "The :attribute field is required when :values is present.", "required_with_all": "The :attribute field is required when :values is present.", "required_without": "The :attribute field is required when :values is not present.", "required_without_all": "The :attribute field is required when none of :values are present.", "same": "The :attribute and :other must match.", "size": { "array": "The :attribute must contain :size items.", "file": "The :attribute must be :size kilobytes.", "numeric": "The :attribute must be :size.", "string": "The :attribute must be :size characters." }, "string": "The :attribute must be a string.", "timezone": "The :attribute must be a valid zone.", "unique": "The :attribute has already been taken.", "uploaded": "The :attribute failed to upload.", "url": "The :attribute format is invalid." }, "en.wish": { "view": { "adults": "Adults", "airport": "Airport", "budget": "Budget", "category": "Hotel category", "catering": "Hotel catering", "comment-header": "Communicate with Agent", "createdat": "Created at", "createdby": "Created by", "destination": "Destination", "duration": "Duration", "earliest_start": "Earliest Start", "email": "Email", "kids": "Kids", "latest_return": "Latest Return", "new_offers": "New offers", "offerCount": "Offers", "offer_number": "Offer number", "owner": "Name", "stage": { "seller_empty": "This travel wish has been distributed on <b>:date<\/b> to you.<br>\n                    Please create an offer.", "seller_message": "This travel wish has been distributed on <b>:date<\/b> to you.<br>\n                    The customer left a message for you.", "seller_offer": "This travel wish has been distributed on <b>:date<\/b> to you.<br>\n                    You created an offer.", "user_empty": "This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\n                     . Unfortunately no received offers yet.", "user_message": "This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\n                    . You received a new message.", "user_offer": "This travel wish has been distributed on <b>:date<\/b> to <b>:seller<\/b><br>\n                    . You received an offer." }, "status": "Status", "text": "Text", "title": "Wish title", "whitelabel": "Whitelabel" } }, "es.backup::notifications": { "backup_failed_body": "Importante: Ocurri\xF3 un error al realizar la copia de seguridad de :application_name", "backup_failed_subject": "Copia de seguridad de :application_name fallida", "backup_successful_body": "Buenas noticias, una nueva copia de seguridad de :application_name fue creada con \xE9xito en el disco llamado :disk_name.", "backup_successful_subject": "Se complet\xF3 con \xE9xito la copia de seguridad de :application_name", "backup_successful_subject_title": "\xA1Nueva copia de seguridad creada con \xE9xito!", "cleanup_failed_body": "Ocurri\xF3 un error mientras se realizaba la limpieza de copias de seguridad de :application_name", "cleanup_failed_subject": "La limpieza de copias de seguridad de :application_name fall\xF3.", "cleanup_successful_body": "La limpieza de copias de seguridad de :application_name en el disco llamado :disk_name se completo con \xE9xito.", "cleanup_successful_subject": "La limpieza de copias de seguridad de :application_name se complet\xF3 con \xE9xito", "cleanup_successful_subject_title": "!Limpieza de copias de seguridad completada con \xE9xito!", "exception_message": "Mensaje de la excepci\xF3n: :message", "exception_message_title": "Mensaje de la excepci\xF3n", "exception_trace": "Traza de la excepci\xF3n: :trace", "exception_trace_title": "Traza de la excepci\xF3n", "healthy_backup_found_body": "Las copias de seguridad de :application_name se consideran en buen estado. \xA1Buen trabajo!", "healthy_backup_found_subject": "Las copias de seguridad de :application_name en el disco :disk_name est\xE1n en buen estado", "healthy_backup_found_subject_title": "Las copias de seguridad de :application_name est\xE1n en buen estado", "unhealthy_backup_found_body": "Las copias de seguridad de :application_name en el disco :disk_name est\xE1n en mal estado.", "unhealthy_backup_found_empty": "No existe ninguna copia de seguridad de esta aplicaci\xF3n.", "unhealthy_backup_found_full": "Las copias de seguridad  est\xE1n ocupando demasiado espacio. El espacio utilizado actualmente es :disk_usage el cual es mayor que el l\xEDmite permitido de :disk_limit.", "unhealthy_backup_found_not_reachable": "No se puede acceder al destino de la copia de seguridad. :error", "unhealthy_backup_found_old": "La \xFAltima copia de seguriad hecha en :date es demasiado antigua.", "unhealthy_backup_found_subject": "Importante: Las copias de seguridad de :application_name est\xE1n en mal estado", "unhealthy_backup_found_subject_title": "Importante: Las copias de seguridad de :application_name est\xE1n en mal estado. :problem", "unhealthy_backup_found_unknown": "Lo siento, no es posible determinar la raz\xF3n exacta." }, "es.log-viewer::general": { "all": "Todos", "date": "Fecha" }, "es.log-viewer::levels": { "alert": "Alerta", "all": "Todos", "critical": "Criticos", "debug": "Debug", "emergency": "Emergencia", "error": "Errores", "info": "Info", "notice": "Aviso", "warning": "Advertencia" }, "et.log-viewer::general": { "all": "K\xF5ik", "date": "Kuup\xE4ev", "empty-logs": "Logide nimekiri on t\xFChi!" }, "et.log-viewer::levels": { "alert": "H\xE4ire", "all": "K\xF5ik", "critical": "Kriitiline", "debug": "Silumine", "emergency": "Erakorraline", "error": "Viga", "info": "Info", "notice": "Teade", "warning": "Hoiatus" }, "fa.backup::notifications": { "backup_failed_body": "\u067E\u06CC\u063A\u0627\u0645 \u0645\u0647\u0645: \u0647\u0646\u06AF\u0627\u0645 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u200C\u06AF\u06CC\u0631\u06CC \u0627\u0632 :application_name \u062E\u0637\u0627\u06CC\u06CC \u0631\u062E \u062F\u0627\u062F\u0647 \u0627\u0633\u062A. ", "backup_failed_subject": "\u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u200C\u06AF\u06CC\u0631\u06CC :application_name \u0628\u0627 \u062E\u0637\u0627 \u0645\u0648\u0627\u062C\u0647 \u0634\u062F.", "backup_successful_body": "\u062E\u0628\u0631 \u062E\u0648\u0628, \u0628\u0647 \u062A\u0627\u0632\u06AF\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0631 \u0631\u0648\u06CC \u062F\u06CC\u0633\u06A9 :disk_name \u0628\u0627 \u0645\u0648\u0641\u0642\u06CC\u062A \u0633\u0627\u062E\u062A\u0647 \u0634\u062F. ", "backup_successful_subject": "\u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 \u062C\u062F\u06CC\u062F :application_name \u0628\u0627 \u0645\u0648\u0641\u0642\u06CC\u062A \u0633\u0627\u062E\u062A\u0647 \u0634\u062F.", "backup_successful_subject_title": "\u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u200C\u06AF\u06CC\u0631\u06CC \u0645\u0648\u0641\u0642!", "cleanup_failed_body": "\u0647\u0646\u06AF\u0627\u0645 \u067E\u0627\u06A9\u200C\u0633\u0627\u0632\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u062E\u0637\u0627\u06CC\u06CC \u0631\u062E \u062F\u0627\u062F\u0647 \u0627\u0633\u062A.", "cleanup_failed_subject": "\u067E\u0627\u06A9\u200C\u200C\u0633\u0627\u0632\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0627\u0646\u062C\u0627\u0645 \u0646\u0634\u062F.", "cleanup_successful_body": "\u067E\u0627\u06A9\u200C\u0633\u0627\u0632\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0631 \u0631\u0648\u06CC \u062F\u06CC\u0633\u06A9 :disk_name \u0628\u0627 \u0645\u0648\u0641\u0642\u06CC\u062A \u0627\u0646\u062C\u0627\u0645 \u0634\u062F.", "cleanup_successful_subject": "\u067E\u0627\u06A9\u200C\u0633\u0627\u0632\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0627 \u0645\u0648\u0641\u0642\u06CC\u062A \u0627\u0646\u062C\u0627\u0645 \u0634\u062F.", "cleanup_successful_subject_title": "\u067E\u0627\u06A9\u200C\u0633\u0627\u0632\u06CC \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646!", "exception_message": "\u067E\u06CC\u063A\u0627\u0645 \u062E\u0637\u0627: :message", "exception_message_title": "\u067E\u06CC\u063A\u0627\u0645 \u062E\u0637\u0627", "exception_trace": "\u062C\u0632\u06CC\u06CC\u0627\u062A \u062E\u0637\u0627: :trace", "exception_trace_title": "\u062C\u0632\u06CC\u06CC\u0627\u062A \u062E\u0637\u0627", "healthy_backup_found_body": "\u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0647 \u0646\u0638\u0631 \u0633\u0627\u0644\u0645 \u0645\u06CC\u0627\u062F. \u062F\u0645\u062A \u06AF\u0631\u0645!", "healthy_backup_found_subject": "\u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0631 \u0631\u0648\u06CC \u062F\u06CC\u0633\u06A9 :disk_name \u0633\u0627\u0644\u0645 \u0628\u0648\u062F.", "healthy_backup_found_subject_title": "\u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0633\u0627\u0644\u0645 \u0628\u0648\u062F.", "unhealthy_backup_found_body": "\u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0628\u0631 \u0631\u0648\u06CC \u062F\u06CC\u0633\u06A9 :disk_name \u0633\u0627\u0644\u0645 \u0646\u0628\u0648\u062F.", "unhealthy_backup_found_empty": "\u0628\u0631\u0627\u06CC \u0627\u06CC\u0646 \u0628\u0631\u0646\u0627\u0645\u0647 \u0647\u06CC\u0686 \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u06CC \u0648\u062C\u0648\u062F \u0646\u062F\u0627\u0631\u062F.", "unhealthy_backup_found_full": "\u0646\u0633\u062E\u0647\u200C\u0647\u0627\u06CC \u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u06CC \u06A9\u0647 \u062A\u0647\u06CC\u0647 \u06A9\u0631\u062F\u0647 \u0627\u06CC\u062F \u062D\u062C\u0645 \u0632\u06CC\u0627\u062F\u06CC \u0627\u0634\u063A\u0627\u0644 \u06A9\u0631\u062F\u0647 \u0627\u0646\u062F. \u0645\u06CC\u0632\u0627\u0646 \u062F\u06CC\u0633\u06A9 \u0627\u0633\u062A\u0641\u0627\u062F\u0647 \u0634\u062F\u0647 :disk_usage \u0627\u0633\u062A \u06A9\u0647 \u0627\u0632 \u0645\u06CC\u0632\u0627\u0646 \u0645\u062C\u0627\u0632 :disk_limit \u0641\u0631\u0627\u062A\u0631 \u0631\u0641\u062A\u0647 \u0627\u0633\u062A. ", "unhealthy_backup_found_not_reachable": "\u0645\u0642\u0635\u062F \u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u200C\u06AF\u06CC\u0631\u06CC \u062F\u0631 \u062F\u0633\u062A\u0631\u0633 \u0646\u0628\u0648\u062F. :error", "unhealthy_backup_found_old": "\u0622\u062E\u0631\u06CC\u0646 \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 \u0628\u0631\u0627\u06CC \u062A\u0627\u0631\u06CC\u062E :date \u0627\u0633\u062A. \u06A9\u0647 \u0628\u0647 \u0646\u0638\u0631 \u062E\u06CC\u0644\u06CC \u0642\u062F\u06CC\u0645\u06CC \u0645\u06CC\u0627\u062F. ", "unhealthy_backup_found_subject": "\u062E\u0628\u0631 \u0645\u0647\u0645: \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0633\u0627\u0644\u0645 \u0646\u0628\u0648\u062F.", "unhealthy_backup_found_subject_title": "\u062E\u0628\u0631 \u0645\u0647\u0645: \u0646\u0633\u062E\u0647 \u067E\u0634\u062A\u06CC\u0628\u0627\u0646 :application_name \u0633\u0627\u0644\u0645 \u0646\u0628\u0648\u062F. :problem", "unhealthy_backup_found_unknown": "\u0645\u062A\u0627\u0633\u0641\u0627\u0646\u0647 \u062F\u0644\u06CC\u0644 \u062F\u0642\u06CC\u0642 \u0645\u0634\u062E\u0635 \u0646\u0634\u062F\u0647 \u0627\u0633\u062A." }, "fa.log-viewer::general": { "all": "\u0647\u0645\u0647", "date": "\u062A\u0627\u0631\u06CC\u062E" }, "fa.log-viewer::levels": { "alert": "\u0627\u062E\u0637\u0627\u0631", "all": "\u0647\u0645\u0647", "critical": "\u0628\u062D\u0631\u0627\u0646\u06CC", "debug": "\u062F\u06CC\u0628\u0627\u06AF", "emergency": "\u0627\u0648\u0631\u0698\u0627\u0646\u0633\u06CC", "error": "\u062E\u0637\u0627", "info": "\u0627\u0637\u0644\u0627\u0639\u0627\u062A", "notice": "\u0627\u0639\u0644\u0627\u0646", "warning": "\u0647\u0634\u062F\u0627\u0631" }, "fr.backup::notifications": { "backup_failed_body": "Important : Une erreur est survenue lors de la sauvegarde de :application_name", "backup_failed_subject": "\xC9chec de la sauvegarde de :application_name", "backup_successful_body": "Bonne nouvelle, une nouvelle sauvegarde de :application_name a \xE9t\xE9 cr\xE9\xE9e avec succ\xE8s sur le disque nomm\xE9 :disk_name.", "backup_successful_subject": "Succ\xE8s de la sauvegarde de :application_name", "backup_successful_subject_title": "Sauvegarde cr\xE9\xE9e avec succ\xE8s !", "cleanup_failed_body": "Une erreur est survenue lors du nettoyage des sauvegardes de :application_name", "cleanup_failed_subject": "Le nettoyage des sauvegardes de :application_name a echou\xE9.", "cleanup_successful_body": "Le nettoyage des sauvegardes de :application_name sur le disque nomm\xE9 :disk_name a \xE9t\xE9 effectu\xE9 avec succ\xE8s.", "cleanup_successful_subject": "Succ\xE8s du nettoyage des sauvegardes de :application_name", "cleanup_successful_subject_title": "Sauvegardes nettoy\xE9es avec succ\xE8s !", "exception_message": "Message de l'exception : :message", "exception_message_title": "Message de l'exception", "exception_trace": "Trace de l'exception : :trace", "exception_trace_title": "Trace de l'exception", "healthy_backup_found_body": "Les sauvegardes pour :application_name sont consid\xE9r\xE9es saines. Bon travail !", "healthy_backup_found_subject": "Les sauvegardes pour :application_name sur le disque :disk_name sont saines", "healthy_backup_found_subject_title": "Les sauvegardes pour :application_name sont saines", "unhealthy_backup_found_body": "Les sauvegardes pour :application_name sur le disque :disk_name sont corrompues.", "unhealthy_backup_found_empty": "Il n'y a aucune sauvegarde pour cette application.", "unhealthy_backup_found_full": "Les sauvegardes utilisent trop d'espace disque. L'utilisation actuelle est de :disk_usage alors que la limite autoris\xE9e est de :disk_limit.", "unhealthy_backup_found_not_reachable": "La destination de la sauvegarde n'est pas accessible. :error", "unhealthy_backup_found_old": "La derni\xE8re sauvegarde du :date est consid\xE9r\xE9e trop vieille.", "unhealthy_backup_found_subject": "Important : Les sauvegardes pour :application_name sont corrompues", "unhealthy_backup_found_subject_title": "Important : Les sauvegardes pour :application_name sont corrompues. :problem", "unhealthy_backup_found_unknown": "D\xE9sol\xE9, une raison exacte ne peut \xEAtre d\xE9termin\xE9e." }, "fr.log-viewer::general": { "all": "Tous", "date": "Date" }, "fr.log-viewer::levels": { "alert": "Alerte", "all": "Tous", "critical": "Critique", "debug": "Debug", "emergency": "Urgence", "error": "Erreur", "info": "Info", "notice": "Notice", "warning": "Avertissement" }, "hi.backup::notifications": { "backup_failed_body": "\u091C\u0930\u0942\u0930\u0940 \u0938\u0941\u091A\u0928\u093E: :application_name \u0915\u093E \u092C\u0948\u0915\u0905\u092A \u0932\u0947\u0924\u0947 \u0938\u092E\u092F \u0905\u0938\u092B\u0932 \u0930\u0939\u0947", "backup_failed_subject": ":application_name \u0915\u093E \u092C\u0948\u0915\u0905\u092A \u0905\u0938\u092B\u0932 \u0930\u0939\u093E", "backup_successful_body": "\u0916\u0941\u0936\u0916\u092C\u0930\u0940, :application_name \u0915\u093E \u092C\u0948\u0915\u0905\u092A :disk_name \u092A\u0930 \u0938\u0902\u0917\u094D\u0930\u0939\u093F\u0924 \u0915\u0930\u0928\u0947 \u092E\u0947 \u0938\u092B\u0932 \u0930\u0939\u0947.", "backup_successful_subject": ":application_name \u0915\u093E \u092C\u0948\u0915\u0905\u092A \u0938\u092B\u0932 \u0930\u0939\u093E", "backup_successful_subject_title": "\u092C\u0948\u0915\u0905\u092A \u0938\u092B\u0932 \u0930\u0939\u093E!", "cleanup_failed_body": ":application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0915\u0940 \u0938\u092B\u093E\u0908 \u0915\u0930\u0924\u0947 \u0938\u092E\u092F \u0915\u0941\u091B \u092C\u093E\u0927\u093E \u0906\u092F\u0940 \u0939\u0948.", "cleanup_failed_subject": ":application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0915\u0940 \u0938\u092B\u093E\u0908 \u0905\u0938\u092B\u0932 \u0930\u0939\u0940.", "cleanup_successful_body": ":application_name \u0915\u093E \u092C\u0948\u0915\u0905\u092A \u091C\u094B :disk_name \u0928\u093E\u092E \u0915\u0940 \u0921\u093F\u0938\u094D\u0915 \u092A\u0930 \u0938\u0902\u0917\u094D\u0930\u0939\u093F\u0924 \u0939\u0948, \u0909\u0938\u0915\u0940 \u0938\u092B\u093E\u0908 \u0938\u092B\u0932 \u0930\u0939\u0940.", "cleanup_successful_subject": ":application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0915\u0940 \u0938\u092B\u093E\u0908 \u0938\u092B\u0932 \u0930\u0939\u0940", "cleanup_successful_subject_title": "\u092C\u0948\u0915\u0905\u092A \u0915\u0940 \u0938\u092B\u093E\u0908 \u0938\u092B\u0932 \u0930\u0939\u0940!", "exception_message": "\u0917\u0932\u0924\u0940 \u0938\u0902\u0926\u0947\u0936: :message", "exception_message_title": "\u0917\u0932\u0924\u0940 \u0938\u0902\u0926\u0947\u0936", "exception_trace": "\u0917\u0932\u0924\u0940 \u0928\u093F\u0936\u093E\u0928: :trace", "exception_trace_title": "\u0917\u0932\u0924\u0940 \u0928\u093F\u0936\u093E\u0928", "healthy_backup_found_body": "\u092C\u0939\u0941\u0924 \u092C\u0922\u093C\u093F\u092F\u093E! :application_name \u0915\u0947 \u0938\u092D\u0940 \u092C\u0948\u0915\u0905\u092A \u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948.", "healthy_backup_found_subject": ":disk_name \u0928\u093E\u092E \u0915\u0940 \u0921\u093F\u0938\u094D\u0915 \u092A\u0930 \u0938\u0902\u0917\u094D\u0930\u0939\u093F\u0924 :application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948", "healthy_backup_found_subject_title": ":application_name \u0915\u0947 \u0938\u092D\u0940 \u092C\u0948\u0915\u0905\u092A \u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948", "unhealthy_backup_found_body": ":disk_name \u0928\u093E\u092E \u0915\u0940 \u0921\u093F\u0938\u094D\u0915 \u092A\u0930 \u0938\u0902\u0917\u094D\u0930\u0939\u093F\u0924 :application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0905\u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948", "unhealthy_backup_found_empty": "\u0907\u0938 \u090F\u092A\u094D\u0932\u0940\u0915\u0947\u0936\u0928 \u0915\u093E \u0915\u094B\u0908 \u092D\u0940 \u092C\u0948\u0915\u0905\u092A \u0928\u0939\u0940\u0902 \u0939\u0948.", "unhealthy_backup_found_full": "\u0938\u092D\u0940 \u092C\u0948\u0915\u0905\u092A \u092C\u0939\u0941\u0924 \u091C\u094D\u092F\u093E\u0926\u093E \u091C\u0917\u0939 \u0915\u093E \u0909\u092A\u092F\u094B\u0917 \u0915\u0930 \u0930\u0939\u0947 \u0939\u0948. \u095E\u093F\u0932\u0939\u093E\u0932 \u0938\u092D\u0940 \u092C\u0948\u0915\u0905\u092A :disk_usage \u091C\u0917\u0939 \u0915\u093E \u0909\u092A\u092F\u094B\u0917 \u0915\u0930 \u0930\u0939\u0947 \u0939\u0948, \u091C\u094B \u0915\u0940 :disk_limit \u0905\u0928\u0941\u092E\u0924\u093F \u0938\u0940\u092E\u093E \u0938\u0947 \u0905\u0927\u093F\u0915 \u0915\u093E \u0939\u0948.", "unhealthy_backup_found_not_reachable": ":error \u0915\u0947 \u092C\u091C\u0947\u0938\u0947 \u092C\u0948\u0915\u0905\u092A \u0915\u0940 \u092E\u0902\u091C\u093F\u0932 \u0924\u0915 \u092A\u094B\u0939\u094B\u091A \u0928\u0939\u0940\u0902 \u0938\u0915\u0924\u0947.", "unhealthy_backup_found_old": "\u0939\u093E\u0932\u0939\u0940\u092E\u0947\u0902 :date \u0915\u094B \u0932\u093F\u092F\u093E \u0939\u0941\u0906 \u092C\u0948\u0915\u0905\u092A \u092C\u0939\u0941\u0924 \u092A\u0941\u0930\u093E\u0928\u093E \u0939\u0948.", "unhealthy_backup_found_subject": "\u091C\u0930\u0942\u0930\u0940 \u0938\u0941\u091A\u0928\u093E :  :application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A \u0905\u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948", "unhealthy_backup_found_subject_title": "\u091C\u0930\u0942\u0930\u0940 \u0938\u0941\u091A\u0928\u093E : :application_name \u0915\u0947 \u092C\u0948\u0915\u0905\u092A :problem \u0915\u0947 \u092C\u091C\u0947\u0938\u0947 \u0905\u0938\u094D\u0935\u0938\u094D\u0925 \u0939\u0948", "unhealthy_backup_found_unknown": "\u092E\u093E\u092B\u093C \u0915\u0940\u091C\u093F\u092F\u0947, \u0938\u0939\u0940 \u0915\u093E\u0930\u0923 \u0928\u093F\u0930\u094D\u0927\u093E\u0930\u093F\u0924 \u0928\u0939\u0940\u0902 \u0915\u0930 \u0938\u0915\u0924\u0947." }, "hu.log-viewer::general": { "all": "\xD6sszes", "date": "D\xE1tum", "empty-logs": "The list of logs is empty!" }, "hu.log-viewer::levels": { "alert": "Riaszt\xE1s", "all": "\xD6sszes", "critical": "Kritikus", "debug": "Hibakeres\xE9s", "emergency": "V\xE9szhelyzet", "error": "Hiba", "info": "Inform\xE1ci\xF3", "notice": "\xC9rtes\xEDt\xE9s", "warning": "Figyelmeztet\xE9s" }, "hy.log-viewer::general": { "all": "\u0532\u0578\u056C\u0578\u0580\u0568", "date": "\u0531\u0574\u057D\u0561\u0569\u056B\u057E" }, "hy.log-viewer::levels": { "alert": "\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574", "all": "\u0532\u0578\u056C\u0578\u0580\u0568", "critical": "\u053F\u0580\u056B\u057F\u056B\u056F\u0561\u056F\u0561\u0576", "debug": "\u053F\u0561\u0580\u0563\u0561\u0562\u0565\u0580\u0578\u0582\u0574", "emergency": "\u054E\u0569\u0561\u0580\u0561\u0575\u056B\u0576", "error": "\u054D\u056D\u0561\u056C", "info": "\u054F\u0565\u0572\u0565\u056F\u0561\u057F\u057E\u0578\u0582\u0569\u0575\u0578\u0582\u0576", "notice": "\u053E\u0561\u0576\u0578\u0582\u0581\u0578\u0582\u0574", "warning": "\u0546\u0561\u056D\u0561\u0566\u0563\u0578\u0582\u0577\u0561\u0581\u0578\u0582\u0574" }, "id.backup::notifications": { "backup_failed_body": "Penting: Sebuah error terjadi ketika membackup :application_name", "backup_failed_subject": "Gagal backup :application_name", "backup_successful_body": "Kabar baik, sebuah backup baru dari :application_name sukses dibuat pada disk bernama :disk_name.", "backup_successful_subject": "Backup baru sukses dari :application_name", "backup_successful_subject_title": "Backup baru sukses!", "cleanup_failed_body": "Sebuah error teradi ketika membersihkan backup dari :application_name", "cleanup_failed_subject": "Membersihkan backup dari :application_name yang gagal.", "cleanup_successful_body": "Pembersihan backup :application_name pada disk bernama :disk_name telah sukses.", "cleanup_successful_subject": "Sukses membersihkan backup :application_name", "cleanup_successful_subject_title": "Sukses membersihkan backup!", "exception_message": "Pesan pengecualian: :message", "exception_message_title": "Pesan pengecualian", "exception_trace": "Jejak pengecualian: :trace", "exception_trace_title": "Jejak pengecualian", "healthy_backup_found_body": "Backup untuk :application_name dipertimbangkan sehat. Kerja bagus!", "healthy_backup_found_subject": "Backup untuk :application_name pada disk :disk_name sehat", "healthy_backup_found_subject_title": "Backup untuk :application_name sehat", "unhealthy_backup_found_body": "Backup untuk :application_name pada disk :disk_name tidak sehat.", "unhealthy_backup_found_empty": "Tidak ada backup pada aplikasi ini sama sekali.", "unhealthy_backup_found_full": "Backup menggunakan terlalu banyak kapasitas penyimpanan. Penggunaan terkini adalah :disk_usage dimana lebih besar dari batas yang diperbolehkan yaitu :disk_limit.", "unhealthy_backup_found_not_reachable": "Tujuan backup tidak dapat terjangkau. :error", "unhealthy_backup_found_old": "Backup terakhir dibuat pada :date dimana dipertimbahkan sudah sangat lama.", "unhealthy_backup_found_subject": "Penting: Backup untuk :application_name tidak sehat", "unhealthy_backup_found_subject_title": "Penting: Backup untuk :application_name tidak sehat. :problem", "unhealthy_backup_found_unknown": "Maaf, sebuah alasan persisnya tidak dapat ditentukan." }, "id.log-viewer::general": { "all": "Semua", "date": "Tanggal" }, "id.log-viewer::levels": { "alert": "Waspada", "all": "Semua", "critical": "Kritis", "debug": "Debug", "emergency": "Darurat", "error": "Kesalahan", "info": "Info", "notice": "Perhatian", "warning": "Peringatan" }, "it.backup::notifications": { "backup_failed_body": "Importante: Si \xE8 verificato un errore durante il backup di :application_name", "backup_failed_subject": "Fallito il backup di :application_name", "backup_successful_body": "Grande notizia, un nuovo backup di :application_name \xE8 stato creato con successo sul disco :disk_name.", "backup_successful_subject": "Creato nuovo backup di :application_name", "backup_successful_subject_title": "Nuovo backup creato!", "cleanup_failed_body": "Si \xE8 verificato un errore durante la pulizia dei backup di :application_name", "cleanup_failed_subject": "Pulizia dei backup di :application_name fallita.", "cleanup_successful_body": "La pulizia dei backup di :application_name sul disco :disk_name \xE8 avvenuta con successo.", "cleanup_successful_subject": "Pulizia dei backup di :application_name avvenuta con successo", "cleanup_successful_subject_title": "Pulizia dei backup avvenuta con successo!", "exception_message": "Messaggio dell'eccezione: :message", "exception_message_title": "Messaggio dell'eccezione", "exception_trace": "Traccia dell'eccezione: :trace", "exception_trace_title": "Traccia dell'eccezione", "healthy_backup_found_body": "I backup per :application_name sono considerati sani. Bel Lavoro!", "healthy_backup_found_subject": "I backup per :application_name sul disco :disk_name sono sani", "healthy_backup_found_subject_title": "I backup per :application_name sono sani", "unhealthy_backup_found_body": "I backup per :application_name sul disco :disk_name sono corrotti.", "unhealthy_backup_found_empty": "Non esiste alcun backup di questa applicazione.", "unhealthy_backup_found_full": "I backup utilizzano troppa memoria. L'utilizzo corrente \xE8 :disk_usage che \xE8 superiore al limite consentito di :disk_limit.", "unhealthy_backup_found_not_reachable": "Impossibile raggiungere la destinazione di backup. :error", "unhealthy_backup_found_old": "L'ultimo backup fatto il :date \xE8 considerato troppo vecchio.", "unhealthy_backup_found_subject": "Importante: i backup per :application_name sono corrotti", "unhealthy_backup_found_subject_title": "Importante: i backup per :application_name sono corrotti. :problem", "unhealthy_backup_found_unknown": "Spiacenti, non \xE8 possibile determinare una ragione esatta." }, "it.log-viewer::general": { "all": "Tutti", "date": "Data" }, "it.log-viewer::levels": { "alert": "Allarme", "all": "Tutti", "critical": "Critico", "debug": "Debug", "emergency": "Emergenza", "error": "Errore", "info": "Info", "notice": "Notifica", "warning": "Avviso" }, "ja.log-viewer::general": { "all": "\u3059\u3079\u3066", "date": "\u65E5\u4ED8", "empty-logs": "\u30ED\u30B0\u30EA\u30B9\u30C8\u304C\u7A7A\u3067\u3059!" }, "ja.log-viewer::levels": { "alert": "\u8B66\u6212", "all": "\u3059\u3079\u3066", "critical": "\u81F4\u547D\u7684", "debug": "\u30C7\u30D0\u30C3\u30B0", "emergency": "\u7DCA\u6025", "error": "\u30A8\u30E9\u30FC", "info": "\u60C5\u5831", "notice": "\u901A\u77E5", "warning": "\u8B66\u544A" }, "ko.log-viewer::general": { "all": "\uC804\uCCB4", "date": "\uB0A0\uC9DC" }, "ko.log-viewer::levels": { "alert": "\uACBD\uACE0", "all": "\uC804\uCCB4", "critical": "\uC2EC\uAC01", "debug": "\uB514\uBC84\uADF8", "emergency": "\uAE34\uAE09", "error": "\uC624\uB958", "info": "\uC815\uBCF4", "notice": "\uC54C\uB9BC", "warning": "\uC8FC\uC758" }, "nl.log-viewer::general": { "all": "Alles", "date": "Datum" }, "nl.log-viewer::levels": { "alert": "Alarm", "all": "Alle", "critical": "Cruciaal", "debug": "Debug", "emergency": "Noodgeval", "error": "Error", "info": "Informatie", "notice": "Opmerking", "warning": "Waarschuwing" }, "pl.backup::notifications": { "backup_failed_body": "Wa\u017Cne: Wyst\u0105pi\u0142 b\u0142\u0105d podczas tworzenia kopii zapasowej aplikacji :application_name", "backup_failed_subject": "Tworzenie kopii zapasowej aplikacji :application_name nie powiod\u0142o si\u0119", "backup_successful_body": "Wspania\u0142a wiadomo\u015B\u0107, nowa kopia zapasowa aplikacji :application_name zosta\u0142a pomy\u015Blnie utworzona na dysku o nazwie :disk_name.", "backup_successful_subject": "Pomy\u015Blnie utworzono kopi\u0119 zapasow\u0105 aplikacji :application_name", "backup_successful_subject_title": "Nowa kopia zapasowa!", "cleanup_failed_body": "Wyst\u0105pi\u0142 b\u0142\u0105d podczas czyszczenia kopii zapasowej aplikacji :application_name", "cleanup_failed_subject": "Czyszczenie kopii zapasowych aplikacji :application_name nie powiod\u0142o si\u0119.", "cleanup_successful_body": "Czyszczenie kopii zapasowych aplikacji :application_name na dysku :disk_name zako\u0144czone sukcecem.", "cleanup_successful_subject": "Kopie zapasowe aplikacji :application_name zosta\u0142y pomy\u015Blnie wyczyszczone", "cleanup_successful_subject_title": "Kopie zapasowe zosta\u0142y pomy\u015Blnie wyczyszczone!", "exception_message": "B\u0142\u0105d: :message", "exception_message_title": "B\u0142\u0105d", "exception_trace": "Zrzut b\u0142\u0119du: :trace", "exception_trace_title": "Zrzut b\u0142\u0119du", "healthy_backup_found_body": "Kopie zapasowe aplikacji :application_name s\u0105 poprawne. Dobra robota!", "healthy_backup_found_subject": "Kopie zapasowe aplikacji :application_name na dysku :disk_name s\u0105 poprawne", "healthy_backup_found_subject_title": "Kopie zapasowe aplikacji :application_name s\u0105 poprawne", "unhealthy_backup_found_body": "Kopie zapasowe aplikacji :application_name na dysku :disk_name s\u0105 niepoprawne.", "unhealthy_backup_found_empty": "W aplikacji nie ma \u017Cadnej kopii zapasowych tej aplikacji.", "unhealthy_backup_found_full": "Kopie zapasowe zajmuj\u0105 zbyt du\u017Co miejsca. Obecne u\u017Cycie dysku :disk_usage jest wi\u0119ksze od ustalonego limitu :disk_limit.", "unhealthy_backup_found_not_reachable": "Miejsce docelowe kopii zapasowej nie jest osi\u0105galne. :error", "unhealthy_backup_found_old": "Ostatnia kopia zapasowa wykonania dnia :date jest zbyt stara.", "unhealthy_backup_found_subject": "Wa\u017Cne: Kopie zapasowe aplikacji :application_name s\u0105 niepoprawne", "unhealthy_backup_found_subject_title": "Wa\u017Cne: Kopie zapasowe aplikacji :application_name s\u0105 niepoprawne. :problem", "unhealthy_backup_found_unknown": "Niestety, nie mo\u017Cna ustali\u0107 dok\u0142adnego b\u0142\u0119du." }, "pl.log-viewer::general": { "all": "Wszystkie", "date": "Data" }, "pl.log-viewer::levels": { "alert": "Alerty", "all": "Wszystkie", "critical": "Krytyczne", "debug": "Debug", "emergency": "Awaryjne", "error": "B\u0142\u0119dy", "info": "Informacje", "notice": "Warte uwagi", "warning": "Ostrze\u017Cenia" }, "pt-BR.backup::notifications": { "backup_failed_body": "Importante: Ocorreu um erro ao fazer o backup da aplica\xE7\xE3o :application_name", "backup_failed_subject": "Falha no backup da aplica\xE7\xE3o :application_name", "backup_successful_body": "Boas not\xEDcias, um novo backup da aplica\xE7\xE3o :application_name foi criado no disco :disk_name.", "backup_successful_subject": "Backup realizado com sucesso: :application_name", "backup_successful_subject_title": "Backup Realizado com sucesso!", "cleanup_failed_body": "Um erro ocorreu ao fazer a limpeza dos backups da aplica\xE7\xE3o :application_name", "cleanup_failed_subject": "Falha na limpeza dos backups da aplica\xE7\xE3o :application_name.", "cleanup_successful_body": "A limpeza dos backups da aplica\xE7\xE3o :application_name no disco :disk_name foi conclu\xEDda.", "cleanup_successful_subject": "Limpeza dos backups da aplica\xE7\xE3o :application_name conclu\xEDda!", "cleanup_successful_subject_title": "Limpeza dos backups conclu\xEDda!", "exception_message": "Exception message: :message", "exception_message_title": "Exception message", "exception_trace": "Exception trace: :trace", "exception_trace_title": "Exception trace", "healthy_backup_found_body": "Os backups da aplica\xE7\xE3o :application_name est\xE3o em dia. Bom trabalho!", "healthy_backup_found_subject": "Os backups da aplica\xE7\xE3o :application_name no disco :disk_name est\xE3o em dia", "healthy_backup_found_subject_title": "Os backups da aplica\xE7\xE3o :application_name est\xE3o em dia", "unhealthy_backup_found_body": "Os backups da aplica\xE7\xE3o :application_name no disco :disk_name n\xE3o est\xE3o em dia.", "unhealthy_backup_found_empty": "N\xE3o existem backups para essa aplica\xE7\xE3o.", "unhealthy_backup_found_full": "Os backups est\xE3o usando muito espa\xE7o de armazenamento. A utiliza\xE7\xE3o atual \xE9 de :disk_usage, o que \xE9 maior que o limite permitido de :disk_limit.", "unhealthy_backup_found_not_reachable": "O destino dos backups n\xE3o pode ser alcan\xE7ado. :error", "unhealthy_backup_found_old": "O \xFAltimo backup realizado em :date \xE9 considerado muito antigo.", "unhealthy_backup_found_subject": "Importante: Os backups da aplica\xE7\xE3o :application_name n\xE3o est\xE3o em dia", "unhealthy_backup_found_subject_title": "Importante: Os backups da aplica\xE7\xE3o :application_name n\xE3o est\xE3o em dia. :problem", "unhealthy_backup_found_unknown": "Desculpe, a exata raz\xE3o n\xE3o pode ser encontrada." }, "pt-BR.log-viewer::general": { "all": "Todos", "date": "Data" }, "pt-BR.log-viewer::levels": { "alert": "Alerta", "all": "Todos", "critical": "Cr\xEDtico", "debug": "Debug", "emergency": "Emerg\xEAncia", "error": "Erro", "info": "Informa\xE7\xE3o", "notice": "Not\xEDcia", "warning": "Aviso" }, "ro.backup::notifications": { "backup_failed_body": "Important: A ap\u0103rut o eroare \xEEn timpul gener\u0103rii copiei de rezerv\u0103 pentru :application_name", "backup_failed_subject": "Nu s-a putut face copie de rezerv\u0103 pentru :application_name", "backup_successful_body": "Ve\u0219ti bune, o nou\u0103 copie de rezerv\u0103 pentru :application_name a fost creat\u0103 cu succes pe discul cu numele :disk_name.", "backup_successful_subject": "Copie de rezerv\u0103 efectuat\u0103 cu succes pentru :application_name", "backup_successful_subject_title": "O nou\u0103 copie de rezerv\u0103 a fost efectuat\u0103 cu succes!", "cleanup_failed_body": "A ap\u0103rut o eroare \xEEn timpul cur\u0103\u021Birii copiilor de rezerv\u0103 pentru :application_name", "cleanup_failed_subject": "Cur\u0103\u021Barea copiilor de rezerv\u0103 pentru :application_name nu a reu\u0219it.", "cleanup_successful_body": "Cur\u0103\u021Barea copiilor de rezerv\u0103 pentru :application_name de pe discul cu numele :disk_name a fost f\u0103cut\u0103 cu succes.", "cleanup_successful_subject": "Cur\u0103\u021Barea copiilor de rezerv\u0103 pentru :application_name a fost f\u0103cut\u0103 cu succes", "cleanup_successful_subject_title": "Cur\u0103\u021Barea copiilor de rezerv\u0103 a fost f\u0103cut\u0103 cu succes!", "exception_message": "Cu excep\u021Bia mesajului: :message", "exception_message_title": "Mesaj de excep\u021Bie", "exception_trace": "Urm\u0103 excep\u0163ie: :trace", "exception_trace_title": "Urm\u0103 excep\u0163ie", "healthy_backup_found_body": "Copiile de rezerv\u0103 pentru :application_name sunt considerate \xEEn regul\u0103. Bun\u0103 treab\u0103!", "healthy_backup_found_subject": "Copiile de rezerv\u0103 pentru :application_name de pe discul :disk_name sunt \xEEn regul\u0103", "healthy_backup_found_subject_title": "Copiile de rezerv\u0103 pentru :application_name sunt \xEEn regul\u0103", "unhealthy_backup_found_body": "Copiile de rezerv\u0103 pentru :application_name de pe discul :disk_name nu sunt \xEEn regul\u0103.", "unhealthy_backup_found_empty": "Nu exist\u0103 copii de rezerv\u0103 ale acestei aplica\u021Bii.", "unhealthy_backup_found_full": "Copiile de rezerv\u0103 folosesc prea mult spa\u021Biu de stocare. Utilizarea curent\u0103 este de :disk_usage care este mai mare dec\xE2t limita permis\u0103 de :disk_limit.", "unhealthy_backup_found_not_reachable": "Nu se poate ajunge la destina\u021Bia copiilor de rezerv\u0103. :error", "unhealthy_backup_found_old": "Cea mai recent\u0103 copie de rezerv\u0103 f\u0103cut\u0103 la :date este considerat\u0103 prea veche.", "unhealthy_backup_found_subject": "Important: Copiile de rezerv\u0103 pentru :application_name nu sunt \xEEn regul\u0103", "unhealthy_backup_found_subject_title": "Important: Copiile de rezerv\u0103 pentru :application_name nu sunt \xEEn regul\u0103. :problem", "unhealthy_backup_found_unknown": "Ne pare r\u0103u, un motiv exact nu poate fi determinat." }, "ro.log-viewer::general": { "all": "Toate", "date": "Dat\u0103" }, "ro.log-viewer::levels": { "alert": "Alert\u0103", "all": "Toate", "critical": "Critic", "debug": "Depanare", "emergency": "Urgen\u021B\u0103", "error": "Eroare", "info": "Informare", "notice": "Avertisment", "warning": "Pericol" }, "ru.backup::notifications": { "backup_failed_body": "\u0412\u043D\u0438\u043C\u0430\u043D\u0438\u0435: \u041F\u0440\u043E\u0438\u0437\u043E\u0448\u043B\u0430 \u043E\u0448\u0438\u0431\u043A\u0430 \u0432\u043E \u0432\u0440\u0435\u043C\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u043E\u0433\u043E \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F :application_name", "backup_failed_subject": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u0434\u0435\u043B\u0430\u0442\u044C \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0443\u044E \u043A\u043E\u043F\u0438\u044E :application_name", "backup_successful_body": "\u041E\u0442\u043B\u0438\u0447\u043D\u0430\u044F \u043D\u043E\u0432\u043E\u0441\u0442\u044C, \u043D\u043E\u0432\u0430\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u0441\u043E\u0437\u0434\u0430\u043D\u0430 \u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0430 \u043D\u0430 \u0434\u0438\u0441\u043A :disk_name.", "backup_successful_subject": "\u0423\u0441\u043F\u0435\u0448\u043D\u043E \u0441\u043E\u0437\u0434\u0430\u043D\u0430 \u043D\u043E\u0432\u0430\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name", "backup_successful_subject_title": "\u0423\u0441\u043F\u0435\u0448\u043D\u043E \u0441\u043E\u0437\u0434\u0430\u043D\u0430 \u043D\u043E\u0432\u0430\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F!", "cleanup_failed_body": "\u041F\u0440\u043E\u0438\u0437\u043E\u0448\u043B\u0430 \u043E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043E\u0447\u0438\u0441\u0442\u043A\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0445 \u043A\u043E\u043F\u0438\u0439 :application_name", "cleanup_failed_subject": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0447\u0438\u0441\u0442\u0438\u0442\u044C \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0435 \u043A\u043E\u043F\u0438\u0438 :application_name", "cleanup_successful_body": "\u041E\u0447\u0438\u0441\u0442\u043A\u0430 \u043E\u0442 \u0441\u0442\u0430\u0440\u044B\u0445 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0445 \u043A\u043E\u043F\u0438\u0439 :application_name \u043D\u0430 \u0434\u0438\u0441\u043A\u0435 :disk_name \u043F\u0440\u043E\u0448\u043B\u0430 \u0443\u0434\u0430\u0447\u043D\u043E.", "cleanup_successful_subject": "\u041E\u0447\u0438\u0441\u0442\u043A\u0430 \u043E\u0442 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0445 \u043A\u043E\u043F\u0438\u0439 :application_name \u043F\u0440\u043E\u0448\u043B\u0430 \u0443\u0441\u043F\u0435\u0448\u043D\u043E", "cleanup_successful_subject_title": "\u041E\u0447\u0438\u0441\u0442\u043A\u0430 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0445 \u043A\u043E\u043F\u0438\u0439 \u043F\u0440\u043E\u0448\u043B\u0430 \u0443\u0434\u0430\u0447\u043D\u043E!", "exception_message": "\u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435 \u043E\u0431 \u043E\u0448\u0438\u0431\u043A\u0435: :message", "exception_message_title": "\u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435 \u043E\u0431 \u043E\u0448\u0438\u0431\u043A\u0435", "exception_trace": "\u0421\u0432\u0435\u0434\u0435\u043D\u0438\u044F \u043E\u0431 \u043E\u0448\u0438\u0431\u043A\u0435: :trace", "exception_trace_title": "\u0421\u0432\u0435\u0434\u0435\u043D\u0438\u044F \u043E\u0431 \u043E\u0448\u0438\u0431\u043A\u0435", "healthy_backup_found_body": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430. \u0425\u043E\u0440\u043E\u0448\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430!", "healthy_backup_found_subject": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name \u0441 \u0434\u0438\u0441\u043A\u0430 :disk_name \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430", "healthy_backup_found_subject_title": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430", "unhealthy_backup_found_body": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u0434\u043B\u044F :application_name \u043D\u0430 \u0434\u0438\u0441\u043A\u0435 :disk_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C.", "unhealthy_backup_found_empty": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0435 \u043A\u043E\u043F\u0438\u0438 \u0434\u043B\u044F \u044D\u0442\u043E\u0433\u043E \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u044F \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u044E\u0442.", "unhealthy_backup_found_full": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0435 \u043A\u043E\u043F\u0438\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u044E\u0442 \u0441\u043B\u0438\u0448\u043A\u043E\u043C \u043C\u043D\u043E\u0433\u043E \u043F\u0430\u043C\u044F\u0442\u0438. \u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u0442\u0441\u044F :disk_usage \u0447\u0442\u043E \u0432\u044B\u0448\u0435 \u0434\u043E\u043F\u0443\u0441\u0442\u0438\u043C\u043E\u0433\u043E \u043F\u0440\u0435\u0434\u0435\u043B\u0430: :disk_limit.", "unhealthy_backup_found_not_reachable": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u043D\u0435 \u0441\u043C\u043E\u0433\u043B\u0430 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C\u0441\u044F. :error", "unhealthy_backup_found_old": "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u043E\u0435 \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0441\u043E\u0437\u0434\u0430\u043D\u043E :date \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0443\u0441\u0442\u0430\u0440\u0435\u0432\u0448\u0438\u043C.", "unhealthy_backup_found_subject": "\u0412\u043D\u0438\u043C\u0430\u043D\u0438\u0435: \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F :application_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C", "unhealthy_backup_found_subject_title": "\u0412\u043D\u0438\u043C\u0430\u043D\u0438\u0435: \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u0434\u043B\u044F :application_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C. :problem", "unhealthy_backup_found_unknown": "\u0418\u0437\u0432\u0438\u043D\u0438\u0442\u0435, \u0442\u043E\u0447\u043D\u0430\u044F \u043F\u0440\u0438\u0447\u0438\u043D\u0430 \u043D\u0435 \u043C\u043E\u0436\u0435\u0442 \u0431\u044B\u0442\u044C \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0435\u043D\u0430." }, "ru.log-viewer::general": { "all": "\u0412\u0441\u0435", "date": "\u0414\u0430\u0442\u0430" }, "ru.log-viewer::levels": { "alert": "\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435", "all": "\u0412\u0441\u0435", "critical": "\u041A\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439", "debug": "\u041E\u0442\u043B\u0430\u0434\u043A\u0430", "emergency": "\u0410\u0432\u0430\u0440\u0438\u0439\u043D\u0430\u044F", "error": "\u041E\u0448\u0438\u0431\u043A\u0430", "info": "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F", "notice": "\u0423\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u0435", "warning": "\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435" }, "sv.log-viewer::general": { "all": "Alla", "date": "Datum" }, "sv.log-viewer::levels": { "alert": "Alarmerande", "all": "Alla", "critical": "Kritisk", "debug": "Debug", "emergency": "Akut", "error": "Error", "info": "Information", "notice": "Notis", "warning": "Varning" }, "th.log-viewer::general": { "all": "\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14", "date": "\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48", "empty-logs": "The list of logs is empty!" }, "th.log-viewer::levels": { "alert": "\u0E27\u0E34\u0E01\u0E24\u0E15\u0E34", "all": "\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14", "critical": "\u0E23\u0E49\u0E32\u0E22\u0E41\u0E23\u0E07", "debug": "\u0E14\u0E35\u0E1A\u0E31\u0E01", "emergency": "\u0E09\u0E38\u0E01\u0E40\u0E09\u0E34\u0E19", "error": "\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14", "info": "\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25", "notice": "\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28", "warning": "\u0E04\u0E33\u0E40\u0E15\u0E37\u0E2D\u0E19" }, "tr.backup::notifications": { "backup_failed_body": "\xD6nemli: Yedeklenirken bir hata olu\u015Ftu :application_name", "backup_failed_subject": "Yedeklenemedi :application_name", "backup_successful_body": "Harika bir haber, :application_name \xE2it yeni bir yedekleme :disk_name adl\u0131 diskte ba\u015Far\u0131yla olu\u015Fturuldu.", "backup_successful_subject": "Ba\u015Far\u0131l\u0131 :application_name yeni yedeklemesi", "backup_successful_subject_title": "Ba\u015Far\u0131l\u0131 bir yeni yedekleme!", "cleanup_failed_body": ":application_name yedeklerini temizlerken bir hata olu\u015Ftu ", "cleanup_failed_subject": ":application_name yedeklemeleri temizlenmesi ba\u015Far\u0131s\u0131z.", "cleanup_successful_body": ":application_name yedeklemeleri temizlenmesi ,:disk_name diskinden silindi", "cleanup_successful_subject": ":application_name yedeklemeleri temizlenmesi ba\u015Far\u0131l\u0131.", "cleanup_successful_subject_title": "Yedeklerin temizlenmesi ba\u015Far\u0131l\u0131!", "exception_message": "Hata mesaj\u0131: :message", "exception_message_title": "Hata mesaj\u0131", "exception_trace": "Hata izleri: :trace", "exception_trace_title": "Hata izleri", "healthy_backup_found_body": ":application_name i\xE7in yap\u0131lan yedeklemeler sa\u011Fl\u0131kl\u0131 say\u0131l\u0131r. Aferin!", "healthy_backup_found_subject": ":application_name yedeklenmesi ,:disk_name adl\u0131 diskte sa\u011Fl\u0131kl\u0131", "healthy_backup_found_subject_title": ":application_name yedeklenmesi sa\u011Fl\u0131kl\u0131", "unhealthy_backup_found_body": "Yedeklemeler: :application_name disk: :disk_name sa\u011Fl\u0131ks\u0131z.", "unhealthy_backup_found_empty": "Bu uygulaman\u0131n yedekleri yok.", "unhealthy_backup_found_full": "Yedeklemeler \xE7ok fazla depolama alan\u0131 kullan\u0131yor. \u015Eu anki kullan\u0131m: :disk_usage, izin verilen s\u0131n\u0131rdan y\xFCksek: :disk_limit.", "unhealthy_backup_found_not_reachable": "Yedekleme hedefine ula\u015F\u0131lam\u0131yor. :error", "unhealthy_backup_found_old": ":date tarihinde yap\u0131lan en son yedekleme \xE7ok eski kabul ediliyor.", "unhealthy_backup_found_subject": "\xD6nemli: :application_name i\xE7in yedeklemeler sa\u011Fl\u0131ks\u0131z", "unhealthy_backup_found_subject_title": "\xD6nemli: :application_name i\xE7in yedeklemeler sa\u011Fl\u0131ks\u0131z. :problem", "unhealthy_backup_found_unknown": "\xDCzg\xFCn\xFCm, kesin bir sebep belirlenemiyor." }, "tr.log-viewer::general": { "all": "Toplam", "date": "Tarih" }, "tr.log-viewer::levels": { "alert": "Alarm", "all": "Toplam", "critical": "Kritik", "debug": "Debug", "emergency": "Acil", "error": "Hata", "info": "Bilgi", "notice": "Bildirim", "warning": "Uyar\u0131" }, "uk.backup::notifications": { "backup_failed_body": "\u0423\u0432\u0430\u0433\u0430: \u0422\u0440\u0430\u043F\u0438\u043B\u0430\u0441\u044C \u043F\u043E\u043C\u0438\u043B\u043A\u0430 \u043F\u0456\u0434 \u0447\u0430\u0441 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u043E\u0433\u043E \u043A\u043E\u043F\u0456\u044E\u0432\u0430\u043D\u043D\u044F :application_name", "backup_failed_subject": "\u041D\u0435 \u0432\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0440\u043E\u0431\u0438\u0442\u0438 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0443 \u043A\u043E\u043F\u0456\u044E :application_name", "backup_successful_body": "\u0427\u0443\u0434\u043E\u0432\u0430 \u043D\u043E\u0432\u0438\u043D\u0430, \u043D\u043E\u0432\u0430 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F :application_name \u0443\u0441\u043F\u0456\u0448\u043D\u043E \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u0430 \u0456 \u0437\u0431\u0435\u0440\u0435\u0436\u0435\u043D\u0430 \u043D\u0430 \u0434\u0438\u0441\u043A :disk_name.", "backup_successful_subject": "\u0423\u0441\u043F\u0456\u0448\u043D\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0435 \u043A\u043E\u043F\u0456\u044E\u0432\u0430\u043D\u043D\u044F :application_name", "backup_successful_subject_title": "\u0423\u0441\u043F\u0456\u0448\u043D\u043E \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u0430 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F!", "cleanup_failed_body": "\u0421\u0442\u0430\u043B\u0430\u0441\u044F \u043F\u043E\u043C\u0438\u043B\u043A\u0430 \u043F\u0456\u0434 \u0447\u0430\u0441 \u043E\u0447\u0438\u0449\u0435\u043D\u043D\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0438\u0445 \u043A\u043E\u043F\u0456\u0439 :application_name", "cleanup_failed_subject": "\u041D\u0435 \u0432\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0447\u0438\u0441\u0442\u0438\u0442\u0438 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0456 \u043A\u043E\u043F\u0456\u0457 :application_name", "cleanup_successful_body": "\u041E\u0447\u0438\u0449\u0435\u043D\u043D\u043E \u0432\u0456\u0434 \u0441\u0442\u0430\u0440\u0438\u0445 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0438\u0445 \u043A\u043E\u043F\u0456\u0439 :application_name \u043D\u0430 \u0434\u0438\u0441\u043A\u0443 :disk_name \u043F\u043E\u0439\u0448\u043B\u043E \u0443\u0441\u043F\u0456\u0448\u043D\u043E.", "cleanup_successful_subject": "\u0423\u0441\u043F\u0456\u0448\u043D\u0435 \u043E\u0447\u0438\u0449\u0435\u043D\u043D\u044F \u0432\u0456\u0434 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0438\u0445 \u043A\u043E\u043F\u0456\u0439 :application_name", "cleanup_successful_subject_title": "\u041E\u0447\u0438\u0449\u0435\u043D\u043D\u044F \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0438\u0445 \u043A\u043E\u043F\u0456\u0439 \u043F\u0440\u043E\u0439\u0448\u043B\u043E \u0432\u0434\u0430\u043B\u043E!", "exception_message": "\u041F\u043E\u0432\u0456\u0434\u043E\u043C\u043B\u0435\u043D\u043D\u044F \u043F\u0440\u043E \u043F\u043E\u043C\u0438\u043B\u043A\u0443: :message", "exception_message_title": "\u041F\u043E\u0432\u0456\u0434\u043E\u043C\u043B\u0435\u043D\u043D\u044F \u043F\u043E\u043C\u0438\u043B\u043A\u0438", "exception_trace": "\u0414\u0435\u0442\u0430\u043B\u0456 \u043F\u043E\u043C\u0438\u043B\u043A\u0438: :trace", "exception_trace_title": "\u0414\u0435\u0442\u0430\u043B\u0456 \u043F\u043E\u043C\u0438\u043B\u043A\u0438", "healthy_backup_found_body": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F :application_name \u0443\u0441\u043F\u0456\u0448\u043D\u043E \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430. \u0425\u043E\u0440\u043E\u0448\u0430 \u0440\u043E\u0431\u043E\u0442\u0430!", "healthy_backup_found_subject": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F :application_name \u0437 \u0434\u0438\u0441\u043A\u0443 :disk_name \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430", "healthy_backup_found_subject_title": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F :application_name \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430", "unhealthy_backup_found_body": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F \u0434\u043B\u044F :application_name \u043D\u0430 \u0434\u0438\u0441\u043A\u0443 :disk_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C.", "unhealthy_backup_found_empty": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0456 \u043A\u043E\u043F\u0456\u0457 \u0434\u043B\u044F \u0446\u044C\u043E\u0433\u043E \u0434\u043E\u0434\u0430\u0442\u043A\u0443 \u0432\u0456\u0434\u0441\u0443\u0442\u043D\u0456.", "unhealthy_backup_found_full": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0456 \u043A\u043E\u043F\u0456\u0457 \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u044E\u0442\u044C \u0437\u0430\u043D\u0430\u0434\u0442\u043E \u0431\u0430\u0433\u0430\u0442\u043E \u043F\u0430\u043C`\u044F\u0442\u0456. \u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0454\u0442\u044C\u0441\u044F :disk_usage \u0449\u043E \u0432\u0438\u0449\u0435 \u0437\u0430 \u0434\u043E\u043F\u0443\u0441\u0442\u0438\u043C\u0443 \u043C\u0435\u0436\u0443 :disk_limit.", "unhealthy_backup_found_not_reachable": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F \u043D\u0435 \u0437\u043C\u043E\u0433\u043B\u0430 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0438\u0441\u044C. :error", "unhealthy_backup_found_old": "\u041E\u0441\u0442\u0430\u043D\u043D\u0454 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0435 \u043A\u043E\u043F\u0456\u044E\u0432\u0430\u043D\u043D\u044F \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043E :date \u0454 \u0437\u0430\u0441\u0442\u0430\u0440\u0456\u043B\u0438\u043C.", "unhealthy_backup_found_subject": "\u0423\u0432\u0430\u0433\u0430: \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F :application_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C", "unhealthy_backup_found_subject_title": "\u0423\u0432\u0430\u0433\u0430: \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0430 \u043A\u043E\u043F\u0456\u044F \u0434\u043B\u044F :application_name \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C. :problem", "unhealthy_backup_found_unknown": "\u0412\u0438\u0431\u0430\u0447\u0442\u0435, \u0430\u043B\u0435 \u043C\u0438 \u043D\u0435 \u0437\u043C\u043E\u0433\u043B\u0438 \u0432\u0438\u0437\u043D\u0430\u0447\u0438\u0442\u0438 \u0442\u043E\u0447\u043D\u0443 \u043F\u0440\u0438\u0447\u0438\u043D\u0443." }, "zh-TW.log-viewer::general": { "all": "\u5168\u90E8", "date": "\u65E5\u671F" }, "zh-TW.log-viewer::levels": { "alert": "\u8B66\u5831", "all": "\u5168\u90E8", "critical": "\u56B4\u91CD", "debug": "\u9664\u932F", "emergency": "\u7DCA\u6025", "error": "\u932F\u8AA4", "info": "\u8A0A\u606F", "notice": "\u6CE8\u610F", "warning": "\u8B66\u544A" }, "zh.log-viewer::general": { "all": "\u5168\u90E8", "date": "\u65E5\u671F" }, "zh.log-viewer::levels": { "alert": "\u7D27\u6025", "all": "\u5168\u90E8", "critical": "\u4E25\u91CD", "debug": "\u8C03\u8BD5", "emergency": "\u5371\u6025", "error": "\u9519\u8BEF", "info": "\u4FE1\u606F", "notice": "\u6CE8\u610F", "warning": "\u8B66\u544A" } };
 
 /***/ }),
 /* 238 */
@@ -41566,19 +41566,19 @@ module.exports = __webpack_require__(239);
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(11);
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(14);
 
 /***/ }),
 /* 4 */
@@ -41590,7 +41590,7 @@ module.exports = __webpack_require__(39);
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(27);
+module.exports = __webpack_require__(28);
 
 /***/ }),
 /* 6 */
@@ -41602,7 +41602,7 @@ module.exports = __webpack_require__(4);
 /* 7 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(28);
+module.exports = __webpack_require__(29);
 
 /***/ }),
 /* 8 */
@@ -41650,7 +41650,7 @@ module.exports = __webpack_require__(64);
 /* 15 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(30);
+module.exports = __webpack_require__(31);
 
 /***/ }),
 /* 16 */
@@ -41674,7 +41674,7 @@ module.exports = __webpack_require__(63);
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(29);
+module.exports = __webpack_require__(30);
 
 /***/ }),
 /* 20 */
@@ -83682,7 +83682,7 @@ exports.default = function (Vue) {
   return template;
 };
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(10);
 
 var RE_NARGS = /(%|)\{([0-9a-zA-Z_]+)\}/g;
 /**
@@ -83704,7 +83704,7 @@ var _vue = __webpack_require__(4);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _dom = __webpack_require__(9);
+var _dom = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -86469,7 +86469,7 @@ var index = (function () {
 
 /* harmony default export */ __webpack_exports__["default"] = (index);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(26)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(27)))
 
 /***/ }),
 /* 247 */
@@ -86480,7 +86480,7 @@ var index = (function () {
 
 exports.__esModule = true;
 
-var _dom = __webpack_require__(9);
+var _dom = __webpack_require__(11);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -86581,7 +86581,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.isVNode = isVNode;
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(10);
 
 function isVNode(node) {
   return node !== null && (typeof node === 'undefined' ? 'undefined' : _typeof(node)) === 'object' && (0, _util.hasOwn)(node, 'componentOptions');
@@ -86981,28 +86981,28 @@ main.install = function (Vue) {
 /***/ 17:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(30);
+module.exports = __webpack_require__(31);
 
 /***/ }),
 
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(11);
 
 /***/ }),
 
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
 /***/ 5:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(27);
+module.exports = __webpack_require__(28);
 
 /***/ }),
 
@@ -87479,7 +87479,7 @@ function normalizeComponent (
 /***/ 4:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(14);
 
 /***/ }),
 
@@ -88224,7 +88224,7 @@ progress.install = function (Vue) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var throttle = __webpack_require__(43);
-var debounce = __webpack_require__(30);
+var debounce = __webpack_require__(31);
 
 module.exports = {
 	throttle: throttle,
@@ -88430,19 +88430,19 @@ function normalizeComponent (
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(14);
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(27);
+module.exports = __webpack_require__(28);
 
 /***/ }),
 /* 6 */
@@ -88484,7 +88484,7 @@ module.exports = __webpack_require__(42);
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(30);
+module.exports = __webpack_require__(31);
 
 /***/ }),
 /* 18 */,
@@ -88498,7 +88498,7 @@ module.exports = __webpack_require__(21);
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(29);
+module.exports = __webpack_require__(30);
 
 /***/ }),
 /* 22 */
@@ -90635,7 +90635,7 @@ function normalizeComponent (
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
@@ -90893,7 +90893,7 @@ component.options.__file = "packages/select/src/option.vue"
 /***/ 4:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(14);
 
 /***/ }),
 
@@ -91972,9 +91972,9 @@ module.exports = function (it) {
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
-var getKeys = __webpack_require__(33);
+var getKeys = __webpack_require__(34);
 var gOPS = __webpack_require__(55);
-var pIE = __webpack_require__(36);
+var pIE = __webpack_require__(37);
 var toObject = __webpack_require__(76);
 var IObject = __webpack_require__(74);
 var $assign = Object.assign;
@@ -92129,7 +92129,7 @@ module.exports = function (TO_STRING) {
 "use strict";
 
 var create = __webpack_require__(79);
-var descriptor = __webpack_require__(32);
+var descriptor = __webpack_require__(33);
 var setToStringTag = __webpack_require__(57);
 var IteratorPrototype = {};
 
@@ -92147,8 +92147,8 @@ module.exports = function (Constructor, NAME, next) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(17);
-var anObject = __webpack_require__(31);
-var getKeys = __webpack_require__(33);
+var anObject = __webpack_require__(32);
+var getKeys = __webpack_require__(34);
 
 module.exports = __webpack_require__(18) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -92165,7 +92165,7 @@ module.exports = __webpack_require__(18) ? Object.defineProperties : function de
 /* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var document = __webpack_require__(11).document;
+var document = __webpack_require__(13).document;
 module.exports = document && document.documentElement;
 
 
@@ -92174,7 +92174,7 @@ module.exports = document && document.documentElement;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(14);
+var has = __webpack_require__(15);
 var toObject = __webpack_require__(76);
 var IE_PROTO = __webpack_require__(52)('IE_PROTO');
 var ObjectProto = Object.prototype;
@@ -92193,7 +92193,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(282);
-var global = __webpack_require__(11);
+var global = __webpack_require__(13);
 var hide = __webpack_require__(16);
 var Iterators = __webpack_require__(56);
 var TO_STRING_TAG = __webpack_require__(20)('toStringTag');
@@ -92294,8 +92294,8 @@ module.exports = __webpack_require__(22).Symbol;
 "use strict";
 
 // ECMAScript 6 symbols shim
-var global = __webpack_require__(11);
-var has = __webpack_require__(14);
+var global = __webpack_require__(13);
+var has = __webpack_require__(15);
 var DESCRIPTORS = __webpack_require__(18);
 var $export = __webpack_require__(48);
 var redefine = __webpack_require__(78);
@@ -92303,22 +92303,22 @@ var META = __webpack_require__(288).KEY;
 var $fails = __webpack_require__(24);
 var shared = __webpack_require__(53);
 var setToStringTag = __webpack_require__(57);
-var uid = __webpack_require__(35);
+var uid = __webpack_require__(36);
 var wks = __webpack_require__(20);
 var wksExt = __webpack_require__(58);
 var wksDefine = __webpack_require__(59);
 var enumKeys = __webpack_require__(289);
 var isArray = __webpack_require__(290);
-var anObject = __webpack_require__(31);
+var anObject = __webpack_require__(32);
 var isObject = __webpack_require__(23);
 var toIObject = __webpack_require__(19);
 var toPrimitive = __webpack_require__(49);
-var createDesc = __webpack_require__(32);
+var createDesc = __webpack_require__(33);
 var _create = __webpack_require__(79);
 var gOPNExt = __webpack_require__(291);
 var $GOPD = __webpack_require__(292);
 var $DP = __webpack_require__(17);
-var $keys = __webpack_require__(33);
+var $keys = __webpack_require__(34);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
 var gOPN = gOPNExt.f;
@@ -92442,10 +92442,10 @@ if (!USE_NATIVE) {
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
   __webpack_require__(80).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(36).f = $propertyIsEnumerable;
+  __webpack_require__(37).f = $propertyIsEnumerable;
   __webpack_require__(55).f = $getOwnPropertySymbols;
 
-  if (DESCRIPTORS && !__webpack_require__(34)) {
+  if (DESCRIPTORS && !__webpack_require__(35)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -92532,9 +92532,9 @@ setToStringTag(global.JSON, 'JSON', true);
 /* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META = __webpack_require__(35)('meta');
+var META = __webpack_require__(36)('meta');
 var isObject = __webpack_require__(23);
-var has = __webpack_require__(14);
+var has = __webpack_require__(15);
 var setDesc = __webpack_require__(17).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
@@ -92592,9 +92592,9 @@ var meta = module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(33);
+var getKeys = __webpack_require__(34);
 var gOPS = __webpack_require__(55);
-var pIE = __webpack_require__(36);
+var pIE = __webpack_require__(37);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -92648,11 +92648,11 @@ module.exports.f = function getOwnPropertyNames(it) {
 /* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(36);
-var createDesc = __webpack_require__(32);
+var pIE = __webpack_require__(37);
+var createDesc = __webpack_require__(33);
 var toIObject = __webpack_require__(19);
 var toPrimitive = __webpack_require__(49);
-var has = __webpack_require__(14);
+var has = __webpack_require__(15);
 var IE8_DOM_DEFINE = __webpack_require__(71);
 var gOPD = Object.getOwnPropertyDescriptor;
 
@@ -94266,7 +94266,7 @@ input_number.install = function (Vue) {
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(11);
 
 /***/ }),
 
@@ -94526,7 +94526,7 @@ module.exports = __webpack_require__(67);
 /***/ 21:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(29);
+module.exports = __webpack_require__(30);
 
 /***/ }),
 
@@ -94540,7 +94540,7 @@ module.exports = __webpack_require__(68);
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
@@ -95867,7 +95867,7 @@ module.exports = __webpack_require__(39);
 /***/ 9:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(28);
+module.exports = __webpack_require__(29);
 
 /***/ })
 
@@ -96071,21 +96071,21 @@ function normalizeComponent (
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(11);
 
 /***/ }),
 
 /***/ 3:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
 /***/ 5:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(27);
+module.exports = __webpack_require__(28);
 
 /***/ }),
 
@@ -96523,7 +96523,7 @@ if(false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var escape = __webpack_require__(322);
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(8)(false);
 // imports
 
 
@@ -98124,7 +98124,7 @@ var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(354)
 /* template */
-var __vue_template__ = __webpack_require__(360)
+var __vue_template__ = __webpack_require__(365)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -98173,7 +98173,7 @@ var content = __webpack_require__(352);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(15)("7f2ca3c4", content, false, {});
+var update = __webpack_require__(12)("7f2ca3c4", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -98192,12 +98192,12 @@ if(false) {
 /* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(8)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -98320,26 +98320,31 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(9);
 
 var _Table = __webpack_require__(89);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _UploadAttachments = __webpack_require__(37);
+var _UploadAttachments = __webpack_require__(26);
 
 var _UploadAttachments2 = _interopRequireDefault(_UploadAttachments);
+
+var _TagComponent = __webpack_require__(360);
+
+var _TagComponent2 = _interopRequireDefault(_TagComponent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
   name: 'WhitelabelsProviderComponent',
-  components: { VueTable: _Table2.default, UploadAttachments: _UploadAttachments2.default },
+  components: { VueTable: _Table2.default, UploadAttachments: _UploadAttachments2.default, TagComponent: _TagComponent2.default },
   data: function data() {
     return {
       // eslint-disable-next-line
@@ -98558,7 +98563,7 @@ var _vuex = __webpack_require__(358);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -99731,6 +99736,344 @@ if (false) {
 /* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(361)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(363)
+/* template */
+var __vue_template__ = __webpack_require__(364)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-7a44cbab"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/admin/whitelabels/components/TagComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7a44cbab", Component.options)
+  } else {
+    hotAPI.reload("data-v-7a44cbab", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 361 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(362);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(12)("36a9e628", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7a44cbab\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TagComponent.vue", function() {
+     var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7a44cbab\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TagComponent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.el-tag + .el-tag[data-v-7a44cbab] {\n    margin-left: 10px;\n}\n.button-new-tag[data-v-7a44cbab] {\n    margin-left: 10px;\n    height: 32px;\n    line-height: 30px;\n    padding-top: 0;\n    padding-bottom: 0;\n}\n.input-new-tag[data-v-7a44cbab] {\n    width: 190px;\n    margin-left: 10px;\n    vertical-align: bottom;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 363 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _errors = __webpack_require__(9);
+
+exports.default = {
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      dynamicTags: [],
+      inputVisible: false,
+      inputValue: '',
+      tag: ''
+    };
+  },
+
+  props: {
+    hostsList: {
+      default: function _default() {
+        return [];
+      },
+      type: Array
+    }
+  },
+  name: 'TagComponent',
+  mounted: function mounted() {
+    this.initValues();
+  },
+
+  watch: {
+    hostsList: function hostsList() {
+      this.initValues();
+    }
+  },
+  methods: {
+    initValues: function initValues() {
+      if (Object.entries(this.hostsList).length !== 0) {
+        this.dynamicTags = JSON.parse(JSON.stringify(this.hostsList));
+      }
+    },
+    handleClose: function handleClose(tag) {
+      var _this = this;
+
+      this.tag = tag;
+      this.$store.dispatch('block', { element: 'whitelabelsProviderComponent', load: true });
+      this.$http.delete(window.laroute.route('provider.hosts.destroy', { host: tag }), { host: tag }).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+        _this.$store.dispatch('block', { element: 'whitelabelsProviderComponent', load: false });
+      });
+    },
+    showInput: function showInput() {
+      var _this2 = this;
+
+      this.inputVisible = true;
+      this.$nextTick(function (_) {
+        _this2.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+    handleInputConfirm: function handleInputConfirm() {
+      var _this3 = this;
+
+      var inputValue = this.inputValue;
+      if (inputValue) {
+        this.$store.dispatch('block', { element: 'whitelabelsProviderComponent', load: true });
+        this.$http.post(window.laroute.route('provider.hosts.store'), { host: 'https://' + inputValue }).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+          _this3.$store.dispatch('block', { element: 'whitelabelsProviderComponent', load: false });
+        });
+      }
+    },
+    onDeleteSuccess: function onDeleteSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.$message({
+          message: response.data.message,
+          showClose: true,
+          type: 'success'
+        });
+        this.dynamicTags.splice(this.dynamicTags.indexOf(this.tag), 1);
+      } else {
+        this.$message({
+          message: response.data.message,
+          showClose: true,
+          type: 'error'
+        });
+      }
+    },
+    onSubmitSuccess: function onSubmitSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.$message({
+          message: response.data.message,
+          showClose: true,
+          type: 'success'
+        });
+        this.dynamicTags.push(this.inputValue);
+        this.inputVisible = false;
+        this.inputValue = '';
+      } else {
+        this.$message({
+          message: response.data.message,
+          showClose: true,
+          type: 'error'
+        });
+      }
+    },
+    onFailed: function onFailed(error) {
+      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+        this.errors.record(error.response.data.errors);
+        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
+          this.$notify.error({ title: 'Failed', message: error.response.data.message });
+        } else {
+          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
+        }
+      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Failed', message: error.response.data.message });
+      } else if (error.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Error', message: error.message });
+      } else {
+        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
+        console.log(error);
+      }
+    }
+  }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 364 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "form-group row" }, [
+    _c("label", { staticClass: "col-lg-3 col-form-label" }, [
+      _vm._v(" " + _vm._s(_vm.trans("modals.hosts")) + " "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v(" *")])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-lg-9" },
+      [
+        _vm._l(_vm.dynamicTags, function(tag) {
+          return _c(
+            "el-tag",
+            {
+              key: tag,
+              attrs: { closable: "", "disable-transitions": false },
+              on: {
+                close: function($event) {
+                  _vm.handleClose(tag)
+                }
+              }
+            },
+            [_vm._v("\n            " + _vm._s("https://" + tag) + "\n        ")]
+          )
+        }),
+        _vm._v(" "),
+        _vm.inputVisible
+          ? _c(
+              "el-input",
+              {
+                ref: "saveTagInput",
+                staticClass: "input-new-tag",
+                attrs: { size: "mini" },
+                on: { blur: _vm.handleInputConfirm },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.handleInputConfirm($event)
+                  }
+                },
+                model: {
+                  value: _vm.inputValue,
+                  callback: function($$v) {
+                    _vm.inputValue = $$v
+                  },
+                  expression: "inputValue"
+                }
+              },
+              [_c("template", { slot: "prepend" }, [_vm._v("https://")])],
+              2
+            )
+          : _c(
+              "el-button",
+              {
+                staticClass: "button-new-tag",
+                attrs: { size: "small" },
+                on: { click: _vm.showInput }
+              },
+              [_vm._v("+ Domain hinzufügen")]
+            )
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7a44cbab", module.exports)
+  }
+}
+
+/***/ }),
+/* 365 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -99752,218 +100095,229 @@ var render = function() {
           }
         },
         [
-          _c("fieldset", { staticClass: "mb-3" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-lg-3 col-form-label" }, [
-                _vm._v(" " + _vm._s(_vm.trans("modals.display_name")) + " "),
-                _c("span", { staticClass: "text-danger" }, [_vm._v(" *")])
-              ]),
+          _c(
+            "fieldset",
+            { staticClass: "mb-3" },
+            [
+              _vm._m(0),
               _vm._v(" "),
-              _c("div", { staticClass: "col-lg-9" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  class: _vm.errors.has("display_name") ? "is-invalid" : "",
-                  attrs: {
-                    type: "text",
-                    id: "display_name",
-                    name: "display_name",
-                    placeholder: _vm.trans("modals.display_name")
-                  },
-                  domProps: { value: _vm.whitelabel.display_name },
-                  on: { input: _vm.updateWhitelabel }
-                }),
+              _c("div", { staticClass: "form-group row" }, [
+                _c("label", { staticClass: "col-lg-3 col-form-label" }, [
+                  _vm._v(" " + _vm._s(_vm.trans("modals.display_name")) + " "),
+                  _c("span", { staticClass: "text-danger" }, [_vm._v(" *")])
+                ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "invalid-feedback" }, [
-                  _c("strong", {
-                    domProps: {
-                      textContent: _vm._s(_vm.errors.get("display_name"))
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-lg-3 col-form-label" }, [
-                _vm._v(" " + _vm._s(_vm.trans("modals.domain")) + " "),
-                _c("span", { staticClass: "text-danger" }, [_vm._v(" *")])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-9" }, [
-                _c("div", { staticClass: "input-group" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
+                _c("div", { staticClass: "col-lg-9" }, [
                   _c("input", {
                     staticClass: "form-control",
-                    class: _vm.errors.has("sub_domain") ? "is-invalid" : "",
+                    class: _vm.errors.has("display_name") ? "is-invalid" : "",
                     attrs: {
                       type: "text",
-                      id: "sub_domain",
-                      name: "sub_domain",
-                      placeholder: _vm.trans("modals.domain")
+                      id: "display_name",
+                      name: "display_name",
+                      placeholder: _vm.trans("modals.display_name")
                     },
-                    domProps: { value: _vm.whitelabel.sub_domain },
+                    domProps: { value: _vm.whitelabel.display_name },
                     on: { input: _vm.updateWhitelabel }
                   }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "input-group-append" }, [
-                    _c("span", { staticClass: "input-group-text" }, [
-                      _vm._v(_vm._s(_vm.whitelabel.main_domain))
-                    ])
-                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "invalid-feedback" }, [
                     _c("strong", {
                       domProps: {
-                        textContent: _vm._s(_vm.errors.get("sub_domain"))
+                        textContent: _vm._s(_vm.errors.get("display_name"))
                       }
                     })
                   ])
                 ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-lg-3 col-form-label" }, [
-                _vm._v(" " + _vm._s(_vm.trans("modals.primary_color")) + " "),
-                _c("span", { staticClass: "text-danger" }, [_vm._v(" *")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c("label", { staticClass: "col-lg-3 col-form-label" }, [
+                  _vm._v(" " + _vm._s(_vm.trans("modals.domain")) + " "),
+                  _c("span", { staticClass: "text-danger" }, [_vm._v(" *")])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-9" }, [
+                  _c("div", { staticClass: "input-group" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control",
+                      class: _vm.errors.has("sub_domain") ? "is-invalid" : "",
+                      attrs: {
+                        type: "text",
+                        id: "sub_domain",
+                        name: "sub_domain",
+                        placeholder: _vm.trans("modals.domain")
+                      },
+                      domProps: { value: _vm.whitelabel.sub_domain },
+                      on: { input: _vm.updateWhitelabel }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "input-group-append" }, [
+                      _c("span", { staticClass: "input-group-text" }, [
+                        _vm._v(_vm._s(_vm.whitelabel.main_domain))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "invalid-feedback" }, [
+                      _c("strong", {
+                        domProps: {
+                          textContent: _vm._s(_vm.errors.get("sub_domain"))
+                        }
+                      })
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c("label", { staticClass: "col-lg-3 col-form-label" }, [
+                  _vm._v(" " + _vm._s(_vm.trans("modals.primary_color")) + " "),
+                  _c("span", { staticClass: "text-danger" }, [_vm._v(" *")])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-lg-9" },
+                  [
+                    _c("el-color-picker", {
+                      attrs: { value: _vm.whitelabel.color },
+                      on: { input: _vm.updateWhitelabelColor }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "help-block text-danger" }, [
+                      _c("strong", {
+                        domProps: {
+                          textContent: _vm._s(_vm.errors.get("color"))
+                        }
+                      })
+                    ])
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("tag-component", {
+                attrs: { hostsList: _vm.whitelabel.hostsList }
+              }),
+              _vm._v(" "),
+              _c("legend", { staticClass: "font-weight-semibold" }, [
+                _c("i", { staticClass: "icon-upload mr-2" }),
+                _vm._v(" " + _vm._s(_vm.trans("modals.whitelabels_image")))
               ]),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-lg-9" },
+                { staticClass: "form-group" },
                 [
-                  _c("el-color-picker", {
-                    attrs: { value: _vm.whitelabel.color },
-                    on: { input: _vm.updateWhitelabelColor }
+                  _c("upload-attachments", {
+                    attrs: {
+                      data: {
+                        attachable_id: parseInt(_vm.whitelabel.id),
+                        attachable_type:
+                          "Modules\\Whitelabels\\Entities\\Whitelabel",
+                        type: "whitelabels",
+                        folder: "background"
+                      },
+                      fileList: _vm.whitelabel.background,
+                      tip: _vm.trans("messages.background"),
+                      limit: 1,
+                      listType: "picture-card"
+                    }
                   }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "help-block text-danger" }, [
-                    _c("strong", {
-                      domProps: { textContent: _vm._s(_vm.errors.get("color")) }
-                    })
-                  ])
+                  _vm.errors.has("background")
+                    ? _c("div", { staticClass: "help-block text-danger" }, [
+                        _c("strong", {
+                          domProps: {
+                            textContent: _vm._s(_vm.errors.get("background"))
+                          }
+                        })
+                      ])
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("legend", { staticClass: "font-weight-semibold" }, [
+                _c("i", { staticClass: "icon-upload mr-2" }),
+                _vm._v(" " + _vm._s(_vm.trans("Logo")) + " ")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("upload-attachments", {
+                    attrs: {
+                      data: {
+                        attachable_id: parseInt(_vm.whitelabel.id),
+                        attachable_type:
+                          "Modules\\Whitelabels\\Entities\\Whitelabel",
+                        type: "whitelabels",
+                        folder: "logo"
+                      },
+                      fileList: _vm.whitelabel.logo,
+                      limit: 1,
+                      tip: _vm.trans("messages.logo"),
+                      listType: "picture-card"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.has("logo")
+                    ? _c("div", { staticClass: "help-block text-danger" }, [
+                        _c("strong", {
+                          domProps: {
+                            textContent: _vm._s(_vm.errors.get("logo"))
+                          }
+                        })
+                      ])
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("legend", { staticClass: "font-weight-semibold" }, [
+                _c("i", { staticClass: "icon-upload mr-2" }),
+                _vm._v(" " + _vm._s(_vm.trans("Favicon")) + " ")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("upload-attachments", {
+                    attrs: {
+                      data: {
+                        attachable_id: parseInt(_vm.whitelabel.id),
+                        attachable_type:
+                          "Modules\\Whitelabels\\Entities\\Whitelabel",
+                        type: "whitelabels",
+                        folder: "favicon"
+                      },
+                      fileList: _vm.whitelabel.favicon,
+                      limit: 1,
+                      tip: _vm.trans("messages.favicon"),
+                      listType: "picture-card"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.has("favicon")
+                    ? _c("div", { staticClass: "help-block text-danger" }, [
+                        _c("strong", {
+                          domProps: {
+                            textContent: _vm._s(_vm.errors.get("favicon"))
+                          }
+                        })
+                      ])
+                    : _vm._e()
                 ],
                 1
               )
-            ]),
-            _vm._v(" "),
-            _c("legend", { staticClass: "font-weight-semibold" }, [
-              _c("i", { staticClass: "icon-upload mr-2" }),
-              _vm._v(" " + _vm._s(_vm.trans("modals.whitelabels_image")))
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "form-group" },
-              [
-                _c("upload-attachments", {
-                  attrs: {
-                    data: {
-                      attachable_id: parseInt(_vm.whitelabel.id),
-                      attachable_type:
-                        "Modules\\Whitelabels\\Entities\\Whitelabel",
-                      type: "whitelabels",
-                      folder: "background"
-                    },
-                    fileList: _vm.whitelabel.background,
-                    tip: _vm.trans("messages.background"),
-                    limit: 1,
-                    listType: "picture-card"
-                  }
-                }),
-                _vm._v(" "),
-                _vm.errors.has("background")
-                  ? _c("div", { staticClass: "help-block text-danger" }, [
-                      _c("strong", {
-                        domProps: {
-                          textContent: _vm._s(_vm.errors.get("background"))
-                        }
-                      })
-                    ])
-                  : _vm._e()
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("legend", { staticClass: "font-weight-semibold" }, [
-              _c("i", { staticClass: "icon-upload mr-2" }),
-              _vm._v(" " + _vm._s(_vm.trans("Logo")) + " ")
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "form-group" },
-              [
-                _c("upload-attachments", {
-                  attrs: {
-                    data: {
-                      attachable_id: parseInt(_vm.whitelabel.id),
-                      attachable_type:
-                        "Modules\\Whitelabels\\Entities\\Whitelabel",
-                      type: "whitelabels",
-                      folder: "logo"
-                    },
-                    fileList: _vm.whitelabel.logo,
-                    limit: 1,
-                    tip: _vm.trans("messages.logo"),
-                    listType: "picture-card"
-                  }
-                }),
-                _vm._v(" "),
-                _vm.errors.has("logo")
-                  ? _c("div", { staticClass: "help-block text-danger" }, [
-                      _c("strong", {
-                        domProps: {
-                          textContent: _vm._s(_vm.errors.get("logo"))
-                        }
-                      })
-                    ])
-                  : _vm._e()
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("legend", { staticClass: "font-weight-semibold" }, [
-              _c("i", { staticClass: "icon-upload mr-2" }),
-              _vm._v(" " + _vm._s(_vm.trans("Favicon")) + " ")
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "form-group" },
-              [
-                _c("upload-attachments", {
-                  attrs: {
-                    data: {
-                      attachable_id: parseInt(_vm.whitelabel.id),
-                      attachable_type:
-                        "Modules\\Whitelabels\\Entities\\Whitelabel",
-                      type: "whitelabels",
-                      folder: "favicon"
-                    },
-                    fileList: _vm.whitelabel.favicon,
-                    limit: 1,
-                    tip: _vm.trans("messages.favicon"),
-                    listType: "picture-card"
-                  }
-                }),
-                _vm._v(" "),
-                _vm.errors.has("favicon")
-                  ? _c("div", { staticClass: "help-block text-danger" }, [
-                      _c("strong", {
-                        domProps: {
-                          textContent: _vm._s(_vm.errors.get("favicon"))
-                        }
-                      })
-                    ])
-                  : _vm._e()
-              ],
-              1
-            )
-          ]),
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "text-right" }, [
             _c(
@@ -100005,19 +100359,19 @@ if (false) {
 }
 
 /***/ }),
-/* 361 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(362)
+  __webpack_require__(367)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(364)
+var __vue_script__ = __webpack_require__(369)
 /* template */
-var __vue_template__ = __webpack_require__(369)
+var __vue_template__ = __webpack_require__(374)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -100056,17 +100410,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 362 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(363);
+var content = __webpack_require__(368);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(15)("00c02fbe", content, false, {});
+var update = __webpack_require__(12)("00c02fbe", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -100082,10 +100436,10 @@ if(false) {
 }
 
 /***/ }),
-/* 363 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(8)(false);
 // imports
 
 
@@ -100096,7 +100450,7 @@ exports.push([module.i, "\n.time[data-v-eb11c63a] {\n    font-size: 13px;\n    c
 
 
 /***/ }),
-/* 364 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100157,10 +100511,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
 
 var _vuex = __webpack_require__(3);
 
@@ -100170,6 +100520,8 @@ var _FilterBar = __webpack_require__(90);
 
 var _FilterBar2 = _interopRequireDefault(_FilterBar);
 
+var _errors = __webpack_require__(9);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
@@ -100177,7 +100529,13 @@ exports.default = {
   components: { FilterBar: _FilterBar2.default },
   data: function data() {
     return {
-      layers: window.layers,
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      checkedLayers: [],
+      pivot: [],
+      max: 1,
+      whitelabel: {},
+      layers: [],
       checked: null,
       dialogFormVisible: false,
       form: {
@@ -100187,7 +100545,6 @@ exports.default = {
   },
 
   computed: _extends({}, _vuex2.default.mapGetters({
-    whitelabel: 'whitelabel',
     whitelabels: 'whitelabels',
     user: 'currentUser'
   })),
@@ -100196,7 +100553,6 @@ exports.default = {
 
     this.loadUser();
     this.loadWhitelabels();
-    this.loadCurrentWhitelabel();
     this.$events.$on('whitelabel-set', function (id) {
       return _this.doWhitelabel(id);
     });
@@ -100208,6 +100564,16 @@ exports.default = {
     loadWhitelabels: 'loadWhitelabels',
     loadCurrentWhitelabel: 'loadCurrentWhitelabel'
   }), {
+    doLayerSelect: function doLayerSelect(id) {
+      debugger;
+    },
+    isIncludes: function isIncludes(id) {
+      if (!this.checkedLayers.includes(id)) {
+        this.pivot[id] = '';
+      }
+
+      return !this.checkedLayers.includes(id);
+    },
     doWhitelabel: function doWhitelabel(id) {
       this.loadWhitelabel(id);
     },
@@ -100229,10 +100595,24 @@ exports.default = {
     onSubmit: function onSubmit() {
       var _this2 = this;
 
-      this.$store.dispatch('block', { element: 'layersComponent', load: true });
-      this.$http.put(window.laroute.route('admin.whitelabels.layers.update'), { layer: this.whitelabel.layer, whitelabel_id: this.form.id }).then(this.onSubmitStore).catch(this.onFailed).then(function () {
-        _this2.$store.dispatch('block', { element: 'layersComponent', load: false });
+      var check = true;
+      this.checkedLayers.forEach(function (layer) {
+        if (_this2.pivot[layer] === '') {
+          _this2.$message({
+            message: 'Bitte geben Sie die korrekte URL an',
+            showClose: true,
+            type: 'error'
+          });
+
+          check = false;
+        }
       });
+      if (check) {
+        this.$store.dispatch('block', { element: 'layersComponent', load: true });
+        this.$http.put(window.laroute.route('admin.whitelabels.layers.update'), { layers: this.checkedLayers, pivot: this.pivot }).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+          _this2.$store.dispatch('block', { element: 'layersComponent', load: false });
+        });
+      }
     },
     onSubmitSuccess: function onSubmitSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
@@ -100254,23 +100634,69 @@ exports.default = {
     },
     hasPermissionTo: function hasPermissionTo(permission) {
       return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
+    },
+    generateLayers: function generateLayers(layers) {
+      var data = [];
+      var pivot = [];
+      layers.forEach(function (layer, index) {
+        data.push(layer['id']);
+        pivot[layer['id']] = layer['pivot'].layer_url;
+      });
+      this.checkedLayers = data;
+      this.pivot = pivot;
+    },
+    onFailed: function onFailed(error) {
+      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+        this.errors.record(error.response.data.errors);
+        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
+          this.$notify.error({ title: 'Failed', message: error.response.data.message });
+        } else {
+          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
+        }
+      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Failed', message: error.response.data.message });
+      } else if (error.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Error', message: error.message });
+      } else {
+        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
+        console.log(error);
+      }
     }
-  })
+  }),
+  created: function created() {
+    var _this3 = this;
 
+    this.$store.dispatch('block', { element: 'layersComponent', load: true });
+    this.$http.get(window.laroute.route('admin.whitelabels.layers.view')).then(function (response) {
+      _this3.layers = response.data.layers;
+    }).catch(this.onFailed).then(function () {
+      _this3.$store.dispatch('block', { element: 'layersComponent', load: false });
+    });
+
+    this.$http.get(window.laroute.route('admin.whitelabels.current')).then(function (response) {
+      _this3.whitelabel = response.data.whitelabel;
+      _this3.generateLayers(_this3.whitelabel.layers);
+      if (_this3.whitelabel.licence !== 0) {
+        _this3.max = 4;
+      }
+    }).catch(this.onFailed).then(function () {
+      _this3.$store.dispatch('block', { element: 'layersComponent', load: false });
+    });
+  }
 };
 
 /***/ }),
-/* 365 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(366);
+var content = __webpack_require__(371);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(15)("d8b97092", content, false, {});
+var update = __webpack_require__(12)("d8b97092", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -100286,10 +100712,10 @@ if(false) {
 }
 
 /***/ }),
-/* 366 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(8)(false);
 // imports
 
 
@@ -100300,7 +100726,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 367 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100383,7 +100809,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 368 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100490,7 +100916,7 @@ if (false) {
 }
 
 /***/ }),
-/* 369 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100504,106 +100930,120 @@ var render = function() {
         ? _c("filter-bar", { attrs: { defaultWhitelabel: _vm.whitelabel.id } })
         : _vm._e(),
       _vm._v(" "),
-      _c("form", { attrs: { action: "#" } }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("\n                Layer auswählen\n            ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "div",
-              { staticClass: "row" },
-              _vm._l(_vm.layers, function(layer, index) {
-                return _c(
-                  "el-col",
-                  { key: layer.id, staticClass: "col-xl-4 col-sm-6" },
-                  [
-                    _c(
-                      "el-card",
-                      {
-                        attrs: {
-                          "body-style": { padding: "0px" },
-                          shadow: "hover"
-                        }
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "image",
-                          attrs: { src: layer.url }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticStyle: { padding: "14px" } }, [
-                          _c("span", {
-                            domProps: { textContent: _vm._s(layer.description) }
-                          }),
-                          _vm._v(" "),
+      _c(
+        "form",
+        {
+          attrs: { action: "#" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.onSubmit($event)
+            },
+            keydown: function($event) {
+              _vm.errors.clear($event.target.name)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("\n                Layer auswählen\n            ")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _c(
+                    "el-checkbox-group",
+                    {
+                      attrs: { max: _vm.max },
+                      model: {
+                        value: _vm.checkedLayers,
+                        callback: function($$v) {
+                          _vm.checkedLayers = $$v
+                        },
+                        expression: "checkedLayers"
+                      }
+                    },
+                    _vm._l(_vm.layers, function(layer, index) {
+                      return _c(
+                        "el-col",
+                        { key: layer.id, staticClass: "col-xl-3 col-sm-6" },
+                        [
                           _c(
-                            "div",
-                            { staticClass: "bottom clearfix" },
+                            "el-card",
+                            {
+                              attrs: {
+                                "body-style": { padding: "0px" },
+                                shadow: "hover"
+                              }
+                            },
                             [
-                              _c(
-                                "el-checkbox",
-                                {
-                                  staticClass: "whitelabel_layer_selecter",
-                                  attrs: {
-                                    name: layer.name,
-                                    label: layer.id,
-                                    border: ""
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      _vm.doSeleted(layer.id)
-                                    }
-                                  },
-                                  model: {
-                                    value: _vm.checked,
-                                    callback: function($$v) {
-                                      _vm.checked = $$v
-                                    },
-                                    expression: "checked"
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        " +
-                                      _vm._s(layer.name) +
-                                      "\n                                    "
-                                  )
-                                ]
-                              ),
+                              _c("img", {
+                                staticClass: "image",
+                                attrs: { src: layer.image }
+                              }),
                               _vm._v(" "),
-                              _c("el-input", {
-                                staticClass: "float-left hide",
-                                attrs: {
-                                  placeholder: "Please input",
-                                  name: layer.name,
-                                  value: layer.url,
-                                  clearable: ""
-                                },
-                                on: {
-                                  input: function($event) {
-                                    _vm.doUrlSelect(layer)
+                              _c("div", { staticStyle: { padding: "14px" } }, [
+                                _c("span", {
+                                  domProps: {
+                                    textContent: _vm._s(layer.description)
                                   }
-                                }
-                              })
-                            ],
-                            1
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "bottom clearfix" },
+                                  [
+                                    _c(
+                                      "el-checkbox",
+                                      {
+                                        key: layer.id,
+                                        attrs: { label: layer.id }
+                                      },
+                                      [_vm._v(_vm._s(layer.name))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      staticClass: "float-left hide",
+                                      attrs: {
+                                        placeholder: "Please input",
+                                        type: "url",
+                                        name: _vm.pivot[layer.id],
+                                        disabled: _vm.isIncludes(layer.id),
+                                        clearable: ""
+                                      },
+                                      model: {
+                                        value: _vm.pivot[layer.id],
+                                        callback: function($$v) {
+                                          _vm.$set(_vm.pivot, layer.id, $$v)
+                                        },
+                                        expression: "pivot[layer.id]"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ]
                           )
-                        ])
-                      ]
-                    )
-                  ],
-                  1
-                )
-              }),
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _vm._m(0)
-        ])
-      ])
+                        ],
+                        1
+                      )
+                    }),
+                    1
+                  )
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ]
+      )
     ],
     1
   )
@@ -100630,19 +101070,19 @@ if (false) {
 }
 
 /***/ }),
-/* 370 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(371)
+  __webpack_require__(376)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(373)
+var __vue_script__ = __webpack_require__(378)
 /* template */
-var __vue_template__ = __webpack_require__(374)
+var __vue_template__ = __webpack_require__(384)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -100681,17 +101121,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 371 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(372);
+var content = __webpack_require__(377);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(15)("65c8ff1f", content, false, {});
+var update = __webpack_require__(12)("65c8ff1f", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -100707,10 +101147,10 @@ if(false) {
 }
 
 /***/ }),
-/* 372 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(8)(false);
 // imports
 
 
@@ -100721,7 +101161,7 @@ exports.push([module.i, "\n.time[data-v-68e81da8] {\n    font-size: 13px;\n    c
 
 
 /***/ }),
-/* 373 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100761,74 +101201,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(9);
 
-var _UploadAttachments = __webpack_require__(37);
+var _UploadAttachments = __webpack_require__(26);
 
 var _UploadAttachments2 = _interopRequireDefault(_UploadAttachments);
 
@@ -100836,15 +101216,21 @@ var _FilterBar = __webpack_require__(90);
 
 var _FilterBar2 = _interopRequireDefault(_FilterBar);
 
+var _LayerContent = __webpack_require__(379);
+
+var _LayerContent2 = _interopRequireDefault(_LayerContent);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
   name: 'ContentComponent',
-  components: { FilterBar: _FilterBar2.default, UploadAttachments: _UploadAttachments2.default },
+  components: { FilterBar: _FilterBar2.default, LayerContent: _LayerContent2.default, UploadAttachments: _UploadAttachments2.default },
   data: function data() {
     return {
       // eslint-disable-next-line
       errors: new _errors.Errors(),
+      isTab: 1,
+      layers: [],
       contents: window.contents,
       radio1: null,
       dialogFormVisible: false,
@@ -100876,6 +101262,9 @@ exports.default = {
     loadWhitelabels: 'loadWhitelabels',
     loadCurrentWhitelabel: 'loadCurrentWhitelabel'
   }), {
+    handleActive: function handleActive(tab) {
+      this.isTab = tab;
+    },
     updateWhitelabel: function updateWhitelabel(e) {
       if (e.target.value !== null) {
         var tabnr = parseInt($('.tab-content .active').data('tabnr') - 1);
@@ -100926,11 +101315,547 @@ exports.default = {
     hasPermissionTo: function hasPermissionTo(permission) {
       return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
     }
-  })
+  }),
+  created: function created() {
+    var _this3 = this;
+
+    this.$store.dispatch('block', { element: 'contentComponent', load: true });
+    this.$http.get(window.laroute.route('admin.whitelabels.content.view')).then(function (response) {
+      _this3.layers = response.data.data;
+    }).catch(this.onFailed).then(function () {
+      _this3.$store.dispatch('block', { element: 'contentComponent', load: false });
+    });
+  }
 };
 
 /***/ }),
-/* 374 */
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(380)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(382)
+/* template */
+var __vue_template__ = __webpack_require__(383)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-e6049ee0"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "Resources/assets/js/modules/admin/whitelabels/components/LayerContent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e6049ee0", Component.options)
+  } else {
+    hotAPI.reload("data-v-e6049ee0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 380 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(381);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(12)("728fd8d8", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e6049ee0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LayerContent.vue", function() {
+     var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e6049ee0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LayerContent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 381 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 382 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _errors = __webpack_require__(9);
+
+var _UploadAttachments = __webpack_require__(26);
+
+var _UploadAttachments2 = _interopRequireDefault(_UploadAttachments);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  name: 'LayerContent',
+  components: { Errors: _errors.Errors, UploadAttachments: _UploadAttachments2.default },
+  props: {
+    layer: {
+      type: Object,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      // eslint-disable-next-line
+      errors: new _errors.Errors(),
+      obj: {},
+      id: null,
+      name: '',
+      headline: '',
+      whitelabel_id: null,
+      subheadline: '',
+      headline_success: '',
+      subheadline_success: '',
+      attachments: []
+    };
+  },
+  mounted: function mounted() {
+    this.initValues();
+  },
+
+  watch: {
+    layer: function layer(val) {
+      this.initValues();
+    }
+  },
+  methods: {
+    initValues: function initValues() {
+      if (Object.entries(this.layer).length !== 0) {
+        var _JSON$parse = JSON.parse(JSON.stringify(this.layer)),
+            id = _JSON$parse.id,
+            name = _JSON$parse.name,
+            headline = _JSON$parse.headline,
+            subheadline = _JSON$parse.subheadline,
+            headline_success = _JSON$parse.headline_success,
+            subheadline_success = _JSON$parse.subheadline_success,
+            whitelabel_id = _JSON$parse.whitelabel_id,
+            attachments = _JSON$parse.attachments;
+
+        this.id = id;
+        this.name = name;
+        this.whitelabel_id = whitelabel_id;
+        this.headline = headline;
+        this.subheadline = subheadline;
+        this.headline_success = headline_success;
+        this.subheadline_success = subheadline_success;
+        this.attachments = attachments;
+      }
+    },
+    onSubmit: function onSubmit() {
+      var _this = this;
+
+      this.$store.dispatch('block', { element: 'contentComponent', load: true });
+      this.$http.put(window.laroute.route('admin.whitelabels.content.update'), { id: this.id, name: this.name, whitelabel_id: this.whitelabel_id, headline: this.headline, subheadline: this.subheadline, headline_success: this.headline_success, subheadline_success: this.subheadline_success }).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+        _this.$store.dispatch('block', { element: 'contentComponent', load: false });
+      });
+    },
+    onSubmitSuccess: function onSubmitSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.$message({
+          message: response.data.message,
+          showClose: true,
+          type: 'success'
+        });
+      } else {
+        this.$message({
+          message: response.data.message,
+          showClose: true,
+          type: 'error'
+        });
+      }
+    },
+    onFailed: function onFailed(error) {
+      if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+        this.errors.record(error.response.data.errors);
+        if (error.response.data.hasOwnProperty('success') && error.response.data.hasOwnProperty('message')) {
+          this.$notify.error({ title: 'Failed', message: error.response.data.message });
+        } else {
+          this.$notify.error({ title: 'Failed', dangerouslyUseHTMLString: true, message: this.errors.getErrors(this.errors.errors) });
+        }
+      } else if (error.response !== undefined && error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Failed', message: error.response.data.message });
+      } else if (error.hasOwnProperty('message')) {
+        this.$notify.error({ title: 'Error', message: error.message });
+      } else {
+        this.$notify.error({ title: 'Failed', message: 'Service not answer, Please contact your Support' });
+        console.log(error);
+      }
+    }
+  }
+};
+
+/***/ }),
+/* 383 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      attrs: { action: "#" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.onSubmit($event)
+        },
+        keydown: function($event) {
+          _vm.errors.clear($event.target.name)
+        }
+      }
+    },
+    [
+      _c("fieldset", { staticClass: "mb-3" }, [
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          [
+            _c("upload-attachments", {
+              attrs: {
+                data: {
+                  attachable_id: parseInt(_vm.layer.id),
+                  attachable_type:
+                    "Modules\\Whitelabels\\Entities\\LayerWhitelabel",
+                  type: "whitelabels",
+                  folder: "layers"
+                },
+                fileList: _vm.layer.attachments,
+                tip: _vm.trans("modals.visual"),
+                limit: 1,
+                listType: "picture-card"
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row mt-5" }, [
+          _c("label", { staticClass: "col-lg-3 col-form-label" }, [
+            _vm._v(" " + _vm._s(_vm.trans("modals.headline")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-9" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.headline,
+                  expression: "headline"
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.errors.has("headline") ? "is-invalid" : "",
+              attrs: {
+                type: "text",
+                id: _vm.name + "headline",
+                name: _vm.name + "headline",
+                placeholder: _vm.trans("modals.headline")
+              },
+              domProps: { value: _vm.headline },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.headline = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "invalid-feedback" }, [
+              _c("strong", {
+                domProps: { textContent: _vm._s(_vm.errors.get("headline")) }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c("label", { staticClass: "col-lg-3 col-form-label" }, [
+            _vm._v(" " + _vm._s(_vm.trans("modals.subheadline")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-9" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.subheadline,
+                  expression: "subheadline"
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.errors.has("subheadline") ? "is-invalid" : "",
+              attrs: {
+                rows: "5",
+                cols: "5",
+                id: _vm.name + "subheadline",
+                name: _vm.name + "subheadline",
+                placeholder: _vm.trans("modals.subheadline")
+              },
+              domProps: { value: _vm.subheadline },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.subheadline = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "invalid-feedback" }, [
+              _c("strong", {
+                domProps: { textContent: _vm._s(_vm.errors.get("subheadline")) }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "legend",
+          { staticClass: "text-uppercase font-size-sm font-weight-bold" },
+          [_vm._v(_vm._s(_vm.trans("modals.message_success")))]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c("label", { staticClass: "col-lg-3 col-form-label" }, [
+            _vm._v(" " + _vm._s(_vm.trans("modals.headline_success")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-9" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.headline_success,
+                  expression: "headline_success"
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.errors.has("headline_success") ? "is-invalid" : "",
+              attrs: {
+                type: "text",
+                id: _vm.name + "headline_success",
+                name: _vm.name + "headline_success",
+                placeholder: _vm.trans("modals.headline_success")
+              },
+              domProps: { value: _vm.headline_success },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.headline_success = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "invalid-feedback" }, [
+              _c("strong", {
+                domProps: {
+                  textContent: _vm._s(_vm.errors.get("headline_success"))
+                }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c("label", { staticClass: "col-lg-3 col-form-label" }, [
+            _vm._v(" " + _vm._s(_vm.trans("modals.subheadline_success")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-9" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.subheadline_success,
+                  expression: "subheadline_success"
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.errors.has("subheadline_success") ? "is-invalid" : "",
+              attrs: {
+                rows: "5",
+                cols: "5",
+                id: _vm.name + "subheadline_success",
+                name: _vm.name + "subheadline_success",
+                placeholder: _vm.trans("modals.subheadline_success")
+              },
+              domProps: { value: _vm.subheadline_success },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.subheadline_success = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "invalid-feedback" }, [
+              _c("strong", {
+                domProps: {
+                  textContent: _vm._s(_vm.errors.get("subheadline_success"))
+                }
+              })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-right" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+          [
+            _vm._v(
+              "\n            " +
+                _vm._s(_vm.trans("button.save")) +
+                "\n            "
+            ),
+            _c("i", { staticClass: "icon-paperplane ml-2" })
+          ]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-e6049ee0", module.exports)
+  }
+}
+
+/***/ }),
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100951,25 +101876,39 @@ var render = function() {
           _c(
             "ul",
             { staticClass: "nav nav-tabs nav-tabs-highlight" },
-            _vm._l(_vm.whitelabel.layers, function(layer, index) {
-              return _vm.whitelabel.layers.length > 0
-                ? _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "nav-link",
-                        class: { active: index === 0 },
-                        attrs: { href: "#" + layer.name, "data-toggle": "tab" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(layer.name) +
-                            "\n                        "
-                        )
-                      ]
-                    )
-                  ])
+            _vm._l(_vm.layers, function(layer, index) {
+              return _vm.layers.length > 0
+                ? _c(
+                    "li",
+                    {
+                      staticClass: "nav-item",
+                      on: {
+                        click: function($event) {
+                          _vm.handleActive(layer.layer_id)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          class: { active: index === 0 },
+                          attrs: {
+                            href: "#" + layer.name,
+                            "data-toggle": "tab"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(layer.name) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    ]
+                  )
                 : _vm._e()
             }),
             0
@@ -100978,274 +101917,24 @@ var render = function() {
           _c(
             "div",
             { staticClass: "tab-content" },
-            _vm._l(_vm.whitelabel.layers, function(layer, index) {
-              return _c(
-                "div",
-                {
-                  staticClass: "tab-pane fade",
-                  class: { "active show": index === 0 },
-                  attrs: { "data-tabnr": layer.id, id: layer.name }
-                },
-                [
-                  _c(
-                    "form",
+            _vm._l(_vm.layers, function(layer, index) {
+              return _vm.layers[0]
+                ? _c(
+                    "div",
                     {
-                      attrs: { action: "#" },
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.onSubmit($event)
-                        },
-                        keydown: function($event) {
-                          _vm.errors.clear($event.target.name)
-                        }
-                      }
+                      staticClass: "tab-pane fade",
+                      class: { "active show": _vm.isTab === layer.layer_id },
+                      attrs: { id: "#" + layer.name }
                     },
                     [
-                      _c("input", {
-                        attrs: {
-                          type: "hidden",
-                          name: "layer_id_" + layer.id,
-                          id: "layer_id_" + layer.id
-                        },
-                        domProps: { value: layer.id }
-                      }),
-                      _vm._v(" "),
-                      _c("fieldset", { staticClass: "mb-3" }, [
-                        _c(
-                          "div",
-                          { staticClass: "form-group" },
-                          [
-                            _c("upload-attachments", {
-                              attrs: {
-                                data: {
-                                  attachable_id: parseInt(_vm.whitelabel.id),
-                                  attachable_type:
-                                    "Modules\\Whitelabels\\Entities\\Whitelabel",
-                                  type: "whitelabels",
-                                  folder: "visual"
-                                },
-                                fileList: _vm.whitelabel.visual,
-                                tip: _vm.trans("modals.visual"),
-                                limit: 1,
-                                listType: "picture-card"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.has("visual")
-                              ? _c(
-                                  "div",
-                                  { staticClass: "help-block text-danger" },
-                                  [
-                                    _c("strong", {
-                                      domProps: {
-                                        textContent: _vm._s(
-                                          _vm.errors.get("visual")
-                                        )
-                                      }
-                                    })
-                                  ]
-                                )
-                              : _vm._e()
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row mt-5" }, [
-                          _c(
-                            "label",
-                            { staticClass: "col-lg-3 col-form-label" },
-                            [_vm._v(" " + _vm._s(_vm.trans("modals.headline")))]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-lg-9" }, [
-                            _c("input", {
-                              staticClass: "form-control",
-                              class: _vm.errors.has("headline")
-                                ? "is-invalid"
-                                : "",
-                              attrs: {
-                                type: "text",
-                                id: "headline",
-                                name: "headline",
-                                placeholder: _vm.trans("modals.headline")
-                              },
-                              domProps: { value: layer.pivot.headline },
-                              on: { input: _vm.updateWhitelabel }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              _c("strong", {
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm.errors.get("headline")
-                                  )
-                                }
-                              })
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            { staticClass: "col-lg-3 col-form-label" },
-                            [
-                              _vm._v(
-                                " " + _vm._s(_vm.trans("modals.subheadline"))
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-lg-9" }, [
-                            _c("textarea", {
-                              staticClass: "form-control",
-                              class: _vm.errors.has("subheadline")
-                                ? "is-invalid"
-                                : "",
-                              attrs: {
-                                rows: "5",
-                                cols: "5",
-                                id: "subheadline",
-                                name: "subheadline",
-                                placeholder: _vm.trans("modals.subheadline")
-                              },
-                              domProps: { value: layer.pivot.subheadline },
-                              on: { input: _vm.updateWhitelabel }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              _c("strong", {
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm.errors.get("subheadline")
-                                  )
-                                }
-                              })
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "legend",
-                          {
-                            staticClass:
-                              "text-uppercase font-size-sm font-weight-bold"
-                          },
-                          [_vm._v(_vm._s(_vm.trans("modals.message_success")))]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            { staticClass: "col-lg-3 col-form-label" },
-                            [
-                              _vm._v(
-                                " " +
-                                  _vm._s(_vm.trans("modals.headline_success"))
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-lg-9" }, [
-                            _c("input", {
-                              staticClass: "form-control",
-                              class: _vm.errors.has("headline_success")
-                                ? "is-invalid"
-                                : "",
-                              attrs: {
-                                type: "text",
-                                id: "headline_success",
-                                name: "headline_success",
-                                placeholder: _vm.trans(
-                                  "modals.headline_success"
-                                )
-                              },
-                              domProps: { value: layer.pivot.headline_success },
-                              on: { input: _vm.updateWhitelabel }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              _c("strong", {
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm.errors.get("headline_success")
-                                  )
-                                }
-                              })
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            { staticClass: "col-lg-3 col-form-label" },
-                            [
-                              _vm._v(
-                                " " +
-                                  _vm._s(
-                                    _vm.trans("modals.subheadline_success")
-                                  )
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-lg-9" }, [
-                            _c("textarea", {
-                              staticClass: "form-control",
-                              class: _vm.errors.has("subheadline_success")
-                                ? "is-invalid"
-                                : "",
-                              attrs: {
-                                rows: "5",
-                                cols: "5",
-                                id: "subheadline_success",
-                                name: "subheadline_success",
-                                placeholder: _vm.trans(
-                                  "modals.subheadline_success"
-                                )
-                              },
-                              domProps: {
-                                value: layer.pivot.subheadline_success
-                              },
-                              on: { input: _vm.updateWhitelabel }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "invalid-feedback" }, [
-                              _c("strong", {
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm.errors.get("subheadline_success")
-                                  )
-                                }
-                              })
-                            ])
-                          ])
-                        ])
-                      ]),
-                      _vm._v("\n-\n                            "),
-                      _c("div", { staticClass: "text-right" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            attrs: { type: "submit" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.trans("button.save")) +
-                                "\n                                    "
-                            ),
-                            _c("i", { staticClass: "icon-paperplane ml-2" })
-                          ]
-                        )
-                      ])
-                    ]
+                      _c("layer-content", {
+                        key: layer.id,
+                        attrs: { layer: layer }
+                      })
+                    ],
+                    1
                   )
-                ]
-              )
+                : _vm._e()
             }),
             0
           )
@@ -101277,15 +101966,15 @@ if (false) {
 }
 
 /***/ }),
-/* 375 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(376)
+var __vue_script__ = __webpack_require__(386)
 /* template */
-var __vue_template__ = __webpack_require__(444)
+var __vue_template__ = __webpack_require__(454)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -101324,7 +102013,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 376 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101348,7 +102037,7 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _VueDatatable = __webpack_require__(377);
+var _VueDatatable = __webpack_require__(387);
 
 var _VueDatatable2 = _interopRequireDefault(_VueDatatable);
 
@@ -101374,13 +102063,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 377 */
+/* 387 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(378)
+var __vue_script__ = __webpack_require__(388)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -101421,7 +102110,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 378 */
+/* 388 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101441,11 +102130,11 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _toastr = __webpack_require__(379);
+var _toastr = __webpack_require__(389);
 
 var _toastr2 = _interopRequireDefault(_toastr);
 
-var _accounting = __webpack_require__(382);
+var _accounting = __webpack_require__(392);
 
 var _accounting2 = _interopRequireDefault(_accounting);
 
@@ -101453,15 +102142,15 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _Vuetable = __webpack_require__(385);
+var _Vuetable = __webpack_require__(395);
 
 var _Vuetable2 = _interopRequireDefault(_Vuetable);
 
-var _VuetablePagination = __webpack_require__(408);
+var _VuetablePagination = __webpack_require__(418);
 
 var _VuetablePagination2 = _interopRequireDefault(_VuetablePagination);
 
-var _VuetablePaginationInfo = __webpack_require__(413);
+var _VuetablePaginationInfo = __webpack_require__(423);
 
 var _VuetablePaginationInfo2 = _interopRequireDefault(_VuetablePaginationInfo);
 
@@ -101469,11 +102158,11 @@ var _config = __webpack_require__(220);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _FilterBar = __webpack_require__(440);
+var _FilterBar = __webpack_require__(450);
 
 var _FilterBar2 = _interopRequireDefault(_FilterBar);
 
-var _CssConfig = __webpack_require__(443);
+var _CssConfig = __webpack_require__(453);
 
 var _CssConfig2 = _interopRequireDefault(_CssConfig);
 
@@ -101827,7 +102516,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 379 */
+/* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -101844,7 +102533,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
  */
 /* global define */
 (function (define) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(380)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ($) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(390)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ($) {
         return (function () {
             var $container;
             var listener;
@@ -102300,11 +102989,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
         })();
     }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-}(__webpack_require__(381)));
+}(__webpack_require__(391)));
 
 
 /***/ }),
-/* 380 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -112675,7 +113364,7 @@ return jQuery;
 
 
 /***/ }),
-/* 381 */
+/* 391 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
@@ -112684,7 +113373,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 382 */
+/* 392 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -113103,7 +113792,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 383 */
+/* 393 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -113131,7 +113820,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 384 */
+/* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -113398,22 +114087,22 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 384;
+webpackContext.id = 394;
 
 /***/ }),
-/* 385 */
+/* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(386)
+  __webpack_require__(396)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(388)
+var __vue_script__ = __webpack_require__(398)
 /* template */
-var __vue_template__ = __webpack_require__(407)
+var __vue_template__ = __webpack_require__(417)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -113452,17 +114141,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 386 */
+/* 396 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(387);
+var content = __webpack_require__(397);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(15)("c96b1a10", content, false, {});
+var update = __webpack_require__(12)("c96b1a10", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -113478,10 +114167,10 @@ if(false) {
 }
 
 /***/ }),
-/* 387 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(8)(false);
 // imports
 
 
@@ -113492,14 +114181,14 @@ exports.push([module.i, "\n[v-cloak][data-v-15965e3b] {\n  display: none;\n}\n.v
 
 
 /***/ }),
-/* 388 */
+/* 398 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(389);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(399);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 
 
@@ -114441,13 +115130,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 389 */
+/* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(390);
+module.exports = __webpack_require__(400);
 
 /***/ }),
-/* 390 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114455,7 +115144,7 @@ module.exports = __webpack_require__(390);
 
 var utils = __webpack_require__(7);
 var bind = __webpack_require__(215);
-var Axios = __webpack_require__(391);
+var Axios = __webpack_require__(401);
 var defaults = __webpack_require__(61);
 
 /**
@@ -114490,14 +115179,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(219);
-axios.CancelToken = __webpack_require__(405);
+axios.CancelToken = __webpack_require__(415);
 axios.isCancel = __webpack_require__(218);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(406);
+axios.spread = __webpack_require__(416);
 
 module.exports = axios;
 
@@ -114506,7 +115195,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 391 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114514,10 +115203,10 @@ module.exports.default = axios;
 
 var defaults = __webpack_require__(61);
 var utils = __webpack_require__(7);
-var InterceptorManager = __webpack_require__(400);
-var dispatchRequest = __webpack_require__(401);
-var isAbsoluteURL = __webpack_require__(403);
-var combineURLs = __webpack_require__(404);
+var InterceptorManager = __webpack_require__(410);
+var dispatchRequest = __webpack_require__(411);
+var isAbsoluteURL = __webpack_require__(413);
+var combineURLs = __webpack_require__(414);
 
 /**
  * Create a new instance of Axios
@@ -114598,7 +115287,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 392 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114617,7 +115306,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 393 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114649,7 +115338,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 394 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114675,7 +115364,7 @@ module.exports = function enhanceError(error, config, code, response) {
 
 
 /***/ }),
-/* 395 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114750,7 +115439,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 396 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114794,7 +115483,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 397 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114869,7 +115558,7 @@ module.exports = (
 
 
 /***/ }),
-/* 398 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114912,7 +115601,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 399 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114972,7 +115661,7 @@ module.exports = (
 
 
 /***/ }),
-/* 400 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -115031,14 +115720,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 401 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(7);
-var transformData = __webpack_require__(402);
+var transformData = __webpack_require__(412);
 var isCancel = __webpack_require__(218);
 var defaults = __webpack_require__(61);
 
@@ -115117,7 +115806,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 402 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -115144,7 +115833,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 403 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -115165,7 +115854,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 404 */
+/* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -115184,7 +115873,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 405 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -115248,7 +115937,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 406 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -115282,7 +115971,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 407 */
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -116283,15 +116972,15 @@ if (false) {
 }
 
 /***/ }),
-/* 408 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(409)
+var __vue_script__ = __webpack_require__(419)
 /* template */
-var __vue_template__ = __webpack_require__(412)
+var __vue_template__ = __webpack_require__(422)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -116330,12 +117019,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 409 */
+/* 419 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationMixin_vue__ = __webpack_require__(410);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationMixin_vue__ = __webpack_require__(420);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationMixin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__VuetablePaginationMixin_vue__);
 
 
@@ -116346,13 +117035,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 410 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(411)
+var __vue_script__ = __webpack_require__(421)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -116393,7 +117082,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 411 */
+/* 421 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -116478,7 +117167,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 412 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -116637,15 +117326,15 @@ if (false) {
 }
 
 /***/ }),
-/* 413 */
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(414)
+var __vue_script__ = __webpack_require__(424)
 /* template */
-var __vue_template__ = __webpack_require__(417)
+var __vue_template__ = __webpack_require__(427)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -116684,12 +117373,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 414 */
+/* 424 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationInfoMixin_vue__ = __webpack_require__(415);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationInfoMixin_vue__ = __webpack_require__(425);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VuetablePaginationInfoMixin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__VuetablePaginationInfoMixin_vue__);
 
 
@@ -116700,13 +117389,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 415 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(416)
+var __vue_script__ = __webpack_require__(426)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -116747,7 +117436,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 416 */
+/* 426 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -116801,7 +117490,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 417 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -116824,7 +117513,7 @@ if (false) {
 }
 
 /***/ }),
-/* 418 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -116878,7 +117567,7 @@ exports.default = [{
 }];
 
 /***/ }),
-/* 419 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -116894,15 +117583,15 @@ exports.default = [{
 }];
 
 /***/ }),
-/* 420 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(421)
+var __vue_script__ = __webpack_require__(431)
 /* template */
-var __vue_template__ = __webpack_require__(422)
+var __vue_template__ = __webpack_require__(432)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -116941,7 +117630,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 421 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -116989,7 +117678,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 422 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -117025,19 +117714,19 @@ if (false) {
 }
 
 /***/ }),
-/* 423 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(424)
+  __webpack_require__(434)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(426)
+var __vue_script__ = __webpack_require__(436)
 /* template */
-var __vue_template__ = __webpack_require__(427)
+var __vue_template__ = __webpack_require__(437)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -117076,17 +117765,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 424 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(425);
+var content = __webpack_require__(435);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(15)("21831729", content, false, {});
+var update = __webpack_require__(12)("21831729", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -117102,10 +117791,10 @@ if(false) {
 }
 
 /***/ }),
-/* 425 */
+/* 435 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(8)(false);
 // imports
 
 
@@ -117116,7 +117805,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 426 */
+/* 436 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -117196,7 +117885,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 427 */
+/* 437 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -117300,15 +117989,15 @@ if (false) {
 }
 
 /***/ }),
-/* 428 */
+/* 438 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(429)
+var __vue_script__ = __webpack_require__(439)
 /* template */
-var __vue_template__ = __webpack_require__(430)
+var __vue_template__ = __webpack_require__(440)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -117347,7 +118036,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 429 */
+/* 439 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -117405,7 +118094,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 430 */
+/* 440 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -117450,15 +118139,15 @@ if (false) {
 }
 
 /***/ }),
-/* 431 */
+/* 441 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(432)
+var __vue_script__ = __webpack_require__(442)
 /* template */
-var __vue_template__ = __webpack_require__(433)
+var __vue_template__ = __webpack_require__(443)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -117497,7 +118186,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 432 */
+/* 442 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -117555,7 +118244,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 433 */
+/* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -117605,15 +118294,15 @@ if (false) {
 }
 
 /***/ }),
-/* 434 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(435)
+var __vue_script__ = __webpack_require__(445)
 /* template */
-var __vue_template__ = __webpack_require__(436)
+var __vue_template__ = __webpack_require__(446)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -117652,7 +118341,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 435 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -117688,7 +118377,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 436 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -117720,15 +118409,15 @@ if (false) {
 }
 
 /***/ }),
-/* 437 */
+/* 447 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(438)
+var __vue_script__ = __webpack_require__(448)
 /* template */
-var __vue_template__ = __webpack_require__(439)
+var __vue_template__ = __webpack_require__(449)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -117767,7 +118456,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 438 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -117803,7 +118492,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 439 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -117833,15 +118522,15 @@ if (false) {
 }
 
 /***/ }),
-/* 440 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(441)
+var __vue_script__ = __webpack_require__(451)
 /* template */
-var __vue_template__ = __webpack_require__(442)
+var __vue_template__ = __webpack_require__(452)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -117880,7 +118569,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 441 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -118102,7 +118791,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 442 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -118349,7 +119038,7 @@ if (false) {
 }
 
 /***/ }),
-/* 443 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -118392,7 +119081,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 444 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -118412,15 +119101,15 @@ if (false) {
 }
 
 /***/ }),
-/* 445 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(446)
+var __vue_script__ = __webpack_require__(456)
 /* template */
-var __vue_template__ = __webpack_require__(447)
+var __vue_template__ = __webpack_require__(457)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -118459,7 +119148,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 446 */
+/* 456 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -118635,13 +119324,13 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(9);
 
 var _Table = __webpack_require__(89);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _UploadAttachments = __webpack_require__(37);
+var _UploadAttachments = __webpack_require__(26);
 
 var _UploadAttachments2 = _interopRequireDefault(_UploadAttachments);
 
@@ -118790,7 +119479,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 447 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -119560,15 +120249,15 @@ if (false) {
 }
 
 /***/ }),
-/* 448 */
+/* 458 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(449)
+var __vue_script__ = __webpack_require__(459)
 /* template */
-var __vue_template__ = __webpack_require__(453)
+var __vue_template__ = __webpack_require__(463)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -119607,7 +120296,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 449 */
+/* 459 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -119658,11 +120347,11 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(9);
 
-var _vueFormWizard = __webpack_require__(450);
+var _vueFormWizard = __webpack_require__(460);
 
-__webpack_require__(451);
+__webpack_require__(461);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -119772,19 +120461,19 @@ exports.default = {
 };
 
 /***/ }),
-/* 450 */
+/* 460 */
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(t,e){ true?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports.VueFormWizard=e():t.VueFormWizard=e()}("undefined"!=typeof self?self:this,function(){return function(t){function e(n){if(a[n])return a[n].exports;var i=a[n]={i:n,l:!1,exports:{}};return t[n].call(i.exports,i,i.exports,e),i.l=!0,i.exports}var a={};return e.m=t,e.c=a,e.d=function(t,a,n){e.o(t,a)||Object.defineProperty(t,a,{configurable:!1,enumerable:!0,get:n})},e.n=function(t){var a=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(a,"a",a),a},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=7)}([function(t,e){t.exports=function(t,e,a,n,i,r){var s,o=t=t||{},c=typeof t.default;"object"!==c&&"function"!==c||(s=t,o=t.default);var u="function"==typeof o?o.options:o;e&&(u.render=e.render,u.staticRenderFns=e.staticRenderFns,u._compiled=!0),a&&(u.functional=!0),i&&(u._scopeId=i);var l;if(r?(l=function(t){t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext,t||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),n&&n.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(r)},u._ssrRegister=l):n&&(l=n),l){var d=u.functional,b=d?u.render:u.beforeCreate;d?(u._injectStyles=l,u.render=function(t,e){return l.call(e),b(t,e)}):u.beforeCreate=b?[].concat(b,l):[l]}return{esModule:s,exports:o,options:u}}},function(t,e,a){"use strict";var n=a(2),i=a(4),r=a(14);e.a={name:"form-wizard",components:{WizardButton:n.a,WizardStep:i.a},props:{title:{type:String,default:"Awesome Wizard"},subtitle:{type:String,default:"Split a complicated flow in multiple steps"},nextButtonText:{type:String,default:"Next"},backButtonText:{type:String,default:"Back"},finishButtonText:{type:String,default:"Finish"},hideButtons:{type:Boolean,default:!1},validateOnBack:Boolean,color:{type:String,default:"#e74c3c"},errorColor:{type:String,default:"#8b0000"},shape:{type:String,default:"circle"},layout:{type:String,default:"horizontal"},stepsClasses:{type:[String,Array],default:""},stepSize:{type:String,default:"md",validator:function(t){return-1!==["xs","sm","md","lg"].indexOf(t)}},transition:{type:String,default:""},startIndex:{type:Number,default:0,validator:function(t){return t>=0}}},provide:function(){return{addTab:this.addTab,removeTab:this.removeTab}},data:function(){return{activeTabIndex:0,currentPercentage:0,maxStep:0,loading:!1,tabs:[]}},computed:{slotProps:function(){return{nextTab:this.nextTab,prevTab:this.prevTab,activeTabIndex:this.activeTabIndex,isLastStep:this.isLastStep,fillButtonStyle:this.fillButtonStyle}},tabCount:function(){return this.tabs.length},isLastStep:function(){return this.activeTabIndex===this.tabCount-1},isVertical:function(){return"vertical"===this.layout},displayPrevButton:function(){return 0!==this.activeTabIndex},stepPercentage:function(){return 1/(2*this.tabCount)*100},progressBarStyle:function(){return{backgroundColor:this.color,width:this.progress+"%",color:this.color}},fillButtonStyle:function(){return{backgroundColor:this.color,borderColor:this.color,color:"white"}},progress:function(){return this.activeTabIndex>0?this.stepPercentage*(2*this.activeTabIndex+1):this.stepPercentage}},methods:{emitTabChange:function(t,e){this.$emit("on-change",t,e),this.$emit("update:startIndex",e)},addTab:function(t){var e=this.$slots.default.indexOf(t.$vnode);t.tabId=""+t.title.replace(/ /g,"")+e,this.tabs.splice(e,0,t),e<this.activeTabIndex+1&&(this.maxStep=e,this.changeTab(this.activeTabIndex+1,e))},removeTab:function(t){var e=this.tabs,a=e.indexOf(t);a>-1&&(a===this.activeTabIndex&&(this.maxStep=this.activeTabIndex-1,this.changeTab(this.activeTabIndex,this.activeTabIndex-1)),a<this.activeTabIndex&&(this.maxStep=this.activeTabIndex-1,this.activeTabIndex=this.activeTabIndex-1,this.emitTabChange(this.activeTabIndex+1,this.activeTabIndex)),e.splice(a,1))},reset:function(){this.maxStep=0,this.tabs.forEach(function(t){t.checked=!1}),this.navigateToTab(0)},activateAll:function(){this.maxStep=this.tabs.length-1,this.tabs.forEach(function(t){t.checked=!0})},navigateToTab:function(t){var e=this,a=t>this.activeTabIndex;if(t<=this.maxStep){var n=function n(){a&&t-e.activeTabIndex>1?(e.changeTab(e.activeTabIndex,e.activeTabIndex+1),e.beforeTabChange(e.activeTabIndex,n)):(e.changeTab(e.activeTabIndex,t),e.afterTabChange(e.activeTabIndex))};a?this.beforeTabChange(this.activeTabIndex,n):(this.setValidationError(null),n())}return t<=this.maxStep},nextTab:function(){var t=this,e=function(){t.activeTabIndex<t.tabCount-1?(t.changeTab(t.activeTabIndex,t.activeTabIndex+1),t.afterTabChange(t.activeTabIndex)):t.$emit("on-complete")};this.beforeTabChange(this.activeTabIndex,e)},prevTab:function(){var t=this,e=function(){t.activeTabIndex>0&&(t.setValidationError(null),t.changeTab(t.activeTabIndex,t.activeTabIndex-1))};this.validateOnBack?this.beforeTabChange(this.activeTabIndex,e):e()},focusNextTab:function(){var t=Object(r.b)(this.tabs);if(-1!==t&&t<this.tabs.length-1){var e=this.tabs[t+1];e.checked&&Object(r.a)(e.tabId)}},focusPrevTab:function(){var t=Object(r.b)(this.tabs);if(-1!==t&&t>0){var e=this.tabs[t-1].tabId;Object(r.a)(e)}},setLoading:function(t){this.loading=t,this.$emit("on-loading",t)},setValidationError:function(t){this.tabs[this.activeTabIndex].validationError=t,this.$emit("on-error",t)},validateBeforeChange:function(t,e){var a=this;if(this.setValidationError(null),Object(r.c)(t))this.setLoading(!0),t.then(function(t){a.setLoading(!1);var n=!0===t;a.executeBeforeChange(n,e)}).catch(function(t){a.setLoading(!1),a.setValidationError(t)});else{var n=!0===t;this.executeBeforeChange(n,e)}},executeBeforeChange:function(t,e){this.$emit("on-validate",t,this.activeTabIndex),t?e():this.tabs[this.activeTabIndex].validationError="error"},beforeTabChange:function(t,e){if(!this.loading){var a=this.tabs[t];if(a&&void 0!==a.beforeChange){var n=a.beforeChange();this.validateBeforeChange(n,e)}else e()}},afterTabChange:function(t){if(!this.loading){var e=this.tabs[t];e&&void 0!==e.afterChange&&e.afterChange()}},changeTab:function(t,e){var a=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],n=this.tabs[t],i=this.tabs[e];return n&&(n.active=!1),i&&(i.active=!0),a&&this.activeTabIndex!==e&&this.emitTabChange(t,e),this.activeTabIndex=e,this.activateTabAndCheckStep(this.activeTabIndex),!0},tryChangeRoute:function(t){this.$router&&t.route&&this.$router.push(t.route)},checkRouteChange:function(t){var e=-1,a=this.tabs.find(function(a,n){var i=a.route===t;return i&&(e=n),i});if(a&&!a.active){var n=e>this.activeTabIndex;this.navigateToTab(e,n)}},deactivateTabs:function(){this.tabs.forEach(function(t){t.active=!1})},activateTab:function(t){this.deactivateTabs();var e=this.tabs[t];e&&(e.active=!0,e.checked=!0,this.tryChangeRoute(e))},activateTabAndCheckStep:function(t){this.activateTab(t),t>this.maxStep&&(this.maxStep=t),this.activeTabIndex=t},initializeTabs:function(){this.tabs.length>0&&0===this.startIndex&&this.activateTab(this.activeTabIndex),this.startIndex<this.tabs.length?this.activateTabAndCheckStep(this.startIndex):window.console.warn("Prop startIndex set to "+this.startIndex+" is greater than the number of tabs - "+this.tabs.length+". Make sure that the starting index is less than the number of tabs registered")}},mounted:function(){this.initializeTabs()},watch:{"$route.path":function(t){this.checkRouteChange(t)}}}},function(t,e,a){"use strict";function n(t){a(10)}var i=a(3),r=a(11),s=a(0),o=n,c=s(i.a,r.a,!1,o,null,null);e.a=c.exports},function(t,e,a){"use strict";e.a={}},function(t,e,a){"use strict";function n(t){a(12)}var i=a(5),r=a(13),s=a(0),o=n,c=s(i.a,r.a,!1,o,null,null);e.a=c.exports},function(t,e,a){"use strict";e.a={name:"wizard-step",props:{tab:{type:Object,default:function(){}},transition:{type:String,default:""},index:{type:Number,default:0}},computed:{iconActiveStyle:function(){return{backgroundColor:this.tab.color}},stepCheckedStyle:function(){return{borderColor:this.tab.color}},errorStyle:function(){return{borderColor:this.tab.errorColor,backgroundColor:this.tab.errorColor}},stepTitleStyle:function(){return{color:this.tab.validationError?this.tab.errorColor:this.tab.color}},isStepSquare:function(){return"square"===this.tab.shape},isTabShape:function(){return"tab"===this.tab.shape}}}},function(t,e,a){"use strict";e.a={name:"tab-content",props:{title:{type:String,default:""},icon:{type:String,default:""},beforeChange:{type:Function},afterChange:{type:Function},route:{type:[String,Object]},additionalInfo:{type:Object,default:function(){}}},inject:["addTab","removeTab"],data:function(){return{active:!1,validationError:null,checked:!1,tabId:""}},computed:{shape:function(){return this.$parent.shape},color:function(){return this.$parent.color},errorColor:function(){return this.$parent.errorColor}},mounted:function(){this.addTab(this)},destroyed:function(){this.$el&&this.$el.parentNode&&this.$el.parentNode.removeChild(this.$el),this.removeTab(this)}}},function(t,e,a){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=a(8),i=a(16),r=a(2),s=a(4);a.d(e,"FormWizard",function(){return n.a}),a.d(e,"TabContent",function(){return i.a}),a.d(e,"WizardButton",function(){return r.a}),a.d(e,"WizardStep",function(){return s.a});var o={install:function(t){t.component("form-wizard",n.a),t.component("tab-content",i.a),t.component("wizard-button",r.a),t.component("wizard-step",s.a)}};"undefined"!=typeof window&&window.Vue&&window.Vue.use(o),e.default=o},function(t,e,a){"use strict";function n(t){a(9)}var i=a(1),r=a(15),s=a(0),o=n,c=s(i.a,r.a,!1,o,null,null);e.a=c.exports},function(t,e){},function(t,e){},function(t,e,a){"use strict";var n=function(){var t=this,e=t.$createElement;return(t._self._c||e)("button",{staticClass:"wizard-btn",attrs:{tabindex:"-1",type:"button"}},[t._t("default")],2)},i=[],r={render:n,staticRenderFns:i};e.a=r},function(t,e){},function(t,e,a){"use strict";var n=function(){var t=this,e=t.$createElement,a=t._self._c||e;return a("li",{class:{active:t.tab.active}},[a("a",{class:{disabled:!t.tab.checked},attrs:{href:"javascript:void(0)"}},[a("div",{staticClass:"wizard-icon-circle md",class:{checked:t.tab.checked,square_shape:t.isStepSquare,tab_shape:t.isTabShape},style:[t.tab.checked?t.stepCheckedStyle:{},t.tab.validationError?t.errorStyle:{}],attrs:{role:"tab",tabindex:t.tab.checked?0:"",id:"step-"+t.tab.tabId,"aria-controls":t.tab.tabId,"aria-disabled":t.tab.active,"aria-selected":t.tab.active}},[a("transition",{attrs:{name:t.transition,mode:"out-in"}},[t.tab.active?a("div",{staticClass:"wizard-icon-container",class:{square_shape:t.isStepSquare,tab_shape:t.isTabShape},style:[t.tab.active?t.iconActiveStyle:{},t.tab.validationError?t.errorStyle:{}]},[t._t("active-step",[t.tab.icon?a("i",{staticClass:"wizard-icon",class:t.tab.icon}):a("i",{staticClass:"wizard-icon"},[t._v(t._s(t.index+1))])])],2):t._e(),t._v(" "),t.tab.active?t._e():t._t("default",[!t.tab.active&&t.tab.icon?a("i",{staticClass:"wizard-icon",class:t.tab.icon}):t._e(),t._v(" "),t.tab.active||t.tab.icon?t._e():a("i",{staticClass:"wizard-icon"},[t._v(t._s(t.index+1))])])],2)],1),t._v(" "),t._t("title",[a("span",{staticClass:"stepTitle",class:{active:t.tab.active,has_error:t.tab.validationError},style:t.tab.active?t.stepTitleStyle:{}},[t._v("\n            "+t._s(t.tab.title)+"\n      ")])])],2)])},i=[],r={render:n,staticRenderFns:i};e.a=r},function(t,e,a){"use strict";function n(){return document.activeElement.id}function i(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],e=n();return t.findIndex(function(t){return t.tabId===e})}function r(t){document.getElementById(t).focus()}function s(t){return t.then&&"function"==typeof t.then}e.b=i,e.a=r,e.c=s},function(t,e,a){"use strict";var n=function(){var t=this,e=t.$createElement,a=t._self._c||e;return a("div",{staticClass:"vue-form-wizard",class:[t.stepSize,{vertical:t.isVertical}],on:{keyup:[function(e){return"button"in e||!t._k(e.keyCode,"right",39,e.key)?"button"in e&&2!==e.button?null:void t.focusNextTab(e):null},function(e){return"button"in e||!t._k(e.keyCode,"left",37,e.key)?"button"in e&&0!==e.button?null:void t.focusPrevTab(e):null}]}},[a("div",{staticClass:"wizard-header"},[t._t("title",[a("h4",{staticClass:"wizard-title"},[t._v(t._s(t.title))]),t._v(" "),a("p",{staticClass:"category"},[t._v(t._s(t.subtitle))])])],2),t._v(" "),a("div",{staticClass:"wizard-navigation"},[t.isVertical?t._e():a("div",{staticClass:"wizard-progress-with-circle"},[a("div",{staticClass:"wizard-progress-bar",style:t.progressBarStyle})]),t._v(" "),a("ul",{staticClass:"wizard-nav wizard-nav-pills",class:t.stepsClasses,attrs:{role:"tablist"}},[t._l(t.tabs,function(e,n){return t._t("step",[a("wizard-step",{attrs:{tab:e,"step-size":t.stepSize,transition:t.transition,index:n},nativeOn:{click:function(e){t.navigateToTab(n)},keyup:function(e){if(!("button"in e)&&t._k(e.keyCode,"enter",13,e.key))return null;t.navigateToTab(n)}}})],{tab:e,index:n,navigateToTab:t.navigateToTab,stepSize:t.stepSize,transition:t.transition})})],2),t._v(" "),a("div",{staticClass:"wizard-tab-content"},[t._t("default",null,null,t.slotProps)],2)]),t._v(" "),t.hideButtons?t._e():a("div",{staticClass:"wizard-card-footer clearfix"},[t._t("footer",[a("div",{staticClass:"wizard-footer-left"},[t.displayPrevButton?a("span",{attrs:{role:"button",tabindex:"0"},on:{click:t.prevTab,keyup:function(e){if(!("button"in e)&&t._k(e.keyCode,"enter",13,e.key))return null;t.prevTab(e)}}},[t._t("prev",[a("wizard-button",{style:t.fillButtonStyle,attrs:{disabled:t.loading}},[t._v("\n              "+t._s(t.backButtonText)+"\n            ")])],null,t.slotProps)],2):t._e(),t._v(" "),t._t("custom-buttons-left",null,null,t.slotProps)],2),t._v(" "),a("div",{staticClass:"wizard-footer-right"},[t._t("custom-buttons-right",null,null,t.slotProps),t._v(" "),t.isLastStep?a("span",{attrs:{role:"button",tabindex:"0"},on:{click:t.nextTab,keyup:function(e){if(!("button"in e)&&t._k(e.keyCode,"enter",13,e.key))return null;t.nextTab(e)}}},[t._t("finish",[a("wizard-button",{style:t.fillButtonStyle},[t._v("\n              "+t._s(t.finishButtonText)+"\n            ")])],null,t.slotProps)],2):a("span",{attrs:{role:"button",tabindex:"0"},on:{click:t.nextTab,keyup:function(e){if(!("button"in e)&&t._k(e.keyCode,"enter",13,e.key))return null;t.nextTab(e)}}},[t._t("next",[a("wizard-button",{style:t.fillButtonStyle,attrs:{disabled:t.loading}},[t._v("\n            "+t._s(t.nextButtonText)+"\n           ")])],null,t.slotProps)],2)],2)],null,t.slotProps)],2)])},i=[],r={render:n,staticRenderFns:i};e.a=r},function(t,e,a){"use strict";var n=a(6),i=a(17),r=a(0),s=r(n.a,i.a,!1,null,null,null);e.a=s.exports},function(t,e,a){"use strict";var n=function(){var t=this,e=t.$createElement;return(t._self._c||e)("div",{directives:[{name:"show",rawName:"v-show",value:t.active,expression:"active"}],staticClass:"wizard-tab-container",attrs:{role:"tabpanel",id:t.tabId,"aria-hidden":!t.active,"aria-labelledby":"step-"+t.tabId}},[t._t("default",null,{active:t.active})],2)},i=[],r={render:n,staticRenderFns:i};e.a=r}])});
 
 /***/ }),
-/* 451 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(452);
+var content = __webpack_require__(462);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -119809,10 +120498,10 @@ if(false) {
 }
 
 /***/ }),
-/* 452 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(8)(false);
 // imports
 
 
@@ -119823,7 +120512,7 @@ exports.push([module.i, ".vue-form-wizard .wizard-btn{display:inline-block;margi
 
 
 /***/ }),
-/* 453 */
+/* 463 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -119910,15 +120599,15 @@ if (false) {
 }
 
 /***/ }),
-/* 454 */
+/* 464 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(455)
+var __vue_script__ = __webpack_require__(465)
 /* template */
-var __vue_template__ = __webpack_require__(456)
+var __vue_template__ = __webpack_require__(466)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -119957,7 +120646,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 455 */
+/* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -120067,9 +120756,9 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(9);
 
-var _UploadAttachments = __webpack_require__(37);
+var _UploadAttachments = __webpack_require__(26);
 
 var _UploadAttachments2 = _interopRequireDefault(_UploadAttachments);
 
@@ -120180,7 +120869,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 456 */
+/* 466 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -120521,15 +121210,15 @@ if (false) {
 }
 
 /***/ }),
-/* 457 */
+/* 467 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(458)
+var __vue_script__ = __webpack_require__(468)
 /* template */
-var __vue_template__ = __webpack_require__(459)
+var __vue_template__ = __webpack_require__(469)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -120568,7 +121257,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 458 */
+/* 468 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -120622,7 +121311,7 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -120700,7 +121389,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 459 */
+/* 469 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -120826,19 +121515,19 @@ if (false) {
 }
 
 /***/ }),
-/* 460 */
+/* 470 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(461)
+  __webpack_require__(471)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(463)
+var __vue_script__ = __webpack_require__(473)
 /* template */
-var __vue_template__ = __webpack_require__(464)
+var __vue_template__ = __webpack_require__(474)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -120877,17 +121566,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 461 */
+/* 471 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(462);
+var content = __webpack_require__(472);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(15)("469848f0", content, false, {});
+var update = __webpack_require__(12)("469848f0", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -120903,10 +121592,10 @@ if(false) {
 }
 
 /***/ }),
-/* 462 */
+/* 472 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(8)(false);
 // imports
 
 
@@ -120917,7 +121606,7 @@ exports.push([module.i, "\npre {\n    overflow: auto;\n}\npre .string { color: #
 
 
 /***/ }),
-/* 463 */
+/* 473 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -120951,7 +121640,7 @@ var _vuex = __webpack_require__(3);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -121003,7 +121692,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 464 */
+/* 474 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

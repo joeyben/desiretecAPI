@@ -20,7 +20,6 @@ class CreatedUserNotificationForExecutive extends Notification
      */
     private $password;
 
-
     public function __construct(User $user, string $password)
     {
         $this->user = $user;

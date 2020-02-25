@@ -26,6 +26,7 @@ use Modules\Groups\Http\Requests\UpdateGroupRequest;
 use Modules\Groups\Repositories\Contracts\GroupsRepository;
 use Modules\Groups\Services\GroupsService;
 use Modules\Whitelabels\Entities\Whitelabel;
+use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
 
 class GroupsController extends Controller
 {
@@ -66,11 +67,15 @@ class GroupsController extends Controller
      * @var \Modules\Groups\Services\GroupsService
      */
     private $groupsService;
+    /**
+     * @var \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository
+     */
+    private $moduleWhitelabels;
 
     /**
      * GroupsController constructor.
      */
-    public function __construct(GroupsService $groupsService, GroupsRepository $groups, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, Excel $excel)
+    public function __construct(GroupsService $groupsService, GroupsRepository $groups, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabels, Excel $excel)
     {
         $this->groups = $groups;
         $this->response = $response;
@@ -81,6 +86,7 @@ class GroupsController extends Controller
         $this->whitelabels = $whitelabels;
         $this->excel = $excel;
         $this->groupsService = $groupsService;
+        $this->moduleWhitelabels = $moduleWhitelabels;
     }
 
     /**
@@ -90,7 +96,22 @@ class GroupsController extends Controller
      */
     public function index()
     {
-        return view('groups::index');
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int) $whitelabel->state < 8) {
+                $this->moduleWhitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' => 8]
+                );
+            }
+
+            $step = Flag::step()[9];
+        }
+
+        return view('groups::index', compact(['step']));
     }
 
     public function view(Request $request)

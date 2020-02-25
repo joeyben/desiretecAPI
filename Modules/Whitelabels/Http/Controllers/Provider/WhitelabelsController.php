@@ -2,12 +2,12 @@
 
 namespace Modules\Whitelabels\Http\Controllers\Provider;
 
+use App\Http\Controllers\Controller;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Str;
 use Illuminate\Translation\Translator;
@@ -68,17 +68,30 @@ class WhitelabelsController extends Controller
             return redirect()->route('admin.whitelabels');
         }
 
-        return view('whitelabels::provider');
+        $step = Flag::step()[2];
+
+        return view('whitelabels::provider', compact(['step']));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
+
+    public function snippet()
     {
-        return view('whitelabels::create');
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int) $whitelabel->state < 11) {
+                $this->whitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' => 11]
+                );
+            }
+
+            $step = Flag::step()[12];
+        }
+
+        return view('whitelabels::snippet', compact(['step', 'whitelabel']));
     }
 
     /**
@@ -140,10 +153,16 @@ class WhitelabelsController extends Controller
             $domain = Flag::HTTPS . $subDomain . $request->get('main_domain');
 
             if ($result['whitelabel']->domain !== $this->str->lower($domain)) {
-                $this->whitelabels->updateRoute($id, $result['whitelabel']->name, $subDomain);
+                if ($this->isOldWhitelabel()) {
+                    $this->whitelabels->updateRoute($id, $result['whitelabel']->name, $subDomain);
+                }
+
                 ini_set('max_execution_time', 300);
                 $result['whitelabel'] = $this->whitelabels->update($id, ['domain' => $domain]);
-                $this->artisan->call('whitelabel:make-route', ['domain' => $subDomain, 'module' => $result['whitelabel']->name]);
+
+                if ($this->isOldWhitelabel()) {
+                    $this->artisan->call('whitelabel:make-route', ['domain' => $subDomain, 'module' => $result['whitelabel']->name]);
+                }
             }
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);

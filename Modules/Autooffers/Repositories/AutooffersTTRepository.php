@@ -860,6 +860,85 @@ class AutooffersTTRepository extends BaseRepository
 
     public function testTT()
     {
+        $requestXML = '{
+         "AvailabilityAndPriceCheckRQ": {
+          "RQ_Metadata": {
+           "Language": "de-CH"
+          }, 
+        "CurrencyCode": "CHF",
+          "Travellers": {
+                    "Traveller": [
+                           {
+                                  "Age": 33
+                           },
+                           {
+                                  "Age": 33
+                           },
+                           {
+                                  "Age": 6
+                           }
+                    ]
+             },
+          "OfferID": "2OUC6GYWCCKS9TNL1GLX6WJ3K3C8W1KX91JZEKZNXRSMJ9AVMAGNRNH4X7UVE8KX9YWLDTJM42MMDL",
+          "Options": {
+          }
+        }}';
+
+        $server = 'https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck';
+        $this->getToken();
+        $headers = [
+            "Content-type: text/xml",
+            "Content-length: " . strlen($requestXML), "Connection: close",
+        ];
+        $ch = curl_init();
+        $authorization = 'Authorization: Bearer ' . $this->token;
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
+        curl_setopt($ch, CURLOPT_URL, $server);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $requestXML);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        $data = curl_exec($ch);
+        var_dump($data);
+        if (curl_errno($ch)) {
+            print curl_error($ch);
+            echo "Algo fallo";
+        } else {
+            curl_close($ch);
+        }
+
+
+
+
+
+        /*$curl = curl_init();
+
+        $authorization = 'Authorization: Bearer ' . $this->token;
+
+        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
+        curl_setopt($curl, CURLOPT_URL, "https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $xmlreq);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $result = curl_exec($curl);
+        dd($result);
+        if (!$result) {
+            die('Connection Failure');
+        }
+        curl_close($curl);
+        dd($result);*/
+    }
+
+
+    public function testTTbkp()
+    {
         $xmlreq = '{
          "PackageOffersRQ": {
           "RQ_Metadata": {

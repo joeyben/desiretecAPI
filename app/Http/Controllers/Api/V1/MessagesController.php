@@ -10,6 +10,7 @@ use App\Models\Messages\Message;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use App\Services\Flag\Src\Flag;
 use Auth;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Storage;
@@ -18,11 +19,13 @@ class MessagesController extends APIController implements MessagesControllerInte
 {
     private $session;
     private $wishesRepository;
+    private $auth;
 
-    public function __construct(Store $session, WishesRepository $wishesRepository)
+    public function __construct(Store $session, WishesRepository $wishesRepository, AuthManager $authManager)
     {
         $this->session = $session;
-        $this->wishes = $wishesRepository;
+        $this->wishesRepository = $wishesRepository;
+        $this->auth = $authManager;
     }
 
     public function list(int $wishId, int $groupId)
@@ -54,8 +57,8 @@ class MessagesController extends APIController implements MessagesControllerInte
                                 ->where('wish_id', '=', $wishId)
                                 ->get();
 
-        $path = Storage::disk('s3')->url('img/agent/');
         foreach ($agentMessages as $agentMessage) {
+            $path = Storage::disk('s3')->url('img/agent/');
             $agentMessage['avatar'] = $path . $agentMessage['avatar'];
         }
 
@@ -76,15 +79,11 @@ class MessagesController extends APIController implements MessagesControllerInte
         $message = $request->input('message');
         $agentId = null;
 
-        // TODO: Resolve current agent
-        // if ($this->auth->guard('agent')->check() && $this->auth->guard('web')->user()->hasRole(Flag::SELLER_ROLE)) {
-        if (true) {
-            // TODO: Get current agent
-            $agentId = 155;
-            // $agentId = $this->auth->guard('agent')->user()->id;
+        if ($this->auth->user()->hasRole(Flag::SELLER_ROLE) && Auth::guard('agent')->check()) {
+            $agentId = Auth::guard('agent')->user()->id;
+            $wish = $this->wishesRepository->getById($request->wish_id);
 
-            $wish = $this->wishes->find($request->wish_id);
-            $this->wishes->update($wish, ['agent_id' => $agentId]);
+            $this->wishesRepository->update($wish, ['agent_id' => $agentId]);
         }
 
         try {
@@ -94,6 +93,7 @@ class MessagesController extends APIController implements MessagesControllerInte
                 'message' => $message,
                 'agent_id'=> $agentId
             ]);
+
         } catch (\Illuminate\Database\QueryException $e) {
             return $this->respondWithError($e->errorInfo);
         }
@@ -121,7 +121,7 @@ class MessagesController extends APIController implements MessagesControllerInte
             $m->message = $request->input('message');
 
             if ($m->save()) {
-                return $this->respondUpdated('message deleted successfully');
+                return $this->respondUpdated('message updated successfully');
             }
             throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
         } catch (Exception $e) {

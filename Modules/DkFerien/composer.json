@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/dkferien",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\DkFerien\\Providers\\DkFerienServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\DkFerien\\": ""
+        }
+    }
+}

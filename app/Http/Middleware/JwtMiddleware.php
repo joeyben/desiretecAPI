@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\Flag\Src\Flag;
 use Closure;
 use Exception;
 use Illuminate\Http\Response as IlluminateResponse;
@@ -31,11 +32,37 @@ class JwtMiddleware extends BaseMiddleware
                 $rawToken = JWTAuth::getToken();
                 $payload = JWTAuth::decode($rawToken);
                 Auth::guard('web')->loginUsingId($payload['sub']);
+
+                if (Auth::guard('web')->user()->hasRole(Flag::SELLER_ROLE)) {
+                    if ($request->hasHeader('c-agent') && !is_null($request->hasHeader('c-agent'))) {
+                        Auth::guard('agent')->logout();
+                        Auth::guard('agent')->loginUsingId($request->header('c-agent'));
+                    }
+                }
+
+                if (Auth::guard('web')->user()->hasRole(Flag::SELLER_ROLE) && !Auth::guard('agent')->check()) {
+                    if ($agent = Auth::guard('web')->user()->agents()->first()) {
+                        Auth::guard('agent')->loginUsingId($agent->id);
+                    }
+                }
             } else {
                 $rawToken = $request->cookie('access_token');
                 $token = new Token($rawToken);
                 $payload = JWTAuth::decode($token);
                 Auth::loginUsingId($payload['sub']);
+
+                if (Auth::user()->hasRole(Flag::SELLER_ROLE)) {
+                    if ($request->hasHeader('c-agent') && !is_null($request->hasHeader('c-agent'))) {
+                        Auth::guard('agent')->logout();
+                        Auth::guard('agent')->loginUsingId((int) $request->header('c-agent'));
+                    }
+                }
+
+                if (Auth::user()->hasRole(Flag::SELLER_ROLE) && !Auth::guard('agent')->check()) {
+                    if ($agent = Auth::user()->agents()->first()) {
+                        Auth::guard('agent')->loginUsingId($agent->id);
+                    }
+                }
             }
         } catch (Exception $e) {
             if ($e instanceof TokenInvalidException) {

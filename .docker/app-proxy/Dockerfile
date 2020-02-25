@@ -27,6 +27,8 @@ RUN cd /myapp/Modules/Bild && yarn install --ignore-engines && npm run productio
 #RUN cd /myapp/Modules/Holiday123 && yarn install --ignore-engines && npm run production
 
 RUN cd /myapp/Modules/Bentour && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/Olimar && yarn install --ignore-engines && npm run production
+RUN cd /myapp/Modules/DkFerien && yarn install --ignore-engines && npm run production
 
 
 FROM nginx:latest

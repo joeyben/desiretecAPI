@@ -10,7 +10,7 @@
                 </legend>
 
                 <ul class="nav nav-tabs nav-tabs-highlight">
-                    <li class="nav-item" v-for="(layer, index) in whitelabel.layers"  v-if="whitelabel.layers.length > 0">
+                    <li class="nav-item" v-for="(layer, index) in layers"  v-if="layers.length > 0" @click="handleActive(layer.layer_id)">
                         <a :href="'#' + layer.name " class="nav-link" v-bind:class="{'active': index === 0}" data-toggle="tab">
                             {{ layer.name }}
                         </a>
@@ -18,68 +18,8 @@
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane fade" :data-tabnr="layer.id" v-for="(layer, index) in whitelabel.layers" v-bind:class="{'active show': index === 0}" :id="layer.name" >
-                        <form action="#" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
-
-                            <input type="hidden" :name="'layer_id_'+layer.id" :id="'layer_id_'+layer.id" :value="layer.id">
-                            <fieldset class="mb-3">
-                                <div class="form-group">
-                                    <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'visual'}" :fileList="whitelabel.visual" :tip="trans('modals.visual')" :limit="1" listType="picture-card"></upload-attachments>
-                                    <div class="help-block text-danger" v-if="errors.has('visual')">
-                                        <strong v-text="errors.get('visual')"></strong>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row mt-5">
-                                    <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline') }}</label>
-                                    <div class="col-lg-9">
-                                        <input type="text" class="form-control" :class="errors.has('headline') ? 'is-invalid': ''" id='headline' name='headline' :placeholder="trans('modals.headline')"  @input="updateWhitelabel" :value="layer.pivot.headline"/>
-                                        <div class="invalid-feedback">
-                                            <strong v-text="errors.get('headline')"></strong>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline') }}</label>
-                                    <div class="col-lg-9">
-                                        <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline') ? 'is-invalid': ''" id='subheadline' name='subheadline' :placeholder="trans('modals.subheadline')"  @input="updateWhitelabel" :value="layer.pivot.subheadline"></textarea>
-                                        <div class="invalid-feedback">
-                                            <strong v-text="errors.get('subheadline')"></strong>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <legend class="text-uppercase font-size-sm font-weight-bold">{{ trans('modals.message_success') }}</legend>
-
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline_success') }}</label>
-                                    <div class="col-lg-9">
-                                        <input type="text" class="form-control" :class="errors.has('headline_success') ? 'is-invalid': ''" id='headline_success' name='headline_success' :placeholder="trans('modals.headline_success')" @input="updateWhitelabel"  :value="layer.pivot.headline_success"/>
-                                        <div class="invalid-feedback">
-                                            <strong v-text="errors.get('headline_success')"></strong>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline_success') }}</label>
-                                    <div class="col-lg-9">
-                                        <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline_success') ? 'is-invalid': ''" id='subheadline_success' name='subheadline_success' :placeholder="trans('modals.subheadline_success')" @input="updateWhitelabel"  :value="layer.pivot.subheadline_success"></textarea>
-                                        <div class="invalid-feedback">
-                                            <strong v-text="errors.get('subheadline_success')"></strong>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
--
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ trans('button.save') }}
-                                    <i class="icon-paperplane ml-2"></i>
-                                </button>
-                            </div>
-                        </form>
+                    <div class="tab-pane fade" v-if="layers[0]" v-for="(layer, index) in layers" :class="{'active show': isTab === layer.layer_id}" :id="'#' + layer.name">
+                        <layer-content :layer="layer" :key="layer.id"></layer-content>
                     </div>
                 </div>
             </div>
@@ -93,13 +33,16 @@
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   import UploadAttachments from '../../../../../../../../../resources/assets/js/utils/UploadAttachments'
   import FilterBar from './FilterBar'
+  import LayerContent from './LayerContent'
   export default {
     name: 'ContentComponent',
-    components: { FilterBar, UploadAttachments },
+    components: { FilterBar, LayerContent, UploadAttachments },
     data () {
       return {
         // eslint-disable-next-line
         errors: new Errors(),
+        isTab: 1,
+        layers: [],
         contents: window.contents,
         radio1: null,
         dialogFormVisible: false,
@@ -128,6 +71,9 @@
         loadWhitelabels: 'loadWhitelabels',
         loadCurrentWhitelabel: 'loadCurrentWhitelabel'
       }),
+      handleActive (tab) {
+        this.isTab = tab
+      },
       updateWhitelabel (e) {
         if (e.target.value !== null) {
           var tabnr = parseInt($('.tab-content .active').data('tabnr') - 1)
@@ -179,6 +125,17 @@
       hasPermissionTo (permission) {
         return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
       }
+    },
+    created () {
+      this.$store.dispatch('block', {element: 'contentComponent', load: true})
+      this.$http.get(window.laroute.route('admin.whitelabels.content.view'))
+        .then((response) => {
+          this.layers = response.data.data
+        })
+        .catch(this.onFailed)
+        .then(() => {
+          this.$store.dispatch('block', {element: 'contentComponent', load: false})
+        })
     }
   }
 </script>

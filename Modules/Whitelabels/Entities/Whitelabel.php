@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Schema;
 use Modules\Attachments\Traits\AttachableTrait;
+use Modules\Footers\Entities\Footer;
 use Modules\Languages\Entities\Language;
 use Modules\Wishes\Entities\Wish;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -137,6 +138,20 @@ class Whitelabel extends Model
     }
 
     /**
+     * get languages(locales) for a Whitelabel.
+     */
+    public function footers()
+    {
+        return $this->hasMany(Footer::class);
+    }
+
+
+    public function hosts()
+    {
+        return $this->hasMany(WhitelabelHost::class);
+    }
+
+    /**
      * get the distribution for a Whitelabel.
      */
     public function distribution()
@@ -156,6 +171,6 @@ class Whitelabel extends Model
             'headline_success',
             'subheadline_success',
             'layer_url'
-        ]);
+        ])->using(LayerWhitelabel::class);
     }
 }

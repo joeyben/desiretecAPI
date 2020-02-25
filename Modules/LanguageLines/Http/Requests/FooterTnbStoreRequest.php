@@ -15,7 +15,8 @@ class FooterTnbStoreRequest extends FormRequest
     {
         return [
             'language'                => 'required|string|min:2|max:2',
-            'footer_tnb_editor'       => 'required|string'
+            'footer_tnb_editor'       => 'required|string',
+            'checkbox'                => 'accepted'
         ];
     }
 

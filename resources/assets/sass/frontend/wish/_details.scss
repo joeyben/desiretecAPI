@@ -1028,7 +1028,7 @@ aside {
     width:100%;
     height:2.2em;
   }
-  .mousehover:hover + .custom-tooltip {
+  .mousehover:hover + .tooltip {
     visibility: visible;
     transition: opacity 0.3s ease;
     opacity: 1;

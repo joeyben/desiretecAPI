@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class StepMiddleware
 {
-
     public function handle($request, Closure $next, $guard = null)
     {
         if (!Auth::guard($guard)->check()) {
@@ -22,7 +21,7 @@ class StepMiddleware
         if (Auth::guard($guard)->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
             $step = Auth::guard($guard)->user()->whitelabels()->first()->state;
 
-            if ($step >= 10) {
+            if ($step >= Flag::MAX_STEP) {
                 return $next($request);
             }
 

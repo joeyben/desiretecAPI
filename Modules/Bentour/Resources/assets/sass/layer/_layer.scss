@@ -164,6 +164,7 @@ $gutter: 30px;
   }
   * {
     box-sizing: border-box;
+    font-weight: 400;
   }
 }
 
@@ -1091,6 +1092,8 @@ p.kwp-info {
       display: block;
       margin-top: 5px;
       margin-left: 5px;
+      height: 20px;
+      width: 20px;
       &:after{
         content: "";
         display: inline-block;
@@ -1101,8 +1104,6 @@ p.kwp-info {
         background-color: #fff;
         background-size: 20px;
         background-position: center center;
-        margin-left: -5px;
-        margin-top: -5px;
       }
     }
     input[type="checkbox"]:checked{
@@ -1152,6 +1153,9 @@ p.kwp-info {
         color: #000;
         margin-bottom: 20px;
       }
+    }
+    form{
+      margin: 0;
     }
   }
   .kwp-content{
@@ -1303,12 +1307,6 @@ p.kwp-info {
       .kwp-custom-select select,.kwp-custom-select, .kwp-custom-select:after, input[type="text"], input[type="date"]{
         border-color: $brand-danger;
       }
-
-      input[type="checkbox"]{
-        &:after{
-          border-color: $brand-danger;
-        }
-      }
       ~ .rangeslider--horizontal{
         background: $brand-danger;
         .rangeslider__handle{
@@ -1424,15 +1422,19 @@ p.kwp-info {
     top: -3px;
   }
 }
-.error-input{
-  display: block;
-  background: $brand-danger !important;
-  padding: 0 10px;
-  color: #fff;
-  font-size: 14px;
-}
-.dt_terms.hasError:after{
-  border: 1px solid $brand-danger !important;
+
+// Errors
+.dt-modal{
+  .error-input{
+    display: block;
+    background: $brand-danger !important;
+    padding: 0 10px;
+    color: #fff;
+    font-size: 14px;
+  }
+  input[type="checkbox"].hasError{
+    outline: 3px solid $brand-danger !important;
+  }
 }
 
 //
@@ -1466,6 +1468,7 @@ p.kwp-info {
     font-size: 11px;
     border-radius: 5px;
     border: 1px solid #eee;
+    padding: 0 10px;
   }
 
   // Bootstrap css copy

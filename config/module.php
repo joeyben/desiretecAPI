@@ -33,6 +33,9 @@ return [
     'whitelabels' => [
         'table' => 'whitelabels',
     ],
+    'whitelabel_hosts' => [
+        'table' => 'whitelabel_hosts',
+    ],
     'agents' => [
         'table' => 'agents',
     ],

@@ -110,14 +110,17 @@ class WishesController extends APIController
             $user = Auth::guard('api')->user();
             $wish = $this->repository->getById($id);
             $result['data'] = $wish;
+            $result['data']['wish_id'] = $id;
 
-            if ($user->hasRole('User') && $wish->created_by === $user->id) {
-                return $this->responseJson($result);
-            } else if(($user->hasRole('Seller') && in_array($wish->group_id, $user->groups->pluck('id')->toArray()))) {
-                return $this->responseJson($result);
-            }
+            return $this->responseJson($result);
 
-            return $this->respondUnauthorized();
+            // if ($user->hasRole('User') && $wish->created_by === $user->id) {
+            //     return $this->responseJson($result);
+            // } else if(($user->hasRole('Seller') && in_array($wish->group_id, $user->groups->pluck('id')->toArray()))) {
+            //     return $this->responseJson($result);
+            // }
+
+            // return $this->respondUnauthorized();
         } catch (Exception $e) {
             return $this->responseJsonError($e);
         }
@@ -161,7 +164,7 @@ class WishesController extends APIController
             );
 
             if ($this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
-                'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3','ages4'))){
+                'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3','ages4'), $newUser->id)){
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
             }
 

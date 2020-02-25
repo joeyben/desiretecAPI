@@ -24,11 +24,13 @@ Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' 
 Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' . \App\Services\Flag\Src\Flag::EXECUTIVE_ROLE], 'prefix' => 'admin', 'namespace' => 'Modules\Whitelabels\Http\Controllers'], function () {
     Route::get('whitelabels/show/{id}', 'WhitelabelsController@show')->name('admin.whitelabels.show')->where('id', '[0-9]+');
     Route::get('whitelabels/layers', 'LayersController@index')->name('admin.whitelabels.layers');
+    Route::get('whitelabels/layers/view', 'LayersController@view')->name('admin.whitelabels.layers.view');
     Route::put('whitelabels/layers/update', 'LayersController@update')->name('admin.whitelabels.layers.update');
     Route::get('whitelabels/current', 'WhitelabelsController@current')->name('admin.whitelabels.current');
 });
 
 Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' . \App\Services\Flag\Src\Flag::EXECUTIVE_ROLE], 'prefix' => 'admin', 'namespace' => 'Modules\Whitelabels\Http\Controllers'], function () {
+    Route::get('whitelabels/content/view', 'LayersContentController@view')->name('admin.whitelabels.content.view');
     Route::get('whitelabels/content', 'LayersContentController@index')->name('admin.whitelabels.content');
     Route::put('whitelabels/content/update', 'LayersContentController@update')->name('admin.whitelabels.content.update');
 });
@@ -36,4 +38,13 @@ Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' 
 Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' . \App\Services\Flag\Src\Flag::EXECUTIVE_ROLE], 'prefix' => 'provider', 'namespace' => 'Modules\Whitelabels\Http\Controllers\Provider'], function () {
     Route::get('whitelabels', 'WhitelabelsController@index')->name('provider.whitelabels');
     Route::put('whitelabels/save/{id}', 'WhitelabelsController@save')->name('provider.whitelabels.save')->where('id', '[0-9]+');
+});
+
+Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' . \App\Services\Flag\Src\Flag::EXECUTIVE_ROLE], 'prefix' => 'provider', 'namespace' => 'Modules\Whitelabels\Http\Controllers\Provider'], function () {
+    Route::post('whitelabels/store', 'HostsController@store')->name('provider.hosts.store');
+    Route::delete('whitelabels/{host}', 'HostsController@destroy')->name('provider.hosts.destroy');
+});
+
+Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' . \App\Services\Flag\Src\Flag::EXECUTIVE_ROLE], 'prefix' => 'provider', 'namespace' => 'Modules\Whitelabels\Http\Controllers\Provider'], function () {
+    Route::get('whitelabels/snippet', 'WhitelabelsController@snippet')->name('provider.whitelabels.snippet');
 });

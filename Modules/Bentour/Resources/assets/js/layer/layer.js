@@ -889,12 +889,12 @@ var exitIntent = window.exitIntent || {};
             maxChars: 20,
             allowDuplicates: false,
             typeahead: {
-            autoSelect: false,
-            minLength: 3,
-            highlight: true,
-            source: function(query) {
-                return $.get('https://bentour.reise-wunsch.com/get-all-destinations', {query: query});
-            }
+                autoSelect: false,
+                minLength: 3,
+                highlight: true,
+                source: function(query) {
+                    return $.get('https://bentour.reise-wunsch.com/get-all-destinations', {query: query});
+                }
             }
         });
 
@@ -903,12 +903,12 @@ var exitIntent = window.exitIntent || {};
             maxChars: 20,
             allowDuplicates: false,
             typeahead: {
-            autoSelect: false,
-            minLength: 3,
-            highlight: true,
-            source: function(query) {
-                return $.get('https://bentour.reise-wunsch.com/get-all-airports', {query: query});
-            }
+                autoSelect: false,
+                minLength: 3,
+                highlight: true,
+                source: function(query) {
+                    return $.get('https://bentour.reise-wunsch.com/get-all-airports', {query: query});
+                }
             }
         });
 

@@ -32,20 +32,20 @@ class OffersController extends APIController
 
             return $this->responseJson($offers);
         } catch (\Exception $e) {
-            return $this->respondWithError($e->getMessage());
+            return $this->responseJsonError($e);
         }
     }
 
     public function store(StoreOffersRequest $request)
     {
         try {
-            if ($this->offer->createTemp($request)) {
+            if ($this->offer->createOfferAPI($request)) {
                 return $this->respondCreated(trans('alerts.frontend.offers.created'));
             }
 
-            return $this->respondWithError('error');
+            \ErrorException(trans('alerts.frontend.offers.error'));
         } catch (\Exception $e) {
-            return $this->respondWithError($e->getMessage());
+            return $this->responseJsonError($e);
         }
     }
 }

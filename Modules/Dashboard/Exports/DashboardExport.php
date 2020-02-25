@@ -69,15 +69,19 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
         ];
         $optParams1 = [
             'dimensions' => 'ga:date',
-            'filters'    => $filter['filterm'],
+            'filters'    => $filter['filterphone'],
+        ];
+        $optParams2 = [
+            'dimensions' => 'ga:date',
+            'filters'    => $filter['filtertablet'],
         ];
         $result = $this->dashboard->uniqueEventsDay($viewid, $optParams, $start, $end);
         $wishes = $this->getWishes($whitelabel, $start, $end);
-        $uem = $this->dashboard->uniqueEventsDay($viewid, $optParams1, $start, $end);
+        $uem = $this->dashboard->uniqueEventsDayMobile($viewid, $optParams1, $optParams2, $start, $end);
         $i = 0;
         $j = 0;
         foreach ($result as $key => $value) {
-            $result[$key]['2'] = $uem[$key]['1'];
+            $result[$key]['2'] = '0' !== (string) $uem[$key]['1'] ? $uem[$key]['1'] : '0';
             if (!$wishes) {
                 $result[$key]['3'] = '0';
             }
@@ -104,15 +108,15 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
      */
     public function map($dash): array
     {
-        $d31 = '0' !== $dash['1'] ? round($dash['3'] / $dash['1'] * 100, 1) : 0;
-        $d32 = '0' !== $dash['2'] ? round($dash['3'] / $dash['2'] * 100, 1) : 0;
+        $d31 = '0' !== (string) $dash['1'] ? round($dash['3'] / $dash['1'] * 100, 1) : '0';
+        $d32 = '0' !== (string) $dash['2'] ? round($dash['3'] / $dash['2'] * 100, 1) : '0';
 
         return [
             $dash['0'],
             $dash['1'],
             $dash['2'],
             '',
-            $dash['1'] + $dash['2'],
+            (string) ((int) ($dash['1']) + (int) ($dash['2'])),
             '',
             $dash['3'],
             '',
@@ -135,17 +139,17 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
             '#',
             'LI Desktop',
             'LI Mobile',
-            'LI Tablet',
+            '',
             'LI Total',
             '',
             'Wishes Desktop',
             'Wishes Mobile',
-            'Wishes Tablet',
+            '',
             'Wishes Total',
             '',
             'Response Rate Desktop',
             'Response Rate Mobile',
-            'Response Rate Tablet',
+            '',
             'Response Rate Total',
             '',
             'Reaction quota',
@@ -164,9 +168,7 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
         if ('' === $start) {
             $data = DB::table('wishes')
             ->select((DB::raw('DATE_FORMAT(created_at,"%Y%m%d") as date')), DB::raw('count(*) as wishes_count'))
-            ->Where([
-            ['whitelabel_id', '=', $whitelabel],
-            ])
+            ->Where('whitelabel_id', '=', $whitelabel)
             ->whereBetween('created_at', [DB::raw('DATE_ADD(NOW(),INTERVAL -30 day)'), DB::raw('NOW()')])
             ->groupBy('date')
             ->get()
@@ -175,9 +177,7 @@ class DashboardExport implements FromCollection, Responsable, WithMapping, WithH
         } else {
             $data = DB::table('wishes')
             ->select((DB::raw('DATE_FORMAT(created_at,"%Y%m%d") as date')), DB::raw('count(*) as wishes_count'))
-            ->Where([
-            ['whitelabel_id', '=', $whitelabel],
-            ])
+            ->Where('whitelabel_id', '=', $whitelabel)
             ->whereBetween('created_at', [$start, $end])
             ->groupBy('date')
             ->get()

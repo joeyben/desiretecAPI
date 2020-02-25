@@ -10,6 +10,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
+use Modules\LanguageLines\Entities\LanguageLines;
 
 class Controller extends BaseController
 {
@@ -32,6 +33,11 @@ class Controller extends BaseController
     protected function responseJsonPaginated($data = null): JsonResponse
     {
         return response()->json($data, Flag::STATUS_CODE_SUCCESS, [], JSON_NUMERIC_CHECK);
+    }
+
+    protected function isOldWhitelabel(): bool
+    {
+        return !('language_lines' === with(new LanguageLines())->getTable());
     }
 
     protected function responseJsonError(Exception $e): JsonResponse

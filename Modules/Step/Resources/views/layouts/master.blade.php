@@ -8,7 +8,7 @@
     <meta name="i18" content="{{ App::getLocale() }}">
     <title> @yield('title') - {{ config('app.name', 'Laravel') }} </title>
 <?php
-if(!empty($google_analytics)){
+if (!empty($google_analytics)) {
     echo $google_analytics;
 }
 ?>
@@ -34,7 +34,7 @@ if(!empty($google_analytics)){
 </head>
 
 <body class="navbar-top">
-<?php $module = Module::collections() ?>
+<?php $module = Module::collections(); ?>
 <!-- Main navbar -->
 <div class="navbar navbar-dark navbar-expand-md fixed-top">
     <div class="navbar-brand">
@@ -61,7 +61,14 @@ if(!empty($google_analytics)){
             </li>
         </ul>
         @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
-            <a href="{{ live_preview_url() }}" target="_blank" class="btn bg-orange-800 text-uppercase font-size-sm line-height-sm font-weight-semibold py-2 px-3 ml-sm-4 shadow  d-block d-sm-inline-block">Live Preview <i class="icon-circle-right2 ml-2"></i></a>
+            <a href="{{ live_preview_url() }}" target="_blank" class="btn btn-outline bg-orange-800 text-orange-800 border-orange-800 text-uppercase font-size-sm line-height-sm font-weight-semibold py-2 px-3 ml-sm-4 shadow  d-block d-sm-inline-block">Live Preview <i class="icon-circle-right2 ml-2"></i></a>
+           @isset($step)
+               @if($step['name'] !== 'Dashboard')
+                    <a href="{{ $step['url'] }}" class="btn bg-orange-800 text-uppercase font-size-sm line-height-sm font-weight-semibold py-2 px-3 ml-sm-4 shadow  d-block d-sm-inline-block"> {{ $step['name'] }} <i class="icon-circle-right2 ml-2"></i></a>
+               @else
+                    <a href="{{ $step['url'] }}" class="btn bg-success text-uppercase font-size-sm line-height-sm font-weight-semibold py-2 px-3 ml-sm-4 shadow  d-block d-sm-inline-block"> {{ $step['name'] }} <i class="icon-circle-right2 ml-2"></i></a>
+                @endif
+           @endisset()
         @endif
         <ul class="navbar-nav ml-auto" id="notificationsComponent">
             <notifications-component></notifications-component>
@@ -160,7 +167,7 @@ if(!empty($google_analytics)){
                     @if($module->has('Step'))
                         <li class="nav-item">
                             <a href="{{ Flag::step()[1]['url'] }}" class="nav-link {{ is_active(Flag::step()[1]['route']) }} {{ is_disabled(1) }}">
-                                <span>Step 1: White Label</span>
+                                <span>{{ Flag::step()[1]['name'] }}</span>
                                 @if (is_active_step(1))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
                                 @endif
@@ -170,7 +177,7 @@ if(!empty($google_analytics)){
                     @if($module->has('Step'))
                         <li class="nav-item">
                             <a href="{{ Flag::step()[2]['url'] }}" class="nav-link {{ is_active(Flag::step()[2]['route']) }} {{ is_disabled(2) }}">
-                                <span>Step 2: Layer Management</span>
+                                <span>{{ Flag::step()[2]['name'] }}</span>
                                 @if (is_active_step(2))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
                                 @endif
@@ -180,7 +187,7 @@ if(!empty($google_analytics)){
                     @if($module->has('Step'))
                         <li class="nav-item">
                             <a href="{{ Flag::step()[3]['url'] }}" class="nav-link {{ is_active(Flag::step()[3]['route']) }} {{ is_disabled(3) }}">
-                                <span>Step 3: E-Mail Signature</span>
+                                <span>{{ Flag::step()[3]['name'] }}</span>
                                 @if (is_active_step(3))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
                                 @endif
@@ -190,7 +197,7 @@ if(!empty($google_analytics)){
                     @if($module->has('Step'))
                         <li class="nav-item">
                             <a href="{{ Flag::step()[4]['url'] }}" class="nav-link {{ is_active(Flag::step()[4]['route']) }} {{ is_disabled(4) }}">
-                                <span>Step 4: Footers</span>
+                                <span>{{ Flag::step()[4]['name'] }}</span>
                                 @if (is_active_step(4))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
                                 @endif
@@ -200,7 +207,7 @@ if(!empty($google_analytics)){
                     @if($module->has('Step'))
                         <li class="nav-item">
                             <a href="{{ Flag::step()[5]['url'] }}" class="nav-link {{ is_active(Flag::step()[5]['route']) }} {{ is_disabled(5) }}">
-                                <span>Step 5: Teilnahmebedingungen</span>
+                                <span>{{ Flag::step()[5]['name'] }}</span>
                                 @if (is_active_step(5))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
                                 @endif
@@ -210,7 +217,7 @@ if(!empty($google_analytics)){
                     @if($module->has('Step'))
                         <li class="nav-item">
                             <a href="{{ Flag::step()[6]['url'] }}" class="nav-link {{ is_active(Flag::step()[6]['route']) }} {{ is_disabled(6) }}">
-                                <span>Step 6: Anbieter Management</span>
+                                <span>{{ Flag::step()[6]['name'] }}</span>
                                 @if (is_active_step(6))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
                                 @endif
@@ -220,7 +227,7 @@ if(!empty($google_analytics)){
                     @if($module->has('Step'))
                         <li class="nav-item">
                             <a href="{{ Flag::step()[7]['url'] }}" class="nav-link {{ is_active(Flag::step()[7]['route']) }} {{ is_disabled(7) }}">
-                                <span>Step 7: Gruppen Management</span>
+                                <span>{{ Flag::step()[7]['name'] }}</span>
                                 @if (is_active_step(7))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
                                 @endif
@@ -230,7 +237,7 @@ if(!empty($google_analytics)){
                     @if($module->has('Step'))
                         <li class="nav-item">
                             <a href="{{ Flag::step()[8]['url'] }}" class="nav-link {{ is_active(Flag::step()[8]['route']) }} {{ is_disabled(8) }}">
-                                <span>Step 8: Lead Management (if BASIC or PREMIUM)</span>
+                                <span>{{ Flag::step()[8]['name'] }}</span>
                                 @if (is_active_step(8))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
                                 @endif
@@ -240,7 +247,7 @@ if(!empty($google_analytics)){
                     @if($module->has('Step'))
                         <li class="nav-item">
                             <a href="{{ Flag::step()[9]['url'] }}" class="nav-link {{ is_active(Flag::step()[9]['route']) }} {{ is_disabled(9) }}">
-                                <span>Step 9 Offer Management (if BASIC or PREMIUM)</span>
+                                <span>{{ Flag::step()[9]['name'] }}</span>
                                 @if (is_active_step(9))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
                                 @endif
@@ -250,8 +257,18 @@ if(!empty($google_analytics)){
                     @if($module->has('Step'))
                         <li class="nav-item">
                             <a href="{{ Flag::step()[10]['url'] }}" class="nav-link {{ is_active(Flag::step()[10]['route']) }} {{ is_disabled(10) }}">
-                                <span>Step 10: Download JS Snippet</span>
+                                <span>{{ Flag::step()[10]['name'] }}</span>
                                 @if (is_active_step(10))
+                                    <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
+                                @endif
+                            </a>
+                        </li>
+                    @endif
+                    @if($module->has('Step'))
+                        <li class="nav-item">
+                            <a href="{{ Flag::step()[11]['url'] }}" class="nav-link {{ is_active(Flag::step()[11]['route']) }} {{ is_disabled(11) }}">
+                                <span>{{ Flag::step()[11]['name'] }}</span>
+                                @if (is_active_step(11))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
                                 @endif
                             </a>

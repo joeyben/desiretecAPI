@@ -81,7 +81,22 @@ class FootersController extends Controller
      */
     public function index()
     {
-        return view('footers::index');
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int) $whitelabel->state < 5) {
+                $this->whitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' => 5]
+                );
+            }
+
+            $step = Flag::step()[6];
+        }
+
+        return view('footers::index', compact(['step']));
     }
 
     public function view(Request $request)

@@ -15,8 +15,8 @@ class ApiStoreWhitelabelRequest extends FormRequest
     {
         return [
             'name'               => 'required|string|min:2|max:255|unique:whitelabels,name',
-            'email'              => 'required|email',
-            'licence'            => 'required|int|min:1',
+            'email'              => 'required|email|unique:users,email',
+            'licence'            => 'required|int|min:0,max:4',
         ];
     }
 

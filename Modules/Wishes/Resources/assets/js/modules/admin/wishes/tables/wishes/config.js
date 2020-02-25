@@ -7,7 +7,7 @@ import CustomLinkByTitle from './CustomLinkByTitle'
 import CustomStatus from './CustomStatus'
 import CustomUser from './CustomUser'
 export default {
-  perPage: 10,
+  perPage: 50,
   fields: Columns,
   sortOrder: sort,
   moreParams: {},
