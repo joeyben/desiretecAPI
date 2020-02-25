@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\LanguageLines\Http\Requests;
+namespace Modules\Whitelabels\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FooterTnbStoreRequest extends FormRequest
+class StoreHostWhitelabelByExecutiveRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,9 +14,7 @@ class FooterTnbStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'language'                => 'required|string|min:2|max:2',
-            'footer_tnb_editor'       => 'required|string',
-            'checkbox'                => 'accepted'
+            'host' => 'required|url|unique:whitelabel_hosts,host',
         ];
     }
 

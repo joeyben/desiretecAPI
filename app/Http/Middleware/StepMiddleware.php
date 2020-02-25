@@ -21,7 +21,7 @@ class StepMiddleware
         if (Auth::guard($guard)->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
             $step = Auth::guard($guard)->user()->whitelabels()->first()->state;
 
-            if ($step >= Flag::MAX_STEP - 2) {
+            if ($step >= Flag::MAX_STEP) {
                 return $next($request);
             }
 

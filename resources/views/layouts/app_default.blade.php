@@ -193,51 +193,12 @@ if(!empty($google_analytics)){
                             </a>
                         </li>
                     @endif
-                    @if($module->has('Groups') && Auth::guard('web')->user()->hasPermission('read-group'))
-                        <li class="nav-item">
-                            <a href="{{ route('admin.groups') }}" class="nav-link">
-                                <i class="icon-collaboration"></i>
-                                <span>{{ __('menus.groups_management') }}</span>
-                            </a>
-                        </li>
-                    @endif
 
                     @if($module->has('Wishes')  && Auth::guard('web')->user()->hasPermission('read-wish'))
                         <li class="nav-item">
                             <a href="{{ route('admin.wishes') }}" class="nav-link">
                                 <i class="icon-heart5"></i>
                                 <span>{{ __('menus.wishes_management') }}</span>
-                            </a>
-                        </li>
-                    @endif
-
-                    @if($module->has('Users')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
-                        @permission('view-access-management')
-                        @permission('view-seller-management')
-                        <li class="nav-item">
-                            <a href="{{ route('admin.sellers') }}" class="nav-link">
-                                <i class="icon-users4"></i>
-                                <span>{{ __('menus.sellers_management') }}</span>
-                            </a>
-                        </li>
-                    @endauth
-                    @endauth
-                    @endif
-
-                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
-                        <li class="nav-item">
-                            <a href="{{ route('provider.languages') }}" class="nav-link">
-                                <i class="icon-flag3"></i>
-                                <span>{{ __('menus.languages') }}</span>
-                            </a>
-                        </li>
-                    @endif
-
-                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
-                        <li class="nav-item">
-                            <a href="{{ route('provider.language-lines') }}" class="nav-link">
-                                <i class="icon-flag3"></i>
-                                <span>{{ __('menus.languages_lines') }}</span>
                             </a>
                         </li>
                     @endif
@@ -261,21 +222,17 @@ if(!empty($google_analytics)){
                     @endif
 
                     @if(Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
-                        <li class="nav-item nav-item-submenu">
-                            <a href="#" class="nav-link"><i class="icon-menu2"></i> <span>{{ __('Layer Management') }}</span></a>
-
-                            <ul class="nav nav-group-sub" data-submenu-title="Layouts">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.whitelabels.layers') }}" class="nav-link">
-                                        <span>{{ __('Layer Version') }}</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.whitelabels.content') }}" class="nav-link">
-                                        <span>{{ __('Layer Content') }}</span>
-                                    </a>
-                                </li>
-                            </ul>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.whitelabels.layers') }}" class="nav-link">
+                                <i class="icon-menu2"></i>
+                                <span>{{ __('Layer Version') }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.whitelabels.content') }}" class="nav-link">
+                                <i class="icon-menu2"></i>
+                                <span>{{ __('Layer Content') }}</span>
+                            </a>
                         </li>
                     @endif
 
@@ -287,6 +244,16 @@ if(!empty($google_analytics)){
                             </a>
                         </li>
                     @endif
+
+                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.footers') }}" class="nav-link">
+                                <i class="icon-move-down"></i>
+                                <span>{{ __('labels.footers') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
                     @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
                         <li class="nav-item">
                             <a href="{{ route('provider.footer.tnb', app()->getLocale()) }}" class="nav-link">
@@ -296,11 +263,42 @@ if(!empty($google_analytics)){
                         </li>
                     @endif
 
-                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                    @if($module->has('Users')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
+                        @permission('view-access-management')
+                            @permission('view-seller-management')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.sellers') }}" class="nav-link">
+                                        <i class="icon-users4"></i>
+                                        <span>{{ __('menus.sellers_management') }}</span>
+                                    </a>
+                                </li>
+                            @endauth
+                        @endauth
+                    @endif
+
+                    @if($module->has('Groups') && Auth::guard('web')->user()->hasPermission('read-group'))
                         <li class="nav-item">
-                            <a href="{{ route('admin.footers') }}" class="nav-link">
-                                <i class="icon-move-down"></i>
-                                <span>{{ __('labels.footers') }}</span>
+                            <a href="{{ route('admin.groups') }}" class="nav-link">
+                                <i class="icon-collaboration"></i>
+                                <span>{{ __('menus.groups_management') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('provider.languages') }}" class="nav-link">
+                                <i class="icon-flag3"></i>
+                                <span>{{ __('menus.languages') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::ADMINISTRATOR_ROLE))
+                        <li class="nav-item">
+                            <a href="{{ route('provider.language-lines') }}" class="nav-link">
+                                <i class="icon-flag3"></i>
+                                <span>{{ __('menus.languages_lines') }}</span>
                             </a>
                         </li>
                     @endif
@@ -351,6 +349,24 @@ if(!empty($google_analytics)){
                             <a href="{{ route('autooffer.setting') }}" class="nav-link disabled">
                                 <i class="icon-stack-picture"></i>
                                 <span>{{ __('menus.autooffers_management') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole('Administrator'))
+                        <li class="nav-item">
+                            <a href="{{ route('provider.whitelabels.snippet') }}" class="nav-link">
+                                <i class="icon-file-text"></i>
+                                <span>{{ __('Download JS Snippet') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole('Administrator'))
+                        <li class="nav-item">
+                            <a href="#" class="nav-link disabled">
+                                <i class="icon-help"></i>
+                                <span>{{ __('How It Works (Coming Soon)') }}</span>
                             </a>
                         </li>
                     @endif

@@ -890,6 +890,6 @@ if (!function_exists('is_disabled')) {
 if (!function_exists('is_step_finished')) {
     function is_step_finished()
     {
-        return current_step() >= Flag::MAX_STEP - 2;
+        return current_step() >= Flag::MAX_STEP;
     }
 }

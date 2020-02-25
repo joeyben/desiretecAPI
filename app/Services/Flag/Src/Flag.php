@@ -80,12 +80,12 @@ class Flag implements FlagInterface
                 'url'   => route('provider.whitelabels')
             ],
             2 => [
-                'name'  => 'Step 2: Layer version',
+                'name'  => 'Step 2: Layer Version',
                 'route' => 'admin.whitelabels.layers',
                 'url'   => route('admin.whitelabels.layers')
             ],
             3 => [
-                'name'  => 'Step 3: Layer content',
+                'name'  => 'Step 3: Layer Content',
                 'route' => 'admin.whitelabels.content',
                 'url'   => route('admin.whitelabels.content')
             ],
@@ -126,8 +126,13 @@ class Flag implements FlagInterface
             ],
             11 => [
                 'name'  => 'Step 11: Download JS Snippet',
-                'route' => '#',
-                'url'   => '#'
+                'route' => 'provider.whitelabels.snippet',
+                'url'   => route('provider.whitelabels.snippet')
+            ],
+            12 => [
+                'name'  => 'Dashboard',
+                'route' => 'admin.dashboard',
+                'url'   => route('admin.dashboard')
             ]
         ];
     }

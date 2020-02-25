@@ -101,6 +101,7 @@ return [
     'frontend' => [
         'offers' => [
             'created' => 'Offer successfully created',
+            'error'   => 'Error creating offer.',
         ],
         'wishes' => [
             'created' => 'The Wish was successfully created.',

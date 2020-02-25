@@ -9,6 +9,7 @@ use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Str;
 use Modules\Users\Notifications\ApiCreatedUserNotificationForExecutive;
 use Modules\Users\Repositories\Contracts\UsersRepository;
+use Modules\Whitelabels\Entities\WhitelabelHost;
 use Modules\Whitelabels\Http\Requests\ApiStoreWhitelabelRequest;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
@@ -73,6 +74,11 @@ class WhitelabelsController extends APIController
 
             $this->users->sync($user->id, 'whitelabels', [$result['whitelabel']->id]);
             $this->whitelabels->sync($result['whitelabel']->id, 'layers', [Flag::PACKAGE]);
+
+            $host = WhitelabelHost::create([
+                'host' => str_slug($request->get('name')) . '.' . env('API_DOMAIN', 'reise-wunsch.com'),
+                'whitelabel_id'      =>$result['whitelabel']->id,
+            ]);
 
             $user->fresh();
 
