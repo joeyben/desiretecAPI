@@ -17,6 +17,12 @@
 @section('content')
     <!-- Basic card -->
     <div class="content" id="whitelabelsProviderComponent">
+        <div class="row">
+            <div class="alert alert-info border-0 alert-dismissible col-md-12 offset-md-12">
+                Kopieren Sie dieses Snippet und fügen Sie es auf Ihrer Website ein
+            </div>
+        </div>
+
         <pre class="language-less mb-1"><code>
             <span class="hljs-tag">&lt;<span class="hljs-name">script</span>  type="text/javascript" <span class="hljs-attr">src</span>=<span class="hljs-string">"{{ $whitelabel->domain }}/js/layer.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code>
         </pre>

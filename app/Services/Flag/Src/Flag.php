@@ -125,7 +125,7 @@ class Flag implements FlagInterface
                 'url'   => route('autooffer.setting')
             ],
             11 => [
-                'name'  => 'Step 11: Download JS Snippet',
+                'name'  => 'Step 11: JS Snippet',
                 'route' => 'provider.whitelabels.snippet',
                 'url'   => route('provider.whitelabels.snippet')
             ],
