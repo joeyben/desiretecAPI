@@ -26,6 +26,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use Validator;
 use Auth;
@@ -66,8 +67,12 @@ class WishesController extends APIController
      * @var \App\Repositories\Frontend\Wishes\WishesRepository
      */
     private $repository;
+    /**
+     * @var \Modules\Categories\Repositories\Contracts\CategoriesRepository
+     */
+    private $categories;
 
-    public function __construct(WishesRepository $repository, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, GroupsRepository $groups)
+    public function __construct(WishesRepository $repository, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, GroupsRepository $groups, CategoriesRepository $categories)
     {
         $this->repository = $repository;
         $this->notification = $notification;
@@ -76,6 +81,7 @@ class WishesController extends APIController
         $this->lang = $lang;
         $this->carbon = $carbon;
         $this->groups = $groups;
+        $this->categories = $categories;
     }
 
     public function getWishes(Request $request)
@@ -107,13 +113,16 @@ class WishesController extends APIController
     public function getWish(int $id, Request $request)
     {
         try {
-            $user = Auth::guard('api')->user();
             $wish = $this->repository->getById($id);
+
             $result['data'] = $wish;
             $result['data']['wish_id'] = $id;
+            $result['data']['category'] = $this->categories->getCategoryByParentValue('catering', $wish->catering);
 
             return $this->responseJson($result);
 
+            // TODO: Do we need role validation?
+            // $user = Auth::guard('api')->user();
             // if ($user->hasRole('User') && $wish->created_by === $user->id) {
             //     return $this->responseJson($result);
             // } else if(($user->hasRole('Seller') && in_array($wish->group_id, $user->groups->pluck('id')->toArray()))) {
