@@ -204,7 +204,7 @@ class AgentsRepository extends BaseRepository
         return $this->storage->delete($this->upload_path . $fileName);
     }
 
-    public function deleteAgent($id, $request)
+    public function deleteAgentFromApi($id, $request)
     {
         $whitelabel_group = null;
         $user_group = null;
@@ -213,8 +213,31 @@ class AgentsRepository extends BaseRepository
         $whitelabel = Auth::guard('api')->user()->whitelabels()->first();
 
         if($whitelabel) {
-            $whitelabel_group = DB::table('groups')->where('whitelabel_id', $whitelabel->id);
+            $whitelabel_group = DB::table('groups')->where('whitelabel_id', $whitelabel->id)->first();
         }
+        if ($whitelabel_group) {
+            $user_group = DB::table('group_user')->where('group_id', $whitelabel_group->id)->first();
+        }
+        if ($user_group) {
+            $first_agent = DB::table('agents')->where([['user_id', $user_group->user_id], ['status', 'Active'], ['id', '!=', $id]])->first();
+        }
+
+        if ($first_agent) {
+            DB::table('offers')->where('agent_id', '=', $id)->update(['agent_id' => $first_agent->id]);
+            DB::table('message')->where('agent_id', '=', $id)->update(['agent_id' => $first_agent->id]);
+        } else {
+            DB::table('offers')->where('agent_id', '=', $id)->delete();
+            DB::table('message')->where('agent_id', '=', $id)->delete();
+        }
+        DB::table('agents')->where('id', '=', $id)->delete();
+    }
+
+    public function deleteAgent($id)
+    {
+        $whitelabel_group = DB::table('groups')->where('whitelabel_id', getCurrentWhiteLabelId())->first();
+        $user_group = null;
+        $first_agent = null;
+
         if ($whitelabel_group) {
             $user_group = DB::table('group_user')->where('group_id', $whitelabel_group->id)->first();
         }
