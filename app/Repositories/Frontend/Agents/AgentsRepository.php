@@ -204,9 +204,14 @@ class AgentsRepository extends BaseRepository
         return $this->storage->delete($this->upload_path . $fileName);
     }
 
-    public function deleteAgent($id)
+    public function deleteAgent($id, $request)
     {
-        $whitelabel_group = DB::table('groups')->where('whitelabel_id', getCurrentWhiteLabelId())->first();
+        $arr = explode(".", $request->root());
+        $domain = explode("//", $arr[0]);
+
+        $user = Auth::guard('api')->user()->whitelabels()->first();
+
+        $whitelabel_group = DB::table('groups')->where('whitelabel_id', getWhitelabelBySlug($domain[1])->first()->id)->first();
         $user_group = null;
         $first_agent = null;
 
