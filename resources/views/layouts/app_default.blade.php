@@ -357,7 +357,7 @@ if(!empty($google_analytics)){
                         <li class="nav-item">
                             <a href="{{ route('provider.whitelabels.snippet') }}" class="nav-link">
                                 <i class="icon-file-text"></i>
-                                <span>{{ __('Download JS Snippet') }}</span>
+                                <span>{{ __('JS Snippet') }}</span>
                             </a>
                         </li>
                     @endif
