@@ -70,7 +70,7 @@ class OfferUser extends Notification
      */
     public function toMail()
     {
-        $confirmation_url = route($this->getRoute(), [$this->wish_id, $this->token]);
+        $confirmation_url = url($this->getRoute());
         $subject = trans('email.offer.created_user', ['whitelabel' => $this->wl_name]);
         $view = 'emails.offer.offer-user';
 
@@ -97,10 +97,16 @@ class OfferUser extends Notification
 
             return $whitelabelslug . '.wish.details';
         }
-        $whitelabelId = mb_strtolower(Auth::guard('api')->user()->whitelabels()->first()->name);
 
-        return $whitelabelId . '.wish.details';
+        $whitelabelId = Auth::guard('api')->user()->whitelabels()->first();
+        $route = $whitelabelId->name . '.wish.details';
 
-        return 'frontend.wishes.wish';
+        if(\Route::has($route, [$this->wish_id, $this->token])){
+            return route($route, [$this->wish_id, $this->token]);
+        } else {
+            return $whitelabelId->domain . '/wishes/' . $this->wish_id;
+        }
+
+        return 'frontend.wishes.show';
     }
 }
