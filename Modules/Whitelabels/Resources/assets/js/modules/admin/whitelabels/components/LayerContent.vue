@@ -124,6 +124,7 @@
             showClose: true,
             type: 'success'
           })
+          this.errors.drop()
         } else {
           this.$message({
             message: response.data.message,
