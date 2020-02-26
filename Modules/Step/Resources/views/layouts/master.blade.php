@@ -244,7 +244,7 @@ if (!empty($google_analytics)) {
                             </a>
                         </li>
                     @endif
-                    @if($module->has('Step'))
+                    @if($module->has('Step') && Flag::step()[9]['visible'])
                         <li class="nav-item">
                             <a href="{{ Flag::step()[9]['url'] }}" class="nav-link {{ is_active(Flag::step()[9]['route']) }} {{ is_disabled(9) }}">
                                 <span>{{ Flag::step()[9]['name'] }}</span>
@@ -254,7 +254,7 @@ if (!empty($google_analytics)) {
                             </a>
                         </li>
                     @endif
-                    @if($module->has('Step'))
+                    @if($module->has('Step') && Flag::step()[10]['visible'])
                         <li class="nav-item">
                             <a href="{{ Flag::step()[10]['url'] }}" class="nav-link {{ is_active(Flag::step()[10]['route']) }} {{ is_disabled(10) }}">
                                 <span>{{ Flag::step()[10]['name'] }}</span>
