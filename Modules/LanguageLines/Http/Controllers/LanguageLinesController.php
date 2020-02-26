@@ -651,8 +651,8 @@ class LanguageLinesController extends Controller
             } else if($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)){
                 $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
             } else {
-                return redirect(route('provider.footer.tnb', $lang))->with('error', trans('User guard is different'));
-            }
+                return view('languagelines::email-signature', compact(['step', []]))->with('error', trans('User guard is different'));
+        }
 
             if (!$this->isOldWhitelabel()) {
                 if (!$this->languageline->withCriteria([
@@ -721,7 +721,7 @@ class LanguageLinesController extends Controller
                 } else if($this->auth->guard('web')->user()->hasRole('Executive')){
                     $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
                 } else {
-                    return redirect(route('provider.footer.tnb', $request->language))->with('error', trans('User guard is different'));
+                    return view('languagelines::email-signature', compact(['step', []]))->with('error', trans('User guard is different'));
                 }
 
                 $languageline = $this->languageline->update(
