@@ -199,7 +199,7 @@
 
                         <div class="card-body">
                             <p class="mb-3 text-justify">
-                                Unter Anbieter sind die Servicecenter oder Reisebüros zu verstehen, welche die gesammelten Wünsche bearbeiten dürfen/können/werden.
+                                Unter Anbieter sind die Servicecenter oder Reisebüros zu verstehen, welche die gesammelten Wünsche bearbeiten.
                             </p>
                         </div>
                     </div>
