@@ -364,9 +364,9 @@ if(!empty($google_analytics)){
 
                     @if($module->has('Whitelabels')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE) && !Auth::guard('web')->user()->hasRole('Administrator'))
                         <li class="nav-item">
-                            <a href="#" class="nav-link disabled">
+                            <a href="{{ route('provider.whitelabels.how-it-works') }}" class="nav-link">
                                 <i class="icon-help"></i>
-                                <span>{{ __('How It Works (Coming Soon)') }}</span>
+                                <span>{{ __('How It Works') }}</span>
                             </a>
                         </li>
                     @endif
