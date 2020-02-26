@@ -234,9 +234,13 @@ class WishesRepository extends BaseRepository
      */
     public function getById(int $id)
     {
-        return Wish::where([config('module.wishes.table').'.id' => $id])
+        $result['wish'] = Wish::where([config('module.wishes.table').'.id' => $id])->get()->first();
+
+        $result['modifiedData'] = Wish::where([config('module.wishes.table').'.id' => $id])
             ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.wishes.table') . '.created_by')
             ->first();
+
+        return $result;
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
+use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Groups\GroupsRepository;
 use App\Repositories\Criteria\ByUser;
@@ -113,11 +114,35 @@ class WishesController extends APIController
     public function getWish(int $id, Request $request)
     {
         try {
-            $wish = $this->repository->getById($id);
+            $data = $this->repository->getById($id);
 
+            $wishData = $data['wish'];
+            $offers = $wishData->offers;
+            $offerFiles = [];
+            $avatar = [];
+            $agentName = [];
+
+            foreach ($offers as $offer) {
+                if(!is_null(Agent::where('id', $offer->agent_id)->value('avatar')))
+                    array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
+
+                if(!is_null(Agent::where('id', $offer->agent_id)->first()))
+                    array_push($agentName, Agent::where('id', $offer->agent_id)->first());
+
+                if(!$offer->offerFiles->isEmpty())
+                    array_push($offerFiles, $offer->offerFiles);
+            }
+
+            $wish = $data['modifiedData'];
             $result['data'] = $wish;
             $result['data']['wish_id'] = $id;
             $result['data']['category'] = $this->categories->getCategoryByParentValue('catering', $wish->catering);
+            $result['data']['avatar'] = $avatar;
+            $result['data']['agent'] = \Illuminate\Support\Facades\Auth::guard('agent')->user();
+            $result['data']['agent_name'] = $agentName;
+            $result['data']['offerFiles'] = $offerFiles;
+            $result['data']['wishDetails'] = $wishData;
+            $result['data']['wishDetails']['contacts'] = $wishData->contacts;
 
             return $this->responseJson($result);
 
