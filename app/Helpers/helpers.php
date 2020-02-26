@@ -893,3 +893,10 @@ if (!function_exists('is_step_finished')) {
         return current_step() >= Flag::MAX_STEP;
     }
 }
+
+if (!function_exists('is_light')) {
+    function is_light()
+    {
+        return ((int)Auth::guard('web')->user()->whitelabels()->first()->licence === 0);
+    }
+}

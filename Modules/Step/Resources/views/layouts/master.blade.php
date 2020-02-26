@@ -244,9 +244,9 @@ if (!empty($google_analytics)) {
                             </a>
                         </li>
                     @endif
-                    @if($module->has('Step') && Flag::step()[9]['visible'])
+                    @if($module->has('Step'))
                         <li class="nav-item">
-                            <a href="{{ Flag::step()[9]['url'] }}" class="nav-link {{ is_active(Flag::step()[9]['route']) }} {{ is_disabled(9) }}">
+                            <a href="{{ Flag::step()[9]['url'] }}" class="nav-link {{ is_active(Flag::step()[9]['route']) }} {{ is_disabled(9) }} {{ is_light() ? 'disabled' : '' }}">
                                 <span>{{ Flag::step()[9]['name'] }}</span>
                                 @if (is_active_step(9))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
@@ -254,9 +254,9 @@ if (!empty($google_analytics)) {
                             </a>
                         </li>
                     @endif
-                    @if($module->has('Step') && Flag::step()[10]['visible'])
+                    @if($module->has('Step'))
                         <li class="nav-item">
-                            <a href="{{ Flag::step()[10]['url'] }}" class="nav-link {{ is_active(Flag::step()[10]['route']) }} {{ is_disabled(10) }}">
+                            <a href="{{ Flag::step()[10]['url'] }}" class="nav-link {{ is_active(Flag::step()[10]['route']) }} {{ is_disabled(10) }} {{ is_light() ? 'disabled' : '' }}">
                                 <span>{{ Flag::step()[10]['name'] }}</span>
                                 @if (is_active_step(10))
                                     <span class="badge bg-blue-400 align-self-center ml-auto">Current</span>
