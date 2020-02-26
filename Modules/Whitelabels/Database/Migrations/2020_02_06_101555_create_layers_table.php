@@ -26,11 +26,11 @@ class CreateLayersTable extends Migration
             $table->increments('id');
             $table->integer('whitelabel_id')->unsigned()->index();
             $table->integer('layer_id')->unsigned()->index();
-            $table->string('image', 255);
-            $table->string('headline', 100);
-            $table->string('subheadline', 100);
-            $table->string('layer_url', 255);
-            $table->string('headline_success', 100);
+            $table->string('image');
+            $table->string('headline');
+            $table->string('subheadline');
+            $table->string('layer_url');
+            $table->string('headline_success');
             $table->text('subheadline_success');
         });
 
