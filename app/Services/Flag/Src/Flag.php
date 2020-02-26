@@ -10,6 +10,7 @@
 namespace App\Services\Flag\Src;
 
 use App\Services\Flag\Interfaces\FlagInterface;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class Flag.
@@ -117,15 +118,17 @@ class Flag implements FlagInterface
             9 => [
                 'name'  => 'Step 9: Lead Management (if BASIC or PREMIUM)',
                 'route' => 'admin.rules',
-                'url'   => route('admin.rules')
+                'visible'   => (int)Auth::user()->whitelabels()->first()->licence !== Flag::LIGHT,
+                'url'   => route('admin.rules'),
             ],
             10 => [
                 'name'  => 'Step 10: Offer Management (if BASIC or PREMIUM)',
                 'route' => 'autooffer.setting',
+                'visible'   => (int)Auth::user()->whitelabels()->first()->licence !== Flag::LIGHT,
                 'url'   => route('autooffer.setting')
             ],
             11 => [
-                'name'  => 'Step 11: JS Snippet',
+                'name'  => 'JS Snippet',
                 'route' => 'provider.whitelabels.snippet',
                 'url'   => route('provider.whitelabels.snippet')
             ],

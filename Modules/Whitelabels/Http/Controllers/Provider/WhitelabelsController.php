@@ -99,8 +99,9 @@ class WhitelabelsController extends Controller
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function howItWorks()
     {
+        return view('whitelabels::how_it_works');
     }
 
     /**

@@ -47,4 +47,5 @@ Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' 
 
 Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' . \App\Services\Flag\Src\Flag::EXECUTIVE_ROLE], 'prefix' => 'provider', 'namespace' => 'Modules\Whitelabels\Http\Controllers\Provider'], function () {
     Route::get('whitelabels/snippet', 'WhitelabelsController@snippet')->name('provider.whitelabels.snippet');
+    Route::get('whitelabels/how-it-works', 'WhitelabelsController@howItWorks')->name('provider.whitelabels.how-it-works');
 });
