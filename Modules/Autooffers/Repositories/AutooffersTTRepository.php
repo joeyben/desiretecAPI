@@ -885,14 +885,13 @@ class AutooffersTTRepository extends BaseRepository
         }}';
 
         $server = 'https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck';
-        //$this->getToken();
-
+        $this->getToken();
         $headers = [
             "Content-type: text/xml",
             "Content-length: " . strlen($requestXML), "Connection: close",
         ];
         $ch = curl_init();
-        $authorization = 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhSlhaUzhIbW1TSXEybWhvMGlreVNIcEFLNUpjMnZ4cGRabVY1Sk1wb0s4In0.eyJqdGkiOiI5NTU3YTQxOS00ZWZmLTRhZDUtYTUwYS0xOGFmNDQ1ZDNkNmMiLCJleHAiOjE1ODI2NjkxNDEsIm5iZiI6MCwiaWF0IjoxNTgyNjY1NTQxLCJpc3MiOiJodHRwczovL2F1dGgud3MudHJhdmVsdGFpbm1lbnQuZXUvYXV0aC9yZWFsbXMvU3lzdGVtVXNlci1CYXNpY0FjY2Vzc0xldmVsIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjFhMGIyMjY1LWU4M2QtNDA5Yy05NjFjLWJmNzlhZDUwZjEyZiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImdhdGV3YXkiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiJhYWI3YTA4OC0yNzI4LTRjZjctOTcwOC1kNjZjMjVhZDliZDMiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIltUVE1LVElCRVdTXTpQYWNrYWdlRm9yRXh0ZXJuYWxDdXN0b21lcl9CMkMiXX0sInJlc291cmNlX2FjY2VzcyI6eyJnYXRld2F5Ijp7InJvbGVzIjpbInJpZ2h0X2Nvb3JkaW5hdGVzIiwiZmVhdHVyZV9TZWFyY2giLCJyaWdodF9CZXN0UGFja2FnZU9mZmVyRm9yVHJhbnNmZXJJbmZvT3BlcmF0aW9uIiwiaG90ZWxSZXZpZXdzIiwicmlnaHRfUGFja2FnZU9mZmVyT3BlcmF0aW9uIiwicmlnaHRfQmVzdFBhY2thZ2VPZmZlcnNGb3JHZW9Hcm91cE9wZXJhdGlvbiIsInJpZ2h0X0ludmVudG9yeURhdGFGb3JQYWNrYWdlT3BlcmF0aW9uIiwiZmVhdHVyZV9JbnZlbnRvcnkiLCJyaWdodF9CZXN0UGFja2FnZU9mZmVyRm9yUmVnaW9uT3BlcmF0aW9uIiwicmlnaHRfQmVzdFBhY2thZ2VPZmZlckZvclJvb21UeXBlT3BlcmF0aW9uIiwicmlnaHRfQmVzdFBhY2thZ2VPZmZlckZvckhvdGVsT3BlcmF0aW9uIiwicmlnaHRfQmVzdFBhY2thZ2VPZmZlckZvclJvb21WaWV3T3BlcmF0aW9uIiwicmlnaHRfYWxsb3dHaWF0YSIsInJpZ2h0X0Jlc3RQYWNrYWdlT2ZmZXJGb3JEZXBhcnR1cmVEYXRlT3BlcmF0aW9uIiwicmlnaHRfQmVzdFBhY2thZ2VPZmZlckZvckJvYXJkVHlwZU9wZXJhdGlvbiIsInJpZ2h0X0Jlc3RQYWNrYWdlT2ZmZXJGb3JDb3VudHJ5T3BlcmF0aW9uIiwicmlnaHRfQmVzdFBhY2thZ2VPZmZlcnNPcGVyYXRpb24iLCJyaWdodF9CZXN0UGFja2FnZU9mZmVyRm9yUHJvdmluY2VPcGVyYXRpb24iLCJyaWdodF9UZXJtc0FuZENvbmRpdGlvbnNPcGVyYXRpb24iLCJyaWdodF9CZXN0UGFja2FnZU9mZmVyRm9yVG91ck9wZXJhdG9yT3BlcmF0aW9uIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJhZGRpdGlvbmFsX2luZm9ybWF0aW9uIjp7ImNvcnJlc3BvbmRpbmdfeG1sX3VzZXIiOiJTWVNfMzE1MTUwX0RFIiwiZGlzdHJpYnV0aW9uX2NoYW5uZWwiOiI1OTI1NiIsImlwX3doaXRlbGlzdCI6WyIzNS4xNTguMjEzLjgiLCI1Mi41OS4xOTguNDAiLCI1Mi41OC4zNS4yMzQiLCIzLjEyMC42OC44NyIsIjE3OC4xNjIuMjAxLjE3IiwiNTIuNTguMC41NyIsIjkxLjY1LjUxLjE5OCIsIjM1LjE1Ni4xMzEuMyIsIjkwLjE4Ny44NC4xODUiXSwidHR4bWxfdmVyc2lvbiI6IjEuNyIsInJlYWxtX25hbWUiOiJTeXN0ZW1Vc2VyLUJhc2ljQWNjZXNzTGV2ZWwifSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJNYW51ZWwgUG9zY2giLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJta3RfMzE1MTUwX2RlIiwiZ2l2ZW5fbmFtZSI6Ik1hbnVlbCIsImxvY2FsZSI6ImRlIiwiZmFtaWx5X25hbWUiOiJQb3NjaCIsImVtYWlsIjoiMm1hbnVlbC5wb3NjaEBkZXJ0b3VyaXN0aWsuY2gifQ.WjmmQS0f2Hc6nendyTpTcOb8WYCVBBALGbUys-DPbCDluY0s6Mr3byMw0EI0yzraANyFRFDFQUfzo5PMdyvUZfq1ix4_ZyIHQUj8NlwnkZvXdaNedT-9a5RswXQjlHrRfdWBPuyf7uKiceNlCHVY4qcsnTgIc8hxjoyTtFyWpWneG3muPyeadqPUp5ICyF7OkYI4o8e8SjtpY6eCxPYiIDfnX9Fkemtr3uMei1Nn33j7N8c3pd9o0SpjopUGzTJG82I56rQMGh0-Hzsvj3yJA4nRAxS9mCTOeb_Xyv65194EQ4oKz1tMRSZWNVZwfsW_gy0zuAxlo8p_nJLbDiHLEg';
+        $authorization = 'Authorization: Bearer ' . $this->token;
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
         curl_setopt($ch, CURLOPT_URL, $server);
@@ -1014,7 +1013,7 @@ class AutooffersTTRepository extends BaseRepository
           }
         } }';
         $curl = curl_init();
-        dd($this->token);
+
         $authorization = 'Authorization: Bearer ' . $this->token;
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
