@@ -957,3 +957,10 @@ if (!function_exists('get_wl_email_signature')) {
         }
     }
 }
+
+if (!function_exists('is_light')) {
+    function is_light()
+    {
+        return ((int)Auth::guard('web')->user()->whitelabels()->first()->licence === 0);
+    }
+}
