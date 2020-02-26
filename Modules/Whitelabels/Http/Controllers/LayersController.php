@@ -131,7 +131,7 @@ class LayersController extends Controller
                     'headline' => 'Dürfen wir Sie beraten?',
                     'subheadline' => 'Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!',
                     'headline_success' => 'Vielen Dank, Ihr Reisewunsch wurde versandt.',
-                    'subheadline_success' => 'Ein Berater aus dem Reisebüro nimmt sich Ihrer Wünsche an. Wenn Sie Ihren Reisewunsch noch einmal überprüfen wollen, ',
+                    'subheadline_success' => 'Ein Berater aus dem Reisebüro nimmt sich Ihrer Wünsche an.',
                 ];
             }
 
