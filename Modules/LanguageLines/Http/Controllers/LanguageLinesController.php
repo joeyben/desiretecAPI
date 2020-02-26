@@ -642,11 +642,58 @@ class LanguageLinesController extends Controller
         }
 
         try {
-            $result['data']['text'] = $this->languageline->firstOrCreate([
-                'locale' => $lang,
-                'key'    => 'email_signature',
-                'group'  => 'email'
-            ])->text;
+            if ($this->auth->guard('web')->user()->whitelabels()->first() === null){
+                abort(403, trans('errors.user.nowhitelabel'));
+            }
+
+            if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $whiteLabelID = getCurrentWhiteLabelField('id');
+            } else if($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)){
+                $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
+            } else {
+                return view('languagelines::email-signature', compact(['step', []]))->with('error', trans('User guard is different'));
+        }
+
+            if (!$this->isOldWhitelabel()) {
+                if (!$this->languageline->withCriteria([
+                    new Where('locale', $lang),
+                    new Where('key', 'email_signature'),
+                    new Where('group', 'email'),
+                    new Where('whitelabel_id', $whiteLabelID),
+                ])->get()->count()) {
+                    $result['data']['text'] = $this->languageline->firstOrCreate([
+                        'locale' => $lang,
+                        'key'    => 'email_signature',
+                        'group'  => 'email',
+                        'whitelabel_id'   => $whiteLabelID,
+                    ])->text;
+                } else {
+                    $result['data']['text'] = $this->languageline->withCriteria([
+                        new Where('locale', $lang),
+                        new Where('key', 'email_signature'),
+                        new Where('group', 'email'),
+                        new Where('whitelabel_id', $whiteLabelID),
+                    ])->first()->text;
+                }
+            } else {
+                if (!$this->languageline->withCriteria([
+                    new Where('locale', $lang),
+                    new Where('key', 'email_signature'),
+                    new Where('group', 'email'),
+                ])->get()->count()) {
+                    $result['data']['text'] = $this->languageline->firstOrCreate([
+                        'locale' => $lang,
+                        'key'    => 'email_signature',
+                        'group'  => 'email'
+                    ])->text;
+                } else {
+                    $result['data']['text'] = $this->languageline->withCriteria([
+                        new Where('locale', $lang),
+                        new Where('key', 'email_signature'),
+                        new Where('group', 'email'),
+                    ])->first()->text;
+                }
+            }
 
             $result['data']['language'] = $lang;
             $result['success'] = true;
@@ -667,6 +714,45 @@ class LanguageLinesController extends Controller
      */
     public function signatureStore(EmailSignatureStoreRequest $request)
     {
+        try {
+            if (!$this->isOldWhitelabel()) {
+                if ($this->auth->guard('web')->user()->hasRole('Admin')) {
+                    $whiteLabelID = getCurrentWhiteLabelField('id');
+                } else if($this->auth->guard('web')->user()->hasRole('Executive')){
+                    $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
+                } else {
+                    return view('languagelines::email-signature', compact(['step', []]))->with('error', trans('User guard is different'));
+                }
+
+                $languageline = $this->languageline->update(
+                    $this->languageline->firstOrCreate([
+                        'locale' => $request->get('language'),
+                        'key'    => 'email_signature',
+                        'group'  => 'email',
+                        'whitelabel_id'  => $whiteLabelID])->id,
+                    ['text'=> $request->get('email_signature_editor')]
+                );
+            } else {
+                $languageline = $this->languageline->update(
+                    $this->languageline->firstOrCreate([
+                        'locale' => $request->get('language'),
+                        'key'    => 'email_signature',
+                        'group'  => 'email'])->id,
+                    ['text'=> $request->get('email_signature_editor')]
+                );
+            }
+
+            $result['success'] = true;
+            $result['status'] = 200;
+
+            return redirect(route('provider.email.signature', $request->language))->with('success', trans('email.signature.stored'));
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+            $result['status'] = 500;
+
+            return redirect(route('provider.email.signature', $request->language))->with('error', trans('email.signature.not_stored'));
+        }
         try {
             $languageline = $this->languageline->update(
                 $this->languageline->firstOrCreate([

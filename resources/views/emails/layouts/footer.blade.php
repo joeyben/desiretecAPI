@@ -4,6 +4,6 @@
             font-size: 12px;
             color: #000;
             width:100%;">
-    {!! Lang::get('email.email_signature') !!}
+    {!! get_wl_email_signature() !!}
 </p>
 <hr style="background: #e7e7e7;border: none;height: 1px;">
