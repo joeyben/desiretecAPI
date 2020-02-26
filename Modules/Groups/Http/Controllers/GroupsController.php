@@ -108,7 +108,13 @@ class GroupsController extends Controller
                 );
             }
 
-            $step = Flag::step()[9];
+            if ((int)$whitelabel->licence === 0) {
+                $step = Flag::step()[11];
+            } else {
+                $step = Flag::step()[9];
+            }
+
+
         }
 
         return view('groups::index', compact(['step']));
