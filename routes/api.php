@@ -74,6 +74,11 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::put('/{id}', 'MessagesController@update');
             Route::delete('/{id}', 'MessagesController@delete');
         });
+
+        Route::group(['prefix' => 'contact'], function () {
+            Route::post('store', 'ContactController@store');
+            Route::post('storeCallback', 'ContactController@storeCallback');
+        });
     });
 
     Route::group(['middleware' => []], function () {

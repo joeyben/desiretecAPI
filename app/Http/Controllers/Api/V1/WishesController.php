@@ -142,7 +142,11 @@ class WishesController extends APIController
             $result['data']['agent_name'] = $agentName;
             $result['data']['offerFiles'] = $offerFiles;
             $result['data']['wishDetails'] = $wishData;
+            $result['data']['wishDetails']['messages'] = $wishData->messages;
             $result['data']['wishDetails']['contacts'] = $wishData->contacts;
+            $result['data']['wishDetails']['callbacks'] = $wishData->callbacks;
+            $result['data']['wishDetails']['group'] = $wishData->group;
+            $result['data']['wishDetails']['group']['users'] = $wishData->group->users;
 
             return $this->responseJson($result);
 
