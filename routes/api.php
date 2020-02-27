@@ -20,6 +20,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('login', 'AuthController@login');
         Route::post('login/email', 'AuthController@sendLoginEmail');
         Route::post('login/token/{token}', 'AuthController@token');
+        Route::post('login/wish-token/{token}', 'AuthController@wishToken');
     });
 
     Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'auth'], function () {
