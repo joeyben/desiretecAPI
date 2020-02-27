@@ -67,7 +67,6 @@ class OffersRepository extends BaseRepository
 
     public function getOffers()
     {
-
         $data = $this->query()
             ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.offers.table') . '.created_by')
             ->leftjoin(config('module.wishes.table'), config('module.wishes.table') . '.id', '=', config('module.offers.table') . '.wish_id')
@@ -86,14 +85,15 @@ class OffersRepository extends BaseRepository
             ->orderBy(config('module.offers.table') . '.id', 'DESC')->get()->toArray();
 
         foreach ($data as &$offer) {
-            $offer['title'] = '<a href="/wishes/'. $offer['wish_id'] .'">' . $offer['title'] . '</a>';
-            if(isset($offer['agent_id']) && $offer['agent_id'] !== null){
+            $offer['title'] = '<a href="/wishes/' . $offer['wish_id'] . '">' . $offer['title'] . '</a>';
+            if (isset($offer['agent_id']) && null !== $offer['agent_id']) {
                 $offer['created_by'] = Agent::where('id', $offer['agent_id'])->first()->name;
             } else {
                 $offer['created_by'] = Auth::guard('agent')->user()->name;
             }
             $offer['created_at'] = date('d.m.Y H:i:s', strtotime($offer['created_at']));
         }
+
         return $data;
     }
 

@@ -73,7 +73,6 @@ class WhitelabelsController extends Controller
         return view('whitelabels::provider', compact(['step']));
     }
 
-
     public function snippet()
     {
         $step = null;

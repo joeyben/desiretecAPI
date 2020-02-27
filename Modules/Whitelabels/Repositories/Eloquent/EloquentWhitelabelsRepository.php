@@ -473,7 +473,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     {
         $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
         WhitelabelHost::create([
-                'host' => $host,
+                'host'          => $host,
                 'whitelabel_id' => $whitelabel->id
         ]);
 

@@ -10,17 +10,16 @@ use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Translation\Translator;
+use Modules\LanguageLines\Entities\LanguageLines;
 use Modules\LanguageLines\Http\Requests\FooterTnbStoreRequest;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
-use Modules\LanguageLines\Entities\LanguageLines;
 
 class TnbController extends Controller
 {
@@ -89,11 +88,10 @@ class TnbController extends Controller
         $this->artisan = $artisan;
     }
 
-
     public function tnb(string $lang)
     {
         try {
-            if ($this->auth->guard('web')->user()->whitelabels()->first() === null){
+            if (null === $this->auth->guard('web')->user()->whitelabels()->first()) {
                 abort(403, trans('errors.user.nowhitelabel'));
             }
 
@@ -116,7 +114,7 @@ class TnbController extends Controller
                 $whiteLabelID = getCurrentWhiteLabelField('id');
                 $whiteLabelName = getCurrentWhiteLabelField('display_name');
                 $domain = getCurrentWhiteLabelField('domain');
-            } else if($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)){
+            } elseif ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                 $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
                 $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
                 $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
@@ -124,66 +122,66 @@ class TnbController extends Controller
                 return redirect(route('provider.footer.tnb', $lang))->with('error', trans('User guard is different'));
             }
 
-             if (!$this->isOldWhitelabel()) {
-                 // new Logic
-                 if (!$this->languageline->withCriteria([
+            if (!$this->isOldWhitelabel()) {
+                // new Logic
+                if (!$this->languageline->withCriteria([
                      new Where('locale', $lang),
                      new Where('key', 'footer.tnb'),
                      new Where('group', 'layer'),
                      new Where('whitelabel_id', $whiteLabelID),
                  ])->get()->count()) {
-                     $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
-                     $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
+                    $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
+                    $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
 
-                     $result['data']['text'] = $this->languageline->firstOrCreate([
-                         'locale' => $lang,
-                         'key'    => 'footer.tnb',
-                         'group'  => 'layer',
-                         'text'   => $tnb,
+                    $result['data']['text'] = $this->languageline->firstOrCreate([
+                         'locale'          => $lang,
+                         'key'             => 'footer.tnb',
+                         'group'           => 'layer',
+                         'text'            => $tnb,
                          'whitelabel_id'   => $whiteLabelID,
                      ])->text;
-                 } else {
-                     $result['data']['text'] = $this->languageline->withCriteria([
+                } else {
+                    $result['data']['text'] = $this->languageline->withCriteria([
                          new Where('locale', $lang),
                          new Where('key', 'footer.tnb'),
                          new Where('group', 'layer'),
                          new Where('whitelabel_id', $whiteLabelID),
                      ])->first()->text;
-                 }
-             } else {
-                 // old Logic
-                 if (!$this->languageline->withCriteria([
+                }
+            } else {
+                // old Logic
+                if (!$this->languageline->withCriteria([
                      new Where('locale', $lang),
                      new Where('key', 'footer.tnb'),
                      new Where('group', 'layer'),
                  ])->get()->count()) {
-                     if ($this->auth->guard('web')->user()->hasRole('Admin')) {
-                         $whiteLabelName = getCurrentWhiteLabelField('display_name');
-                         $domain = getCurrentWhiteLabelField('domain');
-                     } else if($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)){
-                         $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
-                         $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
-                     } else {
-                         return redirect(route('provider.footer.tnb', $lang))->with('error', trans('User guard is different'));
-                     }
+                    if ($this->auth->guard('web')->user()->hasRole('Admin')) {
+                        $whiteLabelName = getCurrentWhiteLabelField('display_name');
+                        $domain = getCurrentWhiteLabelField('domain');
+                    } elseif ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                        $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
+                        $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
+                    } else {
+                        return redirect(route('provider.footer.tnb', $lang))->with('error', trans('User guard is different'));
+                    }
 
-                     $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
-                     $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
+                    $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
+                    $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
 
-                     $result['data']['text'] = $this->languageline->firstOrCreate([
+                    $result['data']['text'] = $this->languageline->firstOrCreate([
                          'locale' => $lang,
                          'key'    => 'footer.tnb',
                          'group'  => 'layer',
                          'text'   => $tnb
                      ])->text;
-                 } else {
-                     $result['data']['text'] = $this->languageline->withCriteria([
+                } else {
+                    $result['data']['text'] = $this->languageline->withCriteria([
                          new Where('locale', $lang),
                          new Where('key', 'footer.tnb'),
                          new Where('group', 'layer'),
                      ])->first()->text;
-                 }
-             }
+                }
+            }
 
             $result['data']['language'] = $lang;
             $result['success'] = true;
@@ -208,7 +206,7 @@ class TnbController extends Controller
             if (!$this->isOldWhitelabel()) {
                 if ($this->auth->guard('web')->user()->hasRole('Admin')) {
                     $whiteLabelID = getCurrentWhiteLabelField('id');
-                } else if($this->auth->guard('web')->user()->hasRole('Executive')){
+                } elseif ($this->auth->guard('web')->user()->hasRole('Executive')) {
                     $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
                 } else {
                     return redirect(route('provider.footer.tnb', $request->language))->with('error', trans('User guard is different'));
@@ -216,9 +214,9 @@ class TnbController extends Controller
 
                 $languageline = $this->languageline->update(
                     $this->languageline->firstOrCreate([
-                        'locale' => $request->get('language'),
-                        'key'    => 'footer.tnb',
-                        'group'  => 'layer',
+                        'locale'         => $request->get('language'),
+                        'key'            => 'footer.tnb',
+                        'group'          => 'layer',
                         'whitelabel_id'  => $whiteLabelID])->id,
                     ['text'=> $request->get('footer_tnb_editor')]
                 );

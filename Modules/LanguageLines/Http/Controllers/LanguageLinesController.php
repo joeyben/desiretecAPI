@@ -97,7 +97,6 @@ class LanguageLinesController extends Controller
      */
     private $activities;
 
-
     public function __construct(LanguageLinesRepository $languageline, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DatabaseManager $database, ChannelManager $notification, Role $role, LanguagesRepository $languages, Kernel $artisan, LogManager $log, ActivitiesRepository $activities)
     {
         $this->languageline = $languageline;
@@ -270,8 +269,6 @@ class LanguageLinesController extends Controller
             }
 
             $result['languageline'] = $languageline;
-
-
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'LanguageLine']);
             $result['success'] = true;
@@ -642,17 +639,17 @@ class LanguageLinesController extends Controller
         }
 
         try {
-            if ($this->auth->guard('web')->user()->whitelabels()->first() === null){
+            if (null === $this->auth->guard('web')->user()->whitelabels()->first()) {
                 abort(403, trans('errors.user.nowhitelabel'));
             }
 
             if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                 $whiteLabelID = getCurrentWhiteLabelField('id');
-            } else if($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)){
+            } elseif ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                 $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
             } else {
                 return view('languagelines::email-signature', compact(['step', []]))->with('error', trans('User guard is different'));
-        }
+            }
 
             if (!$this->isOldWhitelabel()) {
                 if (!$this->languageline->withCriteria([
@@ -662,9 +659,9 @@ class LanguageLinesController extends Controller
                     new Where('whitelabel_id', $whiteLabelID),
                 ])->get()->count()) {
                     $result['data']['text'] = $this->languageline->firstOrCreate([
-                        'locale' => $lang,
-                        'key'    => 'email_signature',
-                        'group'  => 'email',
+                        'locale'          => $lang,
+                        'key'             => 'email_signature',
+                        'group'           => 'email',
                         'whitelabel_id'   => $whiteLabelID,
                     ])->text;
                 } else {
@@ -718,7 +715,7 @@ class LanguageLinesController extends Controller
             if (!$this->isOldWhitelabel()) {
                 if ($this->auth->guard('web')->user()->hasRole('Admin')) {
                     $whiteLabelID = getCurrentWhiteLabelField('id');
-                } else if($this->auth->guard('web')->user()->hasRole('Executive')){
+                } elseif ($this->auth->guard('web')->user()->hasRole('Executive')) {
                     $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
                 } else {
                     return view('languagelines::email-signature', compact(['step', []]))->with('error', trans('User guard is different'));
@@ -726,9 +723,9 @@ class LanguageLinesController extends Controller
 
                 $languageline = $this->languageline->update(
                     $this->languageline->firstOrCreate([
-                        'locale' => $request->get('language'),
-                        'key'    => 'email_signature',
-                        'group'  => 'email',
+                        'locale'         => $request->get('language'),
+                        'key'            => 'email_signature',
+                        'group'          => 'email',
                         'whitelabel_id'  => $whiteLabelID])->id,
                     ['text'=> $request->get('email_signature_editor')]
                 );

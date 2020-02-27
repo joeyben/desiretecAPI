@@ -93,7 +93,6 @@ class MessagesController extends APIController implements MessagesControllerInte
                 'message' => $message,
                 'agent_id'=> $agentId
             ]);
-
         } catch (\Illuminate\Database\QueryException $e) {
             return $this->respondWithError($e->errorInfo);
         }

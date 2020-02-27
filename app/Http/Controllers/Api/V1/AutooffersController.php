@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\V1\Contracts\AutooffersControllerInterface;
+use App\Models\KeywordList;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\AutooffersTTRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
-use App\Models\KeywordList;
 
 class AutooffersController extends APIController implements AutooffersControllerInterface
 {
@@ -31,14 +31,13 @@ class AutooffersController extends APIController implements AutooffersController
             $offers['data'] = $this->repository->getOffersDataFromId($wishId);
 
             foreach ($offers['data'] as &$offer) {
-
-                if (! array_key_exists( 'hotelOffer', $offer['data'] )) {
+                if (!\array_key_exists('hotelOffer', $offer['data'])) {
                     continue;
                 }
 
-                $offer['data']['hotelOffer']['hotel']['keywordHighlights'] = array();
+                $offer['data']['hotelOffer']['hotel']['keywordHighlights'] = [];
 
-                for ($i = 0; $i < 3; $i++) {
+                for ($i = 0; $i < 3; ++$i) {
                     $keyword = $offer['data']['hotelOffer']['hotel']['keywordList'][$i];
                     $keywordCode = $this->keywordList::where('code', $keyword)->first();
                     $keywordName = $keywordCode ? $keywordCode->name : '';
@@ -59,8 +58,7 @@ class AutooffersController extends APIController implements AutooffersController
             $offers['data'] = $this->repository->getOffersDataFromId($wishId);
 
             foreach ($offers as $offer) {
-
-                for ($i = 0; $i < 3; $i++) {
+                for ($i = 0; $i < 3; ++$i) {
                     $keywordCode = $offer['data']['hotelOffer']['hotel']['keywordList'][$i];
                     $keyword = $this->keywordList::where('code', $keywordCode)->first();
                     $keywordName = $keywords ? $keywords->name : '';
@@ -78,7 +76,7 @@ class AutooffersController extends APIController implements AutooffersController
     public function getKeywords($offers)
     {
         try {
-            for ($i = 0; $i < 3; $i++) {
+            for ($i = 0; $i < 3; ++$i) {
                 $offer['data']['hotelOffer']['hotel']['keywordList'][$i];
             }
 

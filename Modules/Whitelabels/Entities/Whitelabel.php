@@ -145,7 +145,6 @@ class Whitelabel extends Model
         return $this->hasMany(Footer::class);
     }
 
-
     public function hosts()
     {
         return $this->hasMany(WhitelabelHost::class);

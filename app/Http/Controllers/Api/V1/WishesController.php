@@ -4,20 +4,19 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
+use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
 use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Groups\GroupsRepository;
-use App\Repositories\Criteria\ByUser;
 use App\Repositories\Criteria\ByUserRole;
 use App\Repositories\Criteria\ByWhitelabel;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
-use App\Repositories\Criteria\Where;
-use App\Repositories\Criteria\WhereBetween;
-use App\Repositories\Criteria\WithTrashed;
 use App\Repositories\Frontend\Access\User\UserRepository;
+use App\Repositories\Frontend\Wishes\WishesRepository;
+use Auth;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -26,12 +25,7 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
-use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
-use App\Repositories\Frontend\Wishes\WishesRepository;
-use Validator;
-use Auth;
-use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 
 class WishesController extends APIController
 {
@@ -109,8 +103,8 @@ class WishesController extends APIController
         } catch (Exception $e) {
             return $this->responseJsonError($e);
         }
-
     }
+
     public function getWish(int $id, Request $request)
     {
         try {
@@ -123,14 +117,17 @@ class WishesController extends APIController
             $agentName = [];
 
             foreach ($offers as $offer) {
-                if(!is_null(Agent::where('id', $offer->agent_id)->value('avatar')))
+                if (null !== Agent::where('id', $offer->agent_id)->value('avatar')) {
                     array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
+                }
 
-                if(!is_null(Agent::where('id', $offer->agent_id)->first()))
+                if (null !== Agent::where('id', $offer->agent_id)->first()) {
                     array_push($agentName, Agent::where('id', $offer->agent_id)->first());
+                }
 
-                if(!$offer->offerFiles->isEmpty())
+                if (!$offer->offerFiles->isEmpty()) {
                     array_push($offerFiles, $offer->offerFiles);
+                }
             }
 
             $wish = $data['modifiedData'];
@@ -160,7 +157,8 @@ class WishesController extends APIController
         }
     }
 
-    public function wishlist(ManageWishesRequest $request){
+    public function wishlist(ManageWishesRequest $request)
+    {
         try {
             return $this->responseJson($this->repository->getWishList($request));
         } catch (Exception $e) {
@@ -168,7 +166,8 @@ class WishesController extends APIController
         }
     }
 
-    public function changeWishStatus(ChangeWishesStatusRequest $request){
+    public function changeWishStatus(ChangeWishesStatusRequest $request)
+    {
         try {
             return $this->responseJson($this->repository->changeWishStatus($request)->original);
         } catch (Exception $e) {
@@ -176,7 +175,8 @@ class WishesController extends APIController
         }
     }
 
-    public function updateNote(UpdateNoteRequest $request) {
+    public function updateNote(UpdateNoteRequest $request)
+    {
         try {
             $this->repository->updateNote($request->get('id'), $request->get('note') ?? '');
 
@@ -186,19 +186,16 @@ class WishesController extends APIController
         }
     }
 
-    /**
-     *
-     */
     public function store(StoreWishesRequest $request, UserRepository $user)
     {
-        try{
+        try {
             $newUser = $user->createUserFromLayer(
                 $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'),
                 $request->input('whitelabel_id')
             );
 
             if ($this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
-                'password', 'is_term_accept', 'name', 'terms','ages1','ages2','ages3','ages4'), $newUser->id)){
+                'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'), $newUser->id)) {
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
             }
 

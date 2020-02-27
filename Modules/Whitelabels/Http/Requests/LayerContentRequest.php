@@ -14,11 +14,11 @@ class LayerContentRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|int|min:1',
-            'whitelabel_id' => 'required|int|min:1',
-            'headline' => 'required|string|min:2|max:255',
-            'subheadline' => 'required|string|min:2|max:255',
-            'headline_success' => 'required|string|min:2|max:255',
+            'id'                  => 'required|int|min:1',
+            'whitelabel_id'       => 'required|int|min:1',
+            'headline'            => 'required|string|min:2|max:255',
+            'subheadline'         => 'required|string|min:2|max:255',
+            'headline_success'    => 'required|string|min:2|max:255',
             'subheadline_success' => 'required|string|min:2|max:255',
         ];
     }

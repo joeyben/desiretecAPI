@@ -7,12 +7,11 @@ use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
-use Illuminate\Http\Request;
-use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
-use Illuminate\Validation\ValidationException;
 
 /**
  * Class WhitelabelController.
@@ -93,7 +92,6 @@ class WhitelabelController extends Controller
      */
     public function getWhitelabelByHost(string $host)
     {
-
         $id = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
 
         $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
@@ -138,48 +136,46 @@ class WhitelabelController extends Controller
         return $this->responseJson($result);
     }
 
-    public function getTnb(Request $request){
+    public function getTnb(Request $request)
+    {
         try {
             if (!$this->isOldWhitelabel()) {
-                if($this->languageline->withCriteria([
+                if (null === $this->languageline->withCriteria([
                         new Where('locale', 'de'),
                         new Where('key', 'footer.tnb'),
                         new Where('group', 'layer'),
                         new Where('whitelabel_id', $request->id),
-                    ])->get()->first() === null){
+                    ])->get()->first()) {
                     throw new \ErrorException(trans('errors.tnb.notset'));
-                } else {
-                    $result['data'] = $this->languageline->withCriteria([
+                }
+                $result['data'] = $this->languageline->withCriteria([
                         new Where('locale', 'de'),
                         new Where('key', 'footer.tnb'),
                         new Where('group', 'layer'),
                         new Where('whitelabel_id', $request->id),
                     ])->get()->first()->text;
 
-                    return $this->responseJson($result);
-                }
-            } else {
-                $wlName = $this->moduleWhitelabelsRepository->withCriteria([
+                return $this->responseJson($result);
+            }
+            $wlName = $this->moduleWhitelabelsRepository->withCriteria([
                     new Where('id', $request->id),
                 ])->first()->name;
-                if(DB::table("language_lines_{$wlName}")
+            if (null === DB::table("language_lines_{$wlName}")
                         ->select('text')
                         ->where('locale', 'de')
                         ->where('group', 'layer')
                         ->where('key', 'footer.tnb')
-                        ->get()->first() === null){
-                    throw new \ErrorException(trans('errors.tnb.notset'));
-                } else {
-                    $result['data'] = DB::table("language_lines_{$wlName}")
+                        ->get()->first()) {
+                throw new \ErrorException(trans('errors.tnb.notset'));
+            }
+            $result['data'] = DB::table("language_lines_{$wlName}")
                         ->select('text')
                         ->where('locale', 'de')
                         ->where('group', 'layer')
                         ->where('key', 'footer.tnb')
                         ->get()->first()->text;
 
-                    return $this->responseJson($result);
-                }
-            }
+            return $this->responseJson($result);
         } catch (\Exception $e) {
             return $this->responseJsonError($e);
         }
