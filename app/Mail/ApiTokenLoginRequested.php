@@ -15,9 +15,12 @@ class ApiTokenLoginRequested extends Mailable
     public $user;
     public $options;
 
+    private $whiteLabel;
+
     public function __construct(User $user, array $options)
     {
         $this->user = $user;
+        $this->whiteLabel = $user->whitelabels()->first();
         $this->options = $options;
     }
 
@@ -28,18 +31,18 @@ class ApiTokenLoginRequested extends Mailable
      */
     public function build()
     {
-        $subject = trans('email.message.token_new', [
-            'whitelabel' => getCurrentWhiteLabelField('display_name')
-        ]);
-        $formAddress = getCurrentWhiteLabelField('email');
-        $formName = getCurrentWhiteLabelField('display_name');
-
-        if (null === $formAddress) {
-            $formAddress = config('mail.from.address');
-        }
-
-        if (null === $formName) {
+        if (null === $this->whiteLabel) {
+            $subject = trans('email.message.token_new', [
+                'whitelabel' => config('mail.from.whitelabel')
+            ]);
+            $formAddress = config('mail.from.email');
             $formName = config('mail.from.name');
+        } else {
+            $subject = trans('email.message.token_new', [
+                'whitelabel' => $this->whiteLabel->display_name
+            ]);
+            $formAddress = $this->whiteLabel->email;
+            $formName = $this->whiteLabel->display_name;
         }
 
         return $this->subject($subject)

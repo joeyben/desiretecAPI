@@ -907,9 +907,13 @@ if (!function_exists('get_wl_email_signature')) {
     function get_wl_email_signature()
     {
         try {
-            if(\Illuminate\Support\Facades\Auth::guard('web')->user()->whitelabels()->get()->first()->count() && !is_null(\Illuminate\Support\Facades\Auth::guard('web')->user()->whitelabels()->get()->first())){
-                $whiteLabelID = \Illuminate\Support\Facades\Auth::guard('web')->user()->whitelabels()->get()->first()->id;
-                $whiteLabelName = strtolower(\Illuminate\Support\Facades\Auth::guard('web')->user()->whitelabels()->get()->first()->display_name);
+            if (!Auth::check()) {
+                return '';
+            }
+
+            if(Auth::user()->whitelabels()->get()->first()->count() && !is_null(Auth::user()->whitelabels()->get()->first())){
+                $whiteLabelID = Auth::user()->whitelabels()->get()->first()->id;
+                $whiteLabelName = strtolower(Auth::user()->whitelabels()->get()->first()->display_name);
             } else {
                 return null;
             }

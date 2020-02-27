@@ -56,6 +56,7 @@ return [
     */
 
     'from' => [
+        'whitelabel' => env('WHITELABEL_FROM', 'Desiretec'),
         'address' => env('MAIL_FROM', 'noreply@desiretec.com'),
         'name'    => env('MAIL_FROM_NAME', 'Reisewunsch'),
     ],
