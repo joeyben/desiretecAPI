@@ -58,7 +58,7 @@
                                 </li>
                                 <li>
                                     <p>
-                                        Ihr hochgeladenes Logo wird automatisch an verschiedenen Stellen Ihres Reisewunschportals angezeigt. Wie z.B. auf der Website, auf dem Layer oder in den E-Mails. Verwenden sie nach Möglichkeit ein freigestelltes Logo mit transparentem Hintergrund.
+                                        Ihr hochgeladenes Logo wird automatisch an verschiedenen Stellen Ihres Reisewunschportals angezeigt. Wie z.B. auf der Website, auf dem Layer oder in den E-Mails. Verwenden Sie nach Möglichkeit ein freigestelltes Logo mit transparentem Hintergrund.
                                     </p>
                                 </li>
                                 <li>
@@ -265,7 +265,7 @@
 
                         <div class="card-body">
                             <p class="mb-3 text-justify">
-                                Einen weiteren Mehrwert der Basic oder Premium Stufe bietet Ihnen das Offer Management, welches die Angebotsauswahl- und anzeige steuert. Wie viele Angebote sollen dem Kunden präsentiert werden, welche Mindest Weiterempfehlungsrate setzen Sie dafür voraus und wie hoch soll die durchschnittliche Bewertung liegen?
+                                Einen weiteren Mehrwert der Basic oder Premium Stufe bietet Ihnen das Offer Management, welches die Angebotsauswahl- und anzeige steuert. Wie viele Angebote sollen dem Kunden präsentiert werden, welche Mindest Weiterempfehlungsrate setzen Sie dafür voraus und wie hoch soll die durchschnittliche Bewertung sein?
                             </p>
                         </div>
                     </div>
@@ -310,7 +310,7 @@
                                 </li>
                             </ul>
                             <p class="mb-3 text-justify">
-                                Implementierung
+                                Implementierung:
                             </p>
                             <ul class="list mb-0">
                                 <li>
