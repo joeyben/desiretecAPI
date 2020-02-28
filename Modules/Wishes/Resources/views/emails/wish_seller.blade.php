@@ -23,7 +23,7 @@
                         <p style="line-height: 24px; margin-bottom:20px;">
                             {!! trans('email.wish.created.seller.body_1') !!}
 
-                            {!! trans('email.wish.created.seller.url', ['id' => $wish->id, 'token' => $token, 'url' => $url]) !!}
+                            {!! trans('email.wish.created.seller.url', ['id' => $wish->id, 'token' => $token, 'url' => $url]) !!} 
 
                             {!! trans('email.wish.created.seller.body_2') !!}
 
