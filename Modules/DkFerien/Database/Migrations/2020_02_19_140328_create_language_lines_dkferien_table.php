@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateLanguageLinesDkFerienTable extends Migration
@@ -14,16 +14,16 @@ class CreateLanguageLinesDkFerienTable extends Migration
     public function up()
     {
         if (!Schema::hasTable('language_lines_dkferien')) {
-                Schema::create('language_lines_dkferien', function (Blueprint $table) {
-                    $table->increments('id');
-                    $table->string('locale');
-                    $table->string('description')->nullable();
-                    $table->string('group');
-                    $table->index('group');
-                    $table->string('key');
-                    $table->text('text');
-                    $table->timestamps();
-                });
+            Schema::create('language_lines_dkferien', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('locale');
+                $table->string('description')->nullable();
+                $table->string('group');
+                $table->index('group');
+                $table->string('key');
+                $table->text('text');
+                $table->timestamps();
+            });
         }
     }
 
@@ -34,8 +34,8 @@ class CreateLanguageLinesDkFerienTable extends Migration
      */
     public function down()
     {
-         if (Schema::hasTable('language_lines_dkferien')) {
-             Schema::drop('language_lines_dkferien');
-         }
+        if (Schema::hasTable('language_lines_dkferien')) {
+            Schema::drop('language_lines_dkferien');
+        }
     }
 }

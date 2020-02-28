@@ -10,7 +10,6 @@
 namespace App\Services\Flag\Src;
 
 use App\Services\Flag\Interfaces\FlagInterface;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Class Flag.

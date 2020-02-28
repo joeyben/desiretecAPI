@@ -212,7 +212,7 @@ class AgentsRepository extends BaseRepository
 
         $whitelabel = Auth::guard('api')->user()->whitelabels()->first();
 
-        if($whitelabel) {
+        if ($whitelabel) {
             $whitelabel_group = DB::table('groups')->where('whitelabel_id', $whitelabel->id)->first();
         }
         if ($whitelabel_group) {

@@ -934,22 +934,22 @@ if (!function_exists('get_wl_email_signature')) {
                 return '';
             }
 
-            if(Auth::user()->whitelabels()->get()->first()->count() && !is_null(Auth::user()->whitelabels()->get()->first())){
+            if (Auth::user()->whitelabels()->get()->first()->count() && null !== Auth::user()->whitelabels()->get()->first()) {
                 $whiteLabelID = Auth::user()->whitelabels()->get()->first()->id;
-                $whiteLabelName = strtolower(Auth::user()->whitelabels()->get()->first()->display_name);
+                $whiteLabelName = mb_strtolower(Auth::user()->whitelabels()->get()->first()->display_name);
             } else {
                 return null;
             }
 
             if (!('language_lines' === with(new LanguageLines())->getTable())) {
-                if(!DB::table("language_lines")
+                if (!DB::table('language_lines')
                     ->select('text')
                     ->where('locale', 'de')
                     ->where('group', 'email')
                     ->where('key', 'email_signature')
                     ->where('whitelabel_id', $whiteLabelID)
-                    ->get()->isEmpty()){
-                    $email_signature = DB::table("language_lines")
+                    ->get()->isEmpty()) {
+                    $email_signature = DB::table('language_lines')
                         ->select('text')
                         ->where('locale', 'de')
                         ->where('group', 'email')
@@ -958,28 +958,28 @@ if (!function_exists('get_wl_email_signature')) {
                         ->get()->first()->text;
 
                     return $email_signature;
-                } else {
-                    return null;
                 }
-            } else {
-                if(!DB::table("language_lines_{$whiteLabelName}")
+
+                return null;
+            }
+            if (!DB::table("language_lines_{$whiteLabelName}")
                     ->select('text')
                     ->where('locale', 'de')
                     ->where('group', 'email')
                     ->where('key', 'email_signature')
-                    ->get()->isEmpty()){
-                    $email_signature = DB::table("language_lines_{$whiteLabelName}")
+                    ->get()->isEmpty()) {
+                $email_signature = DB::table("language_lines_{$whiteLabelName}")
                         ->select('text')
                         ->where('locale', 'de')
                         ->where('group', 'email')
                         ->where('key', 'email_signature')
                         ->get()->first()->text;
-                    return $email_signature;
-                } else {
-                    return null;
-                }
+
+                return $email_signature;
             }
-        } catch (\Exception $e){
+
+            return null;
+        } catch (\Exception $e) {
             return null;
         }
     }
@@ -988,6 +988,6 @@ if (!function_exists('get_wl_email_signature')) {
 if (!function_exists('is_light')) {
     function is_light()
     {
-        return ((int)Auth::guard('web')->user()->whitelabels()->first()->licence === 0);
+        return 0 === (int) Auth::guard('web')->user()->whitelabels()->first()->licence;
     }
 }

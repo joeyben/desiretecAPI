@@ -46,6 +46,16 @@
                     </div>
                 </div>
             </div>
+
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.privacy') }}</label>
+                <div class="col-lg-9">
+                    <input type="url" class="form-control" :class="errors.has('privacy') ? 'is-invalid': ''" :id="privacy" name="privacy" :placeholder="trans('modals.privacy')" v-model="privacy"/>
+                    <div class="invalid-feedback">
+                        <strong v-text="errors.get('privacy')"></strong>
+                    </div>
+                </div>
+            </div>
         </fieldset>
 
         <div class="text-right">
@@ -80,6 +90,7 @@
         whitelabel_id: null,
         subheadline: '',
         headline_success: '',
+        privacy: '',
         subheadline_success: '',
         attachments: []
       }
@@ -95,7 +106,7 @@
     methods: {
       initValues() {
         if (Object.entries(this.layer).length !== 0) {
-          let { id, name, headline, subheadline, headline_success, subheadline_success, whitelabel_id, attachments } = JSON.parse(JSON.stringify(this.layer))
+          let { id, name, headline, subheadline, headline_success, subheadline_success, whitelabel_id, privacy, attachments } = JSON.parse(JSON.stringify(this.layer))
           this.id = id
           this.name = name
           this.whitelabel_id = whitelabel_id
@@ -103,12 +114,13 @@
           this.subheadline = subheadline
           this.headline_success = headline_success
           this.subheadline_success = subheadline_success
+          this.privacy = privacy
           this.attachments = attachments
         }
       },
       onSubmit () {
         this.$store.dispatch('block', {element: 'contentComponent', load: true})
-        this.$http.put(window.laroute.route('admin.whitelabels.content.update'), {id: this.id, name: this.name, whitelabel_id: this.whitelabel_id, headline: this.headline, subheadline: this.subheadline, headline_success: this.headline_success, subheadline_success: this.subheadline_success})
+        this.$http.put(window.laroute.route('admin.whitelabels.content.update'), {id: this.id, name: this.name, whitelabel_id: this.whitelabel_id, headline: this.headline, subheadline: this.subheadline, headline_success: this.headline_success, subheadline_success: this.subheadline_success, privacy: this.privacy})
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {

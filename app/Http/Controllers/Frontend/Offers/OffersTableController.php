@@ -35,7 +35,7 @@ class OffersTableController extends Controller
                     . '">' . $offers->title . '</a>';
             })
             ->addColumn('created_by', function ($offers) {
-                return (Agent::where('id', $offers->agent_id)->first() ? Agent::where('id', $offers->agent_id)->first()->name : Auth::guard('agent')->user()->name);
+                return Agent::where('id', $offers->agent_id)->first() ? Agent::where('id', $offers->agent_id)->first()->name : Auth::guard('agent')->user()->name;
             })
             ->addColumn('created_at', function ($offers) {
                 return $offers->created_at->format('d.m.Y') . ' ' . $offers->created_at->toTimeString();

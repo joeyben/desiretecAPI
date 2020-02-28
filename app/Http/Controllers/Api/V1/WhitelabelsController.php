@@ -77,16 +77,16 @@ class WhitelabelsController extends APIController
             $this->whitelabels->sync($result['whitelabel']->id, 'layers', [Flag::PACKAGE]);
 
             $host = WhitelabelHost::create([
-                'host' => str_slug($request->get('name')) . '.' . env('API_DOMAIN', 'reise-wunsch.com'),
-                'whitelabel_id'      =>$result['whitelabel']->id,
+                'host'               => str_slug($request->get('name')) . '.' . env('API_DOMAIN', 'reise-wunsch.com'),
+                'whitelabel_id'      => $result['whitelabel']->id,
             ]);
 
             $layerWhitelabel = LayerWhitelabel::where('whitelabel_id', $result['whitelabel']->id)->where('layer_id', Flag::PACKAGE)->first();
 
             $layerWhitelabel->update([
-                'headline' => 'Dürfen wir Sie beraten?',
-                'subheadline' => 'Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!',
-                'headline_success' => 'Vielen Dank, Ihr Reisewunsch wurde versandt.',
+                'headline'            => 'Dürfen wir Sie beraten?',
+                'subheadline'         => 'Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!',
+                'headline_success'    => 'Vielen Dank, Ihr Reisewunsch wurde versandt.',
                 'subheadline_success' => 'Ein Berater aus dem Reisebüro nimmt sich Ihrer Wünsche an.',
             ]);
 

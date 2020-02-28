@@ -494,7 +494,7 @@ class OffersController extends Controller
             }
 
             $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
-            $result['ga'] =  $result['mobile'];
+            $result['ga'] = $result['mobile'];
 
             $data = $this->wishes->withCriteria([
             new ByWhitelabel(),

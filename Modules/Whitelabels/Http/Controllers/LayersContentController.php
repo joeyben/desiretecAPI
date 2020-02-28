@@ -13,7 +13,6 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
 use Modules\Whitelabels\Http\Requests\LayerContentRequest;
-use Modules\Whitelabels\Http\Services\LayersContentService;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
@@ -40,7 +39,7 @@ class LayersContentController extends Controller
      */
     private $layerWhitelabels;
 
-    public function __construct(WhitelabelsRepository $whitelabels,LayerWhitelabelRepository $layerWhitelabels, Translator $lang, ResponseFactory $response, AuthManager $auth)
+    public function __construct(WhitelabelsRepository $whitelabels, LayerWhitelabelRepository $layerWhitelabels, Translator $lang, ResponseFactory $response, AuthManager $auth)
     {
         $this->whitelabels = $whitelabels;
         $this->lang = $lang;
@@ -74,7 +73,6 @@ class LayersContentController extends Controller
         return view('whitelabels::content', compact(['step']));
     }
 
-
     public function view()
     {
         $result['data'] = [];
@@ -90,16 +88,17 @@ class LayersContentController extends Controller
 
                 $result['data'] = $data->map(function ($layer) {
                     return [
-                        'id'  => $layer->id,
-                        'name' => $layer->layer->name,
-                        'layer_id' => $layer->layer_id,
-                        'whitelabel_id' => $layer->whitelabel_id,
-                        'headline' => $layer->headline,
-                        'subheadline' => $layer->subheadline,
-                        'headline_success' => $layer->headline_success,
+                        'id'                  => $layer->id,
+                        'name'                => $layer->layer->name,
+                        'layer_id'            => $layer->layer_id,
+                        'whitelabel_id'       => $layer->whitelabel_id,
+                        'headline'            => $layer->headline,
+                        'subheadline'         => $layer->subheadline,
+                        'headline_success'    => $layer->headline_success,
                         'subheadline_success' => $layer->subheadline_success,
-                        'layer_url' => $layer->layer_url,
-                        'attachments' => $layer->attachments->map(function ($attachment) {
+                        'privacy'             => $layer->privacy,
+                        'layer_url'           => $layer->layer_url,
+                        'attachments'         => $layer->attachments->map(function ($attachment) {
                             return [
                                 'uid'  => $attachment->id,
                                 'name' => $attachment->name . '.' . $attachment->extension,
@@ -109,7 +108,6 @@ class LayersContentController extends Controller
                     ];
                 });
             }
-
 
             return $this->responseJson($result);
         } catch (Exception $e) {
@@ -156,11 +154,10 @@ class LayersContentController extends Controller
         return view('whitelabels::edit');
     }
 
-
     public function update(LayerContentRequest $request)
     {
         try {
-            $this->layerWhitelabels->update($request->get('id'), $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success'));
+            $this->layerWhitelabels->update($request->get('id'), $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success', 'privacy'));
 
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Content']);
             $result['success'] = true;

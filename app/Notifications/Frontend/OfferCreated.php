@@ -106,11 +106,11 @@ class OfferCreated extends Notification
         $whitelabelId = Auth::guard('api')->user()->whitelabels()->first();
         $route = $whitelabelId->name . '.wish.details';
 
-        if(\Route::has($route, [$this->wish_id, $this->token])){
+        if (\Route::has($route, [$this->wish_id, $this->token])) {
             return route($route, [$this->wish_id, $this->token]);
-        } else {
-            return $whitelabelId->domain . '/wishes/' . $this->wish_id;
         }
+
+        return $whitelabelId->domain . '/wishes/' . $this->wish_id;
 
         return 'frontend.wishes.show';
     }
