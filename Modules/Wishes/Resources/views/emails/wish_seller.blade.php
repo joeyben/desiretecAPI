@@ -1,3 +1,12 @@
+@php
+    if (env('APP_USE_API')) {
+        $url = 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wish';
+        $urlList = 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wishlist';
+    }else {
+        $url = url('/wish');
+        $urlList = url('/wishlist');
+    }
+@endphp
 @extends('emails.layouts.app')
 
 @section('content')
@@ -14,11 +23,11 @@
                         <p style="line-height: 24px; margin-bottom:20px;">
                             {!! trans('email.wish.created.seller.body_1') !!}
 
-                            {!! trans('email.wish.created.seller.url', ['id' => $wish->id, 'token' => $token, 'url' => 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wish']) !!}
+                            {!! trans('email.wish.created.seller.url', ['id' => $wish->id, 'token' => $token, 'url' => $url]) !!}
 
                             {!! trans('email.wish.created.seller.body_2') !!}
 
-                            {!! trans('email.wish.created.seller.urllist', [ 'url' => 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wishlist', 'token' => $token]) !!}
+                            {!! trans('email.wish.created.seller.urllist', [ 'url' => $urlList, 'token' => $token]) !!}
 
                             {!! trans('email.wish.created.seller.body_3') !!}
 
