@@ -191,4 +191,13 @@ class AuthController extends APIController
         return $this->respond(['access_token' => JWTAuth::fromUser($token->user), 'status' => 200])
             ->cookie('access_token', $jwtToken, JWTAuth::factory()->getTTL() * 60);
     }
+
+    public function wishListToken(Request $request, UserToken $token)
+    {
+        Auth::login($token->user, true);
+        $jwtToken = JWTAuth::fromUser($token->user);
+
+        return $this->respond(['access_token' => JWTAuth::fromUser($token->user), 'status' => 200])
+            ->cookie('access_token', $jwtToken, JWTAuth::factory()->getTTL() * 60);
+    }
 }
