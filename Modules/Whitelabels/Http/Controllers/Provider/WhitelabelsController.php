@@ -146,7 +146,7 @@ class WhitelabelsController extends Controller
         try {
             $result['whitelabel'] = $this->whitelabels->update(
                 $id,
-                $request->only('display_name', 'color')
+                $request->only('display_name', 'color', 'email')
             );
 
             $subDomain = str_slug(str_replace('.', '', $request->get('sub_domain')));

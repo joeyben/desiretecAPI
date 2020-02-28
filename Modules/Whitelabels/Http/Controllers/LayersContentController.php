@@ -96,6 +96,7 @@ class LayersContentController extends Controller
                         'subheadline'         => $layer->subheadline,
                         'headline_success'    => $layer->headline_success,
                         'subheadline_success' => $layer->subheadline_success,
+                        'privacy'             => $layer->privacy,
                         'layer_url'           => $layer->layer_url,
                         'attachments'         => $layer->attachments->map(function ($attachment) {
                             return [
@@ -156,7 +157,7 @@ class LayersContentController extends Controller
     public function update(LayerContentRequest $request)
     {
         try {
-            $this->layerWhitelabels->update($request->get('id'), $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success'));
+            $this->layerWhitelabels->update($request->get('id'), $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success', 'privacy'));
 
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Content']);
             $result['success'] = true;

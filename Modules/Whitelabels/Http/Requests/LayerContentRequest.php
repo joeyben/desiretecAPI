@@ -20,6 +20,7 @@ class LayerContentRequest extends FormRequest
             'subheadline'         => 'required|string|min:2|max:255',
             'headline_success'    => 'required|string|min:2|max:255',
             'subheadline_success' => 'required|string|min:2|max:255',
+            'privacy'             => 'required|string|min:2|max:255',
         ];
     }
 
