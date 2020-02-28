@@ -29,7 +29,7 @@
                                         @if(isWhiteLabel())
                                             <img width="200" class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
                                         @else
-                                            <img width="200" class="navbar-brand" src="{{ getWhiteLabelLogoUrlByID('logo',$wish->whitelabel->id) }}">
+                                            <img width="200" class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
                                         @endif
                                     <hr style="background: #e7e7e7;border: none;height: 1px;margin-top: 30px;">
                                 </td>
