@@ -46,7 +46,7 @@ class WhitelabelController extends Controller
     {
         $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
             new EagerLoad(['footers']),
-            new Like('domain', $slug),
+            new Like('domain', '//' . $slug . '.'),
         ])->first();
 
         $background = $this->moduleWhitelabelsRepository->getBackgroundImage($whitelabel);
