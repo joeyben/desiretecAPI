@@ -241,7 +241,7 @@ class APIController extends Controller
         ], JSON_NUMERIC_CHECK);
     }
 
-    protected function responseJsonPaginated($data = null): JsonResponse
+    protected function responseJsonPaginated($data = null)
     {
         return response()->json($data, Flag::STATUS_CODE_SUCCESS, [], JSON_NUMERIC_CHECK);
     }
