@@ -171,8 +171,8 @@ class OffersRepository extends BaseRepository
 
     public function createOfferAPI(Request $request)
     {
+        $filesArr = [];
         if(isset($request->file) && !is_null($request->file)){
-            $filesArr = [];
             foreach ($request->file as $file){
                 $temp_array = [];
                 $temp_array['content'] = base64_decode($file['content']);
