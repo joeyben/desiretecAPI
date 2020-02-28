@@ -98197,7 +98197,7 @@ exports = module.exports = __webpack_require__(8)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -98247,6 +98247,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
 //
 //
 //
@@ -98384,6 +98389,7 @@ exports.default = {
     onSubmit: function onSubmit() {
       var _this = this;
 
+      this.$store.commit('updateWhitelabel', { name: 'email', value: this.whitelabel.sub_email + this.whitelabel.domain_email });
       this.$store.dispatch('block', { element: 'whitelabelsProviderComponent', load: true });
       this.$http.put(window.laroute.route('provider.whitelabels.save', { id: this.whitelabel.id }), this.whitelabel).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
         _this.$store.dispatch('block', { element: 'whitelabelsProviderComponent', load: false });
@@ -100147,24 +100153,33 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-lg-9" }, [
-                  _c("input", {
-                    staticClass: "form-control",
-                    class: _vm.errors.has("email") ? "is-invalid" : "",
-                    attrs: {
-                      type: "email",
-                      id: "email",
-                      name: "email",
-                      placeholder: _vm.trans("modals.email"),
-                      required: ""
-                    },
-                    domProps: { value: _vm.whitelabel.email },
-                    on: { input: _vm.updateWhitelabel }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "invalid-feedback" }, [
-                    _c("strong", {
-                      domProps: { textContent: _vm._s(_vm.errors.get("email")) }
-                    })
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("input", {
+                      staticClass: "form-control",
+                      class: _vm.errors.has("email") ? "is-invalid" : "",
+                      attrs: {
+                        type: "text",
+                        id: "email",
+                        name: "sub_email",
+                        placeholder: _vm.trans("modals.email")
+                      },
+                      domProps: { value: _vm.whitelabel.sub_email },
+                      on: { input: _vm.updateWhitelabel }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "input-group-append" }, [
+                      _c("span", { staticClass: "input-group-text" }, [
+                        _vm._v(_vm._s(_vm.whitelabel.domain_email))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "invalid-feedback" }, [
+                      _c("strong", {
+                        domProps: {
+                          textContent: _vm._s(_vm.errors.get("email"))
+                        }
+                      })
+                    ])
                   ])
                 ])
               ]),

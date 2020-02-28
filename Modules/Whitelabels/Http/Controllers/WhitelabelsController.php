@@ -316,6 +316,8 @@ class WhitelabelsController extends Controller
             $result['whitelabel']['sub_domain'] = $this->whitelabels->getSubDomain($domain);
             $result['whitelabel']['main_domain'] = $this->whitelabels->getDomain($domain);
             $result['whitelabel']['hostsList'] = $result['whitelabel']->hosts->pluck('host');
+            $result['whitelabel']['sub_email'] = explode('@', $result['whitelabel']->email)[0];
+            $result['whitelabel']['domain_email'] = '@' . explode('@', $result['whitelabel']->email)[1];
 
             $result['success'] = true;
             $result['status'] = 200;

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
+use App\Repositories\Criteria\Like;
 use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,14 +41,12 @@ class WhitelabelController extends Controller
         $this->languageline = $languageline;
     }
 
-    /**
-     * show page by $page_slug.
-     */
+
     public function getWhitelabelBySlug(string $slug)
     {
         $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
             new EagerLoad(['footers']),
-            new Where('name', $slug),
+            new Like('domain', $slug),
         ])->first();
 
         $background = $this->moduleWhitelabelsRepository->getBackgroundImage($whitelabel);
