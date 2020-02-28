@@ -504,6 +504,29 @@ if (!function_exists('getWhiteLabelLogo')) {
     }
 }
 
+if (!function_exists('getWhiteLabelLogoUrlByID')) {
+    /**
+     * return current whitelabel logo url.
+     *
+     * @param string $type
+     *
+     * @return string
+     */
+    function getWhiteLabelLogoUrlByID($type = 'logo', $whitelabelID)
+    {
+        $whitelabelID = $whitelabelID ? $whitelabelID : getCurrentWhiteLabelId();
+        $attachment = \Modules\Attachments\Entities\Attachment::select([
+            config('module.attachments.table') . '.basename',
+            config('module.attachments.table') . '.type',
+        ])
+            ->where('attachable_id', $whitelabelID)
+            ->where('type', 'whitelabels/' . $type)
+            ->first();
+
+        return null !== $attachment ? $attachment->toArray()['url'] : asset('img/logo_big.png');
+    }
+}
+
 if (!function_exists('setTranslationLoaderModel')) {
     /**
      * Set translation-loader model.
