@@ -1,5 +1,5 @@
 @php
-    if (env('APP_USE_API') === "true") {
+    if (env('APP_USE_API')) {
         $url = 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wish';
     }else {
         $url = url('/wish');
