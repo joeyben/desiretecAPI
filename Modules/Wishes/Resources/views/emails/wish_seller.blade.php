@@ -1,5 +1,5 @@
 @php
-    if (env('APP_USE_API')) {
+    if (env('APP_USE_API') === "true") {
         $url = 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wish';
         $urlList = 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wishlist';
     }else {
@@ -23,7 +23,7 @@
                         <p style="line-height: 24px; margin-bottom:20px;">
                             {!! trans('email.wish.created.seller.body_1') !!}
 
-                            {!! trans('email.wish.created.seller.url', ['id' => $wish->id, 'token' => $token, 'url' => $url]) !!} 
+                            {!! trans('email.wish.created.seller.url', ['id' => $wish->id, 'token' => $token, 'url' => $url]) !!}
 
                             {!! trans('email.wish.created.seller.body_2') !!}
 
