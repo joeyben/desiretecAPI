@@ -144,6 +144,7 @@ class WishesController extends APIController
             $result['data']['wishDetails']['callbacks'] = $wishData->callbacks;
             $result['data']['wishDetails']['group'] = $wishData->group;
             $result['data']['wishDetails']['group']['users'] = $wishData->group->users;
+            $result['data']['wishDetails']['group']['agents'] = isset($wishData->group->users[0]->agents) ? $wishData->group->users[0]->agents : [];
 
             return $this->responseJson($result);
 
