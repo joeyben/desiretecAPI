@@ -161,6 +161,14 @@ if (!empty($google_analytics)) {
             <!-- Main navigation -->
             <div class="card card-sidebar-mobile">
                 <ul class="nav nav-sidebar" data-nav-type="accordion">
+                    @if($module->has('Step'))
+                        <li class="nav-item">
+                            <a href="{{ route('provider.whitelabels.how-it-works') }}" class="nav-link">
+                                <i class="icon-help"></i>
+                                <span>{{ __('How It Works') }}</span>
+                            </a>
+                        </li>
+                    @endif
 
                     <!-- Main -->
                     <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
