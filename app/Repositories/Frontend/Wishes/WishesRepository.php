@@ -231,7 +231,7 @@ class WishesRepository extends BaseRepository
     }
 
     /**
-     * @return Wish
+     * @return array
      */
     public function getById(int $id)
     {
@@ -243,6 +243,16 @@ class WishesRepository extends BaseRepository
 
         return $result;
     }
+
+
+    /**
+     * @return Wish
+     */
+    public function getWish(int $id)
+    {
+        return Wish::findOrFail($id);
+    }
+
 
     /**
      * @return mixed

@@ -81,10 +81,11 @@ class MessagesController extends APIController implements MessagesControllerInte
 
         if ($this->auth->user()->hasRole(Flag::SELLER_ROLE) && Auth::guard('agent')->check()) {
             $agentId = Auth::guard('agent')->user()->id;
-            $wish = $this->wishesRepository->getById($request->wish_id);
+            $wish = $this->wishesRepository->getWish($request->wish_id);
 
             $this->wishesRepository->update($wish, ['agent_id' => $agentId]);
         }
+
 
         try {
             $message = Message::create([
