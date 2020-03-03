@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\V1\Contracts\AccountControllerInterface;
 use App\Http\Requests\Frontend\User\ChangePasswordRequest;
+use App\Http\Requests\Frontend\User\ResetLinkEmailRequest;
 use App\Http\Requests\Frontend\User\UpdateProfileRequest;
+use App\Notifications\Frontend\Auth\ApiUserNeedsPasswordReset;
+use App\Notifications\Frontend\Auth\UserNeedsPasswordReset;
 use App\Repositories\Frontend\Access\User\UserRepository;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AccountController extends APIController implements AccountControllerInterface
 {
@@ -41,5 +46,33 @@ class AccountController extends APIController implements AccountControllerInterf
         } catch (Exception $e) {
             return $this->respondWithError($e);
         }
+    }
+
+    public function resetPassword(ChangePasswordRequest $request)
+    {
+        try {
+            $this->user->resetPassword($request->all());
+
+            return $this->respondUpdated('Account updated successfully');
+        } catch (Exception $e) {
+            return $this->respondWithError($e);
+        }
+    }
+
+
+    public function sendResetLinkEmail(ResetLinkEmailRequest $request)
+    {
+        $user = $this->repository->findByEmail($request->get('email'));
+
+        if (!$user) {
+            return $this->respondNotFound(trans('api.messages.forgot_password.validation.email_not_found'));
+        }
+
+        $user->notify(new ApiUserNeedsPasswordReset($user->token->token, $request->get('host'), $request->get('email')));
+
+        return $this->respond([
+            'status'    => 'ok',
+            'message'   => trans('api.messages.forgot_password.success'),
+        ]);
     }
 }

@@ -308,6 +308,29 @@ class UserRepository extends BaseRepository
         throw new GeneralException(trans('exceptions.frontend.auth.password.change_mismatch'));
     }
 
+    public function resetPassword($input)
+    {
+        $user = $this->find(access()->id());
+
+        if (Hash::check($input['email'], $user->email)) {
+            $user->password = bcrypt($input['password']);
+
+            if ($user->save()) {
+                $input['email'] = $user->email;
+                // Send email to the user
+                $options = [
+                    'data'                => $input,
+                    'email_template_type' => 4,
+                ];
+                createNotification('', $user->id, 2, $options);
+
+                return true;
+            }
+        }
+
+        throw new GeneralException(trans('exceptions.frontend.auth.password.change_mismatch'));
+    }
+
     /**
      * Create a new token for the user.
      *
