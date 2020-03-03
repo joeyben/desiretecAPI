@@ -311,21 +311,16 @@ class UserRepository extends BaseRepository
     public function resetPassword($input)
     {
         $user = $this->find(access()->id());
+        $user->password = bcrypt($input['password']);
 
-        if (Hash::check($input['email'], $user->email)) {
-            $user->password = bcrypt($input['password']);
+        if ($user->save()) {
+            $options = [
+                'data'                => $input,
+                'email_template_type' => 4,
+            ];
+            createNotification('', $user->id, 2, $options);
 
-            if ($user->save()) {
-                $input['email'] = $user->email;
-                // Send email to the user
-                $options = [
-                    'data'                => $input,
-                    'email_template_type' => 4,
-                ];
-                createNotification('', $user->id, 2, $options);
-
-                return true;
-            }
+            return true;
         }
 
         throw new GeneralException(trans('exceptions.frontend.auth.password.change_mismatch'));

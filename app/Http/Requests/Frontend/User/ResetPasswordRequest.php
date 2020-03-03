@@ -16,7 +16,7 @@ class ResetPasswordRequest extends Request
      */
     public function authorize()
     {
-        return access()->user()->canChangePassword();
+        return true;
     }
 
     /**
@@ -27,7 +27,7 @@ class ResetPasswordRequest extends Request
     public function rules()
     {
         return [
-            'email'        => 'required',
+            'email'        => 'required|email|max:255|exists:users,email',
             'password'     => 'required|min:6|confirmed',
         ];
     }

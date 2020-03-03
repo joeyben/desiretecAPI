@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Api\V1\Contracts\AccountControllerInterface;
 use App\Http\Requests\Frontend\User\ChangePasswordRequest;
 use App\Http\Requests\Frontend\User\ResetLinkEmailRequest;
+use App\Http\Requests\Frontend\User\ResetPasswordRequest;
 use App\Http\Requests\Frontend\User\UpdateProfileRequest;
 use App\Notifications\Frontend\Auth\ApiUserNeedsPasswordReset;
 use App\Notifications\Frontend\Auth\UserNeedsPasswordReset;
@@ -48,12 +49,12 @@ class AccountController extends APIController implements AccountControllerInterf
         }
     }
 
-    public function resetPassword(ChangePasswordRequest $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
         try {
             $this->user->resetPassword($request->all());
 
-            return $this->respondUpdated('Account updated successfully');
+            return $this->respondUpdated('Passwort erfolgreich aktualisiert');
         } catch (Exception $e) {
             return $this->respondWithError($e);
         }
