@@ -22,7 +22,15 @@
                         <strong>Tel.:</strong> {{ $contact->telephone }}<br>
                     </p>
                     <br><br>
-                    {!! trans('email.contact.seller.wish_url', ['id' => $wish_id,'token' => $token, 'url' => url('/wish')]) !!}
+                    @php
+                        if (env('APP_USE_API')) {
+                            $url = 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wishes';
+                        }else {
+                            $url = url('/wish');
+                        }
+                    @endphp
+
+                    {!! trans('email.contact.seller.wish_url', ['id' => $wish_id,'token' => $token, 'url' => $url]) !!}
 
                     @include('emails.layouts.footer')
                 </td>
