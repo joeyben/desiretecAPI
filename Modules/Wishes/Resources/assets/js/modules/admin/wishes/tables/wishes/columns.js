@@ -23,6 +23,11 @@ export default [
   {
     name: 'owner.full_name',
     title: window.Lang.get('tables.owner'),
+    visible: false
+  },
+  {
+    name: 'owner.email',
+    title: window.Lang.get('tables.email'),
     visible: true
   },
   {
