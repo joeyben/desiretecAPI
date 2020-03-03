@@ -158,7 +158,7 @@ class WhitelabelsController extends Controller
                 }
 
                 ini_set('max_execution_time', 300);
-                $result['whitelabel'] = $this->whitelabels->update($id, ['domain' => $domain]);
+                $result['whitelabel'] = $this->whitelabels->update($id, ['name' => $subDomain, 'domain' => $domain]);
 
                 if ($this->isOldWhitelabel()) {
                     $this->artisan->call('whitelabel:make-route', ['domain' => $subDomain, 'module' => $result['whitelabel']->name]);

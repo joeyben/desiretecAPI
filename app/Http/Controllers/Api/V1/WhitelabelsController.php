@@ -63,7 +63,7 @@ class WhitelabelsController extends APIController
             $result['whitelabel'] = $this->whitelabels->create(
                 [
                     'created_by'      => $user->id,
-                    'name'            => $this->str->studly($request->get('name')),
+                    'name'            => str_slug($request->get('name')),
                     'display_name'    => $request->get('name'),
                     'email'           => str_slug($request->get('name')) . '@' . env('API_DOMAIN', 'reise-wunsch.com'),
                     'licence'         => (string) $request->get('licence'),
