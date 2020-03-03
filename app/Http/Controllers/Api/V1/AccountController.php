@@ -32,7 +32,7 @@ class AccountController extends APIController implements AccountControllerInterf
         try {
             $this->repository->updateProfile($id, $request->all());
 
-            return $this->respondUpdated('account updated successfully');
+            return $this->respondUpdated('Konto erfolgreich aktualisiert');
         } catch (Exception $e) {
             return $this->respondWithError($e);
         }
