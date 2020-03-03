@@ -512,7 +512,7 @@ if (!function_exists('getWhiteLabelLogoUrlByID')) {
      *
      * @return string
      */
-    function getWhiteLabelLogoUrlByID($type = 'logo', $whitelabelID)
+    function getWhiteLabelLogoUrlByID($type, $whitelabelID)
     {
         $whitelabelID = $whitelabelID ? $whitelabelID : getCurrentWhiteLabelId();
         $attachment = \Modules\Attachments\Entities\Attachment::select([
