@@ -93,6 +93,7 @@ class LayersContentController extends Controller
                         'layer_id'            => $layer->layer_id,
                         'whitelabel_id'       => $layer->whitelabel_id,
                         'headline'            => $layer->headline,
+                        'headline_color'      => $layer->headline_color,
                         'subheadline'         => $layer->subheadline,
                         'headline_success'    => $layer->headline_success,
                         'subheadline_success' => $layer->subheadline_success,
@@ -157,7 +158,7 @@ class LayersContentController extends Controller
     public function update(LayerContentRequest $request)
     {
         try {
-            $this->layerWhitelabels->update($request->get('id'), $request->only('headline', 'subheadline', 'headline_success', 'subheadline_success', 'privacy'));
+            $this->layerWhitelabels->update($request->get('id'), $request->only('headline', 'headline_color', 'subheadline', 'headline_success', 'subheadline_success', 'privacy'));
 
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Content']);
             $result['success'] = true;
