@@ -177,14 +177,15 @@ class AuthController extends APIController
 
     public function wishToken(Request $request, UserToken $token)
     {
-        if ($wish = $this->wishes->find($request->get('wish_id'))) {
-            if ((int) $wish->created_by !== (int) $token->user->id) {
-                return $this->respondInternalError('Mismatch user wish!');
-            }
-        } else {
-            return $this->respondInternalError('Invalid wish id!');
-        }
+        Auth::login($token->user, true);
+        $jwtToken = JWTAuth::fromUser($token->user);
 
+        return $this->respond(['access_token' => JWTAuth::fromUser($token->user), 'status' => 200])
+            ->cookie('access_token', $jwtToken, JWTAuth::factory()->getTTL() * 60);
+    }
+
+    public function wishListToken(Request $request, UserToken $token)
+    {
         Auth::login($token->user, true);
         $jwtToken = JWTAuth::fromUser($token->user);
 

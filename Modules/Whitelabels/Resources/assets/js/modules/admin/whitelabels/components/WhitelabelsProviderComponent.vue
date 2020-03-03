@@ -17,9 +17,14 @@
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.email') }} <span class="text-danger"> *</span></label>
                         <div class="col-lg-9">
-                            <input type="email" class="form-control" :class="errors.has('email') ? 'is-invalid': ''" id='email' name='email' :placeholder="trans('modals.email')" @input="updateWhitelabel"  :value="whitelabel.email" required/>
-                            <div class="invalid-feedback">
-                                <strong v-text="errors.get('email')"></strong>
+                            <div class="input-group">
+                                <input type="text" class="form-control" :class="errors.has('email') ? 'is-invalid': ''" id='email' name='sub_email' :placeholder="trans('modals.email')" @input="updateWhitelabel"  :value="whitelabel.sub_email"/>
+                                <span class="input-group-append">
+                                    <span class="input-group-text">{{ whitelabel.domain_email }}</span>
+                                </span>
+                                <div class="invalid-feedback">
+                                    <strong v-text="errors.get('email')"></strong>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -123,6 +128,7 @@
         this.$store.commit('updateWhitelabel', {name: 'color', value: value})
       },
       onSubmit () {
+        this.$store.commit('updateWhitelabel', {name: 'email', value: this.whitelabel.sub_email + this.whitelabel.domain_email})
         this.$store.dispatch('block', {element: 'whitelabelsProviderComponent', load: true})
         this.$http.put(window.laroute.route('provider.whitelabels.save', {id: this.whitelabel.id}), this.whitelabel)
           .then(this.onSubmitSuccess)
