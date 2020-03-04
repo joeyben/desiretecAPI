@@ -6,7 +6,7 @@
     }
 @endphp
 
-@extends('emails.layouts.app')
+@extends('emails.layouts.app', ['whitelabel' => $wish->whitelabel])
 
 @section('content')
     <div class="content">
