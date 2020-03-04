@@ -1,3 +1,9 @@
+@if (isset($color))
+<script type="application/javascript">
+    var brandColor = {!! json_encode($color) !!};
+</script>
+@endisset
+
 <link media="all" type="text/css" rel="stylesheet" href="https://mvpprod.desiretec.com/fontawsome/css/all.css">
 
 {{ Form::open(['route' => 'novasol.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) }}

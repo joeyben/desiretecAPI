@@ -19,7 +19,11 @@
 @endsection
 
 @section('before-scripts')
-    <script src="{{ mix('whitelabel/novasol/js/layer/layer.js') }}"></script>
+    <script type="application/javascript">
+        var brandColor = {!! json_encode($color) !!};
+    </script>
+
+    <script src="{{ mix('whitelabel/novasol/js/novasol.js') }}"></script>
 @endsection
 
 @section('after-scripts')
