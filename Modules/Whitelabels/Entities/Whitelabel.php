@@ -37,6 +37,7 @@ class Whitelabel extends Model
         'color',
         'licence',
         'headline',
+        'headline_color',
         'subheadline',
         'headline_success',
         'subheadline_success'

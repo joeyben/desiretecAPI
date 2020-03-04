@@ -18,6 +18,16 @@
             </div>
 
             <div class="form-group row">
+                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline_color') }}</label>
+                <div class="col-lg-9 d-flex align-items-center">
+                    <template>
+                        <el-radio v-model="headline_color" label="dark">Dark</el-radio>
+                        <el-radio v-model="headline_color" label="light">Light</el-radio>
+                    </template>
+                </div>
+            </div>
+
+            <div class="form-group row">
                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline') }}</label>
                 <div class="col-lg-9">
                     <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline') ? 'is-invalid': ''" :id="name + 'subheadline'" name="subheadline" :placeholder="trans('modals.subheadline')"  v-model="subheadline"></textarea>
@@ -87,6 +97,7 @@
         id: null,
         name: '',
         headline: '',
+        headline_color: '',
         whitelabel_id: null,
         subheadline: '',
         headline_success: '',
@@ -106,11 +117,12 @@
     methods: {
       initValues() {
         if (Object.entries(this.layer).length !== 0) {
-          let { id, name, headline, subheadline, headline_success, subheadline_success, whitelabel_id, privacy, attachments } = JSON.parse(JSON.stringify(this.layer))
+          let { id, name, headline, headline_color, subheadline, headline_success, subheadline_success, whitelabel_id, privacy, attachments } = JSON.parse(JSON.stringify(this.layer))
           this.id = id
           this.name = name
           this.whitelabel_id = whitelabel_id
           this.headline = headline
+          this.headline_color = headline_color
           this.subheadline = subheadline
           this.headline_success = headline_success
           this.subheadline_success = subheadline_success
@@ -120,7 +132,7 @@
       },
       onSubmit () {
         this.$store.dispatch('block', {element: 'contentComponent', load: true})
-        this.$http.put(window.laroute.route('admin.whitelabels.content.update'), {id: this.id, name: this.name, whitelabel_id: this.whitelabel_id, headline: this.headline, subheadline: this.subheadline, headline_success: this.headline_success, subheadline_success: this.subheadline_success, privacy: this.privacy})
+        this.$http.put(window.laroute.route('admin.whitelabels.content.update'), {id: this.id, name: this.name, whitelabel_id: this.whitelabel_id, headline: this.headline, headline_color: this.headline_color, subheadline: this.subheadline, headline_success: this.headline_success, subheadline_success: this.subheadline_success, privacy: this.privacy})
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -164,5 +176,7 @@
 </script>
 
 <style scoped>
-
+  .el-radio__input.is-checked+.el-radio__label {
+    color: #606266 !important;
+  }
 </style>
