@@ -24,7 +24,7 @@
                     <br><br>
                     @php
                         if (env('APP_USE_API')) {
-                            $url = 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wishes';
+                            $url = 'https://'.strtolower($whitelabel_name).'.wish-service.com/wishes';
                         }else {
                             $url = url('/wish');
                         }
