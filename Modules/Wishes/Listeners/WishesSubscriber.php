@@ -15,6 +15,7 @@ use Modules\Wishes\Entities\Wish;
 use Modules\Wishes\Notifications\AutoOfferNotification;
 use Modules\Wishes\Notifications\CreatedWishNotification;
 use Modules\Wishes\Notifications\CreatedWishNotificationForSeller;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class WishesSubscriber
 {
@@ -44,7 +45,7 @@ class WishesSubscriber
 
     use TokenAuthenticable;
 
-    public function onCreatedWish(Wish $wish)
+    public function onCreatedWish(Wish $wish, Boolean $fromApi)
     {
         $user = User::where('id', $wish->created_by)->firstOrFail();
         $wishTye = $this->wishRepo->manageRules($wish);
@@ -63,10 +64,10 @@ class WishesSubscriber
             //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish)));
         }
         if (0 === $wishTye) {
-            Notification::send($users, new CreatedWishNotificationForSeller($wish));
+            Notification::send($users, new CreatedWishNotificationForSeller($wish, $fromApi));
         }
 
-        Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));
+        Auth::guard('web')->user()->notify(new CreatedWishNotification($wish, $fromApi));
 
         $admins = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->where('users.id', '!=', Auth::guard('web')->user()->id)->get();
 

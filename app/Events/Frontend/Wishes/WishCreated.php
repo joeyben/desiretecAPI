@@ -17,10 +17,16 @@ class WishCreated
     public $wishes;
 
     /**
+     * @var
+     */
+    public $fromApi;
+
+    /**
      * @param $wishes
      */
-    public function __construct($wishes)
+    public function __construct($wishes, $fromApi)
     {
-        $this->wishes = $wishes;
+        $this->wishes   = $wishes;
+        $this->fromApi  = $fromApi;
     }
 }
