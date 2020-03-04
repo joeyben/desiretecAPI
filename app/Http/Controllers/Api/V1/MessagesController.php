@@ -75,35 +75,29 @@ class MessagesController extends APIController implements MessagesControllerInte
 
     public function create(Request $request)
     {
-        $consumerId = $request->user_id;
-        $message = $request->input('message');
-        $agentId = null;
-
-        if ($this->auth->user()->hasRole(Flag::SELLER_ROLE) && Auth::guard('agent')->check()) {
-            $agentId = Auth::guard('agent')->user()->id;
-            $wish = $this->wishesRepository->getWish($request->wish_id);
-
-            $this->wishesRepository->update($wish, ['agent_id' => $agentId]);
-        }
-
-
         try {
-            $message = Message::create([
+            $consumerId = $request->user_id;
+            $message = $request->input('message');
+            $agentId = null;
+
+            if ($this->auth->user()->hasRole(Flag::SELLER_ROLE) && Auth::guard('agent')->check()) {
+                $agentId = Auth::guard('agent')->user()->id;
+                $wish = $this->wishesRepository->getWish($request->wish_id);
+
+                $this->wishesRepository->update($wish, ['agent_id' => $agentId]);
+            }
+
+            $m = Message::create([
                 'user_id' => $consumerId,
                 'wish_id' => $request->wish_id,
                 'message' => $message,
                 'agent_id'=> $agentId
             ]);
+
+            return  $this->respondCreated('message: ' . $m->message);
         } catch (\Illuminate\Database\QueryException $e) {
             return $this->respondWithError($e->errorInfo);
         }
-
-        // TODO: Check why MessageCreated returns error route not found
-        // if ($message) {
-        //     event(new MessageCreated($message));
-        // }
-
-        return  $this->respondCreated('message: ' . $message);
     }
 
     public function delete(int $id)
