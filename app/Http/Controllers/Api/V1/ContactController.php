@@ -1,14 +1,9 @@
 <?php
 
-
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Frontend\Contact\ManageContactRequest;
 use App\Http\Requests\Frontend\Contact\StoreCallbackRequest;
 use App\Http\Requests\Frontend\Contact\StoreContactRequest;
-use App\Http\Requests\Frontend\Contact\UpdateContactRequest;
-use App\Models\Contact\Contact;
 use App\Repositories\Frontend\Contact\ContactRepository;
 
 /**
@@ -33,7 +28,7 @@ class ContactController extends APIController
      */
     public function store(StoreContactRequest $request)
     {
-        try{
+        try {
             $contact = $this->contact->create($request->all());
 
             return $this->responseJson([
@@ -50,7 +45,7 @@ class ContactController extends APIController
      */
     public function storeCallback(StoreCallbackRequest $request)
     {
-        try{
+        try {
             $contact = $this->contact->create($request->all());
 
             return $this->responseJson([

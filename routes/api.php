@@ -24,6 +24,10 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('login/wishlist-token/{token}', 'AuthController@wishListToken');
     });
 
+    Route::group(['prefix' => 'account'], function () {
+        Route::post('sendResetLinkEmail', 'AccountController@sendResetLinkEmail');
+    });
+
     Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'auth'], function () {
         Route::post('logout', 'AuthController@logout');
         Route::post('refresh', 'AuthController@refresh');
@@ -56,6 +60,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
         Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'account'], function () {
             Route::put('changePassword', 'AccountController@changePassword');
+            Route::put('resetPassword', 'AccountController@resetPassword');
         });
 
         Route::group(['prefix' => 'offers'], function () {

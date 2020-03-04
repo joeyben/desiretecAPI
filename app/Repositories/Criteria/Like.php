@@ -25,16 +25,14 @@ class Like
      */
     private $value;
 
-
     public function __construct(string $column, string $value = null)
     {
         $this->column = $column;
         $this->value = $value;
     }
 
-
     public function apply($model): Builder
     {
-        return null === $this->value ? $model->newQuery() : $model->where($this->column, 'like' , '%' . $this->value .'%');
+        return null === $this->value ? $model->newQuery() : $model->where($this->column, 'like', '%' . $this->value . '%');
     }
 }

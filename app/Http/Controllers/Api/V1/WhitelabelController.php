@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Criteria\EagerLoad;
+use App\Repositories\Criteria\Like;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
-use App\Repositories\Criteria\Like;
 use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +40,6 @@ class WhitelabelController extends Controller
         $this->layerWhitelabels = $layerWhitelabels;
         $this->languageline = $languageline;
     }
-
 
     public function getWhitelabelBySlug(string $slug)
     {
