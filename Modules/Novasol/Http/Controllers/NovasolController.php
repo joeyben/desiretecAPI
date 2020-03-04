@@ -60,6 +60,7 @@ class NovasolController extends Controller
 
         return view('novasol::index')->with([
             'display_name'  => $whitelabel['display_name'],
+            'color'         => $whitelabel['color'],
             'bg_image'      => $this->attachements->getAttachementsByType($this->whitelabelId, 'background')['url'],
             'logo'          => $this->attachements->getAttachementsByType($this->whitelabelId, 'logo')['url'],
             'body_class'    => $this::BODY_CLASS,
@@ -76,12 +77,15 @@ class NovasolController extends Controller
         $input = $request->only('variant');
         $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
 
+        $whitelabel = $this->whitelabel->getByName('Novasol');
+
         $html = view('novasol::' . $layer)->with([
             'adults_arr'   => $this->adults,
             'kids_arr'     => $this->kids,
             'pets_arr'     => $this->pets,
             'duration_arr' => $this->duration,
             'request'      => $request->all(),
+            'color'        => $whitelabel['color'],
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -94,6 +98,8 @@ class NovasolController extends Controller
      */
     public function store(StoreWishRequest $request, UserRepository $user, WishesRepository $wish)
     {
+        $whitelabel = $this->whitelabel->getByName('Novasol');
+
         $input = $request->all();
         if ($request->failed()) {
             $layer = 'eil-mobile' === $input['variant'] ? 'layer.popup-mobile' : 'layer.popup';
@@ -103,7 +109,8 @@ class NovasolController extends Controller
                 'kids_arr'     => $this->kids,
                 'pets_arr'     => $this->pets,
                 'duration_arr' => $this->duration,
-                'request'      => $request->all()
+                'request'      => $request->all(),
+                'color'        => $whitelabel['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
