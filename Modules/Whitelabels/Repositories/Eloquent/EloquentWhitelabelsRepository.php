@@ -19,6 +19,7 @@ use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Entities\WhitelabelHost;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use App\Exceptions\GeneralException;
 
 /**
  * Class EloquentPostsRepository.
@@ -490,5 +491,26 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         }
 
         return $whitelabel;
+    }
+
+    public function updateHost(int $id, string $host, string $newHost)
+    {
+        try{
+            $hostToLookFor = $this->getSubDomain($host) . $this->getDomain($host);
+            $newHostToUpdate = $this->getSubDomain($newHost) . $this->getDomain($newHost);
+            DB::transaction(function () use ($id, $hostToLookFor, $newHostToUpdate) {
+
+                $oldHost = WhitelabelHost::where('whitelabel_id', $id)->where('host', $hostToLookFor)->first();
+
+                if ($oldHost->update(['host' => $newHostToUpdate])) {
+
+                    return true;
+                }
+
+                throw new GeneralException('Error');
+            });
+        } catch (\Exception $e) {
+            return $e;
+        }
     }
 }
