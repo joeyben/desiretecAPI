@@ -45,7 +45,7 @@ class WishesSubscriber
 
     use TokenAuthenticable;
 
-    public function onCreatedWish(Wish $wish, Boolean $fromApi)
+    public function onCreatedWish(Wish $wish)
     {
         $user = User::where('id', $wish->created_by)->firstOrFail();
         $wishTye = $this->wishRepo->manageRules($wish);
@@ -64,10 +64,10 @@ class WishesSubscriber
             //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish)));
         }
         if (0 === $wishTye) {
-            Notification::send($users, new CreatedWishNotificationForSeller($wish, $fromApi));
+            Notification::send($users, new CreatedWishNotificationForSeller($wish));
         }
 
-        Auth::guard('web')->user()->notify(new CreatedWishNotification($wish, $fromApi));
+        Auth::guard('web')->user()->notify(new CreatedWishNotification($wish));
 
         $admins = Role::where('name', Flag::ADMINISTRATOR_ROLE)->first()->users()->where('users.id', '!=', Auth::guard('web')->user()->id)->get();
 
