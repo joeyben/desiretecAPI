@@ -155,6 +155,8 @@ class WhitelabelsController extends Controller
             if ($result['whitelabel']->domain !== $this->str->lower($domain)) {
                 if ($this->isOldWhitelabel()) {
                     $this->whitelabels->updateRoute($id, $result['whitelabel']->name, $subDomain);
+                } else {
+                    $this->whitelabels->updateHost($id, $result['whitelabel']->domain, $domain);
                 }
 
                 ini_set('max_execution_time', 300);

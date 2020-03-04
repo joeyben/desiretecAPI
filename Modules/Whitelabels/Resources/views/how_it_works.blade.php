@@ -43,6 +43,11 @@
                                 </li>
                                 <li>
                                     <p>
+                                        Von der reisewunschportal@wish-service.com E-Mail-Adresse werden die Transaktionsmails verschickt.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
                                         Unter dem Domainnamen wird ihr Reisewunschportal zugänglich sein. User und Ihre Reisebüro- oder Servicecenter Mitarbeiter können sich hier einloggen, Reisewünsche und Angebote erstellen.
                                     </p>
                                 </li>
@@ -53,7 +58,7 @@
                                 </li>
                                 <li>
                                     <p>
-                                        Die Domains geben an, auf welchen Seiten der Exit-Intent-Layer (EIL) angezeigt werden darf. Tragen Sie hier bitte die URL Ihrer Homepage im Format “https://homepage.de”, sowie die URL des gewünschten Reisewunschportals “https://domainname.wish-service.com” ein.
+                                        Die Domains geben an, auf welchen Seiten der Exit-Intent-Layer (EIL) angezeigt werden darf. Tragen Sie hier bitte die URL Ihrer Homepage im Format “https://homepage.de”.
                                     </p>
                                 </li>
                                 <li>
