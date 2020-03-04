@@ -49,7 +49,7 @@ class Translation extends Model
                 ->get()
                 ->map(function (self $translation) {
                     return [
-                        'key' => $translation->key,
+                        'key'  => $translation->key,
                         'text' => $translation->text,
                     ];
                 })
@@ -63,7 +63,7 @@ class Translation extends Model
                     ->get()
                     ->map(function (self $translation) {
                         return [
-                            'key' => $translation->key,
+                            'key'  => $translation->key,
                             'text' => $translation->text,
                         ];
                     })

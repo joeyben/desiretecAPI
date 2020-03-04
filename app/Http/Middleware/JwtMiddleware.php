@@ -34,7 +34,7 @@ class JwtMiddleware extends BaseMiddleware
                 Auth::guard('web')->loginUsingId($payload['sub']);
 
                 if (Auth::guard('web')->user()->hasRole(Flag::SELLER_ROLE)) {
-                    if ($request->hasHeader('c-agent') && !is_null($request->hasHeader('c-agent'))) {
+                    if ($request->hasHeader('c-agent') && null !== $request->hasHeader('c-agent')) {
                         Auth::guard('agent')->logout();
                         Auth::guard('agent')->loginUsingId($request->header('c-agent'));
                     }
@@ -52,7 +52,7 @@ class JwtMiddleware extends BaseMiddleware
                 Auth::loginUsingId($payload['sub']);
 
                 if (Auth::user()->hasRole(Flag::SELLER_ROLE)) {
-                    if ($request->hasHeader('c-agent') && !is_null($request->hasHeader('c-agent'))) {
+                    if ($request->hasHeader('c-agent') && null !== $request->hasHeader('c-agent')) {
                         Auth::guard('agent')->logout();
                         Auth::guard('agent')->loginUsingId((int) $request->header('c-agent'));
                     }

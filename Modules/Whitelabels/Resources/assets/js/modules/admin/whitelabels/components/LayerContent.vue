@@ -10,7 +10,7 @@
             <div class="form-group row mt-5">
                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline') }}</label>
                 <div class="col-lg-9">
-                    <input type="text" class="form-control" :class="errors.has('headline') ? 'is-invalid': ''" :id="name + 'headline'" :name="name + 'headline'" :placeholder="trans('modals.headline')"  v-model="headline"/>
+                    <input type="text" class="form-control" :class="errors.has('headline') ? 'is-invalid': ''" :id="name + 'headline'" name="headline" :placeholder="trans('modals.headline')"  v-model="headline"/>
                     <div class="invalid-feedback">
                         <strong v-text="errors.get('headline')"></strong>
                     </div>
@@ -18,21 +18,29 @@
             </div>
 
             <div class="form-group row">
+                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline_color') }}</label>
+                <div class="col-lg-9 d-flex align-items-center">
+                    <template>
+                        <el-radio v-model="headline_color" label="dark">Dark</el-radio>
+                        <el-radio v-model="headline_color" label="light">Light</el-radio>
+                    </template>
+                </div>
+            </div>
+
+            <div class="form-group row">
                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline') }}</label>
                 <div class="col-lg-9">
-                    <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline') ? 'is-invalid': ''" :id="name + 'subheadline'" :name="name + 'subheadline'" :placeholder="trans('modals.subheadline')"  v-model="subheadline"></textarea>
+                    <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline') ? 'is-invalid': ''" :id="name + 'subheadline'" name="subheadline" :placeholder="trans('modals.subheadline')"  v-model="subheadline"></textarea>
                     <div class="invalid-feedback">
                         <strong v-text="errors.get('subheadline')"></strong>
                     </div>
                 </div>
             </div>
 
-            <legend class="text-uppercase font-size-sm font-weight-bold">{{ trans('modals.message_success') }}</legend>
-
             <div class="form-group row">
                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline_success') }}</label>
                 <div class="col-lg-9">
-                    <input type="text" class="form-control" :class="errors.has('headline_success') ? 'is-invalid': ''" :id="name + 'headline_success'" :name="name + 'headline_success'" :placeholder="trans('modals.headline_success')" v-model="headline_success"/>
+                    <input type="text" class="form-control" :class="errors.has('headline_success') ? 'is-invalid': ''" :id="name + 'headline_success'" name="headline_success" :placeholder="trans('modals.headline_success')" v-model="headline_success"/>
                     <div class="invalid-feedback">
                         <strong v-text="errors.get('headline_success')"></strong>
                     </div>
@@ -42,9 +50,19 @@
             <div class="form-group row">
                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline_success') }}</label>
                 <div class="col-lg-9">
-                    <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline_success') ? 'is-invalid': ''" :id="name + 'subheadline_success'" :name="name + 'subheadline_success'" :placeholder="trans('modals.subheadline_success')"  v-model="subheadline_success"></textarea>
+                    <textarea rows="5" cols="5" class="form-control" :class="errors.has('subheadline_success') ? 'is-invalid': ''" :id="name + 'subheadline_success'" name="subheadline_success" :placeholder="trans('modals.subheadline_success')"  v-model="subheadline_success"></textarea>
                     <div class="invalid-feedback">
                         <strong v-text="errors.get('subheadline_success')"></strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.privacy') }}</label>
+                <div class="col-lg-9">
+                    <input type="url" class="form-control" :class="errors.has('privacy') ? 'is-invalid': ''" :id="privacy" name="privacy" :placeholder="trans('modals.privacy')" v-model="privacy"/>
+                    <div class="invalid-feedback">
+                        <strong v-text="errors.get('privacy')"></strong>
                     </div>
                 </div>
             </div>
@@ -79,9 +97,11 @@
         id: null,
         name: '',
         headline: '',
+        headline_color: '',
         whitelabel_id: null,
         subheadline: '',
         headline_success: '',
+        privacy: '',
         subheadline_success: '',
         attachments: []
       }
@@ -90,27 +110,29 @@
       this.initValues()
     },
     watch: {
-      layer(val) {
+      layer (val) {
         this.initValues()
       }
     },
     methods: {
       initValues() {
         if (Object.entries(this.layer).length !== 0) {
-          let { id, name, headline, subheadline, headline_success, subheadline_success, whitelabel_id, attachments } = JSON.parse(JSON.stringify(this.layer))
+          let { id, name, headline, headline_color, subheadline, headline_success, subheadline_success, whitelabel_id, privacy, attachments } = JSON.parse(JSON.stringify(this.layer))
           this.id = id
           this.name = name
           this.whitelabel_id = whitelabel_id
           this.headline = headline
+          this.headline_color = headline_color
           this.subheadline = subheadline
           this.headline_success = headline_success
           this.subheadline_success = subheadline_success
+          this.privacy = privacy
           this.attachments = attachments
         }
       },
       onSubmit () {
         this.$store.dispatch('block', {element: 'contentComponent', load: true})
-        this.$http.put(window.laroute.route('admin.whitelabels.content.update'), {id: this.id, name: this.name, whitelabel_id: this.whitelabel_id, headline: this.headline, subheadline: this.subheadline, headline_success: this.headline_success, subheadline_success: this.subheadline_success})
+        this.$http.put(window.laroute.route('admin.whitelabels.content.update'), {id: this.id, name: this.name, whitelabel_id: this.whitelabel_id, headline: this.headline, headline_color: this.headline_color, subheadline: this.subheadline, headline_success: this.headline_success, subheadline_success: this.subheadline_success, privacy: this.privacy})
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
@@ -154,5 +176,7 @@
 </script>
 
 <style scoped>
-
+  .el-radio__input.is-checked+.el-radio__label {
+    color: #606266 !important;
+  }
 </style>

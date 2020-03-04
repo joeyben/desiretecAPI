@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
+
 require_once 'Mobile_Detect.php';
 /**
  * Class WishesRepository.
@@ -230,12 +231,28 @@ class WishesRepository extends BaseRepository
     }
 
     /**
-     * @return Wish
+     * @return array
      */
     public function getById(int $id)
     {
+        $result['wish'] = Wish::where([config('module.wishes.table') . '.id' => $id])->get()->first();
+
+        $result['modifiedData'] = Wish::where([config('module.wishes.table') . '.id' => $id])
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.wishes.table') . '.created_by')
+            ->first();
+
+        return $result;
+    }
+
+
+    /**
+     * @return Wish
+     */
+    public function getWish(int $id)
+    {
         return Wish::findOrFail($id);
     }
+
 
     /**
      * @return mixed
@@ -313,7 +330,6 @@ class WishesRepository extends BaseRepository
 
     public function createFromApi(array $input, string $userId)
     {
-
         $this->whitelabel_id = $input['whitelabel_id'];
         $wish = DB::transaction(function () use ($input, $userId) {
             $from = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);

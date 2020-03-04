@@ -12,6 +12,8 @@ return [
     |
     */
 
+    'title'     => 'Beispielhafte Nutzungsbedingungen: ',
+    'message'     => 'Desiretec stellt Ihnen beispielhaft eine Vorlage für Nutzungsbedingungen zur Verfügung. Bitte beachten Sie jedoch, dass Sie die Vorlage umfassend prüfen und auf Ihr Geschäftsmodell anpassen sollten. Eine Haftung für die Richtigkeit der Vorlage übernimmt Desiretec nicht, insbesondere erteilen wir auch keine Rechtsberatung. Jeder Kunde muss selbst bestimmen, welche Nutzungsbedingungen er einbindet.',
     'template'     => '<p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">Bedingungen f&uuml;r die Nutzung des </span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportals</span></span></span></p>
 
     <p><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>1. Funktion des </strong></span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">$KUNDE</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000">-Reisewunschportals</span></span></span><span style="font-size:11pt"><span style="font-family:Arial"><span style="color:#000000"><strong>, Nutzungsbedingungen</strong></span></span></span></p>

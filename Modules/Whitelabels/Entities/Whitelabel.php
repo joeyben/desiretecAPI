@@ -37,6 +37,7 @@ class Whitelabel extends Model
         'color',
         'licence',
         'headline',
+        'headline_color',
         'subheadline',
         'headline_success',
         'subheadline_success'
@@ -143,6 +144,11 @@ class Whitelabel extends Model
     public function footers()
     {
         return $this->hasMany(Footer::class);
+    }
+
+    public function hosts()
+    {
+        return $this->hasMany(WhitelabelHost::class);
     }
 
     /**

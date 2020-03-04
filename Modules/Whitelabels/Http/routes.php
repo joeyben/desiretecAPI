@@ -39,3 +39,13 @@ Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' 
     Route::get('whitelabels', 'WhitelabelsController@index')->name('provider.whitelabels');
     Route::put('whitelabels/save/{id}', 'WhitelabelsController@save')->name('provider.whitelabels.save')->where('id', '[0-9]+');
 });
+
+Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' . \App\Services\Flag\Src\Flag::EXECUTIVE_ROLE], 'prefix' => 'provider', 'namespace' => 'Modules\Whitelabels\Http\Controllers\Provider'], function () {
+    Route::post('whitelabels/store', 'HostsController@store')->name('provider.hosts.store');
+    Route::delete('whitelabels/{host}', 'HostsController@destroy')->name('provider.hosts.destroy');
+});
+
+Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' . \App\Services\Flag\Src\Flag::EXECUTIVE_ROLE], 'prefix' => 'provider', 'namespace' => 'Modules\Whitelabels\Http\Controllers\Provider'], function () {
+    Route::get('whitelabels/snippet', 'WhitelabelsController@snippet')->name('provider.whitelabels.snippet');
+    Route::get('whitelabels/how-it-works', 'WhitelabelsController@howItWorks')->name('provider.whitelabels.how-it-works');
+});

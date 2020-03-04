@@ -1,3 +1,11 @@
+@php
+    if (env('APP_USE_API')) {
+        $url = 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wish';
+    }else {
+        $url = url('/wish');
+    }
+@endphp
+
 @extends('emails.layouts.app')
 
 @section('content')
@@ -12,7 +20,7 @@
 
                         <p style="line-height: 24px; margin-bottom:20px;">
                             {!! trans('email.wish.created.user.body', ['title' => $wish->destination]) !!}
-                            {!! trans('email.wish.created.user.url', ['id' => $wish->id,'token' => $token, 'url' => url('/wish')]) !!}
+                            {!! trans('email.wish.created.user.url', ['id' => $wish->id,'token' => $token, 'url' => $url]) !!}
 
                         </p>
 

@@ -3,9 +3,11 @@
 use App\Helpers\uuid;
 use App\Models\Notification\Notification;
 use App\Models\Settings\Setting;
+use App\Repositories\Criteria\Where;
 use App\Services\Flag\Src\Flag;
 use Carbon\Carbon as Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Modules\LanguageLines\Entities\LanguageLines;
@@ -502,6 +504,29 @@ if (!function_exists('getWhiteLabelLogo')) {
     }
 }
 
+if (!function_exists('getWhiteLabelLogoUrlByID')) {
+    /**
+     * return current whitelabel logo url.
+     *
+     * @param string $type
+     *
+     * @return string
+     */
+    function getWhiteLabelLogoUrlByID($type, $whitelabelID)
+    {
+        $whitelabelID = $whitelabelID ? $whitelabelID : getCurrentWhiteLabelId();
+        $attachment = \Modules\Attachments\Entities\Attachment::select([
+            config('module.attachments.table') . '.basename',
+            config('module.attachments.table') . '.type',
+        ])
+            ->where('attachable_id', $whitelabelID)
+            ->where('type', 'whitelabels/' . $type)
+            ->first();
+
+        return null !== $attachment ? $attachment->toArray()['url'] : asset('img/logo_big.png');
+    }
+}
+
 if (!function_exists('setTranslationLoaderModel')) {
     /**
      * Set translation-loader model.
@@ -890,6 +915,79 @@ if (!function_exists('is_disabled')) {
 if (!function_exists('is_step_finished')) {
     function is_step_finished()
     {
-        return current_step() >= Flag::MAX_STEP - 2;
+        return current_step() >= Flag::MAX_STEP;
+    }
+}
+
+if (!function_exists('get_wl_email_signature')) {
+    /**
+     * return response Error JSON with added status.
+     *
+     * @param Exception $error
+     *
+     * @return RESPONSE JSON
+     */
+    function get_wl_email_signature()
+    {
+        try {
+            if (!Auth::check()) {
+                return '';
+            }
+
+            if (Auth::user()->whitelabels()->get()->first()->count() && null !== Auth::user()->whitelabels()->get()->first()) {
+                $whiteLabelID = Auth::user()->whitelabels()->get()->first()->id;
+                $whiteLabelName = mb_strtolower(Auth::user()->whitelabels()->get()->first()->display_name);
+            } else {
+                return null;
+            }
+
+            if (!('language_lines' === with(new LanguageLines())->getTable())) {
+                if (!DB::table('language_lines')
+                    ->select('text')
+                    ->where('locale', 'de')
+                    ->where('group', 'email')
+                    ->where('key', 'email_signature')
+                    ->where('whitelabel_id', $whiteLabelID)
+                    ->get()->isEmpty()) {
+                    $email_signature = DB::table('language_lines')
+                        ->select('text')
+                        ->where('locale', 'de')
+                        ->where('group', 'email')
+                        ->where('key', 'email_signature')
+                        ->where('whitelabel_id', $whiteLabelID)
+                        ->get()->first()->text;
+
+                    return $email_signature;
+                }
+
+                return null;
+            }
+            if (!DB::table("language_lines_{$whiteLabelName}")
+                    ->select('text')
+                    ->where('locale', 'de')
+                    ->where('group', 'email')
+                    ->where('key', 'email_signature')
+                    ->get()->isEmpty()) {
+                $email_signature = DB::table("language_lines_{$whiteLabelName}")
+                        ->select('text')
+                        ->where('locale', 'de')
+                        ->where('group', 'email')
+                        ->where('key', 'email_signature')
+                        ->get()->first()->text;
+
+                return $email_signature;
+            }
+
+            return null;
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+}
+
+if (!function_exists('is_light')) {
+    function is_light()
+    {
+        return 0 === (int) Auth::guard('web')->user()->whitelabels()->first()->licence;
     }
 }

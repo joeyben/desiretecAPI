@@ -20,6 +20,12 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('login', 'AuthController@login');
         Route::post('login/email', 'AuthController@sendLoginEmail');
         Route::post('login/token/{token}', 'AuthController@token');
+        Route::post('login/wish-token/{token}', 'AuthController@wishToken');
+        Route::post('login/wishlist-token/{token}', 'AuthController@wishListToken');
+    });
+
+    Route::group(['prefix' => 'account'], function () {
+        Route::post('sendResetLinkEmail', 'AccountController@sendResetLinkEmail');
     });
 
     Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'auth'], function () {
@@ -32,16 +38,6 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('me', 'AuthController@me');
         Route::post('check/role', 'AuthController@ckeckRole');
     });
-
-    Route::group(['prefix' => 'popup'], function () {
-        Route::get('show', 'WishesController@show');
-    });
-
-    Route::get('offers/{id}', 'OffersController@index');
-    Route::post('offers/store', 'OffersController@store');
-
-    Route::get('whitelabel/{id}', 'WhitelabelController@getWhitelabelBySlug');
-    Route::get('wish/store', 'WishesController@store');
 
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('wishes', 'WishesController@getWishes');
@@ -62,6 +58,11 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::put('update/{id}', 'AccountController@update');
         });
 
+        Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'account'], function () {
+            Route::put('changePassword', 'AccountController@changePassword');
+            Route::put('resetPassword', 'AccountController@resetPassword');
+        });
+
         Route::group(['prefix' => 'offers'], function () {
             Route::get('', 'OffersController@index');
             Route::post('/store', 'OffersController@store');
@@ -79,13 +80,24 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::put('/{id}', 'MessagesController@update');
             Route::delete('/{id}', 'MessagesController@delete');
         });
+
+        Route::group(['prefix' => 'contact'], function () {
+            Route::post('store', 'ContactController@store');
+            Route::post('storeCallback', 'ContactController@storeCallback');
+        });
     });
 
     Route::group(['middleware' => []], function () {
         Route::post('translations', 'TranslationsController@getTranslations');
-    });
 
-    Route::group(['middleware' => []], function () {
         Route::post('whitelabels', 'WhitelabelsController@store');
+        Route::get('whitelabel/{id}', 'WhitelabelController@getWhitelabelBySlug');
+        Route::get('whitelabelfromhost/{host}', 'WhitelabelController@getWhitelabelByHost');
+        Route::get('tnb', 'WhitelabelController@getTnb');
+
+        Route::get('wish/store', 'WishesController@store');
+
+        Route::get('destinations', 'RegionsController@getAllDestinations');
+        Route::get('airports', 'RegionsController@getAllAirports');
     });
 });

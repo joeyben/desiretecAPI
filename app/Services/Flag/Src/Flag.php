@@ -80,12 +80,12 @@ class Flag implements FlagInterface
                 'url'   => route('provider.whitelabels')
             ],
             2 => [
-                'name'  => 'Step 2: Layer version',
+                'name'  => 'Step 2: Layer Version',
                 'route' => 'admin.whitelabels.layers',
                 'url'   => route('admin.whitelabels.layers')
             ],
             3 => [
-                'name'  => 'Step 3: Layer content',
+                'name'  => 'Step 3: Layer Content',
                 'route' => 'admin.whitelabels.content',
                 'url'   => route('admin.whitelabels.content')
             ],
@@ -117,7 +117,7 @@ class Flag implements FlagInterface
             9 => [
                 'name'  => 'Step 9: Lead Management (if BASIC or PREMIUM)',
                 'route' => 'admin.rules',
-                'url'   => route('admin.rules')
+                'url'   => route('admin.rules'),
             ],
             10 => [
                 'name'  => 'Step 10: Offer Management (if BASIC or PREMIUM)',
@@ -125,9 +125,14 @@ class Flag implements FlagInterface
                 'url'   => route('autooffer.setting')
             ],
             11 => [
-                'name'  => 'Step 11: Download JS Snippet',
-                'route' => '#',
-                'url'   => '#'
+                'name'  => 'JS Snippet',
+                'route' => 'provider.whitelabels.snippet',
+                'url'   => route('provider.whitelabels.snippet')
+            ],
+            12 => [
+                'name'  => 'Dashboard',
+                'route' => 'admin.dashboard',
+                'url'   => route('admin.dashboard')
             ]
         ];
     }

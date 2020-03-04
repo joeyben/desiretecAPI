@@ -27,4 +27,12 @@ interface WhitelabelsRepository
     public function getDomain(string $domain);
 
     public function getVisual($whitelabel);
+
+    public function getTourOperators(int $whitelabelId);
+
+    public function addHost(string $host);
+
+    public function deleteHost(string $host);
+
+    public function updateHost(int $id, string $host, string $newHost);
 }

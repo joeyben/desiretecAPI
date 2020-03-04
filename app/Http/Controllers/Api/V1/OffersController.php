@@ -32,7 +32,7 @@ class OffersController extends APIController
 
             return $this->responseJson($offers);
         } catch (\Exception $e) {
-            return $this->respondWithError($e->getMessage());
+            return $this->responseJsonError($e);
         }
     }
 
@@ -43,9 +43,9 @@ class OffersController extends APIController
                 return $this->respondCreated(trans('alerts.frontend.offers.created'));
             }
 
-            return $this->respondInternalError('error');
+            ErrorException(trans('alerts.frontend.offers.error'));
         } catch (\Exception $e) {
-            return $this->respondWithError($e->getMessage());
+            return $this->responseJsonError($e);
         }
     }
 }

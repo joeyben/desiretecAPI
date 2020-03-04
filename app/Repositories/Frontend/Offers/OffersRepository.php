@@ -85,8 +85,12 @@ class OffersRepository extends BaseRepository
             ->orderBy(config('module.offers.table') . '.id', 'DESC')->get()->toArray();
 
         foreach ($data as &$offer) {
-            $offer['title'] = '<a href="' . route('frontend.wishes.show', [$offer['wish_id']]) . '">' . $offer['title'] . '</a>';
-            $offer['created_by'] = Agent::where('id', $offer['agent_id'])->first()->name;
+            $offer['title'] = '<a href="/wishes/' . $offer['wish_id'] . '">' . $offer['title'] . '</a>';
+            if (isset($offer['agent_id']) && null !== $offer['agent_id']) {
+                $offer['created_by'] = Agent::where('id', $offer['agent_id'])->first()->name;
+            } else {
+                $offer['created_by'] = Auth::guard('agent')->user()->name;
+            }
             $offer['created_at'] = date('d.m.Y H:i:s', strtotime($offer['created_at']));
         }
 
@@ -167,18 +171,26 @@ class OffersRepository extends BaseRepository
 
     public function createOfferAPI(Request $request)
     {
-        $files = $request->hasfile('file') ? $request->file('file') : [];
+        $filesArr = [];
+        if (isset($request->file) && null !== $request->file) {
+            foreach ($request->file as $file) {
+                $temp_array = [];
+                $temp_array['content'] = base64_decode($file['content'], true);
+                $temp_array['name'] = $file['name'];
+                array_push($filesArr, $temp_array);
+            }
+        }
         $input = $request->except('_token', 'file');
 
-        return DB::transaction(function () use ($input, $files) {
+        return DB::transaction(function () use ($input, $filesArr) {
             $id = access()->user()->id;
-            $active_agent = Agent::where('user_id', $id)->where('status', 'Active')->first();
+            $active_agent = Auth::guard('agent')->user()->id;
 
             $input['created_by'] = $id;
             $input['agent_id'] = $active_agent['id'];
 
             if ($offer = Offer::create($input)) {
-                $fileUploaded = $this->uploadImage($files, $offer->id);
+                $fileUploaded = $this->uploadImageAPI($filesArr, $offer->id);
                 event(new OfferCreated($offer));
 
                 return true;
@@ -244,6 +256,32 @@ class OffersRepository extends BaseRepository
             foreach ($files as $file) {
                 $fileName = time() . $file->getClientOriginalName();
                 $this->storage->put($this->upload_path . $fileName, file_get_contents($file->getRealPath()), 'public');
+                $offerFiles = new OfferFile();
+                $offerFiles->offer_id = $id;
+                $offerFiles->file = $fileName;
+                $offerFiles->save();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Upload Image.
+     *
+     * @param array $files
+     * @param int   $id
+     *
+     * @return bool
+     */
+    public function uploadImageAPI($files, $id)
+    {
+        if (isset($files) && !empty($files)) {
+            foreach ($files as $file) {
+                $fileName = time() . $file['name'];
+                $this->storage->put($this->upload_path . $fileName, $file['content'], 'public');
                 $offerFiles = new OfferFile();
                 $offerFiles->offer_id = $id;
                 $offerFiles->file = $fileName;

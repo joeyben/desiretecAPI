@@ -73,14 +73,24 @@ class WhitelabelsController extends Controller
         return view('whitelabels::provider', compact(['step']));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
+    public function snippet()
     {
-        return view('whitelabels::create');
+        $step = null;
+
+        if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            if ((int) $whitelabel->state < 11) {
+                $this->whitelabels->update(
+                    $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                    ['state' => 11]
+                );
+            }
+
+            $step = Flag::step()[12];
+        }
+
+        return view('whitelabels::snippet', compact(['step', 'whitelabel']));
     }
 
     /**
@@ -88,8 +98,9 @@ class WhitelabelsController extends Controller
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function howItWorks()
     {
+        return view('whitelabels::how_it_works');
     }
 
     /**
@@ -135,7 +146,7 @@ class WhitelabelsController extends Controller
         try {
             $result['whitelabel'] = $this->whitelabels->update(
                 $id,
-                $request->only('display_name', 'color')
+                $request->only('display_name', 'color', 'email')
             );
 
             $subDomain = str_slug(str_replace('.', '', $request->get('sub_domain')));
@@ -144,10 +155,12 @@ class WhitelabelsController extends Controller
             if ($result['whitelabel']->domain !== $this->str->lower($domain)) {
                 if ($this->isOldWhitelabel()) {
                     $this->whitelabels->updateRoute($id, $result['whitelabel']->name, $subDomain);
+                } else {
+                    $this->whitelabels->updateHost($id, $result['whitelabel']->domain, $domain);
                 }
 
                 ini_set('max_execution_time', 300);
-                $result['whitelabel'] = $this->whitelabels->update($id, ['domain' => $domain]);
+                $result['whitelabel'] = $this->whitelabels->update($id, ['name' => $subDomain, 'domain' => $domain]);
 
                 if ($this->isOldWhitelabel()) {
                     $this->artisan->call('whitelabel:make-route', ['domain' => $subDomain, 'module' => $result['whitelabel']->name]);

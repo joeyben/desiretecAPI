@@ -16,8 +16,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManager;
 use Modules\Whitelabels\Entities\Whitelabel;
+use Modules\Whitelabels\Entities\WhitelabelHost;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use App\Exceptions\GeneralException;
 
 /**
  * Class EloquentPostsRepository.
@@ -27,6 +29,20 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     public function model()
     {
         return Whitelabel::class;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWhitelabelNameByHost(string $host)
+    {
+        $query = WhitelabelHost::select([
+                config('module.whitelabel_host.table') . '.whitelabel_id'
+            ])
+            ->where(config('module.whitelabel_host.table') . '.host', 'LIKE', '%' . $host . '%')
+            ->first();
+
+        return $query->whitelabel_id;
     }
 
     public function updateRoute(int $id, string $name, string $subDomain)
@@ -347,11 +363,11 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
         if (null !== $whitelabel) {
             return $this->withCriteria([
-                new EagerLoad(['layers']),
+                new EagerLoad(['layers', 'hosts']),
             ])->find($whitelabel->id);
         } elseif ($first) {
             return $this->withCriteria([
-                new EagerLoad(['layers']),
+                new EagerLoad(['layers', 'hosts']),
             ])->first();
         }
     }
@@ -445,5 +461,56 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         }
 
         return null;
+    }
+
+    public function getTourOperators(int $whitelabelId)
+    {
+        $whitelabelOffer = \App\Models\WhitelabelAutooffer::where('whitelabel_id', $whitelabelId)->first();
+
+        return $whitelabelOffer ? $whitelabelOffer['tourOperators'] : '';
+    }
+
+    public function addHost(string $host)
+    {
+        $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
+        WhitelabelHost::create([
+                'host'          => $host,
+                'whitelabel_id' => $whitelabel->id
+        ]);
+
+        return $whitelabel;
+    }
+
+    public function deleteHost(string $host)
+    {
+        $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
+        $host = WhitelabelHost::where('whitelabel_id', $whitelabel->id)->where('host', $host)->first();
+
+        if ($host) {
+            $host->delete();
+        }
+
+        return $whitelabel;
+    }
+
+    public function updateHost(int $id, string $host, string $newHost)
+    {
+        try{
+            $hostToLookFor = $this->getSubDomain($host) . $this->getDomain($host);
+            $newHostToUpdate = $this->getSubDomain($newHost) . $this->getDomain($newHost);
+            DB::transaction(function () use ($id, $hostToLookFor, $newHostToUpdate) {
+
+                $oldHost = WhitelabelHost::where('whitelabel_id', $id)->where('host', $hostToLookFor)->first();
+
+                if ($oldHost->update(['host' => $newHostToUpdate])) {
+
+                    return true;
+                }
+
+                throw new GeneralException('Error');
+            });
+        } catch (\Exception $e) {
+            return $e;
+        }
     }
 }

@@ -95,4 +95,5 @@ return [
     'region_code'                   => 'Region code',
     'region_name'                   => 'Region Name',
     'country_code'                  => 'Country Code',
+    'position'                      => 'Position',
 ];
