@@ -79,6 +79,7 @@ class OfferUser extends Notification
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,
+                    'whitelabelId'     =>  $this->offer->wish->whitelabel->id,
                     'offer'            => $this->offer
                 ]);
     }

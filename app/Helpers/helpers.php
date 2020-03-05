@@ -8,6 +8,7 @@ use App\Services\Flag\Src\Flag;
 use Carbon\Carbon as Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Modules\LanguageLines\Entities\LanguageLines;
@@ -989,5 +990,34 @@ if (!function_exists('is_light')) {
     function is_light()
     {
         return 0 === (int) Auth::guard('web')->user()->whitelabels()->first()->licence;
+    }
+}
+
+if (!function_exists('is_old_whitelabel')) {
+    function is_old_whitelabel()
+    {
+        return !('language_lines' === with(new LanguageLines())->getTable());
+    }
+}
+
+if (!function_exists('wl_email_signature')) {
+    function wl_email_signature($id)
+    {
+        if ($whiteLabel = resolve(\Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository::class)->find($id)) {
+            $translation = DB::table('language_lines')
+                ->select('text')
+                ->where('locale', 'de')
+                ->where('group', 'email')
+                ->where('key', 'email_signature')
+                ->where('whitelabel_id', $whiteLabel->id)
+                ->get();
+            if ($translation->isNotEmpty()) {
+                return $translation->first()->text;
+            }
+
+            return '';
+        } else {
+            return '';
+        }
     }
 }

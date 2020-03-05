@@ -84,6 +84,7 @@ class UserContactedSeller extends Notification
                     'confirmation_url' => $confirmation_url,
                     'contact'          => $this->contact,
                     'wish_id'          => $this->wish_id,
+                    'whitelabelId'     => $this->contact->wish->whitelabel->id,
                     'token'            => $this->token
                 ]);
     }
