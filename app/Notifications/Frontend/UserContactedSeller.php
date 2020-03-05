@@ -70,7 +70,7 @@ class UserContactedSeller extends Notification
     public function toMail()
     {
         $confirmation_url = env('APP_USE_API') ?
-            'https://'.strtolower($this->contact->wish->whitelabel->name).'.wish-service.com/wishes/'.$this->contact->wish->id.'/'.$this->token :
+            'https://'.strtolower($this->contact->wish->whitelabel->name).'.wish-service.com/wish/'.$this->contact->wish->id.'/'.$this->token :
             route($this->getRoute(), [$this->wish_id, $this->token]);
 
         $subject = ('no data' !== $this->contact->email) ? trans('email.wish.user_cnt_seller')
@@ -84,8 +84,10 @@ class UserContactedSeller extends Notification
                     'confirmation_url' => $confirmation_url,
                     'contact'          => $this->contact,
                     'wish_id'          => $this->wish_id,
+                    'token'            => $this->token,
                     'whitelabelId'     => $this->contact->wish->whitelabel->id,
-                    'token'            => $this->token
+                    'whitelabel_name'  => $this->contact->wish->whitelabel->name,
+                    'whitelabel'       => $this->contact->wish->whitelabel
                 ]);
     }
 

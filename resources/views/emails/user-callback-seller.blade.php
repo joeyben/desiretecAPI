@@ -1,4 +1,4 @@
-@extends('emails.layouts.app')
+@extends('emails.layouts.app', ['whitelabel' => $whitelabel])
 
 @section('content')
 <div class="content">
@@ -24,7 +24,7 @@
                     <br><br>
                     @php
                         if (env('APP_USE_API')) {
-                            $url = 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wishes';
+                            $url = 'https://'.strtolower($whitelabel_name).'.wish-service.com/wish';
                         }else {
                             $url = url('/wish');
                         }

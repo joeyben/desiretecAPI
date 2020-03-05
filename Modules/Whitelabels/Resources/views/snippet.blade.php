@@ -13,6 +13,15 @@
     </div>
 @stop
 @section('vue-js')
+    <script>
+      function myFunction() {
+        var copyText = document.getElementById("myInput");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999)
+        document.execCommand("copy");
+        alert("Snippet wurde erfolgreich kopiert");
+      }
+    </script>
 @stop
 @section('content')
     <!-- Basic card -->
@@ -23,8 +32,15 @@
             </div>
         </div>
 
-        <pre class="language-less mb-1"><code>
-            <span class="hljs-tag">&lt;<span class="hljs-name">script</span>  type="text/javascript" <span class="hljs-attr">src</span>=<span class="hljs-string">"{{ $whitelabel->domain }}/js/layer.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code>
+        <pre class="language-less mb-1 flex-column"><code>
+            <div class="form-group">
+                <div class="input-group wmin-md-200">
+                    <input type="text" value='&lt;script  type="text/javascript" src="{{ $whitelabel->domain }}/js/layer.js"&gt;&lt;/script&gt;' id="myInput" readonly class="form-control">
+                    <span class="input-group-append">
+                    <span class="btn btn-outline bg-grey-400 text-grey-400 border-grey-400 input-group-text" onclick="myFunction()"><i class="icon-clippy"></i></span>
+                </span>
+                </div>
+            </div></code>
         </pre>
     </div>
 @stop

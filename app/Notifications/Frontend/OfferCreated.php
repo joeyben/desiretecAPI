@@ -112,7 +112,5 @@ class OfferCreated extends Notification
         }
 
         return $whitelabelId->domain . '/wishes/' . $this->wish_id;
-
-        return 'frontend.wishes.show';
     }
 }
