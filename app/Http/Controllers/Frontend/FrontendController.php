@@ -135,13 +135,17 @@ class FrontendController extends Controller
 
                 return view('frontend.tnb.tnb', compact(['tnb']));
             }
-            if (!DB::table("language_lines_{$domain[1]}")
+
+            $txt = str_slug($domain[1]);
+            $wlName = strtolower(str_replace("-", "", $txt));
+
+            if (!DB::table("language_lines_{$wlName}")
                     ->select('text')
                     ->where('locale', 'de')
                     ->where('group', 'layer')
                     ->where('key', 'footer.tnb')
                     ->get()->isEmpty()) {
-                $tnb = DB::table("language_lines_{$domain[1]}")
+                $tnb = DB::table("language_lines_{$wlName}")
                         ->select('text')
                         ->where('locale', 'de')
                         ->where('group', 'layer')
