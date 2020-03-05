@@ -138,7 +138,10 @@
 
                             <tr>
                                 <td colspan="2">
-                                    @include('emails.layouts.footer')
+                                    @lang('email.footer.line1'),<br>
+                                    @lang('email.footer.line2')<br><br>
+                                    @lang('email.footer.line3')<br>
+                                    @lang('email.footer.line4')<br>
                                 </td>
                             </tr>
 
