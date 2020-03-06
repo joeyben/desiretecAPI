@@ -155,9 +155,10 @@ class WhitelabelController extends Controller
 
                 return $this->responseJson($result);
             }
-            $wlName = $this->moduleWhitelabelsRepository->withCriteria([
-                    new Where('id', $request->id),
-                ])->first()->name;
+            $txt = str_slug($this->moduleWhitelabelsRepository->withCriteria([
+                new Where('id', $request->id),
+            ])->first()->name);
+            $wlName = strtolower(str_replace("-", "", $txt));
             if (null === DB::table("language_lines_{$wlName}")
                         ->select('text')
                         ->where('locale', 'de')

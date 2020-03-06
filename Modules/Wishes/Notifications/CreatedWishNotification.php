@@ -63,7 +63,7 @@ class CreatedWishNotification extends Notification
             ->replyTo($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Reisewunschportal')
             ->subject(trans('email.wish.user', ['whitelabel' => $this->wish->whitelabel->display_name]))
             //->view('wishes::emails.wish_general', ['wish' => $this->wish, 'token' => $this->wish->token]);
-            ->view('wishes::emails.wish', ['wish' => $this->wish, 'token' => $this->wish->token]);
+            ->view('wishes::emails.wish', ['wish' => $this->wish, 'whitelabelId' => $this->wish->whitelabel->id, 'token' => $this->wish->token]);
 
         /*
                 $whitelabelData = $this->_getWhitelabelData();

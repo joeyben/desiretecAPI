@@ -91,11 +91,10 @@
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   import VueTable from '../../../../../../../../../resources/assets/js/utils/Table.vue'
   import UploadAttachments from '../../../../../../../../../resources/assets/js/utils/UploadAttachments'
-  import TagComponent from './TagComponent'
 
   export default {
     name: 'WhitelabelsProviderComponent',
-    components: { VueTable, UploadAttachments, TagComponent },
+    components: { VueTable, UploadAttachments },
     data () {
       return {
         // eslint-disable-next-line
