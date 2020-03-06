@@ -198,6 +198,17 @@ class WishesController extends APIController
                 $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'),
                 $request->input('whitelabel_id')
             );
+            $input = $request->all();
+
+            $ages1 = isset($input['ages1']) ? $input['ages1'] . ',' : '';
+            $ages2 = isset($input['ages2']) ? $input['ages2'] . ',' : '';
+            $ages3 = isset($input['ages3']) ? $input['ages3'] . ',' : '';
+            $ages4 = isset($input['ages4']) ? $input['ages4'] : '';
+            $ages = $ages1 . $ages2 . $ages3 . $ages4;
+
+            $request->merge([
+                'ages'           => $ages
+            ]);
 
             if ($this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
                 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'), $newUser->id)) {
