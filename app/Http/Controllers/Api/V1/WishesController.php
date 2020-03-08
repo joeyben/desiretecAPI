@@ -109,13 +109,13 @@ class WishesController extends APIController
     {
         try {
             $data = $this->repository->getById($id);
-
             $wishData = $data['wish'];
-            $offers = $wishData->offers;
-            $offerFiles = [];
+
             $avatar = [];
             $agentName = [];
 
+            $offers = $wishData->offers;
+            $offerFiles = [];
             foreach ($offers as $offer) {
                 if (null !== Agent::where('id', $offer->agent_id)->value('avatar')) {
                     array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
@@ -133,12 +133,12 @@ class WishesController extends APIController
             $wish = $data['modifiedData'];
             $result['data'] = $wish;
             $result['data']['wish_id'] = $id;
-            $result['data']['category'] = $this->categories->getCategoryByParentValue('catering', $wish->catering);
             $result['data']['avatar'] = $avatar;
             $result['data']['agent'] = \Illuminate\Support\Facades\Auth::guard('agent')->user();
             $result['data']['agent_name'] = $agentName;
             $result['data']['offerFiles'] = $offerFiles;
             $result['data']['wishDetails'] = $wishData;
+            $result['data']['wishDetails']['catering'] = $this->categories->getCategoryByParentValue('catering', $wish->catering);
             $result['data']['wishDetails']['messages'] = $wishData->messages;
             $result['data']['wishDetails']['contacts'] = $wishData->contacts;
             $result['data']['wishDetails']['callbacks'] = $wishData->callbacks;
