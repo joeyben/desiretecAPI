@@ -85,7 +85,7 @@ class OfferCreated extends Notification
                     'offer'            => $this->offer,
                     'offer_type'       => 'manual',
                     'whitelabelId'     =>  $this->wl_id,
-                    'whitelabel'       => $this->wl_id
+                    'whitelabel'       => $this->offer->wish->whitelabel
                 ]);
     }
 
