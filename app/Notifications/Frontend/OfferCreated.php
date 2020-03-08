@@ -111,6 +111,6 @@ class OfferCreated extends Notification
             return route($route, [$this->wish_id, $this->token]);
         }
 
-        return $whitelabelId->domain . '/wishes/' . $this->wish_id;
+        return $whitelabelId->domain . '/wishes/' . $this->wish_id .'/'.$this->token;
     }
 }
