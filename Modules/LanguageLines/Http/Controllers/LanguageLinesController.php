@@ -256,7 +256,7 @@ class LanguageLinesController extends Controller
     public function duplicate(StoreLanguageLineRequest $request)
     {
         try {
-            if ('language_lines' !== with(new LanguageLines())->getTable()) {
+            if (!$this->isOldWhitelabel()) {
                 $languageline = $this->languageline->create(
                     $request->only('locale', 'description', 'group', 'key', 'text', 'whitelabel_id')
                 );
