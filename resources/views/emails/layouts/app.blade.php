@@ -25,7 +25,6 @@
                             <tbody>
                             <tr>
                                 <td style="color: #7f7f7f;text-align: center;">
-                                    <a href='{{ route('frontend.index') }}'>
                                         @if(isWhiteLabel())
                                             <img width="200" class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
                                         @elseif(isset($whitelabel))
