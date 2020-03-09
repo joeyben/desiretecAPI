@@ -50,7 +50,8 @@ class ApiTokenLoginRequested extends Mailable
             ->view('emails.token.link')->with([
                 'link'       => $this->buildLink(),
                 'whitelabel_name' => $formName,
-                'whitelabel' => $this->whiteLabel
+                'whitelabel' => $this->whiteLabel,
+                'whitelabelId'     =>  $this->whiteLabel->id
             ]);
     }
 

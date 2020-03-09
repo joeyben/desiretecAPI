@@ -30,6 +30,9 @@ class MessageSent extends Mailable
     {
         $email = Auth::user()->email;
 
-        return $this->from($email)->subject(Lang::get('email.message.new'))->view('emails.messages.message')->with(['bodyMessage' => $this->message]);
+        return $this->from($email)->subject(Lang::get('email.message.new'))->view('emails.messages.message')->with([
+            'bodyMessage' => $this->message,
+            'whitelabelId'     =>  Auth::user()->whitelabels()->first(),
+        ]);
     }
 }
