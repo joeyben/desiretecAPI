@@ -86,8 +86,8 @@
     display: block;
     box-sizing: border-box;
     .navbar-brand {
-      margin: 0;
-      height: 50px;
+      margin: 8px 0 0 0;
+      max-height: 30px;
       float: none;
       padding: 0;
       &:focus, &:hover {
