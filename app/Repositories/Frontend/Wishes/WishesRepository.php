@@ -185,8 +185,10 @@ class WishesRepository extends BaseRepository
                 }
             }
 
-            if ($singleWish['budget'] > $rules['budget']) {
-                $manuelFlag = true;
+            if (isset($rules['budget']) && null !== $rules['budget']) {
+                if ($singleWish['budget'] > $rules['budget']) {
+                    $manuelFlag = true;
+                }
             }
 
             $singleWish['manuelFlag'] = $manuelFlag;
