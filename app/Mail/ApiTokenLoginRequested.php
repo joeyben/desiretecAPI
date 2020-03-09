@@ -33,15 +33,13 @@ class ApiTokenLoginRequested extends Mailable
     {
         if (null === $this->whiteLabel) {
             $subject = trans('email.message.token_new', [
-                'whitelabel_name' => config('mail.from.whitelabel'),
-                'whitelabel' => null
+                'whitelabel' => config('mail.from.whitelabel'),
             ]);
             $formAddress = config('mail.from.email');
             $formName = config('mail.from.name');
         } else {
             $subject = trans('email.message.token_new', [
-                'whitelabel_name' => $this->whiteLabel->display_name,
-                'whitelabel' => $this->whiteLabel
+                'whitelabel' => $this->whiteLabel->display_name,
             ]);
             $formAddress = $this->whiteLabel->email;
             $formName = $this->whiteLabel->display_name;
@@ -51,7 +49,8 @@ class ApiTokenLoginRequested extends Mailable
             ->from($formAddress, $formName . ' Portal')
             ->view('emails.token.link')->with([
                 'link'       => $this->buildLink(),
-                'whitelabel' => $formName
+                'whitelabel_name' => $formName,
+                'whitelabel' => $this->whiteLabel
             ]);
     }
 
