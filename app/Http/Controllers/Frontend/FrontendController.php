@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\Frontend\Auth\Socialite;
 use App\Http\Controllers\Controller;
 use App\Models\Regions;
 use App\Models\Settings\Setting;
@@ -39,12 +40,18 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        $settingData = Setting::first();
+        /*$settingData = Setting::first();
         $google_analytics = $settingData->google_analytics;
         $body_class = $this::BODY_CLASS;
         $languages = $this->languages->findLanguages();
 
-        return view('frontend.index', compact('google_analytics', 'body_class', 'languages'));
+        return view('frontend.index', compact('google_analytics', 'body_class', 'languages'));*/
+        if (access()->user()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return view('frontend.auth.login')
+            ->withSocialiteLinks((new Socialite())->getSocialLinks());
     }
 
     /**
