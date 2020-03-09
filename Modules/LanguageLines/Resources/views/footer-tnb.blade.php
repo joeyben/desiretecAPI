@@ -34,7 +34,7 @@
                 <div class="form-group row">
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="checkbox" name="checkbox" class="form-check-input">
+                            <input type="checkbox" name="checkbox" class="form-check-input required" required>
                             <p class="font-italic font-size-xs">
                                  <span class="font-weight-black">@lang('tnb.title')</span>
                                  @lang('tnb.message')
