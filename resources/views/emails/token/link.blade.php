@@ -12,7 +12,7 @@
                     </p>
 
                     <p style="line-height: 24px; margin-bottom:20px;">
-                        @lang('email.token_new', ['token' => $link, 'whitelabel' => $whitelabel])
+                        @lang('email.token_new', ['token' => $link, 'whitelabel' => $whitelabel_name])
                     </p>
 
                     @include('emails.layouts.footer')

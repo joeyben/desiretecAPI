@@ -20,6 +20,12 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('login', 'AuthController@login');
         Route::post('login/email', 'AuthController@sendLoginEmail');
         Route::post('login/token/{token}', 'AuthController@token');
+        Route::post('login/wish-token/{token}', 'AuthController@wishToken');
+        Route::post('login/wishlist-token/{token}', 'AuthController@wishListToken');
+    });
+
+    Route::group(['prefix' => 'account'], function () {
+        Route::post('sendResetLinkEmail', 'AccountController@sendResetLinkEmail');
     });
 
     Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'auth'], function () {
@@ -54,6 +60,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
         Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'account'], function () {
             Route::put('changePassword', 'AccountController@changePassword');
+            Route::put('resetPassword', 'AccountController@resetPassword');
         });
 
         Route::group(['prefix' => 'offers'], function () {
@@ -72,6 +79,11 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::post('/', 'MessagesController@create');
             Route::put('/{id}', 'MessagesController@update');
             Route::delete('/{id}', 'MessagesController@delete');
+        });
+
+        Route::group(['prefix' => 'contact'], function () {
+            Route::post('store', 'ContactController@store');
+            Route::post('storeCallback', 'ContactController@storeCallback');
         });
     });
 

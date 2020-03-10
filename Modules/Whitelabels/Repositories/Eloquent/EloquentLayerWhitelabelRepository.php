@@ -10,7 +10,6 @@
 namespace Modules\Whitelabels\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
-use Modules\Whitelabels\Entities\Layer;
 use Modules\Whitelabels\Entities\LayerWhitelabel;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 

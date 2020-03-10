@@ -6,14 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Str;
 use Illuminate\Translation\Translator;
 use Modules\Attachments\Repositories\Contracts\AttachmentsRepository;
-use Modules\Whitelabels\Http\Requests\DeleteHostWhitelabelByExecutiveRequest;
-use Modules\Whitelabels\Http\Requests\SaveWhitelabelByExecutiveRequest;
 use Modules\Whitelabels\Http\Requests\StoreHostWhitelabelByExecutiveRequest;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
@@ -63,7 +59,7 @@ class HostsController extends Controller
     {
         try {
             $result['whitelabel'] = $this->whitelabels->addHost(
-                str_replace('https://','',  $request->get('host'))
+                str_replace('https://', '', $request->get('host'))
             );
 
             $result['message'] = $this->lang->get('messages.deleted', ['attribute' => 'Domain']);
@@ -77,7 +73,6 @@ class HostsController extends Controller
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
-
 
     public function destroy(string $host)
     {

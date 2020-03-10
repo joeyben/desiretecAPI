@@ -176,7 +176,7 @@ class AutooffersRepository extends BaseRepository
         ];
 
         $count = 0;
-        $offerList = array_key_exists('offerList', $data) ? $data->offerList : [];
+        $offerList = \array_key_exists('offerList', $data) ? $data->offerList : [];
         foreach ($offerList as $key => $autooffer) {
             if ($count >= $rulesArray['displayOffer']) {
                 break;

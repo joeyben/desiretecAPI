@@ -25,9 +25,9 @@ class AutooffersTTRepository extends BaseRepository
 
     private $token = '';
 
-    private $username = 'mkt_315150_de';
+    private $username = 'MKT_315150_DE';
 
-    private $password = 'Herostrasse_12';
+    private $password = '1A3s4d5f6g7jk9!';
 
     private $oauthUrl = 'https://auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
 
@@ -887,8 +887,8 @@ class AutooffersTTRepository extends BaseRepository
         $server = 'https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck';
         $this->getToken();
         $headers = [
-            "Content-type: text/xml",
-            "Content-length: " . strlen($requestXML), "Connection: close",
+            'Content-type: text/xml',
+            'Content-length: ' . \mb_strlen($requestXML), 'Connection: close',
         ];
         $ch = curl_init();
         $authorization = 'Authorization: Bearer ' . $this->token;
@@ -905,15 +905,11 @@ class AutooffersTTRepository extends BaseRepository
         $data = curl_exec($ch);
         var_dump($data);
         if (curl_errno($ch)) {
-            print curl_error($ch);
-            echo "Algo fallo";
+            echo curl_error($ch);
+            echo 'Algo fallo';
         } else {
             curl_close($ch);
         }
-
-
-
-
 
         /*$curl = curl_init();
 
@@ -935,7 +931,6 @@ class AutooffersTTRepository extends BaseRepository
         curl_close($curl);
         dd($result);*/
     }
-
 
     public function testTTbkp()
     {

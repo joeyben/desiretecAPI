@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://tui.reisewunschservice.de',
+        baseUrl: 'https://tui.reise-wunsch.com',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/whitelabel/tui/css/layer/whitelabel.css'

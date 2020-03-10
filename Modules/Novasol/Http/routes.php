@@ -1,23 +1,12 @@
 <?php
 
 $domain_env = [
-    'local_url'       => 'novasol.org',
-    'development_url' => 'novasol.reise-wunsch.com',
-    'production_url'  => 'novasol.reisewunschservice.de',
+    'local_url'       => 'http://novasol.com',
+    'development_url' => 'https://novasol.reise-wunsch.com',
+    'production_url'  => 'https://novasol.reisewunschservice.de',
 ];
 
 $domain = $domain_env[\Config::get('app.js_env') . '_url'];
-
-Route::get('test', function () {
-    $client = new GuzzleHttp\Client();
-    $res = $client->get('https://de-staging-ttxml.traveltainment.eu/TTXml-1.8/DispatcherWS', [
-        'auth' => [
-            'MKT_315150_DE', 'G6zP4s=gbNM891e'
-        ]
-    ]);
-
-    dd($res);
-});
 
 Route::group(['domain' => $domain], function () {
     setCurrentWhiteLabelId(\Config::get('novasol.id'));

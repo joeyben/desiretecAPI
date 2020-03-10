@@ -123,4 +123,5 @@ return [
     'default'                       => 'Default',
     'licence'                       => 'Licence',
     'duplicate'                     => 'Duplicate',
+    'privacy'                       => 'Privacy',
 ];

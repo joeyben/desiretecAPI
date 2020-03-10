@@ -79,7 +79,9 @@ class OfferUser extends Notification
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,
-                    'offer'            => $this->offer
+                    'whitelabelId'     =>  $this->offer->wish->whitelabel->id,
+                    'offer'            => $this->offer,
+                    'whitelabel'       => $this->offer->wish->whitelabel
                 ]);
     }
 
@@ -101,12 +103,11 @@ class OfferUser extends Notification
         $whitelabelId = Auth::guard('api')->user()->whitelabels()->first();
         $route = $whitelabelId->name . '.wish.details';
 
-        if(\Route::has($route, [$this->wish_id, $this->token])){
+        if (\Route::has($route, [$this->wish_id, $this->token])) {
             return route($route, [$this->wish_id, $this->token]);
-        } else {
-            return $whitelabelId->domain . '/wishes/' . $this->wish_id;
         }
 
-        return 'frontend.wishes.show';
+        return $whitelabelId->domain . '/wish/' . $this->wish_id .'/'.$this->token;
+
     }
 }

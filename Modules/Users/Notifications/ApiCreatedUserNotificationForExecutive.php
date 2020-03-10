@@ -49,7 +49,7 @@ class ApiCreatedUserNotificationForExecutive extends Notification
     {
         return (new MailMessage())
             ->subject(Lang::get('email.account.subject_for_executive', ['whitelabel' => $this->user->whitelabels()->first()->name]))
-            ->view('users::emails.api_created_executive', ['user' => $this->user, 'password' => $this->password, 'whitelabel' => $this->user->whitelabels()->first()])
+            ->view('users::emails.api_created_executive', ['user' => $this->user, 'whitelabelId' => $this->user->whitelabels()->first()->id, 'password' => $this->password, 'whitelabel' => $this->user->whitelabels()->first()])
             ->replyTo(env('MAIL_REPLY', 'reply@desiretec.com'), 'Desiretec');
     }
 
