@@ -31,9 +31,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         return Whitelabel::class;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getWhitelabelNameByHost(string $host)
     {
         $query = WhitelabelHost::select([
