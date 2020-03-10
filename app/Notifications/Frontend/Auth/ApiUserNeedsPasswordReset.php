@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Notifications\Frontend\Auth;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+
+/**
+ * Class UserNeedsPasswordReset.
+ */
+class ApiUserNeedsPasswordReset extends Notification
+{
+    use Queueable;
+    /**
+     * The password reset token.
+     *
+     * @var string
+     */
+    public $token;
+
+    public $host;
+    private $email;
+
+
+    public function __construct($token, $host, $email)
+    {
+        $this->token = $token;
+        $this->host = $host;
+        $this->email = $email;
+    }
+
+    /**
+     * Get the notification's channels.
+     *
+     * @param mixed $notifiable
+     *
+     * @return array|string
+     */
+    public function via($notifiable)
+    {
+        return ['mail'];
+    }
+
+    /**
+     * Build the mail representation of the notification.
+     *
+     * @param mixed $notifiable
+     *
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        $reset_password_route =  $this->host . '/reset/' . $this->token . '/' . $this->email;
+
+        return (new MailMessage())
+            ->view('emails.reset-password', ['reset_password_url' => $reset_password_route]);
+    }
+}

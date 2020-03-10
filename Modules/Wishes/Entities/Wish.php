@@ -32,6 +32,7 @@ class Wish extends Model
         'budget',
         'adults',
         'kids',
+        'pets',
         'category',
         'catering',
         'duration',

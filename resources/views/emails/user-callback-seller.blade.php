@@ -1,4 +1,4 @@
-@extends('emails.layouts.app')
+@extends('emails.layouts.app', ['whitelabel' => $whitelabel])
 
 @section('content')
 <div class="content">
@@ -22,7 +22,15 @@
                         <strong>Tel.:</strong> {{ $contact->telephone }}<br>
                     </p>
                     <br><br>
-                    {!! trans('email.contact.seller.wish_url', ['id' => $wish_id,'token' => $token, 'url' => url('/wish')]) !!}
+                    @php
+                        if (env('APP_USE_API')) {
+                            $url = 'https://'.strtolower($whitelabel_name).'.wish-service.com/wish';
+                        }else {
+                            $url = url('/wish');
+                        }
+                    @endphp
+
+                    {!! trans('email.contact.seller.wish_url', ['id' => $wish_id,'token' => $token, 'url' => $url]) !!}
 
                     @include('emails.layouts.footer')
                 </td>

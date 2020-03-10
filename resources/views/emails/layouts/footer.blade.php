@@ -4,6 +4,10 @@
             font-size: 12px;
             color: #000;
             width:100%;">
-    {!! Lang::get('email.email_signature') !!}
+    @if(isset($whitelabelId) && !is_old_whitelabel())
+        {!! wl_email_signature($whitelabelId) !!}
+    @else
+        {!! Lang::get('email.email_signature') !!}
+    @endif
 </p>
 <hr style="background: #e7e7e7;border: none;height: 1px;">

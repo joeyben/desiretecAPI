@@ -12,6 +12,7 @@ use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Modules\Wishes\Repositories\Contracts\WishesRepository;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Token;
@@ -24,13 +25,18 @@ class AuthController extends APIController
     private $auth;
 
     protected $identifier = 'email';
+    /**
+     * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
+     */
+    private $wishes;
 
     /**
      * Create a new AuthController instance.
      */
-    public function __construct(AuthManager $auth)
+    public function __construct(AuthManager $auth, WishesRepository $wishes)
     {
         $this->auth = $auth;
+        $this->wishes = $wishes;
     }
 
     public function login(ApiLoginRequest $request)
@@ -162,6 +168,24 @@ class AuthController extends APIController
             return $this->respondInternalError('Invalid login link!');
         }
 
+        Auth::login($token->user, true);
+        $jwtToken = JWTAuth::fromUser($token->user);
+
+        return $this->respond(['access_token' => JWTAuth::fromUser($token->user), 'status' => 200])
+            ->cookie('access_token', $jwtToken, JWTAuth::factory()->getTTL() * 60);
+    }
+
+    public function wishToken(Request $request, UserToken $token)
+    {
+        Auth::login($token->user, true);
+        $jwtToken = JWTAuth::fromUser($token->user);
+
+        return $this->respond(['access_token' => JWTAuth::fromUser($token->user), 'status' => 200])
+            ->cookie('access_token', $jwtToken, JWTAuth::factory()->getTTL() * 60);
+    }
+
+    public function wishListToken(Request $request, UserToken $token)
+    {
         Auth::login($token->user, true);
         $jwtToken = JWTAuth::fromUser($token->user);
 

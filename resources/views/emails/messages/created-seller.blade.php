@@ -1,4 +1,4 @@
-@extends('emails.layouts.app')
+@extends('emails.layouts.app', ['whitelabel' => $whitelabel])
 
 @section('content')
     <div class="content">

@@ -9,6 +9,7 @@ use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Str;
 use Modules\Users\Notifications\ApiCreatedUserNotificationForExecutive;
 use Modules\Users\Repositories\Contracts\UsersRepository;
+use Modules\Whitelabels\Entities\LayerWhitelabel;
 use Modules\Whitelabels\Entities\WhitelabelHost;
 use Modules\Whitelabels\Http\Requests\ApiStoreWhitelabelRequest;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
@@ -62,9 +63,9 @@ class WhitelabelsController extends APIController
             $result['whitelabel'] = $this->whitelabels->create(
                 [
                     'created_by'      => $user->id,
-                    'name'            => $this->str->studly($request->get('name')),
+                    'name'            => str_slug($request->get('name')),
                     'display_name'    => $request->get('name'),
-                    'email'           => $request->get('email'),
+                    'email'           => str_slug($request->get('name')) . '@' . env('API_DOMAIN', 'reise-wunsch.com'),
                     'licence'         => (string) $request->get('licence'),
                     'domain'          => env('API_HTTP', 'https://') . str_slug($request->get('name')) . '.' . env('API_DOMAIN', 'reise-wunsch.com'),
                     'distribution_id' => 1,
@@ -76,8 +77,17 @@ class WhitelabelsController extends APIController
             $this->whitelabels->sync($result['whitelabel']->id, 'layers', [Flag::PACKAGE]);
 
             $host = WhitelabelHost::create([
-                'host' => str_slug($request->get('name')) . '.' . env('API_DOMAIN', 'reise-wunsch.com'),
-                'whitelabel_id'      =>$result['whitelabel']->id,
+                'host'               => str_slug($request->get('name')) . '.' . env('API_DOMAIN', 'reise-wunsch.com'),
+                'whitelabel_id'      => $result['whitelabel']->id,
+            ]);
+
+            $layerWhitelabel = LayerWhitelabel::where('whitelabel_id', $result['whitelabel']->id)->where('layer_id', Flag::PACKAGE)->first();
+
+            $layerWhitelabel->update([
+                'headline'            => 'Dürfen wir Sie beraten?',
+                'subheadline'         => 'Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!',
+                'headline_success'    => 'Vielen Dank, Ihr Reisewunsch wurde versandt.',
+                'subheadline_success' => 'Ein Berater aus dem Reisebüro nimmt sich Ihrer Wünsche an.',
             ]);
 
             $user->fresh();

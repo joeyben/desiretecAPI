@@ -25,9 +25,10 @@
                             <tbody>
                             <tr>
                                 <td style="color: #7f7f7f;text-align: center;">
-                                    <a href='{{ route('frontend.index') }}'>
                                         @if(isWhiteLabel())
                                             <img width="200" class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
+                                        @elseif(isset($whitelabel))
+                                            <img width="200" class="navbar-brand" src="{{ getWhiteLabelLogoUrlByID('logo', $whitelabel->id) }}">
                                         @else
                                             <img width="200" class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
                                         @endif

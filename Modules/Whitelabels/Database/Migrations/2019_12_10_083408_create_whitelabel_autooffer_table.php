@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
 
 class CreateWhitelabelAutoofferTable extends Migration
 {
@@ -37,13 +37,13 @@ class CreateWhitelabelAutoofferTable extends Migration
      */
     public function down()
     {
-        if(app()->environment() !== 'testing') {
+        if ('testing' !== app()->environment()) {
             DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         }
 
         Schema::dropIfExists('whitelabel_autooffer');
 
-        if(app()->environment() !== 'testing') {
+        if ('testing' !== app()->environment()) {
             DB::statement('SET FOREIGN_KEY_CHECKS = 1');
         }
     }

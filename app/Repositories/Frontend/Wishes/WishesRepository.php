@@ -22,6 +22,7 @@ use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 
+require_once 'Mobile_Detect.php';
 /**
  * Class WishesRepository.
  */
@@ -113,7 +114,8 @@ class WishesRepository extends BaseRepository
         return $query;
     }
 
-    public function getWishList(ManageWishesRequest $request){
+    public function getWishList(ManageWishesRequest $request)
+    {
         $status_arr = [
             'new'               => '1',
             'offer_created'     => '2',
@@ -121,12 +123,12 @@ class WishesRepository extends BaseRepository
         ];
 
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
-        $id = ($request->get('filter') && !is_null($request->get('filter')) && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
-        $destination = ($request->get('filter') && !is_null($request->get('filter')) && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
+        $id = ($request->get('filter') && null !== $request->get('filter') && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
+        $destination = ($request->get('filter') && null !== $request->get('filter') && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
         $currentWhiteLabelID = Auth::guard('api')->user()->whitelabels()->first()->id;
         $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
 
-        if(Auth::guard('api')->user()->hasRole('User')) {
+        if (Auth::guard('api')->user()->hasRole('User')) {
             $wish = $this->getForDataTable()
                 ->when($currentWhiteLabelID, function ($wish, $currentWhiteLabelID) {
                     return $wish->where('whitelabel_id', (int) ($currentWhiteLabelID));
@@ -156,13 +158,13 @@ class WishesRepository extends BaseRepository
         }
 
         foreach ($wish as $singleWish) {
-            $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
+            $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
 
-            if(Auth::guard('api')->user()->hasRole('Seller')) {
-                if($currentWhiteLabelID === 198) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
-                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
+            if (Auth::guard('api')->user()->hasRole('Seller')) {
+                if (198 === $currentWhiteLabelID) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
+                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && null !== $this->users->find($singleWish['created_by'])->email) ? $this->users->find($singleWish['created_by'])->email : 'No Email';
                 }
-                if($singleWish->messages() && $singleWish->messages()->count() > 0) {
+                if ($singleWish->messages() && $singleWish->messages()->count() > 0) {
                     $singleWish['messageSentFlag'] = true;
                 }
             }
@@ -183,8 +185,10 @@ class WishesRepository extends BaseRepository
                 }
             }
 
-            if ($singleWish['budget'] > $rules['budget']) {
-                $manuelFlag = true;
+            if (isset($rules['budget']) && null !== $rules['budget']) {
+                if ($singleWish['budget'] > $rules['budget']) {
+                    $manuelFlag = true;
+                }
             }
 
             $singleWish['manuelFlag'] = $manuelFlag;
@@ -206,10 +210,7 @@ class WishesRepository extends BaseRepository
         return $response;
     }
 
-
     /**
-     * @param \App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest $request
-     *
      * @return JSON response
      */
     public function changeWishStatus(ChangeWishesStatusRequest $request)
@@ -232,12 +233,28 @@ class WishesRepository extends BaseRepository
     }
 
     /**
-     * @return Wish
+     * @return array
      */
     public function getById(int $id)
     {
+        $result['wish'] = Wish::where([config('module.wishes.table') . '.id' => $id])->get()->first();
+
+        $result['modifiedData'] = Wish::where([config('module.wishes.table') . '.id' => $id])
+            ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.wishes.table') . '.created_by')
+            ->first();
+
+        return $result;
+    }
+
+
+    /**
+     * @return Wish
+     */
+    public function getWish(int $id)
+    {
         return Wish::findOrFail($id);
     }
+
 
     /**
      * @return mixed
@@ -263,8 +280,7 @@ class WishesRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     * @param int   $whitelabelId
+     * @param int $whitelabelId
      *
      * @throws \App\Exceptions\GeneralException
      *
@@ -276,13 +292,14 @@ class WishesRepository extends BaseRepository
 
         $wish = DB::transaction(function () use ($input, $whitelabelId) {
             $from = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
-            $to   = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
+            $to = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
             $daysDiff = $to->diffInDays($from);
+            $detect = new \Mobile_Detect();
 
             if ('0' === $input['duration'] && $daysDiff < 7) {
-                $input['duration'] =  "".$daysDiff;
+                $input['duration'] = '' . $daysDiff;
             } elseif ('0' === $input['duration']) {
-                $input['duration'] =  '7-';
+                $input['duration'] = '7-';
             }
 
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
@@ -290,14 +307,15 @@ class WishesRepository extends BaseRepository
             $input['whitelabel_id'] = $whitelabelId;
             $input['group_id'] = $this->getGroup();
             $input['title'] = '-';
-            $input['budget'] = $input['budget'] === null ? 0 : $input['budget'];
-            $input['category'] = $input['category'] === null ? 3 : $input['category'];
+            $input['budget'] = null === $input['budget'] ? 0 : $input['budget'];
+            $input['category'] = null === $input['category'] ? 3 : $input['category'];
+            $input['mobile'] = $detect->isMobile() || $detect->isTablet() ? 1 : 0;
 
             $input['earliest_start'] = $from;
             $input['latest_return'] = $input['latest_return'] ? $to : '0000-00-00';
             $input['adults'] = (int) ($input['adults']);
             $input['extra_params'] = isset($input['extra_params']) ? $input['extra_params'] : '';
-            $input['duration'] = 'exact' === $input['duration'] ? "".$daysDiff : $input['duration'];
+            $input['duration'] = 'exact' === $input['duration'] ? '' . $daysDiff : $input['duration'];
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
@@ -312,29 +330,29 @@ class WishesRepository extends BaseRepository
         return $wish;
     }
 
-    public function createFromApi(array $input)
+    public function createFromApi(array $input, string $userId)
     {
         $this->whitelabel_id = $input['whitelabel_id'];
-        $wish = DB::transaction(function () use ($input) {
+        $wish = DB::transaction(function () use ($input, $userId) {
             $from = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
-            $to   = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
+            $to = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
             $daysDiff = $to->diffInDays($from);
 
             if ('0' === $input['duration'] && $daysDiff < 7) {
-                $input['duration'] =  "".$daysDiff;
+                $input['duration'] = '' . $daysDiff;
             } elseif ('0' === $input['duration']) {
-                $input['duration'] =  '7-';
+                $input['duration'] = '7-';
             }
 
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
-            $input['created_by'] = $input['user_id'];
+            $input['created_by'] = $userId;
             $input['group_id'] = $this->getGroup();
             $input['title'] = '-';
             $input['earliest_start'] = $from;
             $input['latest_return'] = $input['latest_return'] ? $to : '0000-00-00';
             $input['adults'] = (int) ($input['adults']);
             $input['extra_params'] = isset($input['extra_params']) ? $input['extra_params'] : '';
-            $input['duration'] = 'exact' === $input['duration'] ? "".$daysDiff : $input['duration'];
+            $input['duration'] = 'exact' === $input['duration'] ? '' . $daysDiff : $input['duration'];
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
@@ -349,12 +367,8 @@ class WishesRepository extends BaseRepository
         return $wish;
     }
 
-
     /**
      * Update Wish.
-     *
-     * @param \App\Models\Wishes\Wish $wish
-     * @param array                   $input
      */
     public function update(Wish $wish, array $input)
     {
@@ -373,15 +387,11 @@ class WishesRepository extends BaseRepository
                 return true;
             }
 
-            throw new GeneralException(
-                trans('exceptions.backend.wishes.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
         });
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
      * @throws GeneralException
      *
      * @return bool
@@ -508,8 +518,7 @@ class WishesRepository extends BaseRepository
     /**
      * Find data by multiple values in one field.
      *
-     * @param \Modules\Wishes\Entities\Wish $wish
-     * @param                               $category
+     * @param $category
      */
     public function storeCategoryWish($category, \Modules\Wishes\Entities\Wish $wish)
     {
@@ -524,9 +533,6 @@ class WishesRepository extends BaseRepository
 
     /**
      * Update Wish Status.
-     *
-     * @param int    $id
-     * @param string $updatedStatus
      */
     public function updateStatus(int $id, string $updatedStatus)
     {
@@ -539,9 +545,7 @@ class WishesRepository extends BaseRepository
 
             return false;
 
-            throw new GeneralException(
-                trans('exceptions.backend.wishes.update_error')
-            );
+            throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
         });
         if ($update) {
             return true;
@@ -550,31 +554,16 @@ class WishesRepository extends BaseRepository
         return false;
     }
 
-
-    /**
-    * @param int    $id
-    * @param string $updatedNote
-    */
-    public function updateNote(int $id, string $updatedNote)
+    public function updateNote(int $id, string $note)
     {
-       $update = DB::transaction(function () use ($id, $updatedNote) {
-           if (\Modules\Wishes\Entities\Wish::where('id', $id)->update(['note' => $updatedNote])) {
-               return true;
-           }
+        DB::transaction(function () use ($id, $note) {
+            if (Wish::where('id', $id)->update(['note' => $note])) {
+                return true;
+            }
 
-           return false;
-
-           throw new GeneralException(
-               trans('exceptions.backend.wishes.update_error')
-           );
-       });
-
-       if ($update) {
-           return true;
-       }
-       return false;
+            throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
+        });
     }
-
 
     /**
      * @param \App\Models\Wishes\Wish $wish
@@ -634,12 +623,13 @@ class WishesRepository extends BaseRepository
         }
     }
 
-    public function callTraffics($wishID, $userId){
+    public function callTraffics($wishID)
+    {
         $wish = Wish::where('id', $wishID)->first();
         $_rules = $this->autoRules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
         //dd(getRegionCode($wish->airport, 0));
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
-        $this->autooffers->storeMany($response, $wish->id, $_rules, $userId);
+        $this->autooffers->storeMany($response, $wish->id, $_rules);
     }
 }

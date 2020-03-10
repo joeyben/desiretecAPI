@@ -6,6 +6,7 @@ use App\Models\Messages\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class MessageCreated.
@@ -76,7 +77,7 @@ class MessageCreated extends Notification
      */
     public function toMail()
     {
-        $confirmation_url = route($this->getRoute(), [$this->wish_id, $this->token]);
+        $confirmation_url = url($this->getRoute());
         $subject = trans('email.message.created-' . $this->type, ['whitelabel' => $this->wl_name]);
         $view = 'emails.messages.created-' . $this->type;
 
@@ -85,7 +86,9 @@ class MessageCreated extends Notification
             ->subject($subject)
             ->view($view, [
                     'confirmation_url'      => $confirmation_url,
-                    'messageModel'          => $this->message
+                    'whitelabelId'      => $this->message->wish->whitelabel->id,
+                    'messageModel'          => $this->message,
+                    'whitelabel'        => $this->message->wish->whitelabel
                 ]);
     }
 
@@ -104,6 +107,13 @@ class MessageCreated extends Notification
             return $whitelabelslug . '.wish.details';
         }
 
-        return 'frontend.wishes.wish';
+        $whitelabelId = Auth::guard('api')->user()->whitelabels()->first();
+        $route = $whitelabelId->name . '.wish.details';
+
+        if (\Route::has($route, [$this->wish_id, $this->token])) {
+            return route($route, [$this->wish_id, $this->token]);
+        }
+
+        return $whitelabelId->domain . '/wish/' . $this->wish_id . '/' . $this->token;
     }
 }

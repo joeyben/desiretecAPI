@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class WhitelabelHost extends Model
 {
-
     protected $guarded = [];
 
     /**
@@ -16,5 +15,4 @@ class WhitelabelHost extends Model
     {
         return $this->belongsTo(Whitelabel::class);
     }
-
 }

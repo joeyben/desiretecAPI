@@ -15,6 +15,20 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.email') }} <span class="text-danger"> *</span></label>
+                        <div class="col-lg-9">
+                            <div class="input-group">
+                                <input type="text" class="form-control" :class="errors.has('email') ? 'is-invalid': ''" id='email' name='sub_email' :placeholder="trans('modals.email')" @input="updateWhitelabel"  :value="whitelabel.sub_email"/>
+                                <span class="input-group-append">
+                                    <span class="input-group-text">{{ whitelabel.domain_email }}</span>
+                                </span>
+                                <div class="invalid-feedback">
+                                    <strong v-text="errors.get('email')"></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.domain') }} <span class="text-danger"> *</span></label>
                         <div class="col-lg-9">
                             <div class="input-group">
@@ -40,7 +54,6 @@
                             </div>
                         </div>
                     </div>
-                    <tag-component :hostsList="whitelabel.hostsList"></tag-component>
                     <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('modals.whitelabels_image') }}</legend>
                     <div class="form-group">
                         <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'background'}" :fileList="whitelabel.background" :tip="trans('messages.background')" :limit="1" listType="picture-card"></upload-attachments>
@@ -78,11 +91,10 @@
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   import VueTable from '../../../../../../../../../resources/assets/js/utils/Table.vue'
   import UploadAttachments from '../../../../../../../../../resources/assets/js/utils/UploadAttachments'
-  import TagComponent from './TagComponent'
 
   export default {
     name: 'WhitelabelsProviderComponent',
-    components: { VueTable, UploadAttachments, TagComponent },
+    components: { VueTable, UploadAttachments },
     data () {
       return {
         // eslint-disable-next-line
@@ -114,6 +126,7 @@
         this.$store.commit('updateWhitelabel', {name: 'color', value: value})
       },
       onSubmit () {
+        this.$store.commit('updateWhitelabel', {name: 'email', value: this.whitelabel.sub_email + this.whitelabel.domain_email})
         this.$store.dispatch('block', {element: 'whitelabelsProviderComponent', load: true})
         this.$http.put(window.laroute.route('provider.whitelabels.save', {id: this.whitelabel.id}), this.whitelabel)
           .then(this.onSubmitSuccess)

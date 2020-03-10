@@ -16,7 +16,7 @@ class StoreCallbackRequest extends Request
      */
     public function authorize()
     {
-        return access()->allow('create-contact');
+        return true;
     }
 
     /**
