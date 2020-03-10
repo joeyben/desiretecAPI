@@ -4,6 +4,8 @@ namespace Modules\Whitelabels\Repositories\Contracts;
 
 interface WhitelabelsRepository
 {
+    public function getWhitelabelNameByHost(string $host);
+
     public function updateRoute(int $id, string $name, string $subDomain);
 
     public function generateFiles(int $id, string $name);
