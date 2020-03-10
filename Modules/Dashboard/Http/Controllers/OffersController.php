@@ -87,7 +87,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -118,7 +118,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -149,7 +149,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -187,7 +187,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -226,7 +226,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -277,7 +277,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -329,7 +329,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -373,7 +373,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -417,7 +417,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -467,7 +467,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
                 }
             } else {
@@ -529,7 +529,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabelId = config($url[0] . '.id');
                 }
             } else {
@@ -560,7 +560,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabelId = config($url[0] . '.id');
                 }
             } else {
@@ -591,7 +591,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabelId = config($url[0] . '.id');
                 }
             } else {
@@ -622,7 +622,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->first();
                 $url = explode('.', $_SERVER['HTTP_HOST']);
 
-                if (false === mb_strpos($url[0], 'mvp')) {
+                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
                     $whitelabelId = config($url[0] . '.id');
                 }
             } else {
