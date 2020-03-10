@@ -238,7 +238,7 @@ class APIController extends Controller
             'Access-Control-Allow-Origin'  => '*',
             'Access-Control-Allow-Methods' => '*',
             'Access-Control-Allow-Headers' => '*',
-        ], JSON_NUMERIC_CHECK);
+        ], JSON_PRESERVE_ZERO_FRACTION);
     }
 
     protected function responseJsonPaginated($data = null): JsonResponse
