@@ -8,3 +8,6 @@
         @endif
     </p>
 </div>
+<script>
+    dt.Tracking.rawEvent('form_success', 'success', 'Form sent successfully');
+</script>

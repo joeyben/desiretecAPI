@@ -461,12 +461,12 @@
                 });
                 $("#latest_return").trigger("change");
 
-                var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
+                /*var airport = getUrlParams('depap') ? getUrlParams('depap') : '';
                 var airport_arr = airport.split(',');
                 for(var i = 0; i<airport_arr.length;i++) {
                     var airport_name = dt.PopupManager.decoder.dictionaries.airports[airport_arr[i]];
                     $('#airport').tagsinput('add', airport_name);
-                }
+                }*/
             });
 
             $(window).on('resize', function() {
@@ -494,7 +494,7 @@
                   highlight: true,
                   afterSelect: function(val) { this.$element.val(""); },
                   source: function(query) {
-                    return $.get('https://lastminute.reise-wunsch.com/get-all-destinations', {query: query});
+                    return $.get('https://travelwish.lastminute.ch/get-all-destinations', {query: query});
                   }
                 }
               });
@@ -513,7 +513,7 @@
                   highlight: true,
                   afterSelect: function(val) { this.$element.val(""); },
                   source: function(query) {
-                    return $.get('https://lastminute.reise-wunsch.com/get-tt-airports', {query: query});
+                    return $.get('https://travelwish.lastminute.ch/get-tt-airports', {query: query});
                   }
                 }
               });
@@ -575,7 +575,7 @@
                     @endif
 
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                    <p>Ich habe die <a href="https://lastminute.reise-wunsch.com/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.lastminute.ch/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                    <p>Ich habe die <a href="https://lastminute.reisewunschservice.de/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.lastminute.ch/datenschutz/" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                 </div>
             </div>
         </div>

@@ -1,3 +1,7 @@
+@php
+    $budget = $wish->budget === 0 ? "Beliebig" : $wish->budget."€";
+@endphp
+
 @extends('frontend.layouts.app')
 
 @section('title')
@@ -116,7 +120,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-credit-card" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->budget }}€</h4>
+                                    <h4>{{ $budget }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
@@ -218,16 +222,18 @@
                                     <h4 class="dark-grey-2">Highlights der Unterkunft:</h4>
                                     <ul>
                                         @for ($i = 0; $i < 3; $i++)
-                                        <li>
-                                            <i class="fal fa-check"></i>
-                                            <h4 class="dark-grey">{{ getKeywordText($offer['data']['hotelOffer']['hotel']['keywordList'][$i]) }}</h4>
-                                        </li>
+                                            @if (is_array($offer['data']['hotelOffer']['hotel']['keywordList']) and array_key_exists($i, $offer['data']['hotelOffer']['hotel']['keywordList']))
+                                            <li>
+                                                <i class="fal fa-check"></i>
+                                                <h4 class="dark-grey">{{ getKeywordText($offer['data']['hotelOffer']['hotel']['keywordList'][$i]) }}</h4>
+                                            </li>
+                                            @endif
                                         @endfor
                                     </ul>
 
                                     <div class="travel-info">
                                         <h4>{{ $offer['data']['hotelOffer']['boardType']['name'] }}</h4>
-                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['serviceOffer']['description'] }}">{{ $offer['data']['travelDate']['duration'] }} Tage, {{ str_limit($offer['data']['serviceOffer']['description'], 20, "...") }}</h4>
+                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['serviceOffer']['description'] }}">{{ $offer['data']['travelDate']['duration'] }} {{ trans('autooffers.offer.nights') }}, {{ str_limit($offer['data']['serviceOffer']['description'], 20, "...") }}</h4>
                                     </div>
                                 </div>
 
@@ -246,10 +252,10 @@
 
                                         $wlAutooffer = getWhitelabelAutooffers();
                                         $tourOperators = $wlAutooffer['tourOperators'];
-                                        $duration = (int)$offer['data']['travelDate']['duration'] - 1;
+                                        $duration = (int)$offer['data']['travelDate']['duration'];
                                     @endphp
-                                    @if (getCurrentWhiteLabelId() === 159)
-                                        <a class="btn btn-primary" target="_blank" href="https://ibe.traffics.de/1100000160000000/pauschalreise/angebote?giataIdList={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&roomTypeList=&minPricePerPerson={{ $offer['data']['personPrice']['value'] }}&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $duration }}&minBoardType={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveList=&adults={{ $wish->adults }}{{ $kids }}&departureAirportList={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&destinationName={{ $wish->destination }}&regionList={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&ref=desiretec">
+                                    @if (getCurrentWhiteLabelId() === 67)
+                                        <a class="btn btn-primary" target="_blank" href="https://booking.reise-rebellen.de/1100000160000000/pauschalreise/angebote?giataIdList={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&roomTypeList=&minPricePerPerson={{ $offer['data']['personPrice']['value'] }}&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $duration }}&minBoardType={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveList=&adults={{ $wish->adults }}{{ $kids }}&departureAirportList={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&destinationName={{ $wish->destination }}&regionList={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&ref=desiretec">
                                             <i class="fas fa-chevron-right"></i>
                                         </a>
                                     @else

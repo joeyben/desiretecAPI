@@ -412,7 +412,7 @@
                 $('.selectpicker').selectpicker();
                 $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
                 //autocomplete()
-                dt.applyBrandColor();
+                applyBrandColor();
                 dt.adjustResponsive();
 
                 dt.startDate = new Pikaday({
@@ -544,6 +544,76 @@
                 }
             }
 
+            function applyBrandColor(){
+
+                // Style variables
+                // brandColor is passed through blade
+                var brandColorDarker = brandColor;
+
+                var btnPrimaryCss = {
+                    'background': brandColor,
+                    'border': '1px solid ' + brandColor,
+                    'color': '#fff',
+                };
+                var btnPrimaryHoverCss = {
+                    'background': brandColorDarker,
+                    'border': '1px solid ' + brandColorDarker,
+                    'color': '#fff',
+                };
+                var btnSecondaryCss = {
+                    'background': '#fff',
+                    'border': '1px solid ' + brandColor,
+                    'color': brandColor,
+                };
+                var btnSecondaryHoverCss = {
+                    'background': '#fff',
+                    'border': '1px solid ' + brandColorDarker,
+                    'color': brandColorDarker,
+                };
+
+                // Apply styles
+                var layerButtons = $('.primary-btn, .kwp .pax-col .kwp-form-group .pax-more .button a');
+                layerButtons
+                    .css(btnPrimaryCss)
+                    .mouseover(function () {
+                        $(this).css(btnPrimaryHoverCss);
+                    }).mouseout(function () {
+                    $(this).css(btnPrimaryCss);
+                });
+
+                var paxMore = $('.kwp .pax-col .kwp-form-group .pax-more .button a');
+                paxMore.css({
+                    'background': brandColor,
+                });
+
+                var durationMore = $('.kwp .duration-col .kwp-form-group .duration-more .button a');
+                durationMore.css({
+                    'background': brandColor,
+                });
+
+                var footerLinks = $('.kwp-agb p a');
+                footerLinks.css({
+                    'color': brandColor,
+                });
+
+                var checkboxEl = $('.kwp input[type="checkbox"]:checked:after');
+                $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
+
+                var footerHref = $('.kwp-agb p a');
+                footerHref.css({
+                    'color': brandColor,
+                });
+
+                var layerHeader = $('.mobile-layer .kwp-header');
+                layerHeader.css({
+                    'background': brandColor,
+                });
+
+                var successHref = $('.kwp-completed-master a');
+                $("<style>.kwp-completed-master a { color: " + brandColor + "; }</style>")
+                    .appendTo(document.documentElement);
+
+            }
 
         </script>
 

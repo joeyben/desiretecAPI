@@ -81,7 +81,7 @@ class AutooffersRepository extends BaseRepository
                         'searchDate'           => $this->from . ',' . $this->to . ',' . $this->period, // 10112018,12122018,14
                         'adults'               => $this->adults,
                         'children'             => $this->kids,
-                        'navigation'           => '1,500',
+                        'navigation'           => '1,1000',
                         'departureAirportList' => implode(',', $this->airport),
                         'regionList'           => implode(',', $this->region),
                         //'locationList' => $this->location,
@@ -146,14 +146,13 @@ class AutooffersRepository extends BaseRepository
      */
     public function saveWishData(Wish $wish)
     {
-        $this->setAuth();
         $this->setMinBudget(0);
         $this->setMaxBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
         $this->setAirport(getRegionCode($wish->airport, 0));
         $this->setCategory($wish->category);
-        $this->setCatering($wish->category);
+        $this->setCatering($wish->catering);
         $this->setFrom(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->earliest_start)->format('dmy'));
         $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
         $this->setPeriod($wish->duration, $wish);
@@ -189,6 +188,9 @@ class AutooffersRepository extends BaseRepository
             $hotelId = $offer['hotelOffer']['hotel']['giata']['hotelId'];
             $tOperator = $offer['tourOperator']['code'];
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
+            if (!$hotel["hotel"] || empty($hotel["hotel"])) {
+                continue;
+            }
             $this->storeAutooffer($offer, $hotel, $wish_id, $userId);
             ++$count;
         }
@@ -208,7 +210,10 @@ class AutooffersRepository extends BaseRepository
         $recommendation = (int) ($data['hotelOffer']['hotel']['rating']['recommendation']);
         $rules_ratings = ((int) (str_replace('.', '', $rulesArray['rating'])) / 10);
 
-        return $rating > $rules_ratings && 0 === $autooffer && $recommendation > $rulesArray['recommendation'];
+        $rating_b = $rating ? $rating > $rules_ratings : true;
+        $recommendation_b = $recommendation ? $recommendation > $rulesArray['recommendation'] : true;
+
+        return $rating_b && 0 === $autooffer && $recommendation_b;
     }
 
     /**
@@ -294,11 +299,11 @@ class AutooffersRepository extends BaseRepository
     }
 
     /**
-     * @param string $auth
+     * @param int $whitelabel_id
      */
-    public function setAuth(): void
+    public function setAuth($whitelabel_id)
     {
-        $wlAutooffer = getWhitelabelAutooffers();
+        $wlAutooffer = getWhitelabelAutooffersById($whitelabel_id);
         $this->auth = $wlAutooffer ? $wlAutooffer['token'] : 'ZGVzaXJldGVjLmNvbm5lY3RvcnByb2Q6eXJFZ0ZDQzA=';
     }
 
@@ -407,7 +412,7 @@ class AutooffersRepository extends BaseRepository
     /**
      * @param $period
      */
-    public function setPeriod($period)
+    public function setPeriod($period, $wish)
     {
         $period = str_replace('Nächte', '', $period);
         $period = str_replace('Nacht', '', $period);
@@ -426,7 +431,7 @@ class AutooffersRepository extends BaseRepository
             $to = \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return);
             $int_duration = $from->diffInDays($to);
         }
-        $this->period = $int_duration + 1;
+        $this->period = $int_duration;
     }
 
     /**

@@ -143,8 +143,11 @@ class WishesController extends Controller
         return view('frontend.wishes.wish')->with([
             'wish'               => $wish,
             'avatar'             => $avatar,
+            'last_offer'         => $lastOffer,
+            'last_message'       => $lastMessage,
             'agent'              => Auth::guard('agent')->user(),
-            'agent_name'         => $agentName,
+            'agent_last_offer'   => $agentName,
+            'agent_last_message' => $agentLastMessage,
             'body_class'         => $this::BODY_CLASS,
             'offer_url'          => $this::OFFER_URL,
             'categories'         => $this->categories,

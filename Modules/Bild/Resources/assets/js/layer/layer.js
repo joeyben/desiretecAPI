@@ -653,7 +653,7 @@ var exitIntent = window.exitIntent || {};
                 highlight: true,
                 afterSelect: function(val) { this.$element.val(""); },
                 source: function(query) {
-                    return $.get('https://bild.reise-wunsch.com/get-all-destinations', {query: query});
+                    return $.get('https://bild.reisewunschservice.de/get-all-destinations', {query: query});
                 }
             }
         });
@@ -671,7 +671,7 @@ var exitIntent = window.exitIntent || {};
                 highlight: true,
                 afterSelect: function(val) { this.$element.val(""); },
                 source: function(query) {
-                    return $.get('https://bild.reise-wunsch.com/get-all-airports', {query: query});
+                    return $.get('https://bild.reisewunschservice.de/get-all-airports', {query: query});
                 }
             }
         });
@@ -686,3 +686,4 @@ var exitIntent = window.exitIntent || {};
     };
 
 })(jQuery);
+y

@@ -3,7 +3,7 @@ var dt = window.dt || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://lastminute.reise-wunsch.com',
+        baseUrl: 'https://travelwish.lastminute.ch',
         logoPath: '/whitelabel/lastminute/images/layer/logo.png',
         popupPath: '/show',
         popupStore:'/store',
@@ -47,7 +47,7 @@ var dt = window.dt || {};
 
     var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
-        matchesUrl: 'lastminute.reise-wunsch.com',
+        matchesUrl: 'travelwish.lastminute.ch',
         filterFormSelector: 'body',
         dictionaries: {
             'catering': {
@@ -620,7 +620,7 @@ var dt = window.dt || {};
             });
         }
         dt.PopupManager.init();
-        dt.Tracking.init('desiretec_exitwindow','UA-105970361-8');
+        dt.Tracking.init('desiretec_exitwindow','UA-105970361-18');
         dt.triggerButton(e);
         if(isMobile() && dt.PopupManager.decoder){
             dt.scrollUpDetect();

@@ -689,6 +689,18 @@ if (!function_exists('getWhitelabelAutooffers')) {
     }
 }
 
+if (!function_exists('getWhitelabelAutooffersById')) {
+    /**
+     * return url(blade-format = with dot as seperator) to the whitelabel-footer.
+     *
+     * @return string
+     */
+    function getWhitelabelAutooffersById($whitelabel_id)
+    {
+        return \App\Models\WhitelabelAutooffer::where('whitelabel_id', $whitelabel_id)->first();
+    }
+}
+
 if (!function_exists('getKeywordText')) {
     /**
      * return language lines table name.
@@ -715,7 +727,7 @@ if (!function_exists('getRegionCode')) {
 
         $codes = [];
         foreach ($regions as $region) {
-            array_push($codes, str_replace('region.', '', \App\Models\Regions::where('regionName', 'like', '%' . $region . '%')->where('type', $type)->first()->regionCode));
+            array_push($codes, str_replace('region.', '', \App\Models\Regions::where('regionName', $region)->where('type', $type)->first()->regionCode));
         }
 
         return $codes;

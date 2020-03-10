@@ -98,6 +98,7 @@
                                 <li>{{ link_to_route('frontend.wishes.list', trans('navs.frontend.wishes')) }}</li>
                             @endif
 
+
                             <li>{{ link_to_route('frontend.user.account', trans('navs.frontend.user.account')) }}</li>
 
                         </ul>
