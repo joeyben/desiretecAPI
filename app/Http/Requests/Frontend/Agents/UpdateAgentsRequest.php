@@ -29,7 +29,7 @@ class UpdateAgentsRequest extends Request
         return [
             'name'      => 'required|string|max:64',
             'email'     => 'required|email|max:255',
-            'telephone' => 'required|integer'
+            'telephone' => 'required|regex:#^[0\+]{1}[0-9-]{6,20}#'
         ];
     }
 
