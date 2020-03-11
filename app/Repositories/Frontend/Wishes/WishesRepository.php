@@ -87,6 +87,7 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.duration',
                 config('module.wishes.table') . '.adults',
                 config('module.wishes.table') . '.kids',
+                config('module.wishes.table') . '.pets',
                 config('module.wishes.table') . '.budget',
                 config('module.wishes.table') . '.earliest_start',
                 config('module.wishes.table') . '.latest_return',
