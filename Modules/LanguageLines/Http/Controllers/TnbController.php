@@ -95,21 +95,6 @@ class TnbController extends Controller
                 abort(403, trans('errors.user.nowhitelabel'));
             }
 
-            $step = null;
-
-            if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
-
-                if ((int) $whitelabel->state < 6) {
-                    $this->whitelabels->update(
-                        $this->auth->guard('web')->user()->whitelabels()->first()->id,
-                        ['state' => 6]
-                    );
-                }
-
-                $step = Flag::step()[7];
-            }
-
             if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                 $whiteLabelID = getCurrentWhiteLabelField('id');
                 $whiteLabelName = getCurrentWhiteLabelField('display_name');
@@ -192,7 +177,7 @@ class TnbController extends Controller
             $result['status'] = 500;
         }
 
-        return view('languagelines::footer-tnb', compact(['step', 'result']));
+        return view('languagelines::footer-tnb', compact(['result']));
     }
 
     /**
@@ -230,10 +215,25 @@ class TnbController extends Controller
                 );
             }
 
+            $step = null;
+
+            if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+                if ((int) $whitelabel->state < 6) {
+                    $this->whitelabels->update(
+                        $this->auth->guard('web')->user()->whitelabels()->first()->id,
+                        ['state' => 6]
+                    );
+                }
+
+                $step = Flag::step()[7];
+            }
+
             $result['success'] = true;
             $result['status'] = 200;
 
-            return redirect(route('provider.footer.tnb', $request->language))->with('success', trans('tnb.stored'));
+            return redirect(route('provider.footer.tnb', $request->language))->withStep($step)->with('success', trans('tnb.stored'));
         } catch (Exception $e) {
             $result['success'] = false;
             $result['message'] = $e->getMessage();
