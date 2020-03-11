@@ -169,25 +169,30 @@ class WishesRepository extends BaseRepository
                 }
             }
 
-            $manuelFlag = false;
 
-            if (\is_array($rules['destination']) && null !== $rules['destination']) {
-                if (\is_array($singleWish['destination'])) {
-                    foreach ($singleWish['destination'] as $destination) {
-                        if (\in_array($destination, $rules['destination'], true)) {
+            if(is_null($rules) && $rules['type'] === 'manuel'){
+                $manuelFlag = true;
+            } else {
+                $manuelFlag = false;
+
+                if (\is_array($rules['destination']) && null !== $rules['destination']) {
+                    if (\is_array($singleWish['destination'])) {
+                        foreach ($singleWish['destination'] as $destination) {
+                            if (\in_array($destination, $rules['destination'], true)) {
+                                $manuelFlag = true;
+                            }
+                        }
+                    } else {
+                        if (\in_array($singleWish['destination'], $rules['destination'], true)) {
                             $manuelFlag = true;
                         }
                     }
-                } else {
-                    if (\in_array($singleWish['destination'], $rules['destination'], true)) {
+                }
+
+                if (isset($rules['budget']) && null !== $rules['budget']) {
+                    if ($singleWish['budget'] > $rules['budget']) {
                         $manuelFlag = true;
                     }
-                }
-            }
-
-            if (isset($rules['budget']) && null !== $rules['budget']) {
-                if ($singleWish['budget'] > $rules['budget']) {
-                    $manuelFlag = true;
                 }
             }
 
