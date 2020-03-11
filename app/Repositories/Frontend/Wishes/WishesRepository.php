@@ -170,7 +170,7 @@ class WishesRepository extends BaseRepository
             }
 
 
-            if(is_null($rules) && $rules['type'] === 'manuel'){
+            if(is_null($rules) || $rules['type'] === 'manuel'){
                 $manuelFlag = true;
             } else {
                 $manuelFlag = false;
