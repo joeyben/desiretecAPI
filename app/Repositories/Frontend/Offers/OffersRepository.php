@@ -187,7 +187,7 @@ class OffersRepository extends BaseRepository
             $active_agent = Auth::guard('agent')->user()->id;
 
             $input['created_by'] = $id;
-            $input['agent_id'] = $active_agent['id'];
+            $input['agent_id'] = $active_agent;
 
             if ($offer = Offer::create($input)) {
                 $fileUploaded = $this->uploadImageAPI($filesArr, $offer->id);
