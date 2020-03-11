@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row" v-if="hasRole('Administrator')">
                         <label class="col-form-label col-lg-2">{{ trans('modals.price') }}</label>
                         <div class="col-lg-10">
                             <el-radio-group :value="autooffer.price" name="type" @input="updateAutoofferPrice" size="medium" style="width: 100%;">
@@ -70,21 +70,21 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row" v-if="hasRole('Administrator')">
                         <label class="col-form-label col-lg-2">{{ trans('modals.price_loop') }}</label>
                         <div class="col-lg-10">
                             <el-slider :value="autooffer.price_loop"  :max="100" :step="1" show-input @input="updateAutoofferPriceLoop"></el-slider>
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row" v-if="hasRole('Administrator')">
                         <label class="col-form-label col-lg-2">{{ trans('modals.hotel_loop') }}</label>
                         <div class="col-lg-10">
                             <el-slider :value="autooffer.hotel_loop"  :max="5" :step="1" show-stops show-input @input="updateAutoofferHotelLoop"></el-slider>
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row" v-if="hasRole('Administrator')">
                         <label class="col-form-label col-lg-2">{{ trans('modals.status') }}</label>
                         <div class="col-lg-10">
                             <el-switch
