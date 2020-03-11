@@ -2,6 +2,7 @@
 
 return [
 
+
     /*
      * A cors profile determines which origins, methods, headers are allowed for
      * a given requests. The `DefaultProfile` reads its configuration from this
