@@ -101,18 +101,7 @@ class MessageCreated extends Notification
      */
     public function getRoute()
     {
-        if (isWhiteLabel()) {
-            $whitelabelslug = mb_strtolower($this->wl_name);
-
-            return $whitelabelslug . '.wish.details';
-        }
-
         $whitelabelId = Auth::guard('api')->user()->whitelabels()->first();
-        $route = $whitelabelId->name . '.wish.details';
-
-        if (\Route::has($route, [$this->wish_id, $this->token])) {
-            return route($route, [$this->wish_id, $this->token]);
-        }
 
         return $whitelabelId->domain . '/wish/' . $this->wish_id . '/' . $this->token;
     }
