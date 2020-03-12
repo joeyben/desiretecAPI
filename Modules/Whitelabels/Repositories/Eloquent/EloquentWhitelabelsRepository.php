@@ -485,10 +485,17 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         return $whitelabel;
     }
 
-    public function deleteHost(string $host)
+    public function deleteHost(string $host, int $id)
     {
         $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
-        $host = WhitelabelHost::where('whitelabel_id', $whitelabel->id)->where('host', $host)->first();
+        
+        if ($whitelabel) {
+            $whitelebelId = $whitelabel->id;
+        } else {
+            $whitelebelId = $id;
+        }
+
+        $host = WhitelabelHost::where('whitelabel_id', $whitelebelId)->where('host', $host)->first();
 
         if ($host) {
             $host->delete();
