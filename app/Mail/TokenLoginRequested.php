@@ -46,7 +46,7 @@ class TokenLoginRequested extends Mailable
         }
 
         return $this->subject($subject)
-            ->from($formAddress, $formName . ' Portal')
+            ->from($formAddress, $formName . ' Reisewunschportal')
             ->view('emails.token.link')->with([
                 'link'       => $this->buildLink(),
                 'whitelabel' => $formName

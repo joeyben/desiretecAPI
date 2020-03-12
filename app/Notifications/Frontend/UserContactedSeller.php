@@ -45,7 +45,7 @@ class UserContactedSeller extends Notification
         $this->wish_id = $wish_id;
         $this->token = $token;
         $this->contact = $contact;
-        $this->wl_name = \App\Models\Whitelabels\Whitelabel::find($contact->wish->whitelabel->id)->name;
+        $this->wl_name = \App\Models\Whitelabels\Whitelabel::find($contact->wish->whitelabel->id)->display_name;
     }
 
     /**
@@ -78,7 +78,7 @@ class UserContactedSeller extends Notification
         $view = ('no data' !== $this->contact->email) ? 'emails.user-contact-seller' : 'emails.user-callback-seller';
 
         return (new MailMessage())
-            ->from($this->contact->wish->whitelabel->email, $this->wl_name . ' Portal')
+            ->from($this->contact->wish->whitelabel->email, $this->wl_name . ' Reisewunschportal')
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,

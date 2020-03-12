@@ -46,7 +46,7 @@ class OfferUser extends Notification
         $this->wish_id = $wish_id;
         $this->token = $token;
         $this->offer = $offer;
-        $this->wl_name = \App\Models\Whitelabels\Whitelabel::find($offer->wish->whitelabel->id)->name;
+        $this->wl_name = \App\Models\Whitelabels\Whitelabel::find($offer->wish->whitelabel->id)->display_name;
     }
 
     /**
@@ -75,7 +75,7 @@ class OfferUser extends Notification
         $view = 'emails.offer.offer-user';
 
         return (new MailMessage())
-            ->from($this->offer->wish->whitelabel->email, $this->wl_name . ' Portal')
+            ->from($this->offer->wish->whitelabel->email, $this->wl_name . ' Reisewunschportal')
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,
