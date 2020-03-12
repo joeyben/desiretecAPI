@@ -389,7 +389,7 @@ class WhitelabelsController extends Controller
             $whitelabel = $this->whitelabels->withCriteria([
                 new EagerLoad(['owner' => function ($query) {
                     $query->select('users.id', DB::raw('CONCAT(users.first_name, " ", users.last_name) AS full_name'));
-                }])
+                }, 'hosts'])
             ])->find($id);
 
             $result['whitelabel'] = [
@@ -403,6 +403,8 @@ class WhitelabelsController extends Controller
                 'owner'                        => $whitelabel->owner->full_name,
                 'distribution_id'              => $whitelabel->distribution_id,
                 'state'                        => $whitelabel->state,
+                'hostsList'                    => $whitelabel->hosts->pluck('host')
+
             ];
             $result['whitelabel']['logs'] = $this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE) ? $this->activities->byModel($whitelabel) : [];
 

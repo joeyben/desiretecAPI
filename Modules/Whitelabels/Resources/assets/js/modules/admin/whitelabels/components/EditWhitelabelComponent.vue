@@ -113,6 +113,9 @@
                                             </div>
                                         </div>
 
+                                        <tag-component :hostsList="whitelabel.hostsList" :whitelebelId="whitelabel.id"></tag-component>
+
+
                                         <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('modals.whitelabels_image') }}</legend>
                                         <div class="form-group">
                                             <upload-attachments :data="{attachable_id: parseInt(whitelabel.id), attachable_type: 'Modules\\Whitelabels\\Entities\\Whitelabel', type: 'whitelabels', folder: 'background'}" :fileList="whitelabel.background" :tip="trans('messages.background')" :limit="1" listType="picture-card"></upload-attachments>
@@ -164,10 +167,12 @@
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   import VueTable from '../../../../../../../../../resources/assets/js/utils/Table.vue'
   import UploadAttachments from '../../../../../../../../../resources/assets/js/utils/UploadAttachments'
+  import TagComponent from './TagComponent'
+
 
   export default {
     name: 'EditWhitelabelComponent',
-    components: { VueTable, UploadAttachments },
+    components: { VueTable, UploadAttachments, TagComponent },
     data () {
       return {
         // eslint-disable-next-line

@@ -59,7 +59,8 @@ class HostsController extends Controller
     {
         try {
             $result['whitelabel'] = $this->whitelabels->addHost(
-                str_replace('https://', '', $request->get('host'))
+                str_replace('https://', '', $request->get('host')),
+                (int) $request->get('whitelebelId')
             );
 
             $result['message'] = $this->lang->get('messages.deleted', ['attribute' => 'Domain']);

@@ -46,6 +46,12 @@
           return []
         },
         type: Array
+      },
+      whitelebelId: {
+        default: function () {
+          return null
+        },
+        type: Number
       }
     },
     name: 'TagComponent',
@@ -85,7 +91,7 @@
         let inputValue = this.inputValue
         if (inputValue) {
           this.$store.dispatch('block', {element: 'whitelabelsProviderComponent', load: true})
-          this.$http.post(window.laroute.route('provider.hosts.store'), {host: 'https://' + inputValue})
+          this.$http.post(window.laroute.route('provider.hosts.store'), {host: 'https://' + inputValue, whitelebelId: this.whitelebelId})
             .then(this.onSubmitSuccess)
             .catch(this.onFailed)
             .then(() => {
