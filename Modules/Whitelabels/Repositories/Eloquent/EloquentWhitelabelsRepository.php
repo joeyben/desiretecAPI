@@ -468,12 +468,18 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         return $whitelabelOffer ? $whitelabelOffer['tourOperators'] : '';
     }
 
-    public function addHost(string $host)
+    public function addHost(string $host, int $whitelebelId)
     {
         $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
+        if ($whitelabel) {
+            $id = $whitelabel->id;
+        } else {
+            $id = $whitelebelId;
+        }
+
         WhitelabelHost::create([
                 'host'          => $host,
-                'whitelabel_id' => $whitelabel->id
+                'whitelabel_id' => $id
         ]);
 
         return $whitelabel;

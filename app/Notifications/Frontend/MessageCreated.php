@@ -53,7 +53,7 @@ class MessageCreated extends Notification
         $this->token = $token;
         $this->type = $type;
         $this->message = $message;
-        $this->wl_name = \App\Models\Whitelabels\Whitelabel::find($message->wish->whitelabel->id)->name;
+        $this->wl_name = \App\Models\Whitelabels\Whitelabel::find($message->wish->whitelabel->id)->display_name;
     }
 
     /**
@@ -82,7 +82,7 @@ class MessageCreated extends Notification
         $view = 'emails.messages.created-' . $this->type;
 
         return (new MailMessage())
-            ->from($this->message->wish->whitelabel->email, $this->wl_name . ' Portal')
+            ->from($this->message->wish->whitelabel->email, $this->wl_name . ' Reisewunschportal')
             ->subject($subject)
             ->view($view, [
                     'confirmation_url'      => $confirmation_url,
