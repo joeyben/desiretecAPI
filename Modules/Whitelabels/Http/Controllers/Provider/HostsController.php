@@ -75,11 +75,12 @@ class HostsController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-    public function destroy(string $host)
+    public function destroy(string $host, int $id)
     {
         try {
             $result['whitelabel'] = $this->whitelabels->deleteHost(
-                $host
+                $host,
+                $id
             );
 
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Whitelabel']);
