@@ -119124,6 +119124,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vuex = __webpack_require__(3);
 
@@ -119179,6 +119190,9 @@ exports.default = {
   methods: _extends({}, _vuex2.default.mapActions({
     addWhitelabel: 'addWhitelabel'
   }), {
+    updateLicence: function updateLicence(value) {
+      this.$store.commit('updateWhitelabel', { name: 'licence', value: value });
+    },
     handleSuccessFile: function handleSuccessFile(response) {
       if (response !== undefined) {
         this.$store.commit('addWhitelabelFile', response.attachment);
@@ -119249,7 +119263,7 @@ exports.default = {
           $('#modal_large_whitelabel').modal('hide');
           this.$router.push({ name: 'root' });
         } else {
-          this.$router.push({ name: 'root.edit', params: { id: response.data.wish.id } });
+          this.$router.push({ name: 'root.edit', params: { id: response.data.whitelabel.id } });
         }
         this.$message({
           message: response.data.message,
@@ -120114,6 +120128,55 @@ var render = function() {
                                 whitelebelId: _vm.whitelabel.id
                               }
                             }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group row" }, [
+                              _c(
+                                "label",
+                                { staticClass: "col-lg-3 col-form-label" },
+                                [
+                                  _vm._v(
+                                    "  " +
+                                      _vm._s(_vm.trans("modals.licence")) +
+                                      " "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-lg-9" },
+                                [
+                                  _c(
+                                    "el-radio-group",
+                                    {
+                                      attrs: { value: _vm.whitelabel.licence },
+                                      on: { input: _vm.updateLicence }
+                                    },
+                                    [
+                                      _c(
+                                        "el-radio-button",
+                                        { attrs: { label: "0" } },
+                                        [_vm._v("Light")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "el-radio-button",
+                                        { attrs: { label: "1" } },
+                                        [_vm._v("Basic")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "el-radio-button",
+                                        { attrs: { label: "2" } },
+                                        [_vm._v("Premium")]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ]),
                             _vm._v(" "),
                             _c(
                               "legend",

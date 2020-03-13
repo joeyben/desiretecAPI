@@ -24,6 +24,7 @@ class SaveWhitelabelRequest extends FormRequest
             'background'         => 'required|array|min:1',
             'logo'               => 'required|array|min:1',
             'favicon'            => 'required|array|min:1',
+            'licence'            => 'required|in:0,1,2',
         ];
     }
 
