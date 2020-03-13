@@ -403,7 +403,8 @@ class WhitelabelsController extends Controller
                 'owner'                        => $whitelabel->owner->full_name,
                 'distribution_id'              => $whitelabel->distribution_id,
                 'state'                        => $whitelabel->state,
-                'hostsList'                    => $whitelabel->hosts->pluck('host')
+                'hostsList'                    => $whitelabel->hosts->pluck('host'),
+                'licence'                      => $whitelabel->licence
 
             ];
             $result['whitelabel']['logs'] = $this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE) ? $this->activities->byModel($whitelabel) : [];
@@ -465,20 +466,13 @@ class WhitelabelsController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function save(SaveWhitelabelRequest $request, int $id)
     {
         try {
             $result['whitelabel'] = $this->whitelabels->update(
                 $id,
-                array_merge(
-                    $request->only('display_name', 'ga_view_id', 'status', 'distribution_id', 'email'),
-                    ['state' => 2]
-                )
+                $request->only('display_name', 'ga_view_id', 'status', 'distribution_id', 'email', 'licence')
             );
 
             if ($result['whitelabel']->domain !== $this->str->lower($request->get('domain'))) {

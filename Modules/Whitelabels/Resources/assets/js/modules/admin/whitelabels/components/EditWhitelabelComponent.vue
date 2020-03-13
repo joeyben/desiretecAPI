@@ -115,6 +115,17 @@
 
                                         <tag-component :hostsList="whitelabel.hostsList" :whitelebelId="whitelabel.id"></tag-component>
 
+                                        <div class="form-group row">
+                                            <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.licence') }} </label>
+                                            <div class="col-lg-9">
+                                                <el-radio-group :value="whitelabel.licence" @input="updateLicence">
+                                                    <el-radio-button label="0">Light</el-radio-button>
+                                                    <el-radio-button label="1">Basic</el-radio-button>
+                                                    <el-radio-button label="2">Premium</el-radio-button>
+                                                </el-radio-group>
+                                            </div>
+                                        </div>
+
 
                                         <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('modals.whitelabels_image') }}</legend>
                                         <div class="form-group">
@@ -200,6 +211,9 @@
       ...Vuex.mapActions({
         addWhitelabel: 'addWhitelabel'
       }),
+      updateLicence (value) {
+        this.$store.commit('updateWhitelabel', {name: 'licence', value: value})
+      },
       handleSuccessFile (response) {
         if (response !== undefined) {
           this.$store.commit('addWhitelabelFile', response.attachment)
@@ -269,7 +283,7 @@
             $('#modal_large_whitelabel').modal('hide')
             this.$router.push({name: 'root'})
           } else {
-            this.$router.push({name: 'root.edit', params: {id: response.data.wish.id}})
+            this.$router.push({name: 'root.edit', params: {id: response.data.whitelabel.id}})
           }
           this.$message({
             message: response.data.message,
