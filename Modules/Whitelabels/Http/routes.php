@@ -6,6 +6,7 @@ Route::group(['middleware' => ['web', 'auth', 'admin', 'access.routeNeedsRole:' 
     Route::get('whitelabels/list', 'WhitelabelsController@list')->name('admin.whitelabels.list');
     Route::get('whitelabels/create', 'WhitelabelsController@create')->name('admin.whitelabels.create');
     Route::put('whitelabels', 'WhitelabelsController@store')->name('admin.whitelabels.store');
+    Route::post('whitelabels/api/store', 'WhitelabelsController@apiStore')->name('admin.whitelabels.api.store');
     Route::get('whitelabels/{id}/edit', 'WhitelabelsController@edit')->name('admin.whitelabels.edit')->where('id', '[0-9]+');
     Route::put('whitelabels/{id}', 'WhitelabelsController@update')->name('admin.whitelabels.update')->where('id', '[0-9]+');
     Route::put('whitelabels/save/{id}', 'WhitelabelsController@save')->name('admin.whitelabels.save')->where('id', '[0-9]+');
