@@ -13,10 +13,15 @@
     </div>
 @stop
 
-@section('content')   
+@section('content')
     <!-- Language Filter -->
     <div class="content" id="emailSignatureComponent">
         @include('includes.alert')
+        <div class="row">
+            <div class="alert alert-info border-0 alert-dismissible col-md-12 offset-md-12">
+                Bitte nutzen den Button “Live-Preview” klicken, um den Cache zu leeren und den neuen Content zu aktualisieren.
+            </div>
+        </div>
         {{ Form::open(['route' => 'provider.email.signature.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'emailSignatureForm']) }}
             <div class="card">
                 <div class="card-header">
@@ -28,9 +33,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="form-group row"> 
+                    <div class="form-group row">
                         {{ Form::textarea('email_signature_editor', $result['data']['text'], ['id' => 'emailSignatureEditor', 'name' => 'email_signature_editor', 'class' => 'form-control']) }}
-                    </div>                
+                    </div>
                 </div>
                 <div class="card-footer text-right">
                     {{ Form::submit(trans('button.save'), ['class' => 'btn', 'style' => 'background-color: rgb(19, 206, 102); border-color: rgb(19, 206, 102); color: white;']) }}
@@ -47,7 +52,7 @@
         ClassicEditor
         .create( document.querySelector( '#emailSignatureEditor' ) )
         .then( editor => {
-            
+
         })
         .catch( error => {
             console.error( error );
