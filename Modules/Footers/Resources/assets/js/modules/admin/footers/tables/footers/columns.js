@@ -1,11 +1,5 @@
 export default [
   {
-    name: '__component:custom-link-by-id',
-    title: window.Lang.get('tables.id'),
-    sortField: 'id',
-    visible: true
-  },
-  {
     name: 'name',
     title: window.Lang.get('tables.name'),
     sortField: 'name',
