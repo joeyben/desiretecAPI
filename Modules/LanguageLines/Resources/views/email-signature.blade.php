@@ -19,7 +19,7 @@
         @include('includes.alert')
         <div class="row">
             <div class="alert alert-info border-0 alert-dismissible col-md-12 offset-md-12">
-                Bitte nutzen den Button “Live-Preview” klicken, um den Cache zu leeren und den neuen Content zu aktualisieren.
+                Bitte nutzen Sie den Button “Live-Preview”, um den Cache zu leeren und den Content zu aktualisieren.
             </div>
         </div>
         {{ Form::open(['route' => 'provider.email.signature.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'emailSignatureForm']) }}
