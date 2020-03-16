@@ -2,6 +2,9 @@
 
 namespace Modules\Whitelabels\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\Access\Role\Role;
+use App\Models\Access\User\User;
 use App\Repositories\Backend\Distributions\DistributionsRepository;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
@@ -18,7 +21,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Notifications\ChannelManager;
-use Illuminate\Routing\Controller;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +31,11 @@ use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Attachments\Repositories\Contracts\AttachmentsRepository;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use Modules\Roles\Repositories\Contracts\RolesRepository;
+use Modules\Users\Notifications\ApiCreatedUserNotificationForExecutive;
+use Modules\Users\Repositories\Contracts\UsersRepository;
+use Modules\Whitelabels\Entities\LayerWhitelabel;
+use Modules\Whitelabels\Entities\WhitelabelHost;
+use Modules\Whitelabels\Http\Requests\ApiStoreWhitelabelRequest;
 use Modules\Whitelabels\Http\Requests\DomainWhitelabelRequest;
 use Modules\Whitelabels\Http\Requests\SaveWhitelabelRequest;
 use Modules\Whitelabels\Http\Requests\StoreWhitelabelRequest;
@@ -98,11 +105,32 @@ class WhitelabelsController extends Controller
      * @var \Modules\Languages\Repositories\Contracts\LanguagesRepository
      */
     private $languages;
+    /**
+     * @var \Modules\Users\Repositories\Contracts\UsersRepository
+     */
+    private $users;
 
     /**
      * WhitelabelsController constructor.
+     *
+     * @param \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository $whitelabels
+     * @param \Modules\Users\Repositories\Contracts\UsersRepository             $users
+     * @param \App\Repositories\Backend\Distributions\DistributionsRepository   $distributions
+     * @param \Illuminate\Routing\ResponseFactory                               $response
+     * @param \Illuminate\Auth\AuthManager                                      $auth
+     * @param \Illuminate\Translation\Translator                                $lang
+     * @param \Carbon\Carbon                                                    $carbon
+     * @param \Modules\Activities\Repositories\Contracts\ActivitiesRepository   $activities
+     * @param \Maatwebsite\Excel\Excel                                          $excel
+     * @param \Illuminate\Filesystem\FilesystemManager                          $storage
+     * @param \Illuminate\Contracts\Console\Kernel                              $artisan
+     * @param \Illuminate\Support\Str                                           $str
+     * @param \Modules\Attachments\Repositories\Contracts\AttachmentsRepository $attachments
+     * @param \Illuminate\Notifications\ChannelManager                          $notification
+     * @param \Modules\Roles\Repositories\Contracts\RolesRepository             $roles
+     * @param \Modules\Languages\Repositories\Contracts\LanguagesRepository     $languages
      */
-    public function __construct(WhitelabelsRepository $whitelabels, DistributionsRepository $distributions, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel, FilesystemManager $storage, Kernel $artisan, Str $str, AttachmentsRepository $attachments, ChannelManager $notification, RolesRepository $roles, LanguagesRepository $languages)
+    public function __construct(WhitelabelsRepository $whitelabels, UsersRepository $users, DistributionsRepository $distributions, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, Excel $excel, FilesystemManager $storage, Kernel $artisan, Str $str, AttachmentsRepository $attachments, ChannelManager $notification, RolesRepository $roles, LanguagesRepository $languages)
     {
         $this->whitelabels = $whitelabels;
         $this->response = $response;
@@ -119,6 +147,7 @@ class WhitelabelsController extends Controller
         $this->notification = $notification;
         $this->roles = $roles;
         $this->languages = $languages;
+        $this->users = $users;
     }
 
     /**
@@ -204,7 +233,8 @@ class WhitelabelsController extends Controller
                 'logo'                             => [],
                 'favicon'                          => [],
                 'state'                            => 0,
-                'logs'                             => []
+                'logs'                             => [],
+                'licence'                          => 0
             ];
 
             $distributions = $this->distributions->getAll();
@@ -292,6 +322,72 @@ class WhitelabelsController extends Controller
         }
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+    public function apiStore(ApiStoreWhitelabelRequest $request)
+    {
+        try {
+            $pool = '0123456789abcdefghijklmnopqrstuvwxyz';
+
+            $password = mb_substr(str_shuffle(str_repeat($pool, 5)), 0, 6);
+
+            $user = User::create([
+                'first_name' => $request->get('name'),
+                'email'      => $request->get('email'),
+                'confirmed'  => true,
+                'status'     => true,
+                'password'   => bcrypt($password),
+            ]);
+
+            $user->attachRole(Role::where('name', Flag::EXECUTIVE_ROLE)->first());
+
+            $user->storeToken();
+
+            $result['whitelabel'] = $this->whitelabels->create(
+                [
+                    'created_by'      => $user->id,
+                    'name'            => str_slug($request->get('name')),
+                    'display_name'    => $request->get('name'),
+                    'email'           => str_slug($request->get('name')) . '@' . env('API_DOMAIN', 'reise-wunsch.com'),
+                    'licence'         => (string) $request->get('licence'),
+                    'domain'          => env('API_HTTP', 'https://') . str_slug($request->get('name')) . '.' . env('API_DOMAIN', 'reise-wunsch.com'),
+                    'distribution_id' => 1,
+                    'state'           => 1
+                ]
+            );
+
+            $this->users->sync($user->id, 'whitelabels', [$result['whitelabel']->id]);
+            $this->whitelabels->sync($result['whitelabel']->id, 'layers', [Flag::PACKAGE]);
+
+            $host = WhitelabelHost::create([
+                'host'               => str_slug($request->get('name')) . '.' . env('API_DOMAIN', 'reise-wunsch.com'),
+                'whitelabel_id'      => $result['whitelabel']->id,
+            ]);
+
+            $layerWhitelabel = LayerWhitelabel::where('whitelabel_id', $result['whitelabel']->id)->where('layer_id', Flag::PACKAGE)->first();
+
+            $layerWhitelabel->update([
+                'headline'            => 'Dürfen wir Sie beraten?',
+                'subheadline'         => 'Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!',
+                'headline_success'    => 'Vielen Dank, Ihr Reisewunsch wurde versandt.',
+                'subheadline_success' => 'Ein Berater aus dem Reisebüro nimmt sich Ihrer Wünsche an.',
+            ]);
+
+            $user->fresh();
+
+            if ($user->hasRole(Flag::EXECUTIVE_ROLE)) {
+                $this->notification->send($user, new ApiCreatedUserNotificationForExecutive($user, $password));
+            }
+
+            ini_set('max_execution_time', 500);
+            $this->whitelabels->apiCopyLanguage($result['whitelabel']->id);
+            $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
+
+
+            return $this->responseJson($result);
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
+        }
     }
 
     public function current(): JsonResponse

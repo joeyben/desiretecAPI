@@ -6,6 +6,7 @@
             </button>
 
             <div class="dropdown-menu dropdown-menu-left">
+                <router-link class="dropdown-item" :to="{name: 'root.new'}" v-if="hasRole('Administrator')"><i class="icon-plus3"></i>{{ 'Api Whitelabel' }}</router-link>
                 <router-link class="dropdown-item" :to="{name: 'root.create'}" v-if="hasRole('Administrator')"><i class="icon-plus3"></i>{{ trans('button.create') }}</router-link>
             </div>
         </h5>
