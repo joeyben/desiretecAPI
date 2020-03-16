@@ -24,7 +24,7 @@
     <div class="content" id="contentComponent">
         <div class="row">
             <div class="alert alert-info border-0 alert-dismissible col-md-12 offset-md-12">
-                Bitte nutzen den Button “Live-Preview” klicken, um den Cache zu leeren und den neuen Content zu aktualisieren.
+                Bitte nutzen Sie den Button “Live-Preview”, um den Cache zu leeren und den Content zu aktualisieren.
             </div>
         </div>
         <router-view></router-view>
