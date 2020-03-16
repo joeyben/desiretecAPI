@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CheckGroup;
+use App\Console\Commands\ErrorsNotificationJob;
 use App\Console\Commands\InstallAppCommand;
 use App\Console\Commands\WhitelabelMakeRouteCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -24,7 +25,8 @@ class Kernel extends ConsoleKernel
         ImportLanguageFilesCommand::class,
         CopyLanguageCommand::class,
         ExportLanguageLinesCommand::class,
-        CheckGroup::class
+        CheckGroup::class,
+        ErrorsNotificationJob::class
     ];
 
     /**

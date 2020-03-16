@@ -35,7 +35,7 @@
         <pre class="language-less mb-1 flex-column"><code>
             <div class="form-group">
                 <div class="input-group wmin-md-200">
-                    <input type="text" value='&lt;script  type="text/javascript" src="{{ $whitelabel->domain }}/js/layer.js"&gt;&lt;/script&gt;' id="myInput" readonly class="form-control">
+                    <input type="text" value='&lt;script  type="text/javascript" src="{{ $whitelabel->domain }}/js/layer.js" id="dt-layer" &gt;&lt;/script&gt;' readonly class="form-control">
                     <span class="input-group-append">
                     <span class="btn btn-outline bg-grey-400 text-grey-400 border-grey-400 input-group-text" onclick="myFunction()"><i class="icon-clippy"></i></span>
                 </span>
