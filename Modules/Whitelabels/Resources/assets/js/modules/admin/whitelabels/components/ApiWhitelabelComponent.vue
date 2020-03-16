@@ -199,6 +199,7 @@
             $('#modal_large_whitelabel').modal('hide')
             this.$router.push({name: 'root'})
           } else {
+            $('#modal_large_whitelabel').modal('hide')
             this.$router.push({name: 'root.edit', params: {id: response.data.whitelabel.id}})
           }
           this.$message({
