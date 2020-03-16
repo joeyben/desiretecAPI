@@ -111,6 +111,10 @@ if ($whitelabelsComponent) {
         path: '/edit/:id(\\d+)',
         name: 'root.edit',
         component: require('./components/EditWhitelabelComponent.vue')
+      }, {
+        path: '/new',
+        name: 'root.new',
+        component: require('./components/ApiWhitelabelComponent.vue')
       }]
     }, {
       path: '/create',

@@ -204,7 +204,8 @@ class WhitelabelsController extends Controller
                 'logo'                             => [],
                 'favicon'                          => [],
                 'state'                            => 0,
-                'logs'                             => []
+                'logs'                             => [],
+                'licence'                          => 0
             ];
 
             $distributions = $this->distributions->getAll();
