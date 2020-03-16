@@ -1038,7 +1038,6 @@ if (!function_exists('wl_email_signature')) {
 if (!function_exists('wl_default_email_signature')) {
     function wl_default_email_signature()
     {
-        if ($whiteLabel = resolve(\Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository::class)->find($id)) {
             $translation = DB::table('language_lines')
                 ->select('text')
                 ->where('locale', 'de')
@@ -1051,8 +1050,5 @@ if (!function_exists('wl_default_email_signature')) {
             }
 
             return '';
-        } else {
-            return '';
-        }
     }
 }
