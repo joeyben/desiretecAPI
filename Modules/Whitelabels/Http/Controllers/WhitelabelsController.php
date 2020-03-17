@@ -368,7 +368,7 @@ class WhitelabelsController extends Controller
 
             $layerWhitelabel->update([
                 'headline'            => 'Dürfen wir Sie beraten?',
-                'subheadline'         => 'Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!',
+                'subheadline'         => 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!',
                 'headline_success'    => 'Vielen Dank, Ihr Reisewunsch wurde versandt.',
                 'subheadline_success' => 'Ein Berater aus dem Reisebüro nimmt sich Ihrer Wünsche an.',
             ]);
