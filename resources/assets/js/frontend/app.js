@@ -98,6 +98,9 @@ const app = new Vue({
                 'border': '1px solid ' + brandColor,
                 'color': brandColor,
             });
+            $('.link-btn').css({
+                'color': brandColor,
+            });
             $('.wish-note i').css({
                 'color': brandColor,
             });
