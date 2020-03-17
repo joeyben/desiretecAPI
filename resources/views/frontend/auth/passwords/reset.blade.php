@@ -21,7 +21,11 @@
 
 @section('content')
     <div class="row auth">
-        @include('includes.alert')
+
+        <div class="col-md-6 col-md-offset-4">
+            @include('includes.alert')
+        </div>
+
         <div class="col-md-6 col-md-offset-4">
 
             <div class="panel panel-default">
