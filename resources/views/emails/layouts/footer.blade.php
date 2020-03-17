@@ -1,3 +1,7 @@
+@php
+if(wl_default_email_signature()){
+@endphp
+
 <hr style="background: #e7e7e7;border: none;height: 1px;margin-top: 30px;">
 <p style="
             line-height: 24px;
@@ -11,3 +15,7 @@
     @endif
 </p>
 <hr style="background: #e7e7e7;border: none;height: 1px;">
+
+@php
+    }
+@endphp
