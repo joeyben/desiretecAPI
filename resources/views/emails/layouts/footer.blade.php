@@ -1,5 +1,5 @@
 @php
-if(wl_default_email_signature()){
+if( function_exists('wl_default_email_signature')){
 @endphp
 
 <hr style="background: #e7e7e7;border: none;height: 1px;margin-top: 30px;">
