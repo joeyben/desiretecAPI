@@ -1,0 +1,35 @@
+.auth {
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus {
+    outline: none;
+  }
+  .panel-heading {
+    font-size: 18px;
+    padding: 10px 25px;
+  }
+  .panel-body {
+    padding: 25px;
+    padding-top: 45px;
+  }
+  .form-control {
+    background-color: #f8f8f8 !important;
+  }
+  .link-btn {
+    color: transparent;
+    display: inline-block;
+    padding: 5px 0;
+  }
+  .btn-primary {
+    width: 180px;
+  }
+  label {
+    font-weight: normal;
+  }
+  .checkbox {
+    label {
+      font-size: 13px;
+    }
+  }
+}
