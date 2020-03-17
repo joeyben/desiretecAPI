@@ -9,11 +9,6 @@
 @section('after-scripts')
     <script type="application/javascript">
         $(document).ready(function(){
-            $('.btn-primary').css({
-                'background': brandColor,
-                'border': '1px solid ' + brandColor,
-                'color': '#fff',
-            });
             $("input").focus(function(){
                 $(this).css({'border-color': brandColor});
             });
@@ -25,9 +20,9 @@
 @endsection
 
 @section('content')
-    <div class="row">
+    <div class="row auth">
         @include('includes.alert')
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-6 col-md-offset-4">
 
             <div class="panel panel-default">
 
@@ -39,41 +34,32 @@
 
                     <input type="hidden" name="token" value="{{ $token }}">
 
-                        <div class="form-group">
-                            {{ Form::label('email', trans('validation.attributes.frontend.register-user.email'), ['class' => 'col-md-4 control-label']) }}
-                            <div class="col-md-6">
-                                <p class="form-control-static">{{ $email }}</p>
-                                {{ Form::input('hidden', 'email', $email, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.register-user.email')]) }}
-                            </div><!--col-md-6-->
-                        </div><!--form-group-->
+                    <div class="form-group mb-30">
+                        <p class="form-control-static">{{ $email }}</p>
+                        {{ Form::input('hidden', 'email', $email, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.register-user.email')]) }}
+                    </div>
+
+                    <div class="form-group float-label">
+                        {{ Form::input('password', 'password', null, ['id' => 'password', 'class' => 'form-control', 'placeholder' => 'transparent']) }}
+                        {{ Form::label('password', trans('validation.attributes.frontend.register-user.password')) }}
+                    </div>
+
+                    <div class="form-group float-label">
+                        {{ Form::input('password', 'password_confirmation', null, ['id' => 'password_confirmation', 'class' => 'form-control', 'placeholder' => 'transparent']) }}
+                        {{ Form::label('password_confirmation', trans('validation.attributes.frontend.register-user.password_confirmation')) }}
+                    </div>
 
                     <div class="form-group">
-                        {{ Form::label('password', trans('validation.attributes.frontend.register-user.password'), ['class' => 'col-md-4 control-label']) }}
-                        <div class="col-md-6">
-                            {{ Form::input('password', 'password', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.register-user.password')]) }}
-                        </div><!--col-md-6-->
-                    </div><!--form-group-->
-
-                    <div class="form-group">
-                        {{ Form::label('password_confirmation', trans('validation.attributes.frontend.register-user.password_confirmation'), ['class' => 'col-md-4 control-label']) }}
-                        <div class="col-md-6">
-                            {{ Form::input('password', 'password_confirmation', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.register-user.password_confirmation')]) }}
-                        </div><!--col-md-6-->
-                    </div><!--form-group-->
-
-                    <div class="form-group">
-                        <div class="col-md-6 col-md-offset-4">
-                            {{ Form::submit(trans('labels.frontend.passwords.reset_password_button'), ['class' => 'btn btn-primary']) }}
-                        </div><!--col-md-6-->
-                    </div><!--form-group-->
+                        {{ Form::submit(trans('labels.frontend.passwords.reset_password_button'), ['class' => 'btn btn-primary']) }}
+                    </div>
 
                     {{ Form::close() }}
 
-                </div><!-- panel body -->
+                </div>
 
-            </div><!-- panel -->
+            </div>
 
-        </div><!-- col-md-8 -->
+        </div>
 
-    </div><!-- row -->
+    </div>
 @endsection
