@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/trendtours",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Trendtours\\Providers\\TrendtoursServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Trendtours\\": ""
+        }
+    }
+}

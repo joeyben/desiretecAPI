@@ -1,0 +1,16 @@
+{
+    "name": "Traveloverland",
+    "alias": "traveloverland",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Traveloverland\\Providers\\TraveloverlandServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
