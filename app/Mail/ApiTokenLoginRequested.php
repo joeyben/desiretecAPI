@@ -20,7 +20,7 @@ class ApiTokenLoginRequested extends Mailable
     public function __construct(User $user, array $options)
     {
         $this->user = $user;
-        $this->whiteLabel = $user->whitelabels()->first();
+        $this->whiteLabel = $user->whitelabels()->find($options['whitelabelId']);
         $this->options = $options;
     }
 
