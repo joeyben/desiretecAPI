@@ -148,7 +148,8 @@ class AuthController extends APIController
             $user = $this->getUserByIdentifier($request->get($this->identifier));
             $user->storeToken()->sendApiTokenLink([
                 'email' => trim($user->email),
-                'host'  => $request->get('host')
+                'host'  => $request->get('host'),
+                'whitelabelId'  => $request->get('whitelabelId')
             ]);
         } catch (Exception $e) {
             return $this->respondInternalError($e->getMessage());
