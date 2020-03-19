@@ -1,0 +1,194 @@
+@import "variables";
+
+// Html, body, main-containers
+html, body{
+  overflow: auto;
+}
+body{
+  &.landing{
+    padding-top: 0px;
+    #app{
+      .main-container{
+        margin: 0;
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+  &.wish{
+    #app {
+      .main-container {
+        margin: 0;
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+  &.wishlist {
+    #app {
+      .main-container {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+// Buttons
+.primary-btn, .btn-primary, .secondary-btn, .btn-secondary{
+  padding: 5px 20px;
+  min-width: 220px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: transparent;
+  &:focus, &:hover, &:visited {
+    background: transparent;
+    border: 1px solid transparent;
+    color: transparent;
+  }
+}
+
+input:-internal-autofill-selected{
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px #f8f8f8 !important;
+}
+
+// Wish modal
+.wish-modal-1 .modal-body-left input[value=""]~label {
+  top: 5px !important;
+  font-size: 10px !important;
+  color: #bbb !important;
+}
+
+// Slider
+.slider{
+  width: 100%;
+  height:700px;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  .welcome{
+    position: absolute;
+    top: 100px;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    line-height: 45px;
+    font-weight: 400;
+    strong{
+      display: block;
+      font-size: 35px;
+      line-height: 45px;
+      font-weight: 400;
+      margin-top: 20px;
+      @media(max-width: 769px) {
+        font-size: 28px;
+      }
+    }
+  }
+  .layer-action{
+    position: absolute;
+    bottom: 240px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    a{
+      font-size: 22px;
+      text-transform: uppercase;
+      padding: 15px 35px;
+      line-height: 1.5em;
+      letter-spacing: 0.42px;
+      @media(max-width: 769px) {
+        font-size: 18px;
+      }
+    }
+  }
+}
+//AutoOffer section
+.offers{
+  .label{
+    color: #df007a;
+  }
+}
+
+// Footer
+.footer{
+  ul{
+    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    @media (max-width: 600px) {
+      justify-content: center;
+    }
+    li{
+      display: inline-block;
+      padding:0 10px 0 10px;
+      &:last-child {
+        position: absolute;
+        right: 0;
+        &:before{
+          content: "\00a9   " attr(data-copyyear);
+          margin-right: 6px;
+        }
+        @media (max-width: 600px) {
+          position: relative;
+        }
+      }
+      a{
+        color: $master-primary;
+        &:hover{
+          color: $master-primary;
+        }
+      }
+    }
+  }
+}
+
+// Auth views
+.panel-body{
+  .form-group{
+    a{
+      color: transparent;
+    }
+  }
+}
+
+/***Custom CSS***/
+.about-section h3{
+  font-weight: normal !important;
+}
+.action {
+  text-align: center;
+}
+
+@media (max-width:37.49em) {
+  .shell{
+    main{
+      order: 2;
+    }
+    aside{
+      order: 1;
+    }
+    main, aside{
+      width: 100% !important;
+    }
+  }
+  .gallery-section .btn{
+    font-size: 12px;
+  }
+  .location-section, .navigation{
+    display: none;
+  }
+  .reviews-section{
+    padding-left: 20px !important;
+  }
+  .equipment-section .icons{
+    padding-left: 0 !important;
+  }
+  main .sections-wrapper{
+    padding-right: 0 !important;
+  }
+}

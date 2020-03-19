@@ -1,0 +1,265 @@
+@import "variables";
+
+// Html, body, main-containers
+html, body{
+  overflow: auto;
+}
+body{
+  &.landing{
+    padding-top: 0px;
+    #app{
+      .main-container{
+        margin: 0;
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+  &.wish{
+    #app {
+      .main-container {
+        margin: 0;
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+  &.wishlist {
+    #app {
+      .main-container {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+// Buttons
+.primary-btn, .btn-primary, .secondary-btn, .btn-secondary{
+  padding: 5px 20px;
+  min-width: 220px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: transparent;
+  &:focus, &:hover, &:visited {
+    background: transparent;
+    border: 1px solid transparent;
+    color: transparent;
+  }
+}
+
+input:-internal-autofill-selected{
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px #f8f8f8 !important;
+}
+
+// Confirm popup
+.confirm-popup {
+  .popup-body {
+    .primary-btn {
+      border: 1px solid $mastercolor;
+      background-color: $mastercolor;
+      width: 100%;
+    }
+    .secondary-btn {
+      border: 1px solid $mastercolor;
+      color: $mastercolor;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+// Slider
+.slider{
+  width: 100%;
+  height:700px;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  @media screen and (max-width: $break-small) {
+    background-position: 40% center;
+  }
+  .welcome{
+    position: absolute;
+    top: 100px;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    font-weight: 400;
+    strong{
+      display: block;
+      font-size: 35px;
+      line-height: 45px;
+      font-weight: 400;
+      margin-top: 20px;
+      @media(max-width: 769px) {
+        font-size: 28px;
+      }
+    }
+  }
+  .layer-action{
+    position: absolute;
+    bottom: 300px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    @media screen and (max-width: $break-small) {
+      bottom: 350px;
+    }
+    a{
+      font-size: 24px;
+      text-transform: uppercase;
+      padding: 15px 35px;
+      line-height: 1.5em;
+      letter-spacing: 0.42px;
+      border-color: transparent;
+      @media (max-width: $break-small){
+        font-size: 22px;
+      }
+    }
+  }
+}
+
+// Wish modal
+.wish-modal-1 .modal-body-left input[value=""]~label {
+  top: 5px !important;
+  font-size: 10px !important;
+  color: #bbb !important;
+}
+
+// Footer
+.footer{
+  padding-top: 20px;
+  color: #4c4c4c;
+  .container{
+    @media (max-width: $screen-sm) {
+      padding: 0;
+    }
+  }
+  .certificates{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    .certificate {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      @media (max-width: $screen-sm) {
+        width: 100%;
+      }
+      .wrapper{
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        strong{
+          margin-left: 15px;
+          font-size: 16px;
+          font-family: 'TUITypeLight',sans-serif;
+        }
+      }
+    }
+  }
+  .stores-and-socials{
+    display: flex;
+    flex-wrap: wrap;
+    .stores{
+      margin-right: 100px;
+      padding: 20px;
+      width: 330px;
+      background-color: #70cbf4;
+      color: #fff;
+      @media (max-width: $screen-sm) {
+        margin-right: 0px;
+        margin-bottom: 30px;
+        width: 120%;
+      }
+      strong{
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: normal;
+        display: block;
+      }
+      p{
+        font-size: 13px;
+        color: #fff;
+        font-family: $font-family-brand;
+      }
+      img{
+        height: 35px;
+      }
+      img:first-child {
+        margin-right: 5px;
+      }
+    }
+    .socials{
+      @media (max-width: $screen-sm) {
+        margin-bottom: 30px;
+      }
+      .socials-heading{
+        padding-left: 20px;
+      }
+      i{
+        font-size: 50px;
+        margin-right: 15px;
+      }
+      .fa-facebook-square{
+        color: $color-facebook;
+      }
+      .fa-twitter-square{
+        color: $color-twitter;
+      }
+      .fa-instagram{
+        color: $color-instagram;
+      }
+      .fa-pinterest{
+        color: $color-pinterest;
+      }
+    }
+  }
+  .links{
+    padding: 15px 0;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: $font-family-brand;
+    ul{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      text-align: center;
+      @media (max-width: $screen-sm) {
+        justify-content: center;
+      }
+      a{
+        color: $brand-grey;
+      }
+      li{
+        display: inline-block;
+        padding: 0 10px 0 10px;
+      }
+      li.copyright{
+        display: block;
+      }
+    }
+  }
+}
+
+// Logo Fix
+.navbar-default{
+  a.logo{
+    .navbar-brand{
+      padding: 0;
+      height: 50px !important;
+    }
+  }
+}
+
+// Auth views
+.panel-body{
+  .form-group{
+    a{
+      color: transparent;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "name": "Kurenundwellness",
+    "alias": "kurenundwellness",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Kurenundwellness\\Providers\\KurenundwellnessServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
