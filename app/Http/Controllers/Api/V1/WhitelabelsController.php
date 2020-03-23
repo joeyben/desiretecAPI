@@ -7,6 +7,7 @@ use App\Models\Access\User\User;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Str;
+use Modules\LanguageLines\Http\Controllers\LanguageLinesController;
 use Modules\Users\Notifications\ApiCreatedUserNotificationForExecutive;
 use Modules\Users\Repositories\Contracts\UsersRepository;
 use Modules\Whitelabels\Entities\LayerWhitelabel;
@@ -98,6 +99,8 @@ class WhitelabelsController extends APIController
 
             ini_set('max_execution_time', 500);
             $this->whitelabels->apiCopyLanguage($result['whitelabel']->id);
+
+            LanguageLinesController::cacheFlush();
 
             return $this->responseJson($result);
         } catch (Exception $e) {

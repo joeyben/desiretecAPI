@@ -21,6 +21,7 @@ use Illuminate\Log\LogManager;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -146,6 +147,15 @@ class LanguageLinesController extends Controller
         }
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
+    }
+
+
+    public static function cacheFlush()
+    {
+        Artisan::call('cache:clear');
+        Artisan::call('cache:clear');
+        Artisan::call('config:clear');
+        Artisan::call('view:clear');
     }
 
     public function view(Request $request)
@@ -692,6 +702,8 @@ class LanguageLinesController extends Controller
                 }
             }
 
+            LanguageLinesController::cacheFlush();
+
             $result['data']['language'] = $lang;
             $result['success'] = true;
             $result['status'] = 200;
@@ -738,6 +750,8 @@ class LanguageLinesController extends Controller
                     ['text'=> $request->get('email_signature_editor')]
                 );
             }
+
+            LanguageLinesController::cacheFlush();
 
             $result['success'] = true;
             $result['status'] = 200;
