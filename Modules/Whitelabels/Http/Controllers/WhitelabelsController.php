@@ -29,6 +29,7 @@ use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Excel;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
 use Modules\Attachments\Repositories\Contracts\AttachmentsRepository;
+use Modules\LanguageLines\Http\Controllers\LanguageLinesController;
 use Modules\Languages\Repositories\Contracts\LanguagesRepository;
 use Modules\Roles\Repositories\Contracts\RolesRepository;
 use Modules\Users\Notifications\ApiCreatedUserNotificationForExecutive;
@@ -381,6 +382,9 @@ class WhitelabelsController extends Controller
 
             ini_set('max_execution_time', 500);
             $this->whitelabels->apiCopyLanguage($result['whitelabel']->id);
+
+            LanguageLinesController::cacheFlush();
+
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
 
 
