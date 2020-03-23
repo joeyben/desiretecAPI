@@ -168,6 +168,8 @@ class TnbController extends Controller
                 }
             }
 
+            LanguageLinesController::cacheFlush();
+
             $result['data']['language'] = $lang;
             $result['success'] = true;
             $result['status'] = 200;
