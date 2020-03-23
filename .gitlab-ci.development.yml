@@ -1,4 +1,3 @@
-
 deploy stage:
   stage: deploy
   image: pstauffer/curl
@@ -10,6 +9,8 @@ deploy stage:
   only:
     - development
   variables:
-    SERVICE_WEBHOOK: ${STAGE_SERVICE_HOOK_APP}
-    ECHO_SERVICE_WEBHOOK: ${STAGE_SERVICE_HOOK_NGINX}
+    GIT_STRATEGY: none
+  environment:
+    name: development
+    url: https://admin-development.desiretec.com
 
