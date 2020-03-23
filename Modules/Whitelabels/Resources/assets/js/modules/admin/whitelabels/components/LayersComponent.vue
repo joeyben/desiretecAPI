@@ -62,7 +62,7 @@
         errors: new Errors(),
         checkedLayers: [],
         pivot: [],
-        max: 1,
+        max: 4,
         whitelabel: {},
         layers: [],
         checked: null,
