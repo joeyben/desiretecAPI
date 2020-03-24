@@ -157,6 +157,7 @@ class OffersController extends Controller
             }
 
             $filter = $this->getFilter($whitelabel->name);
+
             $optParams = [
                 'dimensions' => 'ga:yearMonth',
                 'filters'    => $filter['filterd'],
@@ -193,12 +194,14 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $filter = $this->getFilter();
+            $filter = $this->getFilter($whitelabel->name);
 
             $optParams = [
                 'dimensions' => 'ga:date',
                 'filters'    => $filter['filterd'],
             ];
+
+
 
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
             $result['ga'] = $this->dashboard->uniqueEventsDay(config('analytics.view_id'), $optParams, $startDate, $endDate);
@@ -231,8 +234,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter();
+            $filter = $this->getFilter($whitelabel->name);
 
             $optParams1 = [
                 'dimensions' => 'ga:yearMonth',
@@ -242,8 +244,8 @@ class OffersController extends Controller
                 'dimensions' => 'ga:yearMonth',
                 'filters'    => $filter['filtertablet'],
             ];
-            $result['phone'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams1, $startDate, $endDate);
-            $result['tablet'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams2, $startDate, $endDate);
+            $result['phone'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams1, $startDate, $endDate);
+            $result['tablet'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams2, $startDate, $endDate);
 
             for ($i = 0; $i < \count($result['phone']); ++$i) {
                 $result['mobile'][$i][0] = $result['phone'][$i][0];
@@ -282,8 +284,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter();
+            $filter = $this->getFilter($whitelabel->name);
 
             $optParams1 = [
                 'dimensions' => 'ga:date',
@@ -294,8 +295,8 @@ class OffersController extends Controller
                 'filters'    => $filter['filtertablet'],
             ];
 
-            $result['phone'] = $this->dashboard->uniqueEventsDay($viewId, $optParams1, $startDate, $endDate);
-            $result['tablet'] = $this->dashboard->uniqueEventsDay($viewId, $optParams2, $startDate, $endDate);
+            $result['phone'] = $this->dashboard->uniqueEventsDay(config('analytics.view_id'), $optParams1, $startDate, $endDate);
+            $result['tablet'] = $this->dashboard->uniqueEventsDay(config('analytics.view_id'), $optParams2, $startDate, $endDate);
 
             for ($i = 0; $i < \count($result['phone']); ++$i) {
                 $result['mobile'][$i][0] = $result['phone'][$i][0];
@@ -334,8 +335,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter();
+            $filter = $this->getFilter($whitelabel->name);
 
             $optParams = [
                 'dimensions' => 'ga:browser',
@@ -343,7 +343,7 @@ class OffersController extends Controller
             ];
 
             $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
-            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+            $result['ga'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams, $startDate, $endDate);
             $sum = 0;
             $browsers = ['Firefox', 'Chrome', 'Edge', 'Safari', 'Internet Explorer', 'Opera'];
 
@@ -378,8 +378,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter();
+            $filter = $this->getFilter($whitelabel->name);
 
             $optParams = [
             'dimensions' => 'ga:browser',
@@ -387,7 +386,7 @@ class OffersController extends Controller
             ];
 
             $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
-            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+            $result['ga'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams, $startDate, $endDate);
             $sum = 0;
             $browsers = ['Firefox', 'Chrome', 'Edge', 'Safari', 'Internet Explorer', 'Opera'];
 
@@ -422,8 +421,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter();
+            $filter = $this->getFilter($whitelabel->name);
 
             $optParams = [
             'dimensions' => 'ga:yearMonth',
@@ -431,7 +429,7 @@ class OffersController extends Controller
             ];
 
             $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
-            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+            $result['ga'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams, $startDate, $endDate);
 
             $data = $this->wishes->withCriteria([
             new ByWhitelabel(),
@@ -472,8 +470,7 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter();
+            $filter = $this->getFilter($whitelabel->name);
 
             $optParams1 = [
             'dimensions' => 'ga:yearMonth',
@@ -483,8 +480,8 @@ class OffersController extends Controller
                 'dimensions' => 'ga:yearMonth',
                 'filters'    => $filter['filtertablet'],
             ];
-            $result['phone'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams1, $startDate, $endDate);
-            $result['tablet'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams2, $startDate, $endDate);
+            $result['phone'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams1, $startDate, $endDate);
+            $result['tablet'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams2, $startDate, $endDate);
 
             for ($i = 0; $i < \count($result['phone']); ++$i) {
                 $result['mobile'][$i][0] = $result['phone'][$i][0];

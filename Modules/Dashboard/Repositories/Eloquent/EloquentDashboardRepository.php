@@ -27,7 +27,6 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function uniqueEventsDay(string $gaViewId, array $optParams, string $startDate, string $endDate)
     {
-        //dd($optParams, $gaViewId);
         return \Analytics::getAnalyticsService()->data_ga->get(
             'ga:' . $gaViewId,
             ('' === $startDate) ? '30daysAgo' : $startDate,
