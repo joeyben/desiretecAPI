@@ -156,15 +156,14 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
-            $filter = $this->getFilter();
+            $filter = $this->getFilter($whitelabel->name);
             $optParams = [
                 'dimensions' => 'ga:yearMonth',
                 'filters'    => $filter['filterd'],
             ];
 
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
-            $result['ga'] = $this->dashboard->uniqueEventsMonth($viewId, $optParams, $startDate, $endDate);
+            $result['ga'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -194,7 +193,6 @@ class OffersController extends Controller
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
-            $viewId = null === $whitelabel['ga_view_id'] ? '192484069' : $whitelabel['ga_view_id'];
             $filter = $this->getFilter();
 
             $optParams = [
@@ -203,7 +201,7 @@ class OffersController extends Controller
             ];
 
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
-            $result['ga'] = $this->dashboard->uniqueEventsDay($viewId, $optParams, $startDate, $endDate);
+            $result['ga'] = $this->dashboard->uniqueEventsDay(config('analytics.view_id'), $optParams, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -657,13 +655,13 @@ class OffersController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-    public function getFilter()
+    public function getFilter($name = 'desiretec')
     {
-        $filterdesk = 'ga:eventLabel==eil-desktop;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
-        $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
-        $filterphone = 'ga:eventLabel==eil-phone;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
-        $filtertablet = 'ga:eventLabel==eil-tablet;ga:eventAction==shown;ga:eventCategory==desiretec_exitwindow';
-        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==desiretec_exitwindow';
+        $filterdesk = 'ga:eventLabel==eil-desktop;ga:eventAction==shown;ga:eventCategory==' . $name . '_exitwindow';
+        $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==' . $name . '_exitwindow';
+        $filterphone = 'ga:eventLabel==eil-phone;ga:eventAction==shown;ga:eventCategory==' . $name . '_exitwindow';
+        $filtertablet = 'ga:eventLabel==eil-tablet;ga:eventAction==shown;ga:eventCategory==' . $name . '_exitwindow';
+        $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==' . $name . '_exitwindow';
 
         return ['filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare, 'filterphone'=>$filterphone, 'filtertablet'=>$filtertablet];
     }
