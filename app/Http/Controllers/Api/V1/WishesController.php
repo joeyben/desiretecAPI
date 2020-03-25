@@ -225,7 +225,7 @@ class WishesController extends APIController
         }
     }
 
-    function callTT($wish, $newUser, $request){
+    public function callTT($wish, $newUser, $request){
         $view = \View::make('wishes::emails.autooffer',
             [
                 'url'=> $wish->whitelabel->domain . '/offer/olist/' . $wish->id . '/' . $newUser->token->token
