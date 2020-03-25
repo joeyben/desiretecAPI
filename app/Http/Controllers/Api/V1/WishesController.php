@@ -26,6 +26,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
+use App\Jobs\callTTApi;
+use App\Jobs\sendAutoOffersMail;
 
 class WishesController extends APIController
 {
