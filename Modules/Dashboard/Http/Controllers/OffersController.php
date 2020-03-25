@@ -15,6 +15,7 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
+use Modules\Users\Repositories\Contracts\UsersRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Modules\Wishes\Repositories\Contracts\WishesRepository;
 
@@ -49,11 +50,13 @@ class OffersController extends Controller
      * @var \Modules\Dashboard\Repositories\Contracts\DashboardRepository
      */
     private $dashboard;
-
     /**
-     * WishesController constructor.
+     * @var \Modules\Users\Repositories\Contracts\UsersRepository
      */
-    public function __construct(WishesRepository $wishes, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DashboardRepository $dashboard)
+    private $users;
+
+
+    public function __construct(WishesRepository $wishes, UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DashboardRepository $dashboard)
     {
         $this->wishes = $wishes;
         $this->response = $response;
@@ -62,6 +65,7 @@ class OffersController extends Controller
         $this->carbon = $carbon;
         $this->whitelabels = $whitelabels;
         $this->dashboard = $dashboard;
+        $this->users = $users;
     }
 
     /**
@@ -84,11 +88,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : str_replace('-', '', $request->get('end'));
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
+                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -115,11 +118,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : str_replace('-', '', $request->get('end'));
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
+                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -146,11 +148,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
+                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -184,11 +185,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
+                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -224,11 +224,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
+                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -274,11 +273,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
+                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -325,11 +323,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
+                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -368,11 +365,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
+                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -411,11 +407,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
+                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -460,11 +455,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabel = $this->whitelabels->find(config($url[0] . '.id'));
+                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
+                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
