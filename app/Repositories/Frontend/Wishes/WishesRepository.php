@@ -101,6 +101,9 @@ class WishesRepository extends BaseRepository
                 config('access.users_table') . '.last_name as last_name',
                 config('module.whitelabels.table') . '.id as whitelabel_id',
                 config('module.whitelabels.table') . '.display_name as whitelabel_name',
+                config('module.whitelabels.table') . '.tt',
+                config('module.whitelabels.table') . '.traffics',
+                config('module.whitelabels.table') . '.peakwork',
                 DB::raw('count(' . config('module.offers.table') . '.id) as offers'),
                 DB::raw('GROUP_CONCAT(categories.value) as categories'),
             ])
