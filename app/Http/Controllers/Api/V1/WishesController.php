@@ -213,8 +213,7 @@ class WishesController extends APIController
 
             if ($wish = $this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
                 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'), $newUser->id)) {
-                dd($newUser->whitelabel);
-                if($newUser->whitelabel->tt){
+                if($wish->whitelabel->tt){
                     $this->callTT($wish, $newUser, $request);
                 }
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
