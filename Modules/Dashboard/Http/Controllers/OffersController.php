@@ -91,7 +91,7 @@ class OffersController extends Controller
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
                 } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -118,10 +118,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : str_replace('-', '', $request->get('end'));
 
             if (null === $whitelabelId) {
-                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
                 } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -148,10 +148,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
                 } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -161,7 +161,7 @@ class OffersController extends Controller
 
             $optParams = [
                 'dimensions' => 'ga:yearMonth',
-                'filters'    => $filter['filterd'],
+                'filters' => $filter['filterd'],
             ];
 
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
@@ -188,7 +188,7 @@ class OffersController extends Controller
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
                 } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -198,9 +198,8 @@ class OffersController extends Controller
 
             $optParams = [
                 'dimensions' => 'ga:date',
-                'filters'    => $filter['filterd'],
+                'filters' => $filter['filterd'],
             ];
-
 
 
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
@@ -224,10 +223,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
                 } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -237,11 +236,11 @@ class OffersController extends Controller
 
             $optParams1 = [
                 'dimensions' => 'ga:yearMonth',
-                'filters'    => $filter['filterphone'],
+                'filters' => $filter['filterphone'],
             ];
             $optParams2 = [
                 'dimensions' => 'ga:yearMonth',
-                'filters'    => $filter['filtertablet'],
+                'filters' => $filter['filtertablet'],
             ];
             $result['phone'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams1, $startDate, $endDate);
             $result['tablet'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams2, $startDate, $endDate);
@@ -273,10 +272,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
                 } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -286,11 +285,11 @@ class OffersController extends Controller
 
             $optParams1 = [
                 'dimensions' => 'ga:date',
-                'filters'    => $filter['filterphone'],
+                'filters' => $filter['filterphone'],
             ];
             $optParams2 = [
                 'dimensions' => 'ga:date',
-                'filters'    => $filter['filtertablet'],
+                'filters' => $filter['filtertablet'],
             ];
 
             $result['phone'] = $this->dashboard->uniqueEventsDay(config('analytics.view_id'), $optParams1, $startDate, $endDate);
@@ -323,10 +322,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
                 } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -336,7 +335,7 @@ class OffersController extends Controller
 
             $optParams = [
                 'dimensions' => 'ga:browser',
-                'filters'    => $filter['filterd'],
+                'filters' => $filter['filterd'],
             ];
 
             $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
@@ -365,10 +364,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
                 } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -377,8 +376,8 @@ class OffersController extends Controller
             $filter = $this->getFilter($whitelabel->name);
 
             $optParams = [
-            'dimensions' => 'ga:browser',
-            'filters'    => $filter['filters'],
+                'dimensions' => 'ga:browser',
+                'filters' => $filter['filters'],
             ];
 
             $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
@@ -407,10 +406,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
                 } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -419,19 +418,19 @@ class OffersController extends Controller
             $filter = $this->getFilter($whitelabel->name);
 
             $optParams = [
-            'dimensions' => 'ga:yearMonth',
-            'filters'    => $filter['filterd'],
+                'dimensions' => 'ga:yearMonth',
+                'filters' => $filter['filterd'],
             ];
 
             $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
             $result['ga'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams, $startDate, $endDate);
 
             $data = $this->wishes->withCriteria([
-            new ByWhitelabel(),
-            new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-            new GroupBy('month')
+                new ByWhitelabel(),
+                new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
+                new GroupBy('month')
             ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'), DB::raw('DATE(wishes.created_at) as date')])
-            ->pluck('wishes_count', 'date');
+                ->pluck('wishes_count', 'date');
             $stack = [];
 
             $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
@@ -455,10 +454,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
                 } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -467,12 +466,12 @@ class OffersController extends Controller
             $filter = $this->getFilter($whitelabel->name);
 
             $optParams1 = [
-            'dimensions' => 'ga:yearMonth',
-            'filters'    => $filter['filterphone'],
+                'dimensions' => 'ga:yearMonth',
+                'filters' => $filter['filterphone'],
             ];
             $optParams2 = [
                 'dimensions' => 'ga:yearMonth',
-                'filters'    => $filter['filtertablet'],
+                'filters' => $filter['filtertablet'],
             ];
             $result['phone'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams1, $startDate, $endDate);
             $result['tablet'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams2, $startDate, $endDate);
@@ -486,12 +485,12 @@ class OffersController extends Controller
             $result['ga'] = $result['mobile'];
 
             $data = $this->wishes->withCriteria([
-            new ByWhitelabel(),
-            new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
-            new Where('wishes.mobile', 1),
-            new GroupBy('month')
+                new ByWhitelabel(),
+                new Where('wishes.whitelabel_id', $request->get('whitelabelId')),
+                new Where('wishes.mobile', 1),
+                new GroupBy('month')
             ])->all(['id', 'whitelabel_id', 'created_at', DB::raw('MONTH(wishes.created_at) as month'), DB::raw('count(*) as wishes_count'), DB::raw('DATE(wishes.created_at) as date')])
-            ->pluck('wishes_count', 'date');
+                ->pluck('wishes_count', 'date');
             $stack = [];
 
             $result['ga'] = $this->dashboard->calculateResponseData($result, $data, $stack);
@@ -654,7 +653,7 @@ class OffersController extends Controller
         $filtertablet = 'ga:eventLabel==eil-tablet;ga:eventAction==shown;ga:eventCategory==' . $name . '_exitwindow';
         $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==' . $name . '_exitwindow';
 
-        return ['filterd'=>$filterdesk, 'filterm'=>$filtermobile, 'filters'=>$filtershare, 'filterphone'=>$filterphone, 'filtertablet'=>$filtertablet];
+        return ['filterd' => $filterdesk, 'filterm' => $filtermobile, 'filters' => $filtershare, 'filterphone' => $filterphone, 'filtertablet' => $filtertablet];
     }
 
     /**
