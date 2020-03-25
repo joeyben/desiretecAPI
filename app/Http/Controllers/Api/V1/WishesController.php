@@ -245,10 +245,10 @@ class WishesController extends APIController
             'email_name'       => trans('autooffers.email.name'),
             'email_subject'    => trans('autooffer.email.subject'),
             'email_content'    => $contents,
-            'current_wl_email' => getCurrentWhiteLabelEmail(),
+            'current_wl_email' => $wish->whitelabel->email,
             'type'             => 0
         ];
 
-        dispatch((new sendAutoOffersMail($details, $wish->id, getCurrentWhiteLabelEmail()))->delay(Carbon::now()->addSeconds(1)));
+        dispatch((new sendAutoOffersMail($details, $wish->id, $wish->whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
     }
 }
