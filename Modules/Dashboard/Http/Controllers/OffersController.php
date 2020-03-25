@@ -88,10 +88,10 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : str_replace('-', '', $request->get('end'));
 
             if (null === $whitelabelId) {
-                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
-                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
+                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -119,9 +119,9 @@ class OffersController extends Controller
 
             if (null === $whitelabelId) {
                  if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
-                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
+                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -149,9 +149,9 @@ class OffersController extends Controller
 
             if (null === $whitelabelId) {
                  if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
-                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
+                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -186,9 +186,9 @@ class OffersController extends Controller
 
             if (null === $whitelabelId) {
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
-                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
+                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -225,9 +225,9 @@ class OffersController extends Controller
 
             if (null === $whitelabelId) {
                  if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
-                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
+                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -274,9 +274,9 @@ class OffersController extends Controller
 
             if (null === $whitelabelId) {
                  if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
-                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
+                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -324,9 +324,9 @@ class OffersController extends Controller
 
             if (null === $whitelabelId) {
                  if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
-                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
+                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -366,9 +366,9 @@ class OffersController extends Controller
 
             if (null === $whitelabelId) {
                  if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
-                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
+                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -408,9 +408,9 @@ class OffersController extends Controller
 
             if (null === $whitelabelId) {
                  if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
-                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
+                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
@@ -456,9 +456,9 @@ class OffersController extends Controller
 
             if (null === $whitelabelId) {
                  if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                    $whitelabel = $this->users()->whitelabels->first();
-                } else if($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
+                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->users()->whitelabels->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
