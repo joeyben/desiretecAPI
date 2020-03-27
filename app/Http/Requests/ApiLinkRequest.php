@@ -24,8 +24,8 @@ class ApiLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|max:255|exists:users,email',
-            'host'  => 'required|string',
+            'email'         => 'required|email|max:255|exists:users,email',
+            'host'          => 'required|string',
             'whitelabelId'  => 'required|integer|exists:whitelabels,id',
         ];
     }

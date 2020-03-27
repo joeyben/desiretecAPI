@@ -329,7 +329,7 @@ class AutooffersTTRepository extends BaseRepository
      *
      * @return mix
      */
-    public function storeAutooffer($offer, $hotel, $wish_id,$userId)
+    public function storeAutooffer($offer, $hotel, $wish_id, $userId)
     {
         try {
             $autooffer = self::MODEL;
@@ -888,7 +888,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->getToken();
         $headers = [
             'Content-type: text/xml',
-            'Content-length: ' . \mb_strlen($requestXML), 'Connection: close',
+            'Content-length: ' . mb_strlen($requestXML), 'Connection: close',
         ];
         $ch = curl_init();
         $authorization = 'Authorization: Bearer ' . $this->token;

@@ -48,10 +48,10 @@ class ApiTokenLoginRequested extends Mailable
         return $this->subject($subject)
             ->from($formAddress, $formName . ' Reisewunschportal')
             ->view('emails.token.link')->with([
-                'link'       => $this->buildLink(),
-                'whitelabel_name' => $formName,
-                'whitelabel' => $this->whiteLabel,
-                'whitelabelId'     =>  $this->whiteLabel->id
+                'link'             => $this->buildLink(),
+                'whitelabel_name'  => $formName,
+                'whitelabel'       => $this->whiteLabel,
+                'whitelabelId'     => $this->whiteLabel->id
             ]);
     }
 

@@ -42,6 +42,6 @@ class callTTApi implements ShouldQueue
         $TTautooffers->saveWishData($wish);
         $TTautooffers->getToken();
         $response = $TTautooffers->getTTData();
-        $TTautooffers->storeMany($response,$wish->id, $_rules,$this->userId);
+        $TTautooffers->storeMany($response, $wish->id, $_rules, $this->userId);
     }
 }

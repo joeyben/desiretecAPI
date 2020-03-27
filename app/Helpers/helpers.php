@@ -8,7 +8,6 @@ use App\Services\Flag\Src\Flag;
 use Carbon\Carbon as Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Modules\LanguageLines\Entities\LanguageLines;
@@ -1028,27 +1027,26 @@ if (!function_exists('wl_email_signature')) {
             }
 
             return '';
-        } else {
-            return '';
         }
+
+        return '';
     }
 }
-
 
 if (!function_exists('wl_default_email_signature')) {
     function wl_default_email_signature()
     {
-            $translation = DB::table('language_lines')
+        $translation = DB::table('language_lines')
                 ->select('text')
                 ->where('locale', 'de')
                 ->where('group', 'email')
                 ->where('key', 'email_signature')
                 ->whereNull('whitelabel_id')
                 ->get();
-            if ($translation->isNotEmpty()) {
-                return $translation->first()->text;
-            }
+        if ($translation->isNotEmpty()) {
+            return $translation->first()->text;
+        }
 
-            return '';
+        return '';
     }
 }
