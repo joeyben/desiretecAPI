@@ -149,7 +149,6 @@ class LanguageLinesController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-
     public static function cacheFlush()
     {
         Artisan::call('cache:clear');
@@ -702,7 +701,7 @@ class LanguageLinesController extends Controller
                 }
             }
 
-            LanguageLinesController::cacheFlush();
+            self::cacheFlush();
 
             $result['data']['language'] = $lang;
             $result['success'] = true;
@@ -751,7 +750,7 @@ class LanguageLinesController extends Controller
                 );
             }
 
-            LanguageLinesController::cacheFlush();
+            self::cacheFlush();
 
             $result['success'] = true;
             $result['status'] = 200;

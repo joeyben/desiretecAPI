@@ -6,6 +6,8 @@ use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
+use App\Jobs\callTTApi;
+use App\Jobs\sendAutoOffersMail;
 use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Groups\GroupsRepository;
@@ -26,8 +28,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
-use App\Jobs\callTTApi;
-use App\Jobs\sendAutoOffersMail;
 
 class WishesController extends APIController
 {
@@ -215,9 +215,10 @@ class WishesController extends APIController
 
             if ($wish = $this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
                 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'), $newUser->id)) {
-                if($wish->whitelabel->tt){
+                if ($wish->whitelabel->tt) {
                     $this->callTT($wish, $newUser, $request);
                 }
+
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
             }
 
@@ -227,14 +228,14 @@ class WishesController extends APIController
         }
     }
 
-    public function callTT($wish, $newUser, $request){
+    public function callTT($wish, $newUser, $request)
+    {
         $view = \View::make('wishes::emails.autooffer',
             [
                 'url'=> $wish->whitelabel->domain . '/offer/olist/' . $wish->id . '/' . $newUser->token->token
             ]
         );
         $contents = $view->render();
-
 
         //$wishJob = (new callTTApi($wish->id, $request->input('whitelabel_id'), $newUser->id))->delay(Carbon::now()->addSeconds(3));
         //dispatch($wishJob);

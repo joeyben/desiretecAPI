@@ -55,7 +55,6 @@ class OffersController extends Controller
      */
     private $users;
 
-
     public function __construct(WishesRepository $wishes, UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, WhitelabelsRepository $whitelabels, DashboardRepository $dashboard)
     {
         $this->wishes = $wishes;
@@ -90,7 +89,7 @@ class OffersController extends Controller
             if (null === $whitelabelId) {
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
-                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
@@ -120,7 +119,7 @@ class OffersController extends Controller
             if (null === $whitelabelId) {
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
-                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
@@ -150,7 +149,7 @@ class OffersController extends Controller
             if (null === $whitelabelId) {
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
-                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
@@ -161,7 +160,7 @@ class OffersController extends Controller
 
             $optParams = [
                 'dimensions' => 'ga:yearMonth',
-                'filters' => $filter['filterd'],
+                'filters'    => $filter['filterd'],
             ];
 
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
@@ -187,7 +186,7 @@ class OffersController extends Controller
             if (null === $whitelabelId) {
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
-                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
@@ -198,9 +197,8 @@ class OffersController extends Controller
 
             $optParams = [
                 'dimensions' => 'ga:date',
-                'filters' => $filter['filterd'],
+                'filters'    => $filter['filterd'],
             ];
-
 
             $result['lidesktop'] = $this->dashboard->getFilterCategory('LI Desktop');
             $result['ga'] = $this->dashboard->uniqueEventsDay(config('analytics.view_id'), $optParams, $startDate, $endDate);
@@ -225,7 +223,7 @@ class OffersController extends Controller
             if (null === $whitelabelId) {
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
-                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
@@ -236,11 +234,11 @@ class OffersController extends Controller
 
             $optParams1 = [
                 'dimensions' => 'ga:yearMonth',
-                'filters' => $filter['filterphone'],
+                'filters'    => $filter['filterphone'],
             ];
             $optParams2 = [
                 'dimensions' => 'ga:yearMonth',
-                'filters' => $filter['filtertablet'],
+                'filters'    => $filter['filtertablet'],
             ];
             $result['phone'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams1, $startDate, $endDate);
             $result['tablet'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams2, $startDate, $endDate);
@@ -274,7 +272,7 @@ class OffersController extends Controller
             if (null === $whitelabelId) {
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
-                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
@@ -285,11 +283,11 @@ class OffersController extends Controller
 
             $optParams1 = [
                 'dimensions' => 'ga:date',
-                'filters' => $filter['filterphone'],
+                'filters'    => $filter['filterphone'],
             ];
             $optParams2 = [
                 'dimensions' => 'ga:date',
-                'filters' => $filter['filtertablet'],
+                'filters'    => $filter['filtertablet'],
             ];
 
             $result['phone'] = $this->dashboard->uniqueEventsDay(config('analytics.view_id'), $optParams1, $startDate, $endDate);
@@ -324,7 +322,7 @@ class OffersController extends Controller
             if (null === $whitelabelId) {
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
-                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
@@ -335,7 +333,7 @@ class OffersController extends Controller
 
             $optParams = [
                 'dimensions' => 'ga:browser',
-                'filters' => $filter['filterd'],
+                'filters'    => $filter['filterd'],
             ];
 
             $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
@@ -366,7 +364,7 @@ class OffersController extends Controller
             if (null === $whitelabelId) {
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
-                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
@@ -377,7 +375,7 @@ class OffersController extends Controller
 
             $optParams = [
                 'dimensions' => 'ga:browser',
-                'filters' => $filter['filters'],
+                'filters'    => $filter['filters'],
             ];
 
             $result['browser'] = $this->dashboard->getFilterCategory('Desktop Browser');
@@ -408,7 +406,7 @@ class OffersController extends Controller
             if (null === $whitelabelId) {
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
-                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
@@ -419,7 +417,7 @@ class OffersController extends Controller
 
             $optParams = [
                 'dimensions' => 'ga:yearMonth',
-                'filters' => $filter['filterd'],
+                'filters'    => $filter['filterd'],
             ];
 
             $result['response'] = $this->dashboard->getFilterCategory('Response Rate');
@@ -456,7 +454,7 @@ class OffersController extends Controller
             if (null === $whitelabelId) {
                 if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
                     $whitelabel = $this->whitelabels->first();
-                } else if ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                     $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
@@ -467,11 +465,11 @@ class OffersController extends Controller
 
             $optParams1 = [
                 'dimensions' => 'ga:yearMonth',
-                'filters' => $filter['filterphone'],
+                'filters'    => $filter['filterphone'],
             ];
             $optParams2 = [
                 'dimensions' => 'ga:yearMonth',
-                'filters' => $filter['filtertablet'],
+                'filters'    => $filter['filtertablet'],
             ];
             $result['phone'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams1, $startDate, $endDate);
             $result['tablet'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams2, $startDate, $endDate);
