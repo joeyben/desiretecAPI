@@ -25,9 +25,9 @@ class AutooffersTTRepository extends BaseRepository
 
     private $token = '';
 
-    private $username = 'MKT_315150_DE';
+    private $username = 'sys_315150_ch_desiretec';
 
-    private $password = '1A3s4d5f6g7jk9!';
+    private $password = '20Destec20#';
 
     private $oauthUrl = 'https://auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
 
