@@ -236,8 +236,10 @@ class WishesController extends APIController
         $contents = $view->render();
 
 
-        $wishJob = (new callTTApi($wish->id, $request->input('whitelabel_id'), $newUser->id))->delay(Carbon::now()->addSeconds(3));
-        dispatch($wishJob);
+        //$wishJob = (new callTTApi($wish->id, $request->input('whitelabel_id'), $newUser->id))->delay(Carbon::now()->addSeconds(3));
+        //dispatch($wishJob);
+
+        $this->repository->callTT($wish->id, $request->input('whitelabel_id'), $newUser->id);
 
         $details = [
             'email'            => $newUser->email,
