@@ -8,10 +8,7 @@ use App\Http\Requests\Frontend\User\ResetLinkEmailRequest;
 use App\Http\Requests\Frontend\User\ResetPasswordRequest;
 use App\Http\Requests\Frontend\User\UpdateProfileRequest;
 use App\Notifications\Frontend\Auth\ApiUserNeedsPasswordReset;
-use App\Notifications\Frontend\Auth\UserNeedsPasswordReset;
 use App\Repositories\Frontend\Access\User\UserRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class AccountController extends APIController implements AccountControllerInterface
 {
@@ -59,7 +56,6 @@ class AccountController extends APIController implements AccountControllerInterf
             return $this->respondWithError($e);
         }
     }
-
 
     public function sendResetLinkEmail(ResetLinkEmailRequest $request)
     {

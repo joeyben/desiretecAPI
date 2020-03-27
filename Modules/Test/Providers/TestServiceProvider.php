@@ -16,8 +16,6 @@ class TestServiceProvider extends ServiceProvider
 
     /**
      * Boot the application events.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -30,8 +28,6 @@ class TestServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -39,8 +35,6 @@ class TestServiceProvider extends ServiceProvider
 
     /**
      * Register config.
-     *
-     * @return void
      */
     protected function registerConfig()
     {
@@ -54,8 +48,6 @@ class TestServiceProvider extends ServiceProvider
 
     /**
      * Register views.
-     *
-     * @return void
      */
     public function registerViews()
     {
@@ -74,8 +66,6 @@ class TestServiceProvider extends ServiceProvider
 
     /**
      * Register translations.
-     *
-     * @return void
      */
     public function registerTranslations()
     {
@@ -90,8 +80,6 @@ class TestServiceProvider extends ServiceProvider
 
     /**
      * Register an additional directory of factories.
-     *
-     * @return void
      */
     public function registerFactories()
     {

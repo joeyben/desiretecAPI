@@ -70,7 +70,7 @@ class UserContactedSeller extends Notification
     public function toMail()
     {
         $confirmation_url = env('APP_USE_API') ?
-            'https://'.strtolower($this->contact->wish->whitelabel->name).'.wish-service.com/wish/'.$this->contact->wish->id.'/'.$this->token :
+            'https://' . mb_strtolower($this->contact->wish->whitelabel->name) . '.wish-service.com/wish/' . $this->contact->wish->id . '/' . $this->token :
             route($this->getRoute(), [$this->wish_id, $this->token]);
 
         $subject = ('no data' !== $this->contact->email) ? trans('email.wish.user_cnt_seller')

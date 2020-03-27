@@ -176,8 +176,7 @@ class WishesRepository extends BaseRepository
                 }
             }
 
-
-            if(is_null($rules) || $rules['type'] === 'manuel'){
+            if (null === $rules || 'manuel' === $rules['type']) {
                 $manuelFlag = true;
             } else {
                 $manuelFlag = false;
@@ -258,7 +257,6 @@ class WishesRepository extends BaseRepository
         return $result;
     }
 
-
     /**
      * @return Wish
      */
@@ -266,7 +264,6 @@ class WishesRepository extends BaseRepository
     {
         return Wish::findOrFail($id);
     }
-
 
     /**
      * @return mixed

@@ -22,7 +22,6 @@ class ApiUserNeedsPasswordReset extends Notification
     public $host;
     private $email;
 
-
     public function __construct($token, $host, $email)
     {
         $this->token = $token;
@@ -51,7 +50,7 @@ class ApiUserNeedsPasswordReset extends Notification
      */
     public function toMail($notifiable)
     {
-        $reset_password_route =  $this->host . '/reset/' . $this->token . '/' . $this->email;
+        $reset_password_route = $this->host . '/reset/' . $this->token . '/' . $this->email;
 
         return (new MailMessage())
             ->view('emails.reset-password', ['reset_password_url' => $reset_password_route]);

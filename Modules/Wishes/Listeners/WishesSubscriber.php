@@ -15,7 +15,6 @@ use Modules\Wishes\Entities\Wish;
 use Modules\Wishes\Notifications\AutoOfferNotification;
 use Modules\Wishes\Notifications\CreatedWishNotification;
 use Modules\Wishes\Notifications\CreatedWishNotificationForSeller;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class WishesSubscriber
 {

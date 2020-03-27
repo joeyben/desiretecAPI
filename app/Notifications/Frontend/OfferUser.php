@@ -79,7 +79,7 @@ class OfferUser extends Notification
             ->subject($subject)
             ->view($view, [
                     'confirmation_url' => $confirmation_url,
-                    'whitelabelId'     =>  $this->offer->wish->whitelabel->id,
+                    'whitelabelId'     => $this->offer->wish->whitelabel->id,
                     'offer'            => $this->offer,
                     'whitelabel'       => $this->offer->wish->whitelabel
                 ]);
@@ -96,6 +96,6 @@ class OfferUser extends Notification
     {
         $whitelabelId = Auth::guard('api')->user()->whitelabels()->first();
 
-        return $whitelabelId->domain . '/wish/' . $this->wish_id .'/'.$this->token;
+        return $whitelabelId->domain . '/wish/' . $this->wish_id . '/' . $this->token;
     }
 }

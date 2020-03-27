@@ -387,7 +387,6 @@ class WhitelabelsController extends Controller
 
             $result['message'] = $this->lang->get('messages.created', ['attribute' => 'Whitelabel']);
 
-
             return $this->responseJson($result);
         } catch (Exception $e) {
             return $this->responseJsonError($e);
@@ -505,7 +504,6 @@ class WhitelabelsController extends Controller
                 'state'                        => $whitelabel->state,
                 'hostsList'                    => $whitelabel->hosts->pluck('host'),
                 'licence'                      => $whitelabel->licence
-
             ];
             $result['whitelabel']['logs'] = $this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE) ? $this->activities->byModel($whitelabel) : [];
 
@@ -565,7 +563,6 @@ class WhitelabelsController extends Controller
 
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
-
 
     public function save(SaveWhitelabelRequest $request, int $id)
     {

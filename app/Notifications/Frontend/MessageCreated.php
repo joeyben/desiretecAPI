@@ -86,9 +86,9 @@ class MessageCreated extends Notification
             ->subject($subject)
             ->view($view, [
                     'confirmation_url'      => $confirmation_url,
-                    'whitelabelId'      => $this->message->wish->whitelabel->id,
+                    'whitelabelId'          => $this->message->wish->whitelabel->id,
                     'messageModel'          => $this->message,
-                    'whitelabel'        => $this->message->wish->whitelabel
+                    'whitelabel'            => $this->message->wish->whitelabel
                 ]);
     }
 
