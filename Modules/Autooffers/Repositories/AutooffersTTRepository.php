@@ -291,13 +291,13 @@ class AutooffersTTRepository extends BaseRepository
     /**
      * @return bool
      */
-    public function saveWishData(Wish $wish)
+    public function saveWishData(Wish $wish, $whitelabelId)
     {
         $this->setMinBudget(0);
         $this->setBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
-        $this->setAirport($wish->airport);
+        $this->setAirport($wish->airport, $whitelabelId);
         $this->setCategory($wish->category);
         $this->setCatering($wish->catering);
         $this->setFrom($wish->earliest_start);
@@ -680,8 +680,9 @@ class AutooffersTTRepository extends BaseRepository
 
     /**
      * @param $airport
+     * @param $whitelabelId
      */
-    public function setAirport($airport)
+    public function setAirport($airport, $whitelabelId)
     {
         $airarr = explode(',', $airport);
         $airports = '';
@@ -689,7 +690,7 @@ class AutooffersTTRepository extends BaseRepository
             if ($key > 0) {
                 $airports .= ',';
             }
-            $airports .= '"' . getTTAirports($air, getCurrentWhiteLabelId()) . '"';
+            $airports .= '"' . getTTAirports($air, $whitelabelId) . '"';
         }
         $this->airport = $airports;
     }

@@ -636,7 +636,7 @@ class WishesRepository extends BaseRepository
     {
         $wish = Wish::where('id', $wishID)->first();
         $_rules = $this->autoRules->getSettingsForWhitelabel($whitelabelId);
-        $this->autooffersTT->saveWishData($wish);
+        $this->autooffersTT->saveWishData($wish, $whitelabelId);
         $this->autooffersTT->getToken();
         $response = $this->autooffersTT->getTTData();
         $this->autooffersTT->storeMany($response, $wish->id, $_rules, $userId);

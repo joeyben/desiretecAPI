@@ -232,7 +232,8 @@ class WishesController extends APIController
     {
         $view = \View::make('wishes::emails.autooffer',
             [
-                'url'=> $wish->whitelabel->domain . '/offer/olist/' . $wish->id . '/' . $newUser->token->token
+                'url'=> $wish->whitelabel->domain . '/offer/olist/' . $wish->id . '/' . $newUser->token->token,
+                'whitelabel' => $wish->whitelabel
             ]
         );
         $contents = $view->render();
@@ -251,7 +252,6 @@ class WishesController extends APIController
             'current_wl_email' => $wish->whitelabel->email,
             'type'             => 0
         ];
-        dd($details);
         dispatch((new sendAutoOffersMail($details, $wish->id, $wish->whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
     }
 }
