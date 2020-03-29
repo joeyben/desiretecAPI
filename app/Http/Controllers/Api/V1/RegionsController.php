@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Regions;
+use App\Models\TTAirports;
 use Illuminate\Http\Request;
 
 /**
@@ -39,6 +40,26 @@ class RegionsController extends Controller
             ->chunk(200, function ($regions) use (&$airports) {
                 foreach ($regions as $region) {
                     $airports[] = $region->regionName;
+                }
+            });
+
+        return $airports;
+    }
+    /**
+     * URL: /get-all-airports
+     * Returns all airports.
+     *
+     * @return array
+     */
+    public function getAllTTAirports()
+    {
+        $airports = [];
+        TTAirports::select('name', 'code')
+            ->where('whitelabel', 87)
+            ->groupBy('name')
+            ->chunk(200, function ($regions) use (&$airports) {
+                foreach ($regions as $region) {
+                    $airports[] = $region->name;
                 }
             });
 
