@@ -98,6 +98,6 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('wish/store', 'WishesController@store');
 
         Route::get('destinations', 'RegionsController@getAllDestinations');
-        Route::get('airports', 'RegionsController@getAllAirports');
+        Route::get('airports', 'RegionsController@getTTAirports');
     });
 });
