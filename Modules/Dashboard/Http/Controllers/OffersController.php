@@ -512,18 +512,17 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabelId = config($url[0] . '.id');
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
             $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-            $result['clickrate'] = $this->dashboard->loadClickRate($whitelabelId, $startDate, $endDate);
+            $result['clickrate'] = $this->dashboard->loadClickRate($whitelabel->id, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -543,18 +542,17 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabelId = config($url[0] . '.id');
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
             $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-            $result['clickrate'] = $this->dashboard->loadClickRateauto($whitelabelId, $startDate, $endDate);
+            $result['clickrate'] = $this->dashboard->loadClickRateauto($whitelabel->id, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -574,18 +572,17 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabelId = config($url[0] . '.id');
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
             $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-            $result['openrate'] = $this->dashboard->loadOpenRate($whitelabelId, $startDate, $endDate);
+            $result['openrate'] = $this->dashboard->loadOpenRate($whitelabel->id, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {
@@ -605,18 +602,17 @@ class OffersController extends Controller
             $endDate = null === $request->get('end') ? '' : $request->get('end');
 
             if (null === $whitelabelId) {
-                $whitelabel = $this->whitelabels->first();
-                $url = explode('.', $_SERVER['HTTP_HOST']);
-
-                if (false === mb_strpos($url[0], env('DOMAIN_PREFIX', 'mvp'))) {
-                    $whitelabelId = config($url[0] . '.id');
+                if ($this->auth->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                    $whitelabel = $this->whitelabels->first();
+                } elseif ($this->auth->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                    $whitelabel = $this->auth->user()->whitelabels()->first();
                 }
             } else {
                 $whitelabel = $this->whitelabels->find($whitelabelId);
             }
 
             $result['email'] = $this->dashboard->getFilterCategory('E-Mail');
-            $result['openrate'] = $this->dashboard->loadOpenRateauto($whitelabelId, $startDate, $endDate);
+            $result['openrate'] = $this->dashboard->loadOpenRateauto($whitelabel->id, $startDate, $endDate);
             $result['success'] = true;
             $result['status'] = Flag::STATUS_CODE_SUCCESS;
         } catch (Exception $e) {

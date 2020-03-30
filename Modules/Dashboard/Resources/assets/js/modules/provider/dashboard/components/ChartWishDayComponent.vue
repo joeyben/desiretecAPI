@@ -133,7 +133,7 @@
         items.forEach((item, index) => {
           data.push([moment(item[0], 'YYYY-MM-DD').utc(+1).valueOf(), item[1]])
         })
-  
+
         return data
       },
       onLoadDashboardSellerSuccess (response) {

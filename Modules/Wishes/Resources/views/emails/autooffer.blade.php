@@ -20,5 +20,6 @@
                     </td>
                 </tr>
             </table>
+        <div style="display: none">auto,{{ $whitelabelId }}</div>
     </div>
 @endsection

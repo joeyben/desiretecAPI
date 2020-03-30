@@ -10,7 +10,7 @@
                     <p style="line-height: 24px; margin-bottom:15px;">
                         Liebe Kundin, lieber Kunde!
                     </p>
-                    
+
                     <p style="line-height: 24px; margin-bottom:20px;">
                         {!! nl2br(trans('email.offer.created.user.body', ['confirmation_url' => $confirmation_url, 'title' => $offer->wish->title])) !!}
                     </p>
@@ -19,7 +19,6 @@
                 </td>
             </tr>
         </table>
-    <div style="display: none">manual,{{ getCurrentWhiteLabelId() }}</div>
+    <div style="display: none">manual,{{ $whitelabelId }}</div>
 </div>
 @endsection
-                        

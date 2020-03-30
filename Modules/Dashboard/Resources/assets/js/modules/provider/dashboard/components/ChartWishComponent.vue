@@ -31,9 +31,6 @@
           title: {
             text: this.trans('dashboard.monthly_average_wish')
           },
-          subtitle: {
-            text: this.trans('dashboard.source_2019')
-          },
           xAxis: {
             type: 'datetime',
             title: {

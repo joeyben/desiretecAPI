@@ -32,9 +32,6 @@
           title: {
             text: this.trans('dashboard.openrate_auto')
           },
-          subtitle: {
-            text: this.trans('dashboard.source_2019')
-          },
           xAxis: {
             type: 'datetime',
             dateTimeLabelFormats: { // don't display the dummy year
@@ -120,7 +117,7 @@
         items.forEach((item, index) => {
           data.push([moment(item[0], 'YYYY-MM-DD').utc(+1).valueOf(), item[1]])
         })
-  
+
         return data
       },
       onLoadDashboardSellerSuccess (response) {

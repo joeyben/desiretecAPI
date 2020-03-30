@@ -30,9 +30,6 @@
           title: {
             text: this.trans('dashboard.monthly_desktop_response')
           },
-          subtitle: {
-            text: this.trans('dashboard.source_2019')
-          },
           xAxis: {
             type: 'datetime',
             title: {
@@ -117,7 +114,7 @@
         items.forEach((item, index) => {
           data.push([moment(item[0], 'YYYY-MM-DD').utc(+1).valueOf(), item[1]])
         })
-  
+
         return data
       },
       onLoadDashboardSellerSuccess (response) {
