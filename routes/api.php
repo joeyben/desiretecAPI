@@ -71,7 +71,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         // autooffers
         Route::group(['prefix' => 'offer'], function () {
             Route::get('list/{wishId}', 'AutooffersController@list');
-            Route::get('ttlist/{wishId}', 'AutooffersController@listTt');
+            //Route::get('ttlist/{wishId}', 'AutooffersController@listTt');
         });
 
         Route::group(['prefix' => 'messages'], function () {
@@ -99,5 +99,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
         Route::get('destinations', 'RegionsController@getAllDestinations');
         Route::get('airports', 'RegionsController@getAllTTAirports');
+        Route::group(['prefix' => 'offer'], function () {
+            Route::get('ttlist/{wishId}', 'AutooffersController@listTt');
+        });
     });
 });

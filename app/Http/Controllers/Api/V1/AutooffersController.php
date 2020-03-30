@@ -27,6 +27,7 @@ class AutooffersController extends APIController implements AutooffersController
 
     public function list(int $wishId)
     {
+        $offers = [];
         try {
             $offers['data'] = $this->repository->getOffersDataFromId($wishId);
 
@@ -54,18 +55,9 @@ class AutooffersController extends APIController implements AutooffersController
 
     public function listTt(int $wishId)
     {
+        $offers = [];
         try {
             $offers['data'] = $this->repository->getOffersDataFromId($wishId);
-
-            foreach ($offers as $offer) {
-                for ($i = 0; $i < 3; ++$i) {
-                    $keywordCode = $offer['data']['hotelOffer']['hotel']['keywordList'][$i];
-                    $keyword = $this->keywordList::where('code', $keywordCode)->first();
-                    $keywordName = $keywords ? $keywords->name : '';
-
-                    $offer['data']['hotelOffer']['hotel']['keywordHighlights'][$i] = $keywordName;
-                }
-            }
 
             return $this->responseJson($offers);
         } catch (Exception $e) {
