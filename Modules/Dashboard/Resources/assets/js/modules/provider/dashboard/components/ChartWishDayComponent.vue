@@ -32,6 +32,9 @@
           title: {
             text: this.trans('dashboard.daily_average_wish')
           },
+          subtitle: {
+            text: this.trans('dashboard.current_month')
+          },
           xAxis: {
             type: 'datetime',
             dateTimeLabelFormats: { // don't display the dummy year
