@@ -33,7 +33,7 @@ class Whitelabel extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['name', 'display_name', 'email', 'status', 'distribution_id', 'bg_image', 'ga_view_id'];
+    protected $fillable = ['name', 'display_name', 'email', 'status', 'distribution_id', 'bg_image', 'ga_view_id', 'traffics', 'tt', 'peakwork'];
 
     protected $attributes = [
         'created_by' => 1,

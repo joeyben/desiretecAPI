@@ -25,9 +25,9 @@ class AutooffersTTRepository extends BaseRepository
 
     private $token = '';
 
-    private $username = 'MKT_315150_DE';
+    private $username = 'sys_315150_ch_desiretec';
 
-    private $password = '1A3s4d5f6g7jk9!';
+    private $password = '20Destec20#';
 
     private $oauthUrl = 'https://auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
 
@@ -291,13 +291,13 @@ class AutooffersTTRepository extends BaseRepository
     /**
      * @return bool
      */
-    public function saveWishData(Wish $wish)
+    public function saveWishData(Wish $wish, $whitelabelId)
     {
         $this->setMinBudget(0);
         $this->setBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
-        $this->setAirport($wish->airport);
+        $this->setAirport($wish->airport, $whitelabelId);
         $this->setCategory($wish->category);
         $this->setCatering($wish->catering);
         $this->setFrom($wish->earliest_start);
@@ -329,7 +329,7 @@ class AutooffersTTRepository extends BaseRepository
      *
      * @return mix
      */
-    public function storeAutooffer($offer, $hotel, $wish_id,$userId)
+    public function storeAutooffer($offer, $hotel, $wish_id, $userId)
     {
         try {
             $autooffer = self::MODEL;
@@ -680,8 +680,9 @@ class AutooffersTTRepository extends BaseRepository
 
     /**
      * @param $airport
+     * @param $whitelabelId
      */
-    public function setAirport($airport)
+    public function setAirport($airport, $whitelabelId)
     {
         $airarr = explode(',', $airport);
         $airports = '';
@@ -689,7 +690,7 @@ class AutooffersTTRepository extends BaseRepository
             if ($key > 0) {
                 $airports .= ',';
             }
-            $airports .= '"' . getTTAirports($air, getCurrentWhiteLabelId()) . '"';
+            $airports .= '"' . getTTAirports($air, $whitelabelId) . '"';
         }
         $this->airport = $airports;
     }
@@ -888,7 +889,7 @@ class AutooffersTTRepository extends BaseRepository
         $this->getToken();
         $headers = [
             'Content-type: text/xml',
-            'Content-length: ' . \mb_strlen($requestXML), 'Connection: close',
+            'Content-length: ' . mb_strlen($requestXML), 'Connection: close',
         ];
         $ch = curl_init();
         $authorization = 'Authorization: Bearer ' . $this->token;

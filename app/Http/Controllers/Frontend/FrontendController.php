@@ -144,7 +144,7 @@ class FrontendController extends Controller
             }
 
             $txt = str_slug($domain[1]);
-            $wlName = strtolower(str_replace("-", "", $txt));
+            $wlName = mb_strtolower(str_replace('-', '', $txt));
 
             if (!DB::table("language_lines_{$wlName}")
                     ->select('text')

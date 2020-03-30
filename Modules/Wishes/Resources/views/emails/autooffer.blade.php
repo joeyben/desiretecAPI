@@ -1,4 +1,4 @@
-@extends('emails.layouts.app')
+@extends('emails.layouts.app', ['whitelabel' => $whitelabel])
 
 @section('content')
     <div class="content">
@@ -20,6 +20,6 @@
                     </td>
                 </tr>
             </table>
-        <div style="display: none">auto,{{ getCurrentWhiteLabelId() }}</div>
+        <div style="display: none">auto,{{ $whitelabelId }}</div>
     </div>
 @endsection

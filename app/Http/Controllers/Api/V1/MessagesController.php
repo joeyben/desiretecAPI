@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Events\Frontend\Messages\MessageCreated;
 use App\Http\Controllers\Api\V1\Contracts\MessagesControllerInterface;
 use App\Models\Access\User\User;
 use App\Models\Agents\Agent;

@@ -28,7 +28,7 @@ class ResetLinkEmailRequest extends Request
     {
         return [
             'email' => 'required|email|max:255|exists:users,email',
-            'host' => 'required|string'
+            'host'  => 'required|string'
         ];
     }
 }

@@ -9,6 +9,7 @@
 
 namespace Modules\Whitelabels\Repositories\Eloquent;
 
+use App\Exceptions\GeneralException;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\RepositoryAbstract;
 use Illuminate\Filesystem\Filesystem;
@@ -19,7 +20,6 @@ use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Entities\WhitelabelHost;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
-use App\Exceptions\GeneralException;
 
 /**
  * Class EloquentPostsRepository.
@@ -30,7 +30,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     {
         return Whitelabel::class;
     }
-
 
     public function getWhitelabelNameByHost(string $host)
     {
@@ -488,7 +487,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     public function deleteHost(string $host, int $id)
     {
         $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
-        
+
         if ($whitelabel) {
             $whitelebelId = $whitelabel->id;
         } else {
@@ -506,15 +505,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function updateHost(int $id, string $host, string $newHost)
     {
-        try{
+        try {
             $hostToLookFor = $this->getSubDomain($host) . $this->getDomain($host);
             $newHostToUpdate = $this->getSubDomain($newHost) . $this->getDomain($newHost);
             DB::transaction(function () use ($id, $hostToLookFor, $newHostToUpdate) {
-
                 $oldHost = WhitelabelHost::where('whitelabel_id', $id)->where('host', $hostToLookFor)->first();
 
                 if ($oldHost->update(['host' => $newHostToUpdate])) {
-
                     return true;
                 }
 

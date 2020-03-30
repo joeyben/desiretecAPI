@@ -6,6 +6,8 @@ use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
+use App\Jobs\callTTApi;
+use App\Jobs\sendAutoOffersMail;
 use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
 use App\Repositories\Backend\Groups\GroupsRepository;
@@ -211,8 +213,12 @@ class WishesController extends APIController
                 'ages'           => $ages
             ]);
 
-            if ($this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
+            if ($wish = $this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
                 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'), $newUser->id)) {
+                if ($wish->whitelabel->tt) {
+                    $this->callTT($wish, $newUser, $request);
+                }
+
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
             }
 
@@ -220,5 +226,33 @@ class WishesController extends APIController
         } catch (\Exception $e) {
             return $this->respondWithError($e->getMessage());
         }
+    }
+
+    public function callTT($wish, $newUser, $request)
+    {
+        $view = \View::make('wishes::emails.autooffer',
+            [
+                'url'=> $wish->whitelabel->domain . '/offer/ttlist/' . $wish->id . '/' . $newUser->token->token,
+                'whitelabelId' => $wish->whitelabel->id,
+                'whitelabel' => $wish->whitelabel
+            ]
+        );
+        $contents = $view->render();
+
+        //$wishJob = (new callTTApi($wish->id, $request->input('whitelabel_id'), $newUser->id))->delay(Carbon::now()->addSeconds(3));
+        //dispatch($wishJob);
+
+        $this->repository->callTT($wish->id, $request->input('whitelabel_id'), $newUser->id);
+
+        $details = [
+            'email'            => $newUser->email,
+            'token'            => $newUser->token->token,
+            'email_name'       => trans('autooffers.email.name'),
+            'email_subject'    => trans('autooffer.email.subject'),
+            'email_content'    => $contents,
+            'current_wl_email' => $wish->whitelabel->email,
+            'type'             => 0
+        ];
+        dispatch((new sendAutoOffersMail($details, $wish->id, $wish->whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
     }
 }

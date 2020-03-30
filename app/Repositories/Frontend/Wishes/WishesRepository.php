@@ -19,6 +19,7 @@ use DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Modules\Autooffers\Repositories\AutooffersRepository;
+use Modules\Autooffers\Repositories\AutooffersTTRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 
@@ -52,14 +53,16 @@ class WishesRepository extends BaseRepository
      */
     private $rules;
     private $autooffers;
+    private $autooffersTT;
     private $autoRules;
 
-    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, EloquentAutooffersRepository $autoRules)
+    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, AutooffersTTRepository $autooffersTT, EloquentAutooffersRepository $autoRules)
     {
         $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
         $this->rules = $rules;
         $this->autooffers = $autooffers;
+        $this->autooffersTT = $autooffersTT;
         $this->autoRules = $autoRules;
     }
 
@@ -101,6 +104,9 @@ class WishesRepository extends BaseRepository
                 config('access.users_table') . '.last_name as last_name',
                 config('module.whitelabels.table') . '.id as whitelabel_id',
                 config('module.whitelabels.table') . '.display_name as whitelabel_name',
+                config('module.whitelabels.table') . '.tt',
+                config('module.whitelabels.table') . '.traffics',
+                config('module.whitelabels.table') . '.peakwork',
                 DB::raw('count(' . config('module.offers.table') . '.id) as offers'),
                 DB::raw('GROUP_CONCAT(categories.value) as categories'),
             ])
@@ -170,8 +176,7 @@ class WishesRepository extends BaseRepository
                 }
             }
 
-
-            if(is_null($rules) || $rules['type'] === 'manuel'){
+            if (null === $rules || 'manuel' === $rules['type']) {
                 $manuelFlag = true;
             } else {
                 $manuelFlag = false;
@@ -252,7 +257,6 @@ class WishesRepository extends BaseRepository
         return $result;
     }
 
-
     /**
      * @return Wish
      */
@@ -260,7 +264,6 @@ class WishesRepository extends BaseRepository
     {
         return Wish::findOrFail($id);
     }
-
 
     /**
      * @return mixed
@@ -627,6 +630,16 @@ class WishesRepository extends BaseRepository
             default:
                 return 0;
         }
+    }
+
+    public function callTT($wishID, $whitelabelId, $userId)
+    {
+        $wish = Wish::where('id', $wishID)->first();
+        $_rules = $this->autoRules->getSettingsForWhitelabel($whitelabelId);
+        $this->autooffersTT->saveWishData($wish, $whitelabelId);
+        $this->autooffersTT->getToken();
+        $response = $this->autooffersTT->getTTData();
+        $this->autooffersTT->storeMany($response, $wish->id, $_rules, $userId);
     }
 
     public function callTraffics($wishID)

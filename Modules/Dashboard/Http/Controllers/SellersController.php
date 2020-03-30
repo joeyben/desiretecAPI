@@ -2,9 +2,11 @@
 
 namespace Modules\Dashboard\Http\Controllers;
 
+use App\Models\Access\User\User;
 use App\Repositories\Criteria\HasRole;
 use App\Repositories\Criteria\WhereHas;
 use App\Repositories\Criteria\WhereHasForDashboard;
+use App\Repositories\Criteria\WhereIn;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -14,6 +16,7 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Translation\Translator;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 use Modules\Users\Repositories\Contracts\UsersRepository;
+use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class SellersController extends Controller
 {
@@ -35,31 +38,53 @@ class SellersController extends Controller
     private $lang;
 
     private $dashboard;
+    /**
+     * @var \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository
+     */
+    private $whitelabels;
 
-    public function __construct(UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, DashboardRepository $dashboard)
+    public function __construct(WhitelabelsRepository $whitelabels, UsersRepository $users, ResponseFactory $response, AuthManager $auth, Translator $lang, DashboardRepository $dashboard)
     {
         $this->users = $users;
         $this->response = $response;
         $this->auth = $auth;
         $this->lang = $lang;
         $this->dashboard = $dashboard;
+        $this->whitelabels = $whitelabels;
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function index(Request $request)
     {
         try {
+            $usersForWhitelabels = [];
+
+            if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE) && !$this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $whitelabelId = $this->auth->guard('web')->user()->whitelabels()->first()->id;
+
+                $users = $this->whitelabels->find($whitelabelId)->users()->whereHas('roles', function ($query) {
+                    $query->where('roles.name', Flag::SELLER_ROLE);
+                })->get();
+
+                foreach ($users as $user) {
+                    if ($user->hasRole(Flag::SELLER_ROLE) && !$user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                        $usersForWhitelabels[] = $user->id;
+                    }
+                }
+            } elseif ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                $users = User::whereHas('roles', function ($query) {
+                    $query->where('roles.name', Flag::SELLER_ROLE);
+                })->get();
+
+                foreach ($users as $user) {
+                    if ($user->hasRole(Flag::SELLER_ROLE) && !$user->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                        $usersForWhitelabels[] = $user->id;
+                    }
+                }
+            }
+
             $sellers = $this->users->withCriteria([
-                new WhereHas('whitelabels', function ($query) {
-                    $whitelabels = $this->auth->guard('web')->user()->whitelabels()->get()->pluck('id')->all();
-                    $this->auth->guard('web')->user()->hasRole('Administrator') ? $query->newQuery() : $query->whereIn('whitelabels.id', $whitelabels);
-                }),
-                new WhereHasForDashboard('whitelabels', function ($query) use ($request) {
-                    $query->where('whitelabels.id', $request->get('whitelabelId'));
-                }),
-                new HasRole(Flag::SELLER_ROLE)
+                new WhereIn('users.id', $usersForWhitelabels),
             ])->all();
 
             $data = [];

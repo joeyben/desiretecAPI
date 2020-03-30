@@ -34,9 +34,6 @@
           title: {
             text: '3D chart with null values'
           },
-          subtitle: {
-            text: 'Notice the difference between a 0 value and a null point'
-          },
           plotOptions: {
             column: {
               depth: 25

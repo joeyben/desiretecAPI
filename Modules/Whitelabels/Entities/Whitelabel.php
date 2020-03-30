@@ -40,7 +40,10 @@ class Whitelabel extends Model
         'headline_color',
         'subheadline',
         'headline_success',
-        'subheadline_success'
+        'subheadline_success',
+        'traffics',
+        'tt',
+        'peakwork'
     ];
 
     protected static $logAttributes = [
