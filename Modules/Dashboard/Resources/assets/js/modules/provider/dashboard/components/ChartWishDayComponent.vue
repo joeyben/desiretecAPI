@@ -32,9 +32,6 @@
           title: {
             text: this.trans('dashboard.daily_average_wish')
           },
-          subtitle: {
-            text: this.trans('dashboard.current_month')
-          },
           xAxis: {
             type: 'datetime',
             dateTimeLabelFormats: { // don't display the dummy year
@@ -133,7 +130,7 @@
         items.forEach((item, index) => {
           data.push([moment(item[0], 'YYYY-MM-DD').utc(+1).valueOf(), item[1]])
         })
-  
+
         return data
       },
       onLoadDashboardSellerSuccess (response) {
