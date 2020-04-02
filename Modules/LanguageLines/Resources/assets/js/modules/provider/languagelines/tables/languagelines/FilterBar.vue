@@ -24,6 +24,11 @@
                     <div class="form-group" v-if="hasRole('Administrator')">
                         <el-select v-model="whitelabel" :placeholder="trans('tables.whitelabel')" @input="doWhitelabel">
                             <el-option style="width: 100%;"
+                                       :key="0"
+                                       label="default"
+                                       :value="0">
+                            </el-option>
+                            <el-option style="width: 100%;"
                                        v-for="item in whitelabels"
                                        :key="item.id"
                                        :label="item.name"
