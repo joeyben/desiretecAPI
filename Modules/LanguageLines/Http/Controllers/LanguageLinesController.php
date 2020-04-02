@@ -9,6 +9,7 @@ use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereIn;
+use App\Repositories\Criteria\WhereWithDefault;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Console\Kernel;
@@ -168,7 +169,7 @@ class LanguageLinesController extends Controller
                     new OrderBy($sort[0], $sort[1]),
                     new Where('locale', $request->get('locale')),
                     new Filter($request->get('filter')),
-                    new Where('language_lines.whitelabel_id', $request->get('whitelabel')),
+                    new WhereWithDefault('language_lines.whitelabel_id', $request->get('whitelabel')),
                     new EagerLoad(['whitelabel'  => function ($query) {
                         $query->select('id', 'display_name');
                     }]),
