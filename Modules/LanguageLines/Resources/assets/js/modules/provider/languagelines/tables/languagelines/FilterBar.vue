@@ -25,7 +25,7 @@
                         <el-select v-model="whitelabel" :placeholder="trans('tables.whitelabel')" @input="doWhitelabel">
                             <el-option style="width: 100%;"
                                        :key="0"
-                                       label="default"
+                                       label="Default"
                                        :value="0">
                             </el-option>
                             <el-option style="width: 100%;"
