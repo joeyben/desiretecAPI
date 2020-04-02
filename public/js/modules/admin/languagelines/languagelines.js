@@ -116380,7 +116380,7 @@ var render = function() {
                         _c("el-option", {
                           key: 0,
                           staticStyle: { width: "100%" },
-                          attrs: { label: "default", value: 0 }
+                          attrs: { label: "Default", value: 0 }
                         }),
                         _vm._v(" "),
                         _vm._l(_vm.whitelabels, function(item) {
