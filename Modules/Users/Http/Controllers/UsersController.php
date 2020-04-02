@@ -4,6 +4,7 @@ namespace Modules\Users\Http\Controllers;
 
 use App\Events\Backend\Access\User\UserCreated;
 use App\Events\Backend\Access\User\UserUpdated;
+use App\Models\Access\User\User;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
@@ -97,6 +98,24 @@ class UsersController extends Controller
     public function index()
     {
         return view('users::index');
+    }
+
+
+    public function login(int $id)
+    {
+        $user = $this->users->find($id);
+        $whitelabel = $user->whitelabels()->first();
+        $url = $whitelabel->domain . '/api/token?' . http_build_query(
+            array_merge(
+                ['token' => $user->token->token],
+                [
+                    'email' => $user->email,
+                    'host' => $whitelabel->domain,
+                    'whitelabelId' => $whitelabel->id
+                ]
+            ));
+
+        return  redirect($url);
     }
 
     /**

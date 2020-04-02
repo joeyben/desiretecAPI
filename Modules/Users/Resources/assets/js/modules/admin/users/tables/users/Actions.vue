@@ -2,7 +2,7 @@
     <div class="list-icons">
         <router-link class="btn btn-outline btn-sm bg-teal text-teal-800 btn-icon ml-2" :to="{name: 'root.edit', params: { id: rowData.id }}"  v-if="can_edit" data-popup="tooltip" :title="trans('button.edit')"><i class="icon-pencil"></i></router-link>
         <a href="javascript:;" class="btn btn-outline btn-sm bg-danger text-danger-800 btn-icon ml-2" @click="doDelete(rowData.id)" v-if="can_delete" data-popup="tooltip" :title="trans('button.delete')"><i class="icon-cancel-circle2"></i></a>
-        <a :href="loginAsUserUrl" class="btn btn-outline btn-sm bg-success text-success-800 btn-icon ml-2"  v-if="can_login" data-popup="tooltip" :title="trans('buttons.backend.access.users.login_as', {user: name})"><i class="icon-user-check"></i></a>
+        <a target="_blank" :href="loginAsUserUrl" class="btn btn-outline btn-sm bg-success text-success-800 btn-icon ml-2"  v-if="can_login" data-popup="tooltip" :title="trans('buttons.backend.access.users.login_as', {user: name})"><i class="icon-user-check"></i></a>
         <a :href="deactivateUserUrl" class="btn btn-outline btn-sm bg-slate text-slate-800 btn-icon ml-2"  v-if="can_deactivate_user" data-popup="tooltip" :title="trans('buttons.backend.access.users.deactivate')"><i class="icon-lock4"></i></a>
         <a :href="activateUserUrl" class="btn btn-outline btn-sm bg-primary text-primary btn-icon ml-2"  v-if="can_activate_user" data-popup="tooltip" :title="trans('buttons.backend.access.users.activate')"><i class="icon-unlocked"></i></a>
     </div>
@@ -33,6 +33,15 @@
         return window.laroute.route('admin.access.user.edit', {user: this.rowData.id})
       },
       loginAsUserUrl () {
+        if (this.rowData.hasOwnProperty('roles')) {
+          let seller = this.rowData.roles.findIndex((p) => p.name === 'Seller')
+          let user = this.rowData.roles.findIndex((p) => p.name === 'User')
+
+          if ((seller > -1) || (user > -1)) {
+            return window.laroute.route('admin.users.login', {id: this.rowData.id})
+          }
+        }
+
         return window.laroute.route('admin.access.user.login-as', {user: this.rowData.id})
       },
       deactivateUserUrl () {
@@ -73,6 +82,7 @@
         if (this.rowData.hasOwnProperty('roles')) {
           index = this.rowData.roles.findIndex((p) => p.name === 'Administrator')
         }
+
         return !this.deleted && this.hasPermissionTo('can-login-as-user') && (index === -1) && (this.rowData.id !== this.user.id)
       },
       name: function () {
