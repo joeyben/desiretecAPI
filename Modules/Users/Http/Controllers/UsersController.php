@@ -104,6 +104,8 @@ class UsersController extends Controller
     public function login(int $id)
     {
         $user = $this->users->find($id);
+        $user->storeToken();
+
         $whitelabel = $user->whitelabels()->first();
         $url = $whitelabel->domain . '/api/token?' . http_build_query(
             array_merge(
