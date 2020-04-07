@@ -933,87 +933,38 @@ class AutooffersTTRepository extends BaseRepository
         dd($result);*/
     }
 
+
     public function testTTbkp()
     {
         $xmlreq = '{
-         "PackageOffersRQ": {
-          "RQ_Metadata": {
-           "Language": "de-CH"
-          }, 
-        "CurrencyCode": "CHF",
-          "Travellers": {
-                    "Traveller": [
-                           {
-                                  "Age": 33
-                           },
-                           {
-                                  "Age": 33
-                           },
-                           {
-                                  "Age": 6
-                           }
-                    ]
-             },
-          "OfferFilters": {
-           "DateAndTimeFilter": {
-            "OutboundFlightDateAndTimeFilter": {
-             "FlightEvent": "Departure",
-             "DateRange": {
-              "MinDate": "2020-03-01"
-             }
-            },
-            "InboundFlightDateAndTimeFilter": {
-             "FlightEvent": "Departure",
-             "DateRange": {
-              "MaxDate": "2020-06-30"
-             }
-            }
-        },
-           "TravelDurationFilter": {
-            "DurationKind": "Stay",
-            "MinDuration": 7,
-            "MaxDuration": 8
-           },
-           "PriceFilter": {
-            "MaxPrice": 1200
-           },
-           "AirportFilter": {
-            "DepartureAirportFilter": {
-             "AirportCodes": ["MUC"]
-        } },
-           "AccomFilter": {
-            "AccomSelectors": {
-             "RegionIDs": [35]
-            }
-           },
-           "AccomPropertiesFilter": {
-            "HotelAttributes": [],
-            "BoardTypes": ["Breakfast","BreakfastEconomy","BreakfastSuperior","HalfBoard","HalfBoardEconomy","HalfBoardSuperior","FullBoard","FullBoardEconomy","FullBoardSuperior","AllInclusive","AllInclusiveEconomy","AllInclusiveSuperior"],
-            "HotelCategoryFilter": {
-                "HotelCategoryRange": {
-                    "MinCategory": 3
-                }
-            },
-            "HotelReview": {
-                "MinRatingsCount": 1,
-                "MinMeanRatingOverall": 1,
-                "MinMeanRecommendationRate": 20
-            }
-           }
-          },
-          "Options": {
-            "NumberOfResults": 500,
-            "ResultOffset": 0,
-            "Sorting": ["PriceAsc"],
-            "AdditionalCurrencyCodes":["EUR"]
-          }
-        } }';
+ "AvailabilityAndPriceCheckRQ": {
+  "RQ_Metadata": {
+   "Language": "de-CH"
+  }, 
+"CurrencyCode": "CHF",
+  "Travellers": {
+            "Traveller": [
+                   {
+                          "Age": 33
+                   },
+                   {
+                          "Age": 33
+                   },
+                   {
+                          "Age": 6
+                   }
+            ]
+     },
+  "OfferID": "2OUC6GYWCCKS9TNL1GLX6WJ3K3C8W1KX91JZEKZNXRSMJ9AVMAGNRNH4X7UVE8KX9YWLDTJM42MMDL",
+  "Options": {
+  }
+}}';
         $curl = curl_init();
 
         $authorization = 'Authorization: Bearer ' . $this->token;
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
-        curl_setopt($curl, CURLOPT_URL, $this->url);
+        curl_setopt($curl, CURLOPT_URL, "https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
@@ -1021,6 +972,7 @@ class AutooffersTTRepository extends BaseRepository
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
         $result = curl_exec($curl);
+        dd($result);
         if (!$result) {
             die('Connection Failure');
         }

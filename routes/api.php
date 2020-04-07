@@ -15,6 +15,7 @@
 use App\Services\Flag\Src\Flag;
 
 Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], function () {
+    Route::get('testTT', 'AutooffersController@testAvailability');
     Route::group(['prefix' => 'auth'], function () {
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
