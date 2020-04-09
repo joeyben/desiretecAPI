@@ -12,6 +12,7 @@ namespace Modules\Dashboard\Repositories\Eloquent;
 use App\Repositories\RepositoryAbstract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Modules\Dashboard\Entities\Dashboard;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 
@@ -122,18 +123,21 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function calculateBrowserData(array $result, array $browsers, int $sum)
     {
-        foreach ($result['ga'] as $key => $value) {
-            if (!\in_array($result['ga'][$key][0], $browsers, true)) {
-                unset($result['ga'][$key]);
+        if (!is_null($result['ga'])) {
+            foreach ($result['ga'] as $key => $value) {
+                if (!\in_array($result['ga'][$key][0], $browsers, true)) {
+                    unset($result['ga'][$key]);
+                }
+            }
+            $result['ga'] = array_values($result['ga']);
+            foreach ($result['ga'] as $key => $value) {
+                $sum = $sum + $result['ga'][$key][1];
+            }
+            foreach ($result['ga'] as $key => $value) {
+                $result['ga'][$key][1] = round($result['ga'][$key][1] / $sum * 100, 1);
             }
         }
-        $result['ga'] = array_values($result['ga']);
-        foreach ($result['ga'] as $key => $value) {
-            $sum = $sum + $result['ga'][$key][1];
-        }
-        foreach ($result['ga'] as $key => $value) {
-            $result['ga'][$key][1] = round($result['ga'][$key][1] / $sum * 100, 1);
-        }
+
 
         return $result['ga'];
     }
@@ -156,7 +160,7 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
                 if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
                     ++$i;
                     $j = 0;
-                    $result['ga'][$key][1] = '0' === $result['ga'][$key][1] ? 0 : round(($result['wishes'][$kk]['wish'] / $result['ga'][$key][1]) * 100, 1);
+                    $result['ga'][$key][1] = (0 === (int) $result['ga'][$key][1]) ? 0 : round(($result['wishes'][$kk]['wish'] / $result['ga'][$key][1]) * 100, 1);
                     break;
                 }
                 ++$j;
