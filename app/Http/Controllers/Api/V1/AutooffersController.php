@@ -83,6 +83,6 @@ class AutooffersController extends APIController implements AutooffersController
 
     public function testAvailability(){
         $this->TTrepository->getToken();
-        $this->TTrepository->testTT();
+        $this->TTrepository->testXML();
     }
 }
