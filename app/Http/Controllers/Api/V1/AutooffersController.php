@@ -80,4 +80,9 @@ class AutooffersController extends APIController implements AutooffersController
             return $this->respondWithError($e);
         }
     }
+
+    public function testAvailability(){
+        $this->TTrepository->getToken();
+        $this->TTrepository->testTT();
+    }
 }

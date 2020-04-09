@@ -15,6 +15,7 @@
 use App\Services\Flag\Src\Flag;
 
 Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], function () {
+    Route::get('testTT', 'AutooffersController@testAvailability');
     Route::group(['prefix' => 'auth'], function () {
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
@@ -98,7 +99,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('wish/store', 'WishesController@store');
 
         Route::get('destinations', 'RegionsController@getAllDestinations');
-        Route::get('airports', 'RegionsController@getAllTTAirports');
+        Route::get('airports', 'RegionsController@getAllAirports');
         Route::group(['prefix' => 'offer'], function () {
             Route::get('ttlist/{wishId}', 'AutooffersController@listTt');
         });
