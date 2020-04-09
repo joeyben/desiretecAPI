@@ -25,7 +25,8 @@ class AddHeadlineColorToLayers extends Migration
      */
     public function down()
     {
-        Schema::table('', function (Blueprint $table) {
+        Schema::table('layer_whitelabel', function (Blueprint $table) {
+            $table->dropColumn('headline_color');
         });
     }
 }

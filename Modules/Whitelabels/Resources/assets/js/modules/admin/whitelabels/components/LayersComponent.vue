@@ -62,7 +62,7 @@
         errors: new Errors(),
         checkedLayers: [],
         pivot: [],
-        max: 4,
+        max: 5,
         whitelabel: {},
         layers: [],
         checked: null,
@@ -206,7 +206,7 @@
             this.whitelabel = response.data.whitelabel
             this.generateLayers(this.whitelabel.layers)
             if (this.whitelabel.licence !== 0) {
-              this.max = 4
+              this.max = 5
             }
         })
         .catch(this.onFailed)
