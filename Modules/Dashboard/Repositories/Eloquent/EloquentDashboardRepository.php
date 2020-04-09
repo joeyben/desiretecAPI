@@ -175,8 +175,9 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function loadClickRate($whitelabel, $start, $end)
     {
-        $start = '' === $start ? date('Ymd') : $start;
-        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
+
+        $start = '' === $start ? date('Ymd') : str_replace('-', '', $start);
+        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : str_replace('-', '', $end);
 
         $i = 0;
         $j = 0;
@@ -239,8 +240,8 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function loadClickRateauto($whitelabel, $start, $end)
     {
-        $start = '' === $start ? date('Ymd') : $start;
-        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
+        $start = '' === $start ? date('Ymd') : str_replace('-', '', $start);
+        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : str_replace('-', '', $end);
 
         $i = 0;
         $j = 0;
@@ -303,8 +304,8 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function loadOpenRate($whitelabel, $start, $end)
     {
-        $start = '' === $start ? date('Ymd') : $start;
-        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
+        $start = '' === $start ? date('Ymd') : str_replace('-', '', $start);
+        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : str_replace('-', '', $end);
 
         $i = 0;
         $j = 0;
@@ -364,8 +365,8 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function loadOpenRateauto($whitelabel, $start, $end)
     {
-        $start = '' === $start ? date('Ymd') : $start;
-        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
+        $start = '' === $start ? date('Ymd') : str_replace('-', '', $start);
+        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : str_replace('-', '', $end);
 
         $i = 0;
         $j = 0;
