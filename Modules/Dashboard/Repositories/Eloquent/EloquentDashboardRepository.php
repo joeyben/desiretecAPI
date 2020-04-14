@@ -10,6 +10,8 @@
 namespace Modules\Dashboard\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
+use DateInterval;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -101,6 +103,8 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         $start = '' === $start ? date('Ymd', strtotime(date('Ymd') . '-1 months')) : $start;
         $end = '' === $end ? date('Ymd') : $end;
 
+        $result = [];
+
         $wishes = DB::table('wishes')
             ->select((DB::raw('DATE_FORMAT(wishes.created_at,"%Y%m%d") as date')), DB::raw('count(*) as nb_wishes'))
             ->having('date', '>=', $start)
@@ -115,8 +119,36 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
                 $result['wishes'][$key][1] = $wishes[$key]->nb_wishes;
             }
         } else {
-            $result['wishes'] = [0, 0];
+            $result['wishes'] = [[$start, 1], [$end, 1]];
         }
+
+        $s = DateTime::createFromFormat('Ymd', $start);
+        $e = DateTime::createFromFormat('Ymd', $end);
+
+        $days = (int) $s->diff($e)->format('%R%a');
+
+        $data = [];
+
+        for ($i = 0; $i <= $days; $i++) {
+            if ($i === 0) {
+                $dd = $s->format('Ymd');
+            }else {
+                $dd = $s->add(new DateInterval('P1D'))->format('Ymd');
+            }
+            $check = true;
+            foreach ($result['wishes'] as $key => $value) {
+                if ((int)$value[0] === (int)$dd) {
+                    $check = false;
+                    $data[] = $value;
+                }
+            }
+
+            if ($check) {
+                $data[] = [$dd, 0];
+            }
+        }
+
+        $result['wishes'] = $data;
 
         return $result['wishes'];
     }
