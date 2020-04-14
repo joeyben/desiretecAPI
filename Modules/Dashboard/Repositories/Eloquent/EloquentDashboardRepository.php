@@ -119,7 +119,7 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
                 $result['wishes'][$key][1] = $wishes[$key]->nb_wishes;
             }
         } else {
-            $result['wishes'] = [[$start, 1], [$end, 1]];
+            $result['wishes'] = [0, 0];
         }
 
         $s = DateTime::createFromFormat('Ymd', $start);
