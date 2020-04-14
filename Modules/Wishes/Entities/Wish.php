@@ -43,7 +43,8 @@ class Wish extends Model
         'updated_by',
         'whitelabel_id',
         'agent_id',
-        'extra_params'
+        'extra_params',
+        'version'
     ];
 
     protected static $logOnlyDirty = true;
