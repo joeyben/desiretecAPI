@@ -38,7 +38,7 @@ return [
         // 'fr'    => ['fr', 'fr_FR', false],
         // 'id'    => ['id', 'id_ID', false],
         // 'it'    => ['it', 'it_IT', false],
-        // 'nl'    => ['nl', 'nl_NL', false],
+         'nl'    => ['nl', 'nl_NL', false],
         // 'pt_BR' => ['pt_BR', 'pt_BR', false],
         // 'ru'    => ['ru', 'ru-RU', false],
         // 'sv'    => ['sv', 'sv_SE', false],
