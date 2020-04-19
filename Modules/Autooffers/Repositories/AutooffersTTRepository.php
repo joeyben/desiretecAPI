@@ -862,7 +862,7 @@ class AutooffersTTRepository extends BaseRepository
     public  function testXML()
     {
         $xmlreq =  '<ttxml:AvailabilityAndPriceCheckRQ xmlns:ttxml="http://traveltainment.de/middleware/xml/AvailabilityAndPriceCheckRQ” LanguageCode="de-CH”>
-	<OfferID>2L9CXTMUOW1BRKBSWWXKT9DK62MFZZUT6Y1VKP1J3TA669GJMZKGCDNJA83ATHK3TNC7E4P3ATKG6C</OfferID>
+	<OfferID>2193VTFNA2OXNPKJZ82O3VG43399NJKNJRTHL8AZB3N2K8ZVNTWSNO7AXZBNGXCKESZ9XT7PSZJY9W</OfferID>
 	<TravellerList>
 		<Traveller>
 			<PersonName>
@@ -884,16 +884,17 @@ class AutooffersTTRepository extends BaseRepository
 		</Traveller>
 	</TravellerList>
 </ttxml:AvailabilityAndPriceCheckRQ>';
-
+        $this->getToken();
         $header  = "POST HTTP/1.0 \r\n";
         $header .= "Content-type: text/xml \r\n";
         $header .= "Content-length: ".strlen($xmlreq)." \r\n";
+        $header .= "Authorization: Bearer ".$this->token." \r\n";
         $header .= "Content-transfer-encoding: text \r\n";
         $header .= "Connection: close \r\n\r\n";
         $header .= $xmlreq;
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_URL,"https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 4);
@@ -903,7 +904,6 @@ class AutooffersTTRepository extends BaseRepository
         var_dump($data);
         if (curl_errno($ch)) {
             echo curl_error($ch);
-            echo 'Algo fallo';
         } else {
             curl_close($ch);
         }
