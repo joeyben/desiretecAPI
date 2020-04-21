@@ -40,18 +40,12 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        /*$settingData = Setting::first();
+        $settingData = Setting::first();
         $google_analytics = $settingData->google_analytics;
         $body_class = $this::BODY_CLASS;
         $languages = $this->languages->findLanguages();
 
-        return view('frontend.index', compact('google_analytics', 'body_class', 'languages'));*/
-        if (access()->user()) {
-            return redirect()->route('admin.dashboard');
-        }
-
-        return view('frontend.auth.login')
-            ->withSocialiteLinks((new Socialite())->getSocialLinks());
+        return view('frontend.index', compact('google_analytics', 'body_class', 'languages'));
     }
 
     /**
