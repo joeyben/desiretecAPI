@@ -267,7 +267,33 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['clickrate'] = [0, 0];
         }
 
-        return $result['clickrate'];
+        $data = [];
+
+        $s = DateTime::createFromFormat('Ymd', $start);
+        $e = DateTime::createFromFormat('Ymd', $end);
+
+        $days = (int) $s->diff($e)->format('%R%a');
+
+        for ($i = 0; $i <= $days; $i++) {
+            if ($i === 0) {
+                $dd = $s->format('Ymd');
+            }else {
+                $dd = $s->add(new DateInterval('P1D'))->format('Ymd');
+            }
+            $check = true;
+            foreach ($result['clickrate'] as $key => $value) {
+                if ((int)$value[0] === (int)$dd) {
+                    $check = false;
+                    $data[] = $value;
+                }
+            }
+
+            if ($check) {
+                $data[] = [$dd, 0];
+            }
+        }
+
+        return $data;
     }
 
     public function loadClickRateauto($whitelabel, $start, $end)
@@ -331,7 +357,33 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['clickrate'] = [0, 0];
         }
 
-        return $result['clickrate'];
+        $data = [];
+
+        $s = DateTime::createFromFormat('Ymd', $start);
+        $e = DateTime::createFromFormat('Ymd', $end);
+
+        $days = (int) $s->diff($e)->format('%R%a');
+
+        for ($i = 0; $i <= $days; $i++) {
+            if ($i === 0) {
+                $dd = $s->format('Ymd');
+            }else {
+                $dd = $s->add(new DateInterval('P1D'))->format('Ymd');
+            }
+            $check = true;
+            foreach ($result['clickrate'] as $key => $value) {
+                if ((int)$value[0] === (int)$dd) {
+                    $check = false;
+                    $data[] = $value;
+                }
+            }
+
+            if ($check) {
+                $data[] = [$dd, 0];
+            }
+        }
+
+        return $data;
     }
 
     public function loadOpenRate($whitelabel, $start, $end)
@@ -392,7 +444,33 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['openrate'] = [0, 0];
         }
 
-        return $result['openrate'];
+        $data = [];
+
+        $s = DateTime::createFromFormat('Ymd', $start);
+        $e = DateTime::createFromFormat('Ymd', $end);
+
+        $days = (int) $s->diff($e)->format('%R%a');
+
+        for ($i = 0; $i <= $days; $i++) {
+            if ($i === 0) {
+                $dd = $s->format('Ymd');
+            }else {
+                $dd = $s->add(new DateInterval('P1D'))->format('Ymd');
+            }
+            $check = true;
+            foreach ($result['openrate'] as $key => $value) {
+                if ((int)$value[0] === (int)$dd) {
+                    $check = false;
+                    $data[] = $value;
+                }
+            }
+
+            if ($check) {
+                $data[] = [$dd, 0];
+            }
+        }
+
+        return $data;
     }
 
     public function loadOpenRateauto($whitelabel, $start, $end)
@@ -453,7 +531,33 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['openrate'] = [0, 0];
         }
 
-        return $result['openrate'];
+        $data = [];
+
+        $s = DateTime::createFromFormat('Ymd', $start);
+        $e = DateTime::createFromFormat('Ymd', $end);
+
+        $days = (int) $s->diff($e)->format('%R%a');
+
+        for ($i = 0; $i <= $days; $i++) {
+            if ($i === 0) {
+                $dd = $s->format('Ymd');
+            }else {
+                $dd = $s->add(new DateInterval('P1D'))->format('Ymd');
+            }
+            $check = true;
+            foreach ($result['openrate'] as $key => $value) {
+                if ((int)$value[0] === (int)$dd) {
+                    $check = false;
+                    $data[] = $value;
+                }
+            }
+
+            if ($check) {
+                $data[] = [$dd, 0];
+            }
+        }
+
+        return $data;
     }
 
     public function getFilterCategory(string $category)
