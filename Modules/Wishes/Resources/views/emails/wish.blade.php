@@ -1,6 +1,6 @@
 @php
     if (env('APP_USE_API')) {
-        $url = 'https://'.strtolower($wish->whitelabel->name).'.wish-service.com/wish';
+        $url = $wish->whitelabel->domain . '/wish';
     }else {
         $url = url('/wish');
     }
