@@ -1,7 +1,7 @@
 @php
     if (env('APP_USE_API')) {
-        $url = $wish->whitelabel->domain .'.wish-service.com/wish';
-        $urlList = $wish->whitelabel->domain .'.wish-service.com/wishlist';
+        $url = $wish->whitelabel->domain .'/wish';
+        $urlList = $wish->whitelabel->domain .'/wishlist';
     }else {
         $url = url('/wish');
         $urlList = url('/wishlist');
