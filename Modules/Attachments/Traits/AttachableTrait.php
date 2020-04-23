@@ -11,7 +11,7 @@ trait AttachableTrait
         self::deleted(function ($subject) {
             if ($subject->isForceDeleting()) {
                 foreach ($subject->attachments()->get() as $attachment) {
-                    $attachment->deleteFile();
+                    // $attachment->deleteFile();
                 }
                 $subject->attachments()->delete();
             }
