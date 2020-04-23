@@ -91,6 +91,7 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.adults',
                 config('module.wishes.table') . '.kids',
                 config('module.wishes.table') . '.pets',
+                config('module.wishes.table') . '.rooms',
                 config('module.wishes.table') . '.budget',
                 config('module.wishes.table') . '.earliest_start',
                 config('module.wishes.table') . '.latest_return',
@@ -642,13 +643,13 @@ class WishesRepository extends BaseRepository
         $this->autooffersTT->storeMany($response, $wish->id, $_rules, $userId);
     }
 
-    public function callTraffics($wishID)
+    public function callTraffics($wishID, $whitelabelId, $userId)
     {
         $wish = Wish::where('id', $wishID)->first();
-        $_rules = $this->autoRules->getSettingsForWhitelabel((int) (getCurrentWhiteLabelId()));
+        $_rules = $this->autoRules->getSettingsForWhitelabel($whitelabelId);
         //dd(getRegionCode($wish->airport, 0));
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
-        $this->autooffers->storeMany($response, $wish->id, $_rules);
+        $this->autooffers->storeMany($response, $wish->id, $_rules, $userId);
     }
 }

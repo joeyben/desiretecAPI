@@ -25,7 +25,8 @@ class AddPrivacyToLayers extends Migration
      */
     public function down()
     {
-        Schema::table('', function (Blueprint $table) {
+        Schema::table('layer_whitelabel', function (Blueprint $table) {
+            $table->dropColumn('privacy');
         });
     }
 }

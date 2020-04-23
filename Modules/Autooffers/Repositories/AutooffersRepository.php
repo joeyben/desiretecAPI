@@ -95,6 +95,7 @@ class AutooffersRepository extends BaseRepository
                     ],
                     'on_stats' => function (TransferStats $stats) use (&$url) {
                         $url = $stats->getEffectiveUri();
+                        var_dump($url);
                     }
                 ]
             );

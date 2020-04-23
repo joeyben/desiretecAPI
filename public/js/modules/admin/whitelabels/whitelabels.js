@@ -100285,7 +100285,7 @@ exports.default = {
       errors: new _errors.Errors(),
       checkedLayers: [],
       pivot: [],
-      max: 4,
+      max: 5,
       whitelabel: {},
       layers: [],
       checked: null,
@@ -100429,7 +100429,7 @@ exports.default = {
       _this3.whitelabel = response.data.whitelabel;
       _this3.generateLayers(_this3.whitelabel.layers);
       if (_this3.whitelabel.licence !== 0) {
-        _this3.max = 4;
+        _this3.max = 5;
       }
     }).catch(this.onFailed).then(function () {
       _this3.$store.dispatch('block', { element: 'layersComponent', load: false });

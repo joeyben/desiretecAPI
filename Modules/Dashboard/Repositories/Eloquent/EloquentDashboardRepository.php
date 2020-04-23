@@ -10,8 +10,11 @@
 namespace Modules\Dashboard\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
+use DateInterval;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Modules\Dashboard\Entities\Dashboard;
 use Modules\Dashboard\Repositories\Contracts\DashboardRepository;
 
@@ -100,6 +103,8 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
         $start = '' === $start ? date('Ymd', strtotime(date('Ymd') . '-1 months')) : $start;
         $end = '' === $end ? date('Ymd') : $end;
 
+        $result = [];
+
         $wishes = DB::table('wishes')
             ->select((DB::raw('DATE_FORMAT(wishes.created_at,"%Y%m%d") as date')), DB::raw('count(*) as nb_wishes'))
             ->having('date', '>=', $start)
@@ -117,23 +122,54 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['wishes'] = [0, 0];
         }
 
+        $s = DateTime::createFromFormat('Ymd', $start);
+        $e = DateTime::createFromFormat('Ymd', $end);
+
+        $days = (int) $s->diff($e)->format('%R%a');
+
+        $data = [];
+
+        for ($i = 0; $i <= $days; $i++) {
+            if ($i === 0) {
+                $dd = $s->format('Ymd');
+            }else {
+                $dd = $s->add(new DateInterval('P1D'))->format('Ymd');
+            }
+            $check = true;
+            foreach ($result['wishes'] as $key => $value) {
+                if ((int)$value[0] === (int)$dd) {
+                    $check = false;
+                    $data[] = $value;
+                }
+            }
+
+            if ($check) {
+                $data[] = [$dd, 0];
+            }
+        }
+
+        $result['wishes'] = $data;
+
         return $result['wishes'];
     }
 
     public function calculateBrowserData(array $result, array $browsers, int $sum)
     {
-        foreach ($result['ga'] as $key => $value) {
-            if (!\in_array($result['ga'][$key][0], $browsers, true)) {
-                unset($result['ga'][$key]);
+        if (!is_null($result['ga'])) {
+            foreach ($result['ga'] as $key => $value) {
+                if (!\in_array($result['ga'][$key][0], $browsers, true)) {
+                    unset($result['ga'][$key]);
+                }
+            }
+            $result['ga'] = array_values($result['ga']);
+            foreach ($result['ga'] as $key => $value) {
+                $sum = $sum + $result['ga'][$key][1];
+            }
+            foreach ($result['ga'] as $key => $value) {
+                $result['ga'][$key][1] = round($result['ga'][$key][1] / $sum * 100, 1);
             }
         }
-        $result['ga'] = array_values($result['ga']);
-        foreach ($result['ga'] as $key => $value) {
-            $sum = $sum + $result['ga'][$key][1];
-        }
-        foreach ($result['ga'] as $key => $value) {
-            $result['ga'][$key][1] = round($result['ga'][$key][1] / $sum * 100, 1);
-        }
+
 
         return $result['ga'];
     }
@@ -156,7 +192,7 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
                 if ($result['ga'][$key][0] === $result['wishes'][$kk]['date']) {
                     ++$i;
                     $j = 0;
-                    $result['ga'][$key][1] = '0' === $result['ga'][$key][1] ? 0 : round(($result['wishes'][$kk]['wish'] / $result['ga'][$key][1]) * 100, 1);
+                    $result['ga'][$key][1] = (0 === (int) $result['ga'][$key][1]) ? 0 : round(($result['wishes'][$kk]['wish'] / $result['ga'][$key][1]) * 100, 1);
                     break;
                 }
                 ++$j;
@@ -171,8 +207,9 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
 
     public function loadClickRate($whitelabel, $start, $end)
     {
-        $start = '' === $start ? date('Ymd') : $start;
-        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
+
+        $start = '' === $start ? date('Ymd', strtotime(date('Ymd') . '-1 months')) : str_replace('-', '', $start);
+        $end = '' === $end ? date('Ymd') : str_replace('-', '', $end);
 
         $i = 0;
         $j = 0;
@@ -230,13 +267,39 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['clickrate'] = [0, 0];
         }
 
-        return $result['clickrate'];
+        $data = [];
+
+        $s = DateTime::createFromFormat('Ymd', $start);
+        $e = DateTime::createFromFormat('Ymd', $end);
+
+        $days = (int) $s->diff($e)->format('%R%a');
+
+        for ($i = 0; $i <= $days; $i++) {
+            if ($i === 0) {
+                $dd = $s->format('Ymd');
+            }else {
+                $dd = $s->add(new DateInterval('P1D'))->format('Ymd');
+            }
+            $check = true;
+            foreach ($result['clickrate'] as $key => $value) {
+                if ((int)$value[0] === (int)$dd) {
+                    $check = false;
+                    $data[] = $value;
+                }
+            }
+
+            if ($check) {
+                $data[] = [$dd, 0];
+            }
+        }
+
+        return $data;
     }
 
     public function loadClickRateauto($whitelabel, $start, $end)
     {
-        $start = '' === $start ? date('Ymd') : $start;
-        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
+        $start = '' === $start ? date('Ymd', strtotime(date('Ymd') . '-1 months')) : str_replace('-', '', $start);
+        $end = '' === $end ? date('Ymd') : str_replace('-', '', $end);
 
         $i = 0;
         $j = 0;
@@ -294,13 +357,39 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['clickrate'] = [0, 0];
         }
 
-        return $result['clickrate'];
+        $data = [];
+
+        $s = DateTime::createFromFormat('Ymd', $start);
+        $e = DateTime::createFromFormat('Ymd', $end);
+
+        $days = (int) $s->diff($e)->format('%R%a');
+
+        for ($i = 0; $i <= $days; $i++) {
+            if ($i === 0) {
+                $dd = $s->format('Ymd');
+            }else {
+                $dd = $s->add(new DateInterval('P1D'))->format('Ymd');
+            }
+            $check = true;
+            foreach ($result['clickrate'] as $key => $value) {
+                if ((int)$value[0] === (int)$dd) {
+                    $check = false;
+                    $data[] = $value;
+                }
+            }
+
+            if ($check) {
+                $data[] = [$dd, 0];
+            }
+        }
+
+        return $data;
     }
 
     public function loadOpenRate($whitelabel, $start, $end)
     {
-        $start = '' === $start ? date('Ymd') : $start;
-        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
+        $start = '' === $start ? date('Ymd', strtotime(date('Ymd') . '-1 months')) : str_replace('-', '', $start);
+        $end = '' === $end ? date('Ymd') : str_replace('-', '', $end);
 
         $i = 0;
         $j = 0;
@@ -355,13 +444,39 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['openrate'] = [0, 0];
         }
 
-        return $result['openrate'];
+        $data = [];
+
+        $s = DateTime::createFromFormat('Ymd', $start);
+        $e = DateTime::createFromFormat('Ymd', $end);
+
+        $days = (int) $s->diff($e)->format('%R%a');
+
+        for ($i = 0; $i <= $days; $i++) {
+            if ($i === 0) {
+                $dd = $s->format('Ymd');
+            }else {
+                $dd = $s->add(new DateInterval('P1D'))->format('Ymd');
+            }
+            $check = true;
+            foreach ($result['openrate'] as $key => $value) {
+                if ((int)$value[0] === (int)$dd) {
+                    $check = false;
+                    $data[] = $value;
+                }
+            }
+
+            if ($check) {
+                $data[] = [$dd, 0];
+            }
+        }
+
+        return $data;
     }
 
     public function loadOpenRateauto($whitelabel, $start, $end)
     {
-        $start = '' === $start ? date('Ymd') : $start;
-        $end = '' === $end ? date('Ymd', strtotime($start . '+1 months')) : $end;
+        $start = '' === $start ? date('Ymd', strtotime(date('Ymd') . '-1 months')) : str_replace('-', '', $start);
+        $end = '' === $end ? date('Ymd') : str_replace('-', '', $end);
 
         $i = 0;
         $j = 0;
@@ -416,7 +531,33 @@ class EloquentDashboardRepository extends RepositoryAbstract implements Dashboar
             $result['openrate'] = [0, 0];
         }
 
-        return $result['openrate'];
+        $data = [];
+
+        $s = DateTime::createFromFormat('Ymd', $start);
+        $e = DateTime::createFromFormat('Ymd', $end);
+
+        $days = (int) $s->diff($e)->format('%R%a');
+
+        for ($i = 0; $i <= $days; $i++) {
+            if ($i === 0) {
+                $dd = $s->format('Ymd');
+            }else {
+                $dd = $s->add(new DateInterval('P1D'))->format('Ymd');
+            }
+            $check = true;
+            foreach ($result['openrate'] as $key => $value) {
+                if ((int)$value[0] === (int)$dd) {
+                    $check = false;
+                    $data[] = $value;
+                }
+            }
+
+            if ($check) {
+                $data[] = [$dd, 0];
+            }
+        }
+
+        return $data;
     }
 
     public function getFilterCategory(string $category)
