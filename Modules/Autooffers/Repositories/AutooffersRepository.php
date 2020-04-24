@@ -95,7 +95,7 @@ class AutooffersRepository extends BaseRepository
                     ],
                     'on_stats' => function (TransferStats $stats) use (&$url) {
                         $url = $stats->getEffectiveUri();
-                        var_dump($url);
+                        dd($url);
                     }
                 ]
             );
@@ -158,7 +158,7 @@ class AutooffersRepository extends BaseRepository
         $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
         $this->setPeriod($wish->duration, $wish);
         $this->setRegion(getRegionCode($wish->destination, 1));
-        $this->setTourOperatorList();
+        $this->setTourOperatorList($wish->whitelabel()->id);
 
         return true;
     }
@@ -518,9 +518,9 @@ class AutooffersRepository extends BaseRepository
     /**
      * @param mixed $tourOperatorList
      */
-    public function setTourOperatorList()
+    public function setTourOperatorList($whitelabelId)
     {
-        $wlAutooffer = getWhitelabelAutooffers();
+        $wlAutooffer = getWhitelabelAutooffers($whitelabelId);
         $this->tourOperatorList = [$wlAutooffer['tourOperators']];
     }
 

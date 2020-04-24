@@ -682,9 +682,9 @@ if (!function_exists('getWhitelabelAutooffers')) {
      *
      * @return string
      */
-    function getWhitelabelAutooffers()
+    function getWhitelabelAutooffers($whitelabelId)
     {
-        return \App\Models\WhitelabelAutooffer::where('whitelabel_id', getCurrentWhiteLabelId())->first();
+        return \App\Models\WhitelabelAutooffer::where('whitelabel_id', $whitelabelId)->first();
     }
 }
 
