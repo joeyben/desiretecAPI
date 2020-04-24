@@ -158,7 +158,7 @@ class AutooffersRepository extends BaseRepository
         $this->setto(\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $wish->latest_return)->format('dmy'));
         $this->setPeriod($wish->duration, $wish);
         $this->setRegion(getRegionCode($wish->destination, 1));
-        $this->setTourOperatorList($wish->whitelabel()->id);
+        $this->setTourOperatorList($wish->whitelabel_id);
 
         return true;
     }
