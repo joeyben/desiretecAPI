@@ -208,10 +208,10 @@ class WishesController extends APIController
             $ages3 = isset($input['ages3']) ? $input['ages3'] . ',' : '';
             $ages4 = isset($input['ages4']) ? $input['ages4'] : '';
             $ages = $ages1 . $ages2 . $ages3 . $ages4;
-
+            $whitelabel = getWhitelabelById((int) $request->input('whitelabel_id'));
             $request->merge([
                 'ages'           => $ages,
-                'is_autooffer'   => getWhitelabelById((int) $request->input('whitelabel_id'))
+                'is_autooffer'   => $whitelabel->traffics || $whitelabel->tt ? true : false
             ]);
 
             if ($wish = $this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
