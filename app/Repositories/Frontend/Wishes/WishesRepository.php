@@ -374,6 +374,7 @@ class WishesRepository extends BaseRepository
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
+                dd($wish);
                 event(new WishCreated($wish));
 
                 return $wish;
