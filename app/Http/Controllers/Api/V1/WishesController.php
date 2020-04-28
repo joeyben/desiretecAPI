@@ -210,17 +210,16 @@ class WishesController extends APIController
             $ages = $ages1 . $ages2 . $ages3 . $ages4;
 
             $request->merge([
-                'ages'           => $ages
+                'ages'           => $ages,
+                'is_autooffer'   => getWhitelabelById((int) $request->input('whitelabel_id'))
             ]);
 
             if ($wish = $this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
                 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'), $newUser->id)) {
                 if ($wish->whitelabel->tt) {
                     $this->callTT($wish, $newUser, $request);
-                    $this->repository->setIsAutoofer($wish->id);
                 } elseif ($wish->whitelabel->traffics) {
                     $this->callTraffics($wish, $newUser, $request);
-                    $this->repository->setIsAutoofer($wish->id);
                 }
 
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));

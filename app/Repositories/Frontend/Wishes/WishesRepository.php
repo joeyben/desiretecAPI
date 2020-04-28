@@ -102,6 +102,7 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.created_at',
                 config('module.wishes.table') . '.group_id',
                 config('module.wishes.table') . '.note',
+                config('module.wishes.table') . '.is_autooffer',
                 config('access.users_table') . '.first_name as first_name',
                 config('access.users_table') . '.last_name as last_name',
                 config('module.whitelabels.table') . '.id as whitelabel_id',

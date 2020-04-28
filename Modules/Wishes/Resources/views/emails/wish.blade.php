@@ -1,4 +1,5 @@
 @php
+dd($wish);
     if (env('APP_USE_API')) {
         $url = $wish->whitelabel->domain . '/wish';
     }else {
@@ -20,6 +21,7 @@
 
                         <p style="line-height: 24px; margin-bottom:20px;">
                             {!! trans('email.wish.created.user.body', ['title' => $wish->destination]) !!}
+
                             @if (!$wish->is_autooffer)
                                 {!! trans('email.wish.created.user.url', ['id' => $wish->id,'token' => $token, 'url' => $url]) !!}
                             @endif

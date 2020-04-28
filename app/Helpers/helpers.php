@@ -468,6 +468,21 @@ if (!function_exists('getCurrentWhiteLabelField')) {
     }
 }
 
+if (!function_exists('getWhitelabelById')) {
+    /**
+     * return current whitelabel Field.
+     *
+     * @param int $id
+     *
+     * @return mixed
+     */
+    function getWhitelabelById(int $id)
+    {
+        return \App\Models\Whitelabels\Whitelabel::Where('id', $id)
+            ->first();
+    }
+}
+
 if (!function_exists('getWhitelabelBySlug')) {
     /**
      * return current whitelabel Field.
