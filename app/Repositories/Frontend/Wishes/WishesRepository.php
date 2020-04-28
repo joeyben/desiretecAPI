@@ -133,10 +133,16 @@ class WishesRepository extends BaseRepository
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
         $id = ($request->get('filter') && null !== $request->get('filter') && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
         $destination = ($request->get('filter') && null !== $request->get('filter') && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
-        $currentWhiteLabelID = Auth::guard('api')->user()->whitelabels()->first()->id;
+
+        if (session()->has('wl-id') && !is_null(session()->get('wl-id'))) {
+            $currentWhiteLabelID = session()->get('wl-id', null);
+        } else {
+            $currentWhiteLabelID = Auth::user()->whitelabels()->first()->id;
+        }
+
         $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
 
-        if (Auth::guard('api')->user()->hasRole('User')) {
+        if (Auth::user()->hasRole('User')) {
             $wish = $this->getForDataTable()
                 ->when($currentWhiteLabelID, function ($wish, $currentWhiteLabelID) {
                     return $wish->where('whitelabel_id', (int) ($currentWhiteLabelID));
@@ -168,7 +174,7 @@ class WishesRepository extends BaseRepository
         foreach ($wish as $singleWish) {
             $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
 
-            if (Auth::guard('api')->user()->hasRole('Seller')) {
+            if (Auth::user()->hasRole('Seller')) {
                 if (198 === $currentWhiteLabelID) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
                     $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && null !== $this->users->find($singleWish['created_by'])->email) ? $this->users->find($singleWish['created_by'])->email : 'No Email';
                 }

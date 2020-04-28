@@ -13,11 +13,13 @@ class AddAutooffersToWhitelabels extends Migration
      */
     public function up()
     {
-        Schema::table('whitelabels', function (Blueprint $table) {
-            $table->tinyInteger('traffics')->default(0);
-            $table->tinyInteger('tt')->default(0);
-            $table->tinyInteger('peakwork')->default(0);
-        });
+        if (Schema::hasTable('whitelabels') && !Schema::hasColumn('whitelabels', 'traffics')) {
+            Schema::table('whitelabels', function (Blueprint $table) {
+                $table->tinyInteger('traffics')->default(0);
+                $table->tinyInteger('tt')->default(0);
+                $table->tinyInteger('peakwork')->default(0);
+            });
+        }
     }
 
     /**
