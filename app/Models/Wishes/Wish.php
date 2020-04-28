@@ -39,7 +39,8 @@ class Wish extends BaseModel
         'quality',
         'ages',
         'direkt_flug',
-        'extra_params'
+        'extra_params',
+        'is_autooffer'
     ];
 
     protected $dates = [

@@ -22,6 +22,7 @@ use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\AutooffersTTRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
+use phpDocumentor\Reflection\Types\Integer;
 
 require_once 'Mobile_Detect.php';
 /**
@@ -405,6 +406,18 @@ class WishesRepository extends BaseRepository
 
             throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
         });
+    }
+
+    /**
+     * @param int $id
+     * Update Wish.
+     */
+    public function setIsAutoofer(int $id)
+    {
+        $wish = Wish::find($id);
+        $wish->is_autooffer = 1;
+
+        return $wish->save();
     }
 
     /**
