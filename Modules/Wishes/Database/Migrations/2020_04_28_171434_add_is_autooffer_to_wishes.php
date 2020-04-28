@@ -13,7 +13,7 @@ class AddIsAutoofferToWishes extends Migration
     {
         if (Schema::hasTable('wishes') && !Schema::hasColumn('wishes', 'is_autooffer')) {
             Schema::table('wishes', function (Blueprint $table) {
-                $table->boolean('is_autooffer')->default(true);
+                $table->boolean('is_autooffer')->default(false);
             });
         }
     }
