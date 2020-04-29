@@ -62,7 +62,7 @@
         errors: new Errors(),
         checkedLayers: [],
         pivot: [],
-        max: 5,
+        max: 1,
         whitelabel: {},
         layers: [],
         checked: null,
@@ -195,6 +195,8 @@
       this.$http.get(window.laroute.route('admin.whitelabels.layers.view'))
         .then((response) => {
           this.layers = response.data.layers
+          // TODO: When licences logic is on, remove line 199 and uncomment line 210
+          this.max = this.layers.length
         })
         .catch(this.onFailed)
         .then(() => {
@@ -205,9 +207,9 @@
         .then((response) => {
             this.whitelabel = response.data.whitelabel
             this.generateLayers(this.whitelabel.layers)
-            if (this.whitelabel.licence !== 0) {
-              this.max = 5
-            }
+            // if (this.whitelabel.licence !== 0) {
+            //   this.max = this.layers.length;
+            // }
         })
         .catch(this.onFailed)
         .then(() => {
