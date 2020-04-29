@@ -52,6 +52,7 @@ class Wish extends Model
 
     protected $casts = [
         'status'  => 'boolean',
+        'is_autooffer' => 'boolean'
     ];
 
     /**

@@ -371,7 +371,6 @@ class WishesRepository extends BaseRepository
             $input['adults'] = (int) ($input['adults']);
             $input['extra_params'] = isset($input['extra_params']) ? $input['extra_params'] : '';
             $input['duration'] = 'exact' === $input['duration'] ? '' . $daysDiff : $input['duration'];
-
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
                 dd($wish);
