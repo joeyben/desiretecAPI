@@ -218,7 +218,7 @@ class WishesController extends APIController
                 'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'), $newUser->id)) {
                 if ($wish->whitelabel->tt && $this->repository->getRuleType($request->input('whitelabel_id'))) {
                     $this->callTT($wish, $newUser, $request);
-                } elseif ($wish->whitelabel->traffics && $this->repository->getRuleType($request->input('whitelabel_id')) {
+                } elseif ($wish->whitelabel->traffics && $this->repository->getRuleType($request->input('whitelabel_id'))) {
                     $this->callTraffics($wish, $newUser, $request);
                 }
 
