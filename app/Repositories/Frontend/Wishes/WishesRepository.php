@@ -373,7 +373,6 @@ class WishesRepository extends BaseRepository
             $input['duration'] = 'exact' === $input['duration'] ? '' . $daysDiff : $input['duration'];
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
-                dd($wish);
                 event(new WishCreated($wish));
 
                 return $wish;
@@ -602,7 +601,7 @@ class WishesRepository extends BaseRepository
      */
     public function manageRules($wish)
     {
-        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelId()));
+        $rules = $this->rules->getRuleForWhitelabel($wish->whitelabel->id);
         $offer = 0;
         switch ($rules['type']) {
             case 'mix':
@@ -631,13 +630,13 @@ class WishesRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
+     * @param int $id
      *
      * @return string
      */
-    public function getRuleType()
+    public function getRuleType(int $id)
     {
-        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelId()));
+        $rules = $this->rules->getRuleForWhitelabel($id);
         switch ($rules['type']) {
             case 'mix':
                 return 2;
