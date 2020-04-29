@@ -100,6 +100,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
         Route::get('destinations', 'RegionsController@getAllDestinations');
         Route::get('airports', 'RegionsController@getAllAirports');
+        Route::get('ttairports', 'RegionsController@getAllTTAirports');
+
         Route::group(['prefix' => 'offer'], function () {
             Route::get('ttlist/{wishId}', 'AutooffersController@listTt');
             Route::get('list/{wishId}', 'AutooffersController@list');
