@@ -36,6 +36,8 @@ class WhitelabelsRepository extends BaseRepository
                 config('module.whitelabels.table') . '.color',
                 config('module.whitelabels.table') . '.email',
                 config('module.whitelabels.table') . '.layer',
+                config('module.whitelabels.table') . '.traffics',
+                config('module.whitelabels.table') . '.tt',
             ])
             ->where(config('module.whitelabels.table') . '.name', 'LIKE', '%' . $name . '%')
             ->first()
