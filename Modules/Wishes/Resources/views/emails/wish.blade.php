@@ -1,5 +1,4 @@
 @php
-dd($wish);
     if (env('APP_USE_API')) {
         $url = $wish->whitelabel->domain . '/wish';
     }else {
