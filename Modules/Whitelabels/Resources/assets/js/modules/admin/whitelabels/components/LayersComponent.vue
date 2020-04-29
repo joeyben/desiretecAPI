@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="row">
                         <el-checkbox-group v-model="checkedLayers" :max="max">
-                            <el-col v-for="(layer, index) in layers" :key="layer.id" class="col-xl-3 col-sm-6">
+                            <el-col v-for="layer in layers" :key="layer.id" class="col-xl-3 col-sm-6">
                             <el-card :body-style="{ padding: '0px' }" shadow="hover">
                                 <img :src="layer.image" class="image">
                                 <div style="padding: 14px;">
@@ -195,8 +195,6 @@
       this.$http.get(window.laroute.route('admin.whitelabels.layers.view'))
         .then((response) => {
           this.layers = response.data.layers
-          // TODO: When licences logic is on, remove line 199 and uncomment line 210
-          this.max = this.layers.length
         })
         .catch(this.onFailed)
         .then(() => {
@@ -207,9 +205,9 @@
         .then((response) => {
             this.whitelabel = response.data.whitelabel
             this.generateLayers(this.whitelabel.layers)
-            // if (this.whitelabel.licence !== 0) {
-            //   this.max = this.layers.length;
-            // }
+            if (this.whitelabel.licence !== 0) {
+              this.max = this.layers.length;
+            }
         })
         .catch(this.onFailed)
         .then(() => {

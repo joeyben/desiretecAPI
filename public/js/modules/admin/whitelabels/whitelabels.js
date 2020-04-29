@@ -86645,8 +86645,6 @@ exports.default = {
     this.$store.dispatch('block', { element: 'layersComponent', load: true });
     this.$http.get(window.laroute.route('admin.whitelabels.layers.view')).then(function (response) {
       _this3.layers = response.data.layers;
-      // TODO: When licences logic is on, remove line 199 and uncomment line 210
-      _this3.max = _this3.layers.length;
     }).catch(this.onFailed).then(function () {
       _this3.$store.dispatch('block', { element: 'layersComponent', load: false });
     });
@@ -86654,9 +86652,9 @@ exports.default = {
     this.$http.get(window.laroute.route('admin.whitelabels.current')).then(function (response) {
       _this3.whitelabel = response.data.whitelabel;
       _this3.generateLayers(_this3.whitelabel.layers);
-      // if (this.whitelabel.licence !== 0) {
-      //   this.max = this.layers.length;
-      // }
+      if (_this3.whitelabel.licence !== 0) {
+        _this3.max = _this3.layers.length;
+      }
     }).catch(this.onFailed).then(function () {
       _this3.$store.dispatch('block', { element: 'layersComponent', load: false });
     });
@@ -86945,7 +86943,7 @@ var render = function() {
                         expression: "checkedLayers"
                       }
                     },
-                    _vm._l(_vm.layers, function(layer, index) {
+                    _vm._l(_vm.layers, function(layer) {
                       return _c(
                         "el-col",
                         { key: layer.id, staticClass: "col-xl-3 col-sm-6" },
