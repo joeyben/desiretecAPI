@@ -124,4 +124,7 @@ return [
     'licence'                       => 'Licence',
     'duplicate'                     => 'Duplicate',
     'privacy'                       => 'Privacy',
+    'headline_color'                => 'Headline Color',
+    'headline_color_dark'           => 'Dark',
+    'headline_color_light'          => 'Light',
 ];
