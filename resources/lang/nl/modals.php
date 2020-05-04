@@ -126,7 +126,7 @@ return [
     'host'                          => 'Domain',
     'hosts'                         => 'Domains',
     'privacy'                       => 'Datenschutzlink',
-    'headline_color'                => 'Überschrift Farbe',
-    'headline_color_dark'           => 'Dunkel',
-    'headline_color_light'          => 'Hell',
+    'headline_color'                => 'Titel Kleur',
+    'headline_color_dark'           => 'Donker',
+    'headline_color_light'          => 'Light',
 ];
