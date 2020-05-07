@@ -35,6 +35,7 @@ class Wish extends Model
         'pets',
         'rooms',
         'category',
+        'class'.
         'catering',
         'duration',
         'status',
