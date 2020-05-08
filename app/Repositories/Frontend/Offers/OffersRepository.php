@@ -171,26 +171,20 @@ class OffersRepository extends BaseRepository
 
     public function createOfferAPI(Request $request)
     {
-        $filesArr = [];
-        if (isset($request->file) && null !== $request->file) {
-            foreach ($request->file as $file) {
-                $temp_array = [];
-                $temp_array['content'] = base64_decode($file['content'], true);
-                $temp_array['name'] = $file['name'];
-                array_push($filesArr, $temp_array);
-            }
-        }
-        $input = $request->except('_token', 'file');
 
-        return DB::transaction(function () use ($input, $filesArr) {
+        $input = $request->except('_token', 'files');
+        $files = $request->input('files');
+        //dd($files);
+        return DB::transaction(function () use ($input, $files) {
             $id = access()->user()->id;
             $active_agent = Auth::guard('agent')->user()->id;
 
             $input['created_by'] = $id;
             $input['agent_id'] = $active_agent;
-
+            //dd($input);
             if ($offer = Offer::create($input)) {
-                $fileUploaded = $this->uploadImageAPI($filesArr, $offer->id);
+                $fileUploaded = $this->uploadImageAPI($files, $offer->id);
+
                 event(new OfferCreated($offer));
 
                 return true;
@@ -280,11 +274,9 @@ class OffersRepository extends BaseRepository
     {
         if (isset($files) && !empty($files)) {
             foreach ($files as $file) {
-                $fileName = time() . $file['name'];
-                $this->storage->put($this->upload_path . $fileName, $file['content'], 'public');
                 $offerFiles = new OfferFile();
                 $offerFiles->offer_id = $id;
-                $offerFiles->file = $fileName;
+                $offerFiles->file = $file;
                 $offerFiles->save();
             }
 
