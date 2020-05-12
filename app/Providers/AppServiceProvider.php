@@ -5,6 +5,7 @@ namespace App\Providers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Modules\Variants\Providers\VariantsServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -67,6 +68,7 @@ class AppServiceProvider extends ServiceProvider
              * Load third party local providers
              */
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+            $this->app->register(VariantsServiceProvider::class);
 
             /*
              * Load third party local aliases
