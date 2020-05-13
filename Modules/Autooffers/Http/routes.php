@@ -5,7 +5,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'offer', 'namespace' => 'Module
     Route::get('create/{wish}', 'AutooffersController@create')->name('create');
     Route::get('list/{wish}', 'AutooffersController@show')->name('list');
     Route::get('ttlist/{wish}', 'AutooffersController@showtt')->name('ttlist');
-    Route::get('testTT', 'AutooffersController@testTT')->name('testtt');
+    Route::get('testTT', 'AutooffersController@testTTbkp')->name('testtt');
     Route::get('olist/{wish}/{token}', 'AutooffersController@showttredirect')->name('ttlist_redirect');
     Route::get('details/{wish}/{index}', 'AutooffersController@details')->name('details');
     Route::get('ttdetails/{wish}/{index}', 'AutooffersController@ttdetails')->name('ttdetails');
