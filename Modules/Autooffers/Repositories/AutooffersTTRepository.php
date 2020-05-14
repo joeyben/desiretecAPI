@@ -911,7 +911,7 @@ class AutooffersTTRepository extends BaseRepository
     public function testTT()
     {
         $xmlreq =  '<ttxml:AvailabilityAndPriceCheckRQ xmlns:ttxml="http://traveltainment.de/middleware/xml/AvailabilityAndPriceCheckRQ” LanguageCode="de-CH”>
-	<OfferID>2L9CXTMUOW1BRKBSWWXKT9DK62MFZZUT6Y1VKP1J3TA669GJMZKGCDNJA83ATHK3TNC7E4P3ATKG6C</OfferID>
+	<OfferID>2LJE23G9746ULFXNPG31P4OSPTCP732RD3CAVVR9JYNF14H8HR96422394GXRCVPM99YBFFCFJ3EHJ</OfferID>
 	<TravellerList>
 		<Traveller>
 			<PersonName>
