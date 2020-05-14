@@ -953,7 +953,7 @@ class AutooffersTTRepository extends BaseRepository
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         $data = curl_exec($ch);
-        var_dump($data);
+        dd($data);
         if (curl_errno($ch)) {
             echo curl_error($ch);
             echo 'Algo fallo';
