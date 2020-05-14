@@ -183,6 +183,7 @@ class OffersRepository extends BaseRepository
             $input['agent_id'] = $active_agent;
             //dd($input);
             if ($offer = Offer::create($input)) {
+                //dd($offer->id);
                 $fileUploaded = $this->uploadImageAPI($files, $offer->id);
 
                 event(new OfferCreated($offer));
