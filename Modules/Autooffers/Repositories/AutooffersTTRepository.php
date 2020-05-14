@@ -27,7 +27,7 @@ class AutooffersTTRepository extends BaseRepository
 
     private $username = 'SYS_315150_DE_DESIRETEC';
 
-    private $password = 'R.8Nh]PB-tg9kKhVCN';
+    private $password = 'R.8Nh]PB-tg9kKhVC';
 
     private $oauthUrl = 'https://auth.ws.traveltainment.eu:443/auth/realms/SystemUser-BasicAccessLevel/protocol/openid-connect/token';
 
@@ -953,7 +953,7 @@ class AutooffersTTRepository extends BaseRepository
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         $data = curl_exec($ch);
-        dd($data);
+        var_dump($data);
         if (curl_errno($ch)) {
             echo curl_error($ch);
             echo 'Algo fallo';
