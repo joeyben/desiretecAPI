@@ -108,7 +108,7 @@ class AutooffersTTRepository extends BaseRepository
             die('Connection Failure');
         }
         curl_close($curl);
-        dd($result);
+        //dd($result);
         $this->token = json_decode($result, true)['access_token'];
     }
 
