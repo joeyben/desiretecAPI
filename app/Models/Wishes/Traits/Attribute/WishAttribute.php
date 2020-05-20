@@ -44,7 +44,7 @@ trait WishAttribute
      */
     public function getDurationAttribute($value)
     {
-        return transformDuration($value);
+        return $value;
     }
 
     /**
