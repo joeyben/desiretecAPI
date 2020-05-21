@@ -16,6 +16,7 @@ use App\Repositories\Criteria\ByWhitelabel;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Filter;
 use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\Where;
 use App\Repositories\Frontend\Access\User\UserRepository;
 use App\Repositories\Frontend\Wishes\WishesRepository;
 use Auth;
@@ -28,6 +29,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
+use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 
 class WishesController extends APIController
 {
@@ -68,8 +70,12 @@ class WishesController extends APIController
      * @var \Modules\Categories\Repositories\Contracts\CategoriesRepository
      */
     private $categories;
+    /**
+     * @var \Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository
+     */
+    private $layerWhitelabel;
 
-    public function __construct(WishesRepository $repository, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, GroupsRepository $groups, CategoriesRepository $categories)
+    public function __construct(WishesRepository $repository, ChannelManager $notification, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, GroupsRepository $groups, CategoriesRepository $categories, LayerWhitelabelRepository $layerWhitelabel)
     {
         $this->repository = $repository;
         $this->notification = $notification;
@@ -79,6 +85,7 @@ class WishesController extends APIController
         $this->carbon = $carbon;
         $this->groups = $groups;
         $this->categories = $categories;
+        $this->layerWhitelabel = $layerWhitelabel;
     }
 
     public function getWishes(Request $request)
@@ -139,6 +146,7 @@ class WishesController extends APIController
             $result['data']['agent'] = \Illuminate\Support\Facades\Auth::guard('agent')->user();
             $result['data']['agent_name'] = $agentName;
             $result['data']['offerFiles'] = $offerFiles;
+            $result['data']['layer_image'] = $this->getLayerImage($wishData->whitelabel_id, $wishData->version);
             $result['data']['wishDetails'] = $wishData;
             $result['data']['wishDetails']['catering'] = $this->categories->getCategoryByParentValue('catering', $wish->catering);
             $result['data']['wishDetails']['owner'] = $wishData->owner;
@@ -285,5 +293,19 @@ class WishesController extends APIController
             'type'             => 0
         ];
         dispatch((new sendAutoOffersMail($details, $wish->id, $wish->whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
+    }
+
+    private function getLayerImage($whitelabelId, $layerName) {
+        $whitelabelLayers = $this->layerWhitelabel->withCriteria([
+            new OrderBy('layer_id'),
+            new Where('whitelabel_id', $whitelabelId),
+            new EagerLoad(['layer', 'attachments'])
+        ])->all();
+
+        foreach ($whitelabelLayers as $layer) {
+            if ($layer['layer']['path'] === $layerName && sizeof($layer['attachments'])) {
+                return $layer['attachments'][0]['url'];
+            }
+        }
     }
 }
