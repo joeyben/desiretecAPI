@@ -23,6 +23,10 @@ use Modules\Autooffers\Repositories\AutooffersTTRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 use phpDocumentor\Reflection\Types\Integer;
+use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
+use App\Repositories\Criteria\Where;
+use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\EagerLoad;
 
 require_once 'Mobile_Detect.php';
 /**
@@ -56,8 +60,9 @@ class WishesRepository extends BaseRepository
     private $autooffers;
     private $autooffersTT;
     private $autoRules;
+    private $layerWhitelabel;
 
-    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, AutooffersTTRepository $autooffersTT, EloquentAutooffersRepository $autoRules)
+    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, AutooffersTTRepository $autooffersTT, EloquentAutooffersRepository $autoRules, LayerWhitelabelRepository $layerWhitelabel)
     {
         $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
@@ -65,6 +70,7 @@ class WishesRepository extends BaseRepository
         $this->autooffers = $autooffers;
         $this->autooffersTT = $autooffersTT;
         $this->autoRules = $autoRules;
+        $this->layerWhitelabel = $layerWhitelabel;
     }
 
     /**
@@ -103,6 +109,7 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.group_id',
                 config('module.wishes.table') . '.note',
                 config('module.wishes.table') . '.is_autooffer',
+                config('module.wishes.table') . '.version',
                 config('access.users_table') . '.first_name as first_name',
                 config('access.users_table') . '.last_name as last_name',
                 config('module.whitelabels.table') . '.id as whitelabel_id',
@@ -173,8 +180,16 @@ class WishesRepository extends BaseRepository
                 ->paginate(10);
         }
 
+        $whitelabelLayers = $this->getLayers((int)$currentWhiteLabelID);
+
         foreach ($wish as $singleWish) {
             $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
+
+            foreach ($whitelabelLayers as $layer) {
+                if ($layer['layer']['path'] === $singleWish['version'] && sizeof($layer['attachments'])) {
+                    $singleWish['layer_image'] = $layer['attachments'][0]['url'];
+                }
+            }
 
             if (Auth::user()->hasRole('Seller')) {
                 if (198 === $currentWhiteLabelID) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
@@ -224,7 +239,8 @@ class WishesRepository extends BaseRepository
                 'from'         => $wish->firstItem(),
                 'to'           => $wish->lastItem()
             ],
-            'data' => $wish
+            'data' => $wish,
+            'currentWhiteLabelID' => $currentWhiteLabelID
         ];
 
         return $response;
@@ -674,5 +690,14 @@ class WishesRepository extends BaseRepository
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response, $wish->id, $_rules, $userId);
+    }
+
+    private function getLayers(int $whitelabelId)
+    {
+        return $this->layerWhitelabel->withCriteria([
+            new OrderBy('layer_id'),
+            new Where('whitelabel_id', $whitelabelId),
+            new EagerLoad(['layer', 'attachments'])
+        ])->all();
     }
 }
