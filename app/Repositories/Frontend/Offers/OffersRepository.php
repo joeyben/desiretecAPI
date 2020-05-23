@@ -177,7 +177,7 @@ class OffersRepository extends BaseRepository
         //dd($files);
         return DB::transaction(function () use ($input, $files) {
             $id = access()->user()->id;
-            $active_agent = Auth::guard('agent')->user()->id;
+            $active_agent = $input['agent_id'];
 
             $input['created_by'] = $id;
             $input['agent_id'] = $active_agent;
