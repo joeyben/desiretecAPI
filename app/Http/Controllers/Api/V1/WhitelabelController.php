@@ -77,6 +77,7 @@ class WhitelabelController extends Controller
             'layers'              => $this->getLayers($whitelabel->id),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
+            'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false
         ];
 
         $result['data']['attachments']['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
@@ -129,6 +130,8 @@ class WhitelabelController extends Controller
             'layers'              => $this->getLayers($whitelabel->id),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
+            'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false
+
         ];
 
         $result['data']['attachments']['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';

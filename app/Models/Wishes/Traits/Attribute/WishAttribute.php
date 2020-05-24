@@ -44,7 +44,7 @@ trait WishAttribute
      */
     public function getDurationAttribute($value)
     {
-        return transformDuration($value);
+        return $value;
     }
 
     /**
@@ -62,7 +62,7 @@ trait WishAttribute
      */
     public function getAdultsExtendedAttribute()
     {
-        return transformTravelers($this->adults, 'adults');
+        return $this->adults;
     }
 
     /**
@@ -80,6 +80,6 @@ trait WishAttribute
      */
     public function getKidsExtendedAttribute()
     {
-        return transformTravelers($this->kids, 'kids');
+        return $this->kids;
     }
 }

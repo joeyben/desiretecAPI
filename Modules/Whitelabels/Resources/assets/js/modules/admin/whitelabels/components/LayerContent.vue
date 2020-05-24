@@ -21,8 +21,8 @@
                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline_color') }}</label>
                 <div class="col-lg-9 d-flex align-items-center">
                     <template>
-                        <el-radio v-model="headline_color" label="dark">Dark</el-radio>
-                        <el-radio v-model="headline_color" label="light">Light</el-radio>
+                        <el-radio v-model="headline_color" label="dark">{{ trans('modals.headline_color_dark') }}</el-radio>
+                        <el-radio v-model="headline_color" label="light">{{ trans('modals.headline_color_light') }}</el-radio>
                     </template>
                 </div>
             </div>

@@ -22,6 +22,11 @@ use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\AutooffersTTRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
+use phpDocumentor\Reflection\Types\Integer;
+use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
+use App\Repositories\Criteria\Where;
+use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\EagerLoad;
 
 require_once 'Mobile_Detect.php';
 /**
@@ -55,8 +60,9 @@ class WishesRepository extends BaseRepository
     private $autooffers;
     private $autooffersTT;
     private $autoRules;
+    private $layerWhitelabel;
 
-    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, AutooffersTTRepository $autooffersTT, EloquentAutooffersRepository $autoRules)
+    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, AutooffersTTRepository $autooffersTT, EloquentAutooffersRepository $autoRules, LayerWhitelabelRepository $layerWhitelabel)
     {
         $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
@@ -64,6 +70,7 @@ class WishesRepository extends BaseRepository
         $this->autooffers = $autooffers;
         $this->autooffersTT = $autooffersTT;
         $this->autoRules = $autoRules;
+        $this->layerWhitelabel = $layerWhitelabel;
     }
 
     /**
@@ -101,6 +108,8 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.created_at',
                 config('module.wishes.table') . '.group_id',
                 config('module.wishes.table') . '.note',
+                config('module.wishes.table') . '.is_autooffer',
+                config('module.wishes.table') . '.version',
                 config('access.users_table') . '.first_name as first_name',
                 config('access.users_table') . '.last_name as last_name',
                 config('module.whitelabels.table') . '.id as whitelabel_id',
@@ -133,10 +142,16 @@ class WishesRepository extends BaseRepository
         $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
         $id = ($request->get('filter') && null !== $request->get('filter') && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
         $destination = ($request->get('filter') && null !== $request->get('filter') && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
-        $currentWhiteLabelID = Auth::guard('api')->user()->whitelabels()->first()->id;
+
+        if (session()->has('wl-id') && !is_null(session()->get('wl-id'))) {
+            $currentWhiteLabelID = session()->get('wl-id', null);
+        } else {
+            $currentWhiteLabelID = Auth::user()->whitelabels()->first()->id;
+        }
+
         $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
 
-        if (Auth::guard('api')->user()->hasRole('User')) {
+        if (Auth::user()->hasRole('User')) {
             $wish = $this->getForDataTable()
                 ->when($currentWhiteLabelID, function ($wish, $currentWhiteLabelID) {
                     return $wish->where('whitelabel_id', (int) ($currentWhiteLabelID));
@@ -165,10 +180,18 @@ class WishesRepository extends BaseRepository
                 ->paginate(10);
         }
 
+        $whitelabelLayers = $this->getLayers((int)$currentWhiteLabelID);
+
         foreach ($wish as $singleWish) {
             $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
 
-            if (Auth::guard('api')->user()->hasRole('Seller')) {
+            foreach ($whitelabelLayers as $layer) {
+                if ($layer['layer']['path'] === $singleWish['version'] && sizeof($layer['attachments'])) {
+                    $singleWish['layer_image'] = $layer['attachments'][0]['url'];
+                }
+            }
+
+            if (Auth::user()->hasRole('Seller')) {
                 if (198 === $currentWhiteLabelID) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
                     $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && null !== $this->users->find($singleWish['created_by'])->email) ? $this->users->find($singleWish['created_by'])->email : 'No Email';
                 }
@@ -216,7 +239,8 @@ class WishesRepository extends BaseRepository
                 'from'         => $wish->firstItem(),
                 'to'           => $wish->lastItem()
             ],
-            'data' => $wish
+            'data' => $wish,
+            'currentWhiteLabelID' => $currentWhiteLabelID
         ];
 
         return $response;
@@ -343,26 +367,29 @@ class WishesRepository extends BaseRepository
     public function createFromApi(array $input, string $userId)
     {
         $this->whitelabel_id = $input['whitelabel_id'];
-        $wish = DB::transaction(function () use ($input, $userId) {
-            $from = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
-            $to = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
-            $daysDiff = $to->diffInDays($from);
 
-            if ('0' === $input['duration'] && $daysDiff < 7) {
-                $input['duration'] = '' . $daysDiff;
-            } elseif ('0' === $input['duration']) {
-                $input['duration'] = '7-';
+        $wish = DB::transaction(function () use ($input, $userId) {
+
+            if($input['earliest_start'] !== '-' && $input['latest_return'] !== '-') {
+                $from = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['earliest_start']);
+                $to = \Illuminate\Support\Carbon::createFromFormat('d.m.Y', $input['latest_return']);
+                $daysDiff = $to->diffInDays($from);
+                if ('0' === $input['duration'] && $daysDiff < 7) {
+                    $input['duration'] = '' . $daysDiff;
+                } elseif ('0' === $input['duration']) {
+                    $input['duration'] = '7-';
+                }
+                $input['earliest_start'] = $from;
+                $input['latest_return'] = $input['latest_return'] ? $to : '0000-00-00';
+                $input['duration'] = 'exact' === $input['duration'] ? '' . $daysDiff : $input['duration'];
             }
 
             $input['featured_image'] = (isset($input['featured_image']) && !empty($input['featured_image'])) ? $input['featured_image'] : '1522558148csm_ER_Namibia_b97bcd06f0.jpg';
             $input['created_by'] = $userId;
             $input['group_id'] = $this->getGroup();
             $input['title'] = '-';
-            $input['earliest_start'] = $from;
-            $input['latest_return'] = $input['latest_return'] ? $to : '0000-00-00';
             $input['adults'] = (int) ($input['adults']);
             $input['extra_params'] = isset($input['extra_params']) ? $input['extra_params'] : '';
-            $input['duration'] = 'exact' === $input['duration'] ? '' . $daysDiff : $input['duration'];
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
@@ -399,6 +426,18 @@ class WishesRepository extends BaseRepository
 
             throw new GeneralException(trans('exceptions.backend.wishes.update_error'));
         });
+    }
+
+    /**
+     * @param int $id
+     * Update Wish.
+     */
+    public function setIsAutoofer(int $id)
+    {
+        $wish = Wish::find($id);
+        $wish->is_autooffer = 1;
+
+        return $wish->save();
     }
 
     /**
@@ -582,7 +621,7 @@ class WishesRepository extends BaseRepository
      */
     public function manageRules($wish)
     {
-        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelId()));
+        $rules = $this->rules->getRuleForWhitelabel($wish->whitelabel->id);
         $offer = 0;
         switch ($rules['type']) {
             case 'mix':
@@ -611,13 +650,13 @@ class WishesRepository extends BaseRepository
     }
 
     /**
-     * @param \App\Models\Wishes\Wish $wish
+     * @param int $id
      *
      * @return string
      */
-    public function getRuleType()
+    public function getRuleType(int $id)
     {
-        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelId()));
+        $rules = $this->rules->getRuleForWhitelabel($id);
         switch ($rules['type']) {
             case 'mix':
                 return 2;
@@ -651,5 +690,14 @@ class WishesRepository extends BaseRepository
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response, $wish->id, $_rules, $userId);
+    }
+
+    private function getLayers(int $whitelabelId)
+    {
+        return $this->layerWhitelabel->withCriteria([
+            new OrderBy('layer_id'),
+            new Where('whitelabel_id', $whitelabelId),
+            new EagerLoad(['layer', 'attachments'])
+        ])->all();
     }
 }

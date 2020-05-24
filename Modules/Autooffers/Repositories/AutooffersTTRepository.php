@@ -108,6 +108,7 @@ class AutooffersTTRepository extends BaseRepository
             die('Connection Failure');
         }
         curl_close($curl);
+        //dd($result);
         $this->token = json_decode($result, true)['access_token'];
     }
 
@@ -929,7 +930,7 @@ class AutooffersTTRepository extends BaseRepository
                            }
                     ]
              },
-          "OfferID": "2LJE23G9746ULFXNPG31P4OSPTCP732RD3CAVVR9JYNF14H8HR96422394GXRCVPM99YBFFCFJ3EHJ",
+          "OfferID": "2193VTFNA2OXNPKJZ82O3VG43399NJKNJRTHL8AZB3N2K8ZVNTWSNO7AXZBNGXCKESZ9XT7PSZJY9W",
           "Options": {
           }
         }}';
@@ -953,7 +954,7 @@ class AutooffersTTRepository extends BaseRepository
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         $data = curl_exec($ch);
-        var_dump($data);
+        dd($data);
         if (curl_errno($ch)) {
             echo curl_error($ch);
             echo 'Algo fallo';

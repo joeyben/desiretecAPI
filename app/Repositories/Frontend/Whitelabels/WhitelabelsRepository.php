@@ -5,6 +5,7 @@ namespace App\Repositories\Frontend\Whitelabels;
 use App\Models\Whitelabels\Whitelabel;
 use App\Repositories\BaseRepository;
 use Modules\Attachments\Entities\Attachment;
+use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 
 /**
  * Class WhitelabelsRepository.
@@ -18,8 +19,14 @@ class WhitelabelsRepository extends BaseRepository
 
     protected $whitelabel_id = null;
 
-    public function __construct()
+    /**
+     * @var \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository
+     */
+    private $rules;
+
+    public function __construct(EloquentRulesRepository $rules)
     {
+        $this->rules = $rules;
     }
 
     /**
@@ -36,6 +43,8 @@ class WhitelabelsRepository extends BaseRepository
                 config('module.whitelabels.table') . '.color',
                 config('module.whitelabels.table') . '.email',
                 config('module.whitelabels.table') . '.layer',
+                config('module.whitelabels.table') . '.traffics',
+                config('module.whitelabels.table') . '.tt',
             ])
             ->where(config('module.whitelabels.table') . '.name', 'LIKE', '%' . $name . '%')
             ->first()
@@ -51,5 +60,28 @@ class WhitelabelsRepository extends BaseRepository
         }
 
         return $query;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return string
+     */
+    public function getRuleType(int $id)
+    {
+        $rules = $this->rules->getRuleForWhitelabel($id);
+        switch ($rules['type']) {
+            case 'mix':
+                return 2;
+                break;
+            case 'auto':
+                return 1;
+                break;
+            case 'manuel':
+                return 0;
+                break;
+            default:
+                return 0;
+        }
     }
 }

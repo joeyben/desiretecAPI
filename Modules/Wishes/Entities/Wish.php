@@ -35,6 +35,7 @@ class Wish extends Model
         'pets',
         'rooms',
         'category',
+        'class'.
         'catering',
         'duration',
         'status',
@@ -44,13 +45,15 @@ class Wish extends Model
         'whitelabel_id',
         'agent_id',
         'extra_params',
-        'version'
+        'version',
+        'is_autooffer'
     ];
 
     protected static $logOnlyDirty = true;
 
     protected $casts = [
         'status'  => 'boolean',
+        'is_autooffer' => 'boolean'
     ];
 
     /**

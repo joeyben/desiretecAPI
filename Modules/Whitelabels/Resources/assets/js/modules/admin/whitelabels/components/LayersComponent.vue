@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="row">
                         <el-checkbox-group v-model="checkedLayers" :max="max">
-                            <el-col v-for="(layer, index) in layers" :key="layer.id" class="col-xl-3 col-sm-6">
+                            <el-col v-for="layer in layers" :key="layer.id" class="col-xl-3 col-sm-6">
                             <el-card :body-style="{ padding: '0px' }" shadow="hover">
                                 <img :src="layer.image" class="image">
                                 <div style="padding: 14px;">
@@ -62,7 +62,7 @@
         errors: new Errors(),
         checkedLayers: [],
         pivot: [],
-        max: 5,
+        max: 1,
         whitelabel: {},
         layers: [],
         checked: null,
@@ -206,7 +206,7 @@
             this.whitelabel = response.data.whitelabel
             this.generateLayers(this.whitelabel.layers)
             if (this.whitelabel.licence !== 0) {
-              this.max = 5
+              this.max = this.layers.length;
             }
         })
         .catch(this.onFailed)

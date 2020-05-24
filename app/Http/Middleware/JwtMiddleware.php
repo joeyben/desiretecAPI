@@ -40,6 +40,10 @@ class JwtMiddleware extends BaseMiddleware
                     }
                 }
 
+                if ($request->hasHeader('wl-id') && null !== $request->header('wl-id')) {
+                    session()->put('wl-id', $request->header('wl-id'));
+                }
+
                 if (Auth::guard('web')->user()->hasRole(Flag::SELLER_ROLE) && !Auth::guard('agent')->check()) {
                     if ($agent = Auth::guard('web')->user()->agents()->first()) {
                         Auth::guard('agent')->loginUsingId($agent->id);
@@ -56,6 +60,10 @@ class JwtMiddleware extends BaseMiddleware
                         Auth::guard('agent')->logout();
                         Auth::guard('agent')->loginUsingId((int) $request->header('c-agent'));
                     }
+                }
+
+                if ($request->hasHeader('wl-id') && null !== $request->header('wl-id')) {
+                    session()->put('wl-id', $request->header('wl-id'));
                 }
 
                 if (Auth::user()->hasRole(Flag::SELLER_ROLE) && !Auth::guard('agent')->check()) {

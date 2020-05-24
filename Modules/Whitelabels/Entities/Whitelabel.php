@@ -66,6 +66,9 @@ class Whitelabel extends Model
 
     protected $casts = [
         'status'  => 'boolean',
+        'traffics'  => 'boolean',
+        'tt'  => 'boolean',
+        'peakwork'  => 'boolean',
     ];
 
     /**
