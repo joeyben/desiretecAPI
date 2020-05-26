@@ -9,7 +9,7 @@
 
 <script>
   import Vuex from 'vuex'
-  import VueDatatable from '../tables/groups/VueDatatable'
+  import VueDatatable from '../tables/variants/VueDatatable'
   export default {
     name: 'GroupsComponent',
     components: { VueDatatable },

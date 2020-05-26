@@ -10,35 +10,24 @@ export default [
   },
   {
     name: '__component:custom-status',
-    title: window.Lang.get('tables.status'),
+    title: window.Lang.get('Layer'),
     sortField: 'status',
     visible: true
   },
   {
-    name: '__component:custom-link-by-name',
-    title: window.Lang.get('tables.name'),
-    sortField: 'title',
+    name: 'layer_url',
+    title: window.Lang.get('tables.url'),
+    sortField: 'layer_url',
     visible: true
   },
   {
-    name: 'display_name',
-    title: window.Lang.get('tables.display_name'),
-    sortField: 'display_name',
-    visible: true
-  },
-  {
-    name: 'owner.full_name',
+    name: 'layer_whitelabel.whitelabel.full_name',
     title: window.Lang.get('tables.owner'),
     visible: false
   },
   {
     name: 'whitelabel.display_name',
     title: window.Lang.get('tables.whitelabel'),
-    visible: true
-  },
-  {
-    name: '__component:custom-users',
-    title: window.Lang.get('tables.users'),
     visible: true
   },
   {

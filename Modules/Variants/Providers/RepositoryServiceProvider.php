@@ -3,7 +3,7 @@
 namespace Modules\Variants\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Agents\Repositories\Contracts\VariantsRepository;
+use Modules\Variants\Repositories\Contracts\VariantsRepository;
 use Modules\Variants\Repositories\Eloquent\EloquentVariantsRepository;
 
 class RepositoryServiceProvider extends ServiceProvider

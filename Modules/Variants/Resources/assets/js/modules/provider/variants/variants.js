@@ -40,15 +40,15 @@ if ($variantsComponent) {
     routes: [{
       path: '/',
       name: 'root',
-      component: require('./components/GroupsComponent.vue'),
+      component: require('./components/VariantsComponent.vue'),
       children: [{
         path: '/edit/:id(\\d+)',
         name: 'root.edit',
-        component: require('./components/EditGroupComponent.vue')
+        component: require('./components/EditVariantComponent.vue')
       }, {
         path: '/create/:id(\\d+)/:whitelabel_id(\\d+)',
         name: 'root.create',
-        component: require('./components/EditGroupComponent.vue')
+        component: require('./components/EditVariantComponent.vue')
       }]
     }]
   })

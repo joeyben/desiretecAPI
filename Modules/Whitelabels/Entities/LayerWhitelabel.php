@@ -22,6 +22,11 @@ class LayerWhitelabel extends Pivot
         return $this->belongsTo(Layer::class);
     }
 
+    public function whitelabel()
+    {
+        return $this->belongsTo(Whitelabel::class);
+    }
+
     public function variants()
     {
         return $this->belongsToMany(Variant::class);
