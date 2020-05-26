@@ -17,6 +17,7 @@
         "barryvdh/laravel-ide-helper": "^2.5",
         "creativeorange/gravatar": "~1.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.0",
+        "dimsav/laravel-translatable": "^10.0",
         "doctrine/dbal": "^2.6",
         "dompdf/dompdf": "^0.8.2",
         "faustbrian/laravel-categories": "^5.1",
@@ -51,7 +52,7 @@
         "spatie/laravel-activitylog": "^3.1",
         "spatie/laravel-analytics": "^3.6",
         "spatie/laravel-backup": "^5.11",
-        "spatie/laravel-cors": "^1.6",
+        "spatie/laravel-cors": "1.5.2",
         "spatie/laravel-newsletter": "4.2.3",
         "spatie/laravel-translatable": "^2.2",
         "spatie/laravel-translation-loader": "2.2",
@@ -60,8 +61,7 @@
         "torann/geoip": "^1.0",
         "tymon/jwt-auth": "dev-develop",
         "unisharp/laravel-filemanager": "~1.8",
-        "yajra/laravel-datatables-oracle": "~8.0",
-        "mobiledetect/mobiledetectlib": "^2.8"
+        "yajra/laravel-datatables-oracle": "~8.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.0",

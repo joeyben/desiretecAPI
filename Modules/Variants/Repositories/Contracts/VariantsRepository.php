@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Agents\Repositories\Contracts;
+namespace Modules\Variants\Repositories\Contracts;
 
 interface VariantsRepository
 {

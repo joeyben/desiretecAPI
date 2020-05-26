@@ -10,7 +10,7 @@
 namespace Modules\Variants\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
-use Modules\Agents\Repositories\Contracts\VariantsRepository;
+use Modules\Variants\Repositories\Contracts\VariantsRepository;
 use Modules\Variants\Entities\Variant;
 
 /**
