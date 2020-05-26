@@ -10,8 +10,14 @@ export default [
   },
   {
     name: '__component:custom-status',
-    title: window.Lang.get('Layer'),
+    title: window.Lang.get('tables.status'),
     sortField: 'status',
+    visible: true
+  },
+  {
+    name: '__component:custom-link-by-name',
+    title: window.Lang.get('Layer'),
+    sortField: 'title',
     visible: true
   },
   {

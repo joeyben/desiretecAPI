@@ -1,6 +1,7 @@
 <template>
-    <span>
-        <span v-text="rowData.layer_whitelabel['layer'].name"></span>
+     <span>
+        <span v-if="rowData.active"><i class="icon-checkmark-circle text-success"></i></span>
+        <span v-if="!rowData.active"><i class="icon-cancel-circle2 text-danger"></i></span>
     </span>
 </template>
 

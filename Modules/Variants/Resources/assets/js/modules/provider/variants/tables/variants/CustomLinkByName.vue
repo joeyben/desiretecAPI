@@ -1,8 +1,6 @@
 <template>
     <span>
-        <router-link :to="{name: 'root.edit', params: { id: rowData.id }}" data-popup="tooltip" :title="rowData.title" v-if="can_edit">{{ rowData.name | str_limit(40) }}</router-link>
-        <span v-if="!can_edit && !deleted">{{ rowData.name | str_limit(40) }}</span>
-        <s class="text-danger"  v-if="deleted">{{ rowData.name | str_limit(40) }}</s>
+        <span v-text="rowData.layer_whitelabel['layer'].name"></span>
     </span>
 </template>
 

@@ -21255,7 +21255,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var LOAD_LANGUAGES = exports.LOAD_LANGUAGES = 'LOAD_LANGUAGES';
-var ADD_GROUP = exports.ADD_GROUP = 'ADD_GROUP';
+var ADD_VARIANT = exports.ADD_VARIANT = 'ADD_VARIANT';
 var ADD_CHECKED = exports.ADD_CHECKED = 'ADD_CHECKED';
 var ADD_CHECKED_ID = exports.ADD_CHECKED_ID = 'ADD_CHECKED_ID';
 var REMOVE_CHECKED_ID = exports.REMOVE_CHECKED_ID = 'REMOVE_CHECKED_ID';
@@ -40391,7 +40391,7 @@ var getters = _interopRequireWildcard(_getters);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var state = {
-  group: {},
+  variant: {},
   users: {},
   checked: [],
   whitelabels: {}
@@ -40410,14 +40410,14 @@ var mutations = {
   ADD_CHECKED: function ADD_CHECKED(state, checked) {
     state.checked = checked;
   },
-  ADD_GROUP: function ADD_GROUP(state, group) {
-    state.group = group;
+  ADD_VARIANT: function ADD_VARIANT(state, variant) {
+    state.variant = variant;
   },
   ADD_WHITELABELS: function ADD_WHITELABELS(state, whitelabels) {
     state.whitelabels = whitelabels;
   },
-  updateGroup: function updateGroup(state, obj) {
-    state.group[obj.name] = obj.value;
+  updateVariant: function updateVariant(state, obj) {
+    state.variant[obj.name] = obj.value;
   }
 };
 
@@ -40438,7 +40438,7 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addChecked = exports.removeCheckedId = exports.addCheckedId = exports.addGroup = undefined;
+exports.addChecked = exports.removeCheckedId = exports.addCheckedId = exports.addVariant = undefined;
 
 var _mutationTypes = __webpack_require__(59);
 
@@ -40446,8 +40446,8 @@ var types = _interopRequireWildcard(_mutationTypes);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var addGroup = exports.addGroup = function addGroup(store, group) {
-  store.commit(types.ADD_GROUP, group);
+var addVariant = exports.addVariant = function addVariant(store, variant) {
+  store.commit(types.ADD_VARIANT, variant);
 };
 
 var addCheckedId = exports.addCheckedId = function addCheckedId(store, id) {
@@ -40472,8 +40472,8 @@ var addChecked = exports.addChecked = function addChecked(store, checked) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var group = exports.group = function group(state) {
-  return state.group;
+var variant = exports.variant = function variant(state) {
+  return state.variant;
 };
 var checked = exports.checked = function checked(state) {
   return state.checked;
@@ -98642,10 +98642,10 @@ exports.default = {
       this.addChecked(data);
     },
     onLoading: function onLoading() {
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
     },
     onLoaded: function onLoaded() {
-      this.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$store.dispatch('block', { element: 'variantsComponent', load: false });
     },
     boardsCallBack: function boardsCallBack(boards) {
       var data = [];
@@ -98716,27 +98716,27 @@ exports.default = {
     onDelete: function onDelete(id) {
       var _this12 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.delete(window.laroute.route('admin.groups.destroy', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
-        _this12.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
+      this.$http.delete(window.laroute.route('admin.variants.destroy', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+        _this12.$store.dispatch('block', { element: 'variantsComponent', load: false });
       });
     },
     onForceDelete: function onForceDelete(id) {
       var _this13 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
       // eslint-disable-next-line
-      this.$http.delete(laroute.route('admin.groups.forceDelete', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
-        _this13.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$http.delete(laroute.route('admin.variants.forceDelete', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+        _this13.$store.dispatch('block', { element: 'variantsComponent', load: false });
       });
     },
     onRestore: function onRestore(id) {
       var _this14 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
       // eslint-disable-next-line
-      this.$http.put(window.laroute.route('admin.groups.restore', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
-        _this14.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$http.put(window.laroute.route('admin.variants.restore', { id: id })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+        _this14.$store.dispatch('block', { element: 'variantsComponent', load: false });
       });
     },
     onDeleteSuccess: function onDeleteSuccess(response) {
@@ -113346,8 +113346,13 @@ exports.default = [{
   visible: true
 }, {
   name: '__component:custom-status',
-  title: window.Lang.get('Layer'),
+  title: window.Lang.get('tables.status'),
   sortField: 'status',
+  visible: true
+}, {
+  name: '__component:custom-link-by-name',
+  title: window.Lang.get('Layer'),
+  sortField: 'title',
   visible: true
 }, {
   name: 'layer_url',
@@ -114025,8 +114030,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
 
 var _vuex = __webpack_require__(8);
 
@@ -114074,37 +114077,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "span",
-    [
-      _vm.can_edit
-        ? _c(
-            "router-link",
-            {
-              attrs: {
-                to: { name: "root.edit", params: { id: _vm.rowData.id } },
-                "data-popup": "tooltip",
-                title: _vm.rowData.title
-              }
-            },
-            [_vm._v(_vm._s(_vm._f("str_limit")(_vm.rowData.name, 40)))]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      !_vm.can_edit && !_vm.deleted
-        ? _c("span", [
-            _vm._v(_vm._s(_vm._f("str_limit")(_vm.rowData.name, 40)))
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.deleted
-        ? _c("s", { staticClass: "text-danger" }, [
-            _vm._v(_vm._s(_vm._f("str_limit")(_vm.rowData.name, 40)))
-          ])
-        : _vm._e()
-    ],
-    1
-  )
+  return _c("span", [
+    _c("span", {
+      domProps: {
+        textContent: _vm._s(_vm.rowData.layer_whitelabel["layer"].name)
+      }
+    })
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -114179,6 +114158,7 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
 
 exports.default = {
   name: 'CustomStatus',
@@ -114207,11 +114187,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("span", [
-    _c("span", {
-      domProps: {
-        textContent: _vm._s(_vm.rowData.layer_whitelabel["layer"].name)
-      }
-    })
+    _vm.rowData.active
+      ? _c("span", [
+          _c("i", { staticClass: "icon-checkmark-circle text-success" })
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.rowData.active
+      ? _c("span", [
+          _c("i", { staticClass: "icon-cancel-circle2 text-danger" })
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -114492,9 +114478,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
 
 var _vuex = __webpack_require__(8);
 
@@ -114647,7 +114630,7 @@ var render = function() {
           "div",
           { staticClass: "dropdown-menu dropdown-menu-left" },
           [
-            _vm.hasPermissionTo("create-group") && !_vm.hasRole("Administrator")
+            !_vm.hasRole("Administrator")
               ? _c(
                   "router-link",
                   {
@@ -114659,52 +114642,7 @@ var render = function() {
                     _vm._v(_vm._s(_vm.trans("button.create")))
                   ]
                 )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.hasRole("Administrator")
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-item",
-                    attrs: { href: "javascript:;" },
-                    on: {
-                      click: function($event) {
-                        _vm.dialogFormVisible = true
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "icon-plus3" }),
-                    _vm._v("  " + _vm._s(_vm.trans("button.create")))
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "dropdown-item",
-                attrs: { href: "javascript:;" },
-                on: {
-                  click: function($event) {
-                    _vm.onExportSelected()
-                  }
-                }
-              },
-              [
-                _c("i", { staticClass: "icon-file-text3" }),
-                _vm._v(" Export Selected")
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "dropdown-item", attrs: { href: _vm.urlExport } },
-              [
-                _c("i", { staticClass: "icon-file-text3" }),
-                _vm._v(" Export All")
-              ]
-            )
+              : _vm._e()
           ],
           1
         )
@@ -115235,6 +115173,42 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vuex = __webpack_require__(8);
 
@@ -115277,22 +115251,22 @@ exports.default = {
 
   watch: {
     '$route.params.id': function $routeParamsId() {
-      this.EditGroup(parseInt(this.$route.params.id));
+      this.EditVariant(parseInt(this.$route.params.id));
     }
   },
   computed: _extends({}, _vuex2.default.mapGetters({
-    group: 'group',
+    variant: 'variant',
     user: 'currentUser'
   }), {
     can_logs: function can_logs() {
       return !this.deleted && this.hasPermissionTo('logs-group');
     },
     deactivate_until: function deactivate_until() {
-      return (0, _moment2.default)(this.group.deactivate_until, _moment2.default.ISO_8601).format('DD.MM.YYYY');
+      return (0, _moment2.default)(this.variant.deactivate_until, _moment2.default.ISO_8601).format('DD.MM.YYYY');
     }
   }),
   methods: _extends({}, _vuex2.default.mapActions({
-    addGroup: 'addGroup'
+    addVariant: 'addVariant'
   }), {
     hasPermissionTo: function hasPermissionTo(permission) {
       return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
@@ -115300,35 +115274,38 @@ exports.default = {
     hasRole: function hasRole(permission) {
       return this.user.hasOwnProperty('roles') && this.user.roles[permission];
     },
-    generateUsers: function generateUsers() {
+    layerWhitelabelsList: function layerWhitelabelsList() {
       var data = [];
-      if (this.group.hasOwnProperty('usersList')) {
-        this.group['usersList'].forEach(function (user, index) {
+      if (this.variant.hasOwnProperty('layerWhitelabelsList')) {
+        this.variant['layerWhitelabelsList'].forEach(function (layerWhitelabel, index) {
           data.push({
-            label: user['name'],
-            key: user['id']
+            label: layerWhitelabel['whitelabel'] + ' - ' + layerWhitelabel['layer'],
+            key: layerWhitelabel['id']
           });
         });
       }
 
       return data;
     },
-    inputUsers: function inputUsers(value) {
-      this.$store.commit('updateGroup', { name: 'users', value: value });
+    inputLayerWhitelabel: function inputLayerWhitelabel(value) {
+      this.$store.commit('updateVariant', { name: 'layer_whitelabel_id', value: value });
     },
-    getGroup: function getGroup(key, value) {
-      return this.group.hasOwnProperty(key) ? this.group[key][value] : '';
+    getVariant: function getVariant(key, value) {
+      return this.variant.hasOwnProperty(key) ? this.variant[key][value] : '';
     },
-    updateGroup: function updateGroup(e) {
+    updateVariant: function updateVariant(e) {
       if (e.target.value !== null) {
-        this.$store.commit('updateGroup', { name: e.target.name, value: e.target.value });
+        this.$store.commit('updateVariant', { name: e.target.name, value: e.target.value });
       }
     },
     updateStatus: function updateStatus(value) {
-      this.$store.commit('updateGroup', { name: 'status', value: value });
+      this.$store.commit('updateVariant', { name: 'active', value: value });
+    },
+    updateWhitelabelColor: function updateWhitelabelColor(value) {
+      this.$store.commit('updateVariant', { name: 'color', value: value });
     },
     updateCurrent: function updateCurrent(value) {
-      this.$store.commit('updateGroup', { name: 'current', value: value });
+      this.$store.commit('updateVariant', { name: 'current', value: value });
     },
     loadModal: function loadModal() {
       var _this = this;
@@ -115339,30 +115316,30 @@ exports.default = {
       });
 
       if (id === 0) {
-        this.CreateGroup(parseInt(this.$route.params.whitelabel_id));
+        this.CreateVariant(parseInt(this.$route.params.whitelabel_id));
       } else {
-        this.EditGroup(id);
+        this.EditVariant(id);
       }
     },
-    CreateGroup: function CreateGroup(whitelabelId) {
+    CreateVariant: function CreateVariant(whitelabelId) {
       var _this2 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.get(window.laroute.route('admin.groups.create', { whitelabelId: whitelabelId })).then(this.onLoadGroupSuccess).catch(this.onFailed).then(function () {
-        _this2.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
+      this.$http.get(window.laroute.route('admin.variants.create', { whitelabelId: whitelabelId })).then(this.onLoadVariantSuccess).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'variantsComponent', load: false });
       });
     },
-    EditGroup: function EditGroup(id) {
+    EditVariant: function EditVariant(id) {
       var _this3 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.get(window.laroute.route('admin.groups.edit', { id: id })).then(this.onLoadGroupSuccess).catch(this.onFailed).then(function () {
-        _this3.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
+      this.$http.get(window.laroute.route('admin.variants.edit', { id: id })).then(this.onLoadVariantSuccess).catch(this.onFailed).then(function () {
+        _this3.$store.dispatch('block', { element: 'variantsComponent', load: false });
       });
     },
-    onLoadGroupSuccess: function onLoadGroupSuccess(response) {
+    onLoadVariantSuccess: function onLoadVariantSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
-        this.addGroup(response.data.group);
+        this.addVariant(response.data.variant);
         if (!($('#modal_large_group').data('bs.modal') || {}).isShown) {
           $('#modal_large_group').modal('show');
         }
@@ -115381,17 +115358,17 @@ exports.default = {
     onSubmitStore: function onSubmitStore() {
       var _this4 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.put(window.laroute.route('admin.groups.store'), this.group).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
-        _this4.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
+      this.$http.put(window.laroute.route('admin.variants.store'), this.variant).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+        _this4.$store.dispatch('block', { element: 'variantsComponent', load: false });
       });
     },
     onSubmitUpdate: function onSubmitUpdate(id) {
       var _this5 = this;
 
-      this.$store.dispatch('block', { element: 'groupsComponent', load: true });
-      this.$http.put(window.laroute.route('admin.groups.update', { id: id }), this.group).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
-        _this5.$store.dispatch('block', { element: 'groupsComponent', load: false });
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
+      this.$http.put(window.laroute.route('admin.variants.update', { id: id }), this.variant).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+        _this5.$store.dispatch('block', { element: 'variantsComponent', load: false });
       });
     },
     onSubmitSuccess: function onSubmitSuccess(response) {
@@ -115400,8 +115377,8 @@ exports.default = {
           $('#modal_large_group').modal('hide');
           this.$router.push({ name: 'root' });
         } else {
-          this.$store.commit('updateGroup', { name: 'status', value: response.data.group.status });
-          this.$router.push({ name: 'root.edit', params: { id: response.data.group.id } });
+          this.$store.commit('updateVariant', { name: 'status', value: response.data.variant.status });
+          this.$router.push({ name: 'root.edit', params: { id: response.data.variant.id } });
         }
         this.$message({
           message: response.data.message,
@@ -115944,7 +115921,7 @@ var render = function() {
                               attrs: { id: "demo1" }
                             },
                             [
-                              _vm.group.id !== 0
+                              _vm.variant.id !== 0
                                 ? _c("div", { staticClass: "form-group row" }, [
                                     _c(
                                       "label",
@@ -115969,7 +115946,7 @@ var render = function() {
                                           name: "id",
                                           placeholder: _vm.trans("modals.id")
                                         },
-                                        domProps: { value: _vm.group.id }
+                                        domProps: { value: _vm.variant.id }
                                       }),
                                       _vm._v(" "),
                                       _c(
@@ -115995,166 +115972,6 @@ var render = function() {
                                   { staticClass: "col-lg-3 col-form-label" },
                                   [
                                     _vm._v(
-                                      " " +
-                                        _vm._s(_vm.trans("modals.name")) +
-                                        " "
-                                    ),
-                                    _c("span", { staticClass: "text-danger" }, [
-                                      _vm._v(" *")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    class: _vm.errors.has("name")
-                                      ? "is-invalid"
-                                      : "",
-                                    attrs: {
-                                      type: "text",
-                                      id: "name",
-                                      name: "name",
-                                      placeholder: _vm.trans("modals.name")
-                                    },
-                                    domProps: { value: _vm.group.name },
-                                    on: { input: _vm.updateGroup }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "invalid-feedback" },
-                                    [
-                                      _c("strong", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.errors.get("name")
-                                          )
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(
-                                          _vm.trans("modals.display_name")
-                                        ) +
-                                        " "
-                                    ),
-                                    _c("span", { staticClass: "text-danger" }, [
-                                      _vm._v(" *")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    class: _vm.errors.has("display_name")
-                                      ? "is-invalid"
-                                      : "",
-                                    attrs: {
-                                      type: "text",
-                                      id: "display_name",
-                                      name: "display_name",
-                                      placeholder: _vm.trans(
-                                        "modals.display_name"
-                                      )
-                                    },
-                                    domProps: { value: _vm.group.display_name },
-                                    on: { input: _vm.updateGroup }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "invalid-feedback" },
-                                    [
-                                      _c("strong", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.errors.get("display_name")
-                                          )
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      " " + _vm._s(_vm.trans("modals.owner"))
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "owner",
-                                      disabled: "",
-                                      readonly: "",
-                                      placeholder: _vm.trans("modals.owner")
-                                    },
-                                    domProps: { value: _vm.group.owner }
-                                  })
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(_vm.trans("modals.whitelabel"))
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "whitelabel",
-                                      disabled: "",
-                                      readonly: "",
-                                      placeholder: _vm.trans(
-                                        "modals.whitelabel"
-                                      )
-                                    },
-                                    domProps: {
-                                      value: _vm.getGroup(
-                                        "whitelabel",
-                                        "display_name"
-                                      )
-                                    }
-                                  })
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group row" }, [
-                                _c(
-                                  "label",
-                                  { staticClass: "col-lg-3 col-form-label" },
-                                  [
-                                    _vm._v(
                                       "  " +
                                         _vm._s(_vm.trans("modals.users")) +
                                         " "
@@ -116169,16 +115986,35 @@ var render = function() {
                                   "div",
                                   { staticClass: "col-lg-9" },
                                   [
-                                    _c("el-transfer", {
-                                      staticStyle: { width: "100%" },
-                                      attrs: {
-                                        filterable: "",
-                                        titles: ["Source", "Target"],
-                                        value: _vm.group.users,
-                                        data: _vm.generateUsers()
+                                    _c(
+                                      "el-select",
+                                      {
+                                        staticStyle: { width: "100%" },
+                                        attrs: {
+                                          value:
+                                            _vm.variant.layer_whitelabel_id,
+                                          clearable: "",
+                                          placeholder: "Select"
+                                        },
+                                        on: { input: _vm.inputLayerWhitelabel }
                                       },
-                                      on: { input: _vm.inputUsers }
-                                    }),
+                                      _vm._l(
+                                        _vm.variant.layerWhitelabelsList,
+                                        function(item) {
+                                          return _c("el-option", {
+                                            key: item.id,
+                                            attrs: {
+                                              label:
+                                                item.whitelabel +
+                                                " - " +
+                                                item.layer,
+                                              value: item.id
+                                            }
+                                          })
+                                        }
+                                      ),
+                                      1
+                                    ),
                                     _vm._v(" "),
                                     _vm.errors.has("users")
                                       ? _c(
@@ -116209,28 +116045,30 @@ var render = function() {
                                   { staticClass: "col-lg-3 col-form-label" },
                                   [
                                     _vm._v(
-                                      "  " +
-                                        _vm._s(_vm.trans("modals.description"))
-                                    )
+                                      " " +
+                                        _vm._s(_vm.trans("modals.headline")) +
+                                        " "
+                                    ),
+                                    _c("span", { staticClass: "text-danger" }, [
+                                      _vm._v(" *")
+                                    ])
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "col-lg-9" }, [
-                                  _c("textarea", {
+                                  _c("input", {
                                     staticClass: "form-control",
-                                    class: _vm.errors.has("description")
+                                    class: _vm.errors.has("headline")
                                       ? "is-invalid"
                                       : "",
                                     attrs: {
-                                      rows: "5",
-                                      id: "description",
-                                      name: "description",
-                                      placeholder: _vm.trans(
-                                        "modals.description"
-                                      )
+                                      type: "text",
+                                      id: "headline",
+                                      name: "headline",
+                                      placeholder: _vm.trans("modals.headline")
                                     },
-                                    domProps: { value: _vm.group.description },
-                                    on: { input: _vm.updateGroup }
+                                    domProps: { value: _vm.variant.headline },
+                                    on: { input: _vm.updateVariant }
                                   }),
                                   _vm._v(" "),
                                   _c(
@@ -116240,7 +116078,267 @@ var render = function() {
                                       _c("strong", {
                                         domProps: {
                                           textContent: _vm._s(
-                                            _vm.errors.get("description")
+                                            _vm.errors.get("headline")
+                                          )
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group row" }, [
+                                _c(
+                                  "label",
+                                  { staticClass: "col-lg-3 col-form-label" },
+                                  [
+                                    _vm._v(
+                                      "  " +
+                                        _vm._s(
+                                          _vm.trans("modals.headline_success")
+                                        )
+                                    ),
+                                    _c("span", { staticClass: "text-danger" }, [
+                                      _vm._v(" *")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-9" }, [
+                                  _c("textarea", {
+                                    staticClass: "form-control",
+                                    class: _vm.errors.has("headline_success")
+                                      ? "is-invalid"
+                                      : "",
+                                    attrs: {
+                                      rows: "5",
+                                      id: "headline_success",
+                                      name: "headline_success",
+                                      placeholder: _vm.trans(
+                                        "modals.headline_success"
+                                      )
+                                    },
+                                    domProps: {
+                                      value: _vm.variant.headline_success
+                                    },
+                                    on: { input: _vm.updateVariant }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _c("strong", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.errors.get("headline_success")
+                                          )
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group row" }, [
+                                _c(
+                                  "label",
+                                  { staticClass: "col-lg-3 col-form-label" },
+                                  [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(
+                                          _vm.trans("modals.subheadline")
+                                        ) +
+                                        " "
+                                    ),
+                                    _c("span", { staticClass: "text-danger" }, [
+                                      _vm._v(" *")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-9" }, [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    class: _vm.errors.has("subheadline")
+                                      ? "is-invalid"
+                                      : "",
+                                    attrs: {
+                                      type: "text",
+                                      id: "subheadline",
+                                      name: "subheadline",
+                                      placeholder: _vm.trans(
+                                        "modals.subheadline"
+                                      )
+                                    },
+                                    domProps: {
+                                      value: _vm.variant.subheadline
+                                    },
+                                    on: { input: _vm.updateVariant }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _c("strong", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.errors.get("subheadline")
+                                          )
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group row" }, [
+                                _c(
+                                  "label",
+                                  { staticClass: "col-lg-3 col-form-label" },
+                                  [
+                                    _vm._v(
+                                      "  " +
+                                        _vm._s(
+                                          _vm.trans(
+                                            "modals.subheadline_success"
+                                          )
+                                        )
+                                    ),
+                                    _c("span", { staticClass: "text-danger" }, [
+                                      _vm._v(" *")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-9" }, [
+                                  _c("textarea", {
+                                    staticClass: "form-control",
+                                    class: _vm.errors.has("subheadline_success")
+                                      ? "is-invalid"
+                                      : "",
+                                    attrs: {
+                                      rows: "5",
+                                      id: "subheadline_success",
+                                      name: "subheadline_success",
+                                      placeholder: _vm.trans(
+                                        "modals.subheadline_success"
+                                      )
+                                    },
+                                    domProps: {
+                                      value: _vm.variant.subheadline_success
+                                    },
+                                    on: { input: _vm.updateVariant }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _c("strong", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.errors.get(
+                                              "subheadline_success"
+                                            )
+                                          )
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group row" }, [
+                                _c(
+                                  "label",
+                                  { staticClass: "col-lg-3 col-form-label" },
+                                  [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(_vm.trans("modals.layer_url")) +
+                                        " "
+                                    ),
+                                    _c("span", { staticClass: "text-danger" }, [
+                                      _vm._v(" *")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-9" }, [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    class: _vm.errors.has("layer_url")
+                                      ? "is-invalid"
+                                      : "",
+                                    attrs: {
+                                      type: "url",
+                                      id: "layer_url",
+                                      name: "layer_url",
+                                      placeholder: _vm.trans("modals.layer_url")
+                                    },
+                                    domProps: { value: _vm.variant.layer_url },
+                                    on: { input: _vm.updateVariant }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _c("strong", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.errors.get("layer_url")
+                                          )
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group row" }, [
+                                _c(
+                                  "label",
+                                  { staticClass: "col-lg-3 col-form-label" },
+                                  [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(_vm.trans("modals.privacy")) +
+                                        " "
+                                    ),
+                                    _c("span", { staticClass: "text-danger" }, [
+                                      _vm._v(" *")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-9" }, [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    class: _vm.errors.has("privacy")
+                                      ? "is-invalid"
+                                      : "",
+                                    attrs: {
+                                      type: "text",
+                                      id: "privacy",
+                                      name: "privacy",
+                                      placeholder: _vm.trans("modals.privacy")
+                                    },
+                                    domProps: { value: _vm.variant.privacy },
+                                    on: { input: _vm.updateVariant }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _c("strong", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.errors.get("privacy")
                                           )
                                         }
                                       })
@@ -116268,44 +116366,88 @@ var render = function() {
                                   [
                                     _c("el-switch", {
                                       attrs: {
-                                        value: _vm.group.status,
+                                        value: _vm.variant.active,
                                         "active-color": "#13ce66",
                                         "inactive-color": "#ff4949"
                                       },
                                       on: { input: _vm.updateStatus }
-                                    }),
-                                    _vm._v(" "),
-                                    _vm.group.deactivate_until !== null &&
-                                    !_vm.group.status
-                                      ? _c("span", {
-                                          staticClass: "help-block ml-4",
-                                          domProps: {
-                                            textContent: _vm._s(
-                                              _vm.trans(
-                                                "modals.inactive_until"
-                                              ) +
-                                                " " +
-                                                _vm.deactivate_until
-                                            )
-                                          }
-                                        })
-                                      : _vm._e()
+                                    })
                                   ],
                                   1
                                 )
                               ]),
                               _vm._v(" "),
-                              _vm.group.status
-                                ? _c("date-component", {
+                              _c("div", { staticClass: "form-group row" }, [
+                                _c(
+                                  "label",
+                                  { staticClass: "col-lg-3 col-form-label" },
+                                  [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(
+                                          _vm.trans("modals.primary_color")
+                                        ) +
+                                        " "
+                                    ),
+                                    _c("span", { staticClass: "text-danger" }, [
+                                      _vm._v(" *")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "col-lg-9" },
+                                  [
+                                    _c("el-color-picker", {
+                                      attrs: { value: _vm.variant.color },
+                                      on: { input: _vm.updateWhitelabelColor }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "help-block text-danger" },
+                                      [
+                                        _c("strong", {
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              _vm.errors.get("color")
+                                            )
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group row" }, [
+                                _c(
+                                  "label",
+                                  { staticClass: "col-lg-3 col-form-label" },
+                                  [
+                                    _vm._v(
+                                      " " + _vm._s(_vm.trans("modals.owner"))
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-9" }, [
+                                  _c("input", {
+                                    staticClass: "form-control",
                                     attrs: {
-                                      errors: _vm.errors,
-                                      start: _vm.group.deactivate_at,
-                                      end: _vm.group.deactivate_until
-                                    }
+                                      type: "text",
+                                      id: "user",
+                                      disabled: "",
+                                      readonly: "",
+                                      placeholder: _vm.trans("modals.user")
+                                    },
+                                    domProps: { value: _vm.variant.user }
                                   })
-                                : _vm._e()
-                            ],
-                            1
+                                ])
+                              ])
+                            ]
                           )
                         ])
                       ]),
@@ -116382,7 +116524,11 @@ var render = function() {
                     _c(
                       "div",
                       { staticClass: "modal-body" },
-                      [_c("vue-table", { attrs: { options: _vm.group.logs } })],
+                      [
+                        _c("vue-table", {
+                          attrs: { options: _vm.variant.logs }
+                        })
+                      ],
                       1
                     ),
                     _vm._v(" "),
@@ -116464,7 +116610,7 @@ var staticRenderFns = [
       [
         _c("i", { staticClass: "icon-collaboration mr-2" }),
         _vm._v(
-          "\n                                        Group details\n                                        "
+          "\n                                        Variant details\n                                        "
         ),
         _c(
           "a",

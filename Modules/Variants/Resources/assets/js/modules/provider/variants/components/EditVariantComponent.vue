@@ -20,72 +20,95 @@
                                     <fieldset>
                                         <legend class="font-weight-semibold text-uppercase font-size-sm">
                                             <i class="icon-collaboration mr-2"></i>
-                                            Group details
+                                            Variant details
                                             <a class="float-right text-default" data-toggle="collapse" data-target="#demo1">
                                                 <i class="icon-circle-down2"></i>
                                             </a>
                                         </legend>
                                         <div class="collapse show" id="demo1">
-                                            <div class="form-group row" v-if="group.id !== 0">
+                                            <div class="form-group row" v-if="variant.id !== 0">
                                                 <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.id') }}</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control disabled" disabled readonly id='id' name='id' :placeholder="trans('modals.id')" :value="group.id"/>
+                                                    <input type="text" class="form-control disabled" disabled readonly id='id' name='id' :placeholder="trans('modals.id')" :value="variant.id"/>
                                                     <div class="invalid-feedback">
                                                         <strong v-text="errors.get('id')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.name') }} <span class="text-danger"> *</span></label>
-                                                <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('name') ? 'is-invalid': ''" id='name' name='name' :placeholder="trans('modals.name')" @input="updateGroup"  :value="group.name"/>
-                                                    <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('name')"></strong>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.display_name') }} <span class="text-danger"> *</span></label>
-                                                <div class="col-lg-9">
-                                                    <input type="text" class="form-control" :class="errors.has('display_name') ? 'is-invalid': ''" id='display_name' name='display_name' :placeholder="trans('modals.display_name')" @input="updateGroup"  :value="group.display_name"/>
-                                                    <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('display_name')"></strong>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.owner') }}</label>
-                                                <div class="col-lg-9">
-                                                    <input type="text" class="form-control"  id='owner' disabled readonly :placeholder="trans('modals.owner')"  :value="group.owner"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.whitelabel') }}</label>
-                                                <div class="col-lg-9">
-                                                    <input type="text" class="form-control"  id='whitelabel' disabled readonly :placeholder="trans('modals.whitelabel')"  :value="getGroup('whitelabel', 'display_name')"/>
-                                                </div>
-                                            </div>
+
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.users') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <el-transfer style="width: 100%;"
-                                                                 @input="inputUsers"
-                                                                 filterable
-                                                                 :titles="['Source', 'Target']"
-                                                                 :value="group.users"
-                                                                 :data="generateUsers()">
-                                                    </el-transfer>
+                                                    <el-select
+                                                            style="width: 100%;"
+                                                            :value="variant.layer_whitelabel_id"
+                                                            clearable
+                                                            placeholder="Select"
+                                                            @input="inputLayerWhitelabel">
+                                                        <el-option
+                                                                v-for="item in variant.layerWhitelabelsList"
+                                                                :key="item.id"
+                                                                :label="item.whitelabel + ' - ' + item.layer"
+                                                                :value="item.id"                                                                >
+                                                        </el-option>
+                                                    </el-select>
                                                     <div class="help-block text-danger" v-if="errors.has('users')">
                                                         <strong v-text="errors.get('users')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.description') }}</label>
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <textarea class="form-control" :class="errors.has('description') ? 'is-invalid': ''" rows="5" id='description' name='description' :placeholder="trans('modals.description')" @input="updateGroup"  :value="group.description"></textarea>
+                                                    <input type="text" class="form-control" :class="errors.has('headline') ? 'is-invalid': ''" id='headline' name='headline' :placeholder="trans('modals.headline')" @input="updateVariant"  :value="variant.headline"/>
                                                     <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('description')"></strong>
+                                                        <strong v-text="errors.get('headline')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.headline_success') }}<span class="text-danger"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <textarea class="form-control" :class="errors.has('headline_success') ? 'is-invalid': ''" rows="5" id='headline_success' name='headline_success' :placeholder="trans('modals.headline_success')" @input="updateVariant"  :value="variant.headline_success"></textarea>
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('headline_success')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.subheadline') }} <span class="text-danger"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" :class="errors.has('subheadline') ? 'is-invalid': ''" id='subheadline' name='subheadline' :placeholder="trans('modals.subheadline')" @input="updateVariant"  :value="variant.subheadline"/>
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('subheadline')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.subheadline_success') }}<span class="text-danger"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <textarea class="form-control" :class="errors.has('subheadline_success') ? 'is-invalid': ''" rows="5" id='subheadline_success' name='subheadline_success' :placeholder="trans('modals.subheadline_success')" @input="updateVariant"  :value="variant.subheadline_success"></textarea>
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('subheadline_success')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.layer_url') }} <span class="text-danger"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <input type="url" class="form-control" :class="errors.has('layer_url') ? 'is-invalid': ''" id='layer_url' name='layer_url' :placeholder="trans('modals.layer_url')" @input="updateVariant"  :value="variant.layer_url"/>
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('layer_url')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.privacy') }} <span class="text-danger"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" :class="errors.has('privacy') ? 'is-invalid': ''" id='privacy' name='privacy' :placeholder="trans('modals.privacy')" @input="updateVariant"  :value="variant.privacy"/>
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('privacy')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
@@ -94,15 +117,27 @@
                                                 <div class="col-lg-9">
                                                     <el-switch
                                                             @input="updateStatus"
-                                                            :value="group.status"
+                                                            :value="variant.active"
                                                             active-color="#13ce66"
                                                             inactive-color="#ff4949">
                                                     </el-switch>
-                                                    <span class="help-block ml-4" v-text="trans('modals.inactive_until') + ' ' + deactivate_until" v-if="group.deactivate_until !== null && !group.status">
-                                                    </span>
                                                 </div>
                                             </div>
-                                            <date-component :errors="errors" :start="group.deactivate_at" :end="group.deactivate_until" v-if="group.status"></date-component>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.primary_color') }} <span class="text-danger"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <el-color-picker :value="variant.color" @input="updateWhitelabelColor"></el-color-picker>
+                                                    <div class="help-block text-danger">
+                                                        <strong v-text="errors.get('color')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.owner') }}</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control"  id='user' disabled readonly :placeholder="trans('modals.user')"  :value="variant.user"/>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </fieldset>
@@ -112,12 +147,13 @@
                                     <button type="submit" class="btn btn-outline bg-teal-400 text-teal-400 border-teal-400 btn-sm" v-on:click="close = true"><i class="icon-checkmark-circle mr-1"></i>{{ trans('button.save_and_close') }}</button>
                                     <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.close') }}</button>
                                 </div>
-                            </form>                        </div>
+                            </form>
+                        </div>
                     </div>
 
                     <div class="tab-pane fade" id="highlighted-justified-tab2" v-if="can_logs">
                         <div class="modal-body">
-                            <vue-table :options="group.logs"></vue-table>
+                            <vue-table :options="variant.logs"></vue-table>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal"><i class="icon-cancel-circle2 mr-1"></i> {{ trans('button.close') }}</button>
@@ -152,24 +188,24 @@
     },
     watch: {
       '$route.params.id' () {
-        this.EditGroup(parseInt(this.$route.params.id))
+        this.EditVariant(parseInt(this.$route.params.id))
       }
     },
     computed: {
       ...Vuex.mapGetters({
-        group: 'group',
+        variant: 'variant',
         user: 'currentUser'
       }),
       can_logs () {
         return !this.deleted && this.hasPermissionTo('logs-group')
       },
       deactivate_until () {
-        return moment(this.group.deactivate_until, moment.ISO_8601).format('DD.MM.YYYY')
+        return moment(this.variant.deactivate_until, moment.ISO_8601).format('DD.MM.YYYY')
       }
     },
     methods: {
       ...Vuex.mapActions({
-        addGroup: 'addGroup'
+        addVariant: 'addVariant'
       }),
       hasPermissionTo (permission) {
         return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
@@ -177,35 +213,38 @@
       hasRole (permission) {
         return this.user.hasOwnProperty('roles') && this.user.roles[permission]
       },
-      generateUsers () {
+      layerWhitelabelsList () {
         let data = []
-        if (this.group.hasOwnProperty('usersList')) {
-          this.group['usersList'].forEach((user, index) => {
+        if (this.variant.hasOwnProperty('layerWhitelabelsList')) {
+          this.variant['layerWhitelabelsList'].forEach((layerWhitelabel, index) => {
             data.push({
-              label: user['name'],
-              key: user['id']
+              label: layerWhitelabel['whitelabel'] + ' - ' + layerWhitelabel['layer'],
+              key: layerWhitelabel['id']
             })
           })
         }
-  
+
         return data
       },
-      inputUsers (value) {
-        this.$store.commit('updateGroup', {name: 'users', value: value})
+      inputLayerWhitelabel (value) {
+        this.$store.commit('updateVariant', {name: 'layer_whitelabel_id', value: value})
       },
-      getGroup (key, value) {
-        return (this.group.hasOwnProperty(key)) ? this.group[key][value] : ''
+      getVariant (key, value) {
+        return (this.variant.hasOwnProperty(key)) ? this.variant[key][value] : ''
       },
-      updateGroup (e) {
+      updateVariant (e) {
         if (e.target.value !== null) {
-          this.$store.commit('updateGroup', {name: e.target.name, value: e.target.value})
+          this.$store.commit('updateVariant', {name: e.target.name, value: e.target.value})
         }
       },
       updateStatus (value) {
-        this.$store.commit('updateGroup', {name: 'status', value: value})
+        this.$store.commit('updateVariant', {name: 'active', value: value})
+      },
+      updateWhitelabelColor (value) {
+        this.$store.commit('updateVariant', {name: 'color', value: value})
       },
       updateCurrent (value) {
-        this.$store.commit('updateGroup', {name: 'current', value: value})
+        this.$store.commit('updateVariant', {name: 'current', value: value})
       },
       loadModal () {
         let id = parseInt(this.$route.params.id)
@@ -214,32 +253,32 @@
         })
 
         if (id === 0) {
-          this.CreateGroup(parseInt(this.$route.params.whitelabel_id))
+          this.CreateVariant(parseInt(this.$route.params.whitelabel_id))
         } else {
-          this.EditGroup(id)
+          this.EditVariant(id)
         }
       },
-      CreateGroup (whitelabelId) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.get(window.laroute.route('admin.groups.create', {whitelabelId: whitelabelId}))
-          .then(this.onLoadGroupSuccess)
+      CreateVariant (whitelabelId) {
+        this.$store.dispatch('block', {element: 'variantsComponent', load: true})
+        this.$http.get(window.laroute.route('admin.variants.create', {whitelabelId: whitelabelId}))
+          .then(this.onLoadVariantSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'variantsComponent', load: false})
           })
       },
-      EditGroup (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.get(window.laroute.route('admin.groups.edit', {id: id}))
-          .then(this.onLoadGroupSuccess)
+      EditVariant (id) {
+        this.$store.dispatch('block', {element: 'variantsComponent', load: true})
+        this.$http.get(window.laroute.route('admin.variants.edit', {id: id}))
+          .then(this.onLoadVariantSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'variantsComponent', load: false})
           })
       },
-      onLoadGroupSuccess (response) {
+      onLoadVariantSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {
-          this.addGroup(response.data.group)
+          this.addVariant(response.data.variant)
           if (!($('#modal_large_group').data('bs.modal') || {}).isShown) {
             $('#modal_large_group').modal('show')
           }
@@ -256,21 +295,21 @@
         }
       },
       onSubmitStore () {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.put(window.laroute.route('admin.groups.store'), this.group)
+        this.$store.dispatch('block', {element: 'variantsComponent', load: true})
+        this.$http.put(window.laroute.route('admin.variants.store'), this.variant)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'variantsComponent', load: false})
           })
       },
       onSubmitUpdate (id) {
-        this.$store.dispatch('block', {element: 'groupsComponent', load: true})
-        this.$http.put(window.laroute.route('admin.groups.update', {id: id}), this.group)
+        this.$store.dispatch('block', {element: 'variantsComponent', load: true})
+        this.$http.put(window.laroute.route('admin.variants.update', {id: id}), this.variant)
           .then(this.onSubmitSuccess)
           .catch(this.onFailed)
           .then(() => {
-            this.$store.dispatch('block', {element: 'groupsComponent', load: false})
+            this.$store.dispatch('block', {element: 'variantsComponent', load: false})
           })
       },
       onSubmitSuccess (response) {
@@ -279,8 +318,8 @@
             $('#modal_large_group').modal('hide')
             this.$router.push({name: 'root'})
           } else {
-            this.$store.commit('updateGroup', {name: 'status', value: response.data.group.status})
-            this.$router.push({name: 'root.edit', params: {id: response.data.group.id}})
+            this.$store.commit('updateVariant', {name: 'status', value: response.data.variant.status})
+            this.$router.push({name: 'root.edit', params: {id: response.data.variant.id}})
           }
           this.$message({
             message: response.data.message,

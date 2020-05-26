@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -15,13 +16,14 @@ class CreateVariantsTable extends Migration
     {
         Schema::create('variants', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('headline');
+            $table->string('layer_url')->nullable();
+            $table->text('headline')->nullable();
             $table->text('subheadline');
-            $table->string('color');
-            $table->string('layer_url');
-            $table->text('headline_success');
-            $table->text('subheadline_success');
-            $table->string('privacy');
+            $table->string('color')->default('#ED653D');
+            $table->text('headline_success')->nullable();
+            $table->text('subheadline_success')->nullable();
+            $table->string('privacy')->nullable();
+            $table->boolean('active')->default(false);
             $table->integer('layer_whitelabel_id')->nullable()->unsigned()->index();
             $table->integer('whitelabel_id')->nullable()->unsigned();
             $table->integer('user_id')->nullable()->unsigned()->index();
@@ -44,6 +46,14 @@ class CreateVariantsTable extends Migration
      */
     public function down()
     {
+        if ('testing' !== app()->environment()) {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        }
+
         Schema::dropIfExists('variants');
+
+        if ('testing' !== app()->environment()) {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        }
     }
 }

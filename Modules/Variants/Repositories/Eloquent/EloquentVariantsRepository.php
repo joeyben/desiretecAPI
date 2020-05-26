@@ -17,9 +17,11 @@ use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
 use App\Repositories\Criteria\WithTrashed;
 use App\Repositories\RepositoryAbstract;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Variants\Repositories\Contracts\VariantsRepository;
 use Modules\Variants\Entities\Variant;
+use Modules\Whitelabels\Entities\Whitelabel;
 
 /**
  * Class EloquentPostsRepository.
@@ -39,9 +41,21 @@ class EloquentVariantsRepository extends RepositoryAbstract implements VariantsR
             new WithTrashed(),
             new OrderBy($sort[0], $sort[1]),
             new ByWhitelabel('variants'),
+            new Filter($search),
             new EagerLoad(['whitelabel', 'layerWhitelabel'  => function ($query) {
                 $query->select('id', 'whitelabel_id', 'layer_id')->with('layer');
             }]),
         ])->paginate($perPage);
+    }
+
+    public function getWhitelabel($request)
+    {
+        $whitelabel = Auth::guard('web')->user()->whitelabels()->first();
+
+        if ((null === $whitelabel) && $request->has('whitelabel_id')) {
+            $whitelabel = Whitelabel::find($request->get('whitelabel_id'));
+        }
+
+        return $whitelabel;
     }
 }
