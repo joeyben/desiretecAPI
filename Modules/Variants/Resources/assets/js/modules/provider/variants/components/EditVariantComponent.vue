@@ -37,6 +37,20 @@
                                             </div>
 
                                             <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.logo') }} <span class="text-danger"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <upload-attachments :data="{attachable_id: parseInt(variant.id), attachable_type: 'Modules\\Variants\\Entities\\Variant', type: 'variants', folder: 'logo'}" :fileList="variant.logo" :tip="trans('modals.visual')" :limit="1" listType="picture-card"></upload-attachments>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.attachment') }} <span class="text-danger"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <upload-attachments :data="{attachable_id: parseInt(variant.id), attachable_type: 'Modules\\Variants\\Entities\\Variant', type: 'variants', folder: 'visual'}" :fileList="variant.visual" :tip="trans('modals.visual')" :limit="1" listType="picture-card"></upload-attachments>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.users') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
                                                     <el-select
@@ -124,12 +138,12 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.primary_color') }} <span class="text-danger"> *</span></label>
-                                                <div class="col-lg-9">
-                                                    <el-color-picker :value="variant.color" @input="updateWhitelabelColor"></el-color-picker>
-                                                    <div class="help-block text-danger">
-                                                        <strong v-text="errors.get('color')"></strong>
-                                                    </div>
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.headline_color') }}</label>
+                                                <div class="col-lg-9 d-flex align-items-center">
+                                                    <template>
+                                                        <el-radio :value="variant.color"  @input="updateWhitelabelColor" label="dark">{{ trans('modals.headline_color_dark') }}</el-radio>
+                                                        <el-radio :value="variant.color"   @input="updateWhitelabelColor" label="light">{{ trans('modals.headline_color_light') }}</el-radio>
+                                                    </template>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -170,12 +184,13 @@
   import moment from 'moment'
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
   import VueTable from '../../../../../../../../../resources/assets/js/utils/Table.vue'
+  import UploadAttachments from '../../../../../../../../../resources/assets/js/utils/UploadAttachments'
   import DateComponent from './DateComponent'
   import toastr from 'toastr'
   moment.locale(window.i18.lang)
   export default {
-    name: 'EditGroupComponent',
-    components: { VueTable, DateComponent },
+    name: 'EditVariantComponent',
+    components: { VueTable, DateComponent, UploadAttachments },
     data () {
       return {
         // eslint-disable-next-line

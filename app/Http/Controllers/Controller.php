@@ -40,7 +40,7 @@ class Controller extends BaseController
         return !('language_lines' === with(new LanguageLines())->getTable());
     }
 
-    protected function responseJsonError(Exception $e): JsonResponse
+    protected function responseJsonError(Exception $e)
     {
         if (method_exists(\get_class($e), 'getResponse')) {
             return $e->getResponse();

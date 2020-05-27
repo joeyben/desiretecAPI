@@ -5,6 +5,7 @@ namespace Modules\Variants\Entities;
 use App\Models\Access\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Attachments\Traits\AttachableTrait;
 use Modules\Whitelabels\Entities\LayerWhitelabel;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -17,6 +18,7 @@ class Variant extends Model
     use SearchableTrait;
     use LogsActivity;
     use HasTranslations;
+    use AttachableTrait;
 
     protected $guarded = [];
 

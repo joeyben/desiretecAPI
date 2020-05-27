@@ -246,7 +246,7 @@ class APIController extends Controller
         return response()->json($data, Flag::STATUS_CODE_SUCCESS, [], JSON_NUMERIC_CHECK);
     }
 
-    protected function responseJsonError(Exception $e): JsonResponse
+    protected function responseJsonError(Exception $e)
     {
         if (method_exists(\get_class($e), 'getResponse')) {
             return $e->getResponse();
