@@ -60,7 +60,25 @@ class VariantCollection extends JsonResource
 
     private function getLogo()
     {
-        return [$this->attachments->map(function ($attachment) {
+
+        $logo = $this->attachments->map(function ($attachment) {
+            if ($attachment->type === 'variants/logo') {
+                return [
+                    'uid' => $attachment->id,
+                    'name' => $attachment->name . '.' . $attachment->extension,
+                    'url' => $attachment->url
+                ];
+            }
+        })->reject(function ($attachment) {
+            return empty($attachment);
+        })->first();
+
+        return $logo ? [$logo] : [];
+    }
+
+    private function getVisual()
+    {
+        $visual = $this->attachments->map(function ($attachment) {
             if ($attachment->type === 'variants/visual') {
                 return [
                     'uid'  => $attachment->id,
@@ -70,21 +88,8 @@ class VariantCollection extends JsonResource
             }
         })->reject(function ($attachment) {
             return empty($attachment);
-        })->first()];
-    }
+        })->first();
 
-    private function getVisual()
-    {
-        return [$this->attachments->map(function ($attachment) {
-            if ($attachment->type === 'variants/logo') {
-                return [
-                    'uid'  => $attachment->id,
-                    'name' => $attachment->name . '.' . $attachment->extension,
-                    'url'  => $attachment->url
-                ];
-            }
-        })->reject(function ($attachment) {
-            return empty($attachment);
-        })->first()];
+        return $visual ? [$visual] : [];
     }
 }
