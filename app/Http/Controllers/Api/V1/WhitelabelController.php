@@ -193,7 +193,9 @@ class WhitelabelController extends Controller
         return $this->layerWhitelabels->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $id),
-            new EagerLoad(['layer', 'attachments'])
+            new EagerLoad(['layer', 'attachments', 'variants'  => function ($query) {
+                $query->where('variants.active', 1)->with('attachments');
+            }])
         ])->all();
     }
 }
