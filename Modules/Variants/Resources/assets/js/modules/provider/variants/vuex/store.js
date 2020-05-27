@@ -27,6 +27,27 @@ const mutations = {
   },
   updateVariant (state, obj) {
     state.variant[obj.name] = obj.value
+  },
+  addVariantFile (state, obj) {
+    let key = obj.type.replace('variants', '').slice(1)
+
+    if (state.variant[key].length <= 0) {
+      let index = state.variant[key].findIndex((c) => c.uid === obj.id)
+      if (index < 0) {
+        state.variant[key].push({name: obj.id, status: 'success', uid: obj.id, url: obj.url})
+      }
+    }
+  },
+  removeVariantFile (state, obj) {
+    let visual = state.variant['visual'].findIndex((c) => c.uid === obj.id)
+    if (visual >= 0) {
+      state.variant['visual'].splice(visual, 1)
+    }
+
+    let logo = state.variant['logo'].findIndex((c) => c.uid === obj.id)
+    if (logo >= 0) {
+      state.variant['logo'].splice(logo, 1)
+    }
   }
 }
 
