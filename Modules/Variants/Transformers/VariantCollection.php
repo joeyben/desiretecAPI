@@ -32,6 +32,8 @@ class VariantCollection extends JsonResource
             'layerWhitelabelsList' => $this->layerWhitelabelsList(),
             'logs' => $this->getLogs(),
             'user' => $this->user->first_name . ' ' . $this->user->last_name,
+            'logo' => $this->getLogo(),
+            'visual' => $this->getVisual(),
         ];
     }
 
@@ -54,5 +56,35 @@ class VariantCollection extends JsonResource
     private function getLogs()
     {
         return app()->make(ActivitiesRepository::class)->byModel($this);
+    }
+
+    private function getLogo()
+    {
+        return [$this->attachments->map(function ($attachment) {
+            if ($attachment->type === 'variants/visual') {
+                return [
+                    'uid'  => $attachment->id,
+                    'name' => $attachment->name . '.' . $attachment->extension,
+                    'url'  => $attachment->url
+                ];
+            }
+        })->reject(function ($attachment) {
+            return empty($attachment);
+        })->first()];
+    }
+
+    private function getVisual()
+    {
+        return [$this->attachments->map(function ($attachment) {
+            if ($attachment->type === 'variants/logo') {
+                return [
+                    'uid'  => $attachment->id,
+                    'name' => $attachment->name . '.' . $attachment->extension,
+                    'url'  => $attachment->url
+                ];
+            }
+        })->reject(function ($attachment) {
+            return empty($attachment);
+        })->first()];
     }
 }

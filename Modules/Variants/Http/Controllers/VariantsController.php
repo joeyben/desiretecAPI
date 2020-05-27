@@ -103,7 +103,7 @@ class VariantsController extends Controller
     {
         try {
             $variant = $this->variants->withCriteria([
-                new EagerLoad(['user', 'whitelabel', 'layerWhitelabel'  => function ($query) {
+                new EagerLoad(['user', 'attachments', 'whitelabel', 'layerWhitelabel'  => function ($query) {
                     $query->select('id', 'whitelabel_id', 'layer_id');
                 }]),
                 new ByWhitelabel('variants'),
