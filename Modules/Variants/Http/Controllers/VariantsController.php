@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Maatwebsite\Excel\Excel;
 use Modules\Activities\Repositories\Contracts\ActivitiesRepository;
+use Modules\Attachments\Repositories\Contracts\AttachmentsRepository;
 use Modules\Groups\Http\Requests\UpdateGroupRequest;
 use Modules\Variants\Http\Requests\StoreVariantRequest;
 use Modules\Variants\Http\Requests\UpdateVariantRequest;
@@ -67,8 +68,12 @@ class VariantsController extends Controller
      * @var \Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository
      */
     private $layerWhitelabels;
+    /**
+     * @var \Modules\Attachments\Repositories\Contracts\AttachmentsRepository
+     */
+    private $attachments;
 
-    public function __construct(VariantsRepository $variants, LayerWhitelabelRepository $layerWhitelabels, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabels, Excel $excel)
+    public function __construct(AttachmentsRepository $attachments, VariantsRepository $variants, LayerWhitelabelRepository $layerWhitelabels, ResponseFactory $response, AuthManager $auth, Translator $lang, Carbon $carbon, ActivitiesRepository $activities, WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabels, Excel $excel)
     {
         $this->response = $response;
         $this->auth = $auth;
@@ -80,6 +85,7 @@ class VariantsController extends Controller
         $this->excel = $excel;
         $this->variants = $variants;
         $this->layerWhitelabels = $layerWhitelabels;
+        $this->attachments = $attachments;
     }
 
 
@@ -197,6 +203,20 @@ class VariantsController extends Controller
                     ['whitelabel_id' => $whitelabel->id, 'user_id' => $this->auth->guard('web')->user()->id]
                 )
             );
+
+            foreach ($request->get('logo') as $item) {
+                $this->attachments->update(
+                    $item['uid'],
+                    ['attachable_id' => $variant->id]
+                );
+            }
+
+            foreach ($request->get('visual') as $item) {
+                $this->attachments->update(
+                    $item['uid'],
+                    ['attachable_id' => $variant->id]
+                );
+            }
 
 
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Variant']);
