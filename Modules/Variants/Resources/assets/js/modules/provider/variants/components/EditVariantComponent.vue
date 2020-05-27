@@ -49,7 +49,6 @@
                                                     <upload-attachments :data="{attachable_id: parseInt(variant.id), attachable_type: 'Modules\\Variants\\Entities\\Variant', type: 'variants', folder: 'visual'}" :fileList="variant.visual" :tip="trans('modals.visual')" :limit="1" listType="picture-card"></upload-attachments>
                                                 </div>
                                             </div>
-
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.users') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
@@ -200,6 +199,8 @@
     },
     mounted () {
       this.loadModal()
+      this.$events.$on('handle-success-file', response => this.handleSuccessFile(response))
+      this.$events.$on('handle-remove-file', response => this.handleRemoveFile(response))
     },
     watch: {
       '$route.params.id' () {
@@ -222,6 +223,16 @@
       ...Vuex.mapActions({
         addVariant: 'addVariant'
       }),
+      handleSuccessFile (response) {
+        if (response !== undefined) {
+          this.$store.commit('addVariantFile', response.attachment)
+        }
+      },
+      handleRemoveFile (response) {
+        if (response !== undefined) {
+          this.$store.commit('removeVariantFile', response.data.attachment)
+        }
+      },
       hasPermissionTo (permission) {
         return this.user.hasOwnProperty('permissions') && this.user.permissions[permission]
       },

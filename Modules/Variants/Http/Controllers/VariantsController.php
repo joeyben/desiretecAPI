@@ -145,6 +145,8 @@ class VariantsController extends Controller
                 'layer_whitelabel_id' => null,
                 'layerWhitelabelsList' => $this->layerWhitelabelsList(),
                 'logs' => [],
+                'logo' => [],
+                'visual' => [],
             ];
 
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'Variant']);

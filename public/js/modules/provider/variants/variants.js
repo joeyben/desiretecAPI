@@ -40501,6 +40501,33 @@ var mutations = {
   },
   updateVariant: function updateVariant(state, obj) {
     state.variant[obj.name] = obj.value;
+  },
+  addVariantFile: function addVariantFile(state, obj) {
+    var key = obj.type.replace('variants', '').slice(1);
+
+    if (state.variant[key].length <= 0) {
+      var index = state.variant[key].findIndex(function (c) {
+        return c.uid === obj.id;
+      });
+      if (index < 0) {
+        state.variant[key].push({ name: obj.id, status: 'success', uid: obj.id, url: obj.url });
+      }
+    }
+  },
+  removeVariantFile: function removeVariantFile(state, obj) {
+    var visual = state.variant['visual'].findIndex(function (c) {
+      return c.uid === obj.id;
+    });
+    if (visual >= 0) {
+      state.variant['visual'].splice(visual, 1);
+    }
+
+    var logo = state.variant['logo'].findIndex(function (c) {
+      return c.uid === obj.id;
+    });
+    if (logo >= 0) {
+      state.variant['logo'].splice(logo, 1);
+    }
   }
 };
 
@@ -115305,7 +115332,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 var _vuex = __webpack_require__(8);
 
@@ -115347,7 +115373,15 @@ exports.default = {
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.loadModal();
+    this.$events.$on('handle-success-file', function (response) {
+      return _this.handleSuccessFile(response);
+    });
+    this.$events.$on('handle-remove-file', function (response) {
+      return _this.handleRemoveFile(response);
+    });
   },
 
   watch: {
@@ -115369,6 +115403,16 @@ exports.default = {
   methods: _extends({}, _vuex2.default.mapActions({
     addVariant: 'addVariant'
   }), {
+    handleSuccessFile: function handleSuccessFile(response) {
+      if (response !== undefined) {
+        this.$store.commit('addVariantFile', response.attachment);
+      }
+    },
+    handleRemoveFile: function handleRemoveFile(response) {
+      if (response !== undefined) {
+        this.$store.commit('removeVariantFile', response.data.attachment);
+      }
+    },
     hasPermissionTo: function hasPermissionTo(permission) {
       return this.user.hasOwnProperty('permissions') && this.user.permissions[permission];
     },
@@ -115409,11 +115453,11 @@ exports.default = {
       this.$store.commit('updateVariant', { name: 'current', value: value });
     },
     loadModal: function loadModal() {
-      var _this = this;
+      var _this2 = this;
 
       var id = parseInt(this.$route.params.id);
       $('#modal_large_group').on('hidden.bs.modal', function () {
-        _this.$router.push({ name: 'root' });
+        _this2.$router.push({ name: 'root' });
       });
 
       if (id === 0) {
@@ -115423,19 +115467,19 @@ exports.default = {
       }
     },
     CreateVariant: function CreateVariant(whitelabelId) {
-      var _this2 = this;
-
-      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
-      this.$http.get(window.laroute.route('admin.variants.create', { whitelabelId: whitelabelId })).then(this.onLoadVariantSuccess).catch(this.onFailed).then(function () {
-        _this2.$store.dispatch('block', { element: 'variantsComponent', load: false });
-      });
-    },
-    EditVariant: function EditVariant(id) {
       var _this3 = this;
 
       this.$store.dispatch('block', { element: 'variantsComponent', load: true });
-      this.$http.get(window.laroute.route('admin.variants.edit', { id: id })).then(this.onLoadVariantSuccess).catch(this.onFailed).then(function () {
+      this.$http.get(window.laroute.route('admin.variants.create', { whitelabelId: whitelabelId })).then(this.onLoadVariantSuccess).catch(this.onFailed).then(function () {
         _this3.$store.dispatch('block', { element: 'variantsComponent', load: false });
+      });
+    },
+    EditVariant: function EditVariant(id) {
+      var _this4 = this;
+
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
+      this.$http.get(window.laroute.route('admin.variants.edit', { id: id })).then(this.onLoadVariantSuccess).catch(this.onFailed).then(function () {
+        _this4.$store.dispatch('block', { element: 'variantsComponent', load: false });
       });
     },
     onLoadVariantSuccess: function onLoadVariantSuccess(response) {
@@ -115457,19 +115501,19 @@ exports.default = {
       }
     },
     onSubmitStore: function onSubmitStore() {
-      var _this4 = this;
-
-      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
-      this.$http.put(window.laroute.route('admin.variants.store'), this.variant).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
-        _this4.$store.dispatch('block', { element: 'variantsComponent', load: false });
-      });
-    },
-    onSubmitUpdate: function onSubmitUpdate(id) {
       var _this5 = this;
 
       this.$store.dispatch('block', { element: 'variantsComponent', load: true });
-      this.$http.put(window.laroute.route('admin.variants.update', { id: id }), this.variant).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+      this.$http.put(window.laroute.route('admin.variants.store'), this.variant).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
         _this5.$store.dispatch('block', { element: 'variantsComponent', load: false });
+      });
+    },
+    onSubmitUpdate: function onSubmitUpdate(id) {
+      var _this6 = this;
+
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
+      this.$http.put(window.laroute.route('admin.variants.update', { id: id }), this.variant).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+        _this6.$store.dispatch('block', { element: 'variantsComponent', load: false });
       });
     },
     onSubmitSuccess: function onSubmitSuccess(response) {
