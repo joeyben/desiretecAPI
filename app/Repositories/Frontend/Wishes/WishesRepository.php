@@ -185,6 +185,8 @@ class WishesRepository extends BaseRepository
         foreach ($wish as $singleWish) {
             $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
 
+            $singleWish['duration'] = transformDuration($singleWish['duration']);
+
             foreach ($whitelabelLayers as $layer) {
                 if ($layer['layer']['path'] === $singleWish['version'] && sizeof($layer['attachments'])) {
                     $singleWish['layer_image'] = $layer['attachments'][0]['url'];
@@ -239,8 +241,7 @@ class WishesRepository extends BaseRepository
                 'from'         => $wish->firstItem(),
                 'to'           => $wish->lastItem()
             ],
-            'data' => $wish,
-            'currentWhiteLabelID' => $currentWhiteLabelID
+            'data' => $wish
         ];
 
         return $response;
