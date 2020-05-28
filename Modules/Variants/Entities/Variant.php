@@ -33,11 +33,7 @@ class Variant extends Model
 
     protected static $logAttributes = [
         'layer_url',
-        'headline',
-        'subheadline',
         'color',
-        'headline_success',
-        'subheadline_success',
         'privacy',
         'active',
         'layer_whitelabel_id',
