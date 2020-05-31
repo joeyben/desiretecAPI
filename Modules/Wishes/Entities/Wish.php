@@ -46,7 +46,9 @@ class Wish extends Model
         'agent_id',
         'extra_params',
         'version',
-        'is_autooffer'
+        'is_autooffer',
+        'events_interested',
+        'purpose',
     ];
 
     protected static $logOnlyDirty = true;
