@@ -1,0 +1,16 @@
+{
+    "name": "Variants",
+    "alias": "variants",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Variants\\Providers\\VariantsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

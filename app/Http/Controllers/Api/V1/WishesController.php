@@ -149,6 +149,7 @@ class WishesController extends APIController
             $result['data']['layer_image'] = $this->getLayerImage($wishData->whitelabel_id, $wishData->version);
             $result['data']['wishDetails'] = $wishData;
             $result['data']['wishDetails']['catering'] = $this->categories->getCategoryByParentValue('catering', $wish->catering);
+            $result['data']['wishDetails']['duration'] = transformDuration($wishData->duration);
             $result['data']['wishDetails']['owner'] = $wishData->owner;
             $result['data']['wishDetails']['messages'] = $wishData->messages;
             $result['data']['wishDetails']['contacts'] = $wishData->contacts;
