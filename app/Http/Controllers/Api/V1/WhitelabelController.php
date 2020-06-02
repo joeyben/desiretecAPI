@@ -145,42 +145,18 @@ class WhitelabelController extends Controller
     public function getTnb(Request $request)
     {
         try {
-            if (!$this->isOldWhitelabel()) {
-                if (null === $this->languageline->withCriteria([
-                        new Where('locale', 'de'),
-                        new Where('key', 'footer.tnb'),
-                        new Where('group', 'layer'),
-                        new Where('whitelabel_id', $request->id),
-                    ])->get()->first()) {
-                    throw new \ErrorException(trans('errors.tnb.notset'));
-                }
-                $result['data'] = $this->languageline->withCriteria([
-                        new Where('locale', 'de'),
-                        new Where('key', 'footer.tnb'),
-                        new Where('group', 'layer'),
-                        new Where('whitelabel_id', $request->id),
-                    ])->get()->first()->text;
+            $tnb = $this->languageline->withCriteria([
+                    new Where('locale', 'de'),
+                    new Where('key', 'footer.tnb'),
+                    new Where('group', 'layer_tnb'),
+                    new Where('whitelabel_id', $request->id),
+                ])->get()->first();
 
-                return $this->responseJson($result);
-            }
-            $txt = str_slug($this->moduleWhitelabelsRepository->withCriteria([
-                new Where('id', $request->id),
-            ])->first()->name);
-            $wlName = mb_strtolower(str_replace('-', '', $txt));
-            if (null === DB::table("language_lines_{$wlName}")
-                        ->select('text')
-                        ->where('locale', 'de')
-                        ->where('group', 'layer')
-                        ->where('key', 'footer.tnb')
-                        ->get()->first()) {
+            if (null === $tnb) {
                 throw new \ErrorException(trans('errors.tnb.notset'));
             }
-            $result['data'] = DB::table("language_lines_{$wlName}")
-                        ->select('text')
-                        ->where('locale', 'de')
-                        ->where('group', 'layer')
-                        ->where('key', 'footer.tnb')
-                        ->get()->first()->text;
+
+            $result['data'] = $tnb->text;
 
             return $this->responseJson($result);
         } catch (\Exception $e) {
