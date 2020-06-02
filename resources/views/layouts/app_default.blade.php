@@ -234,12 +234,6 @@ if(!empty($google_analytics)){
                                 <span>{{ __('Layer Content') }}</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.variants') }}" class="nav-link">
-                                <i class="icon-menu2"></i>
-                                <span>{{ __('Variants') }}</span>
-                            </a>
-                        </li>
                     @endif
 
                     @if($module->has('Languages')  && Auth::guard('web')->user()->hasRole(\App\Services\Flag\Src\Flag::EXECUTIVE_ROLE))
