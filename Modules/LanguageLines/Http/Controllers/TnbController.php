@@ -203,7 +203,7 @@ class TnbController extends Controller
                     $this->languageline->firstOrCreate([
                         'locale'         => $request->get('language'),
                         'key'            => 'footer.tnb',
-                        'group'          => 'layer',
+                        'group'          => 'layer_tnb',
                         'whitelabel_id'  => $whiteLabelID])->id,
                     ['text'=> $request->get('footer_tnb_editor')]
                 );
@@ -212,7 +212,7 @@ class TnbController extends Controller
                     $this->languageline->firstOrCreate([
                         'locale' => $request->get('language'),
                         'key'    => 'footer.tnb',
-                        'group'  => 'layer'])->id,
+                        'group'  => 'layer_tnb'])->id,
                     ['text'=> $request->get('footer_tnb_editor')]
                 );
             }
