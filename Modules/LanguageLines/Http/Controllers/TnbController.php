@@ -112,7 +112,7 @@ class TnbController extends Controller
                 if (!$this->languageline->withCriteria([
                      new Where('locale', $lang),
                      new Where('key', 'footer.tnb'),
-                     new Where('group', 'layer'),
+                     new Where('group', 'layer_tnb'),
                      new Where('whitelabel_id', $whiteLabelID),
                  ])->get()->count()) {
                     $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
@@ -121,7 +121,7 @@ class TnbController extends Controller
                     $result['data']['text'] = $this->languageline->firstOrCreate([
                          'locale'          => $lang,
                          'key'             => 'footer.tnb',
-                         'group'           => 'layer',
+                         'group'           => 'layer_tnb',
                          'text'            => $tnb,
                          'whitelabel_id'   => $whiteLabelID,
                      ])->text;
@@ -129,7 +129,7 @@ class TnbController extends Controller
                     $result['data']['text'] = $this->languageline->withCriteria([
                          new Where('locale', $lang),
                          new Where('key', 'footer.tnb'),
-                         new Where('group', 'layer'),
+                         new Where('group', 'layer_tnb'),
                          new Where('whitelabel_id', $whiteLabelID),
                      ])->first()->text;
                 }
@@ -138,7 +138,7 @@ class TnbController extends Controller
                 if (!$this->languageline->withCriteria([
                      new Where('locale', $lang),
                      new Where('key', 'footer.tnb'),
-                     new Where('group', 'layer'),
+                     new Where('group', 'layer_tnb'),
                  ])->get()->count()) {
                     if ($this->auth->guard('web')->user()->hasRole('Admin')) {
                         $whiteLabelName = getCurrentWhiteLabelField('display_name');
@@ -156,14 +156,14 @@ class TnbController extends Controller
                     $result['data']['text'] = $this->languageline->firstOrCreate([
                          'locale' => $lang,
                          'key'    => 'footer.tnb',
-                         'group'  => 'layer',
+                         'group'  => 'layer_tnb',
                          'text'   => $tnb
                      ])->text;
                 } else {
                     $result['data']['text'] = $this->languageline->withCriteria([
                          new Where('locale', $lang),
                          new Where('key', 'footer.tnb'),
-                         new Where('group', 'layer'),
+                         new Where('group', 'layer_tnb'),
                      ])->first()->text;
                 }
             }
