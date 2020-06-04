@@ -60,6 +60,7 @@ class Translation extends Model
                 $data = static::query()
                     ->where('group', $group)
                     ->where('locale', $locale)
+                    ->whereNull('whitelabel_id')
                     ->get()
                     ->map(function (self $translation) {
                         return [
