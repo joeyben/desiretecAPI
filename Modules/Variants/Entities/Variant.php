@@ -9,14 +9,12 @@ use Modules\Attachments\Traits\AttachableTrait;
 use Modules\Whitelabels\Entities\LayerWhitelabel;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Nicolaslopezj\Searchable\SearchableTrait;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Translatable\HasTranslations;
 
 class Variant extends Model
 {
     use SoftDeletes;
     use SearchableTrait;
-    use LogsActivity;
     use HasTranslations;
     use AttachableTrait;
 
@@ -26,17 +24,6 @@ class Variant extends Model
 
     protected $casts = [
         'active'  => 'boolean'
-    ];
-
-
-    protected static $logOnlyDirty = true;
-
-    protected static $logAttributes = [
-        'layer_url',
-        'color',
-        'privacy',
-        'active',
-        'layer_whitelabel_id',
     ];
 
     /**
