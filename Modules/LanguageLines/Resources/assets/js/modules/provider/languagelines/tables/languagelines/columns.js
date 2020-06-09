@@ -10,7 +10,7 @@ export default [
   },
   {
     name: '__component:custom-default',
-    title: window.Lang.get('modals.default'),
+    title: window.Lang.get('modals.individual'),
     sortField: 'default',
     visible: true
   },

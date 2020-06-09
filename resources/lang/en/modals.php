@@ -127,4 +127,5 @@ return [
     'headline_color'                => 'Headline Color',
     'headline_color_dark'           => 'Dark',
     'headline_color_light'          => 'Light',
+    'individual'                    => 'Individuell',
 ];
