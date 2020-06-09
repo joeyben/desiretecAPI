@@ -1082,21 +1082,21 @@ if (!function_exists('transformTravelPurpose')) {
     function transformTravelPurpose($code)
     {
         switch ($code) {
-            case '1':
+            case '0':
                 return 'Familienurlaub';
-            case '2':
+            case '1':
                 return 'Wellness -oder Gesundheitsreise';
-            case '3':
+            case '2':
                 return 'Aktivurlaub';
-            case '4':
+            case '3':
                 return 'Fahrradurlaub';
-            case '5':
+            case '4':
                 return 'Naturkundliche Reise';
-            case '6':
+            case '5':
                 return 'Studienreise';
-            case '7':
+            case '6':
                 return 'Kulturreise';
-            case '8':
+            case '7':
                 return 'Geschäftsreise';
             default:
                 return $code;
