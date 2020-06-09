@@ -149,6 +149,8 @@ class WishesController extends APIController
             $result['data']['layer_image'] = $this->getLayerImage($wishData->whitelabel_id, $wishData->version);
             $result['data']['wishDetails'] = $wishData;
             $result['data']['wishDetails']['catering'] = $this->categories->getCategoryByParentValue('catering', $wish->catering);
+            $result['data']['wishDetails']['duration'] = transformDuration($wishData->duration);
+            $result['data']['wishDetails']['purpose'] = transformTravelPurpose($wishData->purpose);
             $result['data']['wishDetails']['owner'] = $wishData->owner;
             $result['data']['wishDetails']['messages'] = $wishData->messages;
             $result['data']['wishDetails']['contacts'] = $wishData->contacts;
@@ -158,16 +160,6 @@ class WishesController extends APIController
             $result['data']['wishDetails']['group']['agents'] = isset($wishData->group->users[0]->agents) ? $wishData->group->users[0]->agents : [];
 
             return $this->responseJson($result);
-
-            // TODO: Do we need role validation?
-            // $user = Auth::guard('api')->user();
-            // if ($user->hasRole('User') && $wish->created_by === $user->id) {
-            //     return $this->responseJson($result);
-            // } else if(($user->hasRole('Seller') && in_array($wish->group_id, $user->groups->pluck('id')->toArray()))) {
-            //     return $this->responseJson($result);
-            // }
-
-            // return $this->respondUnauthorized();
         } catch (Exception $e) {
             return $this->responseJsonError($e);
         }

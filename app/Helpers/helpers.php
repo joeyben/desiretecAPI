@@ -323,27 +323,34 @@ if (!function_exists('transformDuration')) {
     function transformDuration($duration)
     {
         switch ($duration) {
-            case '7':
-                return trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]);
-
-                break;
-
-            case '14':
-                return trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]);
-                break;
-
-            case '21':
-                return trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]);
-                break;
-
-            case '28':
-                return trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]);
-                break;
-
-            case null:
+            case '0':
                 return 'beliebig';
                 break;
-
+            case 'exact':
+                return trans('labels.frontend.wishes.exact');
+                break;
+            case '7-':
+                return trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]);
+                break;
+            case '14-':
+                return trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]);
+                break;
+            case '21-':
+                return trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]);
+                break;
+            case '28-':
+                return trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]);
+                break;
+            case '1-4':
+            case '5-8':
+            case '9-12':
+            case '13-15':
+            case '16-22':
+                return $duration . ' ' . trans('labels.frontend.wishes.nights');
+                break;
+            case '22-':
+                return '>22 ' . trans('labels.frontend.wishes.nights');
+                break;
             default:
                 return trans_choice('labels.frontend.wishes.night', (int) $duration, ['value' => (int) $duration]);
                 break;
@@ -1063,5 +1070,36 @@ if (!function_exists('wl_default_email_signature')) {
         }
 
         return '';
+    }
+}
+
+if (!function_exists('transformTravelPurpose')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function transformTravelPurpose($code)
+    {
+        switch ($code) {
+            case '1':
+                return 'Familienurlaub';
+            case '2':
+                return 'Wellness -oder Gesundheitsreise';
+            case '3':
+                return 'Aktivurlaub';
+            case '4':
+                return 'Fahrradurlaub';
+            case '5':
+                return 'Naturkundliche Reise';
+            case '6':
+                return 'Studienreise';
+            case '7':
+                return 'Kulturreise';
+            case '8':
+                return 'Geschäftsreise';
+            default:
+                return $code;
+        }
     }
 }

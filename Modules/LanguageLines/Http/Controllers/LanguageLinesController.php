@@ -389,6 +389,10 @@ class LanguageLinesController extends Controller
                 Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
             }
 
+            if (!$languageline->default && $languagelineOld->default && null === $languageline->whitelabel_id) {
+                Translation::getTranslations($languageline->locale, $languageline->group)->update(['default' => $languageline->default]);
+            }
+
             $result['languageline'] = $languageline;
             $result['message'] = $this->lang->get('messages.updated', ['attribute' => 'LanguageLine']);
             $result['success'] = true;
