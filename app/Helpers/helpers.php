@@ -1072,3 +1072,34 @@ if (!function_exists('wl_default_email_signature')) {
         return '';
     }
 }
+
+if (!function_exists('transformTravelPurpose')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function transformTravelPurpose($code)
+    {
+        switch ($code) {
+            case '1':
+                return 'Familienurlaub';
+            case '2':
+                return 'Wellness -oder Gesundheitsreise';
+            case '3':
+                return 'Aktivurlaub';
+            case '4':
+                return 'Fahrradurlaub';
+            case '5':
+                return 'Naturkundliche Reise';
+            case '6':
+                return 'Studienreise';
+            case '7':
+                return 'Kulturreise';
+            case '8':
+                return 'Geschäftsreise';
+            default:
+                return $code;
+        }
+    }
+}
