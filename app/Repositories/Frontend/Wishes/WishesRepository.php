@@ -108,6 +108,8 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.created_at',
                 config('module.wishes.table') . '.group_id',
                 config('module.wishes.table') . '.note',
+                config('module.wishes.table') . '.purpose',
+                config('module.wishes.table') . '.events_interested',
                 config('module.wishes.table') . '.is_autooffer',
                 config('module.wishes.table') . '.version',
                 config('access.users_table') . '.first_name as first_name',
@@ -186,6 +188,8 @@ class WishesRepository extends BaseRepository
             $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
 
             $singleWish['duration'] = transformDuration($singleWish['duration']);
+
+            $singleWish['purpose'] = transformTravelPurpose($singleWish['purpose']);
 
             foreach ($whitelabelLayers as $layer) {
                 if ($layer['layer']['path'] === $singleWish['version'] && sizeof($layer['attachments'])) {

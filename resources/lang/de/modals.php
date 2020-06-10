@@ -129,4 +129,5 @@ return [
     'headline_color'                => 'Überschrift Farbe',
     'headline_color_dark'           => 'Dunkel',
     'headline_color_light'          => 'Hell',
+    'individual'                    => 'Individuell',
 ];

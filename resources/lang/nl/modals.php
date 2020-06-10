@@ -129,4 +129,5 @@ return [
     'headline_color'                => 'Titel Kleur',
     'headline_color_dark'           => 'Donker',
     'headline_color_light'          => 'Light',
+    'individual'                    => 'individueel',
 ];
