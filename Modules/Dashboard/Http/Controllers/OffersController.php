@@ -240,12 +240,18 @@ class OffersController extends Controller
                 'dimensions' => 'ga:yearMonth',
                 'filters'    => $filter['filtertablet'],
             ];
+            $optParams3 = [
+                'dimensions' => 'ga:date',
+                'filters'    => $filter['filtermobile'],
+            ];
+
             $result['phone'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams1, $startDate, $endDate);
             $result['tablet'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams2, $startDate, $endDate);
+            $result['mobileLayer'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams3, $startDate, $endDate);
 
             for ($i = 0; $i < \count($result['phone']); ++$i) {
                 $result['mobile'][$i][0] = $result['phone'][$i][0];
-                $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1];
+                $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1] + $result['mobileLayer'][$i][1];
             }
 
             $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
@@ -289,13 +295,18 @@ class OffersController extends Controller
                 'dimensions' => 'ga:date',
                 'filters'    => $filter['filtertablet'],
             ];
+            $optParams3 = [
+                'dimensions' => 'ga:date',
+                'filters'    => $filter['filtermobile'],
+            ];
 
             $result['phone'] = $this->dashboard->uniqueEventsDay(config('analytics.view_id'), $optParams1, $startDate, $endDate);
             $result['tablet'] = $this->dashboard->uniqueEventsDay(config('analytics.view_id'), $optParams2, $startDate, $endDate);
+            $result['mobileLayer'] = $this->dashboard->uniqueEventsDay(config('analytics.view_id'), $optParams3, $startDate, $endDate);
 
             for ($i = 0; $i < \count($result['phone']); ++$i) {
                 $result['mobile'][$i][0] = $result['phone'][$i][0];
-                $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1];
+                $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1] + $result['mobileLayer'][$i][1];
             }
 
             $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
@@ -641,13 +652,24 @@ class OffersController extends Controller
 
     public function getFilter($name = 'desiretec')
     {
+        $mobileLayerShown = 'Mobile layer shown';
+        $mobileLayerShownLabel = $name . '_exitwindow';
+
         $filterdesk = 'ga:eventLabel==eil-desktop;ga:eventAction==shown;ga:eventCategory==' . $name . '_exitwindow';
         $filtermobile = 'ga:eventLabel==eil-mobile;ga:eventAction==shown;ga:eventCategory==' . $name . '_exitwindow';
         $filterphone = 'ga:eventLabel==eil-phone;ga:eventAction==shown;ga:eventCategory==' . $name . '_exitwindow';
         $filtertablet = 'ga:eventLabel==eil-tablet;ga:eventAction==shown;ga:eventCategory==' . $name . '_exitwindow';
         $filtershare = 'ga:eventLabel==eil-n1;ga:eventAction==Submit-Button;ga:eventCategory==' . $name . '_exitwindow';
+        $mobileLayer = 'ga:eventLabel=='. $mobileLayerShownLabel .';ga:eventAction=='. $mobileLayerShown .';ga:eventCategory==' . $name . '_exitwindow';
 
-        return ['filterd' => $filterdesk, 'filterm' => $filtermobile, 'filters' => $filtershare, 'filterphone' => $filterphone, 'filtertablet' => $filtertablet];
+        return [
+            'filterd' => $filterdesk,
+            'filterm' => $filtermobile,
+            'filters' => $filtershare,
+            'filterphone' => $filterphone,
+            'filtertablet' => $filtertablet,
+            'filtermobile' => $mobileLayer
+        ];
     }
 
     /**
