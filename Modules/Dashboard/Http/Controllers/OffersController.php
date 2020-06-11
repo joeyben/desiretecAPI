@@ -240,12 +240,18 @@ class OffersController extends Controller
                 'dimensions' => 'ga:yearMonth',
                 'filters'    => $filter['filtertablet'],
             ];
+            $optParams3 = [
+                'dimensions' => 'ga:date',
+                'filters'    => $filter['filtermobile'],
+            ];
+
             $result['phone'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams1, $startDate, $endDate);
             $result['tablet'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams2, $startDate, $endDate);
+            $result['mobileLayer'] = $this->dashboard->uniqueEventsMonth(config('analytics.view_id'), $optParams3, $startDate, $endDate);
 
             for ($i = 0; $i < \count($result['phone']); ++$i) {
                 $result['mobile'][$i][0] = $result['phone'][$i][0];
-                $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1];
+                $result['mobile'][$i][1] = $result['phone'][$i][1] + $result['tablet'][$i][1] + $result['mobileLayer'][$i][1];
             }
 
             $result['limobile'] = $this->dashboard->getFilterCategory('LI Mobile');
