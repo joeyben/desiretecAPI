@@ -39,7 +39,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             ->where(config('module.whitelabel_host.table') . '.host', 'LIKE', '%' . $host . '%')
             ->first();
 
-        return $query->whitelabel_id;
+        return !is_null($query) ? $query->whitelabel_id :  null;
     }
 
     public function updateRoute(int $id, string $name, string $subDomain)
