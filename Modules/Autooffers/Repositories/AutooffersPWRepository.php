@@ -93,11 +93,11 @@ class AutooffersPWRepository extends BaseRepository
     {
         $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
 
-        $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "XXX",
-            'password' => "XXX", 'trace' => 1, 'compression' =>
+        /*$soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
+            'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
                 SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
 
-        $formDataContainer = new stdClass;
+        $formDataContainer = new \stdClass;
         $formDataContainer->RequestType = 'package';
         $formDataContainer->MsgType = 'All';
         $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
@@ -106,7 +106,36 @@ class AutooffersPWRepository extends BaseRepository
 
         $formData = $soapclient->GetFormData($formDataContainer);
 
-        dd($formData);
+        dd($formData);*/
+
+
+        $xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
+   <soap:Header/>
+     <soap:Body>
+<PackageGroupRequest xmlns="http://www.peakwork.net/pws/2010/03" AuthKey="e0a7298a776df161ab2f6f6407f15520">
+<TravelPeriod>
+<DepartureDate>2020-10-01</DepartureDate>
+           <Duration>128</Duration>
+         </TravelPeriod>
+         <Travellers>
+<Adult Age="28"/> </Travellers> <Hotel>
+           <Rooms />
+         </Hotel>
+       </PackageGroupRequest>
+     </soap:Body>
+   </soap:Envelope>';
+        $URL = "http://pwhub.peakwork.de/pws/2010/03/?wsdl";
+
+        $ch = curl_init($URL);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+
+        print_r($output);
     }
 
     public function getToken()
