@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\AutooffersTTRepository;
+use Modules\Autooffers\Repositories\AutooffersPWRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 
 class AutooffersController extends Controller
@@ -55,6 +56,7 @@ class AutooffersController extends Controller
      */
     private $autooffers;
     private $TTautooffers;
+    private $PWautooffers;
     /**
      * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
      */
@@ -63,11 +65,12 @@ class AutooffersController extends Controller
     /**
      * @param \Modules\Autooffers\Repositories\AutooffersTTRepository $autooffers
      */
-    public function __construct(WishesRepository $wish, AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers, EloquentAutooffersRepository $rules)
+    public function __construct(WishesRepository $wish, AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers, AutooffersPWRepository $PWautooffers, EloquentAutooffersRepository $rules)
     {
         $this->wish = $wish;
         $this->autooffers = $autooffers;
         $this->TTautooffers = $TTautooffers;
+        $this->PWautooffers = $PWautooffers;
         $this->rules = $rules;
     }
 
@@ -223,5 +226,11 @@ class AutooffersController extends Controller
     {
         //$this->TTautooffers->getToken();
         $this->TTautooffers->testTT();
+    }
+
+    public function callPW()
+    {
+        //$this->TTautooffers->getToken();
+        $this->PWautooffers->getRequest();
     }
 }
