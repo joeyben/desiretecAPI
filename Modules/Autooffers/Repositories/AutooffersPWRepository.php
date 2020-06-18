@@ -109,33 +109,80 @@ class AutooffersPWRepository extends BaseRepository
         dd($formData);*/
 
 
-        $xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
+     /*   $xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
    <soap:Header/>
      <soap:Body>
-<PackageGroupRequest xmlns="http://www.peakwork.net/pws/2010/03" AuthKey="e0a7298a776df161ab2f6f6407f15520">
-<TravelPeriod>
-<DepartureDate>2020-10-01</DepartureDate>
-           <Duration>128</Duration>
-         </TravelPeriod>
-         <Travellers>
-<Adult Age="28"/> </Travellers> <Hotel>
-           <Rooms />
-         </Hotel>
-       </PackageGroupRequest>
-     </soap:Body>
+<PackageOfferRequest Currency="EUR"
+  					    Lang="en"
+  					    AuthKey="e0a7298a776df161ab2f6f6407f15520"
+  					    ResultsPerPage="15"
+  					    ShowingResultsFrom="0"
+  					    ResultsTotal="300">
+           <TravelPeriod DurationAppliance="flight">
+                <DepartureDate>2020-09-04</DepartureDate>
+                <Duration>7</Duration> 
+            </TravelPeriod>
+            <Travellers>
+                <Adult Age="30" RefId="1"/>
+                <Adult Age="30" RefId="2"/>
+            </Travellers>
+            <Hotel>
+                <Name/>
+                <References>
+                    <GiataCode>11456</GiataCode>
+                </References>
+            </Hotel>
+            <Flight>
+              <DepartureAirports>DUS</DepartureAirports>
+            </Flight>
+        </PackageOfferRequest>
+    </soap:Body>
    </soap:Envelope>';
-        $URL = "http://pwhub.peakwork.de/pws/2010/03/?wsdl";
+        $URL = "http://pwhub.peakwork.de/pws/2010/03/v2/rest/packageoffer";
 
         $ch = curl_init($URL);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
-        curl_close($ch);
+        curl_close($ch);*/
 
+        $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
+            'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
+                SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
 
-        print_r($output);
+        $formDataContainer = new \stdClass;
+        $formDataContainer->RequestType = 'package';
+        $formDataContainer->MsgType = 'All';
+        $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
+        $formDataContainer->Lang = 'de';
+        $formDataContainer->ShowingResultsFrom = 0;
+        $formDataContainer->ResultsTotal = 10;
+        $formDataContainer->ResultsPerPage = 10;
+        $formDataContainer->Currency = 'EUR';
+        $formDataContainer->TravelPeriod = (object)[
+            "DepartureDate" => "2021-02-04",
+            "ReturnDate" => "2021-02-21",
+            "Duration" => 7,
+        ];
+        $formDataContainer->Travellers = (object)[
+            "Adult" => [
+                "Age" => "25"
+            ]
+        ];
+        $formDataContainer->Flight = (object)[
+            "DepartureAirports" => "HAM"
+        ];
+        $formDataContainer->Hotel = (object)[
+            "References" => [
+                "GiataCode" => "2721"
+            ]
+        ];
+        $formData = $soapclient->GetPackageOffer($formDataContainer);
+
+        dd($formData);
+
     }
 
     public function getToken()
