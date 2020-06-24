@@ -286,7 +286,6 @@ class WishesRepository extends BaseRepository
 
         $result['wish'] = Wish::where([config('module.wishes.table') . '.id' => $id])
             ->where(config('module.wishes.table') . 'whitelabel_id', (int) ($currentWhiteLabelID))
-            ->where(config('module.wishes.table') . 'created_by',  $auth->id)
             ->get()
             ->first();
 
