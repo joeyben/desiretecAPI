@@ -126,6 +126,8 @@
                                             </div>
                                         </div>
 
+                                        <tag-component :hostsList="whitelabel.hostsList" :whitelebelId="whitelabel.id"></tag-component>
+
 
                                         <legend class="font-weight-semibold"><i class="icon-upload mr-2"></i> {{ trans('modals.whitelabels_image') }}</legend>
                                         <div class="form-group">

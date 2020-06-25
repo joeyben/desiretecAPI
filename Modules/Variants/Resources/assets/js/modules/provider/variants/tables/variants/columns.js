@@ -9,6 +9,12 @@ export default [
     visible: true
   },
   {
+    name: 'name',
+    title: window.Lang.get('tables.name'),
+    sortField: 'name',
+    visible: true
+  },
+  {
     name: '__component:custom-status',
     title: window.Lang.get('tables.status'),
     sortField: 'status',
@@ -21,9 +27,9 @@ export default [
     visible: true
   },
   {
-    name: 'layer_url',
+    name: '__component:custom-host',
     title: window.Lang.get('tables.url'),
-    sortField: 'layer_url',
+    sortField: 'host',
     visible: true
   },
   {
