@@ -8,11 +8,13 @@ use App\Repositories\Criteria\Like;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
+use function Aws\map;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
+use spec\Phpro\SoapClient\Event\Subscriber\LogSubscriberSpec;
 
 /**
  * Class WhitelabelController.
@@ -166,12 +168,69 @@ class WhitelabelController extends Controller
 
     private function getLayers(int $id)
     {
-        return $this->layerWhitelabels->withCriteria([
+        $layers = $this->layerWhitelabels->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $id),
             new EagerLoad(['layer', 'attachments', 'variants'  => function ($query) {
                 $query->where('variants.active', 1)->with('attachments');
             }])
         ])->all();
+        return  $layers->map(function ($layer) {
+            return [
+                'id' => $layer->id,
+                'whitelabel_id' => $layer->whitelabel_id,
+                'layer_id' => $layer->layer_id,
+                'domain' => $layer->domain,
+                'logo' => $this->getImage($layer, 'logo'),
+                'visual' => $this->getImage($layer, 'visual'),
+                'image' => $this->getImage($layer),
+                'image' => $this->getImage($layer),
+                'headline' => $this->getVariant($layer, 'headline'),
+                'subheadline' => $this->getVariant($layer, 'subheadline'),
+                'headline_color' => $this->getVariant($layer, 'color'),
+                'headline_success' => $this->getVariant($layer, 'headline_success'),
+                'subheadline_success' => $this->getVariant($layer, 'subheadline_success'),
+                'layer_url' => $layer->layer_url,
+                'privacy' => $layer->privacy
+            ];
+        });
+    }
+
+    private function getVariant($layer, string $column)
+    {
+        $variant = $layer->variants->first();
+
+        if ($variant && $column !== 'color') {
+            return $variant->getTranslation($column, session()->get('wl-locale', 'de'), true);
+        } else if ($variant && $column === 'color') {
+            return $variant->{$column};
+        } else {
+            return $layer->{$column};
+        }
+
+    }
+
+    private function getImage($layer, $type = 'logo')
+    {
+        $variant = $layer->variants->first();
+
+        if ($variant) {
+            $attachments = $variant->attachments->map(function ($attachment) {
+                return [
+                    'url' => $attachment->url,
+                    'type' => $attachment->type
+                ];
+            });
+
+            foreach ($attachments as    $attachment) {
+                if ($attachment['type'] === 'variants/' . $type) {
+                    return $attachment['url'];
+                }
+            }
+
+            return $layer->image;
+        } else {
+            $layer->image;
+        }
     }
 }
