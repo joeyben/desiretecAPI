@@ -197,10 +197,10 @@ class WishesController extends APIController
     public function store(StoreWishesRequest $request, UserRepository $user)
     {
         try {
-            if ($request->hasHeader('wl-id') && null !== $request->header('wl-id')) {
-                session()->put('wl-id', $request->header('wl-id'));
+            if ($request->hasHeader('wl-locale') && null !== $request->header('wl-locale')) {
+                session()->put('wl-locale', $request->header('wl-locale'));
             }
-            
+
             $newUser = $user->createUserFromLayer(
                 $request->only('first_name', 'last_name', 'email', 'password', 'is_term_accept', 'terms'),
                 $request->input('whitelabel_id')
