@@ -78,7 +78,7 @@ class LanguageLines extends LanguageLine
         return Cache::rememberForever(static::getCacheKey($group, $locale), function () use ($group, $locale) {
             return static::query()
                 ->where('group', $group)
-                ->where('locale', $locale)
+                ->where('locale', session()->get('wl-locale', $locale))
                 ->get()
                 ->map(function (LanguageLine $languageLine) use ($locale) {
                     return [

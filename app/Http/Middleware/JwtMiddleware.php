@@ -31,6 +31,10 @@ class JwtMiddleware extends BaseMiddleware
                 session()->put('wl-id', $request->header('wl-id'));
             }
 
+            if ($request->hasHeader('wl-locale') && null !== $request->header('wl-locale')) {
+                session()->put('wl-locale', $request->header('wl-locale'));
+            }
+
             if ($request->hasHeader('authorization')) {
                 JWTAuth::parseToken()->authenticate();
                 $rawToken = JWTAuth::getToken();
