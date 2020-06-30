@@ -8,13 +8,10 @@ use App\Repositories\Criteria\Like;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
-use function Aws\map;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
-use spec\Phpro\SoapClient\Event\Subscriber\LogSubscriberSpec;
 
 /**
  * Class WhitelabelController.
