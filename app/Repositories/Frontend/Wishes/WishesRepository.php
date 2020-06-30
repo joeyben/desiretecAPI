@@ -14,6 +14,7 @@ use App\Models\Groups\Group;
 use App\Models\Whitelabels\Whitelabel;
 use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
+use App\Services\Flag\Src\Flag;
 use DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -167,6 +168,9 @@ class WishesRepository extends BaseRepository
                 ->paginate(10);
         } else {
             $wish = $this->getForDataTable()
+                ->when($currentWhiteLabelID, function ($wish, $currentWhiteLabelID) {
+                    return $wish->where('whitelabel_id', (int) ($currentWhiteLabelID));
+                })
                 ->when($status, function ($wish, $status) {
                     return $wish->where(config('module.wishes.table') . '.status', $status);
                 })
@@ -281,11 +285,20 @@ class WishesRepository extends BaseRepository
             $currentWhiteLabelID = $auth->whitelabels()->first()->id;
         }
 
-        $result['wish'] = Wish::where([config('module.wishes.table') . '.id' => $id])
-            ->where(config('module.wishes.table') . '.whitelabel_id', (int) ($currentWhiteLabelID))
-            ->where(config('module.wishes.table') . '.created_by', $auth->id)
-            ->get()
-            ->first();
+        if ($auth->hasRole(Flag::USER_ROLE)) {
+            $result['wish'] = Wish::where([config('module.wishes.table') . '.id' => $id])
+                ->where(config('module.wishes.table') . '.whitelabel_id', (int) ($currentWhiteLabelID))
+                ->where(config('module.wishes.table') . '.created_by', $auth->id)
+                ->get()
+                ->first();
+        } else {
+            $result['wish'] = Wish::where([config('module.wishes.table') . '.id' => $id])
+                ->where(config('module.wishes.table') . '.whitelabel_id', (int) ($currentWhiteLabelID))
+                ->get()
+                ->first();
+        }
+
+
 
         $result['modifiedData'] = Wish::where([config('module.wishes.table') . '.id' => $id])
             ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.wishes.table') . '.created_by')
