@@ -167,9 +167,6 @@ class WishesRepository extends BaseRepository
                 ->paginate(10);
         } else {
             $wish = $this->getForDataTable()
-                ->when($currentWhiteLabelID, function ($wish, $currentWhiteLabelID) {
-                    return $wish->where('whitelabel_id', (int) ($currentWhiteLabelID));
-                })
                 ->when($status, function ($wish, $status) {
                     return $wish->where(config('module.wishes.table') . '.status', $status);
                 })

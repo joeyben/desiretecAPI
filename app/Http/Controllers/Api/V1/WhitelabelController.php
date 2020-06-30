@@ -181,7 +181,6 @@ class WhitelabelController extends Controller
                 'logo' => $this->getImage($layer, 'logo'),
                 'visual' => $this->getImage($layer, 'visual'),
                 'image' => $this->getImage($layer),
-                'image' => $this->getImage($layer),
                 'headline' => $this->getVariant($layer, 'headline'),
                 'subheadline' => $this->getVariant($layer, 'subheadline'),
                 'headline_color' => $this->getVariant($layer, 'color'),
