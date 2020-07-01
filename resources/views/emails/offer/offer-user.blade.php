@@ -8,7 +8,7 @@
                     <!-- section text ======-->
 
                     <p style="line-height: 24px; margin-bottom:15px;">
-                        Liebe Kundin, lieber Kunde!
+                        {{ trans('email.offer.created.salutation') }}
                     </p>
 
                     <p style="line-height: 24px; margin-bottom:20px;">
