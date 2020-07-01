@@ -20,7 +20,7 @@
         "dimsav/laravel-translatable": "^10.0",
         "doctrine/dbal": "^2.6",
         "dompdf/dompdf": "^0.8.2",
-        "faustbrian/laravel-categories": "^5.1",
+        "kodekeep/laravel-categories": "^5.1",
         "fideloper/proxy": "~4.0",
         "friendsofphp/php-cs-fixer": "^2.13",
         "fruitcake/laravel-cors": "^1.0",
