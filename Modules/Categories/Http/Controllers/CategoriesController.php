@@ -4,7 +4,7 @@ namespace Modules\Categories\Http\Controllers;
 
 use App\Repositories\Criteria\WhereIsRoot;
 use App\Services\Flag\Src\Flag;
-use BrianFaust\Categories\Models\Category;
+use KodeKeep\Categories\Models\Category;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

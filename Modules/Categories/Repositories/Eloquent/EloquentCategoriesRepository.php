@@ -10,7 +10,7 @@
 namespace Modules\Categories\Repositories\Eloquent;
 
 use App\Repositories\RepositoryAbstract;
-use BrianFaust\Categories\Models\Category;
+use KodeKeep\Categories\Models\Category;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 
 /**

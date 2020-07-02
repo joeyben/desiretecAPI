@@ -2,7 +2,7 @@
 
 namespace Modules\Categories\Database\Seeders;
 
-use BrianFaust\Categories\Models\Category;
+use KodeKeep\Categories\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
