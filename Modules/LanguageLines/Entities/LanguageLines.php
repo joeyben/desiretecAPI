@@ -79,6 +79,7 @@ class LanguageLines extends LanguageLine
             return static::query()
                 ->where('group', $group)
                 ->where('locale', session()->get('wl-locale', $locale))
+                ->where('whitelabel_id', session()->get('wl-id', null))
                 ->get()
                 ->map(function (LanguageLine $languageLine) use ($locale) {
                     return [
