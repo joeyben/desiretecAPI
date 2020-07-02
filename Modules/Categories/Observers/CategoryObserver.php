@@ -2,7 +2,7 @@
 
 namespace Modules\Categories\Observers;
 
-use KodeKeep\Categories\Models\Category;
+use BrianFaust\Categories\Models\Category;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryObserver

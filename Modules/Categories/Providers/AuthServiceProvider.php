@@ -2,7 +2,7 @@
 
 namespace Modules\Categories\Providers;
 
-use KodeKeep\Categories\Models\Category;
+use BrianFaust\Categories\Models\Category;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Modules\Categories\Policies\CategoryPolicy;
 
