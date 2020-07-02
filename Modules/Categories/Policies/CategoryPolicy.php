@@ -3,7 +3,7 @@
 namespace Modules\Categories\Policies;
 
 use App\Models\Access\User\User;
-use KodeKeep\Categories\Models\Category;
+use BrianFaust\Categories\Models\Category;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CategoryPolicy

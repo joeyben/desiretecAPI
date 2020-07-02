@@ -621,7 +621,7 @@ if (!function_exists('category_name_by_value')) {
      */
     function category_name_by_value(string $value)
     {
-        return \KodeKeep\Categories\Models\Category::where('value', $value)->first()->name;
+        return \BrianFaust\Categories\Models\Category::where('value', $value)->first()->name;
     }
 }
 

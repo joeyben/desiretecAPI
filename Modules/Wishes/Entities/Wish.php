@@ -6,7 +6,7 @@ use App\Models\Agents\Agent;
 use App\Models\Groups\Group;
 use App\Models\Offers\Offer;
 use App\Models\Whitelabels\Whitelabel;
-use KodeKeep\Categories\Models\Category;
+use BrianFaust\Categories\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User;

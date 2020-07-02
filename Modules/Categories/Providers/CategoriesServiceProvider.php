@@ -2,7 +2,7 @@
 
 namespace Modules\Categories\Providers;
 
-use KodeKeep\Categories\Models\Category;
+use BrianFaust\Categories\Models\Category;
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\ServiceProvider;
 use Modules\Categories\Observers\CategoryObserver;
