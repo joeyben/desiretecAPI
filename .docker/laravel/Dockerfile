@@ -5,6 +5,7 @@ COPY composer.json composer.json
 COPY composer.lock composer.lock
 COPY tests tests
 COPY database database
+COPY laravel-categories laravel-categories
 
 RUN composer install \
     --ignore-platform-reqs \

@@ -1,0 +1,49 @@
+{
+    "name": "laravel/categories",
+    "description": "Associate Eloquent Models with Categories",
+    "keywords": ["laravel", "framework", "categories", "polymorphic", "eloquent"],
+    "license": "MIT",
+    "authors": [{
+        "name": "Brian Faust",
+        "email": "hello@brianfaust.me",
+        "homepage": "https://brianfaust.me"
+    }],
+    "require": {
+        "php": ">=7.0.0",
+        "illuminate/database": "5.5.* || 5.6.* || 5.7.*",
+        "illuminate/support": "5.5.* || 5.6.* || 5.7.*",
+        "kalnoy/nestedset": "^4.3",
+        "spatie/laravel-sluggable": "^2.1"
+    },
+    "require-dev": {
+        "graham-campbell/testbench": "^5.0",
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "BrianFaust\\Categories\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BrianFaust\\Tests\\Categories\\": "tests"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "5.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "BrianFaust\\Categories\\CategoriesServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
