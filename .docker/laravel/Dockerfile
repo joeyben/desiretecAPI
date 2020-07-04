@@ -13,7 +13,7 @@ RUN composer install \
     --no-scripts \
     --prefer-dist
 
-FROM horrorhorst/laravel-fpm-base:php7.4
+FROM horrorhorst/laravel-fpm-base:php7.3
 LABEL maintainer="Aljoscha <horrorhorst> Dembowsky - aljoscha@dembowsky.io"
 
 COPY --chown=www-data:www-data . /var/www/html
