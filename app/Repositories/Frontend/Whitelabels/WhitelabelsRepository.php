@@ -70,6 +70,11 @@ class WhitelabelsRepository extends BaseRepository
     public function getRuleType(int $id)
     {
         $rules = $this->rules->getRuleForWhitelabel($id);
+
+        if(!$rules){
+            return 0;
+        }
+        
         switch ($rules['type']) {
             case 'mix':
                 return 2;
