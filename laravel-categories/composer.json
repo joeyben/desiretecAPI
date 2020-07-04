@@ -1,5 +1,5 @@
 {
-    "name": "laravel/categories",
+    "name": "faustbrian/laravel-categories",
     "description": "Associate Eloquent Models with Categories",
     "keywords": ["laravel", "framework", "categories", "polymorphic", "eloquent"],
     "license": "MIT",
