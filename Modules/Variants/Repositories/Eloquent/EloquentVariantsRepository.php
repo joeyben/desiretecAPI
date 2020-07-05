@@ -42,7 +42,7 @@ class EloquentVariantsRepository extends RepositoryAbstract implements VariantsR
             new OrderBy($sort[0], $sort[1]),
             new ByWhitelabel('variants'),
             new Filter($search),
-            new EagerLoad(['whitelabel', 'layerWhitelabel'  => function ($query) {
+            new EagerLoad(['whitelabel', 'whitelabelHost', 'layerWhitelabel'  => function ($query) {
                 $query->select('id', 'whitelabel_id', 'layer_id')->with('layer');
             }]),
         ])->paginate($perPage);

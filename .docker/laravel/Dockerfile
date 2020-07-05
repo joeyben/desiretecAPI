@@ -5,6 +5,7 @@ COPY composer.json composer.json
 COPY composer.lock composer.lock
 COPY tests tests
 COPY database database
+COPY laravel-categories laravel-categories
 
 RUN composer install \
     --ignore-platform-reqs \
@@ -12,7 +13,7 @@ RUN composer install \
     --no-scripts \
     --prefer-dist
 
-FROM horrorhorst/laravel-fpm-base:latest
+FROM horrorhorst/laravel-fpm-base:php7.3
 LABEL maintainer="Aljoscha <horrorhorst> Dembowsky - aljoscha@dembowsky.io"
 
 COPY --chown=www-data:www-data . /var/www/html

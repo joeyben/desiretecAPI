@@ -4,7 +4,6 @@ namespace Modules\Variants\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Groups\Group;
-use App\Repositories\Backend\Whitelabels\WhitelabelsRepository;
 use App\Repositories\Criteria\ByWhitelabel;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\Criteria\Where;
@@ -25,6 +24,7 @@ use Modules\Variants\Repositories\Contracts\VariantsRepository;
 use Modules\Variants\Transformers\VariantCollection;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
+use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
 
 class VariantsController extends Controller
 {
@@ -48,9 +48,8 @@ class VariantsController extends Controller
      * @var \Modules\Activities\Repositories\Contracts\ActivitiesRepository
      */
     private $activities;
-    /**
-     * @var \App\Repositories\Backend\Whitelabels\WhitelabelsRepository
-     */
+
+
     private $whitelabels;
     /**
      * @var \Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository
@@ -109,7 +108,9 @@ class VariantsController extends Controller
     {
         try {
             $variant = $this->variants->withCriteria([
-                new EagerLoad(['user', 'attachments', 'whitelabel', 'layerWhitelabel'  => function ($query) {
+                new EagerLoad(['user', 'attachments', 'whitelabel'  => function ($query) {
+                    $query->with(['hosts']);
+                }, 'layerWhitelabel'  => function ($query) {
                     $query->select('id', 'whitelabel_id', 'layer_id');
                 }]),
                 new ByWhitelabel('variants'),
@@ -138,6 +139,7 @@ class VariantsController extends Controller
         try {
             $result['variant'] = [
                 'id' => 0,
+                'name' => '',
                 'active' => false,
                 'color' => '#540C0C',
                 'headline' => null,
@@ -146,10 +148,12 @@ class VariantsController extends Controller
                 'subheadline_success' => null,
                 'layer_url' => null,
                 'layer_whitelabel_id' => null,
+                'whitelabel_host_id' => null,
                 'privacy' => null,
                 'user' => $this->auth->guard('web')->user()->first_name . ' ' . $this->auth->guard('web')->user()->last_name,
                 'layer_whitelabel_id' => null,
                 'layerWhitelabelsList' => $this->layerWhitelabelsList(),
+                'hostsList' => $this->hostsList(),
                 'logs' => [],
                 'logo' => [],
                 'visual' => [],
@@ -171,7 +175,7 @@ class VariantsController extends Controller
             ])->update(
                 $id,
                 $request->only(
-                    'layer_url',
+                    'name',
                     'color',
                     'headline',
                     'subheadline',
@@ -179,7 +183,8 @@ class VariantsController extends Controller
                     'active',
                     'headline_success',
                     'subheadline_success',
-                    'layer_whitelabel_id'
+                    'layer_whitelabel_id',
+                    'whitelabel_host_id'
                 )
             );
 
@@ -199,7 +204,7 @@ class VariantsController extends Controller
 
             $variant = $this->variants->create(
                 array_merge(
-                    $request->only('layer_url', 'color', 'headline', 'subheadline', 'privacy', 'active', 'headline_success', 'subheadline_success', 'layer_whitelabel_id'),
+                    $request->only('name', 'color', 'headline', 'subheadline', 'privacy', 'active', 'headline_success', 'subheadline_success', 'layer_whitelabel_id', 'whitelabel_host_id'),
                     ['whitelabel_id' => $whitelabel->id, 'user_id' => $this->auth->guard('web')->user()->id]
                 )
             );
@@ -280,5 +285,19 @@ class VariantsController extends Controller
         } catch (Exception $e) {
             return $this->responseJsonError($e);
         }
+    }
+
+    private function hostsList()
+    {
+        $whitelabel = $this->whitelabels->withCriteria([
+            new EagerLoad(['hosts'])
+        ])->find($this->auth->user()->whitelabels()->first()->id);
+
+        return $whitelabel->hosts->map(function ($host) {
+            return [
+                'id' => $host->id,
+                'host' => $host->host
+            ];
+        });
     }
 }

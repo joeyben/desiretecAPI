@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Attachments\Traits\AttachableTrait;
 use Modules\Whitelabels\Entities\LayerWhitelabel;
 use Modules\Whitelabels\Entities\Whitelabel;
+use Modules\Whitelabels\Entities\WhitelabelHost;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Translatable\HasTranslations;
 
@@ -74,5 +75,15 @@ class Variant extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function whitelabelHost()
+    {
+        return $this->belongsTo(WhitelabelHost::class, 'whitelabel_host_id');
+    }
+
+    public function host()
+    {
+        return $this->belongsTo(WhitelabelHost::class);
     }
 }

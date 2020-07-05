@@ -19,9 +19,10 @@ class StoreVariantRequest extends FormRequest
             'color' => 'required|string',
             'headline' => 'required|string',
             'headline_success' => 'required|string',
-            'layer_url' => 'required|url',
+            'name' => 'required|string',
             'subheadline' => 'required|string',
             'subheadline_success' => 'required|string',
+            'whitelabel_host_id' => 'required|int',
         ];
     }
 

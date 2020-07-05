@@ -20,6 +20,7 @@ import CssConfig from './CssConfig.js'
   Vue.component('custom-link-by-name', config.CustomLinkByName)
   Vue.component('custom-status', config.CustomStatus)
   Vue.component('custom-users', config.customUsers)
+  Vue.component('custom-host', config.customHost)
   toastr.options.progressBar = true
   toastr.options.preventDuplicates = true
   moment.locale(window.i18.lang)

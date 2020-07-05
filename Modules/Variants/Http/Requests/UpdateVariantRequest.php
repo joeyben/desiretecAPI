@@ -15,13 +15,14 @@ class UpdateVariantRequest extends FormRequest
     {
         return [
             'id' => 'required|int|min:1',
+            'name' => 'required|string',
             'privacy' => 'required|string',
             'active' => 'required|boolean',
             'color' => 'required|string',
             'headline' => 'required|string',
             'headline_success' => 'required|string',
-            'layer_url' => 'required|url',
             'subheadline' => 'required|string',
+            'whitelabel_host_id' => 'required|int',
             'subheadline_success' => 'required|string',
         ];
     }

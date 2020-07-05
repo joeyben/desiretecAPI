@@ -16,6 +16,7 @@ class CreateVariantsTable extends Migration
     {
         Schema::create('variants', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name')->nullable();
             $table->string('layer_url')->nullable();
             $table->text('headline')->nullable();
             $table->text('subheadline');
@@ -27,6 +28,7 @@ class CreateVariantsTable extends Migration
             $table->integer('layer_whitelabel_id')->nullable()->unsigned()->index();
             $table->integer('whitelabel_id')->nullable()->unsigned();
             $table->integer('user_id')->nullable()->unsigned()->index();
+            $table->integer('whitelabel_host_id')->nullable()->unsigned()->index();
 
             $table->softDeletes();
             $table->timestamps();
@@ -36,6 +38,7 @@ class CreateVariantsTable extends Migration
             $table->foreign('layer_whitelabel_id')->references('id')->on('layer_whitelabel')->onDelete('cascade');
             $table->foreign('whitelabel_id')->references('id')->on('whitelabels')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('whitelabel_host_id', 'host')->references('id')->on('whitelabel_hosts')->onDelete('cascade');
         });
     }
 

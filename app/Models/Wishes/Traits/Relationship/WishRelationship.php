@@ -9,7 +9,7 @@ use App\Models\Contact\Contact;
 use App\Models\Groups\Group;
 use App\Models\Messages\Message;
 use App\Models\Offers\Offer;
-use BrianFaust\Categories\Models\Category;
+use KodeKeep\Categories\Models\Category;
 
 /**
  * Class WishRelationship.

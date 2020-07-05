@@ -14,9 +14,10 @@ use App\Models\Groups\Group;
 use App\Models\Whitelabels\Whitelabel;
 use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
-use Auth;
+use App\Services\Flag\Src\Flag;
 use DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\AutooffersTTRepository;
@@ -273,12 +274,31 @@ class WishesRepository extends BaseRepository
         }
     }
 
-    /**
-     * @return array
-     */
+
     public function getById(int $id)
     {
-        $result['wish'] = Wish::where([config('module.wishes.table') . '.id' => $id])->get()->first();
+        $auth = Auth::user();
+
+        if (session()->has('wl-id') && !is_null(session()->get('wl-id'))) {
+            $currentWhiteLabelID = session()->get('wl-id', null);
+        } else {
+            $currentWhiteLabelID = $auth->whitelabels()->first()->id;
+        }
+
+        if ($auth->hasRole(Flag::USER_ROLE)) {
+            $result['wish'] = Wish::where([config('module.wishes.table') . '.id' => $id])
+                ->where(config('module.wishes.table') . '.whitelabel_id', (int) ($currentWhiteLabelID))
+                ->where(config('module.wishes.table') . '.created_by', $auth->id)
+                ->get()
+                ->first();
+        } else {
+            $result['wish'] = Wish::where([config('module.wishes.table') . '.id' => $id])
+                ->where(config('module.wishes.table') . '.whitelabel_id', (int) ($currentWhiteLabelID))
+                ->get()
+                ->first();
+        }
+
+
 
         $result['modifiedData'] = Wish::where([config('module.wishes.table') . '.id' => $id])
             ->leftjoin(config('access.users_table'), config('access.users_table') . '.id', '=', config('module.wishes.table') . '.created_by')

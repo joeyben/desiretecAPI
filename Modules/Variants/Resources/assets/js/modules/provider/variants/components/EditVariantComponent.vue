@@ -37,6 +37,16 @@
                                             </div>
 
                                             <div class="form-group row">
+                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.name') }} <span class="text-danger"> *</span></label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" :class="errors.has('name') ? 'is-invalid': ''" id='name' name='name' :placeholder="trans('modals.name')" @input="updateVariant"  :value="variant.name"/>
+                                                    <div class="invalid-feedback">
+                                                        <strong v-text="errors.get('name')"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.logo') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
                                                     <upload-attachments :data="{attachable_id: parseInt(variant.id), attachable_type: 'Modules\\Variants\\Entities\\Variant', type: 'variants', folder: 'logo'}" :fileList="variant.logo" :tip="trans('modals.visual')" :limit="1" listType="picture-card"></upload-attachments>
@@ -50,7 +60,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.users') }} <span class="text-danger"> *</span></label>
+                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.layer') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
                                                     <el-select
                                                             style="width: 100%;"
@@ -107,12 +117,25 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.layer_url') }} <span class="text-danger"> *</span></label>
+                                                <label class="col-lg-3 col-form-label">&nbsp; {{ trans('modals.hosts') }} <span class="text-danger"> *</span></label>
                                                 <div class="col-lg-9">
-                                                    <input type="url" class="form-control" :class="errors.has('layer_url') ? 'is-invalid': ''" id='layer_url' name='layer_url' :placeholder="trans('modals.layer_url')" @input="updateVariant"  :value="variant.layer_url"/>
-                                                    <div class="invalid-feedback">
-                                                        <strong v-text="errors.get('layer_url')"></strong>
+                                                    <el-select
+                                                            style="width: 100%;"
+                                                            :value="variant.whitelabel_host_id"
+                                                            clearable
+                                                            placeholder="Select"
+                                                            @input="inputHost">
+                                                        <el-option
+                                                                v-for="item in variant.hostsList"
+                                                                :key="item.id"
+                                                                :label="item.host"
+                                                                :value="item.id"                                                                >
+                                                        </el-option>
+                                                    </el-select>
+                                                    <div class="help-block text-danger" v-if="errors.has('users')">
+                                                        <strong v-text="errors.get('users')"></strong>
                                                     </div>
                                                 </div>
                                             </div>
@@ -254,6 +277,9 @@
       },
       inputLayerWhitelabel (value) {
         this.$store.commit('updateVariant', {name: 'layer_whitelabel_id', value: value})
+      },
+      inputHost (value) {
+        this.$store.commit('updateVariant', {name: 'whitelabel_host_id', value: value})
       },
       getVariant (key, value) {
         return (this.variant.hasOwnProperty(key)) ? this.variant[key][value] : ''

@@ -6,6 +6,7 @@ import CustomLinkById from './CustomLinkById'
 import CustomLinkByName from './CustomLinkByName'
 import CustomStatus from './CustomStatus'
 import CustomUsers from './CustomUsers'
+import CustomHost from './CustomHost'
 export default {
   perPage: 10,
   fields: Columns,
@@ -16,5 +17,6 @@ export default {
   customLinkById: CustomLinkById,
   CustomLinkByName: CustomLinkByName,
   CustomStatus: CustomStatus,
-  customUsers: CustomUsers
+  customUsers: CustomUsers,
+  customHost: CustomHost
 }

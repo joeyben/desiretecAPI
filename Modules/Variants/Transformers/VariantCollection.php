@@ -20,6 +20,7 @@ class VariantCollection extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'active' => $this->active,
             'headline' => $this->headline,
             'subheadline' => $this->subheadline,
@@ -30,10 +31,11 @@ class VariantCollection extends JsonResource
             'privacy' => $this->privacy,
             'layer_whitelabel_id' => $this->layer_whitelabel_id,
             'layerWhitelabelsList' => $this->layerWhitelabelsList(),
-            'logs' => $this->getLogs(),
+            'hostsList' => $this->hostsList(),
             'user' => $this->user->first_name . ' ' . $this->user->last_name,
             'logo' => $this->getLogo(),
             'visual' => $this->getVisual(),
+            'whitelabel_host_id' => $this->whitelabel_host_id,
         ];
     }
 
@@ -91,5 +93,15 @@ class VariantCollection extends JsonResource
         })->first();
 
         return $visual ? [$visual] : [];
+    }
+
+    private function hostsList()
+    {
+        return $this->whitelabel->hosts->map(function ($host) {
+            return [
+                'id' => $host->id,
+                'host' => $host->host
+            ];
+        });
     }
 }

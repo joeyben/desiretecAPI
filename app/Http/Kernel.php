@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\JwtMiddleware;
+use App\Http\Middleware\UpdateLanguage;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 /**
@@ -81,6 +82,7 @@ class Kernel extends HttpKernel
         'access.routeNeedsRole'       => \App\Http\Middleware\RouteNeedsRole::class,
         'access.routeNeedsPermission' => \App\Http\Middleware\RouteNeedsPermission::class,
         'jwt.verify'                  => JwtMiddleware::class,
+        'updateLanguage'              => UpdateLanguage::class,
         'step'                        => \App\Http\Middleware\StepMiddleware::class,
     ];
 }
