@@ -109,6 +109,12 @@ class WhitelabelController extends Controller
 
         $tourOperators = $this->moduleWhitelabelsRepository->getTourOperators($whitelabel->id);
 
+        $result['data']['attachments']['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
+        $result['data']['attachments']['logo'] = (null !== $logo && null !== $logo->first()) ? $logo->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/default_logo.png';
+        $result['data']['attachments']['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
+        $result['data']['attachments']['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
+
+
         $result['data'] = [
             'id'                  => $whitelabel->id,
             'name'                => $whitelabel->name,
@@ -126,17 +132,12 @@ class WhitelabelController extends Controller
             'traffics'            => $whitelabel->traffics,
             'tt'                  => $whitelabel->tt,
             'licence'             => $whitelabel->licence,
-            'layers'              => $this->getLayers($whitelabel->id),
+            'layers'              => $this->getLayers($whitelabel, $result['data']['attachments']),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
             'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false
 
         ];
-
-        $result['data']['attachments']['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
-        $result['data']['attachments']['logo'] = (null !== $logo && null !== $logo->first()) ? $logo->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/default_logo.png';
-        $result['data']['attachments']['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
-        $result['data']['attachments']['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
 
         return $this->responseJson($result);
     }
@@ -163,24 +164,23 @@ class WhitelabelController extends Controller
         }
     }
 
-    private function getLayers(int $id)
+    private function getLayers($whitelabel, array $attachments = [])
     {
         $layers = $this->layerWhitelabels->withCriteria([
             new OrderBy('layer_id'),
-            new Where('whitelabel_id', $id),
+            new Where('whitelabel_id', $whitelabel->id),
             new EagerLoad(['layer', 'attachments', 'variants'  => function ($query) {
                 $query->where('variants.active', 1)->with('attachments');
             }])
         ])->all();
-        return  $layers->map(function ($layer) {
+        return  $layers->map(function ($layer) use ($attachments) {
             return [
                 'id' => $layer->id,
                 'whitelabel_id' => $layer->whitelabel_id,
                 'layer_id' => $layer->layer_id,
                 'domain' => $layer->domain,
-                'logo' => $this->getImage($layer, 'logo'),
-                'visual' => $this->getImage($layer, 'visual'),
-                'image' => $this->getImage($layer),
+                'logo' => $this->getImage($layer, 'logo', $attachments['logo']),
+                'visual' => $this->getImage($layer, 'visual', $attachments['visual']),
                 'headline' => $this->getVariant($layer, 'headline'),
                 'subheadline' => $this->getVariant($layer, 'subheadline'),
                 'headline_color' => $this->getVariant($layer, 'color'),
@@ -207,8 +207,9 @@ class WhitelabelController extends Controller
 
     }
 
-    private function getImage($layer, $type = 'logo')
+    private function getImage($layer, $type = 'logo', string $default)
     {
+        $url = '';
         $variant = $layer->variants->first();
 
         if ($variant) {
@@ -221,13 +222,18 @@ class WhitelabelController extends Controller
 
             foreach ($attachments as    $attachment) {
                 if ($attachment['type'] === 'variants/' . $type) {
-                    return $attachment['url'];
+                    $url = $attachment['url'];
                 }
             }
 
-            return $layer->image;
+            if ($url !== '')
+            {
+                return $url;
+            } else {
+                return $default;
+            }
         } else {
-            $layer->image;
+            return $default;
         }
     }
 }
