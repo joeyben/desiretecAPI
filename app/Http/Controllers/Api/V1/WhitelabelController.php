@@ -132,7 +132,7 @@ class WhitelabelController extends Controller
             'traffics'            => $whitelabel->traffics,
             'tt'                  => $whitelabel->tt,
             'licence'             => $whitelabel->licence,
-            'layers'              => $this->getLayers($whitelabel, $result['data']['attachments']),
+            'layers'              => $this->getLayers($whitelabel->id, $result['data']['attachments']),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
             'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false
@@ -164,11 +164,11 @@ class WhitelabelController extends Controller
         }
     }
 
-    private function getLayers($whitelabel, array $attachments = [])
+    private function getLayers(int $id, array $attachments = [])
     {
         $layers = $this->layerWhitelabels->withCriteria([
             new OrderBy('layer_id'),
-            new Where('whitelabel_id', $whitelabel->id),
+            new Where('whitelabel_id', $id),
             new EagerLoad(['layer', 'attachments', 'variants'  => function ($query) {
                 $query->where('variants.active', 1)->with('attachments');
             }])
