@@ -42,6 +42,8 @@ class WhitelabelController extends Controller
 
     public function getWhitelabelBySlug(string $slug)
     {
+        $data = [];
+
         $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
             new EagerLoad(['footers']),
             new Like('domain', '//' . $slug . '.'),
@@ -57,10 +59,10 @@ class WhitelabelController extends Controller
 
         $tourOperators = $this->moduleWhitelabelsRepository->getTourOperators($whitelabel->id);
 
-        $result['data']['attachments']['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
-        $result['data']['attachments']['logo'] = (null !== $logo && null !== $logo->first()) ? $logo->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/default_logo.png';
-        $result['data']['attachments']['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
-        $result['data']['attachments']['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
+        $data['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
+        $data['logo'] = (null !== $logo && null !== $logo->first()) ? $logo->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/default_logo.png';
+        $data['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
+        $data['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
 
         $result['data'] = [
             'id'                  => $whitelabel->id,
@@ -78,10 +80,11 @@ class WhitelabelController extends Controller
             'licence'             => $whitelabel->licence,
             'traffics'            => $whitelabel->traffics,
             'tt'                  => $whitelabel->tt,
-            'layers'              => $this->getLayers($whitelabel->id, $result['data']['attachments']),
+            'layers'              => $this->getLayers($whitelabel->id, $data),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
-            'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false
+            'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false,
+            'attachments'         => $data
         ];
 
 
@@ -111,10 +114,10 @@ class WhitelabelController extends Controller
 
         $tourOperators = $this->moduleWhitelabelsRepository->getTourOperators($whitelabel->id);
 
-        $result['data']['attachments']['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
-        $result['data']['attachments']['logo'] = (null !== $logo && null !== $logo->first()) ? $logo->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/default_logo.png';
-        $result['data']['attachments']['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
-        $result['data']['attachments']['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
+        $data['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
+        $data['logo'] = (null !== $logo && null !== $logo->first()) ? $logo->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/default_logo.png';
+        $data['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
+        $data['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
 
 
         $result['data'] = [
@@ -134,10 +137,11 @@ class WhitelabelController extends Controller
             'traffics'            => $whitelabel->traffics,
             'tt'                  => $whitelabel->tt,
             'licence'             => $whitelabel->licence,
-            'layers'              => $this->getLayers($whitelabel->id, $result['data']['attachments']),
+            'layers'              => $this->getLayers($whitelabel->id, $data),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
-            'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false
+            'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false,
+            'attachments'         => $data
 
         ];
 
