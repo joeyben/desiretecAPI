@@ -17,6 +17,7 @@ class UpdateLanguage
     {
         if ($request->hasHeader('wl-locale') && null !== $request->header('wl-locale')) {
             session()->put('wl-locale', $request->header('wl-locale'));
+            session()->put('wl-id', $request->header('wl-id'));
         }
 
         return $next($request);
