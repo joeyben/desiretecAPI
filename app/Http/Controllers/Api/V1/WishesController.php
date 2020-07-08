@@ -199,6 +199,7 @@ class WishesController extends APIController
         try {
             if ($request->hasHeader('wl-locale') && null !== $request->header('wl-locale')) {
                 session()->put('wl-locale', $request->header('wl-locale'));
+                session()->put('wl-id', $request->header('wl-id'));
             }
 
             $newUser = $user->createUserFromLayer(
