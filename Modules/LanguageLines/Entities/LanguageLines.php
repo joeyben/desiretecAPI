@@ -66,20 +66,22 @@ class LanguageLines extends LanguageLine
         });
     }
 
-    public static function getCacheKey(string $group, string $locale): string
+    public static function getCacheKey(string $group, string $locale, int $whitelabelId = null): string
     {
         $whitelabel = getLanguageLinesCacheKey();
 
-        return "desiretec.translation-loader.{$whitelabel}.{$group}.{$locale}";
+        return "desiretec.translation-loader.{$whitelabel}.{$group}.{$locale}.{$whitelabelId}";
     }
 
     public static function getTranslationsForGroup(string $locale, string $group): array
     {
-        return Cache::rememberForever(static::getCacheKey($group, $locale), function () use ($group, $locale) {
+        $whitelabelId = session()->get('wl-id', null);
+
+        return Cache::rememberForever(static::getCacheKey($group, $locale, $whitelabelId), function () use ($group, $locale, $whitelabelId) {
             return static::query()
                 ->where('group', $group)
                 ->where('locale', session()->get('wl-locale', $locale))
-                ->where('whitelabel_id', session()->get('wl-id', null))
+                ->where('whitelabel_id', $whitelabelId)
                 ->get()
                 ->map(function (LanguageLine $languageLine) use ($locale) {
                     return [
