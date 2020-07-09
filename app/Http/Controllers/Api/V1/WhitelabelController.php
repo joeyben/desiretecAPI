@@ -207,6 +207,8 @@ class WhitelabelController extends Controller
             return $variant->getTranslation($column, session()->get('wl-locale', 'de'), true);
         } else if ($variant && $column === 'color') {
             return $variant->{$column};
+        } else if ($column === 'color') {
+            return $layer->headline_color;
         } else {
             return $layer->{$column};
         }
