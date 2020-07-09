@@ -194,6 +194,7 @@ class WhitelabelController extends Controller
                 'subheadline_success' => $this->getVariant($layer, 'subheadline_success'),
                 'layer_url' => $layer->layer_url,
                 'privacy' => $layer->privacy,
+                'attachments' => $layer->attachments->first(),
                 'layer' => $layer->layer
             ];
         });
@@ -234,12 +235,20 @@ class WhitelabelController extends Controller
                 }
             }
 
+
             if ($url !== '')
             {
                 return $url;
             } else {
                 return $default;
             }
+
+        } else if ($type === 'visual') {
+            if ($image = $layer->attachments->first()) {
+                return $image->url;
+            }
+
+            return $default;
         } else {
             return $default;
         }
