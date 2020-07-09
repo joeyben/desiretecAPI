@@ -119205,8 +119205,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
 
 var _vuex = __webpack_require__(3);
 
@@ -120198,13 +120196,6 @@ var render = function() {
                                 1
                               )
                             ]),
-                            _vm._v(" "),
-                            _c("tag-component", {
-                              attrs: {
-                                hostsList: _vm.whitelabel.hostsList,
-                                whitelebelId: _vm.whitelabel.id
-                              }
-                            }),
                             _vm._v(" "),
                             _c(
                               "legend",
