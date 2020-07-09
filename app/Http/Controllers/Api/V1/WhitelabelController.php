@@ -194,6 +194,7 @@ class WhitelabelController extends Controller
                 'subheadline_success' => $this->getVariant($layer, 'subheadline_success'),
                 'layer_url' => $layer->layer_url,
                 'privacy' => $layer->privacy,
+                'attachments' => $layer->attachments,
                 'layer' => $layer->layer
             ];
         });
