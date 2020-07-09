@@ -9,7 +9,6 @@ use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
@@ -239,20 +238,17 @@ class WhitelabelController extends Controller
 
             if ($url !== '')
             {
-                Log::info('Url ' . $url);
                 return $url;
-            } else if ($type === 'visual') {
-                Log::info('pre-visual ' . $url);
-                if ($image = $layer->attachments->first()) {
-                    Log::info('visual ' . $image->url);
-                    return $image->url;
-                }
-
-                Log::info('default ' . $default);
-                return $default;
             } else {
                 return $default;
             }
+
+        } else if ($type === 'visual') {
+            if ($image = $layer->attachments->first()) {
+                return $image->url;
+            }
+
+            return $default;
         } else {
             return $default;
         }
