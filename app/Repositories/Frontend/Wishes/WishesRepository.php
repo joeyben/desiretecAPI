@@ -711,7 +711,6 @@ class WishesRepository extends BaseRepository
     {
         $wish = Wish::where('id', $wishID)->first();
         $_rules = $this->autoRules->getSettingsForWhitelabel($whitelabelId);
-        //dd(getRegionCode($wish->airport, 0));
         $this->autooffers->saveWishData($wish);
         $response = $this->autooffers->getTrafficsData();
         $this->autooffers->storeMany($response, $wish->id, $_rules, $userId);
@@ -719,10 +718,54 @@ class WishesRepository extends BaseRepository
 
     private function getLayers(int $whitelabelId)
     {
-        return $this->layerWhitelabel->withCriteria([
+        $layers = $this->layerWhitelabel->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $whitelabelId),
-            new EagerLoad(['layer', 'attachments'])
+            new EagerLoad(['layer', 'attachments', 'variants'  => function ($query) {
+                $query->where('variants.active', 1)->with('attachments');
+            }])
         ])->all();
+        return  $layers->map(function ($layer) {
+            return [
+                'visual' => $this->getLayerImage($layer, 'visual', 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png')
+            ];
+        });
+    }
+
+    private function getLayerImage($layer, $type = 'logo', string $default)
+    {
+        $url = '';
+        $variant = $layer->variants->first();
+
+        if ($variant) {
+            $attachments = $variant->attachments->map(function ($attachment) {
+                return [
+                    'url' => $attachment->url,
+                    'type' => $attachment->type
+                ];
+            });
+
+            foreach ($attachments as    $attachment) {
+                if ($attachment['type'] === 'variants/' . $type) {
+                    $url = $attachment['url'];
+                }
+            }
+
+            if ($url !== '')
+            {
+                return $url;
+            } else {
+                return $default;
+            }
+
+        } else if ($type === 'visual') {
+            if ($image = $layer->attachments->first()) {
+                return $image->url;
+            }
+
+            return $default;
+        } else {
+            return $default;
+        }
     }
 }
