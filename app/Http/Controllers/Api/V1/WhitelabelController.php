@@ -237,6 +237,12 @@ class WhitelabelController extends Controller
             if ($url !== '')
             {
                 return $url;
+            } else if ($type === 'visual') {
+                if ($attachment = $layer->attachments->first()) {
+                    return $attachment->url;
+                }
+
+                return $default;
             } else {
                 return $default;
             }
