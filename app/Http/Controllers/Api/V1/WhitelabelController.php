@@ -194,7 +194,7 @@ class WhitelabelController extends Controller
                 'subheadline_success' => $this->getVariant($layer, 'subheadline_success'),
                 'layer_url' => $layer->layer_url,
                 'privacy' => $layer->privacy,
-                'attachments' => $layer->attachments,
+                'attachments' => $layer->attachments->first(),
                 'layer' => $layer->layer
             ];
         });
@@ -239,8 +239,8 @@ class WhitelabelController extends Controller
             {
                 return $url;
             } else if ($type === 'visual') {
-                if ($attachment = $layer->attachments->first()) {
-                    return $attachment->url;
+                if ($image = $layer->attachments->first()) {
+                    return $image->url;
                 }
 
                 return $default;
