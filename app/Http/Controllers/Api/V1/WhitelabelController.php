@@ -242,7 +242,7 @@ class WhitelabelController extends Controller
                 Log::info('Url ' . $url);
                 return $url;
             } else if ($type === 'visual') {
-                Log::info('pre-visual ' . $image->url);
+                Log::info('pre-visual ' . $url);
                 if ($image = $layer->attachments->first()) {
                     Log::info('visual ' . $image->url);
                     return $image->url;
