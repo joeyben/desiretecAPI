@@ -193,8 +193,8 @@ class WishesRepository extends BaseRepository
             $singleWish['purpose'] = transformTravelPurpose($singleWish['purpose']);
 
             foreach ($whitelabelLayers as $layer) {
-                if ($layer['layer']['path'] === $singleWish['version'] && sizeof($layer['attachments'])) {
-                    $singleWish['layer_image'] = $layer['attachments'][0]['url'];
+                if ($layer['layer']['path'] === $singleWish['version']) {
+                    $singleWish['layer_image'] = $layer['visual'];
                 }
             }
 
@@ -725,15 +725,18 @@ class WishesRepository extends BaseRepository
                 $query->where('variants.active', 1)->with('attachments');
             }])
         ])->all();
+
         return  $layers->map(function ($layer) {
             return [
-                'visual' => $this->getLayerImage($layer, 'visual', 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png')
+                'visual' => $this->getLayerImage($layer, 'visual'),
+                'layer' => $layer->layer,
             ];
         });
     }
 
-    private function getLayerImage($layer, $type = 'logo', string $default)
+    private function getLayerImage($layer, $type = 'logo')
     {
+        $default = 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
         $url = '';
         $variant = $layer->variants->first();
 
