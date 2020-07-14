@@ -74,7 +74,7 @@ class WhitelabelsRepository extends BaseRepository
         if(!$rules){
             return 0;
         }
-        
+
         switch ($rules['type']) {
             case 'mix':
                 return 2;

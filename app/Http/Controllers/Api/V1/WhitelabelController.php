@@ -138,7 +138,7 @@ class WhitelabelController extends Controller
             'traffics'            => $whitelabel->traffics,
             'tt'                  => $whitelabel->tt,
             'licence'             => $whitelabel->licence,
-            'layers'              => $this->getLayers($whitelabelHost->id, $whitelabel->id, $data),
+            'layers'              => $this->getLayers($whitelabelHost->id, $whitelabelHost->whitelabel_id, $data),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
             'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false,
