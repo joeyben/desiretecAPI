@@ -521,4 +521,15 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             return $e;
         }
     }
+
+    public function getHostId(string $host)
+    {
+        $query = WhitelabelHost::select([
+            config('module.whitelabel_host.table') . '.whitelabel_id'
+        ])
+            ->where(config('module.whitelabel_host.table') . '.host', 'LIKE', '%' . $host . '%')
+            ->first();
+
+        return !is_null($query) ? $query->id :  null;
+    }
 }

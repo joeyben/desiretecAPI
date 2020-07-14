@@ -9,6 +9,7 @@ use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
@@ -99,6 +100,8 @@ class WhitelabelController extends Controller
     {
         $id = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
 
+        $hostId = $this->moduleWhitelabelsRepository->getHostId($host);
+
         $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
             new EagerLoad(['footers']),
             new Where('id', $id),
@@ -137,7 +140,7 @@ class WhitelabelController extends Controller
             'traffics'            => $whitelabel->traffics,
             'tt'                  => $whitelabel->tt,
             'licence'             => $whitelabel->licence,
-            'layers'              => $this->getLayers($whitelabel->id, $data),
+            'layers'              => $this->getLayers($hostId, $whitelabel->id, $data),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
             'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false,
@@ -170,8 +173,9 @@ class WhitelabelController extends Controller
         }
     }
 
-    private function getLayers(int $id, array $attachments = [])
+    private function getLayers(int $hostId = null, int $id, array $attachments = [])
     {
+        Log::info($hostId);
         $layers = $this->layerWhitelabels->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $id),

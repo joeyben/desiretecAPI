@@ -37,4 +37,6 @@ interface WhitelabelsRepository
     public function deleteHost(string $host, int $id);
 
     public function updateHost(int $id, string $host, string $newHost);
+
+    public function getHostId(string $host);
 }
