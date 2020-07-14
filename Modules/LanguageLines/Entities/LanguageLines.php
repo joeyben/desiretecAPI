@@ -66,7 +66,7 @@ class LanguageLines extends LanguageLine
         });
     }
 
-    public static function getCacheKey(string $group, string $locale, $whitelabelId = null): string
+    public static function getCacheKey(string $group, string $locale, int $whitelabelId = null): string
     {
         $whitelabel = getLanguageLinesCacheKey();
 
