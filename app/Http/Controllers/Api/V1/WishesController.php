@@ -295,16 +295,69 @@ class WishesController extends APIController
     }
 
     private function getLayerImage($whitelabelId, $layerName) {
-        $whitelabelLayers = $this->layerWhitelabel->withCriteria([
-            new OrderBy('layer_id'),
-            new Where('whitelabel_id', $whitelabelId),
-            new EagerLoad(['layer', 'attachments'])
-        ])->all();
+
+        $whitelabelLayers = $this->getWhitelabelLayers($whitelabelId);
 
         foreach ($whitelabelLayers as $layer) {
-            if ($layer['layer']['path'] === $layerName && sizeof($layer['attachments'])) {
-                return $layer['attachments'][0]['url'];
+            if ($layer['layer']['path'] === $layerName) {
+                return $layer['visual'];
             }
+        }
+    }
+
+    private function getWhitelabelLayers(int $whitelabelId) {
+        
+        $layers = $this->layerWhitelabel->withCriteria([
+            new OrderBy('layer_id'),
+            new Where('whitelabel_id', $whitelabelId),
+            new EagerLoad(['layer', 'attachments', 'variants'  => function ($query) {
+                $query->where('variants.active', 1)->with('attachments');
+            }])
+        ])->all();
+
+        return  $layers->map(function ($layer) {
+            return [
+                'visual' => $this->getImage($layer, 'visual'),
+                'layer' => $layer->layer,
+            ];
+        });
+    }
+
+    private function getImage($layer, $type)
+    {
+        $default = 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
+        $url = '';
+        $variant = $layer->variants->first();
+
+        if ($variant) {
+            $attachments = $variant->attachments->map(function ($attachment) {
+                return [
+                    'url' => $attachment->url,
+                    'type' => $attachment->type
+                ];
+            });
+
+            foreach ($attachments as    $attachment) {
+                if ($attachment['type'] === 'variants/' . $type) {
+                    $url = $attachment['url'];
+                }
+            }
+
+            if ($url !== '')
+            {
+                return $url;
+            } else {
+                return $default;
+            }
+
+        } else if ($type === 'visual') {
+            if ($image = $layer->attachments->first()) {
+                return $image->url;
+            }
+
+            return $default;
+        } else {
+            return $default;
         }
     }
 }
