@@ -34,12 +34,13 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     public function getWhitelabelNameByHost(string $host)
     {
         $query = WhitelabelHost::select([
+                config('module.whitelabel_host.table') . '.id',
                 config('module.whitelabel_host.table') . '.whitelabel_id'
             ])
             ->where(config('module.whitelabel_host.table') . '.host', 'LIKE', '%' . $host . '%')
             ->first();
 
-        return !is_null($query) ? $query->whitelabel_id :  null;
+        return !is_null($query) ? $query :  null;
     }
 
     public function updateRoute(int $id, string $name, string $subDomain)

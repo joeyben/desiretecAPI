@@ -9,6 +9,7 @@ use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
@@ -97,11 +98,11 @@ class WhitelabelController extends Controller
      */
     public function getWhitelabelByHost(string $host)
     {
-        $id = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
+        $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
 
         $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
             new EagerLoad(['footers']),
-            new Where('id', $id),
+            new Where('id', $whitelabelHost->whitelabel_id),
         ])->first();
 
         $background = $this->moduleWhitelabelsRepository->getBackgroundImage($whitelabel);
@@ -137,7 +138,7 @@ class WhitelabelController extends Controller
             'traffics'            => $whitelabel->traffics,
             'tt'                  => $whitelabel->tt,
             'licence'             => $whitelabel->licence,
-            'layers'              => $this->getLayers($whitelabel->id, $data),
+            'layers'              => $this->getLayers($whitelabelHost->id, $whitelabel->id, $data),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
             'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false,
@@ -170,15 +171,22 @@ class WhitelabelController extends Controller
         }
     }
 
-    private function getLayers(int $id, array $attachments = [])
+    private function getLayers(int $hostId = null, int $id, array $attachments = [])
     {
+        Log::info($hostId);
+
         $layers = $this->layerWhitelabels->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $id),
-            new EagerLoad(['layer', 'attachments', 'variants'  => function ($query) {
-                $query->where('variants.active', 1)->with('attachments');
+            new EagerLoad(['layer', 'attachments', 'variants'  => function ($query) use ($hostId) {
+                if (is_null($hostId)) {
+                    $query->where('variants.active', 1)->with('attachments');
+                } else {
+                    $query->where('variants.whitelabel_host_id', $hostId)->with('attachments');
+                }
             }])
         ])->all();
+
         return  $layers->map(function ($layer) use ($attachments) {
             return [
                 'id' => $layer->id,
