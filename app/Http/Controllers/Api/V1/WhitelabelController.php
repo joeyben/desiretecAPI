@@ -93,60 +93,70 @@ class WhitelabelController extends Controller
         return $this->responseJson($result);
     }
 
-    /**
-     * show page by $page_slug.
-     */
+
     public function getWhitelabelByHost(string $host)
     {
-        $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
+        try {
+            $host = str_replace("www.", "", $host);
 
-        $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
-            new EagerLoad(['footers']),
-            new Where('id', $whitelabelHost->whitelabel_id),
-        ])->first();
+            $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
 
-        $background = $this->moduleWhitelabelsRepository->getBackgroundImage($whitelabel);
+            if (null === $whitelabelHost) {
+                throw new \ErrorException(trans('errors.host.missing',  [ 'host' => $host]));
+            }
 
-        $logo = $this->moduleWhitelabelsRepository->getLogo($whitelabel);
+            $whitelabel = $this->moduleWhitelabelsRepository->withCriteria([
+                new EagerLoad(['footers']),
+                new Where('id', $whitelabelHost->whitelabel_id),
+            ])->first();
 
-        $favicon = $this->moduleWhitelabelsRepository->getFavicon($whitelabel);
+            $background = $this->moduleWhitelabelsRepository->getBackgroundImage($whitelabel);
 
-        $visual = $this->moduleWhitelabelsRepository->getVisual($whitelabel);
+            $logo = $this->moduleWhitelabelsRepository->getLogo($whitelabel);
 
-        $tourOperators = $this->moduleWhitelabelsRepository->getTourOperators($whitelabel->id);
+            $favicon = $this->moduleWhitelabelsRepository->getFavicon($whitelabel);
 
-        $data['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
-        $data['logo'] = (null !== $logo && null !== $logo->first()) ? $logo->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/default_logo.png';
-        $data['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
-        $data['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
+            $visual = $this->moduleWhitelabelsRepository->getVisual($whitelabel);
+
+            $tourOperators = $this->moduleWhitelabelsRepository->getTourOperators($whitelabel->id);
+
+            $data['background'] = (null !== $background && null !== $background->first()) ? $background->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/default_background.jpg';
+            $data['logo'] = (null !== $logo && null !== $logo->first()) ? $logo->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/logo/default_logo.png';
+            $data['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
+            $data['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
 
 
-        $result['data'] = [
-            'id'                  => $whitelabel->id,
-            'name'                => $whitelabel->name,
-            'display_name'        => $whitelabel->display_name,
-            'domain'              => $whitelabel->domain,
-            'ga_view_id'          => $whitelabel->ga_view_id,
-            'distribution_id'     => $whitelabel->distribution_id,
-            'subheadline_success' => $whitelabel->subheadline_success,
-            'headline_success'    => $whitelabel->headline_success,
-            'subheadline'         => $whitelabel->subheadline,
-            'headline'            => $whitelabel->headline,
-            'color'               => $whitelabel->color,
-            'is_autooffer'        => $whitelabel->is_autooffer,
-            'licence'             => $whitelabel->licence,
-            'traffics'            => $whitelabel->traffics,
-            'tt'                  => $whitelabel->tt,
-            'licence'             => $whitelabel->licence,
-            'layers'              => $this->getLayers($whitelabel->id, $data, $whitelabelHost->id),
-            'footers'             => $whitelabel->footers,
-            'tourOperators'       => $tourOperators,
-            'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false,
-            'attachments'         => $data
+            $result['data'] = [
+                'id'                  => $whitelabel->id,
+                'name'                => $whitelabel->name,
+                'display_name'        => $whitelabel->display_name,
+                'domain'              => $whitelabel->domain,
+                'ga_view_id'          => $whitelabel->ga_view_id,
+                'distribution_id'     => $whitelabel->distribution_id,
+                'subheadline_success' => $whitelabel->subheadline_success,
+                'headline_success'    => $whitelabel->headline_success,
+                'subheadline'         => $whitelabel->subheadline,
+                'headline'            => $whitelabel->headline,
+                'color'               => $whitelabel->color,
+                'is_autooffer'        => $whitelabel->is_autooffer,
+                'licence'             => $whitelabel->licence,
+                'traffics'            => $whitelabel->traffics,
+                'tt'                  => $whitelabel->tt,
+                'licence'             => $whitelabel->licence,
+                'layers'              => $this->getLayers($whitelabel->id, $data, $whitelabelHost->id),
+                'footers'             => $whitelabel->footers,
+                'tourOperators'       => $tourOperators,
+                'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false,
+                'attachments'         => $data
 
-        ];
+            ];
 
-        return $this->responseJson($result);
+            return $this->responseJson($result);
+
+        } catch (\Exception $e) {
+            return $this->responseJsonError($e);
+        }
+
     }
 
     public function getTnb(Request $request)
@@ -173,8 +183,6 @@ class WhitelabelController extends Controller
 
     private function getLayers(int $id, array $attachments = [], $hostId = null)
     {
-        Log::info($hostId);
-
         $layers = $this->layerWhitelabels->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $id),
