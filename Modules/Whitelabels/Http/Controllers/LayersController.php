@@ -3,6 +3,9 @@
 namespace Modules\Whitelabels\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Criteria\EagerLoad;
+use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\Where;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -73,7 +76,11 @@ class LayersController extends Controller
     public function view()
     {
         try {
-            $result['layers'] = $this->layers->all();
+            $result['layers'] = $this->layers->withCriteria([
+                new EagerLoad(['hosts'])
+            ])->all();
+
+            $result['whitelabel_id'] = $this->auth->user()->whitelabels()->first()->id;
 
             return $this->responseJson($result);
         } catch (Exception $e) {
