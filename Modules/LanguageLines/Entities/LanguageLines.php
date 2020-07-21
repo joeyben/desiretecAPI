@@ -78,7 +78,7 @@ class LanguageLines extends LanguageLine
         $whitelabelId = session()->get('wl-id', null);
 
         return Cache::rememberForever(static::getCacheKey($group, $locale, $whitelabelId), function () use ($group, $locale, $whitelabelId) {
-            return static::query()
+            $data = static::query()
                 ->where('group', $group)
                 ->where('locale', session()->get('wl-locale', $locale))
                 ->where('whitelabel_id', $whitelabelId)
@@ -91,6 +91,24 @@ class LanguageLines extends LanguageLine
                 })
                 ->pluck('text', 'key')
                 ->toArray();
+
+            if ($data === []) {
+                $data = static::query()
+                    ->where('group', $group)
+                    ->where('locale', session()->get('wl-locale', $locale))
+                    ->whereNull('whitelabel_id')
+                    ->get()
+                    ->map(function (LanguageLine $languageLine) use ($locale) {
+                        return [
+                            'key'  => $languageLine->key,
+                            'text' => $languageLine->text,
+                        ];
+                    })
+                    ->pluck('text', 'key')
+                    ->toArray();
+            }
+
+            return $data;
         });
     }
 
