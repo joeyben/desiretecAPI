@@ -4,6 +4,8 @@ namespace Modules\LanguageLines\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+use Spatie\TranslationLoader\LanguageLine;
 
 class Translation extends Model
 {
@@ -41,6 +43,7 @@ class Translation extends Model
 
     public static function getTranslationsForGroup(string $locale, string $group, int $whitelabelId = null): array
     {
+        Cache::flush();
         return Cache::rememberForever(static::getCacheKey($group, $locale, $whitelabelId), function () use ($group, $locale, $whitelabelId) {
             $data = static::query()
                 ->where('whitelabel_id', $whitelabelId)
@@ -56,20 +59,24 @@ class Translation extends Model
                 ->pluck('text', 'key')
                 ->toArray();
 
-            if ($data === []) {
-                $data = static::query()
-                    ->where('group', $group)
-                    ->where('locale', $locale)
-                    ->whereNull('whitelabel_id')
-                    ->get()
-                    ->map(function (self $translation) {
-                        return [
-                            'key'  => $translation->key,
-                            'text' => $translation->text,
-                        ];
-                    })
-                    ->pluck('text', 'key')
-                    ->toArray();
+            $defaultItems = static::query()
+                ->where('group', $group)
+                ->where('locale', $locale)
+                ->whereNull('whitelabel_id')
+                ->get()
+                ->map(function (self $translation) {
+                    return [
+                        'key'  => $translation->key,
+                        'text' => $translation->text,
+                    ];
+                })
+                ->pluck('text', 'key')
+                ->toArray();
+
+            foreach ($defaultItems as $key => $value) {
+                if(!array_key_exists($key, $data)) {
+                    $data[$key] = $value;
+                }
             }
 
             return $data;
