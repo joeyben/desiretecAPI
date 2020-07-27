@@ -76,8 +76,12 @@ class LayersController extends Controller
     public function view()
     {
         try {
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
             $result['layers'] = $this->layers->withCriteria([
-                new EagerLoad(['hosts'])
+                new EagerLoad(['hosts'  => function ($query) use ($whitelabel) {
+                    $query->where('whitelabel_host.whitelabel_id', $whitelabel->id);
+                }])
             ])->all();
 
             $result['whitelabel_id'] = $this->auth->user()->whitelabels()->first()->id;
