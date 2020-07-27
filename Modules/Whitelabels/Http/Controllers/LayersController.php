@@ -80,7 +80,7 @@ class LayersController extends Controller
 
             $result['layers'] = $this->layers->withCriteria([
                 new EagerLoad(['hosts'  => function ($query) use ($whitelabel) {
-                    $query->where('whitelabel_host.whitelabel_id', $whitelabel->id);
+                    $query->where('whitelabel_hosts.whitelabel_id', $whitelabel->id);
                 }])
             ])->all();
 
