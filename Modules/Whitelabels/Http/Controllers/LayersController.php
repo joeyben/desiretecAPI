@@ -138,7 +138,6 @@ class LayersController extends Controller
             $whitelabel = $this->auth->user()->whitelabels()->first();
             foreach ($request->get('layers') as $layer) {
                 $data[$layer] = [
-                    'layer_url'           => $request->get('pivot')[$layer],
                     'headline'            => 'Dürfen wir Sie beraten?',
                     'subheadline'         => 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!',
                     'headline_success'    => 'Vielen Dank, Ihr Reisewunsch wurde versandt.',
