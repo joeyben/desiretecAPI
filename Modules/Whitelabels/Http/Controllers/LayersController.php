@@ -3,6 +3,9 @@
 namespace Modules\Whitelabels\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Criteria\EagerLoad;
+use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\Where;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
@@ -73,7 +76,15 @@ class LayersController extends Controller
     public function view()
     {
         try {
-            $result['layers'] = $this->layers->all();
+            $whitelabel = $this->auth->guard('web')->user()->whitelabels()->first();
+
+            $result['layers'] = $this->layers->withCriteria([
+                new EagerLoad(['hosts'  => function ($query) use ($whitelabel) {
+                    $query->where('whitelabel_hosts.whitelabel_id', $whitelabel->id);
+                }])
+            ])->all();
+
+            $result['whitelabel_id'] = $this->auth->user()->whitelabels()->first()->id;
 
             return $this->responseJson($result);
         } catch (Exception $e) {
@@ -127,7 +138,6 @@ class LayersController extends Controller
             $whitelabel = $this->auth->user()->whitelabels()->first();
             foreach ($request->get('layers') as $layer) {
                 $data[$layer] = [
-                    'layer_url'           => $request->get('pivot')[$layer],
                     'headline'            => 'Dürfen wir Sie beraten?',
                     'subheadline'         => 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!',
                     'headline_success'    => 'Vielen Dank, Ihr Reisewunsch wurde versandt.',

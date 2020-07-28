@@ -3,6 +3,7 @@
 namespace Modules\LanguageLines\Entities;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Modules\LanguageLines\Traits\LanguageLinesSearchableTrait;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -79,7 +80,7 @@ class LanguageLines extends LanguageLine
         $whitelabelId = session()->get('wl-id', null);
 
         return Cache::rememberForever(static::getCacheKey($group, $locale, $whitelabelId), function () use ($group, $locale, $whitelabelId) {
-            return static::query()
+            $data = static::query()
                 ->where('group', $group)
                 ->where('locale', session()->get('wl-locale', $locale))
                 ->where('whitelabel_id', $whitelabelId)
@@ -92,6 +93,28 @@ class LanguageLines extends LanguageLine
                 })
                 ->pluck('text', 'key')
                 ->toArray();
+
+            $defaultItems = static::query()
+                ->where('group', $group)
+                ->where('locale', session()->get('wl-locale', $locale))
+                ->whereNull('whitelabel_id')
+                ->get()
+                ->map(function (LanguageLine $languageLine) use ($locale) {
+                    return [
+                        'key'  => $languageLine->key,
+                        'text' => $languageLine->text,
+                    ];
+                })
+                ->pluck('text', 'key')
+                ->toArray();
+
+            foreach ($defaultItems as $key => $value) {
+                if(!array_key_exists($key, $data)) {
+                    $data[$key] = $value;
+                }
+            }
+
+            return $data;
         });
     }
 
