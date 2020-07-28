@@ -74,7 +74,7 @@
       handleClose (tag) {
         this.tag = tag
         this.$store.dispatch('block', {element: 'whitelabelsProviderComponent', load: true})
-        this.$http.delete(window.laroute.route('provider.hosts.destroy', {host: tag, id: this.whitelebelId}))
+        this.$http.delete(window.laroute.route('provider.hosts.destroy', {host: encodeURIComponent(tag), id: this.whitelebelId}))
           .then(this.onDeleteSuccess)
           .catch(this.onFailed)
           .then(() => {

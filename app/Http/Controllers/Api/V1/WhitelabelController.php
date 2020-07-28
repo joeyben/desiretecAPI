@@ -186,7 +186,9 @@ class WhitelabelController extends Controller
         $layers = $this->layerWhitelabels->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $id),
-            new EagerLoad(['layer', 'attachments', 'variants'  => function ($query) use ($hostId) {
+            new EagerLoad(['layer'  => function ($query) {
+                $query->with(['hosts']);
+            }, 'attachments', 'variants'  => function ($query) use ($hostId) {
                 if (is_null($hostId)) {
                     $query->where('variants.active', 1)->with('attachments');
                 } else {
@@ -209,6 +211,7 @@ class WhitelabelController extends Controller
                 'headline_success' => $this->getVariant($layer, 'headline_success'),
                 'subheadline_success' => $this->getVariant($layer, 'subheadline_success'),
                 'layer_url' => $layer->layer_url,
+                'hosts' => $layer->hosts,
                 'privacy' => $layer->privacy,
                 'attachments' => $layer->attachments->first(),
                 'layer' => $layer->layer
