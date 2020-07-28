@@ -14,8 +14,7 @@ class LayerRequest extends FormRequest
     public function rules()
     {
         return [
-            'layers' => 'required|array|min:1',
-            'pivot'  => 'required|array|min:4',
+            'layers' => 'required|array|min:1'
         ];
     }
 
