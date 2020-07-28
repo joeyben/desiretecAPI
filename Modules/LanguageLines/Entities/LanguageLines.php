@@ -98,10 +98,10 @@ class LanguageLines extends LanguageLine
                 ->where('locale', session()->get('wl-locale', $locale))
                 ->whereNull('whitelabel_id')
                 ->get()
-                ->map(function (self $translation) {
+                ->map(function (LanguageLine $languageLine) use ($locale) {
                     return [
-                        'key'  => $translation->key,
-                        'text' => $translation->text,
+                        'key'  => $languageLine->key,
+                        'text' => $languageLine->text,
                     ];
                 })
                 ->pluck('text', 'key')
