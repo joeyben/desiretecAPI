@@ -127,7 +127,7 @@ class WishesRepository extends BaseRepository
             ->groupBy(config('module.wishes.table') . '.id')->orderBy(config('module.wishes.table') . '.id', 'DESC');
         if (access()->user()->hasRole('User')) {
             $query->where(config('module.wishes.table') . '.created_by', access()->user()->id);
-        } elseif (access()->user()->hasRole('Seller')) {
+        } elseif (access()->user()->hasRole('Seller') && access()->user()->id != 2283) {
             $query->whereIn(config('module.wishes.table') . '.group_id', access()->user()->groups->pluck('id')->toArray());
         }
 
