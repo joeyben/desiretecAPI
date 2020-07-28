@@ -1,29 +1,25 @@
 <template>
     <div class="form-group row">
-        <label class="col-lg-3 col-form-label">&nbsp;{{ trans('modals.hosts') }} <span class="text-danger"> *</span></label>
-        <div class="col-lg-9">
-
-            <el-tag
-                    :key="tag"
-                    v-for="tag in dynamicTags"
-                    closable
-                    :disable-transitions="false"
-                    @close="handleClose(tag)">
-                {{ 'https://' + tag}}
-            </el-tag>
-            <el-input
-                    class="input-new-tag"
-                    v-if="inputVisible"
-                    v-model="inputValue"
-                    ref="saveTagInput"
-                    size="mini"
-                    @keyup.enter.native="handleInputConfirm"
-                    @blur="handleInputConfirm"
-            >
+        <el-tag
+                :key="tag"
+                v-for="tag in dynamicTags"
+                closable
+                :disable-transitions="false"
+                @close="handleClose(tag)">
+            {{ 'https://' + tag}}
+        </el-tag>
+        <el-input
+                class="input-new-tag"
+                v-if="inputVisible"
+                v-model="inputValue"
+                ref="saveTagInput"
+                size="mini"
+                @keyup.enter.native="handleInputConfirm"
+                @blur="handleInputConfirm"
+        >
             <template slot="prepend">https://</template>
-            </el-input>
-            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Domain hinzufügen</el-button>
-        </div>
+        </el-input>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Domain hinzufügen</el-button>
     </div>
 </template>
 

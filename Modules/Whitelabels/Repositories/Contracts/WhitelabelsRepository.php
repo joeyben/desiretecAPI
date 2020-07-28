@@ -32,7 +32,7 @@ interface WhitelabelsRepository
 
     public function getTourOperators(int $whitelabelId);
 
-    public function addHost(string $host, int $whitelebelId);
+    public function addHost(string $host, int $whitelebelId, int $layerId = null);
 
     public function deleteHost(string $host, int $id);
 

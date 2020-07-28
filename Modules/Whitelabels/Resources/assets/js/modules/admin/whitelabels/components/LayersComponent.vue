@@ -18,16 +18,7 @@
                                     <span v-text="layer.description"></span>
                                     <div class="bottom clearfix">
                                         <el-checkbox :label="layer.id" :key="layer.id">{{layer.name}}</el-checkbox>
-
-                                        <el-input
-                                                placeholder="Please input"
-                                                type="url"
-                                                class="float-left hide"
-                                                :name="pivot[layer.id]"
-                                                v-model="pivot[layer.id]"
-                                                :disabled="isIncludes(layer.id)"
-                                                clearable>
-                                        </el-input>
+                                        <tag-layer-component :hostsList="generateHostsList(layer.hosts)" :whitelebelId="whitelabel.id" :layerId="layer.id"></tag-layer-component>
                                     </div>
                                 </div>
                             </el-card>
@@ -53,9 +44,11 @@
   import Vuex from 'vuex'
   import FilterBar from './FilterBar'
   import { Errors } from '../../../../../../../../../resources/assets/js/utils/errors'
+  import TagLayerComponent from './TagLayerComponent'
+
   export default {
     name: 'LayersComponent',
-    components: { FilterBar },
+    components: { FilterBar, TagLayerComponent },
     data () {
       return {
         // eslint-disable-next-line
@@ -91,7 +84,16 @@
         loadCurrentWhitelabel: 'loadCurrentWhitelabel'
       }),
       doLayerSelect (id) {
-        debugger
+
+      },
+      generateHostsList (hosts) {
+        let data = []
+
+        hosts.forEach((host, index) => {
+          data.push(host.host)
+        })
+
+        return data
       },
       isIncludes (id) {
         if (!this.checkedLayers.includes(id)) {
