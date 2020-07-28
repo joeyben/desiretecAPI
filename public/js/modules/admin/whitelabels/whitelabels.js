@@ -100826,7 +100826,9 @@ exports.default = {
 
       this.tag = tag;
       this.$store.dispatch('block', { element: 'whitelabelsProviderComponent', load: true });
-      this.$http.delete(window.laroute.route('provider.hosts.destroy', { host: encodeURIComponent(tag), id: this.whitelebelId })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+      var url = window.laroute.route('provider.hosts.destroy', { id: this.whitelebelId, host: encodeURIComponent(tag) });
+
+      this.$http.delete(url).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
         _this.$store.dispatch('block', { element: 'whitelabelsProviderComponent', load: false });
       });
     },

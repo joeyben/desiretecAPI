@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Http\Request;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Str;
 use Illuminate\Translation\Translator;
@@ -76,11 +77,11 @@ class HostsController extends Controller
         return $this->response->json($result, $result['status'], [], JSON_NUMERIC_CHECK);
     }
 
-    public function destroy(string $host, int $id)
+    public function destroy(Request $request, int $id)
     {
         try {
             $result['whitelabel'] = $this->whitelabels->deleteHost(
-                $host,
+                $request->get('host'),
                 $id
             );
 
