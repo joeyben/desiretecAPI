@@ -76,6 +76,7 @@ class LanguageLines extends LanguageLine
 
     public static function getTranslationsForGroup(string $locale, string $group): array
     {
+
         $whitelabelId = session()->get('wl-id', null);
 
         return Cache::rememberForever(static::getCacheKey($group, $locale, $whitelabelId), function () use ($group, $locale, $whitelabelId) {
