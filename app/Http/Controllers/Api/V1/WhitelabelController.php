@@ -211,7 +211,7 @@ class WhitelabelController extends Controller
                 'headline_success' => $this->getVariant($layer, 'headline_success'),
                 'subheadline_success' => $this->getVariant($layer, 'subheadline_success'),
                 'layer_url' => $layer->layer_url,
-                'hosts' => $layer->hosts,
+                'hosts' => $layer->hosts->pluck('host'),
                 'privacy' => $layer->privacy,
                 'attachments' => $layer->attachments->first(),
                 'layer' => $layer->layer
