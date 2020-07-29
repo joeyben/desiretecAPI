@@ -211,7 +211,7 @@ class WhitelabelController extends Controller
                 'headline_success' => $this->getVariant($layer, 'headline_success'),
                 'subheadline_success' => $this->getVariant($layer, 'subheadline_success'),
                 'layer_url' => $layer->layer_url,
-                'hosts' => $layer->hosts->pluck('host'),
+                'hosts' => $this->getHosts($layer->hosts),
                 'privacy' => $layer->privacy,
                 'attachments' => $layer->attachments->first(),
                 'layer' => $layer->layer
@@ -271,5 +271,10 @@ class WhitelabelController extends Controller
         } else {
             return $default;
         }
+    }
+
+    private function getHosts($hosts = null)
+    {
+        return is_null($hosts) ? [] : $hosts->pluck('host');
     }
 }
