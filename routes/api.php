@@ -44,7 +44,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('wishes', 'WishesController@getWishes');
         Route::get('wishlist', 'WishesController@wishlist');
         Route::post('wishes/changeWishStatus', 'WishesController@changeWishStatus');
-        Route::get('wishes/{id}', 'WishesController@getWish');
+        //Route::get('wishes/{id}', 'WishesController@getWish');
         Route::post('wishes/note/update', 'WishesController@updateNote');
 
         Route::group(['prefix' => 'agents'], function () {
@@ -97,7 +97,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('tnb', 'WhitelabelController@getTnb');
 
         Route::get('wish/store', 'WishesController@store');
-
+        Route::get('wishes/{id}', 'WishesController@getWish');
         Route::get('destinations', 'RegionsController@getAllDestinations');
         Route::get('airports', 'RegionsController@getAllAirports');
         Route::get('ttairports', 'RegionsController@getAllTTAirports');
