@@ -125,13 +125,15 @@ class WishesController extends APIController
 
             $offers = $wishData->offers;
             $offerFiles = [];
-            foreach ($offers as $offer) {
+            foreach ($offers as $key => $offer) {
                 if (null !== Agent::where('id', $offer->agent_id)->value('avatar')) {
                     array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
                 }
 
                 if (null !== Agent::where('id', $offer->agent_id)->first()) {
-                    array_push($agentName, Agent::where('id', $offer->agent_id)->first());
+                    $agent =  Agent::where('id', $offer->agent_id)->first();
+                    array_push($agentName, $agent);
+                    $wishData->offers[$key]->setAttribute('agent', $agent);
                 }
 
                 if (!$offer->offerFiles->isEmpty()) {
