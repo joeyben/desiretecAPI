@@ -133,7 +133,7 @@ class WishesController extends APIController
                 if (null !== Agent::where('id', $offer->agent_id)->first()) {
                     $agent =  Agent::where('id', $offer->agent_id)->first();
                     array_push($agentName, $agent);
-                    array_push($wishData->offers[$key]['agent'], $agent);
+                    $wishData->offers[$key]->setAttribute('agent', $agent);
                 }
 
                 if (!$offer->offerFiles->isEmpty()) {
