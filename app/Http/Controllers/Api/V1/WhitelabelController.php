@@ -98,7 +98,7 @@ class WhitelabelController extends Controller
     {
         try {
             $host = str_replace("www.", "", $host);
-
+            $host = str_replace("_", "/", $host);
             $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
 
             if (null === $whitelabelHost) {
