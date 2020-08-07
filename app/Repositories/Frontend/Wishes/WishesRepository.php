@@ -136,13 +136,7 @@ class WishesRepository extends BaseRepository
 
     public function getWishList(ManageWishesRequest $request)
     {
-        $status_arr = [
-            'new'               => '1',
-            'offer_created'     => '2',
-            'completed'         => '3',
-        ];
-
-        $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+        $status = $request->get('status') ? $request->get('status') : '1';
         $id = ($request->get('filter') && null !== $request->get('filter') && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
         $destination = ($request->get('filter') && null !== $request->get('filter') && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
 
@@ -154,7 +148,7 @@ class WishesRepository extends BaseRepository
 
         $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
 
-        if (Auth::user()->hasRole('User')) {
+        if (Auth::user()->hasRole('User') || $status === '4') {
             $wish = $this->getForDataTable()
                 ->when($currentWhiteLabelID, function ($wish, $currentWhiteLabelID) {
                     return $wish->where('whitelabel_id', (int) ($currentWhiteLabelID));
@@ -186,8 +180,6 @@ class WishesRepository extends BaseRepository
         $whitelabelLayers = $this->getLayers((int)$currentWhiteLabelID);
 
         foreach ($wish as $singleWish) {
-            $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
-
             $singleWish['duration'] = transformDuration($singleWish['duration']);
 
             $singleWish['purpose'] = transformTravelPurpose($singleWish['purpose']);
@@ -258,13 +250,7 @@ class WishesRepository extends BaseRepository
     public function changeWishStatus(ChangeWishesStatusRequest $request)
     {
         try {
-            $status_arr = [
-                'new'               => '1',
-                'offer_created'     => '2',
-                'completed'         => '3',
-            ];
-
-            $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+            $status = $request->get('status') ? $request->get('status') : '1';
 
             $wish = $this->updateStatus($request->get('id'), $status);
 
