@@ -93,7 +93,27 @@ class AutooffersPWRepository extends BaseRepository
     {
         $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
 
-        /*$soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
+        $xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
+   <soap:Header/>
+     <soap:Body>
+<PackageGroupRequest xmlns="http://www.peakwork.net/pws/2010/03" AuthKey="e0a7298a776df161ab2f6f6407f15520">
+<TravelPeriod>
+<DepartureDate>2020-10-01</DepartureDate>
+           <Duration>128</Duration>
+         </TravelPeriod>
+         <Travellers>
+<Adult Age="28"/><Adult Age="22"/> </Travellers> <Hotel>
+           <Rooms />
+         </Hotel>
+         <Flight>
+              <DepartureAirports>DUS FRA</DepartureAirports>
+              <ArrivalAirports>MIA</ArrivalAirports>
+            </Flight>
+       </PackageGroupRequest>
+     </soap:Body>
+   </soap:Envelope>';
+
+        $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
             'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
                 SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
 
@@ -103,13 +123,26 @@ class AutooffersPWRepository extends BaseRepository
         $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
         $formDataContainer->Lang = 'de';
         $formDataContainer->Currency = 'EUR';
+        $data = [];
+        $data['Travellers']['Adult'][0]['Age'] = 28;
+        $data['Travellers']['Adult'][1]['Age'] = 22;
+       // $data['TravelPeriod']['DepartureDate'] = "2020-12-01";
+        //$data['TravelPeriod']['ReturnDate'] = "2020-12-20";
+        $data['TravelPeriod']['Duration'] = '7';
+        $data['Flight']['DepartureAirports'] = "HAM";
+        $data['Flight']['ArrivalAirports'] = "OSL";
+        $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
+        $data['Lang'] = 'en';
+        $data['Currency'] = 'EUR';
+        //dd($soapclient->__getFunctions());
+        $formData = $soapclient->GetPackageProduct($data);
+        echo "<pre>";
+        var_dump($formData);
+        echo "</pre>";
+        dd("yeah");
 
-        $formData = $soapclient->GetFormData($formDataContainer);
 
-        dd($formData);*/
-
-
-        $xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
+        /*$xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
    <soap:Header/>
      <soap:Body>
 <PackageGroupRequest xmlns="http://www.peakwork.net/pws/2010/03" AuthKey="e0a7298a776df161ab2f6f6407f15520">
@@ -133,9 +166,9 @@ class AutooffersPWRepository extends BaseRepository
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
+        echo "------";
 
-
-        print_r($output);
+        print_r($output);*/
     }
 
     public function getToken()

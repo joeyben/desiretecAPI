@@ -122,7 +122,12 @@ class WishesController extends APIController
 
             $avatar = [];
             $agentName = [];
-
+            $lastMessage = count($wishData->messages) ? $wishData->messages[count($wishData->messages) - 1] : null;
+            $lastOffer = count($wishData->offers) ? $wishData->offers[count($wishData->offers) - 1] : null;
+            $lastAgent = $lastMessage ? $lastMessage->agent_id : null;
+            $lastAgent = ($lastOffer && $lastMessage && $lastOffer->created_at > $lastMessage->created_at )  ? $lastOffer->agent_id : $lastAgent;
+            $agents =  isset($wishData->group->users[0]->agents) ? $wishData->group->users[0]->agents : [];
+            $wishData->setAttribute('lastAgent', null);
             $offers = $wishData->offers;
             $offerFiles = [];
             foreach ($offers as $key => $offer) {
@@ -140,7 +145,11 @@ class WishesController extends APIController
                     array_push($offerFiles, $offer->offerFiles);
                 }
             }
-
+            foreach ($agents as $key => $agent) {
+                if($agent->id == $lastAgent){
+                    $wishData->lastAgent = $agent;
+                }
+            }
             $wish = $data['modifiedData'];
             $result['data'] = $wish;
             $result['data']['wish_id'] = $id;
@@ -159,7 +168,7 @@ class WishesController extends APIController
             $result['data']['wishDetails']['callbacks'] = $wishData->callbacks;
             $result['data']['wishDetails']['group'] = $wishData->group;
             $result['data']['wishDetails']['group']['users'] = $wishData->group->users;
-            $result['data']['wishDetails']['group']['agents'] = isset($wishData->group->users[0]->agents) ? $wishData->group->users[0]->agents : [];
+            $result['data']['wishDetails']['group']['agents'] = $agents;
 
             return $this->responseJson($result);
         } catch (Exception $e) {
