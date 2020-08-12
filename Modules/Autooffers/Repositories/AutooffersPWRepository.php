@@ -316,7 +316,7 @@ class AutooffersPWRepository extends BaseRepository
     {
         $count = 0;
         foreach ($offers as $key => $offer) {
-            $hotelId = $offer['References']['GiataCode'];
+            $hotelId = $offer->References->GiataCode;
             if (!$this->checkValidity($hotelId, $wish_id)) {
                 continue;
             }
