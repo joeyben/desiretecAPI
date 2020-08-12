@@ -124,7 +124,7 @@ class AutooffersPWRepository extends BaseRepository
         //echo "</pre>";
         //dd("yeah");
         $this->data = $formData;
-        return $formData['Hotel'];
+        return $formData->Hotel;
         /*$xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
    <soap:Header/>
      <soap:Body>
