@@ -238,6 +238,10 @@ class WishesController extends APIController
                     $this->repository->setIsAutoofer($wish->id);
                     $this->callTraffics($wish, $newUser, $request);
                 }
+                elseif ($wish->whitelabel->peakwork) {
+                    $this->repository->setIsAutoofer($wish->id);
+                    $this->callPeakwork($wish, $newUser, $request);
+                }
 
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
             }
@@ -291,6 +295,34 @@ class WishesController extends APIController
         //dispatch($wishJob);
 
         $this->repository->callTraffics($wish->id, $request->input('whitelabel_id'), $newUser->id);
+
+        $details = [
+            'email'            => $newUser->email,
+            'token'            => $newUser->token->token,
+            'email_name'       => trans('autooffers.email.name'),
+            'email_subject'    => trans('autooffer.email.subject'),
+            'email_content'    => $contents,
+            'current_wl_email' => $wish->whitelabel->email,
+            'type'             => 0
+        ];
+        dispatch((new sendAutoOffersMail($details, $wish->id, $wish->whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
+    }
+
+    public function callPeakwork($wish, $newUser, $request)
+    {
+        $view = \View::make('wishes::emails.autooffer',
+            [
+                'url'=> $wish->whitelabel->domain . '/offer/list/' . $wish->id . '/' . $newUser->token->token,
+                'whitelabelId' => $wish->whitelabel->id,
+                'whitelabel' => $wish->whitelabel
+            ]
+        );
+        $contents = $view->render();
+
+        //$wishJob = (new callTTApi($wish->id, $request->input('whitelabel_id'), $newUser->id))->delay(Carbon::now()->addSeconds(3));
+        //dispatch($wishJob);
+
+        $this->repository->callPeakwork($wish->id, $request->input('whitelabel_id'), $newUser->id);
 
         $details = [
             'email'            => $newUser->email,

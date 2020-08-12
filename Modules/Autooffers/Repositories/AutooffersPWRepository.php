@@ -93,7 +93,8 @@ class AutooffersPWRepository extends BaseRepository
     {
         $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
 
-        /*$soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
+
+        $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
             'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
                 SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
 
@@ -103,13 +104,28 @@ class AutooffersPWRepository extends BaseRepository
         $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
         $formDataContainer->Lang = 'de';
         $formDataContainer->Currency = 'EUR';
-
-        $formData = $soapclient->GetFormData($formDataContainer);
-
-        dd($formData);*/
-
-
-        $xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
+        $data = [];
+        $data['Travellers']['Adult'][0]['Age'] = 28;
+        $data['Travellers']['Adult'][1]['Age'] = 22;
+        $data['Travellers']['Adult'][2]['Age'] = 22;
+       // $data['TravelPeriod']['DepartureDate'] = "2020-12-01";
+        //$data['TravelPeriod']['ReturnDate'] = "2020-12-20";
+        $data['TravelPeriod']['Duration'] = '7';
+        $data['Flight']['DepartureAirports'] = "HAM";
+        $data['Flight']['ArrivalAirports'] = "OSL";
+        $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
+        $data['Lang'] = 'en';
+        $data['Currency'] = 'EUR';
+        $data['ResultsTotal'] = 3;
+        //dd($soapclient->__getFunctions());
+        $formData = $soapclient->GetPackageProduct($data);
+        //echo "<pre>";
+        //dd($formData);
+        //echo "</pre>";
+        //dd("yeah");
+        $this->data = $formData;
+        return $formData['Hotel'];
+        /*$xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
    <soap:Header/>
      <soap:Body>
 <PackageGroupRequest xmlns="http://www.peakwork.net/pws/2010/03" AuthKey="e0a7298a776df161ab2f6f6407f15520">
@@ -133,9 +149,9 @@ class AutooffersPWRepository extends BaseRepository
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
+        echo "------";
 
-
-        print_r($output);
+        print_r($output);*/
     }
 
     public function getToken()
@@ -300,11 +316,11 @@ class AutooffersPWRepository extends BaseRepository
     {
         $count = 0;
         foreach ($offers as $key => $offer) {
-            $hotelId = $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'];
+            $hotelId = $offer['References']['GiataCode'];
             if (!$this->checkValidity($hotelId, $wish_id)) {
                 continue;
             }
-            $tOperator = $offer['TourOperator']['TourOperatorCode'];
+            $tOperator = $offer['Offers']['Offer']['TourOperator']['Code'];
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
             if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
                 continue;
@@ -383,25 +399,27 @@ class AutooffersPWRepository extends BaseRepository
     public function storeAutooffer($offer, $hotel, $wish_id, $userId)
     {
         try {
+            $DepartureDate = new DateTime($offer['TravelDateInfo']['DepartureDate']);
+            $ArrivalDate = new DateTime($offer['TravelDateInfo']['ArrivalDateTime']);
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
-            $autooffer->code = $offer['OfferID'];
-            $autooffer->type = \array_key_exists('TravelType', $offer) ? $offer['TravelType'] : 'NM';
-            $autooffer->totalPrice = $offer['PriceInfo']['Price']['value'];
-            $autooffer->personPrice = $offer['PriceInfo']['Price']['value'];
-            $autooffer->from = $offer['TravelDateInfo']['DepartureDate'];
-            $autooffer->to = $offer['TravelDateInfo']['ReturnDate'];
-            $autooffer->tourOperator_code = $offer['TourOperator']['TourOperatorCode'];
-            $autooffer->tourOperator_name = $offer['TourOperator']['TourOperatorName'];
-            $autooffer->hotel_code = $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'];
-            $autooffer->hotel_name = $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'];
-            $autooffer->hotel_location_name = '';
-            $autooffer->hotel_location_lng = 0;
-            $autooffer->hotel_location_lat = 0;
+            $autooffer->code = $offer['ProductCode'];
+            $autooffer->type = 'pauschal';
+            $autooffer->totalPrice = $offer['Price']['Amount'];
+            $autooffer->personPrice = $offer['Price']['PerPerson'] ? $offer['Price']['Amount'] : $offer['Price']['Amount']/count($this->data['Travellers']['Adult']);
+            $autooffer->from = $DepartureDate->format('Y-m-d');
+            $autooffer->to = $ArrivalDate->format('Y-m-d');
+            $autooffer->tourOperator_code = $offer['TourOperator']['Code'];
+            $autooffer->tourOperator_name = $offer['TourOperator']['_'];
+            $autooffer->hotel_code = $offer['References']['HotelID'];
+            $autooffer->hotel_name = $offer['Name'];
+            $autooffer->hotel_location_name = $offer['Location']['Region'].', '.$offer['Location']['City'].', '.$offer['Location']['Country'];
+            $autooffer->hotel_location_lng = $offer['Location']['GeoCode']['Longitude'];
+            $autooffer->hotel_location_lat = $offer['Location']['GeoCode']['Latitude'];
             $autooffer->hotel_location_region_code = '';
             $autooffer->hotel_location_region_name = '';
-            $autooffer->airport_code = $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightArrival']['ArrivalAirportRef']['AirportCode'];
-            $autooffer->airport_name = '';
+            $autooffer->airport_code = $offer['Offers']['Offer']['Departure']['ArrivalAirport']['Code'];
+            $autooffer->airport_name = $offer['Offers']['Offer']['Departure']['ArrivalAirport']['_'];
             $autooffer->data = json_encode($this->deserializeData($offer));
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;

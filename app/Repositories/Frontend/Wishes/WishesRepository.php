@@ -19,6 +19,7 @@ use DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Modules\Autooffers\Repositories\AutooffersPWRepository;
 use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\AutooffersTTRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
@@ -60,16 +61,18 @@ class WishesRepository extends BaseRepository
     private $rules;
     private $autooffers;
     private $autooffersTT;
+    private $autooffersPW;
     private $autoRules;
     private $layerWhitelabel;
 
-    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, AutooffersTTRepository $autooffersTT, EloquentAutooffersRepository $autoRules, LayerWhitelabelRepository $layerWhitelabel)
+    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, AutooffersTTRepository $autooffersTT, AutooffersPWRepository $autooffersPW, EloquentAutooffersRepository $autoRules, LayerWhitelabelRepository $layerWhitelabel)
     {
         $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
         $this->rules = $rules;
         $this->autooffers = $autooffers;
         $this->autooffersTT = $autooffersTT;
+        $this->autooffersPW = $autooffersPW;
         $this->autoRules = $autoRules;
         $this->layerWhitelabel = $layerWhitelabel;
     }
@@ -691,6 +694,15 @@ class WishesRepository extends BaseRepository
         $this->autooffersTT->getToken();
         $response = $this->autooffersTT->getTTData();
         $this->autooffersTT->storeMany($response, $wish->id, $_rules, $userId);
+    }
+
+    public function callPeakwork($wishID, $whitelabelId, $userId)
+    {
+        $wish = Wish::where('id', $wishID)->first();
+        $_rules = $this->autoRules->getSettingsForWhitelabel($whitelabelId);
+        $this->autooffersPW->saveWishData($wish, $whitelabelId);
+        $response = $this->autooffersPW->getRequest();
+        $this->autooffersPW->storeMany($response, $wish->id, $_rules, $userId);
     }
 
     public function callTraffics($wishID, $whitelabelId, $userId)
