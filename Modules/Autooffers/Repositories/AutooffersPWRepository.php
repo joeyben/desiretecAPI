@@ -399,27 +399,27 @@ class AutooffersPWRepository extends BaseRepository
     public function storeAutooffer($offer, $hotel, $wish_id, $userId)
     {
         try {
-            $DepartureDate = new DateTime($offer['TravelDateInfo']['DepartureDate']);
-            $ArrivalDate = new DateTime($offer['TravelDateInfo']['ArrivalDateTime']);
+            $DepartureDate = new DateTime($offer->TravelDateInfo->DepartureDate);
+            $ArrivalDate = new DateTime($offer->TravelDateInfo->ArrivalDateTime);
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
-            $autooffer->code = $offer['ProductCode'];
+            $autooffer->code = $offer->ProductCode;
             $autooffer->type = 'pauschal';
-            $autooffer->totalPrice = $offer['Price']['Amount'];
-            $autooffer->personPrice = $offer['Price']['PerPerson'] ? $offer['Price']['Amount'] : $offer['Price']['Amount']/count($this->data['Travellers']['Adult']);
+            $autooffer->totalPrice = $offer->Price->Amount;
+            $autooffer->personPrice = $offer->Price->PerPerson ? $offer->Price->Amount : $offer->Price->Amount/count($offer->Travellers->Adult);
             $autooffer->from = $DepartureDate->format('Y-m-d');
             $autooffer->to = $ArrivalDate->format('Y-m-d');
-            $autooffer->tourOperator_code = $offer['TourOperator']['Code'];
-            $autooffer->tourOperator_name = $offer['TourOperator']['_'];
-            $autooffer->hotel_code = $offer['References']['HotelID'];
-            $autooffer->hotel_name = $offer['Name'];
-            $autooffer->hotel_location_name = $offer['Location']['Region'].', '.$offer['Location']['City'].', '.$offer['Location']['Country'];
-            $autooffer->hotel_location_lng = $offer['Location']['GeoCode']['Longitude'];
-            $autooffer->hotel_location_lat = $offer['Location']['GeoCode']['Latitude'];
+            $autooffer->tourOperator_code = $offer->TourOperator->Code;
+            $autooffer->tourOperator_name = $offer->TourOperator->_;
+            $autooffer->hotel_code = $offer->References->HotelID;
+            $autooffer->hotel_name = $offer->Name;
+            $autooffer->hotel_location_name = $offer->Location->Region.', '.$offer->Location->City.', '.$offer->Location->Country;
+            $autooffer->hotel_location_lng = $offer->Location->GeoCode->Longitude;
+            $autooffer->hotel_location_lat = $offer->Location->GeoCode->Latitude;
             $autooffer->hotel_location_region_code = '';
             $autooffer->hotel_location_region_name = '';
-            $autooffer->airport_code = $offer['Offers']['Offer']['Departure']['ArrivalAirport']['Code'];
-            $autooffer->airport_name = $offer['Offers']['Offer']['Departure']['ArrivalAirport']['_'];
+            $autooffer->airport_code = $offer->Offers->Offer->Departure->ArrivalAirport->Code;
+            $autooffer->airport_name = $offer->Offers->Offer->Departure->ArrivalAirport->_;
             $autooffer->data = json_encode($this->deserializeData($offer));
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
