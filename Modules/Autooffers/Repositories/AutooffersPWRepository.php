@@ -320,7 +320,7 @@ class AutooffersPWRepository extends BaseRepository
             if (!$this->checkValidity($hotelId, $wish_id)) {
                 continue;
             }
-            $tOperator = $offer['Offers']['Offer']['TourOperator']['Code'];
+            $tOperator = $offer->Offers->Offer->TourOperator->Code;
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
             if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
                 continue;
