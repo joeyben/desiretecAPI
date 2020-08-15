@@ -130,6 +130,7 @@ class WishesController extends APIController
             $wishData->setAttribute('lastAgent', null);
             $offers = $wishData->offers;
             $offerFiles = [];
+
             foreach ($offers as $key => $offer) {
                 if (null !== Agent::where('id', $offer->agent_id)->value('avatar')) {
                     array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
@@ -145,11 +146,17 @@ class WishesController extends APIController
                     array_push($offerFiles, $offer->offerFiles);
                 }
             }
+
             foreach ($agents as $key => $agent) {
                 if($agent->id == $lastAgent){
                     $wishData->lastAgent = $agent;
                 }
             }
+
+            if(!$wishData->lastAgent) {
+                $wishData->lastAgent = $agents[0];
+            }
+
             $wish = $data['modifiedData'];
             $result['data'] = $wish;
             $result['data']['wish_id'] = $id;
