@@ -149,6 +149,11 @@ class WishesController extends APIController
                     $wishData->lastAgent = $agent;
                 }
             }
+
+            if (!$wishData->lastAgent) {
+                $wishData->lastAgent = $agents->first();
+            }
+
             $wish = $data['modifiedData'];
             $result['data'] = $wish;
             $result['data']['wish_id'] = $id;
@@ -348,7 +353,7 @@ class WishesController extends APIController
     }
 
     private function getWhitelabelLayers(int $whitelabelId) {
-        
+
         $layers = $this->layerWhitelabel->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $whitelabelId),
