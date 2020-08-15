@@ -144,12 +144,6 @@ class WishesController extends APIController
                     array_push($offerFiles, $offer->offerFiles);
                 }
             }
-            foreach ($agents as $key => $agent) {
-                if($agent->id == $lastAgent){
-                    $wishData->lastAgent = $agent;
-                }
-            }
-
             if (!$wishData->lastAgent) {
                 foreach ($agents as $key => $agent) {
                     if (!$wishData->lastAgent) {
@@ -157,6 +151,7 @@ class WishesController extends APIController
                     }
                 }
             }
+
 
             $wish = $data['modifiedData'];
             $result['data'] = $wish;
