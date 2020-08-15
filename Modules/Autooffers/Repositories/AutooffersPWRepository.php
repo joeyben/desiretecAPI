@@ -370,7 +370,7 @@ class AutooffersPWRepository extends BaseRepository
         $this->setFrom($wish->earliest_start);
         $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
-        $this->setRegion(getTTRegionCode($wish->destination, 1));
+        $this->setRegion($wish->destination, 1);
 
         return true;
     }
@@ -399,8 +399,8 @@ class AutooffersPWRepository extends BaseRepository
     public function storeAutooffer($offer, $hotel, $wish_id, $userId)
     {
         try {
-            $DepartureDate = new DateTime($offer->TravelDateInfo->DepartureDate);
-            $ArrivalDate = new DateTime($offer->TravelDateInfo->ArrivalDateTime);
+            $DepartureDate = new DateTime($offer->Departure->DepartureDateTime);
+            $ArrivalDate = new DateTime($offer->Return->DepartureDateTime);
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
             $autooffer->code = $offer->ProductCode;
@@ -449,10 +449,13 @@ class AutooffersPWRepository extends BaseRepository
      */
     public function deserializeData($offer)
     {
+        $DepartureDate = new DateTime($offer->Departure->DepartureDateTime);
+        $ArrivalDate = new DateTime($offer->Return->DepartureDateTime);
+
         $data = [
-            'from'         => $offer['TravelDateInfo']['DepartureDate'],
-            'to'           => $offer['TravelDateInfo']['ReturnDate'],
-            'duration'     => $offer['TravelDateInfo']['TripDuration'],
+            'from'         => $DepartureDate->format('Y-m-d'),
+            'to'           => $ArrivalDate->format('Y-m-d'),
+            'duration'     => $offer->LengthOfStay,
             'tourOperator' => [
                 'code'  => $offer['TourOperator']['TourOperatorCode'],
                 'name'  => $offer['TourOperator']['TourOperatorName'],
