@@ -151,7 +151,11 @@ class WishesController extends APIController
             }
 
             if (!$wishData->lastAgent) {
-                $wishData->lastAgent = $agents->first();
+                foreach ($agents as $key => $agent) {
+                    if (!$wishData->lastAgent) {
+                        $wishData->lastAgent = $agent;
+                    }
+                }
             }
 
             $wish = $data['modifiedData'];
