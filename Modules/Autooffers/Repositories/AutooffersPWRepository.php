@@ -124,6 +124,7 @@ class AutooffersPWRepository extends BaseRepository
         //echo "</pre>";
         //dd("yeah");
         $this->data = $formData;
+
         return $formData->Hotel;
         /*$xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
    <soap:Header/>
@@ -316,15 +317,16 @@ class AutooffersPWRepository extends BaseRepository
     {
         $count = 0;
         foreach ($offers as $key => $offer) {
+
             $hotelId = $offer->References->GiataCode;
-            if (!$this->checkValidity($hotelId, $wish_id)) {
+            /*if (!$this->checkValidity($hotelId, $wish_id)) {
                 continue;
-            }
+            }*/
             $tOperator = $offer->Offers->Offer->TourOperator->Code;
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
-            if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
+            /*if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
                 continue;
-            }
+            }*/
             $this->storeAutooffer($offer, $hotel, $wish_id, $userId);
             ++$count;
             if ($count >= 3) {
