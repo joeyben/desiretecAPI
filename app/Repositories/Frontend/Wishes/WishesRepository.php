@@ -29,6 +29,7 @@ use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\EagerLoad;
+use Illuminate\Support\Facades\Log;
 
 require_once 'Mobile_Detect.php';
 /**
@@ -702,6 +703,8 @@ class WishesRepository extends BaseRepository
         $_rules = $this->autoRules->getSettingsForWhitelabel($whitelabelId);
         $this->autooffersPW->saveWishData($wish, $whitelabelId);
         $response = $this->autooffersPW->getRequest();
+        Log::useDailyFiles(storage_path().'/logs/peakwork.log');
+        Log::info('This is some useful information.');
         $this->autooffersPW->storeMany($response, $wish->id, $_rules, $userId);
     }
 
