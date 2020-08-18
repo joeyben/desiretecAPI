@@ -342,11 +342,10 @@ class AutooffersPWRepository extends BaseRepository
      */
     public function getFullHotelData($hotelId, $tOperator)
     {
-        $giata_id = $this->giataIds[$hotelId];
+        $giata_id = $hotelId;
         $username = '203339';
         $password = '605e5129';
         $remote_url = 'https://xml.giatamedia.com/?show=text,geo,pic800,hn,vn,ln,lk,katid,kn,hk,sn,sn,zi,ln,lc&sc=hotel&vc=' . $tOperator . '&gid=' . $giata_id;
-
         $opts = ['http'=> ['method'=> 'GET',
             'header'               => 'Authorization: Basic ' . base64_encode("$username:$password")]];
 
@@ -472,7 +471,10 @@ class AutooffersPWRepository extends BaseRepository
             'hotel_id'         => $offer->References->GiataCode,
             'hotel_reviews'    => "",
             'hotel_attributes' => "",
-            'hotel_geo'        => "",
+            'hotel_geo'        => [
+                'longitude' => $offer->Location->GeoCode->Longitude,
+                'latitude'  => $offer->Location->GeoCode->Latitude
+            ],
             'boardType'        => $dataOffer->Board->_,
             'room'             => $dataOffer->Room->_,
             'flight'           => [
