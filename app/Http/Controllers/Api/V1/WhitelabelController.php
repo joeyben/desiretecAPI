@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
+use Modules\Variants\Repositories\Contracts\VariantsRepository;
 
 /**
  * Class WhitelabelController.
@@ -33,12 +34,18 @@ class WhitelabelController extends Controller
      */
     private $languageline;
 
-    public function __construct(WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabelsRepository, LayerWhitelabelRepository $layerWhitelabels, LanguageLinesRepository $languageline)
+    /**
+     * @var \Modules\Variants\Repositories\Contracts\VariantsRepository
+     */
+    private $variants;
+
+    public function __construct(WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabelsRepository, LayerWhitelabelRepository $layerWhitelabels, LanguageLinesRepository $languageline, VariantsRepository $variants)
     {
         $this->whitelabels = $whitelabels;
         $this->moduleWhitelabelsRepository = $moduleWhitelabelsRepository;
         $this->layerWhitelabels = $layerWhitelabels;
         $this->languageline = $languageline;
+        $this->variants = $variants;
     }
 
     public function getWhitelabelBySlug(string $slug)
@@ -125,7 +132,6 @@ class WhitelabelController extends Controller
             $data['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
             $data['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
 
-
             $result['data'] = [
                 'id'                  => $whitelabel->id,
                 'name'                => $whitelabel->name,
@@ -157,6 +163,28 @@ class WhitelabelController extends Controller
             return $this->responseJsonError($e);
         }
 
+    }
+
+    public function getVariantId(string $host) {
+        try {
+            $host = str_replace("www.", "", $host);
+
+            $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
+
+            $variant = $this->variants->withCriteria([
+                new Where('whitelabel_host_id', $whitelabelHost->id)
+            ])->get()->first();
+
+            if (is_null($variant)) {
+                $result['data']['id'] = null;
+            } else {
+                $result['data']['id'] = $variant->id;
+            }
+
+            return $this->responseJson($result);
+        } catch (\Exception $e) {
+            return $this->responseJsonError($e);
+        }
     }
 
     public function getTnb(Request $request)
