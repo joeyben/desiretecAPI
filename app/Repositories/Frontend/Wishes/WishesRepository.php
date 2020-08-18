@@ -30,6 +30,7 @@ use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\EagerLoad;
 use Illuminate\Support\Facades\Log;
+use Modules\Variants\Entities\Variant;
 
 require_once 'Mobile_Detect.php';
 /**
@@ -117,6 +118,7 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.events_interested',
                 config('module.wishes.table') . '.is_autooffer',
                 config('module.wishes.table') . '.version',
+                config('module.wishes.table') . '.variant_id',
                 config('access.users_table') . '.first_name as first_name',
                 config('access.users_table') . '.last_name as last_name',
                 config('module.whitelabels.table') . '.id as whitelabel_id',
@@ -188,10 +190,15 @@ class WishesRepository extends BaseRepository
 
             $singleWish['purpose'] = transformTravelPurpose($singleWish['purpose']);
 
-            foreach ($whitelabelLayers as $layer) {
-                if ($layer['layer']['path'] === $singleWish['version']) {
-                    $singleWish['layer_image'] = $layer['visual'];
+            if (is_null($singleWish['variant_id'])) {
+                foreach ($whitelabelLayers as $layer) {
+                    if ($layer['layer']['path'] === $singleWish['version']) {
+                        $singleWish['layer_image'] = $layer['visual'];
+                    }
                 }
+            } else {
+                $variant = Variant::where('id' , $singleWish['variant_id'])->with('attachments')->first();
+                $singleWish['layer_image'] = $variant->attachments[0]->url;
             }
 
             if (Auth::user()->hasRole('Seller')) {
