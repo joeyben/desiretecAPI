@@ -12,6 +12,7 @@ namespace Modules\Autooffers\Repositories;
 use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
 use Modules\Autooffers\Entities\Autooffer;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AutooffersPWRepository.
@@ -362,7 +363,8 @@ class AutooffersPWRepository extends BaseRepository
      */
     public function saveWishData(Wish $wish, $whitelabelId)
     {
-        $this->setMinBudget(0);
+
+        /*$this->setMinBudget(0);
         $this->setBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
@@ -372,7 +374,7 @@ class AutooffersPWRepository extends BaseRepository
         $this->setFrom($wish->earliest_start);
         $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
-        $this->setRegion($wish->destination, 1);
+        $this->setRegion($wish->destination, 1);*/
 
         return true;
     }
@@ -401,21 +403,21 @@ class AutooffersPWRepository extends BaseRepository
     public function storeAutooffer($offer, $hotel, $wish_id, $userId)
     {
         try {
-            $DepartureDate = new DateTime($offer->Departure->DepartureDateTime);
-            $ArrivalDate = new DateTime($offer->Return->DepartureDateTime);
+            $DepartureDate = new \DateTime($offer->Offers->Offer->Departure->DepartureDateTime);
+            $ArrivalDate = new \DateTime($offer->Offers->Offer->Return->DepartureDateTime);
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
-            $autooffer->code = $offer->ProductCode;
+            $autooffer->code = $offer->Offers->Offer->ProductCode;
             $autooffer->type = 'pauschal';
-            $autooffer->totalPrice = $offer->Price->Amount;
-            $autooffer->personPrice = $offer->Price->PerPerson ? $offer->Price->Amount : $offer->Price->Amount/count($offer->Travellers->Adult);
+            $autooffer->totalPrice = $offer->Offers->Offer->Price->Amount;
+            $autooffer->personPrice = $offer->Offers->Offer->Price->PerPerson ? $offer->Offers->Offer->Price->Amount : $offer->Offers->Offer->Price->Amount/count($this->data->Travellers->Adult);
             $autooffer->from = $DepartureDate->format('Y-m-d');
             $autooffer->to = $ArrivalDate->format('Y-m-d');
-            $autooffer->tourOperator_code = $offer->TourOperator->Code;
-            $autooffer->tourOperator_name = $offer->TourOperator->_;
+            $autooffer->tourOperator_code = $offer->Offers->Offer->TourOperator->Code;
+            $autooffer->tourOperator_name = $offer->Offers->Offer->TourOperator->_;
             $autooffer->hotel_code = $offer->References->HotelID;
             $autooffer->hotel_name = $offer->Name;
-            $autooffer->hotel_location_name = $offer->Location->Region.', '.$offer->Location->City.', '.$offer->Location->Country;
+            $autooffer->hotel_location_name = $offer->Location->Region->_.', '.$offer->Location->City->_.', '.$offer->Location->Country->_;
             $autooffer->hotel_location_lng = $offer->Location->GeoCode->Longitude;
             $autooffer->hotel_location_lat = $offer->Location->GeoCode->Latitude;
             $autooffer->hotel_location_region_code = '';
@@ -451,59 +453,59 @@ class AutooffersPWRepository extends BaseRepository
      */
     public function deserializeData($offer)
     {
-        $DepartureDate = new DateTime($offer->Departure->DepartureDateTime);
-        $ArrivalDate = new DateTime($offer->Return->DepartureDateTime);
-
+        $DepartureDate = new \DateTime($offer->Offers->Offer->Departure->DepartureDateTime);
+        $ArrivalDate = new \DateTime($offer->Offers->Offer->Return->DepartureDateTime);
+        $dataOffer = $offer->Offers->Offer;
         $data = [
             'from'         => $DepartureDate->format('Y-m-d'),
             'to'           => $ArrivalDate->format('Y-m-d'),
-            'duration'     => $offer->LengthOfStay,
+            'duration'     => $dataOffer->LengthOfStay,
             'tourOperator' => [
-                'code'  => $offer['TourOperator']['TourOperatorCode'],
-                'name'  => $offer['TourOperator']['TourOperatorName'],
-                'image' => $offer['TourOperator']['TourOperatorImage']
+                'code'  => $dataOffer->TourOperator->Code,
+                'name'  => $dataOffer->TourOperator->_,
+                'image' => ""
             ],
             'price' => [
-                'value'    => $offer['PriceInfo']['Price']['value'],
-                'currency' => $offer['PriceInfo']['Price']['CurrencyCode']
+                'value'    => $dataOffer->Price->Amount,
+                'currency' => "€"
             ],
-            'offerFeatures'    => \array_key_exists('OfferFeatures', $offer['OfferProperties']) ? $offer['OfferProperties']['OfferFeatures'] : '',
-            'hotel_id'         => $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'],
-            'hotel_reviews'    => $this->reviews[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
-            'hotel_attributes' => $this->hotelAttributes[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
-            'hotel_geo'        => $this->geos[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
-            'boardType'        => $offer['OfferServices']['Package']['Accommodation']['BoardType'],
-            'room'             => $offer['OfferServices']['Package']['Accommodation']['Room']['RoomName'],
+            'offerFeatures'    =>  '',
+            'hotel_id'         => $offer->References->HotelID,
+            'hotel_reviews'    => "",
+            'hotel_attributes' => "",
+            'hotel_geo'        => "",
+            'boardType'        => $dataOffer->Board->_,
+            'room'             => $dataOffer->Room->_,
             'flight'           => [
                 'in' => [
                     'departure' => [
-                        'airport' => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightDeparture']['DepartureAirportRef']['AirportCode'],
-                        'date'    => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightDeparture']['DepartureDate'],
-                        'time'    => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightDeparture']['DepartureTime'],
+                        'airport' => $dataOffer->Departure->DepartureAirport->_,
+                        'date'    => $dataOffer->Departure->DepartureDateTime,
+                        'time'    => $dataOffer->Departure->DepartureDateTime,
                     ],
                     'arrival' => [
-                        'airport' => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightArrival']['ArrivalAirportRef']['AirportCode'],
-                        'date'    => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightArrival']['ArrivalDate'],
-                        'time'    => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightArrival']['ArrivalTime'],
+                        'airport' => $dataOffer->Departure->ArrivalAirport->_,
+                        'date'    => $dataOffer->Departure->ArrivalDateTime,
+                        'time'    => $dataOffer->Departure->ArrivalDateTime,
                     ],
-                    'duration' => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightDuration'],
-                    'stops'    => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['NumberOfStops'],
-                    'class'    => \array_key_exists('CabinClass', $offer['OfferServices']['Package']['Flight']['OutboundFlight']) ? $offer['OfferServices']['Package']['Flight']['OutboundFlight']['CabinClass']['value'] : '',
+                    'duration' => $dataOffer->Departure->Duration,
+                    'stops'    => $dataOffer->Departure->StopOver,
+                    'class'    => $dataOffer->Departure->Class,
                 ],
                 'out' => [
                     'departure' => [
-                        'airport' => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightDeparture']['DepartureAirportRef']['AirportCode'],
-                        'date'    => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightDeparture']['DepartureDate'],
-                        'time'    => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightDeparture']['DepartureTime'],
+                        'airport' => $dataOffer->Return->DepartureAirport->_,
+                        'date'    => $dataOffer->Return->DepartureDateTime,
+                        'time'    => $dataOffer->Return->DepartureDateTime,
                     ],
                     'arrival' => [
-                        'airport' => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightArrival']['ArrivalAirportRef']['AirportCode'],
-                        'date'    => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightArrival']['ArrivalDate'],
-                        'time'    => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightArrival']['ArrivalTime'],
+                        'airport' => $dataOffer->Return->ArrivalAirport->_,
+                        'date'    => $dataOffer->Return->ArrivalDateTime,
+                        'time'    => $dataOffer->Return->ArrivalDateTime,
                     ],
-                    'duration' => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightDuration'],
-                    'stops'    => $offer['OfferServices']['Package']['Flight']['InboundFlight']['NumberOfStops'],
-                    'class'    => \array_key_exists('CabinClass', $offer['OfferServices']['Package']['Flight']['InboundFlight']) ? $offer['OfferServices']['Package']['Flight']['InboundFlight']['CabinClass']['value'] : '',
+                    'duration' => $dataOffer->Return->Duration,
+                    'stops'    => $dataOffer->Return->StopOver,
+                    'class'    => $dataOffer->Return->Class,
                 ],
             ],
         ];

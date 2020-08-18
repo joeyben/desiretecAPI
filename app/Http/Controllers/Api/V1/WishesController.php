@@ -246,7 +246,7 @@ class WishesController extends APIController
                 }
                 elseif ($wish->whitelabel->peakwork) {
                     $this->repository->setIsAutoofer($wish->id);
-                    $this->callPeakwork($wish, $newUser, $request);
+                    return $this->callPeakwork($wish, $newUser, $request);
                 }
 
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
@@ -328,7 +328,7 @@ class WishesController extends APIController
         //$wishJob = (new callTTApi($wish->id, $request->input('whitelabel_id'), $newUser->id))->delay(Carbon::now()->addSeconds(3));
         //dispatch($wishJob);
 
-        $this->repository->callPeakwork($wish->id, $request->input('whitelabel_id'), $newUser->id);
+        return $this->repository->callPeakwork($wish->id, $request->input('whitelabel_id'), $newUser->id);
 
         $details = [
             'email'            => $newUser->email,
