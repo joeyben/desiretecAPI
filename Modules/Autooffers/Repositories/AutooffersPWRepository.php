@@ -125,7 +125,6 @@ class AutooffersPWRepository extends BaseRepository
         //echo "</pre>";
         //dd("yeah");
         $this->data = $formData;
-
         return $formData->Hotel;
         /*$xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
    <soap:Header/>
@@ -410,12 +409,12 @@ class AutooffersPWRepository extends BaseRepository
             $autooffer->code = $offer->Offers->Offer->ProductCode;
             $autooffer->type = 'pauschal';
             $autooffer->totalPrice = $offer->Offers->Offer->Price->Amount;
-            $autooffer->personPrice = $offer->Offers->Offer->Price->PerPerson ? $offer->Offers->Offer->Price->Amount : $offer->Offers->Offer->Price->Amount/count($this->data->Travellers->Adult);
+            $autooffer->personPrice = $offer->Offers->Offer->Price->PerPerson ? $offer->Offers->Offer->Price->Amount : ceil($offer->Offers->Offer->Price->Amount/count($this->data->Travellers->Adult));
             $autooffer->from = $DepartureDate->format('Y-m-d');
             $autooffer->to = $ArrivalDate->format('Y-m-d');
             $autooffer->tourOperator_code = $offer->Offers->Offer->TourOperator->Code;
             $autooffer->tourOperator_name = $offer->Offers->Offer->TourOperator->_;
-            $autooffer->hotel_code = $offer->References->HotelID;
+            $autooffer->hotel_code = $offer->References->GiataCode;
             $autooffer->hotel_name = $offer->Name;
             $autooffer->hotel_location_name = $offer->Location->Region->_.', '.$offer->Location->City->_.', '.$offer->Location->Country->_;
             $autooffer->hotel_location_lng = $offer->Location->GeoCode->Longitude;
@@ -470,7 +469,7 @@ class AutooffersPWRepository extends BaseRepository
                 'currency' => "€"
             ],
             'offerFeatures'    =>  '',
-            'hotel_id'         => $offer->References->HotelID,
+            'hotel_id'         => $offer->References->GiataCode,
             'hotel_reviews'    => "",
             'hotel_attributes' => "",
             'hotel_geo'        => "",
@@ -490,7 +489,7 @@ class AutooffersPWRepository extends BaseRepository
                     ],
                     'duration' => $dataOffer->Departure->Duration,
                     'stops'    => $dataOffer->Departure->StopOver,
-                    'class'    => $dataOffer->Departure->Class,
+                    'class'    => property_exists($dataOffer->Departure, 'Class') ? $dataOffer->Departure->Class : "",
                 ],
                 'out' => [
                     'departure' => [
@@ -505,7 +504,7 @@ class AutooffersPWRepository extends BaseRepository
                     ],
                     'duration' => $dataOffer->Return->Duration,
                     'stops'    => $dataOffer->Return->StopOver,
-                    'class'    => $dataOffer->Return->Class,
+                    'class'    => property_exists($dataOffer->Return, 'Class') ? $dataOffer->Return->Class : "",
                 ],
             ],
         ];

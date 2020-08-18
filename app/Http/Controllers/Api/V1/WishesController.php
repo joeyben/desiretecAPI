@@ -225,7 +225,7 @@ class WishesController extends APIController
                 }
                 elseif ($wish->whitelabel->peakwork) {
                     $this->repository->setIsAutoofer($wish->id);
-                    return $this->callPeakwork($wish, $newUser, $request);
+                    $this->callPeakwork($wish, $newUser, $request);
                 }
 
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));

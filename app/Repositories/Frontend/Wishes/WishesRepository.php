@@ -700,7 +700,6 @@ class WishesRepository extends BaseRepository
         $response = $this->autooffersPW->getRequest();
 
         $this->autooffersPW->storeMany($response, $wish->id, $_rules, $userId);
-        return $response;
     }
 
     public function callTraffics($wishID, $whitelabelId, $userId)
