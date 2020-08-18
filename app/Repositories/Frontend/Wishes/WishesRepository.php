@@ -693,13 +693,14 @@ class WishesRepository extends BaseRepository
 
     public function callPeakwork($wishID, $whitelabelId, $userId)
     {
+
         $wish = Wish::where('id', $wishID)->first();
         $_rules = $this->autoRules->getSettingsForWhitelabel($whitelabelId);
         $this->autooffersPW->saveWishData($wish, $whitelabelId);
         $response = $this->autooffersPW->getRequest();
-        Log::useDailyFiles(storage_path().'/logs/peakwork.log');
-        Log::info('This is some useful information.');
+
         $this->autooffersPW->storeMany($response, $wish->id, $_rules, $userId);
+        return $response;
     }
 
     public function callTraffics($wishID, $whitelabelId, $userId)
