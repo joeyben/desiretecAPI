@@ -194,6 +194,26 @@ class AutooffersPWRepository extends BaseRepository
         return $formData;
     }
 
+    public function getAllData()
+    {
+        $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
+
+        $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
+            'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
+                SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
+
+        $formDataContainer = new \stdClass;
+        $formDataContainer->RequestType = 'package';
+        $formDataContainer->MsgType = 'All';
+        $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
+        $formDataContainer->Lang = 'de';
+        $formDataContainer->Currency = 'EUR';
+
+        $formData = $soapclient->GetFormData($formDataContainer);
+
+        dd($formData);
+    }
+
     public function getToken()
     {
         $curl = curl_init();
@@ -504,7 +524,7 @@ class AutooffersPWRepository extends BaseRepository
             ],
             'price' => [
                 'value'    => $dataOffer->Price->Amount,
-                'currency' => "€"
+                'currency' => $this->data->Currency
             ],
             'offerFeatures'    =>  '',
             'hotel_id'         => $offer->References->GiataCode,
