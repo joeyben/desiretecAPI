@@ -319,7 +319,7 @@ class WishesController extends APIController
     {
         $view = \View::make('wishes::emails.autooffer',
             [
-                'url'=> $wish->whitelabel->domain . '/offer/list/' . $wish->id . '/' . $newUser->token->token,
+                'url'=> $wish->whitelabel->domain . '/offer/listpw/' . $wish->id . '/' . $newUser->token->token,
                 'whitelabelId' => $wish->whitelabel->id,
                 'whitelabel' => $wish->whitelabel
             ]
