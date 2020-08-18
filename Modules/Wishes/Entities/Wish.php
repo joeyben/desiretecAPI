@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Modules\Variants\Entities\Variant;
 
 class Wish extends Model
 {
@@ -49,6 +50,7 @@ class Wish extends Model
         'is_autooffer',
         'events_interested',
         'purpose',
+        'variant_id',
     ];
 
     protected static $logOnlyDirty = true;
@@ -153,5 +155,13 @@ class Wish extends Model
         }
 
         $this->categories()->attach($category);
+    }
+
+    /**
+     * Wishes belongsTo with Group.
+     */
+    public function variant()
+    {
+        return $this->belongsTo(Variant::class, 'variant_id');
     }
 }
