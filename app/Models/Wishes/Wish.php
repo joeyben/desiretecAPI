@@ -7,6 +7,7 @@ use App\Models\ModelTrait;
 use App\Models\Wishes\Traits\Attribute\WishAttribute;
 use App\Models\Wishes\Traits\Relationship\WishRelationship;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Variants\Entities\Variant;
 
 class Wish extends BaseModel
 {
@@ -40,7 +41,8 @@ class Wish extends BaseModel
         'ages',
         'direkt_flug',
         'extra_params',
-        'is_autooffer'
+        'is_autooffer',
+        'variant_id',
     ];
 
     protected $dates = [
@@ -77,5 +79,13 @@ class Wish extends BaseModel
         }
 
         return $toReturn;
+    }
+
+    /**
+     * Wishes belongsTo with Group.
+     */
+    public function variant()
+    {
+        return $this->belongsTo(Variant::class, 'variant_id');
     }
 }
