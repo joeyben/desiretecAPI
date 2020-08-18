@@ -117,6 +117,7 @@ class AutooffersPWRepository extends BaseRepository
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
         $data['Lang'] = 'en';
         $data['Currency'] = 'EUR';
+        $data['ShowRatings'] = true;
         $data['ResultsTotal'] = 3;
         //dd($soapclient->__getFunctions());
         $formData = $soapclient->GetPackageProduct($data);
@@ -170,7 +171,6 @@ class AutooffersPWRepository extends BaseRepository
         $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
         $formDataContainer->Lang = 'de';
         $formDataContainer->Currency = 'EUR';
-        $formDataContainer->ShowRatings = 'true';
         $data = [];
         $data['Travellers']['Adult'][0]['Age'] = 28;
         $data['Travellers']['Adult'][1]['Age'] = 22;
@@ -529,7 +529,10 @@ class AutooffersPWRepository extends BaseRepository
             ],
             'offerFeatures'    =>  '',
             'hotel_id'         => $offer->References->GiataCode,
-            'hotel_reviews'    => "",
+            'hotel_ratings'    => [
+                'percentage' => property_exists($offer, Ratings) ? $offer->Ratings->Rating[1]->Value : 0,
+                'count'      => property_exists($offer, Ratings) ? $offer->Ratings->Rating[0]->Value : 0,
+            ],
             'hotel_attributes' => "",
             'hotel_geo'        => [
                 'longitude' => $offer->Location->GeoCode->Longitude,
