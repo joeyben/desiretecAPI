@@ -283,6 +283,7 @@ class WishesController extends APIController
             'current_wl_email' => $wish->whitelabel->email,
             'type'             => 0
         ];
+
         dispatch((new sendAutoOffersMail($details, $wish->id, $wish->whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
     }
 
@@ -328,7 +329,7 @@ class WishesController extends APIController
         //$wishJob = (new callTTApi($wish->id, $request->input('whitelabel_id'), $newUser->id))->delay(Carbon::now()->addSeconds(3));
         //dispatch($wishJob);
 
-        return $this->repository->callPeakwork($wish->id, $request->input('whitelabel_id'), $newUser->id);
+        $this->repository->callPeakwork($wish->id, $request->input('whitelabel_id'), $newUser->id);
 
         $details = [
             'email'            => $newUser->email,
