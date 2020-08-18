@@ -108,12 +108,11 @@ class AutooffersPWRepository extends BaseRepository
         $data = [];
         $data['Travellers']['Adult'][0]['Age'] = 28;
         $data['Travellers']['Adult'][1]['Age'] = 22;
-        $data['Travellers']['Adult'][2]['Age'] = 22;
        // $data['TravelPeriod']['DepartureDate'] = "2020-12-01";
         //$data['TravelPeriod']['ReturnDate'] = "2020-12-20";
         $data['TravelPeriod']['Duration'] = '7';
         $data['Flight']['DepartureAirports'] = "HAM";
-        $data['Flight']['ArrivalAirports'] = "OSL";
+        $data['Flight']['ArrivalAirports'] = "PMI";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
         $data['Lang'] = 'en';
         $data['Currency'] = 'EUR';
@@ -174,12 +173,11 @@ class AutooffersPWRepository extends BaseRepository
         $data = [];
         $data['Travellers']['Adult'][0]['Age'] = 28;
         $data['Travellers']['Adult'][1]['Age'] = 22;
-        $data['Travellers']['Adult'][2]['Age'] = 22;
         // $data['TravelPeriod']['DepartureDate'] = "2020-12-01";
         //$data['TravelPeriod']['ReturnDate'] = "2020-12-20";
         $data['TravelPeriod']['Duration'] = '7';
         $data['Flight']['DepartureAirports'] = "HAM";
-        $data['Flight']['ArrivalAirports'] = "OSL";
+        $data['Flight']['ArrivalAirports'] = "PMI";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
         $data['Lang'] = 'en';
         $data['Currency'] = 'EUR';
