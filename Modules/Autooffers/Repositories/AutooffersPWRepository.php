@@ -530,8 +530,8 @@ class AutooffersPWRepository extends BaseRepository
             'offerFeatures'    =>  '',
             'hotel_id'         => $offer->References->GiataCode,
             'hotel_ratings'    => [
-                'percentage' => property_exists($offer, Ratings) ? $offer->Ratings->Rating[1]->Value : 0,
-                'count'      => property_exists($offer, Ratings) ? $offer->Ratings->Rating[0]->Value : 0,
+                'percentage' => property_exists($offer, 'Ratings') ? $offer->Ratings->Rating[1]->Value : 0,
+                'count'      => property_exists($offer, 'Ratings') ? $offer->Ratings->Rating[0]->Value : 0,
             ],
             'hotel_attributes' => "",
             'hotel_geo'        => [
