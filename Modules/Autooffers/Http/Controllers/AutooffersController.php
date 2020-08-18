@@ -231,6 +231,6 @@ class AutooffersController extends Controller
     public function callPW()
     {
         //$this->TTautooffers->getToken();
-        dd($this->PWautooffers->getRequest());
+        dd($this->PWautooffers->testRequest());
     }
 }

@@ -155,6 +155,44 @@ class AutooffersPWRepository extends BaseRepository
         print_r($output);*/
     }
 
+    public function testRequest()
+    {
+        $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
+
+
+        $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
+            'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
+                SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
+
+        $formDataContainer = new \stdClass;
+        $formDataContainer->RequestType = 'package';
+        $formDataContainer->MsgType = 'All';
+        $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
+        $formDataContainer->Lang = 'de';
+        $formDataContainer->Currency = 'EUR';
+        $data = [];
+        $data['Travellers']['Adult'][0]['Age'] = 28;
+        $data['Travellers']['Adult'][1]['Age'] = 22;
+        $data['Travellers']['Adult'][2]['Age'] = 22;
+        // $data['TravelPeriod']['DepartureDate'] = "2020-12-01";
+        //$data['TravelPeriod']['ReturnDate'] = "2020-12-20";
+        $data['TravelPeriod']['Duration'] = '7';
+        $data['Flight']['DepartureAirports'] = "HAM";
+        $data['Flight']['ArrivalAirports'] = "OSL";
+        $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
+        $data['Lang'] = 'en';
+        $data['Currency'] = 'EUR';
+        $data['ResultsTotal'] = 3;
+        //dd($soapclient->__getFunctions());
+        $formData = $soapclient->GetPackageProduct($data);
+        //echo "<pre>";
+        //dd($formData);
+        //echo "</pre>";
+        //dd("yeah");
+        $this->data = $formData;
+        return $formData;
+    }
+
     public function getToken()
     {
         $curl = curl_init();
