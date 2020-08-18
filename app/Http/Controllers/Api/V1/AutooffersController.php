@@ -53,6 +53,18 @@ class AutooffersController extends APIController implements AutooffersController
         }
     }
 
+    public function listpw(int $wishId)
+    {
+        $offers = [];
+        try {
+            $offers['data'] = $this->repository->getOffersDataFromId($wishId);
+
+            return $this->responseJson($offers);
+        } catch (Exception $e) {
+            return $this->respondWithError($e);
+        }
+    }
+
     public function listTt(int $wishId)
     {
         $offers = [];
