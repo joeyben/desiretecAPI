@@ -172,7 +172,7 @@ class WhitelabelController extends Controller
             $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
 
             $variant = $this->variants->withCriteria([
-                new Where('whitelabel_host_id', $whitelabelHost->id)
+                new Where('whitelabel_id', $whitelabelHost->whitelabel_id)
             ])->get()->first();
 
             if (is_null($variant)) {

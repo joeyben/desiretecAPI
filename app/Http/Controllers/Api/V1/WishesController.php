@@ -356,7 +356,7 @@ class WishesController extends APIController
             }
         } else {
             $variant = Variant::where('id' , $variantId)->with('attachments')->first();
-            $variant_image = $variant->attachments[0]->url;
+            $variant_image = $variant->attachments[1]->url;
             return $variant_image;
         }
     }
