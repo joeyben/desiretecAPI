@@ -198,7 +198,7 @@ class WishesRepository extends BaseRepository
                 }
             } else {
                 $variant = Variant::where('id' , $singleWish['variant_id'])->with('attachments')->first();
-                $singleWish['layer_image'] = $variant->attachments[0]->url;
+                $singleWish['layer_image'] = $variant->attachments[1]->url;
             }
 
             if (Auth::user()->hasRole('Seller')) {
