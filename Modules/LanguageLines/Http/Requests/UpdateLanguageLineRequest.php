@@ -17,9 +17,9 @@ class UpdateLanguageLineRequest extends FormRequest
             'id'                                 => 'required|int|min:1',
             'locale'                             => 'required|string|min:2|max:2',
             'description'                        => 'string|min:1|max:255',
-            'group'                              => 'required|string|min:3|max:255',
-            'key'                                => 'required|string|min:3|max:255',
-            'text'                               => 'required|string|min:3',
+            'group'                              => 'required|string|min:2|max:255',
+            'key'                                => 'required|string|min:2|max:255',
+            'text'                               => 'required|string|min:2',
         ];
     }
 
