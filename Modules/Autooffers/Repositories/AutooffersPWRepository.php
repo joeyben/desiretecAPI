@@ -108,11 +108,13 @@ class AutooffersPWRepository extends BaseRepository
         $data = [];
         $data['Travellers']['Adult'][0]['Age'] = 28;
         $data['Travellers']['Adult'][1]['Age'] = 22;
-       // $data['TravelPeriod']['DepartureDate'] = "2020-12-01";
-        //$data['TravelPeriod']['ReturnDate'] = "2020-12-20";
-        $data['TravelPeriod']['Duration'] = '7';
+        $data['Travellers']['Child'][0]['Age'] = 9;
+        $data['TravelPeriod']['DepartureDate'] = "2020-09-01";
+        $data['TravelPeriod']['ReturnDate'] = "2020-12-20";
+        $data['TravelPeriod']['Duration'] = "256";
+        $data['Location']['Country'] = 'Greece';
+        $data['MaxPrice'] = '1000';
         $data['Flight']['DepartureAirports'] = "HAM";
-        $data['Flight']['ArrivalAirports'] = "PMI";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
         $data['Lang'] = 'en';
         $data['Currency'] = 'EUR';
@@ -173,13 +175,15 @@ class AutooffersPWRepository extends BaseRepository
         $data = [];
         $data['Travellers']['Adult'][0]['Age'] = 28;
         $data['Travellers']['Adult'][1]['Age'] = 22;
-        // $data['TravelPeriod']['DepartureDate'] = "2020-12-01";
-        //$data['TravelPeriod']['ReturnDate'] = "2020-12-20";
-        $data['TravelPeriod']['Duration'] = '7';
+        $data['Travellers']['Child'][0]['Age'] = 9;
+        $data['TravelPeriod']['DepartureDate'] = "2020-09-01";
+        $data['TravelPeriod']['ReturnDate'] = "2020-12-20";
+        $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
+        $data['Location']['Country'] = 'Greece';
+        $data['MaxPrice'] = '1000';
         $data['Flight']['DepartureAirports'] = "HAM";
-        $data['Flight']['ArrivalAirports'] = "PMI";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
-        $data['Lang'] = 'en';
+        $data['Lang'] = 'de';
         $data['Currency'] = 'EUR';
         $data['ShowRatings'] = true;
         $data['ResultsTotal'] = 3;
@@ -237,134 +241,6 @@ class AutooffersPWRepository extends BaseRepository
         $this->token = json_decode($result, true)['access_token'];
     }
 
-    public function getTTData()
-    {
-        $curl = curl_init();
-        $travellers = '';
-
-        for ($i = 0; $i < $this->adults; ++$i) {
-            $travellers .= '{
-                    "Age": 35
-                }';
-            if ($i + 1 < $this->adults) {
-                $travellers .= ',';
-            }
-        }
-
-        for ($i = 0; $i < $this->kids; ++$i) {
-            if (0 === $i) {
-                $travellers .= ',';
-            }
-            $travellers .= '{
-                    "Age": 6
-                }';
-            if ($i + 1 < $this->kids) {
-                $travellers .= ',';
-            }
-        }
-        $xmlreq = '{
-         "PackageOffersRQ": {
-          "RQ_Metadata": {
-           "Language": "de-CH"
-          },
-        "CurrencyCode": "' . $this->currency . '",
-          "Travellers": {
-            "Traveller": [
-            ' . $travellers . '
-            ]
-          },
-          "OfferFilters": {
-           "DateAndTimeFilter": {
-            "OutboundFlightDateAndTimeFilter": {
-             "FlightEvent": "Departure",
-             "DateRange": {
-              "MinDate": "' . $this->from . '"
-             }
-            },
-            "InboundFlightDateAndTimeFilter": {
-             "FlightEvent": "Departure",
-             "DateRange": {
-              "MaxDate": "' . $this->to . '"
-             }
-            }
-        },
-           "TravelDurationFilter": {
-            "DurationKind": "Stay",
-            "MinDuration": ' . $this->minDuration . ',
-            "MaxDuration": ' . $this->maxDuration . '
-           },
-           "PriceFilter": {
-            "MaxPrice": ' . $this->getBudget() . '
-           },
-           "AirportFilter": {
-            "DepartureAirportFilter": {
-             "AirportCodes": [' . $this->airport . ']
-        } },
-           "AccomFilter": {
-            "AccomSelectors": {
-             "RegionIDs": [' . $this->getRegion() . ']
-            }
-           },
-           "AccomPropertiesFilter": {
-            "HotelAttributes": [],
-            "BoardTypes": [' . $this->catering . '],
-            "HotelCategoryFilter": {
-                "HotelCategoryRange": {
-                    "MinCategory": ' . (int) ($this->category) . '
-                }
-            },
-            "HotelReview": {
-                "MinRatingsCount": 10,
-                "MinMeanRatingOverall": 4,
-                "MinMeanRecommendationRate": 80
-            }
-           }
-          },
-          "Options": {
-            "NumberOfResults": 500,
-            "ResultOffset": 0,
-            "Sorting": ["PriceAsc"]
-          }
-        } }';
-
-        $authorization = 'Authorization: Bearer ' . $this->token;
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
-        curl_setopt($curl, CURLOPT_URL, $this->url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $xmlreq);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-        $result = curl_exec($curl);
-        if (!$result) {
-            die('Connection Failure');
-        }
-        curl_close($curl);
-
-        $this->data = json_decode($result, true)['PackageOffersRS'];
-        if (\array_key_exists('Offers', $this->data)) {
-            if (\array_key_exists('Offer', $this->data['Offers'])) {
-                $this->offers = $this->data['Offers']['Offer'];
-            } else {
-                $this->offers = [];
-            }
-        } else {
-            $this->offers = [];
-        }
-        if (empty($this->offers) && !$this->specialSearch) {
-            $this->specialSearch = true;
-            $this->setBudget(0);
-            $this->getTTData();
-        }
-        $this->setGiataIds();
-        $this->setReviews();
-        $this->setHotelGeo();
-        $this->setHotelAttributes();
-
-        return $this->offers;
-    }
 
     /**
      * @param  $data
@@ -1165,5 +1041,14 @@ class AutooffersPWRepository extends BaseRepository
         }
         curl_close($curl);
         dd($result);
+    }
+
+    public function convertDuration($duration){
+        $cDuration = 1;
+        for ($i=1;$i<=$duration;$i++) {
+
+            $cDuration = $cDuration * 2;
+        }
+        return $cDuration;
     }
 }
