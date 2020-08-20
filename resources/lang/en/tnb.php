@@ -14,7 +14,7 @@ return [
     'title'       => 'Beispielhafte Nutzungsbedingungen: ',
     'message'     => 'Desiretec stellt Ihnen beispielhaft eine Vorlage für Nutzungsbedingungen zur Verfügung. Bitte beachten Sie jedoch, dass Sie die Vorlage umfassend prüfen und auf Ihr Geschäftsmodell anpassen sollten. Eine Haftung für die Richtigkeit der Vorlage übernimmt Desiretec nicht, insbesondere erteilen wir auch keine Rechtsberatung. Jeder Kunde muss selbst bestimmen, welche Nutzungsbedingungen er einbindet.',
 
-    'template'     => 'Conditions for the use of the $KUNDE-travel wish portal
+    'tnb'         => 'Conditions for the use of the $KUNDE-travel wish portal
     1. Function of the $KUNDE-travel wish portal, terms of use
     1.1 $KUNDE offers the technical possibility to place search advertisements for travel offers ("travel wishes") free of charge via the online tool "$KUNDE-Reisewunschportal" offers the technical possibility to place search advertisements for travel offers ("travel wishes") free of charge via the online tool $KUNDE to travel consultants for the purpose of an individual offer communication.
     1.2 The use of the online tool is subject to these terms of use, which may be amended in accordance with section 8.1.

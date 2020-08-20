@@ -14,6 +14,7 @@ use Illuminate\Http\Response;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Translation\Translator;
 use Modules\LanguageLines\Entities\LanguageLines;
 use Modules\LanguageLines\Http\Requests\FooterTnbStoreRequest;
@@ -90,85 +91,58 @@ class TnbController extends Controller
 
     public function tnb(string $lang)
     {
+
         try {
             if (null === $this->auth->guard('web')->user()->whitelabels()->first()) {
                 abort(403, trans('errors.user.nowhitelabel'));
             }
 
-            if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
-                $whiteLabelID = getCurrentWhiteLabelField('id');
-                $whiteLabelName = getCurrentWhiteLabelField('display_name');
-                $domain = getCurrentWhiteLabelField('domain');
-            } elseif ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+            if ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
                 $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
                 $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
                 $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
-            } else {
-                return redirect(route('provider.footer.tnb', $lang))->with('error', trans('User guard is different'));
-            }
 
-            if (!$this->isOldWhitelabel()) {
-                // new Logic
-                if (!$this->languageline->withCriteria([
-                     new Where('locale', $lang),
-                     new Where('key', 'footer.tnb'),
-                     new Where('group', 'layer_tnb'),
-                     new Where('whitelabel_id', $whiteLabelID),
-                 ])->get()->count()) {
-                    $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
+
+                $currentLanguageline = $this->languageline->withCriteria([
+                    new Where('locale', $lang),
+                    new Where('key', 'footer.tnb'),
+                    new Where('group', 'layer_tnb'),
+                    new Where('whitelabel_id', $whiteLabelID),
+                ])->get();
+
+
+
+                if (!$currentLanguageline->count()) {
+                    $tnb = str_replace('$KUNDE', $whiteLabelName, Lang::get('tnb.tnb', [], $lang));
                     $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
 
-                    $result['data']['text'] = $this->languageline->firstOrCreate([
-                         'locale'          => $lang,
-                         'key'             => 'footer.tnb',
-                         'group'           => 'layer_tnb',
-                         'text'            => $tnb,
-                         'whitelabel_id'   => $whiteLabelID,
-                     ])->text;
+                    $languageline = $this->languageline->create([
+                        'locale' => $lang,
+                        'key' => 'footer.tnb',
+                        'group' => 'layer_tnb',
+                        'text' => $tnb,
+                        'whitelabel_id' => $whiteLabelID,
+                    ]);
                 } else {
-                    $result['data']['text'] = $this->languageline->withCriteria([
-                         new Where('locale', $lang),
-                         new Where('key', 'footer.tnb'),
-                         new Where('group', 'layer_tnb'),
-                         new Where('whitelabel_id', $whiteLabelID),
-                     ])->first()->text;
+                    $languageline = $this->languageline->withCriteria([
+                        new Where('locale', $lang),
+                        new Where('key', 'footer.tnb'),
+                        new Where('group', 'layer_tnb'),
+                        new Where('whitelabel_id', $whiteLabelID),
+                    ])->first();
+
                 }
+
+
+
+                $result['data']['text'] = $languageline->text;
+
+                LanguageLinesController::cacheFlush();
             } else {
-                // old Logic
-                if (!$this->languageline->withCriteria([
-                     new Where('locale', $lang),
-                     new Where('key', 'footer.tnb'),
-                     new Where('group', 'layer_tnb'),
-                 ])->get()->count()) {
-                    if ($this->auth->guard('web')->user()->hasRole('Admin')) {
-                        $whiteLabelName = getCurrentWhiteLabelField('display_name');
-                        $domain = getCurrentWhiteLabelField('domain');
-                    } elseif ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
-                        $whiteLabelName = $this->auth->guard('web')->user()->whitelabels()->first()->display_name;
-                        $domain = $this->auth->guard('web')->user()->whitelabels()->first()->domain;
-                    } else {
-                        return redirect(route('provider.footer.tnb', $lang))->with('error', trans('User guard is different'));
-                    }
-
-                    $tnb = str_replace('$KUNDE', $whiteLabelName, trans('tnb.template'));
-                    $tnb = str_replace('$URL-REISEWUNSCHPORTAL', $domain, $tnb);
-
-                    $result['data']['text'] = $this->languageline->firstOrCreate([
-                         'locale' => $lang,
-                         'key'    => 'footer.tnb',
-                         'group'  => 'layer_tnb',
-                         'text'   => $tnb
-                     ])->text;
-                } else {
-                    $result['data']['text'] = $this->languageline->withCriteria([
-                         new Where('locale', $lang),
-                         new Where('key', 'footer.tnb'),
-                         new Where('group', 'layer_tnb'),
-                     ])->first()->text;
-                }
+                abort(403, trans('errors.user.noexecutiveuser'));
             }
 
-            LanguageLinesController::cacheFlush();
+
 
             $result['data']['language'] = $lang;
             $result['success'] = true;
