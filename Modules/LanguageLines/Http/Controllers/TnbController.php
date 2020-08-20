@@ -164,32 +164,22 @@ class TnbController extends Controller
     public function tnbStore(FooterTnbStoreRequest $request)
     {
         try {
-            if (!$this->isOldWhitelabel()) {
-                if ($this->auth->guard('web')->user()->hasRole('Admin')) {
-                    $whiteLabelID = getCurrentWhiteLabelField('id');
-                } elseif ($this->auth->guard('web')->user()->hasRole('Executive')) {
-                    $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
-                } else {
-                    return redirect(route('provider.footer.tnb', $request->language))->with('error', trans('User guard is different'));
-                }
-
-                $languageline = $this->languageline->update(
-                    $this->languageline->firstOrCreate([
-                        'locale'         => $request->get('language'),
-                        'key'            => 'footer.tnb',
-                        'group'          => 'layer_tnb',
-                        'whitelabel_id'  => $whiteLabelID])->id,
-                    ['text'=> $request->get('footer_tnb_editor')]
-                );
+            if ($this->auth->guard('web')->user()->hasRole(Flag::ADMINISTRATOR_ROLE)) {
+                return redirect(route('provider.footer.tnb', $request->language))->with('error', trans('User guard is different'));
+            } elseif ($this->auth->guard('web')->user()->hasRole(Flag::EXECUTIVE_ROLE)) {
+                $whiteLabelID = $this->auth->guard('web')->user()->whitelabels()->first()->id;
             } else {
-                $languageline = $this->languageline->update(
-                    $this->languageline->firstOrCreate([
-                        'locale' => $request->get('language'),
-                        'key'    => 'footer.tnb',
-                        'group'  => 'layer_tnb'])->id,
-                    ['text'=> $request->get('footer_tnb_editor')]
-                );
+                return redirect(route('provider.footer.tnb', $request->language))->with('error', trans('User guard is different'));
             }
+
+            $this->languageline->update(
+                $this->languageline->firstOrCreate([
+                    'locale'         => $request->get('language'),
+                    'key'            => 'footer.tnb',
+                    'group'          => 'layer_tnb',
+                    'whitelabel_id'  => $whiteLabelID])->id,
+                ['text'=> $request->get('footer_tnb_editor')]
+            );
 
             $step = null;
 
