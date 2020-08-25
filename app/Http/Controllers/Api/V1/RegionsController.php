@@ -32,9 +32,10 @@ class RegionsController extends Controller
 
     public function getAllPWDestinations(Request $request)
     {
+
         $query = $request->get('query');
         $destinations = [];
-        PWRegions::select('name, country_name')
+        PWRegions::select('name', 'country_name')
             ->where('name', 'like', $query . '%')
             ->orWhere('country_name', 'like', $query . '%')
             ->groupBy('name')

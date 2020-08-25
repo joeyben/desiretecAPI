@@ -20,7 +20,6 @@ class CreatePWRegionsTable extends Migration
             $table->string('country_name');
             $table->string('country_code', 10);
             $table->softDeletes();
-            $table->timestamps();
         });
     }
 

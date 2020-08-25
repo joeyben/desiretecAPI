@@ -99,6 +99,7 @@ class AutooffersPWRepository extends BaseRepository
             'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
                 SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
 
+        $destination = trim(explode('-', $this->getRegion()));
         $formDataContainer = new \stdClass;
         $formDataContainer->RequestType = 'package';
         $formDataContainer->MsgType = 'All';
@@ -109,11 +110,14 @@ class AutooffersPWRepository extends BaseRepository
         $data['Travellers']['Adult'][0]['Age'] = 28;
         $data['Travellers']['Adult'][1]['Age'] = 22;
         $data['Travellers']['Child'][0]['Age'] = 9;
-        $data['TravelPeriod']['DepartureDate'] = "2020-09-01";
-        $data['TravelPeriod']['ReturnDate'] = "2020-12-20";
+        $data['TravelPeriod']['DepartureDate'] =$this->from;
+        $data['TravelPeriod']['ReturnDate'] = $this->to;
         $data['TravelPeriod']['Duration'] = "256";
-        $data['Location']['Country'] = 'Greece';
-        $data['MaxPrice'] = '1000';
+        $data['Location']['Country'] = $destination[0];
+        if(count($destination) > 1){
+            $data['Location']['Region'] = $destination[1];
+        }
+        $data['MaxPrice'] = ''.$this->getBudget();
         $data['Flight']['DepartureAirports'] = "HAM";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
         $data['Lang'] = 'en';
@@ -296,7 +300,7 @@ class AutooffersPWRepository extends BaseRepository
     public function saveWishData(Wish $wish, $whitelabelId)
     {
 
-        /*$this->setMinBudget(0);
+        $this->setMinBudget(0);
         $this->setBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
@@ -306,7 +310,7 @@ class AutooffersPWRepository extends BaseRepository
         $this->setFrom($wish->earliest_start);
         $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
-        $this->setRegion($wish->destination, 1);*/
+        $this->setRegion($wish->destination);
 
         return true;
     }
@@ -722,16 +726,7 @@ class AutooffersPWRepository extends BaseRepository
      */
     public function setRegion($regions)
     {
-        $count = 0;
-        $regions_str = '';
-        foreach ($regions as $region) {
-            if ($count > 0) {
-                $regions_str .= ',';
-            }
-            $regions_str .= $region;
-            ++$count;
-        }
-        $this->region = $regions_str;
+        $this->region = $regions;
     }
 
     /**
