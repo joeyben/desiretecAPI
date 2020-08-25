@@ -99,7 +99,7 @@ class AutooffersPWRepository extends BaseRepository
             'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
                 SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
 
-        $destination = trim(explode('-', $this->getRegion()));
+        //$destination = trim(explode('-', $this->getRegion()));
         $formDataContainer = new \stdClass;
         $formDataContainer->RequestType = 'package';
         $formDataContainer->MsgType = 'All';
@@ -110,13 +110,13 @@ class AutooffersPWRepository extends BaseRepository
         $data['Travellers']['Adult'][0]['Age'] = 28;
         $data['Travellers']['Adult'][1]['Age'] = 22;
         $data['Travellers']['Child'][0]['Age'] = 9;
-        $data['TravelPeriod']['DepartureDate'] =$this->from;
+        $data['TravelPeriod']['DepartureDate'] = $this->from;
         $data['TravelPeriod']['ReturnDate'] = $this->to;
-        $data['TravelPeriod']['Duration'] = "".$this->convertDuration($this->getPeriod());
-        $data['Location']['Country'] = $destination[0];
-        if(count($destination) > 1){
+        $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
+        $data['Location']['City'] = 'Madrid';
+        /*if(false && count($destination) > 1){
             $data['Location']['Region'] = $destination[1];
-        }
+        }*/
         $data['MaxPrice'] = ''.$this->getBudget();
         $data['Flight']['DepartureAirports'] = "HAM";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
@@ -183,7 +183,7 @@ class AutooffersPWRepository extends BaseRepository
         $data['TravelPeriod']['DepartureDate'] = "2020-09-01";
         $data['TravelPeriod']['ReturnDate'] = "2020-12-20";
         $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
-        $data['Location']['Country'] = 'Greece';
+        $data['Location']['Country'] = 'France';
         $data['MaxPrice'] = '1000';
         $data['Flight']['DepartureAirports'] = "HAM";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
@@ -300,7 +300,6 @@ class AutooffersPWRepository extends BaseRepository
     public function saveWishData(Wish $wish, $whitelabelId)
     {
 
-        $this->setMinBudget(0);
         $this->setBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
@@ -703,17 +702,9 @@ class AutooffersPWRepository extends BaseRepository
      * @param $airport
      * @param $whitelabelId
      */
-    public function setAirport($airport, $whitelabelId)
+    public function setAirport($airport)
     {
-        $airarr = explode(',', $airport);
-        $airports = '';
-        foreach ($airarr as $key => $air) {
-            if ($key > 0) {
-                $airports .= ',';
-            }
-            $airports .= '"' . getTTAirports($air, $whitelabelId) . '"';
-        }
-        $this->airport = $airports;
+        $this->airport = $airport;
     }
 
     /**
