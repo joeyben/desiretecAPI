@@ -112,7 +112,7 @@ class AutooffersPWRepository extends BaseRepository
         $data['Travellers']['Child'][0]['Age'] = 9;
         $data['TravelPeriod']['DepartureDate'] =$this->from;
         $data['TravelPeriod']['ReturnDate'] = $this->to;
-        $data['TravelPeriod']['Duration'] = "256";
+        $data['TravelPeriod']['Duration'] = "".$this->convertDuration($this->getPeriod());
         $data['Location']['Country'] = $destination[0];
         if(count($destination) > 1){
             $data['Location']['Region'] = $destination[1];
@@ -604,6 +604,9 @@ class AutooffersPWRepository extends BaseRepository
         }
     }
 
+    public function getPeriod(){
+        return $this->period;
+    }
     /**
      * @return mixed
      */
