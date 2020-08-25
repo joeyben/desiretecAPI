@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Regions;
+use App\Models\PWRegions;
 use App\Models\TTAirports;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,26 @@ class RegionsController extends Controller
 
         return $destinations;
     }
+
+    public function getAllPWDestinations(Request $request)
+    {
+
+        $query = $request->get('query');
+        $destinations = [];
+        PWRegions::select('name', 'country_name')
+            ->where('name', 'like', $query . '%')
+            ->orWhere('country_name', 'like', $query . '%')
+            ->groupBy('name')
+            ->chunk(200, function ($regions) use (&$destinations) {
+                foreach ($regions as $region) {
+                    $destinations[] = $region->name ? $region->country_name .' - '. $region->name
+                                        : $region->country_name;
+                }
+            });
+
+        return $destinations;
+    }
+
 
     public function getAllAirports(Request $request)
     {

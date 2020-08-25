@@ -822,22 +822,22 @@ if (!function_exists('getCateringFromCode')) {
         $category = '';
         switch ($code) {
             case '1':
-                $category = 'Ohne Verpflegung';
+                $category = trans('labels.frontend.wishes.catering.ov');
                 break;
             case '2':
-                $category = 'Frühstück';
+                $category = trans('labels.frontend.wishes.catering.bf');
                 break;
             case '3':
-                $category = 'Halbpension';
+                $category = trans('labels.frontend.wishes.catering.hp');
                 break;
             case '4':
-                $category = 'Vollpension';
+                $category = trans('labels.frontend.wishes.catering.vp');
                 break;
             case '5':
-                $category = 'All Inclusive';
+                $category = trans('labels.frontend.wishes.catering.ai');
                 break;
             default:
-                $category = 'Ohne Verpflegung';
+                $category = trans('labels.frontend.wishes.catering.ov');
         }
 
         return $category;

@@ -121,27 +121,13 @@
         this.onSubmit()
       },
       onSubmit () {
-        let check = true
-        this.checkedLayers.forEach((layer) => {
-          if (this.pivot[layer] === '') {
-            this.$message({
-              message: 'Bitte geben Sie die korrekte URL an',
-              showClose: true,
-              type: 'error'
-            })
-
-            check = false
-          }
-        })
-        if (check) {
-          this.$store.dispatch('block', {element: 'layersComponent', load: true})
-          this.$http.put(window.laroute.route('admin.whitelabels.layers.update'), {layers: this.checkedLayers, pivot: this.pivot})
-            .then(this.onSubmitSuccess)
-            .catch(this.onFailed)
-            .then(() => {
-              this.$store.dispatch('block', {element: 'layersComponent', load: false})
-            })
-        }
+        this.$store.dispatch('block', {element: 'layersComponent', load: true})
+        this.$http.put(window.laroute.route('admin.whitelabels.layers.update'), {layers: this.checkedLayers, pivot: this.pivot})
+          .then(this.onSubmitSuccess)
+          .catch(this.onFailed)
+          .then(() => {
+            this.$store.dispatch('block', {element: 'layersComponent', load: false})
+          })
       },
       onSubmitSuccess (response) {
         if (response.data.hasOwnProperty('success') && response.data.success === true) {

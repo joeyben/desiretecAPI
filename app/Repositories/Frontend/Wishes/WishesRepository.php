@@ -19,6 +19,7 @@ use DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Modules\Autooffers\Repositories\AutooffersPWRepository;
 use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\AutooffersTTRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
@@ -28,6 +29,8 @@ use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\EagerLoad;
+use Illuminate\Support\Facades\Log;
+use Modules\Variants\Entities\Variant;
 
 require_once 'Mobile_Detect.php';
 /**
@@ -60,16 +63,18 @@ class WishesRepository extends BaseRepository
     private $rules;
     private $autooffers;
     private $autooffersTT;
+    private $autooffersPW;
     private $autoRules;
     private $layerWhitelabel;
 
-    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, AutooffersTTRepository $autooffersTT, EloquentAutooffersRepository $autoRules, LayerWhitelabelRepository $layerWhitelabel)
+    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, AutooffersTTRepository $autooffersTT, AutooffersPWRepository $autooffersPW, EloquentAutooffersRepository $autoRules, LayerWhitelabelRepository $layerWhitelabel)
     {
         $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
         $this->rules = $rules;
         $this->autooffers = $autooffers;
         $this->autooffersTT = $autooffersTT;
+        $this->autooffersPW = $autooffersPW;
         $this->autoRules = $autoRules;
         $this->layerWhitelabel = $layerWhitelabel;
     }
@@ -113,6 +118,7 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.events_interested',
                 config('module.wishes.table') . '.is_autooffer',
                 config('module.wishes.table') . '.version',
+                config('module.wishes.table') . '.variant_id',
                 config('access.users_table') . '.first_name as first_name',
                 config('access.users_table') . '.last_name as last_name',
                 config('module.whitelabels.table') . '.id as whitelabel_id',
@@ -136,13 +142,7 @@ class WishesRepository extends BaseRepository
 
     public function getWishList(ManageWishesRequest $request)
     {
-        $status_arr = [
-            'new'               => '1',
-            'offer_created'     => '2',
-            'completed'         => '3',
-        ];
-
-        $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+        $status = $request->get('status') ? $request->get('status') : '1';
         $id = ($request->get('filter') && null !== $request->get('filter') && is_numeric($request->get('filter'))) ? $request->get('filter') : '';
         $destination = ($request->get('filter') && null !== $request->get('filter') && !is_numeric($request->get('filter'))) ? $request->get('filter') : '';
 
@@ -154,7 +154,7 @@ class WishesRepository extends BaseRepository
 
         $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
 
-        if (Auth::user()->hasRole('User')) {
+        if (Auth::user()->hasRole('User') || $status === '4') {
             $wish = $this->getForDataTable()
                 ->when($currentWhiteLabelID, function ($wish, $currentWhiteLabelID) {
                     return $wish->where('whitelabel_id', (int) ($currentWhiteLabelID));
@@ -186,16 +186,19 @@ class WishesRepository extends BaseRepository
         $whitelabelLayers = $this->getLayers((int)$currentWhiteLabelID);
 
         foreach ($wish as $singleWish) {
-            $singleWish['status'] = array_search($singleWish['status'], $status_arr, true) ? array_search($singleWish['status'], $status_arr, true) : 'new';
-
             $singleWish['duration'] = transformDuration($singleWish['duration']);
 
             $singleWish['purpose'] = transformTravelPurpose($singleWish['purpose']);
 
-            foreach ($whitelabelLayers as $layer) {
-                if ($layer['layer']['path'] === $singleWish['version']) {
-                    $singleWish['layer_image'] = $layer['visual'];
+            if (is_null($singleWish['variant_id'])) {
+                foreach ($whitelabelLayers as $layer) {
+                    if ($layer['layer']['path'] === $singleWish['version']) {
+                        $singleWish['layer_image'] = $layer['visual'];
+                    }
                 }
+            } else {
+                $variant = Variant::where('id' , $singleWish['variant_id'])->with('attachments')->first();
+                $singleWish['layer_image'] = $variant->attachments[1]->url;
             }
 
             if (Auth::user()->hasRole('Seller')) {
@@ -258,13 +261,7 @@ class WishesRepository extends BaseRepository
     public function changeWishStatus(ChangeWishesStatusRequest $request)
     {
         try {
-            $status_arr = [
-                'new'               => '1',
-                'offer_created'     => '2',
-                'completed'         => '3',
-            ];
-
-            $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+            $status = $request->get('status') ? $request->get('status') : '1';
 
             $wish = $this->updateStatus($request->get('id'), $status);
 
@@ -705,6 +702,17 @@ class WishesRepository extends BaseRepository
         $this->autooffersTT->getToken();
         $response = $this->autooffersTT->getTTData();
         $this->autooffersTT->storeMany($response, $wish->id, $_rules, $userId);
+    }
+
+    public function callPeakwork($wishID, $whitelabelId, $userId)
+    {
+
+        $wish = Wish::where('id', $wishID)->first();
+        $_rules = $this->autoRules->getSettingsForWhitelabel($whitelabelId);
+        $this->autooffersPW->saveWishData($wish, $whitelabelId);
+        $response = $this->autooffersPW->getRequest();
+
+        $this->autooffersPW->storeMany($response, $wish->id, $_rules, $userId);
     }
 
     public function callTraffics($wishID, $whitelabelId, $userId)

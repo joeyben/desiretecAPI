@@ -100349,24 +100349,10 @@ exports.default = {
     onSubmit: function onSubmit() {
       var _this2 = this;
 
-      var check = true;
-      this.checkedLayers.forEach(function (layer) {
-        if (_this2.pivot[layer] === '') {
-          _this2.$message({
-            message: 'Bitte geben Sie die korrekte URL an',
-            showClose: true,
-            type: 'error'
-          });
-
-          check = false;
-        }
+      this.$store.dispatch('block', { element: 'layersComponent', load: true });
+      this.$http.put(window.laroute.route('admin.whitelabels.layers.update'), { layers: this.checkedLayers, pivot: this.pivot }).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'layersComponent', load: false });
       });
-      if (check) {
-        this.$store.dispatch('block', { element: 'layersComponent', load: true });
-        this.$http.put(window.laroute.route('admin.whitelabels.layers.update'), { layers: this.checkedLayers, pivot: this.pivot }).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
-          _this2.$store.dispatch('block', { element: 'layersComponent', load: false });
-        });
-      }
     },
     onSubmitSuccess: function onSubmitSuccess(response) {
       if (response.data.hasOwnProperty('success') && response.data.success === true) {
@@ -100826,7 +100812,9 @@ exports.default = {
 
       this.tag = tag;
       this.$store.dispatch('block', { element: 'whitelabelsProviderComponent', load: true });
-      this.$http.delete(window.laroute.route('provider.hosts.destroy', { host: tag, id: this.whitelebelId })).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
+      var url = window.laroute.route('provider.hosts.destroy', { id: this.whitelebelId, host: encodeURIComponent(tag) });
+
+      this.$http.delete(url).then(this.onDeleteSuccess).catch(this.onFailed).then(function () {
         _this.$store.dispatch('block', { element: 'whitelabelsProviderComponent', load: false });
       });
     },

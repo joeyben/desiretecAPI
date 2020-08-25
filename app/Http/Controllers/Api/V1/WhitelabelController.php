@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Modules\LanguageLines\Repositories\Contracts\LanguageLinesRepository;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
+use Modules\Variants\Repositories\Contracts\VariantsRepository;
 
 /**
  * Class WhitelabelController.
@@ -33,12 +34,18 @@ class WhitelabelController extends Controller
      */
     private $languageline;
 
-    public function __construct(WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabelsRepository, LayerWhitelabelRepository $layerWhitelabels, LanguageLinesRepository $languageline)
+    /**
+     * @var \Modules\Variants\Repositories\Contracts\VariantsRepository
+     */
+    private $variants;
+
+    public function __construct(WhitelabelsRepository $whitelabels, ModuleWhitelabelsRepository $moduleWhitelabelsRepository, LayerWhitelabelRepository $layerWhitelabels, LanguageLinesRepository $languageline, VariantsRepository $variants)
     {
         $this->whitelabels = $whitelabels;
         $this->moduleWhitelabelsRepository = $moduleWhitelabelsRepository;
         $this->layerWhitelabels = $layerWhitelabels;
         $this->languageline = $languageline;
+        $this->variants = $variants;
     }
 
     public function getWhitelabelBySlug(string $slug)
@@ -81,6 +88,7 @@ class WhitelabelController extends Controller
             'licence'             => $whitelabel->licence,
             'traffics'            => $whitelabel->traffics,
             'tt'                  => $whitelabel->tt,
+            'peakwork'            => $whitelabel->peakwork,
             'layers'              => $this->getLayers($whitelabel->id, $data),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
@@ -98,7 +106,7 @@ class WhitelabelController extends Controller
     {
         try {
             $host = str_replace("www.", "", $host);
-
+            $host = str_replace("_", "/", $host);
             $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
 
             if (null === $whitelabelHost) {
@@ -125,7 +133,6 @@ class WhitelabelController extends Controller
             $data['favicon'] = (null !== $favicon && null !== $favicon->first()) ? $favicon->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/favicon/default_favicon.png';
             $data['visual'] = (null !== $visual && null !== $visual->first()) ? $visual->first()['url'] : 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/visual/default_layer_package.png';
 
-
             $result['data'] = [
                 'id'                  => $whitelabel->id,
                 'name'                => $whitelabel->name,
@@ -142,6 +149,7 @@ class WhitelabelController extends Controller
                 'licence'             => $whitelabel->licence,
                 'traffics'            => $whitelabel->traffics,
                 'tt'                  => $whitelabel->tt,
+                'peakwork'            => $whitelabel->peakwork,
                 'licence'             => $whitelabel->licence,
                 'layers'              => $this->getLayers($whitelabel->id, $data, $whitelabelHost->id),
                 'footers'             => $whitelabel->footers,
@@ -157,6 +165,28 @@ class WhitelabelController extends Controller
             return $this->responseJsonError($e);
         }
 
+    }
+
+    public function getVariantId(string $host) {
+        try {
+            $host = str_replace("www.", "", $host);
+
+            $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
+
+            $variant = $this->variants->withCriteria([
+                new Where('whitelabel_id', $whitelabelHost->whitelabel_id)
+            ])->get()->first();
+
+            if (is_null($variant)) {
+                $result['data']['id'] = null;
+            } else {
+                $result['data']['id'] = $variant->id;
+            }
+
+            return $this->responseJson($result);
+        } catch (\Exception $e) {
+            return $this->responseJsonError($e);
+        }
     }
 
     public function getTnb(Request $request)
@@ -186,7 +216,9 @@ class WhitelabelController extends Controller
         $layers = $this->layerWhitelabels->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $id),
-            new EagerLoad(['layer', 'attachments', 'variants'  => function ($query) use ($hostId) {
+            new EagerLoad(['layer'  => function ($query) {
+                $query->with(['hosts']);
+            }, 'attachments', 'variants'  => function ($query) use ($hostId) {
                 if (is_null($hostId)) {
                     $query->where('variants.active', 1)->with('attachments');
                 } else {
@@ -209,6 +241,7 @@ class WhitelabelController extends Controller
                 'headline_success' => $this->getVariant($layer, 'headline_success'),
                 'subheadline_success' => $this->getVariant($layer, 'subheadline_success'),
                 'layer_url' => $layer->layer_url,
+                'hosts' => $this->getHosts($layer->layer->hosts),
                 'privacy' => $layer->privacy,
                 'attachments' => $layer->attachments->first(),
                 'layer' => $layer->layer
@@ -268,5 +301,10 @@ class WhitelabelController extends Controller
         } else {
             return $default;
         }
+    }
+
+    private function getHosts($hosts = null)
+    {
+        return is_null($hosts) ? [] : $hosts->pluck('host');
     }
 }

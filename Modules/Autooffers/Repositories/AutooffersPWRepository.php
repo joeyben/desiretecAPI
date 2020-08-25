@@ -12,6 +12,7 @@ namespace Modules\Autooffers\Repositories;
 use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
 use Modules\Autooffers\Entities\Autooffer;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AutooffersPWRepository.
@@ -93,30 +94,12 @@ class AutooffersPWRepository extends BaseRepository
     {
         $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
 
-        $xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
-   <soap:Header/>
-     <soap:Body>
-<PackageGroupRequest xmlns="http://www.peakwork.net/pws/2010/03" AuthKey="e0a7298a776df161ab2f6f6407f15520">
-<TravelPeriod>
-<DepartureDate>2020-10-01</DepartureDate>
-           <Duration>128</Duration>
-         </TravelPeriod>
-         <Travellers>
-<Adult Age="28"/><Adult Age="22"/> </Travellers> <Hotel>
-           <Rooms />
-         </Hotel>
-         <Flight>
-              <DepartureAirports>DUS FRA</DepartureAirports>
-              <ArrivalAirports>MIA</ArrivalAirports>
-            </Flight>
-       </PackageGroupRequest>
-     </soap:Body>
-   </soap:Envelope>';
 
         $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
             'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
                 SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
 
+        //$destination = trim(explode('-', $this->getRegion()));
         $formDataContainer = new \stdClass;
         $formDataContainer->RequestType = 'package';
         $formDataContainer->MsgType = 'All';
@@ -126,22 +109,29 @@ class AutooffersPWRepository extends BaseRepository
         $data = [];
         $data['Travellers']['Adult'][0]['Age'] = 28;
         $data['Travellers']['Adult'][1]['Age'] = 22;
-       // $data['TravelPeriod']['DepartureDate'] = "2020-12-01";
-        //$data['TravelPeriod']['ReturnDate'] = "2020-12-20";
-        $data['TravelPeriod']['Duration'] = '7';
+        $data['Travellers']['Child'][0]['Age'] = 9;
+        $data['TravelPeriod']['DepartureDate'] = $this->from;
+        $data['TravelPeriod']['ReturnDate'] = $this->to;
+        $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
+        $data['Location']['City'] = 'Madrid';
+        /*if(false && count($destination) > 1){
+            $data['Location']['Region'] = $destination[1];
+        }*/
+        $data['MaxPrice'] = ''.$this->getBudget();
         $data['Flight']['DepartureAirports'] = "HAM";
-        $data['Flight']['ArrivalAirports'] = "OSL";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
         $data['Lang'] = 'en';
         $data['Currency'] = 'EUR';
+        $data['ShowRatings'] = true;
+        $data['ResultsTotal'] = 3;
         //dd($soapclient->__getFunctions());
         $formData = $soapclient->GetPackageProduct($data);
-        echo "<pre>";
-        var_dump($formData);
-        echo "</pre>";
-        dd("yeah");
-
-
+        //echo "<pre>";
+        //dd($formData);
+        //echo "</pre>";
+        //dd("yeah");
+        $this->data = $formData;
+        return $formData->Hotel;
         /*$xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
    <soap:Header/>
      <soap:Body>
@@ -171,6 +161,66 @@ class AutooffersPWRepository extends BaseRepository
         print_r($output);*/
     }
 
+    public function testRequest()
+    {
+        $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
+
+
+        $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
+            'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
+                SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
+
+        $formDataContainer = new \stdClass;
+        $formDataContainer->RequestType = 'package';
+        $formDataContainer->MsgType = 'All';
+        $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
+        $formDataContainer->Lang = 'de';
+        $formDataContainer->Currency = 'EUR';
+        $data = [];
+        $data['Travellers']['Adult'][0]['Age'] = 28;
+        $data['Travellers']['Adult'][1]['Age'] = 22;
+        $data['Travellers']['Child'][0]['Age'] = 9;
+        $data['TravelPeriod']['DepartureDate'] = "2020-09-01";
+        $data['TravelPeriod']['ReturnDate'] = "2020-12-20";
+        $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
+        $data['Location']['Country'] = 'France';
+        $data['MaxPrice'] = '1000';
+        $data['Flight']['DepartureAirports'] = "HAM";
+        $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
+        $data['Lang'] = 'de';
+        $data['Currency'] = 'EUR';
+        $data['ShowRatings'] = true;
+        $data['ResultsTotal'] = 3;
+        //dd($soapclient->__getFunctions());
+        $formData = $soapclient->GetPackageProduct($data);
+        //echo "<pre>";
+        //dd($formData);
+        //echo "</pre>";
+        //dd("yeah");
+        $this->data = $formData;
+        return $formData;
+    }
+
+    public function getAllData()
+    {
+        $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
+
+        $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
+            'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
+                SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
+
+        $formDataContainer = new \stdClass;
+        $formDataContainer->RequestType = 'package';
+        $formDataContainer->MsgType = 'All';
+        $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
+        $formDataContainer->Lang = 'de';
+        $formDataContainer->Currency = 'EUR';
+
+        $formData = $soapclient->GetFormData($formDataContainer);
+
+        dd($formData);
+    }
+
     public function getToken()
     {
         $curl = curl_init();
@@ -195,134 +245,6 @@ class AutooffersPWRepository extends BaseRepository
         $this->token = json_decode($result, true)['access_token'];
     }
 
-    public function getTTData()
-    {
-        $curl = curl_init();
-        $travellers = '';
-
-        for ($i = 0; $i < $this->adults; ++$i) {
-            $travellers .= '{
-                    "Age": 35
-                }';
-            if ($i + 1 < $this->adults) {
-                $travellers .= ',';
-            }
-        }
-
-        for ($i = 0; $i < $this->kids; ++$i) {
-            if (0 === $i) {
-                $travellers .= ',';
-            }
-            $travellers .= '{
-                    "Age": 6
-                }';
-            if ($i + 1 < $this->kids) {
-                $travellers .= ',';
-            }
-        }
-        $xmlreq = '{
-         "PackageOffersRQ": {
-          "RQ_Metadata": {
-           "Language": "de-CH"
-          },
-        "CurrencyCode": "' . $this->currency . '",
-          "Travellers": {
-            "Traveller": [
-            ' . $travellers . '
-            ]
-          },
-          "OfferFilters": {
-           "DateAndTimeFilter": {
-            "OutboundFlightDateAndTimeFilter": {
-             "FlightEvent": "Departure",
-             "DateRange": {
-              "MinDate": "' . $this->from . '"
-             }
-            },
-            "InboundFlightDateAndTimeFilter": {
-             "FlightEvent": "Departure",
-             "DateRange": {
-              "MaxDate": "' . $this->to . '"
-             }
-            }
-        },
-           "TravelDurationFilter": {
-            "DurationKind": "Stay",
-            "MinDuration": ' . $this->minDuration . ',
-            "MaxDuration": ' . $this->maxDuration . '
-           },
-           "PriceFilter": {
-            "MaxPrice": ' . $this->getBudget() . '
-           },
-           "AirportFilter": {
-            "DepartureAirportFilter": {
-             "AirportCodes": [' . $this->airport . ']
-        } },
-           "AccomFilter": {
-            "AccomSelectors": {
-             "RegionIDs": [' . $this->getRegion() . ']
-            }
-           },
-           "AccomPropertiesFilter": {
-            "HotelAttributes": [],
-            "BoardTypes": [' . $this->catering . '],
-            "HotelCategoryFilter": {
-                "HotelCategoryRange": {
-                    "MinCategory": ' . (int) ($this->category) . '
-                }
-            },
-            "HotelReview": {
-                "MinRatingsCount": 10,
-                "MinMeanRatingOverall": 4,
-                "MinMeanRecommendationRate": 80
-            }
-           }
-          },
-          "Options": {
-            "NumberOfResults": 500,
-            "ResultOffset": 0,
-            "Sorting": ["PriceAsc"]
-          }
-        } }';
-
-        $authorization = 'Authorization: Bearer ' . $this->token;
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
-        curl_setopt($curl, CURLOPT_URL, $this->url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $xmlreq);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-        $result = curl_exec($curl);
-        if (!$result) {
-            die('Connection Failure');
-        }
-        curl_close($curl);
-
-        $this->data = json_decode($result, true)['PackageOffersRS'];
-        if (\array_key_exists('Offers', $this->data)) {
-            if (\array_key_exists('Offer', $this->data['Offers'])) {
-                $this->offers = $this->data['Offers']['Offer'];
-            } else {
-                $this->offers = [];
-            }
-        } else {
-            $this->offers = [];
-        }
-        if (empty($this->offers) && !$this->specialSearch) {
-            $this->specialSearch = true;
-            $this->setBudget(0);
-            $this->getTTData();
-        }
-        $this->setGiataIds();
-        $this->setReviews();
-        $this->setHotelGeo();
-        $this->setHotelAttributes();
-
-        return $this->offers;
-    }
 
     /**
      * @param  $data
@@ -333,15 +255,16 @@ class AutooffersPWRepository extends BaseRepository
     {
         $count = 0;
         foreach ($offers as $key => $offer) {
-            $hotelId = $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'];
-            if (!$this->checkValidity($hotelId, $wish_id)) {
+
+            $hotelId = $offer->References->GiataCode;
+            /*if (!$this->checkValidity($hotelId, $wish_id)) {
                 continue;
-            }
-            $tOperator = $offer['TourOperator']['TourOperatorCode'];
+            }*/
+            $tOperator = $offer->Offers->Offer->TourOperator->Code;
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
-            if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
+            /*if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
                 continue;
-            }
+            }*/
             $this->storeAutooffer($offer, $hotel, $wish_id, $userId);
             ++$count;
             if ($count >= 3) {
@@ -357,11 +280,10 @@ class AutooffersPWRepository extends BaseRepository
      */
     public function getFullHotelData($hotelId, $tOperator)
     {
-        $giata_id = $this->giataIds[$hotelId];
+        $giata_id = $hotelId;
         $username = '203339';
         $password = '605e5129';
         $remote_url = 'https://xml.giatamedia.com/?show=text,geo,pic800,hn,vn,ln,lk,katid,kn,hk,sn,sn,zi,ln,lc&sc=hotel&vc=' . $tOperator . '&gid=' . $giata_id;
-
         $opts = ['http'=> ['method'=> 'GET',
             'header'               => 'Authorization: Basic ' . base64_encode("$username:$password")]];
 
@@ -377,7 +299,7 @@ class AutooffersPWRepository extends BaseRepository
      */
     public function saveWishData(Wish $wish, $whitelabelId)
     {
-        $this->setMinBudget(0);
+
         $this->setBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
@@ -387,7 +309,7 @@ class AutooffersPWRepository extends BaseRepository
         $this->setFrom($wish->earliest_start);
         $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
-        $this->setRegion(getTTRegionCode($wish->destination, 1));
+        $this->setRegion($wish->destination);
 
         return true;
     }
@@ -416,25 +338,27 @@ class AutooffersPWRepository extends BaseRepository
     public function storeAutooffer($offer, $hotel, $wish_id, $userId)
     {
         try {
+            $DepartureDate = new \DateTime($offer->Offers->Offer->Departure->DepartureDateTime);
+            $ArrivalDate = new \DateTime($offer->Offers->Offer->Return->DepartureDateTime);
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
-            $autooffer->code = $offer['OfferID'];
-            $autooffer->type = \array_key_exists('TravelType', $offer) ? $offer['TravelType'] : 'NM';
-            $autooffer->totalPrice = $offer['PriceInfo']['Price']['value'];
-            $autooffer->personPrice = $offer['PriceInfo']['Price']['value'];
-            $autooffer->from = $offer['TravelDateInfo']['DepartureDate'];
-            $autooffer->to = $offer['TravelDateInfo']['ReturnDate'];
-            $autooffer->tourOperator_code = $offer['TourOperator']['TourOperatorCode'];
-            $autooffer->tourOperator_name = $offer['TourOperator']['TourOperatorName'];
-            $autooffer->hotel_code = $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'];
-            $autooffer->hotel_name = $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'];
-            $autooffer->hotel_location_name = '';
-            $autooffer->hotel_location_lng = 0;
-            $autooffer->hotel_location_lat = 0;
+            $autooffer->code = $offer->Offers->Offer->ProductCode;
+            $autooffer->type = 'pauschal';
+            $autooffer->totalPrice = $offer->Offers->Offer->Price->Amount;
+            $autooffer->personPrice = $offer->Offers->Offer->Price->PerPerson ? $offer->Offers->Offer->Price->Amount : ceil($offer->Offers->Offer->Price->Amount/count($this->data->Travellers->Adult));
+            $autooffer->from = $DepartureDate->format('Y-m-d');
+            $autooffer->to = $ArrivalDate->format('Y-m-d');
+            $autooffer->tourOperator_code = $offer->Offers->Offer->TourOperator->Code;
+            $autooffer->tourOperator_name = $offer->Offers->Offer->TourOperator->_;
+            $autooffer->hotel_code = $offer->References->GiataCode;
+            $autooffer->hotel_name = $offer->Name;
+            $autooffer->hotel_location_name = $offer->Location->Region->_.', '.$offer->Location->City->_.', '.$offer->Location->Country->_;
+            $autooffer->hotel_location_lng = $offer->Location->GeoCode->Longitude;
+            $autooffer->hotel_location_lat = $offer->Location->GeoCode->Latitude;
             $autooffer->hotel_location_region_code = '';
             $autooffer->hotel_location_region_name = '';
-            $autooffer->airport_code = $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightArrival']['ArrivalAirportRef']['AirportCode'];
-            $autooffer->airport_name = '';
+            $autooffer->airport_code = $offer->Offers->Offer->Departure->ArrivalAirport->Code;
+            $autooffer->airport_name = $offer->Offers->Offer->Departure->ArrivalAirport->_;
             $autooffer->data = json_encode($this->deserializeData($offer));
             $autooffer->hotel_data = json_encode($hotel);
             $autooffer->wish_id = (int) $wish_id;
@@ -464,56 +388,65 @@ class AutooffersPWRepository extends BaseRepository
      */
     public function deserializeData($offer)
     {
+        $DepartureDate = new \DateTime($offer->Offers->Offer->Departure->DepartureDateTime);
+        $ArrivalDate = new \DateTime($offer->Offers->Offer->Return->DepartureDateTime);
+        $dataOffer = $offer->Offers->Offer;
         $data = [
-            'from'         => $offer['TravelDateInfo']['DepartureDate'],
-            'to'           => $offer['TravelDateInfo']['ReturnDate'],
-            'duration'     => $offer['TravelDateInfo']['TripDuration'],
+            'from'         => $DepartureDate->format('Y-m-d'),
+            'to'           => $ArrivalDate->format('Y-m-d'),
+            'duration'     => $dataOffer->LengthOfStay,
             'tourOperator' => [
-                'code'  => $offer['TourOperator']['TourOperatorCode'],
-                'name'  => $offer['TourOperator']['TourOperatorName'],
-                'image' => $offer['TourOperator']['TourOperatorImage']
+                'code'  => $dataOffer->TourOperator->Code,
+                'name'  => $dataOffer->TourOperator->_,
+                'image' => ""
             ],
             'price' => [
-                'value'    => $offer['PriceInfo']['Price']['value'],
-                'currency' => $offer['PriceInfo']['Price']['CurrencyCode']
+                'value'    => $dataOffer->Price->Amount,
+                'currency' => $this->data->Currency
             ],
-            'offerFeatures'    => \array_key_exists('OfferFeatures', $offer['OfferProperties']) ? $offer['OfferProperties']['OfferFeatures'] : '',
-            'hotel_id'         => $offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID'],
-            'hotel_reviews'    => $this->reviews[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
-            'hotel_attributes' => $this->hotelAttributes[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
-            'hotel_geo'        => $this->geos[$offer['OfferServices']['Package']['Accommodation']['HotelRef']['HotelID']],
-            'boardType'        => $offer['OfferServices']['Package']['Accommodation']['BoardType'],
-            'room'             => $offer['OfferServices']['Package']['Accommodation']['Room']['RoomName'],
+            'offerFeatures'    =>  '',
+            'hotel_id'         => $offer->References->GiataCode,
+            'hotel_ratings'    => [
+                'percentage' => property_exists($offer, 'Ratings') ? $offer->Ratings->Rating[1]->Value : 0,
+                'count'      => property_exists($offer, 'Ratings') ? $offer->Ratings->Rating[0]->Value : 0,
+            ],
+            'hotel_attributes' => "",
+            'hotel_geo'        => [
+                'longitude' => $offer->Location->GeoCode->Longitude,
+                'latitude'  => $offer->Location->GeoCode->Latitude
+            ],
+            'boardType'        => $dataOffer->Board->_,
+            'room'             => $dataOffer->Room->_,
             'flight'           => [
                 'in' => [
                     'departure' => [
-                        'airport' => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightDeparture']['DepartureAirportRef']['AirportCode'],
-                        'date'    => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightDeparture']['DepartureDate'],
-                        'time'    => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightDeparture']['DepartureTime'],
+                        'airport' => $dataOffer->Departure->DepartureAirport->_,
+                        'date'    => $dataOffer->Departure->DepartureDateTime,
+                        'time'    => $dataOffer->Departure->DepartureDateTime,
                     ],
                     'arrival' => [
-                        'airport' => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightArrival']['ArrivalAirportRef']['AirportCode'],
-                        'date'    => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightArrival']['ArrivalDate'],
-                        'time'    => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightArrival']['ArrivalTime'],
+                        'airport' => $dataOffer->Departure->ArrivalAirport->_,
+                        'date'    => $dataOffer->Departure->ArrivalDateTime,
+                        'time'    => $dataOffer->Departure->ArrivalDateTime,
                     ],
-                    'duration' => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['FlightDuration'],
-                    'stops'    => $offer['OfferServices']['Package']['Flight']['OutboundFlight']['NumberOfStops'],
-                    'class'    => \array_key_exists('CabinClass', $offer['OfferServices']['Package']['Flight']['OutboundFlight']) ? $offer['OfferServices']['Package']['Flight']['OutboundFlight']['CabinClass']['value'] : '',
+                    'duration' => $dataOffer->Departure->Duration,
+                    'stops'    => $dataOffer->Departure->StopOver,
+                    'class'    => property_exists($dataOffer->Departure, 'Class') ? $dataOffer->Departure->Class : "",
                 ],
                 'out' => [
                     'departure' => [
-                        'airport' => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightDeparture']['DepartureAirportRef']['AirportCode'],
-                        'date'    => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightDeparture']['DepartureDate'],
-                        'time'    => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightDeparture']['DepartureTime'],
+                        'airport' => $dataOffer->Return->DepartureAirport->_,
+                        'date'    => $dataOffer->Return->DepartureDateTime,
+                        'time'    => $dataOffer->Return->DepartureDateTime,
                     ],
                     'arrival' => [
-                        'airport' => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightArrival']['ArrivalAirportRef']['AirportCode'],
-                        'date'    => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightArrival']['ArrivalDate'],
-                        'time'    => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightArrival']['ArrivalTime'],
+                        'airport' => $dataOffer->Return->ArrivalAirport->_,
+                        'date'    => $dataOffer->Return->ArrivalDateTime,
+                        'time'    => $dataOffer->Return->ArrivalDateTime,
                     ],
-                    'duration' => $offer['OfferServices']['Package']['Flight']['InboundFlight']['FlightDuration'],
-                    'stops'    => $offer['OfferServices']['Package']['Flight']['InboundFlight']['NumberOfStops'],
-                    'class'    => \array_key_exists('CabinClass', $offer['OfferServices']['Package']['Flight']['InboundFlight']) ? $offer['OfferServices']['Package']['Flight']['InboundFlight']['CabinClass']['value'] : '',
+                    'duration' => $dataOffer->Return->Duration,
+                    'stops'    => $dataOffer->Return->StopOver,
+                    'class'    => property_exists($dataOffer->Return, 'Class') ? $dataOffer->Return->Class : "",
                 ],
             ],
         ];
@@ -670,6 +603,9 @@ class AutooffersPWRepository extends BaseRepository
         }
     }
 
+    public function getPeriod(){
+        return $this->period;
+    }
     /**
      * @return mixed
      */
@@ -766,17 +702,9 @@ class AutooffersPWRepository extends BaseRepository
      * @param $airport
      * @param $whitelabelId
      */
-    public function setAirport($airport, $whitelabelId)
+    public function setAirport($airport)
     {
-        $airarr = explode(',', $airport);
-        $airports = '';
-        foreach ($airarr as $key => $air) {
-            if ($key > 0) {
-                $airports .= ',';
-            }
-            $airports .= '"' . getTTAirports($air, $whitelabelId) . '"';
-        }
-        $this->airport = $airports;
+        $this->airport = $airport;
     }
 
     /**
@@ -792,16 +720,7 @@ class AutooffersPWRepository extends BaseRepository
      */
     public function setRegion($regions)
     {
-        $count = 0;
-        $regions_str = '';
-        foreach ($regions as $region) {
-            if ($count > 0) {
-                $regions_str .= ',';
-            }
-            $regions_str .= $region;
-            ++$count;
-        }
-        $this->region = $regions_str;
+        $this->region = $regions;
     }
 
     /**
@@ -1111,5 +1030,14 @@ class AutooffersPWRepository extends BaseRepository
         }
         curl_close($curl);
         dd($result);
+    }
+
+    public function convertDuration($duration){
+        $cDuration = 1;
+        for ($i=1;$i<=$duration;$i++) {
+
+            $cDuration = $cDuration * 2;
+        }
+        return $cDuration;
     }
 }

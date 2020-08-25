@@ -14,7 +14,7 @@ return [
 
     'title'     => 'Beispielhafte Nutzungsbedingungen: ',
     'message'     => 'Desiretec stellt Ihnen beispielhaft eine Vorlage für Nutzungsbedingungen zur Verfügung. Bitte beachten Sie jedoch, dass Sie die Vorlage umfassend prüfen und auf Ihr Geschäftsmodell anpassen sollten. Eine Haftung für die Richtigkeit der Vorlage übernimmt Desiretec nicht, insbesondere erteilen wir auch keine Rechtsberatung. Jeder Kunde muss selbst bestimmen, welche Nutzungsbedingungen er einbindet.',
-    'template'     => 'Voorwaarden voor het gebruik van het $KUNDE-reiswensenportaal
+    'tnb'         => 'Voorwaarden voor het gebruik van het $KUNDE-reiswensenportaal
     1. Functie van het $KUNDE-reiswensenportaal, Gebruiksvoorwaarden
     1.1 $KUNDE biedt de technische mogelijkheid om via de online tool "$KUNDE-Reisewunschportal" gratis zoekadvertenties voor reisaanbiedingen te plaatsen ("reiswensen") biedt de technische mogelijkheid om via de online tool $KUNDE gratis zoekadvertenties voor reisaanbiedingen te plaatsen ("reiswensen") voor reisadviseurs met het oog op een individuele aanbiedingscommunicatie.
     1.2 Het gebruik van de online-tool is onderworpen aan deze gebruiksvoorwaarden, die overeenkomstig punt 8.1 kunnen worden gewijzigd.

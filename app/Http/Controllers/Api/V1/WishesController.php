@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Translation\Translator;
 use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
+use Modules\Variants\Entities\Variant;
 
 class WishesController extends APIController
 {
@@ -97,7 +98,7 @@ class WishesController extends APIController
                 new ByUserRole($this->auth->user()->id),
                 new OrderBy($sort[0], $sort[1]),
                 new Filter($search),
-                new EagerLoad(['owner' => function ($query) {
+                new EagerLoad(['variant', 'owner' => function ($query) {
                     $select = 'CONCAT(first_name, " ", last_name) AS full_name';
                     $query->select('id', DB::raw($select));
                 }, 'group'  => function ($query) {
@@ -119,7 +120,6 @@ class WishesController extends APIController
         try {
             $data = $this->repository->getById($id);
             $wishData = $data['wish'];
-
             $avatar = [];
             $agentName = [];
             $lastMessage = count($wishData->messages) ? $wishData->messages[count($wishData->messages) - 1] : null;
@@ -130,7 +130,6 @@ class WishesController extends APIController
             $wishData->setAttribute('lastAgent', null);
             $offers = $wishData->offers;
             $offerFiles = [];
-
             foreach ($offers as $key => $offer) {
                 if (null !== Agent::where('id', $offer->agent_id)->value('avatar')) {
                     array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
@@ -164,7 +163,7 @@ class WishesController extends APIController
             $result['data']['agent'] = \Illuminate\Support\Facades\Auth::guard('agent')->user();
             $result['data']['agent_name'] = $agentName;
             $result['data']['offerFiles'] = $offerFiles;
-            $result['data']['layer_image'] = $this->getLayerImage($wishData->whitelabel_id, $wishData->version);
+            $result['data']['layer_image'] = $this->getLayerImage($wishData->whitelabel_id, $wishData->version, $wishData->variant_id);
             $result['data']['wishDetails'] = $wishData;
             $result['data']['wishDetails']['catering'] = $this->categories->getCategoryByParentValue('catering', $wish->catering);
             $result['data']['wishDetails']['duration'] = transformDuration($wishData->duration);
@@ -246,6 +245,10 @@ class WishesController extends APIController
                     $this->repository->setIsAutoofer($wish->id);
                     $this->callTraffics($wish, $newUser, $request);
                 }
+                elseif ($wish->whitelabel->peakwork) {
+                    $this->repository->setIsAutoofer($wish->id);
+                    $this->callPeakwork($wish, $newUser, $request);
+                }
 
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
             }
@@ -281,6 +284,7 @@ class WishesController extends APIController
             'current_wl_email' => $wish->whitelabel->email,
             'type'             => 0
         ];
+
         dispatch((new sendAutoOffersMail($details, $wish->id, $wish->whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
     }
 
@@ -312,19 +316,53 @@ class WishesController extends APIController
         dispatch((new sendAutoOffersMail($details, $wish->id, $wish->whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
     }
 
-    private function getLayerImage($whitelabelId, $layerName) {
+    public function callPeakwork($wish, $newUser, $request)
+    {
+        $view = \View::make('wishes::emails.autooffer',
+            [
+                'url'=> $wish->whitelabel->domain . '/offer/listpw/' . $wish->id . '/' . $newUser->token->token,
+                'whitelabelId' => $wish->whitelabel->id,
+                'whitelabel' => $wish->whitelabel
+            ]
+        );
+        $contents = $view->render();
+
+        //$wishJob = (new callTTApi($wish->id, $request->input('whitelabel_id'), $newUser->id))->delay(Carbon::now()->addSeconds(3));
+        //dispatch($wishJob);
+
+        $this->repository->callPeakwork($wish->id, $request->input('whitelabel_id'), $newUser->id);
+
+        $details = [
+            'email'            => $newUser->email,
+            'token'            => $newUser->token->token,
+            'email_name'       => trans('autooffers.email.name'),
+            'email_subject'    => trans('autooffer.email.subject'),
+            'email_content'    => $contents,
+            'current_wl_email' => $wish->whitelabel->email,
+            'type'             => 0
+        ];
+        dispatch((new sendAutoOffersMail($details, $wish->id, $wish->whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
+    }
+
+    private function getLayerImage($whitelabelId, $layerName, $variantId) {
 
         $whitelabelLayers = $this->getWhitelabelLayers($whitelabelId);
 
-        foreach ($whitelabelLayers as $layer) {
-            if ($layer['layer']['path'] === $layerName) {
-                return $layer['visual'];
+        if (is_null($variantId)) {
+            foreach ($whitelabelLayers as $layer) {
+                if ($layer['layer']['path'] === $layerName) {
+                    return $layer['visual'];
+                }
             }
+        } else {
+            $variant = Variant::where('id' , $variantId)->with('attachments')->first();
+            $variant_image = $variant->attachments[1]->url;
+            return $variant_image;
         }
     }
 
     private function getWhitelabelLayers(int $whitelabelId) {
-        
+
         $layers = $this->layerWhitelabel->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $whitelabelId),
