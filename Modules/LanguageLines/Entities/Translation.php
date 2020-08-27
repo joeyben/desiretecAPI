@@ -37,8 +37,7 @@ class Translation extends Model
     {
         return static::query()
             ->where('whitelabel_id', $whitelabelId)
-            ->where('group', $group)
-            ->where('locale', $locale);
+            ->where('group', $group);
     }
 
     public static function getTranslationsForGroup(string $locale, string $group, int $whitelabelId = null): array
