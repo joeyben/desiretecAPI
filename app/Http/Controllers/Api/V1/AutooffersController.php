@@ -37,8 +37,9 @@ class AutooffersController extends APIController implements AutooffersController
                 }
 
                 $offer['data']['hotelOffer']['hotel']['keywordHighlights'] = [];
-
-                for ($i = 0; $i < 3; ++$i) {
+                $keywordlist = $offer['data']['hotelOffer']['hotel']['keywordList'];
+                $keywordlistCount = count($keywordlist) > 3 ? 3 : count($keywordlist);
+                for ($i = 0; $i < $keywordlistCount; ++$i) {
                     $keyword = $offer['data']['hotelOffer']['hotel']['keywordList'][$i];
                     $keywordCode = $this->keywordList::where('code', $keyword)->first();
                     $keywordName = $keywordCode ? $keywordCode->name : '';
