@@ -37,7 +37,7 @@ class RegionsController extends Controller
         $destinations = [];
         PWRegions::select('name', 'country_name')
             ->where('name', 'like', $query . '%')
-            ->orWhere('country_name', 'like', $query . '%')
+            ->andWhere('country_name', 'like', $query . '%')
             ->groupBy('name')
             ->chunk(200, function ($regions) use (&$destinations) {
                 foreach ($regions as $region) {
