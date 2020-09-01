@@ -34,19 +34,28 @@ class RegionsController extends Controller
     {
 
         $query = $request->get('query');
+        $countries = [];
         $destinations = [];
         PWRegions::select('name', 'country_name')
-            ->where('name', 'like', $query . '%')
-            ->andWhere('country_name', 'like', $query . '%')
-            ->groupBy('name')
+            ->where('country_name', 'like', $query . '%')
+            ->where('name', '=', '-')
+            ->groupBy('country_name')
             ->chunk(200, function ($regions) use (&$destinations) {
                 foreach ($regions as $region) {
-                    $destinations[] = $region->name != "-" ? $region->country_name .' - '. $region->name
-                                        : $region->country_name;
+                    $countries[] = $region->country_name;
                 }
             });
 
-        return $destinations;
+        PWRegions::select('name', 'country_name')
+            ->where('name', 'like', $query . '%')
+            ->groupBy('name')
+            ->chunk(200, function ($regions) use (&$destinations) {
+                foreach ($regions as $region) {
+                    $destinations[] = $region->country_name .' - '. $region->name;
+                }
+            });
+
+        return array_merge($destinations, $countries);
     }
 
 
