@@ -41,7 +41,7 @@ class RegionsController extends Controller
             ->groupBy('name')
             ->chunk(200, function ($regions) use (&$destinations) {
                 foreach ($regions as $region) {
-                    $destinations[] = $region->name !== "-" ? $region->country_name .' - '. $region->name
+                    $destinations[] = $region->name != "-" ? $region->country_name .' - '. $region->name
                                         : $region->country_name;
                 }
             });
