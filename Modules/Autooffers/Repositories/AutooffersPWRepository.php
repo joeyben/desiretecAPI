@@ -40,6 +40,8 @@ class AutooffersPWRepository extends BaseRepository
 
     protected $region;
 
+    protected $country;
+
     protected $location;
 
     protected $from;
@@ -113,10 +115,9 @@ class AutooffersPWRepository extends BaseRepository
         $data['TravelPeriod']['DepartureDate'] = $this->from;
         $data['TravelPeriod']['ReturnDate'] = $this->to;
         $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
-        $data['Location']['City'] = 'Madrid';
-        /*if(false && count($destination) > 1){
-            $data['Location']['Region'] = $destination[1];
-        }*/
+
+        $data['Location']['Region']['CodeList']= $this->getRegion();
+
         $data['MaxPrice'] = ''.$this->getBudget();
         $data['Flight']['DepartureAirports'] = "HAM";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
@@ -124,41 +125,11 @@ class AutooffersPWRepository extends BaseRepository
         $data['Currency'] = 'EUR';
         $data['ShowRatings'] = true;
         $data['ResultsTotal'] = 3;
-        //dd($soapclient->__getFunctions());
         $formData = $soapclient->GetPackageProduct($data);
-        //echo "<pre>";
-        //dd($formData);
-        //echo "</pre>";
-        //dd("yeah");
+
         $this->data = $formData;
         return $formData->Hotel;
-        /*$xml_data = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.peakwork.net/pws/2010/03">
-   <soap:Header/>
-     <soap:Body>
-<PackageGroupRequest xmlns="http://www.peakwork.net/pws/2010/03" AuthKey="e0a7298a776df161ab2f6f6407f15520">
-<TravelPeriod>
-<DepartureDate>2020-10-01</DepartureDate>
-           <Duration>128</Duration>
-         </TravelPeriod>
-         <Travellers>
-<Adult Age="28"/> </Travellers> <Hotel>
-           <Rooms />
-         </Hotel>
-       </PackageGroupRequest>
-     </soap:Body>
-   </soap:Envelope>';
-        $URL = "http://pwhub.peakwork.de/pws/2010/03/?wsdl";
 
-        $ch = curl_init($URL);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        curl_close($ch);
-        echo "------";
-
-        print_r($output);*/
     }
 
     public function testRequest()
@@ -183,7 +154,7 @@ class AutooffersPWRepository extends BaseRepository
         $data['TravelPeriod']['DepartureDate'] = "2020-09-01";
         $data['TravelPeriod']['ReturnDate'] = "2020-12-20";
         $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
-        $data['Location']['Country'] = 'France';
+        $data['Location']['Region']['CodeList']= "131";
         $data['MaxPrice'] = '1000';
         $data['Flight']['DepartureAirports'] = "HAM";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
@@ -309,8 +280,8 @@ class AutooffersPWRepository extends BaseRepository
         $this->setFrom($wish->earliest_start);
         $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
-        $this->setRegion($wish->destination);
-
+        $this->setRegion(getPWRegionCode($wish->destination));
+        $this->setCountry(getPWCountryCode($wish->destination));
         return true;
     }
 
@@ -721,6 +692,22 @@ class AutooffersPWRepository extends BaseRepository
     public function setRegion($regions)
     {
         $this->region = $regions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->region;
+    }
+
+    /**
+     * @param mixed $region
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
     }
 
     /**

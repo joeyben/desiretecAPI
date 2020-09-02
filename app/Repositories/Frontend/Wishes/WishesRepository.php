@@ -711,7 +711,6 @@ class WishesRepository extends BaseRepository
         $_rules = $this->autoRules->getSettingsForWhitelabel($whitelabelId);
         $this->autooffersPW->saveWishData($wish, $whitelabelId);
         $response = $this->autooffersPW->getRequest();
-
         $this->autooffersPW->storeMany($response, $wish->id, $_rules, $userId);
     }
 
