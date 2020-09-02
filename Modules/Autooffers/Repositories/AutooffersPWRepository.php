@@ -129,8 +129,6 @@ class AutooffersPWRepository extends BaseRepository
         $formData = $soapclient->GetPackageProduct($data);
 
         $this->data = $formData;
-        var_dump($formData->Hotel);
-        var_dump($formData->Hotel);
         return $formData->Hotel;
 
     }
