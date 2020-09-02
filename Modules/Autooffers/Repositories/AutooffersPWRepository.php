@@ -233,9 +233,9 @@ class AutooffersPWRepository extends BaseRepository
             }*/
             $tOperator = $offer->Offers->Offer->TourOperator->Code;
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
-            /*if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
+            if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
                 continue;
-            }*/
+            }
             $this->storeAutooffer($offer, $hotel, $wish_id, $userId);
             ++$count;
             if ($count >= 3) {
