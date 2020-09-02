@@ -125,10 +125,12 @@ class AutooffersPWRepository extends BaseRepository
         $data['Currency'] = 'EUR';
         $data['ShowRatings'] = true;
         $data['ResultsTotal'] = 3;
-        var_dump($data);
+
         $formData = $soapclient->GetPackageProduct($data);
 
         $this->data = $formData;
+        var_dump($formData->Hotel);
+        var_dump($formData->Hotel);
         return $formData->Hotel;
 
     }
@@ -237,6 +239,7 @@ class AutooffersPWRepository extends BaseRepository
             if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
                 continue;
             }
+            var_dump($hotel);
             $this->storeAutooffer($offer, $hotel, $wish_id, $userId);
             ++$count;
             if ($count >= 3) {
