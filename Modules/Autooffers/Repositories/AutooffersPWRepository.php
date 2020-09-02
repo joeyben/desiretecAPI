@@ -125,6 +125,7 @@ class AutooffersPWRepository extends BaseRepository
         $data['Currency'] = 'EUR';
         $data['ShowRatings'] = true;
         $data['ResultsTotal'] = 3;
+        var_dump($data);
         $formData = $soapclient->GetPackageProduct($data);
 
         $this->data = $formData;
