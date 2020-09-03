@@ -158,7 +158,8 @@ class AutooffersPWRepository extends BaseRepository
         $data['TravelPeriod']['DepartureDate'] = "2020-09-01";
         $data['TravelPeriod']['ReturnDate'] = "2020-12-20";
         $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
-        $data['Location']['Region']['CodeList']= "131";
+        //$data['Location']['Region']['CodeList']= "131";
+        $data['StaticGroupIdList'] = '837509';
         $data['MaxPrice'] = '1000';
         $data['Flight']['DepartureAirports'] = "HAM";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
