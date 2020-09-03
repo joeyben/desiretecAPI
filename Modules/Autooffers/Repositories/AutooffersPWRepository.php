@@ -109,12 +109,15 @@ class AutooffersPWRepository extends BaseRepository
         $formDataContainer->Lang = 'de';
         $formDataContainer->Currency = 'EUR';
         $data = [];
-        $data['Travellers']['Adult'][0]['Age'] = 28;
-        $data['Travellers']['Adult'][1]['Age'] = 22;
-        $data['Travellers']['Child'][0]['Age'] = 9;
+        for($i=0;$i<$this->getAdults();$i++){
+            $data['Travellers']['Adult'][$i]['Age'] = 28;
+        }
+        for($i=0;$i<$this->getKids();$i++){
+            $data['Travellers']['Child'][$i]['Age'] = 8;
+        }
         $data['TravelPeriod']['DepartureDate'] = $this->from;
         $data['TravelPeriod']['ReturnDate'] = $this->to;
-        $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
+        $data['TravelPeriod']['Duration'] = "".$this->convertDuration($this->getPeriod());
 
         $data['Location']['Region']['CodeList']= $this->getRegion();
 
@@ -534,9 +537,24 @@ class AutooffersPWRepository extends BaseRepository
     /**
      * @param $adults
      */
+    public function getAdults()
+    {
+        return $this->adults;
+    }
+    /**
+     * @param $adults
+     */
     public function setAdults($adults)
     {
         $this->adults = (int) $adults;
+    }
+
+    /**
+     * @param $kids
+     */
+    public function getKids()
+    {
+        return $this->kids;
     }
 
     /**
@@ -553,28 +571,6 @@ class AutooffersPWRepository extends BaseRepository
     public function setPeriod($period)
     {
         $this->period = (int) $period;
-        switch ($this->period) {
-            case 7:
-                $this->setMinDuration(7);
-                $this->setMaxDuration(8);
-                break;
-            case 14:
-                $this->setMinDuration(13);
-                $this->setMaxDuration(15);
-                break;
-            case 21:
-                $this->setMinDuration(19);
-                $this->setMaxDuration(22);
-                break;
-            case 28:
-                $this->setMinDuration(26);
-                $this->setMaxDuration(30);
-                break;
-            default:
-                $this->setMinDuration($this->period);
-                $this->setMaxDuration($this->period);
-                break;
-        }
     }
 
     public function getPeriod(){
