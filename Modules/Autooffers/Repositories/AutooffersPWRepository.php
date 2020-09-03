@@ -115,6 +115,11 @@ class AutooffersPWRepository extends BaseRepository
         for($i=0;$i<$this->getKids();$i++){
             $data['Travellers']['Child'][$i]['Age'] = 8;
         }
+        if($this->getRegion() !== "")
+            $data['Location']['City'] = $this->getRegion();
+        if($this->getCountry() !== "")
+            $data['Location']['Country'] = $this->getCountry();
+
         $data['TravelPeriod']['DepartureDate'] = $this->from;
         $data['TravelPeriod']['ReturnDate'] = $this->to;
         $data['TravelPeriod']['Duration'] = "".$this->convertDuration($this->getPeriod());
@@ -158,8 +163,8 @@ class AutooffersPWRepository extends BaseRepository
         $data['TravelPeriod']['DepartureDate'] = "2020-09-01";
         $data['TravelPeriod']['ReturnDate'] = "2020-12-20";
         $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
-        //$data['Location']['Region']['CodeList']= "131";
-        $data['StaticGroupIdList'] = '837509';
+        $data['Location']['City'] = "Mallorca";
+        //$data['StaticGroupIdList'] = '69220';
         $data['MaxPrice'] = '1000';
         $data['Flight']['DepartureAirports'] = "HAM";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';

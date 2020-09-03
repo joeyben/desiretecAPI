@@ -10,7 +10,9 @@ class PWRegions extends Model
         'code',
         'name',
         'country_name',
-        'country_code'
+        'country_code',
+        'name_en',
+        'country_name_en',
     ];
 
     /**
