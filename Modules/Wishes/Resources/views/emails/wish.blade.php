@@ -21,7 +21,7 @@
                         <p style="line-height: 24px; margin-bottom:20px;">
                             {!! trans('email.wish.created.user.body', ['title' => $wish->destination]) !!}
 
-                            @if ($type !== 1)
+                            @if ($wish->is_autooffer > 0)
                                 {!! trans('email.wish.created.user.url', ['id' => $wish->id,'token' => $token, 'url' => $url]) !!}
                             @endif
                         </p>
