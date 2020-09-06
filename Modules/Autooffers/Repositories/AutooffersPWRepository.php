@@ -117,14 +117,12 @@ class AutooffersPWRepository extends BaseRepository
         }
         if($this->getRegion() !== "")
             $data['Location']['City'] = $this->getRegion();
-        if($this->getCountry() !== "")
+        else if($this->getCountry() !== "")
             $data['Location']['Country'] = $this->getCountry();
 
         $data['TravelPeriod']['DepartureDate'] = $this->from;
         $data['TravelPeriod']['ReturnDate'] = $this->to;
         $data['TravelPeriod']['Duration'] = "".$this->convertDuration($this->getPeriod());
-
-        $data['Location']['Region']['CodeList']= $this->getRegion();
 
         $data['MaxPrice'] = ''.$this->getBudget();
         $data['Flight']['DepartureAirports'] = "HAM";
@@ -133,7 +131,6 @@ class AutooffersPWRepository extends BaseRepository
         $data['Currency'] = 'EUR';
         $data['ShowRatings'] = true;
         $data['ResultsTotal'] = 10;
-
         $formData = $soapclient->GetPackageProduct($data);
 
         $this->data = $formData;
@@ -152,20 +149,20 @@ class AutooffersPWRepository extends BaseRepository
 
         $formDataContainer = new \stdClass;
         $formDataContainer->RequestType = 'package';
-        $formDataContainer->MsgType = 'All';
         $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
         $formDataContainer->Lang = 'de';
         $formDataContainer->Currency = 'EUR';
+        $formDataContainer->DetailLevel = "full";
+
         $data = [];
         $data['Travellers']['Adult'][0]['Age'] = 28;
         $data['Travellers']['Adult'][1]['Age'] = 22;
-        $data['Travellers']['Child'][0]['Age'] = 9;
         $data['TravelPeriod']['DepartureDate'] = "2020-09-01";
         $data['TravelPeriod']['ReturnDate'] = "2020-12-20";
         $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
-        $data['Location']['City'] = "Mallorca";
-        //$data['StaticGroupIdList'] = '69220';
-        $data['MaxPrice'] = '1000';
+        $data['Location']['City'] = "London & Umgebung";
+        //$data['StaticGroupIdList'] = "151273";
+        $data['MaxPrice'] = '2000';
         $data['Flight']['DepartureAirports'] = "HAM";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
         $data['Lang'] = 'de';

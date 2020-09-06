@@ -769,7 +769,7 @@ if (!function_exists('getPWRegionCode')) {
         foreach ($regions as $region) {
             $regionArr = explode('-', $region);
             if(count($regionArr) > 1)
-                $codes = \App\Models\PWRegions::where('name', trim($regionArr[1]))->first()->name_en;
+                $codes = \App\Models\PWRegions::where('name', trim($regionArr[1]))->first()->name;
         }
         return $codes;
     }
@@ -789,7 +789,7 @@ if (!function_exists('getPWCountryCode')) {
         foreach ($regions as $region) {
             $regionArr = explode('-', $region);
             if(count($regionArr) === 1)
-                $codes =  \App\Models\PWRegions::where('country_name', trim($regionArr[0]))->first()->country_name_en;
+                $codes =  \App\Models\PWRegions::where('country_name', trim($regionArr[0]))->first()->country_name;
         }
         return $codes;
     }
