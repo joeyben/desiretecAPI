@@ -53,15 +53,14 @@ class WishesSubscriber
 
         $token = $usertoken->token->token;
         $wish['token'] = $token;
+        $wish['is_autooffer'] = $wishTye;
         $wish->load('owner');
 
         $users = Group::find($wish->group_id)->users()->get();
         //Notification::send($users, new CreatedWishNotificationForSeller($wish));
         //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish))->delay(now()->addMinutes(10)));
 
-        if ($wish->whitelabel->isAutooffer()) {
-            //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish)));
-        }
+        
         if (0 === $wishTye) {
             Notification::send($users, new CreatedWishNotificationForSeller($wish));
         }

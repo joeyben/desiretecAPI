@@ -2,7 +2,6 @@
 
 namespace Modules\Wishes\Notifications;
 
-use App\Repositories\Frontend\Whitelabels\WhitelabelsRepository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -18,19 +17,18 @@ class CreatedWishNotification extends Notification
      * @var \Modules\Wishes\Entities\Wish
      */
     private $wish;
-
-    private $whitelabels;
+    //private $token;
 
     private $_whitelabels = [];
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Wish $wish, WhitelabelsRepository $whitelabels)
+    public function __construct(Wish $wish)
     {
         $this->wish = $wish;
         $this->_setWhitelabelData();
-        $this->whitelabels = $whitelabels;
+        //$this->$token = $token;
     }
 
     /**
@@ -59,16 +57,15 @@ class CreatedWishNotification extends Notification
     public function toMail($notifiable)
     {
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
-        $type = $this->whitelabels->getRuleType($this->wish->whitelabel->id);
+
         return (new MailMessage())
             ->from($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Reisewunschportal')
             ->replyTo($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Reisewunschportal')
             ->subject(trans('email.wish.user', ['whitelabel' => $this->wish->whitelabel->display_name]))
             //->view('wishes::emails.wish_general', ['wish' => $this->wish, 'token' => $this->wish->token]);
-            ->view('wishes::emails.wish', ['wish' => $this->wish, 'whitelabelId' => $this->wish->whitelabel->id, 'token' => $this->wish->token, $type]);
+            ->view('wishes::emails.wish', ['wish' => $this->wish, 'whitelabelId' => $this->wish->whitelabel->id, 'token' => $this->wish->token]);
 
         /*
-         *
                 $whitelabelData = $this->_getWhitelabelData();
 
                 error_log(print_r($whitelabelData, true));

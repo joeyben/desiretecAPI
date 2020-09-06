@@ -240,7 +240,7 @@ class AutooffersPWRepository extends BaseRepository
             }*/
             $tOperator = $offer->Offers->Offer->TourOperator->Code;
             $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
-            var_dump($hotel);
+
             if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
                 continue;
             }
