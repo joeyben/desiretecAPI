@@ -684,17 +684,9 @@ class AutooffersPWRepository extends BaseRepository
      * @param $airport
      * @param $whitelabelId
      */
-    public function setAirport($airport, $whitelabelId)
+    public function setAirport($airport)
     {
-        $airarr = explode(',', $airport);
-        $airports = '';
-        foreach ($airarr as $key => $air) {
-            if ($key > 0) {
-                $airports .= ',';
-            }
-            $airports .= '"' . getTTAirports($air, $whitelabelId) . '"';
-        }
-        $this->airport = $airports;
+        $this->airport = $airport;
     }
 
     /**
