@@ -133,7 +133,7 @@ class AutooffersPWRepository extends BaseRepository
         $data['Currency'] = 'EUR';
         $data['ShowRatings'] = true;
         $data['ResultsTotal'] = 10;
-
+        var_dump($data);
         $formData = $soapclient->GetPackageProduct($data);
 
         $this->data = $formData;
@@ -163,8 +163,8 @@ class AutooffersPWRepository extends BaseRepository
         $data['TravelPeriod']['DepartureDate'] = "2020-09-01";
         $data['TravelPeriod']['ReturnDate'] = "2020-12-20";
         $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
-        $data['Location']['City'] = "London & Umgebung";
-        //$data['StaticGroupIdList'] = "151273";
+        //$data['Location']['City'] = "London & Umgebung";
+        $data['StaticGroupIdList'] = "151273";
         $data['MaxPrice'] = $this->getBudget();
         $data['Flight']['DepartureAirports'] = "HAM";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
@@ -174,10 +174,7 @@ class AutooffersPWRepository extends BaseRepository
         $data['ResultsTotal'] = 3;
         //dd($soapclient->__getFunctions());
         $formData = $soapclient->GetPackageProduct($data);
-        //echo "<pre>";
-        //dd($formData);
-        //echo "</pre>";
-        //dd("yeah");
+
         $this->data = $formData;
         return $formData;
     }
