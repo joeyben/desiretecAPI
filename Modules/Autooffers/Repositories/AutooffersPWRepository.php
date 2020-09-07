@@ -646,30 +646,30 @@ class AutooffersPWRepository extends BaseRepository
      */
     public function setCatering($catering)
     {
-        $noboard = '"AO"';
-        $breakfast = '"BB"';
-        $halfboard = '"HB","HBP"';
-        $fullboard = '"FB","FBP"';
-        $allin = '"AI","AIP","AIU","AIR"';
+        $noboard = "AO";
+        $breakfast = "BB";
+        $halfboard = "HB, HBP";
+        $fullboard = "FB, FBP";
+        $allin = "AI, AIP, AIU, AIR";
 
         switch ($catering) {
             case 1:
-                $this->catering = $noboard . ',' . $breakfast . ',' . $halfboard . ',' . $fullboard . ',' . $allin;
+                $this->catering = $noboard;
                 break;
             case 2:
-                $this->catering = $breakfast . ',' . $halfboard . ',' . $fullboard . ',' . $allin;
+                $this->catering = $breakfast ;
                 break;
             case 3:
-                $this->catering = $halfboard . ',' . $fullboard . ',' . $allin;
+                $this->catering = $halfboard ;
                 break;
             case 4:
-                $this->catering = $fullboard . ',' . $allin;
+                $this->catering = $fullboard ;
                 break;
             case 5:
-                $this->catering = $allin;
+                $this->catering = $allin ;
                 break;
             default:
-                $this->catering = $noboard . ',' . $breakfast . ',' . $halfboard . ',' . $fullboard . ',' . $allin;
+                $this->catering = '';
                 break;
         }
     }
@@ -869,175 +869,8 @@ class AutooffersPWRepository extends BaseRepository
         $this->hotelAttributes = $hotelAttributes;
     }
 
-    public  function testXML()
-    {
-        $xmlreq =  '<ttxml:AvailabilityAndPriceCheckRQ xmlns:ttxml="http://traveltainment.de/middleware/xml/AvailabilityAndPriceCheckRQ” LanguageCode="de-CH”>
-	<OfferID>2193VTFNA2OXNPKJZ82O3VG43399NJKNJRTHL8AZB3N2K8ZVNTWSNO7AXZBNGXCKESZ9XT7PSZJY9W</OfferID>
-	<TravellerList>
-		<Traveller>
-			<PersonName>
-				<FirstName>Max</FirstName>
-				<LastName>Mustermann</LastName>
-			</PersonName>
-			<Gender>MALE</Gender>
-			<BirthDate>1970-01-01</BirthDate>
-			<Type>ADULT</Type>
-		</Traveller>
-		<Traveller>
-			<PersonName>
-				<FirstName>Maxa</FirstName>
-				<LastName>Mustermann</LastName>
-			</PersonName>
-			<Gender>FEMALE</Gender>
-			<BirthDate>1970-01-01</BirthDate>
-			<Type>ADULT</Type>
-		</Traveller>
-	</TravellerList>
-</ttxml:AvailabilityAndPriceCheckRQ>';
-        $this->getToken();
-        $header  = "POST HTTP/1.0 \r\n";
-        $header .= "Content-type: text/xml \r\n";
-        $header .= "Content-length: ".strlen($xmlreq)." \r\n";
-        $header .= "Authorization: Bearer ".$this->token." \r\n";
-        $header .= "Content-transfer-encoding: text \r\n";
-        $header .= "Connection: close \r\n\r\n";
-        $header .= $xmlreq;
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_URL,"https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 4);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $header);
-
-        $data = curl_exec($ch);
-        var_dump($data);
-        if (curl_errno($ch)) {
-            echo curl_error($ch);
-        } else {
-            curl_close($ch);
-        }
-    }
-    public function testTT()
-    {
-        $requestXML = '{
-         "AvailabilityAndPriceCheckRQ": {
-          "RQ_Metadata": {
-           "Language": "de-CH"
-          }, 
-        "CurrencyCode": "CHF",
-          "Travellers": {
-                    "Traveller": [
-                           {
-                                  "Age": 33
-                           },
-                           {
-                                  "Age": 33
-                           },
-                           {
-                                  "Age": 6
-                           }
-                    ]
-             },
-          "OfferID": "2193VTFNA2OXNPKJZ82O3VG43399NJKNJRTHL8AZB3N2K8ZVNTWSNO7AXZBNGXCKESZ9XT7PSZJY9W",
-          "Options": {
-          }
-        }}';
-
-        $server = 'https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck';
-        $this->getToken();
-        $headers = [
-            'Content-type: text/xml',
-            'Content-length: ' . mb_strlen($requestXML), 'Connection: close',
-        ];
-        $ch = curl_init();
-        $authorization = 'Authorization: Bearer ' . $this->token;
-
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
-        curl_setopt($ch, CURLOPT_URL, $server);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 100);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $requestXML);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-        $data = curl_exec($ch);
-        dd($data);
-        if (curl_errno($ch)) {
-            echo curl_error($ch);
-            echo 'Algo fallo';
-        } else {
-            curl_close($ch);
-        }
-
-        /*$curl = curl_init();
-
-        $authorization = 'Authorization: Bearer ' . $this->token;
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
-        curl_setopt($curl, CURLOPT_URL, "https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck");
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $xmlreq);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-        $result = curl_exec($curl);
-        dd($result);
-        if (!$result) {
-            die('Connection Failure');
-        }
-        curl_close($curl);
-        dd($result);*/
-    }
 
 
-    public function testTTbkp()
-    {
-        $xmlreq = '{
- "AvailabilityAndPriceCheckRQ": {
-  "RQ_Metadata": {
-   "Language": "de-CH"
-  }, 
-"CurrencyCode": "CHF",
-  "Travellers": {
-            "Traveller": [
-                   {
-                          "Age": 33
-                   },
-                   {
-                          "Age": 33
-                   },
-                   {
-                          "Age": 6
-                   }
-            ]
-     },
-  "OfferID": "2OUC6GYWCCKS9TNL1GLX6WJ3K3C8W1KX91JZEKZNXRSMJ9AVMAGNRNH4X7UVE8KX9YWLDTJM42MMDL",
-  "Options": {
-  }
-}}';
-        $curl = curl_init();
-
-        $authorization = 'Authorization: Bearer ' . $this->token;
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', $authorization]);
-        curl_setopt($curl, CURLOPT_URL, "https://de-ibe.ws.traveltainment.eu/ttgateway-web-v1_1/ttxml-bridge/TTXmlBridge/Dispatcher/Booking/Package/AvailabilityAndPriceCheck");
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $xmlreq);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-        $result = curl_exec($curl);
-        dd($result);
-        if (!$result) {
-            die('Connection Failure');
-        }
-        curl_close($curl);
-        dd($result);
-    }
 
     public function convertDuration($duration){
         $cDuration = 1;
