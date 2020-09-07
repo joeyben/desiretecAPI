@@ -284,7 +284,7 @@ class AutooffersPWRepository extends BaseRepository
         $this->setBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
-        $this->setAirport($wish->airport, $whitelabelId);
+        $this->setAirport(getRegionCode($wish->airport, 0));
         $this->setCategory($wish->category);
         $this->setCatering($wish->catering);
         $this->setFrom($wish->earliest_start);
