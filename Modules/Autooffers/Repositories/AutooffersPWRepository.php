@@ -126,6 +126,8 @@ class AutooffersPWRepository extends BaseRepository
 
         $data['MaxPrice'] = ''.$this->getBudget();
         $data['Flight']['DepartureAirports'] = $this->getAirport();
+        $data['Hotel']['Category'] = $this->getCategory();
+        $data['Rooms']['Room']['BoardCodeList'] = $this->getCatering();
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
         $data['Lang'] = 'en';
         $data['Currency'] = 'EUR';
@@ -644,11 +646,11 @@ class AutooffersPWRepository extends BaseRepository
      */
     public function setCatering($catering)
     {
-        $noboard = '"NoBoard"';
-        $breakfast = '"Breakfast","BreakfastEconomy","BreakfastSuperior"';
-        $halfboard = '"HalfBoard","HalfBoardEconomy","HalfBoardSuperior"';
-        $fullboard = '"FullBoard","FullBoardEconomy","FullBoardSuperior"';
-        $allin = '"AllInclusive","AllInclusiveEconomy","AllInclusiveSuperior"';
+        $noboard = '"AO"';
+        $breakfast = '"BB"';
+        $halfboard = '"HB","HBP"';
+        $fullboard = '"FB","FBP"';
+        $allin = '"AI","AIP","AIU","AIR"';
 
         switch ($catering) {
             case 1:
@@ -672,6 +674,13 @@ class AutooffersPWRepository extends BaseRepository
         }
     }
 
+    /**
+     * @return $catering
+     */
+    public function getCatering()
+    {
+        return $this->catering;
+    }
     /**
      * @return mixed
      */
