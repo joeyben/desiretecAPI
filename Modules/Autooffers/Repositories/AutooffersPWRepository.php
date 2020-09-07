@@ -125,12 +125,13 @@ class AutooffersPWRepository extends BaseRepository
         $data['TravelPeriod']['Duration'] = "".$this->convertDuration($this->getPeriod());
 
         $data['MaxPrice'] = ''.$this->getBudget();
-        $data['Flight']['DepartureAirports'] = "HAM";
+        $data['Flight']['DepartureAirports'] = $this->getAirport();
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
         $data['Lang'] = 'en';
         $data['Currency'] = 'EUR';
         $data['ShowRatings'] = true;
         $data['ResultsTotal'] = 10;
+        var_dump($data);
         $formData = $soapclient->GetPackageProduct($data);
 
         $this->data = $formData;
@@ -162,7 +163,7 @@ class AutooffersPWRepository extends BaseRepository
         $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
         $data['Location']['City'] = "London & Umgebung";
         //$data['StaticGroupIdList'] = "151273";
-        $data['MaxPrice'] = '2000';
+        $data['MaxPrice'] = $this->getBudget();
         $data['Flight']['DepartureAirports'] = "HAM";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
         $data['Lang'] = 'de';
@@ -672,12 +673,28 @@ class AutooffersPWRepository extends BaseRepository
     }
 
     /**
+     * @return mixed
+     */
+    public function getAirport()
+    {
+        return $this->airport;
+    }
+
+    /**
      * @param $airport
      * @param $whitelabelId
      */
-    public function setAirport($airport)
+    public function setAirport($airport, $whitelabelId)
     {
-        $this->airport = $airport;
+        $airarr = explode(',', $airport);
+        $airports = '';
+        foreach ($airarr as $key => $air) {
+            if ($key > 0) {
+                $airports .= ',';
+            }
+            $airports .= '"' . getTTAirports($air, $whitelabelId) . '"';
+        }
+        $this->airport = $airports;
     }
 
     /**

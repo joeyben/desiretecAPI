@@ -60,7 +60,7 @@ class WishesSubscriber
         //Notification::send($users, new CreatedWishNotificationForSeller($wish));
         //Auth::guard('web')->user()->notify((new AutoOfferNotification($wish))->delay(now()->addMinutes(10)));
 
-        
+
         if (0 === $wishTye) {
             Notification::send($users, new CreatedWishNotificationForSeller($wish));
         }
