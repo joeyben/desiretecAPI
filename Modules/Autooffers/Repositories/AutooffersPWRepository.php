@@ -129,11 +129,11 @@ class AutooffersPWRepository extends BaseRepository
         $data['Hotel']['Category'] = $this->getCategory();
         $data['Rooms']['Room']['BoardCodeList'] = $this->getCatering();
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
-        $data['Lang'] = 'en';
+        $data['Lang'] = 'de';
         $data['Currency'] = 'EUR';
         $data['ShowRatings'] = true;
         $data['ResultsTotal'] = 10;
-        var_dump($data);
+
         $formData = $soapclient->GetPackageProduct($data);
 
         $this->data = $formData;
@@ -143,6 +143,58 @@ class AutooffersPWRepository extends BaseRepository
 
     public function testRequest()
     {
+        $xmlreq = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" 
+                   xmlns="http://www.peakwork.net/pws/2010/03">   <soap:Header/> 
+       <soap:Body> 
+          <PackageProductRequest Currency="EUR" 
+                               Lang="de" 
+                               AuthKey="e0a7298a776df161ab2f6f6407f15520" 
+                               ShowRatings="1" 
+                               ShowProductCount="true"> 
+             <TravelPeriod> 
+                <DepartureDate>2020-10-10</DepartureDate> 
+                <ReturnDate>2020-11-07</ReturnDate> 
+                <Duration>P7D</Duration> 
+             </TravelPeriod> 
+             <Travellers> 
+                <Adult Age="30"/> 
+                <Adult Age="30"/> 
+             </Travellers> 
+             <Hotel> 
+                <Rooms> 
+                   <Room/> 
+                </Rooms> 
+             </Hotel> 
+             <Flight> 
+                <DepartureAirports>DUS</DepartureAirports> 
+                             </Flight> 
+             <StaticGroupIdList>69220</StaticGroupIdList> 
+          </PackageProductRequest> 
+       </soap:Body> 
+    </soap:Envelope> ';
+
+//Change this variables.
+$action_URL = "http://pwhub.peakwork.de:80/pws/2010/03/v2/GetPackageProductRequest";
+$location_URL = "http://pwhub.peakwork.de:80/pws/2010/03/v2";
+$client = new \SoapClient(null, array(
+    'location' => $location_URL,
+    'uri'      => "",
+    'trace'    => 1,
+));
+
+try{
+    $order_return = $client->__doRequest($xmlreq,$location_URL,$action_URL,1);
+//Get response from here
+    dd($order_return);
+}catch (\SoapFault $exception){
+    var_dump(get_class($exception));
+    var_dump($exception);
+}
+
+    }
+
+    public function testRequestBKP()
+    {
         $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
 
 
@@ -151,30 +203,29 @@ class AutooffersPWRepository extends BaseRepository
                 SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
 
         $formDataContainer = new \stdClass;
-        $formDataContainer->RequestType = 'package';
         $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
         $formDataContainer->Lang = 'de';
         $formDataContainer->Currency = 'EUR';
-        $formDataContainer->DetailLevel = "full";
-
+        $formDataContainer->TreeID="25";
         $data = [];
         $data['Travellers']['Adult'][0]['Age'] = 28;
         $data['Travellers']['Adult'][1]['Age'] = 22;
-        $data['TravelPeriod']['DepartureDate'] = "2020-09-01";
-        $data['TravelPeriod']['ReturnDate'] = "2020-12-20";
-        $data['TravelPeriod']['Duration'] = "".$this->convertDuration(7);
+        $data['TravelPeriod']['DepartureDate'] = "2020-10-10";
+        $data['TravelPeriod']['ReturnDate'] = "2020-11-07";
         //$data['Location']['City'] = "London & Umgebung";
-        $data['StaticGroupIdList'] = "151273";
-        $data['MaxPrice'] = $this->getBudget();
-        $data['Flight']['DepartureAirports'] = "HAM";
+        $data['StaticGroupIdList'] = "69220";
+        $data['Flight']['DepartureAirports'] = "DUS";
         $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
         $data['Lang'] = 'de';
         $data['Currency'] = 'EUR';
-        $data['ShowRatings'] = true;
+        $data['ShowRatings'] = 1;
         $data['ResultsTotal'] = 3;
+        $data['TreeID'] = 25;
         //dd($soapclient->__getFunctions());
         $formData = $soapclient->GetPackageProduct($data);
-
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
         $this->data = $formData;
         return $formData;
     }
