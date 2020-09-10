@@ -37,8 +37,21 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 config('module.whitelabel_host.table') . '.id',
                 config('module.whitelabel_host.table') . '.whitelabel_id'
             ])
-            ->where(config('module.whitelabel_host.table') . '.host', 'LIKE', '%' . $host . '%')
+            ->where(config('module.whitelabel_host.table') . '.host', $host)
             ->first();
+
+        return !is_null($query) ? $query :  null;
+    }
+
+    public function getWhitelabelHosts(string $host)
+    {
+        $query = WhitelabelHost::select([
+                config('module.whitelabel_host.table') . '.id',
+                config('module.whitelabel_host.table') . '.whitelabel_id',
+                config('module.whitelabel_host.table') . '.host'
+            ])
+            ->where(config('module.whitelabel_host.table') . '.host', $host)
+            ->get()->toArray();
 
         return !is_null($query) ? $query :  null;
     }
