@@ -124,8 +124,19 @@ class WishesController extends APIController
             $agentName = [];
             $lastMessage = count($wishData->messages) ? $wishData->messages[count($wishData->messages) - 1] : null;
             $lastOffer = count($wishData->offers) ? $wishData->offers[count($wishData->offers) - 1] : null;
-            $lastAgent = $lastMessage ? $lastMessage->agent_id : null;
-            $lastAgent = ($lastOffer && $lastMessage && $lastOffer->created_at > $lastMessage->created_at )  ? $lastOffer->agent_id : $lastAgent;
+            $lastAgentMessage = $lastMessage ? $lastMessage->agent_id : null; //
+            $lastAgentOffer = $lastOffer  ? $lastOffer->agent_id : null;
+
+            if($lastAgentOffer && $lastAgentMessage){
+                $lastAgent =  $lastOffer->created_at > $lastMessage->created_at ? $lastAgentOffer : $lastAgentMessage;
+            }else if($lastAgentOffer && !$lastAgentMessage){
+                $lastAgent = $lastAgentOffer;
+            }else if(!$lastAgentOffer && $lastAgentMessage){
+                $lastAgent = $lastAgentMessage;
+            }else{
+                $lastAgent = null;
+            }
+
             $agents =  isset($wishData->group->users[0]->agents) ? $wishData->group->users[0]->agents : [];
             $wishData->setAttribute('lastAgent', null);
             $offers = $wishData->offers;
