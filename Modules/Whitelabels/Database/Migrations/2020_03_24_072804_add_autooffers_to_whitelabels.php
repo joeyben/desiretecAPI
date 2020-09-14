@@ -18,6 +18,7 @@ class AddAutooffersToWhitelabels extends Migration
                 $table->tinyInteger('traffics')->default(0);
                 $table->tinyInteger('tt')->default(0);
                 $table->tinyInteger('peakwork')->default(0);
+                $table->tinyInteger('bestfewo')->default(0);
             });
         }
     }
@@ -33,6 +34,7 @@ class AddAutooffersToWhitelabels extends Migration
             $table->dropColumn('traffics');
             $table->dropColumn('tt');
             $table->dropColumn('peakwork');
+            $table->dropColumn('bestfewo');
         });
     }
 }
