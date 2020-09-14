@@ -105,9 +105,8 @@ class WhitelabelController extends Controller
     public function getWhitelabelByHost(string $host)
     {
         try {
-            $host = str_replace("www.", "", $host);
-            $host = str_replace("_", "/", $host);
             $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
+            $whitelabelHosts = $this->moduleWhitelabelsRepository->getWhitelabelHosts($host);
 
             if (null === $whitelabelHost) {
                 throw new \ErrorException(trans('errors.host.missing',  [ 'host' => $host]));
@@ -151,7 +150,7 @@ class WhitelabelController extends Controller
                 'tt'                  => $whitelabel->tt,
                 'peakwork'            => $whitelabel->peakwork,
                 'licence'             => $whitelabel->licence,
-                'layers'              => $this->getLayers($whitelabel->id, $data, $whitelabelHost->id),
+                'layers'              => $this->getLayers($whitelabel->id, $data, $whitelabelHosts),
                 'footers'             => $whitelabel->footers,
                 'tourOperators'       => $tourOperators,
                 'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false,
@@ -211,18 +210,22 @@ class WhitelabelController extends Controller
         }
     }
 
-    private function getLayers(int $id, array $attachments = [], $hostId = null)
+    private function getLayers(int $id, array $attachments = [], $hosts = null)
     {
+        $hostsIds = [];
+        foreach ($hosts as $host) {
+            array_push($hostsIds, $host['id']);
+        }
         $layers = $this->layerWhitelabels->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $id),
             new EagerLoad(['layer'  => function ($query) {
                 $query->with(['hosts']);
-            }, 'attachments', 'variants'  => function ($query) use ($hostId) {
-                if (is_null($hostId)) {
+            }, 'attachments', 'variants'  => function ($query) use ($host, $hostsIds) {
+                if (is_null($host)) {
                     $query->where('variants.active', 1)->with('attachments');
                 } else {
-                    $query->where('variants.whitelabel_host_id', $hostId)->with('attachments');
+                    $query->whereIn('variants.whitelabel_host_id', $hostsIds)->with('attachments');
                 }
             }])
         ])->all();
