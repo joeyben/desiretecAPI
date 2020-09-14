@@ -145,7 +145,7 @@ class AutooffersBFRepository extends BaseRepository
     {
         $username = 'desiretec';
         $password = 'uub8hai2HeeW6eel';
-        $server = 'https://export.bestfewo.com/desiretec/objects.xml.gz bzw. https://export.bestfewo.com/desiretec/objects.xml';
+        $server = 'https://export.bestfewo.com/desiretec/objects.xml';
 
         $context = stream_context_create(array(
                 'http' => array(
