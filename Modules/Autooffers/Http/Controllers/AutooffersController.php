@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller;
 use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\AutooffersTTRepository;
 use Modules\Autooffers\Repositories\AutooffersPWRepository;
+use Modules\Autooffers\Repositories\AutooffersBFRepository;
 use Modules\Autooffers\Repositories\Eloquent\EloquentAutooffersRepository;
 
 class AutooffersController extends Controller
@@ -57,6 +58,7 @@ class AutooffersController extends Controller
     private $autooffers;
     private $TTautooffers;
     private $PWautooffers;
+    private $BFautooffers;
     /**
      * @var \Modules\Wishes\Repositories\Contracts\WishesRepository
      */
@@ -65,12 +67,14 @@ class AutooffersController extends Controller
     /**
      * @param \Modules\Autooffers\Repositories\AutooffersTTRepository $autooffers
      */
-    public function __construct(WishesRepository $wish, AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers, AutooffersPWRepository $PWautooffers, EloquentAutooffersRepository $rules)
+    public function __construct(WishesRepository $wish, AutooffersRepository $autooffers, AutooffersTTRepository $TTautooffers,
+                                AutooffersPWRepository $PWautooffers, AutooffersBFRepository $BFautooffers, EloquentAutooffersRepository $rules)
     {
         $this->wish = $wish;
         $this->autooffers = $autooffers;
         $this->TTautooffers = $TTautooffers;
         $this->PWautooffers = $PWautooffers;
+        $this->BFautooffers = $BFautooffers;
         $this->rules = $rules;
     }
 
@@ -233,5 +237,11 @@ class AutooffersController extends Controller
     {
         //$this->TTautooffers->getToken();
         dd($this->PWautooffers->testRequest());
+    }
+
+    public function callBF()
+    {
+        //$this->TTautooffers->getToken();
+        dd($this->BFautooffers->testRequest());
     }
 }
