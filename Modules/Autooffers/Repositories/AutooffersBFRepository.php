@@ -9,6 +9,7 @@
 
 namespace Modules\Autooffers\Repositories;
 
+use App\Models\Bestfewo;
 use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
 use Modules\Autooffers\Entities\Autooffer;
@@ -143,27 +144,8 @@ class AutooffersBFRepository extends BaseRepository
 
     public function testRequest()
     {
-        $username = 'desiretec';
-        $password = 'uub8hai2HeeW6eel';
-        $server = 'https://export.bestfewo.com/desiretec/objects.xml';
-
-        $context = stream_context_create(array(
-                'http' => array(
-                    'header'  => "Authorization: Basic " . base64_encode("$username:$password")
-                )
-            )
-        );
-        $data = file_get_contents($server, false, $context);
-        $xml=simplexml_load_string($data);
-        if ($xml === false) {
-            echo "Failed loading XML: ";
-            foreach(libxml_get_errors() as $error) {
-                echo "<br>", $error->message;
-            }
-        } else {
-            print_r($xml);
-        }
-
+        $resutls = Bestfewo::where('type','Ferienwohnung')->limit(3)->get();
+        dd($resutls);
     }
 
     public function testRequestBKP()
