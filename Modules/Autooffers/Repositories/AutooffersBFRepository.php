@@ -95,57 +95,13 @@ class AutooffersBFRepository extends BaseRepository
 
     public function getRequest()
     {
-        $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
-
-
-        $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
-            'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
-                SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
-
-        //$destination = trim(explode('-', $this->getRegion()));
-        $formDataContainer = new \stdClass;
-        $formDataContainer->RequestType = 'package';
-        $formDataContainer->MsgType = 'All';
-        $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
-        $formDataContainer->Lang = 'de';
-        $formDataContainer->Currency = 'EUR';
-        $data = [];
-        for($i=0;$i<$this->getAdults();$i++){
-            $data['Travellers']['Adult'][$i]['Age'] = 28;
-        }
-        for($i=0;$i<$this->getKids();$i++){
-            $data['Travellers']['Child'][$i]['Age'] = 8;
-        }
-        if($this->getRegion() !== "")
-            $data['Location']['City'] = $this->getRegion();
-        else if($this->getCountry() !== "")
-            $data['Location']['Country'] = $this->getCountry();
-
-        $data['TravelPeriod']['DepartureDate'] = $this->from;
-        $data['TravelPeriod']['ReturnDate'] = $this->to;
-        $data['TravelPeriod']['Duration'] = "".$this->convertDuration($this->getPeriod());
-
-        $data['MaxPrice'] = ''.$this->getBudget();
-        $data['Flight']['DepartureAirports'] = $this->getAirport();
-        $data['Hotel']['Category'] = $this->getCategory();
-        $data['Rooms']['Room']['BoardCodeList'] = $this->getCatering();
-        $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
-        $data['Lang'] = 'de';
-        $data['Currency'] = 'EUR';
-        $data['ShowRatings'] = true;
-        $data['ResultsTotal'] = 10;
-
-        $formData = $soapclient->GetPackageProduct($data);
-
-        $this->data = $formData;
-        return $formData->Hotel;
-
+        return Bestfewo::where('type','Ferienwohnung')->limit(3)->get()->toArray();
     }
 
     public function testRequest()
     {
-        $resutls = Bestfewo::where('type','Ferienwohnung')->limit(3)->get();
-        dd($resutls);
+        $resutls = Bestfewo::where('type','Ferienwohnung')->limit(3)->get()->toArray();
+
     }
 
     public function testRequestBKP()
@@ -185,50 +141,6 @@ class AutooffersBFRepository extends BaseRepository
         return $formData;
     }
 
-    public function getAllData()
-    {
-        $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
-
-        $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
-            'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
-                SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
-
-        $formDataContainer = new \stdClass;
-        $formDataContainer->RequestType = 'package';
-        $formDataContainer->MsgType = 'All';
-        $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
-        $formDataContainer->Lang = 'de';
-        $formDataContainer->Currency = 'EUR';
-
-        $formData = $soapclient->GetFormData($formDataContainer);
-
-        dd($formData);
-    }
-
-    public function getToken()
-    {
-        $curl = curl_init();
-        $auth_data = [
-            'grant_type' => 'password',
-            'username'   => $this->username,
-            'password'   => $this->password,
-            'client_id'  => 'gateway',
-        ];
-        curl_setopt($curl, CURLOPT_URL, $this->oauthUrl);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, rawurldecode(http_build_query($auth_data)));
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-        $result = curl_exec($curl);
-        if (!$result) {
-            die('Connection Failure');
-        }
-        curl_close($curl);
-        //dd($result);
-        $this->token = json_decode($result, true)['access_token'];
-    }
-
 
     /**
      * @param  $data
@@ -240,18 +152,8 @@ class AutooffersBFRepository extends BaseRepository
         $count = 0;
         foreach ($offers as $key => $offer) {
 
-            $hotelId = $offer->References->GiataCode;
-            /*if (!$this->checkValidity($hotelId, $wish_id)) {
-                continue;
-            }*/
-            $tOperator = $offer->Offers->Offer->TourOperator->Code;
-            $hotel = json_decode(json_encode($this->getFullHotelData($hotelId, $tOperator)), true);
 
-            if (!\array_key_exists('data', $hotel) || !\array_key_exists('Bildfile', $hotel['data'])) {
-                continue;
-            }
-
-            $this->storeAutooffer($offer, $hotel, $wish_id, $userId);
+            $this->storeAutooffer($offer, $wish_id, $userId);
             ++$count;
             if ($count >= 3) {
                 break;
@@ -259,26 +161,6 @@ class AutooffersBFRepository extends BaseRepository
         }
     }
 
-    /**
-     * @param string $hotelId
-     *
-     * @return bool
-     */
-    public function getFullHotelData($hotelId, $tOperator)
-    {
-        $giata_id = $hotelId;
-        $username = '203339';
-        $password = '605e5129';
-        $remote_url = 'https://xml.giatamedia.com/?show=text,geo,pic800,hn,vn,ln,lk,katid,kn,hk,sn,sn,zi,ln,lc&sc=hotel&vc=' . $tOperator . '&gid=' . $giata_id;
-        $opts = ['http'=> ['method'=> 'GET',
-            'header'               => 'Authorization: Basic ' . base64_encode("$username:$password")]];
-
-        $context = stream_context_create($opts);
-        $file = file_get_contents($remote_url, false, $context);
-        $xml = simplexml_load_string($file, 'SimpleXMLElement', LIBXML_NOCDATA);
-
-        return json_decode(json_encode($xml), true);
-    }
 
     /**
      * @return bool
@@ -289,14 +171,14 @@ class AutooffersBFRepository extends BaseRepository
         $this->setBudget($wish->budget);
         $this->setAdults($wish->adults);
         $this->setKids($wish->kids);
-        $this->setAirport(getRegionCode($wish->airport, 0));
+        $this->setAirport($wish->airport);
         $this->setCategory($wish->category);
         $this->setCatering($wish->catering);
         $this->setFrom($wish->earliest_start);
         $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
-        $this->setRegion(getPWRegionCode($wish->destination));
-        $this->setCountry(getPWCountryCode($wish->destination));
+        $this->setRegion($wish->destination);
+        $this->setCountry($wish->destination);
         return true;
     }
 
@@ -321,32 +203,33 @@ class AutooffersBFRepository extends BaseRepository
      *
      * @return mix
      */
-    public function storeAutooffer($offer, $hotel, $wish_id, $userId)
+    public function storeAutooffer($offer, $wish_id, $userId)
     {
+        $data = json_decode($offer['data']);
         try {
-            $DepartureDate = new \DateTime($offer->Offers->Offer->Departure->DepartureDateTime);
-            $ArrivalDate = new \DateTime($offer->Offers->Offer->Return->DepartureDateTime);
+            $DepartureDate = new \DateTime();
+            $ArrivalDate = new \DateTime();
             $autooffer = self::MODEL;
             $autooffer = new $autooffer();
-            $autooffer->code = $offer->Offers->Offer->ProductCode;
-            $autooffer->type = 'pauschal';
-            $autooffer->totalPrice = $offer->Offers->Offer->Price->Amount;
-            $autooffer->personPrice = $offer->Offers->Offer->Price->PerPerson ? $offer->Offers->Offer->Price->Amount : ceil($offer->Offers->Offer->Price->Amount/count($this->data->Travellers->Adult));
+            $autooffer->code = $offer['obj_id'];
+            $autooffer->type = $offer['type'];
+            $autooffer->totalPrice = $offer['obj_id'];
+            $autooffer->personPrice = $data->prices->range[0]->price;
             $autooffer->from = $DepartureDate->format('Y-m-d');
             $autooffer->to = $ArrivalDate->format('Y-m-d');
-            $autooffer->tourOperator_code = $offer->Offers->Offer->TourOperator->Code;
-            $autooffer->tourOperator_name = $offer->Offers->Offer->TourOperator->_;
-            $autooffer->hotel_code = $offer->References->GiataCode;
-            $autooffer->hotel_name = $offer->Name;
-            $autooffer->hotel_location_name = $offer->Location->Region->_.', '.$offer->Location->City->_.', '.$offer->Location->Country->_;
-            $autooffer->hotel_location_lng = $offer->Location->GeoCode->Longitude;
-            $autooffer->hotel_location_lat = $offer->Location->GeoCode->Latitude;
+            $autooffer->tourOperator_code = '';
+            $autooffer->tourOperator_name = '';
+            $autooffer->hotel_code = '';
+            $autooffer->hotel_name = $data->title->text;
+            $autooffer->hotel_location_name = $offer['region'].', '.$offer['city'].', '.$offer['country'];
+            $autooffer->hotel_location_lng = $offer['longitude'];
+            $autooffer->hotel_location_lat = $offer['latitude'];
             $autooffer->hotel_location_region_code = '';
             $autooffer->hotel_location_region_name = '';
-            $autooffer->airport_code = $offer->Offers->Offer->Departure->ArrivalAirport->Code;
-            $autooffer->airport_name = $offer->Offers->Offer->Departure->ArrivalAirport->_;
-            $autooffer->data = json_encode($this->deserializeData($offer));
-            $autooffer->hotel_data = json_encode($hotel);
+            $autooffer->airport_code = '';
+            $autooffer->airport_name = '';
+            $autooffer->data = $offer['data'];
+            $autooffer->hotel_data = '';
             $autooffer->wish_id = (int) $wish_id;
             $autooffer->user_id = $userId;
             $autooffer->status = $this->specialSearch ? 0 : 1;
