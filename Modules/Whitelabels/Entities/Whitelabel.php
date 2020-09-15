@@ -43,7 +43,8 @@ class Whitelabel extends Model
         'subheadline_success',
         'traffics',
         'tt',
-        'peakwork'
+        'peakwork',
+        'bestfewo'
     ];
 
     protected static $logAttributes = [
@@ -69,6 +70,7 @@ class Whitelabel extends Model
         'traffics'  => 'boolean',
         'tt'  => 'boolean',
         'peakwork'  => 'boolean',
+        'bestfewo'  => 'boolean',
     ];
 
     /**

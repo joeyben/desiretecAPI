@@ -66,6 +66,18 @@ class AutooffersController extends APIController implements AutooffersController
         }
     }
 
+    public function listbf(int $wishId)
+    {
+        $offers = [];
+        try {
+            $offers['data'] = $this->repository->getOffersDataFromId($wishId);
+
+            return $this->responseJson($offers);
+        } catch (Exception $e) {
+            return $this->respondWithError($e);
+        }
+    }
+
     public function listTt(int $wishId)
     {
         $offers = [];
@@ -78,7 +90,7 @@ class AutooffersController extends APIController implements AutooffersController
         }
     }
 
-    public function getKeywords($offers)
+    public function getKeywords($offer)
     {
         try {
             for ($i = 0; $i < 3; ++$i) {
