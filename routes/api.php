@@ -108,6 +108,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::get('ttlist/{wishId}', 'AutooffersController@listTt');
             Route::get('list/{wishId}', 'AutooffersController@list');
             Route::get('listpw/{wishId}', 'AutooffersController@listpw');
+            Route::get('listbf/{wishId}', 'AutooffersController@listbf');
         });
     });
 });
