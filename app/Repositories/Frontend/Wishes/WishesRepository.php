@@ -129,6 +129,7 @@ class WishesRepository extends BaseRepository
                 config('module.whitelabels.table') . '.tt',
                 config('module.whitelabels.table') . '.traffics',
                 config('module.whitelabels.table') . '.peakwork',
+                config('module.whitelabels.table') . '.bestfewo',
                 DB::raw('count(' . config('module.offers.table') . '.id) as offers'),
                 DB::raw('GROUP_CONCAT(categories.value) as categories'),
             ])
