@@ -95,6 +95,9 @@ class AutooffersBFRepository extends BaseRepository
 
     public function getRequest()
     {
+        /**dd(Bestfewo::where('max_adults', '>=', $this->getAdults())
+            ->where('city', $this->getRegion())
+            ->limit(3)->get()->toArray()[0]['data']);**/
         return Bestfewo::where('max_adults', '>=', $this->getAdults())
             ->where('city', $this->getRegion())
             ->limit(3)->get()->toArray();
@@ -179,7 +182,7 @@ class AutooffersBFRepository extends BaseRepository
             $autooffer->code = $offer['obj_id'];
             $autooffer->type = $offer['type'];
             $autooffer->totalPrice = $offer['obj_id'];
-            $autooffer->personPrice = $data->prices->range[0]->price;
+            $autooffer->personPrice = is_array($data->prices->range) ? $data->prices->range[0]->price : $data->prices->range->price;
             $autooffer->from = $DepartureDate->format('Y-m-d');
             $autooffer->to = $ArrivalDate->format('Y-m-d');
             $autooffer->tourOperator_code = '';
