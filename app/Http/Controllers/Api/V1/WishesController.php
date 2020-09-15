@@ -247,7 +247,7 @@ class WishesController extends APIController
             ]);
 
             if ($wish = $this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
-                'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'), $newUser->id)) {
+                'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4', 'currentUrl'), $newUser->id)) {
 
                 if ($wish->whitelabel->tt && $this->repository->manageRules($wish) > 0) {
                     $this->repository->setIsAutoofer($wish->id);
