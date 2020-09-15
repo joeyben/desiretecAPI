@@ -95,50 +95,15 @@ class AutooffersBFRepository extends BaseRepository
 
     public function getRequest()
     {
-        return Bestfewo::where('type','Ferienwohnung')->limit(3)->get()->toArray();
+        return Bestfewo::where('max_adults', '>=', $this->getAdults())
+            ->where('city', $this->getRegion())
+            ->limit(3)->get()->toArray();
     }
 
     public function testRequest()
     {
         $resutls = Bestfewo::where('type','Ferienwohnung')->limit(3)->get()->toArray();
 
-    }
-
-    public function testRequestBKP()
-    {
-        $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
-
-
-        $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
-            'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
-                SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
-
-        $formDataContainer = new \stdClass;
-        $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
-        $formDataContainer->Lang = 'de';
-        $formDataContainer->Currency = 'EUR';
-        $formDataContainer->TreeID="25";
-        $data = [];
-        $data['Travellers']['Adult'][0]['Age'] = 28;
-        $data['Travellers']['Adult'][1]['Age'] = 22;
-        $data['TravelPeriod']['DepartureDate'] = "2020-10-10";
-        $data['TravelPeriod']['ReturnDate'] = "2020-11-07";
-        //$data['Location']['City'] = "London & Umgebung";
-        $data['StaticGroupIdList'] = "69220";
-        $data['Flight']['DepartureAirports'] = "DUS";
-        $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
-        $data['Lang'] = 'de';
-        $data['Currency'] = 'EUR';
-        $data['ShowRatings'] = 1;
-        $data['ResultsTotal'] = 3;
-        $data['TreeID'] = 25;
-        //dd($soapclient->__getFunctions());
-        $formData = $soapclient->GetPackageProduct($data);
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
-        $this->data = $formData;
-        return $formData;
     }
 
 
