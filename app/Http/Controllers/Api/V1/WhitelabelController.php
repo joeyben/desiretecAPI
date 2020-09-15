@@ -213,7 +213,7 @@ class WhitelabelController extends Controller
     private function getLayers(int $id, array $attachments = [], $hosts = null)
     {
         $hostsIds = [];
-        foreach ($hosts as $host) {
+        foreach ((array)$hosts as $host) {
             array_push($hostsIds, $host['id']);
         }
         $layers = $this->layerWhitelabels->withCriteria([
@@ -221,8 +221,8 @@ class WhitelabelController extends Controller
             new Where('whitelabel_id', $id),
             new EagerLoad(['layer'  => function ($query) {
                 $query->with(['hosts']);
-            }, 'attachments', 'variants'  => function ($query) use ($host, $hostsIds) {
-                if (is_null($host)) {
+            }, 'attachments', 'variants'  => function ($query) use ($hostsIds) {
+                if (empty($hostsIds)) {
                     $query->where('variants.active', 1)->with('attachments');
                 } else {
                     $query->whereIn('variants.whitelabel_host_id', $hostsIds)->with('attachments');
