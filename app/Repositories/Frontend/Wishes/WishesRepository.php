@@ -391,6 +391,7 @@ class WishesRepository extends BaseRepository
             $input['title'] = '-';
             $input['adults'] = (int) ($input['adults']);
             $input['extra_params'] = isset($input['extra_params']) ? $input['extra_params'] : '';
+            $input['variant_id'] = $input['variant_id'] ? (int) ($input['variant_id']) : null;
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
