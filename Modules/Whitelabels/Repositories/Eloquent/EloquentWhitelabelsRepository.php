@@ -60,9 +60,19 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function getWhitelabelHostIds(string $host)
     {
+        $host = str_replace("_", "/", $host);
+
         $query = WhitelabelHost::select([config('module.whitelabel_host.table') . '.id'])
             ->where(config('module.whitelabel_host.table') . '.host', $host)
             ->get()->pluck('id');
+
+        if (is_null($query))
+        {
+            $baseUrl = parse_url("http://$host")['host'];
+            $query = WhitelabelHost::select([config('module.whitelabel_host.table') . '.id'])
+                ->where(config('module.whitelabel_host.table') . '.host', $baseUrl)
+                ->get()->pluck('id');
+        }
 
         return !is_null($query) ? $query :  null;
     }
