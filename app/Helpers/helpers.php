@@ -1143,3 +1143,35 @@ if (!function_exists('transformTravelPurpose')) {
         }
     }
 }
+
+if (!function_exists('transformAccommodation')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function transformAccommodation($code)
+    {
+        $accomodation = '';
+        switch ($code) {
+            case '0':
+                $accomodation = trans('layer.general.destination.holidayhome');
+                break;
+            case '1':
+                $accomodation = trans('layer.general.destination.hotel');
+                break;
+            case '2':
+                $accomodation = trans('layer.general.destination.bed_and_breakfast');
+                break;
+            case '3':
+                $accomodation = trans('layer.general.destination.youth_hostel');
+                break;
+            case '4':
+                $accomodation = trans('layer.general.destination.pension');
+                break;
+            default:
+                $accomodation = trans('layer.general.destination.bed_bike');
+        }
+        return $accomodation;
+    }
+}
