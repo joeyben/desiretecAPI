@@ -118,6 +118,7 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.group_id',
                 config('module.wishes.table') . '.note',
                 config('module.wishes.table') . '.purpose',
+                config('module.wishes.table') . '.accommodation',
                 config('module.wishes.table') . '.events_interested',
                 config('module.wishes.table') . '.is_autooffer',
                 config('module.wishes.table') . '.version',
@@ -191,8 +192,8 @@ class WishesRepository extends BaseRepository
 
         foreach ($wish as $singleWish) {
             $singleWish['duration'] = transformDuration($singleWish['duration']);
-
             $singleWish['purpose'] = transformTravelPurpose($singleWish['purpose']);
+            $singleWish['accommodation'] = transformAccommodation($singleWish['accommodation']);
 
             if (is_null($singleWish['variant_id'])) {
                 foreach ($whitelabelLayers as $layer) {

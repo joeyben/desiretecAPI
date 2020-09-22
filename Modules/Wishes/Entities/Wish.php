@@ -50,6 +50,7 @@ class Wish extends Model
         'is_autooffer',
         'events_interested',
         'purpose',
+        'accommodation',
         'variant_id',
     ];
 

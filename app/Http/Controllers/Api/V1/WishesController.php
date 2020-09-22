@@ -179,6 +179,7 @@ class WishesController extends APIController
             $result['data']['wishDetails']['catering'] = $this->categories->getCategoryByParentValue('catering', $wish->catering);
             $result['data']['wishDetails']['duration'] = transformDuration($wishData->duration);
             $result['data']['wishDetails']['purpose'] = transformTravelPurpose($wishData->purpose);
+            $result['data']['wishDetails']['accommodation'] = transformAccommodation($wishData->accommodation);
             $result['data']['wishDetails']['owner'] = $wishData->owner;
             $result['data']['wishDetails']['messages'] = $wishData->messages;
             $result['data']['wishDetails']['contacts'] = $wishData->contacts;
