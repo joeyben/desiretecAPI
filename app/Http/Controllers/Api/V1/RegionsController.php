@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bestfewo;
 use App\Models\Regions;
 use App\Models\PWRegions;
 use App\Models\TTAirports;
@@ -43,6 +44,23 @@ class RegionsController extends Controller
                 foreach ($regions as $region) {
                     $destinations[] = $region->name != "-" ? $region->country_name .' - '. $region->name
                                         : $region->country_name;
+                }
+            });
+
+        return $destinations;
+    }
+
+    public function getAllBFDestinations(Request $request)
+    {
+
+        $query = $request->get('query');
+        $destinations = [];
+        Bestfewo::select('city')
+            ->where('city', 'like', $query . '%')
+            ->groupBy('city')
+            ->chunk(200, function ($regions) use (&$destinations) {
+                foreach ($regions as $region) {
+                    $destinations[] = $region->city;
                 }
             });
 

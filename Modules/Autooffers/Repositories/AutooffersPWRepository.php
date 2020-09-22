@@ -141,7 +141,7 @@ class AutooffersPWRepository extends BaseRepository
 
     }
 
-    public function testRequest()
+    public function testRequestbkp()
     {
         $xmlreq = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" 
                    xmlns="http://www.peakwork.net/pws/2010/03">   <soap:Header/> 
@@ -193,17 +193,16 @@ try{
 
     }
 
-    public function testRequestBKP()
+    public function testRequest()
     {
-        $wsdl = 'http://pwhub.peakwork.de/pws/2010/03/?wsdl';
 
-
+        $wsdl = 'http://34.91.223.132/pws/?wsdl';
         $soapclient = new \SoapClient($wsdl, array('soap_version' => SOAP_1_2, 'login' => "pw_demo",
             'password' => "d3m0_pw!", 'trace' => 1, 'compression' =>
                 SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
 
         $formDataContainer = new \stdClass;
-        $formDataContainer->AuthKey = 'e0a7298a776df161ab2f6f6407f15520';
+        $formDataContainer->AuthKey = '7e1b6dadb72b160c3390a8c3a8d8e571';
         $formDataContainer->Lang = 'de';
         $formDataContainer->Currency = 'EUR';
         $formDataContainer->TreeID="25";
@@ -215,7 +214,7 @@ try{
         //$data['Location']['City'] = "London & Umgebung";
         $data['StaticGroupIdList'] = "69220";
         $data['Flight']['DepartureAirports'] = "DUS";
-        $data['AuthKey'] = 'e0a7298a776df161ab2f6f6407f15520';
+        $data['AuthKey'] = '7e1b6dadb72b160c3390a8c3a8d8e571';
         $data['Lang'] = 'de';
         $data['Currency'] = 'EUR';
         $data['ShowRatings'] = 1;
@@ -223,6 +222,8 @@ try{
         $data['TreeID'] = 25;
         //dd($soapclient->__getFunctions());
         $formData = $soapclient->GetPackageProduct($data);
+
+        echo "REQUEST:\n" . htmlentities($soapclient->__getLastRequest()) . "\n";
         echo "<pre>";
         print_r($data);
         echo "</pre>";
