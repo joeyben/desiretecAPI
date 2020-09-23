@@ -85,7 +85,8 @@ class RegionsController extends Controller
             });
 
         $result = array_merge($destinations, $regionsArr, $countries);
-        return sort($result);
+        sort($result);
+        return $result;
     }
 
 
