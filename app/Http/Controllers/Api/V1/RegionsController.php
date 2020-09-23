@@ -55,6 +55,8 @@ class RegionsController extends Controller
 
         $query = $request->get('query');
         $destinations = [];
+        $regionsArr = [];
+        $countries = [];
         Bestfewo::select('city','country')
             ->where('city', 'like', $query . '%')
             ->groupBy('city')
@@ -64,7 +66,26 @@ class RegionsController extends Controller
                 }
             });
 
-        return $destinations;
+        Bestfewo::select('region','country')
+            ->where('region', 'like', $query . '%')
+            ->groupBy('region')
+            ->chunk(200, function ($regions) use (&$regionsArr) {
+                foreach ($regions as $region) {
+                    $regionsArr[] = $region->country .' - '. $region->region.'(Region)';
+                }
+            });
+
+        Bestfewo::select('country')
+            ->where('country', 'like', $query . '%')
+            ->groupBy('country')
+            ->chunk(200, function ($regions) use (&$countries) {
+                foreach ($regions as $region) {
+                    $countries[] = $region->country .'(Land)';
+                }
+            });
+
+        $result = array_merge($destinations, $regionsArr, $countries);
+        return sort($result);
     }
 
 
