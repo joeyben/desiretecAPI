@@ -55,12 +55,12 @@ class RegionsController extends Controller
 
         $query = $request->get('query');
         $destinations = [];
-        Bestfewo::select('city')
+        Bestfewo::select('city','country')
             ->where('city', 'like', $query . '%')
             ->groupBy('city')
             ->chunk(200, function ($regions) use (&$destinations) {
                 foreach ($regions as $region) {
-                    $destinations[] = $region->city;
+                    $destinations[] = $region->country .' - '. $region->city;
                 }
             });
 
