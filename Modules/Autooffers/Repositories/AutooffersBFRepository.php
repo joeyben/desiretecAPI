@@ -14,6 +14,7 @@ use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
 use Modules\Autooffers\Entities\Autooffer;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 /**
  * Class AutooffersBFRepository.
@@ -95,12 +96,29 @@ class AutooffersBFRepository extends BaseRepository
 
     public function getRequest()
     {
-        /**dd(Bestfewo::where('max_adults', '>=', $this->getAdults())
+        $objects = Bestfewo::where('max_adults', '>=', $this->getAdults())
+            ->where('max_children', '>=', $this->getKids())
             ->where('city', $this->getRegion())
-            ->limit(3)->get()->toArray()[0]['data']);**/
-        return Bestfewo::where('max_adults', '>=', $this->getAdults())
-            ->where('city', $this->getRegion())
-            ->limit(3)->get()->toArray();
+            ->get()->toArray();
+
+        $results = [];
+
+        foreach ($objects as $object){
+            foreach (json_decode($object['data'], true)["availabilities"]['range'] as $range){
+                if(isset($range["@attributes"])) {
+                    $rangeFromDate = Carbon::parse($range["@attributes"]["dateFrom"]);
+                    $fromDate = Carbon::parse($this->getFrom());
+
+                    $rangeToDate = Carbon::parse($range["@attributes"]["dateTo"]);
+                    $toDate = Carbon::parse($this->getTo());
+
+                    if ($fromDate->gt($rangeFromDate) && $rangeToDate->gt($toDate)) {
+                        array_push($results, $object);
+                    }
+                }
+            }
+        }
+        return $results;
     }
 
     public function testRequest()
@@ -387,11 +405,27 @@ class AutooffersBFRepository extends BaseRepository
     }
 
     /**
+     *
+     */
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    /**
      * @param $to
      */
     public function setTo($to)
     {
         $this->to = $to;
+    }
+
+    /**
+     * @param $to
+     */
+    public function getTo()
+    {
+        return $this->to;
     }
 
     /**
