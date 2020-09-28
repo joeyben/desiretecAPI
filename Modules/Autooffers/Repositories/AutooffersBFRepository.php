@@ -96,6 +96,7 @@ class AutooffersBFRepository extends BaseRepository
 
     public function getRequest()
     {
+        var_dump($this->getRegion());
         $objects = Bestfewo::where('max_adults', '>=', $this->getAdults())
             ->where('max_children', '>=', $this->getKids())
             ->where('city', $this->getRegion())
@@ -599,7 +600,17 @@ class AutooffersBFRepository extends BaseRepository
      */
     public function setRegion($regions)
     {
-        $this->region = $regions;
+        $region = "";
+        if (strpos($regions, '(Region)') !== false){
+            $region = explode('-', $regions)[1];
+            $region = trim(str_replace('(Region)', '', $region));
+
+        }elseif(strpos($regions, '(Land)') !== false){
+            $region = trim(str_replace('(Land)', '', $regions));
+        }else{
+            $region = trim(explode('-', $regions)[1]);
+        }
+        $this->region = $region;
     }
 
     /**
