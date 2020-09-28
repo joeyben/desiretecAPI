@@ -44,6 +44,8 @@ class AutooffersBFRepository extends BaseRepository
 
     protected $country;
 
+    protected $city;
+
     protected $location;
 
     protected $from;
@@ -96,11 +98,17 @@ class AutooffersBFRepository extends BaseRepository
 
     public function getRequest()
     {
-        var_dump($this->getRegion());
         $objects = Bestfewo::where('max_adults', '>=', $this->getAdults())
-            ->where('max_children', '>=', $this->getKids())
-            ->where('city', $this->getRegion())
-            ->get()->toArray();
+            ->where('max_children', '>=', $this->getKids());
+
+        if($this->getCity())
+            $objects->where('city', $this->getCity());
+        elseif($this->getCountry())
+            $objects->where('country', $this->getCountry());
+        elseif($this->getRegion())
+            $objects->where('region', $this->getRegion());
+
+        $objects->get()->toArray();
 
         $results = [];
 
@@ -164,6 +172,7 @@ class AutooffersBFRepository extends BaseRepository
         $this->setFrom($wish->earliest_start);
         $this->setto($wish->latest_return);
         $this->setPeriod($wish->duration);
+        $this->setCity($wish->destination);
         $this->setRegion($wish->destination);
         $this->setCountry($wish->destination);
         return true;
@@ -605,10 +614,6 @@ class AutooffersBFRepository extends BaseRepository
             $region = explode('-', $regions)[1];
             $region = trim(str_replace('(Region)', '', $region));
 
-        }elseif(strpos($regions, '(Land)') !== false){
-            $region = trim(str_replace('(Land)', '', $regions));
-        }else{
-            $region = trim(explode('-', $regions)[1]);
         }
         $this->region = $region;
     }
@@ -624,9 +629,33 @@ class AutooffersBFRepository extends BaseRepository
     /**
      * @param mixed $region
      */
-    public function setCountry($country)
+    public function setCountry($countries)
     {
+        $country = "";
+        if(strpos($countries, '(Land)') !== false){
+            $country = trim(str_replace('(Land)', '', $countries));
+        }
         $this->country = $country;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($cities): void
+    {
+        $city = "";
+        if (strpos($cities, '(Region)') === false && strpos($cities, '(Land)') === false){
+            $city = trim(explode('-', $cities)[1]);
+        }
+        $this->city = $city;
     }
 
     /**
