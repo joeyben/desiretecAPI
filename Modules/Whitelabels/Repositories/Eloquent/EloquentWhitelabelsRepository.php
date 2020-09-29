@@ -42,17 +42,37 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             ->where(config('module.whitelabel_host.table') . '.host', $host)
             ->first();
 
-
         if (is_null($query))
         {
-            $baseUrl = parse_url("http://$host")['host'];
-            $query = WhitelabelHost::select([
-                config('module.whitelabel_host.table') . '.id',
-                config('module.whitelabel_host.table') . '.whitelabel_id'
-            ])
-                ->where(config('module.whitelabel_host.table') . '.host', $baseUrl)
-                ->first();
+            $parts = explode("/", $host);
+            $length = count($parts);
+
+            if ($length > 2) {
+                array_pop($parts);
+                $host = implode("/", $parts);
+            }
+
+            $query = $this->getWhitelabelHost($host);
+
+            if (is_null($query))
+            {
+                $parts = explode("/", $host);
+                $length = count($parts);
+
+                if ($length > 2) {
+                    array_pop($parts);
+                    $host = implode("/", $parts);
+                }
+
+                if (is_null($query)) {
+                    $baseUrl = parse_url("http://$host")['host'];
+                    $query =$this->getWhitelabelHost($baseUrl);
+                }
+
+            }
         }
+
+
 
 
         return !is_null($query) ? $query :  null;
@@ -556,5 +576,15 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         } catch (\Exception $e) {
             return $e;
         }
+    }
+
+    private function getWhitelabelHost(string $host)
+    {
+        return  WhitelabelHost::select([
+            config('module.whitelabel_host.table') . '.id',
+            config('module.whitelabel_host.table') . '.whitelabel_id'
+        ])
+            ->where(config('module.whitelabel_host.table') . '.host', $host)
+            ->first();
     }
 }
