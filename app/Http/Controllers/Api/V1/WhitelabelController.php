@@ -89,6 +89,7 @@ class WhitelabelController extends Controller
             'traffics'            => $whitelabel->traffics,
             'tt'                  => $whitelabel->tt,
             'peakwork'            => $whitelabel->peakwork,
+            'bestfewo'            => $whitelabel->bestfewo,
             'layers'              => $this->getLayers($whitelabel->id, $data),
             'footers'             => $whitelabel->footers,
             'tourOperators'       => $tourOperators,
@@ -105,10 +106,8 @@ class WhitelabelController extends Controller
     public function getWhitelabelByHost(string $host)
     {
         try {
-            $host = str_replace("www.", "", $host);
-            $host = str_replace("_", "/", $host);
-            $host = explode('/', $host); 
-            $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host[0]);
+            $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
+            $whitelabelHostIds = $this->moduleWhitelabelsRepository->getWhitelabelHostIds($host);
 
             if (null === $whitelabelHost) {
                 throw new \ErrorException(trans('errors.host.missing',  [ 'host' => $host]));
@@ -152,7 +151,8 @@ class WhitelabelController extends Controller
                 'tt'                  => $whitelabel->tt,
                 'peakwork'            => $whitelabel->peakwork,
                 'licence'             => $whitelabel->licence,
-                'layers'              => $this->getLayers($whitelabel->id, $data, $whitelabelHost->id),
+                'bestfewo'            => $whitelabel->bestfewo,
+                'layers'              => $this->getLayers($whitelabel->id, $data, $whitelabelHostIds),
                 'footers'             => $whitelabel->footers,
                 'tourOperators'       => $tourOperators,
                 'is_pure_autooffers'  => $this->whitelabels->getRuleType($whitelabel->id) === 1 ? true : false,
@@ -166,28 +166,6 @@ class WhitelabelController extends Controller
             return $this->responseJsonError($e);
         }
 
-    }
-
-    public function getVariantId(string $host) {
-        try {
-            $host = str_replace("www.", "", $host);
-
-            $whitelabelHost = $this->moduleWhitelabelsRepository->getWhitelabelNameByHost($host);
-
-            $variant = $this->variants->withCriteria([
-                new Where('whitelabel_id', $whitelabelHost->whitelabel_id)
-            ])->get()->first();
-
-            if (is_null($variant)) {
-                $result['data']['id'] = null;
-            } else {
-                $result['data']['id'] = $variant->id;
-            }
-
-            return $this->responseJson($result);
-        } catch (\Exception $e) {
-            return $this->responseJsonError($e);
-        }
     }
 
     public function getTnb(Request $request)
@@ -212,18 +190,18 @@ class WhitelabelController extends Controller
         }
     }
 
-    private function getLayers(int $id, array $attachments = [], $hostId = null)
+    private function getLayers(int $id, array $attachments = [], $hostsIds = null)
     {
         $layers = $this->layerWhitelabels->withCriteria([
             new OrderBy('layer_id'),
             new Where('whitelabel_id', $id),
             new EagerLoad(['layer'  => function ($query) {
                 $query->with(['hosts']);
-            }, 'attachments', 'variants'  => function ($query) use ($hostId) {
-                if (is_null($hostId)) {
+            }, 'attachments', 'variants'  => function ($query) use ($hostsIds) {
+                if (empty($hostsIds)) {
                     $query->where('variants.active', 1)->with('attachments');
                 } else {
-                    $query->where('variants.whitelabel_host_id', $hostId)->with('attachments');
+                    $query->whereIn('variants.whitelabel_host_id', $hostsIds)->where('variants.active', 1)->with('attachments');
                 }
             }])
         ])->all();
@@ -242,10 +220,11 @@ class WhitelabelController extends Controller
                 'headline_success' => $this->getVariant($layer, 'headline_success'),
                 'subheadline_success' => $this->getVariant($layer, 'subheadline_success'),
                 'layer_url' => $layer->layer_url,
+                'variant_id' => $this->getVariant($layer, 'id'),
                 'hosts' => $this->getHosts($layer->layer->hosts),
                 'privacy' => $layer->privacy,
                 'attachments' => $layer->attachments->first(),
-                'layer' => $layer->layer
+                'layer' => $layer->layer,
             ];
         });
     }
@@ -254,12 +233,14 @@ class WhitelabelController extends Controller
     {
         $variant = $layer->variants->first();
 
-        if ($variant && $column !== 'color') {
+        if ($variant && $column !== 'color' && $column !== 'id') {
             return $variant->getTranslation($column, session()->get('wl-locale', 'de'), true);
-        } else if ($variant && $column === 'color') {
+        } else if ($variant && ($column === 'color' || $column === 'id')) {
             return $variant->{$column};
         } else if ($column === 'color') {
             return $layer->headline_color;
+        } else if ($column === 'id') {
+            return null;
         } else {
             return $layer->{$column};
         }

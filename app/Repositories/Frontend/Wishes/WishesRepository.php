@@ -19,6 +19,7 @@ use DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Modules\Autooffers\Repositories\AutooffersBFRepository;
 use Modules\Autooffers\Repositories\AutooffersPWRepository;
 use Modules\Autooffers\Repositories\AutooffersRepository;
 use Modules\Autooffers\Repositories\AutooffersTTRepository;
@@ -64,10 +65,11 @@ class WishesRepository extends BaseRepository
     private $autooffers;
     private $autooffersTT;
     private $autooffersPW;
+    private $autooffersBF;
     private $autoRules;
     private $layerWhitelabel;
 
-    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, AutooffersTTRepository $autooffersTT, AutooffersPWRepository $autooffersPW, EloquentAutooffersRepository $autoRules, LayerWhitelabelRepository $layerWhitelabel)
+    public function __construct(EloquentRulesRepository $rules, AutooffersRepository $autooffers, AutooffersTTRepository $autooffersTT, AutooffersPWRepository $autooffersPW, AutooffersBFRepository $autooffersBF, EloquentAutooffersRepository $autoRules, LayerWhitelabelRepository $layerWhitelabel)
     {
         $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'wish' . \DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('s3');
@@ -75,6 +77,7 @@ class WishesRepository extends BaseRepository
         $this->autooffers = $autooffers;
         $this->autooffersTT = $autooffersTT;
         $this->autooffersPW = $autooffersPW;
+        $this->autooffersBF = $autooffersBF;
         $this->autoRules = $autoRules;
         $this->layerWhitelabel = $layerWhitelabel;
     }
@@ -115,6 +118,7 @@ class WishesRepository extends BaseRepository
                 config('module.wishes.table') . '.group_id',
                 config('module.wishes.table') . '.note',
                 config('module.wishes.table') . '.purpose',
+                config('module.wishes.table') . '.accommodation',
                 config('module.wishes.table') . '.events_interested',
                 config('module.wishes.table') . '.is_autooffer',
                 config('module.wishes.table') . '.version',
@@ -126,6 +130,7 @@ class WishesRepository extends BaseRepository
                 config('module.whitelabels.table') . '.tt',
                 config('module.whitelabels.table') . '.traffics',
                 config('module.whitelabels.table') . '.peakwork',
+                config('module.whitelabels.table') . '.bestfewo',
                 DB::raw('count(' . config('module.offers.table') . '.id) as offers'),
                 DB::raw('GROUP_CONCAT(categories.value) as categories'),
             ])
@@ -187,8 +192,8 @@ class WishesRepository extends BaseRepository
 
         foreach ($wish as $singleWish) {
             $singleWish['duration'] = transformDuration($singleWish['duration']);
-
             $singleWish['purpose'] = transformTravelPurpose($singleWish['purpose']);
+            $singleWish['accommodation'] = transformAccommodation($singleWish['accommodation']);
 
             if (is_null($singleWish['variant_id'])) {
                 foreach ($whitelabelLayers as $layer) {
@@ -387,6 +392,7 @@ class WishesRepository extends BaseRepository
             $input['title'] = '-';
             $input['adults'] = (int) ($input['adults']);
             $input['extra_params'] = isset($input['extra_params']) ? $input['extra_params'] : '';
+            $input['variant_id'] = $input['variant_id'] ? (int) ($input['variant_id']) : null;
 
             if ($wish = \Modules\Wishes\Entities\Wish::create($input)) {
                 $this->updateGroup($input['group_id'], $input['whitelabel_id']);
@@ -686,8 +692,16 @@ class WishesRepository extends BaseRepository
         $_rules = $this->autoRules->getSettingsForWhitelabel($whitelabelId);
         $this->autooffersPW->saveWishData($wish, $whitelabelId);
         $response = $this->autooffersPW->getRequest();
-
         $this->autooffersPW->storeMany($response, $wish->id, $_rules, $userId);
+    }
+
+    public function callBestfewo($wishID, $whitelabelId, $userId)
+    {
+        $wish = Wish::where('id', $wishID)->first();
+        $_rules = $this->autoRules->getSettingsForWhitelabel($whitelabelId);
+        $this->autooffersBF->saveWishData($wish, $whitelabelId);
+        $response = $this->autooffersBF->getRequest();
+        $this->autooffersBF->storeMany($response, $wish->id, $_rules, $userId);
     }
 
     public function callTraffics($wishID, $whitelabelId, $userId)

@@ -15,15 +15,11 @@
                     <td align="left" style="color: #888888; width:20px; font-size: 16px; line-height: 24px;">
 
                         <p style="line-height: 24px; margin-bottom:15px;">
-                            {{ trans('email.wish.created.user.header') }}
+                            {{ trans('email.wish.created.autooffers.header') }}
                         </p>
 
                         <p style="line-height: 24px; margin-bottom:20px;">
-                            {!! trans('email.wish.created.user.body', ['title' => $wish->destination]) !!}
-
-                            @if ($wish->is_autooffer === 0)
-                                {!! trans('email.wish.created.user.url', ['id' => $wish->id,'token' => $token, 'url' => $url]) !!}
-                            @endif
+                            {!! trans('email.wish.created.autooffers.body', ['title' => $wish->destination]) !!}
                         </p>
 
                         @include('emails.layouts.footer')

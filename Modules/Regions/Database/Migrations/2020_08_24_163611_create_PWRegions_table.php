@@ -19,6 +19,8 @@ class CreatePWRegionsTable extends Migration
             $table->string('name');
             $table->string('country_name');
             $table->string('country_code', 10);
+            $table->string('name_en');
+            $table->string('country_name_en');
             $table->softDeletes();
         });
     }

@@ -7,6 +7,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'offer', 'namespace' => 'Module
     Route::get('ttlist/{wish}', 'AutooffersController@showtt')->name('ttlist');
     Route::get('testTT', 'AutooffersController@testTT')->name('testtt');
     Route::get('testPW', 'AutooffersController@callPW')->name('peakwork');
+    Route::get('testBF', 'AutooffersController@callBF')->name('bestfewo');
     Route::get('olist/{wish}/{token}', 'AutooffersController@showttredirect')->name('ttlist_redirect');
     Route::get('details/{wish}/{index}', 'AutooffersController@details')->name('details');
     Route::get('ttdetails/{wish}/{index}', 'AutooffersController@ttdetails')->name('ttdetails');

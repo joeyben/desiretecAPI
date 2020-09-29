@@ -740,7 +740,7 @@ if (!function_exists('getRegionCode')) {
     /**
      * return language lines table name.
      *
-     * @return string
+     * @return array
      */
     function getRegionCode($value, $type)
     {
@@ -751,6 +751,46 @@ if (!function_exists('getRegionCode')) {
             array_push($codes, str_replace('region.', '', \App\Models\Regions::where('regionName', $region)->where('type', $type)->first()->regionCode));
         }
 
+        return $codes;
+    }
+}
+
+if (!function_exists('getPWRegionCode')) {
+    /**
+     * return language lines table name.
+     *
+     * @return array
+     */
+    function getPWRegionCode($value)
+    {
+        $regions = explode(',', $value);
+
+        $codes = "";
+        foreach ($regions as $region) {
+            $regionArr = explode('-', $region);
+            if(count($regionArr) > 1)
+                $codes = \App\Models\PWRegions::where('name', trim($regionArr[1]))->first()->name;
+        }
+        return $codes;
+    }
+}
+
+if (!function_exists('getPWCountryCode')) {
+    /**
+     * return language lines table name.
+     *
+     * @return array
+     */
+    function getPWCountryCode($value)
+    {
+        $regions = explode(',', $value);
+
+        $codes = "";
+        foreach ($regions as $region) {
+            $regionArr = explode('-', $region);
+            if(count($regionArr) === 1)
+                $codes =  \App\Models\PWRegions::where('country_name', trim($regionArr[0]))->first()->country_name;
+        }
         return $codes;
     }
 }
@@ -1101,5 +1141,37 @@ if (!function_exists('transformTravelPurpose')) {
             default:
                 return $code;
         }
+    }
+}
+
+if (!function_exists('transformAccommodation')) {
+    /**
+     * return language lines table name.
+     *
+     * @return string
+     */
+    function transformAccommodation($code)
+    {
+        $accomodation = '';
+        switch ($code) {
+            case '0':
+                $accomodation = trans('layer.general.destination.holidayhome');
+                break;
+            case '1':
+                $accomodation = trans('layer.general.destination.hotel');
+                break;
+            case '2':
+                $accomodation = trans('layer.general.destination.bed_and_breakfast');
+                break;
+            case '3':
+                $accomodation = trans('layer.general.destination.youth_hostel');
+                break;
+            case '4':
+                $accomodation = trans('layer.general.destination.pension');
+                break;
+            default:
+                $accomodation = trans('layer.general.destination.bed_bike');
+        }
+        return $accomodation;
     }
 }

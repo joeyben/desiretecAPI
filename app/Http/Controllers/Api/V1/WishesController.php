@@ -179,6 +179,7 @@ class WishesController extends APIController
             $result['data']['wishDetails']['catering'] = $this->categories->getCategoryByParentValue('catering', $wish->catering);
             $result['data']['wishDetails']['duration'] = transformDuration($wishData->duration);
             $result['data']['wishDetails']['purpose'] = transformTravelPurpose($wishData->purpose);
+            $result['data']['wishDetails']['accommodation'] = transformAccommodation($wishData->accommodation);
             $result['data']['wishDetails']['owner'] = $wishData->owner;
             $result['data']['wishDetails']['messages'] = $wishData->messages;
             $result['data']['wishDetails']['contacts'] = $wishData->contacts;
@@ -247,7 +248,7 @@ class WishesController extends APIController
             ]);
 
             if ($wish = $this->repository->createFromApi($request->except('variant', 'first_name', 'last_name', 'email',
-                'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4'), $newUser->id)) {
+                'password', 'is_term_accept', 'name', 'terms', 'ages1', 'ages2', 'ages3', 'ages4', 'currentUrl'), $newUser->id)) {
 
                 if ($wish->whitelabel->tt && $this->repository->manageRules($wish) > 0) {
                     $this->repository->setIsAutoofer($wish->id);
@@ -259,6 +260,10 @@ class WishesController extends APIController
                 elseif ($wish->whitelabel->peakwork) {
                     $this->repository->setIsAutoofer($wish->id);
                     $this->callPeakwork($wish, $newUser, $request);
+                }
+                elseif ($wish->whitelabel->bestfewo) {
+                    $this->repository->setIsAutoofer($wish->id);
+                    $this->callBestfewo($wish, $newUser, $request);
                 }
 
                 return $this->respondCreated(trans('alerts.frontend.wish.created'));
@@ -342,6 +347,34 @@ class WishesController extends APIController
         //dispatch($wishJob);
 
         $this->repository->callPeakwork($wish->id, $request->input('whitelabel_id'), $newUser->id);
+
+        $details = [
+            'email'            => $newUser->email,
+            'token'            => $newUser->token->token,
+            'email_name'       => trans('autooffers.email.name'),
+            'email_subject'    => trans('autooffer.email.subject'),
+            'email_content'    => $contents,
+            'current_wl_email' => $wish->whitelabel->email,
+            'type'             => 0
+        ];
+        dispatch((new sendAutoOffersMail($details, $wish->id, $wish->whitelabel->email))->delay(Carbon::now()->addSeconds(1)));
+    }
+
+    public function callBestfewo($wish, $newUser, $request)
+    {
+        $view = \View::make('wishes::emails.autooffer',
+            [
+                'url'=> $wish->whitelabel->domain . '/offer/listbf/' . $wish->id . '/' . $newUser->token->token,
+                'whitelabelId' => $wish->whitelabel->id,
+                'whitelabel' => $wish->whitelabel
+            ]
+        );
+        $contents = $view->render();
+
+        //$wishJob = (new callTTApi($wish->id, $request->input('whitelabel_id'), $newUser->id))->delay(Carbon::now()->addSeconds(3));
+        //dispatch($wishJob);
+
+        $this->repository->callBestfewo($wish->id, $request->input('whitelabel_id'), $newUser->id);
 
         $details = [
             'email'            => $newUser->email,

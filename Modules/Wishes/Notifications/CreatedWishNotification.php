@@ -57,13 +57,13 @@ class CreatedWishNotification extends Notification
     public function toMail($notifiable)
     {
         createNotification(Lang::get('notification.created', ['name' => 'Wish', 'url' =>  $this->wish->title, 'user' => Auth::guard('web')->user()->first_name . ' ' . Auth::guard('web')->user()->last_name]), $notifiable->id, $this->wish->created_by);
-
+        $emailTemplate = $this->wish->is_autooffer ? 'wishes::emails.wish-autooffers' : 'wishes::emails.wish';
         return (new MailMessage())
             ->from($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Reisewunschportal')
             ->replyTo($this->wish->whitelabel->email, $this->wish->whitelabel->display_name . ' Reisewunschportal')
             ->subject(trans('email.wish.user', ['whitelabel' => $this->wish->whitelabel->display_name]))
             //->view('wishes::emails.wish_general', ['wish' => $this->wish, 'token' => $this->wish->token]);
-            ->view('wishes::emails.wish', ['wish' => $this->wish, 'whitelabelId' => $this->wish->whitelabel->id, 'token' => $this->wish->token]);
+            ->view($emailTemplate, ['wish' => $this->wish, 'whitelabelId' => $this->wish->whitelabel->id, 'token' => $this->wish->token]);
 
         /*
                 $whitelabelData = $this->_getWhitelabelData();

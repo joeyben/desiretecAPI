@@ -94,13 +94,13 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('whitelabels', 'WhitelabelsController@store');
         Route::get('whitelabel/{id}', 'WhitelabelController@getWhitelabelBySlug');
         Route::get('whitelabelfromhost/{host}', 'WhitelabelController@getWhitelabelByHost');
-        Route::get('whitelabel/variant/{host}', 'WhitelabelController@getVariantId');
         Route::get('tnb', 'WhitelabelController@getTnb');
 
         Route::get('wish/store', 'WishesController@store');
 
         Route::get('destinations', 'RegionsController@getAllDestinations');
         Route::get('pwdestinations', 'RegionsController@getAllPWDestinations');
+        Route::get('bfdestinations', 'RegionsController@getAllBFDestinations');
         Route::get('airports', 'RegionsController@getAllAirports');
         Route::get('ttairports', 'RegionsController@getAllTTAirports');
 
@@ -108,6 +108,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
             Route::get('ttlist/{wishId}', 'AutooffersController@listTt');
             Route::get('list/{wishId}', 'AutooffersController@list');
             Route::get('listpw/{wishId}', 'AutooffersController@listpw');
+            Route::get('listbf/{wishId}', 'AutooffersController@listbf');
         });
     });
 });
