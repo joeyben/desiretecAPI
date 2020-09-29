@@ -98,17 +98,17 @@ class AutooffersBFRepository extends BaseRepository
 
     public function getRequest()
     {
-        $objects = Bestfewo::where('max_adults', '>=', $this->getAdults())
+        $query = Bestfewo::where('max_adults', '>=', $this->getAdults())
             ->where('max_children', '>=', $this->getKids());
 
         if($this->getCity())
-            $objects->where('city', $this->getCity());
+            $query->where('city', $this->getCity());
         elseif($this->getCountry())
-            $objects->where('country', $this->getCountry());
+            $query->where('country', $this->getCountry());
         elseif($this->getRegion())
-            $objects->where('region', $this->getRegion());
+            $query->where('region', $this->getRegion());
 
-        $objects->get()->toArray();
+        $objects = $query->get()->toArray();
 
         $results = [];
 
@@ -121,7 +121,7 @@ class AutooffersBFRepository extends BaseRepository
                     $rangeToDate = Carbon::parse($range["@attributes"]["dateTo"]);
                     $toDate = Carbon::parse($this->getTo());
 
-                    if ($fromDate->gt($rangeFromDate) && $rangeToDate->gt($toDate)) {
+                    if ($fromDate->gt($rangeFromDate) && $rangeToDate->gt($toDate) && $this->priceCheck($object)) {
                         array_push($results, $object);
                     }
                 }
@@ -807,5 +807,23 @@ class AutooffersBFRepository extends BaseRepository
             $cDuration = $cDuration * 2;
         }
         return $cDuration;
+    }
+
+    public function priceCheck($object){
+        foreach (json_decode($object['data'], true)["prices"] as $price){
+            if(isset($price["@attributes"])) {
+                $rangeFromDate = Carbon::parse($price["@attributes"]["dateFrom"]);
+                $fromDate = Carbon::parse($this->getFrom());
+
+                $rangeToDate = Carbon::parse($price["@attributes"]["dateTo"]);
+                $toDate = Carbon::parse($this->getTo());
+                
+                if ($fromDate->gt($rangeFromDate) && $rangeToDate->gt($toDate)) {
+                    $price = floatval($price["price"]) * ($this->getAdults() + $this->getKids()) * $this->getPeriod();
+
+                    return $price <= $this->getBudget();
+                }
+            }
+        }
     }
 }
