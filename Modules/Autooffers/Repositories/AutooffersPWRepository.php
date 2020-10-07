@@ -204,13 +204,14 @@ try{
         $formDataContainer = new \stdClass;
         $formDataContainer->AuthKey = '7e1b6dadb72b160c3390a8c3a8d8e571';
         $formDataContainer->Lang = 'de';
+        $formDataContainer->ShowRatings = '1';
         $formDataContainer->Currency = 'EUR';
         $formDataContainer->TreeID="25";
         $data = [];
         $data['Travellers']['Adult'][0]['Age'] = 28;
         $data['Travellers']['Adult'][1]['Age'] = 22;
-        $data['TravelPeriod']['DepartureDate'] = "2020-10-10";
-        $data['TravelPeriod']['ReturnDate'] = "2020-11-07";
+        $data['TravelPeriod']['DepartureDate'] = "2021-02-10";
+        $data['TravelPeriod']['ReturnDate'] = "2021-03-07";
         //$data['Location']['City'] = "London & Umgebung";
         $data['StaticGroupIdList'] = "69220";
         $data['Flight']['DepartureAirports'] = "DUS";
@@ -218,8 +219,7 @@ try{
         $data['Lang'] = 'de';
         $data['Currency'] = 'EUR';
         $data['ShowRatings'] = 1;
-        $data['ResultsTotal'] = 3;
-        $data['TreeID'] = 25;
+        $data['ResultsTotal'] = 10;
         //dd($soapclient->__getFunctions());
         $formData = $soapclient->GetPackageProduct($data);
 

@@ -98,6 +98,7 @@ class AutooffersBFRepository extends BaseRepository
 
     public function getRequest()
     {
+        //dd(utf8_decode($this->getCountry()));
         $query = Bestfewo::where('max_adults', '>=', $this->getAdults())
             ->where('max_children', '>=', $this->getKids());
 
@@ -106,22 +107,23 @@ class AutooffersBFRepository extends BaseRepository
         elseif($this->getCountry())
             $query->where('country', $this->getCountry());
         elseif($this->getRegion())
-            $query->where('region', $this->getRegion());
+            $query->where('region', utf8_decode($this->getRegion()));
+        //$sql = str_replace_array('?', $query->getBindings(), $query->toSql());
 
         $objects = $query->get()->toArray();
 
         $results = [];
-
         foreach ($objects as $object){
             foreach (json_decode($object['data'], true)["availabilities"]['range'] as $range){
                 if(isset($range["@attributes"])) {
+
                     $rangeFromDate = Carbon::parse($range["@attributes"]["dateFrom"]);
                     $fromDate = Carbon::parse($this->getFrom());
 
                     $rangeToDate = Carbon::parse($range["@attributes"]["dateTo"]);
                     $toDate = Carbon::parse($this->getTo());
-
                     if ($fromDate->gt($rangeFromDate) && $rangeToDate->gt($toDate) && $this->priceCheck($object)) {
+                        echo "push";
                         array_push($results, $object);
                     }
                 }
@@ -150,9 +152,9 @@ class AutooffersBFRepository extends BaseRepository
 
             $this->storeAutooffer($offer, $wish_id, $userId);
             ++$count;
-            if ($count >= 3) {
+            /*if ($count >= 10) {
                 break;
-            }
+            }*/
         }
     }
 
@@ -623,7 +625,7 @@ class AutooffersBFRepository extends BaseRepository
      */
     public function getCountry()
     {
-        return $this->region;
+        return $this->country;
     }
 
     /**
@@ -810,7 +812,7 @@ class AutooffersBFRepository extends BaseRepository
     }
 
     public function priceCheck($object){
-        foreach (json_decode($object['data'], true)["prices"] as $price){
+        foreach (json_decode($object['data'], true)["prices"]['range'] as $price){
             if(isset($price["@attributes"])) {
                 $rangeFromDate = Carbon::parse($price["@attributes"]["dateFrom"]);
                 $fromDate = Carbon::parse($this->getFrom());
