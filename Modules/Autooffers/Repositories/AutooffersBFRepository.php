@@ -123,7 +123,6 @@ class AutooffersBFRepository extends BaseRepository
                     $rangeToDate = Carbon::parse($range["@attributes"]["dateTo"]);
                     $toDate = Carbon::parse($this->getTo());
                     if ($fromDate->gt($rangeFromDate) && $rangeToDate->gt($toDate) && $this->priceCheck($object)) {
-                        echo "push";
                         array_push($results, $object);
                     }
                 }
