@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Groups\Group;
 use App\Repositories\Criteria\ByWhitelabel;
 use App\Repositories\Criteria\EagerLoad;
+use App\Repositories\Criteria\Select;
 use App\Repositories\Criteria\Where;
 use App\Services\Flag\Src\Flag;
 use Illuminate\Auth\AuthManager;
@@ -22,6 +23,7 @@ use Modules\Variants\Http\Requests\StoreVariantRequest;
 use Modules\Variants\Http\Requests\UpdateVariantRequest;
 use Modules\Variants\Repositories\Contracts\VariantsRepository;
 use Modules\Variants\Transformers\VariantCollection;
+use Modules\Whitelabels\Entities\WhitelabelHost;
 use Modules\Whitelabels\Repositories\Contracts\LayerWhitelabelRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository as ModuleWhitelabelsRepository;
 use Modules\Whitelabels\Repositories\Contracts\WhitelabelsRepository;
@@ -122,6 +124,35 @@ class VariantsController extends Controller
         } catch (Exception $e) {
             return $this->responseJsonError($e);
         }
+    }
+
+    public function domains(int $layerWhitelabelId)
+    {
+        try {
+            $layerWhitelabel = $this->layerWhitelabels->withCriteria([
+                new Select('id', 'layer_id', 'whitelabel_id')
+            ])->find($layerWhitelabelId);
+
+
+
+            $result['hostsList'] =  $this->mapHostsList(WhitelabelHost::where('whitelabel_id', $layerWhitelabel->whitelabel_id)
+                ->where('layer_id', $layerWhitelabel->layer_id)
+                ->get());
+
+            return $this->responseJson($result);
+        } catch (Exception $e) {
+            return $this->responseJsonError($e);
+        }
+    }
+
+    private function mapHostsList($hosts)
+    {
+        return $hosts->map(function ($host) {
+            return [
+                'id' => $host->id,
+                'host' => $host->host
+            ];
+        });
     }
 
     public function parseRequest($request)

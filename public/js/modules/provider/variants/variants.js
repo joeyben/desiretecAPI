@@ -115586,7 +115586,14 @@ exports.default = {
       return data;
     },
     inputLayerWhitelabel: function inputLayerWhitelabel(value) {
+      var _this2 = this;
+
       this.$store.commit('updateVariant', { name: 'layer_whitelabel_id', value: value });
+
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
+      this.$http.get(window.laroute.route('admin.variants.domains', { layerWhitelabelId: value })).then(this.onLoadDomainsSuccess).catch(this.onFailed).then(function () {
+        _this2.$store.dispatch('block', { element: 'variantsComponent', load: false });
+      });
     },
     inputHost: function inputHost(value) {
       this.$store.commit('updateVariant', { name: 'whitelabel_host_id', value: value });
@@ -115609,11 +115616,11 @@ exports.default = {
       this.$store.commit('updateVariant', { name: 'current', value: value });
     },
     loadModal: function loadModal() {
-      var _this2 = this;
+      var _this3 = this;
 
       var id = parseInt(this.$route.params.id);
       $('#modal_large_group').on('hidden.bs.modal', function () {
-        _this2.$router.push({ name: 'root' });
+        _this3.$router.push({ name: 'root' });
       });
 
       if (id === 0) {
@@ -115623,19 +115630,19 @@ exports.default = {
       }
     },
     CreateVariant: function CreateVariant(whitelabelId) {
-      var _this3 = this;
-
-      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
-      this.$http.get(window.laroute.route('admin.variants.create', { whitelabelId: whitelabelId })).then(this.onLoadVariantSuccess).catch(this.onFailed).then(function () {
-        _this3.$store.dispatch('block', { element: 'variantsComponent', load: false });
-      });
-    },
-    EditVariant: function EditVariant(id) {
       var _this4 = this;
 
       this.$store.dispatch('block', { element: 'variantsComponent', load: true });
-      this.$http.get(window.laroute.route('admin.variants.edit', { id: id })).then(this.onLoadVariantSuccess).catch(this.onFailed).then(function () {
+      this.$http.get(window.laroute.route('admin.variants.create', { whitelabelId: whitelabelId })).then(this.onLoadVariantSuccess).catch(this.onFailed).then(function () {
         _this4.$store.dispatch('block', { element: 'variantsComponent', load: false });
+      });
+    },
+    EditVariant: function EditVariant(id) {
+      var _this5 = this;
+
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
+      this.$http.get(window.laroute.route('admin.variants.edit', { id: id })).then(this.onLoadVariantSuccess).catch(this.onFailed).then(function () {
+        _this5.$store.dispatch('block', { element: 'variantsComponent', load: false });
       });
     },
     onLoadVariantSuccess: function onLoadVariantSuccess(response) {
@@ -115657,19 +115664,27 @@ exports.default = {
       }
     },
     onSubmitStore: function onSubmitStore() {
-      var _this5 = this;
-
-      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
-      this.$http.put(window.laroute.route('admin.variants.store'), this.variant).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
-        _this5.$store.dispatch('block', { element: 'variantsComponent', load: false });
-      });
-    },
-    onSubmitUpdate: function onSubmitUpdate(id) {
       var _this6 = this;
 
       this.$store.dispatch('block', { element: 'variantsComponent', load: true });
-      this.$http.put(window.laroute.route('admin.variants.update', { id: id }), this.variant).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+      this.$http.put(window.laroute.route('admin.variants.store'), this.variant).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
         _this6.$store.dispatch('block', { element: 'variantsComponent', load: false });
+      });
+    },
+    onLoadDomainsSuccess: function onLoadDomainsSuccess(response) {
+      if (response.data.hasOwnProperty('success') && response.data.success === true) {
+        this.$store.commit('updateVariant', { name: 'whitelabel_host_id', value: null });
+        this.$store.commit('updateVariant', { name: 'hostsList', value: response.data.hostsList });
+      } else {
+        _toastr2.default.error(response.data.message);
+      }
+    },
+    onSubmitUpdate: function onSubmitUpdate(id) {
+      var _this7 = this;
+
+      this.$store.dispatch('block', { element: 'variantsComponent', load: true });
+      this.$http.put(window.laroute.route('admin.variants.update', { id: id }), this.variant).then(this.onSubmitSuccess).catch(this.onFailed).then(function () {
+        _this7.$store.dispatch('block', { element: 'variantsComponent', load: false });
       });
     },
     onSubmitSuccess: function onSubmitSuccess(response) {
