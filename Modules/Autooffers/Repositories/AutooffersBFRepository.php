@@ -15,6 +15,7 @@ use App\Repositories\BaseRepository;
 use Modules\Autooffers\Entities\Autooffer;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class AutooffersBFRepository.
@@ -99,6 +100,7 @@ class AutooffersBFRepository extends BaseRepository
     public function getRequest()
     {
         //dd(utf8_decode($this->getCountry()));
+        DB::disableQueryLog();
         $query = Bestfewo::where('max_adults', '>=', $this->getAdults())
             ->where('max_children', '>=', $this->getKids());
 
@@ -211,7 +213,7 @@ class AutooffersBFRepository extends BaseRepository
             $autooffer->code = $offer['obj_id'];
             $autooffer->type = $offer['type'];
             $autooffer->totalPrice = $offer['obj_id'];
-            $autooffer->personPrice = is_array($data->prices->range) ? $data->prices->range[0]->price : $data->prices->range->price;
+            $autooffer->personPrice = "";
             $autooffer->from = $DepartureDate->format('Y-m-d');
             $autooffer->to = $ArrivalDate->format('Y-m-d');
             $autooffer->tourOperator_code = '';
