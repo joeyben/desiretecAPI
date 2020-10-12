@@ -275,6 +275,7 @@ class AutooffersRepository extends BaseRepository
         $offers = $this->query()
             ->select(['*'])
             ->where('wish_id', (int) $id)
+            ->where('status', 1)
             ->get()->toArray();
 
         $offerObj = [];
@@ -304,33 +305,58 @@ class AutooffersRepository extends BaseRepository
         $offers = $this->query()
             ->select(['*'])
             ->where('wish_id', (int) $id)
+            ->where('status', 1)
             ->get()->toArray();
-
-        $offerObj = [];
 
         foreach ($offers as $key => $offer) {
             $data = json_decode($offer['data'], true);
-            $client = new Client();
-            $res = $client->request('POST', 'https://export.bestfewo.com/pricerequest/instant', [
-                'form_params' => [
-                    'from' => '2021-01-16',
-                    'to' => '2021-01-29',
-                    'people' => '2',
-                    'ids' => [$data['@attributes']['id']]
-                ],
-                'auth' => [
-                    'desiretec',
-                    'uub8hai2HeeW6eel'
-                ]
-            ]);
-            //echo $res->getStatusCode();
-            // 200
-            //echo $res->getHeader('content-type');
-            // 'application/json; charset=utf8'
-            var_dump($res->getBody()->getContents());
-        }
 
-        return $offerObj;
+            $client = new \GuzzleHttp\Client();
+            $url = "https://export.bestfewo.com/pricerequest/instant";
+
+
+            try {
+                $request = $client->post($url,  [
+                    'form_params'=> [
+                        'from' => '2021-01-16',
+                        'to' => '2021-01-29',
+                        'people' => '2',
+                        'ids' => [$data['@attributes']['id']],
+                        'response_mode' => 'poll'
+                    ],
+                    'auth' => [
+                        'desiretec',
+                        'uub8hai2HeeW6eel'
+                    ],
+                ]);
+                $result = json_decode($request->getBody(), true);
+                if(!$result['data'][$data['@attributes']['id']]["is_bookable"]){
+                    $this->updateStatus($id, $data['@attributes']['id']);
+                }else{
+                    $this->updatePrice($id, $data['@attributes']['id'], $result['data'][$data['@attributes']['id']]["price_total"]);
+                }
+            } catch (\GuzzleHttp\Exception\ClientException $e) {
+                echo $e->getRequest() . "\n";
+                if ($e->hasResponse()) {
+                    echo $e->getResponse() . "\n";
+                }
+            }
+
+        }
+    }
+
+    public function updateStatus($wishId, $objId){
+        $update = $this->query()
+            ->where('wish_id', (int) $wishId)
+            ->where('code',(string) $objId)
+            ->update(['status' => 0]);
+    }
+
+    public function updatePrice($wishId, $objId, $totalPrice){
+        $update = $this->query()
+            ->where('wish_id', (int) $wishId)
+            ->where('code',(string) $objId)
+            ->update(['totalPrice' => $totalPrice]);
     }
 
     public function getAuth(): string
