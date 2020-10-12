@@ -59,7 +59,7 @@ class AutooffersController extends APIController implements AutooffersController
         $offers = [];
         try {
             $offers['data'] = $this->repository->getOffersDataFromId($wishId);
-            $this->BFAvailability($offers['data']);
+
             return $this->responseJson($offers);
         } catch (Exception $e) {
             return $this->respondWithError($e);
@@ -70,8 +70,10 @@ class AutooffersController extends APIController implements AutooffersController
     {
         $offers = [];
         try {
-            $offers['data'] = $this->repository->getOffersDataFromId($wishId);
+            dd($this->repository->setOffersDataFromId($wishId));
 
+            $offers['data'] = $this->repository->getOffersDataFromId($wishId);
+            //$this->BFAvailability($offers['data']);
             return $this->responseJson($offers);
         } catch (Exception $e) {
             return $this->respondWithError($e);

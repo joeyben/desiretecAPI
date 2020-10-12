@@ -294,6 +294,45 @@ class AutooffersRepository extends BaseRepository
         return $offerObj;
     }
 
+    /**
+     * @param int $id
+     *
+     * @return array
+     */
+    public function setOffersDataFromId($id)
+    {
+        $offers = $this->query()
+            ->select(['*'])
+            ->where('wish_id', (int) $id)
+            ->get()->toArray();
+
+        $offerObj = [];
+
+        foreach ($offers as $key => $offer) {
+            $data = json_decode($offer['data'], true);
+            $client = new Client();
+            $res = $client->request('POST', 'https://export.bestfewo.com/pricerequest/instant', [
+                'form_params' => [
+                    'from' => '2021-01-16',
+                    'to' => '2021-01-29',
+                    'people' => '2',
+                    'ids' => [$data['@attributes']['id']]
+                ],
+                'auth' => [
+                    'desiretec',
+                    'uub8hai2HeeW6eel'
+                ]
+            ]);
+            //echo $res->getStatusCode();
+            // 200
+            //echo $res->getHeader('content-type');
+            // 'application/json; charset=utf8'
+            var_dump($res->getBody()->getContents());
+        }
+
+        return $offerObj;
+    }
+
     public function getAuth(): string
     {
         return $this->auth;
