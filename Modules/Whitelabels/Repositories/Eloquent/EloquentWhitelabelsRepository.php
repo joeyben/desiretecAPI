@@ -48,7 +48,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             $length = count($parts);
 
             if ($length > 2) {
-                array_pop($parts);
+                $parts = array_pop($parts);
                 $host = implode("/", $parts);
             }
 
@@ -60,7 +60,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 $length = count($parts);
 
                 if ($length > 2) {
-                    array_pop($parts);
+                    $parts = array_pop($parts);
                     $host = implode("/", $parts);
                 }
 
