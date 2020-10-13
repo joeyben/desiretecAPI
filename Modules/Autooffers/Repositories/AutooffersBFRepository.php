@@ -153,9 +153,9 @@ class AutooffersBFRepository extends BaseRepository
 
             $this->storeAutooffer($offer, $wish_id, $userId);
             ++$count;
-            /*if ($count >= 10) {
+            if ($count >= 3) {
                 break;
-            }*/
+            }
         }
     }
 

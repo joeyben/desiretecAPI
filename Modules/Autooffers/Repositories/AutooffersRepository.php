@@ -303,6 +303,7 @@ class AutooffersRepository extends BaseRepository
      */
     public function setOffersDataFromId($id)
     {
+        $wish = $this->getWish($id);
         $offers = $this->query()
             ->select(['*'])
             ->where('wish_id', (int) $id)
@@ -319,8 +320,8 @@ class AutooffersRepository extends BaseRepository
             try {
                 $request = $client->post($url,  [
                     'form_params'=> [
-                        'from' => '2021-01-16',
-                        'to' => '2021-01-29',
+                        'from' => $wish[0]["earliest_start"],
+                        'to' => $wish[0]["latest_return"],
                         'people' => '2',
                         'ids' => [$data['@attributes']['id']],
                         'response_mode' => 'poll'
@@ -358,6 +359,13 @@ class AutooffersRepository extends BaseRepository
             ->where('wish_id', (int) $wishId)
             ->where('code',(string) $objId)
             ->update(['totalPrice' => $totalPrice]);
+    }
+
+    public function getWish($wishId){
+        $wish = Wish::select('earliest_start', 'latest_return')
+            ->where('id', (int) $wishId)
+            ->get()->toArray();
+        return $wish;
     }
 
     public function getAuth(): string
