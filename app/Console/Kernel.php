@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\CheckGroup;
 use App\Console\Commands\ErrorsNotificationJob;
 use App\Console\Commands\InstallAppCommand;
+use App\Console\Commands\UpdateBestFewo;
 use App\Console\Commands\WhitelabelMakeRouteCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -26,7 +27,8 @@ class Kernel extends ConsoleKernel
         CopyLanguageCommand::class,
         ExportLanguageLinesCommand::class,
         CheckGroup::class,
-        ErrorsNotificationJob::class
+        ErrorsNotificationJob::class,
+        UpdateBestFewo::class
     ];
 
     /**
