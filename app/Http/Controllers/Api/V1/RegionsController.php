@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Bestfewo;
+use App\Models\BfRegions;
 use App\Models\Regions;
 use App\Models\PWRegions;
 use App\Models\TTAirports;
@@ -58,28 +58,31 @@ class RegionsController extends Controller
         $regionsArr = [];
         $countries = [];
 
-        Bestfewo::select('city','country')
+        BfRegions::select('city','country')
             ->where('city', 'like', $query . '%')
             ->groupBy('city')
-            ->chunk(200, function ($regions) use (&$destinations) {
+            ->limit(10)
+            ->chunk(10, function ($regions) use (&$destinations) {
                 foreach ($regions as $region) {
                     $destinations[] = $region->country .' - '. $region->city;
                 }
             });
 
-        Bestfewo::select('region','country')
+        BfRegions::select('region','country')
             ->where('region', 'like', $query . '%')
             ->groupBy('region')
-            ->chunk(200, function ($regions) use (&$regionsArr) {
+            ->limit(10)
+            ->chunk(10, function ($regions) use (&$regionsArr) {
                 foreach ($regions as $region) {
                     $regionsArr[] = $region->country .' - '. $region->region.' (Region)';
                 }
             });
 
-        Bestfewo::select('country')
+        BfRegions::select('country')
             ->where('country', 'like', $query . '%')
             ->groupBy('country')
-            ->chunk(200, function ($regions) use (&$countries) {
+            ->limit(10)
+            ->chunk(10, function ($regions) use (&$countries) {
                 foreach ($regions as $region) {
                     $countries[] = $region->country .' (Land)';
                 }
