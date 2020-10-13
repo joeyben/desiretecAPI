@@ -98,10 +98,18 @@ class VariantCollection extends JsonResource
     private function hostsList()
     {
         return $this->whitelabel->hosts->map(function ($host) {
-            return [
-                'id' => $host->id,
-                'host' => $host->host
-            ];
-        });
+            if (is_null($this->whitelabel_host_id)) {
+                return [
+                    'id' => $host->id,
+                    'host' => $host->host
+                ];
+            } else if ((int) $this->whitelabel_host_id === (int)$host->id) {
+                return [
+                    'id' => $host->id,
+                    'host' => $host->host
+                ];
+            }
+
+        })->filter();
     }
 }
