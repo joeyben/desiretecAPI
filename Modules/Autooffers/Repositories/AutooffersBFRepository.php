@@ -9,6 +9,7 @@
 
 namespace Modules\Autooffers\Repositories;
 
+use App\Models\Bestfewo;
 use App\Models\BestfewoRange;
 use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
@@ -100,12 +101,18 @@ class AutooffersBFRepository extends BaseRepository
     public function getRequest()
     {
         //dd(utf8_decode($this->getCountry()));
-        DB::disableQueryLog();
+        //DB::disableQueryLog();
+        $from = Carbon::parse($this->getFrom());
+        $to = Carbon::parse($this->getTo());
+        $duration = $to->diff($from)->days;
+        $pricePerDay = $this->getBudget() / ($this->getAdults() + $this->getKids()) / $duration;
+
         $query = BestfewoRange::where('max_adults', '>=', $this->getAdults())
             ->where('max_children', '>=', $this->getKids())
-            ->where('from', '<=', Carbon::parse($this->getFrom()))
-            ->where('to', '>=', Carbon::parse($this->getTo()));
-
+            ->where('from', '<=', $from)
+            ->where('to', '>=', $to)
+            ->where('ratings', true)
+            ->where('price', '<=', $pricePerDay);
         if($this->getCity())
             $query->where('city', $this->getCity());
         elseif($this->getCountry())
@@ -114,11 +121,15 @@ class AutooffersBFRepository extends BaseRepository
             $query->where('region', utf8_decode($this->getRegion()));
         //$sql = str_replace_array('?', $query->getBindings(), $query->toSql());
 
-        $objects = $query->limit(10)->get()->toArray();
+        $objects = $query->limit(3)->get()->toArray();
 
-        dd($objects);
+        $ids = [];
+        foreach($objects as $object){
+            array_push($ids, $object['obj_id']);
+        }
 
-        return $objects;
+        $results = Bestfewo::whereIn('obj_id', $ids)->get()->toArray();
+        return $results;
     }
 
     public function testRequest()

@@ -45,6 +45,7 @@ class UpdateBestFewo extends Command
         $reader = new \XMLReader();
         $reader->open($file);
         //DB::table('Bestfewo')->truncate();
+        //DB::table('bf_regions')->truncate();
         while( $reader->read() ) {
             if ($reader->nodeType == \XMLReader::ELEMENT) {
                 switch ($reader->name) {
@@ -54,9 +55,10 @@ class UpdateBestFewo extends Command
                         $location = $node->location;
                         $price = $node->prices;
                         $availability = $node->availabilities;
+                        $ratings = isset($node->ratings) ? true : false;
                         //$this->addObject($attributes, $location, $node);
                         //$this->addRegion($location);
-                        $this->addAvailabilty($attributes, $location, $availability, $price);
+                        $this->addAvailabilty($attributes, $location, $availability, $price, $ratings);
                         break;
                 }
             }
@@ -90,7 +92,7 @@ class UpdateBestFewo extends Command
             ]);
     }
 
-    public function addARecord($attributes, $location, $from, $to, $price){
+    public function addARecord($attributes, $location, $from, $to, $price, $ratings){
         //Log::info('Initializing Insert' );
         DB::table('BestfewoRange')
             ->insert([
@@ -109,6 +111,7 @@ class UpdateBestFewo extends Command
                 'from'              => $from,
                 'to'                => $to,
                 'price'             => floatval($price),
+                'ratings'           => $ratings,
             ]);
     }
 
@@ -124,7 +127,7 @@ class UpdateBestFewo extends Command
         }
     }
 
-    public function addAvailabilty($attributes, $location, $availability, $price){
+    public function addAvailabilty($attributes, $location, $availability, $price, $ratings){
         foreach ($availability->range as $range){
             $range = (array)$range;
             $from = Carbon::parse($range["@attributes"]["dateFrom"]);
@@ -136,7 +139,7 @@ class UpdateBestFewo extends Command
                 $pTo = Carbon::parse($priceRange["@attributes"]["dateTo"]);
 
                 if($from->gt($pFrom) && $pTo->gt($to)){
-                   $this->addARecord($attributes, $location, $range["@attributes"]["dateFrom"], $range["@attributes"]["dateTo"], $priceRange["price"]);
+                   $this->addARecord($attributes, $location, $range["@attributes"]["dateFrom"], $range["@attributes"]["dateTo"], $priceRange["price"], $ratings);
                 }
             }
 
