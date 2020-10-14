@@ -284,7 +284,7 @@ class AutooffersRepository extends BaseRepository
             array_push(
                 $offerObj,
                 [
-                    'data'       => json_decode($offer['data'], true),
+                    'data'       => json_decode(stripslashes($offer['data']), true),
                     'hotel_data' => json_decode($offer['hotel_data'], true),
                     'personPrice'=> $offer['personPrice'],
                     'totalPrice'=> $offer['totalPrice'],
@@ -311,7 +311,7 @@ class AutooffersRepository extends BaseRepository
             ->get()->toArray();
 
         foreach ($offers as $key => $offer) {
-            $data = json_decode($offer['data'], true);
+            $data = json_decode(stripslashes($offer['data']), true);
 
             $client = new \GuzzleHttp\Client();
             $url = "https://export.bestfewo.com/pricerequest/instant";

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -43,7 +44,7 @@ class UpdateBestFewo extends Command
         $file = "https://desiretec:uub8hai2HeeW6eel@export.bestfewo.com/desiretec/objects.xml";
         $reader = new \XMLReader();
         $reader->open($file);
-        DB::table('Bestfewo')->truncate();
+        //DB::table('Bestfewo')->truncate();
         while( $reader->read() ) {
             if ($reader->nodeType == \XMLReader::ELEMENT) {
                 switch ($reader->name) {
@@ -51,8 +52,11 @@ class UpdateBestFewo extends Command
                         $node = new \SimpleXMLElement($reader->readOuterXML());
                         $attributes = $node->attributes();
                         $location = $node->location;
+                        $price = $node->prices;
+                        $availability = $node->availabilities;
                         //$this->addObject($attributes, $location, $node);
-                        $this->addRegion($location);
+                        //$this->addRegion($location);
+                        $this->addAvailabilty($attributes, $location, $availability, $price);
                         break;
                 }
             }
@@ -86,6 +90,28 @@ class UpdateBestFewo extends Command
             ]);
     }
 
+    public function addARecord($attributes, $location, $from, $to, $price){
+        //Log::info('Initializing Insert' );
+        DB::table('BestfewoRange')
+            ->insert([
+                'obj_id'            => $attributes->id,
+                'max_guests'        => intval($attributes->max_guests),
+                'max_adults'        => intval($attributes->max_adults),
+                'max_children'      => intval($attributes->max_children),
+                'max_children_age'  => intval($attributes->max_children_age),
+                'type'              => $attributes->type,
+                'city'              => $location->city,
+                'zipcode'           => intval($location->zipcode),
+                'region'            => $location->region,
+                'country'           => $location->country,
+                'latitude'          => $location->geo->latitude,
+                'longitude'         => $location->geo->longitude,
+                'from'              => $from,
+                'to'                => $to,
+                'price'             => floatval($price),
+            ]);
+    }
+
     public function addRegion($location){
         //Log::info('Initializing Insert' );
         if($this->checkRegion($location) === 0){
@@ -95,6 +121,25 @@ class UpdateBestFewo extends Command
                     'region'            => $location->region,
                     'country'           => $location->country,
                 ]);
+        }
+    }
+
+    public function addAvailabilty($attributes, $location, $availability, $price){
+        foreach ($availability->range as $range){
+            $range = (array)$range;
+            $from = Carbon::parse($range["@attributes"]["dateFrom"]);
+            $to = Carbon::parse($range["@attributes"]["dateTo"]);
+
+            foreach ($price->range as $priceRange){
+                $priceRange = (array)$priceRange;
+                $pFrom = Carbon::parse($priceRange["@attributes"]["dateFrom"]);
+                $pTo = Carbon::parse($priceRange["@attributes"]["dateTo"]);
+
+                if($from->gt($pFrom) && $pTo->gt($to)){
+                   $this->addARecord($attributes, $location, $range["@attributes"]["dateFrom"], $range["@attributes"]["dateTo"], $priceRange["price"]);
+                }
+            }
+
         }
     }
 

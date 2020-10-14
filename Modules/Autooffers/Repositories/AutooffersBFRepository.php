@@ -9,7 +9,7 @@
 
 namespace Modules\Autooffers\Repositories;
 
-use App\Models\Bestfewo;
+use App\Models\BestfewoRange;
 use App\Models\Wishes\Wish;
 use App\Repositories\BaseRepository;
 use Modules\Autooffers\Entities\Autooffer;
@@ -101,8 +101,10 @@ class AutooffersBFRepository extends BaseRepository
     {
         //dd(utf8_decode($this->getCountry()));
         DB::disableQueryLog();
-        $query = Bestfewo::where('max_adults', '>=', $this->getAdults())
-            ->where('max_children', '>=', $this->getKids());
+        $query = BestfewoRange::where('max_adults', '>=', $this->getAdults())
+            ->where('max_children', '>=', $this->getKids())
+            ->where('from', '<=', Carbon::parse($this->getFrom()))
+            ->where('to', '>=', Carbon::parse($this->getTo()));
 
         if($this->getCity())
             $query->where('city', $this->getCity());
@@ -112,30 +114,16 @@ class AutooffersBFRepository extends BaseRepository
             $query->where('region', utf8_decode($this->getRegion()));
         //$sql = str_replace_array('?', $query->getBindings(), $query->toSql());
 
-        $objects = $query->get()->toArray();
+        $objects = $query->limit(10)->get()->toArray();
 
-        $results = [];
-        foreach ($objects as $object){
-            foreach (json_decode($object['data'], true)["availabilities"]['range'] as $range){
-                if(isset($range["@attributes"])) {
+        dd($objects);
 
-                    $rangeFromDate = Carbon::parse($range["@attributes"]["dateFrom"]);
-                    $fromDate = Carbon::parse($this->getFrom());
-
-                    $rangeToDate = Carbon::parse($range["@attributes"]["dateTo"]);
-                    $toDate = Carbon::parse($this->getTo());
-                    if ($fromDate->gt($rangeFromDate) && $rangeToDate->gt($toDate) && $this->priceCheck($object)) {
-                        array_push($results, $object);
-                    }
-                }
-            }
-        }
-        return $results;
+        return $objects;
     }
 
     public function testRequest()
     {
-        $resutls = Bestfewo::where('type','Ferienwohnung')->limit(3)->get()->toArray();
+        //$resutls = Bestfewo::where('type','Ferienwohnung')->limit(3)->get()->toArray();
 
     }
 
@@ -153,7 +141,7 @@ class AutooffersBFRepository extends BaseRepository
 
             $this->storeAutooffer($offer, $wish_id, $userId);
             ++$count;
-            if ($count >= 3) {
+            if ($count >= 10) {
                 break;
             }
         }
@@ -204,7 +192,7 @@ class AutooffersBFRepository extends BaseRepository
      */
     public function storeAutooffer($offer, $wish_id, $userId)
     {
-        $data = json_decode($offer['data']);
+        $data = json_decode(stripslashes($offer['data']));
         try {
             $DepartureDate = new \DateTime();
             $ArrivalDate = new \DateTime();
@@ -813,7 +801,7 @@ class AutooffersBFRepository extends BaseRepository
     }
 
     public function priceCheck($object){
-        foreach (json_decode($object['data'], true)["prices"]['range'] as $price){
+        foreach (json_decode(stripslashes($object['data']), true)["prices"]['range'] as $price){
             if(isset($price["@attributes"])) {
                 $rangeFromDate = Carbon::parse($price["@attributes"]["dateFrom"]);
                 $fromDate = Carbon::parse($this->getFrom());
