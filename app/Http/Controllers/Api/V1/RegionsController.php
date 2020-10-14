@@ -61,7 +61,8 @@ class RegionsController extends Controller
         BfRegions::select('city','country')
             ->where('city', 'like', $query . '%')
             ->groupBy('city')
-            ->chunk(300, function ($regions) use (&$destinations) {
+            ->limit(10)
+            ->chunk(10, function ($regions) use (&$destinations) {
                 foreach ($regions as $region) {
                     $destinations[] = $region->country .' - '. $region->city;
                 }
@@ -70,7 +71,8 @@ class RegionsController extends Controller
         BfRegions::select('region','country')
             ->where('region', 'like', $query . '%')
             ->groupBy('region')
-            ->chunk(300, function ($regions) use (&$regionsArr) {
+            ->limit(10)
+            ->chunk(10, function ($regions) use (&$regionsArr) {
                 foreach ($regions as $region) {
                     $regionsArr[] = $region->country .' - '. $region->region.' (Region)';
                 }
@@ -79,7 +81,8 @@ class RegionsController extends Controller
         BfRegions::select('country')
             ->where('country', 'like', $query . '%')
             ->groupBy('country')
-            ->chunk(300, function ($regions) use (&$countries) {
+            ->limit(10)
+            ->chunk(10, function ($regions) use (&$countries) {
                 foreach ($regions as $region) {
                     $countries[] = $region->country .' (Land)';
                 }
