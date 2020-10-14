@@ -121,7 +121,7 @@ class AutooffersBFRepository extends BaseRepository
             $query->where('region', utf8_decode($this->getRegion()));
         //$sql = str_replace_array('?', $query->getBindings(), $query->toSql());
 
-        $objects = $query->limit(3)->get()->toArray();
+        $objects = $query->limit(5)->get()->toArray();
 
         $ids = [];
         foreach($objects as $object){
