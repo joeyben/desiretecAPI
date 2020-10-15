@@ -12,9 +12,11 @@ namespace Modules\Whitelabels\Repositories\Eloquent;
 use App\Exceptions\GeneralException;
 use App\Repositories\Criteria\EagerLoad;
 use App\Repositories\RepositoryAbstract;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Intervention\Image\ImageManager;
 use Modules\Whitelabels\Entities\Whitelabel;
 use Modules\Whitelabels\Entities\WhitelabelHost;
@@ -76,10 +78,12 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function getWhitelabelHostIds(string $host)
     {
+        Log::info($host);
+
         $host = str_replace("_", "/", $host);
         $query = $this->getWhitelabelHosts($host);
 
-        if (is_null($query))
+        if ($query->isEmpty())
         {
             $parts = explode("/", $host);
             $length = count($parts);
@@ -91,7 +95,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
             $query = $this->getWhitelabelHosts($host);
 
-            if (is_null($query))
+            if ($query->isEmpty())
             {
                 $parts = explode("/", $host);
                 $length = count($parts);
@@ -103,20 +107,17 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
                 $query = $this->getWhitelabelHosts($host);
 
-                if (is_null($query)) {
-                    $baseUrl = parse_url("http://$host")['host'];
-                    $query =$this->getWhitelabelHost($baseUrl);
-                }
-
             }
 
-            if (is_null($query)) {
-                $baseUrl = parse_url("http://$host")['host'];
-                $query =$this->getWhitelabelHosts($baseUrl);
+            if ($query->isEmpty()) {
+                $host = parse_url("http://$host")['host'];
+                $query =$this->getWhitelabelHosts($host);
             }
         }
 
-        return !is_null($query) ? $query :  null;
+        Log::info($host);
+
+        return $query->isNotEmpty() ? $query->pluck('id') :  null;
     }
 
     public function updateRoute(int $id, string $name, string $subDomain)
@@ -610,10 +611,10 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             ->first();
     }
 
-    private function getWhitelabelHosts(string $host)
+    private function getWhitelabelHosts(string $host): Collection
     {
         return WhitelabelHost::select([config('module.whitelabel_host.table') . '.id'])
             ->where(config('module.whitelabel_host.table') . '.host', $host)
-            ->get()->pluck('id');
+            ->get();
     }
 }
