@@ -78,8 +78,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
     public function getWhitelabelHostIds(string $host)
     {
-        Log::info($host);
-
         $host = str_replace("_", "/", $host);
         $query = $this->getWhitelabelHosts($host);
 
@@ -114,8 +112,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 $query =$this->getWhitelabelHosts($host);
             }
         }
-
-        Log::info($host);
 
         return $query->isNotEmpty() ? $query->pluck('id') :  null;
     }
