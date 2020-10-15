@@ -43,10 +43,16 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             $parts = explode("/", $host);
             $length = count($parts);
 
-            if ($length > 2) {
-                array_pop($parts);
+             if ($length >= 2) {
+                $test = array_pop($parts);
                 $host = implode("/", $parts);
+
+                Log::info('---');
+                 Log::info($test);
+                 Log::info('---');
             }
+
+
 
             $query = $this->getWhitelabelHost($host);
 
@@ -55,7 +61,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 $parts = explode("/", $host);
                 $length = count($parts);
 
-                if ($length > 2) {
+                if ($length >= 2) {
                     array_pop($parts);
                     $host = implode("/", $parts);
                 }
@@ -88,7 +94,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             $parts = explode("/", $host);
             $length = count($parts);
 
-            if ($length > 2) {
+             if ($length >= 2) {
                 array_pop($parts);
                 $host = implode("/", $parts);
             }
@@ -100,7 +106,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 $parts = explode("/", $host);
                 $length = count($parts);
 
-                if ($length > 2) {
+                if ($length >= 2) {
                     array_pop($parts);
                     $host = implode("/", $parts);
                 }
