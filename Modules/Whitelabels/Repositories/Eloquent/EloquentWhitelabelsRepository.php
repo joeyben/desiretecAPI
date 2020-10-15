@@ -38,8 +38,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $host = str_replace("_", "/", $host);
         $query = $this->getWhitelabelHost($host);
 
-        Log::info($host);
-
         if (is_null($query))
         {
             $parts = explode("/", $host);
@@ -64,15 +62,10 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
 
                 $query =$this->getWhitelabelHost($host);
 
-                Log::info('---');
-                Log::info($host);
                 if (is_null($query)) {
                     $host = parse_url("http://$host")['host'];
                     $query = $this->getWhitelabelHost($host);
                 }
-
-                Log::info('---');
-                Log::info($host);
 
             }
         }
@@ -95,9 +88,9 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             $parts = explode("/", $host);
             $length = count($parts);
 
-             if ($length >= 2) {
-                array_pop($parts);
-                $host = implode("/", $parts);
+            if ($length >= 2) {
+                $surfix = array_pop($parts);
+                $host = $this->generateHost($parts, $surfix);
             }
 
             $query = $this->getWhitelabelHosts($host);
@@ -108,8 +101,8 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 $length = count($parts);
 
                 if ($length >= 2) {
-                    array_pop($parts);
-                    $host = implode("/", $parts);
+                    $surfix = array_pop($parts);
+                    $host = $this->generateHost($parts, $surfix);
                 }
 
                 $query = $this->getWhitelabelHosts($host);
