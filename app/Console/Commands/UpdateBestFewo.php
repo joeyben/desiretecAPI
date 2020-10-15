@@ -41,9 +41,12 @@ class UpdateBestFewo extends Command
     {
         //$xml = simplexml_load_file("https://desiretec:uub8hai2HeeW6eel@export.bestfewo.com/desiretec/objects.xml") or die("Error: Cannot create object");
 
-        $file = "https://desiretec:uub8hai2HeeW6eel@export.bestfewo.com/desiretec/objects.xml";
+        $file = "https://desiretec:uub8hai2HeeW6eel@export.bestfewo.com/desiretec/objects.xml.gz";
+        $zipped = file_get_contents($file);
+        $unzipped = gzdecode($zipped);
+
         $reader = new \XMLReader();
-        $reader->open($file);
+        $reader->open($unzipped);
         DB::table('Bestfewo')->truncate();
         DB::table('bf_regions')->truncate();
         DB::table('BestfewoRange')->truncate();
