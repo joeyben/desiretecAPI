@@ -44,8 +44,9 @@ class UpdateBestFewo extends Command
         $file = "https://desiretec:uub8hai2HeeW6eel@export.bestfewo.com/desiretec/objects.xml";
         $reader = new \XMLReader();
         $reader->open($file);
-        //DB::table('Bestfewo')->truncate();
-        //DB::table('bf_regions')->truncate();
+        DB::table('Bestfewo')->truncate();
+        DB::table('bf_regions')->truncate();
+        DB::table('BestfewoRange')->truncate();
         while( $reader->read() ) {
             if ($reader->nodeType == \XMLReader::ELEMENT) {
                 switch ($reader->name) {
@@ -56,8 +57,8 @@ class UpdateBestFewo extends Command
                         $price = $node->prices;
                         $availability = $node->availabilities;
                         $ratings = isset($node->ratings) ? true : false;
-                        //$this->addObject($attributes, $location, $node);
-                        //$this->addRegion($location);
+                        $this->addObject($attributes, $location, $node);
+                        $this->addRegion($location);
                         $this->addAvailabilty($attributes, $location, $availability, $price, $ratings);
                         break;
                 }
