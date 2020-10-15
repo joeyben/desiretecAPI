@@ -38,21 +38,17 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         $host = str_replace("_", "/", $host);
         $query = $this->getWhitelabelHost($host);
 
+        Log::info($host);
+
         if (is_null($query))
         {
             $parts = explode("/", $host);
             $length = count($parts);
 
              if ($length >= 2) {
-                $test = array_pop($parts);
-                $host = implode("/", $parts);
-
-                Log::info('---');
-                 Log::info($test);
-                 Log::info('---');
+                $surfix = array_pop($parts);
+                $host = $this->generateHost($parts, $surfix);
             }
-
-
 
             $query = $this->getWhitelabelHost($host);
 
@@ -62,16 +58,21 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 $length = count($parts);
 
                 if ($length >= 2) {
-                    array_pop($parts);
-                    $host = implode("/", $parts);
+                    $surfix = array_pop($parts);
+                    $host = $this->generateHost($parts, $surfix);
                 }
 
                 $query =$this->getWhitelabelHost($host);
 
+                Log::info('---');
+                Log::info($host);
                 if (is_null($query)) {
-                    $baseUrl = parse_url("http://$host")['host'];
-                    $query =$this->getWhitelabelHost($baseUrl);
+                    $host = parse_url("http://$host")['host'];
+                    $query = $this->getWhitelabelHost($host);
                 }
+
+                Log::info('---');
+                Log::info($host);
 
             }
         }
@@ -622,5 +623,16 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         return WhitelabelHost::select([config('module.whitelabel_host.table') . '.id'])
             ->where(config('module.whitelabel_host.table') . '.host', $host)
             ->get();
+    }
+
+    private function generateHost(array $parts, $surfix)
+    {
+        $params = explode("-", $surfix);
+
+        if (count($params) > 1) {
+            array_push($parts, $params[0]);
+        }
+
+        return implode("/", $parts);
     }
 }
