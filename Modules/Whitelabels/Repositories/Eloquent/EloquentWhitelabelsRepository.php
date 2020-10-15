@@ -34,13 +34,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     public function getWhitelabelNameByHost(string $host)
     {
         $host = str_replace("_", "/", $host);
-
-        $query = WhitelabelHost::select([
-                config('module.whitelabel_host.table') . '.id',
-                config('module.whitelabel_host.table') . '.whitelabel_id'
-            ])
-            ->where(config('module.whitelabel_host.table') . '.host', $host)
-            ->first();
+        $query = $this->getWhitelabelHost($host);
 
         if (is_null($query))
         {
@@ -64,6 +58,8 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                     $host = implode("/", $parts);
                 }
 
+                $query =$this->getWhitelabelHost($host);
+
                 if (is_null($query)) {
                     $baseUrl = parse_url("http://$host")['host'];
                     $query =$this->getWhitelabelHost($baseUrl);
@@ -81,7 +77,6 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     public function getWhitelabelHostIds(string $host)
     {
         $host = str_replace("_", "/", $host);
-
         $query = $this->getWhitelabelHosts($host);
 
         if (is_null($query))
@@ -95,6 +90,25 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             }
 
             $query = $this->getWhitelabelHosts($host);
+
+            if (is_null($query))
+            {
+                $parts = explode("/", $host);
+                $length = count($parts);
+
+                if ($length > 2) {
+                    array_pop($parts);
+                    $host = implode("/", $parts);
+                }
+
+                $query = $this->getWhitelabelHosts($host);
+
+                if (is_null($query)) {
+                    $baseUrl = parse_url("http://$host")['host'];
+                    $query =$this->getWhitelabelHost($baseUrl);
+                }
+
+            }
 
             if (is_null($query)) {
                 $baseUrl = parse_url("http://$host")['host'];
