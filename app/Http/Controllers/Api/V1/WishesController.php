@@ -261,7 +261,7 @@ class WishesController extends APIController
                     $this->repository->setIsAutoofer($wish->id);
                     $this->callPeakwork($wish, $newUser, $request);
                 }
-                elseif ($wish->whitelabel->bestfewo) {
+                elseif ($wish->whitelabel->bestfewo && $this->repository->manageRules($wish) > 0) {
                     $this->repository->setIsAutoofer($wish->id);
                     $this->callBestfewo($wish, $newUser, $request);
                 }

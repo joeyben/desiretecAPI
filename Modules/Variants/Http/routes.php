@@ -3,6 +3,7 @@
 Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin', 'namespace' => 'Modules\Variants\Http\Controllers'], function () {
     Route::get('variants', 'VariantsController@index')->name('admin.variants');
     Route::get('variants/view', 'VariantsController@view')->name('admin.variants.view');
+    Route::get('variants/domains/{layerWhitelabelId}', 'VariantsController@domains')->name('admin.variants.domains');
     Route::put('variants', 'VariantsController@store')->name('admin.variants.store');
     Route::get('variants/{id}', 'VariantsController@show')->name('admin.variants.show')->where('id', '[0-9]+');
     Route::get('variants/{id}/edit', 'VariantsController@edit')->name('admin.variants.edit')->where('id', '[0-9]+');

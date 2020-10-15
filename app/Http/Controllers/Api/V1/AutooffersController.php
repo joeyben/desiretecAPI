@@ -70,8 +70,8 @@ class AutooffersController extends APIController implements AutooffersController
     {
         $offers = [];
         try {
+            $this->repository->setOffersDataFromId($wishId);
             $offers['data'] = $this->repository->getOffersDataFromId($wishId);
-
             return $this->responseJson($offers);
         } catch (Exception $e) {
             return $this->respondWithError($e);
@@ -105,6 +105,7 @@ class AutooffersController extends APIController implements AutooffersController
             return $this->respondWithError($e);
         }
     }
+    
 
     public function testAvailability(){
         $this->TTrepository->getToken();
