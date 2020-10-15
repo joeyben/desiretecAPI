@@ -48,7 +48,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
             $length = count($parts);
 
             if ($length > 2) {
-                $parts = array_pop($parts);
+                array_pop($parts);
                 $host = implode("/", $parts);
             }
 
@@ -60,7 +60,7 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
                 $length = count($parts);
 
                 if ($length > 2) {
-                    $parts = array_pop($parts);
+                    array_pop($parts);
                     $host = implode("/", $parts);
                 }
 
@@ -82,16 +82,24 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
     {
         $host = str_replace("_", "/", $host);
 
-        $query = WhitelabelHost::select([config('module.whitelabel_host.table') . '.id'])
-            ->where(config('module.whitelabel_host.table') . '.host', $host)
-            ->get()->pluck('id');
+        $query = $this->getWhitelabelHosts($host);
 
         if (is_null($query))
         {
-            $baseUrl = parse_url("http://$host")['host'];
-            $query = WhitelabelHost::select([config('module.whitelabel_host.table') . '.id'])
-                ->where(config('module.whitelabel_host.table') . '.host', $baseUrl)
-                ->get()->pluck('id');
+            $parts = explode("/", $host);
+            $length = count($parts);
+
+            if ($length > 2) {
+                array_pop($parts);
+                $host = implode("/", $parts);
+            }
+
+            $query = $this->getWhitelabelHosts($host);
+
+            if (is_null($query)) {
+                $baseUrl = parse_url("http://$host")['host'];
+                $query =$this->getWhitelabelHosts($baseUrl);
+            }
         }
 
         return !is_null($query) ? $query :  null;
@@ -586,5 +594,12 @@ class EloquentWhitelabelsRepository extends RepositoryAbstract implements Whitel
         ])
             ->where(config('module.whitelabel_host.table') . '.host', $host)
             ->first();
+    }
+
+    private function getWhitelabelHosts(string $host)
+    {
+        return WhitelabelHost::select([config('module.whitelabel_host.table') . '.id'])
+            ->where(config('module.whitelabel_host.table') . '.host', $host)
+            ->get()->pluck('id');
     }
 }
